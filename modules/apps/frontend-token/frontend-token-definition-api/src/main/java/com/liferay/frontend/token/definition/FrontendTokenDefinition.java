@@ -14,11 +14,13 @@
 
 package com.liferay.frontend.token.definition;
 
+import java.util.Locale;
+
 /**
  * @author Iván Zaera
  */
 public interface FrontendTokenDefinition {
 
-	public String getJSON();
+	public String getJSON(Locale locale);
 
 }

@@ -242,64 +242,44 @@ const SidebarPanelInfoView = ({
 							</div>
 						)}
 
-						{formattedDisplayDate && (
-							<div className="mb-4 sidebar-dl sidebar-section">
-								<p className="h5">
-									{Liferay.Language.get('display-date')}
-								</p>
+						{[
+							{
+								text: formattedDisplayDate,
+								title: Liferay.Language.get('display-date'),
+							},
+							{
+								text: formattedCreateDate,
+								title: Liferay.Language.get('creation-date'),
+							},
+							{
+								text: formattedModifiedDate,
+								title: Liferay.Language.get('modified-date'),
+							},
+							{
+								text: formattedExpirationDate,
+								title: Liferay.Language.get('expiration-date'),
+							},
+							{
+								text: formattedReviewDate,
+								title: Liferay.Language.get('review-date'),
+							},
+							{
+								text: classPK,
+								title: Liferay.Language.get('id'),
+							},
+						].map(
+							({text, title}) =>
+								text &&
+								title && (
+									<div
+										className="mb-4 sidebar-dl sidebar-section"
+										key={title}
+									>
+										<p className="h5">{title}</p>
 
-								<p>{formattedDisplayDate}</p>
-							</div>
-						)}
-
-						{formattedCreateDate && (
-							<div className="mb-4 sidebar-dl sidebar-section">
-								<p className="h5">
-									{Liferay.Language.get('creation-date')}
-								</p>
-
-								<p>{formattedCreateDate}</p>
-							</div>
-						)}
-
-						{formattedModifiedDate && (
-							<div className="mb-4 sidebar-dl sidebar-section">
-								<p className="h5">
-									{Liferay.Language.get('modified-date')}
-								</p>
-
-								<p>{formattedModifiedDate}</p>
-							</div>
-						)}
-
-						{formattedExpirationDate && (
-							<div className="mb-4 sidebar-dl sidebar-section">
-								<p className="h5">
-									{Liferay.Language.get('expiration-date')}
-								</p>
-
-								<p>{formattedExpirationDate}</p>
-							</div>
-						)}
-
-						{formattedReviewDate && (
-							<div className="mb-4 sidebar-dl sidebar-section">
-								<p className="h5">
-									{Liferay.Language.get('review-date')}
-								</p>
-
-								<p>{formattedReviewDate}</p>
-							</div>
-						)}
-
-						{classPK && (
-							<div className="mb-4 sidebar-dl sidebar-section">
-								<p className="h5">
-									{Liferay.Language.get('id')}
-								</p>
-
-								<p>{classPK}</p>
-							</div>
+										<p>{text}</p>
+									</div>
+								)
 						)}
 					</ClayTabs.TabPane>
 				</ClayTabs.Content>

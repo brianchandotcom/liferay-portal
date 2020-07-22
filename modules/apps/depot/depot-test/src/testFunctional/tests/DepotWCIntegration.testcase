@@ -89,6 +89,74 @@ definition {
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Depot 2");
 	}
 
+	@description = "This ensures that web content using a structure stored in AL can be removed on a connected site."
+	@priority = "4"
+	test RemoveCustomizedWC {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Text",
+			templateName = "WC Template Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.connectSite(siteList = "Site Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		Depot.configureDDMStructures(
+			depotName = "Test Depot Name",
+			siteName = "Site Name",
+			tableEntryText = "Yes");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentText = "Text",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+
+		WebContentStructures.deleteCP(
+			structureName = "WC Structure Name",
+			webContentHasReference = "true");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContent.deleteCP(
+			siteURLKey = "site-name",
+			webContentTitle = "Web Content Title");
+	}
+
 	@description = "This test covers LPS-105119. It ensures that a web content in a depot can be selected through the field."
 	@priority = "4"
 	test SelectDepotContentViaWebContentField {
@@ -432,6 +500,264 @@ definition {
 			siteName = "Site Name");
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Depot");
+	}
+
+	@description = "This ensures that a user can use structures stored in AL to create articles and display them in AP on a connected site."
+	@priority = "5"
+	test ViewCustomizedWCInAP {
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name");
+
+		for (var count : list "1,2") {
+			JSONDepot.addDepot(
+				depotDescription = "This is the description of a depot",
+				depotName = "Test Depot Name${count}");
+		}
+
+		for (var count : list "1,2") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name${count}");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(
+				structureDescription = "WC Structure Description",
+				structureName = "WC Structure Name${count}");
+
+			DynamicDataMapping.addField(
+				field = "Text",
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name${count}");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name${count}");
+
+			NavItem.gotoTemplates();
+
+			WebContentTemplates.addCP(
+				structureName = "WC Structure Name${count}",
+				templateDescription = "WC Template Description",
+				templateFieldNames = "Text",
+				templateName = "WC Template Name${count}");
+		}
+
+		for (var count : list "1,2") {
+			DepotNavigator.openDepotAdmin();
+
+			DepotNavigator.gotoEdit(depotName = "Test Depot Name${count}");
+
+			DepotNavigator.gotoSites(depotName = "Test Depot Name${count}");
+
+			Depot.connectSite(siteList = "Site Name");
+		}
+
+		for (var count : list "1,2") {
+			DepotNavigator.openDepotAdmin();
+
+			Depot.configureDDMStructures(
+				depotName = "Test Depot Name${count}",
+				siteName = "Site Name",
+				tableEntryText = "Yes");
+		}
+
+		for (var count : list "1,2") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name${count}");
+
+			WebContent.addWithStructureCP(
+				structureName = "WC Structure Name${count}",
+				templateName = "WC Template Name${count}",
+				webContentText = "Text${count}",
+				webContentTitle = "Web Content Title${count}");
+
+			PortletEntry.publish();
+		}
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name",
+			widgetName = "Asset Publisher");
+
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
+
+		for (var count : list "1,2") {
+			AssertTextEquals.assertPartialText(
+				key_assetTitle = "Web Content Title${count}",
+				locator1 = "APAsset#ASSET_TITLE",
+				value1 = "Web Content Title${count}");
+		}
+	}
+
+	@description = "This ensures that a user can use a structure stored in AL to create an article and display it in WCD on a connected site."
+	@priority = "5"
+	test ViewCustomizedWCInWCD {
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Text",
+			templateName = "WC Template Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.connectSite(siteList = "Site Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		Depot.configureDDMStructures(
+			depotName = "Test Depot Name",
+			siteName = "Site Name",
+			tableEntryText = "Yes");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		NavItem.gotoStructures();
+
+		AssertElementNotPresent(
+			key_tableEntry = "WC Structure Name",
+			locator1 = "LexiconTable#TABLE_ENTRY_TITLE");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentText = "Web Content Text",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.publish();
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name",
+			widgetName = "Web Content Display");
+
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
+
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
+
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
+
+		WebContent.viewPGViaWCD(webContentContent = "Web Content Text");
+	}
+
+	@description = "This ensures that a user can see information of WC structure from more iframe about which AL owns it."
+	@priority = "4"
+	test ViewStructuresScopeList {
+		for (var i : list "1,2,3") {
+			JSONDepot.addDepot(
+				depotDescription = "This is the description of a depot",
+				depotName = "Test Depot Name${i}");
+		}
+
+		for (var i : list "1,2,3") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name${i}");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(
+				structureDescription = "WC Structure Description",
+				structureName = "WC Structure Name${i}");
+
+			DynamicDataMapping.addField(
+				field = "Text",
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name${i}");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name${i}");
+
+			NavItem.gotoTemplates();
+
+			WebContentTemplates.addCP(
+				structureName = "WC Structure Name${i}",
+				templateDescription = "WC Template Description",
+				templateFieldNames = "Text",
+				templateName = "WC Template Name${i}");
+		}
+
+		for (var i : list "1,2,3") {
+			DepotNavigator.openDepotAdmin();
+
+			DepotNavigator.gotoEdit(depotName = "Test Depot Name${i}");
+
+			DepotNavigator.gotoSites(depotName = "Test Depot Name${i}");
+
+			Depot.connectSite(siteList = "Site Name");
+		}
+
+		for (var i : list "1,2,3") {
+			DepotNavigator.openDepotAdmin();
+
+			Depot.configureDDMStructures(
+				depotName = "Test Depot Name${i}",
+				siteName = "Site Name",
+				tableEntryText = "Yes");
+		}
+
+		for (var i : list "4,5,6,7,8") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(
+				structureDescription = "WC Structure Description",
+				structureName = "WC Structure Name${i}");
+
+			DynamicDataMapping.addField(
+				field = "Text",
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name${i}");
+		}
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoMoreStructuresViaPlusButton(pageMod = "8 of 10");
+
+		for (var i : list "1,2,3") {
+			WebContentStructures.viewScopesViaMoreIFrame(
+				scopeName = "Test Depot Name${i}",
+				structureName = "WC Structure Name${i}");
+		}
 	}
 
 }

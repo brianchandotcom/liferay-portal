@@ -319,6 +319,8 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 				).put(
 					"selectedCategories", selectedCategoryIds
 				).put(
+					"system", vocabulary.isSystem()
+				).put(
 					"title",
 					vocabulary.getUnambiguousTitle(
 						vocabularies, themeDisplay.getScopeGroupId(),

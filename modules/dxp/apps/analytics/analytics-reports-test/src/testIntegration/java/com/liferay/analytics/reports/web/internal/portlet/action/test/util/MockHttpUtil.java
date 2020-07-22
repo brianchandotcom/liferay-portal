@@ -43,8 +43,8 @@ public class MockHttpUtil {
 					String location = options.getLocation();
 
 					String endpoint = location.substring(
-						location.lastIndexOf("/api/1.0/pages/"),
-						location.indexOf("?"));
+						location.lastIndexOf("/api"),
+						_getLastPosition(location));
 
 					if (mockRequest.containsKey(endpoint)) {
 						Http.Response httpResponse = new Http.Response();
@@ -79,6 +79,14 @@ public class MockHttpUtil {
 					throw throwable;
 				}
 			});
+	}
+
+	private static int _getLastPosition(String location) {
+		if (location.contains("?")) {
+			return location.indexOf("?");
+		}
+
+		return location.length();
 	}
 
 }

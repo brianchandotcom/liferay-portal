@@ -27,7 +27,7 @@ const DROPDOWN_VALUES = {
 		{
 			id: 123,
 			name: {
-				'en-US': 'Object test',
+				en_US: 'Object test',
 			},
 		},
 	],

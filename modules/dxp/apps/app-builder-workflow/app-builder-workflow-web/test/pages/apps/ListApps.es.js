@@ -24,7 +24,7 @@ const DROPDOWN_VALUES = {
 		{
 			id: 1,
 			name: {
-				'en-US': 'object',
+				en_US: 'object',
 			},
 		},
 	],

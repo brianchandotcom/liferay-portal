@@ -12,6 +12,13 @@
  * details.
  */
 
+window.themeDisplay = {
+	...window.themeDisplay,
+	getDefaultLanguageId: () => 'en_US',
+	getLanguageId: () => 'en_US',
+	getUserId: () => 0,
+};
+
 window.Liferay = {
 	...(window.Liferay || {}),
 	Language: {

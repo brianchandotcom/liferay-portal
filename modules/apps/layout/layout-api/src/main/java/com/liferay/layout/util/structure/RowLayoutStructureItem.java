@@ -28,7 +28,7 @@ import java.util.Objects;
 /**
  * @author Eudaldo Alonso
  */
-public class RowLayoutStructureItem extends LayoutStructureItem {
+public class RowLayoutStructureItem extends StyledLayoutStructureItem {
 
 	public RowLayoutStructureItem(String parentItemId) {
 		super(parentItemId);
@@ -66,7 +66,9 @@ public class RowLayoutStructureItem extends LayoutStructureItem {
 
 	@Override
 	public JSONObject getItemConfigJSONObject() {
-		JSONObject jsonObject = JSONUtil.put(
+		JSONObject jsonObject = super.getItemConfigJSONObject();
+
+		jsonObject.put(
 			"gutters", _gutters
 		).put(
 			"modulesPerRow", getModulesPerRow()
@@ -214,6 +216,8 @@ public class RowLayoutStructureItem extends LayoutStructureItem {
 
 	@Override
 	public void updateItemConfig(JSONObject itemConfigJSONObject) {
+		super.updateItemConfig(itemConfigJSONObject);
+
 		if (itemConfigJSONObject.has("gutters")) {
 			setGutters(itemConfigJSONObject.getBoolean("gutters"));
 		}

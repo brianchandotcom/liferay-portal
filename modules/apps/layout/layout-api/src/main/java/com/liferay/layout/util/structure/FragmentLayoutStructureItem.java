@@ -17,14 +17,13 @@ package com.liferay.layout.util.structure;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 
 import java.util.Objects;
 
 /**
  * @author Eudaldo Alonso
  */
-public class FragmentLayoutStructureItem extends LayoutStructureItem {
+public class FragmentLayoutStructureItem extends StyledLayoutStructureItem {
 
 	public FragmentLayoutStructureItem(String parentItemId) {
 		super(parentItemId);
@@ -59,7 +58,9 @@ public class FragmentLayoutStructureItem extends LayoutStructureItem {
 
 	@Override
 	public JSONObject getItemConfigJSONObject() {
-		return JSONUtil.put(
+		JSONObject jsonObject = super.getItemConfigJSONObject();
+
+		return jsonObject.put(
 			"fragmentEntryLinkId", String.valueOf(_fragmentEntryLinkId));
 	}
 
@@ -79,6 +80,8 @@ public class FragmentLayoutStructureItem extends LayoutStructureItem {
 
 	@Override
 	public void updateItemConfig(JSONObject itemConfigJSONObject) {
+		super.updateItemConfig(itemConfigJSONObject);
+
 		if (itemConfigJSONObject.has("fragmentEntryLinkId")) {
 			setFragmentEntryLinkId(
 				itemConfigJSONObject.getLong("fragmentEntryLinkId"));

@@ -192,6 +192,24 @@ definition {
 		Button.click(button = "Done");
 	}
 
+	macro configureDDMStructures {
+		DepotNavigator.gotoEdit(depotName = "${depotName}");
+
+		DepotNavigator.gotoSites(depotName = "${depotName}");
+
+		LexiconTable.clickEllipsisItem(
+			item = "Make DDM Structures Available",
+			tableEntry = "${siteName}");
+
+		Alert.viewSuccessMessage();
+
+		AssertTextEquals(
+			key_tableEntry = "${siteName}",
+			key_tableEntryText = "${tableEntryText}",
+			locator1 = "LexiconTable#TABLE_ENTRY_TEXT_2",
+			value1 = "${tableEntryText}");
+	}
+
 	macro configureDefaultLanguage {
 		Click(
 			key_language = "${defaultDepotLanguage}",

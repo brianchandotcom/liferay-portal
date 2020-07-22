@@ -173,12 +173,12 @@ public class MockLiferayPortletRenderResponse
 
 	@Override
 	public ResourceURL createResourceURL() {
-		return null;
+		return new MockLiferayPortletURL();
 	}
 
 	@Override
 	public LiferayPortletURL createResourceURL(String portletName) {
-		return null;
+		return new MockLiferayPortletURL();
 	}
 
 	@Override

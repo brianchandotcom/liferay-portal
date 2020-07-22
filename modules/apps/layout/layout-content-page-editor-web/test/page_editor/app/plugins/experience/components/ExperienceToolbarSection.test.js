@@ -197,6 +197,7 @@ describe('ExperienceToolbarSection', () => {
 		});
 
 		const {
+			getAllByRole,
 			getByLabelText,
 			getByRole,
 			getByText,
@@ -212,9 +213,11 @@ describe('ExperienceToolbarSection', () => {
 
 		await waitForElement(() => getByRole('list'));
 
-		const experience = getByText('Experience #3');
+		expect(getByText('Experience #3')).toBeInTheDocument();
 
-		const lockIcon = within(experience).getByRole('presentation');
+		const icons = getAllByRole('presentation');
+
+		const lockIcon = icons[1];
 
 		// Hackily work around:
 		//

@@ -39,8 +39,6 @@ const ExperienceItem = ({
 	onPriorityIncrease,
 	onSelect,
 }) => {
-	const iconRef = React.useRef();
-	const [showtoolTip, setShowtoolTip] = React.useState(false);
 	const handleSelect = () => onSelect(experience.segmentsExperienceId);
 	const handlePriorityIncrease = () =>
 		onPriorityIncrease(
@@ -114,32 +112,7 @@ const ExperienceItem = ({
 									</ClayTooltipProvider>
 
 									{experience.hasLockedSegmentsExperiment && (
-										<span>
-											<ClayIcon
-												className="text-secondary"
-												onMouseEnter={() =>
-													setShowtoolTip(true)
-												}
-												onMouseLeave={() =>
-													setShowtoolTip(false)
-												}
-												ref={iconRef}
-												symbol="lock"
-											/>
-
-											{showtoolTip && (
-												<Popover
-													anchor={iconRef.current}
-													header={Liferay.Language.get(
-														'experience-locked'
-													)}
-												>
-													{Liferay.Language.get(
-														'edit-is-not-allowed-for-this-experience'
-													)}
-												</Popover>
-											)}
-										</span>
+										<ExperienceLockIcon />
 									)}
 								</span>
 
@@ -175,100 +148,147 @@ const ExperienceItem = ({
 					</ClayLayout.ContentRow>
 				</ClayButton>
 			</ClayList.ItemField>
-
 			<ClayList.ItemField className="align-self-center">
-				{editable && (
-					<div className="pl-2">
-						<ClayButtonWithIcon
-							aria-label={Liferay.Language.get(
-								'prioritize-experience'
-							)}
-							borderless
-							className="component-action mx-1"
-							disabled={lockedIncreasePriority}
-							displayType="unstyled"
-							monospaced
-							onClick={handlePriorityIncrease}
-							outline
-							symbol="angle-up"
-							title={Liferay.Language.get(
-								'prioritize-experience'
-							)}
-							type="button"
-						/>
-
-						<ClayButtonWithIcon
-							aria-label={Liferay.Language.get(
-								'deprioritize-experience'
-							)}
-							borderless
-							className="component-action mx-1"
-							disabled={lockedDecreasePriority}
-							displayType="unstyled"
-							monospaced
-							onClick={handlePriorityDecrease}
-							outline
-							symbol="angle-down"
-							title={Liferay.Language.get(
-								'deprioritize-experience'
-							)}
-							type="button"
-						/>
-
-						<ClayButtonWithIcon
-							aria-label={Liferay.Language.get('edit-experience')}
-							borderless
-							className="component-action mx-1"
-							displayType="unstyled"
-							monospaced
-							onClick={handleExperienceEdit}
-							outline
-							symbol="pencil"
-							title={Liferay.Language.get('edit-experience')}
-							type="button"
-						/>
-
-						<ClayButtonWithIcon
-							aria-label={Liferay.Language.get(
-								'delete-experience'
-							)}
-							borderless
-							className="component-action mx-1"
-							displayType="unstyled"
-							monospaced
-							onClick={handleExperienceDelete}
-							outline
-							symbol="times-circle"
-							title={Liferay.Language.get('delete-experience')}
-							type="button"
-						/>
-					</div>
-				)}
-
-				{experience.hasLockedSegmentsExperiment &&
-					experience.segmentsExperimentURL && (
-						<div className="pl-2">
-							<ClayLink
-								aria-label={Liferay.Language.get(
-									'go-to-test-details'
-								)}
-								borderless
-								className="component-action mx-1"
-								displayType="unstyled"
-								href={experience.segmentsExperimentURL}
-								monospaced
-								onClick={handleExperimentNavigation}
-								outline
-								title={Liferay.Language.get(
-									'go-to-test-details'
-								)}
-							>
-								<ClayIcon symbol="test" />
-							</ClayLink>
-						</div>
-					)}
+				<ExperienceActions
+					editable={editable}
+					experience={experience}
+					handleExperienceDelete={handleExperienceDelete}
+					handleExperienceEdit={handleExperienceEdit}
+					handleExperimentNavigation={handleExperimentNavigation}
+					handlePriorityDecrease={handlePriorityDecrease}
+					handlePriorityIncrease={handlePriorityIncrease}
+					lockedDecreasePriority={lockedDecreasePriority}
+					lockedIncreasePriority={lockedIncreasePriority}
+				/>
 			</ClayList.ItemField>
 		</ClayList.Item>
+	);
+};
+
+const ExperienceActions = ({
+	editable,
+	experience,
+	handleExperienceDelete,
+	handleExperienceEdit,
+	handleExperimentNavigation,
+	handlePriorityDecrease,
+	handlePriorityIncrease,
+	lockedDecreasePriority,
+	lockedIncreasePriority,
+}) => {
+	return (
+		<>
+			{editable && (
+				<div className="pl-2">
+					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get(
+							'prioritize-experience'
+						)}
+						borderless
+						className="component-action mx-1"
+						disabled={lockedIncreasePriority}
+						displayType="unstyled"
+						monospaced
+						onClick={handlePriorityIncrease}
+						outline
+						symbol="angle-up"
+						title={Liferay.Language.get('prioritize-experience')}
+						type="button"
+					/>
+
+					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get(
+							'deprioritize-experience'
+						)}
+						borderless
+						className="component-action mx-1"
+						disabled={lockedDecreasePriority}
+						displayType="unstyled"
+						monospaced
+						onClick={handlePriorityDecrease}
+						outline
+						symbol="angle-down"
+						title={Liferay.Language.get('deprioritize-experience')}
+						type="button"
+					/>
+
+					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get('edit-experience')}
+						borderless
+						className="component-action mx-1"
+						displayType="unstyled"
+						monospaced
+						onClick={handleExperienceEdit}
+						outline
+						symbol="pencil"
+						title={Liferay.Language.get('edit-experience')}
+						type="button"
+					/>
+
+					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get('delete-experience')}
+						borderless
+						className="component-action mx-1"
+						displayType="unstyled"
+						monospaced
+						onClick={handleExperienceDelete}
+						outline
+						symbol="times-circle"
+						title={Liferay.Language.get('delete-experience')}
+						type="button"
+					/>
+				</div>
+			)}
+
+			{experience.hasLockedSegmentsExperiment &&
+				experience.segmentsExperimentURL && (
+					<div className="pl-2">
+						<ClayLink
+							aria-label={Liferay.Language.get(
+								'go-to-test-details'
+							)}
+							borderless
+							className="component-action mx-1"
+							displayType="unstyled"
+							href={experience.segmentsExperimentURL}
+							monospaced
+							onClick={handleExperimentNavigation}
+							outline
+							title={Liferay.Language.get('go-to-test-details')}
+						>
+							<ClayIcon symbol="test" />
+						</ClayLink>
+					</div>
+				)}
+		</>
+	);
+};
+
+const ExperienceLockIcon = () => {
+	const iconRef = React.useRef();
+	const [showtoolTip, setShowtoolTip] = React.useState(false);
+
+	return (
+		<span>
+			<ClayIcon
+				className="text-secondary"
+				onMouseEnter={() => setShowtoolTip(true)}
+				onMouseLeave={() => setShowtoolTip(false)}
+				ref={iconRef}
+				symbol="lock"
+			/>
+
+			{showtoolTip && (
+				<Popover
+					anchor={iconRef.current}
+					header={Liferay.Language.get('experience-locked')}
+				>
+					{Liferay.Language.get(
+						'edit-is-not-allowed-for-this-experience'
+					)}
+				</Popover>
+			)}
+		</span>
 	);
 };
 

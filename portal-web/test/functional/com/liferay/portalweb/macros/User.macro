@@ -2301,11 +2301,9 @@ definition {
 	}
 
 	macro searchCP {
-		Pause(locator1 = "5000");
-
 		Search.searchCP(searchTerm = "${searchTerm}");
 
-		Pause(locator1 = "5000");
+		AssertElementPresent(locator1 = "Search#SEARCH_INFO");
 	}
 
 	macro setPasswordByResetLink {

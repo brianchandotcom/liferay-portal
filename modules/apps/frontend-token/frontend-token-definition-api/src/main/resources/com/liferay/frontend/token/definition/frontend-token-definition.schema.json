@@ -96,6 +96,13 @@
 		"FrontendTokenCategory": {
 			"additionalProperties": false,
 			"properties": {
+				"frontendTokenSets": {
+					"items": {
+						"$ref": "#/definitions/FrontendTokenSet"
+					},
+					"title": "The Frontend Token Sets of the Frontend Token Category",
+					"type": "array"
+				},
 				"label": {
 					"title": "The Language Key to Obtain the Label of the Frontend Token Category",
 					"type": "string"
@@ -103,18 +110,11 @@
 				"name": {
 					"title": "Name of the Frontend Token Category",
 					"type": "string"
-				},
-				"tokenSets": {
-					"items": {
-						"$ref": "#/definitions/FrontendTokenSet"
-					},
-					"title": "The Frontend Token Sets of the Frontend Token Category",
-					"type": "array"
 				}
 			},
 			"required": [
 				"name",
-				"tokenSets"
+				"frontendTokenSets"
 			],
 			"type": "object"
 		},

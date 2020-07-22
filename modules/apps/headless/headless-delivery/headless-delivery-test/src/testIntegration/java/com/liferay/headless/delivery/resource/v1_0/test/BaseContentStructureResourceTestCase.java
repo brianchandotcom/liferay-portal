@@ -531,8 +531,7 @@ public abstract class BaseContentStructureResourceTestCase {
 	protected Long testGetAssetLibraryContentStructuresPage_getAssetLibraryId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDepotEntry.getDepotEntryId();
 	}
 
 	protected Long
@@ -1606,9 +1605,9 @@ public abstract class BaseContentStructureResourceTestCase {
 	}
 
 	protected ContentStructureResource contentStructureResource;
-	protected DepotEntry testDepotEntry;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
+	protected DepotEntry testDepotEntry;
 	protected Group testGroup;
 
 	protected class GraphQLField {

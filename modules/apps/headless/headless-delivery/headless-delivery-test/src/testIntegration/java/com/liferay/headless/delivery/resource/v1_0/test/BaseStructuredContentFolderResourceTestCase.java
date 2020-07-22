@@ -581,8 +581,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			testGetAssetLibraryStructuredContentFoldersPage_getAssetLibraryId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDepotEntry.getDepotEntryId();
 	}
 
 	protected Long
@@ -2568,9 +2567,9 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 	}
 
 	protected StructuredContentFolderResource structuredContentFolderResource;
-	protected DepotEntry testDepotEntry;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
+	protected DepotEntry testDepotEntry;
 	protected Group testGroup;
 
 	protected class GraphQLField {

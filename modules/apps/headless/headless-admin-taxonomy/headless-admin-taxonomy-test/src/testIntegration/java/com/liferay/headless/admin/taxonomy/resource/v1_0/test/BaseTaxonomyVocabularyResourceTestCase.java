@@ -551,8 +551,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			testGetAssetLibraryTaxonomyVocabulariesPage_getAssetLibraryId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDepotEntry.getDepotEntryId();
 	}
 
 	protected Long
@@ -2015,9 +2014,9 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 	}
 
 	protected TaxonomyVocabularyResource taxonomyVocabularyResource;
-	protected DepotEntry testDepotEntry;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
+	protected DepotEntry testDepotEntry;
 	protected Group testGroup;
 
 	protected class GraphQLField {

@@ -342,8 +342,7 @@ public abstract class BaseContentSetElementResourceTestCase {
 			testGetAssetLibraryContentSetByKeyContentSetElementsPage_getAssetLibraryId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDepotEntry.getDepotEntryId();
 	}
 
 	protected Long
@@ -501,8 +500,7 @@ public abstract class BaseContentSetElementResourceTestCase {
 			testGetAssetLibraryContentSetByUuidContentSetElementsPage_getAssetLibraryId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDepotEntry.getDepotEntryId();
 	}
 
 	protected Long
@@ -1395,9 +1393,9 @@ public abstract class BaseContentSetElementResourceTestCase {
 	}
 
 	protected ContentSetElementResource contentSetElementResource;
-	protected DepotEntry testDepotEntry;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
+	protected DepotEntry testDepotEntry;
 	protected Group testGroup;
 
 	protected class GraphQLField {

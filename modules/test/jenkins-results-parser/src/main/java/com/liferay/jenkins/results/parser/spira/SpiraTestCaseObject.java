@@ -263,7 +263,7 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 		SpiraTestCaseType spiraTestCaseType, Integer parentTestCaseFolderID,
 		boolean checkCache) {
 
-		SpiraCustomProperty spiraCustomProperty =
+		SpiraCustomProperty filePathSpiraCustomProperty =
 			SpiraCustomProperty.createSpiraCustomProperty(
 				spiraProject, SpiraTestCaseObject.class,
 				_CUSTOM_FIELD_FILE_PATH_KEY, SpiraCustomProperty.Type.TEXT);
@@ -286,7 +286,7 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 			if ((testCaseFilePath != null) && !testCaseFilePath.isEmpty()) {
 				SpiraCustomProperty.Value spiraCustomValue =
 					SpiraCustomProperty.createSpiraCustomPropertyValue(
-						spiraCustomProperty, testCaseFilePath);
+						filePathSpiraCustomProperty, testCaseFilePath);
 
 				searchParameterList.add(
 					new SearchQuery.SearchParameter(spiraCustomValue));
@@ -325,20 +325,41 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 			requestJSONObject.put("TestCaseTypeId", spiraTestCaseType.getID());
 		}
 
-		if ((testCaseFilePath != null) && !testCaseFilePath.isEmpty()) {
-			JSONArray customPropertiesJSONArray = new JSONArray();
+		JSONArray customPropertiesJSONArray = new JSONArray();
 
+		if ((testCaseFilePath != null) && !testCaseFilePath.isEmpty()) {
 			JSONObject filePathJSONObject = new JSONObject();
 
 			filePathJSONObject.put(
-				"PropertyNumber", spiraCustomProperty.getPropertyNumber());
+				"PropertyNumber",
+				filePathSpiraCustomProperty.getPropertyNumber());
 			filePathJSONObject.put("StringValue", testCaseFilePath);
 
 			customPropertiesJSONArray.put(filePathJSONObject);
-
-			requestJSONObject.put(
-				"CustomProperties", customPropertiesJSONArray);
 		}
+
+		SpiraCustomProperty executionTypeSpiraCustomProperty =
+			SpiraCustomProperty.createSpiraCustomProperty(
+				spiraProject, SpiraTestCaseObject.class,
+				_CUSTOM_FIELD_EXECUTION_TYPE_KEY,
+				SpiraCustomProperty.Type.LIST);
+
+		JSONObject executionTypeJSONObject = new JSONObject();
+
+		executionTypeJSONObject.put(
+			"PropertyNumber",
+			executionTypeSpiraCustomProperty.getPropertyNumber());
+
+		SpiraCustomProperty.Value spiraCustomPropertyValue =
+			SpiraCustomProperty.createSpiraCustomPropertyValue(
+				executionTypeSpiraCustomProperty, "Automatic");
+
+		executionTypeJSONObject.put(
+			"IntegerValue", spiraCustomPropertyValue.getID());
+
+		customPropertiesJSONArray.put(executionTypeJSONObject);
+
+		requestJSONObject.put("CustomProperties", customPropertiesJSONArray);
 
 		try {
 			JSONObject responseJSONObject = SpiraRestAPIUtil.requestJSONObject(
@@ -397,6 +418,9 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 
 		cacheSpiraArtifact(SpiraTestCaseObject.class, this);
 	}
+
+	private static final String _CUSTOM_FIELD_EXECUTION_TYPE_KEY =
+		"Execution Type";
 
 	private static final String _CUSTOM_FIELD_FILE_PATH_KEY = "File Path";
 

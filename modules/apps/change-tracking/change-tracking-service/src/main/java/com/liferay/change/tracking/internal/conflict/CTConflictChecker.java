@@ -285,7 +285,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 				if (!productionPrimaryKeys.contains(modelClassPK)) {
 					conflictInfos.add(
-						new MissingFileConflictInfo(modelClassPK));
+						new DeletionModificationConflictInfo(modelClassPK));
 				}
 			});
 	}

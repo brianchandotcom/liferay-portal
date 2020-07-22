@@ -24,15 +24,16 @@ import java.util.ResourceBundle;
 /**
  * @author Lianne Louie
  */
-public class MissingFileConflictInfo implements ConflictInfo {
+public class DeletionModificationConflictInfo implements ConflictInfo {
 
-	public MissingFileConflictInfo(long modelClassPK) {
+	public DeletionModificationConflictInfo(long modelClassPK) {
 		_modelClassPK = modelClassPK;
 	}
 
 	@Override
 	public String getConflictDescription(ResourceBundle resourceBundle) {
-		return LanguageUtil.get(resourceBundle, "missing-file-conflict");
+		return LanguageUtil.get(
+			resourceBundle, "deletion-modification-conflict");
 	}
 
 	@Override
@@ -43,14 +44,13 @@ public class MissingFileConflictInfo implements ConflictInfo {
 	@Override
 	public String getResolutionDescription(ResourceBundle resourceBundle) {
 		return LanguageUtil.get(
-			resourceBundle,
-			"the-modification-cannot-be-completed-due-to-a-missing-file");
+			resourceBundle, "modification-conflicts-with-a-deletion");
 	}
 
 	@Override
 	public ResourceBundle getResourceBundle(Locale locale) {
 		return ResourceBundleUtil.getBundle(
-			locale, MissingFileConflictInfo.class);
+			locale, DeletionModificationConflictInfo.class);
 	}
 
 	@Override

@@ -1330,11 +1330,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		String portletId = portletElement.elementText("portlet-name");
 
 		if (Validator.isNotNull(servletContextName)) {
-			portletId = portletId.concat(
-				PortletConstants.WAR_SEPARATOR
-			).concat(
-				servletContextName
-			);
+			portletId = StringBundler.concat(
+				portletId, PortletConstants.WAR_SEPARATOR, servletContextName);
 		}
 
 		portletId = PortalUtil.getJsSafePortletId(portletId);
@@ -2003,11 +2000,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		String portletId = portletName;
 
 		if (Validator.isNotNull(servletContextName)) {
-			portletId = portletId.concat(
-				PortletConstants.WAR_SEPARATOR
-			).concat(
-				servletContextName
-			);
+			portletId = StringBundler.concat(
+				portletId, PortletConstants.WAR_SEPARATOR, servletContextName);
 		}
 
 		portletId = PortalUtil.getJsSafePortletId(portletId);
@@ -2677,11 +2671,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		String contextPath = servletContext.getContextPath();
 
-		spriteFileName = contextPath.concat(
-			SpriteProcessor.PATH
-		).concat(
-			spriteFileName
-		);
+		spriteFileName = StringBundler.concat(
+			contextPath, SpriteProcessor.PATH, spriteFileName);
 
 		portletApp.setSpriteImages(spriteFileName, spriteProperties);
 	}

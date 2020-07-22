@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.resiliency.spi.remote;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -184,11 +185,8 @@ public class RemoteSPIProxy implements SPI {
 
 	@Override
 	public String toString() {
-		return _spiProviderName.concat(
-			StringPool.POUND
-		).concat(
-			_spiConfiguration.toString()
-		);
+		return StringBundler.concat(
+			_spiProviderName, StringPool.POUND, _spiConfiguration.toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(RemoteSPIProxy.class);

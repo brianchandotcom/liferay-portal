@@ -58,6 +58,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.exportimport.portlet.data.handler.util.ExportImportGroupedModelUtil;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -847,11 +848,9 @@ public class FileEntryStagedModelDataHandler
 		for (DDMStructure ddmStructure : ddmStructures) {
 			Element structureFieldsElement =
 				(Element)fileEntryElement.selectSingleNode(
-					"structure-fields[@structureUuid='".concat(
-						ddmStructure.getUuid()
-					).concat(
-						"']"
-					));
+					StringBundler.concat(
+						"structure-fields[@structureUuid='",
+						ddmStructure.getUuid(), "']"));
 
 			if (structureFieldsElement == null) {
 				continue;

@@ -492,11 +492,8 @@ public class SingleLogoutProfileImpl
 		if (samlSloContext != null) {
 			String portalURL = portal.getPortalURL(httpServletRequest);
 
-			String redirect = portalURL.concat(
-				portal.getPathMain()
-			).concat(
-				"/portal/saml/slo_logout"
-			);
+			String redirect = StringBundler.concat(
+				portalURL, portal.getPathMain(), "/portal/saml/slo_logout");
 
 			httpServletResponse.sendRedirect(redirect);
 		}
@@ -963,11 +960,8 @@ public class SingleLogoutProfileImpl
 
 		String portalURL = portal.getPortalURL(httpServletRequest);
 
-		String redirect = portalURL.concat(
-			portal.getPathMain()
-		).concat(
-			"/portal/logout"
-		);
+		String redirect = StringBundler.concat(
+			portalURL, portal.getPathMain(), "/portal/logout");
 
 		httpServletResponse.sendRedirect(redirect);
 	}

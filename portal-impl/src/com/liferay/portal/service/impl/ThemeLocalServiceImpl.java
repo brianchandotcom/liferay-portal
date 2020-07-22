@@ -920,11 +920,8 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 
 		String contextPath = servletContext.getContextPath();
 
-		spriteFileName = contextPath.concat(
-			SpriteProcessor.PATH
-		).concat(
-			spriteFileName
-		);
+		spriteFileName = StringBundler.concat(
+			contextPath, SpriteProcessor.PATH, spriteFileName);
 
 		theme.setSpriteImages(spriteFileName, spriteProperties);
 	}

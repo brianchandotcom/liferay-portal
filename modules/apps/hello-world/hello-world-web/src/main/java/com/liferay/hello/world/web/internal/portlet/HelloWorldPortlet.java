@@ -15,6 +15,7 @@
 package com.liferay.hello.world.web.internal.portlet;
 
 import com.liferay.hello.world.web.internal.constants.HelloWorldPortletKeys;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -81,11 +82,7 @@ public class HelloWorldPortlet extends MVCPortlet {
 		}
 
 		printWriter.print(
-			"Welcome to ".concat(
-				releaseInfo
-			).concat(
-				"."
-			));
+			StringBundler.concat("Welcome to ", releaseInfo, "."));
 	}
 
 	@Reference(

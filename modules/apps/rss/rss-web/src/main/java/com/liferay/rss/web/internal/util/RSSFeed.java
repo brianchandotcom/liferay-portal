@@ -14,6 +14,7 @@
 
 package com.liferay.rss.web.internal.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
@@ -66,13 +67,9 @@ public class RSSFeed {
 		if (Validator.isNull(syndFeedLink) ||
 			!HttpUtil.hasDomain(syndFeedLink)) {
 
-			baseURL = HttpUtil.getProtocol(
-				_url
-			).concat(
-				Http.PROTOCOL_DELIMITER
-			).concat(
-				HttpUtil.getDomain(_url)
-			);
+			baseURL = StringBundler.concat(
+				HttpUtil.getProtocol(_url), Http.PROTOCOL_DELIMITER,
+				HttpUtil.getDomain(_url));
 
 			if (Validator.isNotNull(syndFeedLink)) {
 				syndFeedLink = baseURL.concat(syndFeedLink);
@@ -82,13 +79,9 @@ public class RSSFeed {
 			}
 		}
 		else {
-			baseURL = HttpUtil.getProtocol(
-				syndFeedLink
-			).concat(
-				Http.PROTOCOL_DELIMITER
-			).concat(
-				HttpUtil.getDomain(syndFeedLink)
-			);
+			baseURL = StringBundler.concat(
+				HttpUtil.getProtocol(syndFeedLink), Http.PROTOCOL_DELIMITER,
+				HttpUtil.getDomain(syndFeedLink));
 		}
 
 		SyndImage syndImage = syndFeed.getImage();

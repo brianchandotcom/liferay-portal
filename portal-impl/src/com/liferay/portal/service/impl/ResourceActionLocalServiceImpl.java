@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -336,11 +337,7 @@ public class ResourceActionLocalServiceImpl
 	}
 
 	protected String encodeKey(String name, String actionId) {
-		return name.concat(
-			StringPool.POUND
-		).concat(
-			actionId
-		);
+		return StringBundler.concat(name, StringPool.POUND, actionId);
 	}
 
 	private static final Map<String, ResourceAction> _resourceActions =

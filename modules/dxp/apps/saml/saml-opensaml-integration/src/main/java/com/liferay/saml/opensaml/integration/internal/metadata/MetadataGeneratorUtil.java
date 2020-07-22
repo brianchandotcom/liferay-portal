@@ -14,6 +14,7 @@
 
 package com.liferay.saml.opensaml.integration.internal.metadata;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
@@ -133,21 +134,13 @@ public class MetadataGeneratorUtil {
 		SingleSignOnService singleSignOnService =
 			OpenSamlUtil.buildSingleSignOnService(
 				SAMLConstants.SAML2_REDIRECT_BINDING_URI,
-				portalURL.concat(
-					pathMain
-				).concat(
-					"/portal/saml/sso"
-				));
+				StringBundler.concat(portalURL, pathMain, "/portal/saml/sso"));
 
 		singleSignOnServices.add(singleSignOnService);
 
 		singleSignOnService = OpenSamlUtil.buildSingleSignOnService(
 			SAMLConstants.SAML2_POST_BINDING_URI,
-			portalURL.concat(
-				pathMain
-			).concat(
-				"/portal/saml/sso"
-			));
+			StringBundler.concat(portalURL, pathMain, "/portal/saml/sso"));
 
 		singleSignOnServices.add(singleSignOnService);
 
@@ -157,22 +150,14 @@ public class MetadataGeneratorUtil {
 		SingleLogoutService postSingleLogoutService =
 			OpenSamlUtil.buildSingleLogoutService(
 				SAMLConstants.SAML2_POST_BINDING_URI,
-				portalURL.concat(
-					pathMain
-				).concat(
-					"/portal/saml/slo"
-				));
+				StringBundler.concat(portalURL, pathMain, "/portal/saml/slo"));
 
 		singleLogoutServices.add(postSingleLogoutService);
 
 		SingleLogoutService redirectSingleLogoutService =
 			OpenSamlUtil.buildSingleLogoutService(
 				SAMLConstants.SAML2_REDIRECT_BINDING_URI,
-				portalURL.concat(
-					pathMain
-				).concat(
-					"/portal/saml/slo"
-				));
+				StringBundler.concat(portalURL, pathMain, "/portal/saml/slo"));
 
 		singleLogoutServices.add(redirectSingleLogoutService);
 
@@ -236,11 +221,7 @@ public class MetadataGeneratorUtil {
 		AssertionConsumerService assertionConsumerService =
 			OpenSamlUtil.buildAssertionConsumerService(
 				SAMLConstants.SAML2_POST_BINDING_URI, 1, true,
-				portalURL.concat(
-					pathMain
-				).concat(
-					"/portal/saml/acs"
-				));
+				StringBundler.concat(portalURL, pathMain, "/portal/saml/acs"));
 
 		assertionConsumerServices.add(assertionConsumerService);
 
@@ -263,33 +244,22 @@ public class MetadataGeneratorUtil {
 		SingleLogoutService postSingleLogoutService =
 			OpenSamlUtil.buildSingleLogoutService(
 				SAMLConstants.SAML2_POST_BINDING_URI,
-				portalURL.concat(
-					pathMain
-				).concat(
-					"/portal/saml/slo"
-				));
+				StringBundler.concat(portalURL, pathMain, "/portal/saml/slo"));
 
 		singleLogoutServices.add(postSingleLogoutService);
 
 		SingleLogoutService redirectSingleLogoutService =
 			OpenSamlUtil.buildSingleLogoutService(
 				SAMLConstants.SAML2_REDIRECT_BINDING_URI,
-				portalURL.concat(
-					pathMain
-				).concat(
-					"/portal/saml/slo"
-				));
+				StringBundler.concat(portalURL, pathMain, "/portal/saml/slo"));
 
 		singleLogoutServices.add(redirectSingleLogoutService);
 
 		SingleLogoutService soapSingleLogoutService =
 			OpenSamlUtil.buildSingleLogoutService(
 				SAMLConstants.SAML2_SOAP11_BINDING_URI,
-				portalURL.concat(
-					pathMain
-				).concat(
-					"/portal/saml/slo_soap"
-				));
+				StringBundler.concat(
+					portalURL, pathMain, "/portal/saml/slo_soap"));
 
 		singleLogoutServices.add(soapSingleLogoutService);
 

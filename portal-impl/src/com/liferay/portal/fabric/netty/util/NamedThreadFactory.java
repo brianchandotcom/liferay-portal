@@ -14,6 +14,7 @@
 
 package com.liferay.portal.fabric.netty.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
 import java.util.concurrent.ThreadFactory;
@@ -32,11 +33,9 @@ public class NamedThreadFactory implements ThreadFactory {
 	public Thread newThread(Runnable runnable) {
 		Thread thread = new Thread(
 			runnable,
-			_name.concat(
-				StringPool.MINUS
-			).concat(
-				String.valueOf(_counter.incrementAndGet())
-			));
+			StringBundler.concat(
+				_name, StringPool.MINUS,
+				String.valueOf(_counter.incrementAndGet())));
 
 		thread.setDaemon(true);
 

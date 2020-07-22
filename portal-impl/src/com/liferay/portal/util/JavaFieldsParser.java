@@ -14,6 +14,7 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -103,12 +104,7 @@ public class JavaFieldsParser {
 				break;
 			}
 
-			replaceFrom.add(
-				"${".concat(
-					javaSnippet
-				).concat(
-					"}"
-				));
+			replaceFrom.add(StringBundler.concat("${", javaSnippet, "}"));
 			replaceWith.add(fieldValue);
 
 			x = s.indexOf("${", y);

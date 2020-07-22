@@ -1805,11 +1805,7 @@ public class ClusterSchedulerEngineTest {
 
 		ObjectValuePair<SchedulerResponse, TriggerState> objectValuePair =
 			_memoryClusteredJobs.get(
-				groupName.concat(
-					StringPool.PERIOD
-				).concat(
-					jobName
-				));
+				StringBundler.concat(groupName, StringPool.PERIOD, jobName));
 
 		if (objectValuePair == null) {
 			return null;

@@ -995,11 +995,8 @@ public class IMAPAccessor {
 
 				getParts(
 					userId, bodyPlainSB, bodyHtmlSB,
-					contentPath.concat(
-						StringPool.PERIOD
-					).concat(
-						String.valueOf(i)
-					),
+					StringBundler.concat(
+						contentPath, StringPool.PERIOD, String.valueOf(i)),
 					curPart, mailFiles);
 			}
 		}
@@ -1018,11 +1015,7 @@ public class IMAPAccessor {
 		}
 		else {
 			MailFile mailFile = new MailFile(
-				contentPath.concat(
-					StringPool.PERIOD
-				).concat(
-					"-1"
-				),
+				StringBundler.concat(contentPath, StringPool.PERIOD, "-1"),
 				fileName, part.getSize());
 
 			mailFiles.add(mailFile);

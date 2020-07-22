@@ -15,6 +15,7 @@
 package com.liferay.social.kernel.model;
 
 import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -94,11 +95,8 @@ public class SocialActivityCounterDefinition implements Serializable {
 	}
 
 	public String getKey() {
-		return _name.concat(
-			StringPool.SLASH
-		).concat(
-			String.valueOf(_ownerType)
-		);
+		return StringBundler.concat(
+			_name, StringPool.SLASH, String.valueOf(_ownerType));
 	}
 
 	public int getLimitPeriod() {

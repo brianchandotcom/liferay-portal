@@ -121,11 +121,8 @@ public abstract class BaseModelHintsImpl implements ModelHints {
 
 	@Override
 	public String buildCustomValidatorName(String validatorName) {
-		return validatorName.concat(
-			StringPool.UNDERLINE
-		).concat(
-			StringUtil.randomId()
-		);
+		return StringBundler.concat(
+			validatorName, StringPool.UNDERLINE, StringUtil.randomId());
 	}
 
 	@Override

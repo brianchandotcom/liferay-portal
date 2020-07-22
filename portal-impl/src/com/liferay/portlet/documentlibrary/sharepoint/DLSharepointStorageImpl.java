@@ -21,6 +21,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -72,11 +73,8 @@ public class DLSharepointStorageImpl extends BaseSharepointStorageImpl {
 			groupId, parentFolderId);
 
 		for (FileEntry fileEntry : fileEntries) {
-			String documentPath = parentFolderPath.concat(
-				StringPool.SLASH
-			).concat(
-				fileEntry.getTitle()
-			);
+			String documentPath = StringBundler.concat(
+				parentFolderPath, StringPool.SLASH, fileEntry.getTitle());
 
 			addDocumentElement(
 				element, documentPath, fileEntry.getCreateDate(),
@@ -500,11 +498,8 @@ public class DLSharepointStorageImpl extends BaseSharepointStorageImpl {
 	protected Tree getFileEntryTree(
 		FileEntry fileEntry, String parentFolderPath) {
 
-		String documentPath = parentFolderPath.concat(
-			StringPool.SLASH
-		).concat(
-			fileEntry.getTitle()
-		);
+		String documentPath = StringBundler.concat(
+			parentFolderPath, StringPool.SLASH, fileEntry.getTitle());
 
 		return getDocumentTree(
 			documentPath, fileEntry.getCreateDate(),
@@ -513,11 +508,8 @@ public class DLSharepointStorageImpl extends BaseSharepointStorageImpl {
 	}
 
 	protected Tree getFolderTree(Folder folder, String parentFolderPath) {
-		String folderPath = parentFolderPath.concat(
-			StringPool.SLASH
-		).concat(
-			folder.getName()
-		);
+		String folderPath = StringBundler.concat(
+			parentFolderPath, StringPool.SLASH, folder.getName());
 
 		return getFolderTree(
 			folderPath, folder.getCreateDate(), folder.getModifiedDate(),

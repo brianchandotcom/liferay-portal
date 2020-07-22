@@ -24,6 +24,7 @@ import com.liferay.message.boards.internal.messaging.MailingListRequest;
 import com.liferay.message.boards.model.MBMailingList;
 import com.liferay.message.boards.service.base.MBMailingListLocalServiceBaseImpl;
 import com.liferay.petra.lang.SafeClosable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.json.jabsorb.serializer.LiferayJSONDeserializationWhitelist;
@@ -231,11 +232,9 @@ public class MBMailingListLocalServiceImpl
 	}
 
 	protected String getSchedulerGroupName(MBMailingList mailingList) {
-		return DestinationNames.MESSAGE_BOARDS_MAILING_LIST.concat(
-			StringPool.SLASH
-		).concat(
-			String.valueOf(mailingList.getMailingListId())
-		);
+		return StringBundler.concat(
+			DestinationNames.MESSAGE_BOARDS_MAILING_LIST, StringPool.SLASH,
+			String.valueOf(mailingList.getMailingListId()));
 	}
 
 	protected void scheduleMailingList(MBMailingList mailingList)

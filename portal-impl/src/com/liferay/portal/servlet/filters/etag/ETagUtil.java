@@ -14,6 +14,7 @@
 
 package com.liferay.portal.servlet.filters.etag;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -40,11 +41,9 @@ public class ETagUtil {
 		int hashCode = _hashCode(
 			byteBuffer.array(), byteBuffer.position(), byteBuffer.limit());
 
-		String eTag = StringPool.QUOTE.concat(
-			StringUtil.toHexString(hashCode)
-		).concat(
-			StringPool.QUOTE
-		);
+		String eTag = StringBundler.concat(
+			StringPool.QUOTE, StringUtil.toHexString(hashCode),
+			StringPool.QUOTE);
 
 		httpServletResponse.setHeader(HttpHeaders.ETAG, eTag);
 

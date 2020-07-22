@@ -14,6 +14,7 @@
 
 package com.liferay.portal.template.soy.internal.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -136,13 +137,9 @@ public class SoyTemplateResourcesCollectorUtil {
 	}
 
 	private static String _getTemplateId(long bundleId, URL url) {
-		return String.valueOf(
-			bundleId
-		).concat(
-			TemplateConstants.BUNDLE_SEPARATOR
-		).concat(
-			url.getPath()
-		);
+		return StringBundler.concat(
+			String.valueOf(bundleId), TemplateConstants.BUNDLE_SEPARATOR,
+			url.getPath());
 	}
 
 	private static TemplateResource _getTemplateResource(

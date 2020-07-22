@@ -57,11 +57,9 @@ public class PortalClassPathUtil {
 
 		String classpath = _buildClassPath(classes);
 
-		classpath = classpath.concat(
-			File.pathSeparator
-		).concat(
-			_portalProcessConfig.getBootstrapClassPath()
-		);
+		classpath = StringBundler.concat(
+			classpath, File.pathSeparator,
+			_portalProcessConfig.getBootstrapClassPath());
 
 		builder.setBootstrapClassPath(classpath);
 

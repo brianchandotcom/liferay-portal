@@ -51,12 +51,8 @@ public class ReferenceEntry {
 
 	@Override
 	public String toString() {
-		return _object.toString(
-		).concat(
-			StringPool.POUND
-		).concat(
-			_field.toString()
-		);
+		return StringBundler.concat(
+			_object.toString(), StringPool.POUND, _field.toString());
 	}
 
 	private final Field _field;

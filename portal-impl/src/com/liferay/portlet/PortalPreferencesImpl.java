@@ -15,6 +15,7 @@
 package com.liferay.portlet;
 
 import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -482,11 +483,7 @@ public class PortalPreferencesImpl
 			return key;
 		}
 
-		return namespace.concat(
-			StringPool.POUND
-		).concat(
-			key
-		);
+		return StringBundler.concat(namespace, StringPool.POUND, key);
 	}
 
 	private com.liferay.portal.kernel.model.PortalPreferences _reload(

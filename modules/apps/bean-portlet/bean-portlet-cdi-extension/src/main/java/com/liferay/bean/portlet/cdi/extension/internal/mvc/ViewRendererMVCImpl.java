@@ -103,11 +103,8 @@ public class ViewRendererMVCImpl implements ViewRenderer {
 				String defaultViewExtension = (String)configuration.getProperty(
 					ConfigurationImpl.DEFAULT_VIEW_EXTENSION);
 
-				viewName = viewName.concat(
-					"."
-				).concat(
-					defaultViewExtension
-				);
+				viewName = StringBundler.concat(
+					viewName, ".", defaultViewExtension);
 			}
 
 			ViewEngine supportingViewEngine = null;

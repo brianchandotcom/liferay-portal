@@ -1285,11 +1285,8 @@ public class IntrabandProxyUtilTest {
 
 			String name = proxyMethod.getName();
 
-			proxyMethodSignatures[i] = name.concat(
-				StringPool.DASH
-			).concat(
-				Type.getMethodDescriptor(proxyMethod)
-			);
+			proxyMethodSignatures[i] = StringBundler.concat(
+				name, StringPool.DASH, Type.getMethodDescriptor(proxyMethod));
 		}
 
 		return proxyMethodSignatures;

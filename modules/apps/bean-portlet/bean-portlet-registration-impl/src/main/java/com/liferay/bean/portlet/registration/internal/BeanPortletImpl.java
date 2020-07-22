@@ -641,11 +641,9 @@ public class BeanPortletImpl implements BeanPortlet {
 		for (Map.Entry<Integer, String> entry : beanApp.getPortletListeners()) {
 			String listenerClassName = entry.getValue();
 
-			String listener = listenerClassName.concat(
-				StringPool.SEMICOLON
-			).concat(
-				String.valueOf(entry.getKey())
-			);
+			String listener = StringBundler.concat(
+				listenerClassName, StringPool.SEMICOLON,
+				String.valueOf(entry.getKey()));
 
 			portletListeners.add(listener);
 		}
@@ -766,11 +764,7 @@ public class BeanPortletImpl implements BeanPortlet {
 			return name;
 		}
 
-		return name.concat(
-			StringPool.SEMICOLON
-		).concat(
-			value
-		);
+		return StringBundler.concat(name, StringPool.SEMICOLON, value);
 	}
 
 	private static final String _ENGLISH_EN = LocaleUtil.ENGLISH.getLanguage();

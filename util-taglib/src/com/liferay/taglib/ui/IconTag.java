@@ -248,11 +248,9 @@ public class IconTag extends IncludeTag {
 		}
 
 		if (Validator.isNotNull(id) && Validator.isNotNull(message)) {
-			id = id.concat(
-				StringPool.UNDERLINE
-			).concat(
-				FriendlyURLNormalizerUtil.normalize(message)
-			);
+			id = StringBundler.concat(
+				id, StringPool.UNDERLINE,
+				FriendlyURLNormalizerUtil.normalize(message));
 
 			PortletResponse portletResponse =
 				(PortletResponse)httpServletRequest.getAttribute(

@@ -25,6 +25,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.web.internal.util.JournalResourceBundleLoader;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -98,11 +99,10 @@ public class JournalArticleActivityInterpreter
 				String groupFriendlyURL = _portal.getGroupFriendlyURL(
 					layout.getLayoutSet(), serviceContext.getThemeDisplay());
 
-				return groupFriendlyURL.concat(
-					JournalArticleConstants.CANONICAL_URL_SEPARATOR
-				).concat(
-					article.getUrlTitle()
-				);
+				return StringBundler.concat(
+					groupFriendlyURL,
+					JournalArticleConstants.CANONICAL_URL_SEPARATOR,
+					article.getUrlTitle());
 			}
 
 			return null;

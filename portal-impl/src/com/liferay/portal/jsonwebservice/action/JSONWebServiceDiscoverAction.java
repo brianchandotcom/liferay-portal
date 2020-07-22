@@ -449,11 +449,8 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 
 		Method method = jsonWebServiceActionMapping.getRealActionMethod();
 
-		return className.concat(
-			StringPool.POUND
-		).concat(
-			method.getName()
-		);
+		return StringBundler.concat(
+			className, StringPool.POUND, method.getName());
 	}
 
 	private final String _basePath;

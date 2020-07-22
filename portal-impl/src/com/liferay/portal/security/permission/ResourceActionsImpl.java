@@ -128,11 +128,7 @@ public class ResourceActionsImpl implements ResourceActions {
 
 		if (!resourceActions.contains(actionId)) {
 			throw new NoSuchResourceActionException(
-				name.concat(
-					StringPool.POUND
-				).concat(
-					actionId
-				));
+				StringBundler.concat(name, StringPool.POUND, actionId));
 		}
 	}
 
@@ -970,11 +966,9 @@ public class ResourceActionsImpl implements ResourceActions {
 		String servletContextName, String portletName) {
 
 		if (servletContextName != null) {
-			portletName = portletName.concat(
-				PortletConstants.WAR_SEPARATOR
-			).concat(
-				servletContextName
-			);
+			portletName = StringBundler.concat(
+				portletName, PortletConstants.WAR_SEPARATOR,
+				servletContextName);
 		}
 
 		return JS.getSafeName(portletName);

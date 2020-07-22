@@ -14,6 +14,7 @@
 
 package com.liferay.portal.layoutconfiguration.util.velocity;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.CustomizedPages;
 import com.liferay.portal.kernel.model.Layout;
@@ -127,11 +128,8 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 			StringPool.BLANK, "labelOn", "customizable");
 		inputTag.setLabel(StringPool.BLANK);
 		inputTag.setName(
-			"TypeSettingsProperties--".concat(
-				customizableKey
-			).concat(
-				"--"
-			));
+			StringBundler.concat(
+				"TypeSettingsProperties--", customizableKey, "--"));
 		inputTag.setPageContext(_pageContext);
 		inputTag.setType("toggle-switch");
 		inputTag.setValue(customizable);

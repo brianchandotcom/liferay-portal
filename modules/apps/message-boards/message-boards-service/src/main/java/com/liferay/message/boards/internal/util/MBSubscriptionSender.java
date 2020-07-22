@@ -18,6 +18,7 @@ import com.liferay.mail.kernel.model.Account;
 import com.liferay.mail.kernel.model.SMTPAccount;
 import com.liferay.message.boards.model.MBMailingList;
 import com.liferay.message.boards.service.MBMailingListLocalServiceUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -121,11 +122,7 @@ public class MBSubscriptionSender
 		subject = GetterUtil.getString(subject);
 		mailId = GetterUtil.getString(mailId);
 
-		return subject.concat(
-			StringPool.SPACE
-		).concat(
-			mailId
-		);
+		return StringBundler.concat(subject, StringPool.SPACE, mailId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

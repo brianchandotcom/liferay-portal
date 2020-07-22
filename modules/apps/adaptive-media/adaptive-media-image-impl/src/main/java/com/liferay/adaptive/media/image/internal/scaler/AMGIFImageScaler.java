@@ -24,6 +24,7 @@ import com.liferay.adaptive.media.image.scaler.AMImageScaler;
 import com.liferay.petra.process.CollectorOutputProcessor;
 import com.liferay.petra.process.ProcessException;
 import com.liferay.petra.process.ProcessUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -143,11 +144,7 @@ public class AMGIFImageScaler implements AMImageScaler {
 			maxWidthString = String.valueOf(maxWidth);
 		}
 
-		return maxWidthString.concat(
-			"x"
-		).concat(
-			maxHeightString
-		);
+		return StringBundler.concat(maxWidthString, "x", maxHeightString);
 	}
 
 	private volatile AMImageConfiguration _amImageConfiguration;

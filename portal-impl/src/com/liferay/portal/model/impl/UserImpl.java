@@ -339,11 +339,9 @@ public class UserImpl extends UserBaseImpl {
 
 			return PortalUtil.addPreservedParameters(
 				themeDisplay,
-				portalURL.concat(
-					PortalUtil.getPathContext()
-				).concat(
-					profileFriendlyURL
-				));
+				StringBundler.concat(
+					portalURL, PortalUtil.getPathContext(),
+					profileFriendlyURL));
 		}
 
 		Group group = getGroup();

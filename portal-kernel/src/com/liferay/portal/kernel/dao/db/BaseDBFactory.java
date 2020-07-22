@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.dao.db;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -30,11 +31,8 @@ public abstract class BaseDBFactory implements DBFactory {
 		String majorVersion = StringUtil.toHexString(dbMajorVersion);
 		String minorVersion = StringUtil.toHexString(dbMinorVersion);
 
-		String version = majorVersion.concat(
-			StringPool.POUND
-		).concat(
-			minorVersion
-		);
+		String version = StringBundler.concat(
+			majorVersion, StringPool.POUND, minorVersion);
 
 		DB db = _dbs.get(version);
 

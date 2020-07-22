@@ -20,6 +20,7 @@ import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReference
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -136,11 +137,8 @@ public class ImageEditorCapabilityTracker {
 							resourceURL.getFile());
 
 						requiredModules.add(
-							moduleName.concat(
-								StringPool.SLASH
-							).concat(
-								fileName
-							));
+							StringBundler.concat(
+								moduleName, StringPool.SLASH, fileName));
 					}
 				}
 				catch (Exception exception) {

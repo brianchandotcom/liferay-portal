@@ -41,6 +41,7 @@ import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.exportimport.kernel.xstream.XStreamAlias;
 import com.liferay.exportimport.kernel.xstream.XStreamConverter;
 import com.liferay.exportimport.kernel.xstream.XStreamType;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.Conjunction;
 import com.liferay.portal.kernel.dao.orm.Criterion;
@@ -1560,11 +1561,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	@Override
 	public boolean isModelCounted(String className, Serializable classPK) {
-		String modelCountedPrimaryKey = className.concat(
-			StringPool.POUND
-		).concat(
-			String.valueOf(classPK)
-		);
+		String modelCountedPrimaryKey = StringBundler.concat(
+			className, StringPool.POUND, String.valueOf(classPK));
 
 		return addPrimaryKey(String.class, modelCountedPrimaryKey);
 	}
@@ -2199,11 +2197,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	protected String getPrimaryKeyString(
 		String className, Serializable primaryKey) {
 
-		return className.concat(
-			StringPool.POUND
-		).concat(
-			String.valueOf(primaryKey)
-		);
+		return StringBundler.concat(
+			className, StringPool.POUND, String.valueOf(primaryKey));
 	}
 
 	protected List<Element> getReferenceDataElements(
@@ -2331,11 +2326,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	protected String getReferenceKey(String className, String classPK) {
-		return className.concat(
-			StringPool.POUND
-		).concat(
-			classPK
-		);
+		return StringBundler.concat(className, StringPool.POUND, classPK);
 	}
 
 	protected long getUserId(AuditedModel auditedModel) {

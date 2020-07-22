@@ -15,6 +15,7 @@
 package com.liferay.alloy.mvc;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -82,11 +83,8 @@ public abstract class AlloyFriendlyURLMapper extends DefaultFriendlyURLMapper {
 
 		// Add mapping
 
-		return StringPool.SLASH.concat(
-			getMapping()
-		).concat(
-			friendlyURLPath
-		);
+		return StringBundler.concat(
+			StringPool.SLASH, getMapping(), friendlyURLPath);
 	}
 
 	@Override

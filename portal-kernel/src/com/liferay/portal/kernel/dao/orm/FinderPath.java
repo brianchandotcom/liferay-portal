@@ -152,11 +152,8 @@ public class FinderPath {
 	public Serializable encodeLocalCacheKey(String encodedArguments) {
 		return _getCacheKey(
 			new String[] {
-				_cacheName.concat(
-					StringPool.PERIOD
-				).concat(
-					_cacheKeyPrefix
-				),
+				StringBundler.concat(
+					_cacheName, StringPool.PERIOD, _cacheKeyPrefix),
 				encodedArguments
 			});
 	}

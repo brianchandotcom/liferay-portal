@@ -19,6 +19,7 @@ import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.mobile.device.rules.kernel.MDRRuleGroupInstance;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -455,11 +456,9 @@ public class ThemeDisplay
 
 			Group group = layout.getGroup();
 
-			return VirtualLayoutConstants.CANONICAL_URL_SEPARATOR.concat(
-				group.getFriendlyURL()
-			).concat(
-				_getFriendlyURL(layout)
-			);
+			return StringBundler.concat(
+				VirtualLayoutConstants.CANONICAL_URL_SEPARATOR,
+				group.getFriendlyURL(), _getFriendlyURL(layout));
 		}
 
 		return _getFriendlyURL(layout);

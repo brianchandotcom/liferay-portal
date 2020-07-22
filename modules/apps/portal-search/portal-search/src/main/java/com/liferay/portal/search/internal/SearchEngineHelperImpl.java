@@ -185,20 +185,14 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 
 	@Override
 	public String getSearchReaderDestinationName(String searchEngineId) {
-		return DestinationNames.SEARCH_READER.concat(
-			StringPool.SLASH
-		).concat(
-			searchEngineId
-		);
+		return StringBundler.concat(
+			DestinationNames.SEARCH_READER, StringPool.SLASH, searchEngineId);
 	}
 
 	@Override
 	public String getSearchWriterDestinationName(String searchEngineId) {
-		return DestinationNames.SEARCH_WRITER.concat(
-			StringPool.SLASH
-		).concat(
-			searchEngineId
-		);
+		return StringBundler.concat(
+			DestinationNames.SEARCH_WRITER, StringPool.SLASH, searchEngineId);
 	}
 
 	@Override

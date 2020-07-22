@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.web.internal.request.prepocessor;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -35,11 +36,9 @@ import org.osgi.service.component.annotations.Reference;
 public class WorkflowPreprocessorHelper {
 
 	public String getMVCPathAttributeName(String namespace) {
-		return namespace.concat(
-			StringPool.PERIOD
-		).concat(
-			MVCRenderConstants.MVC_PATH_REQUEST_ATTRIBUTE_NAME
-		);
+		return StringBundler.concat(
+			namespace, StringPool.PERIOD,
+			MVCRenderConstants.MVC_PATH_REQUEST_ATTRIBUTE_NAME);
 	}
 
 	public String getPath(

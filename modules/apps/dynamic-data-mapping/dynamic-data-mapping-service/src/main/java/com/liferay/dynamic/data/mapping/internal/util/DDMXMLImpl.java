@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
 import com.liferay.dynamic.data.mapping.util.DDMXML;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -263,11 +264,7 @@ public class DDMXMLImpl implements DDMXML {
 		name = HtmlUtil.escapeXPathAttribute(name);
 
 		XPath xPathSelector = _saxReader.createXPath(
-			"//dynamic-element[@name=".concat(
-				name
-			).concat(
-				"]"
-			));
+			StringBundler.concat("//dynamic-element[@name=", name, "]"));
 
 		return xPathSelector.selectNodes(document);
 	}

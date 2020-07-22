@@ -104,13 +104,8 @@ public class ExportImportPathUtil {
 					" because it is not an XML file");
 		}
 
-		return path.substring(
-			0, pos
-		).concat(
-			"-expando"
-		).concat(
-			path.substring(pos)
-		);
+		return StringBundler.concat(
+			path.substring(0, pos), "-expando", path.substring(pos));
 	}
 
 	public static String getModelPath(

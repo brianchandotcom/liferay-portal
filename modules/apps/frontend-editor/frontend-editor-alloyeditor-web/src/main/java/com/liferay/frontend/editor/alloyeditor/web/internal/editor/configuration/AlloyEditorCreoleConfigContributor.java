@@ -115,11 +115,7 @@ public class AlloyEditorCreoleConfigContributor
 
 		jsonObject.put(
 			"removePlugins",
-			removePlugins.concat(
-				","
-			).concat(
-				sb.toString()
-			)
+			StringBundler.concat(removePlugins, ",", sb.toString())
 		).put(
 			"toolbars", getToolbarsJSONObject(themeDisplay.getLocale())
 		);

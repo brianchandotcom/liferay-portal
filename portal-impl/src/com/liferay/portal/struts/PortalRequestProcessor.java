@@ -222,22 +222,18 @@ public class PortalRequestProcessor {
 		}
 
 		if ((portlet == null) || !portlet.isActive()) {
-			return layoutFriendlyURL.concat(
-				StringPool.QUESTION
-			).concat(
-				httpServletRequest.getQueryString()
-			);
+			return StringBundler.concat(
+				layoutFriendlyURL, StringPool.QUESTION,
+				httpServletRequest.getQueryString());
 		}
 
 		FriendlyURLMapper friendlyURLMapper =
 			portlet.getFriendlyURLMapperInstance();
 
 		if (friendlyURLMapper == null) {
-			return layoutFriendlyURL.concat(
-				StringPool.QUESTION
-			).concat(
-				httpServletRequest.getQueryString()
-			);
+			return StringBundler.concat(
+				layoutFriendlyURL, StringPool.QUESTION,
+				httpServletRequest.getQueryString());
 		}
 
 		String namespace = PortalUtil.getPortletNamespace(portletId);
@@ -264,11 +260,9 @@ public class PortalRequestProcessor {
 			return layoutFriendlyURL.concat(portletFriendlyURL);
 		}
 
-		return layoutFriendlyURL.concat(
-			StringPool.QUESTION
-		).concat(
-			httpServletRequest.getQueryString()
-		);
+		return StringBundler.concat(
+			layoutFriendlyURL, StringPool.QUESTION,
+			httpServletRequest.getQueryString());
 	}
 
 	private String _getLastPath(HttpServletRequest httpServletRequest) {
@@ -499,11 +493,8 @@ public class PortalRequestProcessor {
 				fullPathWithoutQueryString = path;
 
 				if (Validator.isNotNull(queryString)) {
-					fullPath = path.concat(
-						StringPool.QUESTION
-					).concat(
-						queryString
-					);
+					fullPath = StringBundler.concat(
+						path, StringPool.QUESTION, queryString);
 				}
 				else {
 					fullPath = path;

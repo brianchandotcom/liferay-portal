@@ -17,6 +17,7 @@ package com.liferay.mail.reader.internal.imap;
 import com.liferay.mail.reader.configuration.MailGroupServiceConfiguration;
 import com.liferay.mail.reader.exception.MailException;
 import com.liferay.mail.reader.model.Account;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -101,11 +102,8 @@ public class IMAPConnection {
 		Store store = null;
 
 		try {
-			String storeKey = _incomingHostName.concat(
-				_outgoingHostName
-			).concat(
-				_login
-			);
+			String storeKey = StringBundler.concat(
+				_incomingHostName, _outgoingHostName, _login);
 
 			if (useOldStores) {
 				store = _allStores.get(storeKey);

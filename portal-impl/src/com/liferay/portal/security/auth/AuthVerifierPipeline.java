@@ -60,11 +60,8 @@ public class AuthVerifierPipeline {
 		String simpleClassName = StringUtil.extractLast(
 			className, StringPool.PERIOD);
 
-		return PropsKeys.AUTH_VERIFIER.concat(
-			simpleClassName
-		).concat(
-			StringPool.PERIOD
-		);
+		return StringBundler.concat(
+			PropsKeys.AUTH_VERIFIER, simpleClassName, StringPool.PERIOD);
 	}
 
 	public static AuthVerifierResult verifyRequest(

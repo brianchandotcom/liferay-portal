@@ -90,11 +90,7 @@ public class AlloyEditorBBCodeConfigContributor
 
 		jsonObject.put(
 			"removePlugins",
-			removePlugins.concat(
-				","
-			).concat(
-				sb.toString()
-			)
+			StringBundler.concat(removePlugins, ",", sb.toString())
 		).put(
 			"smiley_images",
 			toJSONArray(BBCodeTranslatorUtil.getEmoticonFiles())

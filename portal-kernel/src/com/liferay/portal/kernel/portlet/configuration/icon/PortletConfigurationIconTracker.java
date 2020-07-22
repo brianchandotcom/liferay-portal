@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.portlet.configuration.icon;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.configuration.icon.locator.PortletConfigurationIconLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -64,11 +65,7 @@ public class PortletConfigurationIconTracker {
 	}
 
 	protected static String getKey(String portletId, String path) {
-		return portletId.concat(
-			StringPool.COLON
-		).concat(
-			path
-		);
+		return StringBundler.concat(portletId, StringPool.COLON, path);
 	}
 
 	protected static Set<String> getPaths(

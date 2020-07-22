@@ -21,6 +21,7 @@ import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.web.internal.security.permission.resource.DLFileEntryPermission;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.flash.FlashMagicBytesUtil;
@@ -214,13 +215,9 @@ public class GetFileActionHelper {
 				id, inputStream, sourceExtension, targetExtension);
 
 			if (convertedFile != null) {
-				fileName = FileUtil.stripExtension(
-					fileName
-				).concat(
-					StringPool.PERIOD
-				).concat(
-					targetExtension
-				);
+				fileName = StringBundler.concat(
+					FileUtil.stripExtension(fileName), StringPool.PERIOD,
+					targetExtension);
 				inputStream = new FileInputStream(convertedFile);
 				contentLength = convertedFile.length();
 				contentType = MimeTypesUtil.getContentType(fileName);

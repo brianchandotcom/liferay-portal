@@ -569,26 +569,17 @@ public class HtmlImpl implements Html {
 		if (hasQuote && hasApostrophe) {
 			String[] parts = xPathAttribute.split(StringPool.APOSTROPHE);
 
-			return "concat('".concat(
-				StringUtil.merge(parts, "', \"'\", '")
-			).concat(
-				"')"
-			);
+			return StringBundler.concat(
+				"concat('", StringUtil.merge(parts, "', \"'\", '"), "')");
 		}
 
 		if (hasQuote) {
-			return StringPool.APOSTROPHE.concat(
-				xPathAttribute
-			).concat(
-				StringPool.APOSTROPHE
-			);
+			return StringBundler.concat(
+				StringPool.APOSTROPHE, xPathAttribute, StringPool.APOSTROPHE);
 		}
 
-		return StringPool.QUOTE.concat(
-			xPathAttribute
-		).concat(
-			StringPool.QUOTE
-		);
+		return StringBundler.concat(
+			StringPool.QUOTE, xPathAttribute, StringPool.QUOTE);
 	}
 
 	/**

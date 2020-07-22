@@ -55,11 +55,8 @@ public class HighlightUtil {
 		}
 
 		document.addText(
-			Field.SNIPPET.concat(
-				StringPool.UNDERLINE
-			).concat(
-				snippetFieldName
-			),
+			StringBundler.concat(
+				Field.SNIPPET, StringPool.UNDERLINE, snippetFieldName),
 			snippet);
 	}
 

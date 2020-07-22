@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.mail.reader.model.Attachment;
 import com.liferay.mail.reader.model.Message;
 import com.liferay.mail.reader.service.base.AttachmentLocalServiceBaseImpl;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -174,13 +175,8 @@ public class AttachmentLocalServiceImpl extends AttachmentLocalServiceBaseImpl {
 	}
 
 	protected String getFilePath(long messageId, String fileName) {
-		return getDirectoryPath(
-			messageId
-		).concat(
-			StringPool.SLASH
-		).concat(
-			fileName
-		);
+		return StringBundler.concat(
+			getDirectoryPath(messageId), StringPool.SLASH, fileName);
 	}
 
 	private static final String _DIRECTORY_PATH_PREFIX = "mail/";

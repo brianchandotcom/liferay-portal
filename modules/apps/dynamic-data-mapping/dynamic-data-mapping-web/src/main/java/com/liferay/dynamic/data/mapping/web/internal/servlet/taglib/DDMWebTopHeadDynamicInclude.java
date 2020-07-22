@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.web.internal.servlet.taglib;
 
 import com.liferay.dynamic.data.mapping.web.internal.portlet.DDMPortlet;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -54,11 +55,7 @@ public class DDMWebTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		String staticResourceURL = _portal.getStaticResourceURL(
 			httpServletRequest,
-			cdnBaseURL.concat(
-				_postfix
-			).concat(
-				"/css/main.css"
-			));
+			StringBundler.concat(cdnBaseURL, _postfix, "/css/main.css"));
 
 		String content = "<link href=\"".concat(staticResourceURL);
 

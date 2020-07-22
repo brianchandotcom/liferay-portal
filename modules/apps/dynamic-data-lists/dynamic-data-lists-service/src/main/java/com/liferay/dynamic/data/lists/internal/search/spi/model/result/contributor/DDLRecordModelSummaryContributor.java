@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.lists.internal.search.spi.model.result.contribu
 import com.liferay.dynamic.data.lists.constants.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -54,11 +55,8 @@ public class DDLRecordModelSummaryContributor
 			getTitle(GetterUtil.getLong(document.get("recordSetId")), locale),
 			document.get(
 				locale,
-				Field.SNIPPET.concat(
-					StringPool.UNDERLINE
-				).concat(
-					Field.DESCRIPTION
-				),
+				StringBundler.concat(
+					Field.SNIPPET, StringPool.UNDERLINE, Field.DESCRIPTION),
 				Field.DESCRIPTION));
 
 		summary.setMaxContentLength(200);

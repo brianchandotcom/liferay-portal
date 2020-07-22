@@ -1024,11 +1024,8 @@ public class JournalConverterImpl implements JournalConverter {
 			instanceId = StringUtil.randomString();
 		}
 
-		String fieldsDisplayValue = fieldName.concat(
-			DDM.INSTANCE_SEPARATOR
-		).concat(
-			instanceId
-		);
+		String fieldsDisplayValue = StringBundler.concat(
+			fieldName, DDM.INSTANCE_SEPARATOR, instanceId);
 
 		Field fieldsDisplayField = ddmFields.get(DDM.FIELDS_DISPLAY_NAME);
 

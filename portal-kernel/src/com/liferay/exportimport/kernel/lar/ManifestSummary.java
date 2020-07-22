@@ -325,11 +325,8 @@ public class ManifestSummary implements Serializable {
 			return modelName;
 		}
 
-		return modelName.concat(
-			StringPool.POUND
-		).concat(
-			referrerModelName
-		);
+		return StringBundler.concat(
+			modelName, StringPool.POUND, referrerModelName);
 	}
 
 	protected long getModelAdditionCount(

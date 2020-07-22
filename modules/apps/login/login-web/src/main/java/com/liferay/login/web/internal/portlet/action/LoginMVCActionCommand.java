@@ -15,6 +15,7 @@
 package com.liferay.login.web.internal.portlet.action;
 
 import com.liferay.login.web.constants.LoginPortletKeys;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.CompanyMaxUsersException;
 import com.liferay.portal.kernel.exception.CookieNotSupportedException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
@@ -217,11 +218,9 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 
 		if (PropsValues.PORTAL_JAAS_ENABLE) {
 			if (Validator.isNotNull(redirect)) {
-				redirect = mainPath.concat(
-					"/portal/protected?redirect="
-				).concat(
-					URLCodec.encodeURL(redirect)
-				);
+				redirect = StringBundler.concat(
+					mainPath, "/portal/protected?redirect=",
+					URLCodec.encodeURL(redirect));
 			}
 			else {
 				redirect = mainPath.concat("/portal/protected");

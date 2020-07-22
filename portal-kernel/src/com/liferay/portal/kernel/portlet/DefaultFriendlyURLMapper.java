@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.portlet;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -105,11 +106,8 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 
 		addParametersIncludedInPath(liferayPortletURL, routeParameters);
 
-		return StringPool.SLASH.concat(
-			getMapping()
-		).concat(
-			friendlyURLPath
-		);
+		return StringBundler.concat(
+			StringPool.SLASH, getMapping(), friendlyURLPath);
 	}
 
 	/**

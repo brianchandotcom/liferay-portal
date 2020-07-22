@@ -16,6 +16,7 @@ package com.liferay.exportimport.kernel.lar;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -144,11 +145,8 @@ public class StagedModelType {
 			return _className;
 		}
 
-		return _className.concat(
-			StringPool.POUND
-		).concat(
-			_referrerClassName
-		);
+		return StringBundler.concat(
+			_className, StringPool.POUND, _referrerClassName);
 	}
 
 	protected String getSimpleName(String className) {

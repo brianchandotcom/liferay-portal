@@ -789,11 +789,8 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		}
 
 		if (type == Types.CLOB) {
-			fieldName = CAST_CLOB_TEXT_OPEN.concat(
-				fieldName
-			).concat(
-				StringPool.CLOSE_PARENTHESIS
-			);
+			fieldName = StringBundler.concat(
+				CAST_CLOB_TEXT_OPEN, fieldName, StringPool.CLOSE_PARENTHESIS);
 		}
 
 		return fieldName;

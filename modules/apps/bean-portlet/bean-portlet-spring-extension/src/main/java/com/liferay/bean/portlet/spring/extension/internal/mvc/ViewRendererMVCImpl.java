@@ -91,11 +91,8 @@ public class ViewRendererMVCImpl
 					(String)_configuration.getProperty(
 						ConfigurationImpl.DEFAULT_VIEW_EXTENSION);
 
-				viewName = viewName.concat(
-					"."
-				).concat(
-					defaultViewExtension
-				);
+				viewName = StringBundler.concat(
+					viewName, ".", defaultViewExtension);
 			}
 
 			Map<String, ViewEngine> beansOfType =

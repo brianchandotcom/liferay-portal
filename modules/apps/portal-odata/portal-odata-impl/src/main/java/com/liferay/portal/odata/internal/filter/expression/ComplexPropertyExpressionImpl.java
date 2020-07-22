@@ -14,6 +14,7 @@
 
 package com.liferay.portal.odata.internal.filter.expression;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.odata.filter.expression.ComplexPropertyExpression;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitor;
@@ -51,11 +52,7 @@ public class ComplexPropertyExpressionImpl
 
 	@Override
 	public String toString() {
-		return _name.concat(
-			"/"
-		).concat(
-			_propertyExpression.toString()
-		);
+		return StringBundler.concat(_name, "/", _propertyExpression.toString());
 	}
 
 	private final String _name;

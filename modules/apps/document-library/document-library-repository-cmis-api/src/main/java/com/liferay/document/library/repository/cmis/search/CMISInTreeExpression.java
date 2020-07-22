@@ -14,6 +14,8 @@
 
 package com.liferay.document.library.repository.cmis.search;
 
+import com.liferay.petra.string.StringBundler;
+
 /**
  * @author Mika Koivisto
  */
@@ -25,11 +27,7 @@ public class CMISInTreeExpression implements CMISCriterion {
 
 	@Override
 	public String toQueryFragment() {
-		return "IN_TREE('".concat(
-			_objectId
-		).concat(
-			"')"
-		);
+		return StringBundler.concat("IN_TREE('", _objectId, "')");
 	}
 
 	private final String _objectId;

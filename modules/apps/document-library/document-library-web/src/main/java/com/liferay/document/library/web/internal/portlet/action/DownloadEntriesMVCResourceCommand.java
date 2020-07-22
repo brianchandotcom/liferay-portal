@@ -17,6 +17,7 @@ package com.liferay.document.library.web.internal.portlet.action;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.InvalidRepositoryException;
@@ -295,11 +296,8 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 
 				_zipFolder(
 					folder.getRepositoryId(), folder.getFolderId(),
-					path.concat(
-						StringPool.SLASH
-					).concat(
-						folder.getName()
-					),
+					StringBundler.concat(
+						path, StringPool.SLASH, folder.getName()),
 					zipWriter);
 			}
 			else if (entry instanceof FileEntry) {

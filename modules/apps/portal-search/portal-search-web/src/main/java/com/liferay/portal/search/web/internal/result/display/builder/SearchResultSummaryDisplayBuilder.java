@@ -777,11 +777,8 @@ public class SearchResultSummaryDisplayBuilder {
 			return fieldName;
 		}
 
-		String snippetFieldName = Field.SNIPPET.concat(
-			StringPool.UNDERLINE
-		).concat(
-			fieldName
-		);
+		String snippetFieldName = StringBundler.concat(
+			Field.SNIPPET, StringPool.UNDERLINE, fieldName);
 
 		if (isFieldPresent(snippetFieldName)) {
 			return snippetFieldName;

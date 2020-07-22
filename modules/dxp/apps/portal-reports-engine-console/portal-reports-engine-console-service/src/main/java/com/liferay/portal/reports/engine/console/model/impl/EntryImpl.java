@@ -15,6 +15,7 @@
 package com.liferay.portal.reports.engine.console.model.impl;
 
 import com.liferay.document.library.kernel.store.DLStoreUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cal.TZSRecurrence;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -56,11 +57,9 @@ public class EntryImpl extends EntryBaseImpl {
 
 	@Override
 	public String getSchedulerRequestName() {
-		return ReportsEngineDestinationNames.REPORT_REQUEST.concat(
-			StringPool.SLASH
-		).concat(
-			String.valueOf(getEntryId())
-		);
+		return StringBundler.concat(
+			ReportsEngineDestinationNames.REPORT_REQUEST, StringPool.SLASH,
+			String.valueOf(getEntryId()));
 	}
 
 }

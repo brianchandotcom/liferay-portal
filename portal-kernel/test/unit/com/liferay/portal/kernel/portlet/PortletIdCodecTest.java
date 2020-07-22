@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.portlet;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -379,11 +380,7 @@ public class PortletIdCodecTest {
 	private static final String _TEST_PORTLET_NAME =
 		"com_liferay_test_portlet_TestPortlet";
 
-	private static final String _TEST_PORTLET_NAME_WAR =
-		_TEST_PORTLET_NAME.concat(
-			PortletConstants.WAR_SEPARATOR
-		).concat(
-			"context"
-		);
+	private static final String _TEST_PORTLET_NAME_WAR = StringBundler.concat(
+		_TEST_PORTLET_NAME, PortletConstants.WAR_SEPARATOR, "context");
 
 }

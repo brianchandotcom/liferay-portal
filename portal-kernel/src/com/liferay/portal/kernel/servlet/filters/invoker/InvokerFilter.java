@@ -205,11 +205,7 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 		String queryString = httpServletRequest.getQueryString();
 
 		if (Validator.isNotNull(queryString)) {
-			key = key.concat(
-				StringPool.QUESTION
-			).concat(
-				queryString
-			);
+			key = StringBundler.concat(key, StringPool.QUESTION, queryString);
 		}
 
 		InvokerFilterChain invokerFilterChain = _filterChains.get(key);

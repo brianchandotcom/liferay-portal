@@ -364,11 +364,9 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 			return ddmFormField.getName();
 		}
 
-		return parentDDMFormFieldParameterName.concat(
-			StringPool.POUND
-		).concat(
-			ddmFormField.getName()
-		);
+		return StringBundler.concat(
+			parentDDMFormFieldParameterName, StringPool.POUND,
+			ddmFormField.getName());
 	}
 
 	protected String getDDMFormFieldParameterValue(
@@ -482,11 +480,9 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 			return StringPool.BLANK;
 		}
 
-		return parentEntryKey.concat(
-			DDMFormRendererConstants.DDM_FORM_FIELDS_SEPARATOR
-		).concat(
-			fieldNameFilter
-		);
+		return StringBundler.concat(
+			parentEntryKey, DDMFormRendererConstants.DDM_FORM_FIELDS_SEPARATOR,
+			fieldNameFilter);
 	}
 
 	protected Set<String> getEntryKeys(

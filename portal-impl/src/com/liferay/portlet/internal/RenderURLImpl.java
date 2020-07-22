@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
@@ -58,11 +59,8 @@ public class RenderURLImpl extends PortletURLImpl implements RenderURL {
 		String toString = super.toString();
 
 		if (_fragmentIdentifier != null) {
-			toString = toString.concat(
-				StringPool.POUND
-			).concat(
-				_fragmentIdentifier
-			);
+			toString = StringBundler.concat(
+				toString, StringPool.POUND, _fragmentIdentifier);
 		}
 
 		return toString;

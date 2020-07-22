@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -172,11 +173,9 @@ public class DDMFormValuesToFieldsConverterImpl
 	protected String getFieldDisplayValue(DDMFormFieldValue ddmFormFieldValue) {
 		String fieldName = ddmFormFieldValue.getName();
 
-		return fieldName.concat(
-			DDMImpl.INSTANCE_SEPARATOR
-		).concat(
-			ddmFormFieldValue.getInstanceId()
-		);
+		return StringBundler.concat(
+			fieldName, DDMImpl.INSTANCE_SEPARATOR,
+			ddmFormFieldValue.getInstanceId());
 	}
 
 	protected void setDDMFieldLocalizedValue(

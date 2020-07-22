@@ -16,6 +16,7 @@ package com.liferay.portal.search.internal.spi.model.index.contributor;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.Document;
@@ -95,11 +96,8 @@ public class AssetCategoryDocumentContributor
 			String[] titlesArray = titles.toArray(new String[0]);
 
 			document.addText(
-				field.concat(
-					StringPool.UNDERLINE
-				).concat(
-					locale.toString()
-				),
+				StringBundler.concat(
+					field, StringPool.UNDERLINE, locale.toString()),
 				titlesArray);
 		}
 	}

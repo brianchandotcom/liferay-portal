@@ -508,11 +508,8 @@ public class JSONWebServiceActionsManagerImpl
 		int offset = 0;
 
 		if (Validator.isNotNull(contextName)) {
-			String pathPrefix = StringPool.SLASH.concat(
-				contextName
-			).concat(
-				StringPool.PERIOD
-			);
+			String pathPrefix = StringBundler.concat(
+				StringPool.SLASH, contextName, StringPool.PERIOD);
 
 			if (path.startsWith(pathPrefix)) {
 				offset = pathPrefix.length();

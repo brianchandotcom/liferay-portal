@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.web.internal.portlet.route;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
@@ -57,11 +58,8 @@ public class WikiFriendlyURLMapper extends DefaultFriendlyURLMapper {
 
 		addParametersIncludedInPath(liferayPortletURL, routeParameters);
 
-		return StringPool.SLASH.concat(
-			getMapping()
-		).concat(
-			friendlyURLPath
-		);
+		return StringBundler.concat(
+			StringPool.SLASH, getMapping(), friendlyURLPath);
 	}
 
 	@Override

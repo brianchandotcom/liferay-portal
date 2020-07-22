@@ -734,13 +734,8 @@ public class DLImpl implements DL {
 	@Override
 	public String getTempFileId(long id, String version, String languageId) {
 		if (Validator.isNull(languageId)) {
-			return String.valueOf(
-				id
-			).concat(
-				StringPool.PERIOD
-			).concat(
-				version
-			);
+			return StringBundler.concat(
+				String.valueOf(id), StringPool.PERIOD, version);
 		}
 
 		StringBundler sb = new StringBundler(5);

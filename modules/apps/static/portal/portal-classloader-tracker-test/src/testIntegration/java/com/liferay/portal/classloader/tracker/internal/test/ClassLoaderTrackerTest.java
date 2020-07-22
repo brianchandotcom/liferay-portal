@@ -17,6 +17,7 @@ package com.liferay.portal.classloader.tracker.internal.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
@@ -75,11 +76,8 @@ public class ClassLoaderTrackerTest {
 		String bundleSymbolicName = ClassLoaderTrackerTest.class.getName();
 		String bundleVersion = "1.0.0";
 
-		String contextName = bundleSymbolicName.concat(
-			StringPool.UNDERLINE
-		).concat(
-			bundleVersion
-		);
+		String contextName = StringBundler.concat(
+			bundleSymbolicName, StringPool.UNDERLINE, bundleVersion);
 
 		try {
 

@@ -14,6 +14,7 @@
 
 package com.liferay.knowledge.base.internal.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -31,11 +32,8 @@ public class KBSectionEscapeUtil {
 		sections = ArrayUtil.clone(sections);
 
 		for (int i = 0; i < sections.length; i++) {
-			sections[i] = StringPool.UNDERLINE.concat(
-				sections[i]
-			).concat(
-				StringPool.UNDERLINE
-			);
+			sections[i] = StringBundler.concat(
+				StringPool.UNDERLINE, sections[i], StringPool.UNDERLINE);
 		}
 
 		return sections;

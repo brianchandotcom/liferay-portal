@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.servlet;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.internal.util.ContextResourcePathsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -76,11 +77,8 @@ public class ServletContextUtil {
 
 		if (cache) {
 			lastModifiedCacheKey = ServletContextUtil.class.getName();
-			lastModifiedCacheKey = lastModifiedCacheKey.concat(
-				StringPool.PERIOD
-			).concat(
-				path
-			);
+			lastModifiedCacheKey = StringBundler.concat(
+				lastModifiedCacheKey, StringPool.PERIOD, path);
 
 			Long lastModified = (Long)servletContext.getAttribute(
 				lastModifiedCacheKey);

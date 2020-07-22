@@ -15,6 +15,7 @@
 package com.liferay.util.bridges.freemarker;
 
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -60,11 +61,8 @@ public class FreeMarkerPortlet extends MVCPortlet {
 
 		String servletContextName = portletContext.getPortletContextName();
 
-		String resourcePath = servletContextName.concat(
-			TemplateConstants.SERVLET_SEPARATOR
-		).concat(
-			path
-		);
+		String resourcePath = StringBundler.concat(
+			servletContextName, TemplateConstants.SERVLET_SEPARATOR, path);
 
 		boolean resourceExists = false;
 

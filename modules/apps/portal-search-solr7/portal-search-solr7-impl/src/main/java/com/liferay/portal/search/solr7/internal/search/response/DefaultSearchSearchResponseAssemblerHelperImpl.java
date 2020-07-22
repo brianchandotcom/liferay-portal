@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.solr7.internal.search.response;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
@@ -119,11 +120,8 @@ public class DefaultSearchSearchResponseAssemblerHelperImpl
 		}
 
 		document.addText(
-			Field.SNIPPET.concat(
-				StringPool.UNDERLINE
-			).concat(
-				snippetFieldName
-			),
+			StringBundler.concat(
+				Field.SNIPPET, StringPool.UNDERLINE, snippetFieldName),
 			StringUtil.merge(list, StringPool.TRIPLE_PERIOD));
 	}
 

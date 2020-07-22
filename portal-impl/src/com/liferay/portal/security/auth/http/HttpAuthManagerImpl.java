@@ -15,6 +15,7 @@
 package com.liferay.portal.security.auth.http;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -317,11 +318,8 @@ public class HttpAuthManagerImpl implements HttpAuthManager {
 		String queryString = httpServletRequest.getQueryString();
 
 		if (Validator.isNotNull(queryString)) {
-			requestURI = requestURI.concat(
-				StringPool.QUESTION
-			).concat(
-				queryString
-			);
+			requestURI = StringBundler.concat(
+				requestURI, StringPool.QUESTION, queryString);
 		}
 
 		if (!realm.equals(Portal.PORTAL_REALM) || !uri.equals(requestURI)) {

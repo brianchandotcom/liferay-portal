@@ -15,6 +15,7 @@
 package com.liferay.portal.setup;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
@@ -204,11 +205,8 @@ public class SetupWizardUtil {
 		HttpServletRequest httpServletRequest, String name,
 		String defaultValue) {
 
-		name = _PROPERTIES_PREFIX.concat(
-			name
-		).concat(
-			StringPool.DOUBLE_DASH
-		);
+		name = StringBundler.concat(
+			_PROPERTIES_PREFIX, name, StringPool.DOUBLE_DASH);
 
 		return ParamUtil.getString(httpServletRequest, name, defaultValue);
 	}

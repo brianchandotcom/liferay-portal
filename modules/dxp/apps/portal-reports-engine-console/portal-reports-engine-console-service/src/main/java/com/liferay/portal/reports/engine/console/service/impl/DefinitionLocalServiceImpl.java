@@ -15,6 +15,7 @@
 package com.liferay.portal.reports.engine.console.service.impl;
 
 import com.liferay.document.library.kernel.store.DLStoreUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -260,11 +261,8 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 
 		String directoryName = definition.getAttachmentsDir();
 
-		String fileLocation = directoryName.concat(
-			StringPool.SLASH
-		).concat(
-			fileName
-		);
+		String fileLocation = StringBundler.concat(
+			directoryName, StringPool.SLASH, fileName);
 
 		DLStoreUtil.addFile(
 			companyId, CompanyConstants.SYSTEM, fileLocation, false,

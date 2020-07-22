@@ -14,6 +14,7 @@
 
 package com.liferay.portal.odata.internal.filter.expression;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.odata.filter.expression.CollectionPropertyExpression;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitor;
@@ -60,11 +61,8 @@ public class CollectionPropertyExpressionImpl
 	public String toString() {
 		String string = _propertyExpression.toString();
 
-		return string.concat(
-			"/"
-		).concat(
-			_lambdaFunctionExpression.toString()
-		);
+		return StringBundler.concat(
+			string, "/", _lambdaFunctionExpression.toString());
 	}
 
 	private final LambdaFunctionExpression _lambdaFunctionExpression;

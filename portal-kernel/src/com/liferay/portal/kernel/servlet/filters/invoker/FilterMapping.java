@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.servlet.filters.invoker;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -126,11 +127,7 @@ public class FilterMapping {
 		String queryString = httpServletRequest.getQueryString();
 
 		if (Validator.isNotNull(queryString)) {
-			url = url.concat(
-				StringPool.QUESTION
-			).concat(
-				queryString
-			);
+			url = StringBundler.concat(url, StringPool.QUESTION, queryString);
 		}
 
 		boolean matchURLRegexPattern = true;

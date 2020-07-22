@@ -16,6 +16,7 @@ package com.liferay.portlet.asset.util;
 
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -175,13 +176,9 @@ public class AssetVocabularySettingsHelper {
 	protected String getClassNameIdAndClassTypePK(
 		long classNameId, long classTypePK) {
 
-		return String.valueOf(
-			classNameId
-		).concat(
-			StringPool.COLON
-		).concat(
-			String.valueOf(classTypePK)
-		);
+		return StringBundler.concat(
+			String.valueOf(classNameId), StringPool.COLON,
+			String.valueOf(classTypePK));
 	}
 
 	protected long[] getClassNameIds(String[] classNameIdsAndClassTypePKs) {

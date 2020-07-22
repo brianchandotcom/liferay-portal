@@ -15,6 +15,7 @@
 package com.liferay.portal.servlet;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.BrowserMetadata;
 import com.liferay.portal.kernel.servlet.BrowserSniffer;
@@ -351,11 +352,8 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 
 			String minor = userAgent.substring(minorStart, minorEnd);
 
-			String version = major.concat(
-				StringPool.PERIOD
-			).concat(
-				minor
-			);
+			String version = StringBundler.concat(
+				major, StringPool.PERIOD, minor);
 
 			if (leading.equals("trident")) {
 				if (version.equals("7.0")) {

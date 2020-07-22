@@ -100,11 +100,9 @@ public class SpringServletContainerInitializer
 
 				servletContext.setInitParameter(
 					"contextConfigLocation",
-					_CONTEXT_CONFIG_CLASSPATH_LOCATION.concat(
-						" "
-					).concat(
-						contextConfigLocation
-					));
+					StringBundler.concat(
+						_CONTEXT_CONFIG_CLASSPATH_LOCATION, " ",
+						contextConfigLocation));
 			}
 		}
 		catch (ClassNotFoundException classNotFoundException) {

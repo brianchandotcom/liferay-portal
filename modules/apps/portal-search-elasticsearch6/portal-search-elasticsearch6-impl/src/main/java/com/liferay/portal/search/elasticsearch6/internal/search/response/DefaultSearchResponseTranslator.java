@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.response;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -123,11 +124,8 @@ public class DefaultSearchResponseTranslator
 		Object[] array = highlightField.fragments();
 
 		document.addText(
-			Field.SNIPPET.concat(
-				StringPool.UNDERLINE
-			).concat(
-				snippetFieldName
-			),
+			StringBundler.concat(
+				Field.SNIPPET, StringPool.UNDERLINE, snippetFieldName),
 			StringUtil.merge(array, StringPool.TRIPLE_PERIOD));
 	}
 

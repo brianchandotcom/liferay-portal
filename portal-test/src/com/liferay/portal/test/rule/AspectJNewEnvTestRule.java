@@ -115,11 +115,8 @@ public class AspectJNewEnvTestRule extends NewEnvTestRule {
 
 		File dumpDir = new File(
 			System.getProperty("junit.aspectj.dump"),
-			className.concat(
-				StringPool.PERIOD
-			).concat(
-				description.getMethodName()
-			));
+			StringBundler.concat(
+				className, StringPool.PERIOD, description.getMethodName()));
 
 		try {
 			return new WeavingClassLoader(
@@ -141,11 +138,8 @@ public class AspectJNewEnvTestRule extends NewEnvTestRule {
 
 		File dumpDir = new File(
 			System.getProperty("junit.aspectj.dump"),
-			className.concat(
-				StringPool.PERIOD
-			).concat(
-				methodKey.getMethodName()
-			));
+			StringBundler.concat(
+				className, StringPool.PERIOD, methodKey.getMethodName()));
 
 		return new SwitchClassLoaderProcessCallable(processCallable, dumpDir);
 	}

@@ -568,11 +568,7 @@ public class ClusterSchedulerEngine
 	}
 
 	protected String getFullName(String jobName, String groupName) {
-		return groupName.concat(
-			StringPool.PERIOD
-		).concat(
-			jobName
-		);
+		return StringBundler.concat(groupName, StringPool.PERIOD, jobName);
 	}
 
 	protected void initMemoryClusteredJobs() {

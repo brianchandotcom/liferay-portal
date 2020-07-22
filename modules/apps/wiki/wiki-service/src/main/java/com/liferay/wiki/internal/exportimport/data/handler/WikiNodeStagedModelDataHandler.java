@@ -18,6 +18,7 @@ import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -218,11 +219,8 @@ public class WikiNodeStagedModelDataHandler
 
 		return getNodeName(
 			portletDataContext, node,
-			nodeName.concat(
-				StringPool.SPACE
-			).concat(
-				String.valueOf(count)
-			),
+			StringBundler.concat(
+				nodeName, StringPool.SPACE, String.valueOf(count)),
 			++count);
 	}
 

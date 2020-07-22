@@ -60,13 +60,9 @@ public class USAPhoneNumberFormatImpl implements PhoneNumberFormat {
 			return sb.toString();
 		}
 		else if (phoneNumber.length() == 7) {
-			return phoneNumber.substring(
-				0, 3
-			).concat(
-				StringPool.DASH
-			).concat(
-				phoneNumber.substring(3)
-			);
+			return StringBundler.concat(
+				phoneNumber.substring(0, 3), StringPool.DASH,
+				phoneNumber.substring(3));
 		}
 
 		return phoneNumber;

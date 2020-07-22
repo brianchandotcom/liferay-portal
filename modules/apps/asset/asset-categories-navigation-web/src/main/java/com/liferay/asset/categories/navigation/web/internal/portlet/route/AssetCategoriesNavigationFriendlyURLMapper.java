@@ -15,6 +15,7 @@
 package com.liferay.asset.categories.navigation.web.internal.portlet.route;
 
 import com.liferay.asset.categories.navigation.constants.AssetCategoriesNavigationPortletKeys;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
@@ -57,11 +58,8 @@ public class AssetCategoriesNavigationFriendlyURLMapper
 
 		addParametersIncludedInPath(liferayPortletURL, routeParameters);
 
-		return StringPool.SLASH.concat(
-			getMapping()
-		).concat(
-			friendlyURLPath
-		);
+		return StringBundler.concat(
+			StringPool.SLASH, getMapping(), friendlyURLPath);
 	}
 
 	@Override

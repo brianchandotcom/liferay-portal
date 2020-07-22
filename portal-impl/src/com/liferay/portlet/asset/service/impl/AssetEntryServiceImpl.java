@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCache;
@@ -224,11 +225,8 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 
 		String key = entryQuery.toString();
 
-		key = key.concat(
-			StringPool.POUND
-		).concat(
-			Boolean.toString(returnEntriesCountOnly)
-		);
+		key = StringBundler.concat(
+			key, StringPool.POUND, Boolean.toString(returnEntriesCountOnly));
 
 		Object[] results = threadLocalCache.get(key);
 

@@ -68,7 +68,7 @@ public class FrontendTokenDefinitionRegistryImpl
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		resourceBundleLoaders = ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, ResourceBundleLoader.class, "bundle.symbolic.name");
+			bundleContext, ResourceBundleLoader.class, "bundle.symbolic.name");
 
 		bundleTracker = new BundleTracker<>(
 			bundleContext, Bundle.ACTIVE, _bundleTrackerCustomizer);
@@ -192,7 +192,7 @@ public class FrontendTokenDefinitionRegistryImpl
 	private static final Pattern _themeIdPattern = Pattern.compile(
 		".*<theme id=\"([^\"]*)\"[^>]*>.*");
 
-	private BundleTrackerCustomizer _bundleTrackerCustomizer =
+	private BundleTrackerCustomizer<Bundle> _bundleTrackerCustomizer =
 		new BundleTrackerCustomizer<Bundle>() {
 
 			@Override

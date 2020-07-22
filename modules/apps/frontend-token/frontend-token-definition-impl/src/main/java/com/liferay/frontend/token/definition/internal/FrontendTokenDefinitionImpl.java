@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
@@ -91,17 +92,22 @@ public class FrontendTokenDefinitionImpl implements FrontendTokenDefinition {
 		JSONObject jsonObject, ResourceBundle resourceBundle) {
 
 		for (String key : jsonObject.keySet()) {
-			if (_LOCALIZABLE_KEYS.contains(key)) {
+			if (_localizableKeys.contains(key)) {
 				String value = jsonObject.getString(key);
 
 				if (Validator.isNotNull(value)) {
 					try {
-						jsonObject.put(key, resourceBundle.getString(value));
+						jsonObject.put(
+							key,
+							ResourceBundleUtil.getString(
+								resourceBundle, value));
 					}
 					catch (MissingResourceException missingResourceException) {
-						_log.warn(
-							"Unable to find key " + key,
-							missingResourceException);
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to find key " + key,
+								missingResourceException);
+						}
 					}
 				}
 			}
@@ -127,11 +133,11 @@ public class FrontendTokenDefinitionImpl implements FrontendTokenDefinition {
 		}
 	}
 
-	private static final Set<String> _LOCALIZABLE_KEYS = new HashSet<>(
-		Arrays.asList("label"));
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		FrontendTokenDefinitionImpl.class);
+
+	private static final Set<String> _localizableKeys = new HashSet<>(
+		Arrays.asList("label"));
 
 	private final String _json;
 	private final JSONFactory _jsonFactory;

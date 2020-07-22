@@ -71,7 +71,8 @@ public class InfoDisplayContributorWrapper
 
 		try {
 			return _convertToInfoForm(
-				_infoDisplayContributor.getInfoDisplayFields(0, locale));
+				_infoDisplayContributor.getInfoDisplayFields(0, locale),
+				_infoDisplayContributor.getClassName());
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
@@ -85,7 +86,8 @@ public class InfoDisplayContributorWrapper
 		try {
 			return _convertToInfoForm(
 				_infoDisplayContributor.getInfoDisplayFields(
-					itemClassTypeId, locale));
+					itemClassTypeId, locale),
+				_infoDisplayContributor.getClassName());
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(
@@ -102,7 +104,8 @@ public class InfoDisplayContributorWrapper
 		try {
 			return _convertToInfoForm(
 				_infoDisplayContributor.getInfoDisplayFields(
-					itemObject, locale));
+					itemObject, locale),
+				_infoDisplayContributor.getClassName());
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
@@ -181,7 +184,7 @@ public class InfoDisplayContributorWrapper
 	}
 
 	private InfoForm _convertToInfoForm(
-		Set<InfoDisplayField> infoDisplayFields) {
+		Set<InfoDisplayField> infoDisplayFields, String name) {
 
 		return InfoForm.builder(
 		).infoFieldSetEntry(
@@ -202,7 +205,7 @@ public class InfoDisplayContributorWrapper
 				}
 			}
 		).name(
-			"fields"
+			name
 		).build();
 	}
 

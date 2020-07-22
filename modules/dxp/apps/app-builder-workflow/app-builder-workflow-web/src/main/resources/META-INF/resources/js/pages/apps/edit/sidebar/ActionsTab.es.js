@@ -28,7 +28,7 @@ export default () => {
 	} = useContext(EditAppContext);
 
 	const {
-		appWorkflowTransitions: [primaryAction, secondaryAction] = [{}],
+		appWorkflowTransitions: [primaryAction = {}, secondaryAction] = [{}],
 	} = currentStep;
 
 	const onChangeActionName = ({target}, primary) => {

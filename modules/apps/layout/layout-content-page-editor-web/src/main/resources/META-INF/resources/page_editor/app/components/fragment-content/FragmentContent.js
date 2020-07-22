@@ -17,11 +17,12 @@ import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
+import setFragmentEditables from '../../actions/setFragmentEditables';
 import {EDITABLE_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/editableFloatingToolbarButtons';
 import selectCanConfigureWidgets from '../../selectors/selectCanConfigureWidgets';
 import selectCanUpdateEditables from '../../selectors/selectCanUpdateEditables';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
-import {useSelector, useSelectorCallback} from '../../store/index';
+import {useDispatch, useSelector, useSelectorCallback} from '../../store/index';
 import {useGetContent, useGetFieldValue} from '../CollectionItemContext';
 import {useGlobalContext} from '../GlobalContext';
 import Layout from '../Layout';
@@ -38,6 +39,7 @@ import getEditableUniqueId from './getEditableUniqueId';
 import resolveEditableValue from './resolveEditableValue';
 
 const FragmentContent = ({elementRef, fragmentEntryLinkId, itemId}) => {
+	const dispatch = useDispatch();
 	const isMounted = useIsMounted();
 	const isProcessorEnabled = useIsProcessorEnabled();
 	const globalContext = useGlobalContext();
@@ -45,7 +47,10 @@ const FragmentContent = ({elementRef, fragmentEntryLinkId, itemId}) => {
 
 	const getFieldValue = useGetFieldValue();
 
-	const [editables, setEditables] = useState([]);
+	const editables = useSelectorCallback(
+		(state) => Object.values(state.editables?.[fragmentEntryLinkId] || {}),
+		[fragmentEntryLinkId]
+	);
 
 	const canConfigureWidgets = useSelector(selectCanConfigureWidgets);
 	const canUpdateEditables = useSelector(selectCanUpdateEditables);
@@ -69,11 +74,13 @@ const FragmentContent = ({elementRef, fragmentEntryLinkId, itemId}) => {
 				updatedEditableValues = getAllEditables(fragmentElement);
 			}
 
-			setEditables(updatedEditableValues);
+			dispatch(
+				setFragmentEditables(fragmentEntryLinkId, updatedEditableValues)
+			);
 
 			return updatedEditableValues;
 		},
-		[isMounted]
+		[dispatch, fragmentEntryLinkId, isMounted]
 	);
 
 	const fragmentEntryLink = useSelectorCallback(

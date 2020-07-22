@@ -215,7 +215,7 @@ definition {
 			key_userScreenName = "${userScreenName}",
 			locator1 = "UserGroupsAssignUsers#USER_TABLE_CHECKBOX");
 
-		Pause(locator1 = "5000");
+		Pause(locator1 = "3000");
 
 		SelectFrameTop();
 
@@ -341,7 +341,7 @@ definition {
 	macro assignOrgRoleCP {
 		Organization.gotoActionsCmd(orgName = "${orgName}");
 
-		Pause(locator1 = "5000");
+		Pause(locator1 = "3000");
 
 		MenuItem.click(menuItem = "Assign Organization Roles");
 

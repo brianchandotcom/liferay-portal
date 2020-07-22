@@ -100,7 +100,7 @@ class DropdownProvider {
 		const clickOutsideHandler = (event) => {
 			if (
 				!menu.contains(event.target) &&
-				!trigger.container(event.target)
+				!trigger.contains(event.target)
 			) {
 				this.hide({menu, trigger});
 

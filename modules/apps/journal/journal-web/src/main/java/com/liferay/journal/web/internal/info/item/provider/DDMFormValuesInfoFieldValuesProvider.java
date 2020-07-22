@@ -17,9 +17,11 @@ package com.liferay.journal.web.internal.info.item.provider;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.info.field.converter.DDMFormFieldInfoFieldConverter;
+import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.Value;
+import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.localized.InfoLocalizedValue;
@@ -213,6 +215,16 @@ public class DDMFormValuesInfoFieldValuesProvider<T extends GroupedModel> {
 
 				NumberFormat numberFormat = NumberFormat.getNumberInstance(
 					locale);
+
+				DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
+
+				String dataType = ddmFormField.getDataType();
+
+				if (dataType.equals(FieldConstants.DOUBLE) ||
+					dataType.equals(FieldConstants.FLOAT)) {
+
+					numberFormat.setMinimumFractionDigits(1);
+				}
 
 				return numberFormat.format(numberFormat.parse(valueString));
 			}

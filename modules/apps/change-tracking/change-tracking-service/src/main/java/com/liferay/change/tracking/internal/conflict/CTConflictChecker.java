@@ -416,11 +416,9 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 		Set<Long> primaryKeys = new HashSet<>();
 
-		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				sql);
-
-			ResultSet rs = preparedStatement.executeQuery();
+			ResultSet rs = preparedStatement.executeQuery()) {
 
 			while (rs.next()) {
 				long primaryKey = rs.getLong(1);

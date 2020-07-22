@@ -81,6 +81,34 @@ public class AddAssetListEntryMVCActionCommandTest {
 	}
 
 	@Test
+	public void testAddDynamicAssetListEntry() throws Exception {
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			new MockLiferayPortletActionRequest();
+
+		mockLiferayPortletActionRequest.addParameter(
+			"title", "Dynamic Asset List Title");
+
+		mockLiferayPortletActionRequest.addParameter("type", String.valueOf(0));
+
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+
+		ReflectionTestUtil.invoke(
+			_mvcActionCommand, "doProcessAction",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			mockLiferayPortletActionRequest, new MockActionResponse());
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.getAssetListEntry(
+				_group.getGroupId(), "dynamic-asset-list-title");
+
+		Assert.assertEquals(
+			"Dynamic Asset List Title", assetListEntry.getTitle());
+
+		Assert.assertEquals(_group.getGroupId(), assetListEntry.getGroupId());
+	}
+
+	@Test
 	public void testAddManualAssetListEntry() throws Exception {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();

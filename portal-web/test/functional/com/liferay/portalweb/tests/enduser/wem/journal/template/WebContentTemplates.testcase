@@ -114,4 +114,66 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-116515. The user is able to save changes in existing template when disable template creation in Dynamic Data Mapping."
+	@priority = "5"
+	test SaveChangesInExistingTemplateWhenDisableTemplateCreation {
+		task ("Add a template for Basic Web Content Structure") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoTemplates();
+
+			WebContentTemplates.addCP(
+				structureName = "Basic Web Content",
+				templateDescription = "WC Template Description",
+				templateFieldNames = "Content",
+				templateName = "WC Template Name");
+
+			LexiconCard.viewCardTitle(card = "WC Template Name");
+		}
+
+		task ("Disable Template Creation") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Dynamic Data Mapping",
+				configurationName = "Dynamic Data Mapping Web",
+				configurationScope = "System Scope");
+
+			FormFields.disableCheckbox(fieldName = "Enable Template Creation");
+
+			if (IsElementPresent(locator1 = "Button#UPDATE")) {
+				PortletEntry.update();
+			}
+			else if (IsElementPresent(locator1 = "Button#SAVE")) {
+				PortletEntry.save();
+			}
+		}
+
+		task ("Assert can save changes in existing template") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoTemplates();
+
+			WebContentTemplates.modifyTemplate(
+				templateName = "WC Template Name Edit",
+				templatePreviousName = "WC Template Name",
+				templateScript = "${content.getName()}: ${content.getData()}");
+
+			LexiconCard.viewCardTitle(card = "WC Template Name Edit");
+		}
+
+		task ("Enable Template Creation") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Dynamic Data Mapping",
+				configurationName = "Dynamic Data Mapping Web",
+				configurationScope = "System Scope");
+
+			FormFields.enableCheckbox(fieldName = "Enable Template Creation");
+
+			PortletEntry.update();
+		}
+	}
+
 }

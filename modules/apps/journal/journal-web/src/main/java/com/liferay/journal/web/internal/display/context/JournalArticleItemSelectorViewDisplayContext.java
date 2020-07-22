@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -43,6 +44,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -128,6 +130,24 @@ public class JournalArticleItemSelectorViewDisplayContext {
 			_httpServletRequest, "displayStyle", "descriptive");
 
 		return _displayStyle;
+	}
+
+	public String getGroupCssIcon(long groupId) throws PortalException {
+		Group group = GroupServiceUtil.getGroup(groupId);
+
+		if (group.isSite()) {
+			return "sites";
+		}
+
+		return "books";
+	}
+
+	public String getGroupLabel(long groupId, Locale locale)
+		throws PortalException {
+
+		Group group = GroupServiceUtil.getGroup(groupId);
+
+		return group.getName(locale);
 	}
 
 	public String getItemSelectedEventName() {
@@ -397,6 +417,24 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		return _search;
 	}
 
+	public boolean isSearchEverywhere() {
+		if (_searchEverywhere != null) {
+			return _searchEverywhere;
+		}
+
+		if (Objects.equals(
+				ParamUtil.getString(_httpServletRequest, "scope"),
+				"everywhere")) {
+
+			_searchEverywhere = true;
+		}
+		else {
+			_searchEverywhere = false;
+		}
+
+		return _searchEverywhere;
+	}
+
 	public boolean showArticleId() {
 		if (!_journalWebConfiguration.journalArticleForceAutogenerateId() ||
 			_journalWebConfiguration.journalArticleShowId()) {
@@ -599,6 +637,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 	private final PortletResponse _portletResponse;
 	private final PortletURL _portletURL;
 	private final boolean _search;
+	private Boolean _searchEverywhere;
 	private final ThemeDisplay _themeDisplay;
 
 }

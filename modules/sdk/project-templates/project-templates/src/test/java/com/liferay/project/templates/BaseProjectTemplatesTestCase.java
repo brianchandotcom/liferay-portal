@@ -543,8 +543,7 @@ public interface BaseProjectTemplatesTestCase {
 
 		List<String> completeArgs = new ArrayList<>();
 
-		completeArgs.add(
-			"org.apache.maven.plugins:maven-archetype-plugin:3.1.2:generate");
+		completeArgs.add("archetype:generate");
 		completeArgs.add("--batch-mode");
 
 		String archetypeArtifactId =

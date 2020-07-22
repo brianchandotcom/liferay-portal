@@ -15,7 +15,13 @@
 import ClayAlert from '@clayui/alert';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {fetch} from 'frontend-js-web';
-import React, {useEffect, useImperativeHandle, useRef, useState} from 'react';
+import React, {
+	useCallback,
+	useEffect,
+	useImperativeHandle,
+	useRef,
+	useState,
+} from 'react';
 
 import Sidebar from './components/Sidebar';
 
@@ -27,28 +33,42 @@ const SidebarPanel = React.forwardRef(({View, fetchURL, onClose}, ref) => {
 	const [isOpen, setIsOpen] = useState(true);
 	const [resourceData, setResourceData] = useState();
 
-	const getData = (fetchURL) => {
+	const getData = useCallback((fetchURL) => {
 		setIsLoading(true);
+		setResourceData(null);
 
 		fetch(fetchURL, {
 			method: 'GET',
 		})
 			.then((response) => response.json())
 			.then((data) => {
-				setError(data?.error);
-				setResourceData(data);
-				setIsLoading(false);
+				setData(data, data?.error);
 			})
 			.catch(() => {
-				setError(Liferay.Language.get('an-unexpected-error-occurred'));
-				setResourceData(null);
-				setIsLoading(false);
+				setData(
+					null,
+					Liferay.Language.get('an-unexpected-error-occurred')
+				);
 			});
+	}, []);
+
+	const onCloseHandle = () => (onClose ? onClose() : setIsOpen(false));
+
+	const setData = (data, error) => {
+
+		// Force 300 ms of waiting to render the response so loading
+		// looks more natural.
+
+		setTimeout(() => {
+			setIsLoading(false);
+			setError(error);
+			setResourceData(data);
+		}, 300);
 	};
 
 	useEffect(() => {
 		getData(fetchURL);
-	}, [fetchURL]);
+	}, [fetchURL, getData]);
 
 	useEffect(() => {
 		CurrentView.current = View;
@@ -64,8 +84,6 @@ const SidebarPanel = React.forwardRef(({View, fetchURL, onClose}, ref) => {
 			setIsOpen(true);
 		},
 	}));
-
-	const onCloseHandle = () => (onClose ? onClose() : setIsOpen(false));
 
 	return (
 		<Sidebar onClose={onCloseHandle} open={isOpen}>

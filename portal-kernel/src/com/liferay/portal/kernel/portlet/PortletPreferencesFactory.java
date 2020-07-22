@@ -98,6 +98,11 @@ public interface PortletPreferencesFactory {
 		throws PortalException;
 
 	public PortletPreferencesIds getPortletPreferencesIds(
+			long companyId, long siteGroupId, long layoutGroupId, long plid,
+			String portletId)
+		throws IllegalArgumentException;
+
+	public PortletPreferencesIds getPortletPreferencesIds(
 		long companyId, long siteGroupId, long plid, String portletId,
 		String settingsScope);
 

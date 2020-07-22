@@ -7,6 +7,7 @@ definition {
 	property testray.main.component.name = "Patching Tool";
 	var testBuildFixPackZipURL = PropsUtil.get("test.build.fix.pack.zip.url");
 	var testBuildFixPackZipURLPrevious = PropsUtil.get("test.build.fix.pack.zip.url.previous");
+	var testBuildFixPackZipURLLatestHeavy = PropsUtil.get("test.build.fix.pack.zip.url.latest.heavy");
 
 	setUp {
 		SignIn.signInTestSetup();
@@ -50,6 +51,72 @@ definition {
 
 		for (var outputContent : list "Declarative Service Soft Circular Dependency Checker check result: No issues were found,Declarative Service Unsatisfied Component Checker check result: No issues were found,Spring Extender Unavailable Component Checker check result: No issues were found") {
 			GogoShell.viewOutput(outputContent = "${outputContent}");
+		}
+	}
+
+	@description = "Ensures that a fix pack can be reverted to the latest heavy fix pack."
+	@priority = "5"
+	test RevertToLatestHeavyFixPack {
+		property skip.install-patch = "true";
+		property test.name.skip.portal.instance = "PatchingTool#RevertToLatestHeavyFixPack";
+
+		if ("${testBuildFixPackZipURLPrevious}" == "${testBuildFixPackZipURLLatestHeavy}") {
+			echo("Skip test since the heavey fixpack equal to previous fixpack");
+		}
+		else {
+			SignOut.signOut();
+
+			Portlet.shutdownServer();
+
+			PatchingTool.installPatch(patchFileZipURL = "${testBuildFixPackZipURL}");
+
+			Portlet.startServer(
+				deleteLiferayHome = "true",
+				keepCachedAppServerData = "true");
+
+			SignIn.signIn();
+
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
+
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Guest",
+				title = "WC WebContent Title");
+
+			JSONDocument.addFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Guest");
+
+			Portlet.shutdownServer();
+
+			PatchingTool.uninstallPatches();
+
+			PatchingTool.installPatch(patchFileZipURL = "${testBuildFixPackZipURLLatestHeavy}");
+
+			Portlet.startServer(
+				deleteLiferayHome = "true",
+				keepCachedAppServerData = "true");
+
+			SignIn.signIn();
+
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+			BlogsEntry.viewEntryTable(entryTitle = "Blogs Entry Title");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+			WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+			DMDocument.checkoutCP(dmDocumentTitle = "DM Document Title");
 		}
 	}
 

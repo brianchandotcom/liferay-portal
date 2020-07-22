@@ -86,7 +86,7 @@ public class AnalyticsReportsDisplayContextTest {
 
 		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
 			new AnalyticsReportsDisplayContext(
-				_getAnalyticsReportsConfiguration(true, false),
+				_getAnalyticsReportsConfiguration(false),
 				_getAnalyticsReportsDataProvider(
 					null, RandomTestUtil.randomInt(),
 					RandomTestUtil.randomDouble(), null,
@@ -111,29 +111,6 @@ public class AnalyticsReportsDisplayContextTest {
 			DateTimeFormatter.ISO_DATE.format(
 				localDate.minus(7, ChronoUnit.DAYS)),
 			defaultTimeRange.get("startDate"));
-
-		Assert.assertTrue((Boolean)context.get("readsEnabled"));
-	}
-
-	@Test
-	public void testGetContextWithReadsDisabled() {
-		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
-			new AnalyticsReportsDisplayContext(
-				_getAnalyticsReportsConfiguration(false, false),
-				_getAnalyticsReportsDataProvider(
-					null, RandomTestUtil.randomInt(),
-					RandomTestUtil.randomDouble(), null,
-					RandomTestUtil.randomInt(), RandomTestUtil.randomDouble(),
-					false),
-				_getAnalyticsReportsItem(), null, null, new PortalImpl(),
-				_getRenderResponse(), _getResourceBundle(),
-				_getThemeDisplay(_getLayout()));
-
-		Map<String, Object> data = analyticsReportsDisplayContext.getData();
-
-		Map<String, Object> context = (Map<String, Object>)data.get("context");
-
-		Assert.assertFalse((Boolean)context.get("readsEnabled"));
 	}
 
 	@Test
@@ -156,7 +133,7 @@ public class AnalyticsReportsDisplayContextTest {
 
 		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
 			new AnalyticsReportsDisplayContext(
-				_getAnalyticsReportsConfiguration(false, true),
+				_getAnalyticsReportsConfiguration(true),
 				analyticsReportsDataProvider, analyticsReportsInfoItem, null,
 				null, new PortalImpl(), _getRenderResponse(),
 				_getResourceBundle(), _getThemeDisplay(layout));
@@ -218,7 +195,7 @@ public class AnalyticsReportsDisplayContextTest {
 
 		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
 			new AnalyticsReportsDisplayContext(
-				_getAnalyticsReportsConfiguration(false, false),
+				_getAnalyticsReportsConfiguration(false),
 				analyticsReportsDataProvider, analyticsReportsInfoItem, null,
 				null, new PortalImpl(), _getRenderResponse(),
 				_getResourceBundle(), _getThemeDisplay(layout));
@@ -263,7 +240,7 @@ public class AnalyticsReportsDisplayContextTest {
 
 		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
 			new AnalyticsReportsDisplayContext(
-				_getAnalyticsReportsConfiguration(false, true),
+				_getAnalyticsReportsConfiguration(true),
 				analyticsReportsDataProvider, analyticsReportsInfoItem, null,
 				null, new PortalImpl(), _getRenderResponse(),
 				_getResourceBundle(), _getThemeDisplay(layout));
@@ -363,14 +340,9 @@ public class AnalyticsReportsDisplayContextTest {
 	}
 
 	private AnalyticsReportsConfiguration _getAnalyticsReportsConfiguration(
-		boolean readsEnabled, boolean trafficSourcesEnabled) {
+		boolean trafficSourcesEnabled) {
 
 		return new AnalyticsReportsConfiguration() {
-
-			@Override
-			public boolean readsEnabled() {
-				return readsEnabled;
-			}
 
 			@Override
 			public boolean trafficSourcesEnabled() {

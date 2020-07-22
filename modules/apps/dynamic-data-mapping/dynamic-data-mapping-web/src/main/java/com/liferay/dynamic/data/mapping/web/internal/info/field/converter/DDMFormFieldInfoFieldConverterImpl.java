@@ -85,6 +85,13 @@ public class DDMFormFieldInfoFieldConverterImpl
 			finalStep.attribute(SelectInfoFieldType.MULTIPLE, true);
 		}
 
+		if (Objects.equals(ddmFormField.getType(), DDMFormFieldType.TEXT) &&
+			Objects.equals(
+				ddmFormField.getProperty("displayStyle"), "multiline")) {
+
+			finalStep.attribute(TextInfoFieldType.MULTILINE, true);
+		}
+
 		if (Objects.equals(
 				ddmFormField.getType(), DDMFormFieldType.TEXT_AREA)) {
 

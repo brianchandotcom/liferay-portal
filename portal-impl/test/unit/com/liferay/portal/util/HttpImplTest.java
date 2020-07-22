@@ -284,6 +284,15 @@ public class HttpImplTest {
 	}
 
 	@Test
+	public void testGetQueryString() {
+		String queryString = "doAsUserId=tUaJhZHZbDYaV0WQmKNRig%3D%3D&foo=bar";
+
+		Assert.assertEquals(
+			queryString,
+			_httpImpl.getQueryString("http://localhost:8080/?" + queryString));
+	}
+
+	@Test
 	public void testNormalizePath() {
 		Assert.assertEquals("/api/axis", _httpImpl.normalizePath("/api/axis?"));
 		Assert.assertEquals("/", _httpImpl.normalizePath("/.."));

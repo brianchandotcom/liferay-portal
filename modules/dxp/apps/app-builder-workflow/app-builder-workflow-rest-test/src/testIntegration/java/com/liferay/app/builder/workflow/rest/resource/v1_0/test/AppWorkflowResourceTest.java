@@ -297,8 +297,8 @@ public class AppWorkflowResourceTest extends BaseAppWorkflowResourceTestCase {
 			StringPool.BLANK, 0, new ServiceContext());
 
 		_appBuilderAppDataRecordLinkLocalService.addAppBuilderAppDataRecordLink(
-			testGroup.getCompanyId(), _appBuilderApp.getAppBuilderAppId(),
-			ddlRecord.getRecordId());
+			testGroup.getGroupId(), testGroup.getCompanyId(),
+			_appBuilderApp.getAppBuilderAppId(), ddlRecord.getRecordId());
 
 		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			testGroup.getCompanyId(), _appBuilderApp.getGroupId(),

@@ -109,8 +109,8 @@ public class AddDataRecordMVCResourceCommand extends BaseMVCResourceCommand {
 				ParamUtil.getString(resourceRequest, "dataRecord")));
 
 		_appBuilderAppDataRecordLinkLocalService.addAppBuilderAppDataRecordLink(
-			appBuilderApp.getCompanyId(), appBuilderApp.getAppBuilderAppId(),
-			dataRecord.getId());
+			themeDisplay.getScopeGroupId(), themeDisplay.getCompanyId(),
+			appBuilderApp.getAppBuilderAppId(), dataRecord.getId());
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),

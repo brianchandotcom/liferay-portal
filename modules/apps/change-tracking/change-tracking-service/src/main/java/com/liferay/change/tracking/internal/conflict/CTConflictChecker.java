@@ -279,15 +279,14 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		Set<Long> productionPrimaryKeys = _getProductionPrimaryKeys(
 			connection, ctPersistence, primaryKeyName);
 
-		_modificationCTEntries.forEach(
-			(pk, ctEntry) -> {
-				Long modelClassPK = ctEntry.getModelClassPK();
+		for (CTEntry ctEntry : _modificationCTEntries.values()) {
+			long modelClassPK = ctEntry.getModelClassPK();
 
-				if (!productionPrimaryKeys.contains(modelClassPK)) {
-					conflictInfos.add(
-						new DeletionModificationConflictInfo(modelClassPK));
-				}
-			});
+			if (!productionPrimaryKeys.contains(modelClassPK)) {
+				conflictInfos.add(
+					new DeletionModificationConflictInfo(modelClassPK));
+			}
+		}
 	}
 
 	private List<Map.Entry<Long, Long>> _getConflictingPrimaryKeys(

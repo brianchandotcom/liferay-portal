@@ -217,6 +217,10 @@ public class AccountUserDisplay {
 		List<AccountEntryUserRel> accountEntryUserRels =
 			_getAccountEntryUserRels(getUserId());
 
+		if (accountEntryUserRels.isEmpty()) {
+			return false;
+		}
+
 		if (accountEntryUserRels.size() != 1) {
 			return true;
 		}

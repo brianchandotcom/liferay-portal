@@ -271,24 +271,20 @@ public class ConfigurationHandler {
 
 		code = Character.toUpperCase(code);
 
-		if (code == _TOKEN_SIMPLE_STRING) {
-			return _readQuoted(pushbackReader);
+		if (code == _TOKEN_SIMPLE_BOOLEAN) {
+			return Boolean.valueOf(_readQuoted(pushbackReader));
 		}
-		else if (code == _TOKEN_SIMPLE_INTEGER) {
-			return Integer.valueOf(_readQuoted(pushbackReader));
+		else if (code == _TOKEN_SIMPLE_BYTE) {
+			return Byte.valueOf(_readQuoted(pushbackReader));
 		}
-		else if (code == _TOKEN_SIMPLE_LONG) {
-			return Long.valueOf(_readQuoted(pushbackReader));
-		}
-		else if (code == _TOKEN_SIMPLE_FLOAT) {
-			String floatString = _readQuoted(pushbackReader);
+		else if (code == _TOKEN_SIMPLE_CHARACTER) {
+			String charString = _readQuoted(pushbackReader);
 
-			if (floatString.indexOf(CharPool.PERIOD) >= 0) {
-				return Float.valueOf(floatString);
+			if ((charString != null) && (charString.length() > 0)) {
+				return charString.charAt(0);
 			}
 
-			return Float.intBitsToFloat(
-				GetterUtil.getIntegerStrict(floatString));
+			return null;
 		}
 		else if (code == _TOKEN_SIMPLE_DOUBLE) {
 			String doubleString = _readQuoted(pushbackReader);
@@ -300,23 +296,27 @@ public class ConfigurationHandler {
 			return Double.longBitsToDouble(
 				GetterUtil.getLongStrict(doubleString));
 		}
-		else if (code == _TOKEN_SIMPLE_BYTE) {
-			return Byte.valueOf(_readQuoted(pushbackReader));
+		else if (code == _TOKEN_SIMPLE_FLOAT) {
+			String floatString = _readQuoted(pushbackReader);
+
+			if (floatString.indexOf(CharPool.PERIOD) >= 0) {
+				return Float.valueOf(floatString);
+			}
+
+			return Float.intBitsToFloat(
+				GetterUtil.getIntegerStrict(floatString));
+		}
+		else if (code == _TOKEN_SIMPLE_INTEGER) {
+			return Integer.valueOf(_readQuoted(pushbackReader));
+		}
+		else if (code == _TOKEN_SIMPLE_LONG) {
+			return Long.valueOf(_readQuoted(pushbackReader));
 		}
 		else if (code == _TOKEN_SIMPLE_SHORT) {
 			return Short.valueOf(_readQuoted(pushbackReader));
 		}
-		else if (code == _TOKEN_SIMPLE_CHARACTER) {
-			String charString = _readQuoted(pushbackReader);
-
-			if ((charString != null) && (charString.length() > 0)) {
-				return charString.charAt(0);
-			}
-
-			return null;
-		}
-		else if (code == _TOKEN_SIMPLE_BOOLEAN) {
-			return Boolean.valueOf(_readQuoted(pushbackReader));
+		else if (code == _TOKEN_SIMPLE_STRING) {
+			return _readQuoted(pushbackReader);
 		}
 		else {
 			return null;

@@ -248,6 +248,26 @@ public class Query {
 
 	}
 
+	@GraphQLTypeExtension(Account.class)
+	public class ParentAccountAccountIdTypeExtension {
+
+		public ParentAccountAccountIdTypeExtension(Account account) {
+			_account = account;
+		}
+
+		@GraphQLField(description = "")
+		public Account parentAccount() throws Exception {
+			return _applyComponentServiceObjects(
+				_accountResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				accountResource -> accountResource.getAccount(
+					_account.getParentAccountId()));
+		}
+
+		private Account _account;
+
+	}
+
 	@GraphQLName("AccountPage")
 	public class AccountPage {
 

@@ -31,6 +31,7 @@ import com.liferay.headless.delivery.dto.v1_0.MessageBoardMessage;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardSection;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardThread;
 import com.liferay.headless.delivery.dto.v1_0.NavigationMenu;
+import com.liferay.headless.delivery.dto.v1_0.NavigationMenuItem;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder;
@@ -3094,6 +3095,169 @@ public class Query {
 		}
 
 		private MessageBoardThread _messageBoardThread;
+
+	}
+
+	@GraphQLTypeExtension(Comment.class)
+	public class ParentCommentCommentIdTypeExtension {
+
+		public ParentCommentCommentIdTypeExtension(Comment comment) {
+			_comment = comment;
+		}
+
+		@GraphQLField(description = "Retrieves the comment.")
+		public Comment parentComment() throws Exception {
+			return _applyComponentServiceObjects(
+				_commentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				commentResource -> commentResource.getComment(
+					_comment.getParentCommentId()));
+		}
+
+		private Comment _comment;
+
+	}
+
+	@GraphQLTypeExtension(DocumentFolder.class)
+	public class ParentDocumentFolderDocumentFolderIdTypeExtension {
+
+		public ParentDocumentFolderDocumentFolderIdTypeExtension(
+			DocumentFolder documentFolder) {
+
+			_documentFolder = documentFolder;
+		}
+
+		@GraphQLField(description = "Retrieves the document folder.")
+		public DocumentFolder parentDocumentFolder() throws Exception {
+			return _applyComponentServiceObjects(
+				_documentFolderResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				documentFolderResource ->
+					documentFolderResource.getDocumentFolder(
+						_documentFolder.getParentDocumentFolderId()));
+		}
+
+		private DocumentFolder _documentFolder;
+
+	}
+
+	@GraphQLTypeExtension(MessageBoardMessage.class)
+	public class ParentMessageBoardMessageMessageBoardMessageIdTypeExtension {
+
+		public ParentMessageBoardMessageMessageBoardMessageIdTypeExtension(
+			MessageBoardMessage messageBoardMessage) {
+
+			_messageBoardMessage = messageBoardMessage;
+		}
+
+		@GraphQLField(description = "Retrieves the message board message.")
+		public MessageBoardMessage parentMessageBoardMessage()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_messageBoardMessageResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				messageBoardMessageResource ->
+					messageBoardMessageResource.getMessageBoardMessage(
+						_messageBoardMessage.getParentMessageBoardMessageId()));
+		}
+
+		private MessageBoardMessage _messageBoardMessage;
+
+	}
+
+	@GraphQLTypeExtension(MessageBoardSection.class)
+	public class ParentMessageBoardSectionMessageBoardSectionIdTypeExtension {
+
+		public ParentMessageBoardSectionMessageBoardSectionIdTypeExtension(
+			MessageBoardSection messageBoardSection) {
+
+			_messageBoardSection = messageBoardSection;
+		}
+
+		@GraphQLField(description = "Retrieves the message board section.")
+		public MessageBoardSection parentMessageBoardSection()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_messageBoardSectionResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				messageBoardSectionResource ->
+					messageBoardSectionResource.getMessageBoardSection(
+						_messageBoardSection.getParentMessageBoardSectionId()));
+		}
+
+		private MessageBoardSection _messageBoardSection;
+
+	}
+
+	@GraphQLTypeExtension(NavigationMenuItem.class)
+	public class ParentNavigationMenuItemNavigationMenuIdTypeExtension {
+
+		public ParentNavigationMenuItemNavigationMenuIdTypeExtension(
+			NavigationMenuItem navigationMenuItem) {
+
+			_navigationMenuItem = navigationMenuItem;
+		}
+
+		@GraphQLField(description = "")
+		public NavigationMenu parentNavigationMenu() throws Exception {
+			return _applyComponentServiceObjects(
+				_navigationMenuResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				navigationMenuResource ->
+					navigationMenuResource.getNavigationMenu(
+						_navigationMenuItem.getParentNavigationMenuId()));
+		}
+
+		private NavigationMenuItem _navigationMenuItem;
+
+	}
+
+	@GraphQLTypeExtension(StructuredContentFolder.class)
+	public class
+		ParentStructuredContentFolderStructuredContentFolderIdTypeExtension {
+
+		public ParentStructuredContentFolderStructuredContentFolderIdTypeExtension(
+			StructuredContentFolder structuredContentFolder) {
+
+			_structuredContentFolder = structuredContentFolder;
+		}
+
+		@GraphQLField(description = "Retrieves the structured content folder.")
+		public StructuredContentFolder parentStructuredContentFolder()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_structuredContentFolderResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				structuredContentFolderResource ->
+					structuredContentFolderResource.getStructuredContentFolder(
+						_structuredContentFolder.
+							getParentStructuredContentFolderId()));
+		}
+
+		private StructuredContentFolder _structuredContentFolder;
+
+	}
+
+	@GraphQLTypeExtension(WikiPage.class)
+	public class ParentWikiPageWikiPageIdTypeExtension {
+
+		public ParentWikiPageWikiPageIdTypeExtension(WikiPage wikiPage) {
+			_wikiPage = wikiPage;
+		}
+
+		@GraphQLField(description = "Retrieves the wiki page")
+		public WikiPage parentWikiPage() throws Exception {
+			return _applyComponentServiceObjects(
+				_wikiPageResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				wikiPageResource -> wikiPageResource.getWikiPage(
+					_wikiPage.getParentWikiPageId()));
+		}
+
+		private WikiPage _wikiPage;
 
 	}
 

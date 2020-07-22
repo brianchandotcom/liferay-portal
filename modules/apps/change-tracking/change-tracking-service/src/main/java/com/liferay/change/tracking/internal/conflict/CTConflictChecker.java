@@ -297,8 +297,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 				if(rs.next() == false) {
 					conflictInfos.add(
-						new ModificationConflictInfo(
-							modelClassPK, false));
+						new MissingFileConflictInfo(modelClassPK));
 				}
 			}
 			catch (SQLException sqlException) {

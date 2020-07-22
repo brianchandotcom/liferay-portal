@@ -56,23 +56,31 @@ export default function PagePreview() {
 
 	return (
 		<div className="style-book-editor__page-preview">
-			<iframe
-				className="style-book-editor__page-preview-frame"
-				onLoad={() => {
-					if (iframeRef.current?.contentWindow?.Liferay) {
-						iframeRef.current.contentWindow.Liferay.on(
-							'endNavigate',
-							loadFrontendTokenValues
+			{config.previewURL ? (
+				<iframe
+					className="style-book-editor__page-preview-frame"
+					onLoad={() => {
+						if (iframeRef.current?.contentWindow?.Liferay) {
+							iframeRef.current.contentWindow.Liferay.on(
+								'endNavigate',
+								loadFrontendTokenValues
+							);
+						}
+						loadFrontendTokenValues(
+							iframeRef.current,
+							frontendTokensValues
 						);
-					}
-					loadFrontendTokenValues(
-						iframeRef.current,
-						frontendTokensValues
-					);
-				}}
-				ref={iframeRef}
-				src={config.previewURL}
-			/>
+					}}
+					ref={iframeRef}
+					src={config.previewURL}
+				/>
+			) : (
+				<div className="style-book-editor__page-preview-no-page-message">
+					{Liferay.Language.get(
+						'you-cannot-preview-the-style-book-because-there-are-no-pages-in-this-site'
+					)}
+				</div>
+			)}
 		</div>
 	);
 }

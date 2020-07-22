@@ -38,6 +38,17 @@ $toolbarDesktopHeight: 56px;
 			height: 100%;
 			width: 100%;
 		}
+
+		&-no-page-message {
+			align-items: center;
+			background-color: $gray-100;
+			color: $gray-500;
+			display: flex;
+			font-size: 0.875rem;
+			font-weight: 600;
+			height: 100%;
+			justify-content: center;
+		}
 	}
 
 	&__sidebar {

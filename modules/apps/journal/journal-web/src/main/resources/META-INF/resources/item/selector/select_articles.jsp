@@ -116,6 +116,19 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 								<p class="font-weight-bold h5">
 									<%= HtmlUtil.escape(title) %>
 								</p>
+
+								<c:if test="<%= journalArticleItemSelectorViewDisplayContext.isSearchEverywhere() %>">
+									<h6 class="text-default">
+										<liferay-ui:message key="location" />:
+										<span class="text-secondary">
+											<clay:icon
+												symbol="<%= journalArticleItemSelectorViewDisplayContext.getGroupCssIcon(curArticle.getGroupId()) %>"
+											/>
+
+											<small><%= journalArticleItemSelectorViewDisplayContext.getGroupLabel(curArticle.getGroupId(), locale) %></small>
+										</span>
+									</h6>
+								</c:if>
 							</liferay-ui:search-container-column-text>
 						</c:when>
 						<c:when test='<%= Objects.equals(journalArticleItemSelectorViewDisplayContext.getDisplayStyle(), "icon") %>'>
@@ -219,6 +232,19 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 										<%= HtmlUtil.escape(curFolder.getName()) %>
 									</a>
 								</p>
+
+								<c:if test="<%= journalArticleItemSelectorViewDisplayContext.isSearchEverywhere() %>">
+									<h6 class="text-default">
+										<liferay-ui:message key="location" />:
+										<span class="text-secondary">
+											<clay:icon
+												symbol="<%= journalArticleItemSelectorViewDisplayContext.getGroupCssIcon(curFolder.getGroupId()) %>"
+											/>
+
+											<small><%= journalArticleItemSelectorViewDisplayContext.getGroupLabel(curFolder.getGroupId(), locale) %></small>
+										</span>
+									</h6>
+								</c:if>
 							</liferay-ui:search-container-column-text>
 						</c:when>
 						<c:when test='<%= Objects.equals(journalArticleItemSelectorViewDisplayContext.getDisplayStyle(), "icon") %>'>

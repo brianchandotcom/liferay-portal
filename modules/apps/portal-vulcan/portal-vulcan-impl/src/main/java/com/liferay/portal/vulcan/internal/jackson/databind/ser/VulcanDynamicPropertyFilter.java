@@ -20,20 +20,27 @@ import com.fasterxml.jackson.databind.ser.PropertyFilter;
 import com.fasterxml.jackson.databind.ser.PropertyWriter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 
-import com.liferay.portal.vulcan.internal.jaxrs.extension.ExtendedEntity;
-
-import java.util.Optional;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Javier de Arcos
  */
-public class ExtendedEntityPropertyFilter
-	extends SimpleBeanPropertyFilter implements PropertyFilter {
+public class VulcanDynamicPropertyFilter
+	extends SimpleBeanPropertyFilter implements DynamicPropertyFilter {
 
-	public static ExtendedEntityPropertyFilter with(
-		DynamicPropertyFilter dynamicPropertyFilter) {
+	public static VulcanDynamicPropertyFilter of(
+		PropertyFilter propertyFilter) {
 
-		return new ExtendedEntityPropertyFilter(dynamicPropertyFilter);
+		return new VulcanDynamicPropertyFilter(propertyFilter);
+	}
+
+	public void addPropertyFilters(Set<String> propertyFilters) {
+		_propertyFilters.addAll(propertyFilters);
+	}
+
+	public void clearPropertyFilters() {
+		_propertyFilters.clear();
 	}
 
 	@Override
@@ -43,31 +50,24 @@ public class ExtendedEntityPropertyFilter
 			PropertyWriter propertyWriter)
 		throws Exception {
 
-		try {
-			Optional.ofNullable(
-				(ExtendedEntity)object
-			).map(
-				ExtendedEntity::getFilteredProperties
-			).filter(
-				filteredProperties -> !filteredProperties.isEmpty()
-			).ifPresent(
-				_dynamicPropertyFilter::addPropertyFilters
-			);
+		if (!include(propertyWriter)) {
+			return;
+		}
 
-			_dynamicPropertyFilter.serializeAsField(
-				object, jsonGenerator, serializerProvider, propertyWriter);
-		}
-		finally {
-			_dynamicPropertyFilter.clearPropertyFilters();
-		}
+		_vulcanPropertyFilter.serializeAsField(
+			object, jsonGenerator, serializerProvider, propertyWriter);
 	}
 
-	private ExtendedEntityPropertyFilter(
-		DynamicPropertyFilter dynamicPropertyFilter) {
-
-		_dynamicPropertyFilter = dynamicPropertyFilter;
+	@Override
+	protected boolean include(PropertyWriter propertyWriter) {
+		return !_propertyFilters.contains(propertyWriter.getName());
 	}
 
-	private final DynamicPropertyFilter _dynamicPropertyFilter;
+	private VulcanDynamicPropertyFilter(PropertyFilter vulcanPropertyFilter) {
+		_vulcanPropertyFilter = vulcanPropertyFilter;
+	}
+
+	private final Set<String> _propertyFilters = new HashSet<>();
+	private final PropertyFilter _vulcanPropertyFilter;
 
 }

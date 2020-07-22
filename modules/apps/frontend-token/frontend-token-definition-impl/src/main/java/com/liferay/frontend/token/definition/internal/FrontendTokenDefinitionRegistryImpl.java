@@ -16,9 +16,13 @@ package com.liferay.frontend.token.definition.internal;
 
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
@@ -63,62 +67,11 @@ public class FrontendTokenDefinitionRegistryImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		resourceBundleLoaders = ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, ResourceBundleLoader.class, "bundle.symbolic.name");
+
 		bundleTracker = new BundleTracker<>(
-			bundleContext, Bundle.ACTIVE,
-			new BundleTrackerCustomizer<Bundle>() {
-
-				@Override
-				public Bundle addingBundle(
-					Bundle bundle, BundleEvent bundleEvent) {
-
-					FrontendTokenDefinitionImpl frontendTokenDefinitionImpl =
-						getFrontendTokenDefinitionImpl(bundle);
-
-					if (frontendTokenDefinitionImpl == null) {
-						return null;
-					}
-
-					synchronized (FrontendTokenDefinitionRegistryImpl.this) {
-						bundleFrontendTokenDefinitionImpls.put(
-							bundle, frontendTokenDefinitionImpl);
-
-						if (frontendTokenDefinitionImpl.getThemeId() != null) {
-							themeIdFrontendTokenDefinitionImpls.put(
-								frontendTokenDefinitionImpl.getThemeId(),
-								frontendTokenDefinitionImpl);
-						}
-					}
-
-					return bundle;
-				}
-
-				@Override
-				public void modifiedBundle(
-					Bundle bundle1, BundleEvent bundleEvent, Bundle bundle2) {
-
-					removedBundle(bundle1, bundleEvent, null);
-
-					addingBundle(bundle1, bundleEvent);
-				}
-
-				@Override
-				public void removedBundle(
-					Bundle bundle1, BundleEvent bundleEvent, Bundle bundle2) {
-
-					synchronized (FrontendTokenDefinitionRegistryImpl.this) {
-						FrontendTokenDefinitionImpl
-							frontendTokenDefinitionImpl =
-								bundleFrontendTokenDefinitionImpls.remove(
-									bundle1);
-
-						if (frontendTokenDefinitionImpl.getThemeId() != null) {
-							themeIdFrontendTokenDefinitionImpls.remove(
-								frontendTokenDefinitionImpl.getThemeId());
-						}
-					}
-				}
-
-			});
+			bundleContext, Bundle.ACTIVE, _bundleTrackerCustomizer);
 
 		bundleTracker.open();
 	}
@@ -131,6 +84,8 @@ public class FrontendTokenDefinitionRegistryImpl
 			bundleFrontendTokenDefinitionImpls.clear();
 			themeIdFrontendTokenDefinitionImpls.clear();
 		}
+
+		resourceBundleLoaders.close();
 	}
 
 	protected FrontendTokenDefinitionImpl getFrontendTokenDefinitionImpl(
@@ -142,7 +97,10 @@ public class FrontendTokenDefinitionRegistryImpl
 			return null;
 		}
 
-		return new FrontendTokenDefinitionImpl(json, getThemeId(bundle));
+		return new FrontendTokenDefinitionImpl(
+			json, jsonFactory,
+			resourceBundleLoaders.getService(bundle.getSymbolicName()),
+			getThemeId(bundle));
 	}
 
 	protected String getFrontendTokenDefinitionJSON(Bundle bundle) {
@@ -221,12 +179,69 @@ public class FrontendTokenDefinitionRegistryImpl
 	protected BundleTracker<Bundle> bundleTracker;
 
 	@Reference
+	protected JSONFactory jsonFactory;
+
+	@Reference
 	protected Portal portal;
 
+	protected ServiceTrackerMap<String, ResourceBundleLoader>
+		resourceBundleLoaders;
 	protected Map<String, FrontendTokenDefinitionImpl>
 		themeIdFrontendTokenDefinitionImpls = new ConcurrentHashMap<>();
 
 	private static final Pattern _themeIdPattern = Pattern.compile(
 		".*<theme id=\"([^\"]*)\"[^>]*>.*");
+
+	private BundleTrackerCustomizer _bundleTrackerCustomizer =
+		new BundleTrackerCustomizer<Bundle>() {
+
+			@Override
+			public Bundle addingBundle(Bundle bundle, BundleEvent bundleEvent) {
+				FrontendTokenDefinitionImpl frontendTokenDefinitionImpl =
+					getFrontendTokenDefinitionImpl(bundle);
+
+				if (frontendTokenDefinitionImpl == null) {
+					return null;
+				}
+
+				synchronized (FrontendTokenDefinitionRegistryImpl.this) {
+					bundleFrontendTokenDefinitionImpls.put(
+						bundle, frontendTokenDefinitionImpl);
+
+					if (frontendTokenDefinitionImpl.getThemeId() != null) {
+						themeIdFrontendTokenDefinitionImpls.put(
+							frontendTokenDefinitionImpl.getThemeId(),
+							frontendTokenDefinitionImpl);
+					}
+				}
+
+				return bundle;
+			}
+
+			@Override
+			public void modifiedBundle(
+				Bundle bundle1, BundleEvent bundleEvent, Bundle bundle2) {
+
+				removedBundle(bundle1, bundleEvent, null);
+
+				addingBundle(bundle1, bundleEvent);
+			}
+
+			@Override
+			public void removedBundle(
+				Bundle bundle1, BundleEvent bundleEvent, Bundle bundle2) {
+
+				synchronized (FrontendTokenDefinitionRegistryImpl.this) {
+					FrontendTokenDefinitionImpl frontendTokenDefinitionImpl =
+						bundleFrontendTokenDefinitionImpls.remove(bundle1);
+
+					if (frontendTokenDefinitionImpl.getThemeId() != null) {
+						themeIdFrontendTokenDefinitionImpls.remove(
+							frontendTokenDefinitionImpl.getThemeId());
+					}
+				}
+			}
+
+		};
 
 }

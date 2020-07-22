@@ -15,6 +15,7 @@
 package com.liferay.frontend.token.definition.internal;
 
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PortalImpl;
@@ -25,6 +26,7 @@ import java.io.InputStream;
 import java.net.URL;
 
 import java.util.Dictionary;
+import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -43,6 +45,9 @@ public class FrontendTokenDefinitionRegistryImplTest {
 		FrontendTokenDefinitionRegistryImpl
 			frontendTokenDefinitionRegistryImpl =
 				new FrontendTokenDefinitionRegistryImpl();
+
+		frontendTokenDefinitionRegistryImpl.resourceBundleLoaders =
+			Mockito.mock(ServiceTrackerMap.class);
 
 		Bundle bundle = Mockito.mock(Bundle.class);
 
@@ -67,7 +72,7 @@ public class FrontendTokenDefinitionRegistryImplTest {
 
 			Assert.assertEquals(
 				StringUtil.read(inputStream),
-				frontendTokenDefinition.getJSON());
+				frontendTokenDefinition.getJSON(Locale.ENGLISH));
 		}
 	}
 

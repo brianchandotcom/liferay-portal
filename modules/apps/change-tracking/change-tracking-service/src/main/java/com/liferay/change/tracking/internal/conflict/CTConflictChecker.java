@@ -276,36 +276,16 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			connection, primaryKeyName, ctPersistence.getTableName(),
 			unresolvedPrimaryKeys);
 
+		Set<Long> productionPrimaryKeys = _getProductionPrimaryKeys(
+			connection, ctPersistence, primaryKeyName);
+
 		_modificationCTEntries.forEach(
 			(pk, ctEntry) -> {
-				long modelClassPK = ctEntry.getModelClassPK();
+				Long modelClassPK = ctEntry.getModelClassPK();
 
-				StringBundler sb = new StringBundler(8);
-
-				sb.append("SELECT * from ");
-				sb.append(ctPersistence.getTableName());
-				sb.append(" where ");
-				sb.append(primaryKeyName);
-				sb.append(" = ");
-				sb.append(modelClassPK);
-				sb.append(" AND ctCollectionId = ");
-				sb.append(CTConstants.CT_COLLECTION_ID_PRODUCTION);
-
-				String sql = sb.toString();
-
-				try {
-					PreparedStatement preparedStatement =
-						connection.prepareStatement(sql);
-
-					ResultSet rs = preparedStatement.executeQuery();
-
-					if (rs.next() == false) {
-						conflictInfos.add(
-							new MissingFileConflictInfo(modelClassPK));
-					}
-				}
-				catch (SQLException sqlException) {
-					throw new ORMException(sqlException);
+				if (!productionPrimaryKeys.contains(modelClassPK)) {
+					conflictInfos.add(
+						new MissingFileConflictInfo(modelClassPK));
 				}
 			});
 	}
@@ -408,6 +388,42 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 			while (resultSet.next()) {
 				long primaryKey = resultSet.getLong(1);
+
+				primaryKeys.add(primaryKey);
+			}
+		}
+		catch (SQLException sqlException) {
+			throw new ORMException(sqlException);
+		}
+
+		return primaryKeys;
+	}
+
+	private Set<Long> _getProductionPrimaryKeys(
+		Connection connection, CTPersistence<T> ctPersistence,
+		String primaryKeyName) {
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("SELECT ");
+		sb.append(primaryKeyName);
+		sb.append(" from ");
+		sb.append(ctPersistence.getTableName());
+		sb.append(" where ctCollectionId = ");
+		sb.append(CTConstants.CT_COLLECTION_ID_PRODUCTION);
+
+		String sql = sb.toString();
+
+		Set<Long> primaryKeys = new HashSet<>();
+
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				sql);
+
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				long primaryKey = rs.getLong(1);
 
 				primaryKeys.add(primaryKey);
 			}

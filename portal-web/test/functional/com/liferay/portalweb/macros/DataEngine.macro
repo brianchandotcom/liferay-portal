@@ -30,18 +30,20 @@ definition {
 				value1 = "${fieldType}");
 		}
 
-		AssertElementPresent(
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
-			value1 = "${fieldType}");
-
 		if ("${fieldFieldLabel}" != "${fieldType}") {
-			Type.sendKeys(
+			Click(locator1 = "Sidebar#DDM_LABEL");
+
+			Type(
 				locator1 = "Sidebar#DDM_LABEL",
 				value1 = "${fieldFieldLabel}");
 		}
 
 		AssertTextEquals.assertValue(
 			locator1 = "Sidebar#DDM_LABEL",
+			value1 = "${fieldFieldLabel}");
+
+		AssertElementPresent(
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
 			value1 = "${fieldFieldLabel}");
 
 		Click(locator1 = "Sidebar#BACK");

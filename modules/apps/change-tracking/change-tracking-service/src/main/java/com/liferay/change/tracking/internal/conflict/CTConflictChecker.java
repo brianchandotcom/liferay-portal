@@ -288,15 +288,15 @@ public class CTConflictChecker<T extends CTModel<T>> {
 	private List<Map.Entry<Long, Long>> _getConflictingPrimaryKeys(
 		Connection connection, String constraintConflictsSQL) {
 
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				constraintConflictsSQL);
-			ResultSet rs = ps.executeQuery()) {
+			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			List<Map.Entry<Long, Long>> primaryKeys = null;
 
-			while (rs.next()) {
-				long sourcePK = rs.getLong(1);
-				long targetPK = rs.getLong(2);
+			while (resultSet.next()) {
+				long sourcePK = resultSet.getLong(1);
+				long targetPK = resultSet.getLong(2);
 
 				if (_ignorablePrimaryKeys.contains(sourcePK) ||
 					_ignorablePrimaryKeys.contains(targetPK)) {
@@ -340,12 +340,12 @@ public class CTConflictChecker<T extends CTModel<T>> {
 					CTConstants.CT_CHANGE_TYPE_MODIFICATION, " and ",
 					ctPersistence.getTableName(), ".", primaryKeyName,
 					" is null"));
-			ResultSet rs = preparedStatement.executeQuery()) {
+			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			List<Long> primaryKeys = new ArrayList<>();
 
-			while (rs.next()) {
-				primaryKeys.add(rs.getLong(1));
+			while (resultSet.next()) {
+				primaryKeys.add(resultSet.getLong(1));
 			}
 
 			return primaryKeys;

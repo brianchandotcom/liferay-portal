@@ -97,11 +97,7 @@ export default function Navigation({
 		return Promise.resolve(trafficSource?.value ?? '-');
 	}, [trafficSourceName, trafficSources]);
 
-	const [{publishedToday, readsEnabled}] = useContext(StoreContext);
-
-	const chartDataProviders = readsEnabled
-		? [getHistoricalViews, getHistoricalReads]
-		: [getHistoricalViews];
+	const [{publishedToday}] = useContext(StoreContext);
 
 	return (
 		<>
@@ -138,7 +134,10 @@ export default function Navigation({
 				<div className="p-3">
 					<Main
 						authorName={authorName}
-						chartDataProviders={chartDataProviders}
+						chartDataProviders={[
+							getHistoricalViews,
+							getHistoricalReads,
+						]}
 						defaultTimeRange={defaultTimeRange}
 						defaultTimeSpanOption={defaultTimeSpanKey}
 						languageTag={languageTag}

@@ -138,7 +138,7 @@ export default function Chart({
 
 	const [hasHistoricalWarning, addHistoricalWarning] = useHistoricalWarning();
 
-	const [{publishedToday, readsEnabled}] = useContext(StoreContext);
+	const [{publishedToday}] = useContext(StoreContext);
 
 	const {actions, state: chartState} = useChartState({
 		defaultTimeSpanOption,
@@ -157,11 +157,10 @@ export default function Chart({
 				? HOUR_IN_MILLISECONDS
 				: DAY_IN_MILLISECONDS;
 
-		const keys = ['analyticsReportsHistoricalViews'];
-
-		if (readsEnabled) {
-			keys.push('analyticsReportsHistoricalReads');
-		}
+		const keys = [
+			'analyticsReportsHistoricalViews',
+			'analyticsReportsHistoricalReads',
+		];
 
 		if (validAnalyticsConnection) {
 			const promises = dataProviders.map((getter) => {

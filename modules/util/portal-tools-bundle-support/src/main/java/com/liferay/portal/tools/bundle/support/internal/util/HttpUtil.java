@@ -107,6 +107,13 @@ public class HttpUtil {
 	}
 
 	public static Path downloadFile(
+			URI uri, String token, Path cacheDirPath, StreamLogger streamLogger)
+		throws Exception {
+
+		return downloadFile(uri, token, cacheDirPath, streamLogger, -1);
+	}
+
+	public static Path downloadFile(
 			URI uri, String token, Path cacheDirPath, StreamLogger streamLogger,
 			int connectionTimeout)
 		throws Exception {
@@ -121,6 +128,15 @@ public class HttpUtil {
 		}
 
 		return path;
+	}
+
+	public static Path downloadFile(
+			URI uri, String userName, String password, Path cacheDirPath,
+			StreamLogger streamLogger)
+		throws Exception {
+
+		return downloadFile(
+			uri, userName, password, cacheDirPath, streamLogger, -1);
 	}
 
 	public static Path downloadFile(

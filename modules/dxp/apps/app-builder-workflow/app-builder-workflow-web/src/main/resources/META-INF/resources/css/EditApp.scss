@@ -1,22 +1,16 @@
 $sidebarWidth: 366px;
 $navbarHeight: 120px;
 
-.dropdown-button-asset {
-	margin-top: 0.25rem;
-}
-
-.tooltip-icon:hover {
-	fill: #6b6c7e;
-}
-
 .app-builder-workflow-app {
 	display: flex;
+	justify-content: center;
 	margin-top: 64px;
 
 	&__builder {
 		display: flex;
 		flex-flow: column;
 		height: calc(100vh - #{$navbarHeight} + 56px);
+		margin-right: 350px;
 		overflow: auto;
 		padding-bottom: 55px;
 		padding-top: 56px;
@@ -213,6 +207,10 @@ $navbarHeight: 120px;
 	}
 }
 
+.dropdown-button-asset {
+	margin-top: 0.25rem;
+}
+
 .outline-text {
 	background-color: white;
 	font-size: 12px;
@@ -232,4 +230,8 @@ $navbarHeight: 120px;
 	&:first-of-type {
 		margin-top: 1rem;
 	}
+}
+
+.tooltip-icon:hover {
+	fill: #6b6c7e;
 }

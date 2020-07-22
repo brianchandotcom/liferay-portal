@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.translation.info.field.TranslationInfoFieldChecker;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalService;
-import com.liferay.translation.util.TranslationEntryInfoItemFieldValuesHelper;
 
 import java.io.IOException;
 
@@ -147,8 +146,8 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 
 		if (translationEntry != null) {
 			InfoItemFieldValues translationEntryInfoItemFieldValues =
-				_translationEntryInfoItemFieldValuesHelper.
-					getInfoItemFieldValues(translationEntry);
+				_translationEntryLocalService.getInfoItemFieldValues(
+					translationEntry);
 
 			return InfoItemFieldValues.builder(
 			).infoItemClassPKReference(
@@ -207,10 +206,6 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
-
-	@Reference
-	private TranslationEntryInfoItemFieldValuesHelper
-		_translationEntryInfoItemFieldValuesHelper;
 
 	@Reference
 	private TranslationEntryLocalService _translationEntryLocalService;

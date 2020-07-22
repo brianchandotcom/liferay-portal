@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.translation.info.item.updater.InfoItemFieldValuesUpdater;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalService;
-import com.liferay.translation.util.TranslationEntryInfoItemFieldValuesHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,11 +89,10 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 			if (serviceContext.getWorkflowAction() ==
 					WorkflowConstants.ACTION_SAVE_DRAFT) {
 
-				_translationEntryInfoItemFieldValuesHelper.
-					addOrUpdateTranslationEntry(
-						article.getGroupId(), infoItemClassPKReference,
-						infoItemFieldValues,
-						_getTargetLanguageId(actionRequest), serviceContext);
+				_translationEntryLocalService.addOrUpdateTranslationEntry(
+					article.getGroupId(), infoItemClassPKReference,
+					infoItemFieldValues, _getTargetLanguageId(actionRequest),
+					serviceContext);
 			}
 			else {
 				_journalArticleInfoItemFieldValuesUpdater.
@@ -176,10 +174,6 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 	)
 	private InfoItemFieldValuesUpdater<JournalArticle>
 		_journalArticleInfoItemFieldValuesUpdater;
-
-	@Reference
-	private TranslationEntryInfoItemFieldValuesHelper
-		_translationEntryInfoItemFieldValuesHelper;
 
 	@Reference
 	private TranslationEntryLocalService _translationEntryLocalService;

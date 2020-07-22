@@ -14,11 +14,21 @@
 
 package com.liferay.translation.service.impl;
 
+import com.liferay.info.item.InfoItemClassPKReference;
+import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
+import com.liferay.translation.importer.TranslationInfoItemFieldValuesImporter;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.base.TranslationEntryLocalServiceBaseImpl;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -42,6 +52,25 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class TranslationEntryLocalServiceImpl
 	extends TranslationEntryLocalServiceBaseImpl {
+
+	@Override
+	public TranslationEntry addOrUpdateTranslationEntry(
+			long groupId, InfoItemClassPKReference infoItemClassPKReference,
+			InfoItemFieldValues infoItemFieldValues, String languageId,
+			ServiceContext serviceContext)
+		throws IOException {
+
+		return addOrUpdateTranslationEntry(
+			groupId, infoItemClassPKReference.getClassName(),
+			infoItemClassPKReference.getClassPK(), languageId,
+			StreamUtil.toString(
+				_xliffTranslationInfoItemFieldValuesExporter.
+					exportInfoItemFieldValues(
+						infoItemFieldValues, LocaleUtil.getDefault(),
+						LocaleUtil.fromLanguageId(languageId))),
+			_xliffTranslationInfoItemFieldValuesExporter.getMimeType(),
+			serviceContext);
+	}
 
 	public TranslationEntry addOrUpdateTranslationEntry(
 		long groupId, String className, long classPK, String languageId,
@@ -79,7 +108,31 @@ public class TranslationEntryLocalServiceImpl
 			_portal.getClassNameId(className), classPK, languageId);
 	}
 
+	@Override
+	public InfoItemFieldValues getInfoItemFieldValues(
+			TranslationEntry translationEntry)
+		throws IOException, PortalException {
+
+		String content = translationEntry.getContent();
+
+		return _xliffTranslationInfoItemFieldValuesImporter.
+			importInfoItemFieldValues(
+				translationEntry.getGroupId(),
+				new InfoItemClassPKReference(
+					translationEntry.getClassName(),
+					translationEntry.getClassPK()),
+				new ByteArrayInputStream(content.getBytes()));
+	}
+
 	@Reference
 	private Portal _portal;
+
+	@Reference(target = "(content.type=application/xliff+xml)")
+	private TranslationInfoItemFieldValuesExporter
+		_xliffTranslationInfoItemFieldValuesExporter;
+
+	@Reference(target = "(content.type=application/xliff+xml)")
+	private TranslationInfoItemFieldValuesImporter
+		_xliffTranslationInfoItemFieldValuesImporter;
 
 }

@@ -51,7 +51,6 @@ public class ContentSetElementResourceTest
 			TestPropsValues.getUserId(), testGroup.getGroupId(),
 			RandomTestUtil.randomString(),
 			AssetListEntryTypeConstants.TYPE_DYNAMIC, _serviceContext);
-
 		_depotAssetListEntry = AssetListEntryLocalServiceUtil.addAssetListEntry(
 			TestPropsValues.getUserId(), testDepotEntry.getGroupId(),
 			RandomTestUtil.randomString(),

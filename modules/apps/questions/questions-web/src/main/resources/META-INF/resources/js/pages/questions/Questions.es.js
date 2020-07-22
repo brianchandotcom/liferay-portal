@@ -324,6 +324,9 @@ export default withRouter(
 							<ClayInput.GroupItem>
 								<ClayInput
 									className="bg-transparent form-control input-group-inset input-group-inset-after"
+									defaultValue={
+										(search && slugToText(search)) || ''
+									}
 									disabled={
 										!search &&
 										questions &&

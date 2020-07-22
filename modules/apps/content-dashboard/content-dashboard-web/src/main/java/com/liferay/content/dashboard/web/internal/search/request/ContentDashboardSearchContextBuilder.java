@@ -54,6 +54,9 @@ public class ContentDashboardSearchContextBuilder {
 		SearchContext searchContext = SearchContextFactory.getInstance(
 			_httpServletRequest);
 
+		searchContext.setAssetCategoryIds(
+			ParamUtil.getLongValues(_httpServletRequest, "categoryId"));
+
 		Integer status = GetterUtil.getInteger(
 			ParamUtil.getInteger(
 				_httpServletRequest, "status", WorkflowConstants.STATUS_ANY));

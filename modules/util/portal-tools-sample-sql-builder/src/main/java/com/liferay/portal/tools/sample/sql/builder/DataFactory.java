@@ -1079,36 +1079,6 @@ public class DataFactory {
 			true, true, ContentTypes.TEXT_HTML, wikiPageModel.getTitle());
 	}
 
-	public List<AssetEntryModel> newAssetEntryModels() {
-		List<AssetEntryModel> assetEntryModels = new ArrayList<>(
-			_cpDefinitionCount);
-
-		for (int productIndex = 0;
-			 productIndex < BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_COUNT;
-			 productIndex++) {
-
-			long[] cpDefinitionIds = _cpDefinitionIdList.get(productIndex);
-
-			for (int definitionIndex = 0;
-				 definitionIndex <
-					 BenchmarksPropsValues.
-						 MAX_COMMERCE_PRODUCT_DEFINITION_COUNT;
-				 definitionIndex++) {
-
-				assetEntryModels.add(
-					newAssetEntryModel(
-						_commerceCatalogGroupId, new Date(), new Date(),
-						getClassNameId(CPDefinition.class),
-						cpDefinitionIds[definitionIndex],
-						SequentialUUID.generate(), 0, true, true, "text/plain",
-						_cpDefinitionLocalizationNames.get(
-							cpDefinitionIds[definitionIndex])));
-			}
-		}
-
-		return assetEntryModels;
-	}
-
 	public List<PortletPreferencesModel>
 		newAssetPublisherPortletPreferencesModels(long plid) {
 
@@ -1177,6 +1147,12 @@ public class DataFactory {
 		commerceCatalogModel.setSystem(true);
 
 		return commerceCatalogModel;
+	}
+
+	public ResourcePermissionModel newCommerceCatalogResourcePermission() {
+		return newResourcePermissionModel(
+			CommerceCatalog.class.getName(), String.valueOf(_commerceCatalogId),
+			_guestRoleModel.getRoleId(), _sampleUserId);
 	}
 
 	public GroupModel newCommerceChannelGroupModel() {
@@ -1383,6 +1359,36 @@ public class DataFactory {
 		counterModels.add(counterModel);
 
 		return counterModels;
+	}
+
+	public List<AssetEntryModel> newCPDefinitionAssetEntryModels() {
+		List<AssetEntryModel> assetEntryModels = new ArrayList<>(
+			_cpDefinitionCount);
+
+		for (int productIndex = 0;
+			 productIndex < BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_COUNT;
+			 productIndex++) {
+
+			long[] cpDefinitionIds = _cpDefinitionIdList.get(productIndex);
+
+			for (int definitionIndex = 0;
+				 definitionIndex <
+					 BenchmarksPropsValues.
+						 MAX_COMMERCE_PRODUCT_DEFINITION_COUNT;
+				 definitionIndex++) {
+
+				assetEntryModels.add(
+					newAssetEntryModel(
+						_commerceCatalogGroupId, new Date(), new Date(),
+						getClassNameId(CPDefinition.class),
+						cpDefinitionIds[definitionIndex],
+						SequentialUUID.generate(), 0, true, true, "text/plain",
+						_cpDefinitionLocalizationNames.get(
+							cpDefinitionIds[definitionIndex])));
+			}
+		}
+
+		return assetEntryModels;
 	}
 
 	public List<CPDefinitionLocalizationModel>
@@ -2916,12 +2922,6 @@ public class DataFactory {
 		}
 
 		return releases;
-	}
-
-	public ResourcePermissionModel newResourcePermission() {
-		return newResourcePermissionModel(
-			CommerceCatalog.class.getName(), String.valueOf(_commerceCatalogId),
-			_guestRoleModel.getRoleId(), _sampleUserId);
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(

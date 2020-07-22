@@ -1,10 +1,10 @@
-<#list dataFactory.newAssetEntryModels() as assetEntryModel>
+<#list dataFactory.newCPDefinitionAssetEntryModels() as assetEntryModel>
 	${dataFactory.toInsertSQL(assetEntryModel)}
 </#list>
 
 ${dataFactory.toInsertSQL(dataFactory.newCommerceCatalogModel())}
 
-${dataFactory.toInsertSQL(dataFactory.newResourcePermission())}
+${dataFactory.toInsertSQL(dataFactory.newCommerceCatalogResourcePermission())}
 
 ${dataFactory.toInsertSQL(dataFactory.newCommerceChannelModel())}
 

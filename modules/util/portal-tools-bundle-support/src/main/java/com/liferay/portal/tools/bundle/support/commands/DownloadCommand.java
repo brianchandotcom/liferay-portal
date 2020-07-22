@@ -207,7 +207,7 @@ public class DownloadCommand extends BaseCommand implements StreamLogger {
 		BundleSupportConstants.DEFAULT_BUNDLE_CACHE_DIR_NAME);
 
 	@Parameter(
-		description = "The connection timeout for connection.",
+		description = "The connection timeout.",
 		names = {"--timeout", "--connection-timeout"}
 	)
 	private int _connectionTimeout = -1;

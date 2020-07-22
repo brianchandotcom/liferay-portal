@@ -55,92 +55,92 @@ public class OrganizationScreenNavigationRegistrar {
 		_registerService(
 			ScreenNavigationEntry.class, 10,
 			_getBuilder(
-			).setCategoryKey(
+			).categoryKey(
 				UserScreenNavigationEntryConstants.CATEGORY_KEY_GENERAL
-			).setEntryKey(
+			).entryKey(
 				"information"
-			).setIsVisibleBiFunction(
+			).isVisibleBiFunction(
 				(user, organization) -> true
-			).setJspPath(
+			).jspPath(
 				"/organization/information.jsp"
-			).setMvcActionCommandName(
+			).mvcActionCommandName(
 				"/users_admin/edit_organization"
 			).build());
 
 		_registerService(
 			ScreenNavigationEntry.class, 20,
 			_getBuilder(
-			).setCategoryKey(
+			).categoryKey(
 				UserScreenNavigationEntryConstants.CATEGORY_KEY_GENERAL
-			).setEntryKey(
+			).entryKey(
 				"organization-site"
-			).setJspPath(
+			).jspPath(
 				"/organization/organization_site.jsp"
-			).setMvcActionCommandName(
+			).mvcActionCommandName(
 				"/users_admin/update_organization_organization_site"
-			).setShowControls(
+			).showControls(
 				false
 			).build());
 
 		_registerService(
 			ScreenNavigationEntry.class, 30,
 			_getBuilder(
-			).setCategoryKey(
+			).categoryKey(
 				UserScreenNavigationEntryConstants.CATEGORY_KEY_GENERAL
-			).setEntryKey(
+			).entryKey(
 				"security-questions"
-			).setJspPath(
+			).jspPath(
 				"/organization/reminder_queries.jsp"
-			).setMvcActionCommandName(
+			).mvcActionCommandName(
 				"/users_admin/update_organization_reminder_queries"
 			).build());
 
 		_registerService(
 			ScreenNavigationEntry.class, 10,
 			_getBuilder(
-			).setCategoryKey(
+			).categoryKey(
 				UserScreenNavigationEntryConstants.CATEGORY_KEY_CONTACT
-			).setEntryKey(
+			).entryKey(
 				"addresses"
-			).setJspPath(
+			).jspPath(
 				"/organization/addresses.jsp"
-			).setMvcActionCommandName(
+			).mvcActionCommandName(
 				"/users_admin/update_contact_information"
-			).setShowControls(
+			).showControls(
 				false
-			).setShowTitle(
+			).showTitle(
 				false
 			).build());
 
 		_registerService(
 			ScreenNavigationEntry.class, 20,
 			_getBuilder(
-			).setCategoryKey(
+			).categoryKey(
 				UserScreenNavigationEntryConstants.CATEGORY_KEY_CONTACT
-			).setEntryKey(
+			).entryKey(
 				"contact-information"
-			).setJspPath(
+			).jspPath(
 				"/organization/contact_information.jsp"
-			).setMvcActionCommandName(
+			).mvcActionCommandName(
 				"/users_admin/update_contact_information"
-			).setShowControls(
+			).showControls(
 				false
 			).build());
 
 		_registerService(
 			ScreenNavigationEntry.class, 30,
 			_getBuilder(
-			).setCategoryKey(
+			).categoryKey(
 				UserScreenNavigationEntryConstants.CATEGORY_KEY_CONTACT
-			).setEntryKey(
+			).entryKey(
 				"opening-hours"
-			).setJspPath(
+			).jspPath(
 				"/organization/opening_hours.jsp"
-			).setMvcActionCommandName(
+			).mvcActionCommandName(
 				"/users_admin/update_contact_information"
-			).setShowControls(
+			).showControls(
 				false
-			).setShowTitle(
+			).showTitle(
 				false
 			).build());
 	}
@@ -154,9 +154,9 @@ public class OrganizationScreenNavigationRegistrar {
 
 	private OrganizationScreenNavigationEntry.Builder _getBuilder() {
 		return OrganizationScreenNavigationEntry.builder(
-		).setJspRenderer(
+		).jspRenderer(
 			_jspRenderer
-		).setOrganizationService(
+		).organizationService(
 			_organizationService
 		);
 	}

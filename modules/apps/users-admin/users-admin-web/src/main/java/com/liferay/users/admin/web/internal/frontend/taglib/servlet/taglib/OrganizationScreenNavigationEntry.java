@@ -141,19 +141,19 @@ public class OrganizationScreenNavigationEntry
 				_isVisibleBiFunction);
 		}
 
-		public Builder setCategoryKey(String categoryKey) {
+		public Builder categoryKey(String categoryKey) {
 			_categoryKey = categoryKey;
 
 			return this;
 		}
 
-		public Builder setEntryKey(String entryKey) {
+		public Builder entryKey(String entryKey) {
 			_entryKey = entryKey;
 
 			return this;
 		}
 
-		public Builder setIsVisibleBiFunction(
+		public Builder isVisibleBiFunction(
 			BiFunction<User, Organization, Boolean> isVisibleBiFunction) {
 
 			_isVisibleBiFunction = isVisibleBiFunction;
@@ -161,25 +161,25 @@ public class OrganizationScreenNavigationEntry
 			return this;
 		}
 
-		public Builder setJspPath(String jspPath) {
+		public Builder jspPath(String jspPath) {
 			_jspPath = jspPath;
 
 			return this;
 		}
 
-		public Builder setJspRenderer(JSPRenderer jspRenderer) {
+		public Builder jspRenderer(JSPRenderer jspRenderer) {
 			_jspRenderer = jspRenderer;
 
 			return this;
 		}
 
-		public Builder setMvcActionCommandName(String mvcActionCommandName) {
+		public Builder mvcActionCommandName(String mvcActionCommandName) {
 			_mvcActionCommandName = mvcActionCommandName;
 
 			return this;
 		}
 
-		public Builder setOrganizationService(
+		public Builder organizationService(
 			OrganizationService organizationService) {
 
 			_organizationService = organizationService;
@@ -187,13 +187,13 @@ public class OrganizationScreenNavigationEntry
 			return this;
 		}
 
-		public Builder setShowControls(boolean showControls) {
+		public Builder showControls(boolean showControls) {
 			_showControls = showControls;
 
 			return this;
 		}
 
-		public Builder setShowTitle(boolean showTitle) {
+		public Builder showTitle(boolean showTitle) {
 			_showTitle = showTitle;
 
 			return this;

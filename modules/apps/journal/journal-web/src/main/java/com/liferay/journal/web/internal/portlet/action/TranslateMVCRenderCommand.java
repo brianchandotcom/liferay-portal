@@ -14,6 +14,8 @@
 
 package com.liferay.journal.web.internal.portlet.action;
 
+import com.liferay.info.field.InfoField;
+import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceTracker;
@@ -22,13 +24,20 @@ import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.internal.constants.JournalWebConstants;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.translation.info.field.TranslationInfoFieldChecker;
+import com.liferay.translation.model.TranslationEntry;
+import com.liferay.translation.service.TranslationEntryLocalService;
+import com.liferay.translation.util.TranslationEntryInfoItemFieldValuesHelper;
+
+import java.io.IOException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -77,15 +86,20 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				InfoForm.class.getName(),
 				infoItemFormProvider.getInfoForm(article));
 
-			InfoItemFieldValuesProvider<JournalArticle>
-				infoItemFieldValuesProvider =
-					_infoItemServiceTracker.getFirstInfoItemService(
-						InfoItemFieldValuesProvider.class,
-						JournalArticle.class.getName());
+			String sourceLanguageId = ParamUtil.getString(
+				renderRequest, "sourceLanguageId",
+				article.getDefaultLanguageId());
+
+			List<String> availableTargetLanguageIds =
+				_getSiteAvailableLanguageIds(sourceLanguageId, themeDisplay);
+
+			String targetLanguageId = ParamUtil.getString(
+				renderRequest, "targetLanguageId",
+				availableTargetLanguageIds.get(0));
 
 			renderRequest.setAttribute(
 				InfoItemFieldValues.class.getName(),
-				infoItemFieldValuesProvider.getInfoItemFieldValues(article));
+				_getInfoItemFieldValues(article, targetLanguageId));
 
 			List<String> availableSourceLanguageIds = Arrays.asList(
 				article.getAvailableLanguageIds());
@@ -94,13 +108,6 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				JournalWebConstants.AVAILABLE_SOURCE_LANGUAGE_IDS,
 				availableSourceLanguageIds);
 
-			String sourceLanguageId = ParamUtil.getString(
-				renderRequest, "sourceLanguageId",
-				article.getDefaultLanguageId());
-
-			List<String> availableTargetLanguageIds =
-				_getSiteAvailableLanguageIds(sourceLanguageId, themeDisplay);
-
 			renderRequest.setAttribute(
 				JournalWebConstants.AVAILABLE_TARGET_LANGUAGE_IDS,
 				availableTargetLanguageIds);
@@ -108,10 +115,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				JournalWebConstants.SOURCE_LANGUAGE_ID, sourceLanguageId);
 			renderRequest.setAttribute(
-				JournalWebConstants.TARGET_LANGUAGE_ID,
-				ParamUtil.getString(
-					renderRequest, "targetLanguageId",
-					availableTargetLanguageIds.get(0)));
+				JournalWebConstants.TARGET_LANGUAGE_ID, targetLanguageId);
 			renderRequest.setAttribute(
 				TranslationInfoFieldChecker.class.getName(),
 				_translationInfoFieldChecker);
@@ -121,6 +125,52 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 		}
 
 		return "/translate.jsp";
+	}
+
+	private InfoItemFieldValues _getInfoItemFieldValues(
+			JournalArticle article, String targetLanguageId)
+		throws IOException, PortalException {
+
+		InfoItemFieldValuesProvider<JournalArticle>
+			infoItemFieldValuesProvider =
+				_infoItemServiceTracker.getFirstInfoItemService(
+					InfoItemFieldValuesProvider.class,
+					JournalArticle.class.getName());
+
+		InfoItemFieldValues journalArticleInfoItemFieldValues =
+			infoItemFieldValuesProvider.getInfoItemFieldValues(article);
+
+		TranslationEntry translationEntry =
+			_translationEntryLocalService.fetchTranslationEntry(
+				JournalArticle.class.getName(), article.getResourcePrimKey(),
+				targetLanguageId);
+
+		if (translationEntry != null) {
+			InfoItemFieldValues translationEntryInfoItemFieldValues =
+				_translationEntryInfoItemFieldValuesHelper.
+					getInfoItemFieldValues(translationEntry);
+
+			return InfoItemFieldValues.builder(
+			).infoItemClassPKReference(
+				journalArticleInfoItemFieldValues.getInfoItemClassPKReference()
+			).infoFieldValues(
+				journalArticleInfoItemFieldValues.getInfoFieldValues(
+				).stream(
+				).map(
+					infoFieldValue -> new InfoFieldValue<>(
+						infoFieldValue.getInfoField(),
+						GetterUtil.getObject(
+							_getValue(
+								translationEntryInfoItemFieldValues,
+								infoFieldValue.getInfoField()),
+							infoFieldValue.getValue()))
+				).collect(
+					Collectors.toList()
+				)
+			).build();
+		}
+
+		return journalArticleInfoItemFieldValues;
 	}
 
 	private List<String> _getSiteAvailableLanguageIds(
@@ -140,8 +190,30 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 		);
 	}
 
+	private Object _getValue(
+		InfoItemFieldValues translationEntryInfoItemFieldValues,
+		InfoField infoField) {
+
+		InfoFieldValue<Object> infoFieldValue =
+			translationEntryInfoItemFieldValues.getInfoFieldValue(
+				infoField.getName());
+
+		if (infoFieldValue != null) {
+			return infoFieldValue.getValue();
+		}
+
+		return null;
+	}
+
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private TranslationEntryInfoItemFieldValuesHelper
+		_translationEntryInfoItemFieldValuesHelper;
+
+	@Reference
+	private TranslationEntryLocalService _translationEntryLocalService;
 
 	@Reference
 	private TranslationInfoFieldChecker _translationInfoFieldChecker;

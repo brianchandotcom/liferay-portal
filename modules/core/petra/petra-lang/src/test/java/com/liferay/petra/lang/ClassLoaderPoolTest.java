@@ -201,33 +201,6 @@ public class ClassLoaderPoolTest {
 	}
 
 	@Test
-	public void testGetClassLoaderWithInvalidContextName() {
-		ClassLoader classLoader = new URLClassLoader(new URL[0]);
-
-		ClassLoaderPool.register(_CONTEXT_NAME_WITHOUT_VERSION, classLoader);
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		Assert.assertSame(
-			contextClassLoader, ClassLoaderPool.getClassLoader("null"));
-		Assert.assertSame(
-			contextClassLoader, ClassLoaderPool.getClassLoader(null));
-	}
-
-	@Test
-	public void testGetClassLoaderWithValidContextName() {
-		ClassLoader classLoader = new URLClassLoader(new URL[0]);
-
-		ClassLoaderPool.register(_CONTEXT_NAME_WITHOUT_VERSION, classLoader);
-
-		Assert.assertSame(
-			classLoader,
-			ClassLoaderPool.getClassLoader(_CONTEXT_NAME_WITHOUT_VERSION));
-	}
-
-	@Test
 	public void testGetContextName() {
 		ClassLoader classLoader = new URLClassLoader(new URL[0]);
 
@@ -239,29 +212,6 @@ public class ClassLoaderPoolTest {
 		Assert.assertEquals(
 			"null",
 			ClassLoaderPool.getContextName(new URLClassLoader(new URL[0])));
-	}
-
-	@Test
-	public void testGetContextNameWithInvalidClassLoader() {
-		ClassLoader classLoader = new URLClassLoader(new URL[0]);
-
-		ClassLoaderPool.register(_CONTEXT_NAME_WITHOUT_VERSION, classLoader);
-
-		Assert.assertEquals(
-			"null",
-			ClassLoaderPool.getContextName(new URLClassLoader(new URL[0])));
-		Assert.assertEquals("null", ClassLoaderPool.getContextName(null));
-	}
-
-	@Test
-	public void testGetContextNameWithValidClassLoader() {
-		ClassLoader classLoader = new URLClassLoader(new URL[0]);
-
-		ClassLoaderPool.register(_CONTEXT_NAME_WITHOUT_VERSION, classLoader);
-
-		Assert.assertEquals(
-			_CONTEXT_NAME_WITHOUT_VERSION,
-			ClassLoaderPool.getContextName(classLoader));
 	}
 
 	@Test

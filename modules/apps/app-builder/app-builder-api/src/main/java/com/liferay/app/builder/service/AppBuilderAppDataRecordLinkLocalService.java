@@ -76,8 +76,16 @@ public interface AppBuilderAppDataRecordLinkLocalService
 	public AppBuilderAppDataRecordLink addAppBuilderAppDataRecordLink(
 		AppBuilderAppDataRecordLink appBuilderAppDataRecordLink);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addAppBuilderAppDataRecordLink(long, long, long, long)}
+	 */
+	@Deprecated
 	public AppBuilderAppDataRecordLink addAppBuilderAppDataRecordLink(
 		long companyId, long appBuilderAppId, long ddlRecordId);
+
+	public AppBuilderAppDataRecordLink addAppBuilderAppDataRecordLink(
+		long groupId, long companyId, long appBuilderAppId, long ddlRecordId);
 
 	/**
 	 * Creates a new app builder app data record link with the primary key. Does not add the app builder app data record link to the database.
@@ -207,8 +215,7 @@ public interface AppBuilderAppDataRecordLinkLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AppBuilderAppDataRecordLink
-			fetchDDLRecordAppBuilderAppDataRecordLink(long ddlRecordId)
-		throws PortalException;
+		fetchDDLRecordAppBuilderAppDataRecordLink(long ddlRecordId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

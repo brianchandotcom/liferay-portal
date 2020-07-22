@@ -64,10 +64,12 @@ public class AppBuilderAppDataRecordLinkCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{appBuilderAppDataRecordLinkId=");
 		sb.append(appBuilderAppDataRecordLinkId);
+		sb.append(", groupId=");
+		sb.append(groupId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", appBuilderAppId=");
@@ -86,6 +88,7 @@ public class AppBuilderAppDataRecordLinkCacheModel
 
 		appBuilderAppDataRecordLinkImpl.setAppBuilderAppDataRecordLinkId(
 			appBuilderAppDataRecordLinkId);
+		appBuilderAppDataRecordLinkImpl.setGroupId(groupId);
 		appBuilderAppDataRecordLinkImpl.setCompanyId(companyId);
 		appBuilderAppDataRecordLinkImpl.setAppBuilderAppId(appBuilderAppId);
 		appBuilderAppDataRecordLinkImpl.setDdlRecordId(ddlRecordId);
@@ -99,6 +102,8 @@ public class AppBuilderAppDataRecordLinkCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		appBuilderAppDataRecordLinkId = objectInput.readLong();
 
+		groupId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
 
 		appBuilderAppId = objectInput.readLong();
@@ -110,6 +115,8 @@ public class AppBuilderAppDataRecordLinkCacheModel
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(appBuilderAppDataRecordLinkId);
 
+		objectOutput.writeLong(groupId);
+
 		objectOutput.writeLong(companyId);
 
 		objectOutput.writeLong(appBuilderAppId);
@@ -118,6 +125,7 @@ public class AppBuilderAppDataRecordLinkCacheModel
 	}
 
 	public long appBuilderAppDataRecordLinkId;
+	public long groupId;
 	public long companyId;
 	public long appBuilderAppId;
 	public long ddlRecordId;

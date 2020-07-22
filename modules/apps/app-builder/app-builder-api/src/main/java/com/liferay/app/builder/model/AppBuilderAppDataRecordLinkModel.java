@@ -70,6 +70,20 @@ public interface AppBuilderAppDataRecordLinkModel
 		long appBuilderAppDataRecordLinkId);
 
 	/**
+	 * Returns the group ID of this app builder app data record link.
+	 *
+	 * @return the group ID of this app builder app data record link
+	 */
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this app builder app data record link.
+	 *
+	 * @param groupId the group ID of this app builder app data record link
+	 */
+	public void setGroupId(long groupId);
+
+	/**
 	 * Returns the company ID of this app builder app data record link.
 	 *
 	 * @return the company ID of this app builder app data record link

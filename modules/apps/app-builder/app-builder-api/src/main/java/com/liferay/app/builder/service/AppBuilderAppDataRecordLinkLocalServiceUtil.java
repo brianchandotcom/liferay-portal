@@ -57,12 +57,26 @@ public class AppBuilderAppDataRecordLinkLocalServiceUtil {
 			appBuilderAppDataRecordLink);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addAppBuilderAppDataRecordLink(long, long, long, long)}
+	 */
+	@Deprecated
 	public static com.liferay.app.builder.model.AppBuilderAppDataRecordLink
 		addAppBuilderAppDataRecordLink(
 			long companyId, long appBuilderAppId, long ddlRecordId) {
 
 		return getService().addAppBuilderAppDataRecordLink(
 			companyId, appBuilderAppId, ddlRecordId);
+	}
+
+	public static com.liferay.app.builder.model.AppBuilderAppDataRecordLink
+		addAppBuilderAppDataRecordLink(
+			long groupId, long companyId, long appBuilderAppId,
+			long ddlRecordId) {
+
+		return getService().addAppBuilderAppDataRecordLink(
+			groupId, companyId, appBuilderAppId, ddlRecordId);
 	}
 
 	/**
@@ -237,8 +251,7 @@ public class AppBuilderAppDataRecordLinkLocalServiceUtil {
 	}
 
 	public static com.liferay.app.builder.model.AppBuilderAppDataRecordLink
-			fetchDDLRecordAppBuilderAppDataRecordLink(long ddlRecordId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		fetchDDLRecordAppBuilderAppDataRecordLink(long ddlRecordId) {
 
 		return getService().fetchDDLRecordAppBuilderAppDataRecordLink(
 			ddlRecordId);

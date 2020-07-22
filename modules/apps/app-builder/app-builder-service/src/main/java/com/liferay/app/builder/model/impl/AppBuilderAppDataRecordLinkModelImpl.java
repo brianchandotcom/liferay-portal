@@ -64,8 +64,8 @@ public class AppBuilderAppDataRecordLinkModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"appBuilderAppDataRecordLinkId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"appBuilderAppId", Types.BIGINT},
-		{"ddlRecordId", Types.BIGINT}
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"appBuilderAppId", Types.BIGINT}, {"ddlRecordId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -73,13 +73,14 @@ public class AppBuilderAppDataRecordLinkModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("appBuilderAppDataRecordLinkId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("appBuilderAppId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ddlRecordId", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AppBuilderAppDataRecordLink (appBuilderAppDataRecordLinkId LONG not null primary key,companyId LONG,appBuilderAppId LONG,ddlRecordId LONG)";
+		"create table AppBuilderAppDataRecordLink (appBuilderAppDataRecordLinkId LONG not null primary key,groupId LONG,companyId LONG,appBuilderAppId LONG,ddlRecordId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table AppBuilderAppDataRecordLink";
@@ -256,6 +257,12 @@ public class AppBuilderAppDataRecordLinkModelImpl
 			(BiConsumer<AppBuilderAppDataRecordLink, Long>)
 				AppBuilderAppDataRecordLink::setAppBuilderAppDataRecordLinkId);
 		attributeGetterFunctions.put(
+			"groupId", AppBuilderAppDataRecordLink::getGroupId);
+		attributeSetterBiConsumers.put(
+			"groupId",
+			(BiConsumer<AppBuilderAppDataRecordLink, Long>)
+				AppBuilderAppDataRecordLink::setGroupId);
+		attributeGetterFunctions.put(
 			"companyId", AppBuilderAppDataRecordLink::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
@@ -290,6 +297,16 @@ public class AppBuilderAppDataRecordLinkModelImpl
 		long appBuilderAppDataRecordLinkId) {
 
 		_appBuilderAppDataRecordLinkId = appBuilderAppDataRecordLinkId;
+	}
+
+	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
 	}
 
 	@Override
@@ -386,6 +403,7 @@ public class AppBuilderAppDataRecordLinkModelImpl
 
 		appBuilderAppDataRecordLinkImpl.setAppBuilderAppDataRecordLinkId(
 			getAppBuilderAppDataRecordLinkId());
+		appBuilderAppDataRecordLinkImpl.setGroupId(getGroupId());
 		appBuilderAppDataRecordLinkImpl.setCompanyId(getCompanyId());
 		appBuilderAppDataRecordLinkImpl.setAppBuilderAppId(
 			getAppBuilderAppId());
@@ -487,6 +505,8 @@ public class AppBuilderAppDataRecordLinkModelImpl
 		appBuilderAppDataRecordLinkCacheModel.appBuilderAppDataRecordLinkId =
 			getAppBuilderAppDataRecordLinkId();
 
+		appBuilderAppDataRecordLinkCacheModel.groupId = getGroupId();
+
 		appBuilderAppDataRecordLinkCacheModel.companyId = getCompanyId();
 
 		appBuilderAppDataRecordLinkCacheModel.appBuilderAppId =
@@ -574,6 +594,7 @@ public class AppBuilderAppDataRecordLinkModelImpl
 	}
 
 	private long _appBuilderAppDataRecordLinkId;
+	private long _groupId;
 	private long _companyId;
 	private long _appBuilderAppId;
 	private long _originalAppBuilderAppId;

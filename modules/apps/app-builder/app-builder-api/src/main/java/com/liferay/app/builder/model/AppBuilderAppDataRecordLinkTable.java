@@ -36,6 +36,8 @@ public class AppBuilderAppDataRecordLinkTable
 		appBuilderAppDataRecordLinkId = createColumn(
 			"appBuilderAppDataRecordLinkId", Long.class, Types.BIGINT,
 			Column.FLAG_PRIMARY);
+	public final Column<AppBuilderAppDataRecordLinkTable, Long> groupId =
+		createColumn("groupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<AppBuilderAppDataRecordLinkTable, Long> companyId =
 		createColumn(
 			"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);

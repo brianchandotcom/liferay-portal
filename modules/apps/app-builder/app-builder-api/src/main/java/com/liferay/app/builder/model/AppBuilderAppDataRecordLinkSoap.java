@@ -35,6 +35,7 @@ public class AppBuilderAppDataRecordLinkSoap implements Serializable {
 
 		soapModel.setAppBuilderAppDataRecordLinkId(
 			model.getAppBuilderAppDataRecordLinkId());
+		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setAppBuilderAppId(model.getAppBuilderAppId());
 		soapModel.setDdlRecordId(model.getDdlRecordId());
@@ -110,6 +111,14 @@ public class AppBuilderAppDataRecordLinkSoap implements Serializable {
 		_appBuilderAppDataRecordLinkId = appBuilderAppDataRecordLinkId;
 	}
 
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -135,6 +144,7 @@ public class AppBuilderAppDataRecordLinkSoap implements Serializable {
 	}
 
 	private long _appBuilderAppDataRecordLinkId;
+	private long _groupId;
 	private long _companyId;
 	private long _appBuilderAppId;
 	private long _ddlRecordId;

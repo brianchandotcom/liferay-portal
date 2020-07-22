@@ -38,6 +38,21 @@ public class TranslationEntryLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.translation.service.impl.TranslationEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.translation.model.TranslationEntry
+			addOrUpdateTranslationEntry(
+				long groupId,
+				com.liferay.info.item.InfoItemClassPKReference
+					infoItemClassPKReference,
+				com.liferay.info.item.InfoItemFieldValues infoItemFieldValues,
+				String languageId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws java.io.IOException {
+
+		return getService().addOrUpdateTranslationEntry(
+			groupId, infoItemClassPKReference, infoItemFieldValues, languageId,
+			serviceContext);
+	}
+
+	public static com.liferay.translation.model.TranslationEntry
 		addOrUpdateTranslationEntry(
 			long groupId, String className, long classPK, String languageId,
 			String content, String contentType,
@@ -271,6 +286,15 @@ public class TranslationEntryLocalServiceUtil {
 			getIndexableActionableDynamicQuery() {
 
 		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	public static com.liferay.info.item.InfoItemFieldValues
+			getInfoItemFieldValues(
+				com.liferay.translation.model.TranslationEntry translationEntry)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   java.io.IOException {
+
+		return getService().getInfoItemFieldValues(translationEntry);
 	}
 
 	/**

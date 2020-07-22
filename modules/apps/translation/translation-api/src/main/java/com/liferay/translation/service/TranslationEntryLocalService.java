@@ -15,6 +15,8 @@
 package com.liferay.translation.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.info.item.InfoItemClassPKReference;
+import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -35,6 +37,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.translation.model.TranslationEntry;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.List;
@@ -64,6 +67,12 @@ public interface TranslationEntryLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link TranslationEntryLocalServiceUtil} to access the translation entry local service. Add custom service methods to <code>com.liferay.translation.service.impl.TranslationEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public TranslationEntry addOrUpdateTranslationEntry(
+			long groupId, InfoItemClassPKReference infoItemClassPKReference,
+			InfoItemFieldValues infoItemFieldValues, String languageId,
+			ServiceContext serviceContext)
+		throws IOException;
+
 	public TranslationEntry addOrUpdateTranslationEntry(
 		long groupId, String className, long classPK, String languageId,
 		String content, String contentType, ServiceContext serviceContext);
@@ -229,6 +238,11 @@ public interface TranslationEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public InfoItemFieldValues getInfoItemFieldValues(
+			TranslationEntry translationEntry)
+		throws IOException, PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.

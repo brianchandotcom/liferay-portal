@@ -35,6 +35,22 @@ public class TranslationEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.translation.model.TranslationEntry
+			addOrUpdateTranslationEntry(
+				long groupId,
+				com.liferay.info.item.InfoItemClassPKReference
+					infoItemClassPKReference,
+				com.liferay.info.item.InfoItemFieldValues infoItemFieldValues,
+				String languageId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws java.io.IOException {
+
+		return _translationEntryLocalService.addOrUpdateTranslationEntry(
+			groupId, infoItemClassPKReference, infoItemFieldValues, languageId,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.translation.model.TranslationEntry
 		addOrUpdateTranslationEntry(
 			long groupId, String className, long classPK, String languageId,
 			String content, String contentType,
@@ -290,6 +306,16 @@ public class TranslationEntryLocalServiceWrapper
 
 		return _translationEntryLocalService.
 			getIndexableActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.info.item.InfoItemFieldValues getInfoItemFieldValues(
+			com.liferay.translation.model.TranslationEntry translationEntry)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   java.io.IOException {
+
+		return _translationEntryLocalService.getInfoItemFieldValues(
+			translationEntry);
 	}
 
 	/**

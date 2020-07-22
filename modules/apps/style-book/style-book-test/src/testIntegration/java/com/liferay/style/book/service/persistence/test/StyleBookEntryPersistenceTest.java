@@ -141,13 +141,14 @@ public class StyleBookEntryPersistenceTest {
 		newStyleBookEntry.setDefaultStyleBookEntry(
 			RandomTestUtil.randomBoolean());
 
+		newStyleBookEntry.setFrontendTokensValues(
+			RandomTestUtil.randomString());
+
 		newStyleBookEntry.setName(RandomTestUtil.randomString());
 
 		newStyleBookEntry.setPreviewFileEntryId(RandomTestUtil.nextLong());
 
 		newStyleBookEntry.setStyleBookEntryKey(RandomTestUtil.randomString());
-
-		newStyleBookEntry.setTokensValues(RandomTestUtil.randomString());
 
 		_styleBookEntries.add(_persistence.update(newStyleBookEntry));
 
@@ -180,6 +181,9 @@ public class StyleBookEntryPersistenceTest {
 			existingStyleBookEntry.isDefaultStyleBookEntry(),
 			newStyleBookEntry.isDefaultStyleBookEntry());
 		Assert.assertEquals(
+			existingStyleBookEntry.getFrontendTokensValues(),
+			newStyleBookEntry.getFrontendTokensValues());
+		Assert.assertEquals(
 			existingStyleBookEntry.getName(), newStyleBookEntry.getName());
 		Assert.assertEquals(
 			existingStyleBookEntry.getPreviewFileEntryId(),
@@ -187,9 +191,6 @@ public class StyleBookEntryPersistenceTest {
 		Assert.assertEquals(
 			existingStyleBookEntry.getStyleBookEntryKey(),
 			newStyleBookEntry.getStyleBookEntryKey());
-		Assert.assertEquals(
-			existingStyleBookEntry.getTokensValues(),
-			newStyleBookEntry.getTokensValues());
 	}
 
 	@Test
@@ -567,13 +568,13 @@ public class StyleBookEntryPersistenceTest {
 
 		styleBookEntry.setDefaultStyleBookEntry(RandomTestUtil.randomBoolean());
 
+		styleBookEntry.setFrontendTokensValues(RandomTestUtil.randomString());
+
 		styleBookEntry.setName(RandomTestUtil.randomString());
 
 		styleBookEntry.setPreviewFileEntryId(RandomTestUtil.nextLong());
 
 		styleBookEntry.setStyleBookEntryKey(RandomTestUtil.randomString());
-
-		styleBookEntry.setTokensValues(RandomTestUtil.randomString());
 
 		_styleBookEntries.add(_persistence.update(styleBookEntry));
 

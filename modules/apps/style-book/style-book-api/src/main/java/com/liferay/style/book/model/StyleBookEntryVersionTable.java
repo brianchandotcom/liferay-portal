@@ -62,6 +62,10 @@ public class StyleBookEntryVersionTable
 		defaultStyleBookEntry = createColumn(
 			"defaultStyleBookEntry", Boolean.class, Types.BOOLEAN,
 			Column.FLAG_DEFAULT);
+	public final Column<StyleBookEntryVersionTable, Clob> frontendTokensValues =
+		createColumn(
+			"frontendTokensValues", Clob.class, Types.CLOB,
+			Column.FLAG_DEFAULT);
 	public final Column<StyleBookEntryVersionTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<StyleBookEntryVersionTable, Long> previewFileEntryId =
@@ -72,9 +76,6 @@ public class StyleBookEntryVersionTable
 		createColumn(
 			"styleBookEntryKey", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
-	public final Column<StyleBookEntryVersionTable, Clob> tokensValues =
-		createColumn(
-			"tokensValues", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 
 	private StyleBookEntryVersionTable() {
 		super("StyleBookEntryVersion", StyleBookEntryVersionTable::new);

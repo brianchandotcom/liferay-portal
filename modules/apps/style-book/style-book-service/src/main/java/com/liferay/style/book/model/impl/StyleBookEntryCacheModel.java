@@ -97,14 +97,14 @@ public class StyleBookEntryCacheModel
 		sb.append(createDate);
 		sb.append(", defaultStyleBookEntry=");
 		sb.append(defaultStyleBookEntry);
+		sb.append(", frontendTokensValues=");
+		sb.append(frontendTokensValues);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", previewFileEntryId=");
 		sb.append(previewFileEntryId);
 		sb.append(", styleBookEntryKey=");
 		sb.append(styleBookEntryKey);
-		sb.append(", tokensValues=");
-		sb.append(tokensValues);
 		sb.append("}");
 
 		return sb.toString();
@@ -138,6 +138,13 @@ public class StyleBookEntryCacheModel
 
 		styleBookEntryImpl.setDefaultStyleBookEntry(defaultStyleBookEntry);
 
+		if (frontendTokensValues == null) {
+			styleBookEntryImpl.setFrontendTokensValues("");
+		}
+		else {
+			styleBookEntryImpl.setFrontendTokensValues(frontendTokensValues);
+		}
+
 		if (name == null) {
 			styleBookEntryImpl.setName("");
 		}
@@ -152,13 +159,6 @@ public class StyleBookEntryCacheModel
 		}
 		else {
 			styleBookEntryImpl.setStyleBookEntryKey(styleBookEntryKey);
-		}
-
-		if (tokensValues == null) {
-			styleBookEntryImpl.setTokensValues("");
-		}
-		else {
-			styleBookEntryImpl.setTokensValues(tokensValues);
 		}
 
 		styleBookEntryImpl.resetOriginalValues();
@@ -187,11 +187,11 @@ public class StyleBookEntryCacheModel
 		createDate = objectInput.readLong();
 
 		defaultStyleBookEntry = objectInput.readBoolean();
+		frontendTokensValues = (String)objectInput.readObject();
 		name = objectInput.readUTF();
 
 		previewFileEntryId = objectInput.readLong();
 		styleBookEntryKey = objectInput.readUTF();
-		tokensValues = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -221,6 +221,13 @@ public class StyleBookEntryCacheModel
 
 		objectOutput.writeBoolean(defaultStyleBookEntry);
 
+		if (frontendTokensValues == null) {
+			objectOutput.writeObject("");
+		}
+		else {
+			objectOutput.writeObject(frontendTokensValues);
+		}
+
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
@@ -236,13 +243,6 @@ public class StyleBookEntryCacheModel
 		else {
 			objectOutput.writeUTF(styleBookEntryKey);
 		}
-
-		if (tokensValues == null) {
-			objectOutput.writeObject("");
-		}
-		else {
-			objectOutput.writeObject(tokensValues);
-		}
 	}
 
 	public long mvccVersion;
@@ -255,9 +255,9 @@ public class StyleBookEntryCacheModel
 	public String userName;
 	public long createDate;
 	public boolean defaultStyleBookEntry;
+	public String frontendTokensValues;
 	public String name;
 	public long previewFileEntryId;
 	public String styleBookEntryKey;
-	public String tokensValues;
 
 }

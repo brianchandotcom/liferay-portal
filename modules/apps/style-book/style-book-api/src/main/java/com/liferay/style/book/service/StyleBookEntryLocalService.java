@@ -72,8 +72,8 @@ public interface StyleBookEntryLocalService
 		throws PortalException;
 
 	public StyleBookEntry addStyleBookEntry(
-			long userId, long groupId, String name, String styleBookEntryKey,
-			String tokensValues, ServiceContext serviceContext)
+			long userId, long groupId, String frontendTokensValues, String name,
+			String styleBookEntryKey, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -383,6 +383,10 @@ public interface StyleBookEntryLocalService
 	public StyleBookEntry updateDraft(StyleBookEntry draftStyleBookEntry)
 		throws PortalException;
 
+	public StyleBookEntry updateFrontendTokensValues(
+			long styleBookEntryId, String frontendTokensValues)
+		throws PortalException;
+
 	public StyleBookEntry updateName(long styleBookEntryId, String name)
 		throws PortalException;
 
@@ -391,7 +395,7 @@ public interface StyleBookEntryLocalService
 		throws PortalException;
 
 	public StyleBookEntry updateStyleBookEntry(
-			long styleBookEntryId, String name, String tokensValues)
+			long styleBookEntryId, String frontendTokensValues, String name)
 		throws PortalException;
 
 	/**
@@ -407,10 +411,6 @@ public interface StyleBookEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public StyleBookEntry updateStyleBookEntry(
 			StyleBookEntry draftStyleBookEntry)
-		throws PortalException;
-
-	public StyleBookEntry updateTokensValues(
-			long styleBookEntryId, String tokensValues)
 		throws PortalException;
 
 }

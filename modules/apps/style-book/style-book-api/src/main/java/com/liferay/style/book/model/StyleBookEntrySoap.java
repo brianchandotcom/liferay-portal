@@ -40,10 +40,10 @@ public class StyleBookEntrySoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setDefaultStyleBookEntry(model.isDefaultStyleBookEntry());
+		soapModel.setFrontendTokensValues(model.getFrontendTokensValues());
 		soapModel.setName(model.getName());
 		soapModel.setPreviewFileEntryId(model.getPreviewFileEntryId());
 		soapModel.setStyleBookEntryKey(model.getStyleBookEntryKey());
-		soapModel.setTokensValues(model.getTokensValues());
 
 		return soapModel;
 	}
@@ -178,6 +178,14 @@ public class StyleBookEntrySoap implements Serializable {
 		_defaultStyleBookEntry = defaultStyleBookEntry;
 	}
 
+	public String getFrontendTokensValues() {
+		return _frontendTokensValues;
+	}
+
+	public void setFrontendTokensValues(String frontendTokensValues) {
+		_frontendTokensValues = frontendTokensValues;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -202,14 +210,6 @@ public class StyleBookEntrySoap implements Serializable {
 		_styleBookEntryKey = styleBookEntryKey;
 	}
 
-	public String getTokensValues() {
-		return _tokensValues;
-	}
-
-	public void setTokensValues(String tokensValues) {
-		_tokensValues = tokensValues;
-	}
-
 	private long _mvccVersion;
 	private long _headId;
 	private long _styleBookEntryId;
@@ -219,9 +219,9 @@ public class StyleBookEntrySoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private boolean _defaultStyleBookEntry;
+	private String _frontendTokensValues;
 	private String _name;
 	private long _previewFileEntryId;
 	private String _styleBookEntryKey;
-	private String _tokensValues;
 
 }

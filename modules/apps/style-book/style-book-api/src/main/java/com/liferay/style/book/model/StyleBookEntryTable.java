@@ -57,6 +57,10 @@ public class StyleBookEntryTable extends BaseTable<StyleBookEntryTable> {
 		createColumn(
 			"defaultStyleBookEntry", Boolean.class, Types.BOOLEAN,
 			Column.FLAG_DEFAULT);
+	public final Column<StyleBookEntryTable, Clob> frontendTokensValues =
+		createColumn(
+			"frontendTokensValues", Clob.class, Types.CLOB,
+			Column.FLAG_DEFAULT);
 	public final Column<StyleBookEntryTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<StyleBookEntryTable, Long> previewFileEntryId =
@@ -67,8 +71,6 @@ public class StyleBookEntryTable extends BaseTable<StyleBookEntryTable> {
 		createColumn(
 			"styleBookEntryKey", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
-	public final Column<StyleBookEntryTable, Clob> tokensValues = createColumn(
-		"tokensValues", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 
 	private StyleBookEntryTable() {
 		super("StyleBookEntry", StyleBookEntryTable::new);

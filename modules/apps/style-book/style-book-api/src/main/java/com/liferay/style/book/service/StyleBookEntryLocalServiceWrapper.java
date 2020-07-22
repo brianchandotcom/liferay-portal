@@ -45,13 +45,13 @@ public class StyleBookEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.style.book.model.StyleBookEntry addStyleBookEntry(
-			long userId, long groupId, String name, String styleBookEntryKey,
-			String tokensValues,
+			long userId, long groupId, String frontendTokensValues, String name,
+			String styleBookEntryKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _styleBookEntryLocalService.addStyleBookEntry(
-			userId, groupId, name, styleBookEntryKey, tokensValues,
+			userId, groupId, frontendTokensValues, name, styleBookEntryKey,
 			serviceContext);
 	}
 
@@ -541,6 +541,16 @@ public class StyleBookEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.style.book.model.StyleBookEntry
+			updateFrontendTokensValues(
+				long styleBookEntryId, String frontendTokensValues)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookEntryLocalService.updateFrontendTokensValues(
+			styleBookEntryId, frontendTokensValues);
+	}
+
+	@Override
 	public com.liferay.style.book.model.StyleBookEntry updateName(
 			long styleBookEntryId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -559,11 +569,11 @@ public class StyleBookEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.style.book.model.StyleBookEntry updateStyleBookEntry(
-			long styleBookEntryId, String name, String tokensValues)
+			long styleBookEntryId, String frontendTokensValues, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _styleBookEntryLocalService.updateStyleBookEntry(
-			styleBookEntryId, name, tokensValues);
+			styleBookEntryId, frontendTokensValues, name);
 	}
 
 	/**
@@ -583,15 +593,6 @@ public class StyleBookEntryLocalServiceWrapper
 
 		return _styleBookEntryLocalService.updateStyleBookEntry(
 			draftStyleBookEntry);
-	}
-
-	@Override
-	public com.liferay.style.book.model.StyleBookEntry updateTokensValues(
-			long styleBookEntryId, String tokensValues)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _styleBookEntryLocalService.updateTokensValues(
-			styleBookEntryId, tokensValues);
 	}
 
 	@Override

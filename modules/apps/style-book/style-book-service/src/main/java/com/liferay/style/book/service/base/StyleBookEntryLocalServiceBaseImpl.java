@@ -795,13 +795,13 @@ public abstract class StyleBookEntryLocalServiceBaseImpl
 			publishedStyleBookEntry.getCreateDate());
 		draftStyleBookEntry.setDefaultStyleBookEntry(
 			publishedStyleBookEntry.getDefaultStyleBookEntry());
+		draftStyleBookEntry.setFrontendTokensValues(
+			publishedStyleBookEntry.getFrontendTokensValues());
 		draftStyleBookEntry.setName(publishedStyleBookEntry.getName());
 		draftStyleBookEntry.setPreviewFileEntryId(
 			publishedStyleBookEntry.getPreviewFileEntryId());
 		draftStyleBookEntry.setStyleBookEntryKey(
 			publishedStyleBookEntry.getStyleBookEntryKey());
-		draftStyleBookEntry.setTokensValues(
-			publishedStyleBookEntry.getTokensValues());
 
 		draftStyleBookEntry.resetOriginalValues();
 

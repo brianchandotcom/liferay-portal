@@ -142,6 +142,9 @@ public class StyleBookEntryVersionPersistenceTest {
 		newStyleBookEntryVersion.setDefaultStyleBookEntry(
 			RandomTestUtil.randomBoolean());
 
+		newStyleBookEntryVersion.setFrontendTokensValues(
+			RandomTestUtil.randomString());
+
 		newStyleBookEntryVersion.setName(RandomTestUtil.randomString());
 
 		newStyleBookEntryVersion.setPreviewFileEntryId(
@@ -149,8 +152,6 @@ public class StyleBookEntryVersionPersistenceTest {
 
 		newStyleBookEntryVersion.setStyleBookEntryKey(
 			RandomTestUtil.randomString());
-
-		newStyleBookEntryVersion.setTokensValues(RandomTestUtil.randomString());
 
 		_styleBookEntryVersions.add(
 			_persistence.update(newStyleBookEntryVersion));
@@ -188,6 +189,9 @@ public class StyleBookEntryVersionPersistenceTest {
 			existingStyleBookEntryVersion.isDefaultStyleBookEntry(),
 			newStyleBookEntryVersion.isDefaultStyleBookEntry());
 		Assert.assertEquals(
+			existingStyleBookEntryVersion.getFrontendTokensValues(),
+			newStyleBookEntryVersion.getFrontendTokensValues());
+		Assert.assertEquals(
 			existingStyleBookEntryVersion.getName(),
 			newStyleBookEntryVersion.getName());
 		Assert.assertEquals(
@@ -196,9 +200,6 @@ public class StyleBookEntryVersionPersistenceTest {
 		Assert.assertEquals(
 			existingStyleBookEntryVersion.getStyleBookEntryKey(),
 			newStyleBookEntryVersion.getStyleBookEntryKey());
-		Assert.assertEquals(
-			existingStyleBookEntryVersion.getTokensValues(),
-			newStyleBookEntryVersion.getTokensValues());
 	}
 
 	@Test
@@ -594,14 +595,15 @@ public class StyleBookEntryVersionPersistenceTest {
 		styleBookEntryVersion.setDefaultStyleBookEntry(
 			RandomTestUtil.randomBoolean());
 
+		styleBookEntryVersion.setFrontendTokensValues(
+			RandomTestUtil.randomString());
+
 		styleBookEntryVersion.setName(RandomTestUtil.randomString());
 
 		styleBookEntryVersion.setPreviewFileEntryId(RandomTestUtil.nextLong());
 
 		styleBookEntryVersion.setStyleBookEntryKey(
 			RandomTestUtil.randomString());
-
-		styleBookEntryVersion.setTokensValues(RandomTestUtil.randomString());
 
 		_styleBookEntryVersions.add(_persistence.update(styleBookEntryVersion));
 

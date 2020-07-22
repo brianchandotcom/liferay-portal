@@ -73,9 +73,10 @@ public class StyleBookEntryVersionModelImpl
 		{"styleBookEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"defaultStyleBookEntry", Types.BOOLEAN}, {"name", Types.VARCHAR},
+		{"defaultStyleBookEntry", Types.BOOLEAN},
+		{"frontendTokensValues", Types.CLOB}, {"name", Types.VARCHAR},
 		{"previewFileEntryId", Types.BIGINT},
-		{"styleBookEntryKey", Types.VARCHAR}, {"tokensValues", Types.CLOB}
+		{"styleBookEntryKey", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -91,14 +92,14 @@ public class StyleBookEntryVersionModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("defaultStyleBookEntry", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("frontendTokensValues", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("previewFileEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("styleBookEntryKey", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("tokensValues", Types.CLOB);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table StyleBookEntryVersion (styleBookEntryVersionId LONG not null primary key,version INTEGER,styleBookEntryId LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,defaultStyleBookEntry BOOLEAN,name VARCHAR(75) null,previewFileEntryId LONG,styleBookEntryKey VARCHAR(75) null,tokensValues TEXT null)";
+		"create table StyleBookEntryVersion (styleBookEntryVersionId LONG not null primary key,version INTEGER,styleBookEntryId LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,defaultStyleBookEntry BOOLEAN,frontendTokensValues TEXT null,name VARCHAR(75) null,previewFileEntryId LONG,styleBookEntryKey VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table StyleBookEntryVersion";
@@ -326,6 +327,13 @@ public class StyleBookEntryVersionModelImpl
 			"defaultStyleBookEntry",
 			(BiConsumer<StyleBookEntryVersion, Boolean>)
 				StyleBookEntryVersion::setDefaultStyleBookEntry);
+		attributeGetterFunctions.put(
+			"frontendTokensValues",
+			StyleBookEntryVersion::getFrontendTokensValues);
+		attributeSetterBiConsumers.put(
+			"frontendTokensValues",
+			(BiConsumer<StyleBookEntryVersion, String>)
+				StyleBookEntryVersion::setFrontendTokensValues);
 		attributeGetterFunctions.put("name", StyleBookEntryVersion::getName);
 		attributeSetterBiConsumers.put(
 			"name",
@@ -343,12 +351,6 @@ public class StyleBookEntryVersionModelImpl
 			"styleBookEntryKey",
 			(BiConsumer<StyleBookEntryVersion, String>)
 				StyleBookEntryVersion::setStyleBookEntryKey);
-		attributeGetterFunctions.put(
-			"tokensValues", StyleBookEntryVersion::getTokensValues);
-		attributeSetterBiConsumers.put(
-			"tokensValues",
-			(BiConsumer<StyleBookEntryVersion, String>)
-				StyleBookEntryVersion::setTokensValues);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -369,10 +371,10 @@ public class StyleBookEntryVersionModelImpl
 		styleBookEntry.setUserName(getUserName());
 		styleBookEntry.setCreateDate(getCreateDate());
 		styleBookEntry.setDefaultStyleBookEntry(getDefaultStyleBookEntry());
+		styleBookEntry.setFrontendTokensValues(getFrontendTokensValues());
 		styleBookEntry.setName(getName());
 		styleBookEntry.setPreviewFileEntryId(getPreviewFileEntryId());
 		styleBookEntry.setStyleBookEntryKey(getStyleBookEntryKey());
-		styleBookEntry.setTokensValues(getTokensValues());
 	}
 
 	@Override
@@ -557,6 +559,21 @@ public class StyleBookEntryVersionModelImpl
 	}
 
 	@Override
+	public String getFrontendTokensValues() {
+		if (_frontendTokensValues == null) {
+			return "";
+		}
+		else {
+			return _frontendTokensValues;
+		}
+	}
+
+	@Override
+	public void setFrontendTokensValues(String frontendTokensValues) {
+		_frontendTokensValues = frontendTokensValues;
+	}
+
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return "";
@@ -616,21 +633,6 @@ public class StyleBookEntryVersionModelImpl
 		return GetterUtil.getString(_originalStyleBookEntryKey);
 	}
 
-	@Override
-	public String getTokensValues() {
-		if (_tokensValues == null) {
-			return "";
-		}
-		else {
-			return _tokensValues;
-		}
-	}
-
-	@Override
-	public void setTokensValues(String tokensValues) {
-		_tokensValues = tokensValues;
-	}
-
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -680,11 +682,12 @@ public class StyleBookEntryVersionModelImpl
 		styleBookEntryVersionImpl.setCreateDate(getCreateDate());
 		styleBookEntryVersionImpl.setDefaultStyleBookEntry(
 			isDefaultStyleBookEntry());
+		styleBookEntryVersionImpl.setFrontendTokensValues(
+			getFrontendTokensValues());
 		styleBookEntryVersionImpl.setName(getName());
 		styleBookEntryVersionImpl.setPreviewFileEntryId(
 			getPreviewFileEntryId());
 		styleBookEntryVersionImpl.setStyleBookEntryKey(getStyleBookEntryKey());
-		styleBookEntryVersionImpl.setTokensValues(getTokensValues());
 
 		styleBookEntryVersionImpl.resetOriginalValues();
 
@@ -833,6 +836,18 @@ public class StyleBookEntryVersionModelImpl
 		styleBookEntryVersionCacheModel.defaultStyleBookEntry =
 			isDefaultStyleBookEntry();
 
+		styleBookEntryVersionCacheModel.frontendTokensValues =
+			getFrontendTokensValues();
+
+		String frontendTokensValues =
+			styleBookEntryVersionCacheModel.frontendTokensValues;
+
+		if ((frontendTokensValues != null) &&
+			(frontendTokensValues.length() == 0)) {
+
+			styleBookEntryVersionCacheModel.frontendTokensValues = null;
+		}
+
 		styleBookEntryVersionCacheModel.name = getName();
 
 		String name = styleBookEntryVersionCacheModel.name;
@@ -852,14 +867,6 @@ public class StyleBookEntryVersionModelImpl
 
 		if ((styleBookEntryKey != null) && (styleBookEntryKey.length() == 0)) {
 			styleBookEntryVersionCacheModel.styleBookEntryKey = null;
-		}
-
-		styleBookEntryVersionCacheModel.tokensValues = getTokensValues();
-
-		String tokensValues = styleBookEntryVersionCacheModel.tokensValues;
-
-		if ((tokensValues != null) && (tokensValues.length() == 0)) {
-			styleBookEntryVersionCacheModel.tokensValues = null;
 		}
 
 		return styleBookEntryVersionCacheModel;
@@ -954,12 +961,12 @@ public class StyleBookEntryVersionModelImpl
 	private boolean _defaultStyleBookEntry;
 	private boolean _originalDefaultStyleBookEntry;
 	private boolean _setOriginalDefaultStyleBookEntry;
+	private String _frontendTokensValues;
 	private String _name;
 	private String _originalName;
 	private long _previewFileEntryId;
 	private String _styleBookEntryKey;
 	private String _originalStyleBookEntryKey;
-	private String _tokensValues;
 	private long _columnBitmask;
 	private StyleBookEntryVersion _escapedModel;
 

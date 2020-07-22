@@ -217,6 +217,21 @@ public interface StyleBookEntryModel
 	public void setDefaultStyleBookEntry(boolean defaultStyleBookEntry);
 
 	/**
+	 * Returns the frontend tokens values of this style book entry.
+	 *
+	 * @return the frontend tokens values of this style book entry
+	 */
+	@AutoEscape
+	public String getFrontendTokensValues();
+
+	/**
+	 * Sets the frontend tokens values of this style book entry.
+	 *
+	 * @param frontendTokensValues the frontend tokens values of this style book entry
+	 */
+	public void setFrontendTokensValues(String frontendTokensValues);
+
+	/**
 	 * Returns the name of this style book entry.
 	 *
 	 * @return the name of this style book entry
@@ -259,20 +274,5 @@ public interface StyleBookEntryModel
 	 * @param styleBookEntryKey the style book entry key of this style book entry
 	 */
 	public void setStyleBookEntryKey(String styleBookEntryKey);
-
-	/**
-	 * Returns the tokens values of this style book entry.
-	 *
-	 * @return the tokens values of this style book entry
-	 */
-	@AutoEscape
-	public String getTokensValues();
-
-	/**
-	 * Sets the tokens values of this style book entry.
-	 *
-	 * @param tokensValues the tokens values of this style book entry
-	 */
-	public void setTokensValues(String tokensValues);
 
 }

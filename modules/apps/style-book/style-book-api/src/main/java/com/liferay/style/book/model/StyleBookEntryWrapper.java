@@ -51,10 +51,10 @@ public class StyleBookEntryWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("defaultStyleBookEntry", isDefaultStyleBookEntry());
+		attributes.put("frontendTokensValues", getFrontendTokensValues());
 		attributes.put("name", getName());
 		attributes.put("previewFileEntryId", getPreviewFileEntryId());
 		attributes.put("styleBookEntryKey", getStyleBookEntryKey());
-		attributes.put("tokensValues", getTokensValues());
 
 		return attributes;
 	}
@@ -116,6 +116,13 @@ public class StyleBookEntryWrapper
 			setDefaultStyleBookEntry(defaultStyleBookEntry);
 		}
 
+		String frontendTokensValues = (String)attributes.get(
+			"frontendTokensValues");
+
+		if (frontendTokensValues != null) {
+			setFrontendTokensValues(frontendTokensValues);
+		}
+
 		String name = (String)attributes.get("name");
 
 		if (name != null) {
@@ -132,12 +139,6 @@ public class StyleBookEntryWrapper
 
 		if (styleBookEntryKey != null) {
 			setStyleBookEntryKey(styleBookEntryKey);
-		}
-
-		String tokensValues = (String)attributes.get("tokensValues");
-
-		if (tokensValues != null) {
-			setTokensValues(tokensValues);
 		}
 	}
 
@@ -169,6 +170,16 @@ public class StyleBookEntryWrapper
 	@Override
 	public boolean getDefaultStyleBookEntry() {
 		return model.getDefaultStyleBookEntry();
+	}
+
+	/**
+	 * Returns the frontend tokens values of this style book entry.
+	 *
+	 * @return the frontend tokens values of this style book entry
+	 */
+	@Override
+	public String getFrontendTokensValues() {
+		return model.getFrontendTokensValues();
 	}
 
 	/**
@@ -259,16 +270,6 @@ public class StyleBookEntryWrapper
 	}
 
 	/**
-	 * Returns the tokens values of this style book entry.
-	 *
-	 * @return the tokens values of this style book entry
-	 */
-	@Override
-	public String getTokensValues() {
-		return model.getTokensValues();
-	}
-
-	/**
 	 * Returns the user ID of this style book entry.
 	 *
 	 * @return the user ID of this style book entry
@@ -352,6 +353,16 @@ public class StyleBookEntryWrapper
 	}
 
 	/**
+	 * Sets the frontend tokens values of this style book entry.
+	 *
+	 * @param frontendTokensValues the frontend tokens values of this style book entry
+	 */
+	@Override
+	public void setFrontendTokensValues(String frontendTokensValues) {
+		model.setFrontendTokensValues(frontendTokensValues);
+	}
+
+	/**
 	 * Sets the group ID of this style book entry.
 	 *
 	 * @param groupId the group ID of this style book entry
@@ -429,16 +440,6 @@ public class StyleBookEntryWrapper
 	@Override
 	public void setStyleBookEntryKey(String styleBookEntryKey) {
 		model.setStyleBookEntryKey(styleBookEntryKey);
-	}
-
-	/**
-	 * Sets the tokens values of this style book entry.
-	 *
-	 * @param tokensValues the tokens values of this style book entry
-	 */
-	@Override
-	public void setTokensValues(String tokensValues) {
-		model.setTokensValues(tokensValues);
 	}
 
 	/**

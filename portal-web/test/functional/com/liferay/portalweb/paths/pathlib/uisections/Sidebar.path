@@ -29,6 +29,11 @@
     <td></td>
 </tr>
 <tr>
+    <td>DDM_ANY</td>
+    <td>//div[contains(@class,'sidebar')]//p[contains(.,'${key_text}')]//following-sibling::input</td>
+    <td></td>
+</tr>
+<tr>
     <td>DDM_LABEL</td>
     <td>//div[contains(@class,'sidebar')]//p[contains(.,'Label')]//following-sibling::input</td>
     <td></td>

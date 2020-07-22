@@ -108,6 +108,60 @@ definition {
 		}
 	}
 
+	macro editFieldRepeatable {
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "${fieldFieldLabel}",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = "${fieldFieldLabel}");
+
+		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Advanced")) {
+			Navigator.gotoNavTab(navTab = "Advanced");
+		}
+
+		Check.checkToggleSwitch(
+			checkboxName = "Repeatable",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+	}
+
+	macro editFieldTip {
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "${fieldFieldLabel}",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = "${fieldFieldLabel}");
+
+		if (isSet(fieldPlaceholder)) {
+			var key_fieldFieldLabel = "${fieldFieldLabel}";
+			var key_text = "Placeholder";
+
+			Click(locator1 = "Sidebar#DDM_ANY");
+
+			Type(
+				locator1 = "Sidebar#DDM_ANY",
+				value1 = "${fieldPlaceholder}");
+
+			AssertTextEquals(
+				locator1 = "DDMEditStructure#SETTINGS_TEXT",
+				value1 = "${fieldPlaceholder}");
+		}
+
+		if (isSet(fieldHelp)) {
+			var key_fieldFieldLabel = "${fieldFieldLabel}";
+			var key_text = "Help";
+
+			Click(locator1 = "Sidebar#DDM_ANY");
+
+			Type(
+				locator1 = "Sidebar#DDM_ANY",
+				value1 = "${fieldHelp}");
+
+			AssertTextEquals(
+				locator1 = "DDMEditStructure#SETTINGS_TEXT",
+				value1 = "${fieldHelp}");
+		}
+
+		Click(locator1 = "Sidebar#BACK");
+	}
+
 	macro viewField {
 		var key_fieldFieldLabel = "${fieldFieldLabel}";
 		var key_text = "${fieldName}";

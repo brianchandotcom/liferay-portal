@@ -102,6 +102,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SETTINGS_TEXT</td>
+	<td>//p[contains(.,'${key_fieldFieldLabel}')]//following-sibling::span[contains(@class,'form-text')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SETTINGS_TIP</td>
 	<td>//td[contains(@class,'table-col-name') and contains(.,'Tip')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>

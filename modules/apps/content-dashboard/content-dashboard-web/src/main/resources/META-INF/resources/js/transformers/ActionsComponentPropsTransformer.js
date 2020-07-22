@@ -39,9 +39,9 @@ export default function propsTransformer({
 			render(
 				SidebarPanel,
 				{
-					View,
 					fetchURL,
 					ref: _setSidebarPanel,
+					viewComponent: View,
 				},
 				document.querySelector(sidebarContainerSelector)
 			);

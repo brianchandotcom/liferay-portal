@@ -25,85 +25,87 @@ import React, {
 
 import Sidebar from './components/Sidebar';
 
-const SidebarPanel = React.forwardRef(({View, fetchURL, onClose}, ref) => {
-	const CurrentView = useRef(View);
+const SidebarPanel = React.forwardRef(
+	({fetchURL, onClose, viewComponent: View}, ref) => {
+		const CurrentView = useRef(View);
 
-	const [error, setError] = useState();
-	const [isLoading, setIsLoading] = useState();
-	const [isOpen, setIsOpen] = useState(true);
-	const [resourceData, setResourceData] = useState();
+		const [error, setError] = useState();
+		const [isLoading, setIsLoading] = useState();
+		const [isOpen, setIsOpen] = useState(true);
+		const [resourceData, setResourceData] = useState();
 
-	const getData = useCallback((fetchURL) => {
-		setIsLoading(true);
-		setResourceData(null);
+		const getData = useCallback((fetchURL) => {
+			setIsLoading(true);
+			setResourceData(null);
 
-		fetch(fetchURL, {
-			method: 'GET',
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				setData(data, data?.error);
+			fetch(fetchURL, {
+				method: 'GET',
 			})
-			.catch(() => {
-				setData(
-					null,
-					Liferay.Language.get('an-unexpected-error-occurred')
-				);
-			});
-	}, []);
+				.then((response) => response.json())
+				.then((data) => {
+					setData(data, data?.error);
+				})
+				.catch(() => {
+					setData(
+						null,
+						Liferay.Language.get('an-unexpected-error-occurred')
+					);
+				});
+		}, []);
 
-	const onCloseHandle = () => (onClose ? onClose() : setIsOpen(false));
+		const onCloseHandle = () => (onClose ? onClose() : setIsOpen(false));
 
-	const setData = (data, error) => {
+		const setData = (data, error) => {
 
-		// Force 300 ms of waiting to render the response so loading
-		// looks more natural.
+			// Force 300 ms of waiting to render the response so loading
+			// looks more natural.
 
-		setTimeout(() => {
-			setIsLoading(false);
-			setError(error);
-			setResourceData(data);
-		}, 300);
-	};
+			setTimeout(() => {
+				setIsLoading(false);
+				setError(error);
+				setResourceData(data);
+			}, 300);
+		};
 
-	useEffect(() => {
-		getData(fetchURL);
-	}, [fetchURL, getData]);
-
-	useEffect(() => {
-		CurrentView.current = View;
-	}, [View]);
-
-	useImperativeHandle(ref, () => ({
-		close: () => setIsOpen(false),
-		open: (fetchURL, View) => {
-			CurrentView.current = View;
-
+		useEffect(() => {
 			getData(fetchURL);
+		}, [fetchURL, getData]);
 
-			setIsOpen(true);
-		},
-	}));
+		useEffect(() => {
+			CurrentView.current = View;
+		}, [View]);
 
-	return (
-		<Sidebar onClose={onCloseHandle} open={isOpen}>
-			{isLoading ? (
-				<Sidebar.Body>
-					<ClayLoadingIndicator />
-				</Sidebar.Body>
-			) : error ? (
-				<>
-					<Sidebar.Header />
+		useImperativeHandle(ref, () => ({
+			close: () => setIsOpen(false),
+			open: (fetchURL, View) => {
+				CurrentView.current = View;
 
-					<ClayAlert displayType="danger" variant="stripe">
-						{error}
-					</ClayAlert>
-				</>
-			) : (
-				resourceData && <CurrentView.current {...resourceData} />
-			)}
-		</Sidebar>
-	);
-});
+				getData(fetchURL);
+
+				setIsOpen(true);
+			},
+		}));
+
+		return (
+			<Sidebar onClose={onCloseHandle} open={isOpen}>
+				{isLoading ? (
+					<Sidebar.Body>
+						<ClayLoadingIndicator />
+					</Sidebar.Body>
+				) : error ? (
+					<>
+						<Sidebar.Header />
+
+						<ClayAlert displayType="danger" variant="stripe">
+							{error}
+						</ClayAlert>
+					</>
+				) : (
+					resourceData && <CurrentView.current {...resourceData} />
+				)}
+			</Sidebar>
+		);
+	}
+);
 
 export default SidebarPanel;

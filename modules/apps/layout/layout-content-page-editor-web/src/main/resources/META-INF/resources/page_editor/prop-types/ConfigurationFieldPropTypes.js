@@ -19,6 +19,7 @@ const ConfigurationFieldPropTypes = {
 	defaultValue: PropTypes.oneOfType([
 		PropTypes.bool,
 		PropTypes.number,
+		PropTypes.object,
 		PropTypes.string,
 	]),
 	description: PropTypes.string,

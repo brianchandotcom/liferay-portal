@@ -13,7 +13,7 @@ $toolbarDesktopHeight: 56px;
 
 	// Patch for small color picker until https://github.com/liferay/clay/issues/3514 is resolved
 
-	&__color-token {
+	&__color-frontend-token {
 		label {
 			margin-bottom: 0;
 		}

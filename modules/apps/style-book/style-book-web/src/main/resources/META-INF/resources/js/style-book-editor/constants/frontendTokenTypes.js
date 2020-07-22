@@ -12,7 +12,7 @@
  * details.
  */
 
-export const TOKEN_TYPES = {
+export const FRONTEND_TOKEN_TYPES = {
 	boolean: 'Boolean',
 	integer: 'Integer',
 	number: 'Number',

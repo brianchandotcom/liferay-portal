@@ -72,6 +72,14 @@ public class EditStyleBookEntryDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"frontendTokenDefinition", _getFrontendTokenDefinitionJSONObject()
 		).put(
+			"frontendTokensValues",
+			() -> {
+				StyleBookEntry styleBookEntry = _getStyleBookEntry();
+
+				return JSONFactoryUtil.createJSONObject(
+					styleBookEntry.getFrontendTokensValues());
+			}
+		).put(
 			"namespace", _renderResponse.getNamespace()
 		).put(
 			"previewURL", _getPreviewURL()
@@ -84,14 +92,6 @@ public class EditStyleBookEntryDisplayContext {
 			_getActionURL("/style_book/save_draft_style_book_entry")
 		).put(
 			"styleBookEntryId", _getStyleBookEntryId()
-		).put(
-			"tokensValues",
-			() -> {
-				StyleBookEntry styleBookEntry = _getStyleBookEntry();
-
-				return JSONFactoryUtil.createJSONObject(
-					styleBookEntry.getTokensValues());
-			}
 		).build();
 	}
 

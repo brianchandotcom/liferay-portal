@@ -11,12 +11,12 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="defaultStyleBookEntry" type="boolean" />
+		<field name="frontendTokensValues" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="name" type="String" />
 		<field name="previewFileEntryId" type="long" />
 		<field name="styleBookEntryKey" type="String" />
-		<field name="tokensValues" type="String">
-			<hint-collection name="CLOB" />
-		</field>
 	</model>
 	<model name="com.liferay.style.book.model.StyleBookEntryVersion">
 		<field name="styleBookEntryVersionId" type="long" />
@@ -28,11 +28,11 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="defaultStyleBookEntry" type="boolean" />
+		<field name="frontendTokensValues" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="name" type="String" />
 		<field name="previewFileEntryId" type="long" />
 		<field name="styleBookEntryKey" type="String" />
-		<field name="tokensValues" type="String">
-			<hint-collection name="CLOB" />
-		</field>
 	</model>
 </model-hints>

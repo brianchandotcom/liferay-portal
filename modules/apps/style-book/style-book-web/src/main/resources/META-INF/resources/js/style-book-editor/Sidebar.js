@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import React, {useState} from 'react';
 
-import TokenSet from './TokenSet';
+import FrontendTokenSet from './FrontendTokenSet';
 import Toolbar from './Toolbar';
 import {config} from './config';
 
@@ -75,9 +75,15 @@ function SidebarContent() {
 				</ClayDropDown>
 			)}
 
-			{selectedCategory?.tokenSets.map(({name, tokens}) => (
-				<TokenSet key={name} name={name} tokens={tokens} />
-			))}
+			{selectedCategory?.frontendTokenSets.map(
+				({frontendTokens, name}) => (
+					<FrontendTokenSet
+						frontendTokens={frontendTokens}
+						key={name}
+						name={name}
+					/>
+				)
+			)}
 		</div>
 	);
 }

@@ -158,8 +158,8 @@ public class StyleBookEntryZipProcessor {
 	}
 
 	private StyleBookEntry _addStyleBookEntry(
-			long groupId, String name, boolean overwrite,
-			String styleBookEntryKey, String tokensValues)
+			String frontendTokensValues, long groupId, String name,
+			boolean overwrite, String styleBookEntryKey)
 		throws Exception {
 
 		StyleBookEntry styleBookEntry =
@@ -173,14 +173,14 @@ public class StyleBookEntryZipProcessor {
 		try {
 			if (styleBookEntry == null) {
 				styleBookEntry = _styleBookEntryEntryService.addStyleBookEntry(
-					groupId, name, styleBookEntryKey, tokensValues,
+					groupId, frontendTokensValues, name, styleBookEntryKey,
 					ServiceContextThreadLocal.getServiceContext());
 			}
 			else {
 				styleBookEntry =
 					_styleBookEntryEntryService.updateStyleBookEntry(
-						styleBookEntry.getStyleBookEntryId(), name,
-						tokensValues);
+						styleBookEntry.getStyleBookEntryId(),
+						frontendTokensValues, name);
 			}
 
 			_importResultEntries.add(
@@ -347,7 +347,7 @@ public class StyleBookEntryZipProcessor {
 
 		String name = styleBookEntryKey;
 
-		String tokensValues = StringPool.BLANK;
+		String frontendTokensValues = StringPool.BLANK;
 
 		String styleBookEntryContent = _getContent(zipFile, fileName);
 
@@ -356,13 +356,13 @@ public class StyleBookEntryZipProcessor {
 				JSONFactoryUtil.createJSONObject(styleBookEntryContent);
 
 			name = styleBookEntryJSONObject.getString("name");
-			tokensValues = _getFragmentEntryContent(
+			frontendTokensValues = _getFragmentEntryContent(
 				zipFile, fileName,
-				styleBookEntryJSONObject.getString("tokensValuesPath"));
+				styleBookEntryJSONObject.getString("frontendTokensValuesPath"));
 		}
 
 		StyleBookEntry styleBookEntry = _addStyleBookEntry(
-			groupId, name, overwrite, styleBookEntryKey, tokensValues);
+			frontendTokensValues, groupId, name, overwrite, styleBookEntryKey);
 
 		if (styleBookEntry == null) {
 			return;

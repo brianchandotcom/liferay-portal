@@ -15,8 +15,8 @@
 import React from 'react';
 
 export const StyleBookContext = React.createContext({
-	setTokensValues: () => {},
-	tokensValues: {},
+	frontendTokensValues: {},
+	setFrontendTokensValues: () => {},
 });
 
 export function StyleBookContextProvider({children, value}) {

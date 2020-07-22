@@ -56,9 +56,10 @@ public class StyleBookScopedCSSVariablesProvider
 	public Collection<ScopedCSSVariables> getScopedCSSVariablesCollection(
 		HttpServletRequest httpServletRequest) {
 
-		String tokensValues = _getTokensValues(httpServletRequest);
+		String frontendTokensValues = _getFrontendTokensValues(
+			httpServletRequest);
 
-		if (Validator.isNull(tokensValues)) {
+		if (Validator.isNull(frontendTokensValues)) {
 			return Collections.emptyList();
 		}
 
@@ -69,22 +70,25 @@ public class StyleBookScopedCSSVariablesProvider
 					Map<String, String> cssVariables = new HashMap<>();
 
 					try {
-						JSONObject tokensValuesJSONObject =
-							JSONFactoryUtil.createJSONObject(tokensValues);
+						JSONObject frontendTokensValuesJSONObject =
+							JSONFactoryUtil.createJSONObject(
+								frontendTokensValues);
 
 						Iterator<String> iterator =
-							tokensValuesJSONObject.keys();
+							frontendTokensValuesJSONObject.keys();
 
 						while (iterator.hasNext()) {
 							String key = iterator.next();
 
-							JSONObject tokenValueJSONObject =
-								tokensValuesJSONObject.getJSONObject(key);
+							JSONObject frontendTokenValueJSONObject =
+								frontendTokensValuesJSONObject.getJSONObject(
+									key);
 
 							cssVariables.put(
-								tokenValueJSONObject.getString(
+								frontendTokenValueJSONObject.getString(
 									"cssVariableMapping"),
-								tokenValueJSONObject.getString("value"));
+								frontendTokenValueJSONObject.getString(
+									"value"));
 						}
 					}
 					catch (JSONException jsonException) {
@@ -103,7 +107,9 @@ public class StyleBookScopedCSSVariablesProvider
 			});
 	}
 
-	private String _getTokensValues(HttpServletRequest httpServletRequest) {
+	private String _getFrontendTokensValues(
+		HttpServletRequest httpServletRequest) {
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -143,17 +149,17 @@ public class StyleBookScopedCSSVariablesProvider
 			originalHttpServletRequest, "p_l_mode", Constants.VIEW);
 
 		if (!layoutMode.equals(Constants.PREVIEW)) {
-			return styleBookEntry.getTokensValues();
+			return styleBookEntry.getFrontendTokensValues();
 		}
 
 		StyleBookEntry draftStyleBookEntry =
 			_styleBookEntryLocalService.fetchDraft(styleBookEntry);
 
 		if (draftStyleBookEntry != null) {
-			return draftStyleBookEntry.getTokensValues();
+			return draftStyleBookEntry.getFrontendTokensValues();
 		}
 
-		return styleBookEntry.getTokensValues();
+		return styleBookEntry.getFrontendTokensValues();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

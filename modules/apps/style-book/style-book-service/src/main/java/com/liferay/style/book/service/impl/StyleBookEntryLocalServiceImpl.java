@@ -63,14 +63,14 @@ public class StyleBookEntryLocalServiceImpl
 		throws PortalException {
 
 		return addStyleBookEntry(
-			userId, groupId, name, styleBookEntryKey, StringPool.BLANK,
+			userId, groupId, StringPool.BLANK, name, styleBookEntryKey,
 			serviceContext);
 	}
 
 	@Override
 	public StyleBookEntry addStyleBookEntry(
-			long userId, long groupId, String name, String styleBookEntryKey,
-			String tokensValues, ServiceContext serviceContext)
+			long userId, long groupId, String frontendTokensValues, String name,
+			String styleBookEntryKey, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
@@ -102,9 +102,9 @@ public class StyleBookEntryLocalServiceImpl
 		styleBookEntry.setUserName(user.getFullName());
 		styleBookEntry.setCreateDate(serviceContext.getCreateDate(new Date()));
 		styleBookEntry.setDefaultStyleBookEntry(false);
+		styleBookEntry.setFrontendTokensValues(frontendTokensValues);
 		styleBookEntry.setName(name);
 		styleBookEntry.setStyleBookEntryKey(styleBookEntryKey);
-		styleBookEntry.setTokensValues(tokensValues);
 
 		return publishDraft(styleBookEntry);
 	}
@@ -128,8 +128,8 @@ public class StyleBookEntryLocalServiceImpl
 		String name = sb.toString();
 
 		StyleBookEntry copyStyleBookEntry = addStyleBookEntry(
-			userId, groupId, name, StringPool.BLANK,
-			styleBookEntry.getTokensValues(), serviceContext);
+			userId, groupId, styleBookEntry.getFrontendTokensValues(), name,
+			StringPool.BLANK, serviceContext);
 
 		long previewFileEntryId = _copyStyleBookEntryPreviewFileEntry(
 			userId, groupId, styleBookEntry, copyStyleBookEntry);
@@ -140,8 +140,8 @@ public class StyleBookEntryLocalServiceImpl
 			StyleBookEntry copyDraftStyleBookEntry = getDraft(
 				copyStyleBookEntry);
 
-			copyDraftStyleBookEntry.setTokensValues(
-				draftStyleBookEntry.getTokensValues());
+			copyDraftStyleBookEntry.setFrontendTokensValues(
+				draftStyleBookEntry.getFrontendTokensValues());
 
 			updateDraft(copyDraftStyleBookEntry);
 		}
@@ -285,6 +285,27 @@ public class StyleBookEntryLocalServiceImpl
 	}
 
 	@Override
+	public StyleBookEntry updateFrontendTokensValues(
+			long styleBookEntryId, String frontendTokensValues)
+		throws PortalException {
+
+		StyleBookEntry styleBookEntry =
+			styleBookEntryPersistence.findByPrimaryKey(styleBookEntryId);
+
+		styleBookEntry.setFrontendTokensValues(frontendTokensValues);
+
+		StyleBookEntry draftStyleBookEntry = fetchDraft(styleBookEntry);
+
+		if (draftStyleBookEntry != null) {
+			draftStyleBookEntry.setFrontendTokensValues(frontendTokensValues);
+
+			updateDraft(draftStyleBookEntry);
+		}
+
+		return styleBookEntryPersistence.update(styleBookEntry);
+	}
+
+	@Override
 	public StyleBookEntry updateName(long styleBookEntryId, String name)
 		throws PortalException {
 
@@ -329,7 +350,7 @@ public class StyleBookEntryLocalServiceImpl
 
 	@Override
 	public StyleBookEntry updateStyleBookEntry(
-			long styleBookEntryId, String name, String tokensValues)
+			long styleBookEntryId, String frontendTokensValues, String name)
 		throws PortalException {
 
 		StyleBookEntry styleBookEntry =
@@ -337,35 +358,14 @@ public class StyleBookEntryLocalServiceImpl
 
 		_validate(name);
 
+		styleBookEntry.setFrontendTokensValues(frontendTokensValues);
 		styleBookEntry.setName(name);
-		styleBookEntry.setTokensValues(tokensValues);
 
 		StyleBookEntry draftStyleBookEntry = fetchDraft(styleBookEntry);
 
 		if (draftStyleBookEntry != null) {
+			draftStyleBookEntry.setFrontendTokensValues(frontendTokensValues);
 			draftStyleBookEntry.setName(name);
-			draftStyleBookEntry.setTokensValues(tokensValues);
-
-			updateDraft(draftStyleBookEntry);
-		}
-
-		return styleBookEntryPersistence.update(styleBookEntry);
-	}
-
-	@Override
-	public StyleBookEntry updateTokensValues(
-			long styleBookEntryId, String tokensValues)
-		throws PortalException {
-
-		StyleBookEntry styleBookEntry =
-			styleBookEntryPersistence.findByPrimaryKey(styleBookEntryId);
-
-		styleBookEntry.setTokensValues(tokensValues);
-
-		StyleBookEntry draftStyleBookEntry = fetchDraft(styleBookEntry);
-
-		if (draftStyleBookEntry != null) {
-			draftStyleBookEntry.setTokensValues(tokensValues);
 
 			updateDraft(draftStyleBookEntry);
 		}

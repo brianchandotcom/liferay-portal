@@ -22,20 +22,24 @@ import {config, initializeConfig} from './config';
 import {DRAFT_STATUS} from './constants/draftStatusConstants';
 import {useCloseProductMenu} from './useCloseProductMenu';
 
-const StyleBookEditor = ({tokensValues: initialTokensValues}) => {
+const StyleBookEditor = ({
+	frontendTokensValues: initialFrontendTokensValues,
+}) => {
 	useCloseProductMenu();
 
-	const [tokensValues, setTokensValues] = useState(initialTokensValues);
+	const [frontendTokensValues, setFrontendTokensValues] = useState(
+		initialFrontendTokensValues
+	);
 	const [draftStatus, setDraftStatus] = useState(DRAFT_STATUS.notSaved);
 
 	useEffect(() => {
-		if (tokensValues === initialTokensValues) {
+		if (frontendTokensValues === initialFrontendTokensValues) {
 			return;
 		}
 
 		setDraftStatus(DRAFT_STATUS.saving);
 
-		saveDraft(tokensValues, config.styleBookEntryId)
+		saveDraft(frontendTokensValues, config.styleBookEntryId)
 			.then(() => {
 				setDraftStatus(DRAFT_STATUS.draftSaved);
 			})
@@ -52,14 +56,14 @@ const StyleBookEditor = ({tokensValues: initialTokensValues}) => {
 					type: 'danger',
 				});
 			});
-	}, [initialTokensValues, tokensValues]);
+	}, [initialFrontendTokensValues, frontendTokensValues]);
 
 	return (
 		<StyleBookContextProvider
 			value={{
 				draftStatus,
-				setTokensValues,
-				tokensValues,
+				frontendTokensValues,
+				setFrontendTokensValues,
 			}}
 		>
 			<div className="style-book-editor">
@@ -78,7 +82,7 @@ export default function ({
 	redirectURL,
 	saveDraftURL,
 	styleBookEntryId,
-	tokensValues = {},
+	frontendTokensValues = {},
 } = {}) {
 	initializeConfig({
 		frontendTokenDefinition,
@@ -90,12 +94,14 @@ export default function ({
 		styleBookEntryId,
 	});
 
-	return <StyleBookEditor tokensValues={tokensValues} />;
+	return <StyleBookEditor frontendTokensValues={frontendTokensValues} />;
 }
 
-function saveDraft(tokensValues, styleBookEntryId) {
+function saveDraft(frontendTokensValues, styleBookEntryId) {
 	const body = objectToFormData({
-		[`${config.namespace}tokensValues`]: JSON.stringify(tokensValues),
+		[`${config.namespace}frontendTokensValues`]: JSON.stringify(
+			frontendTokensValues
+		),
 		[`${config.namespace}styleBookEntryId`]: styleBookEntryId,
 	});
 

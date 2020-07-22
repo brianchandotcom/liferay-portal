@@ -16,8 +16,12 @@ import ClayForm, {ClayCheckbox} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-export default function BooleanToken({onValueSelect, token, value}) {
-	const {label} = token;
+export default function BooleanFrontendToken({
+	frontendToken,
+	onValueSelect,
+	value,
+}) {
+	const {label} = frontendToken;
 
 	return (
 		<ClayForm.Group small>
@@ -30,8 +34,9 @@ export default function BooleanToken({onValueSelect, token, value}) {
 	);
 }
 
-BooleanToken.propTypes = {
+BooleanFrontendToken.propTypes = {
+	frontendToken: PropTypes.shape({label: PropTypes.string.isRequired})
+		.isRequired,
 	onValueSelect: PropTypes.func.isRequired,
-	token: PropTypes.shape({label: PropTypes.string.isRequired}).isRequired,
 	value: PropTypes.bool,
 };

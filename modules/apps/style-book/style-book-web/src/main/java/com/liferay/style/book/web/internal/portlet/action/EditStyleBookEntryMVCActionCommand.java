@@ -54,8 +54,8 @@ public class EditStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
 		long styleBookEntryId = ParamUtil.getLong(
 			actionRequest, "styleBookEntryId");
 
-		String tokensValues = ParamUtil.getString(
-			actionRequest, "tokensValues");
+		String frontendTokensValues = ParamUtil.getString(
+			actionRequest, "frontendTokensValues");
 
 		try {
 			StyleBookEntry styleBookEntry =
@@ -76,8 +76,8 @@ public class EditStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
 					draftStyleBookEntry.getStyleBookEntryId();
 			}
 
-			_styleBookEntryService.updateTokensValues(
-				draftStyleBookEntryId, tokensValues);
+			_styleBookEntryService.updateFrontendTokensValues(
+				draftStyleBookEntryId, frontendTokensValues);
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse,

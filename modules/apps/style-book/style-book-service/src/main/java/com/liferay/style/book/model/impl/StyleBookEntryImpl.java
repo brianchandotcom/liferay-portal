@@ -61,9 +61,9 @@ public class StyleBookEntryImpl extends StyleBookEntryBaseImpl {
 		path = path + StringPool.SLASH + getStyleBookEntryKey();
 
 		JSONObject jsonObject = JSONUtil.put(
-			"name", getName()
+			"frontendTokensValuesPath", "frontendTokensValues.json"
 		).put(
-			"tokensValuesPath", "tokensValues.json"
+			"name", getName()
 		);
 
 		FileEntry previewFileEntry = _getPreviewFileEntry();
@@ -77,7 +77,8 @@ public class StyleBookEntryImpl extends StyleBookEntryBaseImpl {
 		zipWriter.addEntry(
 			path + StringPool.SLASH + "style-book.json", jsonObject.toString());
 
-		zipWriter.addEntry(path + "/tokensValues.json", getTokensValues());
+		zipWriter.addEntry(
+			path + "/frontendTokensValues.json", getFrontendTokensValues());
 
 		if (previewFileEntry != null) {
 			zipWriter.addEntry(

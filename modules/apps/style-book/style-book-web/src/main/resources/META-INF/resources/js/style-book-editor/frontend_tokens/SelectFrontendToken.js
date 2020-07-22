@@ -12,49 +12,50 @@
  * details.
  */
 
-import ClayForm, {ClayInput} from '@clayui/form';
-import {debounce} from 'frontend-js-web';
+import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 import {config} from '../config';
-import {TOKEN_TYPES} from '../constants/tokenTypes';
 
-const TOKEN_TYPE_TO_PROPS = {
-	[TOKEN_TYPES.integer]: {pattern: '\\d+', step: 1, type: 'number'},
-	[TOKEN_TYPES.number]: {type: 'number'},
-	[TOKEN_TYPES.string]: {type: 'text'},
-};
+export default function SelectFrontendToken({
+	frontendToken,
+	onValueSelect,
+	value,
+}) {
+	const {label, name, validValues} = frontendToken;
 
-const debouncedOnValueSelect = debounce(
-	(onValueSelect, value) => onValueSelect(value),
-	300
-);
-
-export default function TextToken({onValueSelect, token, value}) {
-	const {label, name} = token;
-
-	const id = `${config.namespace}_tokenId_${name}`;
+	const id = `${config.namespace}_frontendTokenId_${name}`;
 
 	return (
 		<ClayForm.Group small>
 			<label htmlFor={id}>{label}</label>
-			<ClayInput
+
+			<ClaySelectWithOption
 				defaultValue={value}
 				id={id}
-				onChange={(event) =>
-					debouncedOnValueSelect(onValueSelect, event.target.value)
-				}
-				{...TOKEN_TYPE_TO_PROPS[token.type]}
+				onChange={(event) => {
+					const value =
+						event.target.options[event.target.selectedIndex].value;
+
+					onValueSelect(value);
+				}}
+				options={validValues}
 			/>
 		</ClayForm.Group>
 	);
 }
 
-TextToken.propTypes = {
-	onValueSelect: PropTypes.func.isRequired,
-	token: PropTypes.shape({
+SelectFrontendToken.propTypes = {
+	frontendToken: PropTypes.shape({
 		label: PropTypes.string.isRequired,
+		validValues: PropTypes.arrayOf(
+			PropTypes.shape({
+				label: PropTypes.string.isRequired,
+				value: PropTypes.any.isRequired,
+			})
+		),
 	}).isRequired,
+	onValueSelect: PropTypes.func.isRequired,
 	value: PropTypes.any,
 };

@@ -22,15 +22,19 @@ const debouncedOnValueSelect = debounce(
 	(onValueSelect, value) => onValueSelect(value),
 	300
 );
-export default function ColorToken({onValueSelect, token, value}) {
-	const {label} = token;
+export default function ColorFrontendToken({
+	frontendToken,
+	onValueSelect,
+	value,
+}) {
+	const {label} = frontendToken;
 
 	const [customColors, setCustomColors] = useState([]);
 	const [color, setColor] = useState(() => value?.replace('#', '') ?? '');
 
 	return (
 		<ClayForm.Group small>
-			<div className="style-book-editor__color-token">
+			<div className="style-book-editor__color-frontend-token">
 				<ClayColorPicker
 					colors={customColors}
 					label={label}
@@ -48,8 +52,9 @@ export default function ColorToken({onValueSelect, token, value}) {
 	);
 }
 
-ColorToken.propTypes = {
+ColorFrontendToken.propTypes = {
+	frontendToken: PropTypes.shape({label: PropTypes.string.isRequired})
+		.isRequired,
 	onValueSelect: PropTypes.func.isRequired,
-	token: PropTypes.shape({label: PropTypes.string.isRequired}).isRequired,
 	value: PropTypes.string,
 };

@@ -20,11 +20,11 @@ import {config} from './config';
 export default function PagePreview() {
 	const iframeRef = useRef();
 
-	const {tokensValues = {}} = useContext(StyleBookContext);
+	const {frontendTokensValues = {}} = useContext(StyleBookContext);
 
-	const loadTokenValues = useCallback(() => {
+	const loadFrontendTokenValues = useCallback(() => {
 		if (iframeRef.current) {
-			Object.values(tokensValues).forEach(
+			Object.values(frontendTokensValues).forEach(
 				({cssVariableMapping, value}) => {
 					iframeRef.current.contentDocument.body.style.setProperty(
 						`--${cssVariableMapping}`,
@@ -33,26 +33,26 @@ export default function PagePreview() {
 				}
 			);
 		}
-	}, [tokensValues]);
+	}, [frontendTokensValues]);
 
 	useEffect(() => {
-		loadTokenValues(iframeRef.current, tokensValues);
+		loadFrontendTokenValues(iframeRef.current, frontendTokensValues);
 
 		const iframeLiferay = iframeRef.current?.contentWindow?.Liferay;
 
 		if (iframeLiferay) {
 			iframeRef.current.contentWindow.Liferay.on(
 				'endNavigate',
-				loadTokenValues
+				loadFrontendTokenValues
 			);
 		}
 
 		return () => {
 			if (iframeLiferay) {
-				iframeLiferay.detach('endNavigate', loadTokenValues);
+				iframeLiferay.detach('endNavigate', loadFrontendTokenValues);
 			}
 		};
-	}, [loadTokenValues, tokensValues]);
+	}, [loadFrontendTokenValues, frontendTokensValues]);
 
 	return (
 		<div className="style-book-editor__page-preview">
@@ -62,10 +62,13 @@ export default function PagePreview() {
 					if (iframeRef.current?.contentWindow?.Liferay) {
 						iframeRef.current.contentWindow.Liferay.on(
 							'endNavigate',
-							loadTokenValues
+							loadFrontendTokenValues
 						);
 					}
-					loadTokenValues(iframeRef.current, tokensValues);
+					loadFrontendTokenValues(
+						iframeRef.current,
+						frontendTokensValues
+					);
 				}}
 				ref={iframeRef}
 				src={config.previewURL}

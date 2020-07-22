@@ -38,11 +38,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + StyleBookPortletKeys.STYLE_BOOK,
-		"mvc.command.name=/style_book/update_style_book_entry_tokens_values"
+		"mvc.command.name=/style_book/update_style_book_entry_frontend_tokens_values"
 	},
 	service = MVCActionCommand.class
 )
-public class UpdateStyleBookEntryTokensValuesMVCActionCommand
+public class UpdateStyleBookEntryFrontendTokensValuesMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override
@@ -53,12 +53,12 @@ public class UpdateStyleBookEntryTokensValuesMVCActionCommand
 		long styleBookEntryId = ParamUtil.getLong(
 			actionRequest, "styleBookEntryId");
 
-		String tokensValues = ParamUtil.getString(
-			actionRequest, "tokensValues");
+		String frontendTokensValues = ParamUtil.getString(
+			actionRequest, "frontendTokensValues");
 
 		try {
-			_styleBookEntryService.updateTokensValues(
-				styleBookEntryId, tokensValues);
+			_styleBookEntryService.updateFrontendTokensValues(
+				styleBookEntryId, frontendTokensValues);
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 

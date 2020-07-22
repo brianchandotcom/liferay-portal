@@ -3,7 +3,7 @@ definition {
 	macro addDynamicAssetListEntry {
 		Variables.assertDefined(parameterList = "${groupName},${title}");
 
-		var groupId = JSONAssetlistSetter.setGroupId(groupName = "${groupName}");
+		var groupId = JSONAssetlistSetter.setGroupId(groupName = "${groupName}", site = "${site}");
 
 		var type = JSONAssetlistSetter.setType(selectionType = "dynamic");
 
@@ -27,7 +27,7 @@ definition {
 	macro addManualAssetListEntry {
 		Variables.assertDefined(parameterList = "${groupName},${title}");
 
-		var groupId = JSONAssetlistSetter.setGroupId(groupName = "${groupName}");
+		var groupId = JSONAssetlistSetter.setGroupId(groupName = "${groupName}", site = "${site}");
 
 		var type = JSONAssetlistSetter.setType(selectionType = "manual");
 

@@ -17,17 +17,12 @@ package com.liferay.portal.kernel.servlet;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.registry.collections.ServiceReferenceMapperFactory;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.ServletContext;
 
@@ -43,7 +38,7 @@ public class PortalWebResourcesUtil {
 	}
 
 	public static long getLastModified(String resourceType) {
-		PortalWebResources portalWebResources = _portalWebResourcesMap.get(
+		PortalWebResources portalWebResources = _resourceTypeMap.getService(
 			resourceType);
 
 		if (portalWebResources == null) {
@@ -54,7 +49,7 @@ public class PortalWebResourcesUtil {
 	}
 
 	public static String getModuleContextPath(String resourceType) {
-		PortalWebResources portalWebResources = _portalWebResourcesMap.get(
+		PortalWebResources portalWebResources = _resourceTypeMap.getService(
 			resourceType);
 
 		if (portalWebResources == null) {
@@ -67,13 +62,12 @@ public class PortalWebResourcesUtil {
 	public static long getPathLastModified(
 		String requestURI, long defaultValue) {
 
-		for (PortalWebResources portalWebResources :
-				_portalWebResourcesMap.values()) {
-
-			String contextPath = portalWebResources.getContextPath();
-
+		for (String contextPath : _contextPathMap.keySet()) {
 			if (requestURI.equals(Portal.PATH_MODULE) ||
 				contextPath.startsWith(requestURI)) {
+
+				PortalWebResources portalWebResources =
+					_contextPathMap.getService(contextPath);
 
 				return portalWebResources.getLastModified();
 			}
@@ -83,10 +77,11 @@ public class PortalWebResourcesUtil {
 	}
 
 	public static String getPathResourceType(String path) {
-		for (PortalWebResources portalWebResources :
-				_portalWebResourcesMap.values()) {
+		for (String contextPath : _contextPathMap.keySet()) {
+			if (path.contains(contextPath)) {
+				PortalWebResources portalWebResources =
+					_contextPathMap.getService(contextPath);
 
-			if (path.contains(portalWebResources.getContextPath())) {
 				return portalWebResources.getResourceType();
 			}
 		}
@@ -95,8 +90,9 @@ public class PortalWebResourcesUtil {
 	}
 
 	public static ServletContext getPathServletContext(String path) {
-		for (PortalWebResources portalWebResources :
-				_portalWebResourcesMap.values()) {
+		for (String contextPath : _contextPathMap.keySet()) {
+			PortalWebResources portalWebResources = _contextPathMap.getService(
+				contextPath);
 
 			ServletContext servletContext =
 				portalWebResources.getServletContext();
@@ -114,7 +110,7 @@ public class PortalWebResourcesUtil {
 	public static PortalWebResources getPortalWebResources(
 		String resourceType) {
 
-		return _portalWebResourcesMap.get(resourceType);
+		return _resourceTypeMap.getService(resourceType);
 	}
 
 	public static URL getResource(ServletContext servletContext, String path) {
@@ -148,17 +144,15 @@ public class PortalWebResourcesUtil {
 	}
 
 	public static ServletContext getServletContext(String resourceType) {
-		PortalWebResources portalWebResources = _portalWebResourcesMap.get(
+		PortalWebResources portalWebResources = _resourceTypeMap.getService(
 			resourceType);
 
 		return portalWebResources.getServletContext();
 	}
 
 	public static boolean hasContextPath(String requestURI) {
-		for (PortalWebResources portalWebResources :
-				_portalWebResourcesMap.values()) {
-
-			if (requestURI.startsWith(portalWebResources.getContextPath())) {
+		for (String contextPath : _contextPathMap.keySet()) {
+			if (requestURI.startsWith(contextPath)) {
 				return true;
 			}
 		}
@@ -188,59 +182,17 @@ public class PortalWebResourcesUtil {
 		return path;
 	}
 
-	private static final Map<String, PortalWebResources>
-		_portalWebResourcesMap = new ConcurrentHashMap<>();
-	private static final ServiceTracker<PortalWebResources, PortalWebResources>
-		_serviceTracker;
-
-	private static class PortalWebResourcesServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<PortalWebResources, PortalWebResources> {
-
-		@Override
-		public PortalWebResources addingService(
-			ServiceReference<PortalWebResources> serviceReference) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			PortalWebResources portalWebResources = registry.getService(
-				serviceReference);
-
-			_portalWebResourcesMap.put(
-				portalWebResources.getResourceType(), portalWebResources);
-
-			return portalWebResources;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<PortalWebResources> serviceReference,
-			PortalWebResources portalWebResources) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<PortalWebResources> serviceReference,
-			PortalWebResources portalWebResources) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
-
-			_portalWebResourcesMap.remove(
-				portalWebResources.getResourceType(), portalWebResources);
-		}
-
-	}
-
-	static {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			PortalWebResources.class,
-			new PortalWebResourcesServiceTrackerCustomizer());
-
-		_serviceTracker.open();
-	}
+	private static final ServiceTrackerMap<String, PortalWebResources>
+		_contextPathMap = ServiceTrackerCollections.openSingleValueMap(
+			PortalWebResources.class, null,
+			ServiceReferenceMapperFactory.create(
+				(portalWebResources, emitter) -> emitter.emit(
+					portalWebResources.getContextPath())));
+	private static final ServiceTrackerMap<String, PortalWebResources>
+		_resourceTypeMap = ServiceTrackerCollections.openSingleValueMap(
+			PortalWebResources.class, null,
+			ServiceReferenceMapperFactory.create(
+				(portalWebResources, emitter) -> emitter.emit(
+					portalWebResources.getResourceType())));
 
 }

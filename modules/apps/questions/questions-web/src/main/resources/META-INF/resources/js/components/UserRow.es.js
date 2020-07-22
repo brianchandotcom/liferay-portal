@@ -16,6 +16,7 @@ import React from 'react';
 import {withRouter} from 'react-router-dom';
 
 import Link from '../components/Link.es';
+import UserIcon from './UserIcon.es';
 import UserPopover from './UserPopover.es';
 
 export default withRouter(
@@ -27,14 +28,23 @@ export default withRouter(
 		statistics,
 	}) => (
 		<Link
-			className="border-0 btn btn-block btn-secondary position-relative questions-user text-left text-md-right"
+			className="align-items-center border-0 btn btn-block btn-secondary d-flex position-relative questions-user text-left text-md-right"
 			to={`/questions/${sectionTitle}/creator/${creator.id}`}
 		>
-			<p className="c-mb-0 small">
-				{Liferay.Language.get('answered-by')}
-			</p>
+			<UserIcon
+				fullName={creator.name}
+				portraitURL={creator.image}
+				userId={String(creator.id)}
+			/>
+			<div className="align align-items-start c-ml-3 d-flex flex-column">
+				<p className="c-mb-0 small">
+					{Liferay.Language.get('answered-by')}
+				</p>
 
-			<p className="c-mb-0 font-weight-bold text-dark">{creator.name}</p>
+				<p className="c-mb-0 font-weight-bold text-dark">
+					{creator.name}
+				</p>
+			</div>
 
 			<UserPopover creator={creator} statistics={statistics} />
 		</Link>

@@ -276,16 +276,12 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			connection, primaryKeyName, ctPersistence.getTableName(),
 			unresolvedPrimaryKeys);
 
-		Set<Long> productionPrimaryKeys = _getProductionPrimaryKeys(
+		List<Long> deletionModificationPKs = _getDeletionModificationPKs(
 			connection, ctPersistence, primaryKeyName);
 
-		for (CTEntry ctEntry : _modificationCTEntries.values()) {
-			long modelClassPK = ctEntry.getModelClassPK();
-
-			if (!productionPrimaryKeys.contains(modelClassPK)) {
-				conflictInfos.add(
-					new DeletionModificationConflictInfo(modelClassPK));
-			}
+		for (long deletionModificationPK : deletionModificationPKs) {
+			conflictInfos.add(
+				new DeletionModificationConflictInfo(deletionModificationPK));
 		}
 	}
 
@@ -398,16 +394,22 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		return primaryKeys;
 	}
 
-	private Set<Long> _getProductionPrimaryKeys(
+	private List<Long> _getDeletionModificationPKs(
 		Connection connection, CTPersistence<T> ctPersistence,
 		String primaryKeyName) {
 
 		String sql = StringBundler.concat(
-			"SELECT ", primaryKeyName, " from ", ctPersistence.getTableName(),
-			" where ctCollectionId = ",
-			CTConstants.CT_COLLECTION_ID_PRODUCTION);
+			"select CTEntry.modelClassPK from CTEntry left join ",
+			ctPersistence.getTableName(), " on ", ctPersistence.getTableName(),
+			".", primaryKeyName, " = CTEntry.modelClassPK and ",
+			ctPersistence.getTableName(), ".ctCollectionId = ",
+			_targetCTCollectionId, " where CTEntry.ctCollectionId = ",
+			_sourceCTCollectionId, " and CTEntry.modelClassNameId = ",
+			_modelClassNameId, " and CTEntry.changeType = ",
+			CTConstants.CT_CHANGE_TYPE_MODIFICATION, " and ",
+			ctPersistence.getTableName(), ".", primaryKeyName, " is null");
 
-		Set<Long> primaryKeys = new HashSet<>();
+		List<Long> primaryKeys = new ArrayList<>();
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				sql);

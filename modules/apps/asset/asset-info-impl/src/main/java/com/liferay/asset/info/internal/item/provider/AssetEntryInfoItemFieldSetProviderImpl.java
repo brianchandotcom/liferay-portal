@@ -101,15 +101,15 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 						).build()
 					).build(),
 					() -> _getAssetCategoryNames(
-						_filterByVocabularyId(
-							assetEntry.getCategories(),
-							assetVocabulary.getVocabularyId()))));
+						_filterBySystemAndVocabularyId(
+							assetEntry.getCategories(), assetVocabulary))));
 		}
 
 		infoFieldValues.add(
 			new InfoFieldValue<>(
 				_categoriesInfoField,
-				() -> _getAssetCategoryNames(assetEntry.getCategories())));
+				() -> _getAssetCategoryNames(
+					_filterBySystem(assetEntry.getCategories()))));
 		infoFieldValues.add(
 			new InfoFieldValue<>(
 				_tagsInfoField,
@@ -149,12 +149,29 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 		}
 	}
 
-	private List<AssetCategory> _filterByVocabularyId(
-		List<AssetCategory> assetCategories, long vocabularyId) {
+	private List<AssetCategory> _filterBySystem(
+		List<AssetCategory> assetCategories) {
 
 		return ListUtil.filter(
 			assetCategories,
-			assetCategory -> assetCategory.getVocabularyId() == vocabularyId);
+			assetCategory -> {
+				AssetVocabulary assetVocabulary =
+					_assetVocabularyLocalService.fetchAssetVocabulary(
+						assetCategory.getVocabularyId());
+
+				return !assetVocabulary.isSystem();
+			});
+	}
+
+	private List<AssetCategory> _filterBySystemAndVocabularyId(
+		List<AssetCategory> assetCategories, AssetVocabulary assetVocabulary) {
+
+		return ListUtil.filter(
+			assetCategories,
+			assetCategory ->
+				!assetVocabulary.isSystem() &&
+				(assetCategory.getVocabularyId() ==
+					assetVocabulary.getVocabularyId()));
 	}
 
 	private String _getAssetCategoryNames(List<AssetCategory> assetCategories) {

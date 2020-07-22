@@ -87,7 +87,7 @@ PortletURL portletURL = ddmFormViewFormInstanceRecordsDisplayContext.getPortletU
 
 				<liferay-ui:search-container-column-status
 					name="status"
-					status="<%= ddmFormViewFormInstanceRecordsDisplayContext.getStatus(formInstanceRecord) %>"
+					property="status"
 				/>
 
 				<liferay-ui:search-container-column-date

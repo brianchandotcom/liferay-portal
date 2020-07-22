@@ -48,13 +48,6 @@ public class StructuredContentFolderResourceTest
 
 	@Override
 	protected Long
-		testGetAssetLibraryStructuredContentFoldersPage_getAssetLibraryId() {
-
-		return testDepotEntry.getDepotEntryId();
-	}
-
-	@Override
-	protected Long
 			testGetStructuredContentFolderStructuredContentFoldersPage_getIrrelevantParentStructuredContentFolderId()
 		throws Exception {
 

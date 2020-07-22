@@ -52,11 +52,6 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 	}
 
 	@Override
-	protected Long testGetAssetLibraryKeywordsPage_getAssetLibraryId() {
-		return testDepotEntry.getDepotEntryId();
-	}
-
-	@Override
 	protected Keyword testGetKeywordsRankedPage_addKeyword(Keyword keyword)
 		throws Exception {
 

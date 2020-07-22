@@ -392,13 +392,6 @@ public class StructuredContentResourceTest
 	}
 
 	@Override
-	protected Long
-		testGetAssetLibraryStructuredContentsPage_getAssetLibraryId() {
-
-		return testDepotEntry.getDepotEntryId();
-	}
-
-	@Override
 	protected StructuredContent
 			testGetContentStructureStructuredContentsPage_addStructuredContent(
 				Long contentStructureId, StructuredContent structuredContent)

@@ -61,13 +61,6 @@ public class ContentStructureResourceTest
 	}
 
 	@Override
-	protected Long
-		testGetAssetLibraryContentStructuresPage_getAssetLibraryId() {
-
-		return testDepotEntry.getDepotEntryId();
-	}
-
-	@Override
 	protected ContentStructure testGetContentStructure_addContentStructure()
 		throws Exception {
 

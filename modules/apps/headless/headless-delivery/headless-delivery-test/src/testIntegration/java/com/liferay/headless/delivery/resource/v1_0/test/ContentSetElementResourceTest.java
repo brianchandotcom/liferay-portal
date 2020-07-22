@@ -72,13 +72,6 @@ public class ContentSetElementResourceTest
 	}
 
 	@Override
-	protected Long
-		testGetAssetLibraryContentSetByKeyContentSetElementsPage_getAssetLibraryId() {
-
-		return testDepotEntry.getDepotEntryId();
-	}
-
-	@Override
 	protected String
 		testGetAssetLibraryContentSetByKeyContentSetElementsPage_getKey() {
 
@@ -94,13 +87,6 @@ public class ContentSetElementResourceTest
 
 		return _toContentSetElement(
 			JournalTestUtil.addArticle(_depotAssetListEntry.getGroupId(), 0));
-	}
-
-	@Override
-	protected Long
-		testGetAssetLibraryContentSetByUuidContentSetElementsPage_getAssetLibraryId() {
-
-		return testDepotEntry.getDepotEntryId();
 	}
 
 	@Override

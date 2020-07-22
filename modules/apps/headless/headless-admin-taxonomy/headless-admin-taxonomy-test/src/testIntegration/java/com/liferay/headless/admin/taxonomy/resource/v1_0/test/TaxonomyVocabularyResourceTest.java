@@ -66,11 +66,4 @@ public class TaxonomyVocabularyResourceTest
 		};
 	}
 
-	@Override
-	protected Long
-		testGetAssetLibraryTaxonomyVocabulariesPage_getAssetLibraryId() {
-
-		return testDepotEntry.getDepotEntryId();
-	}
-
 }

@@ -122,11 +122,6 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 	}
 
 	@Override
-	protected Long testGetAssetLibraryDocumentsPage_getAssetLibraryId() {
-		return testDepotEntry.getDepotEntryId();
-	}
-
-	@Override
 	protected Long testGetDocumentFolderDocumentsPage_getDocumentFolderId()
 		throws Exception {
 

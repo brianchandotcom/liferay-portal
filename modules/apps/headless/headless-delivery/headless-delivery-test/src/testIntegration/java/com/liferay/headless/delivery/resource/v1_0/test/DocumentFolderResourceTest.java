@@ -51,11 +51,6 @@ public class DocumentFolderResourceTest
 	}
 
 	@Override
-	protected Long testGetAssetLibraryDocumentFoldersPage_getAssetLibraryId() {
-		return testDepotEntry.getDepotEntryId();
-	}
-
-	@Override
 	protected DocumentFolder testGetDocumentFolder_addDocumentFolder()
 		throws Exception {
 

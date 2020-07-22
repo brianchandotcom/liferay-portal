@@ -32,7 +32,6 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.fragment.util.comparator.FragmentCollectionContributorNameComparator;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormProvider;
@@ -181,7 +180,6 @@ public class ContentPageEditorDisplayContext {
 		FragmentRendererController fragmentRendererController,
 		FragmentRendererTracker fragmentRendererTracker,
 		HttpServletRequest httpServletRequest,
-		InfoDisplayContributorTracker infoDisplayContributorTracker,
 		InfoItemServiceTracker infoItemServiceTracker,
 		ItemSelector itemSelector,
 		PageEditorConfiguration pageEditorConfiguration,
@@ -202,7 +200,6 @@ public class ContentPageEditorDisplayContext {
 		_renderResponse = renderResponse;
 
 		this.httpServletRequest = httpServletRequest;
-		this.infoDisplayContributorTracker = infoDisplayContributorTracker;
 		this.infoItemServiceTracker = infoItemServiceTracker;
 
 		themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
@@ -657,7 +654,6 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	protected final HttpServletRequest httpServletRequest;
-	protected final InfoDisplayContributorTracker infoDisplayContributorTracker;
 	protected final InfoItemServiceTracker infoItemServiceTracker;
 	protected final ThemeDisplay themeDisplay;
 

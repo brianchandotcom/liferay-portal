@@ -18,7 +18,6 @@ import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
@@ -79,9 +78,9 @@ public class ContentPageEditorDisplayContextProvider {
 				_fragmentCollectionContributorTracker,
 				_fragmentEntryConfigurationParser, _fragmentRendererController,
 				_fragmentRendererTracker, httpServletRequest,
-				_infoDisplayContributorTracker, _infoItemServiceTracker,
-				_itemSelector, _pageEditorConfiguration, portletRequest,
-				renderResponse, _stagingGroupHelper);
+				_infoItemServiceTracker, _itemSelector,
+				_pageEditorConfiguration, portletRequest, renderResponse,
+				_stagingGroupHelper);
 		}
 
 		long classPK = GetterUtil.getLong(
@@ -106,9 +105,8 @@ public class ContentPageEditorDisplayContextProvider {
 			_fragmentCollectionContributorTracker,
 			_fragmentEntryConfigurationParser, _fragmentRendererController,
 			_fragmentRendererTracker, httpServletRequest,
-			_infoDisplayContributorTracker, _infoItemServiceTracker,
-			_itemSelector, _pageEditorConfiguration, pageIsDisplayPage,
-			portletRequest, renderResponse);
+			_infoItemServiceTracker, _itemSelector, _pageEditorConfiguration,
+			pageIsDisplayPage, portletRequest, renderResponse);
 	}
 
 	@Activate
@@ -163,9 +161,6 @@ public class ContentPageEditorDisplayContextProvider {
 
 	@Reference
 	private FragmentRendererTracker _fragmentRendererTracker;
-
-	@Reference
-	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;

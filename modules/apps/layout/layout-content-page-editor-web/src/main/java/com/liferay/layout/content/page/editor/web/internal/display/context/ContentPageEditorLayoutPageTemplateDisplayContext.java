@@ -18,10 +18,10 @@ import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
@@ -33,6 +33,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -63,7 +64,6 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		FragmentRendererController fragmentRendererController,
 		FragmentRendererTracker fragmentRendererTracker,
 		HttpServletRequest httpServletRequest,
-		InfoDisplayContributorTracker infoDisplayContributorTracker,
 		InfoItemServiceTracker infoItemServiceTracker,
 		ItemSelector itemSelector,
 		PageEditorConfiguration pageEditorConfiguration,
@@ -75,9 +75,9 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			ffLayoutContentPageEditorConfiguration,
 			fragmentCollectionContributorTracker,
 			fragmentEntryConfigurationParser, fragmentRendererController,
-			fragmentRendererTracker, httpServletRequest,
-			infoDisplayContributorTracker, infoItemServiceTracker, itemSelector,
-			pageEditorConfiguration, portletRequest, renderResponse);
+			fragmentRendererTracker, httpServletRequest, infoItemServiceTracker,
+			itemSelector, pageEditorConfiguration, portletRequest,
+			renderResponse);
 
 		_pageIsDisplayPage = pageIsDisplayPage;
 	}
@@ -177,15 +177,19 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_getLayoutPageTemplateEntry();
 
-		InfoDisplayContributor<?> infoDisplayContributor =
-			infoDisplayContributorTracker.getInfoDisplayContributor(
+		InfoItemFormProvider<?> infoItemFormProvider =
+			infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFormProvider.class,
 				layoutPageTemplateEntry.getClassName());
 
-		if (infoDisplayContributor == null) {
+		if (infoItemFormProvider == null) {
 			return null;
 		}
 
-		return infoDisplayContributor.getLabel(themeDisplay.getLocale());
+		InfoForm infoForm = infoItemFormProvider.getInfoForm();
+
+		return ResourceActionsUtil.getModelResource(
+			themeDisplay.getLocale(), infoForm.getName());
 	}
 
 	private Map<String, Object> _getSelectedMappingTypes() {

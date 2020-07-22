@@ -356,10 +356,6 @@ public class DataFactory {
 		_sampleUserId = _counter.get();
 		_userPersonalSiteGroupId = _counter.get();
 
-		_cpDefinitionCount =
-			BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_COUNT *
-				BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_DEFINITION_COUNT;
-
 		_dlDDMStructureContent = _readFile("ddm_structure_basic_document.json");
 		_dlDDMStructureLayoutContent = _readFile(
 			"ddm_structure_layout_basic_document.json");
@@ -1362,8 +1358,7 @@ public class DataFactory {
 	}
 
 	public List<AssetEntryModel> newCPDefinitionAssetEntryModels() {
-		List<AssetEntryModel> assetEntryModels = new ArrayList<>(
-			_cpDefinitionCount);
+		List<AssetEntryModel> assetEntryModels = new ArrayList<>();
 
 		for (int productIndex = 0;
 			 productIndex < BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_COUNT;
@@ -1395,7 +1390,7 @@ public class DataFactory {
 		newCPDefinitionLocalizationModels() {
 
 		List<CPDefinitionLocalizationModel> cpDefinitionLocalizationModels =
-			new ArrayList<>(_cpDefinitionCount);
+			new ArrayList<>();
 
 		for (int productIndex = 0;
 			 productIndex < BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_COUNT;
@@ -1420,8 +1415,7 @@ public class DataFactory {
 	}
 
 	public List<CPDefinitionModel> newCPDefinitionModels() {
-		List<CPDefinitionModel> cpDefinitionModels = new ArrayList<>(
-			_cpDefinitionCount);
+		List<CPDefinitionModel> cpDefinitionModels = new ArrayList<>();
 
 		for (int productIndex = 0;
 			 productIndex < BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_COUNT;
@@ -1449,7 +1443,7 @@ public class DataFactory {
 
 	public List<CPFriendlyURLEntryModel> newCPFriendlyURLEntryModels() {
 		List<CPFriendlyURLEntryModel> cpFriendlyURLEntryModels =
-			new ArrayList<>(_cpDefinitionCount);
+			new ArrayList<>();
 
 		for (int productIndex = 0;
 			 productIndex < BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_COUNT;
@@ -1472,9 +1466,7 @@ public class DataFactory {
 	}
 
 	public List<CPInstanceModel> newCPInstanceModels() {
-		List<CPInstanceModel> cpInstanceModels = new ArrayList<>(
-			_cpDefinitionCount *
-				BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_INSTANCE_COUNT);
+		List<CPInstanceModel> cpInstanceModels = new ArrayList<>();
 
 		for (int productIndex = 0;
 			 productIndex < BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_COUNT;
@@ -4486,7 +4478,6 @@ public class DataFactory {
 	private final long _commerceChannelId;
 	private final long _companyId;
 	private final SimpleCounter _counter;
-	private final int _cpDefinitionCount;
 	private List<long[]> _cpDefinitionIdList;
 	private final Map<Long, String> _cpDefinitionLocalizationNames =
 		new HashMap<>();

@@ -9,4 +9,5 @@ Export-Package:\
 	com.liferay.translation.info.item.updater,\
 	com.liferay.translation.model,\
 	com.liferay.translation.service,\
-	com.liferay.translation.service.persistence
+	com.liferay.translation.service.persistence,\
+	com.liferay.translation.util

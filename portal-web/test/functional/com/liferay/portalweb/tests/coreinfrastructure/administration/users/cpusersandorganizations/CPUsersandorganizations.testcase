@@ -2035,15 +2035,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		var key_userScreenName = "test";
-
-		AssertClick(
-			locator1 = "UsersAndOrganizations#USER_TABLE_SCREEN_NAME",
-			value1 = "test");
-
-		Pause(locator1 = "5000");
-
-		var userId = selenium.getElementValue("UsersAndOrganizationsEditUser#DETAILS_USER_ID_FIELD");
+		var userId = JSONUserSetter.setUserId(userEmailAddress = "test@liferay.com");
 
 		Api.apiJsonwsUserView();
 

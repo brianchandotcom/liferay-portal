@@ -191,6 +191,12 @@ definition {
 			item = "Edit");
 	}
 
+	macro gotoEntry {
+		Click(
+			key_title = "${assetListName}",
+			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
+	}
+
 	macro gotoEntryMenuItem {
 		LexiconList.clickEllipsisItem(
 			item = "${item}",

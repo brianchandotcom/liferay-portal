@@ -881,7 +881,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 				<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
 					protected ${javaMethodParameter.parameterType} test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}() throws Exception {
-						<#if stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
+						<#if stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
+							return testDepotEntry.getDepotEntryId();
+						<#elseif stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
 							return testGroup.getGroupId();
 						<#else>
 							throw new UnsupportedOperationException("This method needs to be implemented");

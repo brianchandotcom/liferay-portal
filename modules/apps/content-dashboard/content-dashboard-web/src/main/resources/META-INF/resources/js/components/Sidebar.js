@@ -13,6 +13,7 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
+import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
 import React, {useContext, useEffect, useState} from 'react';
 
@@ -29,8 +30,8 @@ const SidebarHeader = ({children, subtitle, title}) => {
 
 	return (
 		<div className="sidebar-header">
-			<div className="autofit-row sidebar-section">
-				<div className="autofit-col autofit-col-expand">
+			<ClayLayout.ContentRow className="sidebar-section">
+				<ClayLayout.ContentCol expand>
 					<div className="component-title text-truncate-inline">
 						<span className="text-truncate">{title}</span>
 					</div>
@@ -38,17 +39,17 @@ const SidebarHeader = ({children, subtitle, title}) => {
 					<p className="component-subtitle">{subtitle}</p>
 
 					{children}
-				</div>
+				</ClayLayout.ContentCol>
 
-				<div className="autofit-col">
+				<ClayLayout.ContentCol>
 					<ClayButtonWithIcon
 						displayType="unstyled"
 						onClick={onClose}
 						small={true}
 						symbol="times-small"
 					/>
-				</div>
-			</div>
+				</ClayLayout.ContentCol>
+			</ClayLayout.ContentRow>
 		</div>
 	);
 };

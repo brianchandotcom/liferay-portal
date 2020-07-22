@@ -31,7 +31,7 @@ export const FieldSet = ({fields, label, onValueSelect, values}) => {
 				const FieldComponent =
 					field.type && FRAGMENT_CONFIGURATION_FIELDS[field.type];
 
-				const fieldValue = values[field.name];
+				const fieldValue = values[field.name] || field.defaultValue;
 
 				const visible =
 					!field.dependencies ||

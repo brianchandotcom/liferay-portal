@@ -101,8 +101,9 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 						).build()
 					).build(),
 					() -> _getAssetCategoryNames(
-						_filterBySystemAndVocabularyId(
-							assetEntry.getCategories(), assetVocabulary))));
+						_filterByVocabularyId(
+							assetEntry.getCategories(),
+							assetVocabulary.getVocabularyId()))));
 		}
 
 		infoFieldValues.add(
@@ -163,15 +164,12 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 			});
 	}
 
-	private List<AssetCategory> _filterBySystemAndVocabularyId(
-		List<AssetCategory> assetCategories, AssetVocabulary assetVocabulary) {
+	private List<AssetCategory> _filterByVocabularyId(
+		List<AssetCategory> assetCategories, long vocabularyId) {
 
 		return ListUtil.filter(
 			assetCategories,
-			assetCategory ->
-				!assetVocabulary.isSystem() &&
-				(assetCategory.getVocabularyId() ==
-					assetVocabulary.getVocabularyId()));
+			assetCategory -> assetCategory.getVocabularyId() == vocabularyId);
 	}
 
 	private String _getAssetCategoryNames(List<AssetCategory> assetCategories) {

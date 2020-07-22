@@ -201,9 +201,13 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 				assetEntry.getGroupId()));
 
 		for (AssetCategory assetCategory : assetEntry.getCategories()) {
-			assetVocabularies.add(
+			AssetVocabulary assetVocabulary =
 				_assetVocabularyLocalService.fetchAssetVocabulary(
-					assetCategory.getVocabularyId()));
+					assetCategory.getVocabularyId());
+
+			if (!assetVocabulary.isSystem()) {
+				assetVocabularies.add(assetVocabulary);
+			}
 		}
 
 		return assetVocabularies;
@@ -214,14 +218,24 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 
 		try {
 			if (itemClassTypeId > 0) {
-				return _assetVocabularyLocalService.getGroupsVocabularies(
-					_portal.getCurrentAndAncestorSiteGroupIds(scopeGroupId),
-					itemClassName, itemClassTypeId);
+				List<AssetVocabulary> groupsVocabularies =
+					_assetVocabularyLocalService.getGroupsVocabularies(
+						_portal.getCurrentAndAncestorSiteGroupIds(scopeGroupId),
+						itemClassName, itemClassTypeId);
+
+				return ListUtil.filter(
+					groupsVocabularies,
+					assetVocabulary -> !assetVocabulary.isSystem());
 			}
 
-			return _assetVocabularyLocalService.getGroupsVocabularies(
-				_portal.getCurrentAndAncestorSiteGroupIds(scopeGroupId),
-				itemClassName);
+			List<AssetVocabulary> groupsVocabularies =
+				_assetVocabularyLocalService.getGroupsVocabularies(
+					_portal.getCurrentAndAncestorSiteGroupIds(scopeGroupId),
+					itemClassName);
+
+			return ListUtil.filter(
+				groupsVocabularies,
+				assetVocabulary -> !assetVocabulary.isSystem());
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);

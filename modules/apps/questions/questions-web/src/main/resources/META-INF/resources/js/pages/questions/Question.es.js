@@ -384,6 +384,7 @@ export default withRouter(
 											<Answer
 												answer={answer}
 												answerChange={answerChange}
+												canMarkAsAnswer={question.actions.replace?true:false}
 												deleteAnswer={deleteAnswer}
 												key={answer.id}
 											/>

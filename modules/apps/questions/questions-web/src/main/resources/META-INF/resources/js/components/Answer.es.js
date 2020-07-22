@@ -31,7 +31,7 @@ import Rating from './Rating.es';
 import UserRow from './UserRow.es';
 
 export default withRouter(
-	({answer, answerChange, deleteAnswer, match: {url}}) => {
+	({answer, answerChange, canMarkAsAnswer, deleteAnswer, match: {url}}) => {
 		const [comments, setComments] = useState(
 			answer.messageBoardMessages.items
 		);
@@ -144,7 +144,7 @@ export default withRouter(
 									</ClayButton>
 								)}
 
-								{answer.actions.replace && (
+								{canMarkAsAnswer && (
 									<ClayButton
 										className="text-reset"
 										displayType="unstyled"

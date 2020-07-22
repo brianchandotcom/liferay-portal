@@ -14,7 +14,9 @@
 
 package com.liferay.app.builder.service.impl;
 
+import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.model.AppBuilderAppDataRecordLink;
+import com.liferay.app.builder.service.AppBuilderAppLocalService;
 import com.liferay.app.builder.service.base.AppBuilderAppDataRecordLinkLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -33,14 +36,32 @@ import org.osgi.service.component.annotations.Component;
 public class AppBuilderAppDataRecordLinkLocalServiceImpl
 	extends AppBuilderAppDataRecordLinkLocalServiceBaseImpl {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #addAppBuilderAppDataRecordLink(long, long, long, long)}
+	 */
+	@Deprecated
 	@Override
 	public AppBuilderAppDataRecordLink addAppBuilderAppDataRecordLink(
 		long companyId, long appBuilderAppId, long ddlRecordId) {
+
+		AppBuilderApp appBuilderApp =
+			_appBuilderAppLocalService.fetchAppBuilderApp(appBuilderAppId);
+
+		return addAppBuilderAppDataRecordLink(
+			appBuilderApp.getGroupId(), companyId, appBuilderAppId,
+			ddlRecordId);
+	}
+
+	@Override
+	public AppBuilderAppDataRecordLink addAppBuilderAppDataRecordLink(
+		long groupId, long companyId, long appBuilderAppId, long ddlRecordId) {
 
 		AppBuilderAppDataRecordLink appBuilderAppDataRecordLink =
 			appBuilderAppDataRecordLinkPersistence.create(
 				counterLocalService.increment());
 
+		appBuilderAppDataRecordLink.setGroupId(groupId);
 		appBuilderAppDataRecordLink.setCompanyId(companyId);
 		appBuilderAppDataRecordLink.setAppBuilderAppId(appBuilderAppId);
 		appBuilderAppDataRecordLink.setDdlRecordId(ddlRecordId);
@@ -74,5 +95,8 @@ public class AppBuilderAppDataRecordLinkLocalServiceImpl
 		return appBuilderAppDataRecordLinkPersistence.findByDDLRecordId(
 			ddlRecordId);
 	}
+
+	@Reference
+	private AppBuilderAppLocalService _appBuilderAppLocalService;
 
 }

@@ -60,7 +60,7 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 
 	@Override
 	public InfoFieldSet getInfoFieldSet(AssetEntry assetEntry) {
-		return _getInfoFieldSet(_getAssetVocabularies(assetEntry));
+		return _getInfoFieldSet(_getNonSystemAssetVocabularies(assetEntry));
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 		String itemClassName, long itemClassTypeId, long scopeGroupId) {
 
 		return _getInfoFieldSet(
-			_getAssetVocabularies(
+			_getNonSystemAssetVocabularies(
 				itemClassName, itemClassTypeId, scopeGroupId));
 	}
 
@@ -83,7 +83,7 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 
 		List<InfoFieldValue<Object>> infoFieldValues = new ArrayList<>();
 
-		Set<AssetVocabulary> assetVocabularies = _getAssetVocabularies(
+		Set<AssetVocabulary> assetVocabularies = _getNonSystemAssetVocabularies(
 			assetEntry);
 
 		for (AssetVocabulary assetVocabulary : assetVocabularies) {
@@ -192,9 +192,11 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 		);
 	}
 
-	private Set<AssetVocabulary> _getAssetVocabularies(AssetEntry assetEntry) {
+	private Set<AssetVocabulary> _getNonSystemAssetVocabularies(
+		AssetEntry assetEntry) {
+
 		Set<AssetVocabulary> assetVocabularies = new HashSet<>(
-			_getAssetVocabularies(
+			_getNonSystemAssetVocabularies(
 				assetEntry.getClassName(), assetEntry.getClassTypeId(),
 				assetEntry.getGroupId()));
 
@@ -211,7 +213,7 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 		return assetVocabularies;
 	}
 
-	private List<AssetVocabulary> _getAssetVocabularies(
+	private List<AssetVocabulary> _getNonSystemAssetVocabularies(
 		String itemClassName, long itemClassTypeId, long scopeGroupId) {
 
 		try {

@@ -187,8 +187,6 @@ public class AnalyticsReportsDisplayContext {
 				}
 			).build()
 		).put(
-			"readsEnabled", _analyticsReportsConfiguration.readsEnabled()
-		).put(
 			"timeSpans", _getTimeSpansJSONArray()
 		).put(
 			"validAnalyticsConnection", _validAnalyticsConnection

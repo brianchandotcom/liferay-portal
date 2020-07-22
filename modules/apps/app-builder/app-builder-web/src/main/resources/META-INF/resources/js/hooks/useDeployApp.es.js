@@ -19,7 +19,7 @@ import React, {useContext} from 'react';
 
 import {DEPLOYMENT_ACTION, DEPLOYMENT_TYPES} from '../pages/apps/constants.es';
 import {updateItem} from '../utils/client.es';
-import {concatValues} from '../utils/utils.es';
+import {concatValues, getTranslatedValue} from '../utils/utils.es';
 
 export default () => {
 	const [{onClose}, dispatch] = useContext(Context);
@@ -36,6 +36,10 @@ export default () => {
 
 	const undeployApp = (app) => {
 		return new Promise((resolve, reject) => {
+			const appName =
+				getTranslatedValue(app, 'appName') ??
+				getTranslatedValue(app, 'name');
+
 			dispatch({
 				payload: {
 					body: (
@@ -51,7 +55,7 @@ export default () => {
 											<b>
 												{Liferay.Language.get('name')}:
 											</b>{' '}
-											{app.nameText}
+											{appName}
 										</span>
 										<span>
 											<b>
@@ -108,7 +112,7 @@ export default () => {
 						</ClayButton.Group>,
 					],
 					header: DEPLOYMENT_ACTION.undeploy,
-					size: 'lg',
+					size: 'md',
 					status: 'warning',
 				},
 				type: 1,

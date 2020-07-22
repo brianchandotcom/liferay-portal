@@ -24,7 +24,7 @@ import useBackUrl from '../../hooks/useBackUrl.es';
 import useDeployApp from '../../hooks/useDeployApp.es';
 import {confirmDelete} from '../../utils/client.es';
 import {fromNow} from '../../utils/time.es';
-import {concatValues} from '../../utils/utils.es';
+import {concatValues, getTranslatedValue} from '../../utils/utils.es';
 import {
 	COLUMNS,
 	DEPLOYMENT_ACTION,
@@ -111,10 +111,14 @@ export default ({
 		>
 			{(app) => ({
 				...app,
+				appName: app.name,
 				dateCreated: fromNow(app.dateCreated),
 				dateModified: fromNow(app.dateModified),
-				name: <Link to={getEditAppUrl(app)}>{app.name.en_US}</Link>,
-				nameText: app.name.en_US,
+				name: (
+					<Link to={getEditAppUrl(app)}>
+						{getTranslatedValue(app, 'name')}
+					</Link>
+				),
 				status: (
 					<ClayLabel
 						displayType={app.active ? 'success' : 'secondary'}

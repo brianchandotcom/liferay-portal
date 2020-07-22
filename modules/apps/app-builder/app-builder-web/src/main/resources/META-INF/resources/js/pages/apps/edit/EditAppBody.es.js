@@ -17,6 +17,7 @@ import {SearchInput} from 'data-engine-taglib';
 import React, {useState} from 'react';
 
 import {useRequest} from '../../../hooks/index.es';
+import {getTranslatedValue} from '../../../utils/utils.es';
 import ListItems from './ListItems.es';
 
 export default ({endpoint, title, ...restProps}) => {
@@ -28,7 +29,7 @@ export default ({endpoint, title, ...restProps}) => {
 	} = useRequest(endpoint);
 
 	const filteredItems = items.filter((item) =>
-		new RegExp(searchText, 'ig').test(item.name.en_US)
+		new RegExp(searchText, 'ig').test(getTranslatedValue(item, 'name'))
 	);
 
 	return (

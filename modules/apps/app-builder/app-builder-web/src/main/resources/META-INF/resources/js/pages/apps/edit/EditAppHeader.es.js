@@ -15,16 +15,13 @@
 import React, {useContext} from 'react';
 
 import {UpperToolbarInput} from '../../../components/upper-toolbar/UpperToolbar.es';
+import {getTranslatedValue} from '../../../utils/utils.es';
 import EditAppContext, {UPDATE_NAME} from './EditAppContext.es';
 
 export default () => {
 	const {
 		dispatch,
-		state: {
-			app: {
-				name: {en_US: appName},
-			},
-		},
+		state: {app},
 	} = useContext(EditAppContext);
 
 	const onAppNameChange = (event) => {
@@ -45,7 +42,7 @@ export default () => {
 					maxLength={maxLength}
 					onInput={onAppNameChange}
 					placeholder={Liferay.Language.get('untitled-app')}
-					value={appName}
+					value={getTranslatedValue(app, 'name')}
 				/>
 			</div>
 

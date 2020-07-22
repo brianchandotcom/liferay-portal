@@ -20,6 +20,7 @@ import React, {useContext} from 'react';
 import {withLoading} from '../../../components/loading/Loading.es';
 import {withEmpty} from '../../../components/table/EmptyState.es';
 import {fromNow} from '../../../utils/time.es';
+import {getTranslatedValue} from '../../../utils/utils.es';
 import EditAppContext, {
 	UPDATE_DATA_LAYOUT_ID,
 	UPDATE_DATA_LIST_VIEW_ID,
@@ -67,15 +68,7 @@ const ListItems = ({itemType, items}) => {
 			</Head>
 			<Body>
 				{items.map(
-					(
-						{
-							dateCreated,
-							dateModified,
-							id,
-							name: {en_US: itemName},
-						},
-						index
-					) => {
+					({dateCreated, dateModified, id, ...item}, index) => {
 						return (
 							<Row
 								className={classNames('selectable-row', {
@@ -84,7 +77,9 @@ const ListItems = ({itemType, items}) => {
 								key={index}
 								onClick={() => onItemIdChange(id)}
 							>
-								<Cell align="left">{itemName}</Cell>
+								<Cell align="left">
+									{getTranslatedValue(item, 'name')}
+								</Cell>
 								<Cell>{fromNow(dateCreated)}</Cell>
 								<Cell>{fromNow(dateModified)}</Cell>
 								<Cell align={'right'}>

@@ -4312,6 +4312,8 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		<sequential>
 			<beanshell>
 				<![CDATA[
+					import com.google.common.io.CountingInputStream;
+
 					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
 					Runnable runnable = new Runnable() {
@@ -4361,27 +4363,36 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 							InputStream inputStream = process.getInputStream();
 
-							int appServerLogByte;
-							int appServerLogSize = 0;
+							CountingInputStream countingInputStream = new CountingInputStream(inputStreamO);
+
+							InputStreamReader inputStreamReader = new InputStreamReader(countingInputStream, "UTF-8");
 
 							int appServerLogMaxSize = Integer.valueOf(project.getProperty("app.server.log.max.size.in.mb")) * 1024 * 1024;
 
 							try {
-								while ((appServerLogByte = inputStream.read()) != -1) {
-									appServerLogSize++;
-
-									if (appServerLogSize > appServerLogMaxSize) {
+								while ((int appServerLogCharInt = inputStreamReader.read()) != -1) {
+									if (countingInputStream.getCount() > appServerLogMaxSize) {
 										continue;
 									}
 
-									System.out.print((char)appServerLogByte);
+									System.out.print((char)appServerLogCharInt);
 								}
 							}
 							catch (IOException ioException) {
 								throw new RuntimeException(ioException);
 							}
 							finally {
-								inputStream.close();
+								try {
+									inputStreamReader.close();
+								}
+								finally {
+									try {
+										countingInputStream.close();
+									}
+									finally {
+										inputStream.close();
+									}
+								}
 							}
 
 							process.waitFor();

@@ -135,9 +135,9 @@ public class ConfigurationHandler {
 		List<Object> list = new ArrayList<>();
 
 		while (true) {
-			int spaces = _ignorablePageBreakAndWhiteSpace(pushbackReader);
+			int token = _ignorablePageBreakAndWhiteSpace(pushbackReader);
 
-			if (spaces == _TOKEN_VAL_OPEN) {
+			if (token == _TOKEN_VAL_OPEN) {
 				Object value = _readSimple(typeCode, pushbackReader);
 
 				if (value == null) {
@@ -151,10 +151,10 @@ public class ConfigurationHandler {
 
 				list.add(value);
 
-				spaces = _ignorablePageBreakAndWhiteSpace(pushbackReader);
+				token = _ignorablePageBreakAndWhiteSpace(pushbackReader);
 			}
 
-			if (spaces == CharPool.CLOSE_BRACKET) {
+			if (token == CharPool.CLOSE_BRACKET) {
 				Class<?> type = _codeToType.get(typeCode);
 
 				Object array = Array.newInstance(type, list.size());
@@ -165,10 +165,10 @@ public class ConfigurationHandler {
 
 				return array;
 			}
-			else if (spaces < 0) {
+			else if (token < 0) {
 				return null;
 			}
-			else if (spaces != CharPool.COMMA) {
+			else if (token != CharPool.COMMA) {
 				return null;
 			}
 		}
@@ -181,9 +181,9 @@ public class ConfigurationHandler {
 		Collection<Object> collection = new ArrayList<>();
 
 		while (true) {
-			int spaces = _ignorablePageBreakAndWhiteSpace(pushbackReader);
+			int token = _ignorablePageBreakAndWhiteSpace(pushbackReader);
 
-			if (spaces == _TOKEN_VAL_OPEN) {
+			if (token == _TOKEN_VAL_OPEN) {
 				Object value = _readSimple(typeCode, pushbackReader);
 
 				if (value == null) {
@@ -197,16 +197,16 @@ public class ConfigurationHandler {
 
 				collection.add(value);
 
-				spaces = _ignorablePageBreakAndWhiteSpace(pushbackReader);
+				token = _ignorablePageBreakAndWhiteSpace(pushbackReader);
 			}
 
-			if (spaces == CharPool.CLOSE_PARENTHESIS) {
+			if (token == CharPool.CLOSE_PARENTHESIS) {
 				return collection;
 			}
-			else if (spaces < 0) {
+			else if (token < 0) {
 				return null;
 			}
-			else if (spaces != CharPool.COMMA) {
+			else if (token != CharPool.COMMA) {
 				return null;
 			}
 		}
@@ -271,13 +271,13 @@ public class ConfigurationHandler {
 
 		code = Character.toUpperCase(code);
 
-		if (code == _TOKEN_SIMPLE_BOOLEAN) {
+		if (code == _TOKEN_BOOLEAN) {
 			return Boolean.valueOf(_readQuoted(pushbackReader));
 		}
-		else if (code == _TOKEN_SIMPLE_BYTE) {
+		else if (code == _TOKEN_BYTE) {
 			return Byte.valueOf(_readQuoted(pushbackReader));
 		}
-		else if (code == _TOKEN_SIMPLE_CHARACTER) {
+		else if (code == _TOKEN_CHARACTER) {
 			String charString = _readQuoted(pushbackReader);
 
 			if ((charString != null) && (charString.length() > 0)) {
@@ -286,7 +286,7 @@ public class ConfigurationHandler {
 
 			return null;
 		}
-		else if (code == _TOKEN_SIMPLE_DOUBLE) {
+		else if (code == _TOKEN_DOUBLE) {
 			String doubleString = _readQuoted(pushbackReader);
 
 			if (doubleString.indexOf(CharPool.PERIOD) >= 0) {
@@ -296,7 +296,7 @@ public class ConfigurationHandler {
 			return Double.longBitsToDouble(
 				GetterUtil.getLongStrict(doubleString));
 		}
-		else if (code == _TOKEN_SIMPLE_FLOAT) {
+		else if (code == _TOKEN_FLOAT) {
 			String floatString = _readQuoted(pushbackReader);
 
 			if (floatString.indexOf(CharPool.PERIOD) >= 0) {
@@ -306,16 +306,16 @@ public class ConfigurationHandler {
 			return Float.intBitsToFloat(
 				GetterUtil.getIntegerStrict(floatString));
 		}
-		else if (code == _TOKEN_SIMPLE_INTEGER) {
+		else if (code == _TOKEN_INTEGER) {
 			return Integer.valueOf(_readQuoted(pushbackReader));
 		}
-		else if (code == _TOKEN_SIMPLE_LONG) {
+		else if (code == _TOKEN_LONG) {
 			return Long.valueOf(_readQuoted(pushbackReader));
 		}
-		else if (code == _TOKEN_SIMPLE_SHORT) {
+		else if (code == _TOKEN_SHORT) {
 			return Short.valueOf(_readQuoted(pushbackReader));
 		}
-		else if (code == _TOKEN_SIMPLE_STRING) {
+		else if (code == _TOKEN_STRING) {
 			return _readQuoted(pushbackReader);
 		}
 		else {
@@ -338,7 +338,7 @@ public class ConfigurationHandler {
 			code = _read(pushbackReader);
 		}
 		else {
-			type = _TOKEN_SIMPLE_STRING;
+			type = _TOKEN_STRING;
 		}
 
 		if (code == CharPool.OPEN_BRACKET) {
@@ -510,23 +510,23 @@ public class ConfigurationHandler {
 
 	private static final String _INDENT = "  ";
 
-	private static final int _TOKEN_SIMPLE_BOOLEAN = 'B';
+	private static final int _TOKEN_BOOLEAN = 'B';
 
-	private static final int _TOKEN_SIMPLE_BYTE = 'X';
+	private static final int _TOKEN_BYTE = 'X';
 
-	private static final int _TOKEN_SIMPLE_CHARACTER = 'C';
+	private static final int _TOKEN_CHARACTER = 'C';
 
-	private static final int _TOKEN_SIMPLE_DOUBLE = 'D';
+	private static final int _TOKEN_DOUBLE = 'D';
 
-	private static final int _TOKEN_SIMPLE_FLOAT = 'F';
+	private static final int _TOKEN_FLOAT = 'F';
 
-	private static final int _TOKEN_SIMPLE_INTEGER = 'I';
+	private static final int _TOKEN_INTEGER = 'I';
 
-	private static final int _TOKEN_SIMPLE_LONG = 'L';
+	private static final int _TOKEN_LONG = 'L';
 
-	private static final int _TOKEN_SIMPLE_SHORT = 'S';
+	private static final int _TOKEN_SHORT = 'S';
 
-	private static final int _TOKEN_SIMPLE_STRING = 'T';
+	private static final int _TOKEN_STRING = 'T';
 
 	private static final int _TOKEN_VAL_CLOS = '"'; // '}';
 
@@ -535,21 +535,21 @@ public class ConfigurationHandler {
 	private static final Map<Integer, Class<?>> _codeToType = new HashMap<>();
 	private static final Map<Class<?>, Integer> _typeToCode =
 		HashMapBuilder.<Class<?>, Integer>put(
-			Boolean.class, _TOKEN_SIMPLE_BOOLEAN
+			Boolean.class, _TOKEN_BOOLEAN
 		).put(
-			Byte.class, _TOKEN_SIMPLE_BYTE
+			Byte.class, _TOKEN_BYTE
 		).put(
-			Character.class, _TOKEN_SIMPLE_CHARACTER
+			Character.class, _TOKEN_CHARACTER
 		).put(
-			Double.class, _TOKEN_SIMPLE_DOUBLE
+			Double.class, _TOKEN_DOUBLE
 		).put(
-			Float.class, _TOKEN_SIMPLE_FLOAT
+			Float.class, _TOKEN_FLOAT
 		).put(
-			Integer.class, _TOKEN_SIMPLE_INTEGER
+			Integer.class, _TOKEN_INTEGER
 		).put(
-			Long.class, _TOKEN_SIMPLE_LONG
+			Long.class, _TOKEN_LONG
 		).put(
-			Short.class, _TOKEN_SIMPLE_SHORT
+			Short.class, _TOKEN_SHORT
 		).build();
 
 	static {
@@ -557,7 +557,7 @@ public class ConfigurationHandler {
 			_codeToType.put(entry.getValue(), entry.getKey());
 		}
 
-		_codeToType.put(_TOKEN_SIMPLE_STRING, String.class);
+		_codeToType.put(_TOKEN_STRING, String.class);
 	}
 
 }

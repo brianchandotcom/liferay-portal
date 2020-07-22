@@ -33,6 +33,7 @@ const KeyValue = ({disabled, onChange, value, ...otherProps}) => (
 				onChange({target: {value}});
 			}}
 			readOnly={disabled}
+			tabIndex={disabled ? '-1' : '0'}
 			type="text"
 			value={value}
 		/>

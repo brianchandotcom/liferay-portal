@@ -16,16 +16,19 @@ package com.liferay.journal.web.internal.servlet.taglib.clay;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.portlet.RenderRequest;
 
@@ -63,14 +66,25 @@ public class JournalArticleItemSelectorVerticalCard implements VerticalCard {
 
 	@Override
 	public String getSubtitle() {
-		Date createDate = _article.getModifiedDate();
+		if (Objects.equals(
+				ParamUtil.getString(_httpServletRequest, "scope"),
+				"everywhere")) {
 
-		String modifiedDateDescription = LanguageUtil.getTimeDescription(
-			_httpServletRequest,
-			System.currentTimeMillis() - createDate.getTime(), true);
+			Group group;
 
-		return LanguageUtil.format(
-			_httpServletRequest, "modified-x-ago", modifiedDateDescription);
+			try {
+				group = GroupServiceUtil.getGroup(_article.getGroupId());
+			}
+			catch (PortalException portalException) {
+				portalException.printStackTrace();
+
+				return "";
+			}
+
+			return group.getName(_themeDisplay.getLocale());
+		}
+
+		return "";
 	}
 
 	@Override

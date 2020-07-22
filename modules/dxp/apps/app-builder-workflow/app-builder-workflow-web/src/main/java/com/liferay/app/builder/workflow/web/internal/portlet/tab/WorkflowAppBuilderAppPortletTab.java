@@ -15,8 +15,10 @@
 package com.liferay.app.builder.workflow.web.internal.portlet.tab;
 
 import com.liferay.app.builder.model.AppBuilderApp;
+import com.liferay.app.builder.model.AppBuilderAppDataRecordLink;
 import com.liferay.app.builder.portlet.tab.AppBuilderAppPortletTab;
 import com.liferay.app.builder.portlet.tab.AppBuilderAppPortletTabContext;
+import com.liferay.app.builder.service.AppBuilderAppDataRecordLinkLocalService;
 import com.liferay.app.builder.workflow.service.AppBuilderWorkflowTaskLinkLocalService;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
@@ -59,7 +61,7 @@ public class WorkflowAppBuilderAppPortletTab
 
 		WorkflowInstanceLink workflowInstanceLink =
 			_workflowInstanceLinkLocalService.fetchWorkflowInstanceLink(
-				appBuilderApp.getCompanyId(), appBuilderApp.getGroupId(),
+				appBuilderApp.getCompanyId(), _getGroupId(dataRecordId),
 				ResourceActionsUtil.getCompositeModelName(
 					AppBuilderApp.class.getName(), DDLRecord.class.getName()),
 				dataRecordId);
@@ -124,6 +126,22 @@ public class WorkflowAppBuilderAppPortletTab
 			"app-builder-workflow-web/js/pages/entry/ViewEntry.es");
 	}
 
+	private long _getGroupId(long dataRecordId) {
+		if (dataRecordId == 0) {
+			return 0;
+		}
+
+		AppBuilderAppDataRecordLink appBuilderAppDataRecordLink =
+			_appBuilderAppDataRecordLinkLocalService.
+				fetchDDLRecordAppBuilderAppDataRecordLink(dataRecordId);
+
+		if (appBuilderAppDataRecordLink == null) {
+			return 0;
+		}
+
+		return appBuilderAppDataRecordLink.getGroupId();
+	}
+
 	private String _getWorkflowTaskName(
 		long companyId, long userId, long workflowInstanceId) {
 
@@ -153,6 +171,10 @@ public class WorkflowAppBuilderAppPortletTab
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WorkflowAppBuilderAppPortletTab.class);
+
+	@Reference
+	private AppBuilderAppDataRecordLinkLocalService
+		_appBuilderAppDataRecordLinkLocalService;
 
 	@Reference
 	private AppBuilderWorkflowTaskLinkLocalService

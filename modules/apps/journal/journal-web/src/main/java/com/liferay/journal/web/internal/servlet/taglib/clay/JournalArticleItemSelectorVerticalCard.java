@@ -16,6 +16,8 @@ package com.liferay.journal.web.internal.servlet.taglib.clay;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
@@ -66,25 +68,21 @@ public class JournalArticleItemSelectorVerticalCard implements VerticalCard {
 
 	@Override
 	public String getSubtitle() {
-		if (Objects.equals(
-				ParamUtil.getString(_httpServletRequest, "scope"),
-				"everywhere")) {
+		try {
+			if (!Objects.equals(
+					ParamUtil.getString(_httpServletRequest, "scope"),
+					"everywhere")) {
 
-			Group group;
-
-			try {
-				group = GroupServiceUtil.getGroup(_article.getGroupId());
+				return StringPool.BLANK;
 			}
-			catch (PortalException portalException) {
-				portalException.printStackTrace();
 
-				return "";
-			}
+			Group group = GroupServiceUtil.getGroup(_article.getGroupId());
 
 			return group.getName(_themeDisplay.getLocale());
 		}
-
-		return "";
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
+		}
 	}
 
 	@Override

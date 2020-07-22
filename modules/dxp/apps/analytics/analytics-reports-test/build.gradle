@@ -12,4 +12,6 @@ dependencies {testIntegrationCompile group: "com.liferay.portal", name: "com.lif
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 	testIntegrationCompile project(":apps:asset:asset-info-display-api")
 	testIntegrationCompile project(":apps:info:info-api")
+	testIntegrationCompile project(":apps:asset:asset-display-page-api")
+	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
 }

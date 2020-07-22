@@ -867,7 +867,7 @@ public class LayoutCTTest {
 
 			String message = throwable.toString();
 
-			Assert.assertTrue(message, message.contains("Size mismatch "));
+			Assert.assertTrue(message, message.contains("Unable to publish "));
 		}
 	}
 

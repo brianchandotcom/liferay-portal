@@ -215,14 +215,14 @@ public class ClassLoaderPoolTest {
 	}
 
 	@Test
-	public void testParse() throws Exception {
+	public void testParseVersion() throws Exception {
 		Method method = ReflectionTestUtil.getMethod(
 			ClassLoaderPool.class, "_parseVersion", String.class);
 
-		_assertEquals("1.0.0", method.invoke(null, "1"));
-		_assertEquals("1.0.0", method.invoke(null, "1.0"));
-		_assertEquals("1.0.0.0", method.invoke(null, "1.0.0.0"));
-		_assertEquals("1.0.0.Aa0_-", method.invoke(null, "1.0.0.Aa0_-"));
+		_assertVersionEquals("1.0.0", method.invoke(null, "1"));
+		_assertVersionEquals("1.0.0", method.invoke(null, "1.0"));
+		_assertVersionEquals("1.0.0.0", method.invoke(null, "1.0.0.0"));
+		_assertVersionEquals("1.0.0.Aa0_-", method.invoke(null, "1.0.0.Aa0_-"));
 
 		Assert.assertNull(
 			"null should be return because 'x' of \"1.x.0\" is not a decimal " +
@@ -410,7 +410,7 @@ public class ClassLoaderPoolTest {
 			_fallbackClassLoaders.toString(), _fallbackClassLoaders.isEmpty());
 	}
 
-	private void _assertEquals(String expectedVersion, Object version) {
+	private void _assertVersionEquals(String expectedVersion, Object version) {
 		int major = ReflectionTestUtil.getFieldValue(version, "_major");
 		int minor = ReflectionTestUtil.getFieldValue(version, "_minor");
 		int micro = ReflectionTestUtil.getFieldValue(version, "_micro");

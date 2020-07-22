@@ -16,7 +16,7 @@ import {useLazyQuery, useMutation} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
@@ -40,11 +40,20 @@ export default withRouter(
 		});
 
 		const [articleBody, setArticleBody] = useState('');
+		const [id, setId] = useState('');
+
+		useEffect(() => {
+			setId((data && data.messageBoardMessageByFriendlyUrlPath.id) || '');
+		}, [data]);
 
 		const [addUpdateMessage] = useMutation(updateMessageQuery, {
 			context: getContextLink(`${sectionTitle}/${questionId}`),
 			onCompleted() {
 				history.goBack();
+			},
+			update(proxy) {
+				proxy.evict(`MessageBoardMessage:${id}`);
+				proxy.gc();
 			},
 		});
 

@@ -61,7 +61,7 @@ const TranslateLanguagesSelector = ({
 		if (!formHaschanges) {
 			refreshPage(sourceId, targetId);
 		}
-		else if(
+		else if (
 			confirm(
 				Liferay.Language.get(
 					'are-you-sure-you-want-to-leave-the-page-you-may-lose-your-changes'

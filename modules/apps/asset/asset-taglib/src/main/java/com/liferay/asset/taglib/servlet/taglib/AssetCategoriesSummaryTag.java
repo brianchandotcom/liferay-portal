@@ -56,6 +56,10 @@ public class AssetCategoriesSummaryTag<R> extends IncludeTag {
 		return _portletURL;
 	}
 
+	public boolean isShowSystem() {
+		return _showSystem;
+	}
+
 	public void setClassName(String className) {
 		_className = className;
 	}
@@ -87,6 +91,10 @@ public class AssetCategoriesSummaryTag<R> extends IncludeTag {
 		_portletURL = portletURL;
 	}
 
+	public void setShowSystem(boolean showSystem) {
+		_showSystem = showSystem;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -97,6 +105,7 @@ public class AssetCategoriesSummaryTag<R> extends IncludeTag {
 		_message = null;
 		_paramName = null;
 		_portletURL = null;
+		_showSystem = false;
 	}
 
 	@Override
@@ -134,6 +143,8 @@ public class AssetCategoriesSummaryTag<R> extends IncludeTag {
 			"liferay-asset:asset-categories-summary:paramName", _paramName);
 		httpServletRequest.setAttribute(
 			"liferay-asset:asset-categories-summary:portletURL", _portletURL);
+		httpServletRequest.setAttribute(
+			"liferay-asset:asset-categories-summary:showSystem", _showSystem);
 	}
 
 	private static final String _PAGE = "/asset_categories_summary/page.jsp";
@@ -144,5 +155,6 @@ public class AssetCategoriesSummaryTag<R> extends IncludeTag {
 	private String _message;
 	private String _paramName;
 	private PortletURL _portletURL;
+	private boolean _showSystem;
 
 }

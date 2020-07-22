@@ -408,14 +408,47 @@
 				{
 					"frontendTokens": [
 						{
-							"label": "container-max",
+							"label": "container-max-sm",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "container-max"
+									"value": "container-max-sm"
 								}
 							],
-							"name": "containerMax",
+							"name": "containerMaxSm",
+							"type": "Number"
+						},
+						{
+							"label": "container-max-md",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "container-max-md"
+								}
+							],
+							"name": "containerMaxMd",
+							"type": "Number"
+						},
+						{
+							"label": "container-max-lg",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "container-max-lg"
+								}
+							],
+							"name": "containerMaxLg",
+							"type": "Number"
+						},
+						{
+							"label": "container-max-xl",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "container-max-xl"
+								}
+							],
+							"name": "containerMaxXl",
 							"type": "Number"
 						}
 					],
@@ -492,38 +525,6 @@
 							"type": "Number"
 						},
 						{
-							"label": "font-size-lg",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "font-size-lg"
-								}
-							],
-							"name": "fontSizeLg",
-							"type": "Number"
-						},
-						{
-							"label": "font-size-sm",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "font-size-sm"
-								}
-							],
-							"name": "fontSizeSm",
-							"type": "Number"
-						},
-						{
-							"label": "font-size-base",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "font-size-base"
-								}
-							],
-							"name": "fontSizeBase",
-							"type": "Number"
-						},
 						{
 							"label": "font-size-lg",
 							"mappings": [

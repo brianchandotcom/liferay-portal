@@ -40,7 +40,10 @@ const SCOPES = [
 	},
 	{
 		label: Liferay.Language.get('applications-and-site-menu'),
-		value: ['applications_menu.applications', 'site_administration.content'],
+		value: [
+			'applications_menu.applications',
+			'site_administration.content',
+		],
 	},
 ];
 

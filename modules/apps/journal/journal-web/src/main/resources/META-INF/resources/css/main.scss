@@ -266,11 +266,22 @@ $productMenuWidth: 320px;
 	.translate-article {
 		nav {
 			height: auto;
+			left: 0;
 			position: fixed;
 			transition: left ease $productMenuTransitionDuration,
 				width ease $productMenuTransitionDuration;
 			width: 100%;
 			z-index: $toolbarZIndex;
+
+			body.open & {
+				left: $productMenuWidth;
+				width: calc(100% - #{$productMenuWidth});
+
+				@media (max-width: 768px) {
+					left: 0;
+					width: 100%;
+				}
+			}
 
 			> .container-fluid {
 				padding: 0;

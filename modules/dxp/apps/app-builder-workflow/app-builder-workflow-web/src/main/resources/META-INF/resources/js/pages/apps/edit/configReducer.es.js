@@ -49,6 +49,7 @@ export const getInitialConfig = () => {
 	return {
 		currentStep: initialSteps[0],
 		dataObject: {},
+		draftConfig: {},
 		formView: {},
 		listItems: {
 			assigneeRoles: [],
@@ -215,6 +216,7 @@ export default (state, action) => {
 			return {
 				...state,
 				...action.config,
+				draftConfig: JSON.parse(JSON.stringify(action.config)),
 			};
 		}
 		case UPDATE_DATA_OBJECT: {

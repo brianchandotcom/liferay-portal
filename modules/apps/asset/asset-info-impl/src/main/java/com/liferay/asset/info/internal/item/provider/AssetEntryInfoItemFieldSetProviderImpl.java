@@ -192,6 +192,38 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 		);
 	}
 
+	private InfoFieldSet _getInfoFieldSet(
+		Collection<AssetVocabulary> assetVocabularies) {
+
+		return InfoFieldSet.builder(
+		).infoFieldSetEntry(
+			consumer -> assetVocabularies.forEach(
+				assetVocabulary -> consumer.accept(
+					InfoField.builder(
+					).infoFieldType(
+						TextInfoFieldType.INSTANCE
+					).name(
+						assetVocabulary.getName()
+					).labelInfoLocalizedValue(
+						InfoLocalizedValue.<String>builder(
+						).values(
+							assetVocabulary.getTitleMap()
+						).build()
+					).build()))
+		).infoFieldSetEntry(
+			_categoriesInfoField
+		).infoFieldSetEntry(
+			_tagsInfoField
+		).infoFieldSetEntry(
+			_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
+				AssetEntry.class.getName())
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(getClass(), "categorization")
+		).name(
+			"categorization"
+		).build();
+	}
+
 	private Set<AssetVocabulary> _getNonSystemAssetVocabularies(
 		AssetEntry assetEntry) {
 
@@ -240,38 +272,6 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
 		}
-	}
-
-	private InfoFieldSet _getInfoFieldSet(
-		Collection<AssetVocabulary> assetVocabularies) {
-
-		return InfoFieldSet.builder(
-		).infoFieldSetEntry(
-			consumer -> assetVocabularies.forEach(
-				assetVocabulary -> consumer.accept(
-					InfoField.builder(
-					).infoFieldType(
-						TextInfoFieldType.INSTANCE
-					).name(
-						assetVocabulary.getName()
-					).labelInfoLocalizedValue(
-						InfoLocalizedValue.<String>builder(
-						).values(
-							assetVocabulary.getTitleMap()
-						).build()
-					).build()))
-		).infoFieldSetEntry(
-			_categoriesInfoField
-		).infoFieldSetEntry(
-			_tagsInfoField
-		).infoFieldSetEntry(
-			_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
-				AssetEntry.class.getName())
-		).labelInfoLocalizedValue(
-			InfoLocalizedValue.localize(getClass(), "categorization")
-		).name(
-			"categorization"
-		).build();
 	}
 
 	@Reference

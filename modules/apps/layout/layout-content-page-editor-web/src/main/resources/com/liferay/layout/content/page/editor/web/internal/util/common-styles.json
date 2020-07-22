@@ -678,7 +678,7 @@
 				"label": "border-width",
 				"name": "borderWidth",
 				"responsive": false,
-				"type": "string",
+				"type": "text",
 				"validValues": [
 				]
 			},

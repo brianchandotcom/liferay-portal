@@ -152,6 +152,8 @@ public class AssetVocabularyPersistenceTest {
 
 		newAssetVocabulary.setSettings(RandomTestUtil.randomString());
 
+		newAssetVocabulary.setSystem(RandomTestUtil.randomBoolean());
+
 		newAssetVocabulary.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_assetVocabularies.add(_persistence.update(newAssetVocabulary));
@@ -201,6 +203,8 @@ public class AssetVocabularyPersistenceTest {
 		Assert.assertEquals(
 			existingAssetVocabulary.getSettings(),
 			newAssetVocabulary.getSettings());
+		Assert.assertEquals(
+			existingAssetVocabulary.isSystem(), newAssetVocabulary.isSystem());
 		Assert.assertEquals(
 			Time.getShortTimestamp(
 				existingAssetVocabulary.getLastPublishDate()),
@@ -315,8 +319,8 @@ public class AssetVocabularyPersistenceTest {
 			"uuid", true, "externalReferenceCode", true, "vocabularyId", true,
 			"groupId", true, "companyId", true, "userId", true, "userName",
 			true, "createDate", true, "modifiedDate", true, "name", true,
-			"title", true, "description", true, "settings", true,
-			"lastPublishDate", true);
+			"title", true, "description", true, "settings", true, "system",
+			true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -611,6 +615,8 @@ public class AssetVocabularyPersistenceTest {
 		assetVocabulary.setDescription(RandomTestUtil.randomString());
 
 		assetVocabulary.setSettings(RandomTestUtil.randomString());
+
+		assetVocabulary.setSystem(RandomTestUtil.randomBoolean());
 
 		assetVocabulary.setLastPublishDate(RandomTestUtil.nextDate());
 

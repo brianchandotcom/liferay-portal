@@ -60,6 +60,7 @@ public class AssetVocabularyWrapper
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
 		attributes.put("settings", getSettings());
+		attributes.put("system", isSystem());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
@@ -156,6 +157,12 @@ public class AssetVocabularyWrapper
 
 		if (settings != null) {
 			setSettings(settings);
+		}
+
+		Boolean system = (Boolean)attributes.get("system");
+
+		if (system != null) {
+			setSystem(system);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -387,6 +394,16 @@ public class AssetVocabularyWrapper
 	}
 
 	/**
+	 * Returns the system of this asset vocabulary.
+	 *
+	 * @return the system of this asset vocabulary
+	 */
+	@Override
+	public boolean getSystem() {
+		return model.getSystem();
+	}
+
+	/**
 	 * Returns the title of this asset vocabulary.
 	 *
 	 * @return the title of this asset vocabulary
@@ -555,6 +572,16 @@ public class AssetVocabularyWrapper
 	@Override
 	public boolean isRequired(long classNameId, long classTypePK) {
 		return model.isRequired(classNameId, classTypePK);
+	}
+
+	/**
+	 * Returns <code>true</code> if this asset vocabulary is system.
+	 *
+	 * @return <code>true</code> if this asset vocabulary is system; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isSystem() {
+		return model.isSystem();
 	}
 
 	@Override
@@ -752,6 +779,16 @@ public class AssetVocabularyWrapper
 	@Override
 	public void setSettings(String settings) {
 		model.setSettings(settings);
+	}
+
+	/**
+	 * Sets whether this asset vocabulary is system.
+	 *
+	 * @param system the system of this asset vocabulary
+	 */
+	@Override
+	public void setSystem(boolean system) {
+		model.setSystem(system);
 	}
 
 	/**

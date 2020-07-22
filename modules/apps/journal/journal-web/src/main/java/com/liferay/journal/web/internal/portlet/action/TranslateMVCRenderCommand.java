@@ -21,7 +21,6 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.web.internal.constants.JournalWebConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -143,9 +142,6 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
-
-	@Reference
-	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference
 	private TranslationInfoFieldChecker _translationInfoFieldChecker;

@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.Value;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
 import com.liferay.info.field.InfoFieldValue;
@@ -190,8 +191,9 @@ public class DDMFormValuesInfoFieldValuesProvider<T extends GroupedModel> {
 		String valueString = value.getString(locale);
 
 		try {
-			if (Objects.equals(ddmFormFieldValue.getType(), "date") ||
-				Objects.equals(ddmFormFieldValue.getType(), "ddm-date")) {
+			if (Objects.equals(
+					ddmFormFieldValue.getType(), DDMFormFieldType.DATE) ||
+				Objects.equals(ddmFormFieldValue.getType(), "date")) {
 
 				if (Validator.isNull(valueString)) {
 					return null;
@@ -206,8 +208,11 @@ public class DDMFormValuesInfoFieldValuesProvider<T extends GroupedModel> {
 				return dateFormat.format(date);
 			}
 			else if (Objects.equals(
-						ddmFormFieldValue.getType(), "ddm-decimal") ||
-					 Objects.equals(ddmFormFieldValue.getType(), "numeric")) {
+						ddmFormFieldValue.getType(),
+						DDMFormFieldType.DECIMAL) ||
+					 Objects.equals(
+						 ddmFormFieldValue.getType(),
+						 DDMFormFieldType.NUMERIC)) {
 
 				if (Validator.isNull(valueString)) {
 					return null;
@@ -228,7 +233,8 @@ public class DDMFormValuesInfoFieldValuesProvider<T extends GroupedModel> {
 
 				return numberFormat.format(numberFormat.parse(valueString));
 			}
-			else if (Objects.equals(ddmFormFieldValue.getType(), "ddm-image") ||
+			else if (Objects.equals(
+						ddmFormFieldValue.getType(), DDMFormFieldType.IMAGE) ||
 					 Objects.equals(ddmFormFieldValue.getType(), "image")) {
 
 				return _getWebImage(

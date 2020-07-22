@@ -15,6 +15,7 @@
 import React from 'react';
 
 import {Component} from '../../core/AppContext';
+import PageDesignOptionsSidebar from './components/PageDesignOptionsSidebar';
 
 /**
  * Entry-point for "Page Design Options" (sidebar pane) functionality.
@@ -30,7 +31,7 @@ export default class PageDesignOptions {
 
 		return (
 			<Component>
-				<h1>Styles panel</h1>
+				<PageDesignOptionsSidebar />
 			</Component>
 		);
 	}

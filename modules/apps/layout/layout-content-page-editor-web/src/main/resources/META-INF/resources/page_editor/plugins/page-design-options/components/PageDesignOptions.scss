@@ -1,0 +1,15 @@
+@import 'atlas-variables';
+
+.page-editor__sidebar__page-design-options__tabs {
+	border-bottom: 1px solid $secondary-l3;
+	font-size: 0.75rem;
+
+	.nav-link:not(.active) {
+		color: $secondary;
+	}
+}
+
+.page-editor__sidebar__design-options__tab-card {
+	border-width: 1px;
+	box-shadow: none;
+}

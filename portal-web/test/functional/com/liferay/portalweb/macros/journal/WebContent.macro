@@ -634,16 +634,10 @@ definition {
 
 			AssertClick(
 				key_fieldName = "${linkFieldName}",
-				locator1 = "Button#SELECT_CONTENT",
+				locator1 = "WCEditWebContent#LINK_TO_PAGE_SELECT",
 				value1 = "Select");
 
-			while (IsElementNotPresent(locator1 = "WC#LINK_TO_PAGE_SELECT_PAGE_RADIO")) {
-				Click(locator1 = "WC#LINK_TO_PAGE_NEXT_PAGE");
-			}
-
-			Click(locator1 = "WC#LINK_TO_PAGE_SELECT_PAGE_RADIO");
-
-			ClickNoError(locator1 = "Button#SELECT");
+			LexiconCard.clickCard(card = "${linkedPageName}");
 		}
 
 		if (isSet(webContentNumber)) {

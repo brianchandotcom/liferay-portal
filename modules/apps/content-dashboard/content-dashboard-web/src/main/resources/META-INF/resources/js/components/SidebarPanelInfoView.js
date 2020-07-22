@@ -53,47 +53,54 @@ const SidebarPanelInfoView = ({
 }) => {
 	const [activeTabKeyValue, setActiveTabKeyValue] = useState(0);
 
-	const formattedCreateDate = useMemo(() => {
-		return formatDate(createDate, languageTag);
-	}, [createDate, languageTag]);
+	const formattedCreateDate = useMemo(
+		() => formatDate(createDate, languageTag),
+		[createDate, languageTag]
+	);
 
-	const formattedDisplayDate = useMemo(() => {
-		return formatDate(data['display-date']?.value, languageTag);
-	}, [data, languageTag]);
+	const formattedDisplayDate = useMemo(
+		() => formatDate(data['display-date']?.value, languageTag),
+		[data, languageTag]
+	);
 
-	const formattedExpirationDate = useMemo(() => {
-		return formatDate(data['expiration-date']?.value, languageTag);
-	}, [data, languageTag]);
+	const formattedExpirationDate = useMemo(
+		() => formatDate(data['expiration-date']?.value, languageTag),
+		[data, languageTag]
+	);
 
-	const formattedModifiedDate = useMemo(() => {
-		return formatDate(modifiedDate, languageTag);
-	}, [modifiedDate, languageTag]);
+	const formattedModifiedDate = useMemo(
+		() => formatDate(modifiedDate, languageTag),
+		[modifiedDate, languageTag]
+	);
 
-	const formattedReviewDate = useMemo(() => {
-		return formatDate(data['review-date']?.value, languageTag);
-	}, [data, languageTag]);
+	const formattedReviewDate = useMemo(
+		() => formatDate(data['review-date']?.value, languageTag),
+		[data, languageTag]
+	);
 
-	const sortedViewURLS = useMemo(() => {
-		return viewURLs
-			.sort((a, b) => {
-				if (a.languageId < b.languageId) {
-					return -1;
-				}
+	const sortedViewURLS = useMemo(
+		() =>
+			viewURLs
+				.sort((a, b) => {
+					if (a.languageId < b.languageId) {
+						return -1;
+					}
 
-				if (a.languageId > b.languageId) {
-					return 1;
-				}
+					if (a.languageId > b.languageId) {
+						return 1;
+					}
 
-				return 0;
-			})
-			.sort((a) => {
-				if (a.default) {
-					return -1;
-				}
+					return 0;
+				})
+				.sort((a) => {
+					if (a.default) {
+						return -1;
+					}
 
-				return 0;
-			});
-	}, [viewURLs]);
+					return 0;
+				}),
+		[viewURLs]
+	);
 
 	return (
 		<>

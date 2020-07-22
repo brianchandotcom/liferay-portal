@@ -203,7 +203,8 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 			return layoutPageTemplateStructure;
 		}
 
-		return rebuildLayoutPageTemplateStructure(groupId, plid);
+		return layoutPageTemplateStructureLocalService.
+			rebuildLayoutPageTemplateStructure(groupId, plid);
 	}
 
 	/**

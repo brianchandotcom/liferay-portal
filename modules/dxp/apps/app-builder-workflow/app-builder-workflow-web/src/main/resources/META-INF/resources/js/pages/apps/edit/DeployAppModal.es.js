@@ -10,136 +10,39 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayIcon from '@clayui/icon';
-import ClayLink from '@clayui/link';
 import ClayModal, {useModal} from '@clayui/modal';
-import {AppContext} from 'app-builder-web/js/AppContext.es';
 import {DeploySettings} from 'app-builder-web/js/pages/apps/edit/DeployApp.es';
 import EditAppContext from 'app-builder-web/js/pages/apps/edit/EditAppContext.es';
-import {parseResponse} from 'app-builder-web/js/utils/client.es';
-import {errorToast, successToast} from 'app-builder-web/js/utils/toast.es';
-import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {useContext, useState} from 'react';
 
-export default ({onCancel}) => {
+export default function DeployAppModal({onSave}) {
 	const {
-		appId,
-		config: {dataObject, steps},
-		isModalVisible,
-		setModalVisible,
+		isDeployModalVisible,
+		setDeployModalVisible,
 		state: {app},
 	} = useContext(EditAppContext);
-	const {baseResourceURL, getStandaloneURL, namespace} = useContext(
-		AppContext
-	);
+
 	const [isDeploying, setDeploying] = useState(false);
 
 	const {observer, onClose} = useModal({
-		onClose: () => setModalVisible(false),
+		onClose: () => {
+			setDeploying(false);
+			setDeployModalVisible(false);
+		},
 	});
 
-	if (!isModalVisible) {
+	if (!isDeployModalVisible) {
 		return <></>;
 	}
 
-	const getStandaloneLink = ({appDeployments, id}) => {
-		const isStandalone = appDeployments.some(
-			({type}) => type === 'standalone'
-		);
-
-		if (!isStandalone) {
-			return <></>;
-		}
-
-		return (
-			<ClayLink href={getStandaloneURL(id)} target="_blank">
-				{`${Liferay.Language.get('open-standalone-app')}. `}
-				<ClayIcon symbol="shortcut" />
-			</ClayLink>
-		);
-	};
-
-	const onSuccess = (app) => {
-		onClose();
-		successToast(
-			<>
-				{Liferay.Language.get('the-app-was-deployed-successfully')}{' '}
-				{getStandaloneLink(app)}
-			</>
-		);
-		setDeploying(false);
-		setModalVisible(false);
-
-		onCancel();
-	};
-
-	const onError = ({errorMessage}) => {
-		onClose();
-		errorToast(`${errorMessage}`);
-		setDeploying(false);
-		setModalVisible(false);
-	};
-
-	const onClickDeploy = () => {
+	const onDone = () => {
 		setDeploying(true);
 
-		const workflowAppSteps = [...steps];
-
-		const workflowApp = {
-			appWorkflowStates: [
-				workflowAppSteps.shift(),
-				workflowAppSteps.pop(),
-			],
-			appWorkflowTasks: workflowAppSteps.map(
-				({appWorkflowDataLayoutLinks, ...restProps}) => ({
-					...restProps,
-					appWorkflowDataLayoutLinks: appWorkflowDataLayoutLinks.map(
-						({dataLayoutId, readOnly}) => ({dataLayoutId, readOnly})
-					),
-					errors: undefined,
-				})
-			),
-		};
-
-		if (appId) {
-			fetch(
-				createResourceURL(baseResourceURL, {
-					p_p_resource_id: '/app_builder/update_workflow_app',
-				}),
-				{
-					body: new URLSearchParams(
-						Liferay.Util.ns(namespace, {
-							app: JSON.stringify(app),
-							appBuilderAppId: appId,
-							appWorkflow: JSON.stringify(workflowApp),
-						})
-					),
-					method: 'POST',
-				}
-			)
-				.then(parseResponse)
-				.then(onSuccess)
-				.catch(onError);
+		if (!app.active) {
+			onSave(onClose, true);
 		}
 		else {
-			fetch(
-				createResourceURL(baseResourceURL, {
-					p_p_resource_id: '/app_builder/add_workflow_app',
-				}),
-				{
-					body: new URLSearchParams(
-						Liferay.Util.ns(namespace, {
-							app: JSON.stringify(app),
-							appWorkflow: JSON.stringify(workflowApp),
-							dataDefinitionId: dataObject.id,
-						})
-					),
-					method: 'POST',
-				}
-			)
-				.then(parseResponse)
-				.then(onSuccess)
-				.catch(onError);
+			onClose();
 		}
 	};
 
@@ -158,6 +61,7 @@ export default ({onCancel}) => {
 					<>
 						<ClayButton
 							className="mr-3"
+							disabled={isDeploying}
 							displayType="secondary"
 							onClick={onClose}
 							small
@@ -169,7 +73,7 @@ export default ({onCancel}) => {
 							disabled={
 								isDeploying || app.appDeployments.length === 0
 							}
-							onClick={onClickDeploy}
+							onClick={onDone}
 							small
 						>
 							{Liferay.Language.get('done')}
@@ -179,4 +83,4 @@ export default ({onCancel}) => {
 			/>
 		</ClayModal>
 	);
-};
+}

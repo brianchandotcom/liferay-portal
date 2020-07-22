@@ -423,11 +423,21 @@ public class AssetVocabularyLocalServiceImpl
 		return searchVocabularies(searchContext);
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public AssetVocabulary updateVocabulary(
 			long vocabularyId, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, String settings)
+		throws PortalException {
+
+		return assetVocabularyLocalService.updateVocabulary(
+			vocabularyId, titleMap, descriptionMap, settings, false);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public AssetVocabulary updateVocabulary(
+			long vocabularyId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, String settings, boolean system)
 		throws PortalException {
 
 		AssetVocabulary vocabulary =
@@ -436,6 +446,7 @@ public class AssetVocabularyLocalServiceImpl
 		vocabulary.setTitleMap(titleMap);
 		vocabulary.setDescriptionMap(descriptionMap);
 		vocabulary.setSettings(settings);
+		vocabulary.setSystem(system);
 
 		return assetVocabularyPersistence.update(vocabulary);
 	}

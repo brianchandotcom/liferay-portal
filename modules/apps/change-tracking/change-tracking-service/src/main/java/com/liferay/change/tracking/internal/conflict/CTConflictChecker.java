@@ -323,6 +323,38 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		}
 	}
 
+	private List<Long> _getDeletionModificationPKs(
+		Connection connection, CTPersistence<T> ctPersistence,
+		String primaryKeyName) {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select CTEntry.modelClassPK from CTEntry left join ",
+					ctPersistence.getTableName(), " on ",
+					ctPersistence.getTableName(), ".", primaryKeyName,
+					" = CTEntry.modelClassPK and ",
+					ctPersistence.getTableName(), ".ctCollectionId = ",
+					_targetCTCollectionId, " where CTEntry.ctCollectionId = ",
+					_sourceCTCollectionId, " and CTEntry.modelClassNameId = ",
+					_modelClassNameId, " and CTEntry.changeType = ",
+					CTConstants.CT_CHANGE_TYPE_MODIFICATION, " and ",
+					ctPersistence.getTableName(), ".", primaryKeyName,
+					" is null"));
+			ResultSet rs = preparedStatement.executeQuery()) {
+
+			List<Long> primaryKeys = new ArrayList<>();
+
+			while (rs.next()) {
+				primaryKeys.add(rs.getLong(1));
+			}
+
+			return primaryKeys;
+		}
+		catch (SQLException sqlException) {
+			throw new ORMException(sqlException);
+		}
+	}
+
 	private List<Long> _getModifiedPrimaryKeys(
 		Connection connection, CTPersistence<T> ctPersistence,
 		CTColumnResolutionType ctColumnResolutionType, String sql) {
@@ -385,38 +417,6 @@ public class CTConflictChecker<T extends CTModel<T>> {
 				long primaryKey = resultSet.getLong(1);
 
 				primaryKeys.add(primaryKey);
-			}
-
-			return primaryKeys;
-		}
-		catch (SQLException sqlException) {
-			throw new ORMException(sqlException);
-		}
-	}
-
-	private List<Long> _getDeletionModificationPKs(
-		Connection connection, CTPersistence<T> ctPersistence,
-		String primaryKeyName) {
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"select CTEntry.modelClassPK from CTEntry left join ",
-					ctPersistence.getTableName(), " on ",
-					ctPersistence.getTableName(), ".", primaryKeyName,
-					" = CTEntry.modelClassPK and ",
-					ctPersistence.getTableName(), ".ctCollectionId = ",
-					_targetCTCollectionId, " where CTEntry.ctCollectionId = ",
-					_sourceCTCollectionId, " and CTEntry.modelClassNameId = ",
-					_modelClassNameId, " and CTEntry.changeType = ",
-					CTConstants.CT_CHANGE_TYPE_MODIFICATION, " and ",
-					ctPersistence.getTableName(), ".", primaryKeyName,
-					" is null"));
-			ResultSet rs = preparedStatement.executeQuery()) {
-
-			List<Long> primaryKeys = new ArrayList<>();
-
-			while (rs.next()) {
-				primaryKeys.add(rs.getLong(1));
 			}
 
 			return primaryKeys;

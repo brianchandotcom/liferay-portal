@@ -124,9 +124,9 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
-		var key_entryTitle = "Blogs Entry Title";
-
-		AssertElementNotPresent(locator1 = "BlogsEntry#TITLE_LINK");
+		AssertElementNotPresent(
+			key_entryTitle = "Blogs Entry Title",
+			locator1 = "BlogsEntry#TITLE_LINK");
 
 		LexiconCard.viewCardTitle(card = "Blogs Entry Title");
 	}

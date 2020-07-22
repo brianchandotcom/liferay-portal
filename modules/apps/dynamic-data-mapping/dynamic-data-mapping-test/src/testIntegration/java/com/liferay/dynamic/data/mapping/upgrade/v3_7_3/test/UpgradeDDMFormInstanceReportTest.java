@@ -381,10 +381,6 @@ public class UpgradeDDMFormInstanceReportTest {
 	private DDMForm _createDDMForm() {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
-		ddmForm.addDDMFormField(
-			DDMFormTestUtil.createDDMFormField(
-				"text", "text", "text", "string", false, false, false));
-
 		DDMFormField checkboxMultipleDDMFormField =
 			DDMFormTestUtil.createDDMFormField(
 				"checkboxMultiple", "checkboxMultiple", "checkbox_multiple",
@@ -409,22 +405,6 @@ public class UpgradeDDMFormInstanceReportTest {
 		DDMFormField gridFormField = DDMFormTestUtil.createDDMFormField(
 			"grid", "grid", "grid", "string", false, false, false);
 
-		DDMFormFieldOptions gridRowDDMFormFieldOptions =
-			new DDMFormFieldOptions();
-
-		gridRowDDMFormFieldOptions.addOptionLabel(
-			"row0", LocaleUtil.US, "row0");
-		gridRowDDMFormFieldOptions.addOptionLabel(
-			"row1", LocaleUtil.US, "row1");
-		gridRowDDMFormFieldOptions.addOptionLabel(
-			"row2", LocaleUtil.US, "row2");
-		gridRowDDMFormFieldOptions.addOptionLabel(
-			"row3", LocaleUtil.US, "row3");
-		gridRowDDMFormFieldOptions.addOptionLabel(
-			"row4", LocaleUtil.US, "row4");
-
-		gridFormField.setProperty("rows", gridRowDDMFormFieldOptions);
-
 		DDMFormFieldOptions gridColumnDDMFormFieldOptions =
 			new DDMFormFieldOptions();
 
@@ -440,6 +420,22 @@ public class UpgradeDDMFormInstanceReportTest {
 			"column4", LocaleUtil.US, "column4");
 
 		gridFormField.setProperty("columns", gridColumnDDMFormFieldOptions);
+
+		DDMFormFieldOptions gridRowDDMFormFieldOptions =
+			new DDMFormFieldOptions();
+
+		gridRowDDMFormFieldOptions.addOptionLabel(
+			"row0", LocaleUtil.US, "row0");
+		gridRowDDMFormFieldOptions.addOptionLabel(
+			"row1", LocaleUtil.US, "row1");
+		gridRowDDMFormFieldOptions.addOptionLabel(
+			"row2", LocaleUtil.US, "row2");
+		gridRowDDMFormFieldOptions.addOptionLabel(
+			"row3", LocaleUtil.US, "row3");
+		gridRowDDMFormFieldOptions.addOptionLabel(
+			"row4", LocaleUtil.US, "row4");
+
+		gridFormField.setProperty("rows", gridRowDDMFormFieldOptions);
 
 		ddmForm.addDDMFormField(gridFormField);
 
@@ -467,6 +463,10 @@ public class UpgradeDDMFormInstanceReportTest {
 
 		ddmForm.addDDMFormField(radioDDMFormField);
 
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createDDMFormField(
+				"text", "text", "text", "string", false, false, false));
+
 		return ddmForm;
 	}
 
@@ -475,15 +475,9 @@ public class UpgradeDDMFormInstanceReportTest {
 
 		DDMForm ddmForm = _createDDMForm();
 
-		int qtd = 0;
-
-		while (qtd < _DDM_FORM_INSTANCE_RECORD_MAX_QTD) {
+		for (int qtd = 0; qtd < _DDM_FORM_INSTANCE_RECORD_MAX_QTD; qtd++) {
 			DDMFormValues ddmFormValues =
 				DDMFormValuesTestUtil.createDDMFormValues(ddmForm);
-
-			ddmFormValues.addDDMFormFieldValue(
-				DDMFormValuesTestUtil.createDDMFormFieldValue(
-					"text", new UnlocalizedValue("value " + qtd)));
 
 			ddmFormValues.addDDMFormFieldValue(
 				DDMFormValuesTestUtil.createDDMFormFieldValue(
@@ -509,12 +503,14 @@ public class UpgradeDDMFormInstanceReportTest {
 				DDMFormValuesTestUtil.createDDMFormFieldValue(
 					"radio", new UnlocalizedValue("option" + qtd)));
 
+			ddmFormValues.addDDMFormFieldValue(
+				DDMFormValuesTestUtil.createDDMFormFieldValue(
+					"text", new UnlocalizedValue("value " + qtd)));
+
 			DDMFormInstanceRecordLocalServiceUtil.addFormInstanceRecord(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				ddmFormInstance.getFormInstanceId(), ddmFormValues,
 				getServiceContext());
-
-			qtd++;
 		}
 	}
 

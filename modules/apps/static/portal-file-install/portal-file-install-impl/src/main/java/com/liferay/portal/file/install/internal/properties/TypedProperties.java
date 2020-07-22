@@ -308,7 +308,6 @@ public class TypedProperties extends AbstractMap<String, Object> {
 		}
 
 		private SubstitutionCallback _callback;
-		private final Map<String, String> _computed = new HashMap<>();
 		private final Map<String, String> _cycles = new HashMap<>();
 		private boolean _finalSubstitution;
 		private final String _name;
@@ -339,13 +338,7 @@ public class TypedProperties extends AbstractMap<String, Object> {
 
 					@Override
 					public String getValue() {
-						String v = _computed.get(key);
-
-						if (v == null) {
-							v = _compute(key);
-						}
-
-						return v;
+						return _compute(key);
 					}
 
 					@Override

@@ -16,6 +16,26 @@ import {PortletBase, normalizeFriendlyURL} from 'frontend-js-web';
 import core from 'metal';
 import dom from 'metal-dom';
 
+const VALID_INPUT_KEYS = new Set([
+	'Backspace',
+	'Tab',
+	'Enter',
+	'ArrowUp',
+	'Up',
+	'ArrowDown',
+	'Down',
+	'0',
+	'1',
+	'2',
+	'3',
+	'4',
+	'5',
+	'6',
+	'7',
+	'8',
+	'9',
+]);
+
 /**
  * EditAdaptiveMediaConfig
  *
@@ -24,29 +44,6 @@ import dom from 'metal-dom';
  */
 
 class EditAdaptiveMediaConfig extends PortletBase {
-
-	/**
-	 * @inheritDoc
-	 */
-	created() {
-		this.validInputKeyCodes_ = [
-			8,
-			9,
-			13,
-			38,
-			40,
-			48,
-			49,
-			50,
-			51,
-			52,
-			53,
-			54,
-			55,
-			56,
-			57,
-		];
-	}
 
 	/**
 	 * @inheritDoc
@@ -129,9 +126,7 @@ class EditAdaptiveMediaConfig extends PortletBase {
 	 * @param {KeyboardEvent} event The keyboard event.
 	 */
 	handleKeyDown_(event) {
-		const code = event.keyCode || event.charCode;
-
-		if (this.validInputKeyCodes_.indexOf(code) == -1) {
+		if (!VALID_INPUT_KEYS.has(event.key)) {
 			event.preventDefault();
 		}
 	}

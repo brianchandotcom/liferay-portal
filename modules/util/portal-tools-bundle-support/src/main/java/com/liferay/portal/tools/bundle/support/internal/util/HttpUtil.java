@@ -317,9 +317,9 @@ public class HttpUtil {
 
 		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom();
 
+		requestConfigBuilder.setConnectTimeout(connectionTimeout);
 		requestConfigBuilder.setCookieSpec(CookieSpecs.STANDARD);
 		requestConfigBuilder.setRedirectsEnabled(true);
-		requestConfigBuilder.setConnectTimeout(connectionTimeout);
 
 		httpClientBuilder.setDefaultRequestConfig(requestConfigBuilder.build());
 

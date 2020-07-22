@@ -169,7 +169,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			}
 
 			try {
-				Files.createDirectory(_watchedDirectory.toPath());
+				Files.createDirectories(_watchedDirectory.toPath());
 			}
 			catch (IOException ioException) {
 				_log.error(

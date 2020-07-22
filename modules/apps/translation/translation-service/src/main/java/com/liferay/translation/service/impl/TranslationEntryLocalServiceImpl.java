@@ -72,6 +72,7 @@ public class TranslationEntryLocalServiceImpl
 			serviceContext);
 	}
 
+	@Override
 	public TranslationEntry addOrUpdateTranslationEntry(
 		long groupId, String className, long classPK, String languageId,
 		String content, String contentType, ServiceContext serviceContext) {
@@ -101,6 +102,7 @@ public class TranslationEntryLocalServiceImpl
 		return translationEntryPersistence.update(translationEntry);
 	}
 
+	@Override
 	public TranslationEntry fetchTranslationEntry(
 		String className, long classPK, String languageId) {
 

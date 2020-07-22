@@ -125,7 +125,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-new-user-to-x", accoun
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<c:if test="<%= accountEntryDisplay.isEmailDomainValidationEnabled(themeDisplay) && !Objects.equals(accountEntryDisplay.getType(), AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON) %>">
+<c:if test="<%= accountEntryDisplay.isEmailDomainValidationEnabled(themeDisplay) && ListUtil.isNotEmpty(accountEntryDisplay.getDomains()) && !Objects.equals(accountEntryDisplay.getType(), AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON) %>">
 
 	<%
 	PortletURL viewValidDomainsURL = renderResponse.createRenderURL();

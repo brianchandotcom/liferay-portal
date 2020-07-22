@@ -43,6 +43,14 @@
 	}
 }
 
+.ddm-form-builder-wrapper {
+	button[disabled],
+	input[disabled],
+	textarea[disabled] {
+		pointer-events: none;
+	}
+}
+
 .ddm-target {
 	height: 100%;
 	width: 100%;
@@ -275,12 +283,6 @@
 	.ddm-form-builder .modal-sm {
 		max-width: 300px;
 	}
-}
-
-button[disabled],
-input[disabled],
-textarea[disabled] {
-	pointer-events: none;
 }
 
 input[class^='form-builder-page-header'] {

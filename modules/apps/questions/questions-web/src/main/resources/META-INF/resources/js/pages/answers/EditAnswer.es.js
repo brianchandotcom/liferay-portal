@@ -82,11 +82,6 @@ export default withRouter(
 
 									<ClayForm.FeedbackGroup>
 										<ClayForm.FeedbackItem>
-											<span className="small text-secondary">
-												{Liferay.Language.get(
-													'include-all-the-information-someone-would-need-to-answer-your-question'
-												)}
-											</span>
 											<TextLengthValidation
 												text={articleBody}
 											/>

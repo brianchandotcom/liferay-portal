@@ -661,21 +661,6 @@ public class GraphQLServletExtender {
 				}
 			}
 
-			if (parameterName.equals("siteKey") && (argument != null)) {
-				try {
-					argument = String.valueOf(
-						siteParamConverterProvider.getGroupId(
-							CompanyThreadLocal.getCompanyId(),
-							(String)argument));
-				}
-				catch (Exception exception) {
-					throw new Exception(
-						"Unable to convert site key \"" + argument +
-							"\" to group ID",
-						exception);
-				}
-			}
-
 			if (parameterName.equals("assetLibraryId") && (argument != null)) {
 				try {
 					argument = String.valueOf(
@@ -686,6 +671,21 @@ public class GraphQLServletExtender {
 				catch (Exception exception) {
 					throw new Exception(
 						"Unable to convert asset library \"" + argument +
+							"\" to group ID",
+						exception);
+				}
+			}
+
+			if (parameterName.equals("siteKey") && (argument != null)) {
+				try {
+					argument = String.valueOf(
+						siteParamConverterProvider.getGroupId(
+							CompanyThreadLocal.getCompanyId(),
+							(String)argument));
+				}
+				catch (Exception exception) {
+					throw new Exception(
+						"Unable to convert site key \"" + argument +
 							"\" to group ID",
 						exception);
 				}

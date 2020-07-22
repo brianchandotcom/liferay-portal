@@ -16,9 +16,14 @@ package com.liferay.translation.internal.util;
 
 import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 import com.liferay.translation.importer.TranslationInfoItemFieldValuesImporter;
 import com.liferay.translation.model.TranslationEntry;
+import com.liferay.translation.service.TranslationEntryLocalService;
 import com.liferay.translation.util.TranslationEntryInfoItemFieldValuesHelper;
 
 import java.io.ByteArrayInputStream;
@@ -35,13 +40,31 @@ public class TranslationEntryInfoItemFieldValuesHelperImpl
 	implements TranslationEntryInfoItemFieldValuesHelper {
 
 	@Override
+	public TranslationEntry addOrUpdateTranslationEntry(
+		long groupId, InfoItemClassPKReference infoItemClassPKReference, InfoItemFieldValues infoItemFieldValues, String languageId, ServiceContext serviceContext)
+		throws IOException {
+		return _translationEntryLocalService.addOrUpdateTranslationEntry(
+			groupId,
+			infoItemClassPKReference.getClassName(),
+			infoItemClassPKReference.getClassPK(),
+			languageId,
+			StreamUtil.toString(
+				_xliffTranslationInfoItemFieldValuesExporter.
+					exportInfoItemFieldValues(
+						infoItemFieldValues, LocaleUtil.getDefault(),
+						LocaleUtil.fromLanguageId(languageId))),
+			_xliffTranslationInfoItemFieldValuesExporter.getMimeType(),
+			serviceContext);
+	}
+
+	@Override
 	public InfoItemFieldValues getInfoItemFieldValues(
 			TranslationEntry translationEntry)
 		throws IOException, PortalException {
 
 		String content = translationEntry.getContent();
 
-		return _translationInfoItemFieldValuesImporter.
+		return _xliffTranslationInfoItemFieldValuesImporter.
 			importInfoItemFieldValues(
 				translationEntry.getGroupId(),
 				new InfoItemClassPKReference(
@@ -50,8 +73,14 @@ public class TranslationEntryInfoItemFieldValuesHelperImpl
 				new ByteArrayInputStream(content.getBytes()));
 	}
 
-	@Reference
+	@Reference(target = "(content.type=application/xliff+xml)")
 	private TranslationInfoItemFieldValuesImporter
-		_translationInfoItemFieldValuesImporter;
+		_xliffTranslationInfoItemFieldValuesImporter;
 
+	@Reference(target = "(content.type=application/xliff+xml)")
+	private TranslationInfoItemFieldValuesExporter
+		_xliffTranslationInfoItemFieldValuesExporter;
+
+	@Reference
+	private TranslationEntryLocalService _translationEntryLocalService;
 }

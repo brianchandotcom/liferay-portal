@@ -24,7 +24,6 @@ import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -37,10 +36,10 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 import com.liferay.translation.info.item.updater.InfoItemFieldValuesUpdater;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalService;
+import com.liferay.translation.util.TranslationEntryInfoItemFieldValuesHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,18 +90,11 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 			if (serviceContext.getWorkflowAction() ==
 					WorkflowConstants.ACTION_SAVE_DRAFT) {
 
-				_translationEntryLocalService.addOrUpdateTranslationEntry(
-					article.getGroupId(),
-					infoItemClassPKReference.getClassName(),
-					infoItemClassPKReference.getClassPK(),
-					_getTargetLanguageId(actionRequest),
-					StreamUtil.toString(
-						_xliffTranslationInfoItemFieldValuesExporter.
-							exportInfoItemFieldValues(
-								infoItemFieldValues, LocaleUtil.getDefault(),
-								_getTargetLocale(actionRequest))),
-					_xliffTranslationInfoItemFieldValuesExporter.getMimeType(),
-					serviceContext);
+				_translationEntryInfoItemFieldValuesHelper.
+					addOrUpdateTranslationEntry(
+						article.getGroupId(), infoItemClassPKReference,
+						infoItemFieldValues,
+						_getTargetLanguageId(actionRequest), serviceContext);
 			}
 			else {
 				_journalArticleInfoItemFieldValuesUpdater.
@@ -186,10 +178,10 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 		_journalArticleInfoItemFieldValuesUpdater;
 
 	@Reference
-	private TranslationEntryLocalService _translationEntryLocalService;
+	private TranslationEntryInfoItemFieldValuesHelper
+		_translationEntryInfoItemFieldValuesHelper;
 
-	@Reference(target = "(content.type=application/xliff+xml)")
-	private TranslationInfoItemFieldValuesExporter
-		_xliffTranslationInfoItemFieldValuesExporter;
+	@Reference
+	private TranslationEntryLocalService _translationEntryLocalService;
 
 }

@@ -14,8 +14,10 @@
 
 package com.liferay.translation.util;
 
+import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.translation.model.TranslationEntry;
 
 import java.io.IOException;
@@ -24,6 +26,12 @@ import java.io.IOException;
  * @author Alejandro Tardín
  */
 public interface TranslationEntryInfoItemFieldValuesHelper {
+
+	public TranslationEntry addOrUpdateTranslationEntry(
+			long groupId, InfoItemClassPKReference infoItemClassPKReference,
+			InfoItemFieldValues infoItemFieldValues, String languageId,
+			ServiceContext serviceContext)
+		throws IOException;
 
 	public InfoItemFieldValues getInfoItemFieldValues(
 			TranslationEntry translationEntry)

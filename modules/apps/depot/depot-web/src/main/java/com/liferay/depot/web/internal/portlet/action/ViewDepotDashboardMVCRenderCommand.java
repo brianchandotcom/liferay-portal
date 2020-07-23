@@ -31,15 +31,10 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.util.GroupURLProvider;
 
-import java.util.Locale;
-
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.RenderURL;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -62,8 +57,6 @@ public class ViewDepotDashboardMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			_addBreadcrumbEntries(renderRequest, renderResponse);
-
 			renderRequest.setAttribute(
 				DepotAdminViewDepotDashboardDisplayContext.class.getName(),
 				new DepotAdminViewDepotDashboardDisplayContext(
@@ -77,32 +70,6 @@ public class ViewDepotDashboardMVCRenderCommand implements MVCRenderCommand {
 		catch (PortalException portalException) {
 			throw new PortletException(portalException);
 		}
-	}
-
-	private void _addBreadcrumbEntries(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortalException {
-
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			renderRequest);
-
-		Locale locale = _portal.getLocale(renderRequest);
-
-		RenderURL renderURL = renderResponse.createRenderURL();
-
-		_portal.addPortletBreadcrumbEntry(
-			httpServletRequest,
-			_language.get(httpServletRequest, "asset-libraries"),
-			renderURL.toString());
-
-		DepotEntry depotEntry = _depotEntryService.getDepotEntry(
-			ParamUtil.getLong(renderRequest, "depotEntryId"));
-
-		Group group = depotEntry.getGroup();
-
-		_portal.addPortletBreadcrumbEntry(
-			httpServletRequest, group.getDescriptiveName(locale),
-			_groupURLProvider.getGroupURL(group, renderRequest));
 	}
 
 	private Group _getGroup(PortletRequest portletRequest)

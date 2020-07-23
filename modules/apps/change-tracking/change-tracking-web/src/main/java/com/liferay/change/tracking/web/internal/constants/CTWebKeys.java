@@ -34,6 +34,9 @@ public interface CTWebKeys {
 	public static final String VIEW_CHANGES_DISPLAY_CONTEXT =
 		"VIEW_CHANGES_DISPLAY_CONTEXT";
 
+	public static final String VIEW_DISCARD_DISPLAY_CONTEXT =
+		"VIEW_DISCARD_DISPLAY_CONTEXT";
+
 	public static final String VIEW_ENTRY_DISPLAY_CONTEXT =
 		"VIEW_ENTRY_DISPLAY_CONTEXT";
 

@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -63,6 +64,7 @@ import java.util.Set;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.RenderURL;
 import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -235,6 +237,25 @@ public class ViewChangesDisplayContext {
 			_getContextViewJSONObject(
 				ctClosure, modelInfoMap, rootClassNameIds,
 				contextViewJSONObject)
+		).put(
+			"discardURL",
+			() -> {
+				RenderURL discardURL = _renderResponse.createRenderURL();
+
+				discardURL.setParameter(
+					"mvcRenderCommandName", "/change_lists/view_discard");
+
+				PortletURL redirect = PortletURLUtil.getCurrent(
+					_renderRequest, _renderResponse);
+
+				discardURL.setParameter("redirect", redirect.toString());
+
+				discardURL.setParameter(
+					"ctCollectionId",
+					String.valueOf(_ctCollection.getCtCollectionId()));
+
+				return discardURL.toString();
+			}
 		).put(
 			"models",
 			() -> {

@@ -40,7 +40,11 @@
 
 			var hashObj = A.QueryString.parse(hash);
 
-			hash = String(hashObj['<portlet:namespace />']);
+			hash = hashObj['<portlet:namespace />'];
+
+			if (hash) {
+				hash = String(hash);
+			}
 
 			var iframe = A.one('#<portlet:namespace />iframe');
 

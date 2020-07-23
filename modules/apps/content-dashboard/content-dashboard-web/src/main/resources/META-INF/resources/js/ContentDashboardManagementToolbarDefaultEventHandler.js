@@ -61,7 +61,9 @@ class ContentDashboardManagementToolbarDefaultEventHandler extends DefaultEventH
 			const selectedItem = event.selectedItem;
 
 			if (selectedItem) {
-				const categories = Object.keys(selectedItem);
+				const categories = Object.keys(selectedItem).filter(
+					(key) => !selectedItem[key].unchecked
+				);
 
 				var redirectURL = itemData.redirectURL;
 

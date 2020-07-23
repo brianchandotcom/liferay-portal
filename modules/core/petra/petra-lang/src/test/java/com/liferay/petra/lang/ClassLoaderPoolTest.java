@@ -275,17 +275,6 @@ public class ClassLoaderPoolTest {
 	}
 
 	@Test
-	public void testUnregisterClassLoader() {
-		ClassLoaderPool.register(
-			_CONTEXT_NAME_WITHOUT_VERSION + "_X",
-			new URLClassLoader(new URL[0]));
-
-		ClassLoaderPool.unregister(_CONTEXT_NAME_WITHOUT_VERSION + "_X");
-
-		_assertEmptyMaps();
-	}
-
-	@Test
 	public void testUnregisterFallbackClassLoader() {
 		ClassLoaderPool.register(
 			_CONTEXT_NAME_1, new URLClassLoader(new URL[0]));
@@ -347,14 +336,18 @@ public class ClassLoaderPoolTest {
 
 	@Test
 	public void testUnregisterWithValidContextName() {
-		ClassLoader classLoader = new URLClassLoader(new URL[0]);
-
-		ClassLoaderPool.register(_CONTEXT_NAME_WITHOUT_VERSION, classLoader);
 		ClassLoaderPool.register(
-			_CONTEXT_NAME_WITHOUT_VERSION + "_", classLoader);
+			_CONTEXT_NAME_WITHOUT_VERSION, new URLClassLoader(new URL[0]));
+		ClassLoaderPool.register(
+			_CONTEXT_NAME_WITHOUT_VERSION + "_",
+			new URLClassLoader(new URL[0]));
+		ClassLoaderPool.register(
+			_CONTEXT_NAME_WITHOUT_VERSION + "_X",
+			new URLClassLoader(new URL[0]));
 
 		ClassLoaderPool.unregister(_CONTEXT_NAME_WITHOUT_VERSION);
 		ClassLoaderPool.unregister(_CONTEXT_NAME_WITHOUT_VERSION + "_");
+		ClassLoaderPool.unregister(_CONTEXT_NAME_WITHOUT_VERSION + "_X");
 
 		_assertEmptyMaps();
 	}

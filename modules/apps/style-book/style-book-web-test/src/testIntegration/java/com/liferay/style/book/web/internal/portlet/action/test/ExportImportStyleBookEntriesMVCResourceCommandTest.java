@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.style.book.exception.DuplicateStyleBookEntryKeyException;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 
@@ -168,6 +169,49 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 		Assert.assertEquals(
 			expectedFrontendTokensValuesJSONObject.toJSONString(),
 			actualFrontendTokensValuesJSONObject.toJSONString());
+	}
+
+	@Test(expected = DuplicateStyleBookEntryKeyException.class)
+	public void testExportImportSingleStyleBookEntryAndNotOverwrite()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_sourceGroup, TestPropsValues.getUserId());
+
+		StyleBookEntry styleBookEntry =
+			_styleBookEntryLocalService.addStyleBookEntry(
+				TestPropsValues.getUserId(), _sourceGroup.getGroupId(),
+				_read("frontend_tokens_values.json"), "Style Book Entry Name",
+				"STYLE_BOOK_ENTRY_KEY", serviceContext);
+
+		File file = ReflectionTestUtil.invoke(
+			_exportStyleBookEntriesMVCResourceCommand,
+			"_exportStyleBookEntries", new Class<?>[] {long[].class},
+			new long[] {styleBookEntry.getStyleBookEntryId()});
+
+		ReflectionTestUtil.invoke(
+			_importStyleBookEntriesMVCActionCommand, "_importStyleBookEntries",
+			new Class<?>[] {long.class, long.class, File.class, boolean.class},
+			TestPropsValues.getUserId(), _targetGroup.getGroupId(), file,
+			false);
+
+		StyleBookEntry updatedStyleBookEntry =
+			_styleBookEntryLocalService.updateStyleBookEntry(
+				styleBookEntry.getStyleBookEntryId(),
+				_read("updated_frontend_tokens_values.json"),
+				"Updated Style Book Entry Name");
+
+		ReflectionTestUtil.invoke(
+			_exportStyleBookEntriesMVCResourceCommand,
+			"_exportStyleBookEntries", new Class<?>[] {long[].class},
+			new long[] {updatedStyleBookEntry.getStyleBookEntryId()});
+
+		ReflectionTestUtil.invoke(
+			_importStyleBookEntriesMVCActionCommand, "_importStyleBookEntries",
+			new Class<?>[] {long.class, long.class, File.class, boolean.class},
+			TestPropsValues.getUserId(), _targetGroup.getGroupId(), file,
+			false);
 	}
 
 	@Test

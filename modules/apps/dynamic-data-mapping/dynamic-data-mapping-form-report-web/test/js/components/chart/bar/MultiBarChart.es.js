@@ -21,17 +21,17 @@ const props = {
 	data: {row1: {col1: 1}, row2: {col2: 2}, row3: {col3: 3}},
 	field: {
 		columns: {
-			col1: 'Column 1',
-			col2: 'Column 2',
-			col3: 'Column 3',
+			col1: {index: 1, value: 'Column 1'},
+			col2: {index: 2, value: 'Column 2'},
+			col3: {index: 3, value: 'Column 3'},
 		},
 		icon: 'table2',
 		label: 'Grid',
 		name: 'Grid',
 		rows: {
-			row1: 'Row 1',
-			row2: 'Row 2',
-			row3: 'Row 3',
+			row1: {index: 1, value: 'Row 1'},
+			row2: {index: 2, value: 'Row 2'},
+			row3: {index: 3, value: 'Row 3'},
 		},
 		title: 'Grid',
 		type: 'grid',

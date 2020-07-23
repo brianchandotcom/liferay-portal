@@ -497,6 +497,12 @@ public class AccountEntryLocalServiceImpl
 			return;
 		}
 
+		long[] accountGroupIds = (long[])params.get("accountGroupIds");
+
+		if (ArrayUtil.isNotEmpty(accountGroupIds)) {
+			searchContext.setAttribute("accountGroupIds", accountGroupIds);
+		}
+
 		long[] accountUserIds = (long[])params.get("accountUserIds");
 
 		if (ArrayUtil.isNotEmpty(accountUserIds)) {

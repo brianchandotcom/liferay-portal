@@ -17,6 +17,8 @@ package com.liferay.item.selector.taglib.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.item.selector.taglib.servlet.taglib.RepositoryEntryBrowserTag;
 import com.liferay.item.selector.taglib.servlet.taglib.util.RepositoryEntryBrowserTagUtil;
@@ -32,6 +34,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
@@ -103,6 +107,32 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 				dropdownGroupItem.setDropdownItems(_getOrderByDropdownItems());
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "order-by"));
+			}
+		).build();
+	}
+
+	public List<LabelItem> getFilterLabelItems() {
+		String scope = ParamUtil.getString(_httpServletRequest, "scope");
+
+		if (Validator.isNull(scope)) {
+			return null;
+		}
+
+		return LabelItemListBuilder.add(
+			labelItem -> {
+				PortletURL removeLabelURL = _getCurrentSortingURL();
+
+				removeLabelURL.setParameter("scope", (String)null);
+
+				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+
+				labelItem.setCloseable(true);
+
+				String label = String.format(
+					"%s: %s", LanguageUtil.get(_httpServletRequest, "scope"),
+					_getScopeLabel(scope));
+
+				labelItem.setLabel(label);
 			}
 		).build();
 	}
@@ -259,6 +289,14 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 	private PortletURL _getPortletURL() {
 		return (PortletURL)_httpServletRequest.getAttribute(
 			"liferay-item-selector:repository-entry-browser:portletURL");
+	}
+
+	private String _getScopeLabel(String scope) {
+		if (scope.equals("everywhere")) {
+			return LanguageUtil.get(_httpServletRequest, "everywhere");
+		}
+
+		return _getCurrentScopeLabel();
 	}
 
 	private final PortletURL _currentURLObj;

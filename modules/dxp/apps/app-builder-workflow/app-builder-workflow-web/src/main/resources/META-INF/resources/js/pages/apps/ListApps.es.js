@@ -100,12 +100,8 @@ export default ({scope, ...props}) => {
 							)
 						)
 					)
-					.catch(() => {
-						errorToast(
-							Liferay.Language.get(
-								'the-item-could-not-be-deleted'
-							)
-						);
+					.catch(({errorMessage}) => {
+						errorToast(errorMessage);
 						reject(true);
 					});
 			}

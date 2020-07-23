@@ -240,7 +240,7 @@ public class KaleoDefinitionLocalServiceImpl
 		// Kaleo definition version
 
 		_kaleoDefinitionVersionLocalService.deleteKaleoDefinitionVersions(
-			kaleoDefinition.getKaleoDefinitionVersions());
+			kaleoDefinition);
 	}
 
 	@Override

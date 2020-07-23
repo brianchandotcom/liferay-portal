@@ -42,7 +42,12 @@ public class LiferayWarPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
+
+		// Plugins
+
 		GradleUtil.applyPlugin(project, WarPlugin.class);
+
+		// Tasks
 
 		TaskProvider<Sync> buildWarDirTaskProvider = GradleUtil.addTaskProvider(
 			project, BUILD_WAR_DIR_TASK_NAME, Sync.class);

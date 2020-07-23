@@ -34,12 +34,17 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 
 	@Override
 	protected void applyPluginDefaults(Project project, NodePlugin nodePlugin) {
+
+		// Extensions
+
 		ExtensionContainer extensionContainer = project.getExtensions();
 
 		NodeExtension nodeExtension = extensionContainer.getByType(
 			NodeExtension.class);
 
 		_configureExtensionNode(project, nodeExtension);
+
+		// Other
 
 		TaskContainer taskContainer = project.getTasks();
 

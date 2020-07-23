@@ -1,5 +1,47 @@
 # Liferay Gradle Plugins REST Builder Change Log
 
+## 1.0.120 - 2020-07-22
+
+### Dependencies
+- [LPS-114591] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.119.
+
+## 1.0.119 - 2020-07-21
+
+### Dependencies
+- [LPS-117558] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.118.
+
+## 1.0.118 - 2020-07-20
+
+### Dependencies
+- [LPS-117377] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.117.
+
+## 1.0.117 - 2020-07-12
+
+### Dependencies
+- [LPS-116860] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.116.
+
+## 1.0.116 - 2020-07-09
+
+### Dependencies
+- [LPS-116860] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.115.
+
+## 1.0.115 - 2020-07-01
+
+### Dependencies
+- [LPS-116431] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.114.
+
+## 1.0.114 - 2020-06-30
+
+### Dependencies
+- [LPS-116272] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.113.
+
 ## 1.0.113 - 2020-06-22
 
 ### Dependencies
@@ -836,10 +878,16 @@ version 1.0.1.
 [LPS-114482]: https://issues.liferay.com/browse/LPS-114482
 [LPS-114486]: https://issues.liferay.com/browse/LPS-114486
 [LPS-114504]: https://issues.liferay.com/browse/LPS-114504
+[LPS-114591]: https://issues.liferay.com/browse/LPS-114591
 [LPS-114806]: https://issues.liferay.com/browse/LPS-114806
 [LPS-114849]: https://issues.liferay.com/browse/LPS-114849
 [LPS-114979]: https://issues.liferay.com/browse/LPS-114979
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
 [LPS-115431]: https://issues.liferay.com/browse/LPS-115431
 [LPS-115496]: https://issues.liferay.com/browse/LPS-115496
+[LPS-116272]: https://issues.liferay.com/browse/LPS-116272
+[LPS-116431]: https://issues.liferay.com/browse/LPS-116431
+[LPS-116860]: https://issues.liferay.com/browse/LPS-116860
+[LPS-117377]: https://issues.liferay.com/browse/LPS-117377
+[LPS-117558]: https://issues.liferay.com/browse/LPS-117558
 [LRDOCS-6650]: https://issues.liferay.com/browse/LRDOCS-6650

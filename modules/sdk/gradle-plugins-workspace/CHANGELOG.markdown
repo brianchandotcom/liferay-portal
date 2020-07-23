@@ -1,5 +1,45 @@
 # Liferay Gradle Plugins Workspace Change Log
 
+## 3.0.0 - 2020-07-21
+
+### Dependencies
+- [LPS-105873] Update the com.liferay.gradle.plugins.target.platform dependency
+to version 2.1.24.
+
+## 2.6.2 - 2020-07-21
+
+### Commits
+- [LPS-105873] Remove line break (ba1cc49b74)
+- [LPS-105873] fix 7.0 gulp themes when using yarn (4f2973dda3)
+- [LPS-105873] yarn gradleTest (498512a309)
+- [LPS-105873] Apply (6539d8d782)
+- [LPS-117314] Directory name (82b18d8385)
+- [LPS-117314] disable cleanCopyLibs task as it wipes required local /lib jar
+(ac86c35a80)
+- [LPS-117314] fix gradleTest pluginClasspathDir isolation (95fd67e6d4)
+
+## 2.6.1 - 2020-07-15
+
+### Commits
+- [LPS-105873] wordsmith (e6b228aed8)
+
+## 2.5.9 - 2020-07-15
+
+### Commits
+- [LPS-105873] Sort (e6b6ef4d9c)
+- [LPS-105873] Rename method (4b6a4ffd37)
+- [LPS-105873] Inline (cba0abec2e)
+- [LPS-105873] allow workspace to work with yarn (af1a056aaa)
+
+### Dependencies
+- [LPS-116282] Update the com.liferay.ant.bnd dependency to version 3.2.6.
+
+## 2.5.8 - 2020-07-06
+
+### Dependencies
+- [LPS-105873] Update the com.liferay.gradle.plugins.target.platform dependency
+to version 2.1.23.
+
 ## 2.5.7 - 2020-06-26
 
 ### Dependencies
@@ -4850,6 +4890,7 @@ from settings.gradle (b4be4c57fd)
 [LPS-104679]: https://issues.liferay.com/browse/LPS-104679
 [LPS-105380]: https://issues.liferay.com/browse/LPS-105380
 [LPS-105502]: https://issues.liferay.com/browse/LPS-105502
+[LPS-105873]: https://issues.liferay.com/browse/LPS-105873
 [LPS-105889]: https://issues.liferay.com/browse/LPS-105889
 [LPS-106149]: https://issues.liferay.com/browse/LPS-106149
 [LPS-106167]: https://issues.liferay.com/browse/LPS-106167
@@ -4885,6 +4926,8 @@ from settings.gradle (b4be4c57fd)
 [LPS-115714]: https://issues.liferay.com/browse/LPS-115714
 [LPS-116041]: https://issues.liferay.com/browse/LPS-116041
 [LPS-116049]: https://issues.liferay.com/browse/LPS-116049
+[LPS-116282]: https://issues.liferay.com/browse/LPS-116282
+[LPS-117314]: https://issues.liferay.com/browse/LPS-117314
 [LRCI-65]: https://issues.liferay.com/browse/LRCI-65
 [LRCI-264]: https://issues.liferay.com/browse/LRCI-264
 [LRCI-350]: https://issues.liferay.com/browse/LRCI-350

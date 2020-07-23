@@ -1,5 +1,10 @@
 # Liferay Gradle Plugins Target Platform Change Log
 
+## 2.1.23 - 2020-07-06
+
+### Commits
+- [LPS-111461] fix excludes (551c8279b4)
+
 ## 2.1.18 - 2020-06-11
 
 ### Commits

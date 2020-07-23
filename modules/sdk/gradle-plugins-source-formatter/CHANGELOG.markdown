@@ -1,5 +1,65 @@
 # Liferay Gradle Plugins Source Formatter Change Log
 
+## 4.0.11 - 2020-07-21
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1027.
+
+## 4.0.10 - 2020-07-16
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1026.
+
+## 4.0.9 - 2020-07-14
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1025.
+
+## 4.0.8 - 2020-07-13
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1024.
+
+## 4.0.7 - 2020-07-12
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1023.
+
+## 4.0.6 - 2020-07-09
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1022.
+
+## 4.0.5 - 2020-07-09
+
+### Dependencies
+- [LPS-116604] Update the com.liferay.source.formatter dependency to version
+1.0.1021.
+
+## 4.0.4 - 2020-07-07
+
+### Dependencies
+- [LPS-116604] Update the com.liferay.source.formatter dependency to version
+1.0.1020.
+
+## 4.0.3 - 2020-07-06
+
+### Dependencies
+- [LPS-116530] Update the com.liferay.source.formatter dependency to version
+1.0.1019.
+
+## 4.0.2 - 2020-06-30
+
+### Dependencies
+- [LPS-113863] Update the com.liferay.source.formatter dependency to version
+1.0.1018.
+
 ## 4.0.1 - 2020-06-24
 
 ### Dependencies
@@ -5308,6 +5368,7 @@ version 2.4.
 [LPS-113044]: https://issues.liferay.com/browse/LPS-113044
 [LPS-113624]: https://issues.liferay.com/browse/LPS-113624
 [LPS-113715]: https://issues.liferay.com/browse/LPS-113715
+[LPS-113863]: https://issues.liferay.com/browse/LPS-113863
 [LPS-114165]: https://issues.liferay.com/browse/LPS-114165
 [LPS-114565]: https://issues.liferay.com/browse/LPS-114565
 [LPS-114570]: https://issues.liferay.com/browse/LPS-114570
@@ -5318,6 +5379,8 @@ version 2.4.
 [LPS-115771]: https://issues.liferay.com/browse/LPS-115771
 [LPS-115922]: https://issues.liferay.com/browse/LPS-115922
 [LPS-116041]: https://issues.liferay.com/browse/LPS-116041
+[LPS-116530]: https://issues.liferay.com/browse/LPS-116530
+[LPS-116604]: https://issues.liferay.com/browse/LPS-116604
 [LRCI-642]: https://issues.liferay.com/browse/LRCI-642
 [LRDOCS-2647]: https://issues.liferay.com/browse/LRDOCS-2647
 [RELEASE-1607]: https://issues.liferay.com/browse/RELEASE-1607

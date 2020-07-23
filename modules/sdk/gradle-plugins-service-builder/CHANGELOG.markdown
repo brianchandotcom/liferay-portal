@@ -1,5 +1,28 @@
 # Liferay Gradle Plugins Service Builder Change Log
 
+## 4.0.21 - 2020-07-15
+
+### Dependencies
+- [LPS-115531] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.351.
+
+## 4.0.20 - 2020-07-15
+
+### Dependencies
+- [LPS-115531] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.350.
+
+## 4.0.19 - 2020-07-12
+
+### Commits
+- [LPS-105380] SF, inline (e11238b1a3)
+
+### Dependencies
+- [LPS-102225] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.349.
+- [LPS-115699] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.348.
+
 ## 4.0.18 - 2020-06-24
 
 ### Dependencies
@@ -1900,6 +1923,7 @@ version 2.4.
 [LPS-101214]: https://issues.liferay.com/browse/LPS-101214
 [LPS-101574]: https://issues.liferay.com/browse/LPS-101574
 [LPS-101788]: https://issues.liferay.com/browse/LPS-101788
+[LPS-102225]: https://issues.liferay.com/browse/LPS-102225
 [LPS-102481]: https://issues.liferay.com/browse/LPS-102481
 [LPS-102700]: https://issues.liferay.com/browse/LPS-102700
 [LPS-102817]: https://issues.liferay.com/browse/LPS-102817
@@ -1932,7 +1956,9 @@ version 2.4.
 [LPS-113024]: https://issues.liferay.com/browse/LPS-113024
 [LPS-113624]: https://issues.liferay.com/browse/LPS-113624
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
+[LPS-115531]: https://issues.liferay.com/browse/LPS-115531
 [LPS-115687]: https://issues.liferay.com/browse/LPS-115687
+[LPS-115699]: https://issues.liferay.com/browse/LPS-115699
 [LPS-116049]: https://issues.liferay.com/browse/LPS-116049
 [LRDOCS-2547]: https://issues.liferay.com/browse/LRDOCS-2547
 [LRDOCS-4319]: https://issues.liferay.com/browse/LRDOCS-4319

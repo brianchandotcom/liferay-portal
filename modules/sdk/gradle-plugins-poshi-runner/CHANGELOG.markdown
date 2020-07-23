@@ -1,5 +1,11 @@
 # Liferay Gradle Plugins Poshi Runner Change Log
 
+## 2.2.30 - 2020-07-16
+
+### Commits
+- [POSHI-94] Set default poshi runner version in gradle plugin to 1.0.271
+(336422fa14)
+
 ## 2.2.29 - 2020-06-17
 
 ### Commits
@@ -477,3 +483,4 @@ up-to-date check (59fd9e696c)
 [POSHI-77]: https://issues.liferay.com/browse/POSHI-77
 [POSHI-87]: https://issues.liferay.com/browse/POSHI-87
 [POSHI-90]: https://issues.liferay.com/browse/POSHI-90
+[POSHI-94]: https://issues.liferay.com/browse/POSHI-94

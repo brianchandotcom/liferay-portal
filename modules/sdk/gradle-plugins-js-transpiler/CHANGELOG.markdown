@@ -1,5 +1,28 @@
 # Liferay Gradle Plugins JS Transpiler Change Log
 
+## 2.4.56 - 2020-07-21
+
+### Commits
+- [LPS-105380] SF, inline (2c4ba62dc9)
+
+### Dependencies
+- [LPS-105873] Update the com.liferay.gradle.plugins.node dependency to version
+7.2.0.
+
+## 2.4.55 - 2020-07-09
+
+### Dependencies
+- [LPS-116808] Update the com.liferay.gradle.plugins.node dependency to version
+7.1.2.
+- [LPS-116808] Update the com.liferay.gradle.plugins.node dependency to version
+7.1.1.
+
+## 2.4.54 - 2020-07-07
+
+### Dependencies
+- [LPS-105873] Update the com.liferay.gradle.plugins.node dependency to version
+7.1.0.
+
 ## 2.4.53 - 2020-04-28
 
 ### Dependencies
@@ -1072,10 +1095,13 @@ Gradle (2bc0205a18)
 [LPS-103339]: https://issues.liferay.com/browse/LPS-103339
 [LPS-103580]: https://issues.liferay.com/browse/LPS-103580
 [LPS-104132]: https://issues.liferay.com/browse/LPS-104132
+[LPS-105380]: https://issues.liferay.com/browse/LPS-105380
+[LPS-105873]: https://issues.liferay.com/browse/LPS-105873
 [LPS-106149]: https://issues.liferay.com/browse/LPS-106149
 [LPS-110422]: https://issues.liferay.com/browse/LPS-110422
 [LPS-110486]: https://issues.liferay.com/browse/LPS-110486
 [LPS-111192]: https://issues.liferay.com/browse/LPS-111192
+[LPS-116808]: https://issues.liferay.com/browse/LPS-116808
 [LRDOCS-4129]: https://issues.liferay.com/browse/LRDOCS-4129
 [LRDOCS-4319]: https://issues.liferay.com/browse/LRDOCS-4319
 [LRDOCS-6412]: https://issues.liferay.com/browse/LRDOCS-6412

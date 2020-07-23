@@ -35,8 +35,6 @@ import java.util.Set;
  */
 public class TypedProperties extends AbstractMap<String, Object> {
 
-	public static final String ENV_PREFIX = "env:";
-
 	public TypedProperties(SubstitutionCallback callback) {
 		_storage = new Properties();
 		_callback = callback;
@@ -195,6 +193,8 @@ public class TypedProperties extends AbstractMap<String, Object> {
 		_substitute(map, _prepare(map), callback, true);
 	}
 
+	private static final String _ENV_PREFIX = "env:";
+
 	private final SubstitutionCallback _callback;
 
 	private final SubstitutionCallback _defaultSubstitutionCallback =
@@ -202,8 +202,8 @@ public class TypedProperties extends AbstractMap<String, Object> {
 
 			@Override
 			public String getValue(String name, String key, String value) {
-				if (value.startsWith(ENV_PREFIX)) {
-					return System.getenv(value.substring(ENV_PREFIX.length()));
+				if (value.startsWith(_ENV_PREFIX)) {
+					return System.getenv(value.substring(_ENV_PREFIX.length()));
 				}
 
 				return System.getProperty(value);

@@ -104,11 +104,15 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 
 		renderURL.setParameter(
 			"mvcRenderCommandName", "/document_library/ddm/edit_ddm_structure");
-		renderURL.setParameter(
-			"redirect",
-			String.valueOf(
-				PortletURLUtil.getCurrent(
-					_liferayPortletRequest, _liferayPortletResponse)));
+
+		PortletURL currentPortletURL = PortletURLUtil.getCurrent(
+			_liferayPortletRequest, _liferayPortletResponse);
+
+		currentPortletURL.setParameter(
+			"navigation", "file_entry_metadata_sets");
+
+		renderURL.setParameter("redirect", String.valueOf(currentPortletURL));
+
 		renderURL.setParameter(
 			"ddmStructureId", String.valueOf(ddmStructure.getStructureId()));
 

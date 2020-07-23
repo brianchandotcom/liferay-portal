@@ -1335,7 +1335,7 @@ definition {
 
 		Content.addPG(assetTitle = "WC WebContent Title");
 
-		WebContent.viewPGViaWCD(webContentContent = "#FFFFFF");
+		WebContent.viewPGViaWCD(webContentContent = "FFFFFF");
 	}
 
 	@priority = "3"

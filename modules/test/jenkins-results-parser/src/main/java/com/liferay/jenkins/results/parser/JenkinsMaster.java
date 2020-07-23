@@ -262,18 +262,18 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 	}
 
 	public void update() {
-		JSONObject computerJSONObject = null;
-		JSONObject queueJSONObject = null;
+		JSONObject computerAPIJSONObject = null;
+		JSONObject queueAPIJSONObject = null;
 
 		try {
-			computerJSONObject = JenkinsResultsParserUtil.toJSONObject(
+			computerAPIJSONObject = JenkinsResultsParserUtil.toJSONObject(
 				JenkinsResultsParserUtil.getLocalURL(
 					JenkinsResultsParserUtil.combine(
 						_masterURL,
 						"/computer/api/json?tree=computer[displayName,",
 						"idle,offline]")),
 				false, 5000);
-			queueJSONObject = JenkinsResultsParserUtil.toJSONObject(
+			queueAPIJSONObject = JenkinsResultsParserUtil.toJSONObject(
 				JenkinsResultsParserUtil.getLocalURL(
 					_masterURL + "/queue/api/json?tree=items[task[name],why]"),
 				false, 5000);
@@ -288,14 +288,13 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 
 		_available = true;
 
-		JSONArray computerJSONArray = computerJSONObject.getJSONArray(
+		JSONArray computerJSONArray = computerAPIJSONObject.getJSONArray(
 			"computer");
 
 		for (int i = 0; i < computerJSONArray.length(); i++) {
-			JSONObject curComputerJSONObject = computerJSONArray.getJSONObject(
-				i);
+			JSONObject computerJSONObject = computerJSONArray.getJSONObject(i);
 
-			String jenkinsSlaveName = curComputerJSONObject.getString(
+			String jenkinsSlaveName = computerJSONObject.getString(
 				"displayName");
 
 			if (jenkinsSlaveName.equals("master")) {
@@ -305,10 +304,10 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 			JenkinsSlave jenkinsSlave = _jenkinsSlavesMap.get(jenkinsSlaveName);
 
 			if (jenkinsSlave != null) {
-				jenkinsSlave.update(curComputerJSONObject);
+				jenkinsSlave.update(computerJSONObject);
 			}
 			else {
-				jenkinsSlave = new JenkinsSlave(this, curComputerJSONObject);
+				jenkinsSlave = new JenkinsSlave(this, computerJSONObject);
 
 				_jenkinsSlavesMap.put(jenkinsSlave.getName(), jenkinsSlave);
 			}
@@ -316,11 +315,11 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 
 		_queueCount = 0;
 
-		if (!queueJSONObject.has("items")) {
+		if (!queueAPIJSONObject.has("items")) {
 			return;
 		}
 
-		JSONArray itemsJSONArray = queueJSONObject.getJSONArray("items");
+		JSONArray itemsJSONArray = queueAPIJSONObject.getJSONArray("items");
 
 		for (int i = 0; i < itemsJSONArray.length(); i++) {
 			JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);

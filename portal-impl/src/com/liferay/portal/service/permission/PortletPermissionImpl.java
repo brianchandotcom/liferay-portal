@@ -442,7 +442,7 @@ public class PortletPermissionImpl implements PortletPermission {
 	@Override
 	public String getPrimaryKey(long plid, String portletId) {
 		return StringBundler.concat(
-			String.valueOf(plid), PortletConstants.LAYOUT_SEPARATOR, portletId);
+			plid, PortletConstants.LAYOUT_SEPARATOR, portletId);
 	}
 
 	@Override

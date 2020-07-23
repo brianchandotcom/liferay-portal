@@ -642,8 +642,7 @@ public class BeanPortletImpl implements BeanPortlet {
 			String listenerClassName = entry.getValue();
 
 			String listener = StringBundler.concat(
-				listenerClassName, StringPool.SEMICOLON,
-				String.valueOf(entry.getKey()));
+				listenerClassName, StringPool.SEMICOLON, entry.getKey());
 
 			portletListeners.add(listener);
 		}

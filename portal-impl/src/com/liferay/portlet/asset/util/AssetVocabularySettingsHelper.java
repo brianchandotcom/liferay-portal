@@ -176,9 +176,7 @@ public class AssetVocabularySettingsHelper {
 	protected String getClassNameIdAndClassTypePK(
 		long classNameId, long classTypePK) {
 
-		return StringBundler.concat(
-			String.valueOf(classNameId), StringPool.COLON,
-			String.valueOf(classTypePK));
+		return StringBundler.concat(classNameId, StringPool.COLON, classTypePK);
 	}
 
 	protected long[] getClassNameIds(String[] classNameIdsAndClassTypePKs) {

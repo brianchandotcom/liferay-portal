@@ -584,8 +584,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 	@Override
 	public String getWindowID() {
 		return StringBundler.concat(
-			_portletName, LiferayPortletSession.LAYOUT_SEPARATOR,
-			String.valueOf(_plid));
+			_portletName, LiferayPortletSession.LAYOUT_SEPARATOR, _plid);
 	}
 
 	@Override

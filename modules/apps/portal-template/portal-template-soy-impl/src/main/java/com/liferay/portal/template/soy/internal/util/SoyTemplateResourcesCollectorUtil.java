@@ -138,8 +138,7 @@ public class SoyTemplateResourcesCollectorUtil {
 
 	private static String _getTemplateId(long bundleId, URL url) {
 		return StringBundler.concat(
-			String.valueOf(bundleId), TemplateConstants.BUNDLE_SEPARATOR,
-			url.getPath());
+			bundleId, TemplateConstants.BUNDLE_SEPARATOR, url.getPath());
 	}
 
 	private static TemplateResource _getTemplateResource(

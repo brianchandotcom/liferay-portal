@@ -63,8 +63,7 @@ public class PasswordRetriever {
 
 	protected String encodeKey(long accountId) {
 		return StringBundler.concat(
-			PasswordRetriever.class.getName(), StringPool.POUND,
-			String.valueOf(accountId));
+			PasswordRetriever.class.getName(), StringPool.POUND, accountId);
 	}
 
 	private final HttpServletRequest _httpServletRequest;

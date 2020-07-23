@@ -26,7 +26,7 @@ public class SchedulerUtil {
 	public static final String getGroupName(long kaleoTimerInstanceTokenId) {
 		return StringBundler.concat(
 			KaleoRuntimeDestinationNames.WORKFLOW_TIMER, StringPool.SLASH,
-			String.valueOf(kaleoTimerInstanceTokenId));
+			kaleoTimerInstanceTokenId);
 	}
 
 }

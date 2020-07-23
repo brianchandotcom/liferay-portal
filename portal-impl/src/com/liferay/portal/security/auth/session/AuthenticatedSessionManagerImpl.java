@@ -293,7 +293,7 @@ public class AuthenticatedSessionManagerImpl
 		}
 
 		String userUUID = StringBundler.concat(
-			userIdString, StringPool.PERIOD, String.valueOf(System.nanoTime()));
+			userIdString, StringPool.PERIOD, System.nanoTime());
 
 		Cookie userUUIDCookie = new Cookie(
 			CookieKeys.USER_UUID,

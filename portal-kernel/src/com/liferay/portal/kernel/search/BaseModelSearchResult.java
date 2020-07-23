@@ -52,8 +52,7 @@ public class BaseModelSearchResult<T extends BaseModel<T>>
 	public String toString() {
 		if (_baseModels.isEmpty()) {
 			return StringBundler.concat(
-				"{baseModels={}, length=", String.valueOf(_length),
-				StringPool.CLOSE_BRACKET);
+				"{baseModels={}, length=", _length, StringPool.CLOSE_BRACKET);
 		}
 
 		StringBundler sb = new StringBundler((2 * _baseModels.size()) + 3);

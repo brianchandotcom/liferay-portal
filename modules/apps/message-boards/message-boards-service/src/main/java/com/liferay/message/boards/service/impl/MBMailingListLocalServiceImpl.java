@@ -234,7 +234,7 @@ public class MBMailingListLocalServiceImpl
 	protected String getSchedulerGroupName(MBMailingList mailingList) {
 		return StringBundler.concat(
 			DestinationNames.MESSAGE_BOARDS_MAILING_LIST, StringPool.SLASH,
-			String.valueOf(mailingList.getMailingListId()));
+			mailingList.getMailingListId());
 	}
 
 	protected void scheduleMailingList(MBMailingList mailingList)

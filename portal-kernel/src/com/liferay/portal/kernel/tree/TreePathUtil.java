@@ -73,8 +73,7 @@ public class TreePathUtil {
 
 			for (TreeModel treeModel : treeModels) {
 				String treePath = StringBundler.concat(
-					curParentTreePath,
-					String.valueOf(treeModel.getPrimaryKeyObj()),
+					curParentTreePath, treeModel.getPrimaryKeyObj(),
 					StringPool.SLASH);
 
 				if (!treePath.equals(treeModel.getTreePath())) {
@@ -128,8 +127,7 @@ public class TreePathUtil {
 
 			for (TreeModel treeModel : treeModels) {
 				String treePath = StringBundler.concat(
-					_parentTreePath,
-					String.valueOf(treeModel.getPrimaryKeyObj()),
+					_parentTreePath, treeModel.getPrimaryKeyObj(),
 					StringPool.SLASH);
 
 				if (!treePath.equals(treeModel.getTreePath())) {

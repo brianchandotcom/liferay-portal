@@ -34,8 +34,7 @@ public class NamedThreadFactory implements ThreadFactory {
 		Thread thread = new Thread(
 			runnable,
 			StringBundler.concat(
-				_name, StringPool.MINUS,
-				String.valueOf(_counter.incrementAndGet())));
+				_name, StringPool.MINUS, _counter.incrementAndGet()));
 
 		thread.setDaemon(true);
 

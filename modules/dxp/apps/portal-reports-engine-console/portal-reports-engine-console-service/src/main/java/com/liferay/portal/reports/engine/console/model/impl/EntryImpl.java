@@ -59,7 +59,7 @@ public class EntryImpl extends EntryBaseImpl {
 	public String getSchedulerRequestName() {
 		return StringBundler.concat(
 			ReportsEngineDestinationNames.REPORT_REQUEST, StringPool.SLASH,
-			String.valueOf(getEntryId()));
+			getEntryId());
 	}
 
 }

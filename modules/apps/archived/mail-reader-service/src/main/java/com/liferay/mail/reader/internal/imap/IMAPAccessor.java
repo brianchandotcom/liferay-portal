@@ -995,8 +995,7 @@ public class IMAPAccessor {
 
 				getParts(
 					userId, bodyPlainSB, bodyHtmlSB,
-					StringBundler.concat(
-						contentPath, StringPool.PERIOD, String.valueOf(i)),
+					StringBundler.concat(contentPath, StringPool.PERIOD, i),
 					curPart, mailFiles);
 			}
 		}

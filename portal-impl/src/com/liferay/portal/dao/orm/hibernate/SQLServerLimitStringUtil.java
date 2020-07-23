@@ -86,8 +86,7 @@ public class SQLServerLimitStringUtil {
 			Matcher matcher = _selectPattern.matcher(innerSelectFrom);
 
 			innerSelectFrom = matcher.replaceAll(
-				StringBundler.concat(
-					"select top ", String.valueOf(limit), StringPool.SPACE));
+				StringBundler.concat("select top ", limit, StringPool.SPACE));
 		}
 
 		return innerSelectFrom;

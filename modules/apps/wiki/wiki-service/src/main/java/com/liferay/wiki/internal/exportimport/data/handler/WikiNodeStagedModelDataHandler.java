@@ -219,9 +219,7 @@ public class WikiNodeStagedModelDataHandler
 
 		return getNodeName(
 			portletDataContext, node,
-			StringBundler.concat(
-				nodeName, StringPool.SPACE, String.valueOf(count)),
-			++count);
+			StringBundler.concat(nodeName, StringPool.SPACE, count), ++count);
 	}
 
 	@Reference(unbind = "-")

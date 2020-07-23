@@ -437,10 +437,8 @@ public class JabberImpl implements Jabber {
 	}
 
 	protected String getFullJabberId(String screenName) {
-		String jabberId = getJabberId(screenName);
-
 		return StringBundler.concat(
-			jabberId, StringPool.SLASH,
+			getJabberId(screenName), StringPool.SLASH,
 			_chatGroupServiceConfiguration.jabberResource());
 	}
 

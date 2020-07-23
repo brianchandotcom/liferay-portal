@@ -490,10 +490,9 @@ public class SingleLogoutProfileImpl
 			httpServletRequest, null);
 
 		if (samlSloContext != null) {
-			String portalURL = portal.getPortalURL(httpServletRequest);
-
 			String redirect = StringBundler.concat(
-				portalURL, portal.getPathMain(), "/portal/saml/slo_logout");
+				portal.getPortalURL(httpServletRequest), portal.getPathMain(),
+				"/portal/saml/slo_logout");
 
 			httpServletResponse.sendRedirect(redirect);
 		}
@@ -958,10 +957,9 @@ public class SingleLogoutProfileImpl
 			terminateSpSession(httpServletRequest, httpServletResponse);
 		}
 
-		String portalURL = portal.getPortalURL(httpServletRequest);
-
 		String redirect = StringBundler.concat(
-			portalURL, portal.getPathMain(), "/portal/logout");
+			portal.getPortalURL(httpServletRequest), portal.getPathMain(),
+			"/portal/logout");
 
 		httpServletResponse.sendRedirect(redirect);
 	}

@@ -803,10 +803,8 @@ public class IntrabandProxyUtil {
 			for (int i = 0; i < proxyMethods.size(); i++) {
 				Method proxyMethod = proxyMethods.get(i);
 
-				String name = proxyMethod.getName();
-
 				proxyMethodSignatures[i] = StringBundler.concat(
-					name, StringPool.DASH,
+					proxyMethod.getName(), StringPool.DASH,
 					Type.getMethodDescriptor(proxyMethod));
 			}
 		}

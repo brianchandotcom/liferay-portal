@@ -111,12 +111,11 @@ public class AspectJNewEnvTestRule extends NewEnvTestRule {
 			}
 		}
 
-		String className = description.getClassName();
-
 		File dumpDir = new File(
 			System.getProperty("junit.aspectj.dump"),
 			StringBundler.concat(
-				className, StringPool.PERIOD, description.getMethodName()));
+				description.getClassName(), StringPool.PERIOD,
+				description.getMethodName()));
 
 		try {
 			return new WeavingClassLoader(

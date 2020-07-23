@@ -51,11 +51,10 @@ public class DDMWebTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		String cdnBaseURL = themeDisplay.getCDNBaseURL();
-
 		String staticResourceURL = _portal.getStaticResourceURL(
 			httpServletRequest,
-			StringBundler.concat(cdnBaseURL, _postfix, "/css/main.css"));
+			StringBundler.concat(
+				themeDisplay.getCDNBaseURL(), _postfix, "/css/main.css"));
 
 		String content = "<link href=\"".concat(staticResourceURL);
 

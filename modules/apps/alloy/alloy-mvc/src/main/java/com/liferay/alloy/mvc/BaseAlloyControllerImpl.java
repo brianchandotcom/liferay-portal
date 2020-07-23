@@ -612,10 +612,8 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 	}
 
 	protected String getMessageListenerGroupName() {
-		String rootPortletId = portlet.getRootPortletId();
-
 		return StringBundler.concat(
-			rootPortletId, StringPool.SLASH, controllerPath);
+			portlet.getRootPortletId(), StringPool.SLASH, controllerPath);
 	}
 
 	protected Method getMethod(String methodName, Class<?>... parameterTypes) {

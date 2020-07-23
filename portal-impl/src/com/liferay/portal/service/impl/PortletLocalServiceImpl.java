@@ -2669,10 +2669,9 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			return;
 		}
 
-		String contextPath = servletContext.getContextPath();
-
 		spriteFileName = StringBundler.concat(
-			contextPath, SpriteProcessor.PATH, spriteFileName);
+			servletContext.getContextPath(), SpriteProcessor.PATH,
+			spriteFileName);
 
 		portletApp.setSpriteImages(spriteFileName, spriteProperties);
 	}

@@ -22,9 +22,7 @@
 		"instanceId": "speedwell",
 		"layoutFriendlyURL": "/catalog",
 		"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentMiniPortlet",
-		"portletPreferences": {
-			"cpContentListRendererKey": "compare-list-minium"
-		}
+		"portletPreferences": {}
 	},
 	{
 		"instanceId": "speedwell",
@@ -67,9 +65,7 @@
 		"instanceId": "speedwell",
 		"layoutFriendlyURL": "/product-detail",
 		"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentMiniPortlet",
-		"portletPreferences": {
-			"cpContentListRendererKey": "compare-list-minium"
-		}
+		"portletPreferences": {}
 	},
 	{
 		"instanceId": "speedwell",

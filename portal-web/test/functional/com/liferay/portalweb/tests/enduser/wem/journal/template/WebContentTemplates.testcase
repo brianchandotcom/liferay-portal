@@ -176,4 +176,72 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-116515. The creation of template is not allowed when disable template creation in Dynamic Data Mapping."
+	@priority = "4"
+	test ViewTemplateCreationFailureWhenDisableTemplateCreation {
+		task ("Add a template for Basic Web Content structure but not save") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoTemplates();
+
+			LexiconEntry.gotoAdd();
+
+			Pause(locator1 = "3000");
+		}
+
+		task ("Disable Template Creation") {
+			Open.openInTheNewTab(locator1 = "http://localhost:8080");
+
+			var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+			SelectWindow(locator1 = "title=Home - ${siteName}");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Dynamic Data Mapping",
+				configurationName = "Dynamic Data Mapping Web",
+				configurationScope = "System Scope");
+
+			FormFields.disableCheckbox(fieldName = "Enable Template Creation");
+
+			if (IsElementPresent(locator1 = "Button#UPDATE")) {
+				PortletEntry.update();
+			}
+			else if (IsElementPresent(locator1 = "Button#SAVE")) {
+				PortletEntry.save();
+			}
+		}
+
+		task ("View template creation failure") {
+			Close.closeAndSelectWindow(locator1 = "title=New Template - Test Site Name - ${siteName}");
+
+			WebContentTemplates.inputTemplateAddScreenFields(
+				structureName = "Basic Web Content",
+				templateDescription = "WC Template Description",
+				templateFieldNames = "Content",
+				templateName = "WC Template Name");
+
+			ClickNoError.mouseDownMouseUp(locator1 = "//span[contains(@class,'btn')][normalize-space(text())='Save']/..");
+
+			Alert.viewErrorMessage(errorMessage = "Your request failed to complete.");
+		}
+
+		task ("Enable Template Creation") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Dynamic Data Mapping",
+				configurationName = "Dynamic Data Mapping Web",
+				configurationScope = "System Scope");
+
+			FormFields.enableCheckbox(fieldName = "Enable Template Creation");
+
+			PortletEntry.update();
+		}
+	}
+
 }

@@ -194,6 +194,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COLOR_SELECT</td>
+	<td>//button[@aria-label='Select a color']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COMMENT</td>
 	<td>//button/span[contains(.,'Comment')]</td>
 	<td></td>

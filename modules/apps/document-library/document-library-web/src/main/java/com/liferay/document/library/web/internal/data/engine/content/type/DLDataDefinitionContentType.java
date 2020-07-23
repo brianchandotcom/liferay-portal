@@ -16,6 +16,8 @@ package com.liferay.document.library.web.internal.data.engine.content.type;
 
 import com.liferay.data.engine.content.type.DataDefinitionContentType;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -72,6 +74,19 @@ public class DLDataDefinitionContentType implements DataDefinitionContentType {
 
 			primKey = ddlRecordSet.getDDMStructureId();
 		}
+		else if (StringUtil.startsWith(
+					resourceName, DLFileEntryMetadata.class.getName())) {
+
+			DLFileEntryType dlFileEntryType =
+				_dlFileEntryTypeLocalService.fetchFileEntryType(
+					groupId, primKey);
+
+			if (dlFileEntryType != null) {
+				resourceName = DLFileEntryType.class.getName();
+
+				primKey = dlFileEntryType.getFileEntryTypeId();
+			}
+		}
 
 		if (permissionChecker.hasOwnerPermission(
 				companyId, resourceName, primKey, userId, actionId)) {
@@ -101,6 +116,9 @@ public class DLDataDefinitionContentType implements DataDefinitionContentType {
 
 	@Reference
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
+
+	@Reference
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 	@Reference
 	private Portal _portal;

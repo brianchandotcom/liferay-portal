@@ -59,6 +59,10 @@ public class ModifiedFacetDisplayContext implements Serializable {
 		return _modifiedFacetTermDisplayContexts;
 	}
 
+	public String getPaginationStartParameterName() {
+		return _paginationStartParameterName;
+	}
+
 	public String getParameterName() {
 		return _parameterName;
 	}
@@ -115,6 +119,12 @@ public class ModifiedFacetDisplayContext implements Serializable {
 		_nothingSelected = nothingSelected;
 	}
 
+	public void setPaginationStartParameterName(
+		String paginationStartParameterName) {
+
+		_paginationStartParameterName = paginationStartParameterName;
+	}
+
 	public void setParameterName(String paramName) {
 		_parameterName = paramName;
 	}
@@ -135,6 +145,7 @@ public class ModifiedFacetDisplayContext implements Serializable {
 	private List<ModifiedFacetTermDisplayContext>
 		_modifiedFacetTermDisplayContexts;
 	private boolean _nothingSelected;
+	private String _paginationStartParameterName;
 	private String _parameterName;
 	private boolean _renderNothing;
 

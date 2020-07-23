@@ -369,6 +369,13 @@ public class DLFileEntryTypeLocalServiceImpl
 
 	@Override
 	public DLFileEntryType fetchFileEntryType(
+		long groupId, long dataDefinitionId) {
+
+		return dlFileEntryTypePersistence.fetchByG_D(groupId, dataDefinitionId);
+	}
+
+	@Override
+	public DLFileEntryType fetchFileEntryType(
 		long groupId, String fileEntryTypeKey) {
 
 		fileEntryTypeKey = StringUtil.toUpperCase(

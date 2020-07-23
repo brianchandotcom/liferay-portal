@@ -21,12 +21,14 @@ import java.io.File;
 
 import java.util.concurrent.Callable;
 
+import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.tasks.Sync;
+import org.gradle.api.tasks.TaskProvider;
 import org.gradle.api.tasks.bundling.War;
 
 /**
@@ -42,77 +44,106 @@ public class LiferayWarPlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		GradleUtil.applyPlugin(project, WarPlugin.class);
 
-		War war = (War)GradleUtil.getTask(project, WarPlugin.WAR_TASK_NAME);
-
-		Sync buildWarDirSync = _addTaskBuildWarDir(project, war);
-
-		_addTaskWatch(buildWarDirSync, war);
-	}
-
-	private Sync _addTaskBuildWarDir(final Project project, final War war) {
-		Sync sync = GradleUtil.addTask(
+		TaskProvider<Sync> buildWarDirTaskProvider = GradleUtil.addTaskProvider(
 			project, BUILD_WAR_DIR_TASK_NAME, Sync.class);
+		TaskProvider<WatchTask> watchTaskProvider = GradleUtil.addTaskProvider(
+			project, WATCH_TASK_NAME, WatchTask.class);
 
-		sync.dependsOn(war);
+		TaskProvider<War> warTaskProvider = GradleUtil.getTaskProvider(
+			project, WarPlugin.WAR_TASK_NAME, War.class);
 
-		sync.from(
-			new Callable<FileTree>() {
-
-				@Override
-				public FileTree call() throws Exception {
-					return project.zipTree(war.getArchivePath());
-				}
-
-			});
-
-		sync.into(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return new File(
-						project.getBuildDir(), BUILD_WAR_DIR_TASK_NAME);
-				}
-
-			});
-
-		sync.setDescription(
-			"Unzips the project's WAR file into a temporary directory.");
-
-		return sync;
+		_configureTaskBuildWarDirProvider(
+			project, buildWarDirTaskProvider, warTaskProvider);
+		_configureTaskWatchProvider(
+			buildWarDirTaskProvider, warTaskProvider, watchTaskProvider);
 	}
 
-	private WatchTask _addTaskWatch(final Sync buildWarDirSync, final War war) {
-		WatchTask watchTask = GradleUtil.addTask(
-			buildWarDirSync.getProject(), WATCH_TASK_NAME, WatchTask.class);
+	private void _configureTaskBuildWarDirProvider(
+		final Project project, TaskProvider<Sync> buildWarDirTaskProvider,
+		final TaskProvider<War> warTaskProvider) {
 
-		watchTask.dependsOn(buildWarDirSync);
-
-		watchTask.setBundleDir(
-			new Callable<File>() {
+		buildWarDirTaskProvider.configure(
+			new Action<Sync>() {
 
 				@Override
-				public File call() throws Exception {
-					return buildWarDirSync.getDestinationDir();
+				public void execute(Sync buildWarDirSync) {
+					buildWarDirSync.dependsOn(warTaskProvider);
+
+					buildWarDirSync.from(
+						new Callable<FileTree>() {
+
+							@Override
+							public FileTree call() throws Exception {
+								War war = warTaskProvider.get();
+
+								return project.zipTree(war.getArchivePath());
+							}
+
+						});
+
+					buildWarDirSync.into(
+						new Callable<File>() {
+
+							@Override
+							public File call() throws Exception {
+								return new File(
+									project.getBuildDir(),
+									BUILD_WAR_DIR_TASK_NAME);
+							}
+
+						});
+
+					buildWarDirSync.setDescription(
+						"Unzips the project's WAR file into a temporary " +
+							"directory.");
 				}
 
 			});
+	}
 
-		watchTask.setBundleSymbolicName(
-			new Callable<String>() {
+	private void _configureTaskWatchProvider(
+		final TaskProvider<Sync> buildWarDirTaskProvider,
+		final TaskProvider<War> warTaskProvider,
+		TaskProvider<WatchTask> watchTaskProvider) {
+
+		watchTaskProvider.configure(
+			new Action<WatchTask>() {
 
 				@Override
-				public String call() throws Exception {
-					return war.getBaseName();
+				public void execute(WatchTask watchTask) {
+					watchTask.dependsOn(buildWarDirTaskProvider);
+
+					watchTask.setBundleDir(
+						new Callable<File>() {
+
+							@Override
+							public File call() throws Exception {
+								Sync buildWarDirSync =
+									buildWarDirTaskProvider.get();
+
+								return buildWarDirSync.getDestinationDir();
+							}
+
+						});
+
+					watchTask.setBundleSymbolicName(
+						new Callable<String>() {
+
+							@Override
+							public String call() throws Exception {
+								War war = warTaskProvider.get();
+
+								return war.getBaseName();
+							}
+
+						});
+
+					watchTask.setDescription(
+						"Continuously redeploys the project's WAR dir.");
+					watchTask.setGroup(BasePlugin.BUILD_GROUP);
 				}
 
 			});
-
-		watchTask.setDescription(
-			"Continuously redeploys the project's WAR dir.");
-		watchTask.setGroup(BasePlugin.BUILD_GROUP);
-
-		return watchTask;
 	}
 
 }

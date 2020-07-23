@@ -38,6 +38,7 @@ import {
 	UPDATE_IDS,
 	UPDATE_PAGES,
 } from './actions.es';
+import {getAllDataDefinitionFieldsFromAllFieldSets} from './utils/dataDefinition.es';
 import * as DataLayoutVisitor from './utils/dataLayoutVisitor.es';
 import generateDataDefinitionFieldName from './utils/generateDataDefinitionFieldName.es';
 
@@ -82,6 +83,7 @@ const initialState = {
 const addCustomObjectField = ({
 	dataDefinition,
 	dataLayoutBuilder,
+	fieldSets,
 	fieldTypeName,
 	fieldTypes,
 }) => {
@@ -95,7 +97,13 @@ const addCustomObjectField = ({
 		label: {
 			[themeDisplay.getLanguageId()]: fieldType.label,
 		},
-		name: generateDataDefinitionFieldName(dataDefinition, fieldType.label),
+		name: generateDataDefinitionFieldName(
+			[
+				...dataDefinition.dataDefinitionFields,
+				...getAllDataDefinitionFieldsFromAllFieldSets(fieldSets),
+			],
+			fieldType.label
+		),
 	};
 };
 
@@ -204,10 +212,11 @@ const createReducer = (dataLayoutBuilder) => {
 		switch (action.type) {
 			case ADD_CUSTOM_OBJECT_FIELD: {
 				const {fieldTypeName} = action.payload;
-				const {dataDefinition, fieldTypes} = state;
+				const {dataDefinition, fieldSets, fieldTypes} = state;
 				const newCustomObjectField = addCustomObjectField({
 					dataDefinition,
 					dataLayoutBuilder,
+					fieldSets,
 					fieldTypeName,
 					fieldTypes,
 				});

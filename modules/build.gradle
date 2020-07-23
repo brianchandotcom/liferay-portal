@@ -24,14 +24,14 @@ apply plugin: "com.liferay.yarn.defaults.plugin"
 ext {
 	projectTemplateTokens = [
 		"biz.aQute.bnd.version": "4.3.0",
-		"com.liferay.ant.bnd.version": "3.2.5",
+		"com.liferay.ant.bnd.version": "3.2.6",
 		"com.liferay.css.builder.version": "3.0.2",
 		"com.liferay.gradle.plugins.css.builder.version": "3.0.3",
 		"com.liferay.gradle.plugins.theme.builder.version": "2.0.7",
-		"com.liferay.gradle.plugins.version": "9.0.0",
-		"com.liferay.gradle.plugins.workspace.version": "2.5.3",
+		"com.liferay.gradle.plugins.version": "11.0.4",
+		"com.liferay.gradle.plugins.workspace.version": "3.0.2",
 		"com.liferay.portal.tools.bundle.support.version": "3.6.0",
-		"com.liferay.portal.tools.service.builder.version": "1.0.345",
+		"com.liferay.portal.tools.service.builder.version": "1.0.351",
 		"com.liferay.portal.tools.rest.builder.version": "1.0.114",
 		"com.liferay.portal.tools.soy.builder.version": "3.0.4",
 		"com.liferay.portal.tools.theme.builder.version": "1.1.8",

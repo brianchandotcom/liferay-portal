@@ -16,7 +16,6 @@ package com.liferay.fragment.entry.processor.internal.util;
 
 import com.liferay.asset.info.display.contributor.util.ContentAccessor;
 import com.liferay.asset.info.display.contributor.util.ContentAccessorUtil;
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
@@ -188,10 +187,7 @@ public class FragmentEntryProcessorHelperImpl
 
 		InfoDisplayObjectProvider<Object> infoDisplayObjectProvider = null;
 
-		if ((fragmentEntryProcessorContext.getPreviewClassPK() > 0) &&
-			_isSameClassedModel(
-				classPK, fragmentEntryProcessorContext.getPreviewClassPK())) {
-
+		if (fragmentEntryProcessorContext.getPreviewClassPK() > 0) {
 			infoDisplayObjectProvider =
 				infoDisplayContributor.getPreviewInfoDisplayObjectProvider(
 					fragmentEntryProcessorContext.getPreviewClassPK(),
@@ -369,17 +365,6 @@ public class FragmentEntryProcessorHelperImpl
 		}
 
 		return value;
-	}
-
-	private boolean _isSameClassedModel(long classPK, long previewClassPK) {
-		AssetEntry assetEntry = _assetEntryLocalService.fetchAssetEntry(
-			previewClassPK);
-
-		if ((assetEntry == null) || (assetEntry.getClassPK() != classPK)) {
-			return false;
-		}
-
-		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

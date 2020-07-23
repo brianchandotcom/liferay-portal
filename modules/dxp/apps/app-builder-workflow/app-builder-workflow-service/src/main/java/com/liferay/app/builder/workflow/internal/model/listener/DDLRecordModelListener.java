@@ -17,7 +17,6 @@ package com.liferay.app.builder.workflow.internal.model.listener;
 import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.model.AppBuilderAppDataRecordLink;
 import com.liferay.app.builder.service.AppBuilderAppDataRecordLinkLocalService;
-import com.liferay.app.builder.service.AppBuilderAppLocalService;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.log.Log;
@@ -57,12 +56,9 @@ public class DDLRecordModelListener extends BaseModelListener<DDLRecord> {
 					appBuilderAppDataRecordLink.
 						getAppBuilderAppDataRecordLinkId());
 
-			AppBuilderApp appBuilderApp =
-				_appBuilderAppLocalService.getAppBuilderApp(
-					appBuilderAppDataRecordLink.getAppBuilderAppId());
-
 			_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
-				appBuilderApp.getCompanyId(), appBuilderApp.getGroupId(),
+				appBuilderAppDataRecordLink.getCompanyId(),
+				appBuilderAppDataRecordLink.getGroupId(),
 				ResourceActionsUtil.getCompositeModelName(
 					AppBuilderApp.class.getName(), DDLRecord.class.getName()),
 				ddlRecord.getRecordId());
@@ -78,9 +74,6 @@ public class DDLRecordModelListener extends BaseModelListener<DDLRecord> {
 	@Reference
 	private AppBuilderAppDataRecordLinkLocalService
 		_appBuilderAppDataRecordLinkLocalService;
-
-	@Reference
-	private AppBuilderAppLocalService _appBuilderAppLocalService;
 
 	@Reference
 	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;

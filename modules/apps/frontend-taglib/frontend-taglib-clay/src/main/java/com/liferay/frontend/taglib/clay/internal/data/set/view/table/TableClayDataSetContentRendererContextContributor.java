@@ -84,8 +84,6 @@ public class TableClayDataSetContentRendererContextContributor
 				label = StringPool.BLANK;
 			}
 
-			String name = clayTableSchemaField.getFieldName();
-
 			JSONObject jsonObject = JSONUtil.put(
 				"actionId", clayTableSchemaField.getActionId()
 			).put(
@@ -96,12 +94,21 @@ public class TableClayDataSetContentRendererContextContributor
 			).put(
 				"expand", clayTableSchemaField.isExpand()
 			).put(
-				"fieldName", name
-			).put(
 				"label", label
 			).put(
 				"sortable", clayTableSchemaField.isSortable()
 			);
+
+			String fieldName = clayTableSchemaField.getFieldName();
+
+			if (fieldName.contains(StringPool.PERIOD)) {
+				jsonObject.put(
+					"fieldName",
+					StringUtil.split(fieldName, StringPool.PERIOD));
+			}
+			else {
+				jsonObject.put("fieldName", fieldName);
+			}
 
 			ClayTableSchemaField.SortingOrder sortingOrder =
 				clayTableSchemaField.getSortingOrder();

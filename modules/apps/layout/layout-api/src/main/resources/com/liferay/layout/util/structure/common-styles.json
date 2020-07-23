@@ -679,6 +679,11 @@
 				"name": "borderWidth",
 				"responsive": false,
 				"type": "text",
+				"typeOptions": {
+					"validation": {
+						"type": "number"
+					}
+				},
 				"validValues": [
 				]
 			},

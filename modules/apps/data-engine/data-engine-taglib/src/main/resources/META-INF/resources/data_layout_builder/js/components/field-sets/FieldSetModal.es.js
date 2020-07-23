@@ -23,11 +23,11 @@ import {
 	UPDATE_CONFIG,
 	UPDATE_EDITING_DATA_DEFINITION_ID,
 } from '../../actions.es';
+import {getAllDataDefinitionFieldsFromAllFieldSets} from '../../utils/dataDefinition.es';
 import {
 	containsField,
 	isDataLayoutEmpty,
 } from '../../utils/dataLayoutVisitor.es';
-import generateDataDefinitionFieldName from '../../utils/generateDataDefinitionFieldName.es';
 import ModalWithEventPrevented from '../modal/ModalWithEventPrevented.es';
 import useCreateFieldSet from './actions/useCreateFieldSet.es';
 import usePropagateFieldSet from './actions/usePropagateFieldSet.es';
@@ -44,6 +44,7 @@ const ModalContent = ({
 		{
 			appProps,
 			dataDefinition: {dataDefinitionFields},
+			fieldSets,
 		},
 	] = useContext(AppContext);
 	const [childrenContext, setChildrenContext] = useState({
@@ -85,11 +86,6 @@ const ModalContent = ({
 		return fields;
 	};
 
-	const mergedDataDefinitionFields = normalizeDataDefinitionFields([
-		...dataDefinitionFields,
-		...childrenDataDefinitionFields,
-	]);
-
 	const changeZIndex = (zIndex) => {
 		document
 			.querySelectorAll('.ddm-field-actions-container')
@@ -126,21 +122,17 @@ const ModalContent = ({
 		}
 	}, [dataLayout]);
 
+	const mergedAllDataDefinitionFields = normalizeDataDefinitionFields([
+		...dataDefinitionFields,
+		...childrenDataDefinitionFields,
+		...getAllDataDefinitionFieldsFromAllFieldSets(fieldSets),
+	]);
+
 	useEffect(() => {
 		if (dataLayoutBuilder) {
-			const provider = dataLayoutBuilder.getLayoutProvider();
-
-			provider.props = {
-				...provider.props,
-				fieldNameGenerator: (desiredName) =>
-					generateDataDefinitionFieldName(
-						{dataDefinitionFields: mergedDataDefinitionFields},
-						desiredName
-					),
-				shouldAutoGenerateName: () => false,
-			};
+			dataLayoutBuilder.fieldNameGenerator(mergedAllDataDefinitionFields);
 		}
-	}, [dataLayoutBuilder, mergedDataDefinitionFields]);
+	}, [dataLayoutBuilder, mergedAllDataDefinitionFields]);
 
 	useEffect(() => {
 		if (dataLayoutBuilder) {

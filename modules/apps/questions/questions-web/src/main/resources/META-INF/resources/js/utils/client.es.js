@@ -23,6 +23,11 @@ const HEADERS = {
 
 export const client = new ApolloClient({
 	cache: new InMemoryCache(),
+	defaultOptions: {
+		query: {
+			errorPolicy: 'all',
+		},
+	},
 	link: new HttpLink({
 		credentials: 'include',
 		fetch,
@@ -433,29 +438,7 @@ export const getSections = (sectionTitle, siteKey) =>
 				siteKey,
 			},
 		})
-		.then(({data}) => data.messageBoardSections.items[0])
-		.then((section) => {
-			if (section.parentMessageBoardSectionId) {
-				return Promise.all([
-					section,
-					client.query({
-						query: getSectionQuery,
-						variables: {
-							filter: `title eq '${section.parentMessageBoardSectionId}' or id eq '${section.parentMessageBoardSectionId}'`,
-							siteKey,
-						},
-					}),
-				]).then(([section, {data}]) => [
-					section,
-					data.messageBoardSections.items[0],
-				]);
-			}
-
-			return [section, section];
-		})
-		.then((data) => {
-			return {...data[0], parentSection: data[1]};
-		});
+		.then(({data}) => data.messageBoardSections.items[0]);
 
 export const getThreadsQuery = gql`
 	query messageBoardThreads(
@@ -530,6 +513,10 @@ export const getSectionQuery = gql`
 					}
 				}
 				numberOfMessageBoardSections
+				parentMessageBoardSection {
+					id
+					title
+				}
 				parentMessageBoardSectionId
 				subscribed
 				title

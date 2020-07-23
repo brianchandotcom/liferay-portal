@@ -16,7 +16,7 @@ import ClayColorPicker from '@clayui/color-picker';
 import ClayForm, {ClayInput} from '@clayui/form';
 import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import {config} from '../config';
 
@@ -33,12 +33,23 @@ export default function ColorFrontendToken({
 
 	const [customColors, setCustomColors] = useState([]);
 	const [color, setColor] = useState(value || '');
+	const ref = useRef(null);
 
 	const id = `${config.namespace}_frontendTokenId_${name}`;
+
+	useEffect(() => {
+		if (ref.current) {
+			ref.current.style.setProperty(
+				'--style-book-color-picker-color',
+				color
+			);
+		}
+	}, [color]);
 
 	return (
 		<ClayForm.Group
 			className="style-book-editor__color-frontend-token"
+			ref={ref}
 			small
 		>
 			<label htmlFor={id}>{label}</label>

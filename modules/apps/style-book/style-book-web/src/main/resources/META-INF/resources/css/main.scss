@@ -4,6 +4,8 @@ $controlMenuDesktopHeight: 56px;
 $toolbarDesktopHeight: 56px;
 
 .style-book-editor {
+	--style-book-color-picker-color: none;
+
 	display: flex;
 	height: calc(100vh - #{$controlMenuDesktopHeight});
 	left: 0;
@@ -20,6 +22,7 @@ $toolbarDesktopHeight: 56px;
 		}
 
 		.clay-color-btn {
+			background-color: var(--style-book-color-picker-color) !important;
 			height: 20px !important;
 			padding: 0;
 			width: 20px !important;

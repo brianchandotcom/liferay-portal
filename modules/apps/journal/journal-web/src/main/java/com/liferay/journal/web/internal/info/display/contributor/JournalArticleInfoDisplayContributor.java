@@ -22,7 +22,6 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseDDMStructureClassTypeReader;
 import com.liferay.asset.kernel.model.ClassType;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.dynamic.data.mapping.info.display.field.DDMFormValuesInfoDisplayFieldProvider;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
@@ -207,12 +206,6 @@ public class JournalArticleInfoDisplayContributor
 			getPreviewInfoDisplayObjectProvider(long classPK, int type)
 		throws PortalException {
 
-		AssetEntry assetEntry = assetEntryLocalService.fetchAssetEntry(classPK);
-
-		if (assetEntry == null) {
-			return null;
-		}
-
 		AssetRendererFactory<JournalArticle> assetRendererFactory =
 			(AssetRendererFactory<JournalArticle>)
 				AssetRendererFactoryRegistryUtil.
@@ -220,8 +213,7 @@ public class JournalArticleInfoDisplayContributor
 						JournalArticle.class.getName());
 
 		AssetRenderer<JournalArticle> assetRenderer =
-			assetRendererFactory.getAssetRenderer(
-				assetEntry.getClassPK(), type);
+			assetRendererFactory.getAssetRenderer(classPK, type);
 
 		JournalArticle article = assetRenderer.getAssetObject();
 
@@ -253,9 +245,6 @@ public class JournalArticleInfoDisplayContributor
 	@Reference
 	protected AssetEntryInfoDisplayFieldProvider
 		assetEntryInfoDisplayFieldProvider;
-
-	@Reference
-	protected AssetEntryLocalService assetEntryLocalService;
 
 	@Reference
 	protected ClassTypesInfoDisplayFieldProvider

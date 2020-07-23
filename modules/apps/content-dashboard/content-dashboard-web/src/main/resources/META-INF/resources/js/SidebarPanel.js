@@ -41,10 +41,13 @@ const SidebarPanel = React.forwardRef(
 			fetch(fetchURL, {
 				method: 'GET',
 			})
-				.then((response) => response.json())
-				.then((data) => {
-					setData(data, data?.error);
-				})
+				.then((response) =>
+					response.headers.get('content-type').includes('json')
+						? response
+								.json()
+								.then((data) => setData(data, data?.error))
+						: response.text().then((html) => setData({html}))
+				)
 				.catch(() => {
 					setData(
 						null,

@@ -4363,7 +4363,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 							InputStream inputStream = process.getInputStream();
 
-							CountingInputStream countingInputStream = new CountingInputStream(inputStreamO);
+							CountingInputStream countingInputStream = new CountingInputStream(inputStream);
 
 							InputStreamReader inputStreamReader = new InputStreamReader(countingInputStream, "UTF-8");
 

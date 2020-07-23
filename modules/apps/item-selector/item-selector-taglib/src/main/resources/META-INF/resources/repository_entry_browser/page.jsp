@@ -324,18 +324,29 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 									<liferay-ui:search-container-column-text
 										colspan="<%= 3 %>"
 									>
-										<liferay-frontend:horizontal-card
-											cardCssClass="card-interactive card-interactive-secondary"
-											resultRow="<%= row %>"
-											text="<%= folder.getName() %>"
-											url="<%= viewFolderURL.toString() %>"
-										>
-											<liferay-frontend:horizontal-card-col>
-												<liferay-frontend:horizontal-card-icon
-													icon="folder"
-												/>
-											</liferay-frontend:horizontal-card-col>
-										</liferay-frontend:horizontal-card>
+										<div class="card card-horizontal card-interactive card-interactive-secondary ">
+											<div class="card-body">
+												<div class="card-row">
+													<div class="autofit-col">
+														<span class="sticker sticker-rounded sticker-secondary">
+															<span class="sticker-overlay">
+																<clay:icon
+																	symbol="folder"
+																/>
+															</span>
+														</span>
+													</div>
+
+													<div class="autofit-col autofit-col-expand autofit-col-gutters">
+														<p class="card-title text-truncate">
+															<aui:a href="<%= viewFolderURL.toString() %>" title="<%= HtmlUtil.escapeAttribute(folder.getName()) %>">
+																<%= HtmlUtil.escape(folder.getName()) %>
+															</aui:a>
+														</p>
+													</div>
+												</div>
+											</div>
+										</div>
 									</liferay-ui:search-container-column-text>
 
 								<%

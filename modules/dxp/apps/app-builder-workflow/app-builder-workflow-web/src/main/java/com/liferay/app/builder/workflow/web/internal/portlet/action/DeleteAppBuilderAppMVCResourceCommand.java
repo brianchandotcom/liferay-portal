@@ -50,20 +50,20 @@ public class DeleteAppBuilderAppMVCResourceCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		AppWorkflowResource appWorkflowResource = AppWorkflowResource.builder(
-		).user(
-			themeDisplay.getUser()
-		).build();
-
-		appWorkflowResource.deleteAppWorkflow(
-			ParamUtil.getLong(resourceRequest, "appBuilderAppId"));
-
 		AppResource appResource = AppResource.builder(
 		).user(
 			themeDisplay.getUser()
 		).build();
 
 		appResource.deleteApp(
+			ParamUtil.getLong(resourceRequest, "appBuilderAppId"));
+
+		AppWorkflowResource appWorkflowResource = AppWorkflowResource.builder(
+		).user(
+			themeDisplay.getUser()
+		).build();
+
+		appWorkflowResource.deleteAppWorkflow(
 			ParamUtil.getLong(resourceRequest, "appBuilderAppId"));
 
 		return Optional.empty();

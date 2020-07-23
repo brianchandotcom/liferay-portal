@@ -52,30 +52,34 @@ class FormBuilderBase extends Component {
 	preparePagesForRender(pages) {
 		const visitor = new PagesVisitor(pages);
 
-		return visitor.mapFields((field) => {
-			if (
-				field.type === 'select' &&
-				!field.dataSourceType.includes('manual')
-			) {
-				field = {
-					...field,
-					options: [
-						{
-							label: Liferay.Language.get(
-								'dynamically-loaded-data'
-							),
-							value: 'dynamic',
-						},
-					],
-					value: 'dynamic',
-				};
-			}
+		return visitor.mapFields(
+			(field) => {
+				if (
+					field.type === 'select' &&
+					!field.dataSourceType.includes('manual')
+				) {
+					field = {
+						...field,
+						options: [
+							{
+								label: Liferay.Language.get(
+									'dynamically-loaded-data'
+								),
+								value: 'dynamic',
+							},
+						],
+						value: 'dynamic',
+					};
+				}
 
-			return {
-				...field,
-				readOnly: true,
-			};
-		});
+				return {
+					...field,
+					readOnly: true,
+				};
+			},
+			true,
+			true
+		);
 	}
 
 	render() {

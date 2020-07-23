@@ -71,39 +71,38 @@ import org.osgi.service.component.annotations.Reference;
 public class AppWorkflowResourceHelper {
 
 	public WorkflowDefinition deployWorkflowDefinition(
-			AppBuilderApp appBuilderApp, long companyId, Definition definition,
-			long userId)
+			AppBuilderApp appBuilderApp, Definition definition, long userId)
 		throws PortalException {
 
 		String content = _definitionExporter.export(definition);
 
 		return _workflowDefinitionManager.deployWorkflowDefinition(
-			companyId, userId, appBuilderApp.getName(), appBuilderApp.getUuid(),
+			appBuilderApp.getCompanyId(), userId, appBuilderApp.getName(),
+			String.valueOf(appBuilderApp.getAppBuilderAppId()),
 			AppBuilderApp.class.getSimpleName(), content.getBytes());
 	}
 
-	public Definition getDefinition(AppBuilderApp appBuilderApp)
+	public Definition getDefinition(long appId, long companyId)
 		throws PortalException {
 
 		WorkflowDefinitionLink workflowDefinitionLink =
 			_workflowDefinitionLinkLocalService.getWorkflowDefinitionLink(
-				appBuilderApp.getCompanyId(), 0,
+				companyId, 0,
 				ResourceActionsUtil.getCompositeModelName(
 					AppBuilderApp.class.getName(), DDLRecord.class.getName()),
-				appBuilderApp.getAppBuilderAppId(), 0);
+				appId, 0);
 
 		return _definitionBuilder.buildDefinition(
-			appBuilderApp.getCompanyId(),
-			workflowDefinitionLink.getWorkflowDefinitionName(),
+			companyId, workflowDefinitionLink.getWorkflowDefinitionName(),
 			workflowDefinitionLink.getWorkflowDefinitionVersion());
 	}
 
-	public WorkflowDefinition getWorkflowDefinition(AppBuilderApp appBuilderApp)
+	public WorkflowDefinition getWorkflowDefinition(long appId, long companyId)
 		throws PortalException {
 
 		try {
 			return _workflowDefinitionManager.getLatestWorkflowDefinition(
-				appBuilderApp.getCompanyId(), appBuilderApp.getUuid());
+				companyId, String.valueOf(appId));
 		}
 		catch (WorkflowException workflowException) {
 			Throwable cause = workflowException.getCause();
@@ -121,7 +120,8 @@ public class AppWorkflowResourceHelper {
 		throws KaleoDefinitionValidationException {
 
 		Definition definition = new Definition(
-			appBuilderApp.getUuid(), StringPool.BLANK, StringPool.BLANK, 0);
+			String.valueOf(appBuilderApp.getAppBuilderAppId()),
+			StringPool.BLANK, StringPool.BLANK, 0);
 
 		for (AppWorkflowState appWorkflowState :
 				appWorkflow.getAppWorkflowStates()) {
@@ -191,11 +191,11 @@ public class AppWorkflowResourceHelper {
 	}
 
 	public void undeployWorkflowDefinition(
-			AppBuilderApp appBuilderApp, long userId)
+			long appId, long companyId, long userId)
 		throws PortalException {
 
 		WorkflowDefinition workflowDefinition = getWorkflowDefinition(
-			appBuilderApp);
+			appId, companyId);
 
 		_workflowDefinitionManager.updateActive(
 			workflowDefinition.getCompanyId(), userId,

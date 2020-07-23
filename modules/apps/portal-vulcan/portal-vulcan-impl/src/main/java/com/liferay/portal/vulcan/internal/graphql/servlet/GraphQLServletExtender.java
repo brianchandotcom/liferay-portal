@@ -45,6 +45,7 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
+import com.liferay.portal.vulcan.graphql.servlet.GraphQLContributor;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 import com.liferay.portal.vulcan.internal.configuration.VulcanConfiguration;
@@ -168,6 +169,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -317,6 +319,12 @@ public class GraphQLServletExtender {
 		_defaultTypeFunction.register(new MapTypeFunction());
 		_defaultTypeFunction.register(new ObjectTypeFunction());
 
+		_graphQLContributorServiceTracker = new ServiceTracker<>(
+			bundleContext, GraphQLContributor.class,
+			new GraphQLContributorServiceTrackerCustomizer());
+
+		_graphQLContributorServiceTracker.open();
+
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put(
@@ -402,6 +410,8 @@ public class GraphQLServletExtender {
 
 	@Deactivate
 	protected void deactivate() {
+		_graphQLContributorServiceTracker.close();
+
 		_servletDataServiceTracker.close();
 
 		_servletServiceRegistration.unregister();
@@ -1501,6 +1511,8 @@ public class GraphQLServletExtender {
 	@Reference
 	private FilterParserProvider _filterParserProvider;
 
+	private ServiceTracker<GraphQLContributor, GraphQLContributor>
+		_graphQLContributorServiceTracker;
 	private GraphQLFieldRetriever _graphQLFieldRetriever;
 
 	@Reference
@@ -2003,6 +2015,54 @@ public class GraphQLServletExtender {
 					dataFetcherExceptionHandlerParameters.getSourceLocation())
 			).build();
 		}
+
+	}
+
+	private class GraphQLContributorServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<GraphQLContributor, GraphQLContributor> {
+
+		@Override
+		public GraphQLContributor addingService(
+			ServiceReference<GraphQLContributor> serviceReference) {
+
+			GraphQLContributor graphQLContributor = _bundleContext.getService(
+				serviceReference);
+
+			ServiceRegistration<ServletData> servletDataServiceRegistration =
+				_bundleContext.registerService(
+					ServletData.class,
+					ServletDataAdapter.of(graphQLContributor), null);
+
+			_servletDataServiceRegistrationMapping.put(
+				graphQLContributor, servletDataServiceRegistration);
+
+			return graphQLContributor;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<GraphQLContributor> serviceReference,
+			GraphQLContributor graphQLContributor) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<GraphQLContributor> serviceReference,
+			GraphQLContributor graphQLContributor) {
+
+			Optional.ofNullable(
+				_servletDataServiceRegistrationMapping.remove(
+					graphQLContributor)
+			).ifPresent(
+				ServiceRegistration::unregister
+			);
+
+			_bundleContext.ungetService(serviceReference);
+		}
+
+		private final Map<GraphQLContributor, ServiceRegistration<ServletData>>
+			_servletDataServiceRegistrationMapping = new ConcurrentHashMap<>();
 
 	}
 

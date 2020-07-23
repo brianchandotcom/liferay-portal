@@ -174,11 +174,11 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 			try (ResultSet rs = ps1.executeQuery()) {
 				while (rs.next()) {
-					String ddmStructureVersionDefinition = rs.getString(
-						"structureVersionDefinition");
-
 					String ddmStructureLayoutDefinition = rs.getString(
 						"structureLayoutDefinition");
+
+					String ddmStructureVersionDefinition = rs.getString(
+						"structureVersionDefinition");
 
 					long structureVersionId = rs.getLong("structureVersionId");
 
@@ -219,15 +219,11 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		for (DDMFormLayoutPage ddmFormLayoutPage :
 				ddmFormLayout.getDDMFormLayoutPages()) {
 
-			List<DDMFormLayoutRow> ddmFormLayoutRows =
-				ddmFormLayoutPage.getDDMFormLayoutRows();
-
-			for (DDMFormLayoutRow ddmFormLayoutRow : ddmFormLayoutRows) {
-				List<DDMFormLayoutColumn> ddmFormLayoutColumns =
-					ddmFormLayoutRow.getDDMFormLayoutColumns();
+			for (DDMFormLayoutRow ddmFormLayoutRow :
+					ddmFormLayoutPage.getDDMFormLayoutRows()) {
 
 				for (DDMFormLayoutColumn ddmFormLayoutColumn :
-						ddmFormLayoutColumns) {
+						ddmFormLayoutRow.getDDMFormLayoutColumns()) {
 
 					List<String> ddmFormFieldNames =
 						ddmFormLayoutColumn.getDDMFormFieldNames();

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.facet.modified.ModifiedFacetFactory;
+import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.web.internal.display.context.PortletRequestThemeDisplaySupplier;
 import com.liferay.portal.search.web.internal.display.context.ThemeDisplaySupplier;
@@ -127,6 +128,9 @@ public class ModifiedFacetPortlet extends MVCPortlet {
 		modifiedFacetDisplayBuilder.setLocale(themeDisplay.getLocale());
 		modifiedFacetDisplayBuilder.setTimeZone(themeDisplay.getTimeZone());
 
+		modifiedFacetDisplayBuilder.setPaginationStartParameterName(
+			getPaginationStartParameterName(portletSharedSearchResponse));
+
 		String parameterName =
 			modifiedFacetPortletPreferences.getParameterName();
 
@@ -194,6 +198,17 @@ public class ModifiedFacetPortlet extends MVCPortlet {
 		Facet facet = modifiedFacetFactory.newInstance(null);
 
 		return facet.getFieldName();
+	}
+
+	protected String getPaginationStartParameterName(
+		PortletSharedSearchResponse portletSharedSearchResponse) {
+
+		SearchResponse searchResponse =
+			portletSharedSearchResponse.getSearchResponse();
+
+		SearchRequest request = searchResponse.getRequest();
+
+		return request.getPaginationStartParameterName();
 	}
 
 	protected ModifiedFacetPortletPreferencesImpl getPortletPreferences(

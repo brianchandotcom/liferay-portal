@@ -19,7 +19,10 @@ import React, {useContext} from 'react';
 
 import AppContext from '../../AppContext.es';
 import {DELETE_DATA_LAYOUT_RULE} from '../../actions.es';
-import {getFieldLabel} from '../../utils/dataDefinition.es';
+import {
+	forEachDataDefinitionField,
+	getFieldLabel,
+} from '../../utils/dataDefinition.es';
 import CollapsablePanel from '../collapsable-panel/CollapsablePanel.es';
 
 const ACTION_LABELS = {
@@ -83,7 +86,7 @@ export default function RuleItem({rule, toggleRulesEditorVisibility}) {
 	];
 
 	const replaceExpressionLabels = (expression) => {
-		dataDefinition.dataDefinitionFields.forEach(({name}) => {
+		forEachDataDefinitionField(dataDefinition, ({name}) => {
 			expression = expression.replace(
 				new RegExp(`\\[${name}\\]`, 'g'),
 				getFieldLabel(dataDefinition, name)

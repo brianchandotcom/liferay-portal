@@ -103,7 +103,7 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 	}
 
 	@Activate
-	protected synchronized void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
 		_classNameIdTemplateHandlersServiceTrackerMap =
@@ -134,7 +134,7 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 	}
 
 	@Deactivate
-	protected synchronized void deactivate() {
+	protected void deactivate() {
 		_bundleContext = null;
 	}
 

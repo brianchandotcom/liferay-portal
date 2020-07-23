@@ -14,8 +14,6 @@
 
 package com.liferay.portal.file.install.internal.properties;
 
-import static com.liferay.portal.file.install.internal.properties.InterpolationUtil.substVars;
-
 import com.liferay.petra.string.CharPool;
 
 import java.io.IOException;
@@ -305,7 +303,7 @@ public class TypedProperties extends AbstractMap<String, Object> {
 
 			String value = _storage.get(key);
 
-			return substVars(
+			return InterpolationUtil.substVars(
 				value, key, _cycles, this, wrapper, false, _finalSubstitution,
 				_finalSubstitution);
 		}

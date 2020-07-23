@@ -51,12 +51,6 @@ definition {
 			SelectField.select(
 				selectFieldLabel = "Type",
 				selectFieldValue = "${accountType}");
-
-			if ("${accountType}" == "Person") {
-				AssertElementPresent(
-					key_hidedSection = "${hidedSection}",
-					locator1 = "Account#HIDED_DOMAIN_SECTION");
-			}
 		}
 
 		if (isSet(accountTaxID)) {
@@ -79,6 +73,8 @@ definition {
 	}
 
 	macro addDomains {
+		AssertElementPresent(locator1 = "Account#DOMAIN_SECTION");
+
 		AssertClick(
 			locator1 = "Account#ACCOUNT_DOMAIN_ADD_Link",
 			value1 = "Add");

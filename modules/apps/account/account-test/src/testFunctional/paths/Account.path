@@ -29,18 +29,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>HIDED_DOMAIN_SECTION</td>
-	<td>//div[contains(@class,'hide')]//span[normalize-space(text())='Valid Domains']</td>
+	<td>DOMAIN_SECTION</td>
+	<td>//div[contains(@class,'section')]//span[normalize-space(text())='Valid Domains']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DOMAIN_TABLE_NAME</td>
 	<td>//tr[contains(.,'${key_domainName}')]/td[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>HIDED_PARENT_ACCOUNT_SECTION</td>
-	<td>//div[contains(@class,'hide')]//span[normalize-space(text())='Parent Account']</td>
 	<td></td>
 </tr>
 </tbody>

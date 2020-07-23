@@ -14,15 +14,45 @@
 
 import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer';
 
-const findFieldByName = (dataDefinitionFields, fieldName) =>
-	dataDefinitionFields.find(({name}) => name === fieldName);
+const findFieldByName = (dataDefinitionFields, fieldName) => {
+	let result;
 
-export default ({dataDefinitionFields}, fieldTypeName) => {
+	const traverse = (dataDefinitionFields) =>
+		dataDefinitionFields.forEach((dataDefinition) => {
+			const {name, nestedDataDefinitionFields = []} = dataDefinition;
+
+			if (name === fieldName) {
+				result = dataDefinition;
+
+				return;
+			}
+
+			traverse(nestedDataDefinitionFields);
+		});
+
+	traverse(dataDefinitionFields);
+
+	return result;
+};
+
+export default (
+	dataDefinitionFields,
+	desiredName,
+	currentName = null,
+	blacklist = []
+) => {
 	let counter = 0;
-	let name = normalizeFieldName(fieldTypeName);
+	let name = normalizeFieldName(desiredName);
 
-	while (findFieldByName(dataDefinitionFields, name)) {
-		name = normalizeFieldName(`${fieldTypeName}${++counter}`);
+	let existingField;
+
+	while (
+		((existingField = findFieldByName(dataDefinitionFields, name)) &&
+			existingField &&
+			existingField.name !== currentName) ||
+		blacklist.includes(name)
+	) {
+		name = normalizeFieldName(`${desiredName}${++counter}`);
 	}
 
 	return name;

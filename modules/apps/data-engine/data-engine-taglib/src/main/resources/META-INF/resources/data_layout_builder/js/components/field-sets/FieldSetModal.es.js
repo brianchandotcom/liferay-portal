@@ -19,6 +19,7 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import App from '../../App.es';
 import AppContext from '../../AppContext.es';
+import {UPDATE_CONFIG} from '../../actions.es';
 import {
 	containsField,
 	isDataLayoutEmpty,
@@ -50,7 +51,9 @@ const ModalContent = ({
 	const [name, setName] = useState({});
 	const {
 		dataLayoutBuilder,
+		dispatch,
 		state: {
+			config,
 			dataLayout,
 			dataDefinition: {
 				dataDefinitionFields: childrenDataDefinitionFields = [],
@@ -62,6 +65,8 @@ const ModalContent = ({
 	const availableLanguageIds = [
 		...new Set([...Object.keys(name), editingLanguageId]),
 	];
+
+	const {contentType} = appProps;
 
 	const normalizeDataDefinitionFields = (ddFields) => {
 		const fields = [];
@@ -94,6 +99,21 @@ const ModalContent = ({
 			setName(fieldSet.name);
 		}
 	}, [fieldSet]);
+
+	useEffect(() => {
+		if (contentType === 'app-builder') {
+			dispatch({
+				payload: {
+					config: {
+						...config,
+						allowFieldSets: false,
+					},
+				},
+				type: UPDATE_CONFIG,
+			});
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [contentType, dispatch]);
 
 	useEffect(() => {
 		if (dataLayout) {

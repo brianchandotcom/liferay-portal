@@ -70,6 +70,8 @@ public class UserSearchFacetDisplayBuilder {
 		userSearchFacetDisplayContext.setDisplayStyleGroupId(
 			getDisplayStyleGroupId());
 		userSearchFacetDisplayContext.setNothingSelected(nothingSelected);
+		userSearchFacetDisplayContext.setPaginationStartParameterName(
+			_paginationStartParameterName);
 		userSearchFacetDisplayContext.setParamName(_paramName);
 		userSearchFacetDisplayContext.setParamValue(getFirstParamValue());
 		userSearchFacetDisplayContext.setParamValues(_paramValues);
@@ -96,6 +98,12 @@ public class UserSearchFacetDisplayBuilder {
 
 	public void setMaxTerms(int maxTerms) {
 		_maxTerms = maxTerms;
+	}
+
+	public void setPaginationStartParameterName(
+		String paginationStartParameterName) {
+
+		_paginationStartParameterName = paginationStartParameterName;
 	}
 
 	public void setParamName(String paramName) {
@@ -234,6 +242,7 @@ public class UserSearchFacetDisplayBuilder {
 	private boolean _frequenciesVisible;
 	private int _frequencyThreshold;
 	private int _maxTerms;
+	private String _paginationStartParameterName;
 	private String _paramName;
 	private List<String> _paramValues = Collections.emptyList();
 	private final ThemeDisplay _themeDisplay;

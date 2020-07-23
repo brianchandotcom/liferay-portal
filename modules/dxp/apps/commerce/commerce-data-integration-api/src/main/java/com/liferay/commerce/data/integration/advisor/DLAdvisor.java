@@ -15,8 +15,10 @@
 package com.liferay.commerce.data.integration.advisor;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -54,8 +56,9 @@ public class DLAdvisor {
 		else {
 			fileEntry = DLFileEntryLocalServiceUtil.updateFileEntry(
 				serviceContext.getUserId(), fileEntryId, fileName, mimeType,
-				fileName, fileName, "", true, 0L, null, null, inStream, 0L,
-				serviceContext);
+				fileName, fileName, StringPool.BLANK,
+				DLVersionNumberIncrease.fromMajorVersion(true), 0L, null, null,
+				inStream, 0L, serviceContext);
 		}
 
 		return fileEntry;
@@ -86,8 +89,9 @@ public class DLAdvisor {
 		else {
 			fileEntry = DLFileEntryLocalServiceUtil.updateFileEntry(
 				serviceContext.getUserId(), fileEntryId, sourceFileName,
-				mimeType, sourceFileName, sourceFileName, "", true, 0L, null,
-				file, null, 0L, serviceContext);
+				mimeType, sourceFileName, sourceFileName, StringPool.BLANK,
+				DLVersionNumberIncrease.fromMajorVersion(true), 0L, null, file,
+				null, 0L, serviceContext);
 		}
 
 		return fileEntry;

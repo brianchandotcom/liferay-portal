@@ -15,9 +15,6 @@
 package com.liferay.commerce.data.integration.internal.messaging;
 
 import com.liferay.commerce.data.integration.constants.CommerceDataIntegrationConstants;
-import com.liferay.portal.kernel.concurrent.CallerRunsPolicy;
-import com.liferay.portal.kernel.concurrent.RejectedExecutionHandler;
-import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
@@ -28,6 +25,9 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.RejectedExecutionHandler;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;

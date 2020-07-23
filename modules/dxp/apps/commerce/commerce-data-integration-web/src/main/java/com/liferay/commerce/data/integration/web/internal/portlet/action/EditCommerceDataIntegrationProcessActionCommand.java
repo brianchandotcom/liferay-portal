@@ -24,8 +24,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSender;
-import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactory;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -204,12 +203,9 @@ public class EditCommerceDataIntegrationProcessActionCommand
 			"commerceDataIntegrationProcessId",
 			commerceDataIntegrationProcessId);
 
-		SingleDestinationMessageSender messageSender =
-			_singleDestinationMessageSenderFactory.
-				createSingleDestinationMessageSender(
-					CommerceDataIntegrationConstants.EXECUTOR_DESTINATION_NAME);
-
-		messageSender.send(payLoad.toString());
+		MessageBusUtil.sendMessage(
+			CommerceDataIntegrationConstants.EXECUTOR_DESTINATION_NAME,
+			payLoad.toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -224,9 +220,5 @@ public class EditCommerceDataIntegrationProcessActionCommand
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private SingleDestinationMessageSenderFactory
-		_singleDestinationMessageSenderFactory;
 
 }

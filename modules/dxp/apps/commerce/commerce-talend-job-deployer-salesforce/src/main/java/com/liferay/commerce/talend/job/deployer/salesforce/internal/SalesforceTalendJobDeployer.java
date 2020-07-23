@@ -22,9 +22,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.util.ContentTypeUtil;
 
 import java.io.File;
 import java.io.InputStream;
@@ -91,7 +91,7 @@ public class SalesforceTalendJobDeployer {
 											typeSettingsProperties, false);
 							}
 
-							String contentType = ContentTypeUtil.getContentType(
+							String contentType = MimeTypesUtil.getContentType(
 								zipEntry.getName());
 
 							_talendProcessTypeHelper.addFileEntry(

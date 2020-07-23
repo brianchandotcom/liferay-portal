@@ -125,10 +125,176 @@ public class ViewChangesDisplayContext {
 	}
 
 	public Map<String, Object> getReactData() throws PortalException {
-		JSONObject entryDataJSONObject = _getEntryDataJSONObject();
+		JSONObject contextViewJSONObject = null;
 
-		JSONObject entriesJSONObject = entryDataJSONObject.getJSONObject(
-			"entries");
+		CTClosure ctClosure = null;
+
+		if (_ctCollection.getStatus() != WorkflowConstants.STATUS_APPROVED) {
+			try {
+				ctClosure = _ctClosureFactory.create(
+					_ctCollection.getCtCollectionId());
+			}
+			catch (Exception exception) {
+				contextViewJSONObject = JSONUtil.put(
+					"errorMessage",
+					_language.get(
+						_httpServletRequest, "context-view-is-unavailable"));
+
+				_log.error(exception, exception);
+			}
+		}
+
+		Map<Long, Map<Long, Integer>> entryIdMapMap = new HashMap<>();
+		Map<Long, List<JSONObject>> rootDisplayMap = new LinkedHashMap<>();
+
+		if (ctClosure == null) {
+			entryIdMapMap = _getCTEntriesEntryIdMapMap();
+		}
+		else {
+			JSONObject everythingJSONObject = JSONUtil.put("nodeId", 0);
+
+			for (String className : _ctConfiguration.rootDisplayClassNames()) {
+				rootDisplayMap.put(
+					_portal.getClassNameId(className), new ArrayList<>());
+			}
+
+			for (String childClassName :
+					_ctConfiguration.rootDisplayChildClassNames()) {
+
+				for (long parentClassNameId :
+						CTClosureUtil.getParentClassNameIds(
+							ctClosure,
+							_portal.getClassNameId(childClassName))) {
+
+					rootDisplayMap.computeIfAbsent(
+						parentClassNameId, key -> new ArrayList<>());
+				}
+			}
+
+			int entryIdCounter = 1;
+			AtomicInteger nodeIdCounter = new AtomicInteger(1);
+
+			Deque<JSONObject> deque = new LinkedList<>();
+
+			deque.push(everythingJSONObject);
+
+			JSONObject jsonObject = null;
+
+			while ((jsonObject = deque.poll()) != null) {
+				Map<Long, List<Long>> childPKsMap = null;
+
+				if (jsonObject.getInt("nodeId") == 0) {
+					childPKsMap = ctClosure.getRootPKsMap();
+				}
+				else {
+					long modelClassNameId = jsonObject.getLong(
+						"modelClassNameId");
+					long modelClassPK = jsonObject.getLong("modelClassPK");
+
+					childPKsMap = ctClosure.getChildPKsMap(
+						modelClassNameId, modelClassPK);
+
+					Map<Long, Integer> entryIdMap =
+						entryIdMapMap.computeIfAbsent(
+							modelClassNameId, key -> new HashMap<>());
+
+					Integer entryId = entryIdMap.get(modelClassPK);
+
+					if (entryId == null) {
+						entryId = entryIdCounter++;
+
+						entryIdMap.put(modelClassPK, entryId);
+					}
+
+					jsonObject.put("entryId", entryId);
+
+					_addRootDisplayNode(
+						jsonObject, rootDisplayMap.get(modelClassNameId));
+
+					jsonObject.remove("modelClassNameId");
+					jsonObject.remove("modelClassPK");
+				}
+
+				JSONArray childrenJSONArray = _getChildren(
+					nodeIdCounter, childPKsMap);
+
+				if (childrenJSONArray.length() == 0) {
+					continue;
+				}
+
+				for (int i = 0; i < childrenJSONArray.length(); i++) {
+					deque.push(childrenJSONArray.getJSONObject(i));
+				}
+
+				jsonObject.put("children", childrenJSONArray);
+			}
+
+			contextViewJSONObject = JSONUtil.put(
+				"everything", everythingJSONObject);
+		}
+
+		JSONObject entriesJSONObject = JSONFactoryUtil.createJSONObject();
+		JSONObject typeNamesJSONObject = JSONFactoryUtil.createJSONObject();
+
+		for (Map.Entry<Long, Map<Long, Integer>> entry :
+				entryIdMapMap.entrySet()) {
+
+			List<JSONObject> entryJSONObjects = _getEntries(
+				entry.getValue(), entry.getKey());
+
+			for (JSONObject entryJSONObject : entryJSONObjects) {
+				entriesJSONObject.put(
+					String.valueOf(entryJSONObject.remove("entryId")),
+					entryJSONObject);
+			}
+
+			String typeName = _ctDisplayRendererRegistry.getTypeName(
+				_themeDisplay.getLocale(), entry.getKey());
+
+			typeNamesJSONObject.put(String.valueOf(entry.getKey()), typeName);
+		}
+
+		JSONArray rootDisplayClassesJSONArray =
+			JSONFactoryUtil.createJSONArray();
+
+		if (ctClosure != null) {
+			for (Map.Entry<Long, List<JSONObject>> entry :
+					rootDisplayMap.entrySet()) {
+
+				List<JSONObject> rootDisplayNodes = entry.getValue();
+
+				if (!rootDisplayNodes.isEmpty()) {
+					JSONArray nodesJSONArray =
+						JSONFactoryUtil.createJSONArray();
+
+					for (JSONObject rootDisplayNode : rootDisplayNodes) {
+						nodesJSONArray.put(
+							JSONUtil.put(
+								"entryId", rootDisplayNode.getInt("entryId")
+							).put(
+								"nodeId", rootDisplayNode.getInt("nodeId")
+							));
+					}
+
+					String typeName = typeNamesJSONObject.getString(
+						String.valueOf(entry.getKey()));
+
+					contextViewJSONObject.put(typeName, nodesJSONArray);
+
+					rootDisplayClassesJSONArray.put(typeName);
+				}
+			}
+		}
+
+		JSONObject entryDataJSONObject = JSONUtil.put(
+			"contextView", contextViewJSONObject
+		).put(
+			"entries", entriesJSONObject
+		).put(
+			"rootDisplayClasses", rootDisplayClassesJSONArray
+		).put(
+			"typeNames", typeNamesJSONObject
+		);
 
 		JSONArray changesJSONArray = JSONFactoryUtil.createJSONArray();
 		JSONObject userInfoJSONObject = JSONFactoryUtil.createJSONObject();
@@ -402,179 +568,6 @@ public class ViewChangesDisplayContext {
 		}
 
 		return entries;
-	}
-
-	private JSONObject _getEntryDataJSONObject() throws PortalException {
-		JSONObject contextViewJSONObject = null;
-
-		CTClosure ctClosure = null;
-
-		if (_ctCollection.getStatus() != WorkflowConstants.STATUS_APPROVED) {
-			try {
-				ctClosure = _ctClosureFactory.create(
-					_ctCollection.getCtCollectionId());
-			}
-			catch (Exception exception) {
-				contextViewJSONObject = JSONUtil.put(
-					"errorMessage",
-					_language.get(
-						_httpServletRequest, "context-view-is-unavailable"));
-
-				_log.error(exception, exception);
-			}
-		}
-
-		Map<Long, Map<Long, Integer>> entryIdMapMap = new HashMap<>();
-		Map<Long, List<JSONObject>> rootDisplayMap = new LinkedHashMap<>();
-
-		if (ctClosure == null) {
-			entryIdMapMap = _getCTEntriesEntryIdMapMap();
-		}
-		else {
-			JSONObject everythingJSONObject = JSONUtil.put("nodeId", 0);
-
-			for (String className : _ctConfiguration.rootDisplayClassNames()) {
-				rootDisplayMap.put(
-					_portal.getClassNameId(className), new ArrayList<>());
-			}
-
-			for (String childClassName :
-					_ctConfiguration.rootDisplayChildClassNames()) {
-
-				for (long parentClassNameId :
-						CTClosureUtil.getParentClassNameIds(
-							ctClosure,
-							_portal.getClassNameId(childClassName))) {
-
-					rootDisplayMap.computeIfAbsent(
-						parentClassNameId, key -> new ArrayList<>());
-				}
-			}
-
-			int entryIdCounter = 1;
-			AtomicInteger nodeIdCounter = new AtomicInteger(1);
-
-			Deque<JSONObject> deque = new LinkedList<>();
-
-			deque.push(everythingJSONObject);
-
-			JSONObject jsonObject = null;
-
-			while ((jsonObject = deque.poll()) != null) {
-				Map<Long, List<Long>> childPKsMap = null;
-
-				if (jsonObject.getInt("nodeId") == 0) {
-					childPKsMap = ctClosure.getRootPKsMap();
-				}
-				else {
-					long modelClassNameId = jsonObject.getLong(
-						"modelClassNameId");
-					long modelClassPK = jsonObject.getLong("modelClassPK");
-
-					childPKsMap = ctClosure.getChildPKsMap(
-						modelClassNameId, modelClassPK);
-
-					Map<Long, Integer> entryIdMap =
-						entryIdMapMap.computeIfAbsent(
-							modelClassNameId, key -> new HashMap<>());
-
-					Integer entryId = entryIdMap.get(modelClassPK);
-
-					if (entryId == null) {
-						entryId = entryIdCounter++;
-
-						entryIdMap.put(modelClassPK, entryId);
-					}
-
-					jsonObject.put("entryId", entryId);
-
-					_addRootDisplayNode(
-						jsonObject, rootDisplayMap.get(modelClassNameId));
-
-					jsonObject.remove("modelClassNameId");
-					jsonObject.remove("modelClassPK");
-				}
-
-				JSONArray childrenJSONArray = _getChildren(
-					nodeIdCounter, childPKsMap);
-
-				if (childrenJSONArray.length() == 0) {
-					continue;
-				}
-
-				for (int i = 0; i < childrenJSONArray.length(); i++) {
-					deque.push(childrenJSONArray.getJSONObject(i));
-				}
-
-				jsonObject.put("children", childrenJSONArray);
-			}
-
-			contextViewJSONObject = JSONUtil.put(
-				"everything", everythingJSONObject);
-		}
-
-		JSONObject entriesJSONObject = JSONFactoryUtil.createJSONObject();
-		JSONObject typeNamesJSONObject = JSONFactoryUtil.createJSONObject();
-
-		for (Map.Entry<Long, Map<Long, Integer>> entry :
-				entryIdMapMap.entrySet()) {
-
-			List<JSONObject> entryJSONObjects = _getEntries(
-				entry.getValue(), entry.getKey());
-
-			for (JSONObject entryJSONObject : entryJSONObjects) {
-				entriesJSONObject.put(
-					String.valueOf(entryJSONObject.remove("entryId")),
-					entryJSONObject);
-			}
-
-			String typeName = _ctDisplayRendererRegistry.getTypeName(
-				_themeDisplay.getLocale(), entry.getKey());
-
-			typeNamesJSONObject.put(String.valueOf(entry.getKey()), typeName);
-		}
-
-		JSONArray rootDisplayClassesJSONArray =
-			JSONFactoryUtil.createJSONArray();
-
-		if (ctClosure != null) {
-			for (Map.Entry<Long, List<JSONObject>> entry :
-					rootDisplayMap.entrySet()) {
-
-				List<JSONObject> rootDisplayNodes = entry.getValue();
-
-				if (!rootDisplayNodes.isEmpty()) {
-					JSONArray nodesJSONArray =
-						JSONFactoryUtil.createJSONArray();
-
-					for (JSONObject rootDisplayNode : rootDisplayNodes) {
-						nodesJSONArray.put(
-							JSONUtil.put(
-								"entryId", rootDisplayNode.getInt("entryId")
-							).put(
-								"nodeId", rootDisplayNode.getInt("nodeId")
-							));
-					}
-
-					String typeName = typeNamesJSONObject.getString(
-						String.valueOf(entry.getKey()));
-
-					contextViewJSONObject.put(typeName, nodesJSONArray);
-
-					rootDisplayClassesJSONArray.put(typeName);
-				}
-			}
-		}
-
-		return JSONUtil.put(
-			"contextView", contextViewJSONObject
-		).put(
-			"entries", entriesJSONObject
-		).put(
-			"rootDisplayClasses", rootDisplayClassesJSONArray
-		).put(
-			"typeNames", typeNamesJSONObject
-		);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

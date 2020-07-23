@@ -8,12 +8,16 @@ definition {
 		WebContentStructures.addName(structureName = "${structureName}");
 
 		if (isSet(structureKey)) {
+			if (IsElementNotPresent(locator1 = "Sidebar#ACTIVE_TAB", key_tabName = "Properties")) {
+				Navigator.gotoSidebarTab(tabName = "Properties");
+			}
 			PortletEntry.inputStructureKeyTextInput(structureKey = "${structureKey}");
 		}
 
 		if (isSet(structureDescription)) {
-			Navigator.gotoSidebarTab(tabName = "Properties");
-
+			if (IsElementNotPresent(locator1 = "Sidebar#ACTIVE_TAB", key_tabName = "Properties")) {
+				Navigator.gotoSidebarTab(tabName = "Properties");
+			}
 			PortletEntry.inputDescriptionTextInput(description = "${structureDescription}");
 		}
 	}

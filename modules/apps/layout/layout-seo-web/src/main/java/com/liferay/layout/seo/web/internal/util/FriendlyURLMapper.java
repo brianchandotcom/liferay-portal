@@ -37,16 +37,16 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Adolfo Pérez
  */
-public class AssetDisplayPageFriendlyURLMapper {
+public class FriendlyURLMapper {
 
-	public static AssetDisplayPageFriendlyURLMapper create(
+	public static FriendlyURLMapper create(
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		Layout layout = (Layout)httpServletRequest.getAttribute(WebKeys.LAYOUT);
 
 		if ((layout != null) && !layout.isContentDisplayPage()) {
-			return new AssetDisplayPageFriendlyURLMapper(null);
+			return new FriendlyURLMapper(null);
 		}
 
 		AssetEntry assetEntry = (AssetEntry)httpServletRequest.getAttribute(
@@ -63,11 +63,11 @@ public class AssetDisplayPageFriendlyURLMapper {
 			AssetRenderer<?> assetRenderer =
 				assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
 
-			return new AssetDisplayPageFriendlyURLMapper(
+			return new FriendlyURLMapper(
 				(JournalArticle)assetRenderer.getAssetObject());
 		}
 
-		return new AssetDisplayPageFriendlyURLMapper(null);
+		return new FriendlyURLMapper(null);
 	}
 
 	public String getMappedAssetDisplayPageFriendlyURL(
@@ -128,7 +128,7 @@ public class AssetDisplayPageFriendlyURLMapper {
 		return mappedFriendlyURLs;
 	}
 
-	private AssetDisplayPageFriendlyURLMapper(JournalArticle journalArticle) {
+	private FriendlyURLMapper(JournalArticle journalArticle) {
 		_journalArticle = journalArticle;
 	}
 

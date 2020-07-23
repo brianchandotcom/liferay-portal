@@ -90,8 +90,8 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 					WorkflowConstants.ACTION_SAVE_DRAFT) {
 
 				_translationEntryLocalService.addOrUpdateTranslationEntry(
-					article.getGroupId(), infoItemClassPKReference,
-					infoItemFieldValues, _getTargetLanguageId(actionRequest),
+					article.getGroupId(), _getTargetLanguageId(actionRequest),
+					infoItemClassPKReference, infoItemFieldValues,
 					serviceContext);
 			}
 			else {

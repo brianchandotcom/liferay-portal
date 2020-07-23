@@ -147,7 +147,10 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 		if (translationEntry != null) {
 			InfoItemFieldValues translationEntryInfoItemFieldValues =
 				_translationEntryLocalService.getInfoItemFieldValues(
-					translationEntry);
+					translationEntry.getGroupId(),
+					translationEntry.getClassName(),
+					translationEntry.getClassPK(),
+					translationEntry.getContent());
 
 			return InfoItemFieldValues.builder(
 			).infoItemClassPKReference(

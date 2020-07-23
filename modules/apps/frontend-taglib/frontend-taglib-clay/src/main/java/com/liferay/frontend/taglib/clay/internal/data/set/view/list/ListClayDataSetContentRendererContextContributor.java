@@ -18,7 +18,9 @@ import com.liferay.frontend.taglib.clay.data.set.ClayDataSetContentRendererConte
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.constants.ClayDataSetConstants;
 import com.liferay.frontend.taglib.clay.data.set.view.list.BaseListClayDataSetDisplayView;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Collections;
 import java.util.Locale;
@@ -51,19 +53,29 @@ public class ListClayDataSetContentRendererContextContributor
 	private Map<String, Object> _serialize(
 		BaseListClayDataSetDisplayView baseListClayDataSetDisplayView) {
 
+		Map<String, Object> schema = HashMapBuilder.<String, Object>put(
+			"description", baseListClayDataSetDisplayView.getDescription()
+		).put(
+			"image", baseListClayDataSetDisplayView.getImage()
+		).put(
+			"sticker", baseListClayDataSetDisplayView.getSticker()
+		).put(
+			"symbol", baseListClayDataSetDisplayView.getSymbol()
+		).put(
+			"title",
+			() -> {
+				String title = baseListClayDataSetDisplayView.getTitle();
+
+				if (title.contains(StringPool.PERIOD)) {
+					return StringUtil.split(title, StringPool.PERIOD);
+				}
+
+				return title;
+			}
+		).build();
+
 		return HashMapBuilder.<String, Object>put(
-			"schema",
-			HashMapBuilder.<String, Object>put(
-				"description", baseListClayDataSetDisplayView.getDescription()
-			).put(
-				"image", baseListClayDataSetDisplayView.getImage()
-			).put(
-				"sticker", baseListClayDataSetDisplayView.getSticker()
-			).put(
-				"symbol", baseListClayDataSetDisplayView.getSymbol()
-			).put(
-				"title", baseListClayDataSetDisplayView.getTitle()
-			).build()
+			"schema", schema
 		).build();
 	}
 

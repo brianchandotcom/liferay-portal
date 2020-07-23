@@ -62,11 +62,11 @@ const ModalContent = ({
 		},
 	} = childrenContext;
 
+	const {contentType} = appProps;
+
 	const availableLanguageIds = [
 		...new Set([...Object.keys(name), editingLanguageId]),
 	];
-
-	const {contentType} = appProps;
 
 	const normalizeDataDefinitionFields = (ddFields) => {
 		const fields = [];
@@ -154,16 +154,14 @@ const ModalContent = ({
 		};
 	}, [dataLayoutBuilder]);
 
-	const createFieldSet = useCreateFieldSet({
-		availableLanguageIds,
-		childrenContext,
-	});
-	const saveFieldSet = useSaveFieldSet({
-		DataLayout: childrenAppProps.DataLayout,
+	const actionProps = {
 		availableLanguageIds,
 		childrenContext,
 		fieldSet,
-	});
+	};
+
+	const createFieldSet = useCreateFieldSet(actionProps);
+	const saveFieldSet = useSaveFieldSet(actionProps);
 	const propagateFieldSet = usePropagateFieldSet();
 
 	const onSave = () => {

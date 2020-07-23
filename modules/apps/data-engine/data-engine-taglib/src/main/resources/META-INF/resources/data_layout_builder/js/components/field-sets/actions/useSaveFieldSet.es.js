@@ -26,12 +26,7 @@ import {
 import saveDataDefinition from '../../../utils/saveDataDefinition.es';
 import {errorToast, successToast} from '../../../utils/toast.es';
 
-export default ({
-	DataLayout,
-	availableLanguageIds,
-	childrenContext,
-	fieldSet,
-}) => {
+export default ({availableLanguageIds, childrenContext, fieldSet}) => {
 	const [context, dispatch] = useContext(AppContext);
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 	const {dataDefinition, dataLayout, fieldSets} = context;
@@ -91,7 +86,7 @@ export default ({
 								{
 									name: 'nestedFields',
 									value: dataDefinitionFields.map(({name}) =>
-										DataLayout.getDDMFormField(
+										dataLayoutBuilder.getDDMFormField(
 											childrenState.dataDefinition,
 											name
 										)

@@ -1,3 +1,7 @@
+.audit-graph {
+	position: relative;
+}
+
 .content-dashboard-management-toolbar {
 	.navbar-expand-md .container-fluid {
 		padding: 0;
@@ -60,6 +64,9 @@
 
 .sidebar {
 	.sidebar-header {
+		padding-bottom: 5px;
+		padding-top: 10px;
+
 		.component-subtitle {
 			font-size: 0.875rem;
 		}

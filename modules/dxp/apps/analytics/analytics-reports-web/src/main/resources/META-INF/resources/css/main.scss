@@ -1,169 +1,42 @@
-@import 'atlas-variables';
-@import 'mixins';
-
 .lfr-analytics-reports-panel {
 	&.open-admin-panel.sidenav-menu-slider {
 		visibility: visible;
-		width: 320px;
+		width: 330px;
 	}
 
-	.sidebar-body {
-		background-color: #fff;
-		border-left-color: #e7e7ed;
-		border-left-style: solid;
-		border-left-width: 1px;
-	}
-}
-
-.lfr-analytics-reports-panel {
-	.sidebar .sidebar-header {
-		padding-bottom: 0.75rem;
-		padding-top: 0.75rem;
-	}
-
-	@media only screen and (min-width: 768px) {
-		.sidebar-header {
-			padding-bottom: 12px;
-			padding-left: 24px;
-			padding-top: 12px;
-		}
+	.sidebar-header,
+	.sidebar-header .sidenav-close {
+		color: #d5d6e1;
 	}
 
 	.sidebar-header {
 		background-color: #272833;
-		color: #d5d6e1;
-		display: flex;
-		justify-content: space-between;
 		line-height: 32px;
 		padding-bottom: 8px;
 		padding-right: 9px;
 		padding-top: 8px;
 	}
 
-	.sidebar-body {
-		bottom: 0;
-		left: 0;
-		padding: 0;
-		position: absolute;
-		right: 0;
-		top: 56px;
-	}
-
-	@media only screen and (min-width: 768px) {
+	@media only screen and (min-width: 576px) {
 		.sidebar-header {
 			padding-bottom: 12px;
-			padding-left: 24px;
 			padding-top: 12px;
 		}
 	}
 
-	.recharts-tooltip-label {
-		font-weight: bold;
-	}
-
-	.recharts-legend-item {
-		padding-bottom: 8px;
-	}
-
-	.recharts-legend-item:last-child {
-		padding-bottom: 16px;
-	}
-
-	.custom-circle {
-		border-radius: 50%;
-		display: inline-block;
-		height: 8px;
-		width: 8px;
-	}
-
-	.custom-square {
-		display: inline-block;
-		height: 8px;
-		width: 8px;
-	}
-
-	.custom-tooltip {
-		background-color: #fff;
-		border: 1px solid #ccc;
-		margin: 0;
-		opacity: 0.9;
-		padding: 0.25rem;
-		white-space: nowrap;
-	}
-
-	.line-chart-wrapper {
-		opacity: 1;
-		position: relative;
-
-		&.line-chart-wrapper--loading {
-			.line-chart {
-				opacity: 0.6;
-				pointer-events: none;
-				.recharts-cartesian-axis .recharts-cartesian-axis-ticks {
-					opacity: 0;
-				}
-			}
-		}
-		.recharts-cartesian-axis .recharts-cartesian-axis-ticks {
-			opacity: 1;
-			transition: opacity 0.15s ease-in-out;
-			will-change: opacity;
-		}
-	}
-
-	.loading-animation {
+	.sidebar-body {
+		bottom: 0;
 		left: 0;
+		padding: 1rem;
 		position: absolute;
 		right: 0;
-		top: 40%;
-	}
+		top: 56px;
 
-	.interval-selector-wrapper {
-		display: flex;
-	}
-
-	.pie-chart-wrapper {
-		display: flex;
-		justify-content: space-between;
-		.pie-chart-wrapper--legend--title {
-			font-weight: 600;
-		}
-		.pie-chart-wrapper--legend {
-			list-style: none;
-			margin: 0;
-			padding: 0;
-			.pie-chart-wrapper--legend--dot {
-				border-radius: 50%;
-				display: inline-block;
-				height: 8px;
-				margin-right: 8px;
-				width: 8px;
-			}
-		}
-		.pie-chart-wrapper--chart {
-			.dim {
-				opacity: 0.4;
-			}
-		}
-		.custom-tooltip {
-			transform: translateX(-50%);
-		}
-	}
-	.traffic-source-detail {
-		thead > tr {
-			height: 40px;
-		}
-		tbody > tr {
-			height: 30px;
-		}
-	}
-
-	.list-group-keywords-list {
-		li {
-			border-width: 0;
-		}
-		li > div.autofit-col {
-			padding-left: 0;
+		.loading-animation {
+			left: 0;
+			position: absolute;
+			right: 0;
+			top: 40%;
 		}
 	}
 }

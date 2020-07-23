@@ -1,0 +1,133 @@
+.analytics-reports-app {
+	.component-title {
+		font-weight: 600;
+	}
+
+	.custom-circle {
+		border-radius: 50%;
+		display: inline-block;
+		height: 8px;
+		width: 8px;
+	}
+
+	.custom-square {
+		display: inline-block;
+		height: 8px;
+		width: 8px;
+	}
+
+	.custom-tooltip {
+		background-color: #fff;
+		border: 1px solid #ccc;
+		margin: 0;
+		opacity: 0.9;
+		padding: 0.25rem;
+		white-space: nowrap;
+	}
+
+	.interval-selector-wrapper {
+		display: flex;
+	}
+
+	.line-chart-wrapper {
+		opacity: 1;
+		position: relative;
+
+		&.line-chart-wrapper--loading {
+			.line-chart {
+				opacity: 0.6;
+				pointer-events: none;
+
+				.recharts-cartesian-axis .recharts-cartesian-axis-ticks {
+					opacity: 0;
+				}
+			}
+		}
+
+		.recharts-cartesian-axis .recharts-cartesian-axis-ticks {
+			opacity: 1;
+			transition: opacity 0.15s ease-in-out;
+			will-change: opacity;
+		}
+	}
+
+	.list-group-keywords-list {
+		li {
+			border-width: 0;
+		}
+
+		li > div.autofit-col {
+			padding-left: 0;
+		}
+	}
+
+	.loading-animation {
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 40%;
+	}
+
+	.pie-chart-wrapper {
+		display: flex;
+		justify-content: space-between;
+
+		.pie-chart-wrapper--legend--title {
+			font-weight: 600;
+		}
+
+		.pie-chart-wrapper--legend {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+
+			.pie-chart-wrapper--legend--dot {
+				border-radius: 50%;
+				display: inline-block;
+				height: 8px;
+				margin-right: 8px;
+				width: 8px;
+			}
+		}
+
+		.pie-chart-wrapper--chart {
+			.dim {
+				opacity: 0.4;
+			}
+		}
+
+		.custom-tooltip {
+			transform: translateX(-50%);
+		}
+	}
+
+	.recharts-legend-item {
+		padding-bottom: 8px;
+
+		&:last-child {
+			padding-bottom: 16px;
+		}
+	}
+
+	.recharts-tooltip-label {
+		font-weight: bold;
+	}
+
+	.recharts-wrapper {
+		.recharts-cartesian-grid-vertical line:not(:last-child),
+		.recharts-cartesian-grid-horizontal
+			line:not(:last-child):not(:first-child) {
+			stroke-opacity: 0;
+		}
+	}
+
+	.traffic-source-detail {
+		thead > tr {
+			height: 40px;
+		}
+
+		tbody > tr {
+			height: 30px;
+		}
+	}
+}

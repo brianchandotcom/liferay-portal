@@ -35,7 +35,7 @@ AnalyticsReportsDisplayContext analyticsReportsDisplayContext = (AnalyticsReport
 	</c:when>
 	<c:otherwise>
 		<div id="<portlet:namespace />-analytics-reports-root">
-			<div class="p-3 pt-5 text-center">
+			<div class="pt-5 text-center">
 				<liferay-ui:icon
 					alt="connect-to-liferay-analytics-cloud"
 					src='<%= PortalUtil.getPathContext(request) + "/assets/ac-icon.svg" %>'

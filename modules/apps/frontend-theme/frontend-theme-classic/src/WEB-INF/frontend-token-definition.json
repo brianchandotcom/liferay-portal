@@ -148,7 +148,7 @@
 							"type": "String"
 						}
 					],
-					"label": "Grays",
+					"label": "grays",
 					"name": "grays"
 				},
 				{
@@ -258,11 +258,11 @@
 							"type": "String"
 						}
 					],
-					"label": "Theme Colors",
+					"label": "theme-colors",
 					"name": "themeColors"
 				}
 			],
-			"label": "Color System",
+			"label": "color-system",
 			"name": "colorSystem"
 		},
 		{
@@ -284,7 +284,7 @@
 					]
 				}
 			],
-			"label": "Spacing",
+			"label": "spacing",
 			"name": "spacing"
 		},
 		{
@@ -318,7 +318,7 @@
 							"type": "String"
 						}
 					],
-					"label": "Body",
+					"label": "body",
 					"name": "body"
 				},
 				{
@@ -384,7 +384,7 @@
 							"type": "Number"
 						}
 					],
-					"label": "Borders",
+					"label": "borders",
 					"name": "borders"
 				},
 				{
@@ -426,11 +426,11 @@
 							"type": "String"
 						}
 					],
-					"label": "Box Shadows",
+					"label": "box-shadows",
 					"name": "boxShadows"
 				}
 			],
-			"label": "Global",
+			"label": "global",
 			"name": "global"
 		},
 		{
@@ -486,11 +486,11 @@
 							"type": "Number"
 						}
 					],
-					"label": "Grid Containers",
+					"label": "grid-containers",
 					"name": "gridContainers"
 				}
 			],
-			"label": "Layout",
+			"label": "layout",
 			"name": "layout"
 		},
 		{
@@ -534,7 +534,7 @@
 							"type": "String"
 						}
 					],
-					"label": "Font Family",
+					"label": "font-family",
 					"name": "fontFamily"
 				},
 				{
@@ -576,7 +576,7 @@
 							"type": "Number"
 						}
 					],
-					"label": "Font Size",
+					"label": "font-size",
 					"name": "fontSize"
 				},
 				{
@@ -642,7 +642,7 @@
 							"type": "String"
 						}
 					],
-					"label": "Font Weight",
+					"label": "font-weight",
 					"name": "fontWeight"
 				},
 				{
@@ -720,11 +720,11 @@
 							"type": "Number"
 						}
 					],
-					"label": "Headings",
+					"label": "headings",
 					"name": "headings"
 				}
 			],
-			"label": "Typography",
+			"label": "typography",
 			"name": "typography"
 		}
 	]

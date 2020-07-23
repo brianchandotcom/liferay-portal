@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.content.page.editor.web.internal.util;
+package com.liferay.layout.util.structure;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;

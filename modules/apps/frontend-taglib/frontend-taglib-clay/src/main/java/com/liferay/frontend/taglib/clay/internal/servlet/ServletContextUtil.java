@@ -15,6 +15,7 @@
 package com.liferay.frontend.taglib.clay.internal.servlet;
 
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayViewSerializer;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetFilterSerializer;
 
 import javax.servlet.ServletContext;
 
@@ -33,6 +34,12 @@ public class ServletContextUtil {
 		getClayDataSetDisplayViewSerializer() {
 
 		return _servletContextUtil._getClayDataSetDisplayViewSerializer();
+	}
+
+	public static final ClayDataSetFilterSerializer
+		getClayDataSetFilterSerializer() {
+
+		return _servletContextUtil._getClayDataSetFilterSerializer();
 	}
 
 	public static final String getContextPath() {
@@ -60,6 +67,13 @@ public class ServletContextUtil {
 		_clayDataSetDisplayViewSerializer = clayDataSetDisplayViewSerializer;
 	}
 
+	@Reference(unbind = "-")
+	protected void setClayDataSetFilterSerializer(
+		ClayDataSetFilterSerializer clayDataSetFilterSerializer) {
+
+		_clayDataSetFilterSerializer = clayDataSetFilterSerializer;
+	}
+
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.frontend.taglib.clay)",
 		unbind = "-"
@@ -74,9 +88,14 @@ public class ServletContextUtil {
 		return _clayDataSetDisplayViewSerializer;
 	}
 
+	private ClayDataSetFilterSerializer _getClayDataSetFilterSerializer() {
+		return _clayDataSetFilterSerializer;
+	}
+
 	private static ServletContext _servletContext;
 	private static ServletContextUtil _servletContextUtil;
 
 	private ClayDataSetDisplayViewSerializer _clayDataSetDisplayViewSerializer;
+	private ClayDataSetFilterSerializer _clayDataSetFilterSerializer;
 
 }

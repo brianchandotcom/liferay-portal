@@ -86,6 +86,7 @@ export const createQuestionQuery = gql`
 				encodingFormat: "html"
 				headline: $headline
 				showAsQuestion: true
+				subscribed: true
 				keywords: $keywords
 				viewableBy: ANYONE
 			}

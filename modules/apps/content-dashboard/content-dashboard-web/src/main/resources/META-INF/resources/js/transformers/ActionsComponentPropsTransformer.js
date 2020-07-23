@@ -71,7 +71,7 @@ export default function propsTransformer({
 					if (action) {
 						event.preventDefault();
 
-						actions[action](item.href);
+						actions[action](item.data.fetchURL);
 					}
 				},
 			};

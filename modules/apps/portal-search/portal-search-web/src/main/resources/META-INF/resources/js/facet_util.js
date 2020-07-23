@@ -108,6 +108,33 @@ AUI.add(
 				});
 			},
 
+			removeStartParameter(startParameterName, queryString) {
+				var search = queryString;
+
+				var hasQuestionMark = search[0] === '?';
+
+				if (hasQuestionMark) {
+					search = search.substr(1);
+				}
+
+				var parameterArray = search.split('&').filter((item) => {
+					return item.trim() !== '';
+				});
+
+				var newParameters = FacetUtil.removeURLParameters(
+					startParameterName.value,
+					parameterArray
+				);
+
+				search = newParameters.join('&');
+
+				if (hasQuestionMark) {
+					search = '?' + search;
+				}
+
+				return search;
+			},
+
 			removeURLParameters(key, parameterArray) {
 				key = encodeURIComponent(key);
 
@@ -123,11 +150,26 @@ AUI.add(
 					'#' + form.id + ' input.facet-parameter-name'
 				);
 
-				document.location.search = FacetUtil.updateQueryString(
+				var startParameterName = document.querySelector(
+					'#' + form.id + ' input.start-parameter-name'
+				);
+
+				var search = document.location.search;
+
+				if (startParameterName) {
+					search = FacetUtil.removeStartParameter(
+						startParameterName,
+						search
+					);
+				}
+
+				search = FacetUtil.updateQueryString(
 					formParameterName.value,
 					selections,
-					document.location.search
+					search
 				);
+
+				document.location.search = search;
 			},
 
 			setURLParameter(url, name, value) {

@@ -17,11 +17,15 @@ package com.liferay.account.service.test;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.exception.AccountEntryDomainsException;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountGroup;
 import com.liferay.account.retriever.AccountUserRetriever;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.account.service.AccountGroupAccountEntryRelLocalService;
+import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.test.util.AccountEntryTestUtil;
+import com.liferay.account.service.test.util.AccountGroupTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
@@ -304,6 +308,28 @@ public class AccountEntryLocalServiceTest {
 			accountEntry.getAccountEntryId());
 
 		_assertDeleted(accountEntry.getAccountEntryId());
+	}
+
+	@Test
+	public void testSearchByAccountGroupIds() throws Exception {
+		_addAccountEntries();
+
+		AccountGroup accountGroup = AccountGroupTestUtil.addAccountGroup(
+			_accountGroupLocalService, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		LinkedHashMap<String, Object> params = _getLinkedHashMap(
+			"accountGroupIds", new long[] {accountGroup.getAccountGroupId()});
+
+		_assertSearchWithParams(
+			Arrays.asList(
+				_addAccountGroupAccountEntry(accountGroup.getAccountGroupId()),
+				_addAccountGroupAccountEntry(accountGroup.getAccountGroupId())),
+			params);
+
+		_accountGroupLocalService.deleteAccountGroup(accountGroup);
+
+		_assertSearchWithParams(Collections.emptyList(), params);
 	}
 
 	@Test
@@ -602,6 +628,17 @@ public class AccountEntryLocalServiceTest {
 		return accountEntry;
 	}
 
+	private AccountEntry _addAccountGroupAccountEntry(long accountGroupId)
+		throws Exception {
+
+		AccountEntry accountEntry = _addAccountEntry();
+
+		_accountGroupAccountEntryRelLocalService.addAccountGroupAccountEntryRel(
+			accountGroupId, accountEntry.getAccountEntryId());
+
+		return accountEntry;
+	}
+
 	private AccountEntry _addPersonAccountEntry() throws Exception {
 		return AccountEntryTestUtil.addPersonAccountEntry(
 			_accountEntryLocalService);
@@ -722,6 +759,13 @@ public class AccountEntryLocalServiceTest {
 
 	@Inject
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+
+	@Inject
+	private AccountGroupAccountEntryRelLocalService
+		_accountGroupAccountEntryRelLocalService;
+
+	@Inject
+	private AccountGroupLocalService _accountGroupLocalService;
 
 	@Inject
 	private AccountUserRetriever _accountUserRetriever;

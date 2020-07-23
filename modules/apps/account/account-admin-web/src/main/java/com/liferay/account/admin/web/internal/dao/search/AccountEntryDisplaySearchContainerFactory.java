@@ -48,7 +48,7 @@ public class AccountEntryDisplaySearchContainerFactory {
 			new LinkedHashMap<>(), true);
 	}
 
-	public static SearchContainer<AccountEntryDisplay> create(
+	public static SearchContainer<AccountEntryDisplay> createWithUserId(
 		long userId, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 

@@ -24,7 +24,6 @@ import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.util.ServiceTrackerFactory;
-import com.liferay.petra.reflect.GenericUtil;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -198,8 +197,7 @@ public class InfoDisplayContributorTrackerImpl
 
 		try {
 			dictionary.put(
-				"item.class.name",
-				GenericUtil.getGenericClassName(infoDisplayContributor));
+				"item.class.name", infoDisplayContributor.getClassName());
 		}
 		finally {
 			bundleContext.ungetService(serviceReference);

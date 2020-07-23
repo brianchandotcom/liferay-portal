@@ -80,7 +80,7 @@ const SidebarPanelInfoView = ({
 
 	return (
 		<>
-			<Sidebar.Header title="Content Info" />
+			<Sidebar.Header title={Liferay.Language.get('content-info')} />
 
 			<Sidebar.Body>
 				<div className="mb-4 sidebar-dl sidebar-section">

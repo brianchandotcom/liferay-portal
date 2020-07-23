@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -124,8 +123,6 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			friendlyURLMap = layout.getFriendlyURLMap();
 		}
 
-		String currentType = layout.getType();
-
 		if (layout.isTypeAssetDisplay()) {
 			serviceContext.setAttribute(
 				"layout.instanceable.allowed", Boolean.TRUE);
@@ -197,11 +194,6 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			layout = _layoutService.updateLayout(
 				groupId, privateLayout, layoutId,
 				layoutTypeSettingsUnicodeProperties.toString());
-
-			if (!currentType.equals(LayoutConstants.TYPE_PORTLET)) {
-				_portletPreferencesLocalService.deletePortletPreferences(
-					0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid());
-			}
 		}
 		else {
 			layoutTypeSettingsUnicodeProperties.putAll(

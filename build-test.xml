@@ -4370,7 +4370,9 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 							int appServerLogMaxSize = Integer.valueOf(project.getProperty("app.server.log.max.size.in.mb")) * 1024 * 1024;
 
 							try {
-								while ((int appServerLogCharInt = inputStreamReader.read()) != -1) {
+								int appServerLogCharInt;
+
+								while ((appServerLogCharInt = inputStreamReader.read()) != -1) {
 									if (countingInputStream.getCount() > appServerLogMaxSize) {
 										continue;
 									}

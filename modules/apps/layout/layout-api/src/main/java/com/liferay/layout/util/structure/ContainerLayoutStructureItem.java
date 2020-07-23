@@ -136,51 +136,7 @@ public class ContainerLayoutStructureItem extends StyledLayoutStructureItem {
 	public JSONObject getItemConfigJSONObject() {
 		JSONObject jsonObject = super.getItemConfigJSONObject();
 
-		return jsonObject.put(
-			"align", _align
-		).put(
-			"backgroundColorCssClass", _backgroundColorCssClass
-		).put(
-			"backgroundImage", _backgroundImageJSONObject
-		).put(
-			"borderColor", _borderColor
-		).put(
-			"borderRadius", _borderRadius
-		).put(
-			"borderWidth", _borderWidth
-		).put(
-			"contentDisplay", _contentDisplay
-		).put(
-			"justify", _justify
-		).put(
-			"link", _linkJSONObject
-		).put(
-			"marginBottom", _marginBottom
-		).put(
-			"marginLeft", _marginLeft
-		).put(
-			"marginRight", _marginRight
-		).put(
-			"marginTop", _marginTop
-		).put(
-			"opacity", _opacity
-		).put(
-			"paddingBottom", _paddingBottom
-		).put(
-			"paddingHorizontal", _paddingHorizontal
-		).put(
-			"paddingLeft", _paddingLeft
-		).put(
-			"paddingRight", _paddingRight
-		).put(
-			"paddingTop", _paddingTop
-		).put(
-			"shadow", _shadow
-		).put(
-			"type", _widthType
-		).put(
-			"widthType", _widthType
-		);
+		return jsonObject.put("widthType", _widthType);
 	}
 
 	@Override

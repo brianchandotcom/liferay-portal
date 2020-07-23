@@ -72,6 +72,8 @@ public class AssetEntriesSearchFacetDisplayBuilder implements Serializable {
 			getDisplayStyleGroupId());
 		assetEntriesSearchFacetDisplayContext.setNothingSelected(
 			isNothingSelected());
+		assetEntriesSearchFacetDisplayContext.setPaginationStartParameterName(
+			_paginationStartParameterName);
 		assetEntriesSearchFacetDisplayContext.setParameterName(_parameterName);
 		assetEntriesSearchFacetDisplayContext.setParameterValue(
 			getFirstParameterValue());
@@ -204,6 +206,12 @@ public class AssetEntriesSearchFacetDisplayBuilder implements Serializable {
 		_locale = locale;
 	}
 
+	public void setPaginationStartParameterName(
+		String paginationStartParameterName) {
+
+		_paginationStartParameterName = paginationStartParameterName;
+	}
+
 	public void setParameterName(String parameterName) {
 		_parameterName = parameterName;
 	}
@@ -247,6 +255,7 @@ public class AssetEntriesSearchFacetDisplayBuilder implements Serializable {
 	private boolean _frequenciesVisible;
 	private int _frequencyThreshold;
 	private Locale _locale;
+	private String _paginationStartParameterName;
 	private String _parameterName;
 	private List<String> _parameterValues = Collections.emptyList();
 	private final ThemeDisplay _themeDisplay;

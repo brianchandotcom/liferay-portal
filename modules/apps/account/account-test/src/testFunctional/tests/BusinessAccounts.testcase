@@ -133,6 +133,18 @@ definition {
 	@priority = "4"
 	test AssignExistingUserToAccount {
 		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Accounts",
+			configurationName = "Email Domains",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.editConfigurationUsersPersonalMenuShowInControlMenu(toggleSwitchLabel = "Enable Email Domain Validation");
+
+		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Applications",
 			portlet = "Accounts");
@@ -535,6 +547,18 @@ definition {
 
 	@priority = "4"
 	test RemoveDomain {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Accounts",
+			configurationName = "Email Domains",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.editConfigurationUsersPersonalMenuShowInControlMenu(toggleSwitchLabel = "Enable Email Domain Validation");
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Applications",

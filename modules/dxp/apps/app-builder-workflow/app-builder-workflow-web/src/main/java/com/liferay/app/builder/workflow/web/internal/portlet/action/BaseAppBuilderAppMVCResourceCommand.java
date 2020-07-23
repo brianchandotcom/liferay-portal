@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.workflow.exception.IncompleteWorkflowInstancesException;
 import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
 
 import java.util.Optional;
@@ -75,6 +76,28 @@ public abstract class BaseAppBuilderAppMVCResourceCommand<T>
 						portal.getLocale(resourceRequest), getClass()),
 					"step-names-must-be-unique"),
 				resourceRequest, resourceResponse, exception);
+		}
+		catch (IncompleteWorkflowInstancesException
+					incompleteWorkflowInstancesException) {
+
+			String message =
+				"there-are-x-pending-entries-using-this-workflow-app";
+
+			int workflowInstancesCount =
+				incompleteWorkflowInstancesException.
+					getWorkflowInstancesCount();
+
+			if (workflowInstancesCount == 1) {
+				message = "there-is-a-pending-entry-using-this-workflow-app";
+			}
+
+			_handleException(
+				language.format(
+					ResourceBundleUtil.getModuleAndPortalResourceBundle(
+						portal.getLocale(resourceRequest), getClass()),
+					message, workflowInstancesCount),
+				resourceRequest, resourceResponse,
+				incompleteWorkflowInstancesException);
 		}
 		catch (PortalException portalException) {
 			_handleException(

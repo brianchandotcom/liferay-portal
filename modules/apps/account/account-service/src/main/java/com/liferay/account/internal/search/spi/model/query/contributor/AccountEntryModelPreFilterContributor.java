@@ -46,11 +46,29 @@ public class AccountEntryModelPreFilterContributor
 		SearchContext searchContext) {
 
 		_filterByAccountUserIds(booleanFilter, searchContext);
+		_filterByAccountGroupIds(booleanFilter, searchContext);
 		_filterByDomains(booleanFilter, searchContext);
 		_filterByOrganizationIds(booleanFilter, searchContext);
 		_filterByParentAccountEntryId(booleanFilter, searchContext);
 		_filterByStatus(booleanFilter, searchContext);
 		_filterByType(booleanFilter, searchContext);
+	}
+
+	private void _filterByAccountGroupIds(
+		BooleanFilter booleanFilter, SearchContext searchContext) {
+
+		long[] accountGroupIds = (long[])searchContext.getAttribute(
+			"accountGroupIds");
+
+		if (ArrayUtil.isNotEmpty(accountGroupIds)) {
+			TermsFilter accountEntryTermsFilter = new TermsFilter(
+				"accountGroupIds");
+
+			accountEntryTermsFilter.addValues(
+				ArrayUtil.toStringArray(accountGroupIds));
+
+			booleanFilter.add(accountEntryTermsFilter, BooleanClauseOccur.MUST);
+		}
 	}
 
 	private void _filterByAccountUserIds(

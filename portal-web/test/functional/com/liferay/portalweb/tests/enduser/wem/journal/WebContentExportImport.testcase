@@ -714,15 +714,14 @@ definition {
 			fieldFieldLabel = "Text",
 			fieldType = "Text");
 
-		DynamicDataMapping.editFieldPredefinedValue(
-			field = "Text",
-			fieldFieldLabel = "Text",
-			fieldName = "Text",
-			fieldPredefinedValue = "(Enter Text Here)");
-
-		DynamicDataMapping.editFieldRequired(fieldFieldLabel = "Text");
+		DataEngine.editFieldRequired(fieldFieldLabel = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentStructures.editStructureDefaultValuesCP(
+			editStructureFieldNames = "Text",
+			fieldPredefinedValue = "(Enter Text Here)",
+			structureName = "WC Structure Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

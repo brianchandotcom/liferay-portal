@@ -125,6 +125,21 @@ definition {
 			locator1 = "Checkbox#ANY_CHECKBOX");
 	}
 
+	macro editFieldRequired {
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "${fieldFieldLabel}",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = "${fieldFieldLabel}");
+
+		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Basic")) {
+			Navigator.gotoNavTab(navTab = "Basic");
+		}
+
+		Check.checkToggleSwitch(
+			checkboxName = "Required Field",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+	}
+
 	macro editFieldTip {
 		AssertClick.assertPartialTextClickAt(
 			key_fieldFieldLabel = "${fieldFieldLabel}",

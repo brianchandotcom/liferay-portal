@@ -882,6 +882,12 @@ public class DataDefinitionResourceImpl
 			DataDefinition dataDefinition, long dataDefinitionId)
 		throws Exception {
 
+		List<String> removedFieldNames = new ArrayList<>();
+
+		String[] fieldNames = transform(
+			dataDefinition.getDataDefinitionFields(),
+			DataDefinitionField::getName, String.class);
+
 		DataDefinition existingDataDefinition =
 			DataDefinitionUtil.toDataDefinition(
 				_dataDefinitionContentTypeTracker,
@@ -889,15 +895,33 @@ public class DataDefinitionResourceImpl
 				_ddmStructureLocalService.getStructure(dataDefinitionId),
 				_spiDDMFormRuleConverter);
 
-		return ArrayUtil.filter(
-			transform(
-				existingDataDefinition.getDataDefinitionFields(),
-				DataDefinitionField::getName, String.class),
-			fieldName -> !ArrayUtil.contains(
-				transform(
-					dataDefinition.getDataDefinitionFields(),
-					DataDefinitionField::getName, String.class),
-				fieldName));
+		for (DataDefinitionField dataDefinitionField :
+				existingDataDefinition.getDataDefinitionFields()) {
+
+			if (!ArrayUtil.contains(
+					fieldNames, dataDefinitionField.getName())) {
+
+				removedFieldNames.add(dataDefinitionField.getName());
+
+				if (Objects.equals(
+						dataDefinitionField.getFieldType(), "fieldset")) {
+
+					DDMStructure fieldSetDDMStructure =
+						_ddmStructureLocalService.getDDMStructure(
+							MapUtil.getLong(
+								dataDefinitionField.getCustomProperties(),
+								"ddmStructureId"));
+
+					Map<String, DDMFormField> map =
+						fieldSetDDMStructure.getFullHierarchyDDMFormFieldsMap(
+							false);
+
+					removedFieldNames.addAll(map.keySet());
+				}
+			}
+		}
+
+		return removedFieldNames.toArray(new String[0]);
 	}
 
 	private ResourceBundle _getResourceBundle(

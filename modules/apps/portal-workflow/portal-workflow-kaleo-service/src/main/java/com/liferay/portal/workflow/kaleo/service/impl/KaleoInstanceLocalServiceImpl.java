@@ -246,6 +246,14 @@ public class KaleoInstanceLocalServiceImpl
 	}
 
 	@Override
+	public int getKaleoDefinitionKaleoInstancesCount(
+		long kaleoDefinitionId, boolean completed) {
+
+		return kaleoInstancePersistence.countByKDI_C(
+			kaleoDefinitionId, completed);
+	}
+
+	@Override
 	public List<KaleoInstance> getKaleoInstances(
 		Long userId, String assetClassName, Long assetClassPK,
 		Boolean completed, int start, int end,

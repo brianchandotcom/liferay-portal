@@ -270,6 +270,10 @@
 			<finder-column name="companyId" />
 			<finder-column name="userId" />
 		</finder>
+		<finder name="KDI_C" return-type="Collection">
+			<finder-column name="kaleoDefinitionId" />
+			<finder-column name="completed" />
+		</finder>
 		<finder name="KDVI_C" return-type="Collection">
 			<finder-column name="kaleoDefinitionVersionId" />
 			<finder-column name="completed" />

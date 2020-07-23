@@ -65,6 +65,8 @@ public class AssetTagsSearchFacetDisplayBuilder {
 		assetTagsSearchFacetDisplayContext.setFacetLabel(getFacetLabel());
 		assetTagsSearchFacetDisplayContext.setNothingSelected(
 			isNothingSelected());
+		assetTagsSearchFacetDisplayContext.setPaginationStartParameterName(
+			_paginationStartParameterName);
 		assetTagsSearchFacetDisplayContext.setParameterName(_parameterName);
 		assetTagsSearchFacetDisplayContext.setParameterValue(
 			getFirstParameterValue());
@@ -110,6 +112,12 @@ public class AssetTagsSearchFacetDisplayBuilder {
 		_maxTerms = maxTerms;
 	}
 
+	public void setPaginationStartParameterName(
+		String paginationStartParameterName) {
+
+		_paginationStartParameterName = paginationStartParameterName;
+	}
+
 	public void setParameterName(String parameterName) {
 		_parameterName = parameterName;
 	}
@@ -147,6 +155,7 @@ public class AssetTagsSearchFacetDisplayBuilder {
 		assetTagsSearchFacetTermDisplayContext.setFrequency(frequency);
 		assetTagsSearchFacetTermDisplayContext.setFrequencyVisible(
 			_frequenciesVisible);
+		assetTagsSearchFacetTermDisplayContext.setPopularity(popularity);
 		assetTagsSearchFacetTermDisplayContext.setPopularity(popularity);
 		assetTagsSearchFacetTermDisplayContext.setSelected(isSelected(value));
 		assetTagsSearchFacetTermDisplayContext.setValue(value);
@@ -337,6 +346,7 @@ public class AssetTagsSearchFacetDisplayBuilder {
 	private boolean _frequenciesVisible;
 	private int _frequencyThreshold;
 	private int _maxTerms;
+	private String _paginationStartParameterName;
 	private String _parameterName;
 	private List<String> _selectedTags = Collections.emptyList();
 	private final TagFacetPortletInstanceConfiguration

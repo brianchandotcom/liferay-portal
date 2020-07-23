@@ -31,6 +31,10 @@ public class AssetTagsSearchFacetDisplayContext {
 		return _facetLabel;
 	}
 
+	public String getPaginationStartParameterName() {
+		return _paginationStartParameterName;
+	}
+
 	public String getParameterName() {
 		return _parameterName;
 	}
@@ -83,6 +87,12 @@ public class AssetTagsSearchFacetDisplayContext {
 		_nothingSelected = nothingSelected;
 	}
 
+	public void setPaginationStartParameterName(
+		String paginationStartParameterName) {
+
+		_paginationStartParameterName = paginationStartParameterName;
+	}
+
 	public void setParameterName(String parameterName) {
 		_parameterName = parameterName;
 	}
@@ -121,6 +131,7 @@ public class AssetTagsSearchFacetDisplayContext {
 	private long _displayStyleGroupId;
 	private String _facetLabel;
 	private boolean _nothingSelected;
+	private String _paginationStartParameterName;
 	private String _parameterName;
 	private String _parameterValue;
 	private List<String> _parameterValues;

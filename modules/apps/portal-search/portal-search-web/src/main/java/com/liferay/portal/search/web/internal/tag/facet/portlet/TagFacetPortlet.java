@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.searcher.SearchRequest;
+import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.web.internal.facet.display.builder.AssetTagsSearchFacetDisplayBuilder;
 import com.liferay.portal.search.web.internal.facet.display.context.AssetTagsSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.tag.facet.builder.AssetTagsFacetConfiguration;
@@ -118,6 +120,8 @@ public class TagFacetPortlet extends MVCPortlet {
 			assetTagsFacetConfiguration.getFrequencyThreshold());
 		assetTagsSearchFacetDisplayBuilder.setMaxTerms(
 			assetTagsFacetConfiguration.getMaxTerms());
+		assetTagsSearchFacetDisplayBuilder.setPaginationStartParameterName(
+			getPaginationStartParameterName(portletSharedSearchResponse));
 
 		String parameterName = tagFacetPortletPreferences.getParameterName();
 
@@ -144,6 +148,17 @@ public class TagFacetPortlet extends MVCPortlet {
 
 	protected String getAggregationName(RenderRequest renderRequest) {
 		return portal.getPortletId(renderRequest);
+	}
+
+	protected String getPaginationStartParameterName(
+		PortletSharedSearchResponse portletSharedSearchResponse) {
+
+		SearchResponse searchResponse =
+			portletSharedSearchResponse.getSearchResponse();
+
+		SearchRequest request = searchResponse.getRequest();
+
+		return request.getPaginationStartParameterName();
 	}
 
 	@Reference

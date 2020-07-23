@@ -38,6 +38,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -54,9 +55,12 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -104,6 +108,11 @@ public class CPCompareContentHelperImpl implements CPCompareContentHelper {
 	}
 
 	@Override
+	public String getCompareContentPortletNamespace() {
+		return _portal.getPortletNamespace(
+			CPPortletKeys.CP_COMPARE_CONTENT_WEB);
+	}
+
 	public String getCompareProductsURL(ThemeDisplay themeDisplay)
 		throws PortalException {
 
@@ -259,6 +268,20 @@ public class CPCompareContentHelperImpl implements CPCompareContentHelper {
 		}
 
 		return cpMeasurementUnit.getName(locale);
+	}
+
+	@Override
+	public String getEditCompareProductActionURL(
+		HttpServletRequest httpServletRequest) {
+
+		PortletURL editCompareProductActionURL = PortletURLFactoryUtil.create(
+			httpServletRequest, CPPortletKeys.CP_COMPARE_CONTENT_WEB,
+			PortletRequest.ACTION_PHASE);
+
+		editCompareProductActionURL.setParameter(
+			ActionRequest.ACTION_NAME, "editCompareProduct");
+
+		return editCompareProductActionURL.toString();
 	}
 
 	@Override

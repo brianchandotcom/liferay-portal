@@ -16,11 +16,11 @@
 
 <%@ include file="/init.jsp" %>
 
-
 <%
 CPCompareContentHelper cpCompareContentHelper = (CPCompareContentHelper)request.getAttribute(CPContentWebKeys.CP_COMPARE_CONTENT_HELPER);
+CPCompareContentMiniDisplayContext cpCompareContentMiniDisplayContext = (CPCompareContentMiniDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CPDataSourceResult cpDataSourceResult = (CPDataSourceResult)request.getAttribute(CPWebKeys.CP_DATA_SOURCE_RESULT);
+CPDataSourceResult cpDataSourceResult = cpCompareContentMiniDisplayContext.getCPDataSourceResult();
 
 List<CPCatalogEntry> cpCatalogEntries = cpDataSourceResult.getCPCatalogEntries();
 %>
@@ -30,10 +30,10 @@ List<CPCatalogEntry> cpCatalogEntries = cpDataSourceResult.getCPCatalogEntries()
 <aui:script require="commerce-frontend-js/components/mini_compare/entry as MiniCompare">
 	MiniCompare.default('mini-compare', 'mini-compare-root', {
 		compareProductsURL: '<%= cpCompareContentHelper.getCompareProductsURL(themeDisplay) %>',
-		editCompareProductActionURL: '<portlet:actionURL name="editCompareProduct" />',
+		editCompareProductActionURL: '<%= cpCompareContentHelper.getEditCompareProductActionURL(request) %>',
 		items: <%= jsonSerializer.serializeDeep(cpCatalogEntries) %>,
 		itemsLimit: <%= cpCompareContentHelper.getProductsLimit(portletDisplay) %>,
-		portletNamespace: '<portlet:namespace />',
+		portletNamespace: '<%= cpCompareContentHelper.getCompareContentPortletNamespace() %>',
 		spritemap: '<%= themeDisplay.getPathThemeImages() + "/icons.svg" %>'
 	});
 </aui:script>

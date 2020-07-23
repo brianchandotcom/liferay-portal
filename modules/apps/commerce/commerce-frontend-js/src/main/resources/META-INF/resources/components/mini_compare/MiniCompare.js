@@ -76,7 +76,7 @@ function MiniCompare(props) {
 				const included = items.find(el => el.id === id);
 				toggleRemoteStatus(
 					id,
-					Boolean(included),
+					!Boolean(included),
 					props.editCompareProductActionURL,
 					props.portletNamespace
 				);

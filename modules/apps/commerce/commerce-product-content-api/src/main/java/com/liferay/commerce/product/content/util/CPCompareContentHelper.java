@@ -30,6 +30,7 @@ import java.util.Set;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Alessio Antonio Rendina
@@ -74,6 +75,10 @@ public interface CPCompareContentHelper {
 
 	public int getProductsLimit(PortletDisplay portletDisplay)
 		throws PortalException;
+
+	public String getEditCompareProductActionURL(HttpServletRequest httpServletRequest);
+
+	public String getCompareContentPortletNamespace();
 
 	public boolean hasCategorizedCPDefinitionSpecificationOptionValues(
 			CPDataSourceResult cpDataSourceResult, long cpOptionCategoryId)

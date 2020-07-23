@@ -1534,8 +1534,7 @@ public class ContentPageEditorDisplayContext {
 					"imagePreviewURL",
 					layoutPageTemplateEntry.getImagePreviewURL(themeDisplay)
 				).put(
-					"masterLayoutId",
-					layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+					"masterLayoutPlid", layoutPageTemplateEntry.getPlid()
 				).put(
 					"name", layoutPageTemplateEntry.getName()
 				).build());

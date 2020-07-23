@@ -463,83 +463,12 @@
 			},
 			{
 				"dataType": "object",
-				"defaultValue": {
-					"cssClass": "text-body"
-				},
 				"dependencies": [
 				],
 				"label": "text-body",
 				"name": "textColor",
 				"responsive": false,
-				"type": "colorPalette",
-				"validValues": [
-					{
-						"label": "body",
-						"value": {
-							"cssClass": "text-body"
-						}
-					},
-					{
-						"label": "primary",
-						"value": {
-							"cssClass": "text-primary"
-						}
-					},
-					{
-						"label": "secondary",
-						"value": {
-							"cssClass": "text-secondary"
-						}
-					},
-					{
-						"label": "success",
-						"value": {
-							"cssClass": "text-success"
-						}
-					},
-					{
-						"label": "danger",
-						"value": {
-							"cssClass": "text-danger"
-						}
-					},
-					{
-						"label": "warning",
-						"value": {
-							"cssClass": "text-warning"
-						}
-					},
-					{
-						"label": "info",
-						"value": {
-							"cssClass": "text-info"
-						}
-					},
-					{
-						"label": "light",
-						"value": {
-							"cssClass": "text-light"
-						}
-					},
-					{
-						"label": "dark",
-						"value": {
-							"cssClass": "text-dark"
-						}
-					},
-					{
-						"label": "muted",
-						"value": {
-							"cssClass": "text-muted"
-						}
-					},
-					{
-						"label": "white",
-						"value": {
-							"cssClass": "text-white"
-						}
-					}
-				]
+				"type": "colorPalette"
 			},
 			{
 				"dataType": "string",
@@ -580,77 +509,12 @@
 		"styles": [
 			{
 				"dataType": "object",
-				"defaultValue": {
-					"cssClass": "bg-transparent"
-				},
 				"dependencies": [
 				],
 				"label": "background-color",
 				"name": "backgroundColor",
 				"responsive": false,
-				"type": "colorPalette",
-				"validValues": [
-					{
-						"label": "transparent",
-						"value": {
-							"cssClass": "bg-transparent"
-						}
-					},
-					{
-						"label": "primary",
-						"value": {
-							"cssClass": "bg-primary"
-						}
-					},
-					{
-						"label": "secondary",
-						"value": {
-							"cssClass": "bg-secondary"
-						}
-					},
-					{
-						"label": "success",
-						"value": {
-							"cssClass": "bg-success"
-						}
-					},
-					{
-						"label": "danger",
-						"value": {
-							"cssClass": "bg-danger"
-						}
-					},
-					{
-						"label": "warning",
-						"value": {
-							"cssClass": "bg-warning"
-						}
-					},
-					{
-						"label": "info",
-						"value": {
-							"cssClass": "bg-info"
-						}
-					},
-					{
-						"label": "light",
-						"value": {
-							"cssClass": "bg-light"
-						}
-					},
-					{
-						"label": "dark",
-						"value": {
-							"cssClass": "bg-dark"
-						}
-					},
-					{
-						"label": "white",
-						"value": {
-							"cssClass": "bg-white"
-						}
-					}
-				]
+				"type": "colorPalette"
 			},
 			{
 				"dataType": "object",
@@ -717,71 +581,12 @@
 			},
 			{
 				"dataType": "object",
-				"defaultValue": {
-					"cssClass": "border-dark"
-				},
 				"dependencies": [
 				],
 				"label": "border-color",
 				"name": "borderColor",
 				"responsive": false,
-				"type": "colorPalette",
-				"validValues": [
-					{
-						"label": "primary",
-						"value": {
-							"cssClass": "border-primary"
-						}
-					},
-					{
-						"label": "secondary",
-						"value": {
-							"cssClass": "border-secondary"
-						}
-					},
-					{
-						"label": "success",
-						"value": {
-							"cssClass": "border-success"
-						}
-					},
-					{
-						"label": "danger",
-						"value": {
-							"cssClass": "border-danger"
-						}
-					},
-					{
-						"label": "warning",
-						"value": {
-							"cssClass": "border-warning"
-						}
-					},
-					{
-						"label": "info",
-						"value": {
-							"cssClass": "borer-info"
-						}
-					},
-					{
-						"label": "light",
-						"value": {
-							"cssClass": "border-light"
-						}
-					},
-					{
-						"label": "dark",
-						"value": {
-							"cssClass": "border-dark"
-						}
-					},
-					{
-						"label": "white",
-						"value": {
-							"cssClass": "border-white"
-						}
-					}
-				]
+				"type": "colorPalette"
 			}
 		]
 	},

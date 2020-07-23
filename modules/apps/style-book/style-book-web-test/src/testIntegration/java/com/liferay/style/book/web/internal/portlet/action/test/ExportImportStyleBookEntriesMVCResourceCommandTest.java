@@ -75,7 +75,53 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 	}
 
 	@Test
-	public void testExportImportStyleBookEntries() throws Exception {
+	public void testExportImportMultipleStyleBookEntries() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_sourceGroup, TestPropsValues.getUserId());
+
+		StyleBookEntry styleBookEntry1 =
+			_styleBookEntryLocalService.addStyleBookEntry(
+				TestPropsValues.getUserId(), _sourceGroup.getGroupId(),
+				_read("frontend_tokens_values.json"),
+				RandomTestUtil.randomString(), "STYLE_BOOK_ENTRY_KEY_1",
+				serviceContext);
+
+		StyleBookEntry styleBookEntry2 =
+			_styleBookEntryLocalService.addStyleBookEntry(
+				TestPropsValues.getUserId(), _sourceGroup.getGroupId(),
+				_read("frontend_tokens_values.json"),
+				RandomTestUtil.randomString(), "STYLE_BOOK_ENTRY_KEY_2",
+				serviceContext);
+
+		File file = ReflectionTestUtil.invoke(
+			_exportStyleBookEntriesMVCResourceCommand,
+			"_exportStyleBookEntries", new Class<?>[] {long[].class},
+			new long[] {
+				styleBookEntry1.getStyleBookEntryId(),
+				styleBookEntry2.getStyleBookEntryId()
+			});
+
+		ReflectionTestUtil.invoke(
+			_importStyleBookEntriesMVCActionCommand, "_importStyleBookEntries",
+			new Class<?>[] {long.class, long.class, File.class, boolean.class},
+			TestPropsValues.getUserId(), _targetGroup.getGroupId(), file,
+			false);
+
+		Assert.assertEquals(
+			2,
+			_styleBookEntryLocalService.getStyleBookEntriesCount(
+				_targetGroup.getGroupId()));
+		Assert.assertNotNull(
+			_styleBookEntryLocalService.fetchStyleBookEntry(
+				_targetGroup.getGroupId(), "STYLE_BOOK_ENTRY_KEY_1"));
+		Assert.assertNotNull(
+			_styleBookEntryLocalService.fetchStyleBookEntry(
+				_targetGroup.getGroupId(), "STYLE_BOOK_ENTRY_KEY_2"));
+	}
+
+	@Test
+	public void testExportImportSingleStyleBookEntry() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_sourceGroup, TestPropsValues.getUserId());

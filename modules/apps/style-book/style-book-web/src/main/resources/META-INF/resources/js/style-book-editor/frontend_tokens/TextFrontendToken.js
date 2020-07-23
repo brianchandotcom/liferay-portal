@@ -18,13 +18,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {config} from '../config';
-import {FRONTEND_TOKEN_TYPES} from '../constants/frontendTokenTypes';
-
-const FRONTEND_TOKEN_TYPE_TO_PROPS = {
-	[FRONTEND_TOKEN_TYPES.integer]: {pattern: '\\d+', step: 1, type: 'number'},
-	[FRONTEND_TOKEN_TYPES.number]: {type: 'number'},
-	[FRONTEND_TOKEN_TYPES.string]: {type: 'text'},
-};
 
 const debouncedOnValueSelect = debounce(
 	(onValueSelect, value) => onValueSelect(value),
@@ -49,7 +42,7 @@ export default function TextFrontendToken({
 				onChange={(event) =>
 					debouncedOnValueSelect(onValueSelect, event.target.value)
 				}
-				{...FRONTEND_TOKEN_TYPE_TO_PROPS[frontendToken.type]}
+				type="text"
 			/>
 		</ClayForm.Group>
 	);

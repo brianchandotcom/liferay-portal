@@ -73,6 +73,10 @@ public class AssetCategoriesSearchFacetDisplayContext implements Serializable {
 		return _displayStyleGroupId;
 	}
 
+	public String getPaginationStartParameterName() {
+		return _paginationStartParameterName;
+	}
+
 	public String getParameterName() {
 		return _parameterName;
 	}
@@ -111,6 +115,12 @@ public class AssetCategoriesSearchFacetDisplayContext implements Serializable {
 		_nothingSelected = nothingSelected;
 	}
 
+	public void setPaginationStartParameterName(
+		String paginationStartParameterName) {
+
+		_paginationStartParameterName = paginationStartParameterName;
+	}
+
 	public void setParameterName(String parameterName) {
 		_parameterName = parameterName;
 	}
@@ -143,6 +153,7 @@ public class AssetCategoriesSearchFacetDisplayContext implements Serializable {
 	private long _displayStyleGroupId;
 	private final HttpServletRequest _httpServletRequest;
 	private boolean _nothingSelected;
+	private String _paginationStartParameterName;
 	private String _parameterName;
 	private String _parameterValue;
 	private List<String> _parameterValues;

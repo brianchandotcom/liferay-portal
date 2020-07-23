@@ -159,48 +159,6 @@ public class ClassLoaderPoolTest {
 	}
 
 	@Test
-	public void testGetClassLoader() {
-		Assert.assertSame(
-			_contextClassLoader,
-			ClassLoaderPool.getClassLoader(_CONTEXT_NAME_1));
-
-		ClassLoader classLoader1 = new URLClassLoader(new URL[0]);
-		ClassLoader classLoader2 = new URLClassLoader(new URL[0]);
-		ClassLoader classLoader3 = new URLClassLoader(new URL[0]);
-		ClassLoader classLoader4 = new URLClassLoader(new URL[0]);
-
-		ClassLoaderPool.register(_CONTEXT_NAME_1, classLoader1);
-		ClassLoaderPool.register(_CONTEXT_NAME_2, classLoader2);
-		ClassLoaderPool.register(_SYMBOLIC_NAME + "0_", classLoader3);
-		ClassLoaderPool.register(_SYMBOLIC_NAME + "_X", classLoader4);
-
-		Assert.assertSame(
-			classLoader1, ClassLoaderPool.getClassLoader(_CONTEXT_NAME_1));
-		Assert.assertSame(
-			classLoader2, ClassLoaderPool.getClassLoader(_CONTEXT_NAME_2));
-		Assert.assertSame(
-			classLoader2, ClassLoaderPool.getClassLoader(_CONTEXT_NAME_3));
-		Assert.assertSame(
-			classLoader3,
-			ClassLoaderPool.getClassLoader(_SYMBOLIC_NAME + "0_"));
-		Assert.assertSame(
-			classLoader4,
-			ClassLoaderPool.getClassLoader(_SYMBOLIC_NAME + "_X"));
-		Assert.assertSame(
-			_contextClassLoader,
-			ClassLoaderPool.getClassLoader(_SYMBOLIC_NAME + "1_"));
-		Assert.assertSame(
-			_contextClassLoader,
-			ClassLoaderPool.getClassLoader(_SYMBOLIC_NAME));
-		Assert.assertSame(
-			_contextClassLoader, ClassLoaderPool.getClassLoader(null));
-		Assert.assertSame(
-			_contextClassLoader, ClassLoaderPool.getClassLoader("null"));
-		Assert.assertEquals(
-			_fallbackClassLoaders.toString(), 1, _fallbackClassLoaders.size());
-	}
-
-	@Test
 	public void testGetContextName() {
 		ClassLoader classLoader = new URLClassLoader(new URL[0]);
 
@@ -251,17 +209,43 @@ public class ClassLoaderPoolTest {
 	}
 
 	@Test
-	public void testRegister() {
-		ClassLoader classLoader = new URLClassLoader(new URL[0]);
-
-		ClassLoaderPool.register(_CONTEXT_NAME_WITHOUT_VERSION, classLoader);
-
-		Assert.assertEquals(_contextNames.toString(), 1, _contextNames.size());
-		Assert.assertEquals(_classLoaders.toString(), 1, _classLoaders.size());
+	public void testRegisterAndGetClassLoader() {
 		Assert.assertSame(
-			classLoader, _classLoaders.get(_CONTEXT_NAME_WITHOUT_VERSION));
-		Assert.assertEquals(
-			_CONTEXT_NAME_WITHOUT_VERSION, _contextNames.get(classLoader));
+			_contextClassLoader,
+			ClassLoaderPool.getClassLoader(_CONTEXT_NAME_1));
+
+		ClassLoader classLoader1 = new URLClassLoader(new URL[0]);
+		ClassLoader classLoader2 = new URLClassLoader(new URL[0]);
+		ClassLoader classLoader3 = new URLClassLoader(new URL[0]);
+		ClassLoader classLoader4 = new URLClassLoader(new URL[0]);
+
+		ClassLoaderPool.register(_CONTEXT_NAME_1, classLoader1);
+		ClassLoaderPool.register(_CONTEXT_NAME_2, classLoader2);
+		ClassLoaderPool.register(_SYMBOLIC_NAME + "0_", classLoader3);
+		ClassLoaderPool.register(_SYMBOLIC_NAME + "_X", classLoader4);
+
+		Assert.assertSame(
+			classLoader1, ClassLoaderPool.getClassLoader(_CONTEXT_NAME_1));
+		Assert.assertSame(
+			classLoader2, ClassLoaderPool.getClassLoader(_CONTEXT_NAME_2));
+		Assert.assertSame(
+			classLoader2, ClassLoaderPool.getClassLoader(_CONTEXT_NAME_3));
+		Assert.assertSame(
+			classLoader3,
+			ClassLoaderPool.getClassLoader(_SYMBOLIC_NAME + "0_"));
+		Assert.assertSame(
+			classLoader4,
+			ClassLoaderPool.getClassLoader(_SYMBOLIC_NAME + "_X"));
+		Assert.assertSame(
+			_contextClassLoader,
+			ClassLoaderPool.getClassLoader(_SYMBOLIC_NAME + "1_"));
+		Assert.assertSame(
+			_contextClassLoader,
+			ClassLoaderPool.getClassLoader(_SYMBOLIC_NAME));
+		Assert.assertSame(
+			_contextClassLoader, ClassLoaderPool.getClassLoader(null));
+		Assert.assertSame(
+			_contextClassLoader, ClassLoaderPool.getClassLoader("null"));
 	}
 
 	@Test

@@ -27,6 +27,7 @@ import selectCanUpdateEditables from '../../../app/selectors/selectCanUpdateEdit
 import selectCanUpdateItemConfiguration from '../../../app/selectors/selectCanUpdateItemConfiguration';
 import {useSelector} from '../../../app/store/index';
 import getLayoutDataItemLabel from '../../../app/utils/getLayoutDataItemLabel';
+import PageStructureSidebarSection from './PageStructureSidebarSection';
 import StructureTreeNode from './StructureTreeNode';
 
 export default function PageStructureSidebar() {
@@ -68,21 +69,25 @@ export default function PageStructureSidebar() {
 	);
 
 	return (
-		<div className="page-editor__page-structure__structure-tree px-4">
-			{!nodes.length && (
-				<ClayAlert
-					displayType="info"
-					title={Liferay.Language.get('info')}
-				>
-					{Liferay.Language.get('there-is-no-content-on-this-page')}
-				</ClayAlert>
-			)}
-			<Treeview
-				NodeComponent={StructureTreeNode}
-				nodes={nodes}
-				selectedNodeIds={[activeItemId]}
-			/>
-		</div>
+		<PageStructureSidebarSection>
+			<div className="page-editor__page-structure__structure-tree px-4">
+				{!nodes.length && (
+					<ClayAlert
+						displayType="info"
+						title={Liferay.Language.get('info')}
+					>
+						{Liferay.Language.get(
+							'there-is-no-content-on-this-page'
+						)}
+					</ClayAlert>
+				)}
+				<Treeview
+					NodeComponent={StructureTreeNode}
+					nodes={nodes}
+					selectedNodeIds={[activeItemId]}
+				/>
+			</div>
+		</PageStructureSidebarSection>
 	);
 }
 

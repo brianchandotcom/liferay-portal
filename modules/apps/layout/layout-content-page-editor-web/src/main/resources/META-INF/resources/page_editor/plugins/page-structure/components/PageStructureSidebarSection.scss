@@ -1,0 +1,11 @@
+@import 'atlas-variables';
+
+.page-editor__page-structure__section {
+	flex-basis: 0;
+	flex-grow: 1;
+	overflow: auto;
+
+	& + & {
+		border-top: solid $gray-300 thin;
+	}
+}

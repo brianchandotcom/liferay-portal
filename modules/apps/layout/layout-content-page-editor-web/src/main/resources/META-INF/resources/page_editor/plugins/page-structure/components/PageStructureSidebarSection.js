@@ -14,19 +14,8 @@
 
 import React from 'react';
 
-import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
-import StructureTree from './StructureTree';
-
-export default function PageStructureSidebar() {
+export default function PageStructureSidebarSection({children}) {
 	return (
-		<div className="page-editor__page-structure">
-			<SidebarPanelHeader>
-				{Liferay.Language.get('page-structure')}
-			</SidebarPanelHeader>
-
-			<div className="page-editor__page-structure__content">
-				<StructureTree />
-			</div>
-		</div>
+		<div className="page-editor__page-structure__section">{children}</div>
 	);
 }

@@ -25,6 +25,7 @@ import com.liferay.gradle.util.Validator;
 
 import org.gradle.api.Action;
 import org.gradle.api.Project;
+import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.tasks.TaskContainer;
 
 /**
@@ -34,7 +35,13 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 
 	@Override
 	protected void applyPluginDefaults(Project project, NodePlugin nodePlugin) {
-		_configureNode(project);
+		ExtensionContainer extensionContainer = project.getExtensions();
+
+		NodeExtension nodeExtension = extensionContainer.getByType(
+			NodeExtension.class);
+
+		_configureExtensionNode(project, nodeExtension);
+
 		_configureTasksExecutePackageManager(project);
 		_configureTasksNpmInstall(project);
 		_configureTasksPublishNodeModule(project);
@@ -45,9 +52,8 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 		return NodePlugin.class;
 	}
 
-	private void _configureNode(Project project) {
-		NodeExtension nodeExtension = GradleUtil.getExtension(
-			project, NodeExtension.class);
+	private void _configureExtensionNode(
+		Project project, NodeExtension nodeExtension) {
 
 		nodeExtension.setGlobal(true);
 		nodeExtension.setNodeVersion(_NODE_VERSION);

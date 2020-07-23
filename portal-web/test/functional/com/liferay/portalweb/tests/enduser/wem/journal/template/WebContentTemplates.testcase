@@ -68,6 +68,8 @@ definition {
 	@description = "This is a use case for LPS-116515. The Add FreeMarker button should be hidden when disable template creation in Dynamic Data Mapping."
 	@priority = "5"
 	test CannotAddTemplateWhenDisableTemplateCreation {
+		property test.name.skip.portal.instance = "WebContentTemplates#CannotAddTemplateWhenDisableTemplateCreation";
+
 		task ("Disable Template Creation") {
 			SystemSettings.openSystemSettingsAdmin();
 
@@ -117,6 +119,8 @@ definition {
 	@description = "This is a use case for LPS-116515. The user is able to save changes in existing template when disable template creation in Dynamic Data Mapping."
 	@priority = "5"
 	test SaveChangesInExistingTemplateWhenDisableTemplateCreation {
+		property test.name.skip.portal.instance = "WebContentTemplates#SaveChangesInExistingTemplateWhenDisableTemplateCreation";
+
 		task ("Add a template for Basic Web Content Structure") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -179,6 +183,8 @@ definition {
 	@description = "This is a use case for LPS-116515. The creation of template is not allowed when disable template creation in Dynamic Data Mapping."
 	@priority = "4"
 	test ViewTemplateCreationFailureWhenDisableTemplateCreation {
+		property test.name.skip.portal.instance = "WebContentTemplates#ViewTemplateCreationFailureWhenDisableTemplateCreation";
+
 		task ("Add a template for Basic Web Content structure but not save") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

@@ -40,7 +40,7 @@ public class TypedProperties extends AbstractMap<String, Object> {
 	public static final String ENV_PREFIX = "env:";
 
 	public TypedProperties(SubstitutionCallback callback) {
-		_storage = new Properties(false);
+		_storage = new Properties();
 		_callback = callback;
 	}
 
@@ -188,19 +188,7 @@ public class TypedProperties extends AbstractMap<String, Object> {
 		SubstitutionCallback callback = substitutionCallback;
 
 		if (callback == null) {
-			callback = new SubstitutionCallback() {
-
-				@Override
-				public String getValue(String name, String key, String value) {
-					if (value.startsWith(ENV_PREFIX)) {
-						return System.getenv(
-							value.substring(ENV_PREFIX.length()));
-					}
-
-					return System.getProperty(value);
-				}
-
-			};
+			callback = _defaultSubstitutionCallback;
 		}
 
 		Map<String, TypedProperties> map = Collections.singletonMap(
@@ -210,6 +198,21 @@ public class TypedProperties extends AbstractMap<String, Object> {
 	}
 
 	private final SubstitutionCallback _callback;
+
+	private final SubstitutionCallback _defaultSubstitutionCallback =
+		new SubstitutionCallback() {
+
+			@Override
+			public String getValue(String name, String key, String value) {
+				if (value.startsWith(ENV_PREFIX)) {
+					return System.getenv(value.substring(ENV_PREFIX.length()));
+				}
+
+				return System.getProperty(value);
+			}
+
+		};
+
 	private final Properties _storage;
 
 	private static class DynamicMap extends AbstractMap<String, String> {

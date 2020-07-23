@@ -45,10 +45,6 @@ public class Properties extends AbstractMap<String, String> {
 
 	public static final String DEFAULT_ENCODING = "ISO-8859-1";
 
-	public Properties(boolean substitute) {
-		_substitute = substitute;
-	}
-
 	@Override
 	public void clear() {
 		for (Layout layout : _layoutMap.values()) {
@@ -143,10 +139,6 @@ public class Properties extends AbstractMap<String, String> {
 		}
 		else {
 			_header = new ArrayList<>(propertiesReader.getCommentLines());
-		}
-
-		if (_substitute) {
-			substitute();
 		}
 	}
 
@@ -257,12 +249,6 @@ public class Properties extends AbstractMap<String, String> {
 
 	public void setTyped(boolean typed) {
 		_typed = typed;
-	}
-
-	public void substitute() {
-		InterpolationUtil.performSubstitution(
-			_storage,
-			new InterpolationUtil.BundleContextSubstitutionCallback(null));
 	}
 
 	public static class PropertiesReader extends BufferedReader {
@@ -893,7 +879,6 @@ public class Properties extends AbstractMap<String, String> {
 	private List<String> _header;
 	private final Map<String, Layout> _layoutMap = new LinkedHashMap<>();
 	private final Map<String, String> _storage = new LinkedHashMap<>();
-	private final boolean _substitute;
 	private boolean _typed;
 
 	private static class Layout {

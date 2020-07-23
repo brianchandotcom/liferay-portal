@@ -35,6 +35,7 @@ import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.open.graph.OpenGraphConfiguration;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
+import com.liferay.layout.seo.web.internal.util.AssetDisplayPageFriendlyURLMapper;
 import com.liferay.layout.seo.web.internal.util.OpenGraphImageProvider;
 import com.liferay.layout.seo.web.internal.util.TitleProvider;
 import com.liferay.petra.string.StringBundler;
@@ -93,11 +94,20 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 				return;
 			}
 
+			AssetDisplayPageFriendlyURLMapper
+				assetDisplayPageFriendlyURLMapper =
+					AssetDisplayPageFriendlyURLMapper.create(
+						httpServletRequest);
+
 			String completeURL = _portal.getCurrentCompleteURL(
 				httpServletRequest);
 
-			String canonicalURL = _portal.getCanonicalURL(
-				completeURL, themeDisplay, layout, false, false);
+			String canonicalURL =
+				assetDisplayPageFriendlyURLMapper.
+					getMappedAssetDisplayPageFriendlyURL(
+						_portal.getCanonicalURL(
+							completeURL, themeDisplay, layout, false, false),
+						_portal.getLocale(httpServletRequest));
 
 			Map<Locale, String> alternateURLs = Collections.emptyMap();
 
@@ -105,8 +115,11 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 				themeDisplay.getSiteGroupId());
 
 			if (availableLocales.size() > 1) {
-				alternateURLs = _portal.getAlternateURLs(
-					canonicalURL, themeDisplay, layout);
+				alternateURLs =
+					assetDisplayPageFriendlyURLMapper.
+						getMappedAssetDisplayPageFriendlyURLs(
+							_portal.getAlternateURLs(
+								canonicalURL, themeDisplay, layout));
 			}
 
 			PrintWriter printWriter = httpServletResponse.getWriter();

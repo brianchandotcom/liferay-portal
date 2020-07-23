@@ -190,10 +190,6 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 				layoutTypePortlet.removeCustomization(
 					layoutTypeSettingsUnicodeProperties);
 			}
-
-			layout = _layoutService.updateLayout(
-				groupId, privateLayout, layoutId,
-				layoutTypeSettingsUnicodeProperties.toString());
 		}
 		else {
 			layoutTypeSettingsUnicodeProperties.putAll(
@@ -201,11 +197,11 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 			layoutTypeSettingsUnicodeProperties.putAll(
 				layout.getTypeSettingsProperties());
-
-			layout = _layoutService.updateLayout(
-				groupId, privateLayout, layoutId,
-				layoutTypeSettingsUnicodeProperties.toString());
 		}
+
+		layout = _layoutService.updateLayout(
+			groupId, privateLayout, layoutId,
+			layoutTypeSettingsUnicodeProperties.toString());
 
 		EventsProcessorUtil.process(
 			PropsKeys.LAYOUT_CONFIGURATION_ACTION_UPDATE,

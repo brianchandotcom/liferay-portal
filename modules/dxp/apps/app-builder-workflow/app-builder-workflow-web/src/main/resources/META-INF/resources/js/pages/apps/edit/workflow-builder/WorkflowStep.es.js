@@ -87,30 +87,35 @@ const Card = ({
 
 			<div className="d-flex">
 				{!isInitialOrFinalSteps && (
-					<ClayDropDown
-						active={active}
-						onActiveChange={setActive}
-						trigger={
-							<ClayButtonWithIcon
-								className="border-0"
-								displayType="secondary"
-								symbol="ellipsis-v"
-							/>
-						}
-					>
-						<ClayDropDown.ItemList>
-							{actions.map(({label, onClick}, index) => (
-								<ClayDropDown.Item
-									key={index}
-									onClick={(event) =>
-										handleOnClick(event, onClick)
-									}
-								>
-									{label}
-								</ClayDropDown.Item>
-							))}
-						</ClayDropDown.ItemList>
-					</ClayDropDown>
+					<ClayTooltipProvider>
+						<ClayDropDown
+							active={active}
+							data-tooltip-align="bottom"
+							data-tooltip-delay="0"
+							onActiveChange={setActive}
+							title={Liferay.Language.get('options')}
+							trigger={
+								<ClayButtonWithIcon
+									className="border-0"
+									displayType="secondary"
+									symbol="ellipsis-v"
+								/>
+							}
+						>
+							<ClayDropDown.ItemList>
+								{actions.map(({label, onClick}, index) => (
+									<ClayDropDown.Item
+										key={index}
+										onClick={(event) =>
+											handleOnClick(event, onClick)
+										}
+									>
+										{label}
+									</ClayDropDown.Item>
+								))}
+							</ClayDropDown.ItemList>
+						</ClayDropDown>
+					</ClayTooltipProvider>
 				)}
 			</div>
 		</div>

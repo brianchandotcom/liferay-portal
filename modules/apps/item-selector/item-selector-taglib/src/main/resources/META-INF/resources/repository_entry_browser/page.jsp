@@ -343,6 +343,16 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 																<%= HtmlUtil.escape(folder.getName()) %>
 															</aui:a>
 														</p>
+
+														<c:if test="<%= repositoryEntryBrowserDisplayContext.isSearchEverywhere() %>">
+															<span class="text-secondary">
+																<clay:icon
+																	symbol="<%= repositoryEntryBrowserDisplayContext.getGroupCssIcon(folder.getGroupId()) %>"
+																/>
+
+																<small><%= repositoryEntryBrowserDisplayContext.getGroupLabel(folder.getGroupId(), locale) %></small>
+															</span>
+														</c:if>
 													</div>
 												</div>
 											</div>

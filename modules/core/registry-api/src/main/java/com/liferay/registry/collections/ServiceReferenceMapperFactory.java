@@ -91,9 +91,12 @@ public class ServiceReferenceMapperFactory {
 
 				S service = registry.getService(serviceReference);
 
-				emitter.emit(getterFunction.apply(service));
-
-				registry.ungetService(serviceReference);
+				try {
+					emitter.emit(getterFunction.apply(service));
+				}
+				finally {
+					registry.ungetService(serviceReference);
+				}
 			}
 
 		};

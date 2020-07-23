@@ -20,7 +20,11 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
@@ -28,9 +32,41 @@ import java.util.ResourceBundle;
  */
 public class CommonStylesUtil {
 
+	public static List<String> getAvailableStyleNames() throws Exception {
+		if (_availableStyleNames != null) {
+			return _availableStyleNames;
+		}
+
+		List<String> availableStyleNames = new ArrayList<>();
+
+		JSONArray jsonArray = getCommongStylesJSONArray(null);
+
+		Iterator<JSONObject> iterator = jsonArray.iterator();
+
+		iterator.forEachRemaining(
+			jsonObject -> {
+				JSONArray stylesJSONArray = jsonObject.getJSONArray("styles");
+
+				Iterator<JSONObject> stylesIterator =
+					stylesJSONArray.iterator();
+
+				stylesIterator.forEachRemaining(
+					styleJSONObject -> availableStyleNames.add(
+						styleJSONObject.getString("name")));
+			});
+
+		_availableStyleNames = availableStyleNames;
+
+		return _availableStyleNames;
+	}
+
 	public static JSONArray getCommongStylesJSONArray(
 			ResourceBundle resourceBundle)
 		throws Exception {
+
+		if (_commonStylesJSONArray != null) {
+			return _commonStylesJSONArray;
+		}
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 			new String(
@@ -78,7 +114,44 @@ public class CommonStylesUtil {
 					});
 			});
 
+		if (resourceBundle != null) {
+			_commonStylesJSONArray = jsonArray;
+		}
+
 		return jsonArray;
 	}
+
+	public static Map<String, Object> getDefaultStyleValues() throws Exception {
+		if (_defaultValues != null) {
+			return _defaultValues;
+		}
+
+		Map<String, Object> defaultValues = new HashMap<>();
+
+		JSONArray jsonArray = getCommongStylesJSONArray(null);
+
+		Iterator<JSONObject> iterator = jsonArray.iterator();
+
+		iterator.forEachRemaining(
+			jsonObject -> {
+				JSONArray stylesJSONArray = jsonObject.getJSONArray("styles");
+
+				Iterator<JSONObject> stylesIterator =
+					stylesJSONArray.iterator();
+
+				stylesIterator.forEachRemaining(
+					styleJSONObject -> defaultValues.put(
+						styleJSONObject.getString("name"),
+						styleJSONObject.get("defaultValue")));
+			});
+
+		_defaultValues = defaultValues;
+
+		return _defaultValues;
+	}
+
+	private static List<String> _availableStyleNames;
+	private static JSONArray _commonStylesJSONArray;
+	private static Map<String, Object> _defaultValues;
 
 }

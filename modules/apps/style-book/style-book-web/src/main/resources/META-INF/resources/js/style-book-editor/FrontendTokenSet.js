@@ -60,7 +60,10 @@ export default function FrontendTokenSet({frontendTokens, name}) {
 						onValueSelect={(value) =>
 							updateFrontendTokensValues(frontendToken, value)
 						}
-						value={frontendTokensValues[frontendToken.name]?.value}
+						value={
+							frontendTokensValues[frontendToken.name]?.value ||
+							frontendToken.defaultValue
+						}
 					/>
 				);
 			})}

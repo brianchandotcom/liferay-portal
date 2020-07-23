@@ -27,7 +27,7 @@ function NavBar({creationMenu, showSearch, views}) {
 	return (
 		<nav className="management-bar management-bar-light navbar navbar-expand-md">
 			<div className="container-fluid container-fluid-max-xl">
-				{state.filters.length > 1 && (
+				{state.filters.length && (
 					<div className="mr-2 navbar-nav">
 						<FiltersDropdown />
 					</div>

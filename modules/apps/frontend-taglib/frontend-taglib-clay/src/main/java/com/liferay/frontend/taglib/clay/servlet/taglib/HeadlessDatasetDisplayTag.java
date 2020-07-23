@@ -18,6 +18,7 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayViewSerializer;
 import com.liferay.frontend.taglib.clay.data.set.filter.ClayDataSetFilterSerializer;
 import com.liferay.frontend.taglib.clay.data.set.model.ClayPaginationEntry;
+import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
 import com.liferay.frontend.taglib.clay.internal.js.loader.modules.extender.npm.NPMResolverProvider;
 import com.liferay.frontend.taglib.clay.internal.servlet.ServletContextUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
@@ -77,6 +78,12 @@ public class HeadlessDatasetDisplayTag extends IncludeTag {
 
 	public List<DropdownItem> getBulkActionDropdownItems() {
 		return _bulkActionDropdownItems;
+	}
+
+	public List<ClayDataSetActionDropdownItem>
+		getClayDataSetActionDropdownItems() {
+
+		return _clayDataSetActionDropdownItems;
 	}
 
 	public CreationMenu getCreationMenu() {
@@ -153,6 +160,12 @@ public class HeadlessDatasetDisplayTag extends IncludeTag {
 
 	public void setBulkActionDropdownItems(List<DropdownItem> bulkActions) {
 		_bulkActionDropdownItems = bulkActions;
+	}
+
+	public void setClayDataSetActionDropdownItems(
+		List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems) {
+
+		_clayDataSetActionDropdownItems = clayDataSetActionDropdownItems;
 	}
 
 	public void setCreationMenu(CreationMenu creationMenu) {
@@ -238,6 +251,7 @@ public class HeadlessDatasetDisplayTag extends IncludeTag {
 
 		_apiURL = null;
 		_bulkActionDropdownItems = new ArrayList<>();
+		_clayDataSetActionDropdownItems = new ArrayList<>();
 		_clayDataSetDisplayViewsContext = null;
 		_clayDataSetDisplayViewSerializer = null;
 		_clayDataSetFiltersContext = null;
@@ -274,6 +288,9 @@ public class HeadlessDatasetDisplayTag extends IncludeTag {
 		request.setAttribute(
 			"clay:dataset-display:bulkActionDropdownItems",
 			_bulkActionDropdownItems);
+		request.setAttribute(
+			"clay:dataset-display:clayDataSetActionDropdownItems",
+			_clayDataSetActionDropdownItems);
 		request.setAttribute(
 			"clay:dataset-display:clayDataSetDisplayViewsContext",
 			_clayDataSetDisplayViewsContext);
@@ -362,6 +379,8 @@ public class HeadlessDatasetDisplayTag extends IncludeTag {
 
 	private String _apiURL;
 	private List<DropdownItem> _bulkActionDropdownItems = new ArrayList<>();
+	private List<ClayDataSetActionDropdownItem>
+		_clayDataSetActionDropdownItems = new ArrayList<>();
 	private Object _clayDataSetDisplayViewsContext;
 	private ClayDataSetDisplayViewSerializer _clayDataSetDisplayViewSerializer;
 	private Object _clayDataSetFiltersContext;

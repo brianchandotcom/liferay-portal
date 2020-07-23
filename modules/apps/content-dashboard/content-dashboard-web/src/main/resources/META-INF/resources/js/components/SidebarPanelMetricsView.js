@@ -29,7 +29,9 @@ const SidebarPanelMetricsView = ({html}) => {
 
 	return (
 		<>
-			<Sidebar.Header title="Content Performance" />
+			<Sidebar.Header
+				title={Liferay.Language.get('content-performance')}
+			/>
 
 			<Sidebar.Body>
 				<div ref={elementRef}></div>

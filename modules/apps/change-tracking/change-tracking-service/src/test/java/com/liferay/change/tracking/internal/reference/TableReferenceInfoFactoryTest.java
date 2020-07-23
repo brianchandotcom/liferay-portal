@@ -28,6 +28,8 @@ import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.sql.Clob;
@@ -38,7 +40,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
 
@@ -66,6 +70,20 @@ public class TableReferenceInfoFactoryTest {
 			}
 
 		};
+
+	@BeforeClass
+	public static void setUpClass() {
+		_tableReferenceAppenders = ReflectionTestUtil.getAndSetFieldValue(
+			TableReferenceAppenderRegistry.class, "_tableReferenceAppenders",
+			Collections.emptyList());
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		ReflectionTestUtil.getAndSetFieldValue(
+			TableReferenceAppenderRegistry.class, "_tableReferenceAppenders",
+			_tableReferenceAppenders);
+	}
 
 	@Test
 	public void testChildInnerJoin() {
@@ -636,6 +654,8 @@ public class TableReferenceInfoFactoryTest {
 			parentTableJoinHoldersMap.isEmpty());
 	}
 
+	private static List<TableReferenceAppender> _tableReferenceAppenders;
+
 	private static class InvalidTable extends BaseTable<InvalidTable> {
 
 		public static final InvalidTable INSTANCE = new InvalidTable();
@@ -703,7 +723,7 @@ public class TableReferenceInfoFactoryTest {
 
 		@Override
 		public BasePersistence<?> getBasePersistence() {
-			return null;
+			return new BasePersistenceImpl<>();
 		}
 
 		@Override

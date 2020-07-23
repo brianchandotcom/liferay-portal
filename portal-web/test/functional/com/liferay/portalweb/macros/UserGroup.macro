@@ -95,11 +95,12 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		var key_rowEntry = "${userGroupName}";
-
-		AssertElementPresent(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+		AssertElementPresent(
+			key_rowEntry = "${userGroupName}",
+			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 
 		LexiconEntry.gotoEntryMenuItem(
+			key_rowEntry = "${userGroupName}",
 			menuItem = "Assign Members",
 			rowEntry = "${userGroupName}");
 
@@ -111,9 +112,9 @@ definition {
 
 		User.searchCP(searchTerm = "${userScreenName}");
 
-		var key_userScreenName = "${userScreenName}";
-
-		Check(locator1 = "UserGroupsAssignUsers#USER_TABLE_CHECKBOX");
+		Check(
+			key_userScreenName = "${userScreenName}",
+			locator1 = "UserGroupsAssignUsers#USER_TABLE_CHECKBOX");
 
 		Pause(locator1 = "3000");
 
@@ -126,6 +127,7 @@ definition {
 		Alert.viewSuccessMessage();
 
 		AssertTextEquals(
+			key_userScreenName = "${userScreenName}",
 			locator1 = "UserGroupsAssignUsers#USER_TABLE_SCREEN_NAME",
 			value1 = "${userScreenName}");
 	}
@@ -135,13 +137,13 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		var key_userGroupName = "${userGroupName}";
-
 		AssertTextEquals(
+			key_userGroupName = "${userGroupName}",
 			locator1 = "UserGroups#USER_GROUP_TABLE_NAME",
 			value1 = "${userGroupName}");
 
 		LexiconEntry.gotoEntryMenuItemNoError(
+			key_userGroupName = "${userGroupName}",
 			menuItem = "Delete",
 			rowEntry = "${userGroupName}");
 
@@ -149,7 +151,9 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		AssertElementNotPresent(locator1 = "UserGroups#USER_GROUP_TABLE_NAME");
+		AssertElementNotPresent(
+			key_userGroupName = "${userGroupName}",
+			locator1 = "UserGroups#USER_GROUP_TABLE_NAME");
 	}
 
 	macro deleteUserCP {
@@ -157,13 +161,13 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		var key_userGroupName = "${userGroupName}";
-
 		AssertTextEquals(
+			key_userGroupName = "${userGroupName}",
 			locator1 = "UserGroups#USER_GROUP_TABLE_NAME",
 			value1 = "${userGroupName}");
 
 		LexiconEntry.gotoEntryMenuItemNoError(
+			key_userGroupName = "${userGroupName}",
 			menuItem = "Delete",
 			rowEntry = "${userGroupName}");
 
@@ -215,9 +219,9 @@ definition {
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign Members");
 
-		var key_userScreenName = "${userScreenName}";
-
-		Check(locator1 = "UserGroupsAssignUsers#USER_TABLE_CHECKBOX");
+		Check(
+			key_userScreenName = "${userScreenName}",
+			locator1 = "UserGroupsAssignUsers#USER_TABLE_CHECKBOX");
 
 		ClickNoError(locator1 = "Icon#REMOVE");
 
@@ -279,9 +283,8 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		var key_userGroupName = "${userGroupName}";
-
 		AssertTextEquals(
+			key_userGroupName = "${userGroupName}",
 			locator1 = "UserGroups#USER_GROUP_TABLE_NAME",
 			value1 = "${userGroupName}");
 
@@ -289,7 +292,9 @@ definition {
 
 		AssertElementPresent(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT");
 
-		AssertElementPresent(locator1 = "UserGroups#USER_GROUP_TABLE_CHECKBOX");
+		AssertElementPresent(
+			key_userGroupName = "${userGroupName}",
+			locator1 = "UserGroups#USER_GROUP_TABLE_CHECKBOX");
 
 		AssertElementPresent(locator1 = "Button#PLUS");
 
@@ -307,8 +312,6 @@ definition {
 	macro viewPG {
 		Pause(locator1 = "3000");
 
-		var key_userGroupName = "${userGroupName}";
-
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
 
 		AssertClick.assertPartialTextClickAt(
@@ -321,9 +324,8 @@ definition {
 			locator1 = "Home#SITE_NAME",
 			value1 = "${userGroupName}");
 
-		var key_portletName = "${portletName}";
-
 		AssertTextEquals(
+			key_portletName = "${portletName}",
 			locator1 = "Portlet#TITLE",
 			value1 = "${portletName}");
 

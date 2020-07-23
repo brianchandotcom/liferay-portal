@@ -1,8 +1,0 @@
-dependencies {
-	testIntegrationCompile project(":apps:asset:asset-display-page-api")
-	testIntegrationCompile project(":apps:blogs:blogs-api")
-	testIntegrationCompile project(":apps:layout:layout-page-template-api")
-	testIntegrationCompile project(":apps:layout:layout-test-util")
-	testIntegrationCompile project(":dxp:apps:analytics:analytics-reports-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
-}

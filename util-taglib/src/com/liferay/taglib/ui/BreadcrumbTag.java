@@ -14,13 +14,18 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
+import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntryContributor;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
@@ -170,9 +175,27 @@ public class BreadcrumbTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		Registry registry = RegistryUtil.getRegistry();
+
+		List<BreadcrumbEntry> breadcrumbEntries = getBreadcrumbEntries(
+			httpServletRequest);
+
+		try {
+			for (BreadcrumbEntryContributor breadcrumbEntryContributor :
+					registry.getServices(
+						BreadcrumbEntryContributor.class, null)) {
+
+				breadcrumbEntries =
+					breadcrumbEntryContributor.getBreadcrumbEntries(
+						breadcrumbEntries, httpServletRequest);
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception.getMessage());
+		}
+
 		httpServletRequest.setAttribute(
-			"liferay-ui:breadcrumb:breadcrumbEntries",
-			getBreadcrumbEntries(httpServletRequest));
+			"liferay-ui:breadcrumb:breadcrumbEntries", breadcrumbEntries);
 		httpServletRequest.setAttribute(
 			"liferay-ui:breadcrumb:displayStyle", getDisplayStyle());
 		httpServletRequest.setAttribute(
@@ -181,6 +204,8 @@ public class BreadcrumbTag extends IncludeTag {
 	}
 
 	private static final String _PAGE = "/html/taglib/ui/breadcrumb/page.jsp";
+
+	private static final Log _log = LogFactoryUtil.getLog(BreadcrumbTag.class);
 
 	private long _ddmTemplateGroupId;
 	private String _ddmTemplateKey;

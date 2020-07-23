@@ -1518,6 +1518,15 @@ public class ContentPageEditorDisplayContext {
 	private List<Map<String, Object>> _getMasterLayouts() {
 		ArrayList<Map<String, Object>> masterLayouts = new ArrayList<>();
 
+		masterLayouts.add(
+			HashMapBuilder.<String, Object>put(
+				"imagePreviewURL", StringPool.BLANK
+			).put(
+				"masterLayoutPlid", 0
+			).put(
+				"name", LanguageUtil.get(httpServletRequest, "blank")
+			).build());
+
 		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
 			LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
 				themeDisplay.getScopeGroupId(),

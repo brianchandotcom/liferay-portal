@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -168,6 +170,73 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 		}
 
 		return onlineJenkinsSlavesCount;
+	}
+
+	public List<String> getQueuedJobURLs() throws IOException {
+		List<String> queuedJobURLs = new ArrayList<>();
+
+		JSONObject queueAPIJSONObject = JenkinsResultsParserUtil.toJSONObject(
+			JenkinsResultsParserUtil.getLocalURL(
+				JenkinsResultsParserUtil.combine(
+					_masterURL, "/queue/api/json?tree=items[task[url]]")),
+			false, 5000);
+
+		JSONArray itemsJSONArray = queueAPIJSONObject.getJSONArray("items");
+
+		for (int i = 0; i < itemsJSONArray.length(); i++) {
+			JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
+
+			JSONObject taskJSONObject = itemJSONObject.getJSONObject("task");
+
+			queuedJobURLs.add(taskJSONObject.getString("url"));
+		}
+
+		return queuedJobURLs;
+	}
+
+	public List<String> getRunningJobURLs() throws IOException {
+		List<String> runningJobURLs = new ArrayList<>();
+
+		JSONObject computerAPIJSONObject =
+			JenkinsResultsParserUtil.toJSONObject(
+				JenkinsResultsParserUtil.getLocalURL(
+					JenkinsResultsParserUtil.combine(
+						_masterURL, "/computer/api/json",
+						"?tree=computer[executors[currentExecutable[url]]]")),
+				false, 5000);
+
+		JSONArray computerJSONArray = computerAPIJSONObject.getJSONArray(
+			"computer");
+
+		for (int i = 0; i < computerJSONArray.length(); i++) {
+			JSONObject computerJSONObject = computerJSONArray.getJSONObject(i);
+
+			String computerClassName = computerJSONObject.getString("_class");
+
+			if (computerClassName.contains("hudson.slaves.SlaveComputer")) {
+				JSONArray executorsJSONArray = computerJSONObject.getJSONArray(
+					"executors");
+
+				for (int j = 0; j < executorsJSONArray.length(); j++) {
+					JSONObject executorJSONObject =
+						executorsJSONArray.getJSONObject(j);
+
+					if (executorJSONObject.has("currentExecutable") &&
+						(executorJSONObject.get("currentExecutable") !=
+							JSONObject.NULL)) {
+
+						JSONObject currentExecutableJSONObject =
+							executorJSONObject.getJSONObject(
+								"currentExecutable");
+
+						runningJobURLs.add(
+							currentExecutableJSONObject.getString("url"));
+					}
+				}
+			}
+		}
+
+		return runningJobURLs;
 	}
 
 	public Integer getSlaveRAM() {

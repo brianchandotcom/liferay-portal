@@ -32,6 +32,7 @@
 			filters: <%= jsonSerializer.serializeDeep(clayDataSetFiltersContext) %>,
 			formId: '<%= formId %>',
 			id: '<%= id %>',
+			itemsActions: <%= jsonSerializer.serializeDeep(clayDataSetActionDropdownItems) %>,
 			namespace: '<%= namespace %>',
 
 			<%

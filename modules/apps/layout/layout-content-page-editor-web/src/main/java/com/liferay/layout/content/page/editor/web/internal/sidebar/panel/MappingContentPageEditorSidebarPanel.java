@@ -61,10 +61,14 @@ public class MappingContentPageEditorSidebarPanel
 	public boolean isVisible(
 		PermissionChecker permissionChecker, long plid, int pageType) {
 
+		if (pageType !=
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
+
+			return false;
+		}
+
 		try {
-			if ((pageType ==
-					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) &&
-				LayoutPermissionUtil.contains(
+			if (LayoutPermissionUtil.contains(
 					permissionChecker, plid, ActionKeys.UPDATE)) {
 
 				return true;

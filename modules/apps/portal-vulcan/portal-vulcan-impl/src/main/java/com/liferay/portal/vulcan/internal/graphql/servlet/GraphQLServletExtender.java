@@ -475,6 +475,8 @@ public class GraphQLServletExtender {
 		Map<String, Optional<Method>> methods = stream.flatMap(
 			servletData -> Stream.of(
 				function.apply(servletData)
+			).filter(
+				Objects::nonNull
 			).map(
 				Object::getClass
 			).map(

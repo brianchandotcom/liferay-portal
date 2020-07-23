@@ -247,6 +247,10 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column arrayable-operator="OR" name="groupId" />
 		</finder>
+		<finder name="G_D" return-type="DLFileEntryType" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="dataDefinitionId" />
+		</finder>
 		<finder name="G_F" return-type="DLFileEntryType" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="fileEntryTypeKey" />

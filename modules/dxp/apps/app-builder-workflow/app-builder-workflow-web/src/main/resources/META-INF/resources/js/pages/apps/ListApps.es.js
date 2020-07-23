@@ -116,6 +116,7 @@ export default ({scope, ...props}) => {
 	actions.splice(-1, 1, {
 		action: confirmDelete,
 		name: Liferay.Language.get('delete'),
+		show: ({active}) => !active,
 	});
 
 	return (

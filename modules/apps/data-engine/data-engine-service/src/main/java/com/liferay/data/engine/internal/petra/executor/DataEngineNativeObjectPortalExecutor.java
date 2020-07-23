@@ -104,7 +104,7 @@ public class DataEngineNativeObjectPortalExecutor {
 					_execute(
 						() ->
 							_dataEngineNativeObjectObserver.
-								createDataEngineNativeObjects(
+								_createDataEngineNativeObjects(
 									dataEngineNativeObject));
 
 					emitter.emit(dataEngineNativeObject.getClassName());
@@ -297,7 +297,7 @@ public class DataEngineNativeObjectPortalExecutor {
 			}
 		}
 
-		protected void createDataEngineNativeObjects(
+		private void _createDataEngineNativeObjects(
 				DataEngineNativeObject dataEngineNativeObject)
 			throws Exception {
 

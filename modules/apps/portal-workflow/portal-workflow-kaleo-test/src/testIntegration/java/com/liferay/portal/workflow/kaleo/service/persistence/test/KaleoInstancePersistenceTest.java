@@ -239,6 +239,14 @@ public class KaleoInstancePersistenceTest {
 	}
 
 	@Test
+	public void testCountByKDI_C() throws Exception {
+		_persistence.countByKDI_C(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByKDI_C(0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByKDVI_C() throws Exception {
 		_persistence.countByKDVI_C(
 			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());

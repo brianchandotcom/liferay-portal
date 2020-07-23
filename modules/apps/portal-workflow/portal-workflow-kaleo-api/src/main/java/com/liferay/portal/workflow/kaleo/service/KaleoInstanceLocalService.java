@@ -227,6 +227,10 @@ public interface KaleoInstanceLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getKaleoDefinitionKaleoInstancesCount(
+		long kaleoDefinitionId, boolean completed);
+
 	/**
 	 * Returns the kaleo instance with the primary key.
 	 *

@@ -132,15 +132,17 @@ public class KaleoInstanceModelImpl
 
 	public static final long COMPLETIONDATE_COLUMN_BITMASK = 16L;
 
-	public static final long KALEODEFINITIONNAME_COLUMN_BITMASK = 32L;
+	public static final long KALEODEFINITIONID_COLUMN_BITMASK = 32L;
 
-	public static final long KALEODEFINITIONVERSION_COLUMN_BITMASK = 64L;
+	public static final long KALEODEFINITIONNAME_COLUMN_BITMASK = 64L;
 
-	public static final long KALEODEFINITIONVERSIONID_COLUMN_BITMASK = 128L;
+	public static final long KALEODEFINITIONVERSION_COLUMN_BITMASK = 128L;
 
-	public static final long KALEOINSTANCEID_COLUMN_BITMASK = 256L;
+	public static final long KALEODEFINITIONVERSIONID_COLUMN_BITMASK = 256L;
 
-	public static final long USERID_COLUMN_BITMASK = 512L;
+	public static final long KALEOINSTANCEID_COLUMN_BITMASK = 512L;
+
+	public static final long USERID_COLUMN_BITMASK = 1024L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -528,7 +530,19 @@ public class KaleoInstanceModelImpl
 
 	@Override
 	public void setKaleoDefinitionId(long kaleoDefinitionId) {
+		_columnBitmask |= KALEODEFINITIONID_COLUMN_BITMASK;
+
+		if (!_setOriginalKaleoDefinitionId) {
+			_setOriginalKaleoDefinitionId = true;
+
+			_originalKaleoDefinitionId = _kaleoDefinitionId;
+		}
+
 		_kaleoDefinitionId = kaleoDefinitionId;
+	}
+
+	public long getOriginalKaleoDefinitionId() {
+		return _originalKaleoDefinitionId;
 	}
 
 	@Override
@@ -868,6 +882,11 @@ public class KaleoInstanceModelImpl
 
 		kaleoInstanceModelImpl._setModifiedDate = false;
 
+		kaleoInstanceModelImpl._originalKaleoDefinitionId =
+			kaleoInstanceModelImpl._kaleoDefinitionId;
+
+		kaleoInstanceModelImpl._setOriginalKaleoDefinitionId = false;
+
 		kaleoInstanceModelImpl._originalKaleoDefinitionVersionId =
 			kaleoInstanceModelImpl._kaleoDefinitionVersionId;
 
@@ -1081,6 +1100,8 @@ public class KaleoInstanceModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _kaleoDefinitionId;
+	private long _originalKaleoDefinitionId;
+	private boolean _setOriginalKaleoDefinitionId;
 	private long _kaleoDefinitionVersionId;
 	private long _originalKaleoDefinitionVersionId;
 	private boolean _setOriginalKaleoDefinitionVersionId;

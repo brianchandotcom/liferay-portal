@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 
 import java.io.Serializable;
@@ -133,6 +134,9 @@ public interface KaleoDefinitionVersionLocalService
 
 	public void deleteKaleoDefinitionVersion(
 			long companyId, String name, String version)
+		throws PortalException;
+
+	public void deleteKaleoDefinitionVersions(KaleoDefinition kaleoDefinition)
 		throws PortalException;
 
 	public void deleteKaleoDefinitionVersions(

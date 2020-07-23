@@ -14,10 +14,6 @@ $toolbarDesktopHeight: 56px;
 	// Patch for small color picker until https://github.com/liferay/clay/issues/3514 is resolved
 
 	&__color-frontend-token {
-		label {
-			margin-bottom: 0;
-		}
-
 		.clay-color-picker .clay-color .input-group-item .input-group-text {
 			padding-left: 6px;
 			padding-right: 6px;

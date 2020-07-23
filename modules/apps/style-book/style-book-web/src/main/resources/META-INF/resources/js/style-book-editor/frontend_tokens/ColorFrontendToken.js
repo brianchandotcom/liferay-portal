@@ -13,10 +13,12 @@
  */
 
 import ClayColorPicker from '@clayui/color-picker';
-import ClayForm from '@clayui/form';
+import ClayForm, {ClayInput} from '@clayui/form';
 import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
+
+import {config} from '../config';
 
 const debouncedOnValueSelect = debounce(
 	(onValueSelect, value) => onValueSelect(value),
@@ -30,24 +32,43 @@ export default function ColorFrontendToken({
 	const {label} = frontendToken;
 
 	const [customColors, setCustomColors] = useState([]);
-	const [color, setColor] = useState(() => value?.replace('#', '') ?? '');
+	const [color, setColor] = useState(value || '');
+
+	const id = `${config.namespace}_frontendTokenId_${name}`;
 
 	return (
-		<ClayForm.Group small>
-			<div className="style-book-editor__color-frontend-token">
-				<ClayColorPicker
-					colors={customColors}
-					label={label}
-					onColorsChange={setCustomColors}
-					onValueChange={(color) => {
-						setColor(color);
-						debouncedOnValueSelect(onValueSelect, `#${color}`);
-					}}
-					showHex={true}
-					title={label}
-					value={color}
-				/>
-			</div>
+		<ClayForm.Group
+			className="style-book-editor__color-frontend-token"
+			small
+		>
+			<label htmlFor={id}>{label}</label>
+			<ClayInput.Group small>
+				<ClayInput.GroupItem prepend shrink>
+					<ClayColorPicker
+						colors={customColors}
+						onColorsChange={setCustomColors}
+						onValueChange={(color) => {
+							setColor(`#${color}`);
+							debouncedOnValueSelect(onValueSelect, `#${color}`);
+						}}
+						showHex={false}
+						value={color?.replace('#', '') ?? ''}
+					/>
+				</ClayInput.GroupItem>
+				<ClayInput.GroupItem append>
+					<ClayInput
+						id={id}
+						onChange={(event) => {
+							setColor(event.target.value);
+							debouncedOnValueSelect(
+								onValueSelect,
+								event.target.value
+							);
+						}}
+						value={color}
+					/>
+				</ClayInput.GroupItem>
+			</ClayInput.Group>
 		</ClayForm.Group>
 	);
 }

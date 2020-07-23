@@ -99,7 +99,7 @@ definition {
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
-		
+
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Accounts",
 			configurationName = "Email Domains",

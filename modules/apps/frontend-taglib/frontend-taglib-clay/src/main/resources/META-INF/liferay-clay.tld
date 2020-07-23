@@ -1248,6 +1248,12 @@
 			<type>java.util.List</type>
 		</attribute>
 		<attribute>
+			<name>clayDataSetActionDropdownItems</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.util.List</type>
+		</attribute>
+		<attribute>
 			<name>creationMenu</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

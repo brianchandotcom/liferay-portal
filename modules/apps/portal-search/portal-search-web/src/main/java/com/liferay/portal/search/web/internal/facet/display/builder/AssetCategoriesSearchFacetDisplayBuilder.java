@@ -71,6 +71,8 @@ public class AssetCategoriesSearchFacetDisplayBuilder implements Serializable {
 			isRenderNothing());
 		assetCategoriesSearchFacetDisplayContext.setTermDisplayContexts(
 			buildTermDisplayContexts());
+		assetCategoriesSearchFacetDisplayContext.
+			setPaginationStartParameterName(_paginationStartParameterName);
 
 		return assetCategoriesSearchFacetDisplayContext;
 	}
@@ -117,6 +119,12 @@ public class AssetCategoriesSearchFacetDisplayBuilder implements Serializable {
 
 	public void setMaxTerms(int maxTerms) {
 		_maxTerms = maxTerms;
+	}
+
+	public void setPaginationStartParameterName(
+		String paginationStartParameterName) {
+
+		_paginationStartParameterName = paginationStartParameterName;
 	}
 
 	public void setParameterName(String parameterName) {
@@ -405,6 +413,7 @@ public class AssetCategoriesSearchFacetDisplayBuilder implements Serializable {
 	private int _frequencyThreshold;
 	private Locale _locale;
 	private int _maxTerms;
+	private String _paginationStartParameterName;
 	private String _parameterName;
 	private Portal _portal;
 	private final RenderRequest _renderRequest;

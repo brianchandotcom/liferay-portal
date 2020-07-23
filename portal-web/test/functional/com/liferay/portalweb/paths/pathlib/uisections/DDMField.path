@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>COLOR_PICKER_COLOR</td>
-	<td>//button[contains(@class,'clay-color-btn')][@title='${key_colorCode}']</td>
+	<td>//button[contains(@class,'clay-color-btn')][@*='${key_colorCode}']</td>
 	<td></td>
 </tr>
 <tr>

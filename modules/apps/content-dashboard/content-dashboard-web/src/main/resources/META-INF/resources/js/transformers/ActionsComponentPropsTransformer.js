@@ -16,6 +16,7 @@ import {render} from 'frontend-js-react-web';
 
 import SidebarPanel from '../SidebarPanel';
 import SidebarPanelInfoView from '../components/SidebarPanelInfoView';
+import SidebarPanelMetricsView from '../components/SidebarPanelMetricsView';
 
 export default function propsTransformer({
 	items,
@@ -27,8 +28,8 @@ export default function propsTransformer({
 		showInfo(fetchURL) {
 			showSidebar(fetchURL, SidebarPanelInfoView);
 		},
-		showMetrics() {
-			showSidebar();
+		showMetrics(fetchURL) {
+			showSidebar(fetchURL, SidebarPanelMetricsView);
 		},
 	};
 

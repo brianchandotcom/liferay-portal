@@ -64,12 +64,17 @@ export function executeAsyncAction(url, method = 'GET') {
 }
 
 export function formatActionUrl(url, item) {
-	const regex = new RegExp('{(.*?)}', 'mg');
-
-	return url.replace(regex, (matched) =>
+	const replacedUrl = url.replace(new RegExp('{(.*?)}', 'mg'), (matched) =>
 		getValueFromItem(
 			item,
 			matched.substring(1, matched.length - 1).split('|')
+		)
+	);
+
+	return replacedUrl.replace(new RegExp('(%7B.*?%7D)', 'mg'), (matched) =>
+		getValueFromItem(
+			item,
+			matched.substring(3, matched.length - 3).split('|')
 		)
 	);
 }

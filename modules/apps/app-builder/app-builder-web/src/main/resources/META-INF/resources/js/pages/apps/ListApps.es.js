@@ -47,7 +47,8 @@ export const Actions = () => {
 			action: ({id}) =>
 				Promise.resolve(window.open(getStandaloneURL(id), '_blank')),
 			name: Liferay.Language.get('open-standalone-app'),
-			show: ({appDeployments}) =>
+			show: ({active, appDeployments}) =>
+				active &&
 				appDeployments.some(({type}) => type === 'standalone'),
 		},
 		{

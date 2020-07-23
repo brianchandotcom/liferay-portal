@@ -852,13 +852,22 @@ definition {
 		}
 
 		task ("Add a widget page template") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateStatus = "Approved",
+				layoutPageTemplateType = "Widget Page Template");
+
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-			PageTemplatesAdmin.addPageTemplate(
-				pageTemplateName = "Page Template Name",
-				pageTemplateType = "Widget Page Template");
+			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+				item = "Edit",
+				pageTemplateName = "Page Template Name");
+
+			Pause(locator1 = "3000");
 		}
 
 		task ("Assert can change master from Blank to custom master") {

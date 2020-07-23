@@ -57,15 +57,12 @@ definition {
 		}
 
 		task ("Add a widget page template") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
-
-			Navigator.gotoNavNested(navNested = "Page Template Collection");
-
-			PageTemplatesAdmin.addPageTemplate(
-				pageTemplateName = "Widget Page Template Name",
-				pageTemplateType = "Widget Page Template");
-
-			Pause(locator1 = "5000");
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Widget Page Template Name",
+				layoutPageTemplateStatus = "Approved",
+				layoutPageTemplateType = "Widget Page Template");
 		}
 
 		task ("Assert workflow status of both and select them") {

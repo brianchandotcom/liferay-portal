@@ -19,8 +19,11 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -29,6 +32,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -133,6 +137,11 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 				RandomTestUtil.randomString(), "STYLE_BOOK_ENTRY_KEY",
 				serviceContext);
 
+		FileEntry fileEntry = _addFileEntry(styleBookEntry);
+
+		_styleBookEntryLocalService.updatePreviewFileEntryId(
+			styleBookEntry.getStyleBookEntryId(), fileEntry.getFileEntryId());
+
 		File file = ReflectionTestUtil.invoke(
 			_exportStyleBookEntriesMVCResourceCommand,
 			"_exportStyleBookEntries", new Class<?>[] {long[].class},
@@ -153,8 +162,30 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 				}
 			}
 
-			Assert.assertEquals(2, count);
+			Assert.assertEquals(3, count);
 		}
+	}
+
+	private FileEntry _addFileEntry(StyleBookEntry styleBookEntry)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_sourceGroup, TestPropsValues.getUserId());
+
+		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
+			_sourceGroup.getGroupId(), RandomTestUtil.randomString(),
+			serviceContext);
+
+		Class<?> clazz = getClass();
+
+		return PortletFileRepositoryUtil.addPortletFileEntry(
+			_sourceGroup.getGroupId(), TestPropsValues.getUserId(),
+			StyleBookEntry.class.getName(),
+			styleBookEntry.getStyleBookEntryId(), RandomTestUtil.randomString(),
+			repository.getDlFolderId(),
+			clazz.getResourceAsStream("dependencies/thumbnail.png"),
+			RandomTestUtil.randomString(), ContentTypes.IMAGE_PNG, false);
 	}
 
 	private boolean _isStyleBookDefinitionFile(String path) {
@@ -162,6 +193,18 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 
 		if ((pathParts.length == 2) &&
 			Objects.equals(pathParts[1], "style-book.json")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isStyleBookThumbnailFile(String fileName) {
+		String[] pathParts = StringUtil.split(fileName, CharPool.SLASH);
+
+		if ((pathParts.length == 2) &&
+			Objects.equals(pathParts[1], "thumbnail.png")) {
 
 			return true;
 		}
@@ -213,6 +256,12 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 			Assert.assertEquals(
 				expectedFrontendTokensValuesJSONObject.toJSONString(),
 				actualFrontendTokensValuesJSONObject.toJSONString());
+		}
+
+		if (_isStyleBookThumbnailFile(zipEntry.getName())) {
+			Assert.assertArrayEquals(
+				FileUtil.getBytes(getClass(), "dependencies/thumbnail.png"),
+				FileUtil.getBytes(zipFile.getInputStream(zipEntry)));
 		}
 	}
 

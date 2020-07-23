@@ -139,6 +139,14 @@ public class KaleoDefinitionVersionLocalServiceUtil {
 	}
 
 	public static void deleteKaleoDefinitionVersions(
+			com.liferay.portal.workflow.kaleo.model.KaleoDefinition
+				kaleoDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().deleteKaleoDefinitionVersions(kaleoDefinition);
+	}
+
+	public static void deleteKaleoDefinitionVersions(
 			java.util.List
 				<com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion>
 					kaleoDefinitionVersions)

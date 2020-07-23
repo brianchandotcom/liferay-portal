@@ -273,6 +273,13 @@ public class KaleoInstanceLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static int getKaleoDefinitionKaleoInstancesCount(
+		long kaleoDefinitionId, boolean completed) {
+
+		return getService().getKaleoDefinitionKaleoInstancesCount(
+			kaleoDefinitionId, completed);
+	}
+
 	/**
 	 * Returns the kaleo instance with the primary key.
 	 *

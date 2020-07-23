@@ -286,6 +286,14 @@ public class KaleoInstanceLocalServiceWrapper
 		return _kaleoInstanceLocalService.getIndexableActionableDynamicQuery();
 	}
 
+	@Override
+	public int getKaleoDefinitionKaleoInstancesCount(
+		long kaleoDefinitionId, boolean completed) {
+
+		return _kaleoInstanceLocalService.getKaleoDefinitionKaleoInstancesCount(
+			kaleoDefinitionId, completed);
+	}
+
 	/**
 	 * Returns the kaleo instance with the primary key.
 	 *

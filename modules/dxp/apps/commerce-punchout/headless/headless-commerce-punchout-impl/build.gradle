@@ -15,7 +15,7 @@ apply plugin: "com.liferay.portal.tools.rest.builder"
 dependencies {
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.10.3"
-	compileOnly group: "com.liferay.portal", name: "release.portal.api", version: "7.1.1"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "io.github.graphql-java", name: "graphql-java-annotations", version: "5.4"
 	compileOnly group: "io.swagger.core.v3", name: "swagger-annotations", version: "2.0.5"
 	compileOnly group: "javax.portlet", name: "portlet-api", version: "3.0.0"
@@ -38,6 +38,8 @@ dependencies {
 	compileOnly project(":apps:commerce:headless:headless-commerce-core-api")
 	compileOnly project(":apps:portal-odata:portal-odata-api")
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
+	compileOnly project(":core:petra:petra-function")
+	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":dxp:apps:commerce-punchout:commerce-punchout-api")
 	compileOnly project(":dxp:apps:commerce-punchout:commerce-punchout-oauth2-provider-api")
 	compileOnly project(":dxp:apps:commerce-punchout:commerce-punchout-portal-security-auto-login")

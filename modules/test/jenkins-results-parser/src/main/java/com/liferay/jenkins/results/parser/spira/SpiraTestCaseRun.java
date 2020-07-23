@@ -258,24 +258,27 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 		public Result(
 			SpiraTestCaseObject spiraTestCaseObject, RunnerFormat runnerFormat,
-			String runnerStackTrace, Status status,
+			String runnerStackTrace, long duration, Status status,
 			List<SpiraCustomProperty.Value> spiraCustomPropertyValues) {
 
 			_spiraTestCaseObject = spiraTestCaseObject;
 			_runnerFormat = runnerFormat;
 			_description = runnerStackTrace;
+			_duration = duration;
 			_status = status;
 			_spiraCustomPropertyValues = spiraCustomPropertyValues;
 		}
 
 		public Result(
 			Supplier<SpiraTestCaseObject> spiraTestCaseObjectSupplier,
-			RunnerFormat runnerFormat, String runnerStackTrace, Status status,
+			RunnerFormat runnerFormat, String runnerStackTrace, long duration,
+			Status status,
 			List<SpiraCustomProperty.Value> spiraCustomPropertyValues) {
 
 			_spiraTestCaseObjectSupplier = spiraTestCaseObjectSupplier;
 			_runnerFormat = runnerFormat;
 			_description = runnerStackTrace;
+			_duration = duration;
 			_status = status;
 			_spiraCustomPropertyValues = spiraCustomPropertyValues;
 		}
@@ -375,6 +378,8 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 				}
 			}
 
+			customPropertyValuesJSONArray.put(_getDurationJSONObject());
+
 			return customPropertyValuesJSONArray;
 		}
 
@@ -414,7 +419,23 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 			_spiraTestCaseObject = _spiraTestCaseObjectSupplier.get();
 		}
 
+		private JSONObject _getDurationJSONObject() {
+			JSONObject durationJSONObject = new JSONObject();
+
+			SpiraCustomProperty spiraCustomProperty =
+				SpiraCustomProperty.createSpiraCustomProperty(
+					getSpiraProject(), SpiraTestCaseRun.class, "Duration",
+					SpiraCustomProperty.Type.INTEGER);
+
+			durationJSONObject.put("IntegerValue", _duration);
+			durationJSONObject.put(
+				"PropertyNumber", spiraCustomProperty.getPropertyNumber());
+
+			return durationJSONObject;
+		}
+
 		private final String _description;
+		private final long _duration;
 		private final RunnerFormat _runnerFormat;
 		private final List<SpiraCustomProperty.Value>
 			_spiraCustomPropertyValues;

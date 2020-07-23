@@ -27,6 +27,7 @@ import {
 	DRAG_FIELD_TYPE,
 } from '../drag-and-drop/dragTypes.es';
 import {getDataDefinitionField} from '../utils/dataDefinition.es';
+import generateDataDefinitionFieldName from '../utils/generateDataDefinitionFieldName.es';
 import EventEmitter from './EventEmitter.es';
 import saveDefinitionAndLayout from './saveDefinitionAndLayout.es';
 
@@ -133,6 +134,26 @@ class DataLayoutBuilder extends React.Component {
 
 	emit(event, payload, error = false) {
 		this.eventEmitter.emit(event, payload, error);
+	}
+
+	fieldNameGenerator(dataDefinitionFields) {
+		const layoutProvider = this.getLayoutProvider();
+
+		layoutProvider.props = {
+			...layoutProvider.props,
+			fieldNameGenerator: (
+				desiredFieldName,
+				currentFieldName,
+				blacklist
+			) =>
+				generateDataDefinitionFieldName(
+					dataDefinitionFields,
+					desiredFieldName,
+					currentFieldName,
+					blacklist
+				),
+			shouldAutoGenerateName: () => false,
+		};
 	}
 
 	getDataDefinitionAndDataLayout(pages, rules) {

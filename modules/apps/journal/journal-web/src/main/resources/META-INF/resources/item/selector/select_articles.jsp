@@ -287,6 +287,16 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 												<a class="card-title text-truncate" href="<%= rowURL %>" title="<%= HtmlUtil.escapeAttribute(curFolder.getName()) %>">
 													<%= HtmlUtil.escape(curFolder.getName()) %>
 												</a>
+
+												<c:if test="<%= journalArticleItemSelectorViewDisplayContext.isSearchEverywhere() %>">
+													<span class="text-secondary">
+														<clay:icon
+															symbol="<%= journalArticleItemSelectorViewDisplayContext.getGroupCssIcon(curFolder.getGroupId()) %>"
+														/>
+
+														<small><%= journalArticleItemSelectorViewDisplayContext.getGroupLabel(curFolder.getGroupId(), locale) %></small>
+													</span>
+												</c:if>
 											</div>
 										</div>
 									</div>

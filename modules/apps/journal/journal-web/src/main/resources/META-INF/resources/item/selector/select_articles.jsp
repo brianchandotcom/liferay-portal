@@ -270,9 +270,27 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 							<liferay-ui:search-container-column-text
 								colspan="<%= 2 %>"
 							>
-								<clay:horizontal-card
-									horizontalCard="<%= new JournalFolderItemSelectorHorizontalCard(curFolder, journalArticleItemSelectorViewDisplayContext) %>"
-								/>
+								<div class="card card-horizontal card-interactive card-interactive-secondary card-type-directory">
+									<div class="card-body">
+										<div class="card-row">
+											<div class="autofit-col">
+												<span class="sticker sticker-rounded sticker-unstyled">
+													<span class="inline-item">
+														<clay:icon
+															symbol="folder"
+														/>
+													</span>
+												</span>
+											</div>
+
+											<div class="autofit-col autofit-col-expand autofit-col-gutters">
+												<a class="card-title text-truncate" href="<%= rowURL %>" title="<%= HtmlUtil.escapeAttribute(curFolder.getName()) %>">
+													<%= HtmlUtil.escape(curFolder.getName()) %>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
 							</liferay-ui:search-container-column-text>
 						</c:when>
 						<c:otherwise>

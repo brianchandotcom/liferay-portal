@@ -82,6 +82,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
 
 import javax.servlet.ServletContext;
@@ -352,9 +353,19 @@ public class AddContentPanelDisplayContext {
 						curGroupId = group.getLiveGroupId();
 					}
 
+					PortletURL portletURL =
+						assetPublisherAddItemHolder.getPortletURL();
+
+					portletURL.setParameter(
+						"redirect",
+						HttpUtil.addParameter(
+							PortalUtil.getLayoutRelativeURL(
+								_themeDisplay.getLayout(), _themeDisplay),
+							"portletResource",
+							assetPublisherAddItemHolder.getPortletId()));
+
 					return _assetHelper.getAddURLPopUp(
-						curGroupId, _themeDisplay.getPlid(),
-						assetPublisherAddItemHolder.getPortletURL(), false,
+						curGroupId, _themeDisplay.getPlid(), portletURL, false,
 						_themeDisplay.getLayout());
 				}
 			).build()

@@ -884,7 +884,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 				<then>
 					<property name="com.liferay.portal.search.solr7.test.unit.started" value="true" />
 
-					<ant antfile="build-test-solr.xml" target="prepare-solr-suite" />
+					<ant antfile="build-test-solr.xml" target="set-up-solr" />
 				</then>
 			</if>
 		</sequential>

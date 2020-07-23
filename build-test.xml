@@ -12452,6 +12452,7 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 		</if>
 
 		<get-testcase-property property.name="solr.enabled" />
+		<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
 
 		<if>
 			<equals arg1="${solr.enabled}" arg2="true" />
@@ -12459,16 +12460,9 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 				<ant antfile="build-test-solr.xml" target="start-solr" />
 			</then>
 			<elseif>
-				<isset property="env.CI_TEST_SUITE" />
+				<equals arg1="${suite.search.engine}" arg2="solr" />
 				<then>
-					<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
-
-					<if>
-						<equals arg1="${suite.search.engine}" arg2="solr" />
-						<then>
-							<ant antfile="build-test-solr.xml" target="start-solr" />
-						</then>
-					</if>
+					<ant antfile="build-test-solr.xml" target="set-up-solr" />
 				</then>
 			</elseif>
 		</if>

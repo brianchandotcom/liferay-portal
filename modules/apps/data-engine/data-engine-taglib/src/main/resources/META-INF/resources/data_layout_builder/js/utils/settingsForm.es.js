@@ -44,7 +44,6 @@ export const getFilteredSettingsContext = ({
 						...field,
 						defaultLanguageId,
 						editingLanguageId,
-						readOnly: field.fieldName === 'name',
 					};
 
 					if (unsupportedProperties.includes(fieldName)) {
@@ -61,6 +60,13 @@ export const getFilteredSettingsContext = ({
 							...updatedField,
 							name: generateName(name, updatedField),
 							predefinedValue: '["manual"]',
+							readOnly: true,
+						};
+					}
+
+					if (fieldName === 'name') {
+						return {
+							...updatedField,
 							readOnly: true,
 						};
 					}

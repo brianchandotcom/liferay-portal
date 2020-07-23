@@ -73,15 +73,18 @@ const ModalContent = ({
 		...new Set([...Object.keys(name), editingLanguageId]),
 	];
 
-	const normalizeDataDefinitionFields = (ddFields) => {
+	const normalizeDataDefinitionFields = (dataDefinitionFields) => {
 		const fields = [];
-		ddFields.forEach(({fieldType, name, nestedDataDefinitionFields}) => {
-			if (fieldType === 'fieldset') {
-				return fields.push(...nestedDataDefinitionFields);
-			}
 
-			return fields.push({name});
-		});
+		dataDefinitionFields.forEach(
+			({fieldType, name, nestedDataDefinitionFields}) => {
+				if (fieldType === 'fieldset') {
+					return fields.push(...nestedDataDefinitionFields);
+				}
+
+				return fields.push({name});
+			}
+		);
 
 		return fields;
 	};

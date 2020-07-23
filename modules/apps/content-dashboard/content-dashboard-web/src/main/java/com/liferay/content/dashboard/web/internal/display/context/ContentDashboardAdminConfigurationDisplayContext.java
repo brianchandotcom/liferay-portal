@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.content.dashboard.web.internal.configuration.ContentDashboardAdminConfiguration;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.KeyValuePairComparator;
@@ -52,7 +53,8 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 	}
 
 	public List<KeyValuePair> getAvailableVocabularyNames() {
-		String[] assetVocabularyNames = _getAssetVocabularyNames();
+		String[] assetVocabularyNames = ArrayUtil.clone(
+			_getAssetVocabularyNames());
 
 		Arrays.sort(assetVocabularyNames);
 

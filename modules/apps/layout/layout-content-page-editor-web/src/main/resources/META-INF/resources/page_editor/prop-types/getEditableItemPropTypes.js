@@ -19,9 +19,9 @@ import {EDITABLE_TYPES} from '../app/config/constants/editableTypes';
 export default function getEditableItemPropTypes(extraPropTypes = {}) {
 	return PropTypes.shape({
 		editableId: PropTypes.string.isRequired,
-		editableType: PropTypes.oneOf(Object.values(EDITABLE_TYPES)),
 		fragmentEntryLinkId: PropTypes.string.isRequired,
 		itemId: PropTypes.string.isRequired,
+		type: PropTypes.oneOf(Object.values(EDITABLE_TYPES)),
 		...extraPropTypes,
 	});
 }

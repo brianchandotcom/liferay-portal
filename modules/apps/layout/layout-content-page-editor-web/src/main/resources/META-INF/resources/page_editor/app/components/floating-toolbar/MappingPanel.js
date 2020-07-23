@@ -25,7 +25,7 @@ import updateEditableValues from '../../thunks/updateEditableValues';
 import isMapped from '../fragment-content/isMapped';
 
 export function MappingPanel({item}) {
-	const {editableId, editableType, fragmentEntryLinkId} = item;
+	const {editableId, fragmentEntryLinkId, type} = item;
 
 	const dispatch = useDispatch();
 	const state = useSelector((state) => state);
@@ -33,7 +33,7 @@ export function MappingPanel({item}) {
 	const fragmentEntryLink = state.fragmentEntryLinks[fragmentEntryLinkId];
 
 	const processoryKey =
-		editableType === EDITABLE_TYPES.backgroundImage
+		type === EDITABLE_TYPES.backgroundImage
 			? BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
 			: EDITABLE_FRAGMENT_ENTRY_PROCESSOR;
 
@@ -70,7 +70,7 @@ export function MappingPanel({item}) {
 
 	return (
 		<MappingSelector
-			fieldType={editableType}
+			fieldType={type}
 			mappedItem={editableValue}
 			onMappingSelect={updateEditableValue}
 		/>

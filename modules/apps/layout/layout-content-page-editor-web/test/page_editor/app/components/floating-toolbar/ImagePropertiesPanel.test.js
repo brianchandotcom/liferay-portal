@@ -65,11 +65,11 @@ jest.mock(
 
 const renderComponent = ({
 	editableId = 'e-1',
-	editableType = EDITABLE_TYPES.image,
 	imageTitle = null,
 	imageDescription = '',
 	languageId = 'es',
 	segmentsExperienceId = '',
+	type = EDITABLE_TYPES.image,
 }) =>
 	render(
 		<StoreAPIContextProvider
@@ -120,9 +120,9 @@ const renderComponent = ({
 				debounceDelay={0}
 				item={{
 					editableId,
-					editableType,
 					fragmentEntryLinkId: 'f-1',
 					itemId: 'i-1',
+					type,
 				}}
 			/>
 		</StoreAPIContextProvider>
@@ -147,10 +147,10 @@ describe('TextField', () => {
 		);
 	});
 
-	it('uses backgroundImage processor namespace if specified on editableType', () => {
+	it('uses backgroundImage processor namespace if specified on type', () => {
 		renderComponent({
 			editableId: 'b-1',
-			editableType: EDITABLE_TYPES.backgroundImage,
+			type: EDITABLE_TYPES.backgroundImage,
 		});
 
 		expect(ImageSelector).toBeCalledWith(
@@ -191,7 +191,7 @@ describe('TextField', () => {
 		);
 	});
 
-	it('shows image description field if editableType is image', () => {
+	it('shows image description field if type is image', () => {
 		const {getByLabelText} = renderComponent({});
 
 		expect(getByLabelText('image-description')).toBeInTheDocument();

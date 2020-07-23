@@ -49,7 +49,7 @@ export default function EditableLinkPanel({item}) {
 
 		if (
 			Object.keys(nextConfig).length > 0 &&
-			item.editableType !== EDITABLE_TYPES.link
+			item.type !== EDITABLE_TYPES.link
 		) {
 			config.mapperType = 'link';
 		}

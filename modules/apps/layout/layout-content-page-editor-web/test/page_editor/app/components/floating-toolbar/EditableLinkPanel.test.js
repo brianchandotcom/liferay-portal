@@ -69,7 +69,7 @@ function getStateWithConfig(config = {}) {
 }
 
 function renderLinkPanel(
-	{state = getStateWithConfig(), editableType = EDITABLE_TYPES.text} = {},
+	{state = getStateWithConfig(), type = EDITABLE_TYPES.text} = {},
 	dispatch = () => {}
 ) {
 	return render(
@@ -77,9 +77,9 @@ function renderLinkPanel(
 			<EditableLinkPanel
 				item={{
 					editableId: 'editable-id-0',
-					editableType,
 					fragmentEntryLinkId: '0',
 					itemId: '',
+					type,
 				}}
 			/>
 		</StoreAPIContextProvider>,
@@ -249,8 +249,8 @@ describe('EditableLinkPanel', () => {
 		});
 
 		const {getByLabelText} = renderLinkPanel({
-			editableType: EDITABLE_TYPES.link,
 			state: getStateWithConfig({}),
+			type: EDITABLE_TYPES.link,
 		});
 
 		const hrefInput = getByLabelText('url');

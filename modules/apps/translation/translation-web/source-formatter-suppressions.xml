@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="CamelCaseNameCheck" files="src/main/java/com/liferay/translation/web/internal/importer/XLIFFInfoFormTranslationImporter\.java" />
+	</checkstyle>
+</suppressions>

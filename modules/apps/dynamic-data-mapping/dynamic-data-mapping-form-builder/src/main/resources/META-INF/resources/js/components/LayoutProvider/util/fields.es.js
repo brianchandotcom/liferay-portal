@@ -53,11 +53,15 @@ export const getFieldProperty = (pages, fieldName, propertyName) => {
 	const visitor = new PagesVisitor(pages);
 	let propertyValue;
 
-	visitor.mapFields((field) => {
-		if (field.fieldName === fieldName) {
-			propertyValue = field[propertyName];
-		}
-	});
+	visitor.mapFields(
+		(field) => {
+			if (field.fieldName === fieldName) {
+				propertyValue = field[propertyName];
+			}
+		},
+		true,
+		true
+	);
 
 	return propertyValue;
 };

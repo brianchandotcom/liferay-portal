@@ -14,6 +14,7 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {useTimeout} from 'frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
 import React, {
 	useCallback,
@@ -34,41 +35,49 @@ const SidebarPanel = React.forwardRef(
 		const [isOpen, setIsOpen] = useState(true);
 		const [resourceData, setResourceData] = useState();
 
-		const getData = useCallback((fetchURL) => {
-			setIsLoading(true);
-			setResourceData(null);
+		const delay = useTimeout();
 
-			fetch(fetchURL, {
-				method: 'GET',
-			})
-				.then((response) =>
-					response.headers.get('content-type').includes('json')
-						? response
-								.json()
-								.then((data) => setData(data, data?.error))
-						: response.text().then((html) => setData({html}))
-				)
-				.catch(() => {
-					setData(
-						null,
-						Liferay.Language.get('an-unexpected-error-occurred')
-					);
-				});
-		}, []);
+		const getData = useCallback(
+			(fetchURL) => {
+				setIsLoading(true);
+				setResourceData(null);
+
+				fetch(fetchURL, {
+					method: 'GET',
+				})
+					.then((response) =>
+						response.headers.get('content-type').includes('json')
+							? response
+									.json()
+									.then((data) => setData(data, data?.error))
+							: response.text().then((html) => setData({html}))
+					)
+					.catch(() => {
+						setData(
+							null,
+							Liferay.Language.get('an-unexpected-error-occurred')
+						);
+					});
+			},
+			[setData]
+		);
 
 		const onCloseHandle = () => (onClose ? onClose() : setIsOpen(false));
 
-		const setData = (data, error) => {
+		const setData = useCallback(
+			(data, error) => {
 
-			// Force 300 ms of waiting to render the response so loading
-			// looks more natural.
+				// Force 300 ms of waiting to render the response so loading
+				// looks more natural.
 
-			setTimeout(() => {
-				setIsLoading(false);
-				setError(error);
-				setResourceData(data);
-			}, 300);
-		};
+				delay(() => {
+					setIsLoading(false);
+					setError(error);
+					setResourceData(data);
+				}, 300);
+			},
+			[delay]
+		);
 
 		useEffect(() => {
 			getData(fetchURL);

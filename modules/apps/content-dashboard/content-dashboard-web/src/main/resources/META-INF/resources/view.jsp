@@ -32,7 +32,7 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 					<%= contentDashboardAdminDisplayContext.getAuditGraphTitle() %>
 				</h2>
 
-				<div id="audit-graph">
+				<div class="audit-graph">
 					<div class="inline-item my-5 p-5 w-100">
 						<span aria-hidden="true" class="loading-animation"></span>
 					</div>

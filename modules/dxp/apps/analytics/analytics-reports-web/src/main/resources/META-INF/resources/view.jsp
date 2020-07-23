@@ -22,11 +22,26 @@ String analyticsReportsPanelState = SessionClicks.get(request, "com.liferay.anal
 
 <div class="lfr-analytics-reports-sidebar" id="analyticsReportsSidebar">
 	<div class="sidebar-header">
-		<h1 class="sr-only"><liferay-ui:message key="content-performance-panel" /></h1>
+		<clay:content-row
+			cssClass="sidebar-section"
+		>
+			<clay:content-col
+				expand="<%= true %>"
+			>
+				<h1 class="sr-only"><liferay-ui:message key="content-performance-panel" /></h1>
 
-		<span><liferay-ui:message key="content-performance" /></span>
+				<span><liferay-ui:message key="content-performance" /></span>
+			</clay:content-col>
 
-		<aui:icon cssClass="icon-monospaced sidenav-close" image="times" markupView="lexicon" url="javascript:;" />
+			<clay:content-col>
+				<clay:button
+					cssClass="sidenav-close"
+					displayType="unstyled"
+					icon="times-small"
+					monospaced="<%= true %>"
+				/>
+			</clay:content-col>
+		</clay:content-row>
 	</div>
 
 	<div class="sidebar-body">

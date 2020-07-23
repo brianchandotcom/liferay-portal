@@ -10,6 +10,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import ClayLayout from '@clayui/layout';
 import ClaySticker from '@clayui/sticker';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -40,16 +41,22 @@ function BasicInformation({authorName, languageTag, publishDate, title}) {
 	}).format(publishDate);
 
 	return (
-		<div>
-			<h4 className="mb-2">{title}</h4>
-			<span className="text-secondary">
-				{Liferay.Util.sub(
-					Liferay.Language.get('published-on-x'),
-					formattedPublishDate
-				)}
-			</span>
-			<Author authorName={authorName} />
-		</div>
+		<ClayLayout.ContentRow className="sidebar-section">
+			<ClayLayout.ContentCol expand>
+				<div className="component-title text-truncate-inline">
+					<span className="text-truncate">{title}</span>
+				</div>
+
+				<p className="text-secondary">
+					{Liferay.Util.sub(
+						Liferay.Language.get('published-on-x'),
+						formattedPublishDate
+					)}
+				</p>
+
+				<Author authorName={authorName} />
+			</ClayLayout.ContentCol>
+		</ClayLayout.ContentRow>
 	);
 }
 

@@ -9,7 +9,8 @@
  * distribution rights of the Software.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import {Align} from 'metal-position';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -26,25 +27,24 @@ export default function Detail({
 }) {
 	return (
 		<>
-			<div className="d-flex p-2">
-				<ClayButtonWithIcon
-					className="text-secondary"
+			<div className="d-flex pb-3 pt-1">
+				<ClayButton
 					displayType="unstyled"
 					onClick={() => {
 						onCurrentPageChange({view: 'main'});
 						onTrafficSourceNameChange('');
 					}}
-					small="true"
-					symbol="angle-left"
-				/>
+					small={true}
+				>
+					<ClayIcon symbol="angle-left-small" />
+				</ClayButton>
+
 				<div className="align-self-center flex-grow-1 mx-2">
-					{currentPage.data.title}
+					<strong>{currentPage.data.title}</strong>
 				</div>
 			</div>
 
-			<hr className="my-0" />
-
-			<div className="p-3 traffic-source-detail">
+			<div className="traffic-source-detail">
 				<TotalCount
 					className="mb-2"
 					dataProvider={trafficVolumeDataProvider}

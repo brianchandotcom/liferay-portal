@@ -80,23 +80,31 @@ const SidebarPanelInfoView = ({
 
 	return (
 		<>
-			<Sidebar.Header subtitle={subType} title={title}>
-				{versions.map((version) => (
-					<div key={version}>
-						<ClayLabel displayType="info">
-							{`${Liferay.Language.get('version')} ${
-								version.version
-							}`}
-						</ClayLabel>
-
-						<ClayLabel displayType={version.statusStyle}>
-							{version.statusLabel}
-						</ClayLabel>
-					</div>
-				))}
-			</Sidebar.Header>
+			<Sidebar.Header title="Content Info" />
 
 			<Sidebar.Body>
+				<div className="mb-4 sidebar-dl sidebar-section">
+					<div className="component-title text-truncate-inline">
+						<span className="text-truncate">{title}</span>
+					</div>
+
+					<p className="component-subtitle">{subType}</p>
+
+					{versions.map((version) => (
+						<div key={version}>
+							<ClayLabel displayType="info">
+								{`${Liferay.Language.get('version')} ${
+									version.version
+								}`}
+							</ClayLabel>
+
+							<ClayLabel displayType={version.statusStyle}>
+								{version.statusLabel}
+							</ClayLabel>
+						</div>
+					))}
+				</div>
+
 				<ClayTabs modern>
 					<ClayTabs.Item
 						active={activeTabKeyValue === 0}

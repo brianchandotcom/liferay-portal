@@ -131,7 +131,7 @@ export default function Navigation({
 				)}
 
 			{currentPage.view === 'main' && (
-				<div className="p-3">
+				<div>
 					<Main
 						authorName={authorName}
 						chartDataProviders={[

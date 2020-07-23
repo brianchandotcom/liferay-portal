@@ -86,4 +86,5 @@ const Sidebar = ({children, onClose = noop, open = true}) => {
 Sidebar.Body = SidebarBody;
 Sidebar.Header = SidebarHeader;
 
+export {SidebarContext, Sidebar};
 export default Sidebar;

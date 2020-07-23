@@ -16,14 +16,27 @@ import React, {useContext, useState} from 'react';
 
 import {SidebarContext} from '../sidebar/SidebarContext.es';
 
+const INDEX_REGEX = /.*(\d+)$/;
+
 export default ({fields}) => {
-	const [itemSelected, setItemSelected] = useState(null);
+	const [itemSelectedIndex, setItemSelectedIndex] = useState(() => {
+		if (window.location.hash) {
+			return window.location.hash.match(INDEX_REGEX)[1];
+		}
+		else {
+			return null;
+		}
+	});
+
 	const {portletNamespace} = useContext(SidebarContext);
 
 	const shortcuts = fields.map((field, index) => (
-		<li key={`item-${index}`} onClick={() => setItemSelected(index)}>
+		<li
+			key={`card-item-${index}`}
+			onClick={() => setItemSelectedIndex(index)}
+		>
 			<a
-				className={`${itemSelected == index ? 'selected' : ''}`}
+				className={`${itemSelectedIndex == index ? 'selected' : ''}`}
 				data-senna-off
 				href={`#${portletNamespace}card_${index}`}
 			>

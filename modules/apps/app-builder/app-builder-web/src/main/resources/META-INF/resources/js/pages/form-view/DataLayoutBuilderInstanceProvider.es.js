@@ -15,7 +15,6 @@
 import {DataLayoutBuilderActions} from 'data-engine-taglib';
 import React, {useContext, useEffect} from 'react';
 
-import generateDataDefinitionFieldName from '../../utils/generateDataDefinitionFieldName.es';
 import DataLayoutBuilderContext from './DataLayoutBuilderInstanceContext.es';
 import FormViewContext from './FormViewContext.es';
 import useDeleteDefinitionField from './useDeleteDefinitionField.es';
@@ -26,7 +25,6 @@ export default ({children, dataLayoutBuilder}) => {
 	const [
 		{
 			config: {allowNestedFields},
-			dataDefinition,
 			editingLanguageId,
 		},
 		dispatch,
@@ -107,7 +105,6 @@ export default ({children, dataLayoutBuilder}) => {
 		provider.props = {
 			...provider.props,
 			fieldActions,
-			shouldAutoGenerateName: () => false,
 		};
 
 		provider.getEvents().fieldHovered(fieldHovered);
@@ -118,22 +115,6 @@ export default ({children, dataLayoutBuilder}) => {
 		onDeleteDefinitionField,
 		saveAsFieldset,
 	]);
-
-	useEffect(() => {
-		const provider = dataLayoutBuilder.getLayoutProvider();
-
-		provider.props.fieldNameGenerator = (
-			desiredFieldName,
-			currentFieldName,
-			blacklist
-		) =>
-			generateDataDefinitionFieldName(
-				dataDefinition,
-				desiredFieldName,
-				currentFieldName,
-				blacklist
-			);
-	}, [dataDefinition, dataLayoutBuilder]);
 
 	return (
 		<DataLayoutBuilderContext.Provider

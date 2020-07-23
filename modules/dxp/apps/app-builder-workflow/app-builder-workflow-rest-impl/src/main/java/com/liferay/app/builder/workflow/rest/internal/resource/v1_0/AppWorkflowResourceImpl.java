@@ -72,8 +72,7 @@ public class AppWorkflowResourceImpl extends BaseAppWorkflowResourceImpl {
 			appId, 0);
 
 		_appWorkflowResourceHelper.undeployWorkflowDefinition(
-			_appBuilderAppLocalService.getAppBuilderApp(appId),
-			contextUser.getUserId());
+			appId, contextCompany.getCompanyId(), contextUser.getUserId());
 
 		_appBuilderWorkflowTaskLinkLocalService.
 			deleteAppBuilderWorkflowTaskLinks(appId);
@@ -81,15 +80,13 @@ public class AppWorkflowResourceImpl extends BaseAppWorkflowResourceImpl {
 
 	@Override
 	public AppWorkflow getAppWorkflow(Long appId) throws Exception {
-		AppBuilderApp appBuilderApp =
-			_appBuilderAppLocalService.getAppBuilderApp(appId);
-
 		AppBuilderAppVersion latestAppBuilderAppVersion =
 			_appBuilderAppVersionLocalService.getLatestAppBuilderAppVersion(
-				appBuilderApp.getAppBuilderAppId());
+				appId);
 
 		WorkflowDefinition workflowDefinition =
-			_appWorkflowResourceHelper.getWorkflowDefinition(appBuilderApp);
+			_appWorkflowResourceHelper.getWorkflowDefinition(
+				appId, contextCompany.getCompanyId());
 
 		return _toAppWorkflow(
 			latestAppBuilderAppVersion,
@@ -97,7 +94,9 @@ public class AppWorkflowResourceImpl extends BaseAppWorkflowResourceImpl {
 				getAppBuilderWorkflowTaskLinks(
 					appId,
 					latestAppBuilderAppVersion.getAppBuilderAppVersionId()),
-			appId, _appWorkflowResourceHelper.getDefinition(appBuilderApp),
+			appId,
+			_appWorkflowResourceHelper.getDefinition(
+				appId, contextCompany.getCompanyId()),
 			workflowDefinition.getWorkflowDefinitionId());
 	}
 
@@ -139,8 +138,7 @@ public class AppWorkflowResourceImpl extends BaseAppWorkflowResourceImpl {
 
 		WorkflowDefinition workflowDefinition =
 			_appWorkflowResourceHelper.deployWorkflowDefinition(
-				_appBuilderAppLocalService.getAppBuilderApp(appId),
-				contextCompany.getCompanyId(), definition,
+				_appBuilderAppLocalService.getAppBuilderApp(appId), definition,
 				contextUser.getUserId());
 
 		_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(

@@ -162,11 +162,11 @@ public class SearchResultsPortlet extends MVCPortlet {
 
 		SearchRequest searchRequest = searchResponse.getRequest();
 
-		Optional<String> keywords = Optional.ofNullable(
+		Optional<String> keywordsOptional = Optional.ofNullable(
 			searchRequest.getQueryString());
 
 		searchResultsPortletDisplayContext.setKeywords(
-			keywords.orElse(StringPool.BLANK));
+			keywordsOptional.orElse(StringPool.BLANK));
 
 		searchResultsPortletDisplayContext.setRenderNothing(
 			isRenderNothing(searchRequest));

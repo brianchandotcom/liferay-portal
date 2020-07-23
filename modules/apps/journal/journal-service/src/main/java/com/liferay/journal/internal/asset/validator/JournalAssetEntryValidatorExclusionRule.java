@@ -37,11 +37,11 @@ public class JournalAssetEntryValidatorExclusionRule
 		long groupId, String className, long classPK, long classTypePK,
 		long[] categoryIds, String[] tagNames) {
 
-		JournalArticle journalArticle =
-			_journalArticleLocalService.fetchLatestArticle(classPK);
+		JournalArticle article = _journalArticleLocalService.fetchLatestArticle(
+			classPK);
 
-		if ((journalArticle != null) &&
-			(journalArticle.getClassNameId() >
+		if ((article != null) &&
+			(article.getClassNameId() >
 				JournalArticleConstants.CLASS_NAME_ID_DEFAULT)) {
 
 			return true;

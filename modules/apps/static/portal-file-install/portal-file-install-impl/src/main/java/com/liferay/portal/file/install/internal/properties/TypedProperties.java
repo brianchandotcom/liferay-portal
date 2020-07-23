@@ -361,7 +361,7 @@ public class TypedProperties extends AbstractMap<String, Object> {
 
 	}
 
-	private class KeyIterator implements Iterator {
+	private class KeyIterator implements Iterator<Entry<String, Object>> {
 
 		public KeyIterator() {
 			Set<String> entries = _storage.keySet();

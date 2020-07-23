@@ -162,9 +162,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 				resourceActions = new ArrayList<>(resourceActions);
 
 				resourceActions.remove(ActionKeys.ASSIGN_MEMBERS);
-				resourceActions.remove(ActionKeys.DEFINE_PERMISSIONS);
 				resourceActions.remove(ActionKeys.DELETE);
-				resourceActions.remove(ActionKeys.PERMISSIONS);
 				resourceActions.remove(ActionKeys.UPDATE);
 			}
 		}

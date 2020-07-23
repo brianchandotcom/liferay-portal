@@ -1,0 +1,10 @@
+{
+	"bodyBgColor": {
+		"cssVariableMapping": "body-bg",
+		"value": "#FFFFFF"
+	},
+	"whiteColor": {
+		"cssVariableMapping": "white",
+		"value": "#000000"
+	}
+}

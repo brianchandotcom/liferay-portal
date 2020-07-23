@@ -171,6 +171,73 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 	}
 
 	@Test
+	public void testExportImportSingleStyleBookEntryAndOverwrite()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_sourceGroup, TestPropsValues.getUserId());
+
+		StyleBookEntry styleBookEntry =
+			_styleBookEntryLocalService.addStyleBookEntry(
+				TestPropsValues.getUserId(), _sourceGroup.getGroupId(),
+				_read("frontend_tokens_values.json"), "Style Book Entry Name",
+				"STYLE_BOOK_ENTRY_KEY", serviceContext);
+
+		File file = ReflectionTestUtil.invoke(
+			_exportStyleBookEntriesMVCResourceCommand,
+			"_exportStyleBookEntries", new Class<?>[] {long[].class},
+			new long[] {styleBookEntry.getStyleBookEntryId()});
+
+		ReflectionTestUtil.invoke(
+			_importStyleBookEntriesMVCActionCommand, "_importStyleBookEntries",
+			new Class<?>[] {long.class, long.class, File.class, boolean.class},
+			TestPropsValues.getUserId(), _targetGroup.getGroupId(), file,
+			false);
+
+		StyleBookEntry updatedStyleBookEntry =
+			_styleBookEntryLocalService.updateStyleBookEntry(
+				styleBookEntry.getStyleBookEntryId(),
+				_read("updated_frontend_tokens_values.json"),
+				"Updated Style Book Entry Name");
+
+		file = ReflectionTestUtil.invoke(
+			_exportStyleBookEntriesMVCResourceCommand,
+			"_exportStyleBookEntries", new Class<?>[] {long[].class},
+			new long[] {updatedStyleBookEntry.getStyleBookEntryId()});
+
+		ReflectionTestUtil.invoke(
+			_importStyleBookEntriesMVCActionCommand, "_importStyleBookEntries",
+			new Class<?>[] {long.class, long.class, File.class, boolean.class},
+			TestPropsValues.getUserId(), _targetGroup.getGroupId(), file, true);
+
+		Assert.assertEquals(
+			1,
+			_styleBookEntryLocalService.getStyleBookEntriesCount(
+				_targetGroup.getGroupId()));
+
+		StyleBookEntry updatedTargetGroupStyleBookEntry =
+			_styleBookEntryLocalService.fetchStyleBookEntry(
+				_targetGroup.getGroupId(), "STYLE_BOOK_ENTRY_KEY");
+
+		Assert.assertEquals(
+			"Updated Style Book Entry Name",
+			updatedTargetGroupStyleBookEntry.getName());
+
+		JSONObject expectedFrontendTokensValuesJSONObject =
+			JSONFactoryUtil.createJSONObject(
+				updatedStyleBookEntry.getFrontendTokensValues());
+
+		JSONObject actualFrontendTokensValuesJSONObject =
+			JSONFactoryUtil.createJSONObject(
+				updatedTargetGroupStyleBookEntry.getFrontendTokensValues());
+
+		Assert.assertEquals(
+			expectedFrontendTokensValuesJSONObject.toJSONString(),
+			actualFrontendTokensValuesJSONObject.toJSONString());
+	}
+
+	@Test
 	public void testExportStyleBookEntries() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(

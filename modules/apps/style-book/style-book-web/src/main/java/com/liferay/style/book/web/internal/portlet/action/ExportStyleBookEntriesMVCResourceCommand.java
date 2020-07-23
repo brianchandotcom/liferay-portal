@@ -71,20 +71,7 @@ public class ExportStyleBookEntriesMVCResourceCommand
 		}
 
 		try {
-			List<StyleBookEntry> styleBookEntries = new ArrayList<>();
-
-			if (ArrayUtil.isNotEmpty(exportStyleBookEntryIds)) {
-				for (long exportStyleBookEntryId : exportStyleBookEntryIds) {
-					StyleBookEntry styleBookEntry =
-						_styleBookEntryLocalService.fetchStyleBookEntry(
-							exportStyleBookEntryId);
-
-					styleBookEntries.add(styleBookEntry);
-				}
-			}
-
-			File file = _styleBookEntryZipProcessor.exportStyleBookEntries(
-				styleBookEntries);
+			File file = _exportStyleBookEntries(exportStyleBookEntryIds);
 
 			PortletResponseUtil.sendFile(
 				resourceRequest, resourceResponse,
@@ -96,6 +83,25 @@ public class ExportStyleBookEntriesMVCResourceCommand
 		}
 
 		return false;
+	}
+
+	private File _exportStyleBookEntries(long[] exportStyleBookEntryIds)
+		throws Exception {
+
+		List<StyleBookEntry> styleBookEntries = new ArrayList<>();
+
+		if (ArrayUtil.isNotEmpty(exportStyleBookEntryIds)) {
+			for (long exportStyleBookEntryId : exportStyleBookEntryIds) {
+				StyleBookEntry styleBookEntry =
+					_styleBookEntryLocalService.fetchStyleBookEntry(
+						exportStyleBookEntryId);
+
+				styleBookEntries.add(styleBookEntry);
+			}
+		}
+
+		return _styleBookEntryZipProcessor.exportStyleBookEntries(
+			styleBookEntries);
 	}
 
 	@Reference

@@ -82,7 +82,7 @@ public class ImportStyleBookEntriesMVCActionCommand
 		try {
 			List<StyleBookEntryZipProcessor.ImportResultEntry>
 				styleBookEntryZipProcessorImportResultEntries =
-					_styleBookEntryZipProcessor.importStyleBookEntries(
+					_importStyleBookEntries(
 						themeDisplay.getUserId(),
 						themeDisplay.getScopeGroupId(), file, overwrite);
 
@@ -102,6 +102,15 @@ public class ImportStyleBookEntriesMVCActionCommand
 		}
 
 		sendRedirect(actionRequest, actionResponse);
+	}
+
+	private List<StyleBookEntryZipProcessor.ImportResultEntry>
+			_importStyleBookEntries(
+				long userId, long groupId, File file, boolean overwrite)
+		throws Exception {
+
+		return _styleBookEntryZipProcessor.importStyleBookEntries(
+			userId, groupId, file, overwrite);
 	}
 
 	@Reference

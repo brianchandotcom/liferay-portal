@@ -135,10 +135,6 @@ public class DatasetDisplayTag extends IncludeTag {
 		return _dataProviderKey;
 	}
 
-	public String getDeltaParam() {
-		return _deltaParam;
-	}
-
 	public String getFormId() {
 		return _formId;
 	}
@@ -223,10 +219,6 @@ public class DatasetDisplayTag extends IncludeTag {
 
 	public void setDataProviderKey(String dataProviderKey) {
 		_dataProviderKey = dataProviderKey;
-	}
-
-	public void setDeltaParam(String deltaParam) {
-		_deltaParam = deltaParam;
 	}
 
 	public void setFormId(String formId) {
@@ -314,7 +306,7 @@ public class DatasetDisplayTag extends IncludeTag {
 		_contextParams = new HashMap<>();
 		_creationMenu = new CreationMenu();
 		_dataProviderKey = null;
-		_deltaParam = null;
+		_dataSetAPI = null;
 		_formId = null;
 		_id = null;
 		_itemsPerPage = 0;
@@ -361,7 +353,7 @@ public class DatasetDisplayTag extends IncludeTag {
 			"clay:dataset-display:creationMenu", _creationMenu);
 		request.setAttribute(
 			"clay:dataset-display:dataProviderKey", _dataProviderKey);
-		request.setAttribute("clay:dataset-display:deltaParam", _deltaParam);
+		request.setAttribute("clay:dataset-display:dataSetAPI", _dataSetAPI);
 		request.setAttribute("clay:dataset-display:formId", _formId);
 		request.setAttribute("clay:dataset-display:id", _id);
 		request.setAttribute(
@@ -456,7 +448,7 @@ public class DatasetDisplayTag extends IncludeTag {
 	private Map<String, String> _contextParams = new HashMap<>();
 	private CreationMenu _creationMenu = new CreationMenu();
 	private String _dataProviderKey;
-	private String _deltaParam;
+	private String _dataSetAPI;
 	private String _formId;
 	private String _id;
 	private int _itemsPerPage;

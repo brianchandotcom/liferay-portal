@@ -656,11 +656,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>deltaParam</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>formId</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

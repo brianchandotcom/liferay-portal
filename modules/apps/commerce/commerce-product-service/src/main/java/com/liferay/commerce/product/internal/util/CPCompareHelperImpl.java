@@ -54,6 +54,43 @@ public class CPCompareHelperImpl implements CPCompareHelper {
 	}
 
 	@Override
+	public List<CPCatalogEntry> getCPCatalogEntries(
+			long groupId, long commerceAccountId, HttpSession httpSession)
+		throws PortalException {
+
+		List<Long> cpDefinitionIds = (List<Long>)httpSession.getAttribute(
+			_getSessionAttributeKey(groupId));
+
+		if (cpDefinitionIds == null) {
+			return new ArrayList<>();
+		}
+
+		List<CPCatalogEntry> cpCatalogEntries = new ArrayList<>();
+
+		for (long cpDefinitionId : cpDefinitionIds) {
+			CPCatalogEntry cpCatalogEntry = null;
+
+			try {
+				cpCatalogEntry = _cpDefinitionHelper.getCPCatalogEntry(
+					commerceAccountId, groupId, cpDefinitionId,
+					LocaleUtil.getDefault());
+			}
+			catch (PortalException pe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(pe, pe);
+				}
+
+				continue;
+			}
+
+			if (cpCatalogEntry != null) {
+				cpCatalogEntries.add(cpCatalogEntry);
+			}
+		}
+
+		return cpCatalogEntries;
+	}
+
 	public List<Long> getCPDefinitionIds(
 		long groupId, long commerceAccountId, HttpSession httpSession) {
 

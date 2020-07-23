@@ -18,11 +18,19 @@
 
 <%
 CPCompareContentHelper cpCompareContentHelper = (CPCompareContentHelper)request.getAttribute(CPContentWebKeys.CP_COMPARE_CONTENT_HELPER);
-CPCompareContentMiniDisplayContext cpCompareContentMiniDisplayContext = (CPCompareContentMiniDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CommerceContext commerceContext = (CommerceContext)request.getAttribute(CommerceWebKeys.COMMERCE_CONTEXT);
 
-CPDataSourceResult cpDataSourceResult = cpCompareContentMiniDisplayContext.getCPDataSourceResult();
+long commerceAccountId = 0;
 
-List<CPCatalogEntry> cpCatalogEntries = cpDataSourceResult.getCPCatalogEntries();
+CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
+
+if (commerceAccount != null) {
+	commerceAccountId = GetterUtil.getLong(commerceAccount.getCommerceAccountId());
+}
+
+HttpServletRequest originalHttpServletRequest = PortalUtil.getOriginalServletRequest(request);
+
+List<CPCatalogEntry> cpCatalogEntries = CPCompareHelperUtil.getCPCatalogEntries(commerceContext.getCommerceChannelGroupId(), commerceAccountId, originalHttpServletRequest.getSession());
 %>
 
 <div id="mini-compare-root"></div>
@@ -31,7 +39,12 @@ List<CPCatalogEntry> cpCatalogEntries = cpDataSourceResult.getCPCatalogEntries()
 	MiniCompare.default('mini-compare', 'mini-compare-root', {
 		compareProductsURL: '<%= cpCompareContentHelper.getCompareProductsURL(themeDisplay) %>',
 		editCompareProductActionURL: '<%= cpCompareContentHelper.getEditCompareProductActionURL(request) %>',
-		items: <%= jsonSerializer.serializeDeep(cpCatalogEntries) %>,
+		items: <%= jsonSerializer.serializeDeep(cpCatalogEntries) %>.map(function(item){
+			return {
+			id: item.CPDefinitionId,
+			thumbnail: item.defaultImageFileUrl
+			}
+			}),
 		itemsLimit: <%= cpCompareContentHelper.getProductsLimit(portletDisplay) %>,
 		portletNamespace: '<%= cpCompareContentHelper.getCompareContentPortletNamespace() %>',
 		spritemap: '<%= themeDisplay.getPathThemeImages() + "/icons.svg" %>'

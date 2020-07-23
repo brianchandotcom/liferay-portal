@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.util;
 
+import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -39,6 +40,16 @@ public class CPCompareHelperUtil {
 
 		cpCompareHelper.addCompareProduct(
 			groupId, commerceAccountId, cpDefinitionId, httpSession);
+	}
+
+	public static List<CPCatalogEntry> getCPCatalogEntries(
+			long groupId, long commerceAccountId, HttpSession httpSession)
+		throws PortalException {
+
+		CPCompareHelper cpCompareHelper = _serviceTracker.getService();
+
+		return cpCompareHelper.getCPCatalogEntries(
+			groupId, commerceAccountId, httpSession);
 	}
 
 	public static List<Long> getCPDefinitionIds(

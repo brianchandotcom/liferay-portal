@@ -16,6 +16,7 @@ package com.liferay.commerce.product.util;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
@@ -31,6 +32,10 @@ public interface CPCompareHelper {
 	public void addCompareProduct(
 			long groupId, long commerceAccountId, long cpDefinitionId,
 			HttpSession httpSession)
+		throws PortalException;
+
+	public List<CPCatalogEntry> getCPCatalogEntries(
+			long groupId, long commerceAccountId, HttpSession httpSession)
 		throws PortalException;
 
 	public List<Long> getCPDefinitionIds(

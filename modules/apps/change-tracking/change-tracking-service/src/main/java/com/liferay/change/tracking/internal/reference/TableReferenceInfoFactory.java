@@ -45,6 +45,11 @@ public class TableReferenceInfoFactory {
 		tableReferenceDefinition.defineChildTableReferences(
 			childTableReferenceInfoBuilderImpl);
 
+		TableReferenceAppenderRegistry.appendTableReferences(
+			tableReferenceDefinition, primaryKeyColumn,
+			parentTableReferenceInfoBuilderImpl,
+			childTableReferenceInfoBuilderImpl);
+
 		return new TableReferenceInfo<>(
 			tableReferenceDefinition,
 			parentTableReferenceInfoBuilderImpl.getTableJoinHoldersMap(),

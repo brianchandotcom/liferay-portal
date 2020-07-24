@@ -311,6 +311,10 @@ public class MirrorsGetTask extends Task {
 
 		_mirrorsHostname = project.getProperty("mirrors.hostname");
 
+		if (_mirrorsHostname == null) {
+			_mirrorsHostname = "";
+		}
+
 		return _mirrorsHostname;
 	}
 

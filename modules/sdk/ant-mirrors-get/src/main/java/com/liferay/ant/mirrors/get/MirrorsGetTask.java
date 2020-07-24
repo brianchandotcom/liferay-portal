@@ -228,7 +228,9 @@ public class MirrorsGetTask extends Task {
 
 			String mirrorsHostname = getMirrorsHostname();
 
-			if (_tryLocalNetwork && (mirrorsHostname.length() > 0)) {
+			if (_tryLocalNetwork && (mirrorsHostname != null) &&
+				(mirrorsHostname.length() > 0)) {
+
 				sb = new StringBuilder();
 
 				sb.append("http://");

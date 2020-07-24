@@ -87,8 +87,24 @@ definition {
 		AppBuilderAdmin.gotoBack();
 	}
 
+	macro addRule {
+		Click(locator1 = "FormViewBuilder#RULE_ADD_BUTTON");
+	}
+
+	macro assertFormView {
+		var key_formViewName = "${formViewName}";
+
+		AssertElementPresent(locator1 = "FormViewBuilder#ASSERT_FORM");
+	}
+
 	macro cancelButtonInDeleteFromObject {
 		Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_CANCEL_BUTTON");
+	}
+
+	macro cancelRule {
+		AssertClick(
+			locator1 = "FormViewBuilder#RULE_BUILDER_CANCEL_BUTTON",
+			value1 = "Cancel");
 	}
 
 	macro checkSwitcher {
@@ -191,6 +207,17 @@ definition {
 		AssertElementPresent(locator1 = "FormViewBuilder#OPTIONS_OPTION_NAME_FIELD");
 	}
 
+	macro editRules {
+		Click(locator1 = "FormViewBuilder#EDIT_RULE_COLLAPSE");
+		AssertElementPresent(locator1 = "FormViewBuilder#EDIT_RULE_EXPANDED");
+		Click(locator1 = "FormViewBuilder#EDIT_RULE");
+	}
+
+	macro editRulesDefault {
+		Click(locator1 = "FormViewBuilder#RULE_BUILDER_DEFAULT_EDIT");
+		Click(locator1 = "FormViewBuilder#RULE_BUILDER_EDIT");
+	}
+
 	macro editText {
 		Type(
 			key_fieldName = "${fieldName}",
@@ -257,8 +284,21 @@ definition {
 		Click(locator1 = "FormViewBuilder#OPEN_SIDEBAR");
 	}
 
+	macro ruleSave {
+		AssertClick(
+			locator1 = "FormViewBuilder#RULE_BUILDER_SAVE_BUTTON",
+			value1 = "Save");
+	}
+
 	macro save {
 		AppBuilderAdmin.save();
+	}
+
+	macro saveFormView {
+
+		AssertClick(
+			locator1 = "FormViewBuilder#SAVE_FORM_BUTTON",
+			value1 = "Save");
 	}
 
 	macro searchObjectField {

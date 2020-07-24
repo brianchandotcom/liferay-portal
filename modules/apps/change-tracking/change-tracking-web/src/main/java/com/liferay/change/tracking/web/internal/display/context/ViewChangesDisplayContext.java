@@ -151,7 +151,18 @@ public class ViewChangesDisplayContext {
 		Map<Long, List<JSONObject>> rootDisplayMap = new LinkedHashMap<>();
 
 		if (ctClosure == null) {
-			entryIdMapMap = _getCTEntriesEntryIdMapMap();
+			List<CTEntry> ctEntries =
+				_ctEntryLocalService.getCTCollectionCTEntries(
+					_ctCollection.getCtCollectionId());
+
+			int entryIdCounter = 1;
+
+			for (CTEntry ctEntry : ctEntries) {
+				Map<Long, Integer> entryIdMap = entryIdMapMap.computeIfAbsent(
+					ctEntry.getModelClassNameId(), key -> new HashMap<>());
+
+				entryIdMap.put(ctEntry.getModelClassPK(), entryIdCounter++);
+			}
 		}
 		else {
 			JSONObject everythingJSONObject = JSONUtil.put("nodeId", 0);
@@ -386,24 +397,6 @@ public class ViewChangesDisplayContext {
 		}
 
 		return childrenJSONArray;
-	}
-
-	private Map<Long, Map<Long, Integer>> _getCTEntriesEntryIdMapMap() {
-		Map<Long, Map<Long, Integer>> entryIdMapMap = new HashMap<>();
-
-		List<CTEntry> ctEntries = _ctEntryLocalService.getCTCollectionCTEntries(
-			_ctCollection.getCtCollectionId());
-
-		int entryIdCounter = 1;
-
-		for (CTEntry ctEntry : ctEntries) {
-			Map<Long, Integer> entryIdMap = entryIdMapMap.computeIfAbsent(
-				ctEntry.getModelClassNameId(), key -> new HashMap<>());
-
-			entryIdMap.put(ctEntry.getModelClassPK(), entryIdCounter++);
-		}
-
-		return entryIdMapMap;
 	}
 
 	private <T extends BaseModel<T>> List<JSONObject> _getEntries(

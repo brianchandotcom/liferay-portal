@@ -1,0 +1,14 @@
+.page-editor__page-structure__item-configuration {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	overflow: hidden;
+
+	.tab-content {
+		overflow: auto;
+	}
+
+	&-tab {
+		font-size: 0.75rem;
+	}
+}

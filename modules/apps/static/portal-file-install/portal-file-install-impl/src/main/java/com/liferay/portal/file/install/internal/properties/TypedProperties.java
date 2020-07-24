@@ -301,7 +301,7 @@ public class TypedProperties extends AbstractMap<String, Object> {
 			String value = _storage.get(key);
 
 			return InterpolationUtil.substVars(
-				value, key, _cycles, this, wrapper, false, true, true);
+				value, key, _cycles, this, wrapper, false);
 		}
 
 		private SubstitutionCallback _callback;

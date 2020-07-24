@@ -485,9 +485,7 @@ public class ViewChangesDisplayContext {
 			Set<Long> classPKs)
 		throws PortalException {
 
-		Map<Serializable, T> baseModelMap =
-			_basePersistenceRegistry.fetchBaseModelMap(
-				modelClassNameId, classPKs);
+		Map<Serializable, T> baseModelMap = null;
 
 		Map<Serializable, CTEntry> ctEntryMap = new HashMap<>();
 
@@ -505,6 +503,11 @@ public class ViewChangesDisplayContext {
 			CTEntry ctEntry = ctEntryMap.get(classPK);
 
 			if (ctEntry == null) {
+				if (baseModelMap == null) {
+					baseModelMap = _basePersistenceRegistry.fetchBaseModelMap(
+						modelClassNameId, classPKs);
+				}
+
 				T baseModel = baseModelMap.get(classPK);
 
 				if (baseModel == null) {

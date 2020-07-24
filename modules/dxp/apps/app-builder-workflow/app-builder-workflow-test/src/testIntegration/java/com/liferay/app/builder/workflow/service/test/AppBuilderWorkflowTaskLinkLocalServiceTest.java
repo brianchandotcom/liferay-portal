@@ -15,7 +15,9 @@
 package com.liferay.app.builder.workflow.service.test;
 
 import com.liferay.app.builder.model.AppBuilderApp;
+import com.liferay.app.builder.model.AppBuilderAppVersion;
 import com.liferay.app.builder.service.AppBuilderAppLocalService;
+import com.liferay.app.builder.service.AppBuilderAppVersionLocalService;
 import com.liferay.app.builder.workflow.exception.DuplicateAppBuilderWorkflowTaskLinkException;
 import com.liferay.app.builder.workflow.service.AppBuilderWorkflowTaskLinkLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -54,16 +56,26 @@ public class AppBuilderWorkflowTaskLinkLocalServiceTest {
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomString());
 
+		AppBuilderAppVersion latestAppBuilderAppVersion =
+			_appBuilderAppVersionLocalService.getLatestAppBuilderAppVersion(
+				appBuilderApp.getAppBuilderAppId());
+
 		_appBuilderWorkflowTaskLinkLocalService.addAppBuilderWorkflowTaskLink(
 			TestPropsValues.getCompanyId(), appBuilderApp.getAppBuilderAppId(),
+			latestAppBuilderAppVersion.getAppBuilderAppVersionId(),
 			appBuilderApp.getDdmStructureLayoutId(), true, "A");
+
 		_appBuilderWorkflowTaskLinkLocalService.addAppBuilderWorkflowTaskLink(
 			TestPropsValues.getCompanyId(), appBuilderApp.getAppBuilderAppId(),
+			latestAppBuilderAppVersion.getAppBuilderAppVersionId(),
 			appBuilderApp.getDdmStructureLayoutId(), true, "A");
 	}
 
 	@Inject
 	private AppBuilderAppLocalService _appBuilderAppLocalService;
+
+	@Inject
+	private AppBuilderAppVersionLocalService _appBuilderAppVersionLocalService;
 
 	@Inject
 	private AppBuilderWorkflowTaskLinkLocalService

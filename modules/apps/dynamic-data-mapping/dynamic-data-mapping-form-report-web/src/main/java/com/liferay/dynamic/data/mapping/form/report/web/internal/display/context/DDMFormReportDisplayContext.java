@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -164,9 +163,7 @@ public class DDMFormReportDisplayContext {
 
 		int index = 0;
 
-		Set<String> optionsValues = ddmFormFieldOptions.getOptionsValues();
-
-		for (String optionValue : optionsValues) {
+		for (String optionValue : ddmFormFieldOptions.getOptionsValues()) {
 			jsonObject.put(
 				optionValue,
 				JSONUtil.put(

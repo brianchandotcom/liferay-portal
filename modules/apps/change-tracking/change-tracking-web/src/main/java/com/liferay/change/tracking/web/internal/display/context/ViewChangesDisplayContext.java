@@ -229,8 +229,22 @@ public class ViewChangesDisplayContext {
 					jsonObject.remove("modelClassPK");
 				}
 
-				JSONArray childrenJSONArray = _getChildren(
-					nodeIdCounter, childPKsMap);
+				JSONArray childrenJSONArray = JSONFactoryUtil.createJSONArray();
+
+				for (Map.Entry<Long, List<Long>> entry :
+						childPKsMap.entrySet()) {
+
+					for (long classPK : entry.getValue()) {
+						childrenJSONArray.put(
+							JSONUtil.put(
+								"modelClassNameId", entry.getKey()
+							).put(
+								"modelClassPK", classPK
+							).put(
+								"nodeId", nodeIdCounter.getAndIncrement()
+							));
+					}
+				}
 
 				if (childrenJSONArray.length() == 0) {
 					continue;
@@ -376,27 +390,6 @@ public class ViewChangesDisplayContext {
 		}
 
 		rootDisplayNodes.add(node);
-	}
-
-	private JSONArray _getChildren(
-		AtomicInteger nodeIdCounter, Map<Long, List<Long>> childPKsMap) {
-
-		JSONArray childrenJSONArray = JSONFactoryUtil.createJSONArray();
-
-		for (Map.Entry<Long, List<Long>> entry : childPKsMap.entrySet()) {
-			for (long classPK : entry.getValue()) {
-				childrenJSONArray.put(
-					JSONUtil.put(
-						"modelClassNameId", entry.getKey()
-					).put(
-						"modelClassPK", classPK
-					).put(
-						"nodeId", nodeIdCounter.getAndIncrement()
-					));
-			}
-		}
-
-		return childrenJSONArray;
 	}
 
 	private <T extends BaseModel<T>> List<JSONObject> _getEntries(

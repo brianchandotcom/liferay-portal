@@ -244,8 +244,8 @@ definition {
 
 	@description = "This is a use case for LPS-58754"
 	@priority = "2"
+	@ignore = "true"
 	test WithdrawWorkflowSubmissionFromRemovedUser {
-		property portal.upstream = "quarantine";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

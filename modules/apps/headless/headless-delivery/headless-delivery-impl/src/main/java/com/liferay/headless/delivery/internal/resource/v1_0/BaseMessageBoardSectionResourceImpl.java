@@ -395,6 +395,8 @@ public abstract class BaseMessageBoardSectionResourceImpl
 				@PathParam("parentMessageBoardSectionId") Long
 					parentMessageBoardSectionId,
 				@Parameter(hidden = true) @QueryParam("search") String search,
+				@Context com.liferay.portal.vulcan.aggregation.Aggregation
+					aggregation,
 				@Context Filter filter, @Context Pagination pagination,
 				@Context Sort[] sorts)
 		throws Exception {
@@ -463,6 +465,8 @@ public abstract class BaseMessageBoardSectionResourceImpl
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			@Parameter(hidden = true) @QueryParam("flatten") Boolean flatten,
 			@Parameter(hidden = true) @QueryParam("search") String search,
+			@Context com.liferay.portal.vulcan.aggregation.Aggregation
+				aggregation,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {
@@ -579,7 +583,7 @@ public abstract class BaseMessageBoardSectionResourceImpl
 
 		return getSiteMessageBoardSectionsPage(
 			(Long)parameters.get("siteId"), (Boolean)parameters.get("flatten"),
-			search, filter, pagination, sorts);
+			search, null, filter, pagination, sorts);
 	}
 
 	@Override

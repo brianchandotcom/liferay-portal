@@ -279,7 +279,7 @@
 								}
 							],
 							"name": "spacer",
-							"type": "Number"
+							"type": "String"
 						}
 					]
 				}
@@ -333,7 +333,7 @@
 								}
 							],
 							"name": "borderRadius",
-							"type": "Number"
+							"type": "String"
 						},
 						{
 							"defaultValue": "0.1875rem",
@@ -345,7 +345,7 @@
 								}
 							],
 							"name": "borderRadiusSm",
-							"type": "Number"
+							"type": "String"
 						},
 						{
 							"defaultValue": "0.375rem",
@@ -357,7 +357,7 @@
 								}
 							],
 							"name": "borderRadiusLg",
-							"type": "Number"
+							"type": "String"
 						},
 						{
 							"defaultValue": "50%",
@@ -369,7 +369,7 @@
 								}
 							],
 							"name": "borderRadiusCircle",
-							"type": "Number"
+							"type": "String"
 						},
 						{
 							"defaultValue": "50rem",
@@ -381,7 +381,7 @@
 								}
 							],
 							"name": "roundedPill",
-							"type": "Number"
+							"type": "String"
 						}
 					],
 					"label": "borders",
@@ -447,7 +447,7 @@
 								}
 							],
 							"name": "containerMaxSm",
-							"type": "Number"
+							"type": "String"
 						},
 						{
 							"defaultValue": "768px",
@@ -459,7 +459,7 @@
 								}
 							],
 							"name": "containerMaxMd",
-							"type": "Number"
+							"type": "String"
 						},
 						{
 							"defaultValue": "992px",
@@ -471,7 +471,7 @@
 								}
 							],
 							"name": "containerMaxLg",
-							"type": "Number"
+							"type": "String"
 						},
 						{
 							"defaultValue": "1280px",
@@ -483,7 +483,7 @@
 								}
 							],
 							"name": "containerMaxXl",
-							"type": "Number"
+							"type": "String"
 						}
 					],
 					"label": "grid-containers",
@@ -549,7 +549,7 @@
 								}
 							],
 							"name": "fontSizeSm",
-							"type": "Number"
+							"type": "String"
 						},
 						{
 							"defaultValue": "0.875rem",
@@ -561,7 +561,7 @@
 								}
 							],
 							"name": "fontSizeBase",
-							"type": "Number"
+							"type": "String"
 						},
 						{
 							"defaultValue": "1.125rem",
@@ -573,7 +573,7 @@
 								}
 							],
 							"name": "fontSizeLg",
-							"type": "Number"
+							"type": "String"
 						}
 					],
 					"label": "font-size",
@@ -657,7 +657,7 @@
 								}
 							],
 							"name": "h1FontSize",
-							"type": "Number"
+							"type": "String"
 						},
 						{
 							"defaultValue": "1.375rem",
@@ -669,7 +669,7 @@
 								}
 							],
 							"name": "h2FontSize",
-							"type": "Number"
+							"type": "String"
 						},
 						{
 							"defaultValue": "1.1875rem",
@@ -681,7 +681,7 @@
 								}
 							],
 							"name": "h3FontSize",
-							"type": "Number"
+							"type": "String"
 						},
 						{
 							"defaultValue": "1rem",
@@ -693,7 +693,7 @@
 								}
 							],
 							"name": "h4FontSize",
-							"type": "Number"
+							"type": "String"
 						},
 						{
 							"defaultValue": "0.875rem",
@@ -705,7 +705,7 @@
 								}
 							],
 							"name": "h5FontSize",
-							"type": "Number"
+							"type": "String"
 						},
 						{
 							"defaultValue": "0.8125rem",
@@ -717,7 +717,7 @@
 								}
 							],
 							"name": "h6FontSize",
-							"type": "Number"
+							"type": "String"
 						}
 					],
 					"label": "headings",

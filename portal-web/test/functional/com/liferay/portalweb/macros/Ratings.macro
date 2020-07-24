@@ -123,6 +123,12 @@ definition {
 		}
 	}
 
+	macro revokeStackedStarsRating {
+		Click(locator1 = "Icon#DELETE");
+
+		AssertElementNotPresent(locator1 = "Icon#DELETE");
+	}
+
 	macro revokeStarsRating {
 		Click(locator1 = "Ratings#YOUR_RATING_STAR");
 

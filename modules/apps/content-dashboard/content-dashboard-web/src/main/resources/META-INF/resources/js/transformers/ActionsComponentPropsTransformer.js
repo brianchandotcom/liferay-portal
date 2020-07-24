@@ -18,12 +18,7 @@ import SidebarPanel from '../SidebarPanel';
 import SidebarPanelInfoView from '../components/SidebarPanelInfoView';
 import SidebarPanelMetricsView from '../components/SidebarPanelMetricsView';
 
-export default function propsTransformer({
-	items,
-	namespace,
-	sidebarContainerSelector,
-	...otherProps
-}) {
+export default function propsTransformer({items, namespace, ...otherProps}) {
 	const actions = {
 		showInfo(fetchURL) {
 			showSidebar(fetchURL, SidebarPanelInfoView);
@@ -37,6 +32,10 @@ export default function propsTransformer({
 		const sidebarPanel = _getSidebarPanel();
 
 		if (!sidebarPanel) {
+			const container = document.body.appendChild(
+				document.createElement('div')
+			);
+
 			render(
 				SidebarPanel,
 				{
@@ -44,7 +43,7 @@ export default function propsTransformer({
 					ref: _setSidebarPanel,
 					viewComponent: View,
 				},
-				document.querySelector(sidebarContainerSelector)
+				container
 			);
 		}
 		else {

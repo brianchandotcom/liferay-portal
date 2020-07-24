@@ -83,7 +83,7 @@ const SidebarPanelInfoView = ({
 			<Sidebar.Header title={Liferay.Language.get('content-info')} />
 
 			<Sidebar.Body>
-				<div className="mb-4 sidebar-dl sidebar-section">
+				<div className="c-mb-4 sidebar-dl sidebar-section">
 					<div className="component-title text-truncate-inline">
 						<span className="text-truncate">{title}</span>
 					</div>
@@ -117,8 +117,11 @@ const SidebarPanelInfoView = ({
 				</ClayTabs>
 
 				<ClayTabs.Content activeIndex={activeTabKeyValue} fade>
-					<ClayTabs.TabPane aria-labelledby="tab-1" className="mt-3">
-						<div className="mb-4 sidebar-dl sidebar-section">
+					<ClayTabs.TabPane
+						aria-labelledby="tab-1"
+						className="c-mt-3"
+					>
+						<div className="c-mb-4 sidebar-dl sidebar-section">
 							<ClaySticker className="sticker-user-icon">
 								<div className="sticker-overlay">
 									<img
@@ -128,12 +131,12 @@ const SidebarPanelInfoView = ({
 								</div>
 							</ClaySticker>
 
-							<span className="h5 ml-2">{userName}</span>
+							<span className="c-ml-2 h5">{userName}</span>
 						</div>
 
 						{!!sortedViewURLS.length && (
-							<div className="mb-4 sidebar-dl sidebar-section">
-								<p className="h5 mb-3">
+							<div className="c-mb-4 sidebar-dl sidebar-section">
+								<p className="c-mb-3 h5">
 									{Liferay.Language.get(
 										'languages-translated-into'
 									)}
@@ -141,7 +144,7 @@ const SidebarPanelInfoView = ({
 
 								{sortedViewURLS.map((language) => (
 									<ClayLayout.ContentRow
-										className="mb-1"
+										className="c-mb-1"
 										key={language.languageId}
 										verticalAlign="center"
 									>
@@ -196,7 +199,7 @@ const SidebarPanelInfoView = ({
 						)}
 
 						{!!tags.length && (
-							<div className="mb-4 sidebar-dl sidebar-section">
+							<div className="c-mb-4 sidebar-dl sidebar-section">
 								<p className="h5">
 									{Liferay.Language.get('tags')}
 								</p>
@@ -215,7 +218,7 @@ const SidebarPanelInfoView = ({
 						)}
 
 						{!!categories.length && (
-							<div className="mb-4 sidebar-dl sidebar-section">
+							<div className="c-mb-4 sidebar-dl sidebar-section">
 								<p className="h5">
 									{Liferay.Language.get('categories')}
 								</p>
@@ -272,7 +275,7 @@ const SidebarPanelInfoView = ({
 								text &&
 								title && (
 									<div
-										className="mb-4 sidebar-dl sidebar-section"
+										className="c-mb-4 sidebar-dl sidebar-section"
 										key={title}
 									>
 										<p className="h5">{title}</p>

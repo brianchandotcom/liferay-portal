@@ -23,17 +23,17 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 %>
 
 <clay:row
-	cssClass="no-gutters"
+	cssClass="no-gutters sidebar-wrapper"
 >
 	<clay:container-fluid>
 		<div class="main-content-body">
-			<div class="dashboard-content sheet">
+			<div class="sheet">
 				<h2 class="sheet-title">
 					<%= contentDashboardAdminDisplayContext.getAuditGraphTitle() %>
 				</h2>
 
 				<div class="audit-graph">
-					<div class="inline-item my-5 p-5 w-100">
+					<div class="c-my-5 c-p-5 inline-item w-100">
 						<span aria-hidden="true" class="loading-animation"></span>
 					</div>
 
@@ -46,7 +46,7 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 		</div>
 
 		<div class="main-content-body">
-			<div class="dashboard-content sheet">
+			<div class="sheet">
 				<h2 class="sheet-title">
 					<%= LanguageUtil.format(request, "content-x", contentDashboardAdminDisplayContext.getSearchContainer().getTotal(), false) %>
 				</h2>
@@ -198,9 +198,6 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 			</div>
 		</div>
 	</clay:container-fluid>
-
-	<div class="sidebar-container">
-	</div>
 </clay:row>
 
 <liferay-frontend:component

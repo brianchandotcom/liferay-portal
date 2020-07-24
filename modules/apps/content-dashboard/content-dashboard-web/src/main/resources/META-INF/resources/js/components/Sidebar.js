@@ -14,7 +14,6 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayLayout from '@clayui/layout';
-import classNames from 'classnames';
 import {useTimeout} from 'frontend-js-react-web';
 import React, {useContext, useEffect, useState} from 'react';
 
@@ -71,17 +70,20 @@ const Sidebar = ({children, onClose = noop, open = true}) => {
 		}
 	}, [delay, open]);
 
+	useEffect(() => {
+		if (isOpen) {
+			document.body.classList.add('sidebar-open');
+		}
+		else {
+			document.body.classList.remove('sidebar-open');
+		}
+	}, [isOpen]);
+
 	return (
-		<div
-			className={classNames('sidebar-wrapper', {
-				open: isOpen,
-			})}
-		>
-			<div className="sidebar sidebar-light sidebar-sm">
-				<SidebarContext.Provider value={{onClose}}>
-					{children}
-				</SidebarContext.Provider>
-			</div>
+		<div className="sidebar sidebar-light sidebar-sm">
+			<SidebarContext.Provider value={{onClose}}>
+				{children}
+			</SidebarContext.Provider>
 		</div>
 	);
 };

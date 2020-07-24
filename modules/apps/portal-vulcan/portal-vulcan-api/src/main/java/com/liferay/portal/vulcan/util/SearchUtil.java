@@ -113,10 +113,12 @@ public class SearchUtil {
 
 		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(indexerClass);
 
+		List<T> items = _getItems(
+			indexer, searchContext, transformUnsafeFunction);
+
 		return Page.of(
-			actions, _getFacets(searchContext),
-			_getItems(indexer, searchContext, transformUnsafeFunction),
-			pagination, indexer.searchCount(searchContext));
+			actions, _getFacets(searchContext), items, pagination,
+			indexer.searchCount(searchContext));
 	}
 
 	/**

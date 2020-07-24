@@ -25,7 +25,7 @@ definition {
 	@priority = "4"
 	test AccountFilterByType {
 		for (var accountType : list "Business,Person") {
-			GlobalMenu.gotoPortlet(
+			ApplicationsMenu.gotoPortlet(
 				category = "Accounts",
 				panel = "Applications",
 				portlet = "Accounts");
@@ -36,7 +36,7 @@ definition {
 				accountType = "${accountType}");
 		}
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Applications",
 			portlet = "Accounts");

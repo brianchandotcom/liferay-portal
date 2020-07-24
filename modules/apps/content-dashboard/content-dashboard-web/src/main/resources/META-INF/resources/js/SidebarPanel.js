@@ -16,13 +16,7 @@ import ClayAlert from '@clayui/alert';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useTimeout} from 'frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
-import React, {
-	useCallback,
-	useEffect,
-	useImperativeHandle,
-	useRef,
-	useState,
-} from 'react';
+import React, {useEffect, useImperativeHandle, useRef, useState} from 'react';
 
 import Sidebar from './components/Sidebar';
 
@@ -37,51 +31,46 @@ const SidebarPanel = React.forwardRef(
 
 		const delay = useTimeout();
 
-		const getData = useCallback(
-			(fetchURL) => {
-				setIsLoading(true);
-				setResourceData(null);
+		const getData = (fetchURL) => {
+			setIsLoading(true);
+			setResourceData(null);
 
-				fetch(fetchURL, {
-					method: 'GET',
-				})
-					.then((response) =>
-						response.headers.get('content-type').includes('json')
-							? response
-									.json()
-									.then((data) => setData(data, data?.error))
-							: response.text().then((html) => setData({html}))
-					)
-					.catch(() => {
-						setData(
-							null,
-							Liferay.Language.get('an-unexpected-error-occurred')
-						);
-					});
-			},
-			[setData]
-		);
+			fetch(fetchURL, {
+				method: 'GET',
+			})
+				.then((response) =>
+					response.headers.get('content-type').includes('json')
+						? response
+								.json()
+								.then((data) => setData(data, data?.error))
+						: response.text().then((html) => setData({html}))
+				)
+				.catch(() => {
+					setData(
+						null,
+						Liferay.Language.get('an-unexpected-error-occurred')
+					);
+				});
+		};
 
 		const onCloseHandle = () => (onClose ? onClose() : setIsOpen(false));
 
-		const setData = useCallback(
-			(data, error) => {
+		const setData = (data, error) => {
 
-				// Force 300 ms of waiting to render the response so loading
-				// looks more natural.
+			// Force 300 ms of waiting to render the response so loading
+			// looks more natural.
 
-				delay(() => {
-					setIsLoading(false);
-					setError(error);
-					setResourceData(data);
-				}, 300);
-			},
-			[delay]
-		);
+			delay(() => {
+				setIsLoading(false);
+				setError(error);
+				setResourceData(data);
+			}, 300);
+		};
 
 		useEffect(() => {
 			getData(fetchURL);
-		}, [fetchURL, getData]);
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, [fetchURL]);
 
 		useEffect(() => {
 			CurrentView.current = View;

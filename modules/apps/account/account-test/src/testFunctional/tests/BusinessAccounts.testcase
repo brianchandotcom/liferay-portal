@@ -61,6 +61,82 @@ definition {
 	}
 
 	@priority = "4"
+	test AccountUserFilterByAccounts {
+		for (var accountType : list "Business,Person") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Accounts",
+				panel = "Applications",
+				portlet = "Accounts");
+
+			Accounts.addCP(
+				accountDescription = "This is a ${accountType} Account.",
+				accountName = "${accountType} Account",
+				accountType = "${accountType}");
+		}
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Account Users");
+
+		AccountUsers.addUsers(
+			accountName = "Business Account",
+			userEmailAddress = "businessuser@liferay.com",
+			userFirstName = "business",
+			userLastName = "user",
+			userScreenName = "businessuser");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Account Users");
+
+		AccountUsers.addUsers(
+			accountName = "Business Account",
+			userEmailAddress = "userbusiness@liferay.com",
+			userFirstName = "user",
+			userLastName = "business",
+			userScreenName = "userbusiness");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Account Users");
+
+		AccountUsers.addUsers(
+			accountName = "Person Account",
+			userEmailAddress = "personuser@liferay.com",
+			userFirstName = "person",
+			userLastName = "user",
+			userScreenName = "personuser");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Account Users");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Accounts");
+
+		AccountUsers.selectAccounts(accountName = "Person Account");
+
+		LexiconEntry.viewEntryName(rowEntry = "person user");
+
+		LexiconEntry.viewNoEntry(rowEntry = "user business");
+
+		LexiconEntry.viewNoEntry(rowEntry = "business user");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Accounts");
+
+		AccountUsers.selectAccounts(accountName = "Business Account");
+
+		LexiconEntry.viewEntryName(rowEntry = "business user");
+
+		LexiconEntry.viewEntryName(rowEntry = "user business");
+
+		LexiconEntry.viewNoEntry(rowEntry = "person user");
+	}
+
+	@priority = "4"
 	test AddAccountUser {
 		property portal.acceptance = "true";
 

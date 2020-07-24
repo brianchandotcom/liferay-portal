@@ -15,6 +15,7 @@
 import React from 'react';
 
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
+import ItemConfiguration from './ItemConfiguration';
 import StructureTree from './StructureTree';
 
 export default function PageStructureSidebar() {
@@ -26,6 +27,7 @@ export default function PageStructureSidebar() {
 
 			<div className="page-editor__page-structure__content">
 				<StructureTree />
+				<ItemConfiguration />
 			</div>
 		</div>
 	);

@@ -40,6 +40,19 @@ const BtnAction = ({angle = 'left', className, onClick}) => (
 	/>
 );
 
+const getFieldLabel = (dataDefinition, fieldName) => {
+	const field = DataDefinitionUtils.getDataDefinitionField(
+		dataDefinition,
+		fieldName
+	);
+
+	if (field) {
+		return field.label[dataDefinition.defaultLanguageId];
+	}
+
+	return fieldName;
+};
+
 const FiltersSidebarHeader = () => {
 	const [{dataDefinition, fieldTypes, focusedColumn}, dispatch] = useContext(
 		EditTableViewContext
@@ -67,10 +80,7 @@ const FiltersSidebarHeader = () => {
 						dragAlignment="none"
 						draggable={false}
 						icon={fieldType}
-						label={DataDefinitionUtils.getFieldLabel(
-							dataDefinition,
-							focusedColumn
-						)}
+						label={getFieldLabel(dataDefinition, focusedColumn)}
 						name={focusedColumn}
 					/>
 				</ClayLayout.ContentCol>
@@ -82,7 +92,7 @@ const FiltersSidebarHeader = () => {
 const FieldsTabContent = ({keywords, onAddFieldName}) => {
 	const [
 		{
-			dataDefinition: {dataDefinitionFields = []},
+			dataDefinition: {defaultLanguageId, dataDefinitionFields = []},
 			dataListView: {fieldNames},
 			fieldTypes,
 		},
@@ -90,7 +100,11 @@ const FieldsTabContent = ({keywords, onAddFieldName}) => {
 
 	const fieldTypesItems = [];
 
-	const fieldTypeModel = ({fieldType, label: {en_US: label}, name}) => ({
+	const fieldTypeModel = ({
+		fieldType,
+		label: {[defaultLanguageId]: label},
+		name,
+	}) => ({
 		description: getFieldTypeLabel(fieldTypes, fieldType),
 		disabled: fieldNames.some((fieldName) => fieldName === name),
 		icon: fieldType,

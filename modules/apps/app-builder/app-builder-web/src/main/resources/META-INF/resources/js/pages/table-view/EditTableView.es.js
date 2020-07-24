@@ -13,7 +13,7 @@
  */
 
 import classNames from 'classnames';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import ControlMenu from '../../components/control-menu/ControlMenu.es';
@@ -31,21 +31,27 @@ import EditTableViewContext, {
 import EditTableViewContextProvider from './EditTableViewContextProvider.es';
 import TableViewSidebar from './TableViewSidebar.es';
 
+const getTableViewTitle = ({id}) => {
+	if (id) {
+		return Liferay.Language.get('edit-table-view');
+	}
+
+	return Liferay.Language.get('new-table-view');
+};
+
 const EditTableView = withRouter(({history}) => {
 	const [{dataDefinition, dataListView}, dispatch] = useContext(
 		EditTableViewContext
 	);
+	const [defaultLanguageId, setDefaultLanguageId] = useState('');
 
-	const languageId = Liferay.ThemeDisplay.getLanguageId();
+	useEffect(() => {
+		if (dataDefinition.defaultLanguageId) {
+			setDefaultLanguageId(dataDefinition.defaultLanguageId);
+		}
+	}, [dataDefinition.defaultLanguageId]);
 
-	let title = Liferay.Language.get('new-table-view');
-
-	if (dataListView.id) {
-		title = Liferay.Language.get('edit-table-view');
-	}
-
-	const onError = (error) => {
-		const {title = ''} = error;
+	const onError = ({title = ''}) => {
 		errorToast(`${title}.`);
 	};
 
@@ -53,22 +59,17 @@ const EditTableView = withRouter(({history}) => {
 		successToast(
 			Liferay.Language.get('the-table-view-was-saved-successfully')
 		);
+
 		history.goBack();
 	};
 
-	const onChange = (event) => {
-		const name = event.target.value;
-
-		dispatch({payload: {name}, type: UPDATE_DATA_LIST_VIEW_NAME});
-	};
-
 	const validate = () => {
-		const {[languageId]: name = ''} = dataListView.name;
+		const {[defaultLanguageId]: name = ''} = dataListView.name;
 
 		return {
 			...dataListView,
 			name: {
-				en_US: name.trim(),
+				[defaultLanguageId]: name.trim(),
 			},
 		};
 	};
@@ -98,11 +99,9 @@ const EditTableView = withRouter(({history}) => {
 		}
 	};
 
-	const {dataDefinitionFields} = dataDefinition;
-
 	const {
 		fieldNames,
-		name: {[Liferay.ThemeDisplay.getLanguageId()]: dataListViewName = ''},
+		name: {[defaultLanguageId]: dataListViewName = ''},
 	} = dataListView;
 
 	const [isSidebarClosed, setSidebarClosed] = useState(false);
@@ -114,6 +113,18 @@ const EditTableView = withRouter(({history}) => {
 		});
 	};
 
+	const onTableViewNameChange = ({target: {value}}) => {
+		dispatch({
+			payload: {
+				name: {
+					...dataListView.name,
+					[defaultLanguageId]: value,
+				},
+			},
+			type: UPDATE_DATA_LIST_VIEW_NAME,
+		});
+	};
+
 	const onRemoveFieldName = (fieldName) => {
 		dispatch({payload: {fieldName}, type: REMOVE_DATA_LIST_VIEW_FIELD});
 	};
@@ -121,7 +132,7 @@ const EditTableView = withRouter(({history}) => {
 	const fields = [];
 
 	fieldNames.forEach((fieldName) => {
-		dataDefinitionFields.forEach((dataDefinitionField) => {
+		dataDefinition.dataDefinitionFields.forEach((dataDefinitionField) => {
 			const {name, nestedDataDefinitionFields} = dataDefinitionField;
 
 			if (nestedDataDefinitionFields.length) {
@@ -141,7 +152,10 @@ const EditTableView = withRouter(({history}) => {
 
 	return (
 		<div className="app-builder-table-view">
-			<ControlMenu backURL="../" title={title} />
+			<ControlMenu
+				backURL="../"
+				title={getTableViewTitle(dataListView)}
+			/>
 
 			<Loading isLoading={dataDefinition === null}>
 				<DragLayer />
@@ -155,7 +169,7 @@ const EditTableView = withRouter(({history}) => {
 				>
 					<UpperToolbar>
 						<UpperToolbar.Input
-							onChange={onChange}
+							onChange={onTableViewNameChange}
 							placeholder={Liferay.Language.get(
 								'untitled-table-view'
 							)}

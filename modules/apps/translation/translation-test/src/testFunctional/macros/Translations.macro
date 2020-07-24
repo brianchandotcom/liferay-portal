@@ -13,6 +13,38 @@ definition {
 		}
 	}
 
+	macro changeBaseLocale {
+		Portlet.waitForForm();
+
+		Click.clickNoMouseOver(
+			key_currentLocale = StringUtil.lowerCase("${currentBaseLocale}"),
+			locator1 = "Button#TRANSLATIONS_LOCALIZATION");
+
+		Click(
+			key_locale = "${newBaseLocale}",
+			locator1 = "Translation#DROPDOWN_MENU_ITEM");
+
+		AssertElementPresent(
+			key_locale = "${newBaseLocale}",
+			locator1 = "Translation#CONTENT_TITLE");
+	}
+
+	macro changeTargetLocale {
+		Portlet.waitForForm();
+
+		Click.clickNoMouseOver(
+			key_currentLocale = StringUtil.lowerCase("${currentTargetLocale}"),
+			locator1 = "Button#TRANSLATIONS_LOCALIZATION");
+
+		Click(
+			key_locale = "${newTargetLocale}",
+			locator1 = "Translation#DROPDOWN_MENU_ITEM");
+
+		AssertElementPresent(
+			key_locale = "${newTargetLocale}",
+			locator1 = "Translation#CONTENT_TITLE");
+	}
+
 	macro exportTranslation {
 		AssertElementPresent(locator1 = "Language#EXPORT_TRANSLATION_ORIGIN_LANGUAGE");
 
@@ -51,6 +83,14 @@ definition {
 		MenuItem.click(menuItem = "Import Translation");
 	}
 
+	macro gotoTranslate {
+		Click.waitForMenuToggleJSClick(
+			key_webContentTitle = "${webContentTitle}",
+			locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
+
+		MenuItem.click(menuItem = "Translate");
+	}
+
 	macro importTranslation {
 		Translations.gotoImportTranslation(webContentTitle = "${webContentTitle}");
 
@@ -75,10 +115,174 @@ definition {
 		}
 	}
 
+	macro translateFields {
+		if (isSet(webContentTitle)) {
+			PortletEntry.inputTitle(title = "${webContentTitle}");
+		}
+
+		if (isSet(webContentContent)) {
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+
+			Type(
+				locator1 = "CKEditor#BODY",
+				value1 = "${webContentContent}");
+
+			SelectFrame(value1 = "relative=top");
+		}
+
+		if (isSet(webContentDescription)) {
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+			Type(
+				locator1 = "CKEditor#BODY",
+				value1 = "${webContentDescription}");
+
+			SelectFrame(value1 = "relative=top");
+		}
+
+		if (isSet(webContentText)) {
+			Type(
+				key_fieldName = "Text",
+				locator1 = "TextInput#TRANSLATIONS_TARGET_FIELD",
+				value1 = "${webContentText}");
+		}
+
+		if (isSet(webContentInteger)) {
+			Type(
+				key_fieldName = "Integer",
+				locator1 = "TextInput#TRANSLATIONS_TARGET_FIELD",
+				value1 = "${webContentInteger}");
+		}
+
+		if (isSet(webContentNumber)) {
+			Type(
+				key_fieldName = "Number",
+				locator1 = "TextInput#TRANSLATIONS_TARGET_FIELD",
+				value1 = "${webContentNumber}");
+		}
+
+		if (isSet(webContentDecimal)) {
+			Type(
+				key_fieldName = "Decimal",
+				locator1 = "TextInput#TRANSLATIONS_TARGET_FIELD",
+				value1 = "${webContentDecimal}");
+		}
+	}
+
 	macro translateFile {
 		AntCommand(
 			locator1 = "build-test.xml",
 			value1 = "update-translation-file -Dtranslation.content.target.original=<target><![CDATA[${webContentContent}]]></target> -Dtranslation.content.target=<target><![CDATA[${contentTranslateion}]]></target> -Dtranslation.description.target.original=<target><![CDATA[${webContentDescription}]]></target> -Dtranslation.description.target=<target><![CDATA[${descriptionTranslateion}]]></target> -Dtranslation.title.target.original=<target><![CDATA[${webContentTitle}]]></target> -Dtranslation.title.target=<target><![CDATA[${titleTranslation}]]></target> -Dtranslation.zip.file.name=${translationZipFileName} -Dtranslation.file.name=${translationFileName} -Dtranslation.file.rename=${translationFileRename}");
+	}
+
+	macro viewBaseFields {
+		if (isSet(webContentTitle)) {
+			AssertElementPresent(
+				key_fieldName = "Title",
+				key_fieldValue = "${webContentTitle}",
+				locator1 = "Translation#BASE_LANGUAGE_FIELD");
+		}
+
+		if (isSet(webContentContent)) {
+			AssertTextEquals(
+				key_content = "${webContentContent}",
+				key_fieldName = "Content",
+				locator1 = "Translation#BASE_LANGUAGE_CONTENT_FIELD",
+				value1 = "${webContentContent}");
+		}
+
+		if (isSet(webContentDescription)) {
+			AssertTextEquals(
+				key_content = "${webContentDescription}",
+				key_fieldName = "Description",
+				locator1 = "Translation#BASE_LANGUAGE_CONTENT_FIELD",
+				value1 = "${webContentDescription}");
+		}
+
+		if (isSet(webContentText)) {
+			AssertElementPresent(
+				key_fieldName = "Text",
+				key_fieldValue = "${webContentText}",
+				locator1 = "Translation#BASE_LANGUAGE_FIELD");
+		}
+
+		if (isSet(webContentInteger)) {
+			AssertElementPresent(
+				key_fieldName = "Integer",
+				key_fieldValue = "${webContentInteger}",
+				locator1 = "Translation#BASE_LANGUAGE_FIELD");
+		}
+
+		if (isSet(webContentNumber)) {
+			AssertElementPresent(
+				key_fieldName = "Number",
+				key_fieldValue = "${webContentNumber}",
+				locator1 = "Translation#BASE_LANGUAGE_FIELD");
+		}
+
+		if (isSet(webContentDecimal)) {
+			AssertElementPresent(
+				key_fieldName = "Decimal",
+				key_fieldValue = "${webContentDecimal}",
+				locator1 = "Translation#BASE_LANGUAGE_FIELD");
+		}
+	}
+
+	macro viewTargetFields {
+		if (isSet(webContentTitle)) {
+			AssertElementPresent(
+				key_fieldName = "title",
+				key_fieldValue = "${webContentTitle}",
+				locator1 = "Translation#TARGET_LANGUAGE_FIELD");
+		}
+
+		if (isSet(webContentContent)) {
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+
+			AssertTextEquals(
+				locator1 = "CKEditor#BODY",
+				value1 = "${webContentContent}");
+
+			SelectFrame(value1 = "relative=top");
+		}
+
+		if (isSet(webContentDescription)) {
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+			AssertTextEquals(
+				locator1 = "CKEditor#BODY",
+				value1 = "${webContentDescription}");
+
+			SelectFrame(value1 = "relative=top");
+		}
+
+		if (isSet(webContentText)) {
+			AssertElementPresent(
+				key_fieldName = "Text",
+				key_fieldValue = "${webContentText}",
+				locator1 = "Translation#TARGET_LANGUAGE_FIELD");
+		}
+
+		if (isSet(webContentInteger)) {
+			AssertElementPresent(
+				key_fieldName = "Integer",
+				key_fieldValue = "${webContentInteger}",
+				locator1 = "Translation#TARGET_LANGUAGE_FIELD");
+		}
+
+		if (isSet(webContentNumber)) {
+			AssertElementPresent(
+				key_fieldName = "Number",
+				key_fieldValue = "${webContentNumber}",
+				locator1 = "Translation#TARGET_LANGUAGE_FIELD");
+		}
+
+		if (isSet(webContentDecimal)) {
+			AssertElementPresent(
+				key_fieldName = "Decimal",
+				key_fieldValue = "${webContentDecimal}",
+				locator1 = "Translation#TARGET_LANGUAGE_FIELD");
+		}
 	}
 
 	macro viewTranslationOptions {

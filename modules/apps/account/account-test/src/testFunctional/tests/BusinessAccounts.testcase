@@ -137,6 +137,58 @@ definition {
 	}
 
 	@priority = "4"
+	test AccountUserFilterByNoAssignedAccount {
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		Accounts.addCP(
+			accountDescription = "This is an Account with User.",
+			accountName = "Account with User");
+
+		for (var accountUser : list "1,2") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Accounts",
+				panel = "Applications",
+				portlet = "Account Users");
+
+			AccountUsers.addUsers(
+				accountName = "Account with User",
+				userEmailAddress = "userea${accountUser}@liferay.com",
+				userFirstName = "userfn${accountUser}",
+				userLastName = "userln${accountUser}",
+				userScreenName = "usersn${accountUser}");
+		}
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Account Users");
+
+		AccountUsers.removeAccount(
+			accountName = "Account with User",
+			accountUser = "userfn1 userln1");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Account Users");
+
+		ManagementBar.setFilterAndOrder(filterBy = "No Assigned Account");
+
+		LexiconEntry.viewEntryName(rowEntry = "userfn1 userln1");
+
+		LexiconEntry.viewNoEntry(rowEntry = "userfn2 userln2");
+
+		ManagementBar.setFilterAndOrder(filterBy = "All");
+
+		LexiconEntry.viewEntryName(rowEntry = "userfn1 userln1");
+
+		LexiconEntry.viewEntryName(rowEntry = "userfn2 userln2");
+	}
+
+	@priority = "4"
 	test AddAccountUser {
 		property portal.acceptance = "true";
 

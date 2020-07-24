@@ -93,6 +93,32 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
+	function dragAndDropReorganizeObjects {
+		WaitForSPARefresh();
+
+		selenium.waitForElementPresent("${locator1}");
+
+		selenium.mouseOver("${locator1}");
+
+		selenium.waitForVisible("${locator1}");
+
+		selenium.mouseDown("${locator1}");
+
+		selenium.pause("1000");
+
+		selenium.mouseMove("${locator2}");
+
+		selenium.mouseMoveAt("${locator2}", "${position}");
+
+		selenium.pause("3000");
+
+		selenium.mouseRelease();
+
+		selenium.assertJavaScriptErrors();
+
+		selenium.assertLiferayErrors();
+	}
+
 	function dragAndDropToObject {
 		WaitForSPARefresh();
 

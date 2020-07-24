@@ -671,6 +671,10 @@ public class MessageBoardThreadResourceImpl
 
 			mbThread.setQuestion(showAsQuestion);
 		}
+
+		if (GetterUtil.getBoolean(messageBoardThread.getSubscribed())) {
+			_mbMessageService.subscribeMessage(mbMessage.getRootMessageId());
+		}
 	}
 
 	@Reference

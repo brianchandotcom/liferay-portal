@@ -14,6 +14,7 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
+import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import ClaySticker from '@clayui/sticker';
 import ClayTabs from '@clayui/tabs';
@@ -132,23 +133,29 @@ const SidebarPanelInfoView = ({
 								</p>
 
 								{sortedViewURLS.map((language) => (
-									<div
-										className="autofit-row autofit-row-center mb-1"
+									<ClayLayout.ContentRow
+										className="mb-1"
 										key={language.languageId}
+										verticalAlign="center"
 									>
-										<div className="autofit-col inline-item-before">
+										<ClayLayout.ContentCol className="inline-item-before">
 											<ClayIcon
 												symbol={language.languageId.toLowerCase()}
 											/>
-										</div>
+										</ClayLayout.ContentCol>
 
-										<div className="autofit-col autofit-col-expand">
-											<div className="autofit-row autofit-row-center">
-												<div className="autofit-col inline-item-before small">
+										<ClayLayout.ContentCol
+											expand={!!language.viewURL}
+										>
+											<ClayLayout.ContentRow
+												key={language.languageId}
+												verticalAlign="center"
+											>
+												<ClayLayout.ContentCol className="inline-item-before small">
 													{language.languageId}
-												</div>
+												</ClayLayout.ContentCol>
 
-												<div className="autofit-col">
+												<ClayLayout.ContentCol>
 													{language.default && (
 														<ClayLabel
 															className="d-inline"
@@ -159,22 +166,24 @@ const SidebarPanelInfoView = ({
 															)}
 														</ClayLabel>
 													)}
-												</div>
-											</div>
-										</div>
+												</ClayLayout.ContentCol>
+											</ClayLayout.ContentRow>
+										</ClayLayout.ContentCol>
 
-										<div className="autofit-col">
-											<ClayLink
-												borderless
-												displayType="secondary"
-												href={language.viewURL}
-												monospaced
-												outline
-											>
-												<ClayIcon symbol="view" />
-											</ClayLink>
-										</div>
-									</div>
+										{language.viewURL && (
+											<ClayLayout.ContentCol>
+												<ClayLink
+													borderless
+													displayType="secondary"
+													href={language.viewURL}
+													monospaced
+													outline
+												>
+													<ClayIcon symbol="view" />
+												</ClayLink>
+											</ClayLayout.ContentCol>
+										)}
+									</ClayLayout.ContentRow>
 								))}
 							</div>
 						)}

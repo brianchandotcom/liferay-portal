@@ -14,11 +14,8 @@
 
 package com.liferay.site.navigation.taglib.servlet.taglib;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
-import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntryContributor;
+import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntryContributorUtil;
 import com.liferay.site.navigation.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -27,9 +24,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
-
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Eudaldo Alonso
@@ -56,7 +50,6 @@ public class BreadcrumbTag extends IncludeTag {
 		super.cleanUp();
 
 		_breadcrumbEntries = new ArrayList<>();
-		_serviceTracker = null;
 	}
 
 	@Override
@@ -66,33 +59,14 @@ public class BreadcrumbTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
-		List<BreadcrumbEntry> breadcrumbEntries = _breadcrumbEntries;
-
-		try {
-			_serviceTracker = ServiceTrackerFactory.open(
-				FrameworkUtil.getBundle(BreadcrumbTag.class),
-				BreadcrumbEntryContributor.class);
-
-			BreadcrumbEntryContributor breadcrumbEntryContributor =
-				_serviceTracker.getService();
-
-			breadcrumbEntries = breadcrumbEntryContributor.getBreadcrumbEntries(
-				breadcrumbEntries, httpServletRequest);
-		}
-		catch (Exception exception) {
-			_log.error(exception.getMessage());
-		}
-
 		httpServletRequest.setAttribute(
 			"liferay-site-navigation:breadcrumb:breadcrumbEntries",
-			breadcrumbEntries);
+			BreadcrumbEntryContributorUtil.contribute(
+				_breadcrumbEntries, httpServletRequest));
 	}
 
 	private static final String _PAGE = "/breadcrumb/page.jsp";
 
-	private static final Log _log = LogFactoryUtil.getLog(BreadcrumbTag.class);
-
 	private List<BreadcrumbEntry> _breadcrumbEntries = new ArrayList<>();
-	private ServiceTracker<?, BreadcrumbEntryContributor> _serviceTracker;
 
 }

@@ -122,7 +122,7 @@ Layout curLayout = (Layout)row.getObject();
 				id: '<portlet:namespace />copyLayoutDialog',
 				title: '<liferay-ui:message key="copy-page" />',
 				url:
-					'<%= layoutsAdminDisplayContext.getCopyLayoutRenderURL(layout) %>',
+					'<%= layoutsAdminDisplayContext.getCopyLayoutRenderURL(curLayout) %>',
 			});
 		}
 	);
@@ -136,7 +136,7 @@ Layout curLayout = (Layout)row.getObject();
 				id: '<portlet:namespace />viewCollectionItemsDialog',
 				title: '<liferay-ui:message key="collection-items" />',
 				url:
-					'<%= layoutsAdminDisplayContext.getViewCollectionItemsURL(layout) %>',
+					'<%= layoutsAdminDisplayContext.getViewCollectionItemsURL(curLayout) %>',
 			});
 		}
 	);

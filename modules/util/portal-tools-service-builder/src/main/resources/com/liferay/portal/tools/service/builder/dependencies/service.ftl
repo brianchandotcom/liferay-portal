@@ -137,9 +137,9 @@ public interface ${entity.name}${sessionTypeName}Service
 	 * NOTE FOR DEVELOPERS:
 	 *
 <#if stringUtil.equals(sessionTypeName, "Local")>
-	 * Never modify or reference this interface directly. Always use {@link ${entity.name}LocalServiceUtil} to access the ${entity.humanName} local service. Add custom service methods to <code>${packagePath}.service.impl.${entity.name}LocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>${packagePath}.service.impl.${entity.name}LocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. To consume the ${entity.humanName} local service use a dynamic reference (e.g., via an @Reference annotation for Components). Use {@link ${entity.name}LocalServiceUtil} in contexts where a direct reference cannot be obtained.
 <#else>
-	 * Never modify or reference this interface directly. Always use {@link ${entity.name}ServiceUtil} to access the ${entity.humanName} remote service. Add custom service methods to <code>${packagePath}.service.impl.${entity.name}ServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>${packagePath}.service.impl.${entity.name}ServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. To consume the ${entity.humanName} remote service use a dynamic reference (e.g., via an @Reference annotation for Components). Use {@link ${entity.name}ServiceUtil} in contexts where a direct reference cannot be obtained.
 </#if>
 	 */
 

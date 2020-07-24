@@ -37,13 +37,15 @@ public class AppBuilderWorkflowTaskLinkLocalServiceImpl
 
 	@Override
 	public AppBuilderWorkflowTaskLink addAppBuilderWorkflowTaskLink(
-			long companyId, long appBuilderAppId, long ddmStructureLayoutId,
-			boolean readOnly, String workflowTaskName)
+			long companyId, long appBuilderAppId, long appBuilderAppVersionId,
+			long ddmStructureLayoutId, boolean readOnly,
+			String workflowTaskName)
 		throws PortalException {
 
 		AppBuilderWorkflowTaskLink appBuilderWorkflowTaskLink =
-			appBuilderWorkflowTaskLinkPersistence.fetchByA_D_W(
-				appBuilderAppId, ddmStructureLayoutId, workflowTaskName);
+			appBuilderWorkflowTaskLinkPersistence.fetchByA_A_D_W(
+				appBuilderAppId, appBuilderAppVersionId, ddmStructureLayoutId,
+				workflowTaskName);
 
 		if (Objects.nonNull(appBuilderWorkflowTaskLink)) {
 			throw new DuplicateAppBuilderWorkflowTaskLinkException();
@@ -55,6 +57,8 @@ public class AppBuilderWorkflowTaskLinkLocalServiceImpl
 
 		appBuilderWorkflowTaskLink.setCompanyId(companyId);
 		appBuilderWorkflowTaskLink.setAppBuilderAppId(appBuilderAppId);
+		appBuilderWorkflowTaskLink.setAppBuilderAppVersionId(
+			appBuilderAppVersionId);
 		appBuilderWorkflowTaskLink.setDdmStructureLayoutId(
 			ddmStructureLayoutId);
 		appBuilderWorkflowTaskLink.setReadOnly(readOnly);
@@ -71,6 +75,14 @@ public class AppBuilderWorkflowTaskLinkLocalServiceImpl
 	}
 
 	@Override
+	public void deleteAppBuilderWorkflowTaskLinks(
+		long appBuilderAppId, long appBuilderAppVersionId) {
+
+		appBuilderWorkflowTaskLinkPersistence.removeByA_A(
+			appBuilderAppId, appBuilderAppVersionId);
+	}
+
+	@Override
 	public List<AppBuilderWorkflowTaskLink> getAppBuilderWorkflowTaskLinks(
 		long appBuilderAppId) {
 
@@ -80,10 +92,19 @@ public class AppBuilderWorkflowTaskLinkLocalServiceImpl
 
 	@Override
 	public List<AppBuilderWorkflowTaskLink> getAppBuilderWorkflowTaskLinks(
-		long appBuilderAppId, String workflowTaskName) {
+		long appBuilderAppId, long appBuilderAppVersionId) {
 
-		return appBuilderWorkflowTaskLinkPersistence.findByA_W(
-			appBuilderAppId, workflowTaskName);
+		return appBuilderWorkflowTaskLinkPersistence.findByA_A(
+			appBuilderAppId, appBuilderAppVersionId);
+	}
+
+	@Override
+	public List<AppBuilderWorkflowTaskLink> getAppBuilderWorkflowTaskLinks(
+		long appBuilderAppId, long appBuilderAppVersionId,
+		String workflowTaskName) {
+
+		return appBuilderWorkflowTaskLinkPersistence.findByA_A_W(
+			appBuilderAppId, appBuilderAppVersionId, workflowTaskName);
 	}
 
 }

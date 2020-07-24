@@ -17,13 +17,6 @@ import core from 'metal';
 import dom from 'metal-dom';
 
 const VALID_INPUT_KEYS = new Set([
-	'Backspace',
-	'Tab',
-	'Enter',
-	'ArrowUp',
-	'Up',
-	'ArrowDown',
-	'Down',
 	'0',
 	'1',
 	'2',
@@ -34,6 +27,13 @@ const VALID_INPUT_KEYS = new Set([
 	'7',
 	'8',
 	'9',
+	'ArrowDown',
+	'ArrowUp',
+	'Backspace',
+	'Down',
+	'Enter',
+	'Tab',
+	'Up',
 ]);
 
 /**

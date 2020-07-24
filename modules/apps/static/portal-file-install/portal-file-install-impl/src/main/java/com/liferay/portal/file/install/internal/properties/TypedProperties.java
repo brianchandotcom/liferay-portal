@@ -23,7 +23,6 @@ import java.io.Writer;
 import java.util.AbstractMap;
 import java.util.AbstractSet;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -128,41 +127,6 @@ public class TypedProperties extends AbstractMap<String, Object> {
 		}
 	}
 
-	private static Map<String, Map<String, String>> _prepare(
-		Map<String, TypedProperties> properties) {
-
-		Map<String, Map<String, String>> dynamic = new HashMap<>();
-
-		for (Map.Entry<String, TypedProperties> entry : properties.entrySet()) {
-			String name = entry.getKey();
-
-			TypedProperties typedProperties = entry.getValue();
-
-			dynamic.put(name, new DynamicMap(name, typedProperties._storage));
-		}
-
-		return dynamic;
-	}
-
-	private static void _substitute(
-		Map<String, TypedProperties> properties,
-		Map<String, Map<String, String>> dynamic,
-		SubstitutionCallback callback) {
-
-		for (Map<String, String> map : dynamic.values()) {
-			DynamicMap dynamicMap = (DynamicMap)map;
-
-			dynamicMap.init(callback);
-		}
-
-		for (Map.Entry<String, TypedProperties> entry : properties.entrySet()) {
-			TypedProperties typedProperties = entry.getValue();
-
-			typedProperties._storage.putAllSubstituted(
-				dynamic.get(entry.getKey()));
-		}
-	}
-
 	private void _ensureTyped() {
 		if (!_storage.isTyped()) {
 			_storage.setTyped(true);
@@ -186,10 +150,11 @@ public class TypedProperties extends AbstractMap<String, Object> {
 			callback = _defaultSubstitutionCallback;
 		}
 
-		Map<String, TypedProperties> map = Collections.singletonMap(
-			"root", this);
+		DynamicMap dynamic = new DynamicMap(_storage);
 
-		_substitute(map, _prepare(map), callback);
+		dynamic.init(callback);
+
+		_storage.putAllSubstituted(dynamic);
 	}
 
 	private static final String _ENV_PREFIX = "env:";

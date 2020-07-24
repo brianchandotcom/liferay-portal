@@ -26,30 +26,6 @@ import java.util.function.Function;
 public class ServiceReferenceMapperFactory {
 
 	public static <K, S> ServiceReferenceMapper<K, S> create(
-		final Function<S, K> getterFunction) {
-
-		return new ServiceReferenceMapper<K, S>() {
-
-			@Override
-			public void map(
-				ServiceReference<S> serviceReference, Emitter<K> emitter) {
-
-				Registry registry = RegistryUtil.getRegistry();
-
-				S service = registry.getService(serviceReference);
-
-				try {
-					emitter.emit(getterFunction.apply(service));
-				}
-				finally {
-					registry.ungetService(serviceReference);
-				}
-			}
-
-		};
-	}
-
-	public static <K, S> ServiceReferenceMapper<K, S> create(
 		final ServiceMapper<K, S> serviceMapper) {
 
 		return new ServiceReferenceMapper<K, S>() {
@@ -96,6 +72,30 @@ public class ServiceReferenceMapperFactory {
 				}
 				else {
 					emitter.emit((K)propertyValue);
+				}
+			}
+
+		};
+	}
+
+	public static <K, S> ServiceReferenceMapper<K, S> create(
+		final Function<S, K> getterFunction) {
+
+		return new ServiceReferenceMapper<K, S>() {
+
+			@Override
+			public void map(
+				ServiceReference<S> serviceReference, Emitter<K> emitter) {
+
+				Registry registry = RegistryUtil.getRegistry();
+
+				S service = registry.getService(serviceReference);
+
+				try {
+					emitter.emit(getterFunction.apply(service));
+				}
+				finally {
+					registry.ungetService(serviceReference);
 				}
 			}
 

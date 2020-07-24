@@ -603,6 +603,10 @@ definition {
 		Ratings.viewRateStackedStar(
 			averageStarCount = "3.0",
 			ratingStarCount = "3");
+
+		Ratings.revokeStackedStarsRating();
+
+		Ratings.viewNoRateStackedStar(averageStarCount = "0.0");
 	}
 
 	@priority = "4"

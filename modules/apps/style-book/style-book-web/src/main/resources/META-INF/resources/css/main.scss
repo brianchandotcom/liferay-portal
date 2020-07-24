@@ -31,6 +31,7 @@ $toolbarDesktopHeight: 56px;
 
 	&__page-preview {
 		flex-grow: 1;
+		position: relative;
 
 		&-frame {
 			border: none;
@@ -47,6 +48,17 @@ $toolbarDesktopHeight: 56px;
 			font-weight: 600;
 			height: 100%;
 			justify-content: center;
+		}
+
+		&::after {
+			content: '';
+			cursor: not-allowed;
+			display: block;
+			height: 100%;
+			left: 0;
+			position: fixed;
+			top: 0;
+			width: 100%;
 		}
 	}
 

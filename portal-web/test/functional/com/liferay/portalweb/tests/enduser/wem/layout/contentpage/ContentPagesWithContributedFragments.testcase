@@ -2331,7 +2331,7 @@ definition {
 	@description = "This is a test for LPS-112249. The flags of each collection item are shown when add a Content Flags fragment to Collection Display."
 	@priority = "5"
 	test ViewFlagsViaContentFlagsInCollectionDisplay {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		for (var i : list "1,2,3") {
 			JSONWebcontent.addWebContent(
@@ -2415,7 +2415,7 @@ definition {
 	@description = "This is a use case for LPS-114727. The Content Display fragment can display full content of asset entries in Collection Display."
 	@priority = "5"
 	test ViewFullContentInContentDisplayWithCollectionProvider {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		task ("Add a Web Content Article,a Blogs Entry and a document") {
 			JSONWebcontent.addWebContent(
@@ -2510,7 +2510,7 @@ definition {
 	@description = "This is a test for LPS-112249. The ratings of each collection item are shown when add a Content Ratings fragment to Collection Display."
 	@priority = "5"
 	test ViewRatingsViaContentRatingsInCollectionDisplay {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		for (var i : list "1,2,3") {
 			JSONWebcontent.addWebContent(
@@ -2587,7 +2587,7 @@ definition {
 	@description = "This is a test for LPS-112093. The Web Content Articles of collection are displayed using Default Template when add a Content Display to Collection Display."
 	@priority = "5"
 	test ViewWebContentViaContentInCollectionDisplay {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		for (var i : list "1,2,3") {
 			JSONWebcontent.addWebContent(
@@ -2661,7 +2661,7 @@ definition {
 	@description = "This is a test for LPS-112093. Can display Web Content Articles of collection using custom template when add a Content Display to Collection Display."
 	@priority = "5"
 	test ViewWebContentWithCustomTemplateViaContentDisplayInCollectionDisplay {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

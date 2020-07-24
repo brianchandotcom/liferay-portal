@@ -27,7 +27,7 @@ definition {
 
 	@priority = "4"
 	test AddSiteTemplate {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		SiteTemplates.addCP(
 			siteTemplateActive = "Yes",
@@ -47,7 +47,7 @@ definition {
 
 	@priority = "4"
 	test AddSiteTemplateApplySiteTemplateChangesToSite {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property portal.release = "false";
 
 		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
@@ -94,7 +94,7 @@ definition {
 
 	@priority = "4"
 	test AddSiteTemplateDisablePageModification {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		SiteTemplates.addCP(
 			disableChanges = "true",
@@ -151,7 +151,7 @@ definition {
 
 	@priority = "4"
 	test DeactivateDefaultSiteTemplate {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
@@ -220,7 +220,7 @@ definition {
 
 	@priority = "4"
 	test DeleteSiteTemplateAssociatedWithASite {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		SiteTemplates.addCP(
 			siteTemplateActive = "Yes",
@@ -302,7 +302,7 @@ definition {
 
 	@priority = "4"
 	test EditSiteTemplate {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		SiteTemplates.addCP(
 			siteTemplateActive = "Yes",
@@ -421,7 +421,7 @@ definition {
 
 	@priority = "4"
 	test OnlySiteAdminCanModifyPageAssociatedWithSiteTemplate {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 

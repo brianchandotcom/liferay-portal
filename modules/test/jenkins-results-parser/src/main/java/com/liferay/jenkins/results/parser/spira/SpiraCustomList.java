@@ -20,6 +20,7 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMe
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -129,11 +130,9 @@ public class SpiraCustomList extends BaseSpiraArtifact {
 	}
 
 	public List<SpiraCustomList.Value> getSpiraCustomListValues() {
-		if (_spiraCustomListValues != null) {
+		if (!_spiraCustomListValues.isEmpty()) {
 			return _spiraCustomListValues;
 		}
-
-		_spiraCustomListValues = new ArrayList<>();
 
 		SpiraProject spiraProject = getSpiraProject();
 
@@ -307,6 +306,7 @@ public class SpiraCustomList extends BaseSpiraArtifact {
 	}
 
 	private final Class<? extends SpiraArtifact> _spiraArtifactClass;
-	private List<SpiraCustomList.Value> _spiraCustomListValues;
+	private final List<SpiraCustomList.Value> _spiraCustomListValues =
+		Collections.synchronizedList(new ArrayList<Value>());
 
 }

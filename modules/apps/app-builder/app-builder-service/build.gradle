@@ -1,5 +1,6 @@
 buildService {
 	apiDir = "../app-builder-api/src/main/java"
+	testDir = "../app-builder-test/src/testIntegration/java"
 }
 
 dependencies {

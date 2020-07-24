@@ -97,7 +97,8 @@ public class ContentDashboardAdminDisplayContext {
 
 		_assetCategoryIds = Arrays.asList(
 			ArrayUtil.toLongArray(
-				ParamUtil.getLongValues(_liferayPortletRequest, "categoryId")));
+				ParamUtil.getLongValues(
+					_liferayPortletRequest, "assetCategoryId")));
 
 		return _assetCategoryIds;
 	}

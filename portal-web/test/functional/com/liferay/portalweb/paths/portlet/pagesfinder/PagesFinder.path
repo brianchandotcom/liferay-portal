@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TREE_NODE_ITEM</td>
+	<td>//ul[contains(@class,'tree-container')]/li[contains(@class,'tree-node')][${key_index}][contains(.,'${key_pageName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEW_IN_PAGE_ADMINISTRATION</td>
 	<td>//div[contains(@id,'layout-finder')]//a[contains(.,"View in Page Administration")]</td>
 	<td></td>

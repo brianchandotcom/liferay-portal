@@ -18,9 +18,10 @@ import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.info.form.InfoForm;
+import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemClassDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.item.selector.ItemSelector;
@@ -33,7 +34,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -186,10 +186,19 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			return null;
 		}
 
-		InfoForm infoForm = infoItemFormProvider.getInfoForm();
+		InfoItemClassDetailsProvider<?> infoItemClassDetailsProvider =
+			infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemClassDetailsProvider.class,
+				layoutPageTemplateEntry.getClassName());
 
-		return ResourceActionsUtil.getModelResource(
-			themeDisplay.getLocale(), infoForm.getName());
+		if (infoItemClassDetailsProvider == null) {
+			return null;
+		}
+
+		InfoItemClassDetails infoItemClassDetails =
+			infoItemClassDetailsProvider.getInfoItemClassDetails();
+
+		return infoItemClassDetails.getLabel(themeDisplay.getLocale());
 	}
 
 	private Map<String, Object> _getSelectedMappingTypes() {

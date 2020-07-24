@@ -22,13 +22,13 @@ import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.VirtualLayoutConstants;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.portlet.LayoutFriendlyURLSeparatorComposite;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -120,8 +120,23 @@ public class UpdateLanguageAction implements Action {
 			layoutURL = redirect.substring(0, posQuestion);
 		}
 
-		int posFriendlyURLSeparator = layoutURL.indexOf(
-			Portal.FRIENDLY_URL_SEPARATOR);
+		int posFriendlyURLSeparator = -1;
+
+		for (String urlSeparator :
+				FriendlyURLResolverRegistryUtil.getURLSeparators()) {
+
+			if (VirtualLayoutConstants.CANONICAL_URL_SEPARATOR.equals(
+					urlSeparator)) {
+
+				continue;
+			}
+
+			posFriendlyURLSeparator = layoutURL.indexOf(urlSeparator);
+
+			if (posFriendlyURLSeparator != -1) {
+				break;
+			}
+		}
 
 		Layout layout = themeDisplay.getLayout();
 

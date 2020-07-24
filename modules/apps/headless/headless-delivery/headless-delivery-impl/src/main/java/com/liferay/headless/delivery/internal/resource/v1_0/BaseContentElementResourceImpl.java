@@ -99,6 +99,8 @@ public abstract class BaseContentElementResourceImpl
 	public Page<ContentElement> getSiteContentElementsPage(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			@Parameter(hidden = true) @QueryParam("search") String search,
+			@Context com.liferay.portal.vulcan.aggregation.Aggregation
+				aggregation,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {
@@ -143,7 +145,8 @@ public abstract class BaseContentElementResourceImpl
 		throws Exception {
 
 		return getSiteContentElementsPage(
-			(Long)parameters.get("siteId"), search, filter, pagination, sorts);
+			(Long)parameters.get("siteId"), search, null, filter, pagination,
+			sorts);
 	}
 
 	@Override

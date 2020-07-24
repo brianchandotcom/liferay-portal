@@ -293,6 +293,15 @@ public class DEDataDefinitionFieldLinkLocalServiceUtil {
 			uuid, groupId);
 	}
 
+	public static com.liferay.data.engine.model.DEDataDefinitionFieldLink
+		fetchDEDataDefinitionFieldLinks(
+			long classNameId, long classPK, long ddmStructureId,
+			String fieldName) {
+
+		return getService().fetchDEDataDefinitionFieldLinks(
+			classNameId, classPK, ddmStructureId, fieldName);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

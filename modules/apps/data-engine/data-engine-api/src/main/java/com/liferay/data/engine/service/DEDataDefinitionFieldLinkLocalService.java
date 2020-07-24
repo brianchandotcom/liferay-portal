@@ -244,6 +244,10 @@ public interface DEDataDefinitionFieldLinkLocalService
 			String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DEDataDefinitionFieldLink fetchDEDataDefinitionFieldLinks(
+		long classNameId, long classPK, long ddmStructureId, String fieldName);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**

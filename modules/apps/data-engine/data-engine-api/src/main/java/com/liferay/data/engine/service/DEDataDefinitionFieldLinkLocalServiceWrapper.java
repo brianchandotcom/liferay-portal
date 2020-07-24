@@ -317,6 +317,17 @@ public class DEDataDefinitionFieldLinkLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.data.engine.model.DEDataDefinitionFieldLink
+		fetchDEDataDefinitionFieldLinks(
+			long classNameId, long classPK, long ddmStructureId,
+			String fieldName) {
+
+		return _deDataDefinitionFieldLinkLocalService.
+			fetchDEDataDefinitionFieldLinks(
+				classNameId, classPK, ddmStructureId, fieldName);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

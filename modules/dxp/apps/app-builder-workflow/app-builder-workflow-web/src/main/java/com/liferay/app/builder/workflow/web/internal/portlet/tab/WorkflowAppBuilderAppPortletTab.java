@@ -80,10 +80,15 @@ public class WorkflowAppBuilderAppPortletTab
 				).build());
 		}
 
+		AppBuilderAppDataRecordLink appBuilderAppDataRecordLink =
+			_appBuilderAppDataRecordLinkLocalService.
+				fetchDDLRecordAppBuilderAppDataRecordLink(dataRecordId);
+
 		Stream.of(
 			_appBuilderWorkflowTaskLinkLocalService.
 				getAppBuilderWorkflowTaskLinks(
 					appBuilderApp.getAppBuilderAppId(),
+					appBuilderAppDataRecordLink.getAppBuilderAppVersionId(),
 					_getWorkflowTaskName(
 						appBuilderApp.getCompanyId(), appBuilderApp.getUserId(),
 						workflowInstanceLink.getWorkflowInstanceId()))

@@ -203,7 +203,9 @@ public class DDMFormValuesToMapConverterImpl
 		DDMFormField ddmFormField = ddmFormFields.get(
 			ddmFormFieldValue.getName());
 
-		if (StringUtil.equals(ddmFormField.getType(), "fieldset")) {
+		if ((ddmFormField != null) &&
+			StringUtil.equals(ddmFormField.getType(), "fieldset")) {
+
 			if (ListUtil.isEmpty(
 					ddmFormFieldValue.getNestedDDMFormFieldValues())) {
 

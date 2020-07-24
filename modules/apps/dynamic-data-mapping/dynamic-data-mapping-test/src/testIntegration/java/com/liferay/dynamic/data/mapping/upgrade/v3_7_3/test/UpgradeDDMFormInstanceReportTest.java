@@ -306,7 +306,7 @@ public class UpgradeDDMFormInstanceReportTest {
 
 		ddmForm.addDDMFormField(checkboxMultipleDDMFormField);
 
-		DDMFormField gridFormField = DDMFormTestUtil.createDDMFormField(
+		DDMFormField gridDDMFormField = DDMFormTestUtil.createDDMFormField(
 			"grid", "grid", "grid", "string", false, false, false);
 
 		DDMFormFieldOptions gridColumnDDMFormFieldOptions =
@@ -323,7 +323,7 @@ public class UpgradeDDMFormInstanceReportTest {
 		gridColumnDDMFormFieldOptions.addOptionLabel(
 			"column4", LocaleUtil.US, "column4");
 
-		gridFormField.setProperty("columns", gridColumnDDMFormFieldOptions);
+		gridDDMFormField.setProperty("columns", gridColumnDDMFormFieldOptions);
 
 		DDMFormFieldOptions gridRowDDMFormFieldOptions =
 			new DDMFormFieldOptions();
@@ -339,9 +339,9 @@ public class UpgradeDDMFormInstanceReportTest {
 		gridRowDDMFormFieldOptions.addOptionLabel(
 			"row4", LocaleUtil.US, "row4");
 
-		gridFormField.setProperty("rows", gridRowDDMFormFieldOptions);
+		gridDDMFormField.setProperty("rows", gridRowDDMFormFieldOptions);
 
-		ddmForm.addDDMFormField(gridFormField);
+		ddmForm.addDDMFormField(gridDDMFormField);
 
 		ddmForm.addDDMFormField(
 			DDMFormTestUtil.createDDMFormField(

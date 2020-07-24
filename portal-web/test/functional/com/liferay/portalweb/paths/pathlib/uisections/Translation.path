@@ -45,6 +45,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BASE_LANGUAGE_CONTENT_FIELD</td>
+	<td>//div[contains(@class,'col-md-6') and contains(.,'${key_fieldName}')]//div[contains(.,'${key_content}') and @contenteditable='false']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BASE_LANGUAGE_FIELD</td>
+	<td>//div[contains(@class,'form-group')]//input[contains(@name,'JournalPortlet_${key_fieldName}') and contains(@value,'${key_fieldValue}') and @readonly='true']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TARGET_LANGUAGE_FIELD</td>
+	<td>//div[contains(@class,'form-group')]//input[contains(@id,'JournalPortlet_${key_fieldName}') and contains(@value,'${key_fieldValue}') and (not(@readonly='true'))]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>UNSELECTED_LOCALE_ICON</td>
 	<td>//ul[@id='translationManager']//span[contains(.,'${key_localizedLanguage}')]</td>
 	<td></td>

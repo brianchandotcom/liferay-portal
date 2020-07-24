@@ -15,8 +15,10 @@
 package com.liferay.app.builder.workflow.web.internal.portlet.action;
 
 import com.liferay.app.builder.constants.AppBuilderPortletKeys;
+import com.liferay.app.builder.model.AppBuilderAppVersion;
 import com.liferay.app.builder.rest.dto.v1_0.App;
 import com.liferay.app.builder.rest.resource.v1_0.AppResource;
+import com.liferay.app.builder.service.AppBuilderAppVersionLocalService;
 import com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflow;
 import com.liferay.app.builder.workflow.rest.resource.v1_0.AppWorkflowResource;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -24,11 +26,13 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import javax.portlet.ResourceRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rafael Praxedes
@@ -56,7 +60,12 @@ public class UpdateAppBuilderAppMVCResourceCommand
 			themeDisplay.getUser()
 		).build();
 
-		App app = appResource.putApp(
+		App app = appResource.getApp(
+			ParamUtil.getLong(resourceRequest, "appBuilderAppId"));
+
+		String appVersion = app.getVersion();
+
+		app = appResource.putApp(
 			ParamUtil.getLong(resourceRequest, "appBuilderAppId"),
 			App.toDTO(ParamUtil.getString(resourceRequest, "app")));
 
@@ -65,12 +74,52 @@ public class UpdateAppBuilderAppMVCResourceCommand
 			themeDisplay.getUser()
 		).build();
 
-		appWorkflowResource.putAppWorkflow(
-			app.getId(),
-			AppWorkflow.toDTO(
-				ParamUtil.getString(resourceRequest, "appWorkflow")));
+		AppWorkflow appWorkflow = AppWorkflow.toDTO(
+			ParamUtil.getString(resourceRequest, "appWorkflow"));
+
+		if (_isModifiedAppWorkflow(
+				appWorkflowResource.getAppWorkflow(
+					ParamUtil.getLong(resourceRequest, "appBuilderAppId")),
+				appWorkflow)) {
+
+			if (Objects.equals(app.getVersion(), appVersion)) {
+				AppBuilderAppVersion appBuilderAppVersion =
+					_appBuilderAppVersionLocalService.addAppBuilderAppVersion(
+						app.getSiteId(), themeDisplay.getCompanyId(),
+						themeDisplay.getUserId(), app.getId(),
+						app.getDataRecordCollectionId(),
+						app.getDataDefinitionId(), app.getDataLayoutId());
+
+				app.setVersion(appBuilderAppVersion.getVersion());
+			}
+
+			appWorkflowResource.putAppWorkflow(app.getId(), appWorkflow);
+		}
 
 		return Optional.of(app);
 	}
+
+	private boolean _isModifiedAppWorkflow(
+		AppWorkflow appWorkflow, AppWorkflow newAppWorkflow) {
+
+		if (!Objects.deepEquals(
+				appWorkflow.getAppWorkflowStates(),
+				newAppWorkflow.getAppWorkflowStates())) {
+
+			return true;
+		}
+
+		if (!Objects.deepEquals(
+				appWorkflow.getAppWorkflowTasks(),
+				newAppWorkflow.getAppWorkflowTasks())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Reference
+	private AppBuilderAppVersionLocalService _appBuilderAppVersionLocalService;
 
 }

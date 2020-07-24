@@ -19,10 +19,14 @@ package com.liferay.portal.vulcan.graphql.servlet;
  */
 public interface GraphQLContributor {
 
-	public Object getMutationContribution();
-
 	public String getContributionPath();
 
-	public Object getQueryContribution();
+	public default Object getMutationContribution() {
+		return null;
+	}
+
+	public default Object getQueryContribution() {
+		return null;
+	}
 
 }

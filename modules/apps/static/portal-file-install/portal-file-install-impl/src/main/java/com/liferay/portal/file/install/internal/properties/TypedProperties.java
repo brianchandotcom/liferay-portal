@@ -106,7 +106,7 @@ public class TypedProperties extends AbstractMap<String, Object> {
 
 	public interface SubstitutionCallback {
 
-		public String getValue(String name, String key, String value);
+		public String getValue(String value);
 
 	}
 
@@ -200,7 +200,7 @@ public class TypedProperties extends AbstractMap<String, Object> {
 		new SubstitutionCallback() {
 
 			@Override
-			public String getValue(String name, String key, String value) {
+			public String getValue(String value) {
 				if (value.startsWith(_ENV_PREFIX)) {
 					return System.getenv(value.substring(_ENV_PREFIX.length()));
 				}
@@ -214,8 +214,7 @@ public class TypedProperties extends AbstractMap<String, Object> {
 
 	private static class DynamicMap extends AbstractMap<String, String> {
 
-		public DynamicMap(String name, Properties storage) {
-			_name = name;
+		public DynamicMap(Properties storage) {
 			_storage = storage;
 		}
 
@@ -251,7 +250,7 @@ public class TypedProperties extends AbstractMap<String, Object> {
 						String string = DynamicMap.this.get(value);
 
 						if (string == null) {
-							return _callback.getValue(_name, key, value);
+							return _callback.getValue(value);
 						}
 
 						if (!_storage.isTyped()) {
@@ -305,7 +304,6 @@ public class TypedProperties extends AbstractMap<String, Object> {
 
 		private SubstitutionCallback _callback;
 		private final Map<String, String> _cycles = new HashMap<>();
-		private final String _name;
 		private final Properties _storage;
 
 		private class ComputedIterator

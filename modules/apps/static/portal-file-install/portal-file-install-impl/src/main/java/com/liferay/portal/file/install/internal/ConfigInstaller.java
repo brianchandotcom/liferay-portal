@@ -318,7 +318,7 @@ public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 		return new TypedProperties.SubstitutionCallback() {
 
 			@Override
-			public String getValue(String name, String key, String value) {
+			public String getValue(String value) {
 				return substitutionCallback.getValue(value);
 			}
 

@@ -1599,6 +1599,27 @@ definition {
 			SelectFrame(value1 = "relative=top");
 		}
 
+		if (isSet(webContentDecimal)) {
+			AssertTextEquals(
+				key_fieldName = "Decimal",
+				locator1 = "TextInput#DDM",
+				value1 = "${webContentDecimal}");
+		}
+
+		if (isSet(webContentInteger)) {
+			AssertTextEquals(
+				key_fieldName = "Integer",
+				locator1 = "TextInput#DDM",
+				value1 = "${webContentInteger}");
+		}
+
+		if (isSet(webContentNumber)) {
+			AssertTextEquals(
+				key_fieldName = "Number",
+				locator1 = "TextInput#DDM",
+				value1 = "${webContentNumber}");
+		}
+
 		if (isSet(webContentDocumentsAndMedia)) {
 			AssertTextEquals(
 				key_fieldName = "DocumentsAndMedia",

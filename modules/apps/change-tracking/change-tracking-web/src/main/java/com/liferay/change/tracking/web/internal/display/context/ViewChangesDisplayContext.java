@@ -296,45 +296,6 @@ public class ViewChangesDisplayContext {
 			}
 		}
 
-		JSONObject userInfoJSONObject = JSONFactoryUtil.createJSONObject();
-
-		for (String key : entriesJSONObject.keySet()) {
-			JSONObject entryJSONObject = entriesJSONObject.getJSONObject(key);
-
-			if (entryJSONObject.has("ctEntryId")) {
-				long userId = entryJSONObject.getLong("userId");
-
-				if (!userInfoJSONObject.has(String.valueOf(userId))) {
-					String portraitURL = null;
-					String userName = StringPool.BLANK;
-
-					User user = _userLocalService.fetchUser(userId);
-
-					if (user != null) {
-						if (user.getPortraitId() != 0) {
-							try {
-								portraitURL = user.getPortraitURL(
-									_themeDisplay);
-							}
-							catch (PortalException portalException) {
-								_log.error(portalException, portalException);
-							}
-						}
-
-						userName = user.getFullName();
-					}
-
-					userInfoJSONObject.put(
-						String.valueOf(userId),
-						JSONUtil.put(
-							"portraitURL", portraitURL
-						).put(
-							"userName", userName
-						));
-				}
-			}
-		}
-
 		ResourceURL renderCTEntryURL = _renderResponse.createResourceURL();
 
 		renderCTEntryURL.setResourceID("/change_lists/render_ct_entry");
@@ -365,7 +326,7 @@ public class ViewChangesDisplayContext {
 		).put(
 			"typeNames", typeNamesJSONObject
 		).put(
-			"userInfo", userInfoJSONObject
+			"userInfo", _getUserInfoJSONObject(entriesJSONObject)
 		).build();
 	}
 
@@ -564,6 +525,49 @@ public class ViewChangesDisplayContext {
 		}
 
 		return entries;
+	}
+
+	private JSONObject _getUserInfoJSONObject(JSONObject entriesJSONObject) {
+		JSONObject userInfoJSONObject = JSONFactoryUtil.createJSONObject();
+
+		for (String key : entriesJSONObject.keySet()) {
+			JSONObject entryJSONObject = entriesJSONObject.getJSONObject(key);
+
+			if (entryJSONObject.has("ctEntryId")) {
+				long userId = entryJSONObject.getLong("userId");
+
+				if (!userInfoJSONObject.has(String.valueOf(userId))) {
+					String portraitURL = null;
+					String userName = StringPool.BLANK;
+
+					User user = _userLocalService.fetchUser(userId);
+
+					if (user != null) {
+						if (user.getPortraitId() != 0) {
+							try {
+								portraitURL = user.getPortraitURL(
+									_themeDisplay);
+							}
+							catch (PortalException portalException) {
+								_log.error(portalException, portalException);
+							}
+						}
+
+						userName = user.getFullName();
+					}
+
+					userInfoJSONObject.put(
+						String.valueOf(userId),
+						JSONUtil.put(
+							"portraitURL", portraitURL
+						).put(
+							"userName", userName
+						));
+				}
+			}
+		}
+
+		return userInfoJSONObject;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

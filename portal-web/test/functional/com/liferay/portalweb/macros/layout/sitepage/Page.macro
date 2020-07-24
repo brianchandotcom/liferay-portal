@@ -643,6 +643,19 @@ definition {
 			value1 = "${childPageName}");
 	}
 
+	macro viewCollectionItem {
+		if (isSet(key_rowNumber)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
+				value1 = "${itemName}");
+		}
+		else {
+			AssertTextEquals.assertPartialText(
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_1",
+				value1 = "${itemName}");
+		}
+	}
+
 	macro viewCurrentTheme {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

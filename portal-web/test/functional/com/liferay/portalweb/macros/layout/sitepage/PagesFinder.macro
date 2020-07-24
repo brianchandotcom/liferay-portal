@@ -195,6 +195,14 @@ definition {
 		}
 	}
 
+	macro gotoPageEllipsisItem {
+		Click.mouseOverClick(
+			key_pageName = "${pageName}",
+			locator1 = "PagesFinder#PAGE_ELLIPSIS_ICON");
+
+		MenuItem.clickNoError(menuItem = "${item}");
+	}
+
 	macro inputPageSearch {
 		Type(
 			locator1 = "PagesFinder#INPUT_FIELD",

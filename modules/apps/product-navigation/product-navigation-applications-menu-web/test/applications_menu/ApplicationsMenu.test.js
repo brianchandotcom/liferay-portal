@@ -220,7 +220,11 @@ describe('ApplicationsMenu', () => {
 		const closeButton = getByTitle('close');
 
 		await act(async () => {
-			fireEvent.click(document.body);
+			const backdropElement = document.querySelector(
+				'.fade.modal.d-block.show'
+			);
+			fireEvent.mouseDown(backdropElement);
+			fireEvent.mouseUp(backdropElement);
 		});
 
 		act(() => {

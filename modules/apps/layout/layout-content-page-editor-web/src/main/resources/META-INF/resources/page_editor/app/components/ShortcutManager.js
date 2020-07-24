@@ -57,7 +57,9 @@ const isEditableCKEditor = (element) => {
 const isTextElement = (element) => {
 	return (
 		(element.tagName === 'INPUT' &&
-			(element.type === 'text' || element.type === 'search')) ||
+			(element.type === 'text' ||
+				element.type === 'search' ||
+				element.type === 'number')) ||
 		element.tagName === 'TEXTAREA'
 	);
 };

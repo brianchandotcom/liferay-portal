@@ -105,8 +105,10 @@ export const dropFieldSet = ({
 	indexes,
 	parentFieldName,
 	useFieldName,
+	...otherProps
 }) => {
 	return {
+		...otherProps,
 		fieldName,
 		fieldSet: dataLayoutBuilder.getDDMForm(fieldSet),
 		indexes,

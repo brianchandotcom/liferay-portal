@@ -19,7 +19,14 @@ import {updateField} from '../util/settingsContext.es';
 import {addField} from './fieldAddedHandler.es';
 
 const handleFieldSetAdded = (props, state, event) => {
-	const {fieldSet, indexes, parentFieldName, rows, useFieldName} = event;
+	const {
+		fieldSet,
+		indexes,
+		parentFieldName,
+		properties,
+		rows,
+		useFieldName,
+	} = event;
 	const {pages} = state;
 	const visitor = new PagesVisitor(fieldSet.pages);
 	const nestedFields = [];
@@ -33,6 +40,17 @@ const handleFieldSetAdded = (props, state, event) => {
 		{skipFieldNameGeneration: false, useFieldName},
 		nestedFields
 	);
+
+	if (properties) {
+		Object.keys(properties).forEach((key) => {
+			fieldSetField = updateField(
+				props,
+				fieldSetField,
+				key,
+				properties[key]
+			);
+		});
+	}
 
 	if (fieldSet.id) {
 		fieldSetField = updateField(

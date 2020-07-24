@@ -28,33 +28,36 @@ import FormViewContext from './FormViewContext.es';
 import useDeleteDefinitionField from './useDeleteDefinitionField.es';
 import useDeleteDefinitionFieldModal from './useDeleteDefinitionFieldModal.es';
 
-const createFieldSet = ({
-	defaultLanguageId,
-	fieldSetName,
-	nestedDataDefinitionFields,
-}) => {
+const createFieldSet = ({name, nestedDataDefinitionFields, ...otherProps}) => {
+	const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+
 	return {
+		...otherProps,
 		availableLanguageIds: [defaultLanguageId],
 		dataDefinitionFields: nestedDataDefinitionFields,
 		defaultLanguageId,
 		description: {},
-		name: {
-			[defaultLanguageId]: fieldSetName,
-		},
+		name,
 	};
 };
 
-const getFieldSet = (data) => {
-	const {
-		defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId(),
-		fieldSetName,
-		fieldSets,
-	} = data;
+const getFieldSet = ({customProperties, fieldSets, name, ...otherProps}) => {
 	const fieldSet = fieldSets.find(
-		({name}) => name[defaultLanguageId] === fieldSetName
+		({id}) => id === Number(customProperties.ddmStructureId)
 	);
 
-	return fieldSet || createFieldSet({...data, defaultLanguageId});
+	if (fieldSet) {
+		return {
+			...fieldSet,
+			name,
+		};
+	}
+
+	return createFieldSet({
+		customProperties,
+		name,
+		...otherProps,
+	});
 };
 
 const getFieldTypes = ({
@@ -77,6 +80,8 @@ const getFieldTypes = ({
 			label,
 			name,
 			nestedDataDefinitionFields = [],
+			repeatable,
+			showLabel,
 		},
 		nested
 	) => {
@@ -89,13 +94,6 @@ const getFieldTypes = ({
 		const fieldTypeSettings = fieldTypes.find(({name}) => {
 			return name === fieldType;
 		});
-
-		if (label[editingLanguageId]) {
-			label = label[editingLanguageId];
-		}
-		else {
-			label = label[Liferay.ThemeDisplay.getDefaultLanguageId()];
-		}
 
 		const isFieldGroup = fieldType === 'fieldset';
 		const isFieldSet = isFieldGroup && ddmStructureId;
@@ -132,13 +130,21 @@ const getFieldTypes = ({
 			isFieldSet,
 			...(isFieldGroup && {
 				fieldSet: getFieldSet({
-					fieldSetName: label,
+					customProperties,
 					fieldSets,
+					name: label,
 					nestedDataDefinitionFields,
 				}),
+				properties: {
+					collapsible: customProperties.collapsible,
+					repeatable,
+					showLabel,
+				},
 				useFieldName: name,
 			}),
-			label,
+			label:
+				label[editingLanguageId] ??
+				label[Liferay.ThemeDisplay.getDefaultLanguageId()],
 			name,
 			nestedDataDefinitionFields: nestedDataDefinitionFields.map(
 				(nestedField) => setDefinitionField(nestedField, true)
@@ -194,7 +200,6 @@ export default ({keywords}) => {
 		});
 	};
 	const onDoubleClick = ({name}) => {
-		const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 		const {activePage, pages} = dataLayoutBuilder.getStore();
 		const indexes = {
 			columnIndex: 0,
@@ -202,10 +207,14 @@ export default ({keywords}) => {
 			rowIndex: pages[activePage].rows.length,
 		};
 
-		const {fieldType, label, nestedDataDefinitionFields} = findFieldByName(
-			dataDefinitionFields,
-			name
-		);
+		const {
+			customProperties,
+			fieldType,
+			label,
+			repeatable,
+			showLabel,
+			...otherFieldProps
+		} = findFieldByName(dataDefinitionFields, name);
 
 		if (fieldType === 'fieldset') {
 			return dataLayoutBuilder.dispatch(
@@ -214,12 +223,17 @@ export default ({keywords}) => {
 					dataLayoutBuilder,
 					fieldName: name,
 					fieldSet: getFieldSet({
-						defaultLanguageId,
-						fieldSetName: label[defaultLanguageId],
+						...otherFieldProps,
+						customProperties,
 						fieldSets,
-						nestedDataDefinitionFields,
+						name: label,
 					}),
 					indexes,
+					properties: {
+						collapsible: customProperties.collapsible,
+						repeatable,
+						showLabel,
+					},
 					useFieldName: name,
 				})
 			);

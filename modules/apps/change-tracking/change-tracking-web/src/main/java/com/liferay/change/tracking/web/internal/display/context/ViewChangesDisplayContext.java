@@ -286,16 +286,6 @@ public class ViewChangesDisplayContext {
 			}
 		}
 
-		JSONObject entryDataJSONObject = JSONUtil.put(
-			"contextView", contextViewJSONObject
-		).put(
-			"entries", entriesJSONObject
-		).put(
-			"rootDisplayClasses", rootDisplayClassesJSONArray
-		).put(
-			"typeNames", typeNamesJSONObject
-		);
-
 		JSONArray changesJSONArray = JSONFactoryUtil.createJSONArray();
 		JSONObject userInfoJSONObject = JSONFactoryUtil.createJSONObject();
 
@@ -353,7 +343,7 @@ public class ViewChangesDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"changes", changesJSONArray
 		).put(
-			"contextView", entryDataJSONObject.getJSONObject("contextView")
+			"contextView", contextViewJSONObject
 		).put(
 			"entries", entriesJSONObject
 		).put(
@@ -361,13 +351,12 @@ public class ViewChangesDisplayContext {
 		).put(
 			"renderDiffURL", renderDiffURL.toString()
 		).put(
-			"rootDisplayClasses",
-			entryDataJSONObject.getJSONArray("rootDisplayClasses")
+			"rootDisplayClasses", rootDisplayClassesJSONArray
 		).put(
 			"spritemap",
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
 		).put(
-			"typeNames", entryDataJSONObject.getJSONObject("typeNames")
+			"typeNames", typeNamesJSONObject
 		).put(
 			"userInfo", userInfoJSONObject
 		).build();

@@ -116,11 +116,21 @@ public class StyleBookScopedCSSVariablesProvider
 			return StringPool.BLANK;
 		}
 
+		StyleBookEntry styleBookEntry = null;
+
 		Layout layout = themeDisplay.getLayout();
 
-		StyleBookEntry styleBookEntry =
-			_styleBookEntryLocalService.fetchDefaultStyleBookEntry(
-				layout.getGroupId());
+		if (layout.getStyleBookEntryId() > 0) {
+			styleBookEntry =
+				_styleBookEntryLocalService.fetchDefaultStyleBookEntry(
+					layout.getGroupId());
+		}
+
+		if (styleBookEntry == null) {
+			styleBookEntry =
+				_styleBookEntryLocalService.fetchDefaultStyleBookEntry(
+					layout.getGroupId());
+		}
 
 		if (styleBookEntry == null) {
 			return StringPool.BLANK;

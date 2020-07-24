@@ -186,11 +186,13 @@ public class PortalWebResourcesUtil {
 		_contextPathMap = ServiceTrackerCollections.openSingleValueMap(
 			PortalWebResources.class, null,
 			ServiceReferenceMapperFactory.create(
-				PortalWebResources::getContextPath));
+				(portalWebResources, emitter) -> emitter.emit(
+					portalWebResources.getContextPath())));
 	private static final ServiceTrackerMap<String, PortalWebResources>
 		_resourceTypeMap = ServiceTrackerCollections.openSingleValueMap(
 			PortalWebResources.class, null,
 			ServiceReferenceMapperFactory.create(
-				PortalWebResources::getResourceType));
+				(portalWebResources, emitter) -> emitter.emit(
+					portalWebResources.getResourceType())));
 
 }

@@ -138,6 +138,9 @@ public class AppBuilderAppLocalServiceImpl
 				appBuilderAppDeployment.getAppBuilderAppDeploymentId());
 		}
 
+		_appBuilderAppVersionLocalService.deleteAppBuilderAppVersions(
+			appBuilderAppId);
+
 		return appBuilderAppPersistence.remove(appBuilderAppId);
 	}
 

@@ -36,13 +36,14 @@ import java.util.Map;
 public class Page<T> {
 
 	public static <T> Page<T> of(Collection<T> items) {
-		return new Page<>(items);
+		return new Page<>(new HashMap<>(), items);
 	}
 
 	public static <T> Page<T> of(
 		Collection<T> items, Pagination pagination, long totalCount) {
 
-		return new Page<>(items, pagination, totalCount);
+		return new Page<>(
+			new HashMap<>(), new ArrayList<>(), items, pagination, totalCount);
 	}
 
 	public static <T> Page<T> of(
@@ -55,7 +56,8 @@ public class Page<T> {
 		Map<String, Map<String, String>> actions, Collection<T> items,
 		Pagination pagination, long totalCount) {
 
-		return new Page<>(actions, items, pagination, totalCount);
+		return new Page<>(
+			actions, new ArrayList<>(), items, pagination, totalCount);
 	}
 
 	public static <T> Page<T> of(
@@ -119,14 +121,6 @@ public class Page<T> {
 		return false;
 	}
 
-	private Page(Collection<T> items) {
-		this(new HashMap<>(), items);
-	}
-
-	private Page(Collection<T> items, Pagination pagination, long totalCount) {
-		this(new HashMap<>(), items, pagination, totalCount);
-	}
-
 	private Page(
 		Map<String, Map<String, String>> actions, Collection<T> items) {
 
@@ -135,25 +129,6 @@ public class Page<T> {
 		_page = 1;
 		_pageSize = items.size();
 		_totalCount = items.size();
-	}
-
-	private Page(
-		Map<String, Map<String, String>> actions, Collection<T> items,
-		Pagination pagination, long totalCount) {
-
-		_actions = actions;
-		_items = items;
-
-		if (pagination == null) {
-			_page = 0;
-			_pageSize = 0;
-		}
-		else {
-			_page = pagination.getPage();
-			_pageSize = pagination.getPageSize();
-		}
-
-		_totalCount = totalCount;
 	}
 
 	private Page(

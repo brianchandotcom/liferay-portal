@@ -50,6 +50,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DROPDOWN_MENU_ITEM</td>
+	<td>//div[contains(@class,'dropdown-menu show')]//button[contains(@class,'dropdown-item') and contains(.,'${key_locale}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BASE_LANGUAGE_CONTENT_FIELD</td>
 	<td>//div[contains(@class,'col-md-6') and contains(.,'${key_fieldName}')]//div[contains(.,'${key_content}') and @contenteditable='false']</td>
 	<td></td>

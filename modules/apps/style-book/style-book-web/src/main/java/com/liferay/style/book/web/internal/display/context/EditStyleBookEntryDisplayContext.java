@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.util.GroupURLProvider;
-import com.liferay.style.book.constants.StyleBookWebKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 
@@ -129,12 +128,6 @@ public class EditStyleBookEntryDisplayContext {
 				return StringPool.BLANK;
 			}
 		}
-
-		StyleBookEntry styleBookEntry = _getStyleBookEntry();
-
-		layoutURL = HttpUtil.addParameter(
-			layoutURL, StyleBookWebKeys.STYLE_BOOK_ENTRY_KEY,
-			styleBookEntry.getStyleBookEntryKey());
 
 		return HttpUtil.addParameter(layoutURL, "p_l_mode", Constants.PREVIEW);
 	}

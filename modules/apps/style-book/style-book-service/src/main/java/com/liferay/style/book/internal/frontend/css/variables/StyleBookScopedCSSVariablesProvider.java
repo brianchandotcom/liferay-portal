@@ -25,12 +25,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.style.book.constants.StyleBookWebKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 
@@ -120,43 +116,14 @@ public class StyleBookScopedCSSVariablesProvider
 			return StringPool.BLANK;
 		}
 
-		StyleBookEntry styleBookEntry = null;
-
 		Layout layout = themeDisplay.getLayout();
 
-		String styleBookEntryKey = ParamUtil.getString(
-			httpServletRequest, StyleBookWebKeys.STYLE_BOOK_ENTRY_KEY);
-
-		if (Validator.isNotNull(styleBookEntryKey)) {
-			styleBookEntry = _styleBookEntryLocalService.fetchStyleBookEntry(
-				layout.getGroupId(), styleBookEntryKey);
-		}
-
-		if (styleBookEntry == null) {
-			styleBookEntry =
-				_styleBookEntryLocalService.fetchDefaultStyleBookEntry(
-					layout.getGroupId());
-		}
+		StyleBookEntry styleBookEntry =
+			_styleBookEntryLocalService.fetchDefaultStyleBookEntry(
+				layout.getGroupId());
 
 		if (styleBookEntry == null) {
 			return StringPool.BLANK;
-		}
-
-		HttpServletRequest originalHttpServletRequest =
-			_portal.getOriginalServletRequest(httpServletRequest);
-
-		String layoutMode = ParamUtil.getString(
-			originalHttpServletRequest, "p_l_mode", Constants.VIEW);
-
-		if (!layoutMode.equals(Constants.PREVIEW)) {
-			return styleBookEntry.getFrontendTokensValues();
-		}
-
-		StyleBookEntry draftStyleBookEntry =
-			_styleBookEntryLocalService.fetchDraft(styleBookEntry);
-
-		if (draftStyleBookEntry != null) {
-			return draftStyleBookEntry.getFrontendTokensValues();
 		}
 
 		return styleBookEntry.getFrontendTokensValues();
@@ -164,9 +131,6 @@ public class StyleBookScopedCSSVariablesProvider
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		StyleBookScopedCSSVariablesProvider.class);
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private StyleBookEntryLocalService _styleBookEntryLocalService;

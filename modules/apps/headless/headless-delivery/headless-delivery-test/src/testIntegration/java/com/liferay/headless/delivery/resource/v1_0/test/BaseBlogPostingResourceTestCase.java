@@ -419,7 +419,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 	public void testGetSiteBlogPostingsPage() throws Exception {
 		Page<BlogPosting> page = blogPostingResource.getSiteBlogPostingsPage(
 			testGetSiteBlogPostingsPage_getSiteId(),
-			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+			RandomTestUtil.randomString(), null, null, Pagination.of(1, 2),
+			null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -433,7 +434,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 					irrelevantSiteId, randomIrrelevantBlogPosting());
 
 			page = blogPostingResource.getSiteBlogPostingsPage(
-				irrelevantSiteId, null, null, Pagination.of(1, 2), null);
+				irrelevantSiteId, null, null, null, Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -450,7 +451,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 			siteId, randomBlogPosting());
 
 		page = blogPostingResource.getSiteBlogPostingsPage(
-			siteId, null, null, Pagination.of(1, 2), null);
+			siteId, null, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -485,7 +486,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<BlogPosting> page =
 				blogPostingResource.getSiteBlogPostingsPage(
-					siteId, null,
+					siteId, null, null,
 					getFilterString(entityField, "between", blogPosting1),
 					Pagination.of(1, 2), null);
 
@@ -518,7 +519,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<BlogPosting> page =
 				blogPostingResource.getSiteBlogPostingsPage(
-					siteId, null,
+					siteId, null, null,
 					getFilterString(entityField, "eq", blogPosting1),
 					Pagination.of(1, 2), null);
 
@@ -542,14 +543,14 @@ public abstract class BaseBlogPostingResourceTestCase {
 			siteId, randomBlogPosting());
 
 		Page<BlogPosting> page1 = blogPostingResource.getSiteBlogPostingsPage(
-			siteId, null, null, Pagination.of(1, 2), null);
+			siteId, null, null, null, Pagination.of(1, 2), null);
 
 		List<BlogPosting> blogPostings1 = (List<BlogPosting>)page1.getItems();
 
 		Assert.assertEquals(blogPostings1.toString(), 2, blogPostings1.size());
 
 		Page<BlogPosting> page2 = blogPostingResource.getSiteBlogPostingsPage(
-			siteId, null, null, Pagination.of(2, 2), null);
+			siteId, null, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -558,7 +559,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		Assert.assertEquals(blogPostings2.toString(), 1, blogPostings2.size());
 
 		Page<BlogPosting> page3 = blogPostingResource.getSiteBlogPostingsPage(
-			siteId, null, null, Pagination.of(1, 3), null);
+			siteId, null, null, null, Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(blogPosting1, blogPosting2, blogPosting3),
@@ -667,7 +668,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<BlogPosting> ascPage =
 				blogPostingResource.getSiteBlogPostingsPage(
-					siteId, null, null, Pagination.of(1, 2),
+					siteId, null, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -676,7 +677,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 			Page<BlogPosting> descPage =
 				blogPostingResource.getSiteBlogPostingsPage(
-					siteId, null, null, Pagination.of(1, 2),
+					siteId, null, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(

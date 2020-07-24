@@ -272,7 +272,8 @@ public abstract class BaseContentStructureResourceTestCase {
 		Page<ContentStructure> page =
 			contentStructureResource.getSiteContentStructuresPage(
 				testGetSiteContentStructuresPage_getSiteId(),
-				RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+				RandomTestUtil.randomString(), null, null, Pagination.of(1, 2),
+				null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -286,7 +287,7 @@ public abstract class BaseContentStructureResourceTestCase {
 					irrelevantSiteId, randomIrrelevantContentStructure());
 
 			page = contentStructureResource.getSiteContentStructuresPage(
-				irrelevantSiteId, null, null, Pagination.of(1, 2), null);
+				irrelevantSiteId, null, null, null, Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -305,7 +306,7 @@ public abstract class BaseContentStructureResourceTestCase {
 				siteId, randomContentStructure());
 
 		page = contentStructureResource.getSiteContentStructuresPage(
-			siteId, null, null, Pagination.of(1, 2), null);
+			siteId, null, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -337,7 +338,7 @@ public abstract class BaseContentStructureResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<ContentStructure> page =
 				contentStructureResource.getSiteContentStructuresPage(
-					siteId, null,
+					siteId, null, null,
 					getFilterString(entityField, "between", contentStructure1),
 					Pagination.of(1, 2), null);
 
@@ -372,7 +373,7 @@ public abstract class BaseContentStructureResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<ContentStructure> page =
 				contentStructureResource.getSiteContentStructuresPage(
-					siteId, null,
+					siteId, null, null,
 					getFilterString(entityField, "eq", contentStructure1),
 					Pagination.of(1, 2), null);
 
@@ -402,7 +403,7 @@ public abstract class BaseContentStructureResourceTestCase {
 
 		Page<ContentStructure> page1 =
 			contentStructureResource.getSiteContentStructuresPage(
-				siteId, null, null, Pagination.of(1, 2), null);
+				siteId, null, null, null, Pagination.of(1, 2), null);
 
 		List<ContentStructure> contentStructures1 =
 			(List<ContentStructure>)page1.getItems();
@@ -412,7 +413,7 @@ public abstract class BaseContentStructureResourceTestCase {
 
 		Page<ContentStructure> page2 =
 			contentStructureResource.getSiteContentStructuresPage(
-				siteId, null, null, Pagination.of(2, 2), null);
+				siteId, null, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -424,7 +425,7 @@ public abstract class BaseContentStructureResourceTestCase {
 
 		Page<ContentStructure> page3 =
 			contentStructureResource.getSiteContentStructuresPage(
-				siteId, null, null, Pagination.of(1, 3), null);
+				siteId, null, null, null, Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
@@ -546,7 +547,7 @@ public abstract class BaseContentStructureResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<ContentStructure> ascPage =
 				contentStructureResource.getSiteContentStructuresPage(
-					siteId, null, null, Pagination.of(1, 2),
+					siteId, null, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -555,7 +556,7 @@ public abstract class BaseContentStructureResourceTestCase {
 
 			Page<ContentStructure> descPage =
 				contentStructureResource.getSiteContentStructuresPage(
-					siteId, null, null, Pagination.of(1, 2),
+					siteId, null, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(

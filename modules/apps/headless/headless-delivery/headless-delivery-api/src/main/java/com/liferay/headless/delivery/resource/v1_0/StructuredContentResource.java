@@ -51,13 +51,15 @@ public interface StructuredContentResource {
 	}
 
 	public Page<StructuredContent> getContentStructureStructuredContentsPage(
-			Long contentStructureId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Long contentStructureId, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public Page<StructuredContent> getSiteStructuredContentsPage(
-			Long siteId, Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Long siteId, Boolean flatten, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public StructuredContent postSiteStructuredContent(
@@ -89,6 +91,7 @@ public interface StructuredContentResource {
 	public Page<StructuredContent>
 			getStructuredContentFolderStructuredContentsPage(
 				Long structuredContentFolderId, Boolean flatten, String search,
+				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 				Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 

@@ -188,7 +188,7 @@ export default withRouter(
 							<QuestionsNavigationBar />
 						</div>
 
-						{!!search && (
+						{!!search && !loading && (
 							<div className="c-mt-5 c-mx-auto c-px-0 col-xl-12">
 								<ClayResultsBar className="c-mt-5">
 									<ClayResultsBar.Item expand>

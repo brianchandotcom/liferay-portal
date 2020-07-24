@@ -2,6 +2,8 @@
 
 @import 'variables';
 
+$emptyItemMinHeight: 180px;
+
 .page-editor {
 	&__collection {
 		&__block {
@@ -103,7 +105,7 @@
 
 	&__col.empty {
 		flex-basis: unset;
-		min-height: 10em;
+		min-height: $emptyItemMinHeight;
 	}
 
 	&__row.align-bottom,
@@ -131,7 +133,7 @@
 
 	&__container.empty,
 	&__row.empty {
-		min-height: 10em;
+		min-height: $emptyItemMinHeight;
 	}
 
 	&__editable {

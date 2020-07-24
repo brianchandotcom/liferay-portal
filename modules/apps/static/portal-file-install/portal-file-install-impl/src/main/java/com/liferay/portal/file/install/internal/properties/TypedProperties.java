@@ -147,13 +147,13 @@ public class TypedProperties extends AbstractMap<String, Object> {
 
 	private static void _substitute(
 		Map<String, TypedProperties> properties,
-		Map<String, Map<String, String>> dynamic, SubstitutionCallback callback,
-		boolean finalSubstitution) {
+		Map<String, Map<String, String>> dynamic,
+		SubstitutionCallback callback) {
 
 		for (Map<String, String> map : dynamic.values()) {
 			DynamicMap dynamicMap = (DynamicMap)map;
 
-			dynamicMap.init(callback, finalSubstitution);
+			dynamicMap.init(callback);
 		}
 
 		for (Map.Entry<String, TypedProperties> entry : properties.entrySet()) {
@@ -190,7 +190,7 @@ public class TypedProperties extends AbstractMap<String, Object> {
 		Map<String, TypedProperties> map = Collections.singletonMap(
 			"root", this);
 
-		_substitute(map, _prepare(map), callback, true);
+		_substitute(map, _prepare(map), callback);
 	}
 
 	private static final String _ENV_PREFIX = "env:";
@@ -239,11 +239,8 @@ public class TypedProperties extends AbstractMap<String, Object> {
 			};
 		}
 
-		public void init(
-			SubstitutionCallback callback, boolean finalSubstitution) {
-
+		public void init(SubstitutionCallback callback) {
 			_callback = callback;
-			_finalSubstitution = finalSubstitution;
 		}
 
 		private String _compute(final String key) {
@@ -254,7 +251,7 @@ public class TypedProperties extends AbstractMap<String, Object> {
 					public String getValue(String value) {
 						String string = DynamicMap.this.get(value);
 
-						if (!_finalSubstitution || (string == null)) {
+						if (string == null) {
 							return _callback.getValue(_name, key, value);
 						}
 
@@ -304,13 +301,11 @@ public class TypedProperties extends AbstractMap<String, Object> {
 			String value = _storage.get(key);
 
 			return InterpolationUtil.substVars(
-				value, key, _cycles, this, wrapper, false, _finalSubstitution,
-				_finalSubstitution);
+				value, key, _cycles, this, wrapper, false, true, true);
 		}
 
 		private SubstitutionCallback _callback;
 		private final Map<String, String> _cycles = new HashMap<>();
-		private boolean _finalSubstitution;
 		private final String _name;
 		private final Properties _storage;
 

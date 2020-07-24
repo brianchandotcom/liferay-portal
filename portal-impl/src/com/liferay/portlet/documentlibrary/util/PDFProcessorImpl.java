@@ -698,46 +698,8 @@ public class PDFProcessorImpl
 					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH,
 					generatePreview, generateThumbnail);
 
-			ProcessConfig processConfig =
-				PortalClassPathUtil.getPortalProcessConfig();
-
-			int maxMemory =
-				PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_MAX_MEMORY;
-
-			if (maxMemory > 0) {
-				ProcessConfig.Builder pdfProcessBuilder =
-					new ProcessConfig.Builder();
-
-				List<String> arguments = new ArrayList<>(
-					processConfig.getArguments());
-
-				arguments.add(StringBundler.concat("-Xmx", maxMemory, "m"));
-
-				pdfProcessBuilder.setArguments(arguments);
-				pdfProcessBuilder =
-					pdfProcessBuilder.setBootstrapClassPath(
-						processConfig.getBootstrapClassPath());
-				pdfProcessBuilder =
-					pdfProcessBuilder.setEnvironment(
-						processConfig.getEnvironment());
-				pdfProcessBuilder =
-					pdfProcessBuilder.setJavaExecutable(
-						processConfig.getJavaExecutable());
-				pdfProcessBuilder =
-					pdfProcessBuilder.setProcessLogConsumer(
-						processConfig.getProcessLogConsumer());
-				pdfProcessBuilder =
-					pdfProcessBuilder.setReactClassLoader(
-						processConfig.getReactClassLoader());
-				pdfProcessBuilder =
-					pdfProcessBuilder.setRuntimeClassPath(
-						processConfig.getRuntimeClassPath());
-
-				processConfig = pdfProcessBuilder.build();
-			}
-
 			ProcessChannel<String> processChannel = _processExecutor.execute(
-				processConfig, processCallable);
+				_pdfProcessConfig, processCallable);
 
 			Future<String> future = processChannel.getProcessNoticeableFuture();
 
@@ -1058,10 +1020,50 @@ public class PDFProcessorImpl
 			ServiceProxyFactory.newServiceTrackedInstance(
 				FileVersionPreviewEventListener.class, PDFProcessorImpl.class,
 				"_fileVersionPreviewEventListener", false, false);
+	private static final ProcessConfig _pdfProcessConfig;
 	private static volatile ProcessExecutor _processExecutor =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			ProcessExecutor.class, PDFProcessorImpl.class, "_processExecutor",
 			true);
+
+	static {
+		ProcessConfig pdfProcessConfig =
+			PortalClassPathUtil.getPortalProcessConfig();
+
+		if (PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED &&
+			(PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_MAX_MEMORY > 0)) {
+
+			ProcessConfig.Builder pdfProcessBuilder =
+				new ProcessConfig.Builder();
+
+			List<String> arguments = new ArrayList<>(
+				pdfProcessConfig.getArguments());
+
+			arguments.add(
+				StringBundler.concat(
+					"-Xmx",
+					PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_MAX_MEMORY,
+					"m"));
+
+			pdfProcessBuilder.setArguments(arguments);
+			pdfProcessBuilder = pdfProcessBuilder.setBootstrapClassPath(
+				pdfProcessConfig.getBootstrapClassPath());
+			pdfProcessBuilder = pdfProcessBuilder.setEnvironment(
+				pdfProcessConfig.getEnvironment());
+			pdfProcessBuilder = pdfProcessBuilder.setJavaExecutable(
+				pdfProcessConfig.getJavaExecutable());
+			pdfProcessBuilder = pdfProcessBuilder.setProcessLogConsumer(
+				pdfProcessConfig.getProcessLogConsumer());
+			pdfProcessBuilder = pdfProcessBuilder.setReactClassLoader(
+				pdfProcessConfig.getReactClassLoader());
+			pdfProcessBuilder = pdfProcessBuilder.setRuntimeClassPath(
+				pdfProcessConfig.getRuntimeClassPath());
+
+			pdfProcessConfig = pdfProcessBuilder.build();
+		}
+
+		_pdfProcessConfig = pdfProcessConfig;
+	}
 
 	private final List<Long> _fileVersionIds = new Vector<>();
 	private boolean _ghostscriptInitialized;

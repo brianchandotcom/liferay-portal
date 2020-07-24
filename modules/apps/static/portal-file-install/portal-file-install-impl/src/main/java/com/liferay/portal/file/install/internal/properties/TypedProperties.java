@@ -36,7 +36,6 @@ import java.util.Set;
 public class TypedProperties extends AbstractMap<String, Object> {
 
 	public TypedProperties(SubstitutionCallback callback) {
-		_storage = new Properties();
 		_callback = callback;
 	}
 
@@ -211,7 +210,7 @@ public class TypedProperties extends AbstractMap<String, Object> {
 
 		};
 
-	private final Properties _storage;
+	private final Properties _storage = new Properties();
 
 	private static class DynamicMap extends AbstractMap<String, String> {
 

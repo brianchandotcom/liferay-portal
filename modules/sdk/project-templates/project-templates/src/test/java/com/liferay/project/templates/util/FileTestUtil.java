@@ -138,10 +138,10 @@ public class FileTestUtil {
 			});
 	}
 
-	public static String read(String name) throws IOException {
-		StringBuilder sb = new StringBuilder();
+	public static String read(ClassLoader classLoader, String name)
+		throws IOException {
 
-		ClassLoader classLoader = FileTestUtil.class.getClassLoader();
+		StringBuilder sb = new StringBuilder();
 
 		try (BufferedReader bufferedReader = new BufferedReader(
 				new InputStreamReader(classLoader.getResourceAsStream(name)))) {
@@ -158,6 +158,10 @@ public class FileTestUtil {
 		}
 
 		return sb.toString();
+	}
+
+	public static String read(String name) throws IOException {
+		return read(FileTestUtil.class.getClassLoader(), name);
 	}
 
 	public static byte[] readAllBytes(String resource) throws IOException {

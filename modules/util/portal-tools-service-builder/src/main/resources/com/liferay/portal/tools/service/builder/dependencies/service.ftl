@@ -137,9 +137,9 @@ public interface ${entity.name}${sessionTypeName}Service
 	 * NOTE FOR DEVELOPERS:
 	 *
 <#if stringUtil.equals(sessionTypeName, "Local")>
-	 * Never modify this interface directly. Add custom service methods to <code>${packagePath}.service.impl.${entity.name}LocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. To consume the ${entity.humanName} local service use a dynamic reference (e.g., via an @Reference annotation for Components). Use {@link ${entity.name}LocalServiceUtil} in contexts where a direct reference cannot be obtained.
+	 * Never modify this interface directly. Add custom service methods to <code>${packagePath}.service.impl.${entity.name}LocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the ${entity.humanName} local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ${entity.name}LocalServiceUtil} if injection and service tracking are not available.
 <#else>
-	 * Never modify this interface directly. Add custom service methods to <code>${packagePath}.service.impl.${entity.name}ServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. To consume the ${entity.humanName} remote service use a dynamic reference (e.g., via an @Reference annotation for Components). Use {@link ${entity.name}ServiceUtil} in contexts where a direct reference cannot be obtained.
+	 * Never modify this interface directly. Add custom service methods to <code>${packagePath}.service.impl.${entity.name}ServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the ${entity.humanName} remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ${entity.name}ServiceUtil} if injection and service tracking are not available.
 </#if>
 	 */
 

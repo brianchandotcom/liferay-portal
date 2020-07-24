@@ -74,10 +74,9 @@ public class PortletImportControllerTest extends BaseExportImportTestCase {
 			group, lastPublishDate, null);
 
 		Assert.assertEquals(
-			PortletKeys.PREFS_OWNER_ID_DEFAULT,
-			portletPreferencesImpl.getOwnerId());
+			group.getGroupId(), portletPreferencesImpl.getOwnerId());
 		Assert.assertEquals(
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+			PortletKeys.PREFS_OWNER_TYPE_GROUP,
 			portletPreferencesImpl.getOwnerType());
 		Assert.assertEquals(
 			LayoutConstants.DEFAULT_PLID, portletPreferencesImpl.getPlid());
@@ -90,12 +89,10 @@ public class PortletImportControllerTest extends BaseExportImportTestCase {
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.getStrictPortletSetup(
 				importedGroup.getCompanyId(), importedGroup.getGroupId(),
-				BookmarksPortletKeys.BOOKMARKS);
+				BookmarksPortletKeys.BOOKMARKS_ADMIN);
 
-		Assert.assertEquals(
-			Long.valueOf(lastPublishDate.getTime()),
-			Long.valueOf(
-				portletPreferences.getValue("last-publish-date", null)));
+		Assert.assertNull(
+			portletPreferences.getValue("last-publish-date", null));
 	}
 
 	@Test
@@ -213,7 +210,7 @@ public class PortletImportControllerTest extends BaseExportImportTestCase {
 			portletPreferences =
 				PortletPreferencesFactoryUtil.getStrictPortletSetup(
 					group.getCompanyId(), group.getGroupId(),
-					BookmarksPortletKeys.BOOKMARKS);
+					BookmarksPortletKeys.BOOKMARKS_ADMIN);
 		}
 		else {
 			portletPreferences =

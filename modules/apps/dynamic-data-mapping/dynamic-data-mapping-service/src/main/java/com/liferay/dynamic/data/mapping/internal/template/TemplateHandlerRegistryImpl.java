@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.template.TemplateHandlerRegistry;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.language.LanguageResources;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -146,13 +145,11 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 		PortalInstanceLifecycleListener portalInstanceLifecycleListener =
 			new TemplateHandlerPortalInstanceLifecycleListener(templateHandler);
 
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(Constants.SERVICE_RANKING, serviceRanking);
-
 		serviceRegistration = _bundleContext.registerService(
 			PortalInstanceLifecycleListener.class,
-			portalInstanceLifecycleListener, properties);
+			portalInstanceLifecycleListener,
+			MapUtil.singletonDictionary(
+				Constants.SERVICE_RANKING, serviceRanking));
 
 		_serviceRegistrations.put(templateHandler, serviceRegistration);
 	}

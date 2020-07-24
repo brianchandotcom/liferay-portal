@@ -18,6 +18,7 @@ import com.liferay.app.builder.constants.AppBuilderAppConstants;
 import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.model.AppBuilderAppDeployment;
 import com.liferay.app.builder.service.AppBuilderAppDeploymentLocalService;
+import com.liferay.app.builder.service.AppBuilderAppVersionLocalService;
 import com.liferay.app.builder.service.base.AppBuilderAppLocalServiceBaseImpl;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
@@ -34,6 +35,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -74,6 +76,10 @@ public class AppBuilderAppLocalServiceImpl
 		appBuilderApp.setDeDataListViewId(deDataListViewId);
 		appBuilderApp.setNameMap(nameMap);
 		appBuilderApp.setScope(scope);
+
+		_appBuilderAppVersionLocalService.addAppBuilderAppVersion(
+			groupId, companyId, userId, appBuilderApp.getAppBuilderAppId(),
+			ddlRecordSetId, ddmStructureId, ddmStructureLayoutId);
 
 		return appBuilderAppPersistence.update(appBuilderApp);
 	}
@@ -257,6 +263,17 @@ public class AppBuilderAppLocalServiceImpl
 		AppBuilderApp appBuilderApp = appBuilderAppPersistence.findByPrimaryKey(
 			appBuilderAppId);
 
+		if (!Objects.equals(
+				appBuilderApp.getDdmStructureLayoutId(),
+				ddmStructureLayoutId)) {
+
+			_appBuilderAppVersionLocalService.addAppBuilderAppVersion(
+				appBuilderApp.getGroupId(), appBuilderApp.getCompanyId(),
+				userId, appBuilderApp.getAppBuilderAppId(),
+				appBuilderApp.getDdlRecordSetId(), ddmStructureId,
+				ddmStructureLayoutId);
+		}
+
 		appBuilderApp.setUserId(user.getUserId());
 		appBuilderApp.setUserName(user.getFullName());
 		appBuilderApp.setModifiedDate(new Date());
@@ -272,6 +289,9 @@ public class AppBuilderAppLocalServiceImpl
 	@Reference
 	private AppBuilderAppDeploymentLocalService
 		_appBuilderAppDeploymentLocalService;
+
+	@Reference
+	private AppBuilderAppVersionLocalService _appBuilderAppVersionLocalService;
 
 	@Reference
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;

@@ -15,6 +15,8 @@
 package com.liferay.change.tracking.test.util;
 
 import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.model.CTEntry;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.petra.lang.SafeClosable;
@@ -27,6 +29,8 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -59,6 +63,23 @@ public abstract class BaseTableReferenceDefinitionTestCase {
 
 			Assert.assertTrue(count > 0);
 
+			long modelClassNameId = _classNameLocalService.getClassNameId(
+				ctModel.getModelClass());
+
+			CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(
+				_ctCollection.getCtCollectionId(), modelClassNameId,
+				ctModel.getPrimaryKey());
+
+			Assert.assertNotNull(ctEntry);
+
+			List<CTEntry> ctEntries =
+				_ctCollectionLocalService.getDiscardCTEntries(
+					_ctCollection.getCtCollectionId(), modelClassNameId,
+					ctModel.getPrimaryKey());
+
+			Assert.assertTrue(
+				ctEntries.toString(), ctEntries.contains(ctEntry));
+
 			_ctCollectionService.discardCTEntry(
 				_ctCollection.getCtCollectionId(),
 				_classNameLocalService.getClassNameId(ctModel.getModelClass()),
@@ -78,6 +99,9 @@ public abstract class BaseTableReferenceDefinitionTestCase {
 
 	@Inject
 	private static ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private static CTCollectionLocalService _ctCollectionLocalService;
 
 	@Inject
 	private static CTCollectionService _ctCollectionService;

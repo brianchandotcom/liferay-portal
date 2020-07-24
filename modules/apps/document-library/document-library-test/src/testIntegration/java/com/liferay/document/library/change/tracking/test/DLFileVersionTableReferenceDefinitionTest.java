@@ -82,7 +82,7 @@ public class DLFileVersionTableReferenceDefinitionTest
 
 		InputStream inputStream = new ByteArrayInputStream(bytes);
 
-		return _dlFileEntryLocalService.updateFileEntry(
+		_dlFileEntry = _dlFileEntryLocalService.updateFileEntry(
 			group.getCreatorUserId(), _dlFileEntry.getFileEntryId(),
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
@@ -90,6 +90,8 @@ public class DLFileVersionTableReferenceDefinitionTest
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 			Collections.emptyMap(), null, inputStream, 0,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		return _dlFileEntry.getFileVersion();
 	}
 
 	@Inject

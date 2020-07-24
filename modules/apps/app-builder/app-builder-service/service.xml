@@ -123,4 +123,56 @@
 			<finder-column name="type" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="AppBuilderAppVersion" remote-service="false" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="appBuilderAppVersionId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="appBuilderAppId" type="long" />
+		<column name="ddlRecordSetId" type="long" />
+		<column name="ddmStructureId" type="long" />
+		<column name="ddmStructureLayoutId" type="long" />
+		<column name="version" type="String" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="AppBuilderAppId" return-type="Collection">
+			<finder-column name="appBuilderAppId" />
+		</finder>
+		<finder name="A_V" return-type="AppBuilderAppVersion">
+			<finder-column name="appBuilderAppId" />
+			<finder-column name="version" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="User" package-path="com.liferay.portal" />
+	</entity>
 </service-builder>

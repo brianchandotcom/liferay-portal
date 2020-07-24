@@ -84,57 +84,27 @@ public class UpgradeDDMFormInstanceReportTest {
 
 		DDMForm ddmForm = _createDDMForm();
 
-		DDMFormInstance ddmFormInstance =
-			DDMFormInstanceTestUtil.addDDMFormInstance(
-				ddmForm, _group, TestPropsValues.getUserId());
-
-		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
-			ddmForm);
-
-		ddmFormValues.addDDMFormFieldValue(
-			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				"text", new UnlocalizedValue("Approved Text")));
-
 		ServiceContext serviceContext = getServiceContext();
 
 		DDMFormInstanceRecord ddmFormInstanceRecord =
-			DDMFormInstanceRecordLocalServiceUtil.addFormInstanceRecord(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				ddmFormInstance.getFormInstanceId(), ddmFormValues,
-				serviceContext);
+			_createDDMFormInstanceRecord(ddmForm, serviceContext);
 
-		DDMFormValues newDDMFormValues =
-			DDMFormValuesTestUtil.createDDMFormValues(ddmForm);
-
-		newDDMFormValues.addDDMFormFieldValue(
-			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				"text", new UnlocalizedValue("Draft Text")));
+		DDMFormValues ddmFormValues = _updateTextDDMFormValue(
+			ddmForm, "Draft Text");
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		DDMFormInstanceRecordLocalServiceUtil.updateFormInstanceRecord(
 			TestPropsValues.getUserId(),
 			ddmFormInstanceRecord.getFormInstanceRecordId(), false,
-			newDDMFormValues, serviceContext);
+			ddmFormValues, serviceContext);
 
 		DDMFormInstanceReport ddmFormInstanceReport =
 			DDMFormInstanceReportLocalServiceUtil.
 				getFormInstanceReportByFormInstanceId(
-					ddmFormInstance.getFormInstanceId());
+					ddmFormInstanceRecord.getFormInstanceId());
 
-		JSONObject expectedDataJSONObject = _jsonFactory.createJSONObject(
-			ddmFormInstanceReport.getData());
-
-		_upgradeDDMFormInstanceReport.upgrade();
-
-		ddmFormInstanceReport = _getDDMFormInstanceReport(
-			ddmFormInstance.getFormInstanceId());
-
-		JSONObject actualDataJSONObject = _jsonFactory.createJSONObject(
-			ddmFormInstanceReport.getData());
-
-		Assert.assertEquals(
-			expectedDataJSONObject.toString(), actualDataJSONObject.toString());
+		_testUpgrade(ddmFormInstanceReport);
 	}
 
 	@Test
@@ -143,55 +113,25 @@ public class UpgradeDDMFormInstanceReportTest {
 
 		DDMForm ddmForm = _createDDMForm();
 
-		DDMFormInstance ddmFormInstance =
-			DDMFormInstanceTestUtil.addDDMFormInstance(
-				ddmForm, _group, TestPropsValues.getUserId());
-
-		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
-			ddmForm);
-
-		ddmFormValues.addDDMFormFieldValue(
-			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				"text", new UnlocalizedValue("Approved Text 1")));
-
 		ServiceContext serviceContext = getServiceContext();
 
 		DDMFormInstanceRecord ddmFormInstanceRecord =
-			DDMFormInstanceRecordLocalServiceUtil.addFormInstanceRecord(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				ddmFormInstance.getFormInstanceId(), ddmFormValues,
-				serviceContext);
+			_createDDMFormInstanceRecord(ddmForm, serviceContext);
 
-		DDMFormValues newDDMFormValues =
-			DDMFormValuesTestUtil.createDDMFormValues(ddmForm);
-
-		newDDMFormValues.addDDMFormFieldValue(
-			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				"text", new UnlocalizedValue("Approved Text 2")));
+		DDMFormValues ddmFormValues = _updateTextDDMFormValue(
+			ddmForm, "Approved Text 2");
 
 		DDMFormInstanceRecordLocalServiceUtil.updateFormInstanceRecord(
 			TestPropsValues.getUserId(),
 			ddmFormInstanceRecord.getFormInstanceRecordId(), false,
-			newDDMFormValues, serviceContext);
+			ddmFormValues, serviceContext);
 
 		DDMFormInstanceReport ddmFormInstanceReport =
 			DDMFormInstanceReportLocalServiceUtil.
 				getFormInstanceReportByFormInstanceId(
-					ddmFormInstance.getFormInstanceId());
+					ddmFormInstanceRecord.getFormInstanceId());
 
-		JSONObject expectedDataJSONObject = _jsonFactory.createJSONObject(
-			ddmFormInstanceReport.getData());
-
-		_upgradeDDMFormInstanceReport.upgrade();
-
-		ddmFormInstanceReport = _getDDMFormInstanceReport(
-			ddmFormInstance.getFormInstanceId());
-
-		JSONObject actualDataJSONObject = _jsonFactory.createJSONObject(
-			ddmFormInstanceReport.getData());
-
-		Assert.assertEquals(
-			expectedDataJSONObject.toString(), actualDataJSONObject.toString());
+		_testUpgrade(ddmFormInstanceReport);
 	}
 
 	@Test
@@ -241,19 +181,7 @@ public class UpgradeDDMFormInstanceReportTest {
 				getFormInstanceReportByFormInstanceId(
 					ddmFormInstance.getFormInstanceId());
 
-		JSONObject expectedDataJSONObject = _jsonFactory.createJSONObject(
-			ddmFormInstanceReport.getData());
-
-		_upgradeDDMFormInstanceReport.upgrade();
-
-		ddmFormInstanceReport = _getDDMFormInstanceReport(
-			ddmFormInstance.getFormInstanceId());
-
-		JSONObject actualDataJSONObject = _jsonFactory.createJSONObject(
-			ddmFormInstanceReport.getData());
-
-		Assert.assertEquals(
-			expectedDataJSONObject.toString(), actualDataJSONObject.toString());
+		_testUpgrade(ddmFormInstanceReport);
 	}
 
 	@Test
@@ -269,19 +197,7 @@ public class UpgradeDDMFormInstanceReportTest {
 				getFormInstanceReportByFormInstanceId(
 					ddmFormInstance.getFormInstanceId());
 
-		JSONObject expectedDataJSONObject = _jsonFactory.createJSONObject(
-			ddmFormInstanceReport.getData());
-
-		_upgradeDDMFormInstanceReport.upgrade();
-
-		ddmFormInstanceReport = _getDDMFormInstanceReport(
-			ddmFormInstance.getFormInstanceId());
-
-		JSONObject actualDataJSONObject = _jsonFactory.createJSONObject(
-			ddmFormInstanceReport.getData());
-
-		Assert.assertEquals(
-			expectedDataJSONObject.toString(), actualDataJSONObject.toString());
+		_testUpgrade(ddmFormInstanceReport);
 	}
 
 	@Test
@@ -299,19 +215,7 @@ public class UpgradeDDMFormInstanceReportTest {
 				getFormInstanceReportByFormInstanceId(
 					ddmFormInstance.getFormInstanceId());
 
-		JSONObject expectedDataJSONObject = _jsonFactory.createJSONObject(
-			ddmFormInstanceReport.getData());
-
-		_upgradeDDMFormInstanceReport.upgrade();
-
-		ddmFormInstanceReport = _getDDMFormInstanceReport(
-			ddmFormInstance.getFormInstanceId());
-
-		JSONObject actualDataJSONObject = _jsonFactory.createJSONObject(
-			ddmFormInstanceReport.getData());
-
-		Assert.assertEquals(
-			expectedDataJSONObject.toString(), actualDataJSONObject.toString());
+		_testUpgrade(ddmFormInstanceReport);
 	}
 
 	@Test
@@ -470,6 +374,26 @@ public class UpgradeDDMFormInstanceReportTest {
 		return ddmForm;
 	}
 
+	private DDMFormInstanceRecord _createDDMFormInstanceRecord(
+			DDMForm ddmForm, ServiceContext serviceContext)
+		throws Exception, PortalException {
+
+		DDMFormInstance ddmFormInstance =
+			DDMFormInstanceTestUtil.addDDMFormInstance(
+				ddmForm, _group, TestPropsValues.getUserId());
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"text", new UnlocalizedValue("Approved Text")));
+
+		return DDMFormInstanceRecordLocalServiceUtil.addFormInstanceRecord(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			ddmFormInstance.getFormInstanceId(), ddmFormValues, serviceContext);
+	}
+
 	private void _createDDMFormInstanceRecords(DDMFormInstance ddmFormInstance)
 		throws Exception {
 
@@ -521,6 +445,37 @@ public class UpgradeDDMFormInstanceReportTest {
 
 		return DDMFormInstanceReportLocalServiceUtil.
 			getFormInstanceReportByFormInstanceId(formInstanceId);
+	}
+
+	private void _testUpgrade(DDMFormInstanceReport ddmFormInstanceReport)
+		throws Exception {
+
+		JSONObject expectedDataJSONObject = _jsonFactory.createJSONObject(
+			ddmFormInstanceReport.getData());
+
+		_upgradeDDMFormInstanceReport.upgrade();
+
+		ddmFormInstanceReport = _getDDMFormInstanceReport(
+			ddmFormInstanceReport.getFormInstanceId());
+
+		JSONObject actualDataJSONObject = _jsonFactory.createJSONObject(
+			ddmFormInstanceReport.getData());
+
+		Assert.assertEquals(
+			expectedDataJSONObject.toString(), actualDataJSONObject.toString());
+	}
+
+	private DDMFormValues _updateTextDDMFormValue(
+		DDMForm ddmForm, String value) {
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"text", new UnlocalizedValue(value)));
+
+		return ddmFormValues;
 	}
 
 	private static final String _CLASS_NAME =

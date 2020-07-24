@@ -202,8 +202,8 @@ describe('The BulkReassignModal component should', () => {
 		const processStepFilter = getByTestId('processStepFilter');
 		const assigneeFilter = getByTestId('assigneeFilter');
 
-		const content = modal.children[0].children[0].children[0];
-		const header = content.children[0].children[0];
+		const content = modal.children[0].children[0];
+		const header = content.children[0];
 
 		expect(header).toHaveTextContent('select-tasks-to-reassign');
 
@@ -324,8 +324,8 @@ describe('The BulkReassignModal component should', () => {
 		const previousBtn = getByTestId('previousButton');
 		const nextBtn = getByTestId('nextButton');
 
-		const content = modal.children[0].children[0].children[0];
-		const header = content.children[0].children[0];
+		const content = modal.children[0].children[0];
+		const header = content.children[0];
 
 		expect(header).toHaveTextContent('select-new-assignees');
 
@@ -348,8 +348,8 @@ describe('The BulkReassignModal component should', () => {
 		const useSameAssignee = getByTestId('useSameAssignee');
 		const assigneeInputs = getAllByTestId('autocompleteInput');
 
-		const content = modal.children[0].children[0].children[0];
-		const header = content.children[0].children[0];
+		const content = modal.children[0].children[0];
+		const header = content.children[0];
 
 		expect(header).toHaveTextContent('select-new-assignees');
 

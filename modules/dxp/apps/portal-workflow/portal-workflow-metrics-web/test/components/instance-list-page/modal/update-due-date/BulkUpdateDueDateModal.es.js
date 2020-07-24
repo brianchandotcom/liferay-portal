@@ -156,8 +156,8 @@ describe('The BulkReassignModal component should', () => {
 		const processStepFilter = getByTestId('processStepFilter');
 		const assigneeFilter = getByTestId('assigneeFilter');
 
-		const content = modal.children[0].children[0].children[0];
-		const header = content.children[0].children[0];
+		const content = modal.children[0].children[0];
+		const header = content.children[0];
 
 		expect(header).toHaveTextContent('select-tasks-to-update');
 
@@ -262,8 +262,8 @@ describe('The BulkReassignModal component should', () => {
 		const previousBtn = getByTestId('previousButton');
 		const nextBtn = getByTestId('nextButton');
 
-		const content = modal.children[0].children[0].children[0];
-		const header = content.children[0].children[0];
+		const content = modal.children[0].children[0];
+		const header = content.children[0];
 
 		expect(header).toHaveTextContent('update-tasks-due-dates');
 

@@ -322,8 +322,8 @@ describe('The BulkTransitionModal component should', () => {
 		const checkAllButton = getByTestId('checkAllButton');
 		const processStepFilter = getByTestId('processStepFilter');
 
-		const content = modal.children[0].children[0].children[0];
-		const header = content.children[0].children[0];
+		const content = modal.children[0].children[0];
+		const header = content.children[0];
 
 		expect(header).toHaveTextContent('select-steps-to-transition');
 
@@ -418,8 +418,8 @@ describe('The BulkTransitionModal component should', () => {
 	test('Load the second step and all transitions successfully', () => {
 		const modal = getByTestId('bulkTransitionModal');
 
-		const content = modal.children[0].children[0].children[0];
-		const header = content.children[0].children[0];
+		const content = modal.children[0].children[0];
+		const header = content.children[0];
 		const stepBar = getByTestId('stepBar');
 		const nextBtn = getByTestId('nextButton');
 
@@ -449,9 +449,9 @@ describe('The BulkTransitionModal component should', () => {
 		const nextBtn = getByTestId('nextButton');
 		const modal = getByTestId('bulkTransitionModal');
 
-		const content = modal.children[0].children[0].children[0];
+		const content = modal.children[0].children[0];
 
-		const header = content.children[0].children[0];
+		const header = content.children[0];
 
 		const previousButton = getByTestId('previousButton');
 

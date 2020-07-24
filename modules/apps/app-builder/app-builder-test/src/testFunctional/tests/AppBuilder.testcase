@@ -165,6 +165,84 @@ definition {
 		AppBuilderAdmin.assertNewButtonIsVisible(buttonValue = "New Form View");
 	}
 
+	@description = "This is a use case for LPS-95964"
+	@priority = "5"
+	test AddRulesViaFormView {
+		property test.name.skip.portal.instance = "AppBuilder#AddRulesViaFormView";
+		property portal.acceptance = "true";
+
+		var myFormViewName = "My Registration form";
+		var myTableViewName = "My display table";
+		var myAppName = "My Registration app";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Text");
+
+		Click(locator1 = "FormViewBuilder#RULES_TAB");
+
+		Click(locator1 = "FormViewBuilder#CREATE_NEW_RULE_BUTTON");
+
+		Type(
+			locator1 = "FormViewBuilder#RULE_NAME_TEXT_FIELD",
+			value1 = "Test Rule");
+
+		FormRules.viewInactiveSaveButton();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text",
+			conditionOperator = "Is not empty",
+			conditionRowNumber = "1");
+
+		FormRules.configureActionOptions(
+			action = "Show",
+			actionRowNumber = "1",
+			actionTarget = "Text");
+
+		FormViewBuilder.ruleSave();
+
+		AssertElementNotPresent(locator1 = "FormViewBuilder#CREATE_NEW_RULE_BUTTON");
+
+		FormViewBuilder.addRule();
+
+		FormViewBuilder.cancelRule();
+
+		AssertElementPresent(locator1 = "FormViewBuilder#EDIT_RULE_COLLAPSE");
+
+		FormViewBuilder.editRulesDefault();
+
+		FormViewBuilder.ruleSave();
+
+		AssertElementPresent(locator1 = "FormViewBuilder#EDIT_RULE_COLLAPSE");
+
+		FormViewBuilder.editRules();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text",
+			conditionOperator = "Is empty",
+			conditionRowNumber = "1");
+
+		FormRules.configureActionOptions(
+			action = "Show",
+			actionRowNumber = "1",
+			actionTarget = "Text");
+
+		FormViewBuilder.ruleSave();
+
+		Type(
+			locator1 = "FormViewBuilder#RULE_BUILDER_FORM_VIEW_NAME",
+			value1 = "Test");
+
+		FormViewBuilder.saveFormView();
+
+		FormViewBuilder.assertFormView(formViewName = "Test");
+	}
+
 	@description = "Add a Form View with a Date field"
 	@priority = "5"
 	test AddSimpleFormViewWithDateField {

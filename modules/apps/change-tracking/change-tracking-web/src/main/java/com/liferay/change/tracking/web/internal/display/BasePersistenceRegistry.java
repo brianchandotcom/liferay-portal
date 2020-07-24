@@ -30,9 +30,8 @@ import com.liferay.portal.spring.transaction.TransactionExecutor;
 
 import java.io.Serializable;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
@@ -65,13 +64,13 @@ public class BasePersistenceRegistry {
 	}
 
 	public <T extends BaseModel<T>> Map<Serializable, T> fetchBaseModelMap(
-		long classNameId, List<Long> primaryKeys) {
+		long classNameId, Set<Long> primaryKeys) {
 
 		return _applyBasePersistence(
 			classNameId,
 			basePersistence ->
 				(Map<Serializable, T>)basePersistence.fetchByPrimaryKeys(
-					new HashSet<>(primaryKeys)));
+					(Set)primaryKeys));
 	}
 
 	@Activate

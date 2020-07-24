@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.applications.menu.configuration.ApplicationsMenuInstanceConfiguration;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
@@ -74,12 +75,15 @@ public class ProductMenuDisplayContext {
 			return _childPanelCategories;
 		}
 
-		_childPanelCategories.addAll(
-			0,
+		List<PanelCategory> applicationsMenuChildPanelCategories =
 			_panelCategoryRegistry.getChildPanelCategories(
 				PanelCategoryKeys.APPLICATIONS_MENU,
 				_themeDisplay.getPermissionChecker(),
-				_themeDisplay.getScopeGroup()));
+				_themeDisplay.getScopeGroup());
+
+		Collections.reverse(applicationsMenuChildPanelCategories);
+
+		_childPanelCategories.addAll(0, applicationsMenuChildPanelCategories);
 
 		return _childPanelCategories;
 	}

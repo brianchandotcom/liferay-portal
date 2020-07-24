@@ -132,28 +132,6 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 		_bundleContext = null;
 	}
 
-	protected void registerPortalInstanceLifecycleListener(
-		TemplateHandler templateHandler, int serviceRanking) {
-
-		ServiceRegistration<?> serviceRegistration = _serviceRegistrations.get(
-			templateHandler);
-
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
-		}
-
-		PortalInstanceLifecycleListener portalInstanceLifecycleListener =
-			new TemplateHandlerPortalInstanceLifecycleListener(templateHandler);
-
-		serviceRegistration = _bundleContext.registerService(
-			PortalInstanceLifecycleListener.class,
-			portalInstanceLifecycleListener,
-			MapUtil.singletonDictionary(
-				Constants.SERVICE_RANKING, serviceRanking));
-
-		_serviceRegistrations.put(templateHandler, serviceRegistration);
-	}
-
 	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
@@ -348,8 +326,19 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 			int serviceRanking = GetterUtil.getInteger(
 				serviceReference.getProperty(Constants.SERVICE_RANKING));
 
-			registerPortalInstanceLifecycleListener(
-				templateHandler, serviceRanking);
+			ServiceRegistration<?> serviceRegistration =
+				_serviceRegistrations.put(
+					templateHandler,
+					_bundleContext.registerService(
+						PortalInstanceLifecycleListener.class,
+						new TemplateHandlerPortalInstanceLifecycleListener(
+							templateHandler),
+						MapUtil.singletonDictionary(
+							Constants.SERVICE_RANKING, serviceRanking)));
+
+			if (serviceRegistration != null) {
+				serviceRegistration.unregister();
+			}
 
 			return templateHandler;
 		}

@@ -139,10 +139,17 @@ public class UpdateLanguageActionTest {
 	private String _getFriendlyURLSeparatorPart(Locale locale)
 		throws Exception {
 
+		return _getFriendlyURLSeparatorPart(
+			locale, Portal.FRIENDLY_URL_SEPARATOR);
+	}
+
+	private String _getFriendlyURLSeparatorPart(Locale locale, String separator)
+		throws Exception {
+
 		Map<Locale, String> friendlyURLMap =
 			_journalArticle.getFriendlyURLMap();
 
-		return Portal.FRIENDLY_URL_SEPARATOR + friendlyURLMap.get(locale);
+		return separator + friendlyURLMap.get(locale);
 	}
 
 	private void _testGetRedirectWithControlPanelURL(boolean i18n)
@@ -191,6 +198,12 @@ public class UpdateLanguageActionTest {
 		_testGetRedirectWithFriendlyURL(
 			i18n, _getFriendlyURLSeparatorPart(_sourceLocale),
 			_getFriendlyURLSeparatorPart(_targetLocale));
+		_testGetRedirectWithFriendlyURL(
+			i18n,
+			_getFriendlyURLSeparatorPart(
+				_sourceLocale, _JOURNAL_ARTICLE_FRIENDLY_URL_SEPARATOR),
+			_getFriendlyURLSeparatorPart(
+				_targetLocale, _JOURNAL_ARTICLE_FRIENDLY_URL_SEPARATOR));
 	}
 
 	private void _testGetRedirectWithFriendlyURL(
@@ -226,6 +239,8 @@ public class UpdateLanguageActionTest {
 			themeDisplay, targetURL,
 			"/" + _sourceLocale.getLanguage() + sourceURL);
 	}
+
+	private static final String _JOURNAL_ARTICLE_FRIENDLY_URL_SEPARATOR = "/w/";
 
 	private final Locale _defaultLocale = LocaleUtil.US;
 	private Group _group;

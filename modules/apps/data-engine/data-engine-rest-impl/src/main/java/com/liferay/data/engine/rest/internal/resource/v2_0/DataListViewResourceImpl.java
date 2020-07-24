@@ -16,6 +16,7 @@ package com.liferay.data.engine.rest.internal.resource.v2_0;
 
 import com.liferay.data.engine.constants.DataActionKeys;
 import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
+import com.liferay.data.engine.model.DEDataDefinitionFieldLink;
 import com.liferay.data.engine.model.DEDataListView;
 import com.liferay.data.engine.rest.dto.v2_0.DataListView;
 import com.liferay.data.engine.rest.internal.content.type.DataDefinitionContentTypeTracker;
@@ -275,15 +276,34 @@ public class DataListViewResourceImpl
 				groupId, _getClassNameId(), dataListViewId,
 				ddmStructure.getStructureId(), fieldName);
 
-			if (fieldNameDDMFormFieldMap.containsKey(fieldName)) {
-				DDMFormField ddmFormField = fieldNameDDMFormFieldMap.get(
-					fieldName);
+			if (!fieldNameDDMFormFieldMap.containsKey(fieldName)) {
+				continue;
+			}
 
+			DDMFormField ddmFormField = fieldNameDDMFormFieldMap.get(fieldName);
+
+			DEDataDefinitionFieldLink dataDefinitionDEDataDefinitionFieldLink =
+				_deDataDefinitionFieldLinkLocalService.
+					fetchDEDataDefinitionFieldLinks(
+						_getClassNameId(), dataListViewId,
+						ddmStructure.getStructureId(), ddmFormField.getName());
+
+			if (dataDefinitionDEDataDefinitionFieldLink == null) {
 				_deDataDefinitionFieldLinkLocalService.
 					addDEDataDefinitionFieldLink(
 						groupId, _getClassNameId(), dataListViewId,
 						ddmStructure.getStructureId(), ddmFormField.getName());
+			}
 
+			DEDataDefinitionFieldLink fieldSetDEDataDefinitionFieldLink =
+				_deDataDefinitionFieldLinkLocalService.
+					fetchDEDataDefinitionFieldLinks(
+						_getClassNameId(), dataListViewId,
+						MapUtil.getLong(
+							ddmFormField.getProperties(), "ddmStructureId"),
+						ddmFormField.getName());
+
+			if (fieldSetDEDataDefinitionFieldLink == null) {
 				_deDataDefinitionFieldLinkLocalService.
 					addDEDataDefinitionFieldLink(
 						groupId, _getClassNameId(), dataListViewId,

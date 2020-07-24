@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -82,12 +83,12 @@ public class AddAssetListEntryMVCActionCommandTest {
 
 	@Test
 	public void testAddDynamicAssetListEntry() throws Exception {
+		String title = "Dynamic Asset List Title";
+
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
-		mockLiferayPortletActionRequest.addParameter(
-			"title", "Dynamic Asset List Title");
-
+		mockLiferayPortletActionRequest.addParameter("title", title);
 		mockLiferayPortletActionRequest.addParameter("type", String.valueOf(0));
 
 		mockLiferayPortletActionRequest.setAttribute(
@@ -102,20 +103,29 @@ public class AddAssetListEntryMVCActionCommandTest {
 			_assetListEntryLocalService.getAssetListEntry(
 				_group.getGroupId(), "dynamic-asset-list-title");
 
-		Assert.assertEquals(
-			"Dynamic Asset List Title", assetListEntry.getTitle());
+		Assert.assertNotNull(assetListEntry);
 
-		Assert.assertEquals(_group.getGroupId(), assetListEntry.getGroupId());
+		Assert.assertEquals(title, assetListEntry.getTitle());
+
+		String typeSettings = assetListEntry.getTypeSettings(0);
+
+		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
+
+		unicodeProperties.fastLoad(typeSettings);
+
+		Assert.assertEquals(
+			String.valueOf(_group.getGroupId()),
+			unicodeProperties.getProperty("groupIds"));
 	}
 
 	@Test
 	public void testAddManualAssetListEntry() throws Exception {
+		String title = "Manual Asset List Title";
+
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
-		mockLiferayPortletActionRequest.addParameter(
-			"title", "Manual Asset List Title");
-
+		mockLiferayPortletActionRequest.addParameter("title", title);
 		mockLiferayPortletActionRequest.addParameter("type", String.valueOf(1));
 
 		mockLiferayPortletActionRequest.setAttribute(
@@ -130,8 +140,7 @@ public class AddAssetListEntryMVCActionCommandTest {
 			_assetListEntryLocalService.getAssetListEntry(
 				_group.getGroupId(), "manual-asset-list-title");
 
-		Assert.assertEquals(
-			"Manual Asset List Title", assetListEntry.getTitle());
+		Assert.assertEquals(title, assetListEntry.getTitle());
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {

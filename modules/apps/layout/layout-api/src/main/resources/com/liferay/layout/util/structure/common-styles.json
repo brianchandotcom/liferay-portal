@@ -573,6 +573,30 @@
 				]
 			},
 			{
+				"dataType": "string",
+				"defaultValue": "medium",
+				"dependencies": [
+				],
+				"label": "font-size",
+				"name": "fontSize",
+				"responsive": false,
+				"type": "select",
+				"validValues": [
+					{
+						"label": "small",
+						"value": "small"
+					},
+					{
+						"label": "medium",
+						"value": "medium"
+					},
+					{
+						"label": "large",
+						"value": "large"
+					}
+				]
+			},
+			{
 				"dataType": "object",
 				"dependencies": [
 				],

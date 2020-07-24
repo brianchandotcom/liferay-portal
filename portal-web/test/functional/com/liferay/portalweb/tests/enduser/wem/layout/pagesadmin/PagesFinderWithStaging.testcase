@@ -12,6 +12,8 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
+		JSONGroup.addGroup(groupName = "Site Name");
+
 		Staging.openStagingAdmin(siteURLKey = "test-site-name");
 
 		Staging.activateStagingCP(siteName = "Test Site Name");
@@ -25,6 +27,8 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
 		}
 	}
 
@@ -115,6 +119,70 @@ definition {
 			}
 
 			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Collection Page Name 2");
+		}
+	}
+
+	@description = "This is the test for LPS-116428. Can reorganize the pages via Page Tree panel in Staging site but not in Live site."
+	@priority = "3"
+	test CanReorganizePagesViaPageFinderInStagingSiteNotInLiveSite {
+		task ("Add a widget page and a content page in Site Name") {
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Test Widget Page");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Test Content Page",
+				type = "content");
+		}
+
+		task ("Enable Local Live in Site Name") {
+			Staging.openStagingAdmin(siteURLKey = "site-name");
+
+			Staging.activateStagingCP(siteName = "Site Name");
+		}
+
+		task ("Assert can reorganize pages via Page Tree panel in Staging site") {
+			ProductMenu.gotoStagingSite(site = "Site Name");
+
+			PagesFinder.goToFindAPage();
+
+			var n = "1";
+
+			for (var pageName : list "Test Widget Page,Test Content Page") {
+				AssertVisible(
+					key_index = "${n}",
+					key_pageName = "${pageName}",
+					locator1 = "PagesFinder#TREE_NODE_ITEM");
+
+				var n = ${n} + 1;
+			}
+
+			DragAndDrop.dragAndDropReorganizeObjects(
+				locator1 = "//ul[contains(@class,'tree-container')]/li[contains(@class,'tree-node')][2][contains(.,'Test Content Page')]",
+				locator2 = "//ul[contains(@class,'tree-container')]/li[contains(@class,'tree-node')][1][contains(.,'Test Widget Page')]",
+				position = "0,2");
+
+			var n = "1";
+
+			for (var pageName : list "Test Content Page,Test Widget Page") {
+				AssertVisible(
+					key_index = "${n}",
+					key_pageName = "${pageName}",
+					locator1 = "PagesFinder#TREE_NODE_ITEM");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Assert can not reorganize pages via Page Tree panel in Live site") {
+			ProductMenu.gotoLiveSite(site = "Site Name");
+
+			PagesFinder.goToFindAPage();
+
+			for (var pageName : list "Test Widget Page,Test Content Page") {
+				AssertElementPresent(locator1 = "//a[contains(@class,'layout-tree') and contains(@class,'locked')][contains(.,'${pageName}')]");
+			}
 		}
 	}
 

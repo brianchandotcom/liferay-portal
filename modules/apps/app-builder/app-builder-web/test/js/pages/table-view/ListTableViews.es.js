@@ -20,7 +20,7 @@ import React from 'react';
 import ListTableViews from '../../../../src/main/resources/META-INF/resources/js/pages/table-view/ListTableViews.es';
 import * as time from '../../../../src/main/resources/META-INF/resources/js/utils/time.es';
 import AppContextProviderWrapper from '../../AppContextProviderWrapper.es';
-import {RESPONSES} from '../../constants.es';
+import {DATA_DEFINITION_RESPONSES, RESPONSES} from '../../constants.es';
 
 describe('ListTableViews', () => {
 	let spyFromNow;
@@ -37,7 +37,9 @@ describe('ListTableViews', () => {
 	});
 
 	it('renders', async () => {
-		fetch.mockResponseOnce(JSON.stringify(RESPONSES.ONE_ITEM));
+		fetch
+			.mockResponseOnce(JSON.stringify(RESPONSES.ONE_ITEM))
+			.mockResponseOnce(JSON.stringify(DATA_DEFINITION_RESPONSES.ONE_ITEM));
 
 		const {asFragment} = render(
 			<ListTableViews
@@ -61,7 +63,7 @@ describe('ListTableViews', () => {
 	it('renders with empty state', async () => {
 		fetch
 			.mockResponseOnce(JSON.stringify(RESPONSES.NO_ITEMS))
-			.mockResponseOnce(JSON.stringify({}));
+			.mockResponseOnce(JSON.stringify(DATA_DEFINITION_RESPONSES.ONE_ITEM));
 
 		const {queryByText} = render(
 			<ListTableViews
@@ -90,11 +92,13 @@ describe('ListTableViews', () => {
 			'#/table-views/add'
 		);
 
-		expect(fetch.mock.calls.length).toEqual(1);
+		expect(fetch.mock.calls.length).toEqual(2);
 	});
 
 	it('renders with data and click on actions', async () => {
-		fetch.mockResponseOnce(JSON.stringify(RESPONSES.ONE_ITEM));
+		fetch
+			.mockResponseOnce(JSON.stringify(RESPONSES.ONE_ITEM))
+			.mockResponseOnce(JSON.stringify(DATA_DEFINITION_RESPONSES.ONE_ITEM));
 
 		const history = createMemoryHistory();
 

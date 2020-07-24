@@ -15,6 +15,7 @@
 package com.liferay.exportimport.web.internal.upgrade.v1_0_1;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -49,9 +50,10 @@ public class UpgradeStagingConfigurationClassNames extends UpgradeProcess {
 
 	protected void updateStagingConfiguration() throws Exception {
 		try (PreparedStatement ps = connection.prepareStatement(
-				"select groupId, companyId, typeSettings from Group_ where " +
-					"liveGroupId = 0 and site = 1 and typeSettings like " +
-						"'%staged=true%'")) {
+				SQLTransformer.transform(
+					"select groupId, companyId, typeSettings from Group_ " +
+						"where liveGroupId = 0 and site = [$TRUE$] and " +
+							"typeSettings like '%staged=true%'"))) {
 
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {

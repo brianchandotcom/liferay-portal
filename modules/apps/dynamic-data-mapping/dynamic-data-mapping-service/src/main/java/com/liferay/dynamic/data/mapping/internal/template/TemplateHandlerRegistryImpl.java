@@ -89,17 +89,8 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 
 	@Override
 	public List<TemplateHandler> getTemplateHandlers() {
-		List<TemplateHandler> templateHandlers = new ArrayList<>();
-
-		for (String className :
-				_classNameTemplateHandlersServiceTrackerMap.keySet()) {
-
-			templateHandlers.add(
-				_classNameTemplateHandlersServiceTrackerMap.getService(
-					className));
-		}
-
-		return templateHandlers;
+		return new ArrayList<>(
+			_classNameTemplateHandlersServiceTrackerMap.values());
 	}
 
 	@Activate

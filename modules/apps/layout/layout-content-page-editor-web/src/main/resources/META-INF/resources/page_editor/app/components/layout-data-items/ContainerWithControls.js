@@ -28,9 +28,6 @@ import Container from './Container';
 
 const ContainerWithControls = React.forwardRef(
 	({children, item, layoutData}, ref) => {
-		const {marginLeft, marginRight, widthType} = item.config;
-		const [setRef, itemElement] = useSetRef(ref);
-
 		const canUpdateItemConfiguration = useSelector(
 			selectCanUpdateItemConfiguration
 		);
@@ -38,12 +35,17 @@ const ContainerWithControls = React.forwardRef(
 			selectCanUpdatePageStructure
 		);
 
+		const [setRef, itemElement] = useSetRef(ref);
+
+		const {widthType} = item.config;
+		const {marginLeft, marginRight, shadow, width} = item.config.styles;
+
 		return (
 			<Topper
-				className={classNames({
-					[`ml-${marginLeft || 0}`]: widthType !== 'fixed',
-					[`mr-${marginRight || 0}`]: widthType !== 'fixed',
+				className={classNames(shadow, width, {
 					container: widthType === 'fixed',
+					[`ml-${marginLeft}`]: widthType !== 'fixed',
+					[`mr-${marginRight}`]: widthType !== 'fixed',
 					'p-0': widthType === 'fixed',
 				})}
 				item={item}

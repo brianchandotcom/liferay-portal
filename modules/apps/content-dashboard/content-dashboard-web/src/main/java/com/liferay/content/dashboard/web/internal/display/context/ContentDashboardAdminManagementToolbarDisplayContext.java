@@ -93,7 +93,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();
 
-		clearResultsURL.setParameter("categoryId", (String)null);
+		clearResultsURL.setParameter("assetCategoryId", (String)null);
 		clearResultsURL.setParameter(
 			"contentDashboardItemTypePayload", (String)null);
 		clearResultsURL.setParameter("authorIds", (String)null);
@@ -158,7 +158,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 					Stream<Long> stream = assetCategoryIds.stream();
 
 					portletURL.setParameter(
-						"categoryId",
+						"assetCategoryId",
 						stream.filter(
 							id -> id != assetCategoryId
 						).map(
@@ -176,17 +176,14 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 						StringBundler.concat(
 							LanguageUtil.get(request, "category"),
 							StringPool.COLON,
-							LanguageUtil.get(
-								request,
-								Optional.ofNullable(
-									_assetCategoryLocalService.
-										fetchAssetCategory(assetCategoryId)
-								).map(
-									assetCategory -> assetCategory.getTitle(
-										_locale)
-								).orElse(
-									StringPool.BLANK
-								))));
+							Optional.ofNullable(
+								_assetCategoryLocalService.fetchAssetCategory(
+									assetCategoryId)
+							).map(
+								assetCategory -> assetCategory.getTitle(_locale)
+							).orElse(
+								StringPool.BLANK
+							)));
 				});
 		}
 
@@ -387,7 +384,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 
 		portletURL.setParameter(
 			"eventName",
-			_liferayPortletResponse.getNamespace() + "selectedCategory");
+			_liferayPortletResponse.getNamespace() + "selectedAssetCategory");
 
 		List<Long> assetCategoryIds =
 			_contentDashboardAdminDisplayContext.getAssetCategoryIds();
@@ -511,19 +508,19 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 						_contentDashboardAdminDisplayContext.
 							getAssetCategoryIds()));
 
-				dropdownItem.putData("action", "selectCategory");
+				dropdownItem.putData("action", "selectAssetCategory");
 				dropdownItem.putData(
 					"dialogTitle",
 					LanguageUtil.get(request, "select-categories"));
 
 				PortletURL portletURL = getPortletURL();
 
-				portletURL.setParameter("categoryId", (String)null);
+				portletURL.setParameter("assetCategoryId", (String)null);
 
 				dropdownItem.putData("redirectURL", String.valueOf(portletURL));
 
 				dropdownItem.putData(
-					"selectCategoryURL",
+					"selectAssetCategoryURL",
 					String.valueOf(_getAssetCategorySelectorURL()));
 				dropdownItem.setLabel(
 					LanguageUtil.get(request, "categories") +

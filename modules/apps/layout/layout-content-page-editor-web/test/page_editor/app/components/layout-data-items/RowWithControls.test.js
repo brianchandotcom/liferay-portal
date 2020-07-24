@@ -13,12 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {
-	cleanup,
-	queryByText,
-	queryByTitle,
-	render,
-} from '@testing-library/react';
+import {cleanup, queryByText, render} from '@testing-library/react';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
@@ -80,14 +75,6 @@ const renderRow = ({
 describe('RowWithControls', () => {
 	afterEach(cleanup);
 
-	it('hides FloatingToolbar if user has no permissions', () => {
-		const {baseElement} = renderRow({hasUpdatePermissions: false});
-
-		expect(
-			baseElement.querySelector('.page-editor__floating-toolbar')
-		).toBe(null);
-	});
-
 	it('does not add row class if user has no permissions', () => {
 		const {baseElement} = renderRow({hasUpdatePermissions: false});
 
@@ -99,16 +86,5 @@ describe('RowWithControls', () => {
 
 		expect(queryByText(baseElement, 'delete')).not.toBeInTheDocument();
 		expect(queryByText(baseElement, 'duplicate')).not.toBeInTheDocument();
-	});
-
-	it('does not allow changing configuration if viewport is not desktop', () => {
-		const {baseElement} = renderRow({
-			viewportSize: VIEWPORT_SIZES.landscapeMobile,
-		});
-
-		expect(queryByTitle(baseElement, 'grid-styles')).toBeInTheDocument();
-		expect(
-			queryByTitle(baseElement, 'grid-configuration')
-		).not.toBeInTheDocument();
 	});
 });

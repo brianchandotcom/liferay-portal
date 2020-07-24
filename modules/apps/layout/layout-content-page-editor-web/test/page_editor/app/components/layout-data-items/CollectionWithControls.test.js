@@ -84,12 +84,6 @@ describe('CollectionWithControls', () => {
 		expect(getByText('no-collection-selected-yet')).toBeInTheDocument();
 	});
 
-	it('hides FloatingToolbar if item is not active', async () => {
-		const {queryByTitle} = renderCollection({isActive: false});
-
-		expect(queryByTitle('collection-display-configuration')).toBe(null);
-	});
-
 	it('removes all buttons if user has no permissions', () => {
 		const {queryByTitle} = renderCollection({hasUpdatePermission: false});
 

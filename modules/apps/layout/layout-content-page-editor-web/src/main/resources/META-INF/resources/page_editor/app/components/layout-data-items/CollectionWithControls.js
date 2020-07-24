@@ -19,33 +19,12 @@ import {
 	LayoutDataPropTypes,
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
-import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
-import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
-import selectShowFloatingToolbar from '../../selectors/selectShowFloatingToolbar';
-import {useSelector} from '../../store/index';
-import {useIsActive} from '../Controls';
 import Topper from '../Topper';
-import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import Collection from './Collection';
 
 const CollectionWithControls = React.forwardRef(
 	({children, item, layoutData}, ref) => {
-		const canUpdateItemConfiguration = useSelector(
-			selectCanUpdateItemConfiguration
-		);
-		const isActive = useIsActive();
-
-		const showFloatingToolbar = useSelector(selectShowFloatingToolbar);
-
 		const [setRef, itemElement] = useSetRef(ref);
-
-		const buttons = [];
-
-		if (canUpdateItemConfiguration) {
-			buttons.push(
-				LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.collectionConfiguration
-			);
-		}
 
 		return (
 			<Topper
@@ -53,19 +32,9 @@ const CollectionWithControls = React.forwardRef(
 				itemElement={itemElement}
 				layoutData={layoutData}
 			>
-				<>
-					<Collection item={item} ref={setRef}>
-						{children}
-					</Collection>
-
-					{isActive(item.itemId) && showFloatingToolbar && (
-						<FloatingToolbar
-							buttons={buttons}
-							item={item}
-							itemElement={itemElement}
-						/>
-					)}
-				</>
+				<Collection item={item} ref={setRef}>
+					{children}
+				</Collection>
 			</Topper>
 		);
 	}

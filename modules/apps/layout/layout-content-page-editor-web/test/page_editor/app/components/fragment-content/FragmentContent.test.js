@@ -25,7 +25,6 @@ import {
 } from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/Controls';
 import {EditableProcessorContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/fragment-content/EditableProcessorContext';
 import FragmentContent from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/fragment-content/FragmentContent';
-import getEditableUniqueId from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/fragment-content/getEditableUniqueId';
 import resolveEditableValue from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/fragment-content/resolveEditableValue';
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/backgroundImageFragmentEntryProcessor';
 import {VIEWPORT_SIZES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
@@ -223,44 +222,6 @@ describe('FragmentContent', () => {
 			'en_US',
 			expect.any(Function)
 		);
-	});
-
-	it('hides FloatingToolbar if user has no permissions', async () => {
-		const fragmentEntryLink = getFragmentEntryLink();
-
-		await act(async () => {
-			renderFragmentContent({
-				activeItemId: getEditableUniqueId(
-					FRAGMENT_ENTRY_LINK_ID,
-					'editable-id'
-				),
-				fragmentEntryLink,
-				hasUpdatePermissions: false,
-			});
-		});
-
-		expect(
-			document.body.querySelector('.page-editor__floating-toolbar')
-		).toBe(null);
-	});
-
-	it('hides FloatingToolbar if viewport size is not desktop', async () => {
-		const fragmentEntryLink = getFragmentEntryLink();
-
-		await act(async () => {
-			renderFragmentContent({
-				activeItemId: getEditableUniqueId(
-					FRAGMENT_ENTRY_LINK_ID,
-					'editable-id'
-				),
-				fragmentEntryLink,
-				viewportSize: VIEWPORT_SIZES.tablet,
-			});
-		});
-
-		expect(
-			document.body.querySelector('.page-editor__floating-toolbar')
-		).toBe(null);
 	});
 
 	it('shows widgets topper even without update permissions', async () => {

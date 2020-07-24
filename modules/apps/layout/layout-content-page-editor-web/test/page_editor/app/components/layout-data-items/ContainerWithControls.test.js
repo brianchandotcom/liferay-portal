@@ -76,14 +76,6 @@ const renderContainer = ({
 describe('ContainerWithControls', () => {
 	afterEach(cleanup);
 
-	it('hides FloatingToolbar if user has no permissions', () => {
-		const {baseElement} = renderContainer({hasUpdatePermissions: false});
-
-		expect(
-			baseElement.querySelector('.page-editor__floating-toolbar')
-		).toBe(null);
-	});
-
 	it('does not add container class if user has no permissions', () => {
 		const {baseElement} = renderContainer({hasUpdatePermissions: false});
 

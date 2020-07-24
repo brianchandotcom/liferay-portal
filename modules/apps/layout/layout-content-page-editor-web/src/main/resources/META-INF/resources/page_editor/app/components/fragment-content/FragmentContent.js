@@ -18,24 +18,17 @@ import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import setFragmentEditables from '../../actions/setFragmentEditables';
-import {EDITABLE_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/editableFloatingToolbarButtons';
 import selectCanConfigureWidgets from '../../selectors/selectCanConfigureWidgets';
-import selectCanUpdateEditables from '../../selectors/selectCanUpdateEditables';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector, useSelectorCallback} from '../../store/index';
 import {useGetContent, useGetFieldValue} from '../CollectionItemContext';
 import {useGlobalContext} from '../GlobalContext';
 import Layout from '../Layout';
 import UnsafeHTML from '../UnsafeHTML';
-import {
-	useIsProcessorEnabled,
-	useSetEditableProcessorUniqueId,
-} from './EditableProcessorContext';
-import FragmentContentFloatingToolbar from './FragmentContentFloatingToolbar';
+import {useIsProcessorEnabled} from './EditableProcessorContext';
 import FragmentContentInteractionsFilter from './FragmentContentInteractionsFilter';
 import FragmentContentProcessor from './FragmentContentProcessor';
 import getAllEditables from './getAllEditables';
-import getEditableUniqueId from './getEditableUniqueId';
 import resolveEditableValue from './resolveEditableValue';
 
 const FragmentContent = ({elementRef, fragmentEntryLinkId, itemId}) => {
@@ -43,7 +36,6 @@ const FragmentContent = ({elementRef, fragmentEntryLinkId, itemId}) => {
 	const isMounted = useIsMounted();
 	const isProcessorEnabled = useIsProcessorEnabled();
 	const globalContext = useGlobalContext();
-	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
 
 	const getFieldValue = useGetFieldValue();
 
@@ -53,7 +45,6 @@ const FragmentContent = ({elementRef, fragmentEntryLinkId, itemId}) => {
 	);
 
 	const canConfigureWidgets = useSelector(selectCanConfigureWidgets);
-	const canUpdateEditables = useSelector(selectCanUpdateEditables);
 
 	const editableElements = useMemo(
 		() => editables.map((editable) => editable.element),
@@ -173,17 +164,6 @@ const FragmentContent = ({elementRef, fragmentEntryLinkId, itemId}) => {
 		[]
 	);
 
-	const onFloatingToolbarButtonClick = useCallback(
-		(buttonId, editableId) => {
-			if (buttonId === EDITABLE_FLOATING_TOOLBAR_BUTTONS.edit.id) {
-				setEditableProcessorUniqueId(
-					getEditableUniqueId(fragmentEntryLinkId, editableId)
-				);
-			}
-		},
-		[fragmentEntryLinkId, setEditableProcessorUniqueId]
-	);
-
 	return (
 		<>
 			<FragmentContentInteractionsFilter
@@ -202,14 +182,6 @@ const FragmentContent = ({elementRef, fragmentEntryLinkId, itemId}) => {
 					onRender={onRender}
 				/>
 			</FragmentContentInteractionsFilter>
-
-			{canUpdateEditables && (
-				<FragmentContentFloatingToolbar
-					editables={editables}
-					fragmentEntryLinkId={fragmentEntryLinkId}
-					onButtonClick={onFloatingToolbarButtonClick}
-				/>
-			)}
 
 			<FragmentContentProcessor
 				editables={editables}

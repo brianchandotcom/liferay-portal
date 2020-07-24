@@ -21,17 +21,11 @@ import {
 	LayoutDataPropTypes,
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
-import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
-import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
-import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
-import selectShowFloatingToolbar from '../../selectors/selectShowFloatingToolbar';
 import {useSelector} from '../../store/index';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
-import {useIsActive} from '../Controls';
 import {ResizeContextProvider} from '../ResizeContext';
 import Topper from '../Topper';
-import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import Row from './Row';
 
 const RowWithControls = React.forwardRef(
@@ -40,11 +34,6 @@ const RowWithControls = React.forwardRef(
 		const [resizing, setResizing] = useState(false);
 		const [updatedLayoutData, setUpdatedLayoutData] = useState(null);
 		const [customRow, setCustomRow] = useState(false);
-		const isActive = useIsActive();
-
-		const canUpdateItemConfiguration = useSelector(
-			selectCanUpdateItemConfiguration
-		);
 
 		const canUpdatePageStructure = useSelector(
 			selectCanUpdatePageStructure
@@ -53,7 +42,6 @@ const RowWithControls = React.forwardRef(
 		const selectedViewportSize = useSelector(
 			(state) => state.selectedViewportSize
 		);
-		const showFloatingToolbar = useSelector(selectShowFloatingToolbar);
 
 		const rowResponsiveConfig = getResponsiveConfig(
 			rowConfig,
@@ -61,19 +49,6 @@ const RowWithControls = React.forwardRef(
 		);
 
 		const [setRef, itemElement] = useSetRef(ref);
-
-		const buttons = [];
-
-		if (canUpdateItemConfiguration) {
-			buttons.push(LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.rowStyles);
-
-			if (selectedViewportSize === VIEWPORT_SIZES.desktop) {
-				buttons.push(
-					LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.rowConfiguration
-				);
-			}
-		}
-
 		const {verticalAlignment} = rowResponsiveConfig;
 
 		return (
@@ -103,13 +78,6 @@ const RowWithControls = React.forwardRef(
 							updatedLayoutData,
 						}}
 					>
-						{isActive(item.itemId) && showFloatingToolbar && (
-							<FloatingToolbar
-								buttons={buttons}
-								item={item}
-								itemElement={itemElement}
-							/>
-						)}
 						{children}
 					</ResizeContextProvider>
 				</Row>

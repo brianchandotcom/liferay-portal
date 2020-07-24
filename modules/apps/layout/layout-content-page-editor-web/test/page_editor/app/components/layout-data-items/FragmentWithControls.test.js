@@ -89,16 +89,6 @@ const renderFragment = ({
 describe('FragmentWithControls', () => {
 	afterEach(cleanup);
 
-	it('hides FloatingToolbar if user has no permissions', async () => {
-		await act(async () => {
-			renderFragment({hasUpdatePermissions: false});
-		});
-
-		expect(
-			document.body.querySelector('.page-editor__floating-toolbar')
-		).toBe(null);
-	});
-
 	it('does not allow deleting or duplicating the fragment if user has no permissions', async () => {
 		await act(async () => {
 			renderFragment({hasUpdatePermissions: false});

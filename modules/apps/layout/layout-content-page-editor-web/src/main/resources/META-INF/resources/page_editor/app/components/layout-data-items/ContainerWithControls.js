@@ -20,73 +20,49 @@ import {
 	LayoutDataPropTypes,
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
-import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
-import selectShowFloatingToolbar from '../../selectors/selectShowFloatingToolbar';
 import {useSelector} from '../../store/index';
-import {useIsActive} from '../Controls';
 import Topper from '../Topper';
-import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import Container from './Container';
 
 const ContainerWithControls = React.forwardRef(
 	({children, item, layoutData}, ref) => {
+		const {marginLeft, marginRight, widthType} = item.config;
+		const [setRef, itemElement] = useSetRef(ref);
+
 		const canUpdateItemConfiguration = useSelector(
 			selectCanUpdateItemConfiguration
 		);
 		const canUpdatePageStructure = useSelector(
 			selectCanUpdatePageStructure
 		);
-		const isActive = useIsActive();
-		const showFloatingToolbar = useSelector(selectShowFloatingToolbar);
-
-		const [setRef, itemElement] = useSetRef(ref);
-
-		const buttons = [];
-
-		const {marginLeft, marginRight, widthType} = item.config;
-
-		if (canUpdateItemConfiguration) {
-			buttons.push(LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.containerLink);
-			buttons.push(LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.containerStyles);
-		}
 
 		return (
-			<>
-				{isActive(item.itemId) && showFloatingToolbar && (
-					<FloatingToolbar
-						buttons={buttons}
-						item={item}
-						itemElement={itemElement}
-					/>
-				)}
-
-				<Topper
+			<Topper
+				className={classNames({
+					[`ml-${marginLeft || 0}`]: widthType !== 'fixed',
+					[`mr-${marginRight || 0}`]: widthType !== 'fixed',
+					container: widthType === 'fixed',
+					'p-0': widthType === 'fixed',
+				})}
+				item={item}
+				itemElement={itemElement}
+				layoutData={layoutData}
+			>
+				<Container
 					className={classNames({
-						[`ml-${marginLeft || 0}`]: widthType !== 'fixed',
-						[`mr-${marginRight || 0}`]: widthType !== 'fixed',
-						container: widthType === 'fixed',
-						'p-0': widthType === 'fixed',
+						empty: !item.children.length,
+						'page-editor__container':
+							canUpdatePageStructure ||
+							canUpdateItemConfiguration,
 					})}
 					item={item}
-					itemElement={itemElement}
-					layoutData={layoutData}
+					ref={setRef}
 				>
-					<Container
-						className={classNames({
-							empty: !item.children.length,
-							'page-editor__container':
-								canUpdatePageStructure ||
-								canUpdateItemConfiguration,
-						})}
-						item={item}
-						ref={setRef}
-					>
-						{children}
-					</Container>
-				</Topper>
-			</>
+					{children}
+				</Container>
+			</Topper>
 		);
 	}
 );

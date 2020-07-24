@@ -38,7 +38,7 @@ public class InterpolationUtil {
 
 	public static void performSubstitution(
 		Map<String, String> properties,
-		SubstitutionCallback substitutionCallback) {
+		SubstitutionalCallback substitutionCallback) {
 
 		Map<String, String> map = new HashMap<>(properties);
 
@@ -55,7 +55,7 @@ public class InterpolationUtil {
 
 	public static String substVars(
 			String value, String currentKey, Map<String, String> cycleMap,
-			Map<String, String> configProps, SubstitutionCallback callback,
+			Map<String, String> configProps, SubstitutionalCallback callback,
 			boolean substituteFromConfig)
 		throws IllegalArgumentException {
 
@@ -66,7 +66,7 @@ public class InterpolationUtil {
 	}
 
 	public static class BundleContextSubstitutionCallback
-		implements SubstitutionCallback {
+		implements SubstitutionalCallback {
 
 		public BundleContextSubstitutionCallback(BundleContext context) {
 			_bundleContext = context;
@@ -93,12 +93,6 @@ public class InterpolationUtil {
 		}
 
 		private final BundleContext _bundleContext;
-
-	}
-
-	public interface SubstitutionCallback {
-
-		public String getValue(String key);
 
 	}
 
@@ -135,7 +129,7 @@ public class InterpolationUtil {
 
 	private static String _substVars(
 			String value, String currentKey, Map<String, String> cycleMap,
-			Map<String, String> configProps, SubstitutionCallback callback,
+			Map<String, String> configProps, SubstitutionalCallback callback,
 			boolean substituteFromConfig)
 		throws IllegalArgumentException {
 

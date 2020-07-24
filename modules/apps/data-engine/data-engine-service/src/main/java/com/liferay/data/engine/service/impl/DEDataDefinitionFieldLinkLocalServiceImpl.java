@@ -117,6 +117,14 @@ public class DEDataDefinitionFieldLinkLocalServiceImpl
 	}
 
 	@Override
+	public DEDataDefinitionFieldLink fetchDEDataDefinitionFieldLinks(
+		long classNameId, long classPK, long ddmStructureId, String fieldName) {
+
+		return deDataDefinitionFieldLinkPersistence.fetchByC_C_DDMSI_F(
+			classNameId, classPK, ddmStructureId, fieldName);
+	}
+
+	@Override
 	public List<DEDataDefinitionFieldLink> getDEDataDefinitionFieldLinks(
 		long ddmStructureId) {
 

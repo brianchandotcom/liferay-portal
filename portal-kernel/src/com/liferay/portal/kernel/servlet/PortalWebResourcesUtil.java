@@ -78,7 +78,7 @@ public class PortalWebResourcesUtil {
 
 	public static String getPathResourceType(String path) {
 		for (String contextPath : _contextPathMap.keySet()) {
-			if (path.startsWith(contextPath)) {
+			if (path.contains(contextPath)) {
 				PortalWebResources portalWebResources =
 					_contextPathMap.getService(contextPath);
 

@@ -86,6 +86,7 @@
 		<!-- Other fields -->
 
 		<column name="appBuilderAppId" type="long" />
+		<column name="appBuilderAppVersionId" type="long" />
 		<column name="ddlRecordId" type="long" />
 
 		<!-- Finder methods -->

@@ -93,6 +93,134 @@
 			},
 			{
 				"dataType": "string",
+				"defaultValue": "auto",
+				"dependencies": [
+				],
+				"label": "min-width",
+				"name": "minWidth",
+				"responsive": false,
+				"type": "select",
+				"validValues": [
+					{
+						"label": "auto",
+						"value": "auto"
+					},
+					{
+						"label": "25",
+						"value": "25%"
+					},
+					{
+						"label": "50",
+						"value": "50%"
+					},
+					{
+						"label": "75",
+						"value": "75%"
+					},
+					{
+						"label": "100",
+						"value": "100%"
+					}
+				]
+			},
+			{
+				"dataType": "string",
+				"defaultValue": "none",
+				"dependencies": [
+				],
+				"label": "max-width",
+				"name": "maxWidth",
+				"responsive": false,
+				"type": "select",
+				"validValues": [
+					{
+						"label": "none",
+						"value": "none"
+					},
+					{
+						"label": "25",
+						"value": "25%"
+					},
+					{
+						"label": "50",
+						"value": "50%"
+					},
+					{
+						"label": "75",
+						"value": "75%"
+					},
+					{
+						"label": "100",
+						"value": "100%"
+					}
+				]
+			},
+			{
+				"dataType": "string",
+				"defaultValue": "auto",
+				"dependencies": [
+				],
+				"label": "min-height",
+				"name": "minHeight",
+				"responsive": false,
+				"type": "select",
+				"validValues": [
+					{
+						"label": "auto",
+						"value": "auto"
+					},
+					{
+						"label": "25",
+						"value": "25%"
+					},
+					{
+						"label": "50",
+						"value": "50%"
+					},
+					{
+						"label": "75",
+						"value": "75%"
+					},
+					{
+						"label": "100",
+						"value": "100%"
+					}
+				]
+			},
+			{
+				"dataType": "string",
+				"defaultValue": "none",
+				"dependencies": [
+				],
+				"label": "max-height",
+				"name": "maxHeight",
+				"responsive": false,
+				"type": "select",
+				"validValues": [
+					{
+						"label": "none",
+						"value": "none"
+					},
+					{
+						"label": "25",
+						"value": "25%"
+					},
+					{
+						"label": "50",
+						"value": "50%"
+					},
+					{
+						"label": "75",
+						"value": "75%"
+					},
+					{
+						"label": "100",
+						"value": "100%"
+					}
+				]
+			},
+			{
+				"dataType": "string",
 				"defaultValue": "overflow-auto",
 				"dependencies": [
 				],

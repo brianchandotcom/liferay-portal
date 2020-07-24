@@ -446,6 +446,8 @@ public abstract class BaseBlogPostingResourceImpl
 	public Page<BlogPosting> getSiteBlogPostingsPage(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			@Parameter(hidden = true) @QueryParam("search") String search,
+			@Context com.liferay.portal.vulcan.aggregation.Aggregation
+				aggregation,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {
@@ -592,7 +594,8 @@ public abstract class BaseBlogPostingResourceImpl
 		throws Exception {
 
 		return getSiteBlogPostingsPage(
-			(Long)parameters.get("siteId"), search, filter, pagination, sorts);
+			(Long)parameters.get("siteId"), search, null, filter, pagination,
+			sorts);
 	}
 
 	@Override

@@ -218,7 +218,8 @@ public abstract class BaseDocumentResourceTestCase {
 	public void testGetDocumentFolderDocumentsPage() throws Exception {
 		Page<Document> page = documentResource.getDocumentFolderDocumentsPage(
 			testGetDocumentFolderDocumentsPage_getDocumentFolderId(), null,
-			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+			RandomTestUtil.randomString(), null, null, Pagination.of(1, 2),
+			null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -233,7 +234,7 @@ public abstract class BaseDocumentResourceTestCase {
 					irrelevantDocumentFolderId, randomIrrelevantDocument());
 
 			page = documentResource.getDocumentFolderDocumentsPage(
-				irrelevantDocumentFolderId, null, null, null,
+				irrelevantDocumentFolderId, null, null, null, null,
 				Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -251,7 +252,8 @@ public abstract class BaseDocumentResourceTestCase {
 			documentFolderId, randomDocument());
 
 		page = documentResource.getDocumentFolderDocumentsPage(
-			documentFolderId, null, null, null, Pagination.of(1, 2), null);
+			documentFolderId, null, null, null, null, Pagination.of(1, 2),
+			null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -287,7 +289,7 @@ public abstract class BaseDocumentResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<Document> page =
 				documentResource.getDocumentFolderDocumentsPage(
-					documentFolderId, null, null,
+					documentFolderId, null, null, null,
 					getFilterString(entityField, "between", document1),
 					Pagination.of(1, 2), null);
 
@@ -321,7 +323,7 @@ public abstract class BaseDocumentResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<Document> page =
 				documentResource.getDocumentFolderDocumentsPage(
-					documentFolderId, null, null,
+					documentFolderId, null, null, null,
 					getFilterString(entityField, "eq", document1),
 					Pagination.of(1, 2), null);
 
@@ -348,14 +350,16 @@ public abstract class BaseDocumentResourceTestCase {
 			documentFolderId, randomDocument());
 
 		Page<Document> page1 = documentResource.getDocumentFolderDocumentsPage(
-			documentFolderId, null, null, null, Pagination.of(1, 2), null);
+			documentFolderId, null, null, null, null, Pagination.of(1, 2),
+			null);
 
 		List<Document> documents1 = (List<Document>)page1.getItems();
 
 		Assert.assertEquals(documents1.toString(), 2, documents1.size());
 
 		Page<Document> page2 = documentResource.getDocumentFolderDocumentsPage(
-			documentFolderId, null, null, null, Pagination.of(2, 2), null);
+			documentFolderId, null, null, null, null, Pagination.of(2, 2),
+			null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -364,7 +368,8 @@ public abstract class BaseDocumentResourceTestCase {
 		Assert.assertEquals(documents2.toString(), 1, documents2.size());
 
 		Page<Document> page3 = documentResource.getDocumentFolderDocumentsPage(
-			documentFolderId, null, null, null, Pagination.of(1, 3), null);
+			documentFolderId, null, null, null, null, Pagination.of(1, 3),
+			null);
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(document1, document2, document3),
@@ -480,8 +485,8 @@ public abstract class BaseDocumentResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<Document> ascPage =
 				documentResource.getDocumentFolderDocumentsPage(
-					documentFolderId, null, null, null, Pagination.of(1, 2),
-					entityField.getName() + ":asc");
+					documentFolderId, null, null, null, null,
+					Pagination.of(1, 2), entityField.getName() + ":asc");
 
 			assertEquals(
 				Arrays.asList(document1, document2),
@@ -489,8 +494,8 @@ public abstract class BaseDocumentResourceTestCase {
 
 			Page<Document> descPage =
 				documentResource.getDocumentFolderDocumentsPage(
-					documentFolderId, null, null, null, Pagination.of(1, 2),
-					entityField.getName() + ":desc");
+					documentFolderId, null, null, null, null,
+					Pagination.of(1, 2), entityField.getName() + ":desc");
 
 			assertEquals(
 				Arrays.asList(document2, document1),
@@ -745,7 +750,8 @@ public abstract class BaseDocumentResourceTestCase {
 	public void testGetSiteDocumentsPage() throws Exception {
 		Page<Document> page = documentResource.getSiteDocumentsPage(
 			testGetSiteDocumentsPage_getSiteId(), null,
-			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+			RandomTestUtil.randomString(), null, null, Pagination.of(1, 2),
+			null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -757,7 +763,8 @@ public abstract class BaseDocumentResourceTestCase {
 				irrelevantSiteId, randomIrrelevantDocument());
 
 			page = documentResource.getSiteDocumentsPage(
-				irrelevantSiteId, null, null, null, Pagination.of(1, 2), null);
+				irrelevantSiteId, null, null, null, null, Pagination.of(1, 2),
+				null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -774,7 +781,7 @@ public abstract class BaseDocumentResourceTestCase {
 			siteId, randomDocument());
 
 		page = documentResource.getSiteDocumentsPage(
-			siteId, null, null, null, Pagination.of(1, 2), null);
+			siteId, null, null, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -807,7 +814,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Document> page = documentResource.getSiteDocumentsPage(
-				siteId, null, null,
+				siteId, null, null, null,
 				getFilterString(entityField, "between", document1),
 				Pagination.of(1, 2), null);
 
@@ -839,7 +846,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Document> page = documentResource.getSiteDocumentsPage(
-				siteId, null, null,
+				siteId, null, null, null,
 				getFilterString(entityField, "eq", document1),
 				Pagination.of(1, 2), null);
 
@@ -863,14 +870,14 @@ public abstract class BaseDocumentResourceTestCase {
 			siteId, randomDocument());
 
 		Page<Document> page1 = documentResource.getSiteDocumentsPage(
-			siteId, null, null, null, Pagination.of(1, 2), null);
+			siteId, null, null, null, null, Pagination.of(1, 2), null);
 
 		List<Document> documents1 = (List<Document>)page1.getItems();
 
 		Assert.assertEquals(documents1.toString(), 2, documents1.size());
 
 		Page<Document> page2 = documentResource.getSiteDocumentsPage(
-			siteId, null, null, null, Pagination.of(2, 2), null);
+			siteId, null, null, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -879,7 +886,7 @@ public abstract class BaseDocumentResourceTestCase {
 		Assert.assertEquals(documents2.toString(), 1, documents2.size());
 
 		Page<Document> page3 = documentResource.getSiteDocumentsPage(
-			siteId, null, null, null, Pagination.of(1, 3), null);
+			siteId, null, null, null, null, Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(document1, document2, document3),
@@ -985,7 +992,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Document> ascPage = documentResource.getSiteDocumentsPage(
-				siteId, null, null, null, Pagination.of(1, 2),
+				siteId, null, null, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":asc");
 
 			assertEquals(
@@ -993,7 +1000,7 @@ public abstract class BaseDocumentResourceTestCase {
 				(List<Document>)ascPage.getItems());
 
 			Page<Document> descPage = documentResource.getSiteDocumentsPage(
-				siteId, null, null, null, Pagination.of(1, 2),
+				siteId, null, null, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":desc");
 
 			assertEquals(

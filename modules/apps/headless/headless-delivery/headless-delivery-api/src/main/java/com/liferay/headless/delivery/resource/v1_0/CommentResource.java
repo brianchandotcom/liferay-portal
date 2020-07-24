@@ -50,8 +50,9 @@ public interface CommentResource {
 	}
 
 	public Page<Comment> getBlogPostingCommentsPage(
-			Long blogPostingId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Long blogPostingId, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public Comment postBlogPostingComment(Long blogPostingId, Comment comment)
@@ -74,16 +75,18 @@ public interface CommentResource {
 		throws Exception;
 
 	public Page<Comment> getCommentCommentsPage(
-			Long parentCommentId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Long parentCommentId, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public Comment postCommentComment(Long parentCommentId, Comment comment)
 		throws Exception;
 
 	public Page<Comment> getDocumentCommentsPage(
-			Long documentId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Long documentId, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public Comment postDocumentComment(Long documentId, Comment comment)
@@ -94,8 +97,9 @@ public interface CommentResource {
 		throws Exception;
 
 	public Page<Comment> getStructuredContentCommentsPage(
-			Long structuredContentId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Long structuredContentId, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public Comment postStructuredContentComment(

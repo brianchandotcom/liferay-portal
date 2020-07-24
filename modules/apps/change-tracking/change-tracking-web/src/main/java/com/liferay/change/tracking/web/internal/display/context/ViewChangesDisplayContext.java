@@ -524,28 +524,6 @@ public class ViewChangesDisplayContext {
 				);
 			}
 			else {
-				JSONArray dropdownItemsJSONArray =
-					JSONFactoryUtil.createJSONArray();
-
-				if ((_ctCollection.getCtCollectionId() ==
-						_activeCtCollectionId) &&
-					(ctEntry.getChangeType() !=
-						CTConstants.CT_CHANGE_TYPE_DELETION)) {
-
-					String editURL = _ctDisplayRendererRegistry.getEditURL(
-						_httpServletRequest, ctEntry);
-
-					if (Validator.isNotNull(editURL)) {
-						dropdownItemsJSONArray.put(
-							JSONUtil.put(
-								"href", editURL
-							).put(
-								"label",
-								_language.get(_httpServletRequest, "edit")
-							));
-					}
-				}
-
 				Date modifiedDate = ctEntry.getModifiedDate();
 
 				entryValue._ctEntry = true;
@@ -556,8 +534,6 @@ public class ViewChangesDisplayContext {
 					"description",
 					_ctDisplayRendererRegistry.getEntryDescription(
 						_httpServletRequest, ctEntry)
-				).put(
-					"dropdownItems", dropdownItemsJSONArray
 				).put(
 					"entryId", entryValue._entryId
 				).put(
@@ -585,6 +561,35 @@ public class ViewChangesDisplayContext {
 				).put(
 					"userId", ctEntry.getUserId()
 				);
+
+				if (_ctCollection.getCtCollectionId() ==
+						_activeCtCollectionId) {
+
+					JSONArray dropdownItemsJSONArray =
+						JSONFactoryUtil.createJSONArray();
+
+					if (ctEntry.getChangeType() !=
+							CTConstants.CT_CHANGE_TYPE_DELETION) {
+
+						String editURL = _ctDisplayRendererRegistry.getEditURL(
+							_httpServletRequest, ctEntry);
+
+						if (Validator.isNotNull(editURL)) {
+							dropdownItemsJSONArray.put(
+								JSONUtil.put(
+									"href", editURL
+								).put(
+									"label",
+									_language.get(_httpServletRequest, "edit")
+								));
+						}
+					}
+
+					if (dropdownItemsJSONArray.length() > 0) {
+						entryValue._jsonObject.put(
+							"dropdownItems", dropdownItemsJSONArray);
+					}
+				}
 			}
 		}
 	}

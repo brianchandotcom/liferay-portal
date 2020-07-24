@@ -19,11 +19,13 @@ import com.liferay.change.tracking.closure.CTClosureFactory;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
+import com.liferay.change.tracking.model.CTEntryTable;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.web.internal.configuration.CTConfiguration;
 import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
 import com.liferay.change.tracking.web.internal.display.CTClosureUtil;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,6 +38,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -326,7 +329,7 @@ public class ViewChangesDisplayContext {
 		).put(
 			"typeNames", typeNamesJSONObject
 		).put(
-			"userInfo", _getUserInfoJSONObject(entriesJSONObject)
+			"userInfo", _getUserInfoJSONObject()
 		).build();
 	}
 
@@ -527,44 +530,38 @@ public class ViewChangesDisplayContext {
 		return entries;
 	}
 
-	private JSONObject _getUserInfoJSONObject(JSONObject entriesJSONObject) {
+	private JSONObject _getUserInfoJSONObject() {
 		JSONObject userInfoJSONObject = JSONFactoryUtil.createJSONObject();
 
-		for (String key : entriesJSONObject.keySet()) {
-			JSONObject entryJSONObject = entriesJSONObject.getJSONObject(key);
+		List<User> users = _userLocalService.dslQuery(
+			DSLQueryFactoryUtil.select(
+				UserTable.INSTANCE
+			).from(
+				UserTable.INSTANCE
+			).innerJoinON(
+				CTEntryTable.INSTANCE,
+				CTEntryTable.INSTANCE.userId.eq(UserTable.INSTANCE.userId)
+			).where(
+				CTEntryTable.INSTANCE.ctCollectionId.eq(
+					_ctCollection.getCtCollectionId())
+			));
 
-			if (entryJSONObject.has("ctEntryId")) {
-				long userId = entryJSONObject.getLong("userId");
+		for (User user : users) {
+			JSONObject userJSONObject = JSONUtil.put(
+				"userName", user.getFullName());
 
-				if (!userInfoJSONObject.has(String.valueOf(userId))) {
-					String portraitURL = null;
-					String userName = StringPool.BLANK;
-
-					User user = _userLocalService.fetchUser(userId);
-
-					if (user != null) {
-						if (user.getPortraitId() != 0) {
-							try {
-								portraitURL = user.getPortraitURL(
-									_themeDisplay);
-							}
-							catch (PortalException portalException) {
-								_log.error(portalException, portalException);
-							}
-						}
-
-						userName = user.getFullName();
-					}
-
-					userInfoJSONObject.put(
-						String.valueOf(userId),
-						JSONUtil.put(
-							"portraitURL", portraitURL
-						).put(
-							"userName", userName
-						));
+			if (user.getPortraitId() != 0) {
+				try {
+					userJSONObject.put(
+						"portraitURL", user.getPortraitURL(_themeDisplay));
+				}
+				catch (PortalException portalException) {
+					_log.error(portalException, portalException);
 				}
 			}
+
+			userInfoJSONObject.put(
+				String.valueOf(user.getUserId()), userJSONObject);
 		}
 
 		return userInfoJSONObject;

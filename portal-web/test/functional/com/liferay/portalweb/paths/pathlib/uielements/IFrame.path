@@ -159,6 +159,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_ACCOUNTS</td>
+	<td>//iframe[@title='Select Accounts']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_DEPOT_ROLE</td>
 	<td>//iframe[contains(@id,'selectDepotRole_iframe_')]</td>
 	<td></td>

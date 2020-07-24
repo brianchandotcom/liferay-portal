@@ -16,8 +16,9 @@ package com.liferay.app.builder.web.internal.portlet.action;
 
 import com.liferay.app.builder.constants.AppBuilderAppConstants;
 import com.liferay.app.builder.model.AppBuilderApp;
+import com.liferay.app.builder.model.AppBuilderAppVersion;
 import com.liferay.app.builder.service.AppBuilderAppDataRecordLinkLocalService;
-import com.liferay.app.builder.service.AppBuilderAppLocalService;
+import com.liferay.app.builder.service.AppBuilderAppVersionLocalService;
 import com.liferay.data.engine.rest.dto.v2_0.DataRecord;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordResource;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
@@ -94,8 +95,8 @@ public class AddDataRecordMVCResourceCommand extends BaseMVCResourceCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		AppBuilderApp appBuilderApp =
-			_appBuilderAppLocalService.getAppBuilderApp(
+		AppBuilderAppVersion appBuilderAppVersion =
+			_appBuilderAppVersionLocalService.getLatestAppBuilderAppVersion(
 				ParamUtil.getLong(resourceRequest, "appBuilderAppId"));
 
 		DataRecordResource dataRecordResource = DataRecordResource.builder(
@@ -104,13 +105,15 @@ public class AddDataRecordMVCResourceCommand extends BaseMVCResourceCommand {
 		).build();
 
 		DataRecord dataRecord = dataRecordResource.postDataDefinitionDataRecord(
-			appBuilderApp.getDdmStructureId(),
+			appBuilderAppVersion.getDdmStructureId(),
 			DataRecord.toDTO(
 				ParamUtil.getString(resourceRequest, "dataRecord")));
 
 		_appBuilderAppDataRecordLinkLocalService.addAppBuilderAppDataRecordLink(
-			themeDisplay.getScopeGroupId(), themeDisplay.getCompanyId(),
-			appBuilderApp.getAppBuilderAppId(), dataRecord.getId());
+			themeDisplay.getScopeGroupId(), appBuilderAppVersion.getCompanyId(),
+			appBuilderAppVersion.getAppBuilderAppId(),
+			appBuilderAppVersion.getAppBuilderAppVersionId(),
+			dataRecord.getId());
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
@@ -143,7 +146,7 @@ public class AddDataRecordMVCResourceCommand extends BaseMVCResourceCommand {
 		_appBuilderAppDataRecordLinkLocalService;
 
 	@Reference
-	private AppBuilderAppLocalService _appBuilderAppLocalService;
+	private AppBuilderAppVersionLocalService _appBuilderAppVersionLocalService;
 
 	@Reference
 	private DDLRecordLocalService _ddlRecordLocalService;

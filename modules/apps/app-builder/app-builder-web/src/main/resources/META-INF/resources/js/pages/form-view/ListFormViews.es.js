@@ -12,12 +12,13 @@
  * details.
  */
 
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 
 import {AppContext} from '../../AppContext.es';
 import Button from '../../components/button/Button.es';
 import ListView from '../../components/list-view/ListView.es';
-import {confirmDelete, getItem} from '../../utils/client.es';
+import useDefaultLanguageId from '../../hooks/useDefaultLanguageId.es';
+import {confirmDelete} from '../../utils/client.es';
 import {getLocalizedValue} from '../../utils/lang.es';
 import {fromNow} from '../../utils/time.es';
 
@@ -27,7 +28,7 @@ export default ({
 	},
 }) => {
 	const {basePortletURL} = useContext(AppContext);
-	const [defaultLanguageId, setDefaultLanguageId] = useState('');
+	const defaultLanguageId = useDefaultLanguageId(dataDefinitionId);
 
 	const getItemURL = (item) =>
 		Liferay.Util.PortletURL.createRenderURL(basePortletURL, {
@@ -70,14 +71,6 @@ export default ({
 		dataDefinitionId,
 		mvcRenderCommandName: '/edit_form_view',
 	});
-
-	useEffect(() => {
-		getItem(
-			`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}`
-		).then(({defaultLanguageId}) => {
-			setDefaultLanguageId(defaultLanguageId);
-		});
-	}, [dataDefinitionId]);
 
 	return (
 		<ListView

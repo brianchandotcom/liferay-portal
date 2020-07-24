@@ -17,7 +17,9 @@ import {Link} from 'react-router-dom';
 
 import Button from '../../components/button/Button.es';
 import ListView from '../../components/list-view/ListView.es';
+import useDefaultLanguageId from '../../hooks/useDefaultLanguageId.es';
 import {confirmDelete} from '../../utils/client.es';
+import {getLocalizedValue} from '../../utils/lang.es';
 import {fromNow} from '../../utils/time.es';
 
 const COLUMNS = [
@@ -46,6 +48,8 @@ export default ({
 		url,
 	},
 }) => {
+	const defaultLanguageId = useDefaultLanguageId(dataDefinitionId);
+
 	return (
 		<ListView
 			actions={[
@@ -83,12 +87,21 @@ export default ({
 			}}
 			endpoint={`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-list-views`}
 		>
-			{(item) => ({
-				...item,
-				dateCreated: fromNow(item.dateCreated),
-				dateModified: fromNow(item.dateModified),
-				name: <Link to={`${url}/${item.id}`}>{item.name.en_US}</Link>,
-			})}
+			{(item) => {
+				const {dateCreated, dateModified, id, name} = item;
+
+				return {
+					...item,
+					dateCreated: fromNow(dateCreated),
+					dateModified: fromNow(dateModified),
+					id,
+					name: (
+						<Link to={`${url}/${id}`}>
+							{getLocalizedValue(defaultLanguageId, name)}
+						</Link>
+					),
+				};
+			}}
 		</ListView>
 	);
 };

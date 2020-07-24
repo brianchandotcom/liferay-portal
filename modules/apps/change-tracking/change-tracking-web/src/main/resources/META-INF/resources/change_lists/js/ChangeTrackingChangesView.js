@@ -33,7 +33,7 @@ class ChangeTrackingChangesView extends React.Component {
 		const {
 			changes,
 			contextView,
-			entries,
+			models,
 			renderCTEntryURL,
 			renderDiffURL,
 			rootDisplayClasses,
@@ -44,7 +44,7 @@ class ChangeTrackingChangesView extends React.Component {
 
 		this.changes = changes;
 		this.contextView = contextView;
-		this.entries = entries;
+		this.models = models;
 		this.renderCTEntryURL = renderCTEntryURL;
 		this.renderDiffURL = renderDiffURL;
 		this.rootDisplayClasses = rootDisplayClasses;
@@ -52,14 +52,14 @@ class ChangeTrackingChangesView extends React.Component {
 		this.typeNames = typeNames;
 		this.userInfo = userInfo;
 
-		const keys = Object.keys(this.entries);
+		const keys = Object.keys(this.models);
 
 		for (let i = 0; i < keys.length; i++) {
-			const entry = this.entries[keys[i]];
+			const model = this.models[keys[i]];
 
-			if (!entry.typeName) {
-				entry.typeName = this.typeNames[
-					entry.modelClassNameId.toString()
+			if (!model.typeName) {
+				model.typeName = this.typeNames[
+					model.modelClassNameId.toString()
 				];
 			}
 		}
@@ -319,50 +319,50 @@ class ChangeTrackingChangesView extends React.Component {
 		return this.state.column;
 	}
 
-	_getEntries(nodes) {
+	_getModels(nodes) {
 		if (!nodes) {
 			return [];
 		}
 
-		const entries = [];
+		const models = [];
 
 		for (let i = 0; i < nodes.length; i++) {
 			const node = nodes[i];
 
-			let entryId = node;
+			let modelKey = node;
 			let nodeId = node;
 
 			if (typeof node === 'object') {
-				entryId = node.entryId;
+				modelKey = node.modelKey;
 				nodeId = node.nodeId;
 			}
 
-			const entry = this._clone(this.entries[entryId.toString()]);
+			const model = this._clone(this.models[modelKey.toString()]);
 
-			entry.nodeId = nodeId;
+			model.nodeId = nodeId;
 
-			entries.push(entry);
+			models.push(model);
 		}
 
-		return entries;
+		return models;
 	}
 
 	_getNode(filterClass, navigation, nodeId) {
 		if (navigation === 'changes') {
 			if (nodeId === 0) {
-				return {children: this._getEntries(this.changes)};
+				return {children: this._getModels(this.changes)};
 			}
 
-			return this._clone(this.entries[nodeId.toString()]);
+			return this._clone(this.models[nodeId.toString()]);
 		}
 		else if (filterClass !== 'everything' && nodeId === 0) {
-			return {children: this._getEntries(this.contextView[filterClass])};
+			return {children: this._getModels(this.contextView[filterClass])};
 		}
 
 		const rootNode = this.contextView.everything;
 
 		if (nodeId === 0) {
-			return {children: this._getEntries(rootNode.children)};
+			return {children: this._getModels(rootNode.children)};
 		}
 
 		if (!rootNode.parents) {
@@ -380,10 +380,10 @@ class ChangeTrackingChangesView extends React.Component {
 
 			if (element.nodeId === nodeId) {
 				const entry = this._clone(
-					this.entries[element.entryId.toString()]
+					this.models[element.modelKey.toString()]
 				);
 
-				entry.children = this._getEntries(element.children);
+				entry.children = this._getModels(element.children);
 				entry.parents = element.parents;
 
 				return entry;
@@ -398,12 +398,12 @@ class ChangeTrackingChangesView extends React.Component {
 				if (!child.parents) {
 					const parents = element.parents.slice(0);
 
-					const entry = this.entries[element.entryId.toString()];
+					const model = this.models[element.modelKey.toString()];
 
 					parents.push({
 						nodeId: element.nodeId,
-						title: entry.title,
-						typeName: entry.typeName,
+						title: model.title,
+						typeName: model.typeName,
 					});
 
 					child.parents = parents;

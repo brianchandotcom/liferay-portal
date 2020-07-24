@@ -150,21 +150,21 @@ public class ViewChangesDisplayContext {
 		}
 
 		Map<Long, Set<Long>> classNameIdClassPKsMap = new HashMap<>();
-		Map<EntryKey, EntryValue> entryMap = new HashMap<>();
+		Map<ModelInfoKey, ModelInfo> modelInfoMap = new HashMap<>();
 
 		if (ctClosure == null) {
 			List<CTEntry> ctEntries =
 				_ctEntryLocalService.getCTCollectionCTEntries(
 					_ctCollection.getCtCollectionId());
 
-			int entryIdCounter = 1;
+			int modelKeyCounter = 1;
 
 			for (CTEntry ctEntry : ctEntries) {
-				entryMap.put(
-					new EntryKey(
+				modelInfoMap.put(
+					new ModelInfoKey(
 						ctEntry.getModelClassNameId(),
 						ctEntry.getModelClassPK()),
-					new EntryValue(entryIdCounter++));
+					new ModelInfo(modelKeyCounter++));
 
 				Set<Long> classPKs = classNameIdClassPKsMap.computeIfAbsent(
 					ctEntry.getModelClassNameId(), key -> new HashSet<>());
@@ -173,7 +173,7 @@ public class ViewChangesDisplayContext {
 			}
 		}
 		else {
-			int[] entryIdCounterHolder = {1};
+			int[] modelKeyCounterHolder = {1};
 
 			Map<Long, List<Long>> rootPKsMap = ctClosure.getRootPKsMap();
 
@@ -190,16 +190,17 @@ public class ViewChangesDisplayContext {
 
 				classPKs.addAll(entry.getValue());
 
-				for (long pk : entry.getValue()) {
-					EntryKey entryKey = new EntryKey(classNameId, pk);
+				for (long classPK : entry.getValue()) {
+					ModelInfoKey modelInfoKey = new ModelInfoKey(
+						classNameId, classPK);
 
-					if (!entryMap.containsKey(entryKey)) {
-						entryMap.put(
-							entryKey,
-							new EntryValue(entryIdCounterHolder[0]++));
+					if (!modelInfoMap.containsKey(modelInfoKey)) {
+						modelInfoMap.put(
+							modelInfoKey,
+							new ModelInfo(modelKeyCounterHolder[0]++));
 
 						Map<Long, List<Long>> childPKsMap =
-							ctClosure.getChildPKsMap(classNameId, pk);
+							ctClosure.getChildPKsMap(classNameId, classPK);
 
 						if (!childPKsMap.isEmpty()) {
 							queue.addAll(childPKsMap.entrySet());
@@ -212,7 +213,8 @@ public class ViewChangesDisplayContext {
 		for (Map.Entry<Long, Set<Long>> entry :
 				classNameIdClassPKsMap.entrySet()) {
 
-			_populateEntryValues(entryMap, entry.getKey(), entry.getValue());
+			_populateEntryValues(
+				modelInfoMap, entry.getKey(), entry.getValue());
 		}
 
 		Set<Long> rootClassNameIds = _getRootClassNameIds(ctClosure);
@@ -222,9 +224,9 @@ public class ViewChangesDisplayContext {
 			() -> {
 				JSONArray changesJSONArray = JSONFactoryUtil.createJSONArray();
 
-				for (EntryValue entryValue : entryMap.values()) {
-					if (entryValue._ctEntry) {
-						changesJSONArray.put(entryValue._entryId);
+				for (ModelInfo modelInfo : modelInfoMap.values()) {
+					if (modelInfo._ctEntry) {
+						changesJSONArray.put(modelInfo._modelKey);
 					}
 				}
 
@@ -233,20 +235,21 @@ public class ViewChangesDisplayContext {
 		).put(
 			"contextView",
 			_getContextViewJSONObject(
-				ctClosure, entryMap, rootClassNameIds, contextViewJSONObject)
+				ctClosure, modelInfoMap, rootClassNameIds,
+				contextViewJSONObject)
 		).put(
-			"entries",
+			"models",
 			() -> {
-				JSONObject entriesJSONObject =
+				JSONObject modelsJSONObject =
 					JSONFactoryUtil.createJSONObject();
 
-				for (EntryValue entryValue : entryMap.values()) {
-					entriesJSONObject.put(
-						String.valueOf(entryValue._entryId),
-						entryValue._jsonObject);
+				for (ModelInfo modelInfo : modelInfoMap.values()) {
+					modelsJSONObject.put(
+						String.valueOf(modelInfo._modelKey),
+						modelInfo._jsonObject);
 				}
 
-				return entriesJSONObject;
+				return modelsJSONObject;
 			}
 		).put(
 			"renderCTEntryURL",
@@ -330,7 +333,7 @@ public class ViewChangesDisplayContext {
 	}
 
 	private JSONObject _getContextViewJSONObject(
-		CTClosure ctClosure, Map<EntryKey, EntryValue> entryMap,
+		CTClosure ctClosure, Map<ModelInfoKey, ModelInfo> entryMap,
 		Set<Long> rootClassNameIds, JSONObject defaultContextViewJSONObject) {
 
 		if (ctClosure == null) {
@@ -339,36 +342,36 @@ public class ViewChangesDisplayContext {
 
 		JSONObject everythingJSONObject = JSONUtil.put("nodeId", 0);
 
-		Set<Integer> rootEntryIds = new HashSet<>();
+		Set<Integer> rootModelKeys = new HashSet<>();
 		Map<Long, JSONArray> rootDisplayMap = new HashMap<>();
 
 		int nodeIdCounter = 1;
 
-		Queue<ParentEntry> queue = new LinkedList<>();
+		Queue<ParentModel> queue = new LinkedList<>();
 
 		queue.add(
-			new ParentEntry(everythingJSONObject, ctClosure.getRootPKsMap()));
+			new ParentModel(everythingJSONObject, ctClosure.getRootPKsMap()));
 
-		ParentEntry parentEntry = null;
+		ParentModel parentModel = null;
 
-		while ((parentEntry = queue.poll()) != null) {
+		while ((parentModel = queue.poll()) != null) {
 			JSONArray childrenJSONArray = JSONFactoryUtil.createJSONArray();
 
 			for (Map.Entry<Long, List<Long>> entry :
-					parentEntry._childPKsMap.entrySet()) {
+					parentModel._childPKsMap.entrySet()) {
 
 				long modelClassNameId = entry.getKey();
 
 				for (long modelClassPK : entry.getValue()) {
-					EntryValue entryValue = entryMap.get(
-						new EntryKey(modelClassNameId, modelClassPK));
+					ModelInfo modelInfo = entryMap.get(
+						new ModelInfoKey(modelClassNameId, modelClassPK));
 
-					int entryId = entryValue._entryId;
+					int modelKey = modelInfo._modelKey;
 
 					int nodeId = nodeIdCounter++;
 
 					JSONObject jsonObject = JSONUtil.put(
-						"entryId", entryId
+						"modelKey", modelKey
 					).put(
 						"nodeId", nodeId
 					);
@@ -376,7 +379,7 @@ public class ViewChangesDisplayContext {
 					childrenJSONArray.put(jsonObject);
 
 					if (rootClassNameIds.contains(modelClassNameId) &&
-						rootEntryIds.add(entryId)) {
+						rootModelKeys.add(modelKey)) {
 
 						JSONArray jsonArray = rootDisplayMap.computeIfAbsent(
 							modelClassNameId,
@@ -386,7 +389,7 @@ public class ViewChangesDisplayContext {
 
 						jsonArray.put(
 							JSONUtil.put(
-								"entryId", entryId
+								"modelKey", modelKey
 							).put(
 								"nodeId", nodeId
 							));
@@ -397,12 +400,12 @@ public class ViewChangesDisplayContext {
 							modelClassNameId, modelClassPK);
 
 					if (!childPKsMap.isEmpty()) {
-						queue.add(new ParentEntry(jsonObject, childPKsMap));
+						queue.add(new ParentModel(jsonObject, childPKsMap));
 					}
 				}
 			}
 
-			parentEntry._jsonObject.put("children", childrenJSONArray);
+			parentModel._jsonObject.put("children", childrenJSONArray);
 		}
 
 		JSONObject contextViewJSONObject = JSONUtil.put(
@@ -481,7 +484,7 @@ public class ViewChangesDisplayContext {
 	}
 
 	private <T extends BaseModel<T>> void _populateEntryValues(
-			Map<EntryKey, EntryValue> entryMap, long modelClassNameId,
+			Map<ModelInfoKey, ModelInfo> modelInfoMap, long modelClassNameId,
 			Set<Long> classPKs)
 		throws PortalException {
 
@@ -497,8 +500,8 @@ public class ViewChangesDisplayContext {
 		}
 
 		for (long classPK : classPKs) {
-			EntryValue entryValue = entryMap.get(
-				new EntryKey(modelClassNameId, classPK));
+			ModelInfo modelInfo = modelInfoMap.get(
+				new ModelInfoKey(modelClassNameId, classPK));
 
 			CTEntry ctEntry = ctEntryMap.get(classPK);
 
@@ -508,12 +511,12 @@ public class ViewChangesDisplayContext {
 						modelClassNameId, classPKs);
 				}
 
-				entryValue._jsonObject = JSONUtil.put(
-					"entryId", entryValue._entryId
-				).put(
+				modelInfo._jsonObject = JSONUtil.put(
 					"modelClassNameId", modelClassNameId
 				).put(
 					"modelClassPK", classPK
+				).put(
+					"modelKey", modelInfo._modelKey
 				).put(
 					"title",
 					_ctDisplayRendererRegistry.getTitle(
@@ -526,20 +529,20 @@ public class ViewChangesDisplayContext {
 			else {
 				Date modifiedDate = ctEntry.getModifiedDate();
 
-				entryValue._ctEntry = true;
+				modelInfo._ctEntry = true;
 
-				entryValue._jsonObject = JSONUtil.put(
+				modelInfo._jsonObject = JSONUtil.put(
 					"ctEntryId", ctEntry.getCtEntryId()
 				).put(
 					"description",
 					_ctDisplayRendererRegistry.getEntryDescription(
 						_httpServletRequest, ctEntry)
 				).put(
-					"entryId", entryValue._entryId
-				).put(
 					"modelClassNameId", ctEntry.getModelClassNameId()
 				).put(
 					"modelClassPK", ctEntry.getModelClassPK()
+				).put(
+					"modelKey", modelInfo._modelKey
 				).put(
 					"modifiedTime", modifiedDate.getTime()
 				).put(
@@ -586,7 +589,7 @@ public class ViewChangesDisplayContext {
 					}
 
 					if (dropdownItemsJSONArray.length() > 0) {
-						entryValue._jsonObject.put(
+						modelInfo._jsonObject.put(
 							"dropdownItems", dropdownItemsJSONArray);
 					}
 				}
@@ -613,15 +616,27 @@ public class ViewChangesDisplayContext {
 	private final ThemeDisplay _themeDisplay;
 	private final UserLocalService _userLocalService;
 
-	private static class EntryKey {
+	private static class ModelInfo {
+
+		private ModelInfo(int modelKey) {
+			_modelKey = modelKey;
+		}
+
+		private boolean _ctEntry;
+		private JSONObject _jsonObject;
+		private final int _modelKey;
+
+	}
+
+	private static class ModelInfoKey {
 
 		@Override
 		public boolean equals(Object object) {
-			if (object instanceof EntryKey) {
-				EntryKey entryKey = (EntryKey)object;
+			if (object instanceof ModelInfoKey) {
+				ModelInfoKey modelInfoKey = (ModelInfoKey)object;
 
-				if ((entryKey._classNameId == _classNameId) &&
-					(entryKey._classPK == _classPK)) {
+				if ((modelInfoKey._classNameId == _classNameId) &&
+					(modelInfoKey._classPK == _classPK)) {
 
 					return true;
 				}
@@ -635,7 +650,7 @@ public class ViewChangesDisplayContext {
 			return HashUtil.hash((int)_classNameId, _classPK);
 		}
 
-		private EntryKey(long classNameId, long classPK) {
+		private ModelInfoKey(long classNameId, long classPK) {
 			_classNameId = classNameId;
 			_classPK = classPK;
 		}
@@ -645,21 +660,9 @@ public class ViewChangesDisplayContext {
 
 	}
 
-	private static class EntryValue {
+	private static class ParentModel {
 
-		private EntryValue(int entryId) {
-			_entryId = entryId;
-		}
-
-		private boolean _ctEntry;
-		private final int _entryId;
-		private JSONObject _jsonObject;
-
-	}
-
-	private static class ParentEntry {
-
-		private ParentEntry(
+		private ParentModel(
 			JSONObject jsonObject, Map<Long, List<Long>> childPKsMap) {
 
 			_jsonObject = jsonObject;

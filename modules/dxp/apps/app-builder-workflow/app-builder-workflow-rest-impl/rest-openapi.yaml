@@ -5,6 +5,8 @@ components:
                 appId:
                     format: int64
                     type: integer
+                appVersion:
+                    type: string
                 appWorkflowDefinitionId:
                     format: int64
                     type: integer

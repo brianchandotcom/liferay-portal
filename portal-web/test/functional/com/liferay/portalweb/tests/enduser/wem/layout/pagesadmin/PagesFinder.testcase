@@ -294,6 +294,49 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-116428. Can reorganize the pages via Page Tree panel."
+	@priority = "4"
+	test ReorganizePagesViaPageFinder {
+		task ("Access to Page Tree panel in Test Site Name") {
+			Navigator.openSiteURL(siteName = "Test Site Name");
+
+			PagesFinder.goToFindAPage();
+		}
+
+		task ("Assert the order of Pages in Page Tree panel") {
+			var n = "1";
+
+			for (var pageName : list "Test Portlet Page,Test Content Page,Test Embedded Page") {
+				AssertVisible(
+					key_index = "${n}",
+					key_pageName = "${pageName}",
+					locator1 = "PagesFinder#TREE_NODE_ITEM");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Reorganize the order of Pages in Page Tree panel") {
+			DragAndDrop.dragAndDropReorganizeObjects(
+				locator1 = "//ul[contains(@class,'tree-container')]/li[contains(@class,'tree-node')][2][contains(.,'Test Content Page')]",
+				locator2 = "//ul[contains(@class,'tree-container')]/li[contains(@class,'tree-node')][1][contains(.,'Test Portlet Page')]",
+				position = "0,2");
+		}
+
+		task ("Assert the order of Pages in Page Tree panel") {
+			var n = "1";
+
+			for (var pageName : list "Test Content Page,Test Portlet Page,Test Embedded Page") {
+				AssertVisible(
+					key_index = "${n}",
+					key_pageName = "${pageName}",
+					locator1 = "PagesFinder#TREE_NODE_ITEM");
+
+				var n = ${n} + 1;
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-90363. Assert that all page types can be found and counted in the pages finder."
 	@priority = "5"
 	test SearchAllPageTypes {

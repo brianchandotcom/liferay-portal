@@ -93,8 +93,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();
 
-		clearResultsURL.setParameter(
-			"categoryId", (String)null);
+		clearResultsURL.setParameter("categoryId", (String)null);
 		clearResultsURL.setParameter(
 			"contentDashboardItemTypePayload", (String)null);
 		clearResultsURL.setParameter("authorIds", (String)null);
@@ -506,6 +505,11 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		return DropdownItemList.of(
 			() -> {
 				DropdownItem dropdownItem = new DropdownItem();
+
+				dropdownItem.setActive(
+					!ListUtil.isEmpty(
+						_contentDashboardAdminDisplayContext.
+							getAssetCategoryIds()));
 
 				dropdownItem.putData("action", "selectCategory");
 				dropdownItem.putData(

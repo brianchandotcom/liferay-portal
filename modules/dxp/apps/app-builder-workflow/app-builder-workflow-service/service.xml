@@ -16,6 +16,7 @@
 		<!-- Other fields -->
 
 		<column name="appBuilderAppId" type="long" />
+		<column name="appBuilderAppVersionId" type="long" />
 		<column name="ddmStructureLayoutId" type="long" />
 		<column name="readOnly" type="boolean" />
 		<column name="workflowTaskName" type="String" />
@@ -31,12 +32,18 @@
 		<finder name="AppBuilderAppId" return-type="Collection">
 			<finder-column name="appBuilderAppId" />
 		</finder>
-		<finder name="A_W" return-type="Collection">
+		<finder name="A_A" return-type="Collection">
 			<finder-column name="appBuilderAppId" />
+			<finder-column name="appBuilderAppVersionId" />
+		</finder>
+		<finder name="A_A_W" return-type="Collection">
+			<finder-column name="appBuilderAppId" />
+			<finder-column name="appBuilderAppVersionId" />
 			<finder-column name="workflowTaskName" />
 		</finder>
-		<finder name="A_D_W" return-type="AppBuilderWorkflowTaskLink">
+		<finder name="A_A_D_W" return-type="AppBuilderWorkflowTaskLink">
 			<finder-column name="appBuilderAppId" />
+			<finder-column name="appBuilderAppVersionId" />
 			<finder-column name="ddmStructureLayoutId" />
 			<finder-column name="workflowTaskName" />
 		</finder>

@@ -2415,7 +2415,7 @@ definition {
 	@description = "This is a use case for LPS-114727. The Content Display fragment can display full content of asset entries in Collection Display."
 	@priority = "5"
 	test ViewFullContentInContentDisplayWithCollectionProvider {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		task ("Add a Web Content Article,a Blogs Entry and a document") {
 			JSONWebcontent.addWebContent(

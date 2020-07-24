@@ -406,19 +406,6 @@ public class ViewChangesDisplayContext {
 		return entryIdMapMap;
 	}
 
-	private Map<Serializable, CTEntry> _getCTEntryMap(long classNameId) {
-		Map<Serializable, CTEntry> ctEntryMap = new HashMap<>();
-
-		for (CTEntry ctEntry :
-				_ctEntryLocalService.getCTEntries(
-					_ctCollection.getCtCollectionId(), classNameId)) {
-
-			ctEntryMap.put(ctEntry.getModelClassPK(), ctEntry);
-		}
-
-		return ctEntryMap;
-	}
-
 	private <T extends BaseModel<T>> List<JSONObject> _getEntries(
 			Map<Long, Integer> entryIdMap, long modelClassNameId)
 		throws PortalException {
@@ -427,8 +414,14 @@ public class ViewChangesDisplayContext {
 			_basePersistenceRegistry.fetchBaseModelMap(
 				modelClassNameId, new ArrayList<>(entryIdMap.keySet()));
 
-		Map<Serializable, CTEntry> ctEntryMap = _getCTEntryMap(
-			modelClassNameId);
+		Map<Serializable, CTEntry> ctEntryMap = new HashMap<>();
+
+		for (CTEntry ctEntry :
+				_ctEntryLocalService.getCTEntries(
+					_ctCollection.getCtCollectionId(), modelClassNameId)) {
+
+			ctEntryMap.put(ctEntry.getModelClassPK(), ctEntry);
+		}
 
 		List<JSONObject> entries = new ArrayList<>();
 

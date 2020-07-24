@@ -975,6 +975,20 @@ public interface LayoutModel
 	public void setColorSchemeId(String colorSchemeId);
 
 	/**
+	 * Returns the style book entry ID of this layout.
+	 *
+	 * @return the style book entry ID of this layout
+	 */
+	public long getStyleBookEntryId();
+
+	/**
+	 * Sets the style book entry ID of this layout.
+	 *
+	 * @param styleBookEntryId the style book entry ID of this layout
+	 */
+	public void setStyleBookEntryId(long styleBookEntryId);
+
+	/**
 	 * Returns the css of this layout.
 	 *
 	 * @return the css of this layout

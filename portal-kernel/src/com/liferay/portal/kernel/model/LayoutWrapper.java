@@ -72,6 +72,7 @@ public class LayoutWrapper
 		attributes.put("iconImageId", getIconImageId());
 		attributes.put("themeId", getThemeId());
 		attributes.put("colorSchemeId", getColorSchemeId());
+		attributes.put("styleBookEntryId", getStyleBookEntryId());
 		attributes.put("css", getCss());
 		attributes.put("priority", getPriority());
 		attributes.put("masterLayoutPlid", getMasterLayoutPlid());
@@ -264,6 +265,12 @@ public class LayoutWrapper
 
 		if (colorSchemeId != null) {
 			setColorSchemeId(colorSchemeId);
+		}
+
+		Long styleBookEntryId = (Long)attributes.get("styleBookEntryId");
+
+		if (styleBookEntryId != null) {
+			setStyleBookEntryId(styleBookEntryId);
 		}
 
 		String css = (String)attributes.get("css");
@@ -1253,6 +1260,16 @@ public class LayoutWrapper
 	@Override
 	public Date getStatusDate() {
 		return model.getStatusDate();
+	}
+
+	/**
+	 * Returns the style book entry ID of this layout.
+	 *
+	 * @return the style book entry ID of this layout
+	 */
+	@Override
+	public long getStyleBookEntryId() {
+		return model.getStyleBookEntryId();
 	}
 
 	/**
@@ -2413,6 +2430,16 @@ public class LayoutWrapper
 	@Override
 	public void setStatusDate(Date statusDate) {
 		model.setStatusDate(statusDate);
+	}
+
+	/**
+	 * Sets the style book entry ID of this layout.
+	 *
+	 * @param styleBookEntryId the style book entry ID of this layout
+	 */
+	@Override
+	public void setStyleBookEntryId(long styleBookEntryId) {
+		model.setStyleBookEntryId(styleBookEntryId);
 	}
 
 	/**

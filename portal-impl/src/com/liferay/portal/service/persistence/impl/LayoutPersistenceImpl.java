@@ -16772,6 +16772,7 @@ public class LayoutPersistenceImpl
 		ctStrictColumnNames.add("iconImageId");
 		ctStrictColumnNames.add("themeId");
 		ctStrictColumnNames.add("colorSchemeId");
+		ctStrictColumnNames.add("styleBookEntryId");
 		ctStrictColumnNames.add("css");
 		ctStrictColumnNames.add("priority");
 		ctStrictColumnNames.add("masterLayoutPlid");

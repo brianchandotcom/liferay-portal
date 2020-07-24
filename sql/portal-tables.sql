@@ -634,6 +634,7 @@ create table Layout (
 	iconImageId LONG,
 	themeId VARCHAR(75) null,
 	colorSchemeId VARCHAR(75) null,
+	styleBookEntryId LONG,
 	css TEXT null,
 	priority INTEGER,
 	masterLayoutPlid LONG,

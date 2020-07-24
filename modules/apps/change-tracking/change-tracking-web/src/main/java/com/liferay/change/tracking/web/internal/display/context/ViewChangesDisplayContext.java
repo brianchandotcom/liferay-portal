@@ -508,15 +508,6 @@ public class ViewChangesDisplayContext {
 						modelClassNameId, classPKs);
 				}
 
-				T baseModel = baseModelMap.get(classPK);
-
-				if (baseModel == null) {
-					baseModel = _ctDisplayRendererRegistry.fetchCTModel(
-						CTConstants.CT_COLLECTION_ID_PRODUCTION,
-						CTSQLModeThreadLocal.CTSQLMode.DEFAULT,
-						modelClassNameId, classPK);
-				}
-
 				entryValue._jsonObject = JSONUtil.put(
 					"entryId", entryValue._entryId
 				).put(
@@ -528,7 +519,8 @@ public class ViewChangesDisplayContext {
 					_ctDisplayRendererRegistry.getTitle(
 						CTConstants.CT_COLLECTION_ID_PRODUCTION,
 						CTSQLModeThreadLocal.CTSQLMode.DEFAULT,
-						_themeDisplay.getLocale(), baseModel, modelClassNameId)
+						_themeDisplay.getLocale(), baseModelMap.get(classPK),
+						modelClassNameId)
 				);
 			}
 			else {

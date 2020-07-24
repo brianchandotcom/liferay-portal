@@ -287,14 +287,21 @@ public class ViewChangesDisplayContext {
 		}
 
 		JSONArray changesJSONArray = JSONFactoryUtil.createJSONArray();
-		JSONObject userInfoJSONObject = JSONFactoryUtil.createJSONObject();
 
 		for (String key : entriesJSONObject.keySet()) {
 			JSONObject entryJSONObject = entriesJSONObject.getJSONObject(key);
 
 			if (entryJSONObject.has("ctEntryId")) {
 				changesJSONArray.put(key);
+			}
+		}
 
+		JSONObject userInfoJSONObject = JSONFactoryUtil.createJSONObject();
+
+		for (String key : entriesJSONObject.keySet()) {
+			JSONObject entryJSONObject = entriesJSONObject.getJSONObject(key);
+
+			if (entryJSONObject.has("ctEntryId")) {
 				long userId = entryJSONObject.getLong("userId");
 
 				if (!userInfoJSONObject.has(String.valueOf(userId))) {

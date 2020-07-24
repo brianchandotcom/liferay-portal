@@ -669,6 +669,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TRANSLATIONS_LOCALIZATION</td>
+	<td>//div[contains(@class,'dropdown')]//button[contains(@class,'dropdown-toggle')]//span[*[name()='svg'][contains(@class,'lexicon-icon-${key_currentLocale}')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CLEAR_OPEN_GRAPH_IMAGE</td>
 	<td>//button[contains(@name,'openGraphClearImageButton')][contains(.,'Clear')]</td>
 	<td></td>

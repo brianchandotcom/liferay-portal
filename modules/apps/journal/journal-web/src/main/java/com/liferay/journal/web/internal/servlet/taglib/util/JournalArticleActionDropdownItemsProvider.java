@@ -378,7 +378,7 @@ public class JournalArticleActionDropdownItemsProvider {
 		deleteArticleTranslationsURL.setParameter(
 			ActionRequest.ACTION_NAME, "/journal/delete_article_translations");
 		deleteArticleTranslationsURL.setParameter(
-			"articleId", _article.getArticleId());
+			"id", String.valueOf(_article.getId()));
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "deleteArticleTranslations");

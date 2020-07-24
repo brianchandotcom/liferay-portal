@@ -51,6 +51,7 @@ export default function Detail({
 					label={Liferay.Util.sub(
 						Liferay.Language.get('traffic-volume')
 					)}
+					languageTag={languageTag}
 					popoverAlign={Align.Bottom}
 					popoverHeader={Liferay.Language.get('traffic-volume')}
 					popoverMessage={Liferay.Language.get(

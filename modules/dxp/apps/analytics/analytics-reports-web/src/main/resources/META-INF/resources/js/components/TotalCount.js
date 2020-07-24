@@ -15,12 +15,14 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import ConnectionContext from '../context/ConnectionContext';
 import {StoreContext, useWarning} from '../context/store';
+import {numberFormat} from '../utils/numberFormat';
 import Hint from './Hint';
 
 function TotalCount({
 	className,
 	dataProvider,
 	label,
+	languageTag,
 	percentage = false,
 	popoverAlign,
 	popoverHeader,
@@ -59,7 +61,15 @@ function TotalCount({
 
 	if (validAnalyticsConnection && !publishedToday) {
 		displayValue =
-			percentage && value !== '-' ? <span>{`${value}%`}</span> : value;
+			value !== '-' ? (
+				percentage ? (
+					<span>{`${value}%`}</span>
+				) : (
+					numberFormat(languageTag, value)
+				)
+			) : (
+				value
+			);
 	}
 
 	return (
@@ -81,6 +91,8 @@ function TotalCount({
 TotalCount.propTypes = {
 	dataProvider: PropTypes.func.isRequired,
 	label: PropTypes.string.isRequired,
+	languageTag: PropTypes.string,
+	percentage: PropTypes.bool,
 	popoverHeader: PropTypes.string.isRequired,
 	popoverMessage: PropTypes.string.isRequired,
 };

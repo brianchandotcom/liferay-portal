@@ -48,6 +48,7 @@ export default function Main({
 				className="mb-2"
 				dataProvider={totalViewsDataProvider}
 				label={Liferay.Util.sub(Liferay.Language.get('total-views'))}
+				languageTag={languageTag}
 				popoverHeader={Liferay.Language.get('total-views')}
 				popoverMessage={Liferay.Language.get(
 					'this-number-refers-to-the-total-number-of-views-since-the-content-was-published'
@@ -57,6 +58,7 @@ export default function Main({
 			<TotalCount
 				dataProvider={totalReadsDataProvider}
 				label={Liferay.Util.sub(Liferay.Language.get('total-reads'))}
+				languageTag={languageTag}
 				popoverHeader={Liferay.Language.get('total-reads')}
 				popoverMessage={Liferay.Language.get(
 					'this-number-refers-to-the-total-number-of-reads-since-the-content-was-published'

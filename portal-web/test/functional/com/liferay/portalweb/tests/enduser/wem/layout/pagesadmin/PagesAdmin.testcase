@@ -623,4 +623,92 @@ definition {
 		AssertVisible(locator1 = "Icon#EDIT_PENCIL");
 	}
 
+	@description = "This is a test for LPS-110183. Can view information about collection items of collection page."
+	@priority = "5"
+	test ViewCollectionItemViaPageFinderAndPageAdmin {
+		JSONWebcontent.addWebContent(
+			content = "Webcontent Content",
+			groupName = "Test Site Name",
+			title = "Webcontent Title");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Test Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document Title",
+			groupName = "Test Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		JSONAssetlist.addDynamicAssetListEntryWithItemType(
+			groupName = "Test Site Name",
+			itemType = "All Types",
+			title = "Dynamic Collection");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPublicCollectionPage(
+			collectionName = "Dynamic Collection",
+			pageName = "Content Collection Page Name",
+			tabName = "Collections");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		PagesFinder.goToFindAPage();
+
+		PagesFinder.viewPageNameInPagesFinder(pageName = "Content Collection Page Name");
+
+		PagesFinder.gotoPageEllipsisItem(
+			item = "View Collection Items",
+			pageName = "Content Collection Page Name");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		for (var tableHeader : list "Title,Type,Author,Modified Date,Create Date") {
+			AssertElementPresent(
+				key_tableHeader = "${tableHeader}",
+				locator1 = "LexiconTable#TABLE_HEADER");
+		}
+
+		Page.viewCollectionItem(itemName = "Document Title");
+
+		Page.viewCollectionItem(
+			itemName = "Blogs Entry Title",
+			key_rowNumber = "2");
+
+		Page.viewCollectionItem(
+			itemName = "Webcontent Title",
+			key_rowNumber = "3");
+
+		IFrame.closeFrame();
+
+		ProductMenuHelper.openProductMenu();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "View Collection Items",
+			pageName = "Content Collection Page Name");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		for (var tableHeader : list "Title,Type,Author,Modified Date,Create Date") {
+			AssertElementPresent(
+				key_tableHeader = "${tableHeader}",
+				locator1 = "LexiconTable#TABLE_HEADER");
+		}
+
+		Page.viewCollectionItem(itemName = "Document Title");
+
+		Page.viewCollectionItem(
+			itemName = "Blogs Entry Title",
+			key_rowNumber = "2");
+
+		Page.viewCollectionItem(
+			itemName = "Webcontent Title",
+			key_rowNumber = "3");
+	}
+
 }

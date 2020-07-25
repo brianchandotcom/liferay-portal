@@ -73,6 +73,12 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 		for (Result result : results) {
 			JSONObject requestJSONObject = new JSONObject();
 
+			SpiraAutomationHost spiraAutomationHost =
+				result.getSpiraAutomationHost();
+
+			requestJSONObject.put(
+				SpiraAutomationHost.ID_KEY, spiraAutomationHost.getID());
+
 			SpiraTestCaseObject spiraTestCaseObject =
 				result.getSpiraTestCaseObject();
 
@@ -257,11 +263,13 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 	public static class Result implements Serializable {
 
 		public Result(
-			SpiraTestCaseObject spiraTestCaseObject, RunnerFormat runnerFormat,
+			SpiraTestCaseObject spiraTestCaseObject,
+			SpiraAutomationHost spiraAutomationHost, RunnerFormat runnerFormat,
 			String runnerStackTrace, long duration, Status status,
 			List<SpiraCustomProperty.Value> spiraCustomPropertyValues) {
 
 			_spiraTestCaseObject = spiraTestCaseObject;
+			_spiraAutomationHost = spiraAutomationHost;
 			_runnerFormat = runnerFormat;
 			_description = runnerStackTrace;
 			_duration = duration;
@@ -271,11 +279,12 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 		public Result(
 			Supplier<SpiraTestCaseObject> spiraTestCaseObjectSupplier,
-			RunnerFormat runnerFormat, String runnerStackTrace, long duration,
-			Status status,
+			SpiraAutomationHost spiraAutomationHost, RunnerFormat runnerFormat,
+			String runnerStackTrace, long duration, Status status,
 			List<SpiraCustomProperty.Value> spiraCustomPropertyValues) {
 
 			_spiraTestCaseObjectSupplier = spiraTestCaseObjectSupplier;
+			_spiraAutomationHost = spiraAutomationHost;
 			_runnerFormat = runnerFormat;
 			_description = runnerStackTrace;
 			_duration = duration;
@@ -391,6 +400,10 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 			return _runnerFormat.getID();
 		}
 
+		public SpiraAutomationHost getSpiraAutomationHost() {
+			return _spiraAutomationHost;
+		}
+
 		public SpiraProject getSpiraProject() {
 			SpiraTestCaseObject spiraTestCaseObject = getSpiraTestCaseObject();
 
@@ -437,6 +450,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 		private final String _description;
 		private final long _duration;
 		private final RunnerFormat _runnerFormat;
+		private final SpiraAutomationHost _spiraAutomationHost;
 		private final List<SpiraCustomProperty.Value>
 			_spiraCustomPropertyValues;
 		private SpiraTestCaseObject _spiraTestCaseObject;

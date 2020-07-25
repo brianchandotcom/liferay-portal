@@ -28,6 +28,69 @@ import Select from '../../../src/main/resources/META-INF/resources/Select/Select
 
 const spritemap = 'icons.svg';
 
+const optionsOfSearch = [
+	{
+		label: 'label1',
+		name: 'name1',
+		value: 'item1',
+	},
+	{
+		label: 'label2',
+		name: 'name2',
+		value: 'item2',
+	},
+	{
+		label: 'label3',
+		name: 'name3',
+		value: 'item3',
+	},
+	{
+		label: 'label4',
+		name: 'name4',
+		value: 'item4',
+	},
+	{
+		label: 'label5',
+		name: 'name5',
+		value: 'item5',
+	},
+	{
+		label: 'label6',
+		name: 'name6',
+		value: 'item6',
+	},
+	{
+		label: 'label7',
+		name: 'name7',
+		value: 'item7',
+	},
+	{
+		label: 'label8',
+		name: 'name8',
+		value: 'item8',
+	},
+	{
+		label: 'label9',
+		name: 'name9',
+		value: 'item9',
+	},
+	{
+		label: 'label10',
+		name: 'name10',
+		value: 'item10',
+	},
+	{
+		label: 'label11',
+		name: 'name11',
+		value: 'item11',
+	},
+	{
+		label: 'label12',
+		name: 'name12',
+		value: 'item12',
+	},
+];
+
 const SelectWithProvider = (props) => (
 	<PageProvider value={{editingLanguageId: 'en_US'}}>
 		<Select {...props} />
@@ -391,5 +454,83 @@ describe('Select', () => {
 			'item7',
 		]);
 		expect(container).toMatchSnapshot();
+	});
+
+	it('shows a search input when the number of options is more than the maximum allowed', async () => {
+		const handleFieldEdited = jest.fn();
+
+		const {container} = render(
+			<SelectWithProvider
+				dataSourceType="manual"
+				multiple={true}
+				onChange={handleFieldEdited}
+				options={optionsOfSearch}
+				spritemap={spritemap}
+			/>
+		);
+
+		const dropdownTrigger = container.querySelector(
+			'.form-builder-select-field.input-group-container'
+		);
+
+		fireEvent.click(dropdownTrigger);
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		expect(container).toMatchSnapshot();
+	});
+
+	it('filters according to the input and calls onChange callback when an item is selected using search', async () => {
+		const handleFieldEdited = jest.fn();
+
+		const {container, getByTestId} = render(
+			<SelectWithProvider
+				dataSourceType="manual"
+				multiple={true}
+				onChange={handleFieldEdited}
+				options={optionsOfSearch}
+				spritemap={spritemap}
+			/>
+		);
+
+		const dropdownTrigger = container.querySelector(
+			'.form-builder-select-field.input-group-container'
+		);
+
+		fireEvent.click(dropdownTrigger);
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		const input = container.querySelector('input');
+
+		fireEvent.change(input, {
+			target: {
+				value: 'label1',
+			},
+		});
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		expect(container).toMatchSnapshot();
+
+		const labelItem = await waitForElement(() =>
+			getByTestId('labelItem-item11')
+		);
+
+		fireEvent.click(labelItem);
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		expect(handleFieldEdited).toHaveBeenCalledWith(expect.any(Object), [
+			'item11',
+		]);
 	});
 });

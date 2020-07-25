@@ -14,7 +14,7 @@
 
 import ClayDropDown from '@clayui/drop-down';
 import {ClayCheckbox} from '@clayui/form';
-import React, {forwardRef, useMemo, useRef, useState} from 'react';
+import React, {forwardRef, useEffect, useMemo, useRef, useState} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import {useSyncValue} from '../hooks/useSyncValue.es';
@@ -33,6 +33,11 @@ const KEYCODES = {
 	SPACE: 32,
 	TAB: 9,
 };
+
+/**
+ * Maximum number of items to be shown without the Search bar
+ */
+const MAX_ITEMS = 11;
 
 /**
  * Appends a new value on the current value state
@@ -217,6 +222,61 @@ const DropdownItem = ({
 		{option && option.separator && <ClayDropDown.Divider />}
 	</>
 );
+
+const DropdownWithSearch = ({
+	currentValue,
+	expand,
+	handleSelect,
+	multiple,
+	options,
+}) => {
+	const [query, setQuery] = useState('');
+	const [filteredItems, setFilteredItems] = useState([]);
+
+	const emptyOption = {
+		label: Liferay.Language.get('choose-an-option'),
+		value: null,
+	};
+
+	useEffect(() => {
+		const result = options.filter(
+			(option) =>
+				option.value &&
+				option.label.toLowerCase().includes(query.toLowerCase())
+		);
+		setFilteredItems([emptyOption, ...result]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [query]);
+
+	return (
+		<>
+			<ClayDropDown.Search
+				onChange={(event) => setQuery(event.target.value)}
+				value={query}
+			/>
+			{filteredItems.length > 1 ? (
+				<ClayDropDown.ItemList>
+					{filteredItems.map((item, index) => (
+						<DropdownItem
+							currentValue={currentValue}
+							expand={expand}
+							index={index}
+							key={`${item.value}-${index}`}
+							multiple={multiple}
+							onSelect={handleSelect}
+							option={item}
+							options={filteredItems}
+						/>
+					))}
+				</ClayDropDown.ItemList>
+			) : (
+				<div className="dropdown-section text-muted">
+					{Liferay.Language.get('empty-list')}
+				</div>
+			)}
+		</>
+	);
+};
 
 const Trigger = forwardRef(
 	(
@@ -404,20 +464,30 @@ const Select = ({
 				onSetActive={setExpand}
 				ref={menuElementRef}
 			>
-				<ClayDropDown.ItemList>
-					{options.map((option, index) => (
-						<DropdownItem
-							currentValue={currentValue}
-							expand={expand}
-							index={index}
-							key={`${option.value}-${index}`}
-							multiple={multiple}
-							onSelect={handleSelect}
-							option={option}
-							options={options}
-						/>
-					))}
-				</ClayDropDown.ItemList>
+				{options.length > MAX_ITEMS ? (
+					<DropdownWithSearch
+						currentValue={currentValue}
+						expand={expand}
+						handleSelect={handleSelect}
+						multiple={multiple}
+						options={options}
+					/>
+				) : (
+					<ClayDropDown.ItemList>
+						{options.map((option, index) => (
+							<DropdownItem
+								currentValue={currentValue}
+								expand={expand}
+								index={index}
+								key={`${option.value}-${index}`}
+								multiple={multiple}
+								onSelect={handleSelect}
+								option={option}
+								options={options}
+							/>
+						))}
+					</ClayDropDown.ItemList>
+				)}
 			</ClayDropDown.Menu>
 		</>
 	);

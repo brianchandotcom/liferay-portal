@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemEnv;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
@@ -62,6 +63,7 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -1030,21 +1032,20 @@ public class PDFProcessorImpl
 		ProcessConfig pdfProcessConfig =
 			PortalClassPathUtil.getPortalProcessConfig();
 
-		if (PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED &&
-			(PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_MAX_MEMORY > 0)) {
+		if (PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED) {
+			String jvmOptions = StringUtil.trim(
+				PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_JVM_OPTIONS);
 
-			ProcessConfig.Builder pdfProcessBuilder = new ProcessConfig.Builder(
-				pdfProcessConfig);
+			if (!jvmOptions.isEmpty()) {
+				ProcessConfig.Builder pdfProcessBuilder =
+					new ProcessConfig.Builder(pdfProcessConfig);
 
-			List<String> arguments = pdfProcessBuilder.getArguments();
+				Collections.addAll(
+					pdfProcessBuilder.getArguments(),
+					StringUtil.split(jvmOptions));
 
-			arguments.add(
-				StringBundler.concat(
-					"-Xmx",
-					PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_MAX_MEMORY,
-					"m"));
-
-			pdfProcessConfig = pdfProcessBuilder.build();
+				pdfProcessConfig = pdfProcessBuilder.build();
+			}
 		}
 
 		_pdfProcessConfig = pdfProcessConfig;

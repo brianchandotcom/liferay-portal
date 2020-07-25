@@ -1033,31 +1033,16 @@ public class PDFProcessorImpl
 		if (PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED &&
 			(PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_MAX_MEMORY > 0)) {
 
-			ProcessConfig.Builder pdfProcessBuilder =
-				new ProcessConfig.Builder();
+			ProcessConfig.Builder pdfProcessBuilder = new ProcessConfig.Builder(
+				pdfProcessConfig);
 
-			List<String> arguments = new ArrayList<>(
-				pdfProcessConfig.getArguments());
+			List<String> arguments = pdfProcessBuilder.getArguments();
 
 			arguments.add(
 				StringBundler.concat(
 					"-Xmx",
 					PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_MAX_MEMORY,
 					"m"));
-
-			pdfProcessBuilder.setArguments(arguments);
-			pdfProcessBuilder = pdfProcessBuilder.setBootstrapClassPath(
-				pdfProcessConfig.getBootstrapClassPath());
-			pdfProcessBuilder = pdfProcessBuilder.setEnvironment(
-				pdfProcessConfig.getEnvironment());
-			pdfProcessBuilder = pdfProcessBuilder.setJavaExecutable(
-				pdfProcessConfig.getJavaExecutable());
-			pdfProcessBuilder = pdfProcessBuilder.setProcessLogConsumer(
-				pdfProcessConfig.getProcessLogConsumer());
-			pdfProcessBuilder = pdfProcessBuilder.setReactClassLoader(
-				pdfProcessConfig.getReactClassLoader());
-			pdfProcessBuilder = pdfProcessBuilder.setRuntimeClassPath(
-				pdfProcessConfig.getRuntimeClassPath());
 
 			pdfProcessConfig = pdfProcessBuilder.build();
 		}

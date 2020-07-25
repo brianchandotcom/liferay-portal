@@ -20,7 +20,9 @@ import com.liferay.petra.string.StringUtil;
 import java.io.File;
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -68,8 +70,43 @@ public class ProcessConfig implements Serializable {
 
 	public static class Builder {
 
+		public Builder() {
+		}
+
+		public Builder(ProcessConfig processConfig) {
+			List<String> arguments = processConfig.getArguments();
+
+			if (!arguments.isEmpty()) {
+				_arguments = new ArrayList<>(arguments);
+			}
+
+			_bootstrapClassPath = processConfig.getBootstrapClassPath();
+
+			Map<String, String> environment = processConfig.getEnvironment();
+
+			if (environment != null) {
+				_environment = new HashMap<>(environment);
+			}
+
+			_javaExecutable = processConfig.getJavaExecutable();
+
+			_processLogConsumer = processConfig.getProcessLogConsumer();
+
+			_reactClassLoader = processConfig.getReactClassLoader();
+
+			_runtimeClassPath = processConfig.getRuntimeClassPath();
+		}
+
 		public ProcessConfig build() {
 			return new ProcessConfig(this);
+		}
+
+		public List<String> getArguments() {
+			return _arguments;
+		}
+
+		public Map<String, String> getEnvironment() {
+			return _environment;
 		}
 
 		public Builder setArguments(List<String> arguments) {

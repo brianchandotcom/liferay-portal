@@ -180,7 +180,7 @@ public class AddAssetListEntryMVCActionCommandTest {
 	private static class MockPortletURL implements PortletURL, RenderURL {
 
 		@Override
-		public void addProperty(String s, String s1) {
+		public void addProperty(String key, String value) {
 		}
 
 		@Override
@@ -189,7 +189,7 @@ public class AddAssetListEntryMVCActionCommandTest {
 		}
 
 		@Override
-		public Appendable append(Appendable appendable, boolean b)
+		public Appendable append(Appendable appendable, boolean escapeXML)
 			throws IOException {
 
 			return null;
@@ -221,7 +221,7 @@ public class AddAssetListEntryMVCActionCommandTest {
 		}
 
 		@Override
-		public void removePublicRenderParameter(String s) {
+		public void removePublicRenderParameter(String name) {
 		}
 
 		@Override
@@ -229,15 +229,15 @@ public class AddAssetListEntryMVCActionCommandTest {
 		}
 
 		@Override
-		public void setFragmentIdentifier(String s) {
+		public void setFragmentIdentifier(String fragment) {
 		}
 
 		@Override
-		public void setParameter(String s, String s1) {
+		public void setParameter(String name, String value) {
 		}
 
 		@Override
-		public void setParameter(String s, String... strings) {
+		public void setParameter(String name, String... values) {
 		}
 
 		@Override
@@ -250,11 +250,11 @@ public class AddAssetListEntryMVCActionCommandTest {
 		}
 
 		@Override
-		public void setProperty(String s, String s1) {
+		public void setProperty(String key, String value) {
 		}
 
 		@Override
-		public void setSecure(boolean b) throws PortletSecurityException {
+		public void setSecure(boolean secure) throws PortletSecurityException {
 		}
 
 		@Override
@@ -267,7 +267,7 @@ public class AddAssetListEntryMVCActionCommandTest {
 		}
 
 		@Override
-		public void write(Writer writer, boolean b) throws IOException {
+		public void write(Writer writer, boolean escapeXML) throws IOException {
 		}
 
 	}

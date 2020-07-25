@@ -71,6 +71,27 @@ public class SpiraProject extends BaseSpiraArtifact {
 		return jsonObject.getInt("ProjectTemplateId");
 	}
 
+	public SpiraAutomationHost getSpiraAutomationHostByName(
+		String automationHostName) {
+
+		List<SpiraAutomationHost> spiraAutomationHosts =
+			SpiraAutomationHost.getSpiraAutomationHosts(
+				this,
+				new SearchQuery.SearchParameter("Name", automationHostName));
+
+		if (spiraAutomationHosts.size() > 1) {
+			throw new RuntimeException(
+				"Duplicate automation host name " + automationHostName);
+		}
+
+		if (spiraAutomationHosts.isEmpty()) {
+			throw new RuntimeException(
+				"Missing automation host name " + automationHostName);
+		}
+
+		return spiraAutomationHosts.get(0);
+	}
+
 	public SpiraCustomList getSpiraCustomListByName(
 		Class<? extends SpiraArtifact> spiraArtifactClass,
 		String customPropertyListName) {

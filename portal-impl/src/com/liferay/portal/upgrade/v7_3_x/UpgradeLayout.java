@@ -14,11 +14,8 @@
 
 package com.liferay.portal.upgrade.v7_3_x;
 
-import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.v7_3_x.util.LayoutTable;
-
-import java.sql.PreparedStatement;
 
 /**
  * @author Preston Crary
@@ -64,14 +61,7 @@ public class UpgradeLayout extends UpgradeProcess {
 				new AlterTableAddColumn("statusDate", "DATE null"));
 		}
 
-		try (PreparedStatement ps = connection.prepareStatement(
-				SQLTransformer.transform(
-					"update Layout set masterLayoutPlid = 0, status = 0"))) {
-
-			if (ps.executeUpdate() == 0) {
-				return;
-			}
-		}
+		runSQL("update Layout set masterLayoutPlid = 0, status = 0");
 
 		runSQL("DROP_TABLE_IF_EXISTS(LayoutVersion)");
 	}

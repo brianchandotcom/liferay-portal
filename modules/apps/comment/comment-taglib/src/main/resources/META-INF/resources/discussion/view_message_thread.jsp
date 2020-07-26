@@ -130,14 +130,9 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 									<clay:link
 										ariaLabel='<%= LanguageUtil.format(request, "in-reply-to-x", HtmlUtil.escape(parentDiscussionComment.getUserName()), false) %>'
-										data='<%=
-											HashMapBuilder.put(
-												"inreply-content", parentDiscussionComment.getBody()
-											).put(
-												"inreply-title", parentCommentUserBuffer
-											).build()
-										%>'
-										elementClasses="lfr-discussion-parent-link"
+										cssClass="lfr-discussion-parent-link"
+										data-inreply-content="<%= HtmlUtil.escapeAttribute(parentDiscussionComment.getBody()) %>"
+										data-inreply-title="<%= HtmlUtil.escapeAttribute(parentCommentUserBuffer) %>"
 										href='<%= "#" + randomNamespace + "message_" + parentDiscussionComment.getCommentId() %>'
 										icon="redo"
 										label="<%= HtmlUtil.escape(parentDiscussionComment.getUserName()) %>"

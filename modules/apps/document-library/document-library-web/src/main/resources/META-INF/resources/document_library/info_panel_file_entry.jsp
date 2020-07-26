@@ -179,21 +179,15 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 											</div>
 										</c:when>
 										<c:otherwise>
-
-											<%
-											Map<String, String> data = HashMapBuilder.put(
-												"analytics-file-entry-id", String.valueOf(fileEntry.getFileEntryId())
-											).build();
-											%>
-
 											<div class="btn-group-item">
 												<clay:link
-													buttonStyle="primary"
-													data="<%= data %>"
-													elementClasses="btn-sm"
+													data-analytics-file-entry-id="<%= fileEntry.getFileEntryId() %>"
+													displayType="primary"
 													href="<%= DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, false, true) %>"
-													label='<%= LanguageUtil.get(resourceBundle, "download") %>'
+													label="download"
+													small="<%= true %>"
 													title='<%= LanguageUtil.format(resourceBundle, "file-size-x", LanguageUtil.formatStorageSize(fileVersion.getSize(), locale), false) %>'
+													type="button"
 												/>
 											</div>
 										</c:otherwise>
@@ -202,11 +196,12 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 								<c:otherwise>
 									<div class="btn-group-item" data-analytics-file-entry-id="<%= String.valueOf(fileEntry.getFileEntryId()) %>">
 										<clay:link
-											buttonStyle="primary"
-											elementClasses="btn-sm"
+											displayType="primary"
 											href="<%= DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, false, true) %>"
-											label='<%= LanguageUtil.get(resourceBundle, "download") %>'
+											label="download"
+											small="<%= true %>"
 											title='<%= LanguageUtil.format(resourceBundle, "file-size-x", LanguageUtil.formatStorageSize(fileVersion.getSize(), locale), false) %>'
+											type="button"
 										/>
 									</div>
 								</c:otherwise>

@@ -18,12 +18,14 @@
 
 <label class="align-baseline mb-0 mr-3">
 	<clay:link
-		buttonStyle="outline-secondary"
-		elementClasses="btn-sm"
+		displayTye="secondary"
 		href="https://github.com/liferay/generator-liferay-fragments#liferay-fragments-cli"
 		icon="download"
-		label='<%= LanguageUtil.get(resourceBundle, "fragments-toolkit") %>'
+		label="fragments-toolkit"
+		outline="<%= true %>"
+		small="<%= true %>"
 		target="_blank"
-		title='<%= LanguageUtil.get(resourceBundle, "fragments-toolkit") %>'
+		title="fragments-toolkit"
+		type="button"
 	/>
 </label>

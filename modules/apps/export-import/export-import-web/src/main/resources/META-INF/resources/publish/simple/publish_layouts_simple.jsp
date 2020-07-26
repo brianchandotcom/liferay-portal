@@ -58,10 +58,11 @@ advancedPublishURL.setParameter("privateLayout", String.valueOf(privateLayout));
 	cssClass="mt-2 publish-navbar text-right"
 >
 	<clay:link
-		buttonStyle="link"
-		elementClasses="btn-sm"
+		displayType="link"
 		href="<%= advancedPublishURL.toString() %>"
-		label='<%= LanguageUtil.get(request, "switch-to-advanced-publication") %>'
+		label="switch-to-advanced-publication"
+		small="<%= true %>"
+		type="button"
 	/>
 </clay:container-fluid>
 

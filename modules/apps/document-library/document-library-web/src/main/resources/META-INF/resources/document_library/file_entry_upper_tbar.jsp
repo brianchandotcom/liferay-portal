@@ -69,21 +69,15 @@ FileVersion fileVersion = (FileVersion)request.getAttribute("file_entry_upper_tb
 
 				<c:if test="<%= dlViewFileVersionDisplayContext.isDownloadLinkVisible() %>">
 					<li class="d-none d-sm-flex tbar-item">
-
-						<%
-						Map<String, String> data = HashMapBuilder.put(
-							"analytics-file-entry-id", String.valueOf(fileEntry.getFileEntryId())
-						).build();
-						%>
-
 						<clay:link
-							buttonStyle="primary"
-							data="<%= data %>"
-							elementClasses="btn-sm"
+							data-analytics-file-entry-id="<%= fileEntry.getFileEntryId() %>"
+							displayType="primary"
 							href="<%= DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, false, true) %>"
 							icon="download"
-							label='<%= LanguageUtil.get(resourceBundle, "download") %>'
+							label="download"
+							small="<%= true %>"
 							title='<%= LanguageUtil.format(resourceBundle, "file-size-x", LanguageUtil.formatStorageSize(fileVersion.getSize(), locale), false) %>'
+							type="button"
 						/>
 					</li>
 				</c:if>

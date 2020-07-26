@@ -53,9 +53,14 @@ else {
 			<c:if test="<%= !scopeGroup.equals(themeDisplay.getControlPanelGroup()) %>">
 				<li class="d-none d-sm-flex tbar-item">
 					<clay:link
-						elementClasses="btn btn-monospaced btn-outline-borderless btn-outline-secondary btn-sm"
+						borderless="<%= true %>"
+						displayType="secondary"
 						href="<%= redirect %>"
 						icon="angle-left"
+						monospaced="<%= true %>"
+						outline="<%= true %>"
+						small="<%= true %>"
+						type="button"
 					/>
 				</li>
 			</c:if>

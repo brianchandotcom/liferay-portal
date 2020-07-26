@@ -64,9 +64,10 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 											<c:if test="<%= layoutPageTemplateDisplayContext.isShowAddButton(LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION) %>">
 												<li>
 													<clay:link
-														buttonStyle="borderless"
+														borderless="<%= true %>"
 														href="<%= editLayoutPageTemplateCollectionURL.toString() %>"
 														icon="plus"
+														type="button"
 													/>
 												</li>
 											</c:if>

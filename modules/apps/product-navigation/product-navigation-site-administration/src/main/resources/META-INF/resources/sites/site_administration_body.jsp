@@ -87,10 +87,10 @@ Group group = siteAdministrationPanelCategoryDisplayContext.getGroup();
 
 			<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isDisplaySiteLink() %>">
 				<clay:link
-					elementClasses='<%= "list-group-heading navigation-link panel-header-link" + (siteAdministrationPanelCategoryDisplayContext.isFirstLayout() ? " first-layout" : "") %>'
+					cssClass='<%= "list-group-heading navigation-link panel-header-link" + (siteAdministrationPanelCategoryDisplayContext.isFirstLayout() ? " first-layout" : "") %>'
 					href="<%= siteAdministrationPanelCategoryDisplayContext.getGroupURL() %>"
 					icon="home"
-					label='<%= LanguageUtil.get(request, "home") %>'
+					label="home"
 				/>
 			</c:if>
 

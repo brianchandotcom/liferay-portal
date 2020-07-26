@@ -24,12 +24,10 @@ page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.contex
 page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.DropdownsDisplayContext" %><%@
 page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.ManagementToolbarsDisplayContext" %><%@
 page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.NavigationBarsDisplayContext" %><%@
-page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption" %><%@
-page import="com.liferay.portal.kernel.util.HashMapBuilder" %>
+page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption" %>
 
 <%@ page import="java.util.ArrayList" %><%@
-page import="java.util.List" %><%@
-page import="java.util.Map" %>
+page import="java.util.List" %>
 
 <liferay-theme:defineObjects />
 

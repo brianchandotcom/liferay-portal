@@ -236,10 +236,11 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 
 									<div class="btn-group-item">
 										<clay:link
-											buttonStyle="secondary"
-											elementClasses="btn-sm"
+											displayType="secondary"
 											href="<%= editCategoryURL %>"
-											label='<%= LanguageUtil.get(request, "add-category[message-board]") %>'
+											label="add-category[message-board]"
+											small="<%= true %>"
+											type="button"
 										/>
 									</div>
 								</c:if>
@@ -253,10 +254,11 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 
 									<div class="btn-group-item">
 										<clay:link
-											buttonStyle="primary"
-											elementClasses="btn-sm"
+											displayType="primary"
 											href="<%= editMessageURL %>"
-											label='<%= LanguageUtil.get(request, "new-thread") %>'
+											label="new-thread"
+											small="<%= true %>"
+											type="button"
 										/>
 									</div>
 								</c:if>

@@ -26,14 +26,18 @@
 	<p>Used for stand-alone hyperlinks. Can be a text or an image.</p>
 </blockquote>
 
-<%
-Map<String, String> data = HashMapBuilder.put(
-	"customProperty", "customValue"
-).build();
-%>
-
 <clay:link
-	data="<%= data %>"
+	data-custom-property="customValue"
 	href="#"
 	label="link text"
+	target="blank"
+/>
+
+<clay:link
+	displayType="primary"
+	href="#"
+	label="a button link"
+	target="blank"
+	rel="nofollow"
+	type="button"
 />

@@ -42,11 +42,12 @@ DLFileVersion dlFileVersion = (DLFileVersion)request.getAttribute(WebKeys.DOCUME
 
 <p>
 	<clay:link
-		buttonStyle="primary"
-		elementClasses="btn-sm"
+		displayType="primary"
 		href="<%= displayContext.getDownloadURL(dlFileVersion.getVersion(), dlFileVersion.getSize(), dlFileVersion.getFileName()) %>"
 		icon="download"
-		label='<%= LanguageUtil.get(resourceBundle, "download") %>'
+		label="download"
+		small="<%= true %>"
 		title='<%= LanguageUtil.format(resourceBundle, "file-size-x", LanguageUtil.formatStorageSize(dlFileVersion.getSize(), locale), false) %>'
+		type="button"
 	/>
 </p>

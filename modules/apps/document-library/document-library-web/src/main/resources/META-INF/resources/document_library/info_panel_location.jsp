@@ -43,10 +43,10 @@ long parentFolderId = (parentFolder == null) ? DLFolderConstants.DEFAULT_PARENT_
 		%>
 
 		<clay:link
+			displayType="secondary"
 			href="<%= viewFolderURL.toString() %>"
 			icon="folder"
-			label='<%= (parentFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) ? LanguageUtil.get(request, "home") : parentFolder.getName() %>'
-			style="secondary"
+			label='<%= (parentFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) ? "home" : parentFolder.getName() %>'
 		/>
 	</dd>
 </c:if>

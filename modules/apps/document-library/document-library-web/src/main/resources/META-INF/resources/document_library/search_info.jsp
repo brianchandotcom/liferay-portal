@@ -75,22 +75,26 @@ List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFol
 
 			<c:if test="<%= (mountFolders.size() == 0) && (folder != null) %>">
 				<clay:link
-					buttonStyle="secondary"
-					elementClasses='<%= "btn-sm" + ((searchFolderId == rootFolderId) ? " active" : "") %>'
+					cssClass='<%= (searchFolderId == rootFolderId) ? "active" : "" %>'
+					displayType="secondary"
 					href="<%= searchEverywhereURL.toString() %>"
-					label='<%= LanguageUtil.get(resourceBundle, "everywhere") %>'
-					title='<%= LanguageUtil.get(resourceBundle, "everywhere") %>'
+					label="everywhere"
+					small="<%= true %>"
+					title="everywhere"
+					type="button"
 				/>
 			</c:if>
 
 			<c:if test="<%= folder != null %>">
 				<clay:link
-					buttonStyle="secondary"
-					elementClasses='<%= "btn-sm" + ((searchFolderId == folder.getFolderId()) ? " active" : "") %>'
+					cssClass='<%= (searchFolderId == folder.getFolderId()) ? "active" : "" %>'
+					displayType="secondary"
 					href="<%= searchFolderURL.toString() %>"
 					icon="folder"
 					label="<%= folder.getName() %>"
+					small="<%= true %>"
 					title="<%= folder.getName() %>"
+					type="button"
 				/>
 			</c:if>
 
@@ -104,12 +108,14 @@ List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFol
 				%>
 
 				<clay:link
-					buttonStyle="secondary"
-					elementClasses='<%= "btn-sm" + (((searchRepositoryId == scopeGroupId) && (searchFolderId == rootFolderId)) ? " active" : "") %>'
+					cssClass='<%= ((searchRepositoryId == scopeGroupId) && (searchFolderId == rootFolderId)) ? "active" : "" %>'
+					displayType="secondary"
 					href="<%= searchRepositoryURL.toString() %>"
 					icon="repository"
-					label='<%= LanguageUtil.get(request, "local") %>'
-					title='<%= LanguageUtil.get(request, "local") %>'
+					label="local"
+					small="<%= true %>"
+					title="local"
+					type="button"
 				/>
 
 				<%
@@ -120,12 +126,14 @@ List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFol
 				%>
 
 					<clay:link
-						buttonStyle="secondary"
-						elementClasses='<%= "btn-sm" + ((mountFolder.getFolderId() == searchFolderId) ? " active" : "") %>'
+						cssClass='<%= (mountFolder.getFolderId() == searchFolderId) ? "active" : "" %>'
+						displayType="secondary"
 						href="<%= searchRepositoryURL.toString() %>"
 						icon="repository"
 						label="<%= mountFolder.getName() %>"
+						small="<%= true %>"
 						title="<%= mountFolder.getName() %>"
+						type="button"
 					/>
 
 				<%

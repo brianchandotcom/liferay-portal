@@ -193,10 +193,10 @@ export default withRouter(
 		);
 
 		return (
-			<section className="c-mt-5 questions-section questions-section-single">
-				<Breadcrumb section={question.section} />
+			<section className="questions-section questions-section-single">
+				<Breadcrumb section={question.messageBoardSection} />
 
-				<div className="questions-container">
+				<div className="c-mt-5 questions-container">
 					{!loading && (
 						<div className="row">
 							<div className="col-md-1 text-md-center">

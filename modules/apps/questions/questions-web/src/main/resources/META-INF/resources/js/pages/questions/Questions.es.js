@@ -185,6 +185,10 @@ export default withRouter(
 				<div className="questions-container">
 					<div className="row">
 						<div className="c-mt-3 col col-xl-12">
+							<Breadcrumb section={section} />
+						</div>
+
+						<div className="c-mt-3 col col-xl-12">
 							<QuestionsNavigationBar />
 						</div>
 
@@ -278,8 +282,6 @@ export default withRouter(
 			return (
 				<div className="d-flex flex-column flex-xl-row justify-content-between">
 					<div className="align-items-center d-flex flex-grow-1">
-						{/* <Breadcrumb section={section} /> */}
-
 						{section &&
 							section.actions &&
 							section.actions.subscribe && (

@@ -223,6 +223,7 @@ export const getThreadQuery = gql`
 			keywords
 			messageBoardSection {
 				numberOfMessageBoardSections
+				parentMessageBoardSectionId
 				title
 			}
 			myRating {
@@ -243,6 +244,7 @@ export const getMessageBoardThreadByIdQuery = gql`
 				id
 				messageBoardSection {
 					numberOfMessageBoardSections
+					parentMessageBoardSectionId
 					title
 				}
 			}
@@ -471,6 +473,7 @@ export const getThreadsQuery = gql`
 				keywords
 				messageBoardSection {
 					numberOfMessageBoardSections
+					parentMessageBoardSectionId
 					title
 				}
 				numberOfMessageBoardMessages
@@ -480,40 +483,6 @@ export const getThreadsQuery = gql`
 			page
 			pageSize
 			totalCount
-		}
-	}
-`;
-
-export const getSectionQuery = gql`
-	query messageBoardSections($filter: String!, $siteKey: String!) {
-		messageBoardSections(
-			filter: $filter
-			flatten: true
-			pageSize: 1
-			siteKey: $siteKey
-			sort: "title:desc"
-		) {
-			items {
-				actions
-				id
-				messageBoardSections(sort: "title:asc") {
-					items {
-						id
-						numberOfMessageBoardSections
-						parentMessageBoardSectionId
-						subscribed
-						title
-					}
-				}
-				numberOfMessageBoardSections
-				parentMessageBoardSection {
-					id
-					title
-				}
-				parentMessageBoardSectionId
-				subscribed
-				title
-			}
 		}
 	}
 `;
@@ -577,6 +546,7 @@ export const getRankedThreadsQuery = gql`
 				keywords
 				messageBoardSection {
 					numberOfMessageBoardSections
+					parentMessageBoardSectionId
 					title
 				}
 				numberOfMessageBoardMessages
@@ -616,6 +586,7 @@ export const getRelatedThreadsQuery = gql`
 				id
 				messageBoardSection {
 					numberOfMessageBoardSections
+					parentMessageBoardSectionId
 					title
 				}
 				seen
@@ -623,6 +594,74 @@ export const getRelatedThreadsQuery = gql`
 			page
 			pageSize
 			totalCount
+		}
+	}
+`;
+
+export const getSectionQuery = gql`
+	query messageBoardSections($filter: String!, $siteKey: String!) {
+		messageBoardSections(
+			filter: $filter
+			flatten: true
+			pageSize: 1
+			siteKey: $siteKey
+			sort: "title:desc"
+		) {
+			items {
+				actions
+				id
+				messageBoardSections(sort: "title:asc") {
+					items {
+						id
+						numberOfMessageBoardSections
+						parentMessageBoardSectionId
+						subscribed
+						title
+					}
+				}
+				numberOfMessageBoardSections
+				parentMessageBoardSection {
+					id
+					messageBoardSections {
+						items {
+							id
+							numberOfMessageBoardSections
+							parentMessageBoardSectionId
+							subscribed
+							title
+						}
+					}
+					numberOfMessageBoardSections
+					parentMessageBoardSectionId
+					subscribed
+					title
+				}
+				parentMessageBoardSectionId
+				subscribed
+				title
+			}
+		}
+	}
+`;
+
+export const getSectionsByIdQuery = gql`
+	query messageBoardSection($messageBoardSectionId: Long!) {
+		messageBoardSection(messageBoardSectionId: $messageBoardSectionId) {
+			actions
+			id
+			messageBoardSections(sort: "title:asc") {
+				items {
+					id
+					numberOfMessageBoardSections
+					parentMessageBoardSectionId
+					subscribed
+					title
+				}
+			}
+			numberOfMessageBoardThreads
+			parentMessageBoardSectionId
+			subscribed
+			title
 		}
 	}
 `;
@@ -681,6 +720,7 @@ export const getUserActivityQuery = gql`
 				keywords
 				messageBoardSection {
 					numberOfMessageBoardSections
+					parentMessageBoardSectionId
 					title
 				}
 				numberOfMessageBoardMessages
@@ -825,6 +865,7 @@ export const getSubscriptionsQuery = gql`
 						keywords
 						messageBoardSection {
 							numberOfMessageBoardSections
+							parentMessageBoardSectionId
 							title
 						}
 						myRating {

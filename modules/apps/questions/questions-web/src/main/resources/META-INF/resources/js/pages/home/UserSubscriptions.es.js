@@ -136,6 +136,7 @@ export default withRouter(({history}) => {
 	return (
 		<>
 			<NavigationBar />
+
 			<section className="questions-section questions-section-list">
 				<div className="c-p-5 questions-container row">
 					<div className="col-xl-8 offset-xl-2">

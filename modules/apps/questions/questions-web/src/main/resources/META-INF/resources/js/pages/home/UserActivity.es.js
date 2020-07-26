@@ -96,6 +96,7 @@ export default withRouter(
 		return (
 			<>
 				<NavigationBar />
+
 				<section className="questions-section questions-section-list">
 					<div className="questions-container">
 						<div className="c-p-5 row">

@@ -40,7 +40,7 @@ const AppContextProvider = ({children, ...context}) => {
 		<AppContext.Provider
 			value={{
 				...context,
-				canCreateThread
+				canCreateThread,
 			}}
 		>
 			{children}

@@ -19,16 +19,14 @@ import BreadcrumbDropdown from './BreadcrumbDropdown.es';
 import Link from './Link.es';
 
 export default ({section}) => {
-	const MAX_SECTIONS_IN_BREADCRUMB = 5;
+	const MAX_SECTIONS_IN_BREADCRUMB = 3;
 	const [breadcrumbNodes, setBreadcrumbNodes] = useState([]);
 
 	const getParentSubSections = (section) =>
 		(section && section.messageBoardSections.items) || [];
 
 	const getSectionById = (id) =>
-		mockApiResponse.messageBoardSections.items.find(
-			(section) => section.id === id
-		);
+		section.messageBoardSections.items.find((section) => section.id === id);
 
 	const createEllipsisSectionData = () => {
 		const categories = breadcrumbNodes
@@ -41,7 +39,10 @@ export default ({section}) => {
 	};
 
 	const buildBreadcrumbNodesData = useCallback(
-		(sectionId = CURRENT_SECTION_ID, acc = []) => {
+		(sectionId = section && section.id, acc = []) => {
+			if (!sectionId) {
+				return [];
+			}
 			const section = getSectionById(sectionId);
 			acc.push({
 				subCategories: getParentSubSections(section),
@@ -55,7 +56,7 @@ export default ({section}) => {
 						acc
 				  );
 		},
-		[]
+		[getSectionById, section]
 	);
 
 	useEffect(() => {

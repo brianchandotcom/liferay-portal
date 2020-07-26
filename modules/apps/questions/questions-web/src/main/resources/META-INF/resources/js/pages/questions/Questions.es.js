@@ -229,7 +229,7 @@ export default withRouter(
 											displayType="unstyled"
 											onClick={() => {
 												historyPushParser(
-													`/questions/${context.section}`
+													`/questions/${sectionTitle}`
 												);
 											}}
 										>

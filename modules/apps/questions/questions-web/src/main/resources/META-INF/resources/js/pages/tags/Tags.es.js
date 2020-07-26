@@ -14,6 +14,7 @@
 
 import {useQuery} from '@apollo/client';
 import {ClayButtonWithIcon} from '@clayui/button';
+import ClayEmptyState from '@clayui/empty-state';
 import {ClayInput} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useContext, useEffect, useState} from 'react';
@@ -121,6 +122,14 @@ export default withRouter(
 							}
 							changePage={(page) => changePage(page, pageSize)}
 							data={data && data.keywordsRanked}
+							emptyState={
+								<ClayEmptyState
+									className="empty-state-icon"
+									title={Liferay.Language.get(
+										'there-are-no-results'
+									)}
+								/>
+							}
 							loading={loading}
 						>
 							{(tag) => (

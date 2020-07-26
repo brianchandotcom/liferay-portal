@@ -246,3 +246,13 @@
 		}
 	}
 }
+
+.empty-state-icon {
+	background-image: url(@theme_image_path@/states/empty_state.gif);
+	background-position-x: center;
+	background-repeat: no-repeat;
+	margin: auto;
+	min-width: 300px;
+	padding-top: 250px;
+	text-align: center;
+}

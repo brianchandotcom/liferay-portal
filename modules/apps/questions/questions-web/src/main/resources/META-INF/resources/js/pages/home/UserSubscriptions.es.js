@@ -222,10 +222,9 @@ export default withRouter(({history}) => {
 				{threads &&
 					threads.myUserAccountSubscriptions.items &&
 					threads.myUserAccountSubscriptions.items.map((data) => (
-						<>
+						<div key={data.id}>
 							<QuestionRow
 								items={actions(data)}
-								key={data.id}
 								question={data.graphQLNode}
 								showSectionLabel={true}
 							/>
@@ -233,7 +232,7 @@ export default withRouter(({history}) => {
 								question={data.graphQLNode}
 								showDeleteModalPanel={showDeleteModalPanel}
 							/>
-						</>
+						</div>
 					))}
 			</div>
 		);

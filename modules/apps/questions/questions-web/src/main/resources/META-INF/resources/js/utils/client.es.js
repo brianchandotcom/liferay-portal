@@ -388,16 +388,22 @@ export const getThreads = (
 	siteKey,
 	sort = 'dateCreated:desc'
 ) => {
-	let filter = `(messageBoardSectionId eq ${section.id} `;
+	let filter = '';
 
-	for (let i = 0; i < section.messageBoardSections.items.length; i++) {
-		filter += `or messageBoardSectionId eq ${section.messageBoardSections.items[i].id} `;
+	if (section && section.id) {
+		filter = `(messageBoardSectionId eq ${section.id} `;
+
+		for (let i = 0; i < section.messageBoardSections.items.length; i++) {
+			filter += `or messageBoardSectionId eq ${section.messageBoardSections.items[i].id} `;
+		}
+
+		filter += ')';
 	}
 
-	filter += ')';
-
 	if (keywords) {
-		filter += ` and keywords/any(x:x eq '${keywords}')`;
+		filter += `${
+			(section && section.id && ' and ') || ''
+		}keywords/any(x:x eq '${keywords}')`;
 	}
 	else if (creatorId) {
 		filter += ` and creator/id eq ${creatorId}`;
@@ -559,7 +565,7 @@ export const getRankedThreads = (
 export const getRankedThreadsQuery = gql`
 	query messageBoardThreadsRanked(
 		$dateModified: Date!
-		$messageBoardSectionId: Long!
+		$messageBoardSectionId: Long
 		$page: Int!
 		$pageSize: Int!
 		$sort: String!

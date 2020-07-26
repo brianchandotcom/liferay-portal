@@ -102,7 +102,7 @@ export default withRouter(
 		}, [queryParams]);
 
 		useEffect(() => {
-			if (section.id == null) {
+			if (section.id == null && !currentTag) {
 				return;
 			}
 
@@ -138,29 +138,46 @@ export default withRouter(
 			siteKey,
 		]);
 
+		function buildURL(search, page, pageSize) {
+			let url = '/questions';
+
+			if (sectionTitle) {
+				url += `/${sectionTitle}`;
+			}
+
+			if (tag) {
+				url += `/tag/${tag}`;
+			}
+			if (creatorId) {
+				url += `/creator/${creatorId}`;
+			}
+			if (search) {
+				url += `?search=${search}&`;
+			}
+			else {
+				url += '?';
+			}
+
+			url += `page=${page}&pagesize=${pageSize}`;
+
+			return url;
+		}
+
 		const changePage = (page, pageSize) => {
-			historyPushParser(
-				`/questions/${context.section}${tag ? '/tag/' + tag : ''}${
-					creatorId ? '/creator/' + creatorId : ''
-				}${
-					search && search !== '' ? '?search=' + search + '&' : '?'
-				}page=${page}&pagesize=${pageSize}`
-			);
+			historyPushParser(buildURL(search, page, pageSize));
 		};
 
-		const [debounceCallback] = useDebounceCallback((value) => {
+		const [debounceCallback] = useDebounceCallback((search) => {
 			setLoading(true);
-			historyPushParser(
-				`/questions/${sectionTitle}${
-					value && value !== '' ? '?search=' + value : ''
-				}`
-			);
+			historyPushParser(buildURL(search, 1, 20));
 		}, 500);
 
 		useEffect(() => {
-			getSections(slugToText(sectionTitle), context.siteKey).then(
-				setSection
-			);
+			if (sectionTitle) {
+				getSections(slugToText(sectionTitle), context.siteKey).then(
+					setSection
+				);
+			}
 		}, [sectionTitle, context.siteKey]);
 
 		const filterOptions = getFilterOptions();
@@ -243,14 +260,16 @@ export default withRouter(
 										}
 										title="This topic is empty."
 									>
-										<ClayButton
-											displayType="primary"
-											onClick={navigateToNewQuestion}
-										>
-											{Liferay.Language.get(
-												'ask-question'
-											)}
-										</ClayButton>
+										{sectionTitle && (
+											<ClayButton
+												displayType="primary"
+												onClick={navigateToNewQuestion}
+											>
+												{Liferay.Language.get(
+													'ask-question'
+												)}
+											</ClayButton>
+										)}
 									</ClayEmptyState>
 								}
 								loading={loading}
@@ -366,7 +385,8 @@ export default withRouter(
 								</ClayInput.GroupInsetItem>
 							</ClayInput.GroupItem>
 
-							{questions &&
+							{sectionTitle &&
+								questions &&
 								questions.totalCount > 0 &&
 								(context.redirectToLogin ||
 									(section &&

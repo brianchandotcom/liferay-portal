@@ -59,7 +59,7 @@ export default withRouter(
 
 		const changePage = (page, pageSize) => {
 			historyPushParser(
-				`/questions/${context.section}/tags?page=${page}&pagesize=${pageSize}`
+				`/questions/${sectionTitle}/tags?page=${page}&pagesize=${pageSize}`
 			);
 		};
 
@@ -130,7 +130,7 @@ export default withRouter(
 								>
 									<Link
 										title={tag.name}
-										to={`/questions/${sectionTitle}/tag/${tag.name}`}
+										to={`/questions/tag/${tag.name}`}
 									>
 										<div className="card card-interactive card-interactive-primary card-type-template template-card-horizontal">
 											<div className="card-body">

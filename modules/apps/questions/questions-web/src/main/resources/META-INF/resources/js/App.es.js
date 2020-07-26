@@ -67,6 +67,11 @@ export default (props) => {
 										<NavigationBar />
 
 										<Switch>
+											<Route
+												component={Questions}
+												exact
+												path={`/questions/tag/:tag`}
+											/>
 											<ProtectedRoute
 												component={EditAnswer}
 												exact

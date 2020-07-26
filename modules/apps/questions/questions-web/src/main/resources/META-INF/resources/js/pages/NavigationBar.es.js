@@ -14,9 +14,11 @@
 
 import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
-import React from 'react';
+import React, {useContext} from 'react';
 import {withRouter} from 'react-router-dom';
 
+import {AppContext} from '../AppContext.es';
+import useQueryParams from '../hooks/useQueryParams.es';
 import {historyPushWithSlug} from '../utils/utils.es';
 
 export default withRouter(
@@ -27,6 +29,12 @@ export default withRouter(
 			params: {sectionTitle},
 		},
 	}) => {
+		const context = useContext(AppContext);
+
+		const queryParams = useQueryParams(location);
+
+		sectionTitle = sectionTitle || queryParams.get('sectiontitle');
+
 		const isActive = (value) => location.pathname.includes(value);
 
 		const label = () => {
@@ -63,7 +71,9 @@ export default withRouter(
 										}
 										onClick={() =>
 											historyPushParser(
-												`/questions/${sectionTitle}`
+												sectionTitle
+													? `/questions/${sectionTitle}`
+													: '/'
 											)
 										}
 									>
@@ -79,7 +89,9 @@ export default withRouter(
 										active={isActive('tags')}
 										onClick={() =>
 											historyPushParser(
-												`/questions/${sectionTitle}/tags`
+												sectionTitle
+													? `/questions/${sectionTitle}/tags`
+													: '/'
 											)
 										}
 									>
@@ -100,7 +112,7 @@ export default withRouter(
 										}
 										onClick={() =>
 											historyPushParser(
-												`/subscriptions/${context.userId}`
+												`/subscriptions/${context.userId}?sectionTitle=${sectionTitle}`
 											)
 										}
 									>
@@ -123,7 +135,7 @@ export default withRouter(
 										}
 										onClick={() =>
 											historyPushParser(
-												`/activity/${context.userId}`
+												`/activity/${context.userId}?sectionTitle=${sectionTitle}`
 											)
 										}
 									>

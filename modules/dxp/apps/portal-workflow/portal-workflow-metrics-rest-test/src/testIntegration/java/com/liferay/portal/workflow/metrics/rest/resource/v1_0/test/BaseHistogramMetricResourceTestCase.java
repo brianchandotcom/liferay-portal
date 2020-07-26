@@ -107,7 +107,9 @@ public abstract class BaseHistogramMetricResourceTestCase {
 		HistogramMetricResource.Builder builder =
 			HistogramMetricResource.builder();
 
-		histogramMetricResource = builder.locale(
+		histogramMetricResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

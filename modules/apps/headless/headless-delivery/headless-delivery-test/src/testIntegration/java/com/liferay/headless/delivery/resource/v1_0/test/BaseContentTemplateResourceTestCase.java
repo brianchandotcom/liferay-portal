@@ -116,7 +116,9 @@ public abstract class BaseContentTemplateResourceTestCase {
 		ContentTemplateResource.Builder builder =
 			ContentTemplateResource.builder();
 
-		contentTemplateResource = builder.locale(
+		contentTemplateResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

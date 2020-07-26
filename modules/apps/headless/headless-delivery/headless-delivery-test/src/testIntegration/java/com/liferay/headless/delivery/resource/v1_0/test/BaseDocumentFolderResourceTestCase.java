@@ -121,7 +121,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		DocumentFolderResource.Builder builder =
 			DocumentFolderResource.builder();
 
-		documentFolderResource = builder.locale(
+		documentFolderResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

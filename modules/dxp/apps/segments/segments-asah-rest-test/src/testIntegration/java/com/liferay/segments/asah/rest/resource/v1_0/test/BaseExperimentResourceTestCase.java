@@ -112,7 +112,9 @@ public abstract class BaseExperimentResourceTestCase {
 
 		ExperimentResource.Builder builder = ExperimentResource.builder();
 
-		experimentResource = builder.locale(
+		experimentResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

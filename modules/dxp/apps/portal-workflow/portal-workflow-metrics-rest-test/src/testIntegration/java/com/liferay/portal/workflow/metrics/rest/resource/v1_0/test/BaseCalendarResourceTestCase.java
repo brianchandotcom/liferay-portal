@@ -107,7 +107,9 @@ public abstract class BaseCalendarResourceTestCase {
 
 		CalendarResource.Builder builder = CalendarResource.builder();
 
-		calendarResource = builder.locale(
+		calendarResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

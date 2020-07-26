@@ -109,7 +109,9 @@ public abstract class BaseInstanceResourceTestCase {
 
 		InstanceResource.Builder builder = InstanceResource.builder();
 
-		instanceResource = builder.locale(
+		instanceResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

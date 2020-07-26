@@ -109,7 +109,9 @@ public abstract class BaseFormStructureResourceTestCase {
 
 		FormStructureResource.Builder builder = FormStructureResource.builder();
 
-		formStructureResource = builder.locale(
+		formStructureResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

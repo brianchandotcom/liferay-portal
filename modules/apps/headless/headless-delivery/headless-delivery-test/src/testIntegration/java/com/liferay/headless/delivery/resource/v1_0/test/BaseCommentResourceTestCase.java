@@ -119,7 +119,9 @@ public abstract class BaseCommentResourceTestCase {
 
 		CommentResource.Builder builder = CommentResource.builder();
 
-		commentResource = builder.locale(
+		commentResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

@@ -106,7 +106,9 @@ public abstract class BaseAppWorkflowResourceTestCase {
 
 		AppWorkflowResource.Builder builder = AppWorkflowResource.builder();
 
-		appWorkflowResource = builder.locale(
+		appWorkflowResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

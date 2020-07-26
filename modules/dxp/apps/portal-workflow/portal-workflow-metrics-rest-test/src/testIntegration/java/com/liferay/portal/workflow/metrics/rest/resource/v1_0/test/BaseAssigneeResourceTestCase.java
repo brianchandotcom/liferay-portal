@@ -107,7 +107,9 @@ public abstract class BaseAssigneeResourceTestCase {
 
 		AssigneeResource.Builder builder = AssigneeResource.builder();
 
-		assigneeResource = builder.locale(
+		assigneeResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

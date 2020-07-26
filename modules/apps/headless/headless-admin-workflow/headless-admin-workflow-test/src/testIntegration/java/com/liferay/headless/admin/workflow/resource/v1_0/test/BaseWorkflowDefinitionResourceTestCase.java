@@ -109,7 +109,9 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 		WorkflowDefinitionResource.Builder builder =
 			WorkflowDefinitionResource.builder();
 
-		workflowDefinitionResource = builder.locale(
+		workflowDefinitionResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

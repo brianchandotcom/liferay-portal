@@ -122,7 +122,9 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		MessageBoardThreadResource.Builder builder =
 			MessageBoardThreadResource.builder();
 
-		messageBoardThreadResource = builder.locale(
+		messageBoardThreadResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

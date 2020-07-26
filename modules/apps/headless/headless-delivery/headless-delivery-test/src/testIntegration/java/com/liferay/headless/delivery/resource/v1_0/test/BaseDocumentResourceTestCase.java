@@ -123,7 +123,9 @@ public abstract class BaseDocumentResourceTestCase {
 
 		DocumentResource.Builder builder = DocumentResource.builder();
 
-		documentResource = builder.locale(
+		documentResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

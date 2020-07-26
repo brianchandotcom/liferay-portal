@@ -107,7 +107,9 @@ public abstract class BaseAssigneeMetricResourceTestCase {
 		AssigneeMetricResource.Builder builder =
 			AssigneeMetricResource.builder();
 
-		assigneeMetricResource = builder.locale(
+		assigneeMetricResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

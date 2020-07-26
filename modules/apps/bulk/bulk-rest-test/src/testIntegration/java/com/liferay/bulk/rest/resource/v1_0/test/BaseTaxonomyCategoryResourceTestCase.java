@@ -108,7 +108,9 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		TaxonomyCategoryResource.Builder builder =
 			TaxonomyCategoryResource.builder();
 
-		taxonomyCategoryResource = builder.locale(
+		taxonomyCategoryResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

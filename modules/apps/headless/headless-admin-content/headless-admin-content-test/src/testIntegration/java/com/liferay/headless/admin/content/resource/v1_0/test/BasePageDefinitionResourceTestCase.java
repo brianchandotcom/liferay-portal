@@ -106,7 +106,9 @@ public abstract class BasePageDefinitionResourceTestCase {
 		PageDefinitionResource.Builder builder =
 			PageDefinitionResource.builder();
 
-		pageDefinitionResource = builder.locale(
+		pageDefinitionResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

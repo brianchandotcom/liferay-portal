@@ -120,7 +120,9 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		DataDefinitionResource.Builder builder =
 			DataDefinitionResource.builder();
 
-		dataDefinitionResource = builder.locale(
+		dataDefinitionResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

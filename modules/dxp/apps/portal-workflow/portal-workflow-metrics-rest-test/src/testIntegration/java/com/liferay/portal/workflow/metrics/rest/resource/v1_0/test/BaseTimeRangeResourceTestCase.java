@@ -108,7 +108,9 @@ public abstract class BaseTimeRangeResourceTestCase {
 
 		TimeRangeResource.Builder builder = TimeRangeResource.builder();
 
-		timeRangeResource = builder.locale(
+		timeRangeResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

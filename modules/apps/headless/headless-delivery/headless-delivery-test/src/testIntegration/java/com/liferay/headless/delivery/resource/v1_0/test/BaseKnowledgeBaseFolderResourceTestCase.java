@@ -115,7 +115,9 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		KnowledgeBaseFolderResource.Builder builder =
 			KnowledgeBaseFolderResource.builder();
 
-		knowledgeBaseFolderResource = builder.locale(
+		knowledgeBaseFolderResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

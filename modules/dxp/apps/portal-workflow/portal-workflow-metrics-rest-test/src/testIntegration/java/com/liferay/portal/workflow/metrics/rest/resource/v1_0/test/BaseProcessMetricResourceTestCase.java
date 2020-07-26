@@ -114,7 +114,9 @@ public abstract class BaseProcessMetricResourceTestCase {
 
 		ProcessMetricResource.Builder builder = ProcessMetricResource.builder();
 
-		processMetricResource = builder.locale(
+		processMetricResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

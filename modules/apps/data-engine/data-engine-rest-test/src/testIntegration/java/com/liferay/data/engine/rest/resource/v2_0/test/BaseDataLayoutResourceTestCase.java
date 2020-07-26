@@ -118,7 +118,9 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		DataLayoutResource.Builder builder = DataLayoutResource.builder();
 
-		dataLayoutResource = builder.locale(
+		dataLayoutResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

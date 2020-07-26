@@ -115,7 +115,9 @@ public abstract class BaseAccountUserResourceTestCase {
 
 		AccountUserResource.Builder builder = AccountUserResource.builder();
 
-		accountUserResource = builder.locale(
+		accountUserResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

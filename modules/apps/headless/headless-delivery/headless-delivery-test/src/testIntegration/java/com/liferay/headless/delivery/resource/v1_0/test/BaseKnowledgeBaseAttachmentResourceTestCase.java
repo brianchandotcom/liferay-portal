@@ -114,7 +114,9 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 		KnowledgeBaseAttachmentResource.Builder builder =
 			KnowledgeBaseAttachmentResource.builder();
 
-		knowledgeBaseAttachmentResource = builder.locale(
+		knowledgeBaseAttachmentResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

@@ -114,7 +114,9 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 		WorkflowInstanceResource.Builder builder =
 			WorkflowInstanceResource.builder();
 
-		workflowInstanceResource = builder.locale(
+		workflowInstanceResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

@@ -113,7 +113,9 @@ public abstract class BaseSLAResourceTestCase {
 
 		SLAResource.Builder builder = SLAResource.builder();
 
-		slaResource = builder.locale(
+		slaResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

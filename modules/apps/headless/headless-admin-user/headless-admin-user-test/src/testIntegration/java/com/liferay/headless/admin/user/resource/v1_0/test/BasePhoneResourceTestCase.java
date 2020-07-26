@@ -107,7 +107,9 @@ public abstract class BasePhoneResourceTestCase {
 
 		PhoneResource.Builder builder = PhoneResource.builder();
 
-		phoneResource = builder.locale(
+		phoneResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

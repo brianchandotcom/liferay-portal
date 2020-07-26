@@ -118,7 +118,9 @@ public abstract class BaseAppResourceTestCase {
 
 		AppResource.Builder builder = AppResource.builder();
 
-		appResource = builder.locale(
+		appResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

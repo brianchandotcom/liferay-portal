@@ -107,7 +107,9 @@ public abstract class BaseIndexResourceTestCase {
 
 		IndexResource.Builder builder = IndexResource.builder();
 
-		indexResource = builder.locale(
+		indexResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

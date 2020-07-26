@@ -112,7 +112,9 @@ public abstract class BaseProcessResourceTestCase {
 
 		ProcessResource.Builder builder = ProcessResource.builder();
 
-		processResource = builder.locale(
+		processResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

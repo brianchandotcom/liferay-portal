@@ -119,7 +119,9 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		OrganizationResource.Builder builder = OrganizationResource.builder();
 
-		organizationResource = builder.locale(
+		organizationResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

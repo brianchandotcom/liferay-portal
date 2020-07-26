@@ -121,7 +121,9 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		StructuredContentFolderResource.Builder builder =
 			StructuredContentFolderResource.builder();
 
-		structuredContentFolderResource = builder.locale(
+		structuredContentFolderResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

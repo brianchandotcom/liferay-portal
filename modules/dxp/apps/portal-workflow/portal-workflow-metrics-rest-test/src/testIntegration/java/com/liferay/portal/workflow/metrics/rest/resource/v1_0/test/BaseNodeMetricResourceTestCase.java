@@ -114,7 +114,9 @@ public abstract class BaseNodeMetricResourceTestCase {
 
 		NodeMetricResource.Builder builder = NodeMetricResource.builder();
 
-		nodeMetricResource = builder.locale(
+		nodeMetricResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

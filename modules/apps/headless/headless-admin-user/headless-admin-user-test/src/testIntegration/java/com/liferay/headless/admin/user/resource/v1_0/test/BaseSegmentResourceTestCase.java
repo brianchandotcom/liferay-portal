@@ -109,7 +109,9 @@ public abstract class BaseSegmentResourceTestCase {
 
 		SegmentResource.Builder builder = SegmentResource.builder();
 
-		segmentResource = builder.locale(
+		segmentResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

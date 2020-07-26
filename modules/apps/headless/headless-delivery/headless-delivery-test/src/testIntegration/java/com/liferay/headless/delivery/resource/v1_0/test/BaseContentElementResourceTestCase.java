@@ -116,7 +116,9 @@ public abstract class BaseContentElementResourceTestCase {
 		ContentElementResource.Builder builder =
 			ContentElementResource.builder();
 
-		contentElementResource = builder.locale(
+		contentElementResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

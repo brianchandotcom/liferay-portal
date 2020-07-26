@@ -114,7 +114,9 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		DataRecordCollectionResource.Builder builder =
 			DataRecordCollectionResource.builder();
 
-		dataRecordCollectionResource = builder.locale(
+		dataRecordCollectionResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

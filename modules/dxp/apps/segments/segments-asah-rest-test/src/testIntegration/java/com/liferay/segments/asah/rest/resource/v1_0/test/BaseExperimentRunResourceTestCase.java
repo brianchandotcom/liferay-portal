@@ -107,7 +107,9 @@ public abstract class BaseExperimentRunResourceTestCase {
 
 		ExperimentRunResource.Builder builder = ExperimentRunResource.builder();
 
-		experimentRunResource = builder.locale(
+		experimentRunResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

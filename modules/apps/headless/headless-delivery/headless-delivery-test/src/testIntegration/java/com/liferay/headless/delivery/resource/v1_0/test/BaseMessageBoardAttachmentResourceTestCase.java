@@ -114,7 +114,9 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		MessageBoardAttachmentResource.Builder builder =
 			MessageBoardAttachmentResource.builder();
 
-		messageBoardAttachmentResource = builder.locale(
+		messageBoardAttachmentResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

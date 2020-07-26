@@ -118,7 +118,9 @@ public abstract class BaseDataListViewResourceTestCase {
 
 		DataListViewResource.Builder builder = DataListViewResource.builder();
 
-		dataListViewResource = builder.locale(
+		dataListViewResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

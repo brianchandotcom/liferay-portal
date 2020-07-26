@@ -109,7 +109,9 @@ public abstract class BaseWorkflowLogResourceTestCase {
 
 		WorkflowLogResource.Builder builder = WorkflowLogResource.builder();
 
-		workflowLogResource = builder.locale(
+		workflowLogResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

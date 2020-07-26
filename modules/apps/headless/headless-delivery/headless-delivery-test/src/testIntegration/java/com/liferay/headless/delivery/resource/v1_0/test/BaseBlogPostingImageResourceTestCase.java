@@ -123,7 +123,9 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		BlogPostingImageResource.Builder builder =
 			BlogPostingImageResource.builder();
 
-		blogPostingImageResource = builder.locale(
+		blogPostingImageResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

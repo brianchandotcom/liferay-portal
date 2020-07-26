@@ -107,7 +107,9 @@ public abstract class BaseDataDefinitionFieldLinkResourceTestCase {
 		DataDefinitionFieldLinkResource.Builder builder =
 			DataDefinitionFieldLinkResource.builder();
 
-		dataDefinitionFieldLinkResource = builder.locale(
+		dataDefinitionFieldLinkResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

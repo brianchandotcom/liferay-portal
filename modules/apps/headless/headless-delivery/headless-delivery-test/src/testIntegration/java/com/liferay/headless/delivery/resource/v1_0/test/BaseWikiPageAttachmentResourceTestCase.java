@@ -114,7 +114,9 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 		WikiPageAttachmentResource.Builder builder =
 			WikiPageAttachmentResource.builder();
 
-		wikiPageAttachmentResource = builder.locale(
+		wikiPageAttachmentResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

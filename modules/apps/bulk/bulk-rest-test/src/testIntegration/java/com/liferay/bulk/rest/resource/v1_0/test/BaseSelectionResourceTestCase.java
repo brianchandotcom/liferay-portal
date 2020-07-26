@@ -106,7 +106,9 @@ public abstract class BaseSelectionResourceTestCase {
 
 		SelectionResource.Builder builder = SelectionResource.builder();
 
-		selectionResource = builder.locale(
+		selectionResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

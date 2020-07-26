@@ -106,7 +106,9 @@ public abstract class BaseWorkflowTaskTransitionsResourceTestCase {
 		WorkflowTaskTransitionsResource.Builder builder =
 			WorkflowTaskTransitionsResource.builder();
 
-		workflowTaskTransitionsResource = builder.locale(
+		workflowTaskTransitionsResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

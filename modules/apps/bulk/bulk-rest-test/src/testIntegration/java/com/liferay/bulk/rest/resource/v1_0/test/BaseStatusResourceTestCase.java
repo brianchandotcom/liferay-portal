@@ -106,7 +106,9 @@ public abstract class BaseStatusResourceTestCase {
 
 		StatusResource.Builder builder = StatusResource.builder();
 
-		statusResource = builder.locale(
+		statusResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

@@ -121,7 +121,9 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		BlogPostingResource.Builder builder = BlogPostingResource.builder();
 
-		blogPostingResource = builder.locale(
+		blogPostingResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

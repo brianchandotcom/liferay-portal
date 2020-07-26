@@ -108,7 +108,9 @@ public abstract class BaseTaskResourceTestCase {
 
 		TaskResource.Builder builder = TaskResource.builder();
 
-		taskResource = builder.locale(
+		taskResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

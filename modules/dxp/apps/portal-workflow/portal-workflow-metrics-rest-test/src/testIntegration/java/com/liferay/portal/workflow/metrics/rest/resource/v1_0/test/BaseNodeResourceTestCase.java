@@ -108,7 +108,9 @@ public abstract class BaseNodeResourceTestCase {
 
 		NodeResource.Builder builder = NodeResource.builder();
 
-		nodeResource = builder.locale(
+		nodeResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

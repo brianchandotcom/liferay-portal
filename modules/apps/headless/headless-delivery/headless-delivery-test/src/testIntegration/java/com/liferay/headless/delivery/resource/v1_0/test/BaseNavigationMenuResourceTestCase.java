@@ -115,7 +115,9 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		NavigationMenuResource.Builder builder =
 			NavigationMenuResource.builder();
 
-		navigationMenuResource = builder.locale(
+		navigationMenuResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

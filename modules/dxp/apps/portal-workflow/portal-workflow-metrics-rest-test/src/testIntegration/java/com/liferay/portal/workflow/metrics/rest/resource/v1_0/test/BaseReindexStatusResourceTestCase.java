@@ -107,7 +107,9 @@ public abstract class BaseReindexStatusResourceTestCase {
 
 		ReindexStatusResource.Builder builder = ReindexStatusResource.builder();
 
-		reindexStatusResource = builder.locale(
+		reindexStatusResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

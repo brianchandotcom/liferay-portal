@@ -365,6 +365,9 @@ export const getQuestionThreads = (
 
 		return getRankedThreads(date, page, pageSize, section);
 	}
+	else if (filter === 'most-voted') {
+		return getRankedThreads(null, page, pageSize, section);
+	}
 
 	return getThreads(
 		creatorId,
@@ -549,7 +552,7 @@ export const getRankedThreads = (
 		.query({
 			query: getRankedThreadsQuery,
 			variables: {
-				dateModified: dateModified.toISOString(),
+				dateModified: dateModified && dateModified.toISOString(),
 				messageBoardSectionId: section.id,
 				page,
 				pageSize,

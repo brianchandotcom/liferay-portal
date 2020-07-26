@@ -46,7 +46,9 @@ public class DataDefinitionFieldLinkResourceTest
 		DataDefinitionResource.Builder builder =
 			DataDefinitionResource.builder();
 
-		_dataDefinitionResource = builder.locale(
+		_dataDefinitionResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 

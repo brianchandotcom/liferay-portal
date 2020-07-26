@@ -41,7 +41,9 @@ public class DataDefinitionTestUtil {
 		DataDefinitionResource.Builder builder =
 			DataDefinitionResource.builder();
 
-		DataDefinitionResource dataDefinitionResource = builder.locale(
+		DataDefinitionResource dataDefinitionResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 

@@ -124,7 +124,9 @@ public class StructuredContentResourceTest
 			StructuredContentResource.builder();
 
 		StructuredContentResource frenchStructuredContentResource =
-			builder.locale(
+			builder.authentication(
+				"test@liferay.com", "test"
+			).locale(
 				LocaleUtil.FRANCE
 			).build();
 

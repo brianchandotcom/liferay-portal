@@ -191,9 +191,12 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 
 		// MustNotDuplicateFieldName
 
-		DataDefinitionResource dataDefinitionResource =
-			DataDefinitionResource.builder(
-			).build();
+		DataDefinitionResource.Builder builder =
+			DataDefinitionResource.builder();
+
+		DataDefinitionResource dataDefinitionResource = builder.authentication(
+			"test@liferay.com", "test"
+		).build();
 
 		DataDefinition dataDefinition =
 			dataDefinitionResource.postSiteDataDefinitionByContentType(

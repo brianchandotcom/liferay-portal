@@ -20,7 +20,6 @@ const AppContext = createContext({});
 
 const AppContextProvider = ({children, ...context}) => {
 	const [canCreateThread, setCanCreateThread] = useState(false);
-	const [section, setSection] = useState({});
 
 	useEffect(() => {
 		client
@@ -41,9 +40,7 @@ const AppContextProvider = ({children, ...context}) => {
 		<AppContext.Provider
 			value={{
 				...context,
-				canCreateThread,
-				section,
-				setSection,
+				canCreateThread
 			}}
 		>
 			{children}

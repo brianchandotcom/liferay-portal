@@ -140,7 +140,7 @@ export default withRouter(
 
 		const changePage = (page, pageSize) => {
 			historyPushParser(
-				`/questions/${context.section}${tag ? '/tag/' + tag : ''}${
+				`/questions/${sectionTitle}${tag ? '/tag/' + tag : ''}${
 					creatorId ? '/creator/' + creatorId : ''
 				}${
 					search && search !== '' ? '?search=' + search + '&' : '?'
@@ -212,7 +212,7 @@ export default withRouter(
 											displayType="unstyled"
 											onClick={() => {
 												historyPushParser(
-													`/questions/${context.section}`
+													`/questions/${sectionTitle}`
 												);
 											}}
 										>

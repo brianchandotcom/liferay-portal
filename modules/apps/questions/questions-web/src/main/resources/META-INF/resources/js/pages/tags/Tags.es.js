@@ -59,7 +59,7 @@ export default withRouter(
 
 		const changePage = (page, pageSize) => {
 			historyPushParser(
-				`/questions/${context.section}/tags?page=${page}&pagesize=${pageSize}`
+				`/questions/${sectionTitle}/tags?page=${page}&pagesize=${pageSize}`
 			);
 		};
 

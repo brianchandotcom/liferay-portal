@@ -218,15 +218,15 @@
 
 .questions-root {
 	.questions-breadcrumb {
-		width: 100vw;
-		margin-left: -1vw;
 		background-color: $light;
+		margin-left: -1vw;
+		width: 100vw;
 	}
 
 	.breadcrumb {
 		.breadcrumb-item {
-			font-size: 1.15rem;
 			color: $secondary;
+			font-size: 1.15rem;
 		}
 
 		.breadcrumb-item + .breadcrumb-item {

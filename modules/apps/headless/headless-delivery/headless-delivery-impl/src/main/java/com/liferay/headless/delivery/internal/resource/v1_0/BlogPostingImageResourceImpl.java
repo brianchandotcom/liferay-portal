@@ -165,7 +165,7 @@ public class BlogPostingImageResourceImpl
 				contentUrl = _dlURLHelper.getPreviewURL(
 					fileEntry, fileEntry.getFileVersion(), null, "");
 				contentValue = ContentValueUtil.toContentValue(
-					"contentValue", fileEntry.getContentStream(),
+					"contentValue", fileEntry::getContentStream,
 					Optional.of(contextUriInfo));
 				encodingFormat = fileEntry.getMimeType();
 				fileExtension = fileEntry.getExtension();

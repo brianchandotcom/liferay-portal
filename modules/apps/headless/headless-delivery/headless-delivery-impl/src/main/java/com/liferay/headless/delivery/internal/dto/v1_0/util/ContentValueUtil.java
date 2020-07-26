@@ -14,7 +14,10 @@
 
 package com.liferay.headless.delivery.internal.dto.v1_0.util;
 
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.io.StreamUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Base64;
 
 import java.io.InputStream;
@@ -29,9 +32,8 @@ import javax.ws.rs.core.UriInfo;
 public class ContentValueUtil {
 
 	public static String toContentValue(
-			String field, InputStream inputStream,
-			Optional<UriInfo> uriInfoOptional)
-		throws Exception {
+		String field, UnsafeSupplier<InputStream, Exception> unsafeSupplier,
+		Optional<UriInfo> uriInfoOptional) {
 
 		boolean hasNestedFieldsField = uriInfoOptional.map(
 			UriInfo::getQueryParameters
@@ -44,10 +46,21 @@ public class ContentValueUtil {
 		);
 
 		if (hasNestedFieldsField) {
-			return Base64.encode(StreamUtil.toByteArray(inputStream));
+			try {
+				return Base64.encode(
+					StreamUtil.toByteArray(unsafeSupplier.get()));
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(exception, exception);
+				}
+			}
 		}
 
 		return null;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ContentValueUtil.class);
 
 }

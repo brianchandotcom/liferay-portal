@@ -134,7 +134,7 @@ public class BlogPostingDTOConverter
 					fileEntry, fileEntry.getFileVersion(), null, "", false,
 					false);
 				contentValue = ContentValueUtil.toContentValue(
-					"image.contentValue", fileEntry.getContentStream(),
+					"image.contentValue", fileEntry::getContentStream,
 					dtoConverterContext.getUriInfoOptional());
 				imageId = coverImageFileEntryId;
 			}

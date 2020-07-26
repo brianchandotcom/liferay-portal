@@ -39,7 +39,7 @@ public class ContentDocumentUtil {
 					fileEntry, fileEntry.getFileVersion(), null, "", false,
 					false);
 				contentValue = ContentValueUtil.toContentValue(
-					fieldName + ".contentValue", fileEntry.getContentStream(),
+					fieldName + ".contentValue", fileEntry::getContentStream,
 					uriInfoOptional);
 				description = fileEntry.getDescription();
 				encodingFormat = fileEntry.getMimeType();

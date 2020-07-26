@@ -115,7 +115,7 @@ public class DocumentDTOConverter
 				contentUrl = _dlURLHelper.getPreviewURL(
 					fileEntry, fileVersion, null, "");
 				contentValue = ContentValueUtil.toContentValue(
-					"contentValue", fileEntry.getContentStream(),
+					"contentValue", fileEntry::getContentStream,
 					dtoConverterContext.getUriInfoOptional());
 				creator = CreatorUtil.toCreator(
 					_portal,
@@ -234,8 +234,8 @@ public class DocumentDTOConverter
 			{
 				contentUrl = String.valueOf(adaptiveMedia.getURI());
 				contentValue = ContentValueUtil.toContentValue(
-					"adaptedImages.contentValue",
-					adaptiveMedia.getInputStream(), uriInfoOptional);
+					"adaptedImages.contentValue", adaptiveMedia::getInputStream,
+					uriInfoOptional);
 				height = _getValue(
 					adaptiveMedia, AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT);
 				resolutionName = _getValue(

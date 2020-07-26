@@ -122,7 +122,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 		${schemaName}Resource.Builder builder = ${schemaName}Resource.builder();
 
-		${schemaVarName}Resource = builder.locale(
+		${schemaVarName}Resource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

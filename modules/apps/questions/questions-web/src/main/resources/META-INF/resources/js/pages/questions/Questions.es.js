@@ -55,6 +55,10 @@ function getFilterOptions() {
 			label: Liferay.Language.get('voted-in-the-last-month'),
 			value: 'month',
 		},
+		{
+			label: Liferay.Language.get('most-voted'),
+			value: 'most-voted',
+		}
 	];
 }
 

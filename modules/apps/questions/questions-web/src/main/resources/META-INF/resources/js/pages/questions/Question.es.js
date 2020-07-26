@@ -24,6 +24,7 @@ import {withRouter} from 'react-router-dom';
 import {AppContext} from '../../AppContext.es';
 import Answer from '../../components/Answer.es';
 import ArticleBodyRenderer from '../../components/ArticleBodyRenderer.es';
+import Breadcrumb from '../../components/Breadcrumb.es';
 import CreatorRow from '../../components/CreatorRow.es';
 import DeleteThread from '../../components/DeleteThread.es';
 import Link from '../../components/Link.es';
@@ -193,6 +194,8 @@ export default withRouter(
 
 		return (
 			<section className="c-mt-5 questions-section questions-section-single">
+				<Breadcrumb section={question.section} />
+
 				<div className="questions-container">
 					{!loading && (
 						<div className="row">

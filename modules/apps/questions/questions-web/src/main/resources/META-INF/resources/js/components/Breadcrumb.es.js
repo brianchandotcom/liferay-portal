@@ -15,6 +15,7 @@
 import ClayIcon from '@clayui/icon';
 import React, {useCallback, useEffect, useState} from 'react';
 
+import {client, getSectionsByIdQuery} from '../utils/client.es';
 import BreadcrumbDropdown from './BreadcrumbDropdown.es';
 import Link from './Link.es';
 
@@ -22,11 +23,11 @@ export default ({section}) => {
 	const MAX_SECTIONS_IN_BREADCRUMB = 3;
 	const [breadcrumbNodes, setBreadcrumbNodes] = useState([]);
 
-	const getParentSubSections = (section) =>
-		(section && section.messageBoardSections.items) || [];
-
-	const getSectionById = (id) =>
-		section.messageBoardSections.items.find((section) => section.id === id);
+	const getSubSections = (section) =>
+		(section &&
+			section.messageBoardSections &&
+			section.messageBoardSections.items) ||
+		[];
 
 	const createEllipsisSectionData = () => {
 		const categories = breadcrumbNodes
@@ -38,30 +39,47 @@ export default ({section}) => {
 		return {subCategories: categories, title: ''};
 	};
 
-	const buildBreadcrumbNodesData = useCallback(
-		(sectionId = section && section.id, acc = []) => {
-			if (!sectionId) {
-				return [];
-			}
-			const section = getSectionById(sectionId);
-			acc.push({
-				subCategories: getParentSubSections(section),
-				title: section.title,
-			});
+	const findParent = (messageBoardSectionId) =>
+		client
+			.query({
+				query: getSectionsByIdQuery,
+				variables: {messageBoardSectionId},
+			})
+			.then(({data}) => data.messageBoardSection);
 
-			return section.parentMessageBoardSectionId === null
-				? acc.reverse()
-				: buildBreadcrumbNodesData(
-						section.parentMessageBoardSectionId,
+	const buildBreadcrumbNodesData = useCallback((section, acc = []) => {
+		acc.push({
+			subCategories: getSubSections(section),
+			title: section.title,
+		});
+
+		if (section.parentMessageBoardSectionId) {
+			if (section.parentMessageBoardSection) {
+				return Promise.resolve(
+					buildBreadcrumbNodesData(
+						section.parentMessageBoardSection,
 						acc
-				  );
-		},
-		[getSectionById, section]
-	);
+					)
+				);
+			}
+
+			return findParent(
+				section.parentMessageBoardSectionId
+			).then((section) => buildBreadcrumbNodesData(section, acc));
+		}
+
+		return Promise.resolve(acc.reverse());
+	}, []);
 
 	useEffect(() => {
-		setBreadcrumbNodes(buildBreadcrumbNodesData());
-	}, [buildBreadcrumbNodesData]);
+		if (!section) {
+			return;
+		}
+
+		buildBreadcrumbNodesData(section).then((acc) =>
+			setBreadcrumbNodes(acc)
+		);
+	}, [buildBreadcrumbNodesData, section]);
 
 	return (
 		<section className="align-items-center d-flex">

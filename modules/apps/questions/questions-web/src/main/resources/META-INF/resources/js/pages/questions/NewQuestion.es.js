@@ -25,8 +25,7 @@ import Link from '../../components/Link.es';
 import QuestionsEditor from '../../components/QuestionsEditor';
 import TagSelector from '../../components/TagSelector.es';
 import TextLengthValidation from '../../components/TextLengthValidation.es';
-import useSection from '../../hooks/useSection.es';
-import {client, createQuestionQuery} from '../../utils/client.es';
+import {client, createQuestionQuery, getSections} from '../../utils/client.es';
 import lang from '../../utils/lang.es';
 import {
 	getContextLink,
@@ -54,8 +53,6 @@ export default withRouter(
 		const context = useContext(AppContext);
 		const historyPushParser = historyPushWithSlug(history.push);
 
-		const section = useSection(slugToText(sectionTitle), context.siteKey);
-
 		const [debounceCallback] = useDebounceCallback(
 			() => historyPushParser(`/questions/${sectionTitle}/`),
 			500
@@ -70,16 +67,22 @@ export default withRouter(
 		});
 
 		useEffect(() => {
-			if (section && section.parentSection) {
-				setSections([
-					{
-						id: section.parentSection.id,
-						title: section.parentSection.title,
-					},
-					...section.parentSection.messageBoardSections.items,
-				]);
-			}
-		}, [section, section.parentSection]);
+			getSections(slugToText(sectionTitle), context.siteKey).then(
+				(section) => {
+					setSectionId(section.id);
+					if (section.parentMessageBoardSection) {
+						setSections([
+							{
+								id: section.parentMessageBoardSection.id,
+								title: section.parentMessageBoardSection.title,
+							},
+							...section.parentMessageBoardSection
+								.messageBoardSections.items,
+						]);
+					}
+				}
+			);
+		}, [context.siteKey, sectionTitle]);
 
 		const processError = (error) => {
 			if (error.message && error.message.includes('AssetTagException')) {
@@ -183,10 +186,7 @@ export default withRouter(
 												<ClaySelect.Option
 													key={id}
 													label={title}
-													selected={
-														section &&
-														section.id === id
-													}
+													selected={sectionId === id}
 													value={id}
 												/>
 											))}
@@ -220,8 +220,7 @@ export default withRouter(
 												keywords: tags.map(
 													(tag) => tag.label
 												),
-												messageBoardSectionId:
-													sectionId || section.id,
+												messageBoardSectionId: sectionId,
 											},
 										}).catch(processError);
 									}}

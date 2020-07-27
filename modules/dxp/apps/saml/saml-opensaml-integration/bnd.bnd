@@ -18,6 +18,8 @@ Import-Package:\
 	\
 	!javax.annotation.*,\
 	\
+	!junit.*,\
+	\
 	!net.fortuna.*,\
 	\
 	!net.jcip.*,\
@@ -51,6 +53,7 @@ Import-Package:\
 	!sun.io,\
 	\
 	*
+-fixupmessages: Classes found in the wrong directory: ...;is:=ignore
 -includeresource:\
 	opensaml-core-*;lib:=true,\
 	opensaml-messaging-api-*;lib:=true,\

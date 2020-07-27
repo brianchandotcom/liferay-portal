@@ -13,27 +13,53 @@
  */
 
 import ClayCard from '@clayui/card';
+import ClayIcon from '@clayui/icon';
 import ClayTabs from '@clayui/tabs';
+import classNames from 'classnames';
 import React, {useMemo, useState} from 'react';
 
+import {CHANGE_MASTER_LAYOUT} from '../../../app/actions/types';
 import {config} from '../../../app/config/index';
+import LayoutService from '../../../app/services/LayoutService';
+import {useDispatch, useSelector} from '../../../app/store/index';
 import {useId} from '../../../app/utils/useId';
 import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 
+const OPTIONS_TYPES = {
+	master: 'master',
+	styleBook: 'styleBook',
+};
+
 export default function PageDesignOptionsSidebar() {
+	const masterLayoutPlid = useSelector(
+		(state) => state.masterLayout?.masterLayoutPlid
+	);
+
 	const tabs = useMemo(
 		() => [
 			{
+				icon: 'page',
 				label: Liferay.Language.get('master'),
-				options: config.masterLayouts,
+				options: config.masterLayouts.map((masterLayout) => ({
+					...masterLayout,
+					isActive:
+						masterLayoutPlid === masterLayout.masterLayoutPlid,
+				})),
+				type: OPTIONS_TYPES.master,
 			},
 			{
+				icon: 'magic',
 				label: Liferay.Language.get('style-book'),
-				options: config.styleBooks,
+				options: config.styleBooks.map((styleBook) => ({
+					...styleBook,
+					isActive:
+						config.styleBookEntryId === styleBook.styleBookEntryId,
+				})),
+				type: OPTIONS_TYPES.styleBook,
 			},
 		],
-		[]
+		[masterLayoutPlid]
 	);
 	const [activeTabId, setActiveTabId] = useState(0);
 	const tabIdNamespace = useId();
@@ -68,13 +94,17 @@ export default function PageDesignOptionsSidebar() {
 				</ClayTabs>
 
 				<ClayTabs.Content activeIndex={activeTabId} fade>
-					{tabs.map(({options}, index) => (
+					{tabs.map(({icon, options, type}, index) => (
 						<ClayTabs.TabPane
 							aria-labelledby={getTabId(index)}
 							id={getTabPanelId(index)}
 							key={index}
 						>
-							<OptionList options={options} />
+							<OptionList
+								icon={icon}
+								options={options}
+								type={type}
+							/>
 						</ClayTabs.TabPane>
 					))}
 				</ClayTabs.Content>
@@ -83,22 +113,29 @@ export default function PageDesignOptionsSidebar() {
 	);
 }
 
-const OptionList = ({options = []}) => {
+const OptionList = ({options = [], icon}) => {
 	return (
 		<ul className="list-unstyled mt-3">
-			{options.map(({imagePreviewURL, name}, index) => (
+			{options.map(({imagePreviewURL, isActive, name}, index) => (
 				<li key={index}>
 					<ClayCard
-						className="page-editor__sidebar__design-options__tab-card"
-						displayType="image"
+						className={classNames({
+							'page-editor__sidebar__design-options__tab-card--active': isActive,
+						})}
+						displayType="file"
+						selectable
 					>
 						<ClayCard.AspectRatio className="card-item-first">
-							{imagePreviewURL && (
+							{imagePreviewURL ? (
 								<img
 									alt="thumbnail"
 									className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid"
 									src={imagePreviewURL}
 								/>
+							) : (
+								<div className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon">
+									<ClayIcon symbol={icon} />
+								</div>
 							)}
 						</ClayCard.AspectRatio>
 						<ClayCard.Body>
@@ -107,6 +144,12 @@ const OptionList = ({options = []}) => {
 									<section className="autofit-section">
 										<ClayCard.Description displayType="title">
 											{name}
+											{isActive && (
+												<ClayIcon
+													className="ml-2 text-primary"
+													symbol={'check-circle'}
+												/>
+											)}
 										</ClayCard.Description>
 									</section>
 								</div>

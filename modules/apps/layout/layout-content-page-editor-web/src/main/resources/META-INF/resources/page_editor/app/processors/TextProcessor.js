@@ -33,7 +33,9 @@ export default getAlloyEditorProcessor(
 			anchor.target = config.target || '';
 			anchor.innerHTML = value;
 
-			element.innerHTML = anchor.outerHTML;
+			if (!element.contains(anchor)) {
+				element.innerHTML = anchor.outerHTML;
+			}
 		}
 		else {
 			element.innerHTML = value;

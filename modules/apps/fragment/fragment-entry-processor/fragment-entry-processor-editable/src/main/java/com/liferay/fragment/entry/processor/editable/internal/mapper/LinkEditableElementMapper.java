@@ -86,7 +86,7 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 		if (StringUtil.equalsIgnoreCase(element.tagName(), "lfr-editable")) {
 			processEditableTag = true;
 		}
-		else {
+		else if (StringUtil.equalsIgnoreCase(element.tagName(), "a")) {
 			linkElement = element;
 		}
 
@@ -110,7 +110,7 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 			linkElement.html(
 				replaceLink ? firstChildElement.html() : element.html());
 
-			if (processEditableTag) {
+			if ((linkElement != element) || processEditableTag) {
 				element.html(linkElement.outerHtml());
 			}
 		}

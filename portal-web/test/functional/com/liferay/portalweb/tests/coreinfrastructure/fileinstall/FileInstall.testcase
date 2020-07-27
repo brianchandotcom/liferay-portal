@@ -1,0 +1,104 @@
+@component-name = "portal-file-install"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "File Install";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	test UninstallJarOffline {
+		property test.name.skip.portal.instance = "FileInstall#UninstallJarOffline";
+
+		FileInstall.deployFileOnServer(
+			bundleIndex = "0",
+			liferayDependencyJars = "com.liferay.cluster.test.module.jar");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Gogo Shell");
+
+		AssertConsoleTextPresent(value1 = "STARTED com.liferay.cluster.test.module_");
+
+		GogoShell.executeCommand(commandName = "lb | grep 'Test Module'");
+
+		GogoShell.viewOutput(outputContent = "Liferay Cluster Test Module");
+
+		Portlet.shutdownServer();
+
+		FileInstall.deleteJarOffline(
+			deleteLiferayHome = "false",
+			liferayDependencyJars = "com.liferay.cluster.test.module.jar");
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Gogo Shell");
+
+		AssertConsoleTextPresent(value1 = "STARTED com.liferay.cluster.test.module_");
+
+		GogoShell.executeCommand(commandName = "lb | grep 'Test Module'");
+
+		GogoShell.viewOutput(outputContent = "false");
+
+		GogoShell.viewNoOutput(outputContent = "Liferay Cluster Test Module");
+	}
+
+	@priority = "4"
+	test UninstallWarOffline {
+		property test.name.skip.portal.instance = "FileInstall#UninstallWarOffline";
+
+		FileInstall.deployFileOnServer(
+			bundleIndex = "0",
+			liferayDependencyJars = "test-theme.war");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Gogo Shell");
+
+		AssertConsoleTextPresent(value1 = "STARTED test-theme_");
+
+		GogoShell.executeCommand(commandName = "lb | grep test-theme");
+
+		GogoShell.viewOutput(outputContent = "test-theme");
+
+		Portlet.shutdownServer();
+
+		FileInstall.deleteWarOffline(
+			deleteLiferayHome = "false",
+			liferayDependencyWars = "test-theme.war");
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Gogo Shell");
+
+		AssertConsoleTextPresent(value1 = "STARTED test-theme_");
+
+		GogoShell.executeCommand(commandName = "lb | grep test-theme");
+
+		GogoShell.viewOutput(outputContent = "false");
+
+		GogoShell.viewNoOutput(outputContent = "test-theme");
+	}
+
+}

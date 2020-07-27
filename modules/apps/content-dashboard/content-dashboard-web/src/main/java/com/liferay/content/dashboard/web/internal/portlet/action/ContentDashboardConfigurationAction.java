@@ -22,10 +22,13 @@ import com.liferay.content.dashboard.web.internal.display.context.ContentDashboa
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 
 import javax.servlet.ServletContext;
@@ -65,6 +68,24 @@ public class ContentDashboardConfigurationAction
 				contentDashboardAdminConfiguration, httpServletRequest));
 
 		super.include(portletConfig, httpServletRequest, httpServletResponse);
+	}
+
+	@Override
+	public void processAction(
+			PortletConfig portletConfig, ActionRequest actionRequest,
+			ActionResponse actionResponse)
+		throws Exception {
+
+		String[] assetVocabularyNames = StringUtil.split(
+			getParameter(actionRequest, "assetVocabularyNames"));
+
+		if (ArrayUtil.isEmpty(assetVocabularyNames)) {
+			SessionErrors.add(actionRequest, "emptyAssetVocabularyNames");
+
+			return;
+		}
+
+		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
 
 	@Override

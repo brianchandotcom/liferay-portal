@@ -324,6 +324,7 @@ export default withRouter(
 									className="bg-transparent border-0"
 									id="questionsFilter"
 									onChange={(event) => {
+										setLoading(true);
 										setFilter(event.target.value);
 									}}
 									value={filter}

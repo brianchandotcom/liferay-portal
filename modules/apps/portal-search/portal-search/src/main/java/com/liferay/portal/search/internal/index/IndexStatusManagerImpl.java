@@ -16,6 +16,7 @@ package com.liferay.portal.search.internal.index;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.IndexStatusManagerThreadLocal;
@@ -49,7 +50,9 @@ public class IndexStatusManagerImpl implements IndexStatusManager {
 			return false;
 		}
 
-		if (IndexStatusManagerThreadLocal.isIndexReadOnly() || _indexReadOnly) {
+		if (IndexStatusManagerThreadLocal.isIndexReadOnly() || _indexReadOnly ||
+			StartupHelperUtil.isUpgrading()) {
+
 			return true;
 		}
 

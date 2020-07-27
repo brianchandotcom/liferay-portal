@@ -1,0 +1,27 @@
+definition {
+
+	macro deleteJarOffline {
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "delete-dependency-file  -Dliferay.dependency.jars=${liferayDependencyJars}");
+
+		Pause(locator1 = "10000");
+	}
+
+	macro deleteWarOffline {
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "delete-dependency-file  -Dliferay.dependency.wars=${liferayDependencyWars}");
+
+		Pause(locator1 = "10000");
+	}
+
+	macro deployFileOnServer {
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "deploy-dependency-jars -Dliferay.dependency.jars=${liferayDependencyJars}");
+
+		Pause(locator1 = "10000");
+	}
+
+}

@@ -895,9 +895,14 @@ public class DataDefinitionResourceImpl
 
 		List<String> removedFieldNames = new ArrayList<>();
 
-		String[] fieldNames = transform(
-			dataDefinition.getDataDefinitionFields(),
-			DataDefinitionField::getName, String.class);
+		DDMForm ddmForm = DataDefinitionUtil.toDDMForm(
+			dataDefinition, _ddmFormFieldTypeServicesTracker);
+
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(true);
+
+		String[] fieldNames = ArrayUtil.toStringArray(
+			ddmFormFieldsMap.keySet());
 
 		DataDefinition existingDataDefinition =
 			DataDefinitionUtil.toDataDefinition(
@@ -906,26 +911,31 @@ public class DataDefinitionResourceImpl
 				_ddmStructureLocalService.getStructure(dataDefinitionId),
 				_spiDDMFormRuleConverter);
 
-		for (DataDefinitionField dataDefinitionField :
-				existingDataDefinition.getDataDefinitionFields()) {
+		DDMForm existingDDMForm = DataDefinitionUtil.toDDMForm(
+			existingDataDefinition, _ddmFormFieldTypeServicesTracker);
 
-			if (ArrayUtil.contains(fieldNames, dataDefinitionField.getName())) {
+		Map<String, DDMFormField> existingDDMFormFieldsMap =
+			existingDDMForm.getDDMFormFieldsMap(true);
+
+		for (Map.Entry<String, DDMFormField> entry :
+				existingDDMFormFieldsMap.entrySet()) {
+
+			if (ArrayUtil.contains(fieldNames, entry.getKey())) {
 				continue;
 			}
 
-			removedFieldNames.add(dataDefinitionField.getName());
+			removedFieldNames.add(entry.getKey());
 
-			if (!Objects.equals(
-					dataDefinitionField.getFieldType(), "fieldset")) {
+			DDMFormField ddmFormField = entry.getValue();
 
+			if (!Objects.equals(ddmFormField.getType(), "fieldset")) {
 				continue;
 			}
 
 			DDMStructure fieldSetDDMStructure =
 				_ddmStructureLocalService.getDDMStructure(
 					MapUtil.getLong(
-						dataDefinitionField.getCustomProperties(),
-						"ddmStructureId"));
+						ddmFormField.getProperties(), "ddmStructureId"));
 
 			Map<String, DDMFormField> map =
 				fieldSetDDMStructure.getFullHierarchyDDMFormFieldsMap(false);

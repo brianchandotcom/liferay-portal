@@ -18,10 +18,9 @@ import ClayTabs from '@clayui/tabs';
 import classNames from 'classnames';
 import React, {useMemo, useState} from 'react';
 
-import {CHANGE_MASTER_LAYOUT} from '../../../app/actions/types';
 import {config} from '../../../app/config/index';
-import LayoutService from '../../../app/services/LayoutService';
 import {useDispatch, useSelector} from '../../../app/store/index';
+import changeMasterLayout from '../../../app/thunks/changeMasterLayout';
 import {useId} from '../../../app/utils/useId';
 import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
@@ -45,6 +44,12 @@ export default function PageDesignOptionsSidebar() {
 					...masterLayout,
 					isActive:
 						masterLayoutPlid === masterLayout.masterLayoutPlid,
+					onClick: (dispatch) =>
+						dispatch(
+							changeMasterLayout({
+								masterLayoutPlid: masterLayout.masterLayoutPlid,
+							})
+						),
 				})),
 				type: OPTIONS_TYPES.master,
 			},
@@ -55,6 +60,7 @@ export default function PageDesignOptionsSidebar() {
 					...styleBook,
 					isActive:
 						config.styleBookEntryId === styleBook.styleBookEntryId,
+					onClick: () => {},
 				})),
 				type: OPTIONS_TYPES.styleBook,
 			},
@@ -114,50 +120,55 @@ export default function PageDesignOptionsSidebar() {
 }
 
 const OptionList = ({options = [], icon}) => {
+	const dispatch = useDispatch();
+
 	return (
 		<ul className="list-unstyled mt-3">
-			{options.map(({imagePreviewURL, isActive, name}, index) => (
-				<li key={index}>
-					<ClayCard
-						className={classNames({
-							'page-editor__sidebar__design-options__tab-card--active': isActive,
-						})}
-						displayType="file"
-						selectable
-					>
-						<ClayCard.AspectRatio className="card-item-first">
-							{imagePreviewURL ? (
-								<img
-									alt="thumbnail"
-									className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid"
-									src={imagePreviewURL}
-								/>
-							) : (
-								<div className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon">
-									<ClayIcon symbol={icon} />
-								</div>
-							)}
-						</ClayCard.AspectRatio>
-						<ClayCard.Body>
-							<ClayCard.Row>
-								<div className="autofit-col autofit-col-expand">
-									<section className="autofit-section">
-										<ClayCard.Description displayType="title">
-											{name}
-											{isActive && (
-												<ClayIcon
-													className="ml-2 text-primary"
-													symbol={'check-circle'}
-												/>
-											)}
-										</ClayCard.Description>
-									</section>
-								</div>
-							</ClayCard.Row>
-						</ClayCard.Body>
-					</ClayCard>
-				</li>
-			))}
+			{options.map(
+				({imagePreviewURL, isActive, name, onClick}, index) => (
+					<li key={index}>
+						<ClayCard
+							className={classNames({
+								'page-editor__sidebar__design-options__tab-card--active': isActive,
+							})}
+							displayType="file"
+							onClick={() => onClick(dispatch)}
+							selectable
+						>
+							<ClayCard.AspectRatio className="card-item-first">
+								{imagePreviewURL ? (
+									<img
+										alt="thumbnail"
+										className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid"
+										src={imagePreviewURL}
+									/>
+								) : (
+									<div className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon">
+										<ClayIcon symbol={icon} />
+									</div>
+								)}
+							</ClayCard.AspectRatio>
+							<ClayCard.Body>
+								<ClayCard.Row>
+									<div className="autofit-col autofit-col-expand">
+										<section className="autofit-section">
+											<ClayCard.Description displayType="title">
+												{name}
+												{isActive && (
+													<ClayIcon
+														className="ml-2 text-primary"
+														symbol={'check-circle'}
+													/>
+												)}
+											</ClayCard.Description>
+										</section>
+									</div>
+								</ClayCard.Row>
+							</ClayCard.Body>
+						</ClayCard>
+					</li>
+				)
+			)}
 		</ul>
 	);
 };

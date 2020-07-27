@@ -50,10 +50,10 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 		return (String)_getClassField(spiraArtifactClass, "ARTIFACT_TYPE_NAME");
 	}
 
-	public static String getIDKey(
+	public static String getKeyID(
 		Class<? extends SpiraArtifact> spiraArtifactClass) {
 
-		return (String)_getClassField(spiraArtifactClass, "ID_KEY");
+		return (String)_getClassField(spiraArtifactClass, "KEY_ID");
 	}
 
 	@Override
@@ -81,7 +81,7 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 
 	@Override
 	public int getID() {
-		return jsonObject.getInt(getIDKey(getClass()));
+		return jsonObject.getInt(getKeyID(getClass()));
 	}
 
 	@Override
@@ -96,7 +96,7 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 		}
 
 		return SpiraProject.getSpiraProjectByID(
-			jsonObject.getInt(SpiraProject.ID_KEY));
+			jsonObject.getInt(SpiraProject.KEY_ID));
 	}
 
 	@Override
@@ -198,14 +198,14 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 		SearchQuery<S> searchQuery = new SearchQuery<>(
 			spiraArtifactClass, searchParameters);
 
-		String idKey = getIDKey(spiraArtifactClass);
+		String keyID = getKeyID(spiraArtifactClass);
 
-		if (searchQuery.hasSearchParameter(idKey)) {
+		if (searchQuery.hasSearchParameter(keyID)) {
 			Map<Integer, SpiraArtifact> idSpiraArtifactsMap =
 				_getIDSpiraArtifactsMap(spiraArtifactClass);
 
 			SearchQuery.SearchParameter searchParameter =
-				searchQuery.getSearchParameter(idKey);
+				searchQuery.getSearchParameter(keyID);
 
 			Integer id = (Integer)searchParameter.getValue();
 

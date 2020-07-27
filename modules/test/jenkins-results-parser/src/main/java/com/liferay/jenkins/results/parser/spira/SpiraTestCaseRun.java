@@ -77,13 +77,13 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 				result.getSpiraAutomationHost();
 
 			requestJSONObject.put(
-				SpiraAutomationHost.ID_KEY, spiraAutomationHost.getID());
+				SpiraAutomationHost.KEY_ID, spiraAutomationHost.getID());
 
 			SpiraTestCaseObject spiraTestCaseObject =
 				result.getSpiraTestCaseObject();
 
 			requestJSONObject.put(
-				SpiraTestCaseObject.ID_KEY, spiraTestCaseObject.getID());
+				SpiraTestCaseObject.KEY_ID, spiraTestCaseObject.getID());
 
 			requestJSONObject.put(
 				"CustomProperties", result.getCustomPropertyValuesJSONArray());
@@ -100,21 +100,21 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 				"TestRunFormatId", result.getRunnerFormatID());
 
 			if (releaseID != null) {
-				requestJSONObject.put(SpiraRelease.ID_KEY, releaseID);
+				requestJSONObject.put(SpiraRelease.KEY_ID, releaseID);
 			}
 
 			if (releaseBuildID != null) {
-				requestJSONObject.put(SpiraReleaseBuild.ID_KEY, releaseBuildID);
+				requestJSONObject.put(SpiraReleaseBuild.KEY_ID, releaseBuildID);
 			}
 
 			if (testSetID != null) {
-				requestJSONObject.put(SpiraTestSet.ID_KEY, testSetID);
+				requestJSONObject.put(SpiraTestSet.KEY_ID, testSetID);
 
 				SpiraTestSet.SpiraTestSetTestCase spiraTestSetTestCase =
 					spiraTestSet.assignSpiraTestCaseObject(spiraTestCaseObject);
 
 				requestJSONObject.put(
-					SpiraTestSet.SpiraTestSetTestCase.ID_KEY,
+					SpiraTestSet.SpiraTestSetTestCase.KEY_ID,
 					spiraTestSetTestCase.getID());
 			}
 
@@ -140,7 +140,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 					i);
 
 				responseJSONObject.put(
-					SpiraProject.ID_KEY, spiraProject.getID());
+					SpiraProject.KEY_ID, spiraProject.getID());
 
 				spiraTestCaseRuns.add(new SpiraTestCaseRun(responseJSONObject));
 			}
@@ -524,7 +524,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 	protected static final String ARTIFACT_TYPE_NAME = "testrun";
 
-	protected static final String ID_KEY = "TestRunId";
+	protected static final String KEY_ID = "TestRunId";
 
 	private static List<JSONObject> _requestSpiraTestCaseRuns(
 		SpiraProject spiraProject, SpiraTestCaseObject spiraTestCase,
@@ -534,7 +534,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 		urlParameters.put("number_of_rows", String.valueOf(1000));
 		urlParameters.put("sort_direction", "DESC");
-		urlParameters.put("sort_field", ID_KEY);
+		urlParameters.put("sort_field", KEY_ID);
 		urlParameters.put("starting_row", String.valueOf(1));
 
 		Map<String, String> urlPathReplacements = new HashMap<>();
@@ -564,7 +564,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 					i);
 
 				responseJSONObject.put(
-					SpiraProject.ID_KEY, spiraProject.getID());
+					SpiraProject.KEY_ID, spiraProject.getID());
 
 				spiraTestCaseRuns.add(responseJSONObject);
 			}

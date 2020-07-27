@@ -87,7 +87,7 @@ public class SpiraTestSet extends PathSpiraArtifact {
 			return _parentSpiraTestSetFolder;
 		}
 
-		Object testSetFolderID = jsonObject.get(SpiraTestSetFolder.ID_KEY);
+		Object testSetFolderID = jsonObject.get(SpiraTestSetFolder.KEY_ID);
 
 		if (testSetFolderID == JSONObject.NULL) {
 			return null;
@@ -225,7 +225,7 @@ public class SpiraTestSet extends PathSpiraArtifact {
 
 	protected static final String ARTIFACT_TYPE_NAME = "testset";
 
-	protected static final String ID_KEY = "TestSetId";
+	protected static final String KEY_ID = "TestSetId";
 
 	protected static class SpiraTestSetTestCase extends BaseSpiraArtifact {
 
@@ -243,10 +243,10 @@ public class SpiraTestSet extends PathSpiraArtifact {
 		}
 
 		protected Integer getTestCaseID() {
-			return jsonObject.getInt(SpiraTestCaseObject.ID_KEY);
+			return jsonObject.getInt(SpiraTestCaseObject.KEY_ID);
 		}
 
-		protected static final String ID_KEY = "TestSetTestCaseId";
+		protected static final String KEY_ID = "TestSetTestCaseId";
 
 		private SpiraTestSetTestCase(JSONObject jsonObject) {
 			super(jsonObject);
@@ -283,7 +283,7 @@ public class SpiraTestSet extends PathSpiraArtifact {
 
 		if ((parentTestSetFolderID != null) && (parentTestSetFolderID != 0)) {
 			requestJSONObject.put(
-				SpiraTestSetFolder.ID_KEY, parentTestSetFolderID);
+				SpiraTestSetFolder.KEY_ID, parentTestSetFolderID);
 		}
 
 		if (testSetDescription == null) {
@@ -299,7 +299,7 @@ public class SpiraTestSet extends PathSpiraArtifact {
 				requestJSONObject.toString());
 
 			return spiraProject.getSpiraTestSetByID(
-				responseJSONObject.getInt(ID_KEY));
+				responseJSONObject.getInt(KEY_ID));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -317,7 +317,7 @@ public class SpiraTestSet extends PathSpiraArtifact {
 		urlParameters.put("number_of_rows", String.valueOf(15000));
 		urlParameters.put("release_id", null);
 		urlParameters.put("sort_direction", "ASC");
-		urlParameters.put("sort_field", ID_KEY);
+		urlParameters.put("sort_field", KEY_ID);
 		urlParameters.put("starting_row", String.valueOf(1));
 
 		Map<String, String> urlPathReplacements = new HashMap<>();
@@ -342,7 +342,7 @@ public class SpiraTestSet extends PathSpiraArtifact {
 					i);
 
 				responseJSONObject.put(
-					SpiraProject.ID_KEY, spiraProject.getID());
+					SpiraProject.KEY_ID, spiraProject.getID());
 
 				spiraTestSetFolders.add(responseJSONObject);
 			}

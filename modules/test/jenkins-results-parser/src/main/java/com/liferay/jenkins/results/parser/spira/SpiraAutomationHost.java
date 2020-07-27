@@ -152,7 +152,7 @@ public class SpiraAutomationHost extends BaseSpiraArtifact {
 
 	protected static final String ARTIFACT_TYPE_NAME = "automationhost";
 
-	protected static final String ID_KEY = "AutomationHostId";
+	protected static final String KEY_ID = "AutomationHostId";
 
 	private static List<JSONObject> _requestSpiraAutomationHosts(
 		SpiraProject spiraProject,
@@ -190,7 +190,7 @@ public class SpiraAutomationHost extends BaseSpiraArtifact {
 					i);
 
 				responseJSONObject.put(
-					SpiraProject.ID_KEY, spiraProject.getID());
+					SpiraProject.KEY_ID, spiraProject.getID());
 
 				spiraTestCaseTypes.add(responseJSONObject);
 			}

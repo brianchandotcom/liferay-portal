@@ -71,7 +71,7 @@ public class SpiraTestCaseType extends BaseSpiraArtifact {
 
 	protected static final String ARTIFACT_TYPE_NAME = "testcasetype";
 
-	protected static final String ID_KEY = "TestCaseTypeId";
+	protected static final String KEY_ID = "TestCaseTypeId";
 
 	private static List<JSONObject> _requestSpiraTestCaseTypes(
 		SpiraProject spiraProject) {
@@ -94,7 +94,7 @@ public class SpiraTestCaseType extends BaseSpiraArtifact {
 					i);
 
 				responseJSONObject.put(
-					SpiraProject.ID_KEY, spiraProject.getID());
+					SpiraProject.KEY_ID, spiraProject.getID());
 
 				spiraTestCaseTypes.add(responseJSONObject);
 			}

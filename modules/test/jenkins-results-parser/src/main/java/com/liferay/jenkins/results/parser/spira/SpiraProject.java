@@ -38,7 +38,7 @@ public class SpiraProject extends BaseSpiraArtifact {
 
 	public static SpiraProject getSpiraProjectByID(int projectID) {
 		List<SpiraProject> spiraProjects = _getSpiraProjects(
-			new SearchQuery.SearchParameter(ID_KEY, projectID));
+			new SearchQuery.SearchParameter(KEY_ID, projectID));
 
 		if (spiraProjects.size() > 1) {
 			throw new RuntimeException("Duplicate project ID " + projectID);
@@ -144,7 +144,7 @@ public class SpiraProject extends BaseSpiraArtifact {
 	public SpiraRelease getSpiraReleaseByID(int releaseID) {
 		List<SpiraRelease> spiraReleases = SpiraRelease.getSpiraReleases(
 			this,
-			new SearchQuery.SearchParameter(SpiraRelease.ID_KEY, releaseID));
+			new SearchQuery.SearchParameter(SpiraRelease.KEY_ID, releaseID));
 
 		if (spiraReleases.size() > 1) {
 			throw new RuntimeException("Duplicate release ID " + releaseID);
@@ -203,7 +203,7 @@ public class SpiraProject extends BaseSpiraArtifact {
 			SpiraTestCaseFolder.getSpiraTestCaseFolders(
 				this,
 				new SearchQuery.SearchParameter(
-					SpiraTestCaseFolder.ID_KEY, testCaseFolderID));
+					SpiraTestCaseFolder.KEY_ID, testCaseFolderID));
 
 		if (spiraTestCaseFolders.size() > 1) {
 			throw new RuntimeException(
@@ -275,7 +275,7 @@ public class SpiraProject extends BaseSpiraArtifact {
 			SpiraTestCaseObject.getSpiraTestCaseObjects(
 				this,
 				new SearchQuery.SearchParameter(
-					SpiraTestCaseObject.ID_KEY, testCaseID));
+					SpiraTestCaseObject.KEY_ID, testCaseID));
 
 		if (spiraTestCaseObjects.size() > 1) {
 			throw new RuntimeException("Duplicate test case ID " + testCaseID);
@@ -353,7 +353,7 @@ public class SpiraProject extends BaseSpiraArtifact {
 			SpiraTestCaseType.getSpiraTestCaseTypes(
 				this,
 				new SearchQuery.SearchParameter(
-					SpiraTestCaseType.ID_KEY, testCaseTypeID));
+					SpiraTestCaseType.KEY_ID, testCaseTypeID));
 
 		if (spiraTestCaseTypes.size() > 1) {
 			throw new RuntimeException(
@@ -393,7 +393,7 @@ public class SpiraProject extends BaseSpiraArtifact {
 	public SpiraTestSet getSpiraTestSetByID(int testSetID) {
 		List<SpiraTestSet> spiraTestSets = SpiraTestSet.getSpiraTestSets(
 			this,
-			new SearchQuery.SearchParameter(SpiraTestSet.ID_KEY, testSetID));
+			new SearchQuery.SearchParameter(SpiraTestSet.KEY_ID, testSetID));
 
 		if (spiraTestSets.size() > 1) {
 			throw new RuntimeException("Duplicate test set ID " + testSetID);
@@ -426,7 +426,7 @@ public class SpiraProject extends BaseSpiraArtifact {
 			SpiraTestSetFolder.getSpiraTestSetFolders(
 				this,
 				new SearchQuery.SearchParameter(
-					SpiraTestSetFolder.ID_KEY, testSetFolderID));
+					SpiraTestSetFolder.KEY_ID, testSetFolderID));
 
 		if (spiraTestSetFolders.size() > 1) {
 			throw new RuntimeException(
@@ -526,7 +526,7 @@ public class SpiraProject extends BaseSpiraArtifact {
 
 	protected static final String ARTIFACT_TYPE_NAME = "project";
 
-	protected static final String ID_KEY = "ProjectId";
+	protected static final String KEY_ID = "ProjectId";
 
 	private static List<SpiraProject> _getSpiraProjects(
 		SearchQuery.SearchParameter... searchParameters) {
@@ -557,7 +557,7 @@ public class SpiraProject extends BaseSpiraArtifact {
 			Map<String, String> urlPathReplacements = new HashMap<>();
 
 			urlPathReplacements.put(
-				"project_id", String.valueOf(jsonObject.getInt(ID_KEY)));
+				"project_id", String.valueOf(jsonObject.getInt(KEY_ID)));
 
 			return SpiraRestAPIUtil.requestJSONObject(
 				"projects/{project_id}", null, urlPathReplacements,

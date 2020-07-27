@@ -58,8 +58,8 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 
 		JSONObject requestJSONObject = new JSONObject();
 
-		requestJSONObject.put(SpiraProject.ID_KEY, spiraProject.getID());
-		requestJSONObject.put(SpiraRelease.ID_KEY, spiraRelease.getID());
+		requestJSONObject.put(SpiraProject.KEY_ID, spiraProject.getID());
+		requestJSONObject.put(SpiraRelease.KEY_ID, spiraRelease.getID());
 		requestJSONObject.put("BuildStatusId", releaseBuildStatus.getID());
 		requestJSONObject.put(
 			"CreationDate",
@@ -77,7 +77,7 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 				requestJSONObject.toString());
 
 			return spiraRelease.getSpiraReleaseBuildByID(
-				responseJSONObject.getInt(ID_KEY));
+				responseJSONObject.getInt(KEY_ID));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -137,7 +137,7 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 
 	protected static final String ARTIFACT_TYPE_NAME = "build";
 
-	protected static final String ID_KEY = "BuildId";
+	protected static final String KEY_ID = "BuildId";
 
 	private static List<JSONObject> _requestSpiraReleaseBuilds(
 		SpiraProject spiraProject, SpiraRelease spiraRelease,

@@ -320,7 +320,7 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 			_spiraCustomProperty = spiraCustomProperty;
 		}
 
-		protected static final String ID_KEY = "CustomPropertyValueId";
+		protected static final String KEY_ID = "CustomPropertyValueId";
 
 		private final SpiraCustomProperty _spiraCustomProperty;
 
@@ -335,7 +335,7 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 			new SearchQuery.SearchParameter[searchParameters.length + 2];
 
 		customSearchParameters[0] = new SearchQuery.SearchParameter(
-			SpiraProject.ID_KEY, spiraProject.getID());
+			SpiraProject.KEY_ID, spiraProject.getID());
 		customSearchParameters[1] = new SearchQuery.SearchParameter(
 			"ArtifactTypeName", getArtifactTypeName(spiraArtifactClass));
 
@@ -387,7 +387,7 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 
 	protected static final String ARTIFACT_TYPE_NAME = "customproperty";
 
-	protected static final String ID_KEY = "CustomPropertyId";
+	protected static final String KEY_ID = "CustomPropertyId";
 
 	private static Integer _getNextPositionNumber(
 		List<SpiraCustomProperty> spiraCustomProperties) {
@@ -440,7 +440,7 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 					i);
 
 				responseJSONObject.put(
-					SpiraProject.ID_KEY, spiraProject.getID());
+					SpiraProject.KEY_ID, spiraProject.getID());
 
 				spiraCustomProperties.add(responseJSONObject);
 			}

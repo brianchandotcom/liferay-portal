@@ -32,7 +32,9 @@ export default function LayoutViewport() {
 	const [resizing, setResizing] = useState(false);
 	const selectItem = useSelectItem();
 	const mainItemId = useSelector((state) => state.layoutData.rootItems.main);
-	const masterLayoutData = useSelector((state) => state.masterLayoutData);
+	const masterLayoutData = useSelector(
+		(state) => state.masterLayout?.masterLayoutData
+	);
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);

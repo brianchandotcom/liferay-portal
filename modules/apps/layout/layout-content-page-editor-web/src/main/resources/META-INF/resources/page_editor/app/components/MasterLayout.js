@@ -47,7 +47,9 @@ const LAYOUT_DATA_ITEMS = {
 
 export default function MasterPage() {
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
-	const masterLayoutData = useSelector((state) => state.masterLayoutData);
+	const masterLayoutData = useSelector(
+		(state) => state.masterLayout?.masterLayoutData
+	);
 
 	const mainItem = masterLayoutData.items[masterLayoutData.rootItems.main];
 
@@ -188,7 +190,9 @@ const FragmentContent = React.memo(function FragmentContent({
 	]);
 
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
-	const masterLayoutData = useSelector((state) => state.masterLayoutData);
+	const masterLayoutData = useSelector(
+		(state) => state.masterLayout?.masterLayoutData
+	);
 
 	const getPortals = useCallback(
 		(element) =>

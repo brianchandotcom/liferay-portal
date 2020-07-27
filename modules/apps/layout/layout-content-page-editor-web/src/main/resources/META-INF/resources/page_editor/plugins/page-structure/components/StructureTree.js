@@ -38,7 +38,9 @@ export default function PageStructureSidebar() {
 	);
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const layoutData = useSelector((state) => state.layoutData);
-	const masterLayoutData = useSelector((state) => state.masterLayoutData);
+	const masterLayoutData = useSelector(
+		(state) => state.masterLayout?.masterLayoutData
+	);
 
 	const isMasterPage = config.layoutType === LAYOUT_TYPES.master;
 

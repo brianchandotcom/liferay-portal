@@ -57,7 +57,9 @@ const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 		</ClayLayout.Row>
 	);
 
-	const masterLayoutData = useSelector((state) => state.masterLayoutData);
+	const masterLayoutData = useSelector(
+		(state) => state.masterLayout?.masterLayoutData
+	);
 
 	const masterParent = useMemo(() => {
 		const dropZone =

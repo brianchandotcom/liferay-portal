@@ -64,7 +64,7 @@ public class SpiraAutomationHost extends BaseSpiraArtifact {
 		requestJSONObject.put(
 			"Name", StringEscapeUtils.unescapeJava(automationHostName));
 		requestJSONObject.put(
-			"Token", StringEscapeUtils.unescapeJava(automationHostName));
+			"Token", JenkinsResultsParserUtil.getDistinctTimeStamp());
 
 		JSONArray customPropertiesJSONArray = new JSONArray();
 
@@ -83,6 +83,7 @@ public class SpiraAutomationHost extends BaseSpiraArtifact {
 
 		jenkinsMasterJSONObject.put(
 			"IntegerValue", jenkinsMasterSpiraCustomPropertyValue.getID());
+
 		jenkinsMasterJSONObject.put(
 			"PropertyNumber",
 			jenkinsMasterSpiraCustomProperty.getPropertyNumber());

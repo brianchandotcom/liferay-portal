@@ -22,6 +22,10 @@
 <clay:container-fluid
 	cssClass="container-view"
 >
+	<liferay-ui:breadcrumb
+		showLayout="<%= false %>"
+	/>
+
 	<clay:row>
 		<clay:col
 			lg="3"

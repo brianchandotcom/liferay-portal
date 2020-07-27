@@ -80,6 +80,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -148,6 +149,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -463,17 +465,7 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"mappedInfoItems", _getMappedInfoItems()
 			).put(
-				"masterLayoutData",
-				() -> {
-					LayoutStructure masterLayoutStructure =
-						_getMasterLayoutStructure();
-
-					if (masterLayoutStructure == null) {
-						return StringPool.BLANK;
-					}
-
-					return masterLayoutStructure.toJSONObject();
-				}
+				"masterLayout", _getMasterLayoutJSONObject()
 			).put(
 				"pageContents",
 				ContentUtil.getPageContentsJSONArray(
@@ -1552,6 +1544,25 @@ public class ContentPageEditorDisplayContext {
 		return mappedInfoItems;
 	}
 
+	private JSONObject _getMasterLayoutJSONObject() {
+		Layout layout = themeDisplay.getLayout();
+
+		LayoutStructure masterLayoutStructure = _getMasterLayoutStructure();
+
+		return JSONUtil.put(
+			"masterLayoutData",
+			Optional.ofNullable(
+				masterLayoutStructure
+			).map(
+				LayoutStructure::toJSONObject
+			).orElse(
+				null
+			)
+		).put(
+			"masterLayoutPlid", layout.getMasterLayoutPlid()
+		);
+	}
+
 	private List<Map<String, Object>> _getMasterLayouts() {
 		ArrayList<Map<String, Object>> masterLayouts = new ArrayList<>();
 
@@ -1559,7 +1570,7 @@ public class ContentPageEditorDisplayContext {
 			HashMapBuilder.<String, Object>put(
 				"imagePreviewURL", StringPool.BLANK
 			).put(
-				"masterLayoutPlid", 0
+				"masterLayoutPlid", "0"
 			).put(
 				"name", LanguageUtil.get(httpServletRequest, "blank")
 			).build());
@@ -1580,7 +1591,8 @@ public class ContentPageEditorDisplayContext {
 					"imagePreviewURL",
 					layoutPageTemplateEntry.getImagePreviewURL(themeDisplay)
 				).put(
-					"masterLayoutPlid", layoutPageTemplateEntry.getPlid()
+					"masterLayoutPlid",
+					String.valueOf(layoutPageTemplateEntry.getPlid())
 				).put(
 					"name", layoutPageTemplateEntry.getName()
 				).build());

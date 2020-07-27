@@ -6493,6 +6493,42 @@ go</echo>
 		</exec>
 	</target>
 
+	<target name="delete-dependency-file">
+		<if>
+			<not>
+				<equals arg1="${delete.liferay.home}" arg2="false" />
+			</not>
+			<then>
+				<if>
+					<not>
+						<isset property="test.app.server.liferay.home" />
+					</not>
+					<then>
+						<set-app-server-properties />
+					</then>
+				</if>
+			</then>
+		</if>
+
+		<if>
+			<isset property="liferay.dependency.wars" />
+			<then>
+				<delete file="${test.app.server.liferay.home}/osgi/war/${liferay.dependency.wars}" />
+
+				<echo> ${test.app.server.liferay.home}/osgi/war/${liferay.dependency.wars} </echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="liferay.dependency.jars" />
+			<then>
+				<delete file="${test.app.server.liferay.home}/osgi/modules/${liferay.dependency.jars}" />
+
+				<echo> ${test.app.server.liferay.home}/osgi/modules/${liferay.dependency.jars} </echo>
+			</then>
+		</if>
+	</target>
+
 	<target name="delete-liferay-home">
 		<if>
 			<not>

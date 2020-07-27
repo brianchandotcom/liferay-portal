@@ -20,13 +20,18 @@ import com.liferay.depot.service.DepotEntryService;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntryContributor;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.util.GroupURLProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,13 +60,18 @@ public class DepotBreadcrumbEntryContributorImpl
 			return originalBreadcrumbEntries;
 		}
 
+		long depotEntryId = ParamUtil.getLong(
+			httpServletRequest, "depotEntryId");
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
-		if (scopeGroup.getType() != GroupConstants.TYPE_DEPOT) {
+		if ((depotEntryId == 0) &&
+			(scopeGroup.getType() != GroupConstants.TYPE_DEPOT)) {
+
 			return originalBreadcrumbEntries;
 		}
 
@@ -84,11 +94,15 @@ public class DepotBreadcrumbEntryContributorImpl
 			portletURL.setParameter(
 				"mvcRenderCommandName", "/depot/view_depot_dashboard");
 
-			DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(
-				scopeGroup.getGroupId());
+			if (depotEntryId == 0) {
+				DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(
+					scopeGroup.getGroupId());
+
+				depotEntryId = depotEntry.getDepotEntryId();
+			}
 
 			portletURL.setParameter(
-				"depotEntryId", String.valueOf(depotEntry.getDepotEntryId()));
+				"depotEntryId", String.valueOf(depotEntryId));
 
 			breadcrumbEntry = new BreadcrumbEntry();
 
@@ -98,9 +112,23 @@ public class DepotBreadcrumbEntryContributorImpl
 			breadcrumbEntry.setURL(portletURL.toString());
 
 			breadcrumbEntries.add(breadcrumbEntry);
+
+			if (originalBreadcrumbEntries.isEmpty()) {
+				breadcrumbEntry = new BreadcrumbEntry();
+
+				breadcrumbEntry.setTitle(
+					_language.get(httpServletRequest, "home"));
+				breadcrumbEntry.setURL(
+					_groupURLProvider.getGroupURL(
+						scopeGroup,
+						(PortletRequest)httpServletRequest.getAttribute(
+							JavaConstants.JAVAX_PORTLET_REQUEST)));
+
+				breadcrumbEntries.add(breadcrumbEntry);
+			}
 		}
 		catch (PortalException portalException) {
-			portalException.printStackTrace();
+			_log.error(portalException, portalException);
 		}
 
 		breadcrumbEntries.addAll(originalBreadcrumbEntries);
@@ -108,11 +136,17 @@ public class DepotBreadcrumbEntryContributorImpl
 		return breadcrumbEntries;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		DepotBreadcrumbEntryContributorImpl.class);
+
 	@Reference
 	private DepotConfiguration _depotConfiguration;
 
 	@Reference
 	private DepotEntryService _depotEntryService;
+
+	@Reference
+	private GroupURLProvider _groupURLProvider;
 
 	@Reference
 	private Language _language;

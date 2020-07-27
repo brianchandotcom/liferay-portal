@@ -27,7 +27,9 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 >
 	<clay:container-fluid>
 		<div class="main-content-body">
-			<div class="sheet">
+			<clay:sheet
+				size="<%= StringPool.BLANK %>"
+			>
 				<h2 class="sheet-title">
 					<%= contentDashboardAdminDisplayContext.getAuditGraphTitle() %>
 				</h2>
@@ -42,11 +44,13 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 						props="<%= contentDashboardAdminDisplayContext.getData() %>"
 					/>
 				</div>
-			</div>
+			</clay:sheet>
 		</div>
 
 		<div class="main-content-body">
-			<div class="sheet">
+			<clay:sheet
+				size="<%= StringPool.BLANK %>"
+			>
 				<h2 class="sheet-title">
 					<%= LanguageUtil.format(request, "content-x", contentDashboardAdminDisplayContext.getSearchContainer().getTotal(), false) %>
 				</h2>
@@ -195,7 +199,7 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 						/>
 					</liferay-ui:search-container>
 				</div>
-			</div>
+			</clay:sheet>
 		</div>
 	</clay:container-fluid>
 </clay:row>

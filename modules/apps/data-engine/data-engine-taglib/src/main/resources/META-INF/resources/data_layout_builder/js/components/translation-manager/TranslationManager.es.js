@@ -49,6 +49,7 @@ export const TranslationManagerLabel = ({
 };
 
 export default ({
+	availableLanguageIds = Liferay.Language.available,
 	defaultLanguageId,
 	editingLanguageId,
 	onActiveChange = () => {},
@@ -60,7 +61,7 @@ export default ({
 	const availableLanguages = [
 		...new Set([
 			defaultLanguageId,
-			...Object.keys(Liferay.Language.available).sort(),
+			...Object.keys(availableLanguageIds).sort(),
 		]),
 	];
 

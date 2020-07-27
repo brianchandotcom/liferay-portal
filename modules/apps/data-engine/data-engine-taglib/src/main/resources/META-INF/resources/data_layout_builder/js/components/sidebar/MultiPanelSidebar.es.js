@@ -17,14 +17,13 @@ import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
-import {useIsMounted} from 'frontend-js-react-web';
+import {useIsMounted, useStateSafe} from 'frontend-js-react-web';
 import React from 'react';
 
 import AppContext from '../../AppContext.es';
 import useLazy from '../../hooks/useLazy.es';
 import useLoad from '../../hooks/useLoad.es';
 import usePlugins from '../../hooks/usePlugins.es';
-import useStateSafe from '../../hooks/useStateSafe.es';
 
 const {Suspense, useCallback, useContext, useEffect} = React;
 

@@ -37,7 +37,7 @@ export default ({
 }) => {
 	const [currentStep, setCurrentStep] = useState(0);
 	const [isLoading, setLoading] = useState(false);
-
+	const [editingLanguageId, setEditingLanguageId] = useState('');
 	const [state, dispatch] = useReducer(reducer, {
 		app: {
 			active: true,
@@ -97,6 +97,8 @@ export default ({
 							<EditAppHeader
 								availableLanguageIds={availableLanguageIds}
 								defaultLanguageId={defaultLanguageId}
+								editingLanguageId={editingLanguageId}
+								setEditingLanguageId={setEditingLanguageId}
 							/>
 
 							<div className="card-body p-0 shadowless-card-body">
@@ -155,6 +157,7 @@ export default ({
 							<EditAppFooter
 								currentStep={currentStep}
 								defaultLanguageId={defaultLanguageId}
+								editingLanguageId={editingLanguageId}
 								onCurrentStepChange={onCurrentStepChange}
 							/>
 						</div>

@@ -13,13 +13,17 @@
  */
 
 import {TranslationManager} from 'data-engine-taglib';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect} from 'react';
 
 import {UpperToolbarInput} from '../../../components/upper-toolbar/UpperToolbar.es';
 import EditAppContext, {UPDATE_NAME} from './EditAppContext.es';
 
-export default ({availableLanguageIds, defaultLanguageId}) => {
-	const [editingLanguageId, setEditingLanguageId] = useState('');
+export default ({
+	availableLanguageIds,
+	defaultLanguageId,
+	editingLanguageId,
+	setEditingLanguageId,
+}) => {
 	const {
 		dispatch,
 		state: {
@@ -33,7 +37,7 @@ export default ({availableLanguageIds, defaultLanguageId}) => {
 		if (!editingLanguageId) {
 			setEditingLanguageId(defaultLanguageId);
 		}
-	}, [defaultLanguageId, editingLanguageId]);
+	}, [defaultLanguageId, editingLanguageId, setEditingLanguageId]);
 
 	const onAppNameChange = (event) => {
 		const appName = event.target.value;

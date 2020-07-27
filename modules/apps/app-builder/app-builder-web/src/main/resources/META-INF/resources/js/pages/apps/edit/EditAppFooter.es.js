@@ -21,7 +21,6 @@ import {withRouter} from 'react-router-dom';
 import {AppContext} from '../../../AppContext.es';
 import Button from '../../../components/button/Button.es';
 import {addItem, updateItem} from '../../../utils/client.es';
-import {getLocalizedValue} from '../../../utils/lang.es';
 import {errorToast, successToast} from '../../../utils/toast.es';
 import EditAppContext from './EditAppContext.es';
 
@@ -29,6 +28,7 @@ export default withRouter(
 	({
 		currentStep,
 		defaultLanguageId,
+		editingLanguageId,
 		history,
 		match: {
 			params: {dataDefinitionId},
@@ -51,7 +51,7 @@ export default withRouter(
 			name,
 		} = app;
 
-		const appName = getLocalizedValue(defaultLanguageId, name);
+		const appName = name[editingLanguageId];
 
 		const getStandaloneLink = (appId) => {
 			const isStandalone = appDeployments.some(
@@ -85,6 +85,11 @@ export default withRouter(
 
 		const normalizeAppName = (names) => {
 			const name = {};
+
+			if (!names[defaultLanguageId]) {
+				names[defaultLanguageId] = names[editingLanguageId];
+			}
+
 			Object.keys(names).forEach((key) => {
 				const value = names[key];
 				if (value) {

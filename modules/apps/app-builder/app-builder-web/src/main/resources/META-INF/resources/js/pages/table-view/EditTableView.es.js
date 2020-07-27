@@ -27,6 +27,7 @@ import EditTableViewContext, {
 	ADD_DATA_LIST_VIEW_FIELD,
 	REMOVE_DATA_LIST_VIEW_FIELD,
 	UPDATE_DATA_LIST_VIEW_NAME,
+	UPDATE_EDITING_LANGUAGE_ID,
 } from './EditTableViewContext.es';
 import EditTableViewContextProvider from './EditTableViewContextProvider.es';
 import TableViewSidebar from './TableViewSidebar.es';
@@ -52,9 +53,17 @@ const EditTableView = withRouter(({history}) => {
 		}
 	}, [dataDefinition.defaultLanguageId, onEditingLanguageIdChange]);
 
-	const onEditingLanguageIdChange = useCallback((editingLanguageId) => {
-		setEditingLanguageId(editingLanguageId);
-	}, []);
+	const onEditingLanguageIdChange = useCallback(
+		(editingLanguageId) => {
+			setEditingLanguageId(editingLanguageId);
+
+			dispatch({
+				payload: editingLanguageId,
+				type: UPDATE_EDITING_LANGUAGE_ID,
+			});
+		},
+		[dispatch]
+	);
 
 	const onError = ({title = ''}) => {
 		errorToast(title);

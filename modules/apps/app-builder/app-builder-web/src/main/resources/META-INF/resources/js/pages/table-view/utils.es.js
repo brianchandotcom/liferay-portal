@@ -12,6 +12,7 @@
  * details.
  */
 
+import {DataDefinitionUtils} from 'data-engine-taglib';
 import dom from 'metal-dom';
 
 import {addItem, updateItem} from '../../utils/client.es';
@@ -50,6 +51,19 @@ export const getColumnNode = (container, index) => {
 
 export const getColumns = (container) => {
 	return container.querySelectorAll(`table tbody > tr:first-of-type > td`);
+};
+
+export const getFieldLabel = (dataDefinition, editingLanguageId, fieldName) => {
+	const field = DataDefinitionUtils.getDataDefinitionField(
+		dataDefinition,
+		fieldName
+	);
+
+	if (field) {
+		return field.label[editingLanguageId];
+	}
+
+	return fieldName;
 };
 
 export const getFieldTypeLabel = (fieldTypes, fieldType) => {

@@ -177,10 +177,20 @@ public class LayoutsTreeDisplayContext {
 
 		Layout layout = _themeDisplay.getLayout();
 
-		configureLayoutURL.setParameter(
-			"redirect", PortalUtil.getLayoutFullURL(layout, _themeDisplay));
-		configureLayoutURL.setParameter(
-			"backURL", PortalUtil.getLayoutFullURL(layout, _themeDisplay));
+		if (layout.isTypeAssetDisplay() || layout.isTypeControlPanel()) {
+			String redirect = GetterUtil.getString(
+				_liferayPortletRequest.getAttribute(WebKeys.REDIRECT),
+				_themeDisplay.getURLCurrent());
+
+			configureLayoutURL.setParameter("redirect", redirect);
+			configureLayoutURL.setParameter("backURL", redirect);
+		}
+		else {
+			configureLayoutURL.setParameter(
+				"redirect", PortalUtil.getLayoutFullURL(layout, _themeDisplay));
+			configureLayoutURL.setParameter(
+				"backURL", PortalUtil.getLayoutFullURL(layout, _themeDisplay));
+		}
 
 		configureLayoutURL.setParameter(
 			"groupId", String.valueOf(_themeDisplay.getScopeGroupId()));

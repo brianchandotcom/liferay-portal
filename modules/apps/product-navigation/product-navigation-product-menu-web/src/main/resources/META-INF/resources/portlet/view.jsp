@@ -21,6 +21,8 @@ String productMenuState = SessionClicks.get(request, "com.liferay.product.naviga
 String pagesTreeState = SessionClicks.get(request, "com.liferay.product.navigation.product.menu.web_pagesTreeState", "closed");
 
 ApplicationsMenuInstanceConfiguration applicationsMenuInstanceConfiguration = ConfigurationProviderUtil.getCompanyConfiguration(ApplicationsMenuInstanceConfiguration.class, themeDisplay.getCompanyId());
+
+request.setAttribute(WebKeys.REDIRECT, themeDisplay.getURLCurrent());
 %>
 
 <div class="lfr-product-menu-sidebar <%= applicationsMenuInstanceConfiguration.enableApplicationsMenu() ? "lfr-applications-menu" : "" %>" id="productMenuSidebar">

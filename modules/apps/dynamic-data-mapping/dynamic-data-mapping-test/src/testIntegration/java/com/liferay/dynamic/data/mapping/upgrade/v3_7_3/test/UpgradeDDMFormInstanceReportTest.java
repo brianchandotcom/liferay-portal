@@ -75,6 +75,8 @@ public class UpgradeDDMFormInstanceReportTest {
 
 		_jsonFactory = new JSONFactoryImpl();
 
+		_userId = TestPropsValues.getUserId();
+
 		setUpUpgradeDDMFormInstanceReport();
 	}
 
@@ -95,8 +97,7 @@ public class UpgradeDDMFormInstanceReportTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		DDMFormInstanceRecordLocalServiceUtil.updateFormInstanceRecord(
-			TestPropsValues.getUserId(),
-			ddmFormInstanceRecord.getFormInstanceRecordId(), false,
+			_userId, ddmFormInstanceRecord.getFormInstanceRecordId(), false,
 			ddmFormValues, serviceContext);
 
 		DDMFormInstanceReport ddmFormInstanceReport =
@@ -122,8 +123,7 @@ public class UpgradeDDMFormInstanceReportTest {
 			ddmForm, "Approved Text 2");
 
 		DDMFormInstanceRecordLocalServiceUtil.updateFormInstanceRecord(
-			TestPropsValues.getUserId(),
-			ddmFormInstanceRecord.getFormInstanceRecordId(), false,
+			_userId, ddmFormInstanceRecord.getFormInstanceRecordId(), false,
 			ddmFormValues, serviceContext);
 
 		DDMFormInstanceReport ddmFormInstanceReport =
@@ -142,7 +142,7 @@ public class UpgradeDDMFormInstanceReportTest {
 
 		DDMFormInstance ddmFormInstance =
 			DDMFormInstanceTestUtil.addDDMFormInstance(
-				ddmForm, _group, TestPropsValues.getUserId());
+				ddmForm, _group, _userId);
 
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
@@ -172,9 +172,8 @@ public class UpgradeDDMFormInstanceReportTest {
 				"text", new UnlocalizedValue(StringPool.BLANK)));
 
 		DDMFormInstanceRecordLocalServiceUtil.addFormInstanceRecord(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			ddmFormInstance.getFormInstanceId(), ddmFormValues,
-			getServiceContext());
+			_userId, _group.getGroupId(), ddmFormInstance.getFormInstanceId(),
+			ddmFormValues, getServiceContext());
 
 		DDMFormInstanceReport ddmFormInstanceReport =
 			DDMFormInstanceReportLocalServiceUtil.
@@ -190,7 +189,7 @@ public class UpgradeDDMFormInstanceReportTest {
 
 		DDMFormInstance ddmFormInstance =
 			DDMFormInstanceTestUtil.addDDMFormInstance(
-				_createDDMForm(), _group, TestPropsValues.getUserId());
+				_createDDMForm(), _group, _userId);
 
 		DDMFormInstanceReport ddmFormInstanceReport =
 			DDMFormInstanceReportLocalServiceUtil.
@@ -206,7 +205,7 @@ public class UpgradeDDMFormInstanceReportTest {
 
 		DDMFormInstance ddmFormInstance =
 			DDMFormInstanceTestUtil.addDDMFormInstance(
-				_createDDMForm(), _group, TestPropsValues.getUserId());
+				_createDDMForm(), _group, _userId);
 
 		_createDDMFormInstanceRecords(ddmFormInstance);
 
@@ -222,7 +221,7 @@ public class UpgradeDDMFormInstanceReportTest {
 	public void testUpgradeWithNoDDMFormInstanceReports() throws Exception {
 		DDMFormInstance ddmFormInstance =
 			DDMFormInstanceTestUtil.addDDMFormInstance(
-				_createDDMForm(), _group, TestPropsValues.getUserId());
+				_createDDMForm(), _group, _userId);
 
 		_createDDMFormInstanceRecords(ddmFormInstance);
 
@@ -254,8 +253,7 @@ public class UpgradeDDMFormInstanceReportTest {
 	}
 
 	protected ServiceContext getServiceContext() throws PortalException {
-		return ServiceContextTestUtil.getServiceContext(
-			_group, TestPropsValues.getUserId());
+		return ServiceContextTestUtil.getServiceContext(_group, _userId);
 	}
 
 	protected void setUpUpgradeDDMFormInstanceReport() {
@@ -380,7 +378,7 @@ public class UpgradeDDMFormInstanceReportTest {
 
 		DDMFormInstance ddmFormInstance =
 			DDMFormInstanceTestUtil.addDDMFormInstance(
-				ddmForm, _group, TestPropsValues.getUserId());
+				ddmForm, _group, _userId);
 
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
@@ -390,8 +388,8 @@ public class UpgradeDDMFormInstanceReportTest {
 				"text", new UnlocalizedValue("Approved Text")));
 
 		return DDMFormInstanceRecordLocalServiceUtil.addFormInstanceRecord(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			ddmFormInstance.getFormInstanceId(), ddmFormValues, serviceContext);
+			_userId, _group.getGroupId(), ddmFormInstance.getFormInstanceId(),
+			ddmFormValues, serviceContext);
 	}
 
 	private void _createDDMFormInstanceRecords(DDMFormInstance ddmFormInstance)
@@ -432,7 +430,7 @@ public class UpgradeDDMFormInstanceReportTest {
 					"text", new UnlocalizedValue("value " + qtd)));
 
 			DDMFormInstanceRecordLocalServiceUtil.addFormInstanceRecord(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				_userId, _group.getGroupId(),
 				ddmFormInstance.getFormInstanceId(), ddmFormValues,
 				getServiceContext());
 		}
@@ -494,5 +492,6 @@ public class UpgradeDDMFormInstanceReportTest {
 
 	private JSONFactory _jsonFactory;
 	private UpgradeProcess _upgradeDDMFormInstanceReport;
+	private long _userId;
 
 }

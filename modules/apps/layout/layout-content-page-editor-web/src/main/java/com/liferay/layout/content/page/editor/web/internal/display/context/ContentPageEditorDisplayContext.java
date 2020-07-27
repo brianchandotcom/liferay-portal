@@ -248,6 +248,10 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"availableViewportSizes", _getAvailableViewportSizes()
 			).put(
+				"changeMasterLayoutURL",
+				getFragmentEntryActionURL(
+					"/content_layout/change_master_layout")
+			).put(
 				"collectionSelectorURL", _getCollectionSelectorURL()
 			).put(
 				"containerItemFlexEnabled",

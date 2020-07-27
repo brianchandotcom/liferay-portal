@@ -198,7 +198,7 @@ definition {
 		DepotNavigator.gotoSites(depotName = "${depotName}");
 
 		LexiconTable.clickEllipsisItem(
-			item = "Make DDM Structures Available",
+			item = "Make Web Content Structures Available",
 			tableEntry = "${siteName}");
 
 		Alert.viewSuccessMessage();

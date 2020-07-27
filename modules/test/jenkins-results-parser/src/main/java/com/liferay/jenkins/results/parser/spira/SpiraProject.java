@@ -92,6 +92,10 @@ public class SpiraProject extends BaseSpiraArtifact {
 		return spiraAutomationHosts.get(0);
 	}
 
+	public List<SpiraAutomationHost> getSpiraAutomationHosts() {
+		return SpiraAutomationHost.getSpiraAutomationHosts(this);
+	}
+
 	public SpiraCustomList getSpiraCustomListByName(
 		Class<? extends SpiraArtifact> spiraArtifactClass,
 		String customPropertyListName) {

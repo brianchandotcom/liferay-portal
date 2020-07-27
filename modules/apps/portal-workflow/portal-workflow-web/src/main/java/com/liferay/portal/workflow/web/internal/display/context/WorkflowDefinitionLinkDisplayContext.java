@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
+import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowDefinitionLinkResourcesConstants;
@@ -61,6 +62,7 @@ import com.liferay.portal.workflow.web.internal.search.WorkflowDefinitionLinkSea
 import com.liferay.portal.workflow.web.internal.util.WorkflowDefinitionLinkPortletUtil;
 import com.liferay.portal.workflow.web.internal.util.filter.WorkflowDefinitionLinkSearchEntryLabelPredicate;
 import com.liferay.portal.workflow.web.internal.util.filter.WorkflowDefinitionLinkSearchEntryResourcePredicate;
+import com.liferay.portal.workflow.web.internal.util.filter.WorkflowDefinitionScopePredicate;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -422,10 +424,14 @@ public class WorkflowDefinitionLinkDisplayContext {
 	public List<WorkflowDefinition> getWorkflowDefinitions()
 		throws PortalException {
 
-		return WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(
-			_workflowDefinitionLinkRequestHelper.getCompanyId(),
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			WorkflowComparatorFactoryUtil.getDefinitionNameComparator(true));
+		return ListUtil.filter(
+			WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(
+				_workflowDefinitionLinkRequestHelper.getCompanyId(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				WorkflowComparatorFactoryUtil.getDefinitionNameComparator(
+					true)),
+			new WorkflowDefinitionScopePredicate(
+				WorkflowDefinitionConstants.SCOPE_ALL));
 	}
 
 	public String getWorkflowDefinitionValue(

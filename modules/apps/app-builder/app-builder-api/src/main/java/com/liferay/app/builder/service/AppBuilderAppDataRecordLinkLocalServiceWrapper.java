@@ -57,7 +57,7 @@ public class AppBuilderAppDataRecordLinkLocalServiceWrapper
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addAppBuilderAppDataRecordLink(long, long, long, long)}
+	 #addAppBuilderAppDataRecordLink(long, long, long, long, long)}
 	 */
 	@Deprecated
 	@Override
@@ -74,11 +74,12 @@ public class AppBuilderAppDataRecordLinkLocalServiceWrapper
 	public com.liferay.app.builder.model.AppBuilderAppDataRecordLink
 		addAppBuilderAppDataRecordLink(
 			long groupId, long companyId, long appBuilderAppId,
-			long ddlRecordId) {
+			long appBuilderAppVersionId, long ddlRecordId) {
 
 		return _appBuilderAppDataRecordLinkLocalService.
 			addAppBuilderAppDataRecordLink(
-				groupId, companyId, appBuilderAppId, ddlRecordId);
+				groupId, companyId, appBuilderAppId, appBuilderAppVersionId,
+				ddlRecordId);
 	}
 
 	/**

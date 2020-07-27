@@ -78,6 +78,34 @@ public class AppWorkflow {
 	protected Long appId;
 
 	@Schema
+	public String getAppVersion() {
+		return appVersion;
+	}
+
+	public void setAppVersion(String appVersion) {
+		this.appVersion = appVersion;
+	}
+
+	@JsonIgnore
+	public void setAppVersion(
+		UnsafeSupplier<String, Exception> appVersionUnsafeSupplier) {
+
+		try {
+			appVersion = appVersionUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String appVersion;
+
+	@Schema
 	public Long getAppWorkflowDefinitionId() {
 		return appWorkflowDefinitionId;
 	}
@@ -201,6 +229,20 @@ public class AppWorkflow {
 			sb.append("\"appId\": ");
 
 			sb.append(appId);
+		}
+
+		if (appVersion != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"appVersion\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(appVersion));
+
+			sb.append("\"");
 		}
 
 		if (appWorkflowDefinitionId != null) {

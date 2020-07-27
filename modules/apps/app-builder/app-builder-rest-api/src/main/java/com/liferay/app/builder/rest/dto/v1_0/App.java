@@ -448,6 +448,34 @@ public class App {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long userId;
 
+	@Schema
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
+
+	@JsonIgnore
+	public void setVersion(
+		UnsafeSupplier<String, Exception> versionUnsafeSupplier) {
+
+		try {
+			version = versionUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String version;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -642,6 +670,20 @@ public class App {
 			sb.append("\"userId\": ");
 
 			sb.append(userId);
+		}
+
+		if (version != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"version\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(version));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");

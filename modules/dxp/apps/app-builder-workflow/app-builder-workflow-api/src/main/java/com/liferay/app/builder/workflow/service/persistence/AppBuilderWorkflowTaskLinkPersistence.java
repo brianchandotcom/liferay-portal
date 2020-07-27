@@ -186,58 +186,221 @@ public interface AppBuilderWorkflowTaskLinkPersistence
 	public int countByAppBuilderAppId(long appBuilderAppId);
 
 	/**
-	 * Returns all the app builder workflow task links where appBuilderAppId = &#63; and workflowTaskName = &#63;.
+	 * Returns all the app builder workflow task links where appBuilderAppId = &#63; and appBuilderAppVersionId = &#63;.
 	 *
 	 * @param appBuilderAppId the app builder app ID
-	 * @param workflowTaskName the workflow task name
+	 * @param appBuilderAppVersionId the app builder app version ID
 	 * @return the matching app builder workflow task links
 	 */
-	public java.util.List<AppBuilderWorkflowTaskLink> findByA_W(
-		long appBuilderAppId, String workflowTaskName);
+	public java.util.List<AppBuilderWorkflowTaskLink> findByA_A(
+		long appBuilderAppId, long appBuilderAppVersionId);
 
 	/**
-	 * Returns a range of all the app builder workflow task links where appBuilderAppId = &#63; and workflowTaskName = &#63;.
+	 * Returns a range of all the app builder workflow task links where appBuilderAppId = &#63; and appBuilderAppVersionId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderWorkflowTaskLinkModelImpl</code>.
 	 * </p>
 	 *
 	 * @param appBuilderAppId the app builder app ID
+	 * @param appBuilderAppVersionId the app builder app version ID
+	 * @param start the lower bound of the range of app builder workflow task links
+	 * @param end the upper bound of the range of app builder workflow task links (not inclusive)
+	 * @return the range of matching app builder workflow task links
+	 */
+	public java.util.List<AppBuilderWorkflowTaskLink> findByA_A(
+		long appBuilderAppId, long appBuilderAppVersionId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the app builder workflow task links where appBuilderAppId = &#63; and appBuilderAppVersionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderWorkflowTaskLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param appBuilderAppId the app builder app ID
+	 * @param appBuilderAppVersionId the app builder app version ID
+	 * @param start the lower bound of the range of app builder workflow task links
+	 * @param end the upper bound of the range of app builder workflow task links (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching app builder workflow task links
+	 */
+	public java.util.List<AppBuilderWorkflowTaskLink> findByA_A(
+		long appBuilderAppId, long appBuilderAppVersionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AppBuilderWorkflowTaskLink> orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the app builder workflow task links where appBuilderAppId = &#63; and appBuilderAppVersionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderWorkflowTaskLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param appBuilderAppId the app builder app ID
+	 * @param appBuilderAppVersionId the app builder app version ID
+	 * @param start the lower bound of the range of app builder workflow task links
+	 * @param end the upper bound of the range of app builder workflow task links (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching app builder workflow task links
+	 */
+	public java.util.List<AppBuilderWorkflowTaskLink> findByA_A(
+		long appBuilderAppId, long appBuilderAppVersionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AppBuilderWorkflowTaskLink> orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first app builder workflow task link in the ordered set where appBuilderAppId = &#63; and appBuilderAppVersionId = &#63;.
+	 *
+	 * @param appBuilderAppId the app builder app ID
+	 * @param appBuilderAppVersionId the app builder app version ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching app builder workflow task link
+	 * @throws NoSuchTaskLinkException if a matching app builder workflow task link could not be found
+	 */
+	public AppBuilderWorkflowTaskLink findByA_A_First(
+			long appBuilderAppId, long appBuilderAppVersionId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AppBuilderWorkflowTaskLink> orderByComparator)
+		throws NoSuchTaskLinkException;
+
+	/**
+	 * Returns the first app builder workflow task link in the ordered set where appBuilderAppId = &#63; and appBuilderAppVersionId = &#63;.
+	 *
+	 * @param appBuilderAppId the app builder app ID
+	 * @param appBuilderAppVersionId the app builder app version ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching app builder workflow task link, or <code>null</code> if a matching app builder workflow task link could not be found
+	 */
+	public AppBuilderWorkflowTaskLink fetchByA_A_First(
+		long appBuilderAppId, long appBuilderAppVersionId,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AppBuilderWorkflowTaskLink> orderByComparator);
+
+	/**
+	 * Returns the last app builder workflow task link in the ordered set where appBuilderAppId = &#63; and appBuilderAppVersionId = &#63;.
+	 *
+	 * @param appBuilderAppId the app builder app ID
+	 * @param appBuilderAppVersionId the app builder app version ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching app builder workflow task link
+	 * @throws NoSuchTaskLinkException if a matching app builder workflow task link could not be found
+	 */
+	public AppBuilderWorkflowTaskLink findByA_A_Last(
+			long appBuilderAppId, long appBuilderAppVersionId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AppBuilderWorkflowTaskLink> orderByComparator)
+		throws NoSuchTaskLinkException;
+
+	/**
+	 * Returns the last app builder workflow task link in the ordered set where appBuilderAppId = &#63; and appBuilderAppVersionId = &#63;.
+	 *
+	 * @param appBuilderAppId the app builder app ID
+	 * @param appBuilderAppVersionId the app builder app version ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching app builder workflow task link, or <code>null</code> if a matching app builder workflow task link could not be found
+	 */
+	public AppBuilderWorkflowTaskLink fetchByA_A_Last(
+		long appBuilderAppId, long appBuilderAppVersionId,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AppBuilderWorkflowTaskLink> orderByComparator);
+
+	/**
+	 * Returns the app builder workflow task links before and after the current app builder workflow task link in the ordered set where appBuilderAppId = &#63; and appBuilderAppVersionId = &#63;.
+	 *
+	 * @param appBuilderWorkflowTaskLinkId the primary key of the current app builder workflow task link
+	 * @param appBuilderAppId the app builder app ID
+	 * @param appBuilderAppVersionId the app builder app version ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next app builder workflow task link
+	 * @throws NoSuchTaskLinkException if a app builder workflow task link with the primary key could not be found
+	 */
+	public AppBuilderWorkflowTaskLink[] findByA_A_PrevAndNext(
+			long appBuilderWorkflowTaskLinkId, long appBuilderAppId,
+			long appBuilderAppVersionId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AppBuilderWorkflowTaskLink> orderByComparator)
+		throws NoSuchTaskLinkException;
+
+	/**
+	 * Removes all the app builder workflow task links where appBuilderAppId = &#63; and appBuilderAppVersionId = &#63; from the database.
+	 *
+	 * @param appBuilderAppId the app builder app ID
+	 * @param appBuilderAppVersionId the app builder app version ID
+	 */
+	public void removeByA_A(long appBuilderAppId, long appBuilderAppVersionId);
+
+	/**
+	 * Returns the number of app builder workflow task links where appBuilderAppId = &#63; and appBuilderAppVersionId = &#63;.
+	 *
+	 * @param appBuilderAppId the app builder app ID
+	 * @param appBuilderAppVersionId the app builder app version ID
+	 * @return the number of matching app builder workflow task links
+	 */
+	public int countByA_A(long appBuilderAppId, long appBuilderAppVersionId);
+
+	/**
+	 * Returns all the app builder workflow task links where appBuilderAppId = &#63; and appBuilderAppVersionId = &#63; and workflowTaskName = &#63;.
+	 *
+	 * @param appBuilderAppId the app builder app ID
+	 * @param appBuilderAppVersionId the app builder app version ID
+	 * @param workflowTaskName the workflow task name
+	 * @return the matching app builder workflow task links
+	 */
+	public java.util.List<AppBuilderWorkflowTaskLink> findByA_A_W(
+		long appBuilderAppId, long appBuilderAppVersionId,
+		String workflowTaskName);
+
+	/**
+	 * Returns a range of all the app builder workflow task links where appBuilderAppId = &#63; and appBuilderAppVersionId = &#63; and workflowTaskName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderWorkflowTaskLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param appBuilderAppId the app builder app ID
+	 * @param appBuilderAppVersionId the app builder app version ID
 	 * @param workflowTaskName the workflow task name
 	 * @param start the lower bound of the range of app builder workflow task links
 	 * @param end the upper bound of the range of app builder workflow task links (not inclusive)
 	 * @return the range of matching app builder workflow task links
 	 */
-	public java.util.List<AppBuilderWorkflowTaskLink> findByA_W(
-		long appBuilderAppId, String workflowTaskName, int start, int end);
+	public java.util.List<AppBuilderWorkflowTaskLink> findByA_A_W(
+		long appBuilderAppId, long appBuilderAppVersionId,
+		String workflowTaskName, int start, int end);
 
 	/**
-	 * Returns an ordered range of all the app builder workflow task links where appBuilderAppId = &#63; and workflowTaskName = &#63;.
+	 * Returns an ordered range of all the app builder workflow task links where appBuilderAppId = &#63; and appBuilderAppVersionId = &#63; and workflowTaskName = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderWorkflowTaskLinkModelImpl</code>.
 	 * </p>
 	 *
 	 * @param appBuilderAppId the app builder app ID
+	 * @param appBuilderAppVersionId the app builder app version ID
 	 * @param workflowTaskName the workflow task name
 	 * @param start the lower bound of the range of app builder workflow task links
 	 * @param end the upper bound of the range of app builder workflow task links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching app builder workflow task links
 	 */
-	public java.util.List<AppBuilderWorkflowTaskLink> findByA_W(
-		long appBuilderAppId, String workflowTaskName, int start, int end,
+	public java.util.List<AppBuilderWorkflowTaskLink> findByA_A_W(
+		long appBuilderAppId, long appBuilderAppVersionId,
+		String workflowTaskName, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<AppBuilderWorkflowTaskLink> orderByComparator);
 
 	/**
-	 * Returns an ordered range of all the app builder workflow task links where appBuilderAppId = &#63; and workflowTaskName = &#63;.
+	 * Returns an ordered range of all the app builder workflow task links where appBuilderAppId = &#63; and appBuilderAppVersionId = &#63; and workflowTaskName = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderWorkflowTaskLinkModelImpl</code>.
 	 * </p>
 	 *
 	 * @param appBuilderAppId the app builder app ID
+	 * @param appBuilderAppVersionId the app builder app version ID
 	 * @param workflowTaskName the workflow task name
 	 * @param start the lower bound of the range of app builder workflow task links
 	 * @param end the upper bound of the range of app builder workflow task links (not inclusive)
@@ -245,165 +408,187 @@ public interface AppBuilderWorkflowTaskLinkPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching app builder workflow task links
 	 */
-	public java.util.List<AppBuilderWorkflowTaskLink> findByA_W(
-		long appBuilderAppId, String workflowTaskName, int start, int end,
+	public java.util.List<AppBuilderWorkflowTaskLink> findByA_A_W(
+		long appBuilderAppId, long appBuilderAppVersionId,
+		String workflowTaskName, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<AppBuilderWorkflowTaskLink> orderByComparator,
 		boolean useFinderCache);
 
 	/**
-	 * Returns the first app builder workflow task link in the ordered set where appBuilderAppId = &#63; and workflowTaskName = &#63;.
+	 * Returns the first app builder workflow task link in the ordered set where appBuilderAppId = &#63; and appBuilderAppVersionId = &#63; and workflowTaskName = &#63;.
 	 *
 	 * @param appBuilderAppId the app builder app ID
+	 * @param appBuilderAppVersionId the app builder app version ID
 	 * @param workflowTaskName the workflow task name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching app builder workflow task link
 	 * @throws NoSuchTaskLinkException if a matching app builder workflow task link could not be found
 	 */
-	public AppBuilderWorkflowTaskLink findByA_W_First(
-			long appBuilderAppId, String workflowTaskName,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AppBuilderWorkflowTaskLink> orderByComparator)
-		throws NoSuchTaskLinkException;
-
-	/**
-	 * Returns the first app builder workflow task link in the ordered set where appBuilderAppId = &#63; and workflowTaskName = &#63;.
-	 *
-	 * @param appBuilderAppId the app builder app ID
-	 * @param workflowTaskName the workflow task name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching app builder workflow task link, or <code>null</code> if a matching app builder workflow task link could not be found
-	 */
-	public AppBuilderWorkflowTaskLink fetchByA_W_First(
-		long appBuilderAppId, String workflowTaskName,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<AppBuilderWorkflowTaskLink> orderByComparator);
-
-	/**
-	 * Returns the last app builder workflow task link in the ordered set where appBuilderAppId = &#63; and workflowTaskName = &#63;.
-	 *
-	 * @param appBuilderAppId the app builder app ID
-	 * @param workflowTaskName the workflow task name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching app builder workflow task link
-	 * @throws NoSuchTaskLinkException if a matching app builder workflow task link could not be found
-	 */
-	public AppBuilderWorkflowTaskLink findByA_W_Last(
-			long appBuilderAppId, String workflowTaskName,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AppBuilderWorkflowTaskLink> orderByComparator)
-		throws NoSuchTaskLinkException;
-
-	/**
-	 * Returns the last app builder workflow task link in the ordered set where appBuilderAppId = &#63; and workflowTaskName = &#63;.
-	 *
-	 * @param appBuilderAppId the app builder app ID
-	 * @param workflowTaskName the workflow task name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching app builder workflow task link, or <code>null</code> if a matching app builder workflow task link could not be found
-	 */
-	public AppBuilderWorkflowTaskLink fetchByA_W_Last(
-		long appBuilderAppId, String workflowTaskName,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<AppBuilderWorkflowTaskLink> orderByComparator);
-
-	/**
-	 * Returns the app builder workflow task links before and after the current app builder workflow task link in the ordered set where appBuilderAppId = &#63; and workflowTaskName = &#63;.
-	 *
-	 * @param appBuilderWorkflowTaskLinkId the primary key of the current app builder workflow task link
-	 * @param appBuilderAppId the app builder app ID
-	 * @param workflowTaskName the workflow task name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next app builder workflow task link
-	 * @throws NoSuchTaskLinkException if a app builder workflow task link with the primary key could not be found
-	 */
-	public AppBuilderWorkflowTaskLink[] findByA_W_PrevAndNext(
-			long appBuilderWorkflowTaskLinkId, long appBuilderAppId,
+	public AppBuilderWorkflowTaskLink findByA_A_W_First(
+			long appBuilderAppId, long appBuilderAppVersionId,
 			String workflowTaskName,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<AppBuilderWorkflowTaskLink> orderByComparator)
 		throws NoSuchTaskLinkException;
 
 	/**
-	 * Removes all the app builder workflow task links where appBuilderAppId = &#63; and workflowTaskName = &#63; from the database.
+	 * Returns the first app builder workflow task link in the ordered set where appBuilderAppId = &#63; and appBuilderAppVersionId = &#63; and workflowTaskName = &#63;.
 	 *
 	 * @param appBuilderAppId the app builder app ID
+	 * @param appBuilderAppVersionId the app builder app version ID
 	 * @param workflowTaskName the workflow task name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching app builder workflow task link, or <code>null</code> if a matching app builder workflow task link could not be found
 	 */
-	public void removeByA_W(long appBuilderAppId, String workflowTaskName);
+	public AppBuilderWorkflowTaskLink fetchByA_A_W_First(
+		long appBuilderAppId, long appBuilderAppVersionId,
+		String workflowTaskName,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AppBuilderWorkflowTaskLink> orderByComparator);
 
 	/**
-	 * Returns the number of app builder workflow task links where appBuilderAppId = &#63; and workflowTaskName = &#63;.
+	 * Returns the last app builder workflow task link in the ordered set where appBuilderAppId = &#63; and appBuilderAppVersionId = &#63; and workflowTaskName = &#63;.
 	 *
 	 * @param appBuilderAppId the app builder app ID
+	 * @param appBuilderAppVersionId the app builder app version ID
+	 * @param workflowTaskName the workflow task name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching app builder workflow task link
+	 * @throws NoSuchTaskLinkException if a matching app builder workflow task link could not be found
+	 */
+	public AppBuilderWorkflowTaskLink findByA_A_W_Last(
+			long appBuilderAppId, long appBuilderAppVersionId,
+			String workflowTaskName,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AppBuilderWorkflowTaskLink> orderByComparator)
+		throws NoSuchTaskLinkException;
+
+	/**
+	 * Returns the last app builder workflow task link in the ordered set where appBuilderAppId = &#63; and appBuilderAppVersionId = &#63; and workflowTaskName = &#63;.
+	 *
+	 * @param appBuilderAppId the app builder app ID
+	 * @param appBuilderAppVersionId the app builder app version ID
+	 * @param workflowTaskName the workflow task name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching app builder workflow task link, or <code>null</code> if a matching app builder workflow task link could not be found
+	 */
+	public AppBuilderWorkflowTaskLink fetchByA_A_W_Last(
+		long appBuilderAppId, long appBuilderAppVersionId,
+		String workflowTaskName,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AppBuilderWorkflowTaskLink> orderByComparator);
+
+	/**
+	 * Returns the app builder workflow task links before and after the current app builder workflow task link in the ordered set where appBuilderAppId = &#63; and appBuilderAppVersionId = &#63; and workflowTaskName = &#63;.
+	 *
+	 * @param appBuilderWorkflowTaskLinkId the primary key of the current app builder workflow task link
+	 * @param appBuilderAppId the app builder app ID
+	 * @param appBuilderAppVersionId the app builder app version ID
+	 * @param workflowTaskName the workflow task name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next app builder workflow task link
+	 * @throws NoSuchTaskLinkException if a app builder workflow task link with the primary key could not be found
+	 */
+	public AppBuilderWorkflowTaskLink[] findByA_A_W_PrevAndNext(
+			long appBuilderWorkflowTaskLinkId, long appBuilderAppId,
+			long appBuilderAppVersionId, String workflowTaskName,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AppBuilderWorkflowTaskLink> orderByComparator)
+		throws NoSuchTaskLinkException;
+
+	/**
+	 * Removes all the app builder workflow task links where appBuilderAppId = &#63; and appBuilderAppVersionId = &#63; and workflowTaskName = &#63; from the database.
+	 *
+	 * @param appBuilderAppId the app builder app ID
+	 * @param appBuilderAppVersionId the app builder app version ID
+	 * @param workflowTaskName the workflow task name
+	 */
+	public void removeByA_A_W(
+		long appBuilderAppId, long appBuilderAppVersionId,
+		String workflowTaskName);
+
+	/**
+	 * Returns the number of app builder workflow task links where appBuilderAppId = &#63; and appBuilderAppVersionId = &#63; and workflowTaskName = &#63;.
+	 *
+	 * @param appBuilderAppId the app builder app ID
+	 * @param appBuilderAppVersionId the app builder app version ID
 	 * @param workflowTaskName the workflow task name
 	 * @return the number of matching app builder workflow task links
 	 */
-	public int countByA_W(long appBuilderAppId, String workflowTaskName);
+	public int countByA_A_W(
+		long appBuilderAppId, long appBuilderAppVersionId,
+		String workflowTaskName);
 
 	/**
-	 * Returns the app builder workflow task link where appBuilderAppId = &#63; and ddmStructureLayoutId = &#63; and workflowTaskName = &#63; or throws a <code>NoSuchTaskLinkException</code> if it could not be found.
+	 * Returns the app builder workflow task link where appBuilderAppId = &#63; and appBuilderAppVersionId = &#63; and ddmStructureLayoutId = &#63; and workflowTaskName = &#63; or throws a <code>NoSuchTaskLinkException</code> if it could not be found.
 	 *
 	 * @param appBuilderAppId the app builder app ID
+	 * @param appBuilderAppVersionId the app builder app version ID
 	 * @param ddmStructureLayoutId the ddm structure layout ID
 	 * @param workflowTaskName the workflow task name
 	 * @return the matching app builder workflow task link
 	 * @throws NoSuchTaskLinkException if a matching app builder workflow task link could not be found
 	 */
-	public AppBuilderWorkflowTaskLink findByA_D_W(
-			long appBuilderAppId, long ddmStructureLayoutId,
-			String workflowTaskName)
+	public AppBuilderWorkflowTaskLink findByA_A_D_W(
+			long appBuilderAppId, long appBuilderAppVersionId,
+			long ddmStructureLayoutId, String workflowTaskName)
 		throws NoSuchTaskLinkException;
 
 	/**
-	 * Returns the app builder workflow task link where appBuilderAppId = &#63; and ddmStructureLayoutId = &#63; and workflowTaskName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the app builder workflow task link where appBuilderAppId = &#63; and appBuilderAppVersionId = &#63; and ddmStructureLayoutId = &#63; and workflowTaskName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param appBuilderAppId the app builder app ID
+	 * @param appBuilderAppVersionId the app builder app version ID
 	 * @param ddmStructureLayoutId the ddm structure layout ID
 	 * @param workflowTaskName the workflow task name
 	 * @return the matching app builder workflow task link, or <code>null</code> if a matching app builder workflow task link could not be found
 	 */
-	public AppBuilderWorkflowTaskLink fetchByA_D_W(
-		long appBuilderAppId, long ddmStructureLayoutId,
-		String workflowTaskName);
+	public AppBuilderWorkflowTaskLink fetchByA_A_D_W(
+		long appBuilderAppId, long appBuilderAppVersionId,
+		long ddmStructureLayoutId, String workflowTaskName);
 
 	/**
-	 * Returns the app builder workflow task link where appBuilderAppId = &#63; and ddmStructureLayoutId = &#63; and workflowTaskName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the app builder workflow task link where appBuilderAppId = &#63; and appBuilderAppVersionId = &#63; and ddmStructureLayoutId = &#63; and workflowTaskName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param appBuilderAppId the app builder app ID
+	 * @param appBuilderAppVersionId the app builder app version ID
 	 * @param ddmStructureLayoutId the ddm structure layout ID
 	 * @param workflowTaskName the workflow task name
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching app builder workflow task link, or <code>null</code> if a matching app builder workflow task link could not be found
 	 */
-	public AppBuilderWorkflowTaskLink fetchByA_D_W(
-		long appBuilderAppId, long ddmStructureLayoutId,
-		String workflowTaskName, boolean useFinderCache);
+	public AppBuilderWorkflowTaskLink fetchByA_A_D_W(
+		long appBuilderAppId, long appBuilderAppVersionId,
+		long ddmStructureLayoutId, String workflowTaskName,
+		boolean useFinderCache);
 
 	/**
-	 * Removes the app builder workflow task link where appBuilderAppId = &#63; and ddmStructureLayoutId = &#63; and workflowTaskName = &#63; from the database.
+	 * Removes the app builder workflow task link where appBuilderAppId = &#63; and appBuilderAppVersionId = &#63; and ddmStructureLayoutId = &#63; and workflowTaskName = &#63; from the database.
 	 *
 	 * @param appBuilderAppId the app builder app ID
+	 * @param appBuilderAppVersionId the app builder app version ID
 	 * @param ddmStructureLayoutId the ddm structure layout ID
 	 * @param workflowTaskName the workflow task name
 	 * @return the app builder workflow task link that was removed
 	 */
-	public AppBuilderWorkflowTaskLink removeByA_D_W(
-			long appBuilderAppId, long ddmStructureLayoutId,
-			String workflowTaskName)
+	public AppBuilderWorkflowTaskLink removeByA_A_D_W(
+			long appBuilderAppId, long appBuilderAppVersionId,
+			long ddmStructureLayoutId, String workflowTaskName)
 		throws NoSuchTaskLinkException;
 
 	/**
-	 * Returns the number of app builder workflow task links where appBuilderAppId = &#63; and ddmStructureLayoutId = &#63; and workflowTaskName = &#63;.
+	 * Returns the number of app builder workflow task links where appBuilderAppId = &#63; and appBuilderAppVersionId = &#63; and ddmStructureLayoutId = &#63; and workflowTaskName = &#63;.
 	 *
 	 * @param appBuilderAppId the app builder app ID
+	 * @param appBuilderAppVersionId the app builder app version ID
 	 * @param ddmStructureLayoutId the ddm structure layout ID
 	 * @param workflowTaskName the workflow task name
 	 * @return the number of matching app builder workflow task links
 	 */
-	public int countByA_D_W(
-		long appBuilderAppId, long ddmStructureLayoutId,
-		String workflowTaskName);
+	public int countByA_A_D_W(
+		long appBuilderAppId, long appBuilderAppVersionId,
+		long ddmStructureLayoutId, String workflowTaskName);
 
 	/**
 	 * Caches the app builder workflow task link in the entity cache if it is enabled.

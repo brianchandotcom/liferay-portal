@@ -192,6 +192,7 @@ public abstract class BaseAppResourceTestCase {
 
 		app.setDataDefinitionName(regex);
 		app.setScope(regex);
+		app.setVersion(regex);
 
 		String json = AppSerDes.toJSON(app);
 
@@ -201,6 +202,7 @@ public abstract class BaseAppResourceTestCase {
 
 		Assert.assertEquals(regex, app.getDataDefinitionName());
 		Assert.assertEquals(regex, app.getScope());
+		Assert.assertEquals(regex, app.getVersion());
 	}
 
 	@Test
@@ -1151,6 +1153,14 @@ public abstract class BaseAppResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("version", additionalAssertFieldName)) {
+				if (app.getVersion() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -1373,6 +1383,14 @@ public abstract class BaseAppResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("version", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(app1.getVersion(), app2.getVersion())) {
+					return false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -1583,6 +1601,14 @@ public abstract class BaseAppResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("version")) {
+			sb.append("'");
+			sb.append(String.valueOf(app.getVersion()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -1640,6 +1666,7 @@ public abstract class BaseAppResourceTestCase {
 				scope = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				siteId = testGroup.getGroupId();
 				userId = RandomTestUtil.randomLong();
+				version = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
 	}

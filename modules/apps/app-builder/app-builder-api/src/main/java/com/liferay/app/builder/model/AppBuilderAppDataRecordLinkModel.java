@@ -114,6 +114,20 @@ public interface AppBuilderAppDataRecordLinkModel
 	public void setAppBuilderAppId(long appBuilderAppId);
 
 	/**
+	 * Returns the app builder app version ID of this app builder app data record link.
+	 *
+	 * @return the app builder app version ID of this app builder app data record link
+	 */
+	public long getAppBuilderAppVersionId();
+
+	/**
+	 * Sets the app builder app version ID of this app builder app data record link.
+	 *
+	 * @param appBuilderAppVersionId the app builder app version ID of this app builder app data record link
+	 */
+	public void setAppBuilderAppVersionId(long appBuilderAppVersionId);
+
+	/**
 	 * Returns the ddl record ID of this app builder app data record link.
 	 *
 	 * @return the ddl record ID of this app builder app data record link

@@ -59,7 +59,7 @@ public class AppBuilderAppDataRecordLinkLocalServiceUtil {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addAppBuilderAppDataRecordLink(long, long, long, long)}
+	 #addAppBuilderAppDataRecordLink(long, long, long, long, long)}
 	 */
 	@Deprecated
 	public static com.liferay.app.builder.model.AppBuilderAppDataRecordLink
@@ -73,10 +73,11 @@ public class AppBuilderAppDataRecordLinkLocalServiceUtil {
 	public static com.liferay.app.builder.model.AppBuilderAppDataRecordLink
 		addAppBuilderAppDataRecordLink(
 			long groupId, long companyId, long appBuilderAppId,
-			long ddlRecordId) {
+			long appBuilderAppVersionId, long ddlRecordId) {
 
 		return getService().addAppBuilderAppDataRecordLink(
-			groupId, companyId, appBuilderAppId, ddlRecordId);
+			groupId, companyId, appBuilderAppId, appBuilderAppVersionId,
+			ddlRecordId);
 	}
 
 	/**

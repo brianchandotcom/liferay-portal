@@ -68,6 +68,20 @@ public class AppWorkflowSerDes {
 			sb.append(appWorkflow.getAppId());
 		}
 
+		if (appWorkflow.getAppVersion() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"appVersion\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(appWorkflow.getAppVersion()));
+
+			sb.append("\"");
+		}
+
 		if (appWorkflow.getAppWorkflowDefinitionId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -147,6 +161,13 @@ public class AppWorkflowSerDes {
 			map.put("appId", String.valueOf(appWorkflow.getAppId()));
 		}
 
+		if (appWorkflow.getAppVersion() == null) {
+			map.put("appVersion", null);
+		}
+		else {
+			map.put("appVersion", String.valueOf(appWorkflow.getAppVersion()));
+		}
+
 		if (appWorkflow.getAppWorkflowDefinitionId() == null) {
 			map.put("appWorkflowDefinitionId", null);
 		}
@@ -199,6 +220,11 @@ public class AppWorkflowSerDes {
 				if (jsonParserFieldValue != null) {
 					appWorkflow.setAppId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "appVersion")) {
+				if (jsonParserFieldValue != null) {
+					appWorkflow.setAppVersion((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

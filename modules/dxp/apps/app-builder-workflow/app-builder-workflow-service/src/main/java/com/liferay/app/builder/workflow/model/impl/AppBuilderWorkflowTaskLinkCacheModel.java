@@ -79,7 +79,7 @@ public class AppBuilderWorkflowTaskLinkCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -89,6 +89,8 @@ public class AppBuilderWorkflowTaskLinkCacheModel
 		sb.append(companyId);
 		sb.append(", appBuilderAppId=");
 		sb.append(appBuilderAppId);
+		sb.append(", appBuilderAppVersionId=");
+		sb.append(appBuilderAppVersionId);
 		sb.append(", ddmStructureLayoutId=");
 		sb.append(ddmStructureLayoutId);
 		sb.append(", readOnly=");
@@ -110,6 +112,8 @@ public class AppBuilderWorkflowTaskLinkCacheModel
 			appBuilderWorkflowTaskLinkId);
 		appBuilderWorkflowTaskLinkImpl.setCompanyId(companyId);
 		appBuilderWorkflowTaskLinkImpl.setAppBuilderAppId(appBuilderAppId);
+		appBuilderWorkflowTaskLinkImpl.setAppBuilderAppVersionId(
+			appBuilderAppVersionId);
 		appBuilderWorkflowTaskLinkImpl.setDdmStructureLayoutId(
 			ddmStructureLayoutId);
 		appBuilderWorkflowTaskLinkImpl.setReadOnly(readOnly);
@@ -137,6 +141,8 @@ public class AppBuilderWorkflowTaskLinkCacheModel
 
 		appBuilderAppId = objectInput.readLong();
 
+		appBuilderAppVersionId = objectInput.readLong();
+
 		ddmStructureLayoutId = objectInput.readLong();
 
 		readOnly = objectInput.readBoolean();
@@ -152,6 +158,8 @@ public class AppBuilderWorkflowTaskLinkCacheModel
 		objectOutput.writeLong(companyId);
 
 		objectOutput.writeLong(appBuilderAppId);
+
+		objectOutput.writeLong(appBuilderAppVersionId);
 
 		objectOutput.writeLong(ddmStructureLayoutId);
 
@@ -169,6 +177,7 @@ public class AppBuilderWorkflowTaskLinkCacheModel
 	public long appBuilderWorkflowTaskLinkId;
 	public long companyId;
 	public long appBuilderAppId;
+	public long appBuilderAppVersionId;
 	public long ddmStructureLayoutId;
 	public boolean readOnly;
 	public String workflowTaskName;

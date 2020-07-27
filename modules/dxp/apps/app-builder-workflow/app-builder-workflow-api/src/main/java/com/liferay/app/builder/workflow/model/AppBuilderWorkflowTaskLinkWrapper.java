@@ -49,6 +49,7 @@ public class AppBuilderWorkflowTaskLinkWrapper
 			"appBuilderWorkflowTaskLinkId", getAppBuilderWorkflowTaskLinkId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("appBuilderAppId", getAppBuilderAppId());
+		attributes.put("appBuilderAppVersionId", getAppBuilderAppVersionId());
 		attributes.put("ddmStructureLayoutId", getDdmStructureLayoutId());
 		attributes.put("readOnly", isReadOnly());
 		attributes.put("workflowTaskName", getWorkflowTaskName());
@@ -83,6 +84,13 @@ public class AppBuilderWorkflowTaskLinkWrapper
 			setAppBuilderAppId(appBuilderAppId);
 		}
 
+		Long appBuilderAppVersionId = (Long)attributes.get(
+			"appBuilderAppVersionId");
+
+		if (appBuilderAppVersionId != null) {
+			setAppBuilderAppVersionId(appBuilderAppVersionId);
+		}
+
 		Long ddmStructureLayoutId = (Long)attributes.get(
 			"ddmStructureLayoutId");
 
@@ -111,6 +119,16 @@ public class AppBuilderWorkflowTaskLinkWrapper
 	@Override
 	public long getAppBuilderAppId() {
 		return model.getAppBuilderAppId();
+	}
+
+	/**
+	 * Returns the app builder app version ID of this app builder workflow task link.
+	 *
+	 * @return the app builder app version ID of this app builder workflow task link
+	 */
+	@Override
+	public long getAppBuilderAppVersionId() {
+		return model.getAppBuilderAppVersionId();
 	}
 
 	/**
@@ -206,6 +224,16 @@ public class AppBuilderWorkflowTaskLinkWrapper
 	@Override
 	public void setAppBuilderAppId(long appBuilderAppId) {
 		model.setAppBuilderAppId(appBuilderAppId);
+	}
+
+	/**
+	 * Sets the app builder app version ID of this app builder workflow task link.
+	 *
+	 * @param appBuilderAppVersionId the app builder app version ID of this app builder workflow task link
+	 */
+	@Override
+	public void setAppBuilderAppVersionId(long appBuilderAppVersionId) {
+		model.setAppBuilderAppVersionId(appBuilderAppVersionId);
 	}
 
 	/**

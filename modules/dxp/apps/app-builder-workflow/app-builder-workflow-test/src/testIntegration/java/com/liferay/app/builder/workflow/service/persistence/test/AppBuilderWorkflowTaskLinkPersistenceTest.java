@@ -136,6 +136,9 @@ public class AppBuilderWorkflowTaskLinkPersistenceTest {
 		newAppBuilderWorkflowTaskLink.setAppBuilderAppId(
 			RandomTestUtil.nextLong());
 
+		newAppBuilderWorkflowTaskLink.setAppBuilderAppVersionId(
+			RandomTestUtil.nextLong());
+
 		newAppBuilderWorkflowTaskLink.setDdmStructureLayoutId(
 			RandomTestUtil.nextLong());
 
@@ -166,6 +169,9 @@ public class AppBuilderWorkflowTaskLinkPersistenceTest {
 			existingAppBuilderWorkflowTaskLink.getAppBuilderAppId(),
 			newAppBuilderWorkflowTaskLink.getAppBuilderAppId());
 		Assert.assertEquals(
+			existingAppBuilderWorkflowTaskLink.getAppBuilderAppVersionId(),
+			newAppBuilderWorkflowTaskLink.getAppBuilderAppVersionId());
+		Assert.assertEquals(
 			existingAppBuilderWorkflowTaskLink.getDdmStructureLayoutId(),
 			newAppBuilderWorkflowTaskLink.getDdmStructureLayoutId());
 		Assert.assertEquals(
@@ -184,22 +190,32 @@ public class AppBuilderWorkflowTaskLinkPersistenceTest {
 	}
 
 	@Test
-	public void testCountByA_W() throws Exception {
-		_persistence.countByA_W(RandomTestUtil.nextLong(), "");
+	public void testCountByA_A() throws Exception {
+		_persistence.countByA_A(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countByA_W(0L, "null");
-
-		_persistence.countByA_W(0L, (String)null);
+		_persistence.countByA_A(0L, 0L);
 	}
 
 	@Test
-	public void testCountByA_D_W() throws Exception {
-		_persistence.countByA_D_W(
+	public void testCountByA_A_W() throws Exception {
+		_persistence.countByA_A_W(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "");
 
-		_persistence.countByA_D_W(0L, 0L, "null");
+		_persistence.countByA_A_W(0L, 0L, "null");
 
-		_persistence.countByA_D_W(0L, 0L, (String)null);
+		_persistence.countByA_A_W(0L, 0L, (String)null);
+	}
+
+	@Test
+	public void testCountByA_A_D_W() throws Exception {
+		_persistence.countByA_A_D_W(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), "");
+
+		_persistence.countByA_A_D_W(0L, 0L, 0L, "null");
+
+		_persistence.countByA_A_D_W(0L, 0L, 0L, (String)null);
 	}
 
 	@Test
@@ -234,8 +250,9 @@ public class AppBuilderWorkflowTaskLinkPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"AppBuilderWorkflowTaskLink", "mvccVersion", true,
 			"appBuilderWorkflowTaskLinkId", true, "companyId", true,
-			"appBuilderAppId", true, "ddmStructureLayoutId", true, "readOnly",
-			true, "workflowTaskName", true);
+			"appBuilderAppId", true, "appBuilderAppVersionId", true,
+			"ddmStructureLayoutId", true, "readOnly", true, "workflowTaskName",
+			true);
 	}
 
 	@Test
@@ -502,6 +519,12 @@ public class AppBuilderWorkflowTaskLinkPersistenceTest {
 				"getOriginalAppBuilderAppId", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(
+				existingAppBuilderWorkflowTaskLink.getAppBuilderAppVersionId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingAppBuilderWorkflowTaskLink,
+				"getOriginalAppBuilderAppVersionId", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(
 				existingAppBuilderWorkflowTaskLink.getDdmStructureLayoutId()),
 			ReflectionTestUtil.<Long>invoke(
 				existingAppBuilderWorkflowTaskLink,
@@ -527,6 +550,9 @@ public class AppBuilderWorkflowTaskLinkPersistenceTest {
 		appBuilderWorkflowTaskLink.setCompanyId(RandomTestUtil.nextLong());
 
 		appBuilderWorkflowTaskLink.setAppBuilderAppId(
+			RandomTestUtil.nextLong());
+
+		appBuilderWorkflowTaskLink.setAppBuilderAppVersionId(
 			RandomTestUtil.nextLong());
 
 		appBuilderWorkflowTaskLink.setDdmStructureLayoutId(

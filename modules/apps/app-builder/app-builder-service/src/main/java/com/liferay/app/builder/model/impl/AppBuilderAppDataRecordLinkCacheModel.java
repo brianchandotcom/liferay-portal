@@ -64,7 +64,7 @@ public class AppBuilderAppDataRecordLinkCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{appBuilderAppDataRecordLinkId=");
 		sb.append(appBuilderAppDataRecordLinkId);
@@ -74,6 +74,8 @@ public class AppBuilderAppDataRecordLinkCacheModel
 		sb.append(companyId);
 		sb.append(", appBuilderAppId=");
 		sb.append(appBuilderAppId);
+		sb.append(", appBuilderAppVersionId=");
+		sb.append(appBuilderAppVersionId);
 		sb.append(", ddlRecordId=");
 		sb.append(ddlRecordId);
 		sb.append("}");
@@ -91,6 +93,8 @@ public class AppBuilderAppDataRecordLinkCacheModel
 		appBuilderAppDataRecordLinkImpl.setGroupId(groupId);
 		appBuilderAppDataRecordLinkImpl.setCompanyId(companyId);
 		appBuilderAppDataRecordLinkImpl.setAppBuilderAppId(appBuilderAppId);
+		appBuilderAppDataRecordLinkImpl.setAppBuilderAppVersionId(
+			appBuilderAppVersionId);
 		appBuilderAppDataRecordLinkImpl.setDdlRecordId(ddlRecordId);
 
 		appBuilderAppDataRecordLinkImpl.resetOriginalValues();
@@ -108,6 +112,8 @@ public class AppBuilderAppDataRecordLinkCacheModel
 
 		appBuilderAppId = objectInput.readLong();
 
+		appBuilderAppVersionId = objectInput.readLong();
+
 		ddlRecordId = objectInput.readLong();
 	}
 
@@ -121,6 +127,8 @@ public class AppBuilderAppDataRecordLinkCacheModel
 
 		objectOutput.writeLong(appBuilderAppId);
 
+		objectOutput.writeLong(appBuilderAppVersionId);
+
 		objectOutput.writeLong(ddlRecordId);
 	}
 
@@ -128,6 +136,7 @@ public class AppBuilderAppDataRecordLinkCacheModel
 	public long groupId;
 	public long companyId;
 	public long appBuilderAppId;
+	public long appBuilderAppVersionId;
 	public long ddlRecordId;
 
 }

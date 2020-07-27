@@ -118,6 +118,20 @@ public interface AppBuilderWorkflowTaskLinkModel
 	public void setAppBuilderAppId(long appBuilderAppId);
 
 	/**
+	 * Returns the app builder app version ID of this app builder workflow task link.
+	 *
+	 * @return the app builder app version ID of this app builder workflow task link
+	 */
+	public long getAppBuilderAppVersionId();
+
+	/**
+	 * Sets the app builder app version ID of this app builder workflow task link.
+	 *
+	 * @param appBuilderAppVersionId the app builder app version ID of this app builder workflow task link
+	 */
+	public void setAppBuilderAppVersionId(long appBuilderAppVersionId);
+
+	/**
 	 * Returns the ddm structure layout ID of this app builder workflow task link.
 	 *
 	 * @return the ddm structure layout ID of this app builder workflow task link

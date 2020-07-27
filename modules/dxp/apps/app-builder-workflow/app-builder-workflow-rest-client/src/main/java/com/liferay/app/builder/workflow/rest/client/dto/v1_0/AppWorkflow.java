@@ -51,6 +51,27 @@ public class AppWorkflow implements Cloneable {
 
 	protected Long appId;
 
+	public String getAppVersion() {
+		return appVersion;
+	}
+
+	public void setAppVersion(String appVersion) {
+		this.appVersion = appVersion;
+	}
+
+	public void setAppVersion(
+		UnsafeSupplier<String, Exception> appVersionUnsafeSupplier) {
+
+		try {
+			appVersion = appVersionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String appVersion;
+
 	public Long getAppWorkflowDefinitionId() {
 		return appWorkflowDefinitionId;
 	}

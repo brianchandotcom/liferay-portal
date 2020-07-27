@@ -44,6 +44,10 @@ public class AppBuilderAppDataRecordLinkTable
 	public final Column<AppBuilderAppDataRecordLinkTable, Long>
 		appBuilderAppId = createColumn(
 			"appBuilderAppId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<AppBuilderAppDataRecordLinkTable, Long>
+		appBuilderAppVersionId = createColumn(
+			"appBuilderAppVersionId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
 	public final Column<AppBuilderAppDataRecordLinkTable, Long> ddlRecordId =
 		createColumn(
 			"ddlRecordId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);

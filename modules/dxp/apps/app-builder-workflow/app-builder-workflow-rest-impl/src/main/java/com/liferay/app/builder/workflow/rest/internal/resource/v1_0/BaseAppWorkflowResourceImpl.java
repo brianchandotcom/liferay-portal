@@ -82,7 +82,7 @@ public abstract class BaseAppWorkflowResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/app-builder-workflow/v1.0/apps/{appId}/app-workflows' -d $'{"appId": ___, "appWorkflowDefinitionId": ___, "appWorkflowStates": ___, "appWorkflowTasks": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/app-builder-workflow/v1.0/apps/{appId}/app-workflows' -d $'{"appId": ___, "appVersion": ___, "appWorkflowDefinitionId": ___, "appWorkflowStates": ___, "appWorkflowTasks": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
@@ -102,7 +102,7 @@ public abstract class BaseAppWorkflowResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/app-builder-workflow/v1.0/apps/{appId}/app-workflows' -d $'{"appId": ___, "appWorkflowDefinitionId": ___, "appWorkflowStates": ___, "appWorkflowTasks": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/app-builder-workflow/v1.0/apps/{appId}/app-workflows' -d $'{"appId": ___, "appVersion": ___, "appWorkflowDefinitionId": ___, "appWorkflowStates": ___, "appWorkflowTasks": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})

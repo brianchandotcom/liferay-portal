@@ -77,8 +77,9 @@ public interface AppBuilderWorkflowTaskLinkLocalService
 		AppBuilderWorkflowTaskLink appBuilderWorkflowTaskLink);
 
 	public AppBuilderWorkflowTaskLink addAppBuilderWorkflowTaskLink(
-			long companyId, long appBuilderAppId, long ddmStructureLayoutId,
-			boolean readOnly, String workflowTaskName)
+			long companyId, long appBuilderAppId, long appBuilderAppVersionId,
+			long ddmStructureLayoutId, boolean readOnly,
+			String workflowTaskName)
 		throws PortalException;
 
 	/**
@@ -128,6 +129,9 @@ public interface AppBuilderWorkflowTaskLinkLocalService
 		throws PortalException;
 
 	public void deleteAppBuilderWorkflowTaskLinks(long appBuilderAppId);
+
+	public void deleteAppBuilderWorkflowTaskLinks(
+		long appBuilderAppId, long appBuilderAppVersionId);
 
 	/**
 	 * @throws PortalException
@@ -245,7 +249,12 @@ public interface AppBuilderWorkflowTaskLinkLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AppBuilderWorkflowTaskLink> getAppBuilderWorkflowTaskLinks(
-		long appBuilderAppId, String workflowTaskName);
+		long appBuilderAppId, long appBuilderAppVersionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AppBuilderWorkflowTaskLink> getAppBuilderWorkflowTaskLinks(
+		long appBuilderAppId, long appBuilderAppVersionId,
+		String workflowTaskName);
 
 	/**
 	 * Returns the number of app builder workflow task links.

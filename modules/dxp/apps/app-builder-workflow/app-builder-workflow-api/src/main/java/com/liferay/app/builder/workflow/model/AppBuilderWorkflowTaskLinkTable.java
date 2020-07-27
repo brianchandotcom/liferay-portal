@@ -46,6 +46,10 @@ public class AppBuilderWorkflowTaskLinkTable
 		createColumn(
 			"appBuilderAppId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<AppBuilderWorkflowTaskLinkTable, Long>
+		appBuilderAppVersionId = createColumn(
+			"appBuilderAppVersionId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
+	public final Column<AppBuilderWorkflowTaskLinkTable, Long>
 		ddmStructureLayoutId = createColumn(
 			"ddmStructureLayoutId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);

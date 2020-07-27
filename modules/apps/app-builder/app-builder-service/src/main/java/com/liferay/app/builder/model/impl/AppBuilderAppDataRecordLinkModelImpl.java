@@ -65,7 +65,8 @@ public class AppBuilderAppDataRecordLinkModelImpl
 	public static final Object[][] TABLE_COLUMNS = {
 		{"appBuilderAppDataRecordLinkId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"appBuilderAppId", Types.BIGINT}, {"ddlRecordId", Types.BIGINT}
+		{"appBuilderAppId", Types.BIGINT},
+		{"appBuilderAppVersionId", Types.BIGINT}, {"ddlRecordId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -76,11 +77,12 @@ public class AppBuilderAppDataRecordLinkModelImpl
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("appBuilderAppId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("appBuilderAppVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ddlRecordId", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AppBuilderAppDataRecordLink (appBuilderAppDataRecordLinkId LONG not null primary key,groupId LONG,companyId LONG,appBuilderAppId LONG,ddlRecordId LONG)";
+		"create table AppBuilderAppDataRecordLink (appBuilderAppDataRecordLinkId LONG not null primary key,groupId LONG,companyId LONG,appBuilderAppId LONG,appBuilderAppVersionId LONG,ddlRecordId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table AppBuilderAppDataRecordLink";
@@ -275,6 +277,13 @@ public class AppBuilderAppDataRecordLinkModelImpl
 			(BiConsumer<AppBuilderAppDataRecordLink, Long>)
 				AppBuilderAppDataRecordLink::setAppBuilderAppId);
 		attributeGetterFunctions.put(
+			"appBuilderAppVersionId",
+			AppBuilderAppDataRecordLink::getAppBuilderAppVersionId);
+		attributeSetterBiConsumers.put(
+			"appBuilderAppVersionId",
+			(BiConsumer<AppBuilderAppDataRecordLink, Long>)
+				AppBuilderAppDataRecordLink::setAppBuilderAppVersionId);
+		attributeGetterFunctions.put(
 			"ddlRecordId", AppBuilderAppDataRecordLink::getDdlRecordId);
 		attributeSetterBiConsumers.put(
 			"ddlRecordId",
@@ -339,6 +348,16 @@ public class AppBuilderAppDataRecordLinkModelImpl
 
 	public long getOriginalAppBuilderAppId() {
 		return _originalAppBuilderAppId;
+	}
+
+	@Override
+	public long getAppBuilderAppVersionId() {
+		return _appBuilderAppVersionId;
+	}
+
+	@Override
+	public void setAppBuilderAppVersionId(long appBuilderAppVersionId) {
+		_appBuilderAppVersionId = appBuilderAppVersionId;
 	}
 
 	@Override
@@ -407,6 +426,8 @@ public class AppBuilderAppDataRecordLinkModelImpl
 		appBuilderAppDataRecordLinkImpl.setCompanyId(getCompanyId());
 		appBuilderAppDataRecordLinkImpl.setAppBuilderAppId(
 			getAppBuilderAppId());
+		appBuilderAppDataRecordLinkImpl.setAppBuilderAppVersionId(
+			getAppBuilderAppVersionId());
 		appBuilderAppDataRecordLinkImpl.setDdlRecordId(getDdlRecordId());
 
 		appBuilderAppDataRecordLinkImpl.resetOriginalValues();
@@ -512,6 +533,9 @@ public class AppBuilderAppDataRecordLinkModelImpl
 		appBuilderAppDataRecordLinkCacheModel.appBuilderAppId =
 			getAppBuilderAppId();
 
+		appBuilderAppDataRecordLinkCacheModel.appBuilderAppVersionId =
+			getAppBuilderAppVersionId();
+
 		appBuilderAppDataRecordLinkCacheModel.ddlRecordId = getDdlRecordId();
 
 		return appBuilderAppDataRecordLinkCacheModel;
@@ -599,6 +623,7 @@ public class AppBuilderAppDataRecordLinkModelImpl
 	private long _appBuilderAppId;
 	private long _originalAppBuilderAppId;
 	private boolean _setOriginalAppBuilderAppId;
+	private long _appBuilderAppVersionId;
 	private long _ddlRecordId;
 	private long _originalDdlRecordId;
 	private boolean _setOriginalDdlRecordId;

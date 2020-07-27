@@ -10,3 +10,9 @@ create index IX_22C0B8B0 on AppBuilderAppDataRecordLink (appBuilderAppId);
 create index IX_CF7CED86 on AppBuilderAppDataRecordLink (ddlRecordId);
 
 create index IX_28C98E35 on AppBuilderAppDeployment (appBuilderAppId, type_[$COLUMN_LENGTH:75$]);
+
+create index IX_2AEAD6CD on AppBuilderAppVersion (appBuilderAppId, version[$COLUMN_LENGTH:75$]);
+create index IX_254A3ED1 on AppBuilderAppVersion (companyId);
+create index IX_17464593 on AppBuilderAppVersion (groupId);
+create index IX_E67BA72B on AppBuilderAppVersion (uuid_[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_9A89FC6D on AppBuilderAppVersion (uuid_[$COLUMN_LENGTH:75$], groupId);

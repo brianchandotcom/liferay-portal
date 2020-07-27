@@ -6,6 +6,7 @@
 		<field name="appBuilderWorkflowTaskLinkId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="appBuilderAppId" type="long" />
+		<field name="appBuilderAppVersionId" type="long" />
 		<field name="ddmStructureLayoutId" type="long" />
 		<field name="readOnly" type="boolean" />
 		<field name="workflowTaskName" type="String" />

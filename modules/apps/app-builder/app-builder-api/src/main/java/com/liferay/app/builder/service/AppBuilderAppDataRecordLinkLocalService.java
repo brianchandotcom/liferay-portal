@@ -78,14 +78,15 @@ public interface AppBuilderAppDataRecordLinkLocalService
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addAppBuilderAppDataRecordLink(long, long, long, long)}
+	 #addAppBuilderAppDataRecordLink(long, long, long, long, long)}
 	 */
 	@Deprecated
 	public AppBuilderAppDataRecordLink addAppBuilderAppDataRecordLink(
 		long companyId, long appBuilderAppId, long ddlRecordId);
 
 	public AppBuilderAppDataRecordLink addAppBuilderAppDataRecordLink(
-		long groupId, long companyId, long appBuilderAppId, long ddlRecordId);
+		long groupId, long companyId, long appBuilderAppId,
+		long appBuilderAppVersionId, long ddlRecordId);
 
 	/**
 	 * Creates a new app builder app data record link with the primary key. Does not add the app builder app data record link to the database.

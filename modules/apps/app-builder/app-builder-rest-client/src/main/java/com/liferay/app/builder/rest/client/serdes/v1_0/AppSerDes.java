@@ -227,6 +227,20 @@ public class AppSerDes {
 			sb.append(app.getUserId());
 		}
 
+		if (app.getVersion() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"version\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(app.getVersion()));
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -355,6 +369,13 @@ public class AppSerDes {
 			map.put("userId", String.valueOf(app.getUserId()));
 		}
 
+		if (app.getVersion() == null) {
+			map.put("version", null);
+		}
+		else {
+			map.put("version", String.valueOf(app.getVersion()));
+		}
+
 		return map;
 	}
 
@@ -458,6 +479,11 @@ public class AppSerDes {
 			else if (Objects.equals(jsonParserFieldName, "userId")) {
 				if (jsonParserFieldValue != null) {
 					app.setUserId(Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "version")) {
+				if (jsonParserFieldValue != null) {
+					app.setVersion((String)jsonParserFieldValue);
 				}
 			}
 			else {

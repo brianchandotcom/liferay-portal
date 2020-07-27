@@ -15,8 +15,10 @@
 package com.liferay.app.builder.workflow.rest.resource.v1_0.test;
 
 import com.liferay.app.builder.model.AppBuilderApp;
+import com.liferay.app.builder.model.AppBuilderAppVersion;
 import com.liferay.app.builder.service.AppBuilderAppDataRecordLinkLocalService;
 import com.liferay.app.builder.service.AppBuilderAppLocalService;
+import com.liferay.app.builder.service.AppBuilderAppVersionLocalService;
 import com.liferay.app.builder.workflow.rest.client.dto.v1_0.AppWorkflow;
 import com.liferay.app.builder.workflow.rest.client.dto.v1_0.AppWorkflowDataLayoutLink;
 import com.liferay.app.builder.workflow.rest.client.dto.v1_0.AppWorkflowRoleAssignment;
@@ -296,9 +298,15 @@ public class AppWorkflowResourceTest extends BaseAppWorkflowResourceTestCase {
 			RandomTestUtil.nextLong(), _appBuilderApp.getDdlRecordSetId(),
 			StringPool.BLANK, 0, new ServiceContext());
 
+		AppBuilderAppVersion latestAppBuilderAppVersion =
+			_appBuilderAppVersionLocalService.getLatestAppBuilderAppVersion(
+				_appBuilderApp.getAppBuilderAppId());
+
 		_appBuilderAppDataRecordLinkLocalService.addAppBuilderAppDataRecordLink(
 			testGroup.getGroupId(), testGroup.getCompanyId(),
-			_appBuilderApp.getAppBuilderAppId(), ddlRecord.getRecordId());
+			_appBuilderApp.getAppBuilderAppId(),
+			latestAppBuilderAppVersion.getAppBuilderAppVersionId(),
+			ddlRecord.getRecordId());
 
 		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			testGroup.getCompanyId(), _appBuilderApp.getGroupId(),
@@ -358,6 +366,9 @@ public class AppWorkflowResourceTest extends BaseAppWorkflowResourceTestCase {
 
 	@Inject
 	private AppBuilderAppLocalService _appBuilderAppLocalService;
+
+	@Inject
+	private AppBuilderAppVersionLocalService _appBuilderAppVersionLocalService;
 
 	@Inject
 	private DDLRecordLocalService _ddlRecordLocalService;

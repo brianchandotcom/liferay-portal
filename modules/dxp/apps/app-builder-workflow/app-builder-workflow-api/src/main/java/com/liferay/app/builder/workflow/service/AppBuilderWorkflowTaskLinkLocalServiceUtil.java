@@ -62,13 +62,13 @@ public class AppBuilderWorkflowTaskLinkLocalServiceUtil {
 		com.liferay.app.builder.workflow.model.AppBuilderWorkflowTaskLink
 				addAppBuilderWorkflowTaskLink(
 					long companyId, long appBuilderAppId,
-					long ddmStructureLayoutId, boolean readOnly,
-					String workflowTaskName)
+					long appBuilderAppVersionId, long ddmStructureLayoutId,
+					boolean readOnly, String workflowTaskName)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addAppBuilderWorkflowTaskLink(
-			companyId, appBuilderAppId, ddmStructureLayoutId, readOnly,
-			workflowTaskName);
+			companyId, appBuilderAppId, appBuilderAppVersionId,
+			ddmStructureLayoutId, readOnly, workflowTaskName);
 	}
 
 	/**
@@ -139,6 +139,13 @@ public class AppBuilderWorkflowTaskLinkLocalServiceUtil {
 
 	public static void deleteAppBuilderWorkflowTaskLinks(long appBuilderAppId) {
 		getService().deleteAppBuilderWorkflowTaskLinks(appBuilderAppId);
+	}
+
+	public static void deleteAppBuilderWorkflowTaskLinks(
+		long appBuilderAppId, long appBuilderAppVersionId) {
+
+		getService().deleteAppBuilderWorkflowTaskLinks(
+			appBuilderAppId, appBuilderAppVersionId);
 	}
 
 	/**
@@ -301,10 +308,20 @@ public class AppBuilderWorkflowTaskLinkLocalServiceUtil {
 	public static java.util.List
 		<com.liferay.app.builder.workflow.model.AppBuilderWorkflowTaskLink>
 			getAppBuilderWorkflowTaskLinks(
-				long appBuilderAppId, String workflowTaskName) {
+				long appBuilderAppId, long appBuilderAppVersionId) {
 
 		return getService().getAppBuilderWorkflowTaskLinks(
-			appBuilderAppId, workflowTaskName);
+			appBuilderAppId, appBuilderAppVersionId);
+	}
+
+	public static java.util.List
+		<com.liferay.app.builder.workflow.model.AppBuilderWorkflowTaskLink>
+			getAppBuilderWorkflowTaskLinks(
+				long appBuilderAppId, long appBuilderAppVersionId,
+				String workflowTaskName) {
+
+		return getService().getAppBuilderWorkflowTaskLinks(
+			appBuilderAppId, appBuilderAppVersionId, workflowTaskName);
 	}
 
 	/**

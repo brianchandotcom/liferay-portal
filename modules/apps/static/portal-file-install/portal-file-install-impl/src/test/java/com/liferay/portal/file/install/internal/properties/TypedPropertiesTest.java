@@ -33,7 +33,7 @@ import org.junit.Test;
 public class TypedPropertiesTest {
 
 	@Test
-	public void testClear() throws IOException {
+	public void testClear() {
 		TypedProperties typedProperties = new TypedProperties(null);
 
 		typedProperties.put("testKey1", 1);
@@ -47,7 +47,7 @@ public class TypedPropertiesTest {
 	}
 
 	@Test
-	public void testIterator() throws IOException {
+	public void testIterator() {
 		TypedProperties typedProperties = new TypedProperties(null);
 
 		typedProperties.put("testKey", 1);
@@ -131,7 +131,7 @@ public class TypedPropertiesTest {
 	}
 
 	@Test
-	public void testRemove() throws IOException {
+	public void testRemove() {
 		TypedProperties typedProperties = new TypedProperties(null);
 
 		typedProperties.put("testKey", "testValue");
@@ -177,7 +177,7 @@ public class TypedPropertiesTest {
 	}
 
 	@Test
-	public void testWriteNontyped() throws IOException {
+	public void testWriteNontyped() {
 		TypedProperties typedProperties = new TypedProperties(null);
 
 		typedProperties.put("testKey", "testValue");
@@ -186,7 +186,7 @@ public class TypedPropertiesTest {
 	}
 
 	@Test
-	public void testWriteTyped() throws IOException {
+	public void testWriteTyped() {
 		TypedProperties typedProperties = new TypedProperties(null);
 
 		typedProperties.put("testKey", 1);

@@ -67,18 +67,18 @@ public class DDMFormValuesJSONDeserializer
 		DDMFormValuesDeserializerDeserializeRequest
 			ddmFormValuesDeserializerDeserializeRequest) {
 
-		DDMFormValues ddmFormValues = null;
+		DDMForm ddmForm =
+			ddmFormValuesDeserializerDeserializeRequest.getDDMForm();
+
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
+
+		DDMFormValuesDeserializerDeserializeResponse.Builder builder =
+			DDMFormValuesDeserializerDeserializeResponse.Builder.newBuilder(
+				ddmFormValues);
 
 		try {
-			String content =
-				ddmFormValuesDeserializerDeserializeRequest.getContent();
-
-			DDMForm ddmForm =
-				ddmFormValuesDeserializerDeserializeRequest.getDDMForm();
-
-			JSONObject jsonObject = _jsonFactory.createJSONObject(content);
-
-			ddmFormValues = new DDMFormValues(ddmForm);
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				ddmFormValuesDeserializerDeserializeRequest.getContent());
 
 			setDDMFormValuesAvailableLocales(
 				jsonObject.getJSONArray("availableLanguageIds"), ddmFormValues);
@@ -86,17 +86,18 @@ public class DDMFormValuesJSONDeserializer
 				jsonObject.getString("defaultLanguageId"), ddmFormValues);
 			setDDMFormFieldValues(
 				jsonObject.getJSONArray("fieldValues"), ddmForm, ddmFormValues);
+
 			setDDMFormLocalizedValuesDefaultLocale(ddmFormValues);
+
+			return builder.build();
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(exception, exception);
 			}
-		}
 
-		DDMFormValuesDeserializerDeserializeResponse.Builder builder =
-			DDMFormValuesDeserializerDeserializeResponse.Builder.newBuilder(
-				ddmFormValues);
+			builder = builder.exception(exception);
+		}
 
 		return builder.build();
 	}

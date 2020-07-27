@@ -32,6 +32,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -194,7 +195,9 @@ public class UpgradeDataProviderInstance extends UpgradeProcess {
 		return sb.toString();
 	}
 
-	protected DDMFormValues deserialize(String content, DDMForm ddmForm) {
+	protected DDMFormValues deserialize(String content, DDMForm ddmForm)
+		throws Exception {
+
 		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
 			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
 				content, ddmForm);
@@ -202,6 +205,13 @@ public class UpgradeDataProviderInstance extends UpgradeProcess {
 		DDMFormValuesDeserializerDeserializeResponse
 			ddmFormValuesDeserializerDeserializeResponse =
 				_ddmFormValuesDeserializer.deserialize(builder.build());
+
+		Exception exception =
+			ddmFormValuesDeserializerDeserializeResponse.getException();
+
+		if (exception != null) {
+			throw new UpgradeException(exception);
+		}
 
 		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 	}
@@ -251,7 +261,8 @@ public class UpgradeDataProviderInstance extends UpgradeProcess {
 	}
 
 	protected String upgradeDataProviderInstanceDefinition(
-		String dataProviderInstanceDefinition, String type) {
+			String dataProviderInstanceDefinition, String type)
+		throws Exception {
 
 		DDMDataProviderSettingsProvider ddmDataProviderSettingsProvider =
 			_ddmDataProviderSettingsProviderServiceTracker.getService(type);

@@ -398,6 +398,27 @@ export const getThreads = (
 	siteKey,
 	sort = 'dateCreated:desc'
 ) => {
+	if (
+		!filter &&
+		!keywords &&
+		!creatorId &&
+		!section.messageBoardSections.items.length
+	) {
+		return client
+			.query({
+				query: getSectionThreadsQuery,
+				variables: {
+					messageBoardSectionId: section.id,
+					page,
+					pageSize,
+				},
+			})
+			.then((result) => ({
+				...result,
+				data: result.data.messageBoardSectionMessageBoardThreads,
+			}));
+	}
+
 	let filter = '';
 
 	if (section && section.id) {
@@ -497,6 +518,51 @@ export const getThreadsQuery = gql`
 	}
 `;
 
+export const getSectionThreadsQuery = gql`
+	query messageBoardSectionMessageBoardThreads(
+		$messageBoardSectionId: Long!
+		$page: Int!
+		$pageSize: Int!
+	) {
+		messageBoardSectionMessageBoardThreads(
+			messageBoardSectionId: $messageBoardSectionId
+			page: $page
+			pageSize: $pageSize
+		) {
+			items {
+				aggregateRating {
+					ratingAverage
+					ratingCount
+					ratingValue
+				}
+				articleBody
+				creator {
+					id
+					image
+					name
+				}
+				dateModified
+				friendlyUrlPath
+				hasValidAnswer
+				headline
+				id
+				keywords
+				messageBoardSection {
+					numberOfMessageBoardSections
+					parentMessageBoardSectionId
+					title
+				}
+				numberOfMessageBoardMessages
+				seen
+				viewCount
+			}
+			page
+			pageSize
+			totalCount
+		}
+	}
+`;
+
 export const getRankedThreads = (
 	dateModified,
 	page = 1,
@@ -523,7 +589,7 @@ export const getRankedThreads = (
 
 export const getRankedThreadsQuery = gql`
 	query messageBoardThreadsRanked(
-		$dateModified: Date!
+		$dateModified: Date
 		$messageBoardSectionId: Long
 		$page: Int!
 		$pageSize: Int!

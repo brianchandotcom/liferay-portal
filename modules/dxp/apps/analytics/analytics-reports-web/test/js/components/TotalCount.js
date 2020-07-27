@@ -44,7 +44,7 @@ describe('TotalCount', () => {
 
 		await wait(() => expect(mockDataProvider).toHaveBeenCalled());
 
-		expect(getByText('9999')).toBeInTheDocument();
+		expect(getByText('9,999')).toBeInTheDocument();
 
 		const label = getByText(testProps.label);
 		expect(label).toBeInTheDocument();

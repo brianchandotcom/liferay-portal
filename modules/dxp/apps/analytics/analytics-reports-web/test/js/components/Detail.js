@@ -110,7 +110,7 @@ const mockOnTrafficSourceNameChange = jest.fn(() => Promise.resolve(''));
 
 const mockTrafficShareDataProvider = jest.fn(() => Promise.resolve(90));
 
-const mockTrafficVolumeDataProvider = jest.fn(() => Promise.resolve('278,256'));
+const mockTrafficVolumeDataProvider = jest.fn(() => Promise.resolve(278256));
 
 describe('Detail', () => {
 	afterEach(() => {

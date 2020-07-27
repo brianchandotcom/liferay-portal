@@ -406,7 +406,6 @@ public class ProjectTemplatesFormFieldTest
 
 		completeArgs.add("archetype:generate");
 		completeArgs.add("--batch-mode");
-
 		completeArgs.add("--settings");
 
 		String content = FileTestUtil.read(

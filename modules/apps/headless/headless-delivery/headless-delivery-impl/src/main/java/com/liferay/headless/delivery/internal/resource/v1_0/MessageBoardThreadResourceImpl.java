@@ -191,7 +191,7 @@ public class MessageBoardThreadResourceImpl
 					new TermFilter("parentMessageId", "0"),
 					BooleanClauseOccur.MUST);
 			},
-			mbCategory.getGroupId(), search, aggregation, filter, pagination,
+			mbCategory.getGroupId(), aggregation, filter, search, pagination,
 			sorts);
 	}
 
@@ -228,7 +228,7 @@ public class MessageBoardThreadResourceImpl
 	@Override
 	public Page<MessageBoardThread> getMessageBoardThreadsRankedPage(
 		Date dateCreated, Date dateModified, Long messageBoardSectionId,
-		Aggregation aggregation, Pagination pagination, Sort[] sorts) {
+		Pagination pagination, Sort[] sorts) {
 
 		DynamicQuery dynamicQuery = _getDynamicQuery(
 			dateCreated, dateModified, messageBoardSectionId);
@@ -327,7 +327,7 @@ public class MessageBoardThreadResourceImpl
 					new TermFilter("parentMessageId", "0"),
 					BooleanClauseOccur.MUST);
 			},
-			siteId, search, aggregation, filter, pagination, sorts);
+			siteId, aggregation, filter, search, pagination, sorts);
 	}
 
 	@Override
@@ -544,8 +544,8 @@ public class MessageBoardThreadResourceImpl
 	private Page<MessageBoardThread> _getSiteMessageBoardThreadsPage(
 			Map<String, Map<String, String>> actions,
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-			Long siteId, String keywords, Aggregation aggregation,
-			Filter filter, Pagination pagination, Sort[] sorts)
+			Long siteId, Aggregation aggregation, Filter filter,
+			String keywords, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(

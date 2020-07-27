@@ -33,8 +33,6 @@ import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.service.MBStatsUserLocalService;
 import com.liferay.message.boards.service.MBThreadFlagLocalService;
-import com.liferay.message.boards.service.MBThreadLocalService;
-import com.liferay.message.boards.service.MBThreadService;
 import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -201,12 +199,6 @@ public class MessageBoardThreadDTOConverter
 
 	@Reference
 	private MBThreadFlagLocalService _mbThreadFlagLocalService;
-
-	@Reference
-	private MBThreadLocalService _mbThreadLocalService;
-
-	@Reference
-	private MBThreadService _mbThreadService;
 
 	@Reference
 	private Portal _portal;

@@ -66,6 +66,16 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class ContentElementResourceImpl extends BaseContentElementResourceImpl {
 
 	@Override
+	public Page<ContentElement> getAssetLibraryContentElementsPage(
+			Long assetLibraryId, String search, Aggregation aggregation,
+			Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return _getContentElementsPage(
+			assetLibraryId, search, aggregation, filter, pagination, sorts);
+	}
+
+	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
 		throws Exception {
 
@@ -99,7 +109,7 @@ public class ContentElementResourceImpl extends BaseContentElementResourceImpl {
 	}
 
 	private SearchContext _getAssetSearchContext(
-		Long siteId, String search, Aggregation aggregation, Filter filter,
+		Long groupId, String search, Aggregation aggregation, Filter filter,
 		Pagination pagination, Sort[] sorts) {
 
 		SearchUtil.SearchContext searchContext = new SearchUtil.SearchContext();
@@ -160,7 +170,7 @@ public class ContentElementResourceImpl extends BaseContentElementResourceImpl {
 			searchContext.setEnd(pagination.getEndPosition());
 		}
 
-		searchContext.setGroupIds(new long[] {siteId});
+		searchContext.setGroupIds(new long[] {groupId});
 		searchContext.setKeywords(search);
 		searchContext.setLocale(contextAcceptLanguage.getPreferredLocale());
 
@@ -179,6 +189,29 @@ public class ContentElementResourceImpl extends BaseContentElementResourceImpl {
 		searchContext.setUserId(contextUser.getUserId());
 
 		return searchContext;
+	}
+
+	private Page<ContentElement> _getContentElementsPage(
+			Long groupId, String search, Aggregation aggregation, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		AssetSearcher assetSearcher =
+			(AssetSearcher)AssetSearcher.getInstance();
+
+		assetSearcher.setAssetEntryQuery(new AssetEntryQuery());
+
+		SearchContext searchContext = _getAssetSearchContext(
+			groupId, search, aggregation, filter, pagination, sorts);
+
+		return Page.of(
+			new HashMap<>(),
+			transform(
+				_assetHelper.getAssetEntries(
+					assetSearcher.search(searchContext)),
+				this::_toContentElement),
+			pagination,
+			_assetHelper.searchCount(searchContext, new AssetEntryQuery()));
 	}
 
 	private ContentElement _toContentElement(AssetEntry assetEntry) {

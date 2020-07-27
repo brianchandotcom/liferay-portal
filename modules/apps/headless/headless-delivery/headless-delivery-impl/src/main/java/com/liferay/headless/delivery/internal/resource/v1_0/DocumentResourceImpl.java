@@ -112,6 +112,18 @@ public class DocumentResourceImpl
 	}
 
 	@Override
+	public Page<Document> getAssetLibraryDocumentsPage(
+			Long assetLibraryId, Boolean flatten, String search,
+			Aggregation aggregation, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
+
+		return _getDocumentsPage(
+			assetLibraryId, flatten, search, aggregation, filter, pagination,
+			sorts);
+	}
+
+	@Override
 	public Document getDocument(Long documentId) throws Exception {
 		return _toDocument(_dlAppService.getFileEntry(documentId));
 	}
@@ -180,37 +192,7 @@ public class DocumentResourceImpl
 		throws Exception {
 
 		return _getDocumentsPage(
-			HashMapBuilder.put(
-				"create",
-				addAction(
-					"ADD_DOCUMENT", "postSiteDocument",
-					"com.liferay.document.library", siteId)
-			).put(
-				"get",
-				addAction(
-					"VIEW", "getSiteDocumentsPage",
-					"com.liferay.document.library", siteId)
-			).build(),
-			booleanQuery -> {
-				BooleanFilter booleanFilter =
-					booleanQuery.getPreBooleanFilter();
-
-				if (!GetterUtil.getBoolean(flatten)) {
-					booleanFilter.add(
-						new TermFilter(
-							Field.FOLDER_ID,
-							String.valueOf(
-								DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)),
-						BooleanClauseOccur.MUST);
-				}
-
-				if (siteId != null) {
-					booleanFilter.add(
-						new TermFilter(Field.GROUP_ID, String.valueOf(siteId)),
-						BooleanClauseOccur.MUST);
-				}
-			},
-			search, aggregation, filter, pagination, sorts);
+			siteId, flatten, search, aggregation, filter, pagination, sorts);
 	}
 
 	@Override
@@ -260,6 +242,14 @@ public class DocumentResourceImpl
 						DLFileEntry.class.getName(), documentId),
 					existingFileEntry.getFolderId(), documentOptional,
 					existingFileEntry.getGroupId())));
+	}
+
+	@Override
+	public Document postAssetLibraryDocument(
+			Long assetLibraryId, MultipartBody multipartBody)
+		throws Exception {
+
+		return _addDocument(assetLibraryId, 0L, assetLibraryId, multipartBody);
 	}
 
 	@Override
@@ -422,6 +412,46 @@ public class DocumentResourceImpl
 				return null;
 			}
 		);
+	}
+
+	private Page<Document> _getDocumentsPage(
+			Long groupId, Boolean flatten, String search,
+			Aggregation aggregation, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
+
+		return _getDocumentsPage(
+			HashMapBuilder.put(
+				"create",
+				addAction(
+					"ADD_DOCUMENT", "postSiteDocument",
+					"com.liferay.document.library", groupId)
+			).put(
+				"get",
+				addAction(
+					"VIEW", "getSiteDocumentsPage",
+					"com.liferay.document.library", groupId)
+			).build(),
+			booleanQuery -> {
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				if (!GetterUtil.getBoolean(flatten)) {
+					booleanFilter.add(
+						new TermFilter(
+							Field.FOLDER_ID,
+							String.valueOf(
+								DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)),
+						BooleanClauseOccur.MUST);
+				}
+
+				if (groupId != null) {
+					booleanFilter.add(
+						new TermFilter(Field.GROUP_ID, String.valueOf(groupId)),
+						BooleanClauseOccur.MUST);
+				}
+			},
+			search, aggregation, filter, pagination, sorts);
 	}
 
 	private Page<Document> _getDocumentsPage(

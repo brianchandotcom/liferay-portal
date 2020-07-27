@@ -57,6 +57,16 @@ public class ContentTemplateResourceImpl
 	extends BaseContentTemplateResourceImpl {
 
 	@Override
+	public Page<ContentTemplate> getAssetLibraryContentTemplatesPage(
+			Long assetLibraryId, String search, Aggregation aggregation,
+			Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return _getContentTemplatesPage(
+			assetLibraryId, search, aggregation, filter, pagination, sorts);
+	}
+
+	@Override
 	public ContentTemplate getContentTemplate(
 			Long siteId, String contentTemplateId)
 		throws Exception {
@@ -81,12 +91,21 @@ public class ContentTemplateResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
+		return _getContentTemplatesPage(
+			siteId, search, aggregation, filter, pagination, sorts);
+	}
+
+	private Page<ContentTemplate> _getContentTemplatesPage(
+			Long groupId, String search, Aggregation aggregation, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
 		return SearchUtil.search(
 			Collections.singletonMap(
 				"get",
 				addAction(
 					"MANAGE_LAYOUTS", "getSiteContentTemplatesPage",
-					Group.class.getName(), siteId)),
+					Group.class.getName(), groupId)),
 			booleanQuery -> {
 			},
 			filter, DDMTemplate.class, search, pagination,
@@ -101,7 +120,7 @@ public class ContentTemplateResourceImpl
 					_classNameLocalService.getClassNameId(
 						JournalArticle.class));
 				searchContext.setCompanyId(contextCompany.getCompanyId());
-				searchContext.setGroupIds(new long[] {siteId});
+				searchContext.setGroupIds(new long[] {groupId});
 			},
 			sorts,
 			document -> {

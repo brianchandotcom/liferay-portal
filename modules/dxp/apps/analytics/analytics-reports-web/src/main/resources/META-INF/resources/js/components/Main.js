@@ -16,6 +16,7 @@ import BasicInformation from './BasicInformation';
 import Chart from './Chart';
 import TotalCount from './TotalCount';
 import TrafficSources from './TrafficSources';
+import Translation from './Translation';
 
 export default function Main({
 	authorName,
@@ -25,6 +26,7 @@ export default function Main({
 	defaultTimeRange,
 	defaultTimeSpanOption,
 	languageTag,
+	languages,
 	onTrafficSourceClick,
 	pagePublishDate,
 	pageTitle,
@@ -43,6 +45,10 @@ export default function Main({
 				publishDate={pagePublishDate}
 				title={pageTitle}
 			/>
+
+			<div className="mt-4">
+				<Translation languages={languages} />
+			</div>
 
 			<h5 className="mt-3 sheet-subtitle">
 				{Liferay.Language.get('engagement')}

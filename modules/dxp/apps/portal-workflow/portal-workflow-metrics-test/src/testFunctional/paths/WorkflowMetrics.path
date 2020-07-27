@@ -69,6 +69,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PERFORMANCE_TOTAL_COMPLETED_ITEMS_VALUE</td>
+	<td>//div[@class='header'][span[contains(text(),'Total Completed')]]/following-sibling::div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERFORMANCE_TOTAL_OVERDUE_ITEMS_VALUE</td>
+	<td>//div[@class='header'][span[contains(text(),'Overdue')]]/following-sibling::div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERFORMANCE_TOTAL_ONTIME_ITEMS_VALUE</td>
+	<td>//div[@class='header'][span[contains(text(),'On Time')]]/following-sibling::div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERFORMANCE_TOTAL_UNTRACKED_ITEMS_VALUE</td>
+	<td>//div[@class='header'][span[contains(text(),'Untracked')]]/following-sibling::div</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_ALL_ITEMS_TABLE_INSTANCE</td>
 	<td>//td[contains(@data-testid,'assetInfoCell') and contains(text(),'${key_instanceInfo}')]</td>
 	<td></td>

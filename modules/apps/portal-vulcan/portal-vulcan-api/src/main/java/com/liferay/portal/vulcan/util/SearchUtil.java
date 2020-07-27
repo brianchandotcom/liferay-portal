@@ -113,11 +113,28 @@ public class SearchUtil {
 
 		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(indexerClass);
 
-		List<T> items = _getItems(
-			indexer, searchContext, transformUnsafeFunction);
+		List<T> items = new ArrayList<>();
+
+		Hits hits = null;
+
+		if (searchContext.isVulcanCheckPermissions()) {
+			hits = indexer.search(searchContext);
+		}
+		else {
+			hits = IndexSearcherHelperUtil.search(
+				searchContext, indexer.getFullQuery(searchContext));
+		}
+
+		for (Document document : hits.getDocs()) {
+			T item = transformUnsafeFunction.apply(document);
+
+			if (item != null) {
+				items.add(item);
+			}
+		}
 
 		return Page.of(
-			actions, _getFacets(searchContext), items, pagination,
+			actions, _getFacets(searchContext.getFacets()), items, pagination,
 			indexer.searchCount(searchContext));
 	}
 
@@ -280,39 +297,10 @@ public class SearchUtil {
 			booleanQuery, BooleanClauseOccur.MUST.getName());
 	}
 
-	private static List<Facet> _getFacets(SearchContext searchContext) {
-		Map<String, com.liferay.portal.kernel.search.facet.Facet> facets =
-			searchContext.getFacets();
+	private static List<Facet> _getFacets(
+		Map<String, com.liferay.portal.kernel.search.facet.Facet> facets) {
 
 		return TransformUtil.transform(facets.values(), FacetUtil::toFacet);
-	}
-
-	private static <T> List<T> _getItems(
-			Indexer<?> indexer, SearchContext searchContext,
-			UnsafeFunction<Document, T, Exception> transformUnsafeFunction)
-		throws Exception {
-
-		List<T> items = new ArrayList<>();
-
-		Hits hits = null;
-
-		if (searchContext.isVulcanCheckPermissions()) {
-			hits = indexer.search(searchContext);
-		}
-		else {
-			hits = IndexSearcherHelperUtil.search(
-				searchContext, indexer.getFullQuery(searchContext));
-		}
-
-		for (Document document : hits.getDocs()) {
-			T item = transformUnsafeFunction.apply(document);
-
-			if (item != null) {
-				items.add(item);
-			}
-		}
-
-		return items;
 	}
 
 	private static Object[] _getOrderByComparatorColumns(Sort[] sorts) {

@@ -24,6 +24,7 @@ import com.liferay.asset.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.asset.taglib.internal.util.AssetCategoryUtil;
 import com.liferay.asset.taglib.internal.util.AssetVocabularyUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
@@ -214,12 +215,13 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 				}
 
 				if (!_ignoreRequestValue) {
-					String categoryIdsParam = request.getParameter(
+					String[] categoryIdsParam = request.getParameterValues(
 						_hiddenInput + StringPool.UNDERLINE +
 							vocabulary.getVocabularyId());
 
-					if (Validator.isNotNull(categoryIdsParam)) {
-						categoryIds = categoryIdsParam;
+					if (categoryIdsParam != null) {
+						categoryIds = StringUtil.merge(
+							categoryIdsParam, StringPool.COMMA);
 					}
 				}
 

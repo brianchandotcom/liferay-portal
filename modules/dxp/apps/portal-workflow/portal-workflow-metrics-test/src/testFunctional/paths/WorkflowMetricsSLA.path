@@ -99,6 +99,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SLA_DROPDOWN_PAUSE_OPTION</td>
+	<td>//ul[@id="dropDownListpause"]//span[contains(text(),'${key_slaDefinitionPause}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SLA_DROPDOWN_START_OPTION</td>
 	<td>//span[contains(text(),'${key_slaDefinitionStart}')]</td>
 	<td></td>

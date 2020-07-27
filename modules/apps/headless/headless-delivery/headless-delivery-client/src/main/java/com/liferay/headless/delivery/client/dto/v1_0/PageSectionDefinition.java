@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.client.dto.v1_0;
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
 import com.liferay.headless.delivery.client.serdes.v1_0.PageSectionDefinitionSerDes;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -141,6 +142,27 @@ public class PageSectionDefinition implements Cloneable {
 	}
 
 	protected Layout layout;
+
+	public Map<String, Object> getStyles() {
+		return styles;
+	}
+
+	public void setStyles(Map<String, Object> styles) {
+		this.styles = styles;
+	}
+
+	public void setStyles(
+		UnsafeSupplier<Map<String, Object>, Exception> stylesUnsafeSupplier) {
+
+		try {
+			styles = stylesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, Object> styles;
 
 	@Override
 	public PageSectionDefinition clone() throws CloneNotSupportedException {

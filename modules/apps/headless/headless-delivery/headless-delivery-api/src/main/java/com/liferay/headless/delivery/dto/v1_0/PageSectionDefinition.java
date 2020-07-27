@@ -75,6 +75,7 @@ public class PageSectionDefinition {
 		}
 	}
 
+	@Deprecated
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String backgroundColor;
@@ -108,6 +109,7 @@ public class PageSectionDefinition {
 		}
 	}
 
+	@Deprecated
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentImage backgroundFragmentImage;
@@ -205,6 +207,35 @@ public class PageSectionDefinition {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Layout layout;
 
+	@Schema
+	@Valid
+	public Map<String, Object> getStyles() {
+		return styles;
+	}
+
+	public void setStyles(Map<String, Object> styles) {
+		this.styles = styles;
+	}
+
+	@JsonIgnore
+	public void setStyles(
+		UnsafeSupplier<Map<String, Object>, Exception> stylesUnsafeSupplier) {
+
+		try {
+			styles = stylesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, Object> styles;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -285,6 +316,16 @@ public class PageSectionDefinition {
 			sb.append("\"layout\": ");
 
 			sb.append(String.valueOf(layout));
+		}
+
+		if (styles != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"styles\": ");
+
+			sb.append(_toJSON(styles));
 		}
 
 		sb.append("}");

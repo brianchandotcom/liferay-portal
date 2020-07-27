@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.runner.RunWith;
 
 /**
@@ -31,6 +32,13 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class DocumentFolderResourceTest
 	extends BaseDocumentFolderResourceTestCase {
+
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+
+		testGroup = testDepotEntry.getGroup();
+	}
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {

@@ -10,6 +10,7 @@ dependencies {
 	testIntegrationCompile group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	testIntegrationCompile project(":apps:asset:asset-list-api")
 	testIntegrationCompile project(":apps:blogs:blogs-api")
+	testIntegrationCompile project(":apps:depot:depot-api")
 	testIntegrationCompile project(":apps:document-library:document-library-test-util")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")

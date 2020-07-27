@@ -50,6 +50,17 @@ public class ContentStructureResourceTest
 	}
 
 	@Override
+	protected ContentStructure
+			testGetAssetLibraryContentStructuresPage_addContentStructure(
+				Long assetLibraryId, ContentStructure contentStructure)
+		throws Exception {
+
+		return _toContentStructure(
+			_addDDMStructure(
+				testDepotEntry.getGroup(), contentStructure.getName()));
+	}
+
+	@Override
 	protected ContentStructure testGetContentStructure_addContentStructure()
 		throws Exception {
 

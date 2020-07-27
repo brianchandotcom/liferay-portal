@@ -15,6 +15,7 @@
 import {
 	ADD_FRAGMENT_ENTRY_LINKS,
 	ADD_FRAGMENT_ENTRY_LINK_COMMENT,
+	CHANGE_MASTER_LAYOUT,
 	DELETE_FRAGMENT_ENTRY_LINK_COMMENT,
 	DUPLICATE_ITEM,
 	EDIT_FRAGMENT_ENTRY_LINK_COMMENT,
@@ -78,6 +79,23 @@ export default function fragmentEntryLinksReducer(
 					comments: nextComments,
 				},
 			};
+		}
+		case CHANGE_MASTER_LAYOUT: {
+			const nextFragmentEntryLinks = {
+				...(action.fragmentEntryLinks || {}),
+			};
+
+			Object.entries(fragmentEntryLinks).forEach(
+				([fragmentEntryLinkId, fragmentEntryLink]) => {
+					if (!fragmentEntryLink.masterLayout) {
+						nextFragmentEntryLinks[
+							fragmentEntryLinkId
+						] = fragmentEntryLink;
+					}
+				}
+			);
+
+			return nextFragmentEntryLinks;
 		}
 
 		case DELETE_FRAGMENT_ENTRY_LINK_COMMENT: {

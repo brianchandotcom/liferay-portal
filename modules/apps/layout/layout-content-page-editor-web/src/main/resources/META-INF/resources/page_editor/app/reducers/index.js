@@ -20,6 +20,7 @@ import fragmentsReducer from './fragmentsReducer';
 import languageIdReducer from './languageIdReducer';
 import layoutDataReducer from './layoutDataReducer';
 import mappedInfoItemsReducer from './mappedInfoItemsReducer';
+import masterLayoutReducer from './masterLayoutReducer';
 import networkReducer from './networkReducer';
 import pageContentsReducer from './pageContentsReducer';
 import permissionsReducer from './permissionsReducer';
@@ -53,6 +54,7 @@ const combinedReducer = (state, action) =>
 		languageId: languageIdReducer,
 		layoutData: layoutDataReducer,
 		mappedInfoItems: mappedInfoItemsReducer,
+		masterLayout: masterLayoutReducer,
 		network: networkReducer,
 		pageContents: pageContentsReducer,
 		permissions: permissionsReducer,

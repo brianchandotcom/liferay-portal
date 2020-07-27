@@ -21,7 +21,7 @@ import {confirmDelete} from '../utils/client.es';
 import {successToast} from '../utils/toast.es';
 import usePermissions from './usePermissions.es';
 
-export default function useEntriesActions(refetch) {
+export default function useEntriesActions({refetch, showOptions} = {}) {
 	const actions = [];
 	const {basePortletURL, showFormView} = useContext(AppContext);
 	const {history} = useContext(RouterContext);
@@ -32,6 +32,7 @@ export default function useEntriesActions(refetch) {
 			actions.push({
 				action: ({viewURL}) => Promise.resolve(history.push(viewURL)),
 				name: Liferay.Language.get('view'),
+				show: showOptions?.view,
 			});
 		}
 
@@ -42,6 +43,7 @@ export default function useEntriesActions(refetch) {
 						navigateToEditPage(basePortletURL, {dataRecordId: id})
 					),
 				name: Liferay.Language.get('edit'),
+				show: showOptions?.update,
 			});
 		}
 
@@ -69,6 +71,7 @@ export default function useEntriesActions(refetch) {
 					});
 				},
 				name: Liferay.Language.get('delete'),
+				show: showOptions?.delete,
 			});
 		}
 	}

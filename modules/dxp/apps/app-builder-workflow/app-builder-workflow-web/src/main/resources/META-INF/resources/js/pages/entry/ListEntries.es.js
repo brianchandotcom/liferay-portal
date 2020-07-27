@@ -231,6 +231,9 @@ export default function ListEntries({history}) {
 
 	const isEmpty = totalCount === 0;
 	const showAddButton = showFormView && permissions.add;
+	const showOptions = {
+		update: ({completed}) => !completed,
+	};
 
 	return (
 		<Loading isLoading={isLoading}>
@@ -257,7 +260,7 @@ export default function ListEntries({history}) {
 				/>
 
 				<TableWithPagination
-					actions={useEntriesActions(refetch)}
+					actions={useEntriesActions({refetch, showOptions})}
 					columns={COLUMNS}
 					emptyState={{
 						button: () =>

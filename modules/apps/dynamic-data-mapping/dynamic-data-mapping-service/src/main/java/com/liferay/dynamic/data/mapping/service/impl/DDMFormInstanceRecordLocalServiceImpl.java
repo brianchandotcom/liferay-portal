@@ -450,6 +450,9 @@ public class DDMFormInstanceRecordLocalServiceImpl
 				user, ddmFormInstanceRecordVersion,
 				ddmFormInstanceRecordVersion.getStatus(), version,
 				serviceContext);
+
+			ddmFormInstanceRecordVersionPersistence.clearCache(
+				ddmFormInstanceRecordVersion);
 		}
 
 		// Asset

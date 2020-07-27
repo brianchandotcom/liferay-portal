@@ -424,13 +424,12 @@ public class DDMFormEmailNotificationSender {
 			DDMFormInstance ddmFormInstance, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		Group group = _groupLocalService.getGroup(ddmFormInstance.getGroupId());
-
 		String portletNamespace = _portal.getPortletNamespace(
 			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN);
 
 		return _portal.getSiteAdminURL(
-			themeDisplay.getPortalURL(), group,
+			themeDisplay.getPortalURL(),
+			_groupLocalService.getGroup(ddmFormInstance.getGroupId()),
 			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
 			HashMapBuilder.put(
 				portletNamespace.concat("mvcPath"),
@@ -449,13 +448,12 @@ public class DDMFormEmailNotificationSender {
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		Group group = _groupLocalService.getGroup(ddmFormInstance.getGroupId());
-
 		String portletNamespace = _portal.getPortletNamespace(
 			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN);
 
 		return _portal.getSiteAdminURL(
-			themeDisplay.getPortalURL(), group,
+			themeDisplay.getPortalURL(),
+			_groupLocalService.getGroup(ddmFormInstance.getGroupId()),
 			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
 			HashMapBuilder.put(
 				portletNamespace.concat("mvcPath"),

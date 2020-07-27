@@ -21,12 +21,14 @@ import {withRouter} from 'react-router-dom';
 import {AppContext} from '../../../AppContext.es';
 import Button from '../../../components/button/Button.es';
 import {addItem, updateItem} from '../../../utils/client.es';
+import {getLocalizedValue} from '../../../utils/lang.es';
 import {errorToast, successToast} from '../../../utils/toast.es';
 import EditAppContext from './EditAppContext.es';
 
 export default withRouter(
 	({
 		currentStep,
+		defaultLanguageId,
 		history,
 		match: {
 			params: {dataDefinitionId},
@@ -46,8 +48,10 @@ export default withRouter(
 			dataLayoutId,
 			dataListViewId,
 			id: appId,
-			name: {en_US: appName},
+			name,
 		} = app;
+
+		const appName = getLocalizedValue(defaultLanguageId, name);
 
 		const getStandaloneLink = (appId) => {
 			const isStandalone = appDeployments.some(

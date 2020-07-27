@@ -45,7 +45,7 @@ export default ({
 			dataLayoutId: null,
 			dataListViewId: null,
 			name: {
-				en_US: '',
+				[defaultLanguageId]: '',
 			},
 			scope,
 		},
@@ -153,6 +153,7 @@ export default ({
 
 							<EditAppFooter
 								currentStep={currentStep}
+								defaultLanguageId={defaultLanguageId}
 								onCurrentStepChange={onCurrentStepChange}
 							/>
 						</div>

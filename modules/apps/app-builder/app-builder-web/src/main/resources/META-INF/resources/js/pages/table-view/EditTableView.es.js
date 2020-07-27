@@ -13,7 +13,8 @@
  */
 
 import classNames from 'classnames';
-import React, {useContext, useEffect, useState} from 'react';
+import {TranslationManager} from 'data-engine-taglib';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import ControlMenu from '../../components/control-menu/ControlMenu.es';
@@ -44,12 +45,19 @@ const EditTableView = withRouter(({history}) => {
 		EditTableViewContext
 	);
 	const [defaultLanguageId, setDefaultLanguageId] = useState('');
+	const [editingLanguageId, setEditingLanguageId] = useState('');
 
 	useEffect(() => {
 		if (dataDefinition.defaultLanguageId) {
 			setDefaultLanguageId(dataDefinition.defaultLanguageId);
+
+			onEditingLanguageIdChange(dataDefinition.defaultLanguageId);
 		}
-	}, [dataDefinition.defaultLanguageId]);
+	}, [dataDefinition.defaultLanguageId, onEditingLanguageIdChange]);
+
+	const onEditingLanguageIdChange = useCallback((editingLanguageId) => {
+		setEditingLanguageId(editingLanguageId);
+	}, []);
 
 	const onError = ({title = ''}) => {
 		errorToast(`${title}.`);
@@ -150,6 +158,10 @@ const EditTableView = withRouter(({history}) => {
 		});
 	});
 
+	if (!defaultLanguageId) {
+		return null;
+	}
+
 	return (
 		<div className="app-builder-table-view">
 			<ControlMenu
@@ -168,6 +180,17 @@ const EditTableView = withRouter(({history}) => {
 					}}
 				>
 					<UpperToolbar>
+						<UpperToolbar.Group>
+							<TranslationManager
+								defaultLanguageId={defaultLanguageId}
+								editingLanguageId={editingLanguageId}
+								onEditingLanguageIdChange={
+									onEditingLanguageIdChange
+								}
+								translatedLanguageIds={dataListView.name}
+							/>
+						</UpperToolbar.Group>
+
 						<UpperToolbar.Input
 							onChange={onTableViewNameChange}
 							placeholder={Liferay.Language.get(
@@ -175,6 +198,7 @@ const EditTableView = withRouter(({history}) => {
 							)}
 							value={dataListViewName}
 						/>
+
 						<UpperToolbar.Group>
 							<UpperToolbar.Button
 								displayType="secondary"

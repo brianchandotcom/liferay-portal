@@ -15,7 +15,6 @@
 package com.liferay.analytics.reports.web.internal.display.context;
 
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
-import com.liferay.analytics.reports.web.internal.configuration.AnalyticsReportsConfiguration;
 import com.liferay.analytics.reports.web.internal.data.provider.AnalyticsReportsDataProvider;
 import com.liferay.analytics.reports.web.internal.model.CountrySearchKeywords;
 import com.liferay.analytics.reports.web.internal.model.SearchKeyword;
@@ -86,7 +85,6 @@ public class AnalyticsReportsDisplayContextTest {
 
 		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
 			new AnalyticsReportsDisplayContext(
-				_getAnalyticsReportsConfiguration(false),
 				_getAnalyticsReportsDataProvider(
 					null, RandomTestUtil.randomInt(),
 					RandomTestUtil.randomDouble(), null,
@@ -133,7 +131,6 @@ public class AnalyticsReportsDisplayContextTest {
 
 		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
 			new AnalyticsReportsDisplayContext(
-				_getAnalyticsReportsConfiguration(true),
 				analyticsReportsDataProvider, analyticsReportsInfoItem, null,
 				null, new PortalImpl(), _getRenderResponse(),
 				_getResourceBundle(), _getThemeDisplay(layout));
@@ -176,41 +173,6 @@ public class AnalyticsReportsDisplayContextTest {
 	}
 
 	@Test
-	public void testGetPropsWithTrafficSourcesDisabled() {
-		long organicTrafficAmount = RandomTestUtil.randomInt();
-		double organicTrafficShare = RandomTestUtil.randomDouble();
-
-		long paidTrafficAmount = RandomTestUtil.randomInt();
-		double paidTrafficShare = RandomTestUtil.randomDouble();
-
-		AnalyticsReportsDataProvider analyticsReportsDataProvider =
-			_getAnalyticsReportsDataProvider(
-				null, organicTrafficAmount, organicTrafficShare, null,
-				paidTrafficAmount, paidTrafficShare, false);
-
-		AnalyticsReportsInfoItem<Object> analyticsReportsInfoItem =
-			_getAnalyticsReportsItem();
-
-		Layout layout = _getLayout();
-
-		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
-			new AnalyticsReportsDisplayContext(
-				_getAnalyticsReportsConfiguration(false),
-				analyticsReportsDataProvider, analyticsReportsInfoItem, null,
-				null, new PortalImpl(), _getRenderResponse(),
-				_getResourceBundle(), _getThemeDisplay(layout));
-
-		Map<String, Object> data = analyticsReportsDisplayContext.getData();
-
-		Map<String, Object> props = (Map<String, Object>)data.get("props");
-
-		JSONArray trafficSourcesJSONArray = (JSONArray)props.get(
-			"trafficSources");
-
-		Assert.assertEquals("[]", trafficSourcesJSONArray.toJSONString());
-	}
-
-	@Test
 	public void testGetPropsWithValidAnalyticsConnection() {
 		long organicTrafficAmount = RandomTestUtil.randomInt();
 		double organicTrafficShare = RandomTestUtil.randomDouble();
@@ -240,7 +202,6 @@ public class AnalyticsReportsDisplayContextTest {
 
 		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
 			new AnalyticsReportsDisplayContext(
-				_getAnalyticsReportsConfiguration(true),
 				analyticsReportsDataProvider, analyticsReportsInfoItem, null,
 				null, new PortalImpl(), _getRenderResponse(),
 				_getResourceBundle(), _getThemeDisplay(layout));
@@ -337,19 +298,6 @@ public class AnalyticsReportsDisplayContextTest {
 				)
 			).toJSONString(),
 			trafficSourcesJSONArray.toJSONString());
-	}
-
-	private AnalyticsReportsConfiguration _getAnalyticsReportsConfiguration(
-		boolean trafficSourcesEnabled) {
-
-		return new AnalyticsReportsConfiguration() {
-
-			@Override
-			public boolean trafficSourcesEnabled() {
-				return trafficSourcesEnabled;
-			}
-
-		};
 	}
 
 	private AnalyticsReportsDataProvider _getAnalyticsReportsDataProvider(

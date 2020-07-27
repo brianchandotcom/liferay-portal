@@ -15,7 +15,6 @@
 package com.liferay.analytics.reports.web.internal.display.context;
 
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
-import com.liferay.analytics.reports.web.internal.configuration.AnalyticsReportsConfiguration;
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
 import com.liferay.analytics.reports.web.internal.data.provider.AnalyticsReportsDataProvider;
 import com.liferay.analytics.reports.web.internal.model.TimeRange;
@@ -56,14 +55,12 @@ import javax.portlet.ResourceURL;
 public class AnalyticsReportsDisplayContext {
 
 	public AnalyticsReportsDisplayContext(
-		AnalyticsReportsConfiguration analyticsReportsConfiguration,
 		AnalyticsReportsDataProvider analyticsReportsDataProvider,
 		AnalyticsReportsInfoItem<Object> analyticsReportsInfoItem,
 		Object analyticsReportsInfoItemObject, String canonicalURL,
 		Portal portal, RenderResponse renderResponse,
 		ResourceBundle resourceBundle, ThemeDisplay themeDisplay) {
 
-		_analyticsReportsConfiguration = analyticsReportsConfiguration;
 		_analyticsReportsDataProvider = analyticsReportsDataProvider;
 		_analyticsReportsInfoItem = analyticsReportsInfoItem;
 		_analyticsReportsInfoItemObject = analyticsReportsInfoItemObject;
@@ -207,14 +204,7 @@ public class AnalyticsReportsDisplayContext {
 			_analyticsReportsInfoItem.getTitle(
 				_analyticsReportsInfoItemObject, _themeDisplay.getLocale())
 		).put(
-			"trafficSources",
-			() -> {
-				if (_analyticsReportsConfiguration.trafficSourcesEnabled()) {
-					return _getTrafficSourcesJSONArray();
-				}
-
-				return JSONFactoryUtil.createJSONArray();
-			}
+			"trafficSources", _getTrafficSourcesJSONArray()
 		).build();
 	}
 
@@ -313,7 +303,6 @@ public class AnalyticsReportsDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsReportsDisplayContext.class);
 
-	private final AnalyticsReportsConfiguration _analyticsReportsConfiguration;
 	private final AnalyticsReportsDataProvider _analyticsReportsDataProvider;
 	private final AnalyticsReportsInfoItem<Object> _analyticsReportsInfoItem;
 	private final Object _analyticsReportsInfoItemObject;

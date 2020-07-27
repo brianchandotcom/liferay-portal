@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -288,8 +289,9 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 	}
 
 	private String _upgradeDefinition(
-		String definition, Long parentStructureId, Long parentStructureLayoutId,
-		Long structureId) {
+			String definition, Long parentStructureId,
+			Long parentStructureLayoutId, Long structureId)
+		throws Exception {
 
 		DDMFormDeserializerDeserializeResponse
 			ddmFormDeserializerDeserializeResponse =
@@ -297,6 +299,13 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 					DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
 						definition
 					).build());
+
+		Exception exception =
+			ddmFormDeserializerDeserializeResponse.getException();
+
+		if (exception != null) {
+			throw new UpgradeException(exception);
+		}
 
 		DDMForm ddmForm = ddmFormDeserializerDeserializeResponse.getDDMForm();
 

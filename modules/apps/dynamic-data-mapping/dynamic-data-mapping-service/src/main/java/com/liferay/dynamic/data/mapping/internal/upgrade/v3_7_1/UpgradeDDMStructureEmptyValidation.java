@@ -25,6 +25,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidationExpression;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -115,13 +116,22 @@ public class UpgradeDDMStructureEmptyValidation extends UpgradeProcess {
 		}
 	}
 
-	private String _updateDDMFormFieldValidation(String definition) {
+	private String _updateDDMFormFieldValidation(String definition)
+		throws Exception {
+
 		DDMFormDeserializerDeserializeResponse
 			ddmFormDeserializerDeserializeResponse =
 				_ddmFormDeserializer.deserialize(
 					DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
 						definition
 					).build());
+
+		Exception exception =
+			ddmFormDeserializerDeserializeResponse.getException();
+
+		if (exception != null) {
+			throw new UpgradeException(exception);
+		}
 
 		DDMForm ddmForm = ddmFormDeserializerDeserializeResponse.getDDMForm();
 

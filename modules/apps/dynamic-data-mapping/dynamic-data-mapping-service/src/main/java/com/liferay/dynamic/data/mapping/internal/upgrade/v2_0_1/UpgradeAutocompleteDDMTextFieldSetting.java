@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -131,7 +132,9 @@ public class UpgradeAutocompleteDDMTextFieldSetting extends UpgradeProcess {
 		return false;
 	}
 
-	protected String upgradeDDMFormInstanceStructure(String definition) {
+	protected String upgradeDDMFormInstanceStructure(String definition)
+		throws Exception {
+
 		DDMFormDeserializerDeserializeRequest.Builder deserializerBuilder =
 			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
 				definition);
@@ -139,6 +142,13 @@ public class UpgradeAutocompleteDDMTextFieldSetting extends UpgradeProcess {
 		DDMFormDeserializerDeserializeResponse
 			ddmFormDeserializerDeserializeResponse =
 				_ddmFormDeserializer.deserialize(deserializerBuilder.build());
+
+		Exception exception =
+			ddmFormDeserializerDeserializeResponse.getException();
+
+		if (exception != null) {
+			throw new UpgradeException(exception);
+		}
 
 		DDMForm ddmForm = ddmFormDeserializerDeserializeResponse.getDDMForm();
 

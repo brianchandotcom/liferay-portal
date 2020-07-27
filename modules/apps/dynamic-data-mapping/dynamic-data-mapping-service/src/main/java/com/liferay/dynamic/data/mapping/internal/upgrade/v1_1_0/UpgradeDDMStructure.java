@@ -27,6 +27,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -57,7 +58,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		upgradeDDMStructureVersionDefinition();
 	}
 
-	protected String updateDefinition(String definition) {
+	protected String updateDefinition(String definition) throws Exception {
 		DDMFormDeserializerDeserializeRequest.Builder deserializerBuilder =
 			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
 				definition);
@@ -65,6 +66,13 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		DDMFormDeserializerDeserializeResponse
 			ddmFormDeserializerDeserializeResponse =
 				_ddmFormDeserializer.deserialize(deserializerBuilder.build());
+
+		Exception exception =
+			ddmFormDeserializerDeserializeResponse.getException();
+
+		if (exception != null) {
+			throw new UpgradeException(exception);
+		}
 
 		DDMForm ddmForm = ddmFormDeserializerDeserializeResponse.getDDMForm();
 

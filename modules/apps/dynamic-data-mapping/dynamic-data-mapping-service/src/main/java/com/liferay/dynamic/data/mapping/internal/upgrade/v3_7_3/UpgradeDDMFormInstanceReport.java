@@ -176,6 +176,13 @@ public class UpgradeDDMFormInstanceReport extends UpgradeProcess {
 						ddmFormDeserializerDeserializeResponse =
 							_ddmFormDeserializer.deserialize(builder.build());
 
+					Exception exception =
+						ddmFormDeserializerDeserializeResponse.getException();
+
+					if (exception != null) {
+						throw new UpgradeException(exception);
+					}
+
 					return ddmFormDeserializerDeserializeResponse.getDDMForm();
 				}
 			}

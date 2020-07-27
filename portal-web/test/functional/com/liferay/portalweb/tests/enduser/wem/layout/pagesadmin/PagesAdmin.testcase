@@ -711,4 +711,54 @@ definition {
 			key_rowNumber = "3");
 	}
 
+	@description = "This is a test for LPS-110183. Can view more collection items use pagination in Collection Items modal."
+	@priority = "4"
+	test ViewCollectionItemWithPagination {
+		for (var entryTitle : list "5,4,3,2,1") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title ${entryTitle}");
+		}
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPublicCollectionPage(
+			collectionName = "Highest Rated Assets",
+			pageName = "Content Collection Page Name",
+			tabName = "Collection Providers");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "View Collection Items",
+			pageName = "Content Collection Page Name");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		for (var rowNumber : list "1,2,3,4,5") {
+			Page.viewCollectionItem(
+				itemName = "Web Content Title ${rowNumber}",
+				key_rowNumber = "${rowNumber}");
+		}
+
+		Pagination.changePagination(itemsPerPage = "4");
+
+		for (var rowNumber : list "1,2,3,4") {
+			Page.viewCollectionItem(
+				itemName = "Web Content Title ${rowNumber}",
+				key_rowNumber = "${rowNumber}");
+		}
+
+		AssertElementNotPresent(
+			key_rowNumber = "5",
+			locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER");
+
+		Click(locator1 = "Pagination#NEXT_LINK");
+
+		Page.viewCollectionItem(itemName = "Web Content Title 5");
+	}
+
 }

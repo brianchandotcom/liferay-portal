@@ -620,20 +620,24 @@ class LayoutProvider extends Component {
 	_setInitialPages(initialPages) {
 		const visitor = new PagesVisitor(initialPages);
 
-		return visitor.mapFields((field) => {
-			const {settingsContext} = field;
+		return visitor.mapFields(
+			(field) => {
+				const {settingsContext} = field;
 
-			return {
-				...field,
-				localizedValue: {},
-				readOnly: true,
-				settingsContext: {
-					...this._setInitialSettingsContext(settingsContext),
-				},
-				value: undefined,
-				visible: true,
-			};
-		});
+				return {
+					...field,
+					localizedValue: {},
+					readOnly: true,
+					settingsContext: {
+						...this._setInitialSettingsContext(settingsContext),
+					},
+					value: undefined,
+					visible: true,
+				};
+			},
+			true,
+			true
+		);
 	}
 
 	_setInitialSettingsContext(settingsContext) {

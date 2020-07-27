@@ -21,15 +21,14 @@ import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.formatter.InfoCollectionTextFormatter;
 import com.liferay.info.formatter.InfoTextFormatter;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.type.Labeled;
 import com.liferay.info.type.WebImage;
 import com.liferay.petra.string.StringPool;
@@ -234,12 +233,11 @@ public class FragmentEntryProcessorHelperImpl
 
 		String className = _portal.getClassName(classNameId);
 
-		InfoDisplayContributor<Object> infoDisplayContributor =
-			(InfoDisplayContributor<Object>)
-				_infoDisplayContributorTracker.getInfoDisplayContributor(
-					className);
+		InfoItemObjectProvider<Object> infoItemObjectProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemObjectProvider.class, className);
 
-		if (infoDisplayContributor == null) {
+		if (infoItemObjectProvider == null) {
 			return null;
 		}
 
@@ -252,20 +250,23 @@ public class FragmentEntryProcessorHelperImpl
 			return null;
 		}
 
-		InfoDisplayObjectProvider<Object> infoDisplayObjectProvider = null;
+		InfoItemReference infoItemReference = new InfoItemReference(classPK);
 
 		if (fragmentEntryProcessorContext.getPreviewClassPK() > 0) {
-			infoDisplayObjectProvider =
-				infoDisplayContributor.getPreviewInfoDisplayObjectProvider(
-					fragmentEntryProcessorContext.getPreviewClassPK(),
-					fragmentEntryProcessorContext.getPreviewType());
-		}
-		else {
-			infoDisplayObjectProvider =
-				infoDisplayContributor.getInfoDisplayObjectProvider(classPK);
+			infoItemReference = new InfoItemReference(
+				fragmentEntryProcessorContext.getPreviewClassPK());
+
+			if (Validator.isNotNull(
+					fragmentEntryProcessorContext.getPreviewVersion())) {
+
+				infoItemReference.setVersion(
+					fragmentEntryProcessorContext.getPreviewVersion());
+			}
 		}
 
-		if (infoDisplayObjectProvider == null) {
+		Object object = infoItemObjectProvider.getInfoItem(infoItemReference);
+
+		if (object == null) {
 			return null;
 		}
 
@@ -283,8 +284,6 @@ public class FragmentEntryProcessorHelperImpl
 
 			return null;
 		}
-
-		Object object = infoDisplayObjectProvider.getDisplayObject();
 
 		Map<String, Object> fieldsValues = infoDisplaysFieldValues.get(classPK);
 
@@ -467,9 +466,6 @@ public class FragmentEntryProcessorHelperImpl
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
-	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;

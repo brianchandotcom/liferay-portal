@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gabriel Albuquerque
  */
 @Component(immediate = true, service = PortalInstanceLifecycleListener.class)
-public class AddNativeObjectsPortalInstanceLifecycleListener
+public class AddDataEngineNativeObjectsPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override

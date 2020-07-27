@@ -215,66 +215,52 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	<#assign columnBitmaskEnabled = (entity.finderEntityColumns?size &gt; 0) && (entity.finderEntityColumns?size &lt; 64) && !entity.hasEagerBlobColumn()/>
 
-	<#if entity.hasEagerBlobColumn()>
-		<#if !dependencyInjectorDS>
-			<#if serviceBuilder.isVersionGTE_7_3_0()>
-				/**
-				* @deprecated As of Athanasius (7.3.x), with no direct replacement
-				*/
-				@Deprecated
-			</#if>
-			public static final boolean ENTITY_CACHE_ENABLED = false;
-
-			<#if serviceBuilder.isVersionGTE_7_3_0()>
-				/**
-				* @deprecated As of Athanasius (7.3.x), with no direct replacement
-				*/
-				@Deprecated
-			</#if>
-			public static final boolean FINDER_CACHE_ENABLED = false;
+	<#if !dependencyInjectorDS>
+		<#if serviceBuilder.isVersionGTE_7_3_0()>
+			/**
+			* @deprecated As of Athanasius (7.3.x), with no direct replacement
+			*/
+			@Deprecated
 		</#if>
-	<#else>
-		<#if !dependencyInjectorDS>
-			<#if serviceBuilder.isVersionGTE_7_3_0()>
-				/**
-				* @deprecated As of Athanasius (7.3.x), with no direct replacement
-				*/
-				@Deprecated
-			</#if>
-			public static final boolean ENTITY_CACHE_ENABLED =
-			<#if serviceBuilder.isVersionGTE_7_3_0()>
-				true;
+		public static final boolean ENTITY_CACHE_ENABLED =
+		<#if entity.hasEagerBlobColumn()>
+			false;
+		<#elseif serviceBuilder.isVersionGTE_7_3_0()>
+			true;
+		<#else>
+			GetterUtil.getBoolean(${propsUtil}.get("value.object.entity.cache.enabled.${apiPackagePath}.model.${entity.name}"),
+			<#if entity.isCacheEnabled()>
+				true
 			<#else>
-				GetterUtil.getBoolean(${propsUtil}.get("value.object.entity.cache.enabled.${apiPackagePath}.model.${entity.name}"),
-				<#if entity.isCacheEnabled()>
-					true
-				<#else>
-					false
-				</#if>
-
-				);
+				false
 			</#if>
 
-			<#if serviceBuilder.isVersionGTE_7_3_0()>
-				/**
-				* @deprecated As of Athanasius (7.3.x), with no direct replacement
-				*/
-				@Deprecated
-			</#if>
-			public static final boolean FINDER_CACHE_ENABLED =
-			<#if serviceBuilder.isVersionGTE_7_3_0()>
-				true;
+			);
+		</#if>
+
+		<#if serviceBuilder.isVersionGTE_7_3_0()>
+			/**
+			* @deprecated As of Athanasius (7.3.x), with no direct replacement
+			*/
+			@Deprecated
+		</#if>
+		public static final boolean FINDER_CACHE_ENABLED =
+		<#if entity.hasEagerBlobColumn()>
+			false;
+		<#elseif serviceBuilder.isVersionGTE_7_3_0()>
+			true;
+		<#else>
+			GetterUtil.getBoolean(${propsUtil}.get("value.object.finder.cache.enabled.${apiPackagePath}.model.${entity.name}"),
+
+			<#if entity.isCacheEnabled()>
+				true
 			<#else>
-				GetterUtil.getBoolean(${propsUtil}.get("value.object.finder.cache.enabled.${apiPackagePath}.model.${entity.name}"),
-
-				<#if entity.isCacheEnabled()>
-					true
-				<#else>
-					false
-				</#if>
-
-				);
+				false
 			</#if>
+
+			);
+		</#if>
+		<#if !entity.hasEagerBlobColumn()>
 			<#if serviceBuilder.isVersionGTE_7_3_0()>
 				/**
 				* @deprecated As of Athanasius (7.3.x), with no direct replacement

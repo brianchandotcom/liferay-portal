@@ -322,6 +322,7 @@ export default withRouter(
 							<ClayInput.GroupItem shrink>
 								<ClaySelect
 									className="bg-transparent border-0"
+									disabled={loading}
 									id="questionsFilter"
 									onChange={(event) => {
 										setLoading(true);

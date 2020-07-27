@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>LIKE</td>
-	<td>//div[contains(@class,'ratings-like')]//button[contains(@title,'Like This')]</td>
+	<td>//div[contains(@class,'ratings-like')]//button[contains(@title,'Like This') or contains(@data-title,'Like This')]</td>
 	<td></td>
 </tr>
 <tr>

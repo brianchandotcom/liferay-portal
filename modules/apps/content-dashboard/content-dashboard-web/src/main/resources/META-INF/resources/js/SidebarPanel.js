@@ -14,26 +14,86 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {useTimeout} from 'frontend-js-react-web';
+import {useIsMounted, useTimeout} from 'frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
-import React, {useEffect, useImperativeHandle, useRef, useState} from 'react';
+import React, {useEffect, useImperativeHandle, useReducer, useRef} from 'react';
 
 import Sidebar from './components/Sidebar';
+
+const initialState = {
+	data: null,
+	error: null,
+	html: null,
+	loading: false,
+	open: true,
+};
 
 const SidebarPanel = React.forwardRef(
 	({fetchURL, onClose, viewComponent: View}, ref) => {
 		const CurrentView = useRef(View);
 
-		const [error, setError] = useState();
-		const [isLoading, setIsLoading] = useState();
-		const [isOpen, setIsOpen] = useState(true);
-		const [resourceData, setResourceData] = useState();
-
 		const delay = useTimeout();
 
+		const isMounted = useIsMounted();
+
+		const dataReducer = (state, action) => {
+			if (isMounted()) {
+				switch (action.type) {
+					case 'CLOSE_SIDEBAR':
+						return {
+							...state,
+							isOpen: false,
+						};
+
+					case 'LOAD_DATA':
+						return {
+							loading: true,
+						};
+
+					case 'OPEN_SIDEBAR':
+						return {
+							...state,
+							isOpen: true,
+						};
+
+					case 'SET_ERROR':
+						return {
+							error: action.error,
+							loading: false,
+						};
+
+					case 'SET_HTML':
+						return {
+							data: {
+								html: action.html,
+							},
+							error: null,
+							loading: false,
+						};
+
+					case 'SET_JSON':
+						return {
+							data: action.data,
+							error: action.data?.error,
+							loading: false,
+						};
+
+					default:
+						return initialState;
+				}
+			}
+		};
+
+		const [state, dispatch] = useReducer(dataReducer, initialState);
+
+		// Force 300 ms of waiting to render the response so loading
+		// looks more natural.
+
+		const dispatchWithDelay = (action) =>
+			delay(() => dispatch(action), 300);
+
 		const getData = (fetchURL) => {
-			setIsLoading(true);
-			setResourceData(null);
+			dispatch({type: 'LOAD_DATA'});
 
 			fetch(fetchURL, {
 				method: 'GET',
@@ -42,30 +102,27 @@ const SidebarPanel = React.forwardRef(
 					response.headers.get('content-type').includes('json')
 						? response
 								.json()
-								.then((data) => setData(data, data?.error))
-						: response.text().then((html) => setData({html}))
+								.then((data) =>
+									dispatchWithDelay({data, type: 'SET_JSON'})
+								)
+						: response
+								.text()
+								.then((html) =>
+									dispatchWithDelay({html, type: 'SET_HTML'})
+								)
 				)
 				.catch(() => {
-					setData(
-						null,
-						Liferay.Language.get('an-unexpected-error-occurred')
-					);
+					dispatchWithDelay({
+						error: Liferay.Language.get(
+							'an-unexpected-error-occurred'
+						),
+						type: 'SET_ERROR',
+					});
 				});
 		};
 
-		const onCloseHandle = () => (onClose ? onClose() : setIsOpen(false));
-
-		const setData = (data, error) => {
-
-			// Force 300 ms of waiting to render the response so loading
-			// looks more natural.
-
-			delay(() => {
-				setIsLoading(false);
-				setError(error);
-				setResourceData(data);
-			}, 300);
-		};
+		const onCloseHandle = () =>
+			onClose ? onClose() : dispatch({type: 'CLOSE_SIDEBAR'});
 
 		useEffect(() => {
 			getData(fetchURL);
@@ -77,32 +134,32 @@ const SidebarPanel = React.forwardRef(
 		}, [View]);
 
 		useImperativeHandle(ref, () => ({
-			close: () => setIsOpen(false),
+			close: () => dispatch({type: 'CLOSE_SIDEBAR'}),
 			open: (fetchURL, View) => {
 				CurrentView.current = View;
 
 				getData(fetchURL);
 
-				setIsOpen(true);
+				dispatch({type: 'OPEN_SIDEBAR'});
 			},
 		}));
 
 		return (
-			<Sidebar onClose={onCloseHandle} open={isOpen}>
-				{isLoading ? (
+			<Sidebar onClose={onCloseHandle} open={state.isOpen}>
+				{state?.loading ? (
 					<Sidebar.Body>
 						<ClayLoadingIndicator />
 					</Sidebar.Body>
-				) : error ? (
+				) : state?.error ? (
 					<>
 						<Sidebar.Header />
 
 						<ClayAlert displayType="danger" variant="stripe">
-							{error}
+							{state.error}
 						</ClayAlert>
 					</>
 				) : (
-					resourceData && <CurrentView.current {...resourceData} />
+					state?.data && <CurrentView.current {...state.data} />
 				)}
 			</Sidebar>
 		);

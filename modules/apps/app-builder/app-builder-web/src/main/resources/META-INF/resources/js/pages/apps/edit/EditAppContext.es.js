@@ -141,9 +141,7 @@ const reducer = (state, action) => {
 				...state,
 				app: {
 					...state.app,
-					name: {
-						en_US: action.appName,
-					},
+					name: action.appName,
 				},
 			};
 		}

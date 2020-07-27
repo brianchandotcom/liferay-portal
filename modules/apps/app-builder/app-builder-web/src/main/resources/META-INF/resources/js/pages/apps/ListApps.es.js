@@ -21,10 +21,12 @@ import {AppContext} from '../../AppContext.es';
 import Button from '../../components/button/Button.es';
 import ListView from '../../components/list-view/ListView.es';
 import useBackUrl from '../../hooks/useBackUrl.es';
+import useDefaultLanguageId from '../../hooks/useDefaultLanguageId.es';
 import useDeployApp from '../../hooks/useDeployApp.es';
 import {confirmDelete} from '../../utils/client.es';
+import {getLocalizedValue} from '../../utils/lang.es';
 import {fromNow} from '../../utils/time.es';
-import {concatValues, getTranslatedValue} from '../../utils/utils.es';
+import {concatValues} from '../../utils/utils.es';
 import {
 	COLUMNS,
 	DEPLOYMENT_ACTION,
@@ -69,7 +71,7 @@ export default ({
 	},
 }) => {
 	const withBackUrl = useBackUrl();
-
+	const defaultLanguageId = useDefaultLanguageId(dataDefinitionId);
 	const newAppLink = compile(editPath[0])({dataDefinitionId, objectType});
 
 	const ADD_BUTTON = () => (
@@ -114,27 +116,29 @@ export default ({
 			endpoint={ENDPOINT}
 			{...listViewProps}
 		>
-			{(app) => ({
-				...app,
-				appName: app.name,
-				dateCreated: fromNow(app.dateCreated),
-				dateModified: fromNow(app.dateModified),
-				name: (
-					<Link to={getEditAppUrl(app)}>
-						{getTranslatedValue(app, 'name')}
-					</Link>
-				),
-				status: (
-					<ClayLabel
-						displayType={app.active ? 'success' : 'secondary'}
-					>
-						{STATUSES[app.active ? 'active' : 'inactive']}
-					</ClayLabel>
-				),
-				type: concatValues(
-					app.appDeployments.map(({type}) => DEPLOYMENT_TYPES[type])
-				),
-			})}
+			{(app) => {
+				const appName = getLocalizedValue(defaultLanguageId, app.name);
+
+				return {
+					...app,
+					dateCreated: fromNow(app.dateCreated),
+					dateModified: fromNow(app.dateModified),
+					name: <Link to={getEditAppUrl(app)}>{appName}</Link>,
+					nameText: appName,
+					status: (
+						<ClayLabel
+							displayType={app.active ? 'success' : 'secondary'}
+						>
+							{STATUSES[app.active ? 'active' : 'inactive']}
+						</ClayLabel>
+					),
+					type: concatValues(
+						app.appDeployments.map(
+							({type}) => DEPLOYMENT_TYPES[type]
+						)
+					),
+				};
+			}}
 		</ListView>
 	);
 };

@@ -17,10 +17,9 @@ import {SearchInput} from 'data-engine-taglib';
 import React, {useState} from 'react';
 
 import {useRequest} from '../../../hooks/index.es';
-import {getTranslatedValue} from '../../../utils/utils.es';
 import ListItems from './ListItems.es';
 
-export default ({endpoint, title, ...restProps}) => {
+export default ({defaultLanguageId, endpoint, title, ...restProps}) => {
 	const [searchText, setSearchText] = useState('');
 
 	const {
@@ -29,7 +28,7 @@ export default ({endpoint, title, ...restProps}) => {
 	} = useRequest(endpoint);
 
 	const filteredItems = items.filter((item) =>
-		new RegExp(searchText, 'ig').test(getTranslatedValue(item, 'name'))
+		new RegExp(searchText, 'ig').test(item.name[defaultLanguageId])
 	);
 
 	return (
@@ -51,6 +50,7 @@ export default ({endpoint, title, ...restProps}) => {
 			<ClayLayout.ContentRow className="pl-4 pr-4 scrollable-container">
 				<ClayLayout.ContentCol expand>
 					<ListItems
+						defaultLanguageId={defaultLanguageId}
 						isEmpty={filteredItems.length === 0}
 						isLoading={isLoading}
 						items={filteredItems}

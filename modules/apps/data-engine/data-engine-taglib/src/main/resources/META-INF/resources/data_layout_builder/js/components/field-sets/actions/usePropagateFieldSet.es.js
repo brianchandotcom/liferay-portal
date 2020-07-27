@@ -66,61 +66,54 @@ export default () => {
 		return getItem(
 			`/o/data-engine/v2.0/data-definitions/${fieldSet.id}/data-definition-field-links`
 		).then(({items: response}) => {
-			let items = response;
+			const items = response;
 
 			const dataDefinitionFieldSet = getDataDefinitionFieldSet(
 				dataDefinition.dataDefinitionFields,
 				fieldSet.id
 			);
 
-			const findLayoutById = ({id}) => id === dataLayout.id;
-
-			if (items.length) {
-				if (dataDefinitionFieldSet) {
-					const fieldInDataLayout = containsField(
-						dataLayout.dataLayoutPages,
-						dataDefinitionFieldSet.name
-					);
-
-					items = items.map(({dataLayouts, ...item}) => {
-						if (fieldInDataLayout) {
-							const dataLayoutIndex = dataLayouts.findIndex(
-								findLayoutById
-							);
-
-							if (dataLayoutIndex === -1) {
-								dataLayouts.push(dataLayout);
-							}
-						}
-						else {
-							dataLayouts = dataLayouts.filter((layout) => {
-								return !findLayoutById(layout);
-							});
-						}
-
-						return {
-							dataLayouts,
-							...item,
-						};
-					});
-				}
-				else {
-					items = items.filter(({dataLayouts}) =>
-						findLayoutById(dataLayouts)
-					);
-				}
-			}
-			else if (
+			const fieldInDataLayout =
 				dataDefinitionFieldSet &&
 				containsField(
 					dataLayout.dataLayoutPages,
 					dataDefinitionFieldSet.name
-				)
-			) {
-				items.push({dataDefinition, dataLayouts: [dataLayout]});
+				);
+
+			const item = items.find(
+				({dataDefinition: linkedDataDefinition}) =>
+					linkedDataDefinition.id === dataDefinition.id
+			);
+
+			if (item) {
+				const {dataLayouts} = item;
+
+				const dataLayoutIndex = dataLayouts.findIndex(
+					({id}) => id === dataLayout.id
+				);
+
+				if (dataLayoutIndex === -1 && fieldInDataLayout) {
+					dataLayouts.push(dataLayout);
+				}
+				else if (dataLayoutIndex !== -1 && !fieldInDataLayout) {
+					dataLayouts.splice(dataLayoutIndex, 1);
+				}
+			}
+			else if (fieldInDataLayout) {
+				items.push({
+					dataDefinition,
+					dataLayouts: [dataLayout],
+					dataListViews: [],
+				});
 			}
 
-			const {dataLayouts = [], dataListViews = []} = items[0] || {};
+			const dataLayouts = [];
+			const dataListViews = [];
+
+			items.forEach((item) => {
+				dataLayouts.push(...item.dataLayouts);
+				dataListViews.push(...item.dataListViews);
+			});
 
 			const isFieldSetUsed =
 				!!dataLayouts.length || !!dataListViews.length;

@@ -145,6 +145,18 @@ public class StructuredContentResourceImpl
 	}
 
 	@Override
+	public Page<StructuredContent> getAssetLibraryStructuredContentsPage(
+			Long assetLibraryId, Boolean flatten, String search,
+			Aggregation aggregation, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
+
+		return _getStructuredContentsPage(
+			assetLibraryId, flatten, search, aggregation, filter, pagination,
+			sorts);
+	}
+
+	@Override
 	public Page<StructuredContent> getContentStructureStructuredContentsPage(
 			Long contentStructureId, String search, Aggregation aggregation,
 			Filter filter, Pagination pagination, Sort[] sorts)
@@ -235,32 +247,7 @@ public class StructuredContentResourceImpl
 		throws Exception {
 
 		return _getStructuredContentsPage(
-			HashMapBuilder.put(
-				"create",
-				addAction(
-					"ADD_ARTICLE", "postSiteStructuredContent",
-					"com.liferay.journal", siteId)
-			).put(
-				"get",
-				addAction(
-					"VIEW", "getSiteStructuredContentsPage",
-					"com.liferay.journal", siteId)
-			).build(),
-			booleanQuery -> {
-				BooleanFilter booleanFilter =
-					booleanQuery.getPreBooleanFilter();
-
-				if (!GetterUtil.getBoolean(flatten)) {
-					booleanFilter.add(
-						new TermFilter(
-							com.liferay.portal.kernel.search.Field.FOLDER_ID,
-							String.valueOf(
-								JournalFolderConstants.
-									DEFAULT_PARENT_FOLDER_ID)),
-						BooleanClauseOccur.MUST);
-				}
-			},
-			siteId, search, aggregation, filter, pagination, sorts);
+			siteId, flatten, search, aggregation, filter, pagination, sorts);
 	}
 
 	@Override
@@ -408,6 +395,16 @@ public class StructuredContentResourceImpl
 					_getExpandoBridgeAttributes(structuredContent),
 					journalArticle.getGroupId(),
 					structuredContent.getViewableByAsString())));
+	}
+
+	@Override
+	public StructuredContent postAssetLibraryStructuredContent(
+			Long assetLibraryId, StructuredContent structuredContent)
+		throws Exception {
+
+		return _addStructuredContent(
+			assetLibraryId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			structuredContent);
 	}
 
 	@Override
@@ -780,6 +777,41 @@ public class StructuredContentResourceImpl
 			contextAcceptLanguage.getPreferredLocale());
 
 		return _toStructuredContent(journalArticle);
+	}
+
+	private Page<StructuredContent> _getStructuredContentsPage(
+			Long groupId, Boolean flatten, String search,
+			Aggregation aggregation, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
+
+		return _getStructuredContentsPage(
+			HashMapBuilder.put(
+				"create",
+				addAction(
+					"ADD_ARTICLE", "postSiteStructuredContent",
+					"com.liferay.journal", groupId)
+			).put(
+				"get",
+				addAction(
+					"VIEW", "getSiteStructuredContentsPage",
+					"com.liferay.journal", groupId)
+			).build(),
+			booleanQuery -> {
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				if (!GetterUtil.getBoolean(flatten)) {
+					booleanFilter.add(
+						new TermFilter(
+							com.liferay.portal.kernel.search.Field.FOLDER_ID,
+							String.valueOf(
+								JournalFolderConstants.
+									DEFAULT_PARENT_FOLDER_ID)),
+						BooleanClauseOccur.MUST);
+				}
+			},
+			groupId, search, aggregation, filter, pagination, sorts);
 	}
 
 	private Page<StructuredContent> _getStructuredContentsPage(

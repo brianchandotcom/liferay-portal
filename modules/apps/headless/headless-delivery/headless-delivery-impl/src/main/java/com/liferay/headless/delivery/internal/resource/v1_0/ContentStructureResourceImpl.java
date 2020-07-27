@@ -53,6 +53,16 @@ public class ContentStructureResourceImpl
 	extends BaseContentStructureResourceImpl implements EntityModelResource {
 
 	@Override
+	public Page<ContentStructure> getAssetLibraryContentStructuresPage(
+			Long assetLibraryId, String search, Aggregation aggregation,
+			Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return _getContentStructuresPage(
+			assetLibraryId, search, aggregation, filter, pagination, sorts);
+	}
+
+	@Override
 	public ContentStructure getContentStructure(Long contentStructureId)
 		throws Exception {
 
@@ -71,6 +81,15 @@ public class ContentStructureResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
+		return _getContentStructuresPage(
+			siteId, search, aggregation, filter, pagination, sorts);
+	}
+
+	private Page<ContentStructure> _getContentStructuresPage(
+			Long groupId, String search, Aggregation aggregation, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
 		return SearchUtil.search(
 			Collections.emptyMap(),
 			booleanQuery -> {
@@ -83,7 +102,7 @@ public class ContentStructureResourceImpl
 				searchContext.setAttribute(
 					"searchPermissionContext", StringPool.BLANK);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
-				searchContext.setGroupIds(new long[] {siteId});
+				searchContext.setGroupIds(new long[] {groupId});
 			},
 			sorts,
 			document -> _toContentStructure(

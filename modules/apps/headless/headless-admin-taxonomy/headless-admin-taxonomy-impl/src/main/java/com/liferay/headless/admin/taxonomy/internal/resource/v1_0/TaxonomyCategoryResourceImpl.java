@@ -148,7 +148,7 @@ public class TaxonomyCategoryResourceImpl
 			parentTaxonomyCategoryId);
 
 		return _getCategoriesPage(
-			HashMapBuilder.<String, Map<String, String>>put(
+			HashMapBuilder.put(
 				"add-category",
 				addAction(
 					"ADD_CATEGORY", assetCategory.getCategoryId(),
@@ -186,7 +186,7 @@ public class TaxonomyCategoryResourceImpl
 			taxonomyVocabularyId);
 
 		return _getCategoriesPage(
-			HashMapBuilder.<String, Map<String, String>>put(
+			HashMapBuilder.put(
 				"add-category",
 				addAction(
 					"ADD_CATEGORY", assetVocabulary,
@@ -473,7 +473,7 @@ public class TaxonomyCategoryResourceImpl
 		return _taxonomyCategoryDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(),
-				HashMapBuilder.<String, Map<String, String>>put(
+				HashMapBuilder.put(
 					"add-category",
 					addAction(
 						"ADD_CATEGORY", assetCategory,

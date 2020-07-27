@@ -93,6 +93,16 @@ public class TaxonomyVocabularyResourceImpl
 	}
 
 	@Override
+	public Page<TaxonomyVocabulary> getAssetLibraryTaxonomyVocabulariesPage(
+			Long assetLibraryId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return _getTaxonomyVocabulariesPage(
+			assetLibraryId, search, filter, pagination, sorts);
+	}
+
+	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return _entityModel;
 	}
@@ -103,32 +113,8 @@ public class TaxonomyVocabularyResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
-		return SearchUtil.search(
-			HashMapBuilder.<String, Map<String, String>>put(
-				"create",
-				addAction(
-					"ADD_VOCABULARY", "postSiteTaxonomyVocabulary",
-					"com.liferay.asset.categories", siteId)
-			).put(
-				"get",
-				addAction(
-					"VIEW", "getSiteTaxonomyVocabulariesPage",
-					"com.liferay.asset.categories", siteId)
-			).build(),
-			booleanQuery -> {
-			},
-			filter, AssetVocabulary.class, search, pagination,
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ASSET_VOCABULARY_ID),
-			searchContext -> {
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-				searchContext.setGroupIds(new long[] {siteId});
-			},
-			sorts,
-			document -> _toTaxonomyVocabulary(
-				_assetVocabularyService.getVocabulary(
-					GetterUtil.getLong(
-						document.get(Field.ASSET_VOCABULARY_ID)))));
+		return _getTaxonomyVocabulariesPage(
+			siteId, search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -196,28 +182,19 @@ public class TaxonomyVocabularyResourceImpl
 	}
 
 	@Override
+	public TaxonomyVocabulary postAssetLibraryTaxonomyVocabulary(
+			Long assetLibraryId, TaxonomyVocabulary taxonomyVocabulary)
+		throws Exception {
+
+		return _postTaxonomyVocabulary(assetLibraryId, taxonomyVocabulary);
+	}
+
+	@Override
 	public TaxonomyVocabulary postSiteTaxonomyVocabulary(
 			Long siteId, TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
-		Map<Locale, String> titleMap = LocalizedMapUtil.getLocalizedMap(
-			contextAcceptLanguage.getPreferredLocale(),
-			taxonomyVocabulary.getName(), taxonomyVocabulary.getName_i18n());
-		Map<Locale, String> descriptionMap = LocalizedMapUtil.getLocalizedMap(
-			contextAcceptLanguage.getPreferredLocale(),
-			taxonomyVocabulary.getDescription(),
-			taxonomyVocabulary.getDescription_i18n());
-
-		LocalizedMapUtil.validateI18n(
-			true, LocaleUtil.getSiteDefault(), "Taxonomy vocabulary", titleMap,
-			new HashSet<>(descriptionMap.keySet()));
-
-		return _toTaxonomyVocabulary(
-			_assetVocabularyService.addVocabulary(
-				siteId, null, titleMap, descriptionMap,
-				_getSettings(taxonomyVocabulary.getAssetTypes(), siteId),
-				ServiceContextUtil.createServiceContext(
-					siteId, taxonomyVocabulary.getViewableByAsString())));
+		return _postTaxonomyVocabulary(siteId, taxonomyVocabulary);
 	}
 
 	@Override
@@ -482,13 +459,69 @@ public class TaxonomyVocabularyResourceImpl
 		return assetVocabularySettingsHelper.toString();
 	}
 
-	private TaxonomyVocabulary _toTaxonomyVocabulary(
-			AssetVocabulary assetVocabulary)
+	private Page<TaxonomyVocabulary> _getTaxonomyVocabulariesPage(
+			Long siteId, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
+
+		return SearchUtil.search(
+			HashMapBuilder.put(
+				"create",
+				addAction(
+					"ADD_VOCABULARY", "postSiteTaxonomyVocabulary",
+					"com.liferay.asset.categories", siteId)
+			).put(
+				"get",
+				addAction(
+					"VIEW", "getSiteTaxonomyVocabulariesPage",
+					"com.liferay.asset.categories", siteId)
+			).build(),
+			booleanQuery -> {
+			},
+			filter, AssetVocabulary.class, search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ASSET_VOCABULARY_ID),
+			searchContext -> {
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+				searchContext.setGroupIds(new long[] {siteId});
+			},
+			sorts,
+			document -> _toTaxonomyVocabulary(
+				_assetVocabularyService.getVocabulary(
+					GetterUtil.getLong(
+						document.get(Field.ASSET_VOCABULARY_ID)))));
+	}
+
+	private TaxonomyVocabulary _postTaxonomyVocabulary(
+			Long siteId, TaxonomyVocabulary taxonomyVocabulary)
+		throws Exception {
+
+		Map<Locale, String> titleMap = LocalizedMapUtil.getLocalizedMap(
+			contextAcceptLanguage.getPreferredLocale(),
+			taxonomyVocabulary.getName(), taxonomyVocabulary.getName_i18n());
+		Map<Locale, String> descriptionMap = LocalizedMapUtil.getLocalizedMap(
+			contextAcceptLanguage.getPreferredLocale(),
+			taxonomyVocabulary.getDescription(),
+			taxonomyVocabulary.getDescription_i18n());
+
+		LocalizedMapUtil.validateI18n(
+			true, LocaleUtil.getSiteDefault(), "Taxonomy vocabulary", titleMap,
+			new HashSet<>(descriptionMap.keySet()));
+
+		return _toTaxonomyVocabulary(
+			_assetVocabularyService.addVocabulary(
+				siteId, null, titleMap, descriptionMap,
+				_getSettings(taxonomyVocabulary.getAssetTypes(), siteId),
+				ServiceContextUtil.createServiceContext(
+					siteId, taxonomyVocabulary.getViewableByAsString())));
+	}
+
+	private TaxonomyVocabulary _toTaxonomyVocabulary(
+		AssetVocabulary assetVocabulary) {
 
 		return new TaxonomyVocabulary() {
 			{
-				actions = HashMapBuilder.<String, Map<String, String>>put(
+				actions = HashMapBuilder.put(
 					"delete",
 					addAction(
 						"DELETE", assetVocabulary, "deleteTaxonomyVocabulary")

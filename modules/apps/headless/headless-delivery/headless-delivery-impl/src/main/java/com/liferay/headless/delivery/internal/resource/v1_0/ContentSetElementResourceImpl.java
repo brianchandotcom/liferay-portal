@@ -51,6 +51,30 @@ public class ContentSetElementResourceImpl
 	extends BaseContentSetElementResourceImpl {
 
 	@Override
+	public Page<ContentSetElement>
+			getAssetLibraryContentSetByKeyContentSetElementsPage(
+				Long assetLibraryId, String key, Pagination pagination)
+		throws Exception {
+
+		return _getContentSetContentSetElementsPage(
+			_assetListEntryService.getAssetListEntry(assetLibraryId, key),
+			pagination);
+	}
+
+	@Override
+	public Page<ContentSetElement>
+			getAssetLibraryContentSetByUuidContentSetElementsPage(
+				Long assetLibraryId, String uuid, Pagination pagination)
+		throws Exception {
+
+		AssetListEntry assetListEntry =
+			_assetListEntryService.getAssetListEntryByUuidAndGroupId(
+				uuid, assetLibraryId);
+
+		return _getContentSetContentSetElementsPage(assetListEntry, pagination);
+	}
+
+	@Override
 	public Page<ContentSetElement> getContentSetContentSetElementsPage(
 			Long contentSetId, Pagination pagination)
 		throws Exception {

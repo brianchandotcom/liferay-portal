@@ -32,16 +32,20 @@ import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.item.capability.InfoItemCapability;
+import com.liferay.info.item.provider.InfoItemCapabilitiesProvider;
 import com.liferay.info.item.provider.InfoItemClassDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItemCapability;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -54,7 +58,8 @@ import java.util.Set;
  * @author Jorge Ferrer
  */
 public class InfoDisplayContributorWrapper
-	implements InfoItemClassDetailsProvider<Object>,
+	implements InfoItemCapabilitiesProvider<Object>,
+			   InfoItemClassDetailsProvider<Object>,
 			   InfoItemFieldValuesProvider<Object>,
 			   InfoItemFormProvider<Object>,
 			   InfoItemFormVariationsProvider<Object>,
@@ -134,6 +139,15 @@ public class InfoDisplayContributorWrapper
 		InfoItemReference infoItemReference = new InfoItemReference(classPK);
 
 		return getInfoItem(infoItemReference);
+	}
+
+	@Override
+	public List<InfoItemCapability> getInfoItemCapabilities() {
+		ArrayList<InfoItemCapability> infoItemCapabilities = new ArrayList<>();
+
+		infoItemCapabilities.add(DisplayPageInfoItemCapability.INSTANCE);
+
+		return infoItemCapabilities;
 	}
 
 	@Override

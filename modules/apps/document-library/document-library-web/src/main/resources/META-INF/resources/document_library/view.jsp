@@ -171,12 +171,7 @@ String navigation = ParamUtil.getString(request, "navigation");
 			uploadable = false;
 		}
 		else {
-			List<AssetVocabulary> scopeAssetVocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(scopeGroupId);
-			List<AssetVocabulary> companyAssetVocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(themeDisplay.getCompanyGroupId());
-			List<AssetVocabulary> assetVocabularies = new ArrayList<AssetVocabulary>();
-
-			assetVocabularies.addAll(scopeAssetVocabularies);
-			assetVocabularies.addAll(companyAssetVocabularies);
+			List<AssetVocabulary> assetVocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId));
 
 			if (!assetVocabularies.isEmpty()) {
 				long classNameId = ClassNameLocalServiceUtil.getClassNameId(DLFileEntryConstants.getClassName());

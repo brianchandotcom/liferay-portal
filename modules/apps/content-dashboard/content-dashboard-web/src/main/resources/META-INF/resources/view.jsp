@@ -151,15 +151,40 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 								>
 
 									<%
-									for (AssetCategory assetCategory : (List<AssetCategory>)contentDashboardItem.getAssetCategories(assetVocabulary.getVocabularyId())) {
+									List<AssetCategory> assetCategories = (List<AssetCategory>)contentDashboardItem.getAssetCategories(assetVocabulary.getVocabularyId());
+
+									if (assetCategories.size() >= 1) {
 									%>
 
-										<clay:label
-											displayType="secondary"
-											large="<%= true %>"
-										>
-											<clay:label-item-expand><%= assetCategory.getTitle(locale) %></clay:label-item-expand>
-										</clay:label>
+									<clay:label
+										displayType="secondary"
+										large="<%= true %>"
+									>
+										<clay:label-item-expand><%= assetCategories.get(0).getTitle(locale) %></clay:label-item-expand>
+									</clay:label>
+
+									<%} %>
+
+									<%if (assetCategories.size() > 1) {
+										assetCategories.remove(assetCategories.get(0));
+
+										StringBuilder sb = new StringBuilder();
+											for (AssetCategory assetCategory : assetCategories) {
+												sb.append(
+													assetCategory.getTitle(
+														locale));
+												sb.append("\n");
+											} %>
+
+										<span class="lfr-portal-tooltip" title="<%= sb %>">
+											<clay:label
+												aria-title="<%= sb %>"
+												displayType="secondary"
+												large="<%= true %>"
+											>
+												<span>...</span>
+											</clay:label>
+										</span>
 
 									<%
 									}

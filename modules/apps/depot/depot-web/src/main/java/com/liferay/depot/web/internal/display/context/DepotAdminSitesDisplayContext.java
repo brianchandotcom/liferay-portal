@@ -86,8 +86,15 @@ public class DepotAdminSitesDisplayContext {
 						!depotEntryGroupRel.isDdmStructuresAvailable(),
 						_currentURL.toString(), _liferayPortletResponse);
 
-				dropdownItem.setHref(
-					updateDDMStructuresAvailableActionURL.toString());
+				dropdownItem.setData(
+					HashMapBuilder.<String, Object>put(
+						"action", "shareWebContentStructures"
+					).put(
+						"shared", depotEntryGroupRel.isDdmStructuresAvailable()
+					).put(
+						"updateDDMStructuresAvailableActionURL",
+						updateDDMStructuresAvailableActionURL.toString()
+					).build());
 
 				dropdownItem.setLabel(
 					LanguageUtil.get(

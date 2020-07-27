@@ -15,9 +15,21 @@
 package com.liferay.journal.web.internal.info.item.provider;
 
 import com.liferay.info.exception.NoSuchInfoItemException;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
+import com.liferay.journal.exception.NoSuchArticleException;
+import com.liferay.journal.exception.NoSuchArticleResourceException;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.service.JournalArticleResourceLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.util.Objects;
+import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,21 +42,86 @@ public class JournalArticleInfoItemProvider
 	implements InfoItemObjectProvider<JournalArticle> {
 
 	@Override
-	public JournalArticle getInfoItem(long classPK)
+	public JournalArticle getInfoItem(InfoItemReference infoItemReference)
 		throws NoSuchInfoItemException {
 
-		JournalArticle article = _journalArticleLocalService.fetchLatestArticle(
-			classPK);
+		JournalArticle article = null;
+
+		String version = null;
+
+		Optional<String> versionOptional =
+			infoItemReference.getVersionOptional();
+
+		if (versionOptional.isPresent()) {
+			version = versionOptional.get();
+		}
+
+		try {
+			if (Validator.isNull(version) ||
+				Objects.equals(
+					version, InfoItemReference.VERSION_LATEST_APPROVED)) {
+
+				article = _journalArticleLocalService.fetchLatestArticle(
+					infoItemReference.getClassPK());
+			}
+			else if (Objects.equals(
+						version, InfoItemReference.VERSION_LATEST)) {
+
+				JournalArticleResource articleResource =
+					_journalArticleResourceLocalService.getArticleResource(
+						infoItemReference.getClassPK());
+
+				article = _journalArticleLocalService.fetchLatestArticle(
+					articleResource.getGroupId(),
+					articleResource.getArticleId(),
+					WorkflowConstants.STATUS_ANY);
+			}
+			else {
+				JournalArticleResource articleResource =
+					_journalArticleResourceLocalService.getArticleResource(
+						infoItemReference.getClassPK());
+
+				_journalArticleLocalService.getArticle(
+					articleResource.getGroupId(),
+					articleResource.getArticleId(),
+					GetterUtil.getDouble(version));
+			}
+		}
+		catch (NoSuchArticleException | NoSuchArticleResourceException
+					exception) {
+
+			throw new NoSuchInfoItemException(
+				"Unable to get journal article " +
+					infoItemReference.getClassPK(),
+				exception);
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
 
 		if ((article == null) || article.isInTrash()) {
 			throw new NoSuchInfoItemException(
-				"Unable to get journal article " + classPK);
+				"Unable to get journal article " +
+					infoItemReference.getClassPK());
 		}
 
 		return article;
 	}
 
+	@Override
+	public JournalArticle getInfoItem(long classPK)
+		throws NoSuchInfoItemException {
+
+		InfoItemReference infoItemReference = new InfoItemReference(classPK);
+
+		return getInfoItem(infoItemReference);
+	}
+
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
+	private JournalArticleResourceLocalService
+		_journalArticleResourceLocalService;
 
 }

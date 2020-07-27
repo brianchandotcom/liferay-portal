@@ -23,6 +23,7 @@ String mode = (String)request.getAttribute("liferay-layout:render-fragment-layou
 long previewClassNameId = (long)request.getAttribute("liferay-layout:render-fragment-layout:previewClassNameId");
 long previewClassPK = (long)request.getAttribute("liferay-layout:render-fragment-layout:previewClassPK");
 int previewType = (int)request.getAttribute("liferay-layout:render-fragment-layout:previewType");
+String previewVersion = (String)request.getAttribute("liferay-layout:render-fragment-layout:previewVersion");
 RenderFragmentLayoutDisplayContext renderFragmentLayoutDisplayContext = (RenderFragmentLayoutDisplayContext)request.getAttribute("liferay-layout:render-fragment-layout:renderFragmentLayoutDisplayContext");
 long[] segmentsExperienceIds = (long[])request.getAttribute("liferay-layout:render-fragment-layout:segmentsExperienceIds");
 
@@ -181,6 +182,7 @@ for (String childrenItemId : childrenItemIds) {
 			defaultFragmentRendererContext.setPreviewClassNameId(previewClassNameId);
 			defaultFragmentRendererContext.setPreviewClassPK(previewClassPK);
 			defaultFragmentRendererContext.setPreviewType(previewType);
+			defaultFragmentRendererContext.setPreviewVersion(previewVersion);
 			defaultFragmentRendererContext.setSegmentsExperienceIds(segmentsExperienceIds);
 
 			if (LayoutStructureItemUtil.hasAncestor(fragmentLayoutStructureItem.getItemId(), LayoutDataItemTypeConstants.TYPE_COLLECTION_ITEM, layoutStructure)) {

@@ -145,6 +145,9 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 			"liferay-layout:render-fragment-layout:previewType",
 			_getPreviewType());
 		httpServletRequest.setAttribute(
+			"liferay-layout:render-fragment-layout:previewVersion",
+			_getPreviewVersion());
+		httpServletRequest.setAttribute(
 			"liferay-layout:render-fragment-layout:" +
 				"renderFragmentLayoutDisplayContext",
 			new RenderFragmentLayoutDisplayContext(
@@ -268,6 +271,14 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 		}
 
 		return ParamUtil.getInteger(request, "previewType");
+	}
+
+	private String _getPreviewVersion() {
+		if (!_showPreview) {
+			return null;
+		}
+
+		return ParamUtil.getString(request, "previewVersion");
 	}
 
 	private long[] _getSegmentsExperienceIds() {

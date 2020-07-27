@@ -277,7 +277,9 @@ public class MessageBoardMessageResourceImpl
 			messageBoardMessage.getArticleBody(),
 			_getServiceContext(messageBoardMessage, mbMessage.getGroupId()));
 
-		_updateAnswer(mbMessage, messageBoardMessage);
+		if (messageBoardMessage.getShowAsAnswer() != mbMessage.isAnswer()) {
+			_updateAnswer(mbMessage, messageBoardMessage);
+		}
 
 		return _toMessageBoardMessage(mbMessage);
 	}

@@ -424,7 +424,11 @@ public class WorkflowDefinitionLinkDisplayContext {
 	public List<WorkflowDefinition> getWorkflowDefinitions()
 		throws PortalException {
 
-		return ListUtil.filter(
+		if (Objects.nonNull(_workflowDefinitions)) {
+			return _workflowDefinitions;
+		}
+
+		_workflowDefinitions = ListUtil.filter(
 			WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(
 				_workflowDefinitionLinkRequestHelper.getCompanyId(),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
@@ -432,6 +436,8 @@ public class WorkflowDefinitionLinkDisplayContext {
 					true)),
 			new WorkflowDefinitionScopePredicate(
 				WorkflowDefinitionConstants.SCOPE_ALL));
+
+		return _workflowDefinitions;
 	}
 
 	public String getWorkflowDefinitionValue(
@@ -694,5 +700,6 @@ public class WorkflowDefinitionLinkDisplayContext {
 		_workflowDefinitionLinkLocalService;
 	private final WorkflowDefinitionLinkRequestHelper
 		_workflowDefinitionLinkRequestHelper;
+	private List<WorkflowDefinition> _workflowDefinitions;
 
 }

@@ -213,6 +213,8 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	public static final String TX_MANAGER = "${entity.getTXManager()}";
 
+	<#assign columnBitmaskEnabled = (entity.finderEntityColumns?size &gt; 0) && (entity.finderEntityColumns?size &lt; 64) && !entity.hasEagerBlobColumn()/>
+
 	<#if entity.hasEagerBlobColumn()>
 		<#if !dependencyInjectorDS>
 			<#if serviceBuilder.isVersionGTE_7_3_0()>
@@ -231,8 +233,6 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			</#if>
 			public static final boolean FINDER_CACHE_ENABLED = false;
 		</#if>
-
-		<#assign columnBitmaskEnabled = false />
 	<#else>
 		<#if !dependencyInjectorDS>
 			<#if serviceBuilder.isVersionGTE_7_3_0()>
@@ -277,8 +277,6 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			</#if>
 		</#if>
 
-		<#assign columnBitmaskEnabled = true />
-
 		<#if (entity.finderEntityColumns?size == 0) || (entity.finderEntityColumns?size &gt; 64)>
 			<#if !dependencyInjectorDS>
 				<#if serviceBuilder.isVersionGTE_7_3_0()>
@@ -289,42 +287,40 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 				</#if>
 				public static final boolean COLUMN_BITMASK_ENABLED = false;
 			</#if>
+		</#if>
+	</#if>
 
-			<#assign columnBitmaskEnabled = false />
+	<#if columnBitmaskEnabled>
+		<#if !dependencyInjectorDS>
+			<#if serviceBuilder.isVersionGTE_7_3_0()>
+				/**
+				* @deprecated As of Athanasius (7.3.x), with no direct replacement
+				*/
+				@Deprecated
+			</#if>
+			public static final boolean COLUMN_BITMASK_ENABLED =
+				<#if serviceBuilder.isVersionGTE_7_3_0()>
+					true;
+				<#else>
+					GetterUtil.getBoolean(${propsUtil}.get("value.object.column.bitmask.enabled.${apiPackagePath}.model.${entity.name}"), true);
+				</#if>
 		</#if>
 
-		<#if columnBitmaskEnabled>
-			<#if !dependencyInjectorDS>
-				<#if serviceBuilder.isVersionGTE_7_3_0()>
-					/**
-					* @deprecated As of Athanasius (7.3.x), with no direct replacement
-					*/
-					@Deprecated
-				</#if>
-				public static final boolean COLUMN_BITMASK_ENABLED =
-					<#if serviceBuilder.isVersionGTE_7_3_0()>
-						true;
-					<#else>
-						GetterUtil.getBoolean(${propsUtil}.get("value.object.column.bitmask.enabled.${apiPackagePath}.model.${entity.name}"), true);
-					</#if>
-			</#if>
+		<#assign columnBitmask = 1 />
 
-			<#assign columnBitmask = 1 />
+		<#list entity.finderEntityColumns as entityColumn>
+			public static final long ${entityColumn.name?upper_case}_COLUMN_BITMASK = ${columnBitmask}L;
 
-			<#list entity.finderEntityColumns as entityColumn>
-				public static final long ${entityColumn.name?upper_case}_COLUMN_BITMASK = ${columnBitmask}L;
+			<#assign columnBitmask = columnBitmask * 2 />
+		</#list>
+
+		<#list orderList as order>
+			<#if !entity.finderEntityColumns?seq_contains(order)>
+				public static final long ${order.name?upper_case}_COLUMN_BITMASK = ${columnBitmask}L;
 
 				<#assign columnBitmask = columnBitmask * 2 />
-			</#list>
-
-			<#list orderList as order>
-				<#if !entity.finderEntityColumns?seq_contains(order)>
-					public static final long ${order.name?upper_case}_COLUMN_BITMASK = ${columnBitmask}L;
-
-					<#assign columnBitmask = columnBitmask * 2 />
-				</#if>
-			</#list>
-		</#if>
+			</#if>
+		</#list>
 	</#if>
 
 	<#if dependencyInjectorDS>

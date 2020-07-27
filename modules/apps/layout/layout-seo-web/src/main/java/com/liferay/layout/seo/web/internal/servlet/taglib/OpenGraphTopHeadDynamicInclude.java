@@ -15,6 +15,7 @@
 package com.liferay.layout.seo.web.internal.servlet.taglib;
 
 import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.document.library.util.DLURLHelper;
@@ -44,6 +45,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -95,16 +97,16 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 			}
 
 			FriendlyURLMapper friendlyURLMapper = FriendlyURLMapper.create(
-				httpServletRequest);
+				_assetDisplayPageFriendlyURLProvider, _classNameLocalService,
+				_language, httpServletRequest);
 
 			String completeURL = _portal.getCurrentCompleteURL(
 				httpServletRequest);
 
-			String canonicalURL =
-				friendlyURLMapper.getMappedAssetDisplayPageFriendlyURL(
-					_portal.getCanonicalURL(
-						completeURL, themeDisplay, layout, false, false),
-					_portal.getLocale(httpServletRequest));
+			String canonicalURL = friendlyURLMapper.getMappedFriendlyURL(
+				_portal.getCanonicalURL(
+					completeURL, themeDisplay, layout, false, false),
+				_portal.getLocale(httpServletRequest));
 
 			Map<Locale, String> alternateURLs = Collections.emptyMap();
 
@@ -112,10 +114,9 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 				themeDisplay.getSiteGroupId());
 
 			if (availableLocales.size() > 1) {
-				alternateURLs =
-					friendlyURLMapper.getMappedAssetDisplayPageFriendlyURLs(
-						_portal.getAlternateURLs(
-							canonicalURL, themeDisplay, layout));
+				alternateURLs = friendlyURLMapper.getMappedFriendlyURLs(
+					_portal.getAlternateURLs(
+						canonicalURL, themeDisplay, layout));
 			}
 
 			PrintWriter printWriter = httpServletResponse.getWriter();
@@ -422,6 +423,13 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		return _titleProvider.getTitle(httpServletRequest);
 	}
+
+	@Reference
+	private AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

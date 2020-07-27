@@ -54,13 +54,15 @@ public class DDMFormLayoutJSONDeserializer
 		DDMFormLayoutDeserializerDeserializeRequest
 			ddmFormLayoutDeserializerDeserializeRequest) {
 
-		String content =
-			ddmFormLayoutDeserializerDeserializeRequest.getContent();
-
 		DDMFormLayout ddmFormLayout = new DDMFormLayout();
 
+		DDMFormLayoutDeserializerDeserializeResponse.Builder builder =
+			DDMFormLayoutDeserializerDeserializeResponse.Builder.newBuilder(
+				ddmFormLayout);
+
 		try {
-			JSONObject jsonObject = _jsonFactory.createJSONObject(content);
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				ddmFormLayoutDeserializerDeserializeRequest.getContent());
 
 			setDDMFormLayoutDefaultLocale(
 				jsonObject.getString("defaultLanguageId"), ddmFormLayout);
@@ -80,16 +82,16 @@ public class DDMFormLayoutJSONDeserializer
 			}
 
 			setDDMFormRules(jsonObject.getJSONArray("rules"), ddmFormLayout);
+
+			return builder.build();
 		}
 		catch (JSONException jsonException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(jsonException, jsonException);
 			}
-		}
 
-		DDMFormLayoutDeserializerDeserializeResponse.Builder builder =
-			DDMFormLayoutDeserializerDeserializeResponse.Builder.newBuilder(
-				ddmFormLayout);
+			builder = builder.exception(jsonException);
+		}
 
 		return builder.build();
 	}

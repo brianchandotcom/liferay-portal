@@ -139,7 +139,9 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		);
 	}
 
-	private String _upgradeDDMFormLayoutDefinition(String content) {
+	private String _upgradeDDMFormLayoutDefinition(String content)
+		throws Exception {
+
 		DDMFormLayoutDeserializerDeserializeResponse
 			ddmFormLayoutDeserializerDeserializeResponse =
 				_ddmFormLayoutDeserializer.deserialize(
@@ -147,6 +149,13 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 						newBuilder(
 							content
 						).build());
+
+		Exception exception =
+			ddmFormLayoutDeserializerDeserializeResponse.getException();
+
+		if (exception != null) {
+			throw new UpgradeException(exception);
+		}
 
 		DDMFormLayout ddmFormLayout =
 			ddmFormLayoutDeserializerDeserializeResponse.getDDMFormLayout();
@@ -225,7 +234,8 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 	}
 
 	private String _upgradeDDMFormLayoutDefinition(
-		String definition, Long structureId) {
+			String definition, Long structureId)
+		throws Exception {
 
 		DDMFormLayoutDeserializerDeserializeResponse
 			ddmFormLayoutDeserializerDeserializeResponse =
@@ -234,6 +244,13 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 						newBuilder(
 							definition
 						).build());
+
+		Exception exception =
+			ddmFormLayoutDeserializerDeserializeResponse.getException();
+
+		if (exception != null) {
+			throw new UpgradeException(exception);
+		}
 
 		DDMFormLayout ddmFormLayout =
 			ddmFormLayoutDeserializerDeserializeResponse.getDDMFormLayout();

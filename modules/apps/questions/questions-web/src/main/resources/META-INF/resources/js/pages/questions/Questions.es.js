@@ -58,7 +58,7 @@ function getFilterOptions() {
 		{
 			label: Liferay.Language.get('most-voted'),
 			value: 'most-voted',
-		}
+		},
 	];
 }
 

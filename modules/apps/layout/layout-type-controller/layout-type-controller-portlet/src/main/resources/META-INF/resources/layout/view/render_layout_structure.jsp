@@ -29,6 +29,10 @@ for (String childrenItemId : childrenItemIds) {
 	LayoutStructureItem layoutStructureItem = layoutStructure.getLayoutStructureItem(childrenItemId);
 %>
 
+	<c:if test="<%= layoutStructureItem instanceof StyledLayoutStructureItem %>">
+		<div class="<%= portletLayoutDisplayContext.getCssClass((StyledLayoutStructureItem)layoutStructureItem) %>" style="<%= portletLayoutDisplayContext.getStyle((StyledLayoutStructureItem)layoutStructureItem) %>">
+	</c:if>
+
 	<c:choose>
 		<c:when test="<%= layoutStructureItem instanceof CollectionLayoutStructureItem %>">
 
@@ -121,14 +125,11 @@ for (String childrenItemId : childrenItemIds) {
 				</c:when>
 			</c:choose>
 
-			<div class="<%= portletLayoutDisplayContext.getCssClass(containerLayoutStructureItem) %>" style="<%= portletLayoutDisplayContext.getStyle(containerLayoutStructureItem) %>">
+			<%
+			request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
+			%>
 
-				<%
-				request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
-				%>
-
-				<liferay-util:include page="/layout/view/render_layout_structure.jsp" servletContext="<%= application %>" />
-			</div>
+			<liferay-util:include page="/layout/view/render_layout_structure.jsp" servletContext="<%= application %>" />
 
 			<c:choose>
 				<c:when test="<%= Validator.isNotNull(containerLinkHref) %>">
@@ -251,6 +252,10 @@ for (String childrenItemId : childrenItemIds) {
 			</c:choose>
 		</c:when>
 	</c:choose>
+
+	<c:if test="<%= layoutStructureItem instanceof StyledLayoutStructureItem %>">
+		</div>
+	</c:if>
 
 <%
 }

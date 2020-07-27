@@ -121,6 +121,22 @@ public class CommonStylesUtil {
 		return jsonArray;
 	}
 
+	public static Object getDefaultStyleValue(String name) {
+		if (_defaultValues != null) {
+			return _defaultValues.get(name);
+		}
+
+		try {
+			Map<String, Object> defaultValues = getDefaultStyleValues();
+
+			return defaultValues.get(name);
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(
+				"Unable to get default value for style " + name, exception);
+		}
+	}
+
 	public static Map<String, Object> getDefaultStyleValues() throws Exception {
 		if (_defaultValues != null) {
 			return _defaultValues;

@@ -37,6 +37,7 @@ import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
 import com.liferay.layout.util.structure.CollectionLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerLayoutStructureItem;
+import com.liferay.layout.util.structure.StyledLayoutStructureItem;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -274,108 +275,157 @@ public class RenderFragmentLayoutDisplayContext {
 	}
 
 	public String getCssClass(
-		ContainerLayoutStructureItem containerLayoutStructureItem) {
+		StyledLayoutStructureItem styledLayoutStructureItem) {
 
-		StringBundler cssClassSB = new StringBundler(31);
+		StringBundler cssClassSB = new StringBundler(43);
 
-		if (Validator.isNotNull(containerLayoutStructureItem.getAlign())) {
+		if (Validator.isNotNull(styledLayoutStructureItem.getAlign())) {
 			cssClassSB.append(" ");
-			cssClassSB.append(containerLayoutStructureItem.getAlign());
+			cssClassSB.append(styledLayoutStructureItem.getAlign());
 		}
 
 		if (Validator.isNotNull(
-				containerLayoutStructureItem.getBackgroundColorCssClass())) {
+				styledLayoutStructureItem.getBackgroundColorCssClass())) {
 
 			cssClassSB.append(" bg-");
 			cssClassSB.append(
-				containerLayoutStructureItem.getBackgroundColorCssClass());
+				styledLayoutStructureItem.getBackgroundColorCssClass());
 		}
 
-		if (Validator.isNotNull(
-				containerLayoutStructureItem.getBorderColor())) {
-
+		if (Validator.isNotNull(styledLayoutStructureItem.getBorderColor())) {
 			cssClassSB.append(" border-");
-			cssClassSB.append(containerLayoutStructureItem.getBorderColor());
+			cssClassSB.append(styledLayoutStructureItem.getBorderColor());
 		}
 
-		if (Validator.isNotNull(
-				containerLayoutStructureItem.getBorderRadius())) {
-
+		if (Validator.isNotNull(styledLayoutStructureItem.getBorderRadius())) {
 			cssClassSB.append(" ");
-			cssClassSB.append(containerLayoutStructureItem.getBorderRadius());
+			cssClassSB.append(styledLayoutStructureItem.getBorderRadius());
 		}
 
 		if (Objects.equals(
-				containerLayoutStructureItem.getContentDisplay(), "block")) {
+				styledLayoutStructureItem.getContentDisplay(), "block")) {
 
 			cssClassSB.append(" d-block");
 		}
 
 		if (Objects.equals(
-				containerLayoutStructureItem.getContentDisplay(), "flex")) {
+				styledLayoutStructureItem.getContentDisplay(), "flex")) {
 
 			cssClassSB.append(" d-flex");
 		}
 
-		if (Validator.isNotNull(containerLayoutStructureItem.getJustify())) {
-			cssClassSB.append(" ");
-			cssClassSB.append(containerLayoutStructureItem.getJustify());
+		if (Validator.isNotNull(
+				styledLayoutStructureItem.getFontWeightCssClass())) {
+
+			cssClassSB.append(StringPool.SPACE);
+			cssClassSB.append(
+				styledLayoutStructureItem.getFontWeightCssClass());
 		}
 
-		if (containerLayoutStructureItem.getMarginBottom() != -1L) {
+		if (Validator.isNotNull(
+				styledLayoutStructureItem.getFontSizeCssClass())) {
+
+			cssClassSB.append(StringPool.SPACE);
+			cssClassSB.append(styledLayoutStructureItem.getFontSizeCssClass());
+		}
+
+		if (Validator.isNotNull(
+				styledLayoutStructureItem.getHeightCssClass())) {
+
+			cssClassSB.append(StringPool.SPACE);
+			cssClassSB.append(styledLayoutStructureItem.getHeightCssClass());
+		}
+
+		if (Validator.isNotNull(styledLayoutStructureItem.getJustify())) {
+			cssClassSB.append(" ");
+			cssClassSB.append(styledLayoutStructureItem.getJustify());
+		}
+
+		boolean addHorizontalMargin = true;
+
+		if (styledLayoutStructureItem instanceof ContainerLayoutStructureItem) {
+			ContainerLayoutStructureItem containerLayoutStructureItem =
+				(ContainerLayoutStructureItem)styledLayoutStructureItem;
+
+			if (Objects.equals(
+					containerLayoutStructureItem.getWidthType(), "fixed")) {
+
+				cssClassSB.append(" container");
+			}
+
+			if (!Objects.equals(
+					containerLayoutStructureItem.getWidthType(), "fixed")) {
+
+				addHorizontalMargin = false;
+			}
+		}
+
+		if (styledLayoutStructureItem.getMarginBottom() != -1L) {
 			cssClassSB.append(" mb-");
-			cssClassSB.append(containerLayoutStructureItem.getMarginBottom());
+			cssClassSB.append(styledLayoutStructureItem.getMarginBottom());
 		}
 
-		if (!Objects.equals(
-				containerLayoutStructureItem.getWidthType(), "fixed")) {
-
-			if (containerLayoutStructureItem.getMarginLeft() != -1L) {
+		if (addHorizontalMargin) {
+			if (styledLayoutStructureItem.getMarginLeft() != -1L) {
 				cssClassSB.append(" ml-");
-				cssClassSB.append(containerLayoutStructureItem.getMarginLeft());
+				cssClassSB.append(styledLayoutStructureItem.getMarginLeft());
 			}
 
-			if (containerLayoutStructureItem.getMarginRight() != -1L) {
+			if (styledLayoutStructureItem.getMarginRight() != -1L) {
 				cssClassSB.append(" mr-");
-				cssClassSB.append(
-					containerLayoutStructureItem.getMarginRight());
+				cssClassSB.append(styledLayoutStructureItem.getMarginRight());
 			}
 		}
 
-		if (containerLayoutStructureItem.getMarginTop() != -1L) {
+		if (styledLayoutStructureItem.getMarginTop() != -1L) {
 			cssClassSB.append(" mt-");
-			cssClassSB.append(containerLayoutStructureItem.getMarginTop());
+			cssClassSB.append(styledLayoutStructureItem.getMarginTop());
 		}
 
-		if (containerLayoutStructureItem.getPaddingBottom() != -1L) {
+		if (styledLayoutStructureItem.getPaddingBottom() != -1L) {
 			cssClassSB.append(" pb-");
-			cssClassSB.append(containerLayoutStructureItem.getPaddingBottom());
+			cssClassSB.append(styledLayoutStructureItem.getPaddingBottom());
 		}
 
-		if (containerLayoutStructureItem.getPaddingLeft() != -1L) {
+		if (styledLayoutStructureItem.getPaddingLeft() != -1L) {
 			cssClassSB.append(" pl-");
-			cssClassSB.append(containerLayoutStructureItem.getPaddingLeft());
+			cssClassSB.append(styledLayoutStructureItem.getPaddingLeft());
 		}
 
-		if (containerLayoutStructureItem.getPaddingRight() != -1L) {
+		if (styledLayoutStructureItem.getPaddingRight() != -1L) {
 			cssClassSB.append(" pr-");
-			cssClassSB.append(containerLayoutStructureItem.getPaddingRight());
+			cssClassSB.append(styledLayoutStructureItem.getPaddingRight());
 		}
 
-		if (containerLayoutStructureItem.getPaddingTop() != -1L) {
+		if (styledLayoutStructureItem.getPaddingTop() != -1L) {
 			cssClassSB.append(" pt-");
-			cssClassSB.append(containerLayoutStructureItem.getPaddingTop());
+			cssClassSB.append(styledLayoutStructureItem.getPaddingTop());
 		}
 
-		if (Validator.isNotNull(containerLayoutStructureItem.getShadow())) {
-			cssClassSB.append(" ");
-			cssClassSB.append(containerLayoutStructureItem.getShadow());
+		if (Validator.isNotNull(styledLayoutStructureItem.getShadow())) {
+			cssClassSB.append(StringPool.SPACE);
+			cssClassSB.append(styledLayoutStructureItem.getShadow());
 		}
 
-		if (Objects.equals(
-				containerLayoutStructureItem.getWidthType(), "fixed")) {
+		if (Validator.isNotNull(
+				styledLayoutStructureItem.getTextAlignCssClass()) &&
+			!Objects.equals(
+				styledLayoutStructureItem.getTextAlignCssClass(), "none")) {
 
-			cssClassSB.append(" container");
+			cssClassSB.append(StringPool.SPACE);
+			cssClassSB.append(styledLayoutStructureItem.getTextAlignCssClass());
+		}
+
+		if (Validator.isNotNull(
+				styledLayoutStructureItem.getTextColorCssClass())) {
+
+			cssClassSB.append(StringPool.SPACE);
+			cssClassSB.append(styledLayoutStructureItem.getTextColorCssClass());
+		}
+
+		if (Validator.isNotNull(styledLayoutStructureItem.getWidthCssClass())) {
+			cssClassSB.append(StringPool.SPACE);
+			cssClassSB.append(styledLayoutStructureItem.getWidthCssClass());
 		}
 
 		return cssClassSB.toString();
@@ -459,16 +509,15 @@ public class RenderFragmentLayoutDisplayContext {
 		return unsyncStringWriter.toString();
 	}
 
-	public String getStyle(
-			ContainerLayoutStructureItem containerLayoutStructureItem)
+	public String getStyle(StyledLayoutStructureItem styledLayoutStructureItem)
 		throws PortalException {
 
-		StringBundler styleSB = new StringBundler(12);
+		StringBundler styleSB = new StringBundler(30);
 
 		styleSB.append("box-sizing: border-box;");
 
 		String backgroundImage = _getBackgroundImage(
-			containerLayoutStructureItem.getBackgroundImageJSONObject());
+			styledLayoutStructureItem.getBackgroundImageJSONObject());
 
 		if (Validator.isNotNull(backgroundImage)) {
 			styleSB.append("background-position: 50% 50%; background-repeat: ");
@@ -478,16 +527,52 @@ public class RenderFragmentLayoutDisplayContext {
 			styleSB.append(");");
 		}
 
-		if (containerLayoutStructureItem.getBorderWidth() != -1L) {
+		if (styledLayoutStructureItem.getBorderWidth() != -1L) {
 			styleSB.append("border-style: solid; border-width: ");
-			styleSB.append(containerLayoutStructureItem.getBorderWidth());
+			styleSB.append(styledLayoutStructureItem.getBorderWidth());
 			styleSB.append("px;");
 		}
 
-		if (containerLayoutStructureItem.getOpacity() != -1L) {
+		if (Validator.isNotNull(styledLayoutStructureItem.getFontFamily())) {
+			styleSB.append("font-family: ");
+			styleSB.append(styledLayoutStructureItem.getFontFamily());
+			styleSB.append(StringPool.SEMICOLON);
+		}
+
+		if (Validator.isNotNull(styledLayoutStructureItem.getMaxHeight())) {
+			styleSB.append("max-height: ");
+			styleSB.append(styledLayoutStructureItem.getMaxHeight());
+			styleSB.append(StringPool.SEMICOLON);
+		}
+
+		if (Validator.isNotNull(styledLayoutStructureItem.getMaxWidth())) {
+			styleSB.append("max-width: ");
+			styleSB.append(styledLayoutStructureItem.getMaxWidth());
+			styleSB.append(StringPool.SEMICOLON);
+		}
+
+		if (Validator.isNotNull(styledLayoutStructureItem.getMinHeight())) {
+			styleSB.append("min-height: ");
+			styleSB.append(styledLayoutStructureItem.getMinHeight());
+			styleSB.append(StringPool.SEMICOLON);
+		}
+
+		if (Validator.isNotNull(styledLayoutStructureItem.getMinWidth())) {
+			styleSB.append("min-width: ");
+			styleSB.append(styledLayoutStructureItem.getMinWidth());
+			styleSB.append(StringPool.SEMICOLON);
+		}
+
+		if (styledLayoutStructureItem.getOpacity() != -1L) {
 			styleSB.append("opacity: ");
-			styleSB.append(containerLayoutStructureItem.getOpacity() / 100.0);
-			styleSB.append(";");
+			styleSB.append(styledLayoutStructureItem.getOpacity() / 100.0);
+			styleSB.append(StringPool.SEMICOLON);
+		}
+
+		if (Validator.isNotNull(styledLayoutStructureItem.getOverflow())) {
+			styleSB.append("overflow: ");
+			styleSB.append(styledLayoutStructureItem.getOverflow());
+			styleSB.append(StringPool.SEMICOLON);
 		}
 
 		return styleSB.toString();

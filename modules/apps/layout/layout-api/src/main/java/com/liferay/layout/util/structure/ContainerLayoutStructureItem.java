@@ -18,7 +18,6 @@ import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 
 import java.util.Objects;
 
@@ -30,7 +29,6 @@ public class ContainerLayoutStructureItem extends StyledLayoutStructureItem {
 	public ContainerLayoutStructureItem(String parentItemId) {
 		super(parentItemId);
 
-		_backgroundImageJSONObject = JSONFactoryUtil.createJSONObject();
 		_linkJSONObject = JSONFactoryUtil.createJSONObject();
 	}
 
@@ -47,46 +45,12 @@ public class ContainerLayoutStructureItem extends StyledLayoutStructureItem {
 		ContainerLayoutStructureItem containerLayoutStructureItem =
 			(ContainerLayoutStructureItem)object;
 
-		if (!Objects.equals(_align, containerLayoutStructureItem._align) ||
-			!Objects.equals(
-				_backgroundColorCssClass,
-				containerLayoutStructureItem._backgroundColorCssClass) ||
-			!Objects.equals(
-				_backgroundImageJSONObject.toJSONString(),
-				containerLayoutStructureItem._backgroundImageJSONObject.
-					toJSONString()) ||
-			!Objects.equals(
-				_borderColor, containerLayoutStructureItem._borderColor) ||
-			!Objects.equals(
-				_borderRadius, containerLayoutStructureItem._borderRadius) ||
-			!Objects.equals(
-				_borderWidth, containerLayoutStructureItem._borderWidth) ||
-			!Objects.equals(
-				_contentDisplay,
-				containerLayoutStructureItem._contentDisplay) ||
-			!Objects.equals(
+		if (!Objects.equals(
 				_linkJSONObject.toJSONString(),
 				containerLayoutStructureItem._linkJSONObject.toJSONString()) ||
 			!Objects.equals(
-				_marginBottom, containerLayoutStructureItem._marginBottom) ||
-			!Objects.equals(
-				_marginLeft, containerLayoutStructureItem._marginLeft) ||
-			!Objects.equals(
-				_marginRight, containerLayoutStructureItem._marginRight) ||
-			!Objects.equals(
-				_marginTop, containerLayoutStructureItem._marginTop) ||
-			!Objects.equals(
-				_paddingBottom, containerLayoutStructureItem._paddingBottom) ||
-			!Objects.equals(
-				_paddingHorizontal,
-				containerLayoutStructureItem._paddingHorizontal) ||
-			!Objects.equals(
-				_paddingLeft, containerLayoutStructureItem._paddingLeft) ||
-			!Objects.equals(
-				_paddingRight, containerLayoutStructureItem._paddingRight) ||
-			!Objects.equals(
-				_paddingTop, containerLayoutStructureItem._paddingTop) ||
-			!Objects.equals(_shadow, containerLayoutStructureItem._shadow) ||
+				stylesJSONObject.toString(),
+				containerLayoutStructureItem.stylesJSONObject.toString()) ||
 			!Objects.equals(
 				_widthType, containerLayoutStructureItem._widthType)) {
 
@@ -96,40 +60,12 @@ public class ContainerLayoutStructureItem extends StyledLayoutStructureItem {
 		return super.equals(object);
 	}
 
-	public String getAlign() {
-		return _align;
-	}
-
-	public String getBackgroundColorCssClass() {
-		return _backgroundColorCssClass;
-	}
-
-	public JSONObject getBackgroundImageJSONObject() {
-		return _backgroundImageJSONObject;
-	}
-
-	public String getBorderColor() {
-		return _borderColor;
-	}
-
-	public String getBorderRadius() {
-		return _borderRadius;
-	}
-
-	public int getBorderWidth() {
-		return _borderWidth;
-	}
-
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getWidthType()}
 	 */
 	@Deprecated
 	public String getContainerType() {
 		return _widthType;
-	}
-
-	public String getContentDisplay() {
-		return _contentDisplay;
 	}
 
 	@Override
@@ -144,36 +80,8 @@ public class ContainerLayoutStructureItem extends StyledLayoutStructureItem {
 		return LayoutDataItemTypeConstants.TYPE_CONTAINER;
 	}
 
-	public String getJustify() {
-		return _justify;
-	}
-
 	public JSONObject getLinkJSONObject() {
 		return _linkJSONObject;
-	}
-
-	public int getMarginBottom() {
-		return _marginBottom;
-	}
-
-	public int getMarginLeft() {
-		return _marginLeft;
-	}
-
-	public int getMarginRight() {
-		return _marginRight;
-	}
-
-	public int getMarginTop() {
-		return _marginTop;
-	}
-
-	public int getOpacity() {
-		return _opacity;
-	}
-
-	public int getPaddingBottom() {
-		return _paddingBottom;
 	}
 
 	/**
@@ -182,23 +90,7 @@ public class ContainerLayoutStructureItem extends StyledLayoutStructureItem {
 	 */
 	@Deprecated
 	public int getPaddingHorizontal() {
-		return _paddingHorizontal;
-	}
-
-	public int getPaddingLeft() {
-		return _paddingLeft;
-	}
-
-	public int getPaddingRight() {
-		return _paddingRight;
-	}
-
-	public int getPaddingTop() {
-		return _paddingTop;
-	}
-
-	public String getShadow() {
-		return _shadow;
+		return 0;
 	}
 
 	public String getWidthType() {
@@ -210,30 +102,47 @@ public class ContainerLayoutStructureItem extends StyledLayoutStructureItem {
 		return HashUtil.hash(0, getItemId());
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setAlign(String align) {
-		_align = align;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setBackgroundColorCssClass(String backgroundColorCssClass) {
-		_backgroundColorCssClass = backgroundColorCssClass;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setBackgroundImageJSONObject(
 		JSONObject backgroundImageJSONObject) {
-
-		_backgroundImageJSONObject = backgroundImageJSONObject;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setBorderColor(String borderColor) {
-		_borderColor = borderColor;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setBorderRadius(String borderRadius) {
-		_borderRadius = borderRadius;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setBorderWidth(int borderWidth) {
-		_borderWidth = borderWidth;
 	}
 
 	/**
@@ -245,40 +154,64 @@ public class ContainerLayoutStructureItem extends StyledLayoutStructureItem {
 		_widthType = containerType;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setContentDisplay(String contentDisplay) {
-		_contentDisplay = contentDisplay;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setJustify(String justify) {
-		_justify = justify;
 	}
 
 	public void setLinkJSONObject(JSONObject linkJSONObject) {
 		_linkJSONObject = linkJSONObject;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setMarginBottom(int marginBottom) {
-		_marginBottom = marginBottom;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setMarginLeft(int marginLeft) {
-		_marginLeft = marginLeft;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setMarginRight(int marginRight) {
-		_marginRight = marginRight;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setMarginTop(int marginTop) {
-		_marginTop = marginTop;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setOpacity(int opacity) {
-		_opacity = opacity;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setPaddingBottom(int paddingBottom) {
-		_paddingBottom = paddingBottom;
 	}
 
 	/**
@@ -287,23 +220,34 @@ public class ContainerLayoutStructureItem extends StyledLayoutStructureItem {
 	 */
 	@Deprecated
 	public void setPaddingHorizontal(int paddingHorizontal) {
-		_paddingHorizontal = paddingHorizontal;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setPaddingLeft(int paddingLeft) {
-		_paddingLeft = paddingLeft;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setPaddingRight(int paddingRight) {
-		_paddingRight = paddingRight;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setPaddingTop(int paddingTop) {
-		_paddingTop = paddingTop;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setShadow(String shadow) {
-		_shadow = shadow;
 	}
 
 	public void setWidthType(String widthType) {
@@ -313,109 +257,6 @@ public class ContainerLayoutStructureItem extends StyledLayoutStructureItem {
 	@Override
 	public void updateItemConfig(JSONObject itemConfigJSONObject) {
 		super.updateItemConfig(itemConfigJSONObject);
-
-		if (itemConfigJSONObject.has("align")) {
-			setAlign(itemConfigJSONObject.getString("align"));
-		}
-
-		if (itemConfigJSONObject.has("backgroundColorCssClass")) {
-			setBackgroundColorCssClass(
-				itemConfigJSONObject.getString("backgroundColorCssClass"));
-		}
-
-		if (itemConfigJSONObject.has("backgroundImage")) {
-			JSONObject backgroundImageJSONObject = null;
-
-			Object backgroundImage = itemConfigJSONObject.get(
-				"backgroundImage");
-
-			if (backgroundImage instanceof JSONObject) {
-				backgroundImageJSONObject = (JSONObject)backgroundImage;
-			}
-			else {
-				backgroundImageJSONObject = JSONUtil.put(
-					"url", backgroundImage);
-			}
-
-			setBackgroundImageJSONObject(backgroundImageJSONObject);
-		}
-
-		if (itemConfigJSONObject.has("borderColor")) {
-			setBorderColor(itemConfigJSONObject.getString("borderColor"));
-		}
-
-		if (itemConfigJSONObject.has("borderRadius")) {
-			setBorderRadius(itemConfigJSONObject.getString("borderRadius"));
-		}
-
-		if (itemConfigJSONObject.has("borderWidth")) {
-			setBorderWidth(itemConfigJSONObject.getInt("borderWidth"));
-		}
-
-		if (itemConfigJSONObject.has("contentDisplay")) {
-			setContentDisplay(itemConfigJSONObject.getString("contentDisplay"));
-		}
-
-		if (itemConfigJSONObject.has("justify")) {
-			setJustify(itemConfigJSONObject.getString("justify"));
-		}
-
-		if (itemConfigJSONObject.has("link")) {
-			setLinkJSONObject(itemConfigJSONObject.getJSONObject("link"));
-		}
-
-		if (itemConfigJSONObject.has("marginBottom")) {
-			setMarginBottom(itemConfigJSONObject.getInt("marginBottom"));
-		}
-
-		if (itemConfigJSONObject.has("marginLeft")) {
-			setMarginLeft(itemConfigJSONObject.getInt("marginLeft"));
-		}
-
-		if (itemConfigJSONObject.has("marginRight")) {
-			setMarginRight(itemConfigJSONObject.getInt("marginRight"));
-		}
-
-		if (itemConfigJSONObject.has("marginTop")) {
-			setMarginTop(itemConfigJSONObject.getInt("marginTop"));
-		}
-
-		if (itemConfigJSONObject.has("opacity")) {
-			setOpacity(itemConfigJSONObject.getInt("opacity"));
-		}
-
-		if (itemConfigJSONObject.has("paddingBottom")) {
-			setPaddingBottom(itemConfigJSONObject.getInt("paddingBottom"));
-		}
-
-		if (itemConfigJSONObject.has("paddingHorizontal")) {
-			setPaddingHorizontal(
-				itemConfigJSONObject.getInt("paddingHorizontal"));
-
-			if (!itemConfigJSONObject.has("paddingLeft")) {
-				setPaddingLeft(_paddingHorizontal);
-			}
-
-			if (!itemConfigJSONObject.has("paddingRight")) {
-				setPaddingRight(_paddingHorizontal);
-			}
-		}
-
-		if (itemConfigJSONObject.has("paddingLeft")) {
-			setPaddingLeft(itemConfigJSONObject.getInt("paddingLeft"));
-		}
-
-		if (itemConfigJSONObject.has("paddingRight")) {
-			setPaddingRight(itemConfigJSONObject.getInt("paddingRight"));
-		}
-
-		if (itemConfigJSONObject.has("paddingTop")) {
-			setPaddingTop(itemConfigJSONObject.getInt("paddingTop"));
-		}
-
-		if (itemConfigJSONObject.has("shadow")) {
-			setShadow(itemConfigJSONObject.getString("shadow"));
-		}
 
 		if (itemConfigJSONObject.has("widthType") ||
 			itemConfigJSONObject.has("type")) {
@@ -429,26 +270,7 @@ public class ContainerLayoutStructureItem extends StyledLayoutStructureItem {
 		}
 	}
 
-	private String _align;
-	private String _backgroundColorCssClass;
-	private JSONObject _backgroundImageJSONObject;
-	private String _borderColor = "";
-	private String _borderRadius = "";
-	private int _borderWidth;
-	private String _contentDisplay = "block";
-	private String _justify = "";
 	private JSONObject _linkJSONObject;
-	private int _marginBottom;
-	private int _marginLeft;
-	private int _marginRight;
-	private int _marginTop;
-	private int _opacity = 100;
-	private int _paddingBottom;
-	private int _paddingHorizontal;
-	private int _paddingLeft;
-	private int _paddingRight;
-	private int _paddingTop;
-	private String _shadow = "";
 	private String _widthType = "fluid";
 
 }

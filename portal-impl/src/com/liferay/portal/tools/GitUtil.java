@@ -514,6 +514,10 @@ public class GitUtil {
 
 			String line = unsyncBufferedReader.readLine();
 
+			if (line == null) {
+				continue;
+			}
+
 			String[] parts = line.split(StringPool.COLON);
 
 			if (parts.length != 2) {

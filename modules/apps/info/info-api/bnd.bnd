@@ -14,6 +14,7 @@ Export-Package:\
 	com.liferay.info.form,\
 	com.liferay.info.formatter,\
 	com.liferay.info.item,\
+	com.liferay.info.item.capability,\
 	com.liferay.info.item.field.reader,\
 	com.liferay.info.item.provider,\
 	com.liferay.info.item.renderer,\

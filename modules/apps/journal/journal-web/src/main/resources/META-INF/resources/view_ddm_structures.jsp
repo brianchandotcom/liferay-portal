@@ -46,6 +46,12 @@ JournalDDMStructuresManagementToolbarDisplayContext journalDDMStructuresManageme
 	<liferay-ui:error exception="<%= RequiredStructureException.MustNotDeleteStructureReferencedByTemplates.class %>" message="the-structure-cannot-be-deleted-because-it-is-required-by-one-or-more-templates" />
 	<liferay-ui:error exception="<%= RequiredStructureException.MustNotDeleteStructureThatHasChild.class %>" message="the-structure-cannot-be-deleted-because-it-has-one-or-more-substructures" />
 
+	<c:if test="<%= !journalDisplayContext.isNavigationMine() && !journalDisplayContext.isNavigationRecent() %>">
+		<liferay-site-navigation:breadcrumb
+			breadcrumbEntries="<%= new ArrayList<>() %>"
+		/>
+	</c:if>
+
 	<liferay-ui:search-container
 		id="ddmStructures"
 		searchContainer="<%= journalDDMStructuresDisplayContext.getDDMStructureSearch() %>"

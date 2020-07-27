@@ -33,6 +33,10 @@ DLViewFileEntryMetadataSetsDisplayContext dLViewFileEntryMetadataSetsDisplayCont
 	<liferay-ui:error exception="<%= RequiredStructureException.MustNotDeleteStructureReferencedByTemplates.class %>" message="the-structure-cannot-be-deleted-because-it-is-required-by-one-or-more-templates" />
 	<liferay-ui:error exception="<%= RequiredStructureException.MustNotDeleteStructureThatHasChild.class %>" message="the-structure-cannot-be-deleted-because-it-has-one-or-more-substructures" />
 
+	<liferay-ui:breadcrumb
+		showLayout="<%= false %>"
+	/>
+
 	<liferay-ui:search-container
 		id="ddmStructures"
 		rowChecker="<%= new DDMStructureRowChecker(renderResponse) %>"

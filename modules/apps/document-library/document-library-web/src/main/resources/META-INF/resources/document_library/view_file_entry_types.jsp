@@ -35,6 +35,10 @@ DLViewFileEntryTypesDisplayContext dlViewFileEntryTypesDisplayContext = new DLVi
 <clay:container-fluid
 	cssClass="main-content-body"
 >
+	<liferay-ui:breadcrumb
+		showLayout="<%= false %>"
+	/>
+
 	<liferay-ui:error exception="<%= RequiredFileEntryTypeException.class %>" message="cannot-delete-a-document-type-that-is-presently-used-by-one-or-more-documents" />
 
 	<liferay-ui:search-container

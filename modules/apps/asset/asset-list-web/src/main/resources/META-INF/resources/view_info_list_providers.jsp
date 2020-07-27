@@ -26,6 +26,10 @@ InfoListProviderDisplayContext infoListProviderDisplayContext = (InfoListProvide
 />
 
 <div class="container-fluid-1280 lfr-search-container-wrapper" id="<portlet:namespace/>collectionProviders">
+	<liferay-ui:breadcrumb
+		showLayout="<%= false %>"
+	/>
+
 	<liferay-ui:search-container
 		id="entries"
 		searchContainer="<%= infoListProviderDisplayContext.getSearchContainer() %>"

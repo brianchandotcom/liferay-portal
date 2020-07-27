@@ -84,6 +84,25 @@ public abstract class BaseDataListViewResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-list-views'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@DELETE
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "dataDefinitionId")}
+	)
+	@Path("/data-definitions/{dataDefinitionId}/data-list-views")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "DataListView")})
+	public void deleteDataListViewsDataDefinition(
+			@NotNull @Parameter(hidden = true) @PathParam("dataDefinitionId")
+				Long dataDefinitionId)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-list-views'  -u 'test@liferay.com:test'
 	 */
 	@Override

@@ -291,6 +291,21 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean deleteDataListViewsDataDefinition(
+			@GraphQLName("dataDefinitionId") Long dataDefinitionId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_dataListViewResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataListViewResource ->
+				dataListViewResource.deleteDataListViewsDataDefinition(
+					dataDefinitionId));
+
+		return true;
+	}
+
+	@GraphQLField
 	public DataListView createDataDefinitionDataListView(
 			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
 			@GraphQLName("dataListView") DataListView dataListView)

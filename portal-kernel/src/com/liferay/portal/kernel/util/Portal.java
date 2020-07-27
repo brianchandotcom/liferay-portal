@@ -1005,6 +1005,11 @@ public interface Portal {
 		throws PortalException;
 
 	public String getSiteAdminURL(
+			String portalURL, Group group, String ppid,
+			Map<String, String[]> params)
+		throws PortalException;
+
+	public String getSiteAdminURL(
 			ThemeDisplay themeDisplay, String ppid,
 			Map<String, String[]> params)
 		throws PortalException;

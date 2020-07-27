@@ -2255,9 +2255,11 @@ components:
         PageSectionDefinition:
             properties:
                 backgroundColor:
+                    deprecated: true
                     type: string
                 backgroundFragmentImage:
                     $ref: "#/components/schemas/FragmentImage"
+                    deprecated: true
                 backgroundImage:
                     deprecated: true
                     description:
@@ -2279,50 +2281,71 @@ components:
                 layout:
                     properties:
                         align:
+                            deprecated: true
                             enum: [Center, End, None, Start, Stretch]
                             type: string
                         borderColor:
+                            deprecated: true
                             type: string
                         borderRadius:
+                            deprecated: true
                             enum: [Circle, Large, None, Pill, Regular]
                             type: string
                         borderWidth:
+                            deprecated: true
                             type: integer
                         containerType:
                             enum: [Fixed, Fluid]
                             type: string
                         contentDisplay:
+                            deprecated: true
                             enum: [Block, Flex]
                             type: string
                         justify:
+                            deprecated: true
                             enum: [Center, End, None, SpaceAround, SpaceBetween, Start]
                             type: string
                         marginBottom:
+                            deprecated: true
                             type: integer
                         marginLeft:
+                            deprecated: true
                             type: integer
                         marginRight:
+                            deprecated: true
                             type: integer
                         marginTop:
+                            deprecated: true
                             type: integer
                         opacity:
+                            deprecated: true
                             type: integer
                         paddingBottom:
+                            deprecated: true
                             type: integer
                         paddingHorizontal:
+                            deprecated: true
                             type: integer
                         paddingLeft:
+                            deprecated: true
                             type: integer
                         paddingRight:
+                            deprecated: true
                             type: integer
                         paddingTop:
+                            deprecated: true
                             type: integer
                         shadow:
+                            deprecated: true
                             enum: [Default, Large, None, Regular, Small]
                             type: string
                         widthType:
                             enum: [Fixed, Fluid]
                             type: string
+                    type: object
+                styles:
+                    additionalProperties:
+                        type: object
                     type: object
             type: object
         PageTemplate:

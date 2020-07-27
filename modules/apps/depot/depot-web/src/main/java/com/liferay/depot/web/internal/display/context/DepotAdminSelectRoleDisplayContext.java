@@ -396,7 +396,8 @@ public class DepotAdminSelectRoleDisplayContext {
 		}
 
 		/**
-		 * @see com.liferay.site.memberships.web.internal.display.context.UserRolesDisplayContext#_filterGroupRoles(PermissionChecker, long, List)
+		 * @see com.liferay.site.memberships.web.internal.display.context.UserRolesDisplayContext#_filterGroupRoles(
+		 *      PermissionChecker, long, List)
 		 */
 		private List<Role> _filterGroupRoles(List<Role> roles)
 			throws PortalException {

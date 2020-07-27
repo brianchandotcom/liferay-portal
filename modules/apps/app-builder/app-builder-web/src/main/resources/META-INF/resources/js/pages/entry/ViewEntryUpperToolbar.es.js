@@ -31,6 +31,7 @@ function ViewEntryUpperToolbar({
 	dataRecordId,
 	history,
 	page,
+	showButtons,
 	totalCount,
 }) {
 	const {appDeploymentType, basePortletURL, showFormView} = useContext(
@@ -69,6 +70,9 @@ function ViewEntryUpperToolbar({
 		const prevIndex = Math.max(parseInt(page, 10) - 1, 1);
 		changeEntryIndex(prevIndex);
 	};
+
+	const showDeleteButton = showButtons?.delete ?? true;
+	const showUpdateButton = showButtons?.update ?? true;
 
 	return (
 		<UpperToolbar className={appDeploymentType}>
@@ -114,7 +118,7 @@ function ViewEntryUpperToolbar({
 
 			{showFormView && (
 				<UpperToolbar.Group>
-					{permissions.delete && (
+					{permissions.delete && showDeleteButton && (
 						<ClayTooltipProvider>
 							<ClayButtonWithIcon
 								className="ml-2"
@@ -129,7 +133,7 @@ function ViewEntryUpperToolbar({
 						</ClayTooltipProvider>
 					)}
 
-					{permissions.update && (
+					{permissions.update && showUpdateButton && (
 						<ClayTooltipProvider>
 							<ClayButtonWithIcon
 								className="mx-2"

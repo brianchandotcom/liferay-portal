@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>THUMB</td>
-	<td>//div[contains(@class,'ratings-thumbs')]//button[contains(@title,'${key_ratingResult}')]</td>
+	<td>//div[contains(@class,'ratings-thumbs')]//button[contains(@title,'${key_ratingResult}') or contains(@data-title,'${key_ratingResult}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -41,7 +41,7 @@
 </tr>
 <tr>
 	<td>REPLY_RATING_THUMB</td>
-	<td>//h4[contains(@title,'RE: ${key_threadSubject}')]//following-sibling::div//button[contains(@title,'${key_ratingResult}')]</td>
+	<td>//h4[contains(@title,'RE: ${key_threadSubject}')]//following-sibling::div//button[contains(@title,'${key_ratingResult}') or contains(@data-title,'${key_ratingResult}')]</td>
 	<td></td>
 </tr>
 <tr>

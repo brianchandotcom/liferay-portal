@@ -60,6 +60,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.view.count.ViewCountManager;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -68,6 +69,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.portal.vulcan.util.UriInfoUtil;
 import com.liferay.ratings.kernel.model.RatingsStats;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
@@ -79,6 +81,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -139,7 +142,7 @@ public class MessageBoardThreadResourceImpl
 		MBCategory mbCategory = _mbCategoryService.getCategory(
 			messageBoardSectionId);
 
-		return _getSiteMessageBoardThreadsPage(
+		HashMap<String, Map<String, String>> actions =
 			HashMapBuilder.<String, Map<String, String>>put(
 				"create",
 				addAction(
@@ -154,7 +157,26 @@ public class MessageBoardThreadResourceImpl
 					"getMessageBoardSectionMessageBoardThreadsPage",
 					mbCategory.getUserId(), "com.liferay.message.boards",
 					mbCategory.getGroupId())
-			).build(),
+			).build();
+
+		if ((search == null) && (filter == null) && (sorts == null)) {
+			return Page.of(
+				actions,
+				TransformUtil.transform(
+					_mbThreadService.getThreads(
+						mbCategory.getGroupId(), mbCategory.getCategoryId(),
+						WorkflowConstants.STATUS_APPROVED,
+						pagination.getStartPosition(),
+						pagination.getEndPosition()),
+					this::_toMessageBoardThread),
+				pagination,
+				_mbThreadService.getThreadsCount(
+					mbCategory.getGroupId(), mbCategory.getCategoryId(),
+					WorkflowConstants.STATUS_APPROVED));
+		}
+
+		return _getSiteMessageBoardThreadsPage(
+			actions,
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();

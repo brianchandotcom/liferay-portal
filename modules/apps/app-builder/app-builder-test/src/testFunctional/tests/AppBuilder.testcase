@@ -2711,13 +2711,7 @@ definition {
 
 		AppBuilderAdmin.undeployApp(itemName = "Test App C");
 
-		AppBuilderAdmin.openStandAloneApp(itemName = "Test App C");
-
-		SelectWindow.selectPopUp(locator1 = "null");
-
-		AppBuilderAdmin.validateStandAlone404();
-
-		Navigator.closeWindow();
+		AppBuilderAdmin.validateStandAloneOptionNotPresent(itemName = "Test App C");
 
 		AppBuilderAdmin.deployApp(itemName = "Test App C");
 

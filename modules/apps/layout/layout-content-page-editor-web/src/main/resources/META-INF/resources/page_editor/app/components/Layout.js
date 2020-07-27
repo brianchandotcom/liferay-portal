@@ -25,7 +25,7 @@ import {
 } from '../../prop-types/index';
 import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
-import {PAGE_TYPES} from '../config/constants/pageTypes';
+import {LAYOUT_TYPES} from '../config/constants/layoutTypes';
 import {config} from '../config/index';
 import {useSelector} from '../store/index';
 import {deepEqual} from '../utils/checkDeepEqual';
@@ -96,7 +96,7 @@ export default function Layout({mainItemId}) {
 		};
 	}, [layoutRef]);
 
-	const isPageConversion = config.pageType === PAGE_TYPES.conversion;
+	const isPageConversion = config.layoutType === LAYOUT_TYPES.conversion;
 	const hasWarningMessages =
 		isPageConversion &&
 		config.layoutConversionWarningMessages &&

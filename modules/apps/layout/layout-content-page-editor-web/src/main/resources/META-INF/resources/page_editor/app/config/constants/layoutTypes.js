@@ -14,9 +14,9 @@
 
 /**
  * Available page types
- * @type {import('../../../types/PageTypes').PageTypes}
+ * @type {import('../../../types/LayoutTypes').LayoutTypes}
  */
-export const PAGE_TYPES = {
+export const LAYOUT_TYPES = {
 	content: '0',
 	conversion: '4',
 	display: '1',

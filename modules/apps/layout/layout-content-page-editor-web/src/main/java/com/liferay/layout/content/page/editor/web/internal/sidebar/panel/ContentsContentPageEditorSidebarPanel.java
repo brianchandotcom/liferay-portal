@@ -60,7 +60,7 @@ public class ContentsContentPageEditorSidebarPanel
 
 	@Override
 	public boolean isVisible(
-		PermissionChecker permissionChecker, long plid, int pageType) {
+		PermissionChecker permissionChecker, long plid, int layoutType) {
 
 		try {
 			if (_layoutPermission.contains(

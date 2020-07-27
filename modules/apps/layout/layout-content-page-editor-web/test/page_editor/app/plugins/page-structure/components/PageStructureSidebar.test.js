@@ -27,7 +27,7 @@ import PageStructureSidebar from '../../../../../../src/main/resources/META-INF/
 
 jest.mock(
 	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
-	() => ({config: {pageType: 'content'}})
+	() => ({config: {layoutType: 'content'}})
 );
 
 const renderComponent = ({

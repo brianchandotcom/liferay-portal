@@ -21,7 +21,7 @@ import hasDropZoneChild from '../../../app/components/layout-data-items/hasDropZ
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../app/config/constants/editableFragmentEntryProcessor';
 import {ITEM_TYPES} from '../../../app/config/constants/itemTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
-import {PAGE_TYPES} from '../../../app/config/constants/pageTypes';
+import {LAYOUT_TYPES} from '../../../app/config/constants/layoutTypes';
 import {config} from '../../../app/config/index';
 import selectCanUpdateEditables from '../../../app/selectors/selectCanUpdateEditables';
 import selectCanUpdateItemConfiguration from '../../../app/selectors/selectCanUpdateItemConfiguration';
@@ -40,7 +40,7 @@ export default function PageStructureSidebar() {
 	const layoutData = useSelector((state) => state.layoutData);
 	const masterLayoutData = useSelector((state) => state.masterLayoutData);
 
-	const isMasterPage = config.pageType === PAGE_TYPES.master;
+	const isMasterPage = config.layoutType === LAYOUT_TYPES.master;
 
 	const data = masterLayoutData || layoutData;
 

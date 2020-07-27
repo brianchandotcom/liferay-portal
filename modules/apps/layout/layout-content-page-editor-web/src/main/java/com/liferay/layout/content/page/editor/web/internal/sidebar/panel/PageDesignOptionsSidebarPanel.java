@@ -59,9 +59,9 @@ public class PageDesignOptionsSidebarPanel
 
 	@Override
 	public boolean isVisible(
-		PermissionChecker permissionChecker, long plid, int pageType) {
+		PermissionChecker permissionChecker, long plid, int layoutType) {
 
-		if (pageType ==
+		if (layoutType ==
 				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT) {
 
 			return false;

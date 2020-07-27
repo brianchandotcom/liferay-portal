@@ -23,7 +23,7 @@ import useLazy from '../../core/hooks/useLazy';
 import useLoad from '../../core/hooks/useLoad';
 import usePlugins from '../../core/hooks/usePlugins';
 import * as Actions from '../actions/index';
-import {PAGE_TYPES} from '../config/constants/pageTypes';
+import {LAYOUT_TYPES} from '../config/constants/layoutTypes';
 import {config} from '../config/index';
 import {useDispatch, useSelector} from '../store/index';
 import redo from '../thunks/redo';
@@ -163,7 +163,7 @@ function ToolbarBody() {
 
 	let publishButtonLabel = Liferay.Language.get('publish');
 
-	if (config.pageType === PAGE_TYPES.master) {
+	if (config.layoutType === LAYOUT_TYPES.master) {
 		publishButtonLabel = Liferay.Language.get('publish-master');
 	}
 	else if (config.singleSegmentsExperienceMode) {

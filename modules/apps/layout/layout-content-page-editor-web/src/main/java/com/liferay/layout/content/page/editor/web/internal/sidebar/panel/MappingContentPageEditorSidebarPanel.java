@@ -59,9 +59,9 @@ public class MappingContentPageEditorSidebarPanel
 
 	@Override
 	public boolean isVisible(
-		PermissionChecker permissionChecker, long plid, int pageType) {
+		PermissionChecker permissionChecker, long plid, int layoutType) {
 
-		if (pageType !=
+		if (layoutType !=
 				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
 
 			return false;

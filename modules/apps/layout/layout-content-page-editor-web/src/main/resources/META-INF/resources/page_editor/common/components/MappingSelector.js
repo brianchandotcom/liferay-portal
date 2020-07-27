@@ -22,7 +22,7 @@ import {useCollectionFields} from '../../app/components/CollectionItemContext';
 import isMapped from '../../app/components/fragment-content/isMapped';
 import {COMPATIBLE_TYPES} from '../../app/config/constants/compatibleTypes';
 import {EDITABLE_TYPES} from '../../app/config/constants/editableTypes';
-import {PAGE_TYPES} from '../../app/config/constants/pageTypes';
+import {LAYOUT_TYPES} from '../../app/config/constants/layoutTypes';
 import {config} from '../../app/config/index';
 import InfoItemService from '../../app/services/InfoItemService';
 import {useDispatch, useSelector} from '../../app/store/index';
@@ -141,7 +141,7 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 	const [fields, setFields] = useState(null);
 	const [selectedItem, setSelectedItem] = useState(mappedItem);
 	const [selectedSourceTypeId, setSelectedSourceTypeId] = useState(
-		mappedItem.mappedField || config.pageType === PAGE_TYPES.display
+		mappedItem.mappedField || config.layoutType === LAYOUT_TYPES.display
 			? MAPPING_SOURCE_TYPE_IDS.structure
 			: MAPPING_SOURCE_TYPE_IDS.content
 	);
@@ -249,7 +249,7 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 
 	return (
 		<>
-			{config.pageType === PAGE_TYPES.display && (
+			{config.layoutType === LAYOUT_TYPES.display && (
 				<ClayForm.Group small>
 					<label htmlFor="mappingSelectorSourceSelect">
 						{Liferay.Language.get('source')}

@@ -1,4 +1,4 @@
-export interface PageTypes {
+export interface LayoutTypes {
 	content: '0';
 	conversion: '4';
 	display: '1';

@@ -26,7 +26,7 @@ import React from 'react';
 
 import {useCollectionFields} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/components/CollectionItemContext';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
-import {PAGE_TYPES} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/pageTypes';
+import {LAYOUT_TYPES} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutTypes';
 import {config} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
 import InfoItemService from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/InfoItemService';
 import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
@@ -43,7 +43,7 @@ jest.mock(
 	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index',
 	() => ({
 		config: {
-			pageType: '0',
+			layoutType: '0',
 			selectedMappingTypes: {
 				subtype: {
 					id: '0',
@@ -143,7 +143,7 @@ describe('MappingSelector', () => {
 	});
 
 	it('renders correct selects in display pages', async () => {
-		config.pageType = PAGE_TYPES.display;
+		config.layoutType = LAYOUT_TYPES.display;
 
 		await act(async () => {
 			renderMappingSelector({});
@@ -154,7 +154,7 @@ describe('MappingSelector', () => {
 	});
 
 	it('does not render content select when selecting structure as source', async () => {
-		config.pageType = PAGE_TYPES.display;
+		config.layoutType = LAYOUT_TYPES.display;
 
 		const {getByLabelText, getByText, queryByText} = renderMappingSelector(
 			{}
@@ -175,7 +175,7 @@ describe('MappingSelector', () => {
 	});
 
 	it('calls onMappingSelect with correct params when mapping to content', async () => {
-		config.pageType = PAGE_TYPES.content;
+		config.layoutType = LAYOUT_TYPES.content;
 
 		const onMappingSelect = jest.fn();
 
@@ -202,7 +202,7 @@ describe('MappingSelector', () => {
 	});
 
 	it('calls onMappingSelect with correct params when mapping to structure', async () => {
-		config.pageType = PAGE_TYPES.display;
+		config.layoutType = LAYOUT_TYPES.display;
 
 		const onMappingSelect = jest.fn();
 
@@ -284,7 +284,7 @@ describe('MappingSelector', () => {
 	});
 
 	it('shows a warning and disables the selector if the fields array is empty', async () => {
-		config.pageType = PAGE_TYPES.content;
+		config.layoutType = LAYOUT_TYPES.content;
 
 		InfoItemService.getAvailableAssetMappingFields.mockImplementation(() =>
 			Promise.resolve([])

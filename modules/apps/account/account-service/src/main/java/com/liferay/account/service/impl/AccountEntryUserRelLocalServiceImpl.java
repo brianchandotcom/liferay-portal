@@ -309,17 +309,6 @@ public class AccountEntryUserRelLocalServiceImpl
 			long companyId, long accountEntryId, String emailAddress)
 		throws PortalException {
 
-		AccountEntryEmailDomainsConfiguration
-			accountEntryEmailDomainsConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					AccountEntryEmailDomainsConfiguration.class, companyId);
-
-		if (!accountEntryEmailDomainsConfiguration.
-				enableEmailDomainValidation()) {
-
-			return;
-		}
-
 		long userId = GuestOrUserUtil.getGuestOrUserId();
 
 		List<AccountEntryUserRel> accountEntryUserRels =
@@ -340,6 +329,11 @@ public class AccountEntryUserRelLocalServiceImpl
 
 		String domain = emailAddress.substring(index + 1);
 
+		AccountEntryEmailDomainsConfiguration
+			accountEntryEmailDomainsConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					AccountEntryEmailDomainsConfiguration.class, companyId);
+
 		String[] blockedDomains = StringUtil.split(
 			accountEntryEmailDomainsConfiguration.blockedEmailDomains(),
 			StringPool.RETURN_NEW_LINE);
@@ -348,6 +342,12 @@ public class AccountEntryUserRelLocalServiceImpl
 			throw new UserEmailAddressException.MustNotUseBlockedDomain(
 				emailAddress,
 				StringUtil.merge(blockedDomains, StringPool.COMMA_AND_SPACE));
+		}
+
+		if (!accountEntryEmailDomainsConfiguration.
+				enableEmailDomainValidation()) {
+
+			return;
 		}
 
 		AccountEntry accountEntry = accountEntryLocalService.getAccountEntry(

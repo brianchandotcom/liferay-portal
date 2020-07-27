@@ -355,6 +355,7 @@ definition {
 	}
 
 	@description = "This test validates sign in and sign out UI"
+	@ignore = "true"
 	@priority = "5"
 	test ViewSignInSignOutUI {
 		property portal.acceptance = "false";

@@ -279,21 +279,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 		<#assign columnBitmaskEnabled = true />
 
-		<#if entity.finderEntityColumns?size == 0>
-			<#if !dependencyInjectorDS>
-				<#if serviceBuilder.isVersionGTE_7_3_0()>
-					/**
-					* @deprecated As of Athanasius (7.3.x), with no direct replacement
-					*/
-					@Deprecated
-				</#if>
-				public static final boolean COLUMN_BITMASK_ENABLED = false;
-			</#if>
-
-			<#assign columnBitmaskEnabled = false />
-		</#if>
-
-		<#if entity.finderEntityColumns?size &gt; 64>
+		<#if (entity.finderEntityColumns?size == 0) || (entity.finderEntityColumns?size &gt; 64)>
 			<#if !dependencyInjectorDS>
 				<#if serviceBuilder.isVersionGTE_7_3_0()>
 					/**

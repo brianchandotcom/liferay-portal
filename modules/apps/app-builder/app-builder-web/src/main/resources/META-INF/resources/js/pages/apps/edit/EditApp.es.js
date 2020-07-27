@@ -18,7 +18,6 @@ import React, {useEffect, useReducer, useState} from 'react';
 import ControlMenu from '../../../components/control-menu/ControlMenu.es';
 import {Loading} from '../../../components/loading/Loading.es';
 import MultiStepNav from '../../../components/multi-step-nav/MultiStepNav.es';
-import useDefaultLanguageId from '../../../hooks/useDefaultLanguageId.es';
 import {toQuery} from '../../../hooks/useQuery.es';
 import {getItem} from '../../../utils/client.es';
 import DeployApp from './DeployApp.es';
@@ -28,6 +27,8 @@ import EditAppFooter from './EditAppFooter.es';
 import EditAppHeader from './EditAppHeader.es';
 
 export default ({
+	availableLanguageIds,
+	defaultLanguageId,
 	location: {search},
 	match: {
 		params: {appId, dataDefinitionId},
@@ -36,7 +37,6 @@ export default ({
 }) => {
 	const [currentStep, setCurrentStep] = useState(0);
 	const [isLoading, setLoading] = useState(false);
-	const defaultLanguageId = useDefaultLanguageId(dataDefinitionId);
 
 	const [state, dispatch] = useReducer(reducer, {
 		app: {
@@ -95,6 +95,7 @@ export default ({
 					<ClayLayout.ContainerFluid className="mt-4" size="lg">
 						<div className="card card-root mb-0 shadowless-card">
 							<EditAppHeader
+								availableLanguageIds={availableLanguageIds}
 								defaultLanguageId={defaultLanguageId}
 							/>
 

@@ -37,13 +37,24 @@ export default ({
 		path,
 	},
 }) => {
-	const [title, setTitle] = useState('');
+	const [
+		{availableLanguageIds, defaultLanguageId, title},
+		setDataDefinition,
+	] = useState({
+		availableLanguageIds: [],
+		defaultLanguageId: '',
+		title: '',
+	});
 
 	useEffect(() => {
 		getItem(
 			`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}`
-		).then(({defaultLanguageId, name}) =>
-			setTitle(getLocalizedValue(defaultLanguageId, name))
+		).then(({availableLanguageIds, defaultLanguageId, name}) =>
+			setDataDefinition({
+				availableLanguageIds,
+				defaultLanguageId,
+				title: getLocalizedValue(defaultLanguageId, name),
+			})
 		);
 	}, [dataDefinitionId]);
 
@@ -66,8 +77,14 @@ export default ({
 			/>
 
 			<Route
-				component={EditApp}
 				path={[`${path}/apps/deploy`, `${path}/apps/:appId(\\d+)`]}
+				render={(props) => (
+					<EditApp
+						availableLanguageIds={availableLanguageIds}
+						defaultLanguageId={defaultLanguageId}
+						{...props}
+					/>
+				)}
 			/>
 
 			<Route

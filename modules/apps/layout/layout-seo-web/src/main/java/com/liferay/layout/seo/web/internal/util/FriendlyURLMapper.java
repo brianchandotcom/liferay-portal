@@ -14,23 +14,26 @@
 
 package com.liferay.layout.seo.web.internal.util;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.journal.constants.JournalArticleConstants;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.petra.string.CharPool;
+import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
+import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -40,126 +43,161 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class FriendlyURLMapper {
 
 	public static FriendlyURLMapper create(
+			AssetDisplayPageFriendlyURLProvider
+				assetDisplayPageFriendlyURLProvider,
+			ClassNameLocalService classNameLocalService, Language language,
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		Layout layout = (Layout)httpServletRequest.getAttribute(WebKeys.LAYOUT);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		if ((layout != null) && !layout.isContentDisplayPage()) {
-			return new DefaultFriendlyURLMapper();
-		}
+		return Optional.ofNullable(
+			(InfoDisplayObjectProvider<?>)httpServletRequest.getAttribute(
+				AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER)
+		).filter(
+			infoDisplayObjectProvider -> {
+				try {
+					return AssetDisplayPageUtil.hasAssetDisplayPage(
+						themeDisplay.getScopeGroupId(),
+						infoDisplayObjectProvider.getClassNameId(),
+						infoDisplayObjectProvider.getClassPK(),
+						infoDisplayObjectProvider.getClassTypeId());
+				}
+				catch (PortalException portalException) {
+					_log.error(portalException, portalException);
 
-		AssetEntry assetEntry = (AssetEntry)httpServletRequest.getAttribute(
-			WebKeys.LAYOUT_ASSET_ENTRY);
-
-		if (Objects.equals(
-				assetEntry.getClassName(), JournalArticle.class.getName())) {
-
-			AssetRendererFactory<?> assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassNameId(
-						assetEntry.getClassNameId());
-
-			AssetRenderer<?> assetRenderer =
-				assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
-
-			return new AssetDisplayPageFriendlyURLMapper(
-				(JournalArticle)assetRenderer.getAssetObject());
-		}
-
-		return new DefaultFriendlyURLMapper();
+					return false;
+				}
+			}
+		).map(
+			infoDisplayObjectProvider ->
+				(FriendlyURLMapper)new AssetDisplayPageFriendlyURLMapper(
+					assetDisplayPageFriendlyURLProvider, classNameLocalService,
+					infoDisplayObjectProvider, language, themeDisplay)
+		).orElseGet(
+			() -> new DefaultPageFriendlyURLMapper()
+		);
 	}
 
-	public abstract String getMappedAssetDisplayPageFriendlyURL(
-			String url, Locale locale)
+	public abstract String getMappedFriendlyURL(String url, Locale locale)
 		throws PortalException;
 
-	public abstract Map<Locale, String> getMappedAssetDisplayPageFriendlyURLs(
+	public abstract Map<Locale, String> getMappedFriendlyURLs(
 			Map<Locale, String> friendlyURLs)
 		throws PortalException;
 
 	public static class AssetDisplayPageFriendlyURLMapper
 		extends FriendlyURLMapper {
 
-		@Override
-		public String getMappedAssetDisplayPageFriendlyURL(
-				String url, Locale locale)
+		public String getMappedFriendlyURL(String url, Locale locale)
 			throws PortalException {
 
-			int beginPos = url.indexOf(
-				JournalArticleConstants.CANONICAL_URL_SEPARATOR);
-
-			if (beginPos == -1) {
+			if (_infoDisplayObjectProvider == null) {
 				return url;
 			}
 
-			int endPos = StringUtil.indexOfAny(
-				url, new char[] {CharPool.FORWARD_SLASH, CharPool.QUESTION},
-				beginPos +
-					JournalArticleConstants.CANONICAL_URL_SEPARATOR.length());
+			try {
+				ClassName className = _classNameLocalService.getClassName(
+					_infoDisplayObjectProvider.getClassNameId());
 
-			if (endPos == -1) {
-				endPos = url.length();
+				ThemeDisplay clonedThemeDisplay =
+					(ThemeDisplay)_themeDisplay.clone();
+
+				clonedThemeDisplay.setI18nPath(_getI18nPath(locale));
+
+				String languageId = _language.getLanguageId(locale);
+
+				clonedThemeDisplay.setI18nLanguageId(languageId);
+				clonedThemeDisplay.setLanguageId(languageId);
+
+				clonedThemeDisplay.setLocale(locale);
+
+				return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+					className.getClassName(),
+					_infoDisplayObjectProvider.getClassPK(),
+					clonedThemeDisplay);
+			}
+			catch (CloneNotSupportedException cloneNotSupportedException) {
+				_log.error(
+					cloneNotSupportedException, cloneNotSupportedException);
 			}
 
-			String urlTitle = _journalArticle.getUrlTitle(locale);
-
-			if (Validator.isNull(urlTitle)) {
-				return url;
-			}
-
-			return new StringBuilder(
-				url
-			).replace(
-				beginPos, endPos,
-				JournalArticleConstants.CANONICAL_URL_SEPARATOR + urlTitle
-			).toString();
+			return url;
 		}
 
-		public Map<Locale, String> getMappedAssetDisplayPageFriendlyURLs(
+		@Override
+		public Map<Locale, String> getMappedFriendlyURLs(
 				Map<Locale, String> friendlyURLs)
 			throws PortalException {
+
+			if (_infoDisplayObjectProvider == null) {
+				return friendlyURLs;
+			}
 
 			Map<Locale, String> mappedFriendlyURLs = new HashMap<>();
 
 			for (Map.Entry<Locale, String> entry : friendlyURLs.entrySet()) {
 				mappedFriendlyURLs.put(
 					entry.getKey(),
-					getMappedAssetDisplayPageFriendlyURL(
-						entry.getValue(), entry.getKey()));
+					getMappedFriendlyURL(entry.getValue(), entry.getKey()));
 			}
 
 			return mappedFriendlyURLs;
 		}
 
-		private AssetDisplayPageFriendlyURLMapper(
-			JournalArticle journalArticle) {
+		protected AssetDisplayPageFriendlyURLMapper(
+			AssetDisplayPageFriendlyURLProvider
+				assetDisplayPageFriendlyURLProvider,
+			ClassNameLocalService classNameLocalService,
+			InfoDisplayObjectProvider<?> infoDisplayObjectProvider,
+			Language language, ThemeDisplay themeDisplay) {
 
-			_journalArticle = journalArticle;
+			_assetDisplayPageFriendlyURLProvider =
+				assetDisplayPageFriendlyURLProvider;
+			_classNameLocalService = classNameLocalService;
+			_infoDisplayObjectProvider = infoDisplayObjectProvider;
+			_language = language;
+			_themeDisplay = themeDisplay;
 		}
 
-		private final JournalArticle _journalArticle;
+		private String _getI18nPath(Locale locale) {
+			Locale defaultLocale = LanguageUtil.getLocale(locale.getLanguage());
+
+			if (LocaleUtil.equals(defaultLocale, locale)) {
+				return StringPool.SLASH + defaultLocale.getLanguage();
+			}
+
+			return StringPool.SLASH + locale.toLanguageTag();
+		}
+
+		private final AssetDisplayPageFriendlyURLProvider
+			_assetDisplayPageFriendlyURLProvider;
+		private final ClassNameLocalService _classNameLocalService;
+		private final InfoDisplayObjectProvider<?> _infoDisplayObjectProvider;
+		private final Language _language;
+		private final ThemeDisplay _themeDisplay;
 
 	}
 
-	public static class DefaultFriendlyURLMapper extends FriendlyURLMapper {
+	public static class DefaultPageFriendlyURLMapper extends FriendlyURLMapper {
 
 		@Override
-		public String getMappedAssetDisplayPageFriendlyURL(
-				String url, Locale locale)
-			throws PortalException {
-
+		public String getMappedFriendlyURL(String url, Locale locale) {
 			return url;
 		}
 
 		@Override
-		public Map<Locale, String> getMappedAssetDisplayPageFriendlyURLs(
-				Map<Locale, String> friendlyURLs)
-			throws PortalException {
+		public Map<Locale, String> getMappedFriendlyURLs(
+			Map<Locale, String> friendlyURLs) {
 
 			return friendlyURLs;
 		}
 
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FriendlyURLMapper.class);
 
 }

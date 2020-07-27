@@ -582,6 +582,23 @@ paths:
                         ""
             tags: ["DataLayout"]
     "/data-definitions/{dataDefinitionId}/data-list-views":
+        delete:
+            operationId: deleteDataListViewsDataDefinition
+            parameters:
+                - in: path
+                  name: dataDefinitionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["DataListView"]
         get:
             operationId: getDataDefinitionDataListViewsPage
             parameters:

@@ -19,9 +19,9 @@ import ellipsize from '../../../utils/ellipsize.es';
 
 const MAX_TEXT_SIZE = 34;
 const MAX_WIDTH = 220;
-const SPACING_SIZE = 17;
 const MIN_TICKS_TO_MINIMIZE = 5;
 const MIN_TICKS_TO_ELLIPSIZE = 2;
+const SPACING_SIZE = 17;
 
 const minimize = (ticksNumber) =>
 	ticksNumber > MIN_TICKS_TO_MINIMIZE

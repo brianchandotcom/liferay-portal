@@ -23,6 +23,58 @@ definition {
 	}
 
 	@priority = "4"
+	test AccountAccountUserFilterByNavigation {
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		Accounts.addCP(
+			accountDescription = "Filter AccountUser in Account By Navigation.",
+			accountName = "Filter Account User");
+
+		for (var accountUser : list "1,2") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Accounts",
+				panel = "Applications",
+				portlet = "Account Users");
+
+			AccountUsers.addUsers(
+				accountName = "Filter Account User",
+				userEmailAddress = "userea${accountUser}@liferay.com",
+				userFirstName = "userfn${accountUser}",
+				userLastName = "userln${accountUser}",
+				userScreenName = "usersn${accountUser}");
+		}
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Account Users");
+
+		AccountUsers.deactivateUser(userFirstName = "userfn2");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		LexiconEntry.gotoEntry(rowEntry = "Filter Account User");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
+		LexiconEntry.viewEntryName(rowEntry = "userfn1 userln1");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Inactive");
+
+		LexiconEntry.viewEntryName(rowEntry = "userfn2 userln2");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Active");
+
+		LexiconEntry.viewEntryName(rowEntry = "userfn1 userln1");
+	}
+
+	@priority = "4"
 	test AccountFilterByType {
 		for (var accountType : list "Business,Person") {
 			ApplicationsMenu.gotoPortlet(

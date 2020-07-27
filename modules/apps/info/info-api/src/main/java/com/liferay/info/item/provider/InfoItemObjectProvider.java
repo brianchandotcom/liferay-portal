@@ -15,11 +15,18 @@
 package com.liferay.info.item.provider;
 
 import com.liferay.info.exception.NoSuchInfoItemException;
+import com.liferay.info.item.InfoItemReference;
 
 /**
  * @author Jorge Ferrer
  */
 public interface InfoItemObjectProvider<T> {
+
+	public default T getInfoItem(InfoItemReference infoItemReference)
+		throws NoSuchInfoItemException {
+
+		return getInfoItem(infoItemReference.getClassPK());
+	}
 
 	public T getInfoItem(long classPK) throws NoSuchInfoItemException;
 

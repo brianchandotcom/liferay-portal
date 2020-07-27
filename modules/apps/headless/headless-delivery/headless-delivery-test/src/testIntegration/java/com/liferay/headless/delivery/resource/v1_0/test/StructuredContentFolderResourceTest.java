@@ -19,6 +19,7 @@ import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
+import org.junit.Before;
 import org.junit.runner.RunWith;
 
 /**
@@ -27,6 +28,13 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class StructuredContentFolderResourceTest
 	extends BaseStructuredContentFolderResourceTestCase {
+
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+
+		testGroup = testDepotEntry.getGroup();
+	}
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {

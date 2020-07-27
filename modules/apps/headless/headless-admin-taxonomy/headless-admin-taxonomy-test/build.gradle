@@ -4,6 +4,7 @@ dependencies {
 	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.10.3"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:asset:asset-test-util")
+	testIntegrationCompile project(":apps:depot:depot-api")
 	testIntegrationCompile project(":apps:headless:headless-admin-taxonomy:headless-admin-taxonomy-api")
 	testIntegrationCompile project(":apps:headless:headless-admin-taxonomy:headless-admin-taxonomy-client")
 	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")

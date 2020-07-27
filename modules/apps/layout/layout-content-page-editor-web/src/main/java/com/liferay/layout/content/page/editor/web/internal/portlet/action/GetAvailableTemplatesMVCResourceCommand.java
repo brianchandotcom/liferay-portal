@@ -15,6 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.info.exception.NoSuchInfoItemException;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.renderer.InfoItemRenderer;
@@ -136,7 +137,10 @@ public class GetAvailableTemplatesMVCResourceCommand
 
 		try {
 			if (infoItemObjectProvider != null) {
-				return infoItemObjectProvider.getInfoItem(classPK);
+				InfoItemReference infoItemReference = new InfoItemReference(
+					classPK);
+
+				return infoItemObjectProvider.getInfoItem(infoItemReference);
 			}
 		}
 		catch (NoSuchInfoItemException noSuchInfoItemException) {

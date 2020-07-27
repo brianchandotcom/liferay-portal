@@ -31,6 +31,7 @@ import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemFormVariation;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemClassDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
@@ -113,17 +114,26 @@ public class InfoDisplayContributorWrapper
 	}
 
 	@Override
-	public Object getInfoItem(long itemClassPK) throws NoSuchInfoItemException {
+	public Object getInfoItem(InfoItemReference infoItemReference)
+		throws NoSuchInfoItemException {
+
 		try {
 			InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
 				_infoDisplayContributor.getInfoDisplayObjectProvider(
-					itemClassPK);
+					infoItemReference.getClassPK());
 
 			return infoDisplayObjectProvider.getDisplayObject();
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
 		}
+	}
+
+	@Override
+	public Object getInfoItem(long classPK) throws NoSuchInfoItemException {
+		InfoItemReference infoItemReference = new InfoItemReference(classPK);
+
+		return getInfoItem(infoItemReference);
 	}
 
 	@Override

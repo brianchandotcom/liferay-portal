@@ -275,6 +275,24 @@ definition {
 			site = "${siteName}");
 	}
 
+	macro checkCompletedWorkflowValues {
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#PERFORMANCE_TOTAL_COMPLETED_ITEMS_VALUE",
+			value1 = "${key_completed}");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#PERFORMANCE_TOTAL_OVERDUE_ITEMS_VALUE",
+			value1 = "${key_overdue}");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#PERFORMANCE_TOTAL_ONTIME_ITEMS_VALUE",
+			value1 = "${key_ontime}");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#PERFORMANCE_TOTAL_UNTRACKED_ITEMS_VALUE",
+			value1 = "${key_untracked}");
+	}
+
 	macro checkPendingWorkflowValues {
 		AssertTextEquals(
 			locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_OVERDUE_ITEMS_VALUE",
@@ -493,6 +511,7 @@ definition {
 		var key_slaDefinitionDescription = "${slaDefinitionDescription}";
 		var key_slaDefinitionEnd = "${slaDefinitionEnd}";
 		var key_slaDefinitionName = "${slaDefinitionName}";
+		var key_slaDefinitionPause = "${slaDefinitionPause}";
 		var key_slaDefinitionStart = "${slaDefinitionStart}";
 
 		Type(
@@ -518,6 +537,14 @@ definition {
 			AssertClick(
 				locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_START_OPTION",
 				value1 = "${key_slaDefinitionStart}");
+		}
+
+		if (isSet(slaDefinitionPause)) {
+			Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_PAUSE");
+
+			AssertClick(
+				locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_PAUSE_OPTION",
+				value1 = "${key_slaDefinitionPause}");
 		}
 
 		if (isSet(slaDefinitionEnd)) {
@@ -1262,6 +1289,26 @@ definition {
 	macro waitForSLA {
 
 		while (IsTextEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_${key_status}_ITEMS_VALUE", value1 = "${key_expectedValue}") && (maxIterations = "24")) {
+
+			echo("Waiting 5 seconds to recheck");
+
+			Pause(locator1 = "5000");
+
+			WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+		}
+
+		if (IsTextEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_${key_status}_ITEMS_VALUE", value1 = "${key_expectedValue}")) {
+
+			echo("timeout exceeded");
+		}
+	}
+
+	macro waitForSLAPendingNotChange {
+		var count = "1";
+
+		while (IsTextEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_${key_status}_ITEMS_VALUE", value1 = "${key_expectedValue}") && ("${count}" != "${key_pauseTime}") && (maxIterations = "48")) {
+
+			var count = ${count} + 1;
 
 			echo("Waiting 5 seconds to recheck");
 

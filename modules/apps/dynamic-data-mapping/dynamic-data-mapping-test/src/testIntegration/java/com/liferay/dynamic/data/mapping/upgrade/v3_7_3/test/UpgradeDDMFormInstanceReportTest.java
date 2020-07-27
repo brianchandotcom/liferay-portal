@@ -89,7 +89,7 @@ public class UpgradeDDMFormInstanceReportTest {
 		DDMFormInstanceRecord ddmFormInstanceRecord =
 			_createDDMFormInstanceRecord(ddmForm, serviceContext);
 
-		DDMFormValues ddmFormValues = _updateTextDDMFormValue(
+		DDMFormValues ddmFormValues = _updateTextDDMFormFieldValue(
 			ddmForm, "Draft Text");
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
@@ -118,7 +118,7 @@ public class UpgradeDDMFormInstanceReportTest {
 		DDMFormInstanceRecord ddmFormInstanceRecord =
 			_createDDMFormInstanceRecord(ddmForm, serviceContext);
 
-		DDMFormValues ddmFormValues = _updateTextDDMFormValue(
+		DDMFormValues ddmFormValues = _updateTextDDMFormFieldValue(
 			ddmForm, "Approved Text 2");
 
 		DDMFormInstanceRecordLocalServiceUtil.updateFormInstanceRecord(
@@ -465,7 +465,7 @@ public class UpgradeDDMFormInstanceReportTest {
 			expectedDataJSONObject.toString(), actualDataJSONObject.toString());
 	}
 
-	private DDMFormValues _updateTextDDMFormValue(
+	private DDMFormValues _updateTextDDMFormFieldValue(
 		DDMForm ddmForm, String value) {
 
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(

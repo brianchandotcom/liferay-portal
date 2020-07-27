@@ -65,6 +65,12 @@ definition {
 			value1 = "${moduleStatus}");
 	}
 
+	macro viewNoOutput {
+		AssertTextNotPresent(
+			locator1 = "GogoShell#OUTPUT_FIELD",
+			value1 = "${outputContent}");
+	}
+
 	macro viewOutput {
 		AssertTextEquals.assertPartialText(
 			locator1 = "GogoShell#OUTPUT_FIELD",

@@ -456,7 +456,7 @@ Array [
                                 Object {
                                   "fieldName": "validation",
                                   "validation": Object {
-                                    "fieldName": "copyofx",
+                                    "fieldName": "Any<String>",
                                   },
                                   "value": Object {
                                     "expression": undefined,

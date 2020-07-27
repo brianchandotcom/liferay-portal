@@ -20,6 +20,9 @@ import mockFieldType from '../../__mock__/mockFieldType.es';
 import mockPages from '../../__mock__/mockPages.es';
 
 let component;
+let liferayLanguageSpy;
+
+const DEFAULT_FIELD_NAME_REGEX = /^Field[0-9]{8}$/;
 
 const changeField = ({settingsContext}, fieldName, value) => {
 	const visitor = new PagesVisitor(settingsContext.pages);
@@ -33,6 +36,18 @@ const changeField = ({settingsContext}, fieldName, value) => {
 		}
 
 		return field;
+	});
+};
+
+const mockLiferayLanguage = () => {
+	liferayLanguageSpy = jest.spyOn(Liferay.Language, 'get');
+
+	liferayLanguageSpy.mockImplementation((key) => {
+		if (key === 'field') {
+			return 'Field';
+		}
+
+		return key;
 	});
 };
 
@@ -64,6 +79,10 @@ const rules = [
 		['logical-operator']: 'OR',
 	},
 ];
+
+const unmockLiferayLanguage = () => {
+	liferayLanguageSpy.mockRestore();
+};
 
 class Child extends JSXComponent {
 	render() {
@@ -338,6 +357,8 @@ describe('LayoutProvider', () => {
 					},
 				};
 
+				mockLiferayLanguage();
+
 				const {dispatch} = child.context;
 
 				dispatch('fieldAdded', mockEvent);
@@ -347,7 +368,9 @@ describe('LayoutProvider', () => {
 				expect(
 					provider.state.pages[0].rows[0].columns[1].fields[0]
 						.fieldName
-				).toEqual('TextField');
+				).toEqual(expect.stringMatching(DEFAULT_FIELD_NAME_REGEX));
+
+				unmockLiferayLanguage();
 			});
 
 			it('listen the fieldAdded event and add the field in the row to the pages', () => {
@@ -366,6 +389,8 @@ describe('LayoutProvider', () => {
 					},
 				};
 
+				mockLiferayLanguage();
+
 				const {dispatch} = child.context;
 
 				dispatch('fieldAdded', mockEvent);
@@ -375,7 +400,9 @@ describe('LayoutProvider', () => {
 				expect(
 					provider.state.pages[0].rows[0].columns[0].fields[0]
 						.fieldName
-				).toEqual('TextField');
+				).toEqual(expect.stringMatching(DEFAULT_FIELD_NAME_REGEX));
+
+				unmockLiferayLanguage();
 			});
 
 			it('updates the focusedField with the location of the new field when adding to the pages', () => {
@@ -394,6 +421,8 @@ describe('LayoutProvider', () => {
 					},
 				};
 
+				mockLiferayLanguage();
+
 				const {dispatch} = child.context;
 
 				dispatch('fieldAdded', mockEvent);
@@ -401,8 +430,10 @@ describe('LayoutProvider', () => {
 				jest.runAllTimers();
 
 				expect(provider.state.focusedField.fieldName).toEqual(
-					'TextField'
+					expect.stringMatching(DEFAULT_FIELD_NAME_REGEX)
 				);
+
+				unmockLiferayLanguage();
 			});
 		});
 
@@ -444,6 +475,8 @@ describe('LayoutProvider', () => {
 					fieldName: 'radio',
 				};
 
+				mockLiferayLanguage();
+
 				const {dispatch} = child.context;
 
 				dispatch('fieldDuplicated', mockEvent);
@@ -466,6 +499,19 @@ describe('LayoutProvider', () => {
 							if (pages.length) {
 								pages[0].rows[0].columns[0].fields[1].value =
 									'Liferay';
+
+								const validation =
+									pages[0].rows[0].columns[0].fields[4]
+										.validation;
+
+								if (validation && validation.fieldName) {
+
+									// Overrides the fieldName because it is generated when a field is duplicated,
+									// toMatchSnapshot has problems with deep arrays so we override it here to
+									// avoid this.
+
+									validation.fieldName = 'Any<String>';
+								}
 							}
 
 							return {
@@ -482,6 +528,8 @@ describe('LayoutProvider', () => {
 						}
 					)
 				).toMatchSnapshot();
+
+				unmockLiferayLanguage();
 			});
 		});
 

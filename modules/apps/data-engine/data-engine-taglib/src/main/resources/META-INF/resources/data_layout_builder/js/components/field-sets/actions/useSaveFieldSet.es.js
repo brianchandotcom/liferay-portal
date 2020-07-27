@@ -23,7 +23,6 @@ import {
 	containsField,
 	normalizeDataLayoutRows,
 } from '../../../utils/dataLayoutVisitor.es';
-import saveDataDefinition from '../../../utils/saveDataDefinition.es';
 import {errorToast, successToast} from '../../../utils/toast.es';
 
 export default ({availableLanguageIds, childrenContext, fieldSet}) => {
@@ -68,7 +67,6 @@ export default ({availableLanguageIds, childrenContext, fieldSet}) => {
 						if (ddmStructureId == fieldSet.id) {
 							return {
 								...field,
-								label: name,
 								nestedDataDefinitionFields: dataDefinitionFields,
 							};
 						}
@@ -98,10 +96,6 @@ export default ({availableLanguageIds, childrenContext, fieldSet}) => {
 										dataLayoutPages
 									),
 								},
-								{
-									name: 'label',
-									value: name.en_US,
-								},
 							],
 						});
 					}
@@ -116,14 +110,6 @@ export default ({availableLanguageIds, childrenContext, fieldSet}) => {
 							type: UPDATE_DATA_DEFINITION,
 						});
 					}
-
-					return saveDataDefinition({
-						...context,
-						dataDefinition: {
-							...dataDefinition,
-							dataDefinitionFields: normalizedDataDefinitionFields(),
-						},
-					});
 				}
 
 				return Promise.resolve();

@@ -30,9 +30,12 @@ import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.display.url.provider.InfoEditURLProvider;
 import com.liferay.info.display.url.provider.InfoEditURLProviderTracker;
+import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.string.CharPool;
@@ -79,32 +82,40 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		InfoDisplayContributor<?> infoDisplayContributor =
 			_getInfoDisplayContributor(friendlyURL);
 
-		InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
-			_getInfoDisplayObjectProvider(
-				infoDisplayContributor, groupId, friendlyURL);
-
-		if (infoDisplayObjectProvider != null) {
-			httpServletRequest.setAttribute(
-				AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER,
-				infoDisplayObjectProvider);
-
-			InfoEditURLProvider<?> infoEditURLProvider =
-				infoEditURLProviderTracker.getInfoEditURLProvider(
-					portal.getClassName(
-						infoDisplayObjectProvider.getClassNameId()));
-
-			httpServletRequest.setAttribute(
-				AssetDisplayPageWebKeys.INFO_EDIT_URL_PROVIDER,
-				infoEditURLProvider);
-		}
-
 		httpServletRequest.setAttribute(
 			InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR,
 			infoDisplayContributor);
 
+		InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
+			_getInfoDisplayObjectProvider(
+				infoDisplayContributor, groupId, friendlyURL);
+
 		httpServletRequest.setAttribute(
-			InfoDisplayWebKeys.VERSION_CLASS_PK,
-			_getVersionClassPK(friendlyURL));
+			AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER,
+			infoDisplayObjectProvider);
+
+		InfoEditURLProvider<?> infoEditURLProvider =
+			infoEditURLProviderTracker.getInfoEditURLProvider(
+				portal.getClassName(
+					infoDisplayObjectProvider.getClassNameId()));
+
+		httpServletRequest.setAttribute(
+			AssetDisplayPageWebKeys.INFO_EDIT_URL_PROVIDER,
+			infoEditURLProvider);
+
+		Object infoItem = _getInfoItem(friendlyURL, infoDisplayObjectProvider);
+
+		httpServletRequest.setAttribute(InfoDisplayWebKeys.INFO_ITEM, infoItem);
+
+		InfoItemFieldValuesProvider<?> infoItemFieldValuesProvider =
+			infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class,
+				portal.getClassName(
+					infoDisplayObjectProvider.getClassNameId()));
+
+		httpServletRequest.setAttribute(
+			InfoDisplayWebKeys.INFO_ITEM_FIELD_VALUES_PROVIDER,
+			infoItemFieldValuesProvider);
 
 		Locale locale = portal.getLocale(httpServletRequest);
 		Layout layout = _getInfoDisplayObjectProviderLayout(
@@ -288,6 +299,32 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		}
 
 		return null;
+	}
+
+	private Object _getInfoItem(
+			String friendlyURL,
+			InfoDisplayObjectProvider<?> infoDisplayObjectProvider)
+		throws NoSuchInfoItemException {
+
+		long classPK = _getVersionClassPK(friendlyURL);
+
+		if (classPK <= 0) {
+			return infoDisplayObjectProvider.getDisplayObject();
+		}
+
+		InfoItemObjectProvider<Object> infoItemObjectProvider =
+			(InfoItemObjectProvider<Object>)
+				infoItemServiceTracker.getFirstInfoItemService(
+					InfoItemObjectProvider.class,
+					portal.getClassName(
+						infoDisplayObjectProvider.getClassNameId()));
+
+		InfoItemReference infoItemReference = new InfoItemReference(
+			infoDisplayObjectProvider.getClassPK());
+
+		infoItemReference.setVersion(InfoItemReference.VERSION_LATEST);
+
+		return infoItemObjectProvider.getInfoItem(infoItemReference);
 	}
 
 	private String _getInfoURLSeparator(String friendlyURL) {

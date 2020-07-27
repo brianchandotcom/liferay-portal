@@ -92,8 +92,7 @@ public class DepotAdminSitesDisplayContext {
 					).put(
 						"shared", depotEntryGroupRel.isDdmStructuresAvailable()
 					).put(
-						"updateDDMStructuresAvailableActionURL",
-						updateDDMStructuresAvailableActionURL.toString()
+						"url", updateDDMStructuresAvailableActionURL.toString()
 					).build());
 
 				dropdownItem.setLabel(
@@ -114,8 +113,7 @@ public class DepotAdminSitesDisplayContext {
 					HashMapBuilder.<String, Object>put(
 						"action", "disconnect"
 					).put(
-						"disconnectSiteActionURL",
-						disconnectSiteActionURL.toString()
+						"url", disconnectSiteActionURL.toString()
 					).build());
 
 				dropdownItem.setDisabled(

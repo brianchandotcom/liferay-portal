@@ -15,7 +15,7 @@
 import {navigate} from 'frontend-js-web';
 
 const ACTIONS = {
-	disconnect(itemData) {
+	disconnect({url: disconnectSiteActionURL}) {
 		if (
 			confirm(
 				Liferay.Language.get(
@@ -23,11 +23,14 @@ const ACTIONS = {
 				)
 			)
 		) {
-			submitForm(document.hrefFm, itemData.disconnectSiteActionURL);
+			submitForm(document.hrefFm, disconnectSiteActionURL);
 		}
 	},
-	shareWebContentStructures(itemData) {
-		const message = itemData.shared
+	shareWebContentStructures({
+		shared,
+		url: updateDDMStructuresAvailableActionURL,
+	}) {
+		const message = shared
 			? Liferay.Language.get(
 					'after-disabling-structure-sharing,-any-site-content-that-uses-the-structures-will-be-invalid.-do-you-want-to-disable-structure-sharing'
 			  )
@@ -36,7 +39,7 @@ const ACTIONS = {
 			  );
 
 		if (confirm(message)) {
-			navigate(itemData.updateDDMStructuresAvailableActionURL);
+			navigate(updateDDMStructuresAvailableActionURL);
 		}
 	},
 };

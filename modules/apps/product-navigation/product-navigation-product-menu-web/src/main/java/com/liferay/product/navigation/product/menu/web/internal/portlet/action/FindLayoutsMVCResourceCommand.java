@@ -105,15 +105,14 @@ public class FindLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 			JSONArray layoutPathJSONArray = _getLayoutPathJSONArray(
 				layout, themeDisplay.getLocale());
 
-			JSONObject layoutJSONObject = JSONUtil.put(
-				"name", layout.getName(themeDisplay.getLocale())
-			).put(
-				"path", layoutPathJSONArray
-			).put(
-				"url", _portal.getLayoutFullURL(layout, themeDisplay)
-			);
-
-			jsonArray.put(layoutJSONObject);
+			jsonArray.put(
+				JSONUtil.put(
+					"name", layout.getName(themeDisplay.getLocale())
+				).put(
+					"path", layoutPathJSONArray
+				).put(
+					"url", _portal.getLayoutFullURL(layout, themeDisplay)
+				));
 		}
 
 		jsonObject.put("layouts", jsonArray);

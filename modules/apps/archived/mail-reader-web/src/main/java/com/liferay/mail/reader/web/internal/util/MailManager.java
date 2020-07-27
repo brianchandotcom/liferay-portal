@@ -370,67 +370,64 @@ public class MailManager {
 	}
 
 	public JSONObject getDefaultAccountsJSONObject() {
-		JSONObject gmailAccountJSONObject = JSONUtil.put(
-			"address", "@gmail.com"
-		).put(
-			"descriptionLanguageKey",
-			"please-enable-imap-in-you-gmail-settings-for-mail-to-work"
-		).put(
-			"folderPrefix", ""
-		).put(
-			"hideSettings", true
-		).put(
-			"incomingHostName", "imap.gmail.com"
-		).put(
-			"incomingPort", 993
-		).put(
-			"incomingSecure", true
-		).put(
-			"outgoingHostName", "smtp.gmail.com"
-		).put(
-			"outgoingPort", 465
-		).put(
-			"outgoingSecure", true
-		).put(
-			"protocol", "imap"
-		).put(
-			"titleLanguageKey", "gmail-account"
-		).put(
-			"useLocalPartAsLogin", true
-		);
-
-		JSONObject customMailAccontJSONObject = JSONUtil.put(
-			"address", ""
-		).put(
-			"descriptionLanguageKey", ""
-		).put(
-			"folderPrefix", ""
-		).put(
-			"hideSettings", false
-		).put(
-			"incomingHostName", ""
-		).put(
-			"incomingPort", 110
-		).put(
-			"incomingSecure", false
-		).put(
-			"outgoingHostName", ""
-		).put(
-			"outgoingPort", 25
-		).put(
-			"outgoingSecure", false
-		).put(
-			"protocol", "imap"
-		).put(
-			"titleLanguageKey", "custom-mail-account"
-		).put(
-			"useLocalPartAsLogin", false
-		);
-
 		return JSONUtil.put(
 			"accounts",
 			JSONUtil.putAll(
-				gmailAccountJSONObject, customMailAccontJSONObject));
+				JSONUtil.put(
+					"address", "@gmail.com"
+				).put(
+					"descriptionLanguageKey",
+					"please-enable-imap-in-you-gmail-settings-for-mail-to-work"
+				).put(
+					"folderPrefix", ""
+				).put(
+					"hideSettings", true
+				).put(
+					"incomingHostName", "imap.gmail.com"
+				).put(
+					"incomingPort", 993
+				).put(
+					"incomingSecure", true
+				).put(
+					"outgoingHostName", "smtp.gmail.com"
+				).put(
+					"outgoingPort", 465
+				).put(
+					"outgoingSecure", true
+				).put(
+					"protocol", "imap"
+				).put(
+					"titleLanguageKey", "gmail-account"
+				).put(
+					"useLocalPartAsLogin", true
+				),
+				JSONUtil.put(
+					"address", ""
+				).put(
+					"descriptionLanguageKey", ""
+				).put(
+					"folderPrefix", ""
+				).put(
+					"hideSettings", false
+				).put(
+					"incomingHostName", ""
+				).put(
+					"incomingPort", 110
+				).put(
+					"incomingSecure", false
+				).put(
+					"outgoingHostName", ""
+				).put(
+					"outgoingPort", 25
+				).put(
+					"outgoingSecure", false
+				).put(
+					"protocol", "imap"
+				).put(
+					"titleLanguageKey", "custom-mail-account"
+				).put(
+					"useLocalPartAsLogin", false
+				)));
 	}
 
 	public List<Folder> getFolders(

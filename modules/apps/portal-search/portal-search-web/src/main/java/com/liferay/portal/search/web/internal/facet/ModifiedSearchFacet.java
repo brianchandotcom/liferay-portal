@@ -64,13 +64,12 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (int i = 0; i < _LABELS.length; i++) {
-			JSONObject range = JSONUtil.put(
-				"label", _LABELS[i]
-			).put(
-				"range", _RANGES[i]
-			);
-
-			jsonArray.put(range);
+			jsonArray.put(
+				JSONUtil.put(
+					"label", _LABELS[i]
+				).put(
+					"range", _RANGES[i]
+				));
 		}
 
 		jsonObject.put("ranges", jsonArray);
@@ -135,13 +134,12 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 			String range = ParamUtil.getString(
 				actionRequest, getClassName() + "range_" + rangesIndex);
 
-			JSONObject rangeJSONObject = JSONUtil.put(
-				"label", label
-			).put(
-				"range", range
-			);
-
-			jsonArray.put(rangeJSONObject);
+			jsonArray.put(
+				JSONUtil.put(
+					"label", label
+				).put(
+					"range", range
+				));
 		}
 
 		jsonObject.put("ranges", jsonArray);

@@ -299,21 +299,20 @@ public class AssetCategoriesSelectorDisplayContext {
 		boolean allowedSelectVocabularies = isAllowedSelectVocabularies();
 
 		for (long vocabularyId : getVocabularyIds()) {
-			JSONObject jsonObject = JSONUtil.put(
-				"children", _getCategoriesJSONArray(vocabularyId, 0)
-			).put(
-				"disabled", !allowedSelectVocabularies
-			).put(
-				"icon", "vocabulary"
-			).put(
-				"id", vocabularyId
-			).put(
-				"name", getVocabularyTitle(vocabularyId)
-			).put(
-				"vocabulary", true
-			);
-
-			jsonArray.put(jsonObject);
+			jsonArray.put(
+				JSONUtil.put(
+					"children", _getCategoriesJSONArray(vocabularyId, 0)
+				).put(
+					"disabled", !allowedSelectVocabularies
+				).put(
+					"icon", "vocabulary"
+				).put(
+					"id", vocabularyId
+				).put(
+					"name", getVocabularyTitle(vocabularyId)
+				).put(
+					"vocabulary", true
+				));
 		}
 
 		return jsonArray;

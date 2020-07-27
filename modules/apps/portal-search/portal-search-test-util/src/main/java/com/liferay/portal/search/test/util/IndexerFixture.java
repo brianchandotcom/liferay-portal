@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import java.io.Serializable;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -56,15 +55,14 @@ public class IndexerFixture<T> {
 		try {
 			Stream<Document> stream = Arrays.stream(docs);
 
-			List<String> uids = stream.map(
-				document -> document.getUID()
-			).collect(
-				Collectors.toList()
-			);
-
 			IndexWriterHelperUtil.deleteDocuments(
 				_indexer.getSearchEngineId(), TestPropsValues.getCompanyId(),
-				uids, true);
+				stream.map(
+					document -> document.getUID()
+				).collect(
+					Collectors.toList()
+				),
+				true);
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);

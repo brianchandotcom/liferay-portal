@@ -22,7 +22,6 @@ import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -115,17 +114,16 @@ public class GetAssetMappingFieldsMVCResourceCommand
 		InfoForm infoForm = infoItemFormProvider.getInfoForm(infoItemObject);
 
 		for (InfoField infoField : infoForm.getAllInfoFields()) {
-			JSONObject jsonObject = JSONUtil.put(
-				"key", infoField.getName()
-			).put(
-				"label", infoField.getLabel(themeDisplay.getLocale())
-			).put(
-				"type",
-				infoField.getInfoFieldType(
-				).getName()
-			);
-
-			jsonArray.put(jsonObject);
+			jsonArray.put(
+				JSONUtil.put(
+					"key", infoField.getName()
+				).put(
+					"label", infoField.getLabel(themeDisplay.getLocale())
+				).put(
+					"type",
+					infoField.getInfoFieldType(
+					).getName()
+				));
 		}
 
 		JSONPortletResponseUtil.writeJSON(

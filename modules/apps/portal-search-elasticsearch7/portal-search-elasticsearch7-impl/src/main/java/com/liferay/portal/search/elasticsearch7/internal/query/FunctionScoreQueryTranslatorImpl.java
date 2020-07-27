@@ -53,18 +53,17 @@ public class FunctionScoreQueryTranslatorImpl
 		Stream<FilterQueryScoreFunctionHolder> stream =
 			filterQueryScoreFunctionHolders.stream();
 
-		FilterFunctionBuilder[] filterFunctionBuilders = stream.map(
-			filterQueryScoreFunctionHolder -> translateFilterFunction(
-				filterQueryScoreFunctionHolder, queryTranslator,
-				translateScoreFunction(
-					filterQueryScoreFunctionHolder.getScoreFunction()))
-		).toArray(
-			FilterFunctionBuilder[]::new
-		);
-
 		FunctionScoreQueryBuilder functionScoreQueryBuilder =
 			QueryBuilders.functionScoreQuery(
-				queryBuilder, filterFunctionBuilders);
+				queryBuilder,
+				stream.map(
+					filterQueryScoreFunctionHolder -> translateFilterFunction(
+						filterQueryScoreFunctionHolder, queryTranslator,
+						translateScoreFunction(
+							filterQueryScoreFunctionHolder.getScoreFunction()))
+				).toArray(
+					FilterFunctionBuilder[]::new
+				));
 
 		if (functionScoreQuery.getMinScore() != null) {
 			functionScoreQueryBuilder.setMinScore(

@@ -124,29 +124,27 @@ public class ItemSelectorRepositoryEntryBrowserUtil {
 						HtmlUtil.escape(fileEntry.getUserName())
 					})));
 
-		JSONObject firstTabJSONObject = JSONUtil.put(
-			"data", firstTabDataJSONArray
-		).put(
-			"title", LanguageUtil.get(locale, "file-info")
-		);
+		JSONArray groupsJSONArray = JSONUtil.put(
+			JSONUtil.put(
+				"data", firstTabDataJSONArray
+			).put(
+				"title", LanguageUtil.get(locale, "file-info")
+			));
 
-		JSONArray groupsJSONArray = JSONUtil.put(firstTabJSONObject);
-
-		JSONObject secondTabJSONObject = JSONUtil.put(
-			"data",
-			JSONUtil.putAll(
-				_createJSONObject(
-					LanguageUtil.get(locale, "version"),
-					HtmlUtil.escape(latestFileVersion.getVersion())),
-				_createJSONObject(
-					LanguageUtil.get(locale, "status"),
-					WorkflowConstants.getStatusLabel(
-						latestFileVersion.getStatus())))
-		).put(
-			"title", LanguageUtil.get(locale, "version")
-		);
-
-		groupsJSONArray.put(secondTabJSONObject);
+		groupsJSONArray.put(
+			JSONUtil.put(
+				"data",
+				JSONUtil.putAll(
+					_createJSONObject(
+						LanguageUtil.get(locale, "version"),
+						HtmlUtil.escape(latestFileVersion.getVersion())),
+					_createJSONObject(
+						LanguageUtil.get(locale, "status"),
+						WorkflowConstants.getStatusLabel(
+							latestFileVersion.getStatus())))
+			).put(
+				"title", LanguageUtil.get(locale, "version")
+			));
 
 		return JSONUtil.put("groups", groupsJSONArray);
 	}

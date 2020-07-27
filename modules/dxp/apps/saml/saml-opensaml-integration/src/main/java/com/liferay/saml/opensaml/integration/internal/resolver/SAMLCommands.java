@@ -35,7 +35,6 @@ import org.opensaml.saml.common.messaging.context.SAMLMetadataContext;
 import org.opensaml.saml.common.messaging.context.SAMLPeerEntityContext;
 import org.opensaml.saml.common.messaging.context.SAMLSubjectNameIdentifierContext;
 import org.opensaml.saml.saml2.core.Assertion;
-import org.opensaml.saml.saml2.core.Attribute;
 import org.opensaml.saml.saml2.core.AttributeStatement;
 import org.opensaml.saml.saml2.core.NameID;
 import org.opensaml.saml.saml2.metadata.IDPSSODescriptor;
@@ -84,16 +83,15 @@ public interface SAMLCommands {
 				Stream<AttributeStatement> stream =
 					attributeStatements.stream();
 
-				List<Attribute> bearerAssertionAttributes = stream.map(
-					AttributeStatement::getAttributes
-				).flatMap(
-					Collection::stream
-				).collect(
-					Collectors.toList()
-				);
-
 				return SamlUtil.getAttributesMap(
-					bearerAssertionAttributes, userAttributeMappingsProperties);
+					stream.map(
+						AttributeStatement::getAttributes
+					).flatMap(
+						Collection::stream
+					).collect(
+						Collectors.toList()
+					),
+					userAttributeMappingsProperties);
 			});
 	}
 

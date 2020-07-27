@@ -352,13 +352,12 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 				continue;
 			}
 
-			JSONObject jsonObject = JSONUtil.put(
-				"name", role.getName()
-			).put(
-				"roleId", role.getRoleId()
-			);
-
-			jsonArray.put(jsonObject);
+			jsonArray.put(
+				JSONUtil.put(
+					"name", role.getName()
+				).put(
+					"roleId", role.getRoleId()
+				));
 		}
 
 		writeJSON(resourceRequest, resourceResponse, jsonArray);
@@ -456,17 +455,16 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 				continue;
 			}
 
-			JSONObject jsonObject = JSONUtil.put(
-				"emailAddress", user.getEmailAddress()
-			).put(
-				"fullName", user.getFullName()
-			).put(
-				"screenName", user.getScreenName()
-			).put(
-				"userId", user.getUserId()
-			);
-
-			jsonArray.put(jsonObject);
+			jsonArray.put(
+				JSONUtil.put(
+					"emailAddress", user.getEmailAddress()
+				).put(
+					"fullName", user.getFullName()
+				).put(
+					"screenName", user.getScreenName()
+				).put(
+					"userId", user.getUserId()
+				));
 		}
 
 		writeJSON(resourceRequest, resourceResponse, jsonArray);

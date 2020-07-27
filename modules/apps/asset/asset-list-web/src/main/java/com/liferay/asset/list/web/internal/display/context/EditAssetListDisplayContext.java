@@ -352,13 +352,12 @@ public class EditAssetListDisplayContext {
 		}
 
 		if (rulesJSONArray.length() == 0) {
-			JSONObject defaultRule = JSONUtil.put(
-				"queryContains", true
-			).put(
-				"type", "assetTags"
-			);
-
-			rulesJSONArray.put(defaultRule);
+			rulesJSONArray.put(
+				JSONUtil.put(
+					"queryContains", true
+				).put(
+					"type", "assetTags"
+				));
 		}
 
 		return rulesJSONArray;

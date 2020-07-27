@@ -113,13 +113,13 @@ public class SharepointExtRepository implements ExtRepository {
 			String url = _sharepointURLHelper.getAddFolderURL(
 				extRepositoryParentFolderKey);
 
-			JSONObject bodyJSONObject = JSONUtil.put(
-				"__metadata", JSONUtil.put("type", "SP.Folder")
-			).put(
-				"ServerRelativeUrl", name
-			);
-
-			JSONObject jsonObject = _post(url, bodyJSONObject);
+			JSONObject jsonObject = _post(
+				url,
+				JSONUtil.put(
+					"__metadata", JSONUtil.put("type", "SP.Folder")
+				).put(
+					"ServerRelativeUrl", name
+				));
 
 			return _sharepointServerResponseConverter.getExtRepositoryFolder(
 				jsonObject);

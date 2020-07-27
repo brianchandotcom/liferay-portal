@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Dictionary;
-import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -155,16 +154,6 @@ public class AddChannelMVCActionCommand extends BaseAnalyticsMVCActionCommand {
 
 		Stream<String> stream = Arrays.stream(selectedGroupIds);
 
-		List<Group> groups = stream.map(
-			Long::valueOf
-		).map(
-			groupLocalService::fetchGroup
-		).filter(
-			Objects::nonNull
-		).collect(
-			Collectors.toList()
-		);
-
 		HttpResponse httpResponse = AnalyticsSettingsUtil.doPost(
 			JSONUtil.put(
 				"channelType", channelType
@@ -175,7 +164,16 @@ public class AddChannelMVCActionCommand extends BaseAnalyticsMVCActionCommand {
 			).put(
 				"groups",
 				JSONUtil.toJSONArray(
-					groups, group -> _buildGroupJSONObject(group, themeDisplay))
+					stream.map(
+						Long::valueOf
+					).map(
+						groupLocalService::fetchGroup
+					).filter(
+						Objects::nonNull
+					).collect(
+						Collectors.toList()
+					),
+					group -> _buildGroupJSONObject(group, themeDisplay))
 			),
 			themeDisplay.getCompanyId(), "api/1.0/channels");
 

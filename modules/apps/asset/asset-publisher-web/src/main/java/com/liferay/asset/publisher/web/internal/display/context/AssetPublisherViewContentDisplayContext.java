@@ -117,9 +117,7 @@ public class AssetPublisherViewContentDisplayContext {
 	}
 
 	public boolean isShowBackURL() {
-		boolean print = getPrint();
-
-		return !print;
+		return !getPrint();
 	}
 
 	private long _getAssetEntryId() {

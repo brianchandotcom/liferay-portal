@@ -309,17 +309,16 @@ public class EditorPortlet extends AdminPortlet {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (Folder folder : folders) {
-			JSONObject jsonObject = JSONUtil.put(
-				"entryId", folder.getFolderId()
-			).put(
-				"label", folder.getName()
-			).put(
-				"leaf", false
-			).put(
-				"type", "editor"
-			);
-
-			jsonArray.put(jsonObject);
+			jsonArray.put(
+				JSONUtil.put(
+					"entryId", folder.getFolderId()
+				).put(
+					"label", folder.getName()
+				).put(
+					"leaf", false
+				).put(
+					"type", "editor"
+				));
 		}
 
 		boolean getFileEntries = ParamUtil.getBoolean(

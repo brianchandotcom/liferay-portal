@@ -456,9 +456,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 		calendar.setTime(new Date());
 
-		int maxAge = TrashUtil.getMaxAge(group);
-
-		calendar.add(Calendar.MINUTE, -maxAge);
+		calendar.add(Calendar.MINUTE, -TrashUtil.getMaxAge(group));
 
 		return calendar.getTime();
 	}

@@ -57,13 +57,12 @@ public class OAuth2ApplicationImpl extends OAuth2ApplicationBaseImpl {
 
 		Stream<GrantType> stream = allowedGrantTypesList.stream();
 
-		String allowedGrantTypes = stream.map(
-			GrantType::toString
-		).collect(
-			Collectors.joining(StringPool.COMMA)
-		);
-
-		setAllowedGrantTypes(allowedGrantTypes);
+		setAllowedGrantTypes(
+			stream.map(
+				GrantType::toString
+			).collect(
+				Collectors.joining(StringPool.COMMA)
+			));
 	}
 
 	@Override

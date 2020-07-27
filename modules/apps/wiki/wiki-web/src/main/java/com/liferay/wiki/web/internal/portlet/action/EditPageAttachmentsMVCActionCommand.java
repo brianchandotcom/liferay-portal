@@ -364,14 +364,13 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 					errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
 				}
 
-				JSONObject jsonObject = JSONUtil.put(
-					"message", errorMessage
-				).put(
-					"status", errorType
-				);
-
 				JSONPortletResponseUtil.writeJSON(
-					actionRequest, actionResponse, jsonObject);
+					actionRequest, actionResponse,
+					JSONUtil.put(
+						"message", errorMessage
+					).put(
+						"status", errorType
+					));
 			}
 
 			if (exception instanceof AntivirusScannerException) {

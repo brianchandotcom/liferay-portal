@@ -186,23 +186,21 @@ public class PortletConfigurationCSSPortlet extends MVCPortlet {
 			"backgroundImage", StringPool.BLANK
 		);
 
-		JSONObject backgroundPositionLeftJSONObject = JSONUtil.put(
-			"unit", StringPool.BLANK
-		).put(
-			"value", StringPool.BLANK
-		);
-
 		JSONObject backgroundPositionJSONObject = JSONUtil.put(
-			"left", backgroundPositionLeftJSONObject);
-
-		JSONObject backgroundPositionTopJSONObject = JSONUtil.put(
-			"unit", StringPool.BLANK
-		).put(
-			"value", StringPool.BLANK
-		);
+			"left",
+			JSONUtil.put(
+				"unit", StringPool.BLANK
+			).put(
+				"value", StringPool.BLANK
+			));
 
 		backgroundPositionJSONObject.put(
-			"top", backgroundPositionTopJSONObject);
+			"top",
+			JSONUtil.put(
+				"unit", StringPool.BLANK
+			).put(
+				"value", StringPool.BLANK
+			));
 
 		bgDataJSONObject.put(
 			"backgroundPosition", backgroundPositionJSONObject

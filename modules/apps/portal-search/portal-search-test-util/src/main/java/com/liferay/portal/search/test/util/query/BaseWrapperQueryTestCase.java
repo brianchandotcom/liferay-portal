@@ -68,11 +68,10 @@ public abstract class BaseWrapperQueryTestCase extends BaseIndexingTestCase {
 	protected void assertSearch(Object value, List<String> expectedValues) {
 		assertSearch(
 			indexingTestHelper -> {
-				String query = JSONUtil.put(
-					"match", JSONUtil.put(_FIELD_NAME, value)
-				).toString();
-
-				WrapperQuery wrapperQuery = queries.wrapper(query);
+				WrapperQuery wrapperQuery = queries.wrapper(
+					JSONUtil.put(
+						"match", JSONUtil.put(_FIELD_NAME, value)
+					).toString());
 
 				SearchSearchRequest searchSearchRequest =
 					new SearchSearchRequest();

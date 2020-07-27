@@ -77,20 +77,19 @@ public class DepotSearchBarPortletSharedSearchContributor
 
 			Stream<DepotEntryGroupRel> stream = depotEntryGroupRels.stream();
 
-			List<Long> depotEntryGroupIds = stream.map(
-				DepotEntryGroupRelModel::getDepotEntryId
-			).map(
-				_depotEntryLocalService::fetchDepotEntry
-			).map(
-				DepotEntryModel::getGroupId
-			).collect(
-				Collectors.toList()
-			);
-
 			searchContext.setGroupIds(
 				ArrayUtil.append(
 					searchContext.getGroupIds(),
-					ArrayUtil.toLongArray(depotEntryGroupIds)));
+					ArrayUtil.toLongArray(
+						stream.map(
+							DepotEntryGroupRelModel::getDepotEntryId
+						).map(
+							_depotEntryLocalService::fetchDepotEntry
+						).map(
+							DepotEntryModel::getGroupId
+						).collect(
+							Collectors.toList()
+						))));
 		}
 	}
 

@@ -100,15 +100,15 @@ public class InviteMembersPortlet extends MVCPortlet {
 				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 				keywords));
 
-		JSONObject optionsJSONObject = JSONUtil.put(
-			"end", end
-		).put(
-			"keywords", keywords
-		).put(
-			"start", start
-		);
-
-		jsonObject.put("options", optionsJSONObject);
+		jsonObject.put(
+			"options",
+			JSONUtil.put(
+				"end", end
+			).put(
+				"keywords", keywords
+			).put(
+				"start", start
+			));
 
 		List<User> users = _getAvailableUsers(
 			themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
@@ -117,19 +117,18 @@ public class InviteMembersPortlet extends MVCPortlet {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (User user : users) {
-			JSONObject userJSONObject = JSONUtil.put(
-				"hasPendingMemberRequest",
-				_memberRequestLocalService.hasPendingMemberRequest(
-					themeDisplay.getScopeGroupId(), user.getUserId())
-			).put(
-				"userEmailAddress", user.getEmailAddress()
-			).put(
-				"userFullName", user.getFullName()
-			).put(
-				"userId", user.getUserId()
-			);
-
-			jsonArray.put(userJSONObject);
+			jsonArray.put(
+				JSONUtil.put(
+					"hasPendingMemberRequest",
+					_memberRequestLocalService.hasPendingMemberRequest(
+						themeDisplay.getScopeGroupId(), user.getUserId())
+				).put(
+					"userEmailAddress", user.getEmailAddress()
+				).put(
+					"userFullName", user.getFullName()
+				).put(
+					"userId", user.getUserId()
+				));
 		}
 
 		jsonObject.put("users", jsonArray);

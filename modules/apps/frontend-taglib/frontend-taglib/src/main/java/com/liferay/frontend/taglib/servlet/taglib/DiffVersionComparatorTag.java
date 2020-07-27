@@ -209,14 +209,15 @@ public class DiffVersionComparatorTag extends IncludeTag {
 					JSONFactoryUtil.createJSONArray();
 
 				for (Locale availableLocale : _availableLocales) {
-					JSONObject availableLocaleJSONObject = JSONUtil.put(
-						"displayName",
-						availableLocale.getDisplayName(themeDisplay.getLocale())
-					).put(
-						"languageId", LocaleUtil.toLanguageId(availableLocale)
-					);
-
-					availableLocalesJSONArray.put(availableLocaleJSONObject);
+					availableLocalesJSONArray.put(
+						JSONUtil.put(
+							"displayName",
+							availableLocale.getDisplayName(
+								themeDisplay.getLocale())
+						).put(
+							"languageId",
+							LocaleUtil.toLanguageId(availableLocale)
+						));
 				}
 
 				data.put("availableLocales", availableLocalesJSONArray);

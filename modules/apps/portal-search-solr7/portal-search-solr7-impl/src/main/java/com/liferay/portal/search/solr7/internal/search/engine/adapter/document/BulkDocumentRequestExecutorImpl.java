@@ -136,13 +136,12 @@ public class BulkDocumentRequestExecutorImpl
 
 		Stream<DeleteDocumentRequest> stream = deleteDocumentRequests.stream();
 
-		List<String> uids = stream.map(
-			DeleteDocumentRequest::getUid
-		).collect(
-			Collectors.toList()
-		);
-
-		updateRequest.deleteById(uids);
+		updateRequest.deleteById(
+			stream.map(
+				DeleteDocumentRequest::getUid
+			).collect(
+				Collectors.toList()
+			));
 
 		if (refresh) {
 			updateRequest.setAction(UpdateRequest.ACTION.COMMIT, true, true);
@@ -160,13 +159,13 @@ public class BulkDocumentRequestExecutorImpl
 
 		Stream<GetDocumentRequest> stream = getDocumentRequests.stream();
 
-		String[] ids = stream.map(
-			GetDocumentRequest::getId
-		).toArray(
-			String[]::new
-		);
-
-		modifiableSolrParams.set("ids", ids);
+		modifiableSolrParams.set(
+			"ids",
+			stream.map(
+				GetDocumentRequest::getId
+			).toArray(
+				String[]::new
+			));
 
 		return new QueryRequest(modifiableSolrParams);
 	}

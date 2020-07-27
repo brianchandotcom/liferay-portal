@@ -362,32 +362,30 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			String fileName = validFileNameKVP.getKey();
 			String originalFileName = validFileNameKVP.getValue();
 
-			JSONObject jsonObject = JSONUtil.put(
-				"added", Boolean.TRUE
-			).put(
-				"fileName", fileName
-			).put(
-				"originalFileName", originalFileName
-			);
-
-			jsonArray.put(jsonObject);
+			jsonArray.put(
+				JSONUtil.put(
+					"added", Boolean.TRUE
+				).put(
+					"fileName", fileName
+				).put(
+					"originalFileName", originalFileName
+				));
 		}
 
 		for (KeyValuePair invalidFileNameKVP : invalidFileNameKVPs) {
 			String fileName = invalidFileNameKVP.getKey();
 			String errorMessage = invalidFileNameKVP.getValue();
 
-			JSONObject jsonObject = JSONUtil.put(
-				"added", Boolean.FALSE
-			).put(
-				"errorMessage", errorMessage
-			).put(
-				"fileName", fileName
-			).put(
-				"originalFileName", fileName
-			);
-
-			jsonArray.put(jsonObject);
+			jsonArray.put(
+				JSONUtil.put(
+					"added", Boolean.FALSE
+				).put(
+					"errorMessage", errorMessage
+				).put(
+					"fileName", fileName
+				).put(
+					"originalFileName", fileName
+				));
 		}
 
 		JSONPortletResponseUtil.writeJSON(

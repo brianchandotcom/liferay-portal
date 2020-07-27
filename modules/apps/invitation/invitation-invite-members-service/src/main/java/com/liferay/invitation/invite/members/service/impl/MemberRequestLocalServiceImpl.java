@@ -26,7 +26,6 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -444,16 +443,14 @@ public class MemberRequestLocalServiceImpl
 				MembershipRequestConstants.STATUS_PENDING,
 				UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
 
-			JSONObject notificationEventJSONObject = JSONUtil.put(
-				"classPK", memberRequest.getMemberRequestId()
-			).put(
-				"userId", memberRequest.getUserId()
-			);
-
 			NotificationEvent notificationEvent =
 				NotificationEventFactoryUtil.createNotificationEvent(
 					System.currentTimeMillis(), portletId,
-					notificationEventJSONObject);
+					JSONUtil.put(
+						"classPK", memberRequest.getMemberRequestId()
+					).put(
+						"userId", memberRequest.getUserId()
+					));
 
 			notificationEvent.setDeliveryRequired(0);
 			notificationEvent.setDeliveryType(

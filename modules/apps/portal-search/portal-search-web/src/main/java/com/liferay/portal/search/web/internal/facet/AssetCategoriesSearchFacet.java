@@ -48,17 +48,16 @@ public class AssetCategoriesSearchFacet extends BaseJSPSearchFacet {
 
 		facetConfiguration.setClassName(getFacetClassName());
 
-		JSONObject jsonObject = JSONUtil.put(
-			"displayStyle", "list"
-		).put(
-			"frequencyThreshold", 1
-		).put(
-			"maxTerms", 10
-		).put(
-			"showAssetCount", true
-		);
-
-		facetConfiguration.setDataJSONObject(jsonObject);
+		facetConfiguration.setDataJSONObject(
+			JSONUtil.put(
+				"displayStyle", "list"
+			).put(
+				"frequencyThreshold", 1
+			).put(
+				"maxTerms", 10
+			).put(
+				"showAssetCount", true
+			));
 
 		facetConfiguration.setFieldName(getFieldName());
 		facetConfiguration.setLabel(getLabel());

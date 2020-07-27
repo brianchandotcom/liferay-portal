@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -93,21 +92,20 @@ public class MicroblogsUtil {
 				continue;
 			}
 
-			JSONObject userJSONObject = JSONUtil.put(
-				"emailAddress", user.getEmailAddress()
-			).put(
-				"fullName", user.getFullName()
-			).put(
-				"jobTitle", user.getJobTitle()
-			).put(
-				"portraitURL", user.getPortraitURL(themeDisplay)
-			).put(
-				"screenName", user.getScreenName()
-			).put(
-				"userId", user.getUserId()
-			);
-
-			jsonArray.put(userJSONObject);
+			jsonArray.put(
+				JSONUtil.put(
+					"emailAddress", user.getEmailAddress()
+				).put(
+					"fullName", user.getFullName()
+				).put(
+					"jobTitle", user.getJobTitle()
+				).put(
+					"portraitURL", user.getPortraitURL(themeDisplay)
+				).put(
+					"screenName", user.getScreenName()
+				).put(
+					"userId", user.getUserId()
+				));
 		}
 
 		return jsonArray;

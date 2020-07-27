@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -430,22 +429,20 @@ public class SegmentsExperimentLocalServiceImpl
 			return;
 		}
 
-		JSONObject notificationEventJSONObject = JSONUtil.put(
-			"classPK", segmentsExperiment.getSegmentsExperimentId()
-		).put(
-			"referrerClassNameId", segmentsExperiment.getClassNameId()
-		).put(
-			"referrerClassPK", segmentsExperiment.getClassPK()
-		).put(
-			"segmentsExperimentKey",
-			segmentsExperiment.getSegmentsExperimentKey()
-		);
-
 		userNotificationEventLocalService.sendUserNotificationEvents(
 			segmentsExperiment.getUserId(),
 			SegmentsPortletKeys.SEGMENTS_EXPERIMENT,
 			UserNotificationDeliveryConstants.TYPE_WEBSITE,
-			notificationEventJSONObject);
+			JSONUtil.put(
+				"classPK", segmentsExperiment.getSegmentsExperimentId()
+			).put(
+				"referrerClassNameId", segmentsExperiment.getClassNameId()
+			).put(
+				"referrerClassPK", segmentsExperiment.getClassPK()
+			).put(
+				"segmentsExperimentKey",
+				segmentsExperiment.getSegmentsExperimentKey()
+			));
 	}
 
 	private DynamicQuery _getSegmentsExperienceIdsDynamicQuery(

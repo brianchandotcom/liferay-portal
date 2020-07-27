@@ -40,7 +40,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.editor.constants.EditorConstants;
 import com.liferay.portal.kernel.exception.ImageResolutionException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -172,19 +171,19 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			boolean ajax = ParamUtil.getBoolean(actionRequest, "ajax");
 
 			if (ajax) {
-				JSONObject jsonObject = JSONUtil.put(
-					"attributeDataImageId",
-					EditorConstants.ATTRIBUTE_DATA_IMAGE_ID
-				).put(
-					"content", entry.getContent()
-				).put(
-					"coverImageFileEntryId", entry.getCoverImageFileEntryId()
-				).put(
-					"entryId", entry.getEntryId()
-				);
-
 				JSONPortletResponseUtil.writeJSON(
-					actionRequest, actionResponse, jsonObject);
+					actionRequest, actionResponse,
+					JSONUtil.put(
+						"attributeDataImageId",
+						EditorConstants.ATTRIBUTE_DATA_IMAGE_ID
+					).put(
+						"content", entry.getContent()
+					).put(
+						"coverImageFileEntryId",
+						entry.getCoverImageFileEntryId()
+					).put(
+						"entryId", entry.getEntryId()
+					));
 
 				return;
 			}

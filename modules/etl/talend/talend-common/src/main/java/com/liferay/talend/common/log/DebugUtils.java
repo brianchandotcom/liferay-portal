@@ -52,13 +52,13 @@ public class DebugUtils {
 
 		Stream<StackTraceElement> stream = stackTraceElements.stream();
 
-		List<String> stackTraces = stream.map(
-			element -> _toClassAndMethod(element.toString())
-		).collect(
-			Collectors.toList()
-		);
-
-		return String.join(System.lineSeparator(), stackTraces);
+		return String.join(
+			System.lineSeparator(),
+			stream.map(
+				element -> _toClassAndMethod(element.toString())
+			).collect(
+				Collectors.toList()
+			));
 	}
 
 	private static String _toClassAndMethod(String line) {

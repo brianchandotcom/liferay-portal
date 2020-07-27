@@ -309,14 +309,14 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 		for (long userId : userIds) {
 			try {
-				JSONObject userJSONObject = JSONUtil.put(
-					"success", Boolean.TRUE
-				).put(
-					"user",
-					getUserJSONObject(resourceResponse, themeDisplay, userId)
-				);
-
-				jsonArray.put(userJSONObject);
+				jsonArray.put(
+					JSONUtil.put(
+						"success", Boolean.TRUE
+					).put(
+						"user",
+						getUserJSONObject(
+							resourceResponse, themeDisplay, userId)
+					));
 			}
 			catch (NoSuchUserException noSuchUserException) {
 
@@ -774,13 +774,13 @@ public class ContactsCenterPortlet extends MVCPortlet {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (long userId : userIds) {
-			JSONObject userJSONObject = JSONUtil.put(
-				"success", Boolean.TRUE
-			).put(
-				"user", getUserJSONObject(actionResponse, themeDisplay, userId)
-			);
-
-			jsonArray.put(userJSONObject);
+			jsonArray.put(
+				JSONUtil.put(
+					"success", Boolean.TRUE
+				).put(
+					"user",
+					getUserJSONObject(actionResponse, themeDisplay, userId)
+				));
 		}
 
 		jsonObject.put("contacts", jsonArray);
@@ -806,17 +806,17 @@ public class ContactsCenterPortlet extends MVCPortlet {
 		int start = ParamUtil.getInteger(portletRequest, "start");
 		int end = ParamUtil.getInteger(portletRequest, "end");
 
-		JSONObject optionsJSONObject = JSONUtil.put(
-			"end", end
-		).put(
-			"filterBy", filterBy
-		).put(
-			"keywords", keywords
-		).put(
-			"start", start
-		);
-
-		JSONObject jsonObject = JSONUtil.put("options", optionsJSONObject);
+		JSONObject jsonObject = JSONUtil.put(
+			"options",
+			JSONUtil.put(
+				"end", end
+			).put(
+				"filterBy", filterBy
+			).put(
+				"keywords", keywords
+			).put(
+				"start", start
+			));
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
@@ -1122,17 +1122,15 @@ public class ContactsCenterPortlet extends MVCPortlet {
 				SocialRelationConstants.SOCIAL_RELATION_REQUEST,
 				UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
 
-			JSONObject notificationEventJSONObject = JSONUtil.put(
-				"classPK", socialRequest.getRequestId()
-			).put(
-				"userId", socialRequest.getUserId()
-			);
-
 			userNotificationEventLocalService.sendUserNotificationEvents(
 				socialRequest.getReceiverUserId(),
 				ContactsPortletKeys.CONTACTS_CENTER,
 				UserNotificationDeliveryConstants.TYPE_WEBSITE, true,
-				notificationEventJSONObject);
+				JSONUtil.put(
+					"classPK", socialRequest.getRequestId()
+				).put(
+					"userId", socialRequest.getUserId()
+				));
 		}
 	}
 

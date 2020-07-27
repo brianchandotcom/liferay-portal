@@ -46,14 +46,14 @@ public class ImageJournalUploadResponseHandler
 			portletRequest, portalException);
 
 		if (portalException instanceof ImageTypeException) {
-			JSONObject errorJSONObject = JSONUtil.put(
-				"errorType",
-				ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION
-			).put(
-				"message", StringPool.BLANK
-			);
-
-			jsonObject.put("error", errorJSONObject);
+			jsonObject.put(
+				"error",
+				JSONUtil.put(
+					"errorType",
+					ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION
+				).put(
+					"message", StringPool.BLANK
+				));
 		}
 
 		return jsonObject;

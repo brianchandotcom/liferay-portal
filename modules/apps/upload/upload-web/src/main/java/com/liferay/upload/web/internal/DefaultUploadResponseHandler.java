@@ -100,13 +100,13 @@ public class DefaultUploadResponseHandler implements UploadResponseHandler {
 					ServletResponseConstants.SC_UPLOAD_REQUEST_SIZE_EXCEPTION;
 			}
 
-			JSONObject errorJSONObject = JSONUtil.put(
-				"errorType", errorType
-			).put(
-				"message", errorMessage
-			);
-
-			jsonObject.put("error", errorJSONObject);
+			jsonObject.put(
+				"error",
+				JSONUtil.put(
+					"errorType", errorType
+				).put(
+					"message", errorMessage
+				));
 		}
 
 		return jsonObject;

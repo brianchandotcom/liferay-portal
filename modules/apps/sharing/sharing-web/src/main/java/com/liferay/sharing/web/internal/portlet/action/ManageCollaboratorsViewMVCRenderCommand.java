@@ -228,17 +228,14 @@ public class ManageCollaboratorsViewMVCRenderCommand
 		for (SharingEntryPermissionDisplay sharingEntryPermissionDisplay :
 				sharingEntryPermissionDisplays) {
 
-			JSONObject sharingEntryPermissionDisplaySelectOptionJSONObject =
+			sharingEntryPermissionDisplaySelectOptionsJSONArray.put(
 				JSONUtil.put(
 					"label", sharingEntryPermissionDisplay.getPhrase()
 				).put(
 					"value",
 					sharingEntryPermissionDisplay.
 						getSharingEntryPermissionDisplayActionId()
-				);
-
-			sharingEntryPermissionDisplaySelectOptionsJSONArray.put(
-				sharingEntryPermissionDisplaySelectOptionJSONObject);
+				));
 		}
 
 		return sharingEntryPermissionDisplaySelectOptionsJSONArray;

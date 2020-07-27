@@ -270,23 +270,22 @@ public class EditSegmentsEntryDisplayContext {
 			Criteria.Criterion criterion =
 				segmentsCriteriaContributor.getCriterion(_getCriteria());
 
-			JSONObject contributorJSONObject = JSONUtil.put(
-				"conjunctionId", _getCriterionConjunction(criterion)
-			).put(
-				"conjunctionInputId",
-				_renderResponse.getNamespace() + "criterionConjunction" +
-					segmentsCriteriaContributor.getKey()
-			).put(
-				"initialQuery", _getCriterionFilterString(criterion)
-			).put(
-				"inputId",
-				_renderResponse.getNamespace() + "criterionFilter" +
-					segmentsCriteriaContributor.getKey()
-			).put(
-				"propertyKey", segmentsCriteriaContributor.getKey()
-			);
-
-			contributorsJSONArray.put(contributorJSONObject);
+			contributorsJSONArray.put(
+				JSONUtil.put(
+					"conjunctionId", _getCriterionConjunction(criterion)
+				).put(
+					"conjunctionInputId",
+					_renderResponse.getNamespace() + "criterionConjunction" +
+						segmentsCriteriaContributor.getKey()
+				).put(
+					"initialQuery", _getCriterionFilterString(criterion)
+				).put(
+					"inputId",
+					_renderResponse.getNamespace() + "criterionFilter" +
+						segmentsCriteriaContributor.getKey()
+				).put(
+					"propertyKey", segmentsCriteriaContributor.getKey()
+				));
 		}
 
 		return contributorsJSONArray;
@@ -382,20 +381,20 @@ public class EditSegmentsEntryDisplayContext {
 		for (SegmentsCriteriaContributor segmentsCriteriaContributor :
 				segmentsCriteriaContributors) {
 
-			JSONObject jsonContributorObject = JSONUtil.put(
-				"entityName", segmentsCriteriaContributor.getEntityName()
-			).put(
-				"name", segmentsCriteriaContributor.getLabel(_locale)
-			).put(
-				"properties",
-				JSONFactoryUtil.createJSONArray(
-					JSONFactoryUtil.looseSerializeDeep(
-						segmentsCriteriaContributor.getFields(_renderRequest)))
-			).put(
-				"propertyKey", segmentsCriteriaContributor.getKey()
-			);
-
-			jsonContributorsArray.put(jsonContributorObject);
+			jsonContributorsArray.put(
+				JSONUtil.put(
+					"entityName", segmentsCriteriaContributor.getEntityName()
+				).put(
+					"name", segmentsCriteriaContributor.getLabel(_locale)
+				).put(
+					"properties",
+					JSONFactoryUtil.createJSONArray(
+						JSONFactoryUtil.looseSerializeDeep(
+							segmentsCriteriaContributor.getFields(
+								_renderRequest)))
+				).put(
+					"propertyKey", segmentsCriteriaContributor.getKey()
+				));
 		}
 
 		return jsonContributorsArray;

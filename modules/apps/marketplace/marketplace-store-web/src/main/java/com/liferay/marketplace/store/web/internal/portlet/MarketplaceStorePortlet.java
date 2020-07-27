@@ -147,15 +147,15 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		JSONObject jsonObject = JSONUtil.put(
-			"apps", getInstalledAppsJSONArray()
-		).put(
-			"cmd", "getInstalledApps"
-		).put(
-			"message", "success"
-		);
-
-		writeJSON(actionRequest, actionResponse, jsonObject);
+		writeJSON(
+			actionRequest, actionResponse,
+			JSONUtil.put(
+				"apps", getInstalledAppsJSONArray()
+			).put(
+				"cmd", "getInstalledApps"
+			).put(
+				"message", "success"
+			));
 	}
 
 	public void getPrepackagedApps(

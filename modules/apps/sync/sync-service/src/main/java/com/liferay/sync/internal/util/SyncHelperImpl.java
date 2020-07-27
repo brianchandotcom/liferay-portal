@@ -212,13 +212,12 @@ public class SyncHelperImpl implements SyncHelper {
 			throwableMessage = rootCauseThrowable.toString();
 		}
 
-		JSONObject rootCauseJSONObject = JSONUtil.put(
-			"message", throwableMessage
-		).put(
-			"type", ClassUtil.getClassName(rootCauseThrowable)
-		);
-
-		sb.append(rootCauseJSONObject);
+		sb.append(
+			JSONUtil.put(
+				"message", throwableMessage
+			).put(
+				"type", ClassUtil.getClassName(rootCauseThrowable)
+			));
 
 		return StringUtil.unquote(sb.toString());
 	}

@@ -70,15 +70,13 @@ public class SharingPermissionImpl implements SharingPermission {
 			Stream<SharingEntryAction> sharingEntryActionStream =
 				sharingEntryActions.stream();
 
-			String[] actionIds = sharingEntryActionStream.map(
-				SharingEntryAction::getActionId
-			).toArray(
-				String[]::new
-			);
-
 			throw new PrincipalException.MustHavePermission(
 				permissionChecker.getUserId(), resourceName, classPK,
-				actionIds);
+				sharingEntryActionStream.map(
+					SharingEntryAction::getActionId
+				).toArray(
+					String[]::new
+				));
 		}
 	}
 

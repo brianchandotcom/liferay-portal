@@ -646,17 +646,16 @@ public class MeetingsPortlet extends MVCPortlet {
 				(OrderByComparator)null);
 
 			for (User user : users) {
-				JSONObject jsonObject = JSONUtil.put(
-					"emailAddress", user.getEmailAddress()
-				).put(
-					"fullName", user.getFullName()
-				).put(
-					"portraitURL", user.getPortraitURL(themeDisplay)
-				).put(
-					"userId", user.getUserId()
-				);
-
-				jsonArray.put(jsonObject);
+				jsonArray.put(
+					JSONUtil.put(
+						"emailAddress", user.getEmailAddress()
+					).put(
+						"fullName", user.getFullName()
+					).put(
+						"portraitURL", user.getPortraitURL(themeDisplay)
+					).put(
+						"userId", user.getUserId()
+					));
 			}
 
 			writeJSON(resourceRequest, resourceResponse, jsonArray);

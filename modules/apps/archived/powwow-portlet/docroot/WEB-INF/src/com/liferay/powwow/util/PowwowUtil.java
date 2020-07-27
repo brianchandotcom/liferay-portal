@@ -422,16 +422,14 @@ public class PowwowUtil {
 			return;
 		}
 
-		JSONObject notificationEventJSONObject = JSONUtil.put(
-			"classPK", powwowParticipant.getPowwowMeetingId()
-		).put(
-			"userId", powwowParticipant.getUserId()
-		);
-
 		NotificationEvent notificationEvent =
 			NotificationEventFactoryUtil.createNotificationEvent(
 				System.currentTimeMillis(), PowwowPortletKeys.POWWOW_MEETINGS,
-				notificationEventJSONObject);
+				JSONUtil.put(
+					"classPK", powwowParticipant.getPowwowMeetingId()
+				).put(
+					"userId", powwowParticipant.getUserId()
+				));
 
 		notificationEvent.setDeliveryRequired(0);
 

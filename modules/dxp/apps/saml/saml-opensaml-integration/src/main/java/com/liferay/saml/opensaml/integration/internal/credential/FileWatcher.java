@@ -129,19 +129,17 @@ public class FileWatcher implements Closeable {
 							}
 						));
 
-				CompletableFuture[] completableFutures =
-					watchEventsPathStream.map(
-						watchEvent -> (Runnable)() -> _consumer.accept(
-							watchEvent)
-					).map(
-						runnable -> CompletableFuture.runAsync(
-							runnable, notificationsExecutorService)
-					).toArray(
-						CompletableFuture[]::new
-					);
-
 				CompletableFuture<Void> completableFuture =
-					CompletableFuture.allOf(completableFutures);
+					CompletableFuture.allOf(
+						watchEventsPathStream.map(
+							watchEvent -> (Runnable)() -> _consumer.accept(
+								watchEvent)
+						).map(
+							runnable -> CompletableFuture.runAsync(
+								runnable, notificationsExecutorService)
+						).toArray(
+							CompletableFuture[]::new
+						));
 
 				try {
 					completableFuture.get(

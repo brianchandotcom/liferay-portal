@@ -70,13 +70,13 @@ public class WeDeployUserInfoStrutsAction implements StrutsAction {
 			User user = _userLocalService.getUser(
 				weDeployAuthToken.getUserId());
 
-			JSONObject userJSONObject = JSONUtil.put(
-				"email", user.getEmailAddress()
-			).put(
-				"name", user.getFullName()
-			);
-
-			jsonObject.put("info", userJSONObject);
+			jsonObject.put(
+				"info",
+				JSONUtil.put(
+					"email", user.getEmailAddress()
+				).put(
+					"name", user.getFullName()
+				));
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

@@ -111,20 +111,19 @@ public class FormContextUtil {
 
 				Stream<Map<String, Object>> stream = maps.stream();
 
-				List<Map<String, Object>> fields = stream.map(
-					row -> _getMaps(row, "columns")
-				).flatMap(
-					List::stream
-				).map(
-					column -> _getMaps(column, "fields")
-				).flatMap(
-					List::stream
-				).collect(
-					Collectors.toList()
-				);
-
 				formFieldContexts = TransformUtil.transformToArray(
-					fields, FormContextUtil::_toFormFieldContext,
+					stream.map(
+						row -> _getMaps(row, "columns")
+					).flatMap(
+						List::stream
+					).map(
+						column -> _getMaps(column, "fields")
+					).flatMap(
+						List::stream
+					).collect(
+						Collectors.toList()
+					),
+					FormContextUtil::_toFormFieldContext,
 					FormFieldContext.class);
 
 				showRequiredFieldsWarning = _getBoolean(

@@ -17,7 +17,6 @@ package com.liferay.depot.web.internal.util;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -37,13 +36,12 @@ public class DepotLanguageUtil {
 		JSONArray availableLocalesJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {
-			JSONObject languageObject = JSONUtil.put(
-				"displayName", availableLocale.getDisplayName(locale)
-			).put(
-				"localeId", LocaleUtil.toLanguageId(availableLocale)
-			);
-
-			availableLocalesJSONArray.put(languageObject);
+			availableLocalesJSONArray.put(
+				JSONUtil.put(
+					"displayName", availableLocale.getDisplayName(locale)
+				).put(
+					"localeId", LocaleUtil.toLanguageId(availableLocale)
+				));
 		}
 
 		return availableLocalesJSONArray;

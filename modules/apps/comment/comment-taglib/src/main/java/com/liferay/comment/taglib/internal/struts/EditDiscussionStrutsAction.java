@@ -98,15 +98,13 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 					String randomNamespace = ParamUtil.getString(
 						namespacedHttpServletRequest, "randomNamespace");
 
-					JSONObject jsonObject = JSONUtil.put(
-						"commentId", commentId
-					).put(
-						"randomNamespace", randomNamespace
-					);
-
 					writeJSON(
 						namespacedHttpServletRequest, httpServletResponse,
-						jsonObject);
+						JSONUtil.put(
+							"commentId", commentId
+						).put(
+							"randomNamespace", randomNamespace
+						));
 
 					return null;
 				}

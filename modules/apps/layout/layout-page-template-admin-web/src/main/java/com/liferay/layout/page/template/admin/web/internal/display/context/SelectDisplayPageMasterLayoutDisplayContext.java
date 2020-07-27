@@ -28,7 +28,6 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUt
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -66,20 +65,19 @@ public class SelectDisplayPageMasterLayoutDisplayContext {
 				_infoItemServiceTracker.getInfoItemClassDetails(
 					InfoItemFormProvider.class)) {
 
-			JSONObject jsonObject = JSONUtil.put(
-				"id",
-				String.valueOf(
-					PortalUtil.getClassNameId(
-						infoItemClassDetails.getClassName()))
-			).put(
-				"label",
-				infoItemClassDetails.getLabel(_themeDisplay.getLocale())
-			).put(
-				"subtypes",
-				_getMappingFormVariationsJSONArray(infoItemClassDetails)
-			);
-
-			mappingTypesJSONArray.put(jsonObject);
+			mappingTypesJSONArray.put(
+				JSONUtil.put(
+					"id",
+					String.valueOf(
+						PortalUtil.getClassNameId(
+							infoItemClassDetails.getClassName()))
+				).put(
+					"label",
+					infoItemClassDetails.getLabel(_themeDisplay.getLocale())
+				).put(
+					"subtypes",
+					_getMappingFormVariationsJSONArray(infoItemClassDetails)
+				));
 		}
 
 		return mappingTypesJSONArray;
@@ -133,14 +131,13 @@ public class SelectDisplayPageMasterLayoutDisplayContext {
 			InfoLocalizedValue<String> labelInfoLocalizedValue =
 				infoItemFormVariation.getLabelInfoLocalizedValue();
 
-			JSONObject jsonObject = JSONUtil.put(
-				"id", String.valueOf(infoItemFormVariation.getKey())
-			).put(
-				"label",
-				labelInfoLocalizedValue.getValue(_themeDisplay.getLocale())
-			);
-
-			jsonArray.put(jsonObject);
+			jsonArray.put(
+				JSONUtil.put(
+					"id", String.valueOf(infoItemFormVariation.getKey())
+				).put(
+					"label",
+					labelInfoLocalizedValue.getValue(_themeDisplay.getLocale())
+				));
 		}
 
 		return jsonArray;

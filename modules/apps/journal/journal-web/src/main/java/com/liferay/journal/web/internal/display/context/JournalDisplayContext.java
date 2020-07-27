@@ -646,17 +646,16 @@ public class JournalDisplayContext {
 			_themeDisplay.getScopeGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		JSONObject jsonObject = JSONUtil.put(
-			"children", jsonArray
-		).put(
-			"icon", "folder"
-		).put(
-			"id", JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID
-		).put(
-			"name", LanguageUtil.get(_themeDisplay.getLocale(), "home")
-		);
-
-		return JSONUtil.put(jsonObject);
+		return JSONUtil.put(
+			JSONUtil.put(
+				"children", jsonArray
+			).put(
+				"icon", "folder"
+			).put(
+				"id", JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID
+			).put(
+				"name", LanguageUtil.get(_themeDisplay.getLocale(), "home")
+			));
 	}
 
 	public String getFolderTitle() {

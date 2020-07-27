@@ -96,14 +96,14 @@ public class ElasticsearchSortFieldTranslator
 
 		Stream<GeoLocationPoint> stream = geoLocationPoints.stream();
 
-		GeoPoint[] geoPoints = stream.map(
-			GeoLocationPointTranslator::translate
-		).toArray(
-			GeoPoint[]::new
-		);
-
 		GeoDistanceSortBuilder geoDistanceSortBuilder =
-			SortBuilders.geoDistanceSort(geoDistanceSort.getField(), geoPoints);
+			SortBuilders.geoDistanceSort(
+				geoDistanceSort.getField(),
+				stream.map(
+					GeoLocationPointTranslator::translate
+				).toArray(
+					GeoPoint[]::new
+				));
 
 		if (geoDistanceSort.getDistanceUnit() != null) {
 			geoDistanceSortBuilder.unit(

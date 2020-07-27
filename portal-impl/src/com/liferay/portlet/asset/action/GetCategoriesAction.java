@@ -20,7 +20,6 @@ import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.struts.JSONAction;
@@ -51,21 +50,20 @@ public class GetCategoriesAction extends JSONAction {
 				AssetCategoryServiceUtil.getChildCategories(
 					category.getCategoryId());
 
-			JSONObject jsonObject = JSONUtil.put(
-				"categoryId", category.getCategoryId()
-			).put(
-				"childrenCount", childCategories.size()
-			).put(
-				"hasChildren", !childCategories.isEmpty()
-			).put(
-				"name", category.getName()
-			).put(
-				"parentCategoryId", category.getParentCategoryId()
-			).put(
-				"titleCurrentValue", category.getTitleCurrentValue()
-			);
-
-			jsonArray.put(jsonObject);
+			jsonArray.put(
+				JSONUtil.put(
+					"categoryId", category.getCategoryId()
+				).put(
+					"childrenCount", childCategories.size()
+				).put(
+					"hasChildren", !childCategories.isEmpty()
+				).put(
+					"name", category.getName()
+				).put(
+					"parentCategoryId", category.getParentCategoryId()
+				).put(
+					"titleCurrentValue", category.getTitleCurrentValue()
+				));
 		}
 
 		return jsonArray.toString();

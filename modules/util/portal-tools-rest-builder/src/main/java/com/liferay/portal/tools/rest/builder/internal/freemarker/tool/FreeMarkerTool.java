@@ -62,6 +62,19 @@ public class FreeMarkerTool {
 		return _freeMarkerTool;
 	}
 
+	public boolean containsJavaMethodSignature(
+		List<JavaMethodSignature> javaMethodSignatures, String text) {
+
+		Stream<JavaMethodSignature> stream = javaMethodSignatures.stream();
+
+		return stream.map(
+			JavaMethodSignature::getMethodName
+		).anyMatch(
+			javaMethodSignatureMethodName ->
+				javaMethodSignatureMethodName.contains(text)
+		);
+	}
+
 	public Map<String, Schema> getAllSchemas(
 		OpenAPIYAML openAPIYAML, Map<String, Schema> schemas) {
 
@@ -213,6 +226,8 @@ public class FreeMarkerTool {
 		String arguments = OpenAPIParserUtil.getArguments(javaMethodParameters);
 
 		arguments = StringUtil.replace(
+			arguments, "assetLibraryId", "Long.valueOf(assetLibraryId)");
+		arguments = StringUtil.replace(
 			arguments, "filter",
 			"_filterBiFunction.apply(" + schemaVarName +
 				"Resource, filterString)");
@@ -296,13 +311,15 @@ public class FreeMarkerTool {
 			javaMethodParameters, operation, annotation);
 
 		parameters = StringUtil.replace(
+			parameters,
+			"@GraphQLName(\"assetLibraryId\") java.lang.Long assetLibraryId",
+			"@GraphQLName(\"assetLibraryId\") @NotEmpty String assetLibraryId");
+		parameters = StringUtil.replace(
 			parameters, "com.liferay.portal.kernel.search.filter.Filter filter",
 			"String filterString");
-
 		parameters = StringUtil.replace(
 			parameters, "com.liferay.portal.kernel.search.Sort[] sorts",
 			"String sortsString");
-
 		parameters = StringUtil.replace(
 			parameters, "@GraphQLName(\"siteId\") java.lang.Long siteId",
 			"@GraphQLName(\"siteKey\") @NotEmpty String siteKey");

@@ -275,23 +275,6 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 				);
 			</#if>
-		</#if>
-
-		<#if (entity.finderEntityColumns?size == 0) || (entity.finderEntityColumns?size &gt; 64)>
-			<#if !dependencyInjectorDS>
-				<#if serviceBuilder.isVersionGTE_7_3_0()>
-					/**
-					* @deprecated As of Athanasius (7.3.x), with no direct replacement
-					*/
-					@Deprecated
-				</#if>
-				public static final boolean COLUMN_BITMASK_ENABLED = false;
-			</#if>
-		</#if>
-	</#if>
-
-	<#if columnBitmaskEnabled>
-		<#if !dependencyInjectorDS>
 			<#if serviceBuilder.isVersionGTE_7_3_0()>
 				/**
 				* @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -299,13 +282,17 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 				@Deprecated
 			</#if>
 			public static final boolean COLUMN_BITMASK_ENABLED =
-				<#if serviceBuilder.isVersionGTE_7_3_0()>
-					true;
-				<#else>
-					GetterUtil.getBoolean(${propsUtil}.get("value.object.column.bitmask.enabled.${apiPackagePath}.model.${entity.name}"), true);
-				</#if>
+			<#if columnBitmaskEnabled && serviceBuilder.isVersionGTE_7_3_0()>
+				true;
+			<#elseif (entity.finderEntityColumns?size == 0) || (entity.finderEntityColumns?size &gt; 64)>
+				false;
+			<#else>
+				GetterUtil.getBoolean(${propsUtil}.get("value.object.column.bitmask.enabled.${apiPackagePath}.model.${entity.name}"), true);
+			</#if>
 		</#if>
+	</#if>
 
+	<#if columnBitmaskEnabled>
 		<#assign columnBitmask = 1 />
 
 		<#list entity.finderEntityColumns as entityColumn>

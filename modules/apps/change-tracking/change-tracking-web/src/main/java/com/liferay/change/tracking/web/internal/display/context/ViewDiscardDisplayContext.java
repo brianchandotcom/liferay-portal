@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -75,41 +76,48 @@ public class ViewDiscardDisplayContext {
 	}
 
 	public Map<String, Object> getReactData() {
-		JSONArray ctEntriesJSONArray = JSONFactoryUtil.createJSONArray();
 		Set<Long> ctEntryIds = new HashSet<>();
 		Set<Long> classNameIds = new HashSet<>();
 
-		for (CTEntry ctEntry :
-				_ctCollectionLocalService.getDiscardCTEntries(
-					_ctCollectionId, _modelClassNameId, _modelClassPK)) {
+		List<CTEntry> ctEntries = _ctCollectionLocalService.getDiscardCTEntries(
+			_ctCollectionId, _modelClassNameId, _modelClassPK);
 
-			ctEntriesJSONArray.put(
-				JSONUtil.put(
-					"ctEntryId", ctEntry.getCtEntryId()
-				).put(
-					"description",
-					_ctDisplayRendererRegistry.getEntryDescription(
-						_httpServletRequest, ctEntry)
-				).put(
-					"modelClassNameId", ctEntry.getModelClassNameId()
-				).put(
-					"modelClassPK", ctEntry.getModelClassPK()
-				).put(
-					"title",
-					_ctDisplayRendererRegistry.getTitle(
-						ctEntry.getCtCollectionId(), ctEntry,
-						_themeDisplay.getLocale())
-				).put(
-					"userId", ctEntry.getUserId()
-				));
-
+		for (CTEntry ctEntry : ctEntries) {
 			ctEntryIds.add(ctEntry.getCtEntryId());
 
 			classNameIds.add(ctEntry.getModelClassNameId());
 		}
 
 		return HashMapBuilder.<String, Object>put(
-			"ctEntries", ctEntriesJSONArray
+			"ctEntries",
+			() -> {
+				JSONArray ctEntriesJSONArray =
+					JSONFactoryUtil.createJSONArray();
+
+				for (CTEntry ctEntry : ctEntries) {
+					ctEntriesJSONArray.put(
+						JSONUtil.put(
+							"ctEntryId", ctEntry.getCtEntryId()
+						).put(
+							"description",
+							_ctDisplayRendererRegistry.getEntryDescription(
+								_httpServletRequest, ctEntry)
+						).put(
+							"modelClassNameId", ctEntry.getModelClassNameId()
+						).put(
+							"modelClassPK", ctEntry.getModelClassPK()
+						).put(
+							"title",
+							_ctDisplayRendererRegistry.getTitle(
+								ctEntry.getCtCollectionId(), ctEntry,
+								_themeDisplay.getLocale())
+						).put(
+							"userId", ctEntry.getUserId()
+						));
+				}
+
+				return ctEntriesJSONArray;
+			}
 		).put(
 			"diffURL",
 			() -> {

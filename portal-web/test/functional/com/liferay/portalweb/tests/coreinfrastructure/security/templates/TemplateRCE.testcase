@@ -35,7 +35,7 @@ definition {
 
 	@priority = "4"
 	test ViewInstanceManager {
-		property app.server.types = "tomcat,wildfly";
+		property app.server.types = "tomcat";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -180,6 +180,58 @@ $request.servletContext.getAttribute("org.apache.tomcat.InstanceManager"))
 			siteName = "Test Site Name");
 
 		AssertConsoleTextPresent(value1 = "java.lang.IllegalArgumentException: Denied resolving class org.apache.catalina.core.ApplicationContextFacade by org.apache");
+	}
+
+	@priority = "4"
+	test ViewInstanceManagerWildfly {
+		property app.server.types = "wildfly";
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		LexiconEntry.gotoAdd();
+
+		WebContentTemplates.inputTemplateAddScreenFields(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateName = "WC Template Name");
+
+		var templateScript = '''
+${Application['org.apache.tomcat.InstanceManager'].newInstance('com.sun.org.apache.bcel.internal.util.ClassLoader')}
+''';
+
+		WebContentTemplates.inputScript(templateScript = "${templateScript}");
+
+		PortletEntry.save();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Test Site Name");
+
+		WebContent.addStructuredPGViaWCD(
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentTitle = "WC Title");
+
+		Portlet.viewBody(
+			portletBody = "Denied access to method or field newInstance",
+			portletName = "WC Title");
 	}
 
 	@priority = "4"

@@ -1,3 +1,42 @@
+body {
+	background: white !important;
+}
+
+.navbar-nav li {
+	color: #6B6C7E;
+	font-size: 20px;
+	line-height: 150%;
+	padding-left: 30px;
+}
+
+h4 span {
+	font-size: 14px;
+}
+
+.swagger-ui .scheme-container {
+	border: 1px solid #E7E7ED;
+	border-radius: 5px;
+	margin-left: 32px;
+	margin-right: 32px;
+}
+
+.swagger-ui section.models {
+	border: 0 !important;
+}
+
+.swagger-ui .info a {
+	color: #0B5FFF;
+	font-weight: 600;
+}
+
+.swagger-ui .model-container {
+	margin-left: 0 !important;
+}
+
+.graphiql-container .doc-explorer-title-bar {
+	height: 100% !important;
+}
+
 .tag {
 	font-weight: bold;
 	margin-right: 1em;
@@ -5,13 +44,4 @@
 
 .value {
 	font-family: monospace;
-}
-
-.pre {
-	font-family: monospace;
-	white-space: pre;
-}
-
-.graphiql-container .doc-explorer-title-bar {
-	height: 100% !important;
 }

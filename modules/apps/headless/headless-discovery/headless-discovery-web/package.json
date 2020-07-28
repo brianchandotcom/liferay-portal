@@ -1,10 +1,11 @@
 {
 	"dependencies": {
 		"@clayui/button": "3.3.1",
+		"@clayui/drop-down": "3.4.6",
 		"@clayui/icon": "3.0.5",
 		"@clayui/layout": "3.1.1",
-		"@clayui/modal": "3.5.1",
 		"@clayui/link": "3.2.0",
+		"@clayui/modal": "3.6.3",
 		"@clayui/navigation-bar": "3.2.1",
 		"graphiql": "1.0.0-alpha.8",
 		"graphql": "^15.0.0",

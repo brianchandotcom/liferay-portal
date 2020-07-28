@@ -87,7 +87,7 @@ export default ({newCustomObject, showTranslationManager}) => {
 	const onError = (error) => {
 		const {title = ''} = error;
 
-		errorToast(`${title}.`);
+		errorToast(title);
 	};
 
 	const onSuccess = () => {

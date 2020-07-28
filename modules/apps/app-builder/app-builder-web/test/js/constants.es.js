@@ -209,5 +209,5 @@ export const DATA_DEFINITION_RESPONSES = {
 				name: 'SelectFromList',
 			},
 		],
-	}
+	},
 };

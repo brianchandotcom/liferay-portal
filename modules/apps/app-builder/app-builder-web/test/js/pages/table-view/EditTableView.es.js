@@ -125,7 +125,9 @@ describe('EditTableView', () => {
 	it('renders', async () => {
 		fetch
 			.mockResponseOnce(JSON.stringify(fieldTypeResponse))
-			.mockResponseOnce(JSON.stringify(DATA_DEFINITION_RESPONSES.ONE_ITEM));
+			.mockResponseOnce(
+				JSON.stringify(DATA_DEFINITION_RESPONSES.ONE_ITEM)
+			);
 
 		const {asFragment} = render(
 			<DndProvider backend={HTML5Backend}>
@@ -146,7 +148,9 @@ describe('EditTableView', () => {
 	it('renders with two fields in the sidebar and saves successfully', async () => {
 		fetch
 			.mockResponseOnce(JSON.stringify(fieldTypeResponse))
-			.mockResponseOnce(JSON.stringify(DATA_DEFINITION_RESPONSES.TWO_ITEMS))
+			.mockResponseOnce(
+				JSON.stringify(DATA_DEFINITION_RESPONSES.TWO_ITEMS)
+			)
 			.mockResponseOnce();
 
 		const {queryAllByText, queryByPlaceholderText, queryByText} = render(
@@ -205,7 +209,9 @@ describe('EditTableView', () => {
 	it('renders with two fields in the sidebar and does not save successfully', async () => {
 		fetch
 			.mockResponseOnce(JSON.stringify(fieldTypeResponse))
-			.mockResponseOnce(JSON.stringify(DATA_DEFINITION_RESPONSES.TWO_ITEMS))
+			.mockResponseOnce(
+				JSON.stringify(DATA_DEFINITION_RESPONSES.TWO_ITEMS)
+			)
 			.mockRejectOnce(() =>
 				Promise.reject(
 					JSON.stringify({
@@ -252,7 +258,9 @@ describe('EditTableView', () => {
 	it('renders with two fields in the sidebar and make actions', async () => {
 		fetch
 			.mockResponseOnce(JSON.stringify(fieldTypeResponse))
-			.mockResponseOnce(JSON.stringify(DATA_DEFINITION_RESPONSES.TWO_ITEMS));
+			.mockResponseOnce(
+				JSON.stringify(DATA_DEFINITION_RESPONSES.TWO_ITEMS)
+			);
 
 		const {
 			container,
@@ -307,7 +315,9 @@ describe('EditTableView', () => {
 	it('renders with one field already inside the table and saves', async () => {
 		fetch
 			.mockResponseOnce(JSON.stringify(fieldTypeResponse))
-			.mockResponseOnce(JSON.stringify(DATA_DEFINITION_RESPONSES.TWO_ITEMS))
+			.mockResponseOnce(
+				JSON.stringify(DATA_DEFINITION_RESPONSES.TWO_ITEMS)
+			)
 			.mockResponseOnce(JSON.stringify(tableViewWithId))
 			.mockResponseOnce(JSON.stringify({}));
 
@@ -355,7 +365,9 @@ describe('EditTableView', () => {
 	it('renders and toggle sidebar by clicking in the toggle button', async () => {
 		fetch
 			.mockResponseOnce(JSON.stringify(fieldTypeResponse))
-			.mockResponseOnce(JSON.stringify(DATA_DEFINITION_RESPONSES.ONE_ITEM));
+			.mockResponseOnce(
+				JSON.stringify(DATA_DEFINITION_RESPONSES.ONE_ITEM)
+			);
 
 		render(
 			<DndProvider backend={HTML5Backend}>

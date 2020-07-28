@@ -100,7 +100,9 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 		_writeLock.lock();
 
 		try {
-			_cmSupport = new ConfigAdminSupport(bundleContext, this);
+			_tracker = new Tracker(bundleContext, this);
+
+			_tracker.open();
 
 			Map<String, String> map = new HashMap<>();
 
@@ -172,9 +174,7 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 				}
 			}
 
-			if (_cmSupport != null) {
-				_cmSupport.run();
-			}
+			_tracker.close();
 		}
 		finally {
 			_stopped = true;
@@ -243,82 +243,62 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 	}
 
 	private BundleContext _bundleContext;
-	private Runnable _cmSupport;
 	private ServiceTrackerList<FileInstaller, FileInstaller> _fileInstallers;
 	private ServiceRegistration<FileInstaller>
 		_jarFileInstallerServiceRegistration;
 	private final ReadWriteLock _lock = new ReentrantReadWriteLock();
 	private final Lock _readLock = _lock.readLock();
 	private volatile boolean _stopped;
+	private Tracker _tracker;
 	private final Map<String, DirectoryWatcher> _watchers = new HashMap<>();
 	private final Lock _writeLock = _lock.writeLock();
 
-	private class ConfigAdminSupport implements Runnable {
+	private class Tracker
+		extends ServiceTracker<ConfigurationAdmin, ConfigInstaller> {
 
 		@Override
-		public void run() {
-			_tracker.close();
+		public ConfigInstaller addingService(
+			ServiceReference<ConfigurationAdmin> serviceReference) {
+
+			if (_stopped) {
+				return null;
+			}
+
+			ConfigurationAdmin configurationAdmin = context.getService(
+				serviceReference);
+
+			ConfigInstaller configInstaller = new ConfigInstaller(
+				context, configurationAdmin, _fileInstall);
+
+			configInstaller.init();
+
+			return configInstaller;
 		}
 
-		private ConfigAdminSupport(
+		@Override
+		public void removedService(
+			ServiceReference<ConfigurationAdmin> serviceReference,
+			ConfigInstaller configInstaller) {
+
+			if (_stopped) {
+				return;
+			}
+
+			configInstaller.destroy();
+
+			context.ungetService(serviceReference);
+		}
+
+		private Tracker(
 			BundleContext bundleContext,
 			FileInstallImplBundleActivator fileInstall) {
 
-			_tracker = new Tracker(bundleContext, fileInstall);
+			super(bundleContext, ConfigurationAdmin.class.getName(), null);
 
-			_tracker.open();
+			_fileInstall = fileInstall;
 		}
 
-		private final Tracker _tracker;
-
-		private class Tracker
-			extends ServiceTracker<ConfigurationAdmin, ConfigInstaller> {
-
-			@Override
-			public ConfigInstaller addingService(
-				ServiceReference<ConfigurationAdmin> serviceReference) {
-
-				if (_stopped) {
-					return null;
-				}
-
-				ConfigurationAdmin configurationAdmin = context.getService(
-					serviceReference);
-
-				ConfigInstaller configInstaller = new ConfigInstaller(
-					context, configurationAdmin, _fileInstall);
-
-				configInstaller.init();
-
-				return configInstaller;
-			}
-
-			@Override
-			public void removedService(
-				ServiceReference<ConfigurationAdmin> serviceReference,
-				ConfigInstaller configInstaller) {
-
-				if (_stopped) {
-					return;
-				}
-
-				configInstaller.destroy();
-
-				context.ungetService(serviceReference);
-			}
-
-			private Tracker(
-				BundleContext bundleContext,
-				FileInstallImplBundleActivator fileInstall) {
-
-				super(bundleContext, ConfigurationAdmin.class.getName(), null);
-
-				_fileInstall = fileInstall;
-			}
-
-			private final FileInstallImplBundleActivator _fileInstall;
-
-		}
+		private final FileInstallImplBundleActivator _fileInstall;
 
 	}
 

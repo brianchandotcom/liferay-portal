@@ -35,7 +35,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -271,6 +270,8 @@ public class AppBuilderAppLocalServiceImpl
 		AppBuilderApp appBuilderApp = appBuilderAppPersistence.findByPrimaryKey(
 			appBuilderAppId);
 
+		long oldDDMStructureLayoutId = appBuilderApp.getDdmStructureLayoutId();
+
 		appBuilderApp.setUserId(user.getUserId());
 		appBuilderApp.setUserName(user.getFullName());
 		appBuilderApp.setModifiedDate(new Date());
@@ -282,9 +283,8 @@ public class AppBuilderAppLocalServiceImpl
 
 		appBuilderApp = appBuilderAppPersistence.update(appBuilderApp);
 
-		if (!Objects.equals(
-				appBuilderApp.getDdmStructureLayoutId(),
-				ddmStructureLayoutId)) {
+		if (oldDDMStructureLayoutId !=
+				appBuilderApp.getDdmStructureLayoutId()) {
 
 			_appBuilderAppVersionLocalService.addAppBuilderAppVersion(
 				appBuilderApp.getGroupId(), appBuilderApp.getCompanyId(),

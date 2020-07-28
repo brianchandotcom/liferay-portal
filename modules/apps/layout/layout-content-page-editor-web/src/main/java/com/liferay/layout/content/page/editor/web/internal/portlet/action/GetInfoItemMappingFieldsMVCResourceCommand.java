@@ -15,6 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.info.field.InfoField;
+import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
@@ -30,9 +31,14 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Predicate;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -117,7 +123,12 @@ public class GetInfoItemMappingFieldsMVCResourceCommand
 
 		InfoForm infoForm = infoItemFormProvider.getInfoForm(infoItemObject);
 
-		for (InfoField infoField : infoForm.getAllInfoFields()) {
+		String fieldType = ParamUtil.getString(resourceRequest, "fieldType");
+
+		List<InfoField> infoFields = ListUtil.filter(
+			infoForm.getAllInfoFields(), _infoFieldTypePredicate(fieldType));
+
+		for (InfoField infoField : infoFields) {
 			jsonArray.put(
 				JSONUtil.put(
 					"key", infoField.getName()
@@ -132,6 +143,21 @@ public class GetInfoItemMappingFieldsMVCResourceCommand
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonArray);
+	}
+
+	private Predicate<InfoField> _infoFieldTypePredicate(String fieldType) {
+		return infoField -> {
+			boolean imageInfoFieldType =
+				infoField.getInfoFieldType() instanceof ImageInfoFieldType;
+
+			if (Objects.equals(fieldType, "background-image") ||
+				Objects.equals(fieldType, "image")) {
+
+				return imageInfoFieldType;
+			}
+
+			return !imageInfoFieldType;
+		};
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

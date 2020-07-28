@@ -33,7 +33,7 @@ import java.util.List;
 /**
  * @author Samuel Trong Tran
  */
-public class CTJSONObjectUtil {
+public class DisplayContextUtil {
 
 	public static JSONObject getUserInfoJSONObject(
 		Predicate predicate, ThemeDisplay themeDisplay,
@@ -74,10 +74,10 @@ public class CTJSONObjectUtil {
 		return userInfoJSONObject;
 	}
 
-	private CTJSONObjectUtil() {
+	private DisplayContextUtil() {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CTJSONObjectUtil.class);
+		DisplayContextUtil.class);
 
 }

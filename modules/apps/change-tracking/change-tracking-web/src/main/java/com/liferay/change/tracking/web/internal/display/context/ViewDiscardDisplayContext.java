@@ -143,7 +143,7 @@ public class ViewDiscardDisplayContext {
 			"typeNames", typeNamesJSONObject
 		).put(
 			"userInfo",
-			CTJSONObjectUtil.getUserInfoJSONObject(
+			DisplayContextUtil.getUserInfoJSONObject(
 				CTEntryTable.INSTANCE.ctEntryId.in(
 					ArrayUtil.toLongArray(ctEntryIds.toArray())),
 				_themeDisplay, _userLocalService)

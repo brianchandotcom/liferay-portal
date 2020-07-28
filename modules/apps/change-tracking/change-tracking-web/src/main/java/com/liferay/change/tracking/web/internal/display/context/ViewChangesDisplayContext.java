@@ -329,7 +329,7 @@ public class ViewChangesDisplayContext {
 			}
 		).put(
 			"userInfo",
-			CTJSONObjectUtil.getUserInfoJSONObject(
+			DisplayContextUtil.getUserInfoJSONObject(
 				CTEntryTable.INSTANCE.ctCollectionId.eq(
 					_ctCollection.getCtCollectionId()),
 				_themeDisplay, _userLocalService)

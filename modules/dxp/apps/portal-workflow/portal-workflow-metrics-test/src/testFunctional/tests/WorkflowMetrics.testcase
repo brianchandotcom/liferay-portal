@@ -1834,7 +1834,23 @@ definition {
 
 		Click(locator1 = "WorkflowMetricsSLA#METRICS_SLA_SETTINGS");
 
-		WorkflowMetrics.goToDeleteSLA(slaName = "One day");
+		Click(
+			key_slaTitle = "One day",
+			locator1 = "WorkflowMetricsSLA#SLA_RECORD_TITLE");
+
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "1",
+			slaDefinitionDescription = "SLA Description",
+			slaDefinitionEnd = "Process Ends: Approved",
+			slaDefinitionHours = "0000",
+			slaDefinitionName = "One day Edit",
+			slaDefinitionStart = "Process Begins");
+
+		Button.clickUpdate();
+
+		Alert.viewSuccessMessage();
+
+		WorkflowMetrics.goToDeleteSLA(slaName = "One day Edit");
 
 		AssertElementPresent(locator1 = "WorkflowMetricsSLA#SLA_EMPTY_MESSAGE");
 	}

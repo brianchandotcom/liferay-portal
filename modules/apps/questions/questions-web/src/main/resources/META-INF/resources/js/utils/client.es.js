@@ -383,8 +383,7 @@ export const getQuestionThreads = (
 		pageSize,
 		search,
 		section,
-		siteKey,
-		'dateCreated:desc'
+		siteKey
 	);
 };
 
@@ -396,12 +395,13 @@ export const getThreads = (
 	search = '',
 	section,
 	siteKey,
-	sort = 'dateCreated:desc'
+	sort
 ) => {
 	if (
-		!filter &&
+		!search &&
 		!keywords &&
 		!creatorId &&
+		!sort &&
 		!section.messageBoardSections.items.length
 	) {
 		return client
@@ -439,6 +439,8 @@ export const getThreads = (
 	else if (creatorId) {
 		filter += ` and creator/id eq ${creatorId}`;
 	}
+
+	sort = sort || 'dateCreated:desc';
 
 	return client
 		.query({

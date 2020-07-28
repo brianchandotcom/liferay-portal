@@ -62,7 +62,7 @@ renderResponse.setTitle((vocabulary == null) ? LanguageUtil.get(request, "add-vo
 
 				<aui:input helpMessage="multi-valued-help" label="allow-multiple-categories" name="multiValued" type="toggle-switch" value="<%= (vocabulary != null) ? vocabulary.isMultiValued() : true %>" />
 
-				<aui:input helpMessage="for-internal-use-only-help" label="for-internal-use-only" name="system" type="toggle-switch" value="<%= (vocabulary != null) ? vocabulary.isSystem() : false %>" />
+				<aui:input helpMessage="for-internal-use-only-help" label="for-internal-use-only" name="internalUse" type="toggle-switch" value="<%= (vocabulary != null) ? (vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL) : false %>" />
 			</liferay-frontend:fieldset>
 
 			<%@ include file="/edit_vocabulary_settings.jspf" %>

@@ -28,9 +28,21 @@
 		<column name="content" type="String" />
 		<column name="contentType" type="String" />
 		<column name="languageId" type="String" />
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
 
 		<!-- Finder methods -->
 
+		<finder name="G_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="C_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="status" />
+		</finder>
 		<finder name="C_C_L" return-type="TranslationEntry" unique="true">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />

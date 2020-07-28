@@ -128,33 +128,36 @@ const renderComponent = ({
 						version: 1,
 					},
 
-					masterLayoutData: {
-						items: {
-							'10-main': {
-								children: masterRootItemChildren,
-								config: {},
-								itemId: '10-main',
-								parentId: null,
-								type: LAYOUT_DATA_ITEM_TYPES.root,
+					masterLayout: {
+						masterLayoutData: {
+							items: {
+								'10-main': {
+									children: masterRootItemChildren,
+									config: {},
+									itemId: '10-main',
+									parentId: null,
+									type: LAYOUT_DATA_ITEM_TYPES.root,
+								},
+								'11-container': {
+									children: ['12-dropzone'],
+									config: {},
+									itemId: '11-container',
+									parentId: '10-main',
+									type: LAYOUT_DATA_ITEM_TYPES.container,
+								},
+								'12-dropzone': {
+									children: [],
+									config: {},
+									itemId: '12-dropzone',
+									parentId: '11-container',
+									type: LAYOUT_DATA_ITEM_TYPES.dropZone,
+								},
 							},
-							'11-container': {
-								children: ['12-dropzone'],
-								config: {},
-								itemId: '11-container',
-								parentId: '10-main',
-								type: LAYOUT_DATA_ITEM_TYPES.container,
-							},
-							'12-dropzone': {
-								children: [],
-								config: {},
-								itemId: '12-dropzone',
-								parentId: '11-container',
-								type: LAYOUT_DATA_ITEM_TYPES.dropZone,
-							},
-						},
 
-						rootItems: {main: '10-main'},
-						version: 1,
+							rootItems: {main: '10-main'},
+							version: 1,
+						},
+						masterLayoutPlid: '0',
 					},
 
 					permissions: {

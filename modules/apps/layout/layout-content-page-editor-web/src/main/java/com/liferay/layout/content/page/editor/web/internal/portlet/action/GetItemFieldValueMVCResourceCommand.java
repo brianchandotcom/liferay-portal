@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCResourceCommand.class
 )
-public class GetAssetFieldValueMVCResourceCommand
+public class GetItemFieldValueMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
 	@Override
@@ -156,7 +156,7 @@ public class GetAssetFieldValueMVCResourceCommand
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		GetAssetFieldValueMVCResourceCommand.class);
+		GetItemFieldValueMVCResourceCommand.class);
 
 	@Reference
 	private FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;

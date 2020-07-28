@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCResourceCommand.class
 )
-public class GetAssetMappingFieldsMVCResourceCommand
+public class GetItemMappingFieldsMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
 	@Override
@@ -137,7 +137,7 @@ public class GetAssetMappingFieldsMVCResourceCommand
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		GetAssetMappingFieldsMVCResourceCommand.class);
+		GetItemMappingFieldsMVCResourceCommand.class);
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;

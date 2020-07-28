@@ -10,17 +10,40 @@ definition {
 			key_assigneeType = "${assigneeType}",
 			locator1 = "IFrame#ADD_ASSIGNEE_TO_ACCOUNT");
 
-		Search.searchCP(searchTerm = "${assigneeName}");
+		if (isSet(addNewAssignee)) {
+			LexiconEntry.gotoAdd();
 
-		Check(
-			key_tableEntry = "${assigneeName}",
-			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
+				value1 = "${userScreenName}");
 
-		SelectFrameTop();
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
+				value1 = "${userEmailAddress}");
 
-		Button.clickAssign();
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD",
+				value1 = "${userFirstName}");
 
-		Alert.viewSuccessMessage();
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
+				value1 = "${userLastName}");
+
+			Button.clickSave();
+		}
+		else {
+			Search.searchCP(searchTerm = "${assigneeName}");
+
+			Check(
+				key_tableEntry = "${assigneeName}",
+				locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+
+			SelectFrameTop();
+
+			Button.clickAssign();
+
+			Alert.viewSuccessMessage();
+		}
 
 		Refresh();
 

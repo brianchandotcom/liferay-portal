@@ -36,6 +36,7 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
@@ -245,7 +246,15 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 			actionRequest, "title");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
-		boolean system = ParamUtil.getBoolean(actionRequest, "system");
+
+		int visibilityType;
+
+		if (ParamUtil.getBoolean(actionRequest, "internalUse")) {
+			visibilityType = AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL;
+		}
+		else {
+			visibilityType = AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC;
+		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			AssetVocabulary.class.getName(), actionRequest);
@@ -258,7 +267,7 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 
 			vocabulary = _assetVocabularyService.addVocabulary(
 				serviceContext.getScopeGroupId(), StringPool.BLANK, titleMap,
-				descriptionMap, getSettings(actionRequest), system,
+				descriptionMap, getSettings(actionRequest), visibilityType,
 				serviceContext);
 		}
 		else {
@@ -267,7 +276,7 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 
 			vocabulary = _assetVocabularyService.updateVocabulary(
 				vocabularyId, titleMap, descriptionMap,
-				getSettings(actionRequest), system);
+				getSettings(actionRequest), visibilityType);
 		}
 
 		actionRequest.setAttribute(

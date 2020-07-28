@@ -83,8 +83,6 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 
 			<%
 			Map<String, Object> props = HashMapBuilder.<String, Object>put(
-				"articleResourcePrimKey", articleResourcePrimKey
-			).put(
 				"saveDraftBtnId", liferayPortletResponse.getNamespace() + "saveDraftBtn"
 			).put(
 				"submitBtnId", liferayPortletResponse.getNamespace() + "submitBtnId"

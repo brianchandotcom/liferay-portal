@@ -20,6 +20,59 @@ import React, {useEffect, useImperativeHandle, useReducer, useRef} from 'react';
 
 import Sidebar from './components/Sidebar';
 
+const dataReducer = (state, action) => {
+	switch (action.type) {
+		case 'CLOSE_SIDEBAR':
+			return {
+				...state,
+				isOpen: false,
+			};
+
+		case 'LOAD_DATA':
+			return {
+				...state,
+				data: null,
+				error: null,
+				loading: true,
+			};
+
+		case 'OPEN_SIDEBAR':
+			return {
+				...state,
+				isOpen: true,
+			};
+
+		case 'SET_ERROR':
+			return {
+				...state,
+				data: null,
+				error: action.error,
+				loading: false,
+			};
+
+		case 'SET_HTML':
+			return {
+				...state,
+				data: {
+					html: action.html,
+				},
+				error: null,
+				loading: false,
+			};
+
+		case 'SET_JSON':
+			return {
+				...state,
+				data: action.data,
+				error: action.data?.error,
+				loading: false,
+			};
+
+		default:
+			return initialState;
+	}
+};
+
 const initialState = {
 	data: null,
 	error: null,
@@ -35,71 +88,16 @@ const SidebarPanel = React.forwardRef(
 
 		const isMounted = useIsMounted();
 
-		const dataReducer = (state, action) => {
-			if (isMounted()) {
-				switch (action.type) {
-					case 'CLOSE_SIDEBAR':
-						return {
-							...state,
-							isOpen: false,
-						};
-
-					case 'LOAD_DATA':
-						return {
-							...state,
-							data: null,
-							error: null,
-							loading: true,
-						};
-
-					case 'OPEN_SIDEBAR':
-						return {
-							...state,
-							isOpen: true,
-						};
-
-					case 'SET_ERROR':
-						return {
-							...state,
-							data: null,
-							error: action.error,
-							loading: false,
-						};
-
-					case 'SET_HTML':
-						return {
-							...state,
-							data: {
-								html: action.html,
-							},
-							error: null,
-							loading: false,
-						};
-
-					case 'SET_JSON':
-						return {
-							...state,
-							data: action.data,
-							error: action.data?.error,
-							loading: false,
-						};
-
-					default:
-						return initialState;
-				}
-			}
-		};
-
 		const [state, dispatch] = useReducer(dataReducer, initialState);
 
 		// Force 300 ms of waiting to render the response so loading
 		// looks more natural.
 
 		const dispatchWithDelay = (action) =>
-			delay(() => dispatch(action), 300);
+			delay(() => safeDispatch(action), 300);
 
 		const getData = (fetchURL) => {
-			dispatch({type: 'LOAD_DATA'});
+			safeDispatch({type: 'LOAD_DATA'});
 
 			fetch(fetchURL, {
 				method: 'GET',
@@ -128,7 +126,13 @@ const SidebarPanel = React.forwardRef(
 		};
 
 		const onCloseHandle = () =>
-			onClose ? onClose() : dispatch({type: 'CLOSE_SIDEBAR'});
+			onClose ? onClose() : safeDispatch({type: 'CLOSE_SIDEBAR'});
+
+		const safeDispatch = (action) => {
+			if (isMounted()) {
+				dispatch(action);
+			}
+		};
 
 		useEffect(() => {
 			getData(fetchURL);

@@ -14,18 +14,15 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.asset.info.display.contributor.util.ContentAccessor;
-import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
-import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.field.InfoField;
+import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
-import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
-import com.liferay.info.type.WebImage;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -33,7 +30,6 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -46,16 +42,17 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
+ * @author Jorge Ferrer
  */
 @Component(
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-		"mvc.command.name=/content_layout/get_asset_field_value"
+		"mvc.command.name=/content_layout/get_asset_mapping_fields"
 	},
 	service = MVCResourceCommand.class
 )
-public class GetAssetFieldValueMVCResourceCommand
+public class GetInfoItemMappingFieldsMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
 	@Override
@@ -65,31 +62,36 @@ public class GetAssetFieldValueMVCResourceCommand
 
 		long classNameId = ParamUtil.getLong(resourceRequest, "classNameId");
 
-		String className = _portal.getClassName(classNameId);
+		String itemClassName = _portal.getClassName(classNameId);
 
-		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemFieldValuesProvider.class, className);
+		InfoItemFormProvider<Object> infoItemFormProvider =
+			(InfoItemFormProvider<Object>)
+				_infoItemServiceTracker.getFirstInfoItemService(
+					InfoItemFormProvider.class, itemClassName);
 
-		if (infoItemFieldValuesProvider == null) {
+		if (infoItemFormProvider == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to get info item form provider for class " +
-						className);
+						itemClassName);
 			}
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
-				JSONFactoryUtil.createJSONObject());
+				JSONFactoryUtil.createJSONArray());
 
 			return;
 		}
 
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemObjectProvider.class, className);
+				InfoItemObjectProvider.class, itemClassName);
 
 		if (infoItemObjectProvider == null) {
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONFactoryUtil.createJSONArray());
+
 			return;
 		}
 
@@ -97,69 +99,43 @@ public class GetAssetFieldValueMVCResourceCommand
 
 		InfoItemReference infoItemReference = new InfoItemReference(classPK);
 
-		Object object = infoItemObjectProvider.getInfoItem(infoItemReference);
+		Object infoItemObject = infoItemObjectProvider.getInfoItem(
+			infoItemReference);
 
-		if (object == null) {
+		if (infoItemObject == null) {
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
-				JSONFactoryUtil.createJSONObject());
+				JSONFactoryUtil.createJSONArray());
 
 			return;
 		}
 
-		String fieldId = ParamUtil.getString(resourceRequest, "fieldId");
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		JSONObject jsonObject = JSONUtil.put(
-			"classNameId", classNameId
-		).put(
-			"classPK", classPK
-		).put(
-			"fieldId", fieldId
-		);
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		String languageId = ParamUtil.getString(
-			resourceRequest, "languageId", themeDisplay.getLanguageId());
+		InfoForm infoForm = infoItemFormProvider.getInfoForm(infoItemObject);
 
-		InfoFieldValue<Object> infoFieldValue =
-			infoItemFieldValuesProvider.getInfoItemFieldValue(object, fieldId);
-
-		Object value = StringPool.BLANK;
-
-		if (infoFieldValue != null) {
-			value = infoFieldValue.getValue(
-				LocaleUtil.fromLanguageId(languageId));
+		for (InfoField infoField : infoForm.getAllInfoFields()) {
+			jsonArray.put(
+				JSONUtil.put(
+					"key", infoField.getName()
+				).put(
+					"label", infoField.getLabel(themeDisplay.getLocale())
+				).put(
+					"type",
+					infoField.getInfoFieldType(
+					).getName()
+				));
 		}
-
-		if (value instanceof ContentAccessor) {
-			ContentAccessor contentAccessor = (ContentAccessor)value;
-
-			value = contentAccessor.getContent();
-		}
-
-		if (value instanceof WebImage) {
-			WebImage webImage = (WebImage)value;
-
-			value = webImage.toJSONObject();
-		}
-		else {
-			value = _fragmentEntryProcessorHelper.formatMappedValue(
-				value, themeDisplay.getLocale());
-		}
-
-		jsonObject.put("fieldValue", value);
 
 		JSONPortletResponseUtil.writeJSON(
-			resourceRequest, resourceResponse, jsonObject);
+			resourceRequest, resourceResponse, jsonArray);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		GetAssetFieldValueMVCResourceCommand.class);
-
-	@Reference
-	private FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;
+		GetInfoItemMappingFieldsMVCResourceCommand.class);
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;

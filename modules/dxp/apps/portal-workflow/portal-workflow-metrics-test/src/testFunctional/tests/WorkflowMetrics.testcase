@@ -1219,6 +1219,8 @@ definition {
 		Click(locator1 = "WorkflowReassignModal#SEARCH_NEW_ASSIGNEE");
 		WorkflowMetrics.assertNoAssignees();
 
+		Click(locator1 = "WorkflowReassignModal#CLOSE_MODAL_BUTTON");
+
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "Blogs Entry Title 1",

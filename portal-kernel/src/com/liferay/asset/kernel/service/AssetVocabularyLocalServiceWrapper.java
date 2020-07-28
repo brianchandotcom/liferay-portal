@@ -63,13 +63,13 @@ public class AssetVocabularyLocalServiceWrapper
 			long userId, long groupId, String title,
 			java.util.Map<java.util.Locale, String> titleMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
-			String settings, boolean system,
+			String settings, int visibilityType,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetVocabularyLocalService.addVocabulary(
-			userId, groupId, title, titleMap, descriptionMap, settings, system,
-			serviceContext);
+			userId, groupId, title, titleMap, descriptionMap, settings,
+			visibilityType, serviceContext);
 	}
 
 	@Override
@@ -101,13 +101,13 @@ public class AssetVocabularyLocalServiceWrapper
 			long userId, long groupId, String name, String title,
 			java.util.Map<java.util.Locale, String> titleMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
-			String settings, boolean system,
+			String settings, int visibilityType,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetVocabularyLocalService.addVocabulary(
 			userId, groupId, name, title, titleMap, descriptionMap, settings,
-			system, serviceContext);
+			visibilityType, serviceContext);
 	}
 
 	@Override
@@ -665,11 +665,11 @@ public class AssetVocabularyLocalServiceWrapper
 	public AssetVocabulary updateVocabulary(
 			long vocabularyId, java.util.Map<java.util.Locale, String> titleMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
-			String settings, boolean system)
+			String settings, int visibilityType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetVocabularyLocalService.updateVocabulary(
-			vocabularyId, titleMap, descriptionMap, settings, system);
+			vocabularyId, titleMap, descriptionMap, settings, visibilityType);
 	}
 
 	@Override

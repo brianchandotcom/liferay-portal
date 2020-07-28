@@ -38,12 +38,12 @@ public class AssetVocabularyServiceWrapper
 			long groupId, String title,
 			java.util.Map<java.util.Locale, String> titleMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
-			String settings, boolean system,
+			String settings, int visibilityType,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetVocabularyService.addVocabulary(
-			groupId, title, titleMap, descriptionMap, settings, system,
+			groupId, title, titleMap, descriptionMap, settings, visibilityType,
 			serviceContext);
 	}
 
@@ -279,11 +279,11 @@ public class AssetVocabularyServiceWrapper
 	public AssetVocabulary updateVocabulary(
 			long vocabularyId, java.util.Map<java.util.Locale, String> titleMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
-			String settings, boolean system)
+			String settings, int visibilityType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetVocabularyService.updateVocabulary(
-			vocabularyId, titleMap, descriptionMap, settings, system);
+			vocabularyId, titleMap, descriptionMap, settings, visibilityType);
 	}
 
 	@Override

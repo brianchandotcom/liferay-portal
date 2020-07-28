@@ -109,8 +109,8 @@ public class AssetVocabularyCacheModel
 		sb.append(description);
 		sb.append(", settings=");
 		sb.append(settings);
-		sb.append(", system=");
-		sb.append(system);
+		sb.append(", visibilityType=");
+		sb.append(visibilityType);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append("}");
@@ -193,7 +193,7 @@ public class AssetVocabularyCacheModel
 			assetVocabularyImpl.setSettings(settings);
 		}
 
-		assetVocabularyImpl.setSystem(system);
+		assetVocabularyImpl.setVisibilityType(visibilityType);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
 			assetVocabularyImpl.setLastPublishDate(null);
@@ -230,7 +230,7 @@ public class AssetVocabularyCacheModel
 		description = objectInput.readUTF();
 		settings = objectInput.readUTF();
 
-		system = objectInput.readBoolean();
+		visibilityType = objectInput.readInt();
 		lastPublishDate = objectInput.readLong();
 	}
 
@@ -300,7 +300,7 @@ public class AssetVocabularyCacheModel
 			objectOutput.writeUTF(settings);
 		}
 
-		objectOutput.writeBoolean(system);
+		objectOutput.writeInt(visibilityType);
 		objectOutput.writeLong(lastPublishDate);
 	}
 
@@ -319,7 +319,7 @@ public class AssetVocabularyCacheModel
 	public String title;
 	public String description;
 	public String settings;
-	public boolean system;
+	public int visibilityType;
 	public long lastPublishDate;
 
 }

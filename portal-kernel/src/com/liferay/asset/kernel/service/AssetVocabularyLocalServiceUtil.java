@@ -64,13 +64,13 @@ public class AssetVocabularyLocalServiceUtil {
 			long userId, long groupId, String title,
 			java.util.Map<java.util.Locale, String> titleMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
-			String settings, boolean system,
+			String settings, int visibilityType,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addVocabulary(
-			userId, groupId, title, titleMap, descriptionMap, settings, system,
-			serviceContext);
+			userId, groupId, title, titleMap, descriptionMap, settings,
+			visibilityType, serviceContext);
 	}
 
 	public static com.liferay.asset.kernel.model.AssetVocabulary addVocabulary(
@@ -99,13 +99,13 @@ public class AssetVocabularyLocalServiceUtil {
 			long userId, long groupId, String name, String title,
 			java.util.Map<java.util.Locale, String> titleMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
-			String settings, boolean system,
+			String settings, int visibilityType,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addVocabulary(
 			userId, groupId, name, title, titleMap, descriptionMap, settings,
-			system, serviceContext);
+			visibilityType, serviceContext);
 	}
 
 	public static com.liferay.asset.kernel.model.AssetVocabulary addVocabulary(
@@ -630,11 +630,11 @@ public class AssetVocabularyLocalServiceUtil {
 				long vocabularyId,
 				java.util.Map<java.util.Locale, String> titleMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
-				String settings, boolean system)
+				String settings, int visibilityType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateVocabulary(
-			vocabularyId, titleMap, descriptionMap, settings, system);
+			vocabularyId, titleMap, descriptionMap, settings, visibilityType);
 	}
 
 	public static com.liferay.asset.kernel.model.AssetVocabulary

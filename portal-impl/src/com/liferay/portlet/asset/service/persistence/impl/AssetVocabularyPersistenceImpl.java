@@ -4968,7 +4968,6 @@ public class AssetVocabularyPersistenceImpl
 
 		dbColumnNames.put("uuid", "uuid_");
 		dbColumnNames.put("settings", "settings_");
-		dbColumnNames.put("system", "system_");
 
 		setDBColumnNames(dbColumnNames);
 
@@ -5975,7 +5974,7 @@ public class AssetVocabularyPersistenceImpl
 		ctStrictColumnNames.add("title");
 		ctStrictColumnNames.add("description");
 		ctStrictColumnNames.add("settings_");
-		ctStrictColumnNames.add("system_");
+		ctStrictColumnNames.add("visibilityType");
 		ctStrictColumnNames.add("lastPublishDate");
 
 		_ctColumnNamesMap.put(
@@ -6195,6 +6194,6 @@ public class AssetVocabularyPersistenceImpl
 		AssetVocabularyPersistenceImpl.class);
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
-		new String[] {"uuid", "settings", "system"});
+		new String[] {"uuid", "settings"});
 
 }

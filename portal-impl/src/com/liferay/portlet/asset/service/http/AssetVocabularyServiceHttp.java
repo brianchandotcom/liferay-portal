@@ -55,7 +55,7 @@ public class AssetVocabularyServiceHttp {
 			HttpPrincipal httpPrincipal, long groupId, String title,
 			java.util.Map<java.util.Locale, String> titleMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
-			String settings, boolean system,
+			String settings, int visibilityType,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -66,7 +66,7 @@ public class AssetVocabularyServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, title, titleMap, descriptionMap, settings,
-				system, serviceContext);
+				visibilityType, serviceContext);
 
 			Object returnObj = null;
 
@@ -1051,7 +1051,7 @@ public class AssetVocabularyServiceHttp {
 				HttpPrincipal httpPrincipal, long vocabularyId,
 				java.util.Map<java.util.Locale, String> titleMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
-				String settings, boolean system)
+				String settings, int visibilityType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -1061,7 +1061,7 @@ public class AssetVocabularyServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, vocabularyId, titleMap, descriptionMap, settings,
-				system);
+				visibilityType);
 
 			Object returnObj = null;
 
@@ -1189,7 +1189,7 @@ public class AssetVocabularyServiceHttp {
 	private static final Class<?>[] _addVocabularyParameterTypes0 =
 		new Class[] {
 			long.class, String.class, java.util.Map.class, java.util.Map.class,
-			String.class, boolean.class,
+			String.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addVocabularyParameterTypes1 =
@@ -1277,7 +1277,7 @@ public class AssetVocabularyServiceHttp {
 	private static final Class<?>[] _updateVocabularyParameterTypes25 =
 		new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class, String.class,
-			boolean.class
+			int.class
 		};
 	private static final Class<?>[] _updateVocabularyParameterTypes26 =
 		new Class[] {

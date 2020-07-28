@@ -489,25 +489,18 @@ public interface AssetVocabularyModel
 	public void setSettings(String settings);
 
 	/**
-	 * Returns the system of this asset vocabulary.
+	 * Returns the visibility type of this asset vocabulary.
 	 *
-	 * @return the system of this asset vocabulary
+	 * @return the visibility type of this asset vocabulary
 	 */
-	public boolean getSystem();
+	public int getVisibilityType();
 
 	/**
-	 * Returns <code>true</code> if this asset vocabulary is system.
+	 * Sets the visibility type of this asset vocabulary.
 	 *
-	 * @return <code>true</code> if this asset vocabulary is system; <code>false</code> otherwise
+	 * @param visibilityType the visibility type of this asset vocabulary
 	 */
-	public boolean isSystem();
-
-	/**
-	 * Sets whether this asset vocabulary is system.
-	 *
-	 * @param system the system of this asset vocabulary
-	 */
-	public void setSystem(boolean system);
+	public void setVisibilityType(int visibilityType);
 
 	/**
 	 * Returns the last publish date of this asset vocabulary.

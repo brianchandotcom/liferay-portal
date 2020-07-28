@@ -69,7 +69,8 @@ public class AssetVocabularyServiceSoap {
 			addVocabulary(
 				long groupId, String title, String[] titleMapLanguageIds,
 				String[] titleMapValues, String[] descriptionMapLanguageIds,
-				String[] descriptionMapValues, String settings, boolean system,
+				String[] descriptionMapValues, String settings,
+				int visibilityType,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 
@@ -82,8 +83,8 @@ public class AssetVocabularyServiceSoap {
 
 			com.liferay.asset.kernel.model.AssetVocabulary returnValue =
 				AssetVocabularyServiceUtil.addVocabulary(
-					groupId, title, titleMap, descriptionMap, settings, system,
-					serviceContext);
+					groupId, title, titleMap, descriptionMap, settings,
+					visibilityType, serviceContext);
 
 			return com.liferay.asset.kernel.model.AssetVocabularySoap.
 				toSoapModel(returnValue);
@@ -600,7 +601,8 @@ public class AssetVocabularyServiceSoap {
 			updateVocabulary(
 				long vocabularyId, String[] titleMapLanguageIds,
 				String[] titleMapValues, String[] descriptionMapLanguageIds,
-				String[] descriptionMapValues, String settings, boolean system)
+				String[] descriptionMapValues, String settings,
+				int visibilityType)
 		throws RemoteException {
 
 		try {
@@ -612,7 +614,8 @@ public class AssetVocabularyServiceSoap {
 
 			com.liferay.asset.kernel.model.AssetVocabulary returnValue =
 				AssetVocabularyServiceUtil.updateVocabulary(
-					vocabularyId, titleMap, descriptionMap, settings, system);
+					vocabularyId, titleMap, descriptionMap, settings,
+					visibilityType);
 
 			return com.liferay.asset.kernel.model.AssetVocabularySoap.
 				toSoapModel(returnValue);

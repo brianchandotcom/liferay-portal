@@ -88,7 +88,7 @@ public class AssetVocabularyModelImpl
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
 		{"title", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"settings_", Types.VARCHAR}, {"system_", Types.BOOLEAN},
+		{"settings_", Types.VARCHAR}, {"visibilityType", Types.INTEGER},
 		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
@@ -111,12 +111,12 @@ public class AssetVocabularyModelImpl
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("settings_", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("system_", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("visibilityType", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetVocabulary (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,vocabularyId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,title STRING null,description STRING null,settings_ STRING null,system_ BOOLEAN,lastPublishDate DATE null,primary key (vocabularyId, ctCollectionId))";
+		"create table AssetVocabulary (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,vocabularyId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,title STRING null,description STRING null,settings_ STRING null,visibilityType INTEGER,lastPublishDate DATE null,primary key (vocabularyId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table AssetVocabulary";
 
@@ -188,7 +188,7 @@ public class AssetVocabularyModelImpl
 		model.setTitle(soapModel.getTitle());
 		model.setDescription(soapModel.getDescription());
 		model.setSettings(soapModel.getSettings());
-		model.setSystem(soapModel.isSystem());
+		model.setVisibilityType(soapModel.getVisibilityType());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
@@ -419,10 +419,12 @@ public class AssetVocabularyModelImpl
 		attributeSetterBiConsumers.put(
 			"settings",
 			(BiConsumer<AssetVocabulary, String>)AssetVocabulary::setSettings);
-		attributeGetterFunctions.put("system", AssetVocabulary::getSystem);
+		attributeGetterFunctions.put(
+			"visibilityType", AssetVocabulary::getVisibilityType);
 		attributeSetterBiConsumers.put(
-			"system",
-			(BiConsumer<AssetVocabulary, Boolean>)AssetVocabulary::setSystem);
+			"visibilityType",
+			(BiConsumer<AssetVocabulary, Integer>)
+				AssetVocabulary::setVisibilityType);
 		attributeGetterFunctions.put(
 			"lastPublishDate", AssetVocabulary::getLastPublishDate);
 		attributeSetterBiConsumers.put(
@@ -895,19 +897,13 @@ public class AssetVocabularyModelImpl
 
 	@JSON
 	@Override
-	public boolean getSystem() {
-		return _system;
-	}
-
-	@JSON
-	@Override
-	public boolean isSystem() {
-		return _system;
+	public int getVisibilityType() {
+		return _visibilityType;
 	}
 
 	@Override
-	public void setSystem(boolean system) {
-		_system = system;
+	public void setVisibilityType(int visibilityType) {
+		_visibilityType = visibilityType;
 	}
 
 	@JSON
@@ -1067,7 +1063,7 @@ public class AssetVocabularyModelImpl
 		assetVocabularyImpl.setTitle(getTitle());
 		assetVocabularyImpl.setDescription(getDescription());
 		assetVocabularyImpl.setSettings(getSettings());
-		assetVocabularyImpl.setSystem(isSystem());
+		assetVocabularyImpl.setVisibilityType(getVisibilityType());
 		assetVocabularyImpl.setLastPublishDate(getLastPublishDate());
 
 		assetVocabularyImpl.resetOriginalValues();
@@ -1254,7 +1250,7 @@ public class AssetVocabularyModelImpl
 			assetVocabularyCacheModel.settings = null;
 		}
 
-		assetVocabularyCacheModel.system = isSystem();
+		assetVocabularyCacheModel.visibilityType = getVisibilityType();
 
 		Date lastPublishDate = getLastPublishDate();
 
@@ -1364,7 +1360,7 @@ public class AssetVocabularyModelImpl
 	private String _description;
 	private String _descriptionCurrentLanguageId;
 	private String _settings;
-	private boolean _system;
+	private int _visibilityType;
 	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private AssetVocabulary _escapedModel;

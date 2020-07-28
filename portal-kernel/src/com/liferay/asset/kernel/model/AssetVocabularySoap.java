@@ -46,7 +46,7 @@ public class AssetVocabularySoap implements Serializable {
 		soapModel.setTitle(model.getTitle());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setSettings(model.getSettings());
-		soapModel.setSystem(model.isSystem());
+		soapModel.setVisibilityType(model.getVisibilityType());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
@@ -227,16 +227,12 @@ public class AssetVocabularySoap implements Serializable {
 		_settings = settings;
 	}
 
-	public boolean getSystem() {
-		return _system;
+	public int getVisibilityType() {
+		return _visibilityType;
 	}
 
-	public boolean isSystem() {
-		return _system;
-	}
-
-	public void setSystem(boolean system) {
-		_system = system;
+	public void setVisibilityType(int visibilityType) {
+		_visibilityType = visibilityType;
 	}
 
 	public Date getLastPublishDate() {
@@ -262,7 +258,7 @@ public class AssetVocabularySoap implements Serializable {
 	private String _title;
 	private String _description;
 	private String _settings;
-	private boolean _system;
+	private int _visibilityType;
 	private Date _lastPublishDate;
 
 }

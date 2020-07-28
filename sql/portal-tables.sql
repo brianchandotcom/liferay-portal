@@ -203,7 +203,7 @@ create table AssetVocabulary (
 	title STRING null,
 	description STRING null,
 	settings_ STRING null,
-	system_ BOOLEAN,
+	visibilityType INTEGER,
 	lastPublishDate DATE null,
 	primary key (vocabularyId, ctCollectionId)
 );

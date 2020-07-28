@@ -39,7 +39,6 @@ public class AssetVocabularyFinderBaseImpl
 
 		dbColumnNames.put("uuid", "uuid_");
 		dbColumnNames.put("settings", "settings_");
-		dbColumnNames.put("system", "system_");
 
 		setDBColumnNames(dbColumnNames);
 	}

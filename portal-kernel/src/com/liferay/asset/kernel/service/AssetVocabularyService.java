@@ -61,8 +61,8 @@ public interface AssetVocabularyService extends BaseService {
 	 */
 	public AssetVocabulary addVocabulary(
 			long groupId, String title, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, String settings, boolean system,
-			ServiceContext serviceContext)
+			Map<Locale, String> descriptionMap, String settings,
+			int visibilityType, ServiceContext serviceContext)
 		throws PortalException;
 
 	public AssetVocabulary addVocabulary(
@@ -182,7 +182,8 @@ public interface AssetVocabularyService extends BaseService {
 
 	public AssetVocabulary updateVocabulary(
 			long vocabularyId, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, String settings, boolean system)
+			Map<Locale, String> descriptionMap, String settings,
+			int visibilityType)
 		throws PortalException;
 
 	public AssetVocabulary updateVocabulary(

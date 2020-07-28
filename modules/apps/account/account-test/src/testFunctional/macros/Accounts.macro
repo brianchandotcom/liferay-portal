@@ -369,4 +369,10 @@ definition {
 			value1 = "There are no ${assigneeType} associated with this account.");
 	}
 
+	macro viewNoAssigneeTab {
+		AssertElementNotPresent(
+			key_tab = "${navTab}",
+			locator1 = "NavTab#TAB_LINK");
+	}
+
 }

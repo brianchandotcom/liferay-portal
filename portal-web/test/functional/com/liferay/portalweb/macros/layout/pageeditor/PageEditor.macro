@@ -691,6 +691,8 @@ definition {
 				key_contentName = "${infoListProviderName}",
 				locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_INPUT");
 		}
+
+		Pause(locator1 = "1000");
 	}
 
 	macro editComment {

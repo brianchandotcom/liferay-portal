@@ -6547,7 +6547,12 @@ go</echo>
 				<get-testcase-property property.name="portal.version" />
 
 				<if>
-					<isset property="portal.version" />
+					<and>
+						<isset property="portal.version" />
+						<not>
+							<equals arg1="${keep.osgi.state}" arg2="true" />
+						</not>
+					</and>
 					<then>
 						<delete dir="${test.app.server.liferay.home}/osgi/state" />
 					</then>
@@ -6569,8 +6574,16 @@ go</echo>
 							</then>
 						</if>
 
+						<if>
+							<not>
+								<equals arg1="${keep.osgi.state}" arg2="true" />
+							</not>
+							<then>
+								<delete dir="${test.app.server.liferay.home}/osgi/state" />
+							</then>
+						</if>
+
 						<delete dir="${test.app.server.liferay.home}/logs" />
-						<delete dir="${test.app.server.liferay.home}/osgi/state" />
 						<delete dir="${test.app.server.liferay.home}/work" />
 
 						<delete file="${test.app.server.liferay.home}/portal-setup-wizard.properties" />

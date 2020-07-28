@@ -38,26 +38,28 @@ definition {
 
 		GogoShell.viewOutput(outputContent = "Liferay Cluster Test Module");
 
+		GogoShell.viewOutput(outputContent = "Active");
+
 		Portlet.shutdownServer();
 
-		FileInstall.deleteJarOffline(
-			deleteLiferayHome = "false",
-			liferayDependencyJars = "com.liferay.cluster.test.module.jar");
+		FileInstall.deleteJarOffline(liferayDependencyJars = "com.liferay.cluster.test.module.jar");
 
-		Portlet.startServer(deleteLiferayHome = "false");
+		Portlet.startServer(keepOSGiState = "true");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
 			panel = "Control Panel",
 			portlet = "Gogo Shell");
 
-		AssertConsoleTextPresent(value1 = "STARTED com.liferay.cluster.test.module_");
+		AssertConsoleTextNotPresent(value1 = "STARTED com.liferay.cluster.test.module_");
 
 		GogoShell.executeCommand(commandName = "lb | grep 'Test Module'");
 
 		GogoShell.viewOutput(outputContent = "false");
 
 		GogoShell.viewNoOutput(outputContent = "Liferay Cluster Test Module");
+
+		GogoShell.viewNoOutput(outputContent = "Active");
 	}
 
 	@priority = "4"
@@ -79,26 +81,28 @@ definition {
 
 		GogoShell.viewOutput(outputContent = "test-theme");
 
+		GogoShell.viewOutput(outputContent = "Active");
+
 		Portlet.shutdownServer();
 
-		FileInstall.deleteWarOffline(
-			deleteLiferayHome = "false",
-			liferayDependencyWars = "test-theme.war");
+		FileInstall.deleteWarOffline(liferayDependencyWars = "test-theme.war");
 
-		Portlet.startServer(deleteLiferayHome = "false");
+		Portlet.startServer(keepOSGiState = "true");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
 			panel = "Control Panel",
 			portlet = "Gogo Shell");
 
-		AssertConsoleTextPresent(value1 = "STARTED test-theme_");
+		AssertConsoleTextNotPresent(value1 = "STARTED test-theme_");
 
 		GogoShell.executeCommand(commandName = "lb | grep test-theme");
 
 		GogoShell.viewOutput(outputContent = "false");
 
 		GogoShell.viewNoOutput(outputContent = "test-theme");
+
+		GogoShell.viewNoOutput(outputContent = "Active");
 	}
 
 }

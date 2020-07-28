@@ -376,6 +376,11 @@ definition {
 				locator1 = "build-test.xml",
 				value1 = "start-app-server -Dkeep.cached.app.server.data=true");
 		}
+		else if ("${keepOSGiState}" == "true") {
+			AntCommand(
+				locator1 = "build-test.xml",
+				value1 = "start-app-server -Dkeep.osgi.state=true");
+		}
 		else {
 			AntCommand(
 				locator1 = "build-test.xml",

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.io.File;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
@@ -35,18 +34,15 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.framework.wiring.FrameworkWiring;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedServiceFactory;
@@ -59,20 +55,6 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class FileInstallImplBundleActivator
 	implements BundleActivator,
 			   ServiceTrackerCustomizer<FileInstaller, FileInstaller> {
-
-	public static void refresh(Bundle systemBundle, Collection<Bundle> bundles)
-		throws InterruptedException {
-
-		CountDownLatch countDownLatch = new CountDownLatch(1);
-
-		FrameworkWiring frameworkWiring = systemBundle.adapt(
-			FrameworkWiring.class);
-
-		frameworkWiring.refreshBundles(
-			bundles, event -> countDownLatch.countDown());
-
-		countDownLatch.await();
-	}
 
 	@Override
 	public FileInstaller addingService(

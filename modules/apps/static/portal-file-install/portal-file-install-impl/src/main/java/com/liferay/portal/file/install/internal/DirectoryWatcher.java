@@ -49,6 +49,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 import java.util.jar.Attributes;
@@ -68,6 +69,7 @@ import org.osgi.framework.VersionRange;
 import org.osgi.framework.startlevel.BundleStartLevel;
 import org.osgi.framework.startlevel.FrameworkStartLevel;
 import org.osgi.framework.wiring.BundleRevision;
+import org.osgi.framework.wiring.FrameworkWiring;
 
 /**
  * @author Matthew Tambara
@@ -1046,7 +1048,15 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	private void _refresh(Collection<Bundle> bundles)
 		throws InterruptedException {
 
-		FileInstallImplBundleActivator.refresh(_systemBundle, bundles);
+		CountDownLatch countDownLatch = new CountDownLatch(1);
+
+		FrameworkWiring frameworkWiring = _systemBundle.adapt(
+			FrameworkWiring.class);
+
+		frameworkWiring.refreshBundles(
+			bundles, event -> countDownLatch.countDown());
+
+		countDownLatch.await();
 	}
 
 	private void _removeArtifact(File file) {

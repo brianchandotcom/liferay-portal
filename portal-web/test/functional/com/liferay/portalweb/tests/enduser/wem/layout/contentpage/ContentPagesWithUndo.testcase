@@ -505,8 +505,6 @@ definition {
 	@description = "This is a use case for for LPS-111548. Undo can make the page editor come back to previous state up to 100 last states when the page has more than 100 states."
 	@priority = "5"
 	test UndoPagechangeHundredTimes {
-		property portal.acceptance = "quarantine";
-
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");
@@ -609,6 +607,10 @@ definition {
 			Click(
 				key_text = "undo",
 				locator1 = "Icon#ANY");
+
+			AssertTextEquals(
+				locator1 = "PageEditor#AUTOSAVE_MESSAGE",
+				value1 = "Saved");
 
 			var count = ${count} + 1;
 		}

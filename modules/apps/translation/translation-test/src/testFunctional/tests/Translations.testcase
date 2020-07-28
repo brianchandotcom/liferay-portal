@@ -428,7 +428,7 @@ definition {
 			newTargetLocale = "es-ES");
 
 		Translations.viewTargetFields(
-			webContentDecimal = "2.2",
+			webContentDecimal = "22,0",
 			webContentDescription = "WC WebContent Descripción",
 			webContentInteger = "321",
 			webContentNumber = "200",
@@ -442,7 +442,7 @@ definition {
 		PortletEntry.changeLocale(locale = "es-ES");
 
 		WebContent.viewCP(
-			webContentDecimal = "2.2",
+			webContentDecimal = "22,0",
 			webContentDescription = "WC WebContent Descripción",
 			webContentInteger = "321",
 			webContentNumber = "200",

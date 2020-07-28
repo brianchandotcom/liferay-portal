@@ -75,6 +75,14 @@ definition {
 				selectFieldLabel = "Type",
 				selectFieldValue = "${accountType}");
 		}
+		else {
+			AssertTextEquals(
+				key_typeName = "Business",
+				locator1 = "Select#TYPE_SELECTED",
+				value1 = "Business");
+		}
+
+		AssertElementNotPresent(locator1 = "Account#USER_SELECT");
 
 		if (isSet(accountTaxID)) {
 			PortletEntry.inputText(

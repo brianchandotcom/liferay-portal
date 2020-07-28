@@ -23,17 +23,9 @@ import APIGUI from './APIGUI';
 import 'graphiql/graphiql.css';
 
 import '../css/main.css';
-import {AppStateProvider} from './hooks/appState';
-import appReducer, {initialState} from './reducers/appReducer';
 
 const App = (props) => {
-	return (
-		<>
-			<AppStateProvider initialState={initialState} reducer={appReducer}>
-				<APIGUI props={props} />
-			</AppStateProvider>
-		</>
-	);
+	return <APIGUI props={props} />;
 };
 
 export default App;

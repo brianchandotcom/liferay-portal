@@ -21,6 +21,7 @@ import {withRouter} from 'react-router-dom';
 
 import Alert from '../../components/Alert.es';
 import DeleteThread from '../../components/DeleteThread.es';
+import Link from '../../components/Link.es';
 import QuestionRow from '../../components/QuestionRow.es';
 import {
 	client,
@@ -77,10 +78,6 @@ export default withRouter(({history}) => {
 	const [showDeleteModalPanel, setShowDeleteModalPanel] = useState(false);
 
 	const historyPushParser = historyPushWithSlug(history.push);
-
-	const navigate = (data) => {
-		historyPushParser(`/questions/${data.graphQLNode.title}`);
-	};
 
 	const actions = (data) => {
 		const question = data.graphQLNode;
@@ -172,20 +169,25 @@ export default withRouter(({history}) => {
 								<div className="card card-interactive card-interactive-primary card-type-template template-card-horizontal">
 									<div className="card-body">
 										<div className="card-row">
-											<div
-												className="autofit-col autofit-col-expand"
-												onClick={() => navigate(data)}
-											>
-												<div className="autofit-section">
-													<div className="card-title">
-														<span className="text-truncate">
-															{
-																data.graphQLNode
-																	.title
-															}
-														</span>
+											<div className="autofit-col autofit-col-expand">
+												<Link
+													title={
+														data.graphQLNode.title
+													}
+													to={`/questions/${data.graphQLNode.title}`}
+												>
+													<div className="autofit-section">
+														<div className="card-title">
+															<span className="text-truncate">
+																{
+																	data
+																		.graphQLNode
+																		.title
+																}
+															</span>
+														</div>
 													</div>
-												</div>
+												</Link>
 											</div>
 											<div className="autofit-col">
 												<ClayDropDownWithItems

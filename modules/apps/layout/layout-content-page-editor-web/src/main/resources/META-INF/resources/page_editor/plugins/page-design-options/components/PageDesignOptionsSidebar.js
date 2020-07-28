@@ -154,12 +154,6 @@ const OptionList = ({options = [], icon}) => {
 										<section className="autofit-section">
 											<ClayCard.Description displayType="title">
 												{name}
-												{isActive && (
-													<ClayIcon
-														className="ml-2 text-primary"
-														symbol={'check-circle'}
-													/>
-												)}
 											</ClayCard.Description>
 										</section>
 									</div>

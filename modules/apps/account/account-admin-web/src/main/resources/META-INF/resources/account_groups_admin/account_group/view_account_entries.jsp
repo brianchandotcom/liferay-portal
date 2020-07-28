@@ -15,3 +15,98 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<%
+AccountGroupDisplay accountGroupDisplay = (AccountGroupDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_GROUP_DISPLAY);
+
+SearchContainer<AccountEntryDisplay> accountEntryDisplaySearchContainer = AccountEntryDisplaySearchContainerFactory.createWithAccountGroupId(accountGroupDisplay.getAccountGroupId(), liferayPortletRequest, liferayPortletResponse);
+
+ViewAccountGroupAccountEntriesManagementToolbarDisplayContext viewAccountGroupAccountEntriesManagementToolbarDisplayContext = new ViewAccountGroupAccountEntriesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountEntryDisplaySearchContainer);
+
+String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backURL);
+
+renderResponse.setTitle(accountGroupDisplay.getName());
+%>
+
+<clay:management-toolbar
+	displayContext="<%= viewAccountGroupAccountEntriesManagementToolbarDisplayContext %>"
+/>
+
+<clay:container-fluid>
+	<aui:form method="post" name="fm">
+		<aui:input name="accountEntryIds" type="hidden" />
+		<aui:input name="accountGroupId" type="hidden" value="<%= accountGroupDisplay.getAccountGroupId() %>" />
+
+		<liferay-ui:search-container
+			searchContainer="<%= accountEntryDisplaySearchContainer %>"
+		>
+			<liferay-ui:search-container-row
+				className="com.liferay.account.admin.web.internal.display.AccountEntryDisplay"
+				keyProperty="accountEntryId"
+				modelVar="accountEntryDisplay"
+			>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand table-title"
+					name="name"
+					property="name"
+				/>
+
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand"
+					name="organizations"
+					property="organizationNames"
+				/>
+
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand"
+					name="type"
+					property="type"
+					translate="<%= true %>"
+				/>
+
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand"
+					name="status"
+				>
+					<clay:label
+						displayType="<%= accountEntryDisplay.getStatusLabelStyle() %>"
+						label="<%= accountEntryDisplay.getStatusLabel() %>"
+					/>
+				</liferay-ui:search-container-column-text>
+			</liferay-ui:search-container-row>
+
+			<liferay-ui:search-iterator
+				markupView="lexicon"
+			/>
+		</liferay-ui:search-container>
+	</aui:form>
+</clay:container-fluid>
+
+<portlet:actionURL name="/account_groups_admin/assign_account_group_account_entries" var="assignAccountGroupAccountEntriesURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
+
+<portlet:renderURL var="selectAccountGroupAccountEntriesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcPath" value="/account_users_admin/select_account_entry.jsp" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="accountGroupId" value="<%= String.valueOf(accountGroupDisplay.getAccountGroupId()) %>" />
+	<portlet:param name="openModalOnRedirect" value="<%= Boolean.TRUE.toString() %>" />
+	<portlet:param name="showCreateButton" value="<%= Boolean.TRUE.toString() %>" />
+</portlet:renderURL>
+
+<liferay-frontend:component
+	componentId="<%= viewAccountGroupAccountEntriesManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"accountGroupName", accountGroupDisplay.getName()
+		).put(
+			"assignAccountGroupAccountEntriesURL", assignAccountGroupAccountEntriesURL
+		).put(
+			"selectAccountGroupAccountEntriesURL", selectAccountGroupAccountEntriesURL
+		).build()
+	%>'
+	module="account_groups_admin/js/AccountGroupAccountEntriesManagementToolbarDefaultEventHandler.es"
+/>

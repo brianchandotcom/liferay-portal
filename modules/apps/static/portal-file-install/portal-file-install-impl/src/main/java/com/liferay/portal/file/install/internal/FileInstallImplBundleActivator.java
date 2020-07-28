@@ -122,7 +122,7 @@ public class FileInstallImplBundleActivator
 		_writeLock.lock();
 
 		try {
-			_fileInstallersTracker = new ServiceTracker(
+			_fileInstallersTracker = new ServiceTracker<>(
 				bundleContext, FileInstaller.class, this);
 
 			_fileInstallersTracker.open();

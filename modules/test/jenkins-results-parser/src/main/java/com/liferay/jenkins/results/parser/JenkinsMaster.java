@@ -271,8 +271,10 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 							executorJSONObject.getJSONObject(
 								"currentExecutable");
 
-						_runningJobURLs.add(
-							currentExecutableJSONObject.getString("url"));
+						if (currentExecutableJSONObject.has("url")) {
+							_runningJobURLs.add(
+								currentExecutableJSONObject.getString("url"));
+						}
 					}
 				}
 			}
@@ -293,7 +295,9 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 				JSONObject taskJSONObject = itemJSONObject.getJSONObject(
 					"task");
 
-				_queuedJobURLs.add(taskJSONObject.getString("url"));
+				if (taskJSONObject.has("url")) {
+					_queuedJobURLs.add(taskJSONObject.getString("url"));
+				}
 
 				String taskName = taskJSONObject.getString("name");
 

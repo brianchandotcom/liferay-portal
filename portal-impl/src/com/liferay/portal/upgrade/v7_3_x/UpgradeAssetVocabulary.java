@@ -26,7 +26,7 @@ public class UpgradeAssetVocabulary extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		alter(
 			AssetVocabularyTable.class,
-			new AlterTableAddColumn("system_", "BOOLEAN"));
+			new AlterTableAddColumn("visibilityType", "INT"));
 	}
 
 }

@@ -68,18 +68,6 @@ public class FileInstallImplBundleActivator
 		return fileInstaller;
 	}
 
-	public void deleted(String pid) {
-		DirectoryWatcher directoryWatcher = null;
-
-		synchronized (_watchers) {
-			directoryWatcher = _watchers.remove(pid);
-		}
-
-		if (directoryWatcher != null) {
-			directoryWatcher.close();
-		}
-	}
-
 	public List<FileInstaller> getFileInstallers() {
 		synchronized (_fileInstallers) {
 			List<FileInstaller> fileInstallers = new ArrayList<>(
@@ -383,7 +371,7 @@ public class FileInstallImplBundleActivator
 			public void deleted(String string) {
 				_configs.remove(string);
 
-				_fileInstall.deleted(string);
+				_deleted(string);
 			}
 
 			@Override
@@ -408,7 +396,7 @@ public class FileInstallImplBundleActivator
 					while (iterator.hasNext()) {
 						String string = iterator.next();
 
-						_fileInstall.deleted(string);
+						_deleted(string);
 
 						iterator.remove();
 					}
@@ -458,6 +446,18 @@ public class FileInstallImplBundleActivator
 				super(bundleContext, ConfigurationAdmin.class.getName(), null);
 
 				_fileInstall = fileInstall;
+			}
+
+			private void _deleted(String pid) {
+				DirectoryWatcher directoryWatcher = null;
+
+				synchronized (_watchers) {
+					directoryWatcher = _watchers.remove(pid);
+				}
+
+				if (directoryWatcher != null) {
+					directoryWatcher.close();
+				}
 			}
 
 			private final Map<Long, ConfigInstaller> _configInstallers =

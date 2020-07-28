@@ -663,7 +663,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	}
 
 	private FileInstaller _findFileInstaller(
-		File artifact, List<FileInstaller> fileInstallers) {
+		File artifact, Iterable<FileInstaller> fileInstallers) {
 
 		for (FileInstaller fileInstaller : fileInstallers) {
 			if (fileInstaller.canTransformURL(artifact)) {

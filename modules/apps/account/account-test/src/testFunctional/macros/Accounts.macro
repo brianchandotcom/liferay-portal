@@ -191,7 +191,7 @@ definition {
 	}
 
 	macro gotoAssigneeTab {
-		Navigator.gotoNavItem(navItem = "${assigneeTab}");
+		Navigator.gotoNavTab(navTab = "${assigneeTab}");
 	}
 
 	macro gotoEdit {

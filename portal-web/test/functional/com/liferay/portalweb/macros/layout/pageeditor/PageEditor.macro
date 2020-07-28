@@ -1437,12 +1437,20 @@ definition {
 	}
 
 	macro gotoEditableFieldEdit {
+		id = "${id}";
+		key_fragmentName = "${fragmentName}";
+
 		PageEditor.clickEditableField(
 			contributed = "${contributed}",
 			fragmentName = "${fragmentName}",
 			id = "${id}");
 
-		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_EDIT_BUTTON");
+		if ("${contributed}" == "false") {
+			DoubleClick(locator1 = "Fragment#EDITABLE_FIELD");
+		}
+		else {
+			DoubleClick(locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD");
+		}
 	}
 
 	macro gotoSaveAsFragment {

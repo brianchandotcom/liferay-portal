@@ -23,9 +23,7 @@ definition {
 	test UninstallJarOffline {
 		property test.name.skip.portal.instance = "FileInstall#UninstallJarOffline";
 
-		FileInstall.deployFileOnServer(
-			bundleIndex = "0",
-			liferayDependencyJars = "com.liferay.cluster.test.module.jar");
+		FileInstall.deployFileOnServer(liferayDependencyJars = "com.liferay.cluster.test.module.jar");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -66,9 +64,7 @@ definition {
 	test UninstallWarOffline {
 		property test.name.skip.portal.instance = "FileInstall#UninstallWarOffline";
 
-		FileInstall.deployFileOnServer(
-			bundleIndex = "0",
-			liferayDependencyJars = "test-theme.war");
+		FileInstall.deployFileOnServer(liferayDependencyJars = "test-theme.war");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",

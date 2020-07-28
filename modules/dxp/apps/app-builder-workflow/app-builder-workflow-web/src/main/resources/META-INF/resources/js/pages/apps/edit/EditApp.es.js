@@ -9,22 +9,16 @@
  * distribution rights of the Software.
  */
 
-import ClayBadge from '@clayui/badge';
-import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import {AppContext} from 'app-builder-web/js/AppContext.es';
 import ControlMenu from 'app-builder-web/js/components/control-menu/ControlMenu.es';
 import {Loading} from 'app-builder-web/js/components/loading/Loading.es';
-import UpperToolbar from 'app-builder-web/js/components/upper-toolbar/UpperToolbar.es';
-import useDeployApp from 'app-builder-web/js/hooks/useDeployApp.es';
+import {getDataObjects} from 'app-builder-web/js/pages/apps/SelectObjectsDropDown.es';
 import EditAppContext, {
 	UPDATE_APP,
-	UPDATE_NAME,
 	reducer,
 } from 'app-builder-web/js/pages/apps/edit/EditAppContext.es';
 import {getItem, parseResponse} from 'app-builder-web/js/utils/client.es';
 import {errorToast, successToast} from 'app-builder-web/js/utils/toast.es';
-import {getTranslatedValue} from 'app-builder-web/js/utils/utils.es';
 import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {useContext, useEffect, useReducer, useState} from 'react';
 
@@ -32,9 +26,10 @@ import '../../../../css/EditApp.scss';
 import AppStandaloneLink from './AppStandaloneLink.es';
 import ApplyAppChangesModal from './ApplyAppChangesModal.es';
 import DeployAppModal from './DeployAppModal.es';
+import EditAppToolbar from './EditAppToolbar.es';
 import {
 	getAssigneeRoles,
-	getDataObjects,
+	getDataDefinition,
 	getFormViews,
 	getTableViews,
 	populateConfigData,
@@ -45,7 +40,6 @@ import configReducer, {
 	getInitialConfig,
 } from './configReducer.es';
 import EditAppSidebar from './sidebar/EditAppSidebar.es';
-import {canDeployApp, hasConfigBreakChanges} from './utils.es';
 import WorkflowBuilder from './workflow-builder/WorkflowBuilder.es';
 
 export default ({
@@ -58,6 +52,14 @@ export default ({
 	const {baseResourceURL, getStandaloneURL, namespace} = useContext(
 		AppContext
 	);
+
+	const [config, dispatchConfig] = useReducer(
+		configReducer,
+		getInitialConfig()
+	);
+
+	const {defaultLanguageId} = config.dataObject;
+
 	const [{app}, dispatch] = useReducer(reducer, {
 		app: {
 			active: false,
@@ -65,17 +67,11 @@ export default ({
 			dataLayoutId: null,
 			dataListViewId: null,
 			name: {
-				en_US: '',
+				[defaultLanguageId]: '',
 			},
 			scope,
 		},
 	});
-	const [config, dispatchConfig] = useReducer(
-		configReducer,
-		getInitialConfig()
-	);
-
-	const {undeployApp} = useDeployApp();
 
 	const [isAppChangesModalVisible, setAppChangesModalVisible] = useState(
 		false
@@ -97,15 +93,15 @@ export default ({
 	};
 
 	useEffect(() => {
-		if (app.dataDefinitionId) {
+		if (app.dataDefinitionId && defaultLanguageId) {
 			dispatchConfig({
 				listItems: {fetching: true},
 				type: UPDATE_LIST_ITEMS,
 			});
 
 			Promise.all([
-				getFormViews(app.dataDefinitionId),
-				getTableViews(app.dataDefinitionId),
+				getFormViews(app.dataDefinitionId, defaultLanguageId),
+				getTableViews(app.dataDefinitionId, defaultLanguageId),
 			])
 				.then(([formViews, tableViews]) => {
 					dispatchConfig({
@@ -124,7 +120,7 @@ export default ({
 					});
 				});
 		}
-	}, [app.dataDefinitionId]);
+	}, [app.dataDefinitionId, defaultLanguageId]);
 
 	useEffect(() => {
 		const promises = [getAssigneeRoles(), getDataObjects()];
@@ -145,9 +141,24 @@ export default ({
 				...promises,
 			])
 				.then(([app, ...previousResults]) => {
+					return getDataDefinition(
+						app.dataDefinitionId
+					).then((dataDefinition) => [
+						app,
+						dataDefinition,
+						...previousResults,
+					]);
+				})
+				.then(([app, dataDefinition, ...previousResults]) => {
 					return Promise.all([
-						getFormViews(app.dataDefinitionId),
-						getTableViews(app.dataDefinitionId),
+						getFormViews(
+							app.dataDefinitionId,
+							dataDefinition.defaultLanguageId
+						),
+						getTableViews(
+							app.dataDefinitionId,
+							dataDefinition.defaultLanguageId
+						),
 					]).then((results) => [app, ...previousResults, ...results]);
 				})
 				.then(populateConfigData)
@@ -200,10 +211,6 @@ export default ({
 	if (appId) {
 		title = Liferay.Language.get('edit-workflow-powered-app');
 	}
-
-	const onAppNameChange = ({target}) => {
-		dispatch({appName: target.value, type: UPDATE_NAME});
-	};
 
 	const onCancel = () => {
 		history.push(`/${scope}`);
@@ -280,115 +287,17 @@ export default ({
 			});
 	};
 
-	const onClickSave = () => {
-		if (appId && hasConfigBreakChanges(config)) {
-			setAppChangesModalVisible(true);
-		}
-		else {
-			onSave();
-		}
-	};
-
-	const onClickUndeploy = () => {
-		undeployApp(app)
-			.then(() => {
-				dispatch({
-					app: {...app, active: false},
-					type: UPDATE_APP,
-				});
-			})
-			.catch(({title}) => errorToast(title));
-	};
-
-	const isDisabledSaveButton = !canDeployApp(app, config) || isSaving;
-	const maxLength = 30;
-
 	return (
 		<div className="app-builder-workflow-app">
 			<ControlMenu backURL={`../../${scope}`} title={title} />
 
 			<Loading isLoading={isLoading}>
 				<EditAppContext.Provider value={editState}>
-					<UpperToolbar>
-						<UpperToolbar.Input
-							maxLength={maxLength}
-							onChange={onAppNameChange}
-							placeholder={Liferay.Language.get('untitled-app')}
-							value={getTranslatedValue(app, 'name')}
-						/>
-						<UpperToolbar.Group>
-							{appId && (
-								<ClayBadge
-									className="text-secondary version-badge"
-									displayType="secondary"
-									label={
-										<div>
-											{`${Liferay.Language.get(
-												'version'
-											)}:`}{' '}
-											<span className="font-weight-normal text-dark">
-												{app.version ?? '1.0'}
-											</span>
-										</div>
-									}
-								/>
-							)}
-
-							<UpperToolbar.Button
-								displayType="secondary"
-								onClick={onCancel}
-							>
-								{Liferay.Language.get('cancel')}
-							</UpperToolbar.Button>
-
-							<UpperToolbar.Button
-								disabled={isDisabledSaveButton}
-								displayType="secondary"
-								onClick={onClickSave}
-							>
-								{Liferay.Language.get('save')}
-							</UpperToolbar.Button>
-
-							<ClayButton.Group className="ml-2">
-								<ClayButton
-									disabled={
-										!app.active && isDisabledSaveButton
-									}
-									displayType={
-										app.active ? 'secondary' : 'primary'
-									}
-									onClick={
-										app.active
-											? onClickUndeploy
-											: () => setDeployModalVisible(true)
-									}
-									small
-								>
-									{app.active
-										? Liferay.Language.get('undeploy')
-										: Liferay.Language.get('deploy')}
-								</ClayButton>
-
-								{app.active && (
-									<ClayTooltipProvider>
-										<ClayButtonWithIcon
-											data-tooltip-align="bottom"
-											data-tooltip-delay="0"
-											displayType="secondary"
-											onClick={() =>
-												setDeployModalVisible(true)
-											}
-											small
-											symbol="cog"
-											title={Liferay.Language.get(
-												'deploy-settings'
-											)}
-										/>
-									</ClayTooltipProvider>
-								)}
-							</ClayButton.Group>
-						</UpperToolbar.Group>
-					</UpperToolbar>
+					<EditAppToolbar
+						isSaving={isSaving}
+						onCancel={onCancel}
+						onSave={onSave}
+					/>
 
 					<WorkflowBuilder />
 

@@ -28,6 +28,10 @@ export function getAssigneeRoles() {
 	return getItem('/o/headless-admin-user/v1.0/roles').then(getItems);
 }
 
+export function getDataDefinition(dataDefinitionId) {
+	return getItem(`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}`);
+}
+
 export function getFormViews(dataDefinitionId, defaultLanguageId) {
 	return getItem(
 		`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-layouts`,

@@ -74,8 +74,9 @@ public class UpgradeStagingConfigurationClassNames extends UpgradeProcess {
 		Map<String, String> adminPortletIdsMap = new HashMap<>();
 
 		try (PreparedStatement ps = connection.prepareStatement(
-				"select portletId from Portlet where companyId = ? and " +
-					"active_ = 1")) {
+				SQLTransformer.transform(
+					"select portletId from Portlet where companyId = ? and " +
+						"active_ = [$TRUE$]"))) {
 
 			ps.setLong(1, companyId);
 

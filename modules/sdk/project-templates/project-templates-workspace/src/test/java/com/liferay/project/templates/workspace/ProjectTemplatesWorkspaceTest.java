@@ -201,7 +201,8 @@ public class ProjectTemplatesWorkspaceTest
 		Assert.assertTrue(gradleProperties.exists());
 
 		String configLine =
-			System.lineSeparator() + "liferay.workspace.node.package.manager=yarn";
+			System.lineSeparator() +
+				"liferay.workspace.node.package.manager=yarn";
 
 		Files.write(
 			gradleProperties.toPath(), configLine.getBytes(),

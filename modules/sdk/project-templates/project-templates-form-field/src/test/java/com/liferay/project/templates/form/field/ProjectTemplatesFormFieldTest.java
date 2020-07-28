@@ -375,6 +375,74 @@ public class ProjectTemplatesFormFieldTest
 	}
 
 	@Test
+	public void testBuildTemplateFormField73() throws Exception {
+		String liferayVersion = "7.3.2";
+		String name = "foobar";
+
+		File workspaceDir = buildWorkspace(temporaryFolder, liferayVersion);
+
+		File gradleProjectDir = buildTemplateWithGradle(
+			new File(workspaceDir, "modules"), "form-field", name,
+			"--liferay-version", liferayVersion);
+
+		testContains(
+			gradleProjectDir, "bnd.bnd", "Provide-Capability:", "soy;",
+			"type:String=\"LiferayFormField\"");
+		testContains(
+			gradleProjectDir, "build.gradle",
+			"compileOnly group: \"com.liferay\", name: " +
+				"\"com.liferay.dynamic.data.mapping.api\"",
+			"compileOnly group: \"com.liferay\", name: " +
+				"\"com.liferay.frontend.js.loader.modules.extender.api\"",
+			"jsCompile group: \"com.liferay\", name: " +
+				"\"com.liferay.dynamic.data.mapping.form.field.type\"",
+			DEPENDENCY_PORTAL_KERNEL);
+		testContains(
+			gradleProjectDir,
+			"src/main/java/foobar/form/field/FoobarDDMFormFieldType.java",
+			"com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;",
+			"org.osgi.service.component.annotations.Reference;",
+			"ddm.form.field.type.description=foobar-description",
+			"ddm.form.field.type.display.order:Integer=13",
+			"ddm.form.field.type.group=customized",
+			"public String getModuleName()",
+			"public boolean isCustomDDMFormFieldType()",
+			"private NPMResolver _npmResolver;");
+		testContains(
+			gradleProjectDir,
+			"src/main/resources/META-INF/resources/foobar.soy",
+			"{template .content}", "ddm-field-foobar", "form-control foobar");
+		testContains(
+			gradleProjectDir,
+			"src/main/resources/META-INF/resources/foobar.es.js",
+			"'dynamic-data-mapping-form-field-type/FieldBase/FieldBase.es';",
+			"import './foobarRegister.soy.js';",
+			"import {Config} from 'metal-state'",
+			"import templates from './foobar.soy.js';", "* Foobar Component",
+			"class Foobar extends Component", "Foobar.STATE",
+			"Soy.register(Foobar, templates);");
+
+		testNotContains(
+			gradleProjectDir, "build.gradle", true, "^repositories \\{.*");
+		testNotContains(gradleProjectDir, "build.gradle", "version: \"[0-9].*");
+
+		if (isBuildProjects()) {
+			executeGradle(
+				workspaceDir, _gradleDistribution,
+				":modules:" + name + GRADLE_TASK_PATH_BUILD);
+
+			File gradleOutputDir = new File(gradleProjectDir, "build/libs");
+
+			Path gradleOutputPath = FileTestUtil.getFile(
+				gradleOutputDir.toPath(), OUTPUT_FILE_NAME_GLOB_REGEX, 1);
+
+			Assert.assertNotNull(gradleOutputPath);
+
+			Assert.assertTrue(Files.exists(gradleOutputPath));
+		}
+	}
+
+	@Test
 	public void testBuildTemplateFormField72CustomPackage() throws Exception {
 		String liferayVersion = "7.2.1";
 		String name = "foobar";

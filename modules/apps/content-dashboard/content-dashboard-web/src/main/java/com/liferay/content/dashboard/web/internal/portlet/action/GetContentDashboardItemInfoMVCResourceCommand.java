@@ -34,9 +34,11 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.searcher.Searcher;
 
 import java.time.Instant;
@@ -231,6 +233,18 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 		return contentDashboardItemType.getLabel(locale);
 	}
 
+	private String _getURLWithBackURL(
+		HttpServletRequest httpServletRequest, String url) {
+
+		String backURL = ParamUtil.getString(httpServletRequest, "backURL");
+
+		if (Validator.isNotNull(backURL)) {
+			return _http.setParameter(url, "p_l_back_url", backURL);
+		}
+
+		return url;
+	}
+
 	private JSONArray _getVersionsJSONArray(
 		ContentDashboardItem contentDashboardItem, Locale locale) {
 
@@ -265,7 +279,8 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 				).put(
 					"languageId", _language.getBCP47LanguageId(entry.getKey())
 				).put(
-					"viewURL", entry.getValue()
+					"viewURL",
+					_getURLWithBackURL(httpServletRequest, entry.getValue())
 				)
 			).toArray());
 	}
@@ -302,6 +317,9 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 	@Reference
 	private ContentDashboardSearchRequestBuilderFactory
 		_contentDashboardSearchRequestBuilderFactory;
+
+	@Reference
+	private Http _http;
 
 	@Reference
 	private Language _language;

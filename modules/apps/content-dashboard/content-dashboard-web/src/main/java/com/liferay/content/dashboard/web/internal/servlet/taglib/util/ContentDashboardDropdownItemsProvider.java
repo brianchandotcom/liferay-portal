@@ -103,6 +103,8 @@ public class ContentDashboardDropdownItemsProvider {
 					_liferayPortletResponse.createResourceURL();
 
 				resourceURL.setParameter(
+					"backURL", _portal.getCurrentURL(_liferayPortletRequest));
+				resourceURL.setParameter(
 					"className", contentDashboardItem.getClassName());
 				resourceURL.setParameter(
 					"classPK",

@@ -1,40 +1,6 @@
 @import 'atlas-variables';
 
-$control-menu-height: 56px;
-$tab-header-height: 38px;
-
 .applications-menu-modal {
-	.applications-menu-header {
-		.autofit-row {
-			@include media-breakpoint-down(xs) {
-				flex-wrap: wrap;
-			}
-		}
-
-		.applications-menu-tabs {
-			@include media-breakpoint-down(xs) {
-				order: 1;
-				width: 100%;
-			}
-		}
-
-		.control-menu-level-1-heading {
-			@include media-breakpoint-down(xs) {
-				flex-grow: 1;
-				flex-shrink: 1;
-				min-height: 3.25rem;
-			}
-		}
-
-		.nav-link {
-			line-height: 1.6rem;
-
-			@include media-breakpoint-up(sm) {
-				line-height: 2.15rem;
-			}
-		}
-	}
-
 	.modal-full {
 		margin-top: 0;
 		width: 100%;
@@ -53,90 +19,148 @@ $tab-header-height: 38px;
 		}
 	}
 
-	.tab-pane {
-		max-height: calc(100vh - #{$control-menu-height + $tab-header-height});
-		overflow-y: auto;
+	.modal-info .btn-monospaced {
+		color: $secondary;
 	}
 }
 
-.applications-menu-nav {
-	margin: 0;
-	padding: 0.2rem;
+.applications-menu-header .nav-link {
+	color: $secondary;
+	padding-bottom: 1rem;
+	padding-top: 1rem;
 
-	@include media-breakpoint-down(xs) {
-		@at-root {
-			.mobile #{&} {
-				padding-bottom: 7rem;
-			}
+	&.active {
+		color: $dark;
+	}
+}
+
+.applications-menu-wrapper {
+	display: flex;
+	flex-direction: column;
+	max-height: 100vh;
+}
+
+.applications-menu-bg {
+	@include media-breakpoint-up(md) {
+		background: linear-gradient(
+			to right,
+			$white 0%,
+			$white 50%,
+			$light 51%,
+			$light 100%
+		);
+
+		.container-fluid {
+			background-color: $white;
 		}
 	}
+}
+
+.applications-menu-border-top {
+	border-top: 1px solid $light;
+}
+
+.applications-menu-nav-columns {
+	column-count: 1;
+	margin-left: -$grid-gutter-width / 2;
+	margin-right: -$grid-gutter-width / 2;
+	orphans: 1;
+	widows: 1;
 
 	@include media-breakpoint-up(sm) {
-		padding: 1.5rem 2.5rem 1.5rem 1.75rem;
+		column-count: 2;
 	}
 
-	.applications-menu-nav-header {
-		color: $secondary;
-		font-size: 0.875rem;
-		font-weight: 700;
-		line-height: 3rem;
-		text-transform: uppercase;
+	@include media-breakpoint-up(md) {
+		column-count: 3;
 	}
 
-	.applications-menu-nav-subheader {
-		color: $secondary;
-		font-size: 0.75rem;
-		font-weight: 600;
-		margin-bottom: 0.25rem;
-		text-transform: uppercase;
+	@include media-breakpoint-up(lg) {
+		column-count: 4;
 	}
 
-	.applications-menu-nav-item {
-		margin-bottom: 0.5rem;
+	.col-md {
+		display: inline-block;
 	}
+}
 
-	.applications-menu-nav-link {
+.applications-menu-nav-header {
+	color: $secondary;
+	font-size: 0.875rem;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+.applications-menu-nav-link {
+	color: $dark;
+
+	&:hover {
 		color: $dark;
-		line-height: 1.5rem;
-
-		&.active {
-			font-weight: 600;
-		}
+		text-decoration: none;
 	}
 
-	.applications-menu-nav-columns {
-		column-count: 1;
-		orphans: 1;
-		widows: 1;
+	&.active {
+		font-weight: 600;
+	}
 
-		@include media-breakpoint-up(sm) {
-			column-count: 2;
-		}
+	.sticker-sm {
+		height: 1.25rem;
+		width: 1.25rem;
+	}
+}
 
-		@include media-breakpoint-up(md) {
-			column-count: 3;
-		}
+.applications-menu-sites-label {
+	background-color: $light;
+	color: $secondary;
+	font-size: 0.875rem;
+	font-weight: 600;
+	margin-bottom: 0;
+	text-transform: uppercase;
 
-		@include media-breakpoint-up(lg) {
-			column-count: 4;
-		}
-
-		.col-md {
-			display: inline-block;
-		}
+	@include media-breakpoint-up(md) {
+		bottom: 100%;
+		left: 0.5rem;
+		padding: 1.375rem 1.5rem;
+		position: absolute;
 	}
 }
 
 .applications-menu-sites {
-	margin-bottom: 0;
-	width: 100%;
+	background-color: $light;
+	height: 100%;
+}
 
-	@include media-breakpoint-up(md) {
-		width: 270px;
-	}
+.applications-menu-shrink {
+	flex-shrink: 1;
+	min-width: 0;
+}
 
-	> ul {
-		margin-bottom: 0;
-		padding: 0 1.5rem 1rem;
-	}
+.applications-menu-btn {
+	font-size: 0.875rem;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.applications-menu-nav-divider {
+	border-top: 1px solid $secondary;
+	width: 1.25rem;
+}
+
+.applications-menu-company {
+	font-size: 1rem;
+	font-weight: 600;
+}
+
+.applications-menu-powered {
+	color: $secondary;
+	font-size: 0.625rem;
+	text-align: right;
+	text-transform: uppercase;
+}
+
+.applications-menu-copyright {
+	color: $secondary;
+	font-size: 0.875rem;
+	font-weight: 600;
+	text-align: right;
 }

@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -146,7 +145,7 @@ public class ViewDiscardDisplayContext {
 			"userInfo",
 			DisplayContextUtil.getUserInfoJSONObject(
 				CTEntryTable.INSTANCE.ctEntryId.in(
-					ArrayUtil.toLongArray(ctEntryIds.toArray())),
+					ctEntryIds.toArray(new Long[0])),
 				_themeDisplay, _userLocalService)
 		).build();
 	}

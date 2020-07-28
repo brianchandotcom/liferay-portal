@@ -125,7 +125,7 @@ public class IconTag extends BaseIconTag {
 			if (Objects.equals(getMarkupView(), "lexicon")) {
 				jspWriter.write("<svg class=\"lexicon-icon lexicon-icon-");
 				jspWriter.write(GetterUtil.getString(getImage()));
-				jspWriter.write("\" focusable=\"false\" role=\"presentation\"");
+				jspWriter.write("\" focusable=\"false\" aria-hidden=\"true\"");
 				jspWriter.write(
 					InlineUtil.buildDynamicAttributes(getDynamicAttributes()));
 				jspWriter.write("><use data-href=\"");

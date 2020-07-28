@@ -40,6 +40,7 @@ import com.liferay.translation.model.TranslationEntry;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -74,8 +75,10 @@ public interface TranslationEntryLocalService
 		throws PortalException;
 
 	public TranslationEntry addOrUpdateTranslationEntry(
-		long groupId, String className, long classPK, String content,
-		String contentType, String languageId, ServiceContext serviceContext);
+			long groupId, String className, long classPK, String content,
+			String contentType, String languageId,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Adds the translation entry to the database. Also notifies the appropriate model listeners.
@@ -329,6 +332,12 @@ public interface TranslationEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public TranslationEntry getTranslationEntryByUuidAndGroupId(
 			String uuid, long groupId)
+		throws PortalException;
+
+	public TranslationEntry updateStatus(
+			long userId, long translationEntryId, int status,
+			ServiceContext serviceContext,
+			Map<String, Serializable> workflowContext)
 		throws PortalException;
 
 	/**

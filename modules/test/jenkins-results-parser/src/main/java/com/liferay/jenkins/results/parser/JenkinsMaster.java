@@ -14,8 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -172,71 +170,12 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 		return onlineJenkinsSlavesCount;
 	}
 
-	public List<String> getQueuedJobURLs() throws IOException {
-		List<String> queuedJobURLs = new ArrayList<>();
-
-		JSONObject queueAPIJSONObject = JenkinsResultsParserUtil.toJSONObject(
-			JenkinsResultsParserUtil.getLocalURL(
-				JenkinsResultsParserUtil.combine(
-					_masterURL, "/queue/api/json?tree=items[task[url]]")),
-			false, 5000);
-
-		JSONArray itemsJSONArray = queueAPIJSONObject.getJSONArray("items");
-
-		for (int i = 0; i < itemsJSONArray.length(); i++) {
-			JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
-
-			JSONObject taskJSONObject = itemJSONObject.getJSONObject("task");
-
-			queuedJobURLs.add(taskJSONObject.getString("url"));
-		}
-
-		return queuedJobURLs;
+	public List<String> getQueuedJobURLs() {
+		return _queuedJobURLs;
 	}
 
-	public List<String> getRunningJobURLs() throws IOException {
-		List<String> runningJobURLs = new ArrayList<>();
-
-		JSONObject computerAPIJSONObject =
-			JenkinsResultsParserUtil.toJSONObject(
-				JenkinsResultsParserUtil.getLocalURL(
-					JenkinsResultsParserUtil.combine(
-						_masterURL, "/computer/api/json",
-						"?tree=computer[executors[currentExecutable[url]]]")),
-				false, 5000);
-
-		JSONArray computerJSONArray = computerAPIJSONObject.getJSONArray(
-			"computer");
-
-		for (int i = 0; i < computerJSONArray.length(); i++) {
-			JSONObject computerJSONObject = computerJSONArray.getJSONObject(i);
-
-			String computerClassName = computerJSONObject.getString("_class");
-
-			if (computerClassName.contains("hudson.slaves.SlaveComputer")) {
-				JSONArray executorsJSONArray = computerJSONObject.getJSONArray(
-					"executors");
-
-				for (int j = 0; j < executorsJSONArray.length(); j++) {
-					JSONObject executorJSONObject =
-						executorsJSONArray.getJSONObject(j);
-
-					if (executorJSONObject.has("currentExecutable") &&
-						(executorJSONObject.get("currentExecutable") !=
-							JSONObject.NULL)) {
-
-						JSONObject currentExecutableJSONObject =
-							executorJSONObject.getJSONObject(
-								"currentExecutable");
-
-						runningJobURLs.add(
-							currentExecutableJSONObject.getString("url"));
-					}
-				}
-			}
-		}
-
-		return runningJobURLs;
+	public List<String> getRunningJobURLs() {
+		return _runningJobURLs;
 	}
 
 	public Integer getSlaveRAM() {
@@ -271,11 +210,13 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 					JenkinsResultsParserUtil.combine(
 						_masterURL,
 						"/computer/api/json?tree=computer[displayName,",
-						"idle,offline]")),
+						"executors[currentExecutable[url]],idle,offline]")),
 				false, 5000);
 			queueAPIJSONObject = JenkinsResultsParserUtil.toJSONObject(
 				JenkinsResultsParserUtil.getLocalURL(
-					_masterURL + "/queue/api/json?tree=items[task[name],why]"),
+					JenkinsResultsParserUtil.combine(
+						_masterURL,
+						"/queue/api/json?tree=items[task[name,url],why]")),
 				false, 5000);
 		}
 		catch (Exception exception) {
@@ -311,6 +252,30 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 
 				_jenkinsSlavesMap.put(jenkinsSlave.getName(), jenkinsSlave);
 			}
+
+			String computerClassName = computerJSONObject.getString("_class");
+
+			if (computerClassName.contains("hudson.slaves.SlaveComputer")) {
+				JSONArray executorsJSONArray = computerJSONObject.getJSONArray(
+					"executors");
+
+				for (int j = 0; j < executorsJSONArray.length(); j++) {
+					JSONObject executorJSONObject =
+						executorsJSONArray.getJSONObject(j);
+
+					if (executorJSONObject.has("currentExecutable") &&
+						(executorJSONObject.get("currentExecutable") !=
+							JSONObject.NULL)) {
+
+						JSONObject currentExecutableJSONObject =
+							executorJSONObject.getJSONObject(
+								"currentExecutable");
+
+						_runningJobURLs.add(
+							currentExecutableJSONObject.getString("url"));
+					}
+				}
+			}
 		}
 
 		_queueCount = 0;
@@ -327,6 +292,8 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 			if (itemJSONObject.has("task")) {
 				JSONObject taskJSONObject = itemJSONObject.getJSONObject(
 					"task");
+
+				_queuedJobURLs.add(taskJSONObject.getString("url"));
 
 				String taskName = taskJSONObject.getString("name");
 
@@ -383,7 +350,9 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 	private final String _masterName;
 	private final String _masterURL;
 	private int _queueCount;
+	private List<String> _queuedJobURLs = new ArrayList<>();
 	private int _reportedAvailableSlavesCount;
+	private List<String> _runningJobURLs = new ArrayList<>();
 	private final Integer _slaveRAM;
 
 }

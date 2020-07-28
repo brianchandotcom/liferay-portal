@@ -78,7 +78,7 @@ public class TranslationEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -108,6 +108,14 @@ public class TranslationEntryCacheModel
 		sb.append(contentType);
 		sb.append(", languageId=");
 		sb.append(languageId);
+		sb.append(", status=");
+		sb.append(status);
+		sb.append(", statusByUserId=");
+		sb.append(statusByUserId);
+		sb.append(", statusByUserName=");
+		sb.append(statusByUserName);
+		sb.append(", statusDate=");
+		sb.append(statusDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -176,6 +184,23 @@ public class TranslationEntryCacheModel
 			translationEntryImpl.setLanguageId(languageId);
 		}
 
+		translationEntryImpl.setStatus(status);
+		translationEntryImpl.setStatusByUserId(statusByUserId);
+
+		if (statusByUserName == null) {
+			translationEntryImpl.setStatusByUserName("");
+		}
+		else {
+			translationEntryImpl.setStatusByUserName(statusByUserName);
+		}
+
+		if (statusDate == Long.MIN_VALUE) {
+			translationEntryImpl.setStatusDate(null);
+		}
+		else {
+			translationEntryImpl.setStatusDate(new Date(statusDate));
+		}
+
 		translationEntryImpl.resetOriginalValues();
 
 		return translationEntryImpl;
@@ -205,6 +230,12 @@ public class TranslationEntryCacheModel
 		content = (String)objectInput.readObject();
 		contentType = objectInput.readUTF();
 		languageId = objectInput.readUTF();
+
+		status = objectInput.readInt();
+
+		statusByUserId = objectInput.readLong();
+		statusByUserName = objectInput.readUTF();
+		statusDate = objectInput.readLong();
 	}
 
 	@Override
@@ -260,6 +291,19 @@ public class TranslationEntryCacheModel
 		else {
 			objectOutput.writeUTF(languageId);
 		}
+
+		objectOutput.writeInt(status);
+
+		objectOutput.writeLong(statusByUserId);
+
+		if (statusByUserName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(statusByUserName);
+		}
+
+		objectOutput.writeLong(statusDate);
 	}
 
 	public long mvccVersion;
@@ -276,5 +320,9 @@ public class TranslationEntryCacheModel
 	public String content;
 	public String contentType;
 	public String languageId;
+	public int status;
+	public long statusByUserId;
+	public String statusByUserName;
+	public long statusDate;
 
 }

@@ -150,6 +150,14 @@ public class TranslationEntryPersistenceTest {
 
 		newTranslationEntry.setLanguageId(RandomTestUtil.randomString());
 
+		newTranslationEntry.setStatus(RandomTestUtil.nextInt());
+
+		newTranslationEntry.setStatusByUserId(RandomTestUtil.nextLong());
+
+		newTranslationEntry.setStatusByUserName(RandomTestUtil.randomString());
+
+		newTranslationEntry.setStatusDate(RandomTestUtil.nextDate());
+
 		_translationEntries.add(_persistence.update(newTranslationEntry));
 
 		TranslationEntry existingTranslationEntry =
@@ -196,6 +204,18 @@ public class TranslationEntryPersistenceTest {
 		Assert.assertEquals(
 			existingTranslationEntry.getLanguageId(),
 			newTranslationEntry.getLanguageId());
+		Assert.assertEquals(
+			existingTranslationEntry.getStatus(),
+			newTranslationEntry.getStatus());
+		Assert.assertEquals(
+			existingTranslationEntry.getStatusByUserId(),
+			newTranslationEntry.getStatusByUserId());
+		Assert.assertEquals(
+			existingTranslationEntry.getStatusByUserName(),
+			newTranslationEntry.getStatusByUserName());
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingTranslationEntry.getStatusDate()),
+			Time.getShortTimestamp(newTranslationEntry.getStatusDate()));
 	}
 
 	@Test
@@ -223,6 +243,22 @@ public class TranslationEntryPersistenceTest {
 		_persistence.countByUuid_C("null", 0L);
 
 		_persistence.countByUuid_C((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByG_S() throws Exception {
+		_persistence.countByG_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+		_persistence.countByG_S(0L, 0);
+	}
+
+	@Test
+	public void testCountByC_S() throws Exception {
+		_persistence.countByC_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+		_persistence.countByC_S(0L, 0);
 	}
 
 	@Test
@@ -264,7 +300,9 @@ public class TranslationEntryPersistenceTest {
 			"translationEntryId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "classNameId", true, "classPK", true,
-			"contentType", true, "languageId", true);
+			"contentType", true, "languageId", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate",
+			true);
 	}
 
 	@Test
@@ -553,6 +591,14 @@ public class TranslationEntryPersistenceTest {
 		translationEntry.setContentType(RandomTestUtil.randomString());
 
 		translationEntry.setLanguageId(RandomTestUtil.randomString());
+
+		translationEntry.setStatus(RandomTestUtil.nextInt());
+
+		translationEntry.setStatusByUserId(RandomTestUtil.nextLong());
+
+		translationEntry.setStatusByUserName(RandomTestUtil.randomString());
+
+		translationEntry.setStatusDate(RandomTestUtil.nextDate());
 
 		_translationEntries.add(_persistence.update(translationEntry));
 

@@ -12,5 +12,9 @@ create table TranslationEntry (
 	classPK LONG,
 	content TEXT null,
 	contentType VARCHAR(75) null,
-	languageId VARCHAR(75) null
+	languageId VARCHAR(75) null,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null
 );

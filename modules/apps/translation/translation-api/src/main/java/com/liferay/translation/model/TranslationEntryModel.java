@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
+import com.liferay.portal.kernel.model.WorkflowedModel;
 
 import java.util.Date;
 
@@ -40,7 +41,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface TranslationEntryModel
 	extends AttachedModel, BaseModel<TranslationEntry>, GroupedModel, MVCCModel,
-			ShardedModel, StagedAuditedModel {
+			ShardedModel, StagedAuditedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -308,5 +309,150 @@ public interface TranslationEntryModel
 	 * @param languageId the language ID of this translation entry
 	 */
 	public void setLanguageId(String languageId);
+
+	/**
+	 * Returns the status of this translation entry.
+	 *
+	 * @return the status of this translation entry
+	 */
+	@Override
+	public int getStatus();
+
+	/**
+	 * Sets the status of this translation entry.
+	 *
+	 * @param status the status of this translation entry
+	 */
+	@Override
+	public void setStatus(int status);
+
+	/**
+	 * Returns the status by user ID of this translation entry.
+	 *
+	 * @return the status by user ID of this translation entry
+	 */
+	@Override
+	public long getStatusByUserId();
+
+	/**
+	 * Sets the status by user ID of this translation entry.
+	 *
+	 * @param statusByUserId the status by user ID of this translation entry
+	 */
+	@Override
+	public void setStatusByUserId(long statusByUserId);
+
+	/**
+	 * Returns the status by user uuid of this translation entry.
+	 *
+	 * @return the status by user uuid of this translation entry
+	 */
+	@Override
+	public String getStatusByUserUuid();
+
+	/**
+	 * Sets the status by user uuid of this translation entry.
+	 *
+	 * @param statusByUserUuid the status by user uuid of this translation entry
+	 */
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid);
+
+	/**
+	 * Returns the status by user name of this translation entry.
+	 *
+	 * @return the status by user name of this translation entry
+	 */
+	@AutoEscape
+	@Override
+	public String getStatusByUserName();
+
+	/**
+	 * Sets the status by user name of this translation entry.
+	 *
+	 * @param statusByUserName the status by user name of this translation entry
+	 */
+	@Override
+	public void setStatusByUserName(String statusByUserName);
+
+	/**
+	 * Returns the status date of this translation entry.
+	 *
+	 * @return the status date of this translation entry
+	 */
+	@Override
+	public Date getStatusDate();
+
+	/**
+	 * Sets the status date of this translation entry.
+	 *
+	 * @param statusDate the status date of this translation entry
+	 */
+	@Override
+	public void setStatusDate(Date statusDate);
+
+	/**
+	 * Returns <code>true</code> if this translation entry is approved.
+	 *
+	 * @return <code>true</code> if this translation entry is approved; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isApproved();
+
+	/**
+	 * Returns <code>true</code> if this translation entry is denied.
+	 *
+	 * @return <code>true</code> if this translation entry is denied; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDenied();
+
+	/**
+	 * Returns <code>true</code> if this translation entry is a draft.
+	 *
+	 * @return <code>true</code> if this translation entry is a draft; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDraft();
+
+	/**
+	 * Returns <code>true</code> if this translation entry is expired.
+	 *
+	 * @return <code>true</code> if this translation entry is expired; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isExpired();
+
+	/**
+	 * Returns <code>true</code> if this translation entry is inactive.
+	 *
+	 * @return <code>true</code> if this translation entry is inactive; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isInactive();
+
+	/**
+	 * Returns <code>true</code> if this translation entry is incomplete.
+	 *
+	 * @return <code>true</code> if this translation entry is incomplete; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isIncomplete();
+
+	/**
+	 * Returns <code>true</code> if this translation entry is pending.
+	 *
+	 * @return <code>true</code> if this translation entry is pending; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isPending();
+
+	/**
+	 * Returns <code>true</code> if this translation entry is scheduled.
+	 *
+	 * @return <code>true</code> if this translation entry is scheduled; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isScheduled();
 
 }

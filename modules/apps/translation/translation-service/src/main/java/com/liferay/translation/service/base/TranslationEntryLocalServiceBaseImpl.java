@@ -17,6 +17,8 @@ package com.liferay.translation.service.base;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -26,7 +28,9 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -34,6 +38,7 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
@@ -46,6 +51,7 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalService;
 import com.liferay.translation.service.persistence.TranslationEntryPersistence;
@@ -357,8 +363,23 @@ public abstract class TranslationEntryLocalServiceBaseImpl
 
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
-					portletDataContext.addDateRangeCriteria(
-						dynamicQuery, "modifiedDate");
+					Criterion modifiedDateCriterion =
+						portletDataContext.getDateRangeCriteria("modifiedDate");
+
+					Criterion statusDateCriterion =
+						portletDataContext.getDateRangeCriteria("statusDate");
+
+					if ((modifiedDateCriterion != null) &&
+						(statusDateCriterion != null)) {
+
+						Disjunction disjunction =
+							RestrictionsFactoryUtil.disjunction();
+
+						disjunction.add(modifiedDateCriterion);
+						disjunction.add(statusDateCriterion);
+
+						dynamicQuery.add(disjunction);
+					}
 
 					StagedModelType stagedModelType =
 						exportActionableDynamicQuery.getStagedModelType();
@@ -382,6 +403,26 @@ public abstract class TranslationEntryLocalServiceBaseImpl
 								StagedModelType.REFERRER_CLASS_NAME_ID_ANY) {
 
 						dynamicQuery.add(classNameIdProperty.isNotNull());
+					}
+
+					Property workflowStatusProperty =
+						PropertyFactoryUtil.forName("status");
+
+					if (portletDataContext.isInitialPublication()) {
+						dynamicQuery.add(
+							workflowStatusProperty.ne(
+								WorkflowConstants.STATUS_IN_TRASH));
+					}
+					else {
+						StagedModelDataHandler<?> stagedModelDataHandler =
+							StagedModelDataHandlerRegistryUtil.
+								getStagedModelDataHandler(
+									TranslationEntry.class.getName());
+
+						dynamicQuery.add(
+							workflowStatusProperty.in(
+								stagedModelDataHandler.
+									getExportableStatuses()));
 					}
 				}
 

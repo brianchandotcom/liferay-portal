@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.model.TranslationEntryModel;
 import com.liferay.translation.model.TranslationEntrySoap;
@@ -81,7 +82,9 @@ public class TranslationEntryModelImpl
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
 		{"classPK", Types.BIGINT}, {"content", Types.CLOB},
-		{"contentType", Types.VARCHAR}, {"languageId", Types.VARCHAR}
+		{"contentType", Types.VARCHAR}, {"languageId", Types.VARCHAR},
+		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
+		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -102,10 +105,14 @@ public class TranslationEntryModelImpl
 		TABLE_COLUMNS_MAP.put("content", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("contentType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("languageId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table TranslationEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,translationEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,content TEXT null,contentType VARCHAR(75) null,languageId VARCHAR(75) null)";
+		"create table TranslationEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,translationEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,content TEXT null,contentType VARCHAR(75) null,languageId VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table TranslationEntry";
 
@@ -131,9 +138,11 @@ public class TranslationEntryModelImpl
 
 	public static final long LANGUAGEID_COLUMN_BITMASK = 16L;
 
-	public static final long UUID_COLUMN_BITMASK = 32L;
+	public static final long STATUS_COLUMN_BITMASK = 32L;
 
-	public static final long TRANSLATIONENTRYID_COLUMN_BITMASK = 64L;
+	public static final long UUID_COLUMN_BITMASK = 64L;
+
+	public static final long TRANSLATIONENTRYID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -176,6 +185,10 @@ public class TranslationEntryModelImpl
 		model.setContent(soapModel.getContent());
 		model.setContentType(soapModel.getContentType());
 		model.setLanguageId(soapModel.getLanguageId());
+		model.setStatus(soapModel.getStatus());
+		model.setStatusByUserId(soapModel.getStatusByUserId());
+		model.setStatusByUserName(soapModel.getStatusByUserName());
+		model.setStatusDate(soapModel.getStatusDate());
 
 		return model;
 	}
@@ -401,6 +414,28 @@ public class TranslationEntryModelImpl
 			"languageId",
 			(BiConsumer<TranslationEntry, String>)
 				TranslationEntry::setLanguageId);
+		attributeGetterFunctions.put("status", TranslationEntry::getStatus);
+		attributeSetterBiConsumers.put(
+			"status",
+			(BiConsumer<TranslationEntry, Integer>)TranslationEntry::setStatus);
+		attributeGetterFunctions.put(
+			"statusByUserId", TranslationEntry::getStatusByUserId);
+		attributeSetterBiConsumers.put(
+			"statusByUserId",
+			(BiConsumer<TranslationEntry, Long>)
+				TranslationEntry::setStatusByUserId);
+		attributeGetterFunctions.put(
+			"statusByUserName", TranslationEntry::getStatusByUserName);
+		attributeSetterBiConsumers.put(
+			"statusByUserName",
+			(BiConsumer<TranslationEntry, String>)
+				TranslationEntry::setStatusByUserName);
+		attributeGetterFunctions.put(
+			"statusDate", TranslationEntry::getStatusDate);
+		attributeSetterBiConsumers.put(
+			"statusDate",
+			(BiConsumer<TranslationEntry, Date>)
+				TranslationEntry::setStatusDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -697,11 +732,168 @@ public class TranslationEntryModelImpl
 		return GetterUtil.getString(_originalLanguageId);
 	}
 
+	@JSON
+	@Override
+	public int getStatus() {
+		return _status;
+	}
+
+	@Override
+	public void setStatus(int status) {
+		_columnBitmask |= STATUS_COLUMN_BITMASK;
+
+		if (!_setOriginalStatus) {
+			_setOriginalStatus = true;
+
+			_originalStatus = _status;
+		}
+
+		_status = status;
+	}
+
+	public int getOriginalStatus() {
+		return _originalStatus;
+	}
+
+	@JSON
+	@Override
+	public long getStatusByUserId() {
+		return _statusByUserId;
+	}
+
+	@Override
+	public void setStatusByUserId(long statusByUserId) {
+		_statusByUserId = statusByUserId;
+	}
+
+	@Override
+	public String getStatusByUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getStatusByUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException portalException) {
+			return "";
+		}
+	}
+
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid) {
+	}
+
+	@JSON
+	@Override
+	public String getStatusByUserName() {
+		if (_statusByUserName == null) {
+			return "";
+		}
+		else {
+			return _statusByUserName;
+		}
+	}
+
+	@Override
+	public void setStatusByUserName(String statusByUserName) {
+		_statusByUserName = statusByUserName;
+	}
+
+	@JSON
+	@Override
+	public Date getStatusDate() {
+		return _statusDate;
+	}
+
+	@Override
+	public void setStatusDate(Date statusDate) {
+		_statusDate = statusDate;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
 			PortalUtil.getClassNameId(TranslationEntry.class.getName()),
 			getClassNameId());
+	}
+
+	@Override
+	public boolean isApproved() {
+		if (getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isDenied() {
+		if (getStatus() == WorkflowConstants.STATUS_DENIED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isDraft() {
+		if (getStatus() == WorkflowConstants.STATUS_DRAFT) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isExpired() {
+		if (getStatus() == WorkflowConstants.STATUS_EXPIRED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isInactive() {
+		if (getStatus() == WorkflowConstants.STATUS_INACTIVE) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isIncomplete() {
+		if (getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isPending() {
+		if (getStatus() == WorkflowConstants.STATUS_PENDING) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isScheduled() {
+		if (getStatus() == WorkflowConstants.STATUS_SCHEDULED) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public long getColumnBitmask() {
@@ -754,6 +946,10 @@ public class TranslationEntryModelImpl
 		translationEntryImpl.setContent(getContent());
 		translationEntryImpl.setContentType(getContentType());
 		translationEntryImpl.setLanguageId(getLanguageId());
+		translationEntryImpl.setStatus(getStatus());
+		translationEntryImpl.setStatusByUserId(getStatusByUserId());
+		translationEntryImpl.setStatusByUserName(getStatusByUserName());
+		translationEntryImpl.setStatusDate(getStatusDate());
 
 		translationEntryImpl.resetOriginalValues();
 
@@ -852,6 +1048,11 @@ public class TranslationEntryModelImpl
 		translationEntryModelImpl._originalLanguageId =
 			translationEntryModelImpl._languageId;
 
+		translationEntryModelImpl._originalStatus =
+			translationEntryModelImpl._status;
+
+		translationEntryModelImpl._setOriginalStatus = false;
+
 		translationEntryModelImpl._columnBitmask = 0;
 	}
 
@@ -930,6 +1131,27 @@ public class TranslationEntryModelImpl
 
 		if ((languageId != null) && (languageId.length() == 0)) {
 			translationEntryCacheModel.languageId = null;
+		}
+
+		translationEntryCacheModel.status = getStatus();
+
+		translationEntryCacheModel.statusByUserId = getStatusByUserId();
+
+		translationEntryCacheModel.statusByUserName = getStatusByUserName();
+
+		String statusByUserName = translationEntryCacheModel.statusByUserName;
+
+		if ((statusByUserName != null) && (statusByUserName.length() == 0)) {
+			translationEntryCacheModel.statusByUserName = null;
+		}
+
+		Date statusDate = getStatusDate();
+
+		if (statusDate != null) {
+			translationEntryCacheModel.statusDate = statusDate.getTime();
+		}
+		else {
+			translationEntryCacheModel.statusDate = Long.MIN_VALUE;
 		}
 
 		return translationEntryCacheModel;
@@ -1030,6 +1252,12 @@ public class TranslationEntryModelImpl
 	private String _contentType;
 	private String _languageId;
 	private String _originalLanguageId;
+	private int _status;
+	private int _originalStatus;
+	private boolean _setOriginalStatus;
+	private long _statusByUserId;
+	private String _statusByUserName;
+	private Date _statusDate;
 	private long _columnBitmask;
 	private TranslationEntry _escapedModel;
 

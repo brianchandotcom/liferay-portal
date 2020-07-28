@@ -59,6 +59,12 @@ definition {
 			value1 = "${preferredLanguageLocalizationMessage}");
 	}
 
+	macro viewMutedMessage {
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#EMPTY_INFO_DEPOT",
+			value1 = "${muteMessage}");
+	}
+
 	macro viewRequestFailedToComplete {
 		AssertElementPresent(locator1 = "Message#ERROR_REQUEST_FAILED");
 

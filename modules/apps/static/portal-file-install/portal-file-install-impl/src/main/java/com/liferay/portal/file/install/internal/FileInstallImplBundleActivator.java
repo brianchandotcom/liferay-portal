@@ -177,8 +177,6 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 			_tracker.close();
 		}
 		finally {
-			_stopped = true;
-
 			_writeLock.unlock();
 		}
 
@@ -248,7 +246,6 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 		_jarFileInstallerServiceRegistration;
 	private final ReadWriteLock _lock = new ReentrantReadWriteLock();
 	private final Lock _readLock = _lock.readLock();
-	private volatile boolean _stopped;
 	private Tracker _tracker;
 	private final Map<String, DirectoryWatcher> _watchers = new HashMap<>();
 	private final Lock _writeLock = _lock.writeLock();
@@ -259,10 +256,6 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 		@Override
 		public ConfigInstaller addingService(
 			ServiceReference<ConfigurationAdmin> serviceReference) {
-
-			if (_stopped) {
-				return null;
-			}
 
 			ConfigurationAdmin configurationAdmin = context.getService(
 				serviceReference);
@@ -279,10 +272,6 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 		public void removedService(
 			ServiceReference<ConfigurationAdmin> serviceReference,
 			ConfigInstaller configInstaller) {
-
-			if (_stopped) {
-				return;
-			}
 
 			configInstaller.destroy();
 

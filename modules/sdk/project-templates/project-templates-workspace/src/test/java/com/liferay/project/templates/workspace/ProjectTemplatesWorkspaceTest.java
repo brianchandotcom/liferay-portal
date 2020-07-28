@@ -188,6 +188,39 @@ public class ProjectTemplatesWorkspaceTest
 	}
 
 	@Test
+	public void testBuildTemplateWorkspaceNodePackageManagerYarn()
+		throws Exception {
+
+		File workspaceProjectDir = buildWorkspace(
+			temporaryFolder, "gradle", "foows", getDefaultLiferayVersion(),
+			mavenExecutor);
+
+		File gradleProperties = new File(
+			workspaceProjectDir, "gradle.properties");
+
+		Assert.assertTrue(gradleProperties.exists());
+
+		String configLine =
+			System.lineSeparator() + "node.package.manager=yarn";
+
+		Files.write(
+			gradleProperties.toPath(), configLine.getBytes(),
+			StandardOpenOption.APPEND);
+
+		File modulesProjectDir = buildTemplateWithGradle(
+			new File(workspaceProjectDir, "modules"), "npm-react-portlet",
+			"foo-portlet");
+
+		if (isBuildProjects()) {
+			executeGradle(
+				workspaceProjectDir, _gradleDistribution,
+				":modules:foo-portlet" + GRADLE_TASK_PATH_BUILD);
+
+			testExists(modulesProjectDir, "build/libs/foo-portlet-1.0.0.jar");
+		}
+	}
+
+	@Test
 	public void testBuildTemplateWorkspaceWithPortlet() throws Exception {
 		assumeTrue(isBuildProjects());
 

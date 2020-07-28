@@ -341,6 +341,12 @@ definition {
 			value1 = "${assigneeName}");
 	}
 
+	macro viewAssigneeTab {
+		AssertElementPresent(
+			key_tab = "${navTab}",
+			locator1 = "NavTab#TAB_LINK");
+	}
+
 	macro viewInactiveAccount {
 		ManagementBar.setFilterAndOrder(filterBy = "Inactive");
 

@@ -91,7 +91,7 @@ const SidebarPanelInfoView = ({
 					<p className="component-subtitle">{subType}</p>
 
 					{versions.map((version) => (
-						<div key={version}>
+						<div key={version.version}>
 							<ClayLabel displayType="info">
 								{Liferay.Language.get('version')}{' '}
 								{version.version}

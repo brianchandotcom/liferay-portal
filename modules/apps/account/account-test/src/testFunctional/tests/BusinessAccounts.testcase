@@ -274,6 +274,41 @@ definition {
 	}
 
 	@priority = "4"
+	test AddAccountUserViaAssignUser {
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		Accounts.addCP(
+			accountDescription = "Add account user via assign user.",
+			accountName = "Assign Account User");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
+		Accounts.addAssignee(
+			accountName = "Assign Account User",
+			addNewAssignee = "true",
+			assigneeName = "userfn",
+			assigneeType = "Users",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		LexiconEntry.gotoEntry(rowEntry = "Assign Account User");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
+		Accounts.viewAssignee(assigneeName = "userfn");
+	}
+
+	@priority = "4"
 	test AddAccountWithMultiDomains {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

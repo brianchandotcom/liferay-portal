@@ -34,7 +34,7 @@ const renderContainer = ({
 } = {}) => {
 	const container = {
 		children: [],
-		config: {},
+		config: {styles: {}},
 		itemId: 'container',
 		parentId: null,
 		type: LAYOUT_DATA_ITEM_TYPES.container,

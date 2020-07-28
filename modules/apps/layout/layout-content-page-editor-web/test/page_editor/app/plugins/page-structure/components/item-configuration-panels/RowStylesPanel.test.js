@@ -79,6 +79,7 @@ jest.mock(
 				desktop: {label: 'Desktop'},
 				landscapeMobile: {label: 'landscapeMobile'},
 			},
+			commonStyles: [],
 			responsiveEnabled: true,
 		},
 	})

@@ -37,7 +37,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Adolfo Pérez
  */
-public class FriendlyURLMapper {
+public abstract class FriendlyURLMapper {
 
 	public static FriendlyURLMapper create(
 			HttpServletRequest httpServletRequest)
@@ -46,7 +46,7 @@ public class FriendlyURLMapper {
 		Layout layout = (Layout)httpServletRequest.getAttribute(WebKeys.LAYOUT);
 
 		if ((layout != null) && !layout.isContentDisplayPage()) {
-			return new FriendlyURLMapper(null);
+			return new DefaultFriendlyURLMapper();
 		}
 
 		AssetEntry assetEntry = (AssetEntry)httpServletRequest.getAttribute(
@@ -63,75 +63,103 @@ public class FriendlyURLMapper {
 			AssetRenderer<?> assetRenderer =
 				assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
 
-			return new FriendlyURLMapper(
+			return new AssetDisplayPageFriendlyURLMapper(
 				(JournalArticle)assetRenderer.getAssetObject());
 		}
 
-		return new FriendlyURLMapper(null);
+		return new DefaultFriendlyURLMapper();
 	}
 
-	public String getMappedAssetDisplayPageFriendlyURL(
+	public abstract String getMappedAssetDisplayPageFriendlyURL(
 			String url, Locale locale)
-		throws PortalException {
+		throws PortalException;
 
-		if (_journalArticle == null) {
-			return url;
+	public abstract Map<Locale, String> getMappedAssetDisplayPageFriendlyURLs(
+			Map<Locale, String> friendlyURLs)
+		throws PortalException;
+
+	public static class AssetDisplayPageFriendlyURLMapper
+		extends FriendlyURLMapper {
+
+		@Override
+		public String getMappedAssetDisplayPageFriendlyURL(
+				String url, Locale locale)
+			throws PortalException {
+
+			int beginPos = url.indexOf(
+				JournalArticleConstants.CANONICAL_URL_SEPARATOR);
+
+			if (beginPos == -1) {
+				return url;
+			}
+
+			int endPos = StringUtil.indexOfAny(
+				url, new char[] {CharPool.FORWARD_SLASH, CharPool.QUESTION},
+				beginPos +
+					JournalArticleConstants.CANONICAL_URL_SEPARATOR.length());
+
+			if (endPos == -1) {
+				endPos = url.length();
+			}
+
+			String urlTitle = _journalArticle.getUrlTitle(locale);
+
+			if (Validator.isNull(urlTitle)) {
+				return url;
+			}
+
+			return new StringBuilder(
+				url
+			).replace(
+				beginPos, endPos,
+				JournalArticleConstants.CANONICAL_URL_SEPARATOR + urlTitle
+			).toString();
 		}
 
-		int beginPos = url.indexOf(
-			JournalArticleConstants.CANONICAL_URL_SEPARATOR);
+		public Map<Locale, String> getMappedAssetDisplayPageFriendlyURLs(
+				Map<Locale, String> friendlyURLs)
+			throws PortalException {
 
-		if (beginPos == -1) {
-			return url;
+			Map<Locale, String> mappedFriendlyURLs = new HashMap<>();
+
+			for (Map.Entry<Locale, String> entry : friendlyURLs.entrySet()) {
+				mappedFriendlyURLs.put(
+					entry.getKey(),
+					getMappedAssetDisplayPageFriendlyURL(
+						entry.getValue(), entry.getKey()));
+			}
+
+			return mappedFriendlyURLs;
 		}
 
-		int endPos = StringUtil.indexOfAny(
-			url, new char[] {CharPool.FORWARD_SLASH, CharPool.QUESTION},
-			beginPos +
-				JournalArticleConstants.CANONICAL_URL_SEPARATOR.length());
+		private AssetDisplayPageFriendlyURLMapper(
+			JournalArticle journalArticle) {
 
-		if (endPos == -1) {
-			endPos = url.length();
+			_journalArticle = journalArticle;
 		}
 
-		String urlTitle = _journalArticle.getUrlTitle(locale);
+		private final JournalArticle _journalArticle;
 
-		if (Validator.isNull(urlTitle)) {
-			return url;
-		}
-
-		return new StringBuilder(
-			url
-		).replace(
-			beginPos, endPos,
-			JournalArticleConstants.CANONICAL_URL_SEPARATOR + urlTitle
-		).toString();
 	}
 
-	public Map<Locale, String> getMappedAssetDisplayPageFriendlyURLs(
-			Map<Locale, String> friendlyURLs)
-		throws PortalException {
+	public static class DefaultFriendlyURLMapper extends FriendlyURLMapper {
 
-		if (_journalArticle == null) {
+		@Override
+		public String getMappedAssetDisplayPageFriendlyURL(
+				String url, Locale locale)
+			throws PortalException {
+
+			return url;
+		}
+
+		@Override
+		public Map<Locale, String> getMappedAssetDisplayPageFriendlyURLs(
+				Map<Locale, String> friendlyURLs)
+			throws PortalException {
+
 			return friendlyURLs;
 		}
 
-		Map<Locale, String> mappedFriendlyURLs = new HashMap<>();
-
-		for (Map.Entry<Locale, String> entry : friendlyURLs.entrySet()) {
-			mappedFriendlyURLs.put(
-				entry.getKey(),
-				getMappedAssetDisplayPageFriendlyURL(
-					entry.getValue(), entry.getKey()));
-		}
-
-		return mappedFriendlyURLs;
 	}
-
-	private FriendlyURLMapper(JournalArticle journalArticle) {
-		_journalArticle = journalArticle;
-	}
-
-	private final JournalArticle _journalArticle;
 
 }

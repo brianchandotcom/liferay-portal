@@ -260,6 +260,22 @@ portletDisplay.setURLBack(backURL);
 														</c:if>
 													</c:otherwise>
 												</c:choose>
+
+												<clay:content-col>
+													<clay:content-section>
+														<liferay-portlet:renderURL var="discardURL">
+															<portlet:param name="mvcRenderCommandName" value="/change_lists/view_discard" />
+															<portlet:param name="redirect" value="<%= currentURL %>" />
+															<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctEntry.getCtCollectionId()) %>" />
+															<portlet:param name="modelClassNameId" value="<%= String.valueOf(ctEntry.getModelClassNameId()) %>" />
+															<portlet:param name="modelClassPK" value="<%= String.valueOf(ctEntry.getModelClassPK()) %>" />
+														</liferay-portlet:renderURL>
+
+														<a class="btn btn-secondary btn-sm" href="<%= discardURL %>" type="button">
+															<liferay-ui:message key="discard" />
+														</a>
+													</clay:content-section>
+												</clay:content-col>
 											</clay:content-row>
 										</div>
 									</div>

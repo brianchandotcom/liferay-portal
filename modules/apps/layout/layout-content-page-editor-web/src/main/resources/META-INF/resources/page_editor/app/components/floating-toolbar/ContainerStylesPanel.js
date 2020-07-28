@@ -69,7 +69,7 @@ export const ContainerStylesPanel = ({item}) => {
 
 	const Section = ({children, label}) => (
 		<>
-			<div className="align-items-center d-flex justify-content-between page-editor__floating-toolbar__label pt-3">
+			<div className="align-items-center d-flex justify-content-between page-editor__container-styles-panel__label pt-3">
 				<p className="mb-3 text-uppercase">{label}</p>
 			</div>
 			{children}

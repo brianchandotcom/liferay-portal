@@ -658,6 +658,12 @@ public class JournalArticleContentDashboardItemTest {
 			invocation -> invocation.getArguments()[1]
 		);
 
+		Mockito.when(
+			language.getLocale(Mockito.anyString())
+		).thenAnswer(
+			invocation -> LocaleUtil.US
+		);
+
 		return language;
 	}
 

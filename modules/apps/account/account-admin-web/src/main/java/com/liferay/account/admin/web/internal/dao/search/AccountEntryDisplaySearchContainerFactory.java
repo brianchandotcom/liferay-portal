@@ -48,6 +48,18 @@ public class AccountEntryDisplaySearchContainerFactory {
 			new LinkedHashMap<>(), true);
 	}
 
+	public static SearchContainer<AccountEntryDisplay> createWithAccountGroupId(
+		long accountGroupId, LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
+
+		return _create(
+			liferayPortletRequest, liferayPortletResponse,
+			LinkedHashMapBuilder.<String, Object>put(
+				"accountGroupIds", new long[] {accountGroupId}
+			).build(),
+			false);
+	}
+
 	public static SearchContainer<AccountEntryDisplay> createWithUserId(
 		long userId, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {

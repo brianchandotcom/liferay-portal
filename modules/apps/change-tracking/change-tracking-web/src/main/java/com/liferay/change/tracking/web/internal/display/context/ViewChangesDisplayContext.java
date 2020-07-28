@@ -25,8 +25,8 @@ import com.liferay.change.tracking.web.internal.configuration.CTConfiguration;
 import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
 import com.liferay.change.tracking.web.internal.display.CTClosureUtil;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
+import com.liferay.change.tracking.web.internal.display.CTJSONObjectUtil;
 import com.liferay.petra.lang.HashUtil;
-import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,8 +38,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -310,7 +308,11 @@ public class ViewChangesDisplayContext {
 				return typeNamesJSONObject;
 			}
 		).put(
-			"userInfo", _getUserInfoJSONObject()
+			"userInfo",
+			CTJSONObjectUtil.getUserInfoJSONObject(
+				CTEntryTable.INSTANCE.ctCollectionId.eq(
+					_ctCollection.getCtCollectionId()),
+				_themeDisplay, _userLocalService)
 		).build();
 	}
 
@@ -444,43 +446,6 @@ public class ViewChangesDisplayContext {
 		}
 
 		return rootClassNameIds;
-	}
-
-	private JSONObject _getUserInfoJSONObject() {
-		JSONObject userInfoJSONObject = JSONFactoryUtil.createJSONObject();
-
-		List<User> users = _userLocalService.dslQuery(
-			DSLQueryFactoryUtil.select(
-				UserTable.INSTANCE
-			).from(
-				UserTable.INSTANCE
-			).innerJoinON(
-				CTEntryTable.INSTANCE,
-				CTEntryTable.INSTANCE.userId.eq(UserTable.INSTANCE.userId)
-			).where(
-				CTEntryTable.INSTANCE.ctCollectionId.eq(
-					_ctCollection.getCtCollectionId())
-			));
-
-		for (User user : users) {
-			JSONObject userJSONObject = JSONUtil.put(
-				"userName", user.getFullName());
-
-			if (user.getPortraitId() != 0) {
-				try {
-					userJSONObject.put(
-						"portraitURL", user.getPortraitURL(_themeDisplay));
-				}
-				catch (PortalException portalException) {
-					_log.error(portalException, portalException);
-				}
-			}
-
-			userInfoJSONObject.put(
-				String.valueOf(user.getUserId()), userJSONObject);
-		}
-
-		return userInfoJSONObject;
 	}
 
 	private <T extends BaseModel<T>> void _populateEntryValues(

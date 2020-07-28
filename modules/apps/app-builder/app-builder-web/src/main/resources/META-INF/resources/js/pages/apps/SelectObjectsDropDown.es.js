@@ -18,8 +18,36 @@ import ClayLabel from '@clayui/label';
 import React, {useEffect, useState} from 'react';
 
 import {getItem} from '../../utils/client.es';
-import {getTranslatedValue} from '../../utils/utils.es';
+import {getLocalizedValue} from '../../utils/lang.es';
 import DropDownWithSearch from './DropDownWithSearch.es';
+
+export function getDataObjects() {
+	const PARAMS = {keywords: '', page: -1, pageSize: -1, sort: ''};
+
+	return Promise.all([
+		getItem(
+			'/o/data-engine/v2.0/data-definitions/by-content-type/app-builder',
+			PARAMS
+		).then(({items}) => items),
+		getItem(
+			'/o/data-engine/v2.0/data-definitions/by-content-type/native-object',
+			PARAMS
+		).then(({items}) => items),
+	]).then(([customObjects, nativeObjects]) => {
+		return [
+			...customObjects.map((item) => ({
+				...item,
+				name: getLocalizedValue(item.defaultLanguageId, item.name),
+				type: 'custom',
+			})),
+			...nativeObjects.map((item) => ({
+				...item,
+				name: getLocalizedValue(item.defaultLanguageId, item.name),
+				type: 'native',
+			})),
+		];
+	});
+}
 
 export default ({defaultValue, label, onSelect, selectedValue, visible}) => {
 	const [state, setState] = useState({
@@ -29,50 +57,26 @@ export default ({defaultValue, label, onSelect, selectedValue, visible}) => {
 	const [items, setItems] = useState([]);
 
 	const doFetch = () => {
-		const params = {keywords: '', page: -1, pageSize: -1, sort: ''};
-
 		setState({
 			error: null,
 			isLoading: true,
 		});
 
-		return Promise.all([
-			getItem(
-				'/o/data-engine/v2.0/data-definitions/by-content-type/app-builder',
-				params
-			),
-			getItem(
-				'/o/data-engine/v2.0/data-definitions/by-content-type/native-object',
-				params
-			),
-		])
-			.then(([customObjects, nativeObjects]) => {
-				const newItems = [
-					...customObjects.items.map((item) => ({
-						...item,
-						type: 'custom',
-					})),
-					...nativeObjects.items.map((item) => ({
-						...item,
-						type: 'native',
-					})),
-				];
-				setItems(newItems);
+		getDataObjects()
+			.then((items) => {
+				setItems(items);
 				setState({
 					error: null,
 					isLoading: false,
 				});
 
 				if (defaultValue) {
-					const defaultItem = newItems.find(
+					const defaultItem = items.find(
 						({id}) => id === defaultValue
 					);
 
 					if (defaultItem) {
-						onSelect({
-							...defaultItem,
-							name: getTranslatedValue(defaultItem, 'name'),
-						});
+						onSelect(defaultItem);
 					}
 				}
 			})

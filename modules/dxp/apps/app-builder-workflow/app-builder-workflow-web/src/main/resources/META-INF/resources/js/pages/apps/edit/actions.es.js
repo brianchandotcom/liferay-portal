@@ -10,56 +10,44 @@
  */
 
 import {getItem} from 'app-builder-web/js/utils/client.es';
-import {getTranslatedValue} from 'app-builder-web/js/utils/utils.es';
+import {getLocalizedValue} from 'app-builder-web/js/utils/lang.es';
 
 import {getFormViewFields, validateSelectedFormViews} from './utils.es';
 
 const PARAMS = {keywords: '', page: -1, pageSize: -1, sort: ''};
 
+export function buildLocalizedItems(defaultLanguageId) {
+	return (items) =>
+		items.map((item) => ({
+			...item,
+			name: getLocalizedValue(defaultLanguageId, item.name),
+		}));
+}
+
 export function getAssigneeRoles() {
 	return getItem('/o/headless-admin-user/v1.0/roles').then(getItems);
 }
 
-export function getDataObjects() {
-	return Promise.all([
-		getItem(
-			'/o/data-engine/v2.0/data-definitions/by-content-type/app-builder',
-			PARAMS
-		).then(getItems),
-		getItem(
-			'/o/data-engine/v2.0/data-definitions/by-content-type/native-object',
-			PARAMS
-		).then(getItems),
-	]).then(([customObjects, nativeObjects]) => {
-		return [
-			...customObjects.map((item) => ({
-				...item,
-				type: 'custom',
-			})),
-			...nativeObjects.map((item) => ({
-				...item,
-				type: 'native',
-			})),
-		];
-	});
-}
-
-export function getFormViews(dataDefinitionId) {
+export function getFormViews(dataDefinitionId, defaultLanguageId) {
 	return getItem(
 		`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-layouts`,
 		PARAMS
-	).then(getItems);
+	)
+		.then(getItems)
+		.then(buildLocalizedItems(defaultLanguageId));
 }
 
 function getItems({items}) {
 	return items;
 }
 
-export function getTableViews(dataDefinitionId) {
+export function getTableViews(dataDefinitionId, defaultLanguageId) {
 	return getItem(
 		`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-list-views`,
 		PARAMS
-	).then(getItems);
+	)
+		.then(getItems)
+		.then(buildLocalizedItems(defaultLanguageId));
 }
 
 export function populateConfigData([
@@ -70,18 +58,11 @@ export function populateConfigData([
 	formViews,
 	tableViews,
 ]) {
-	const parseItem = (item = {}) => {
-		return {
-			...item,
-			name: getTranslatedValue(item, 'name'),
-		};
-	};
-
 	appWorkflow.appWorkflowTasks.forEach((task) => {
 		task.appWorkflowDataLayoutLinks = task.appWorkflowDataLayoutLinks.map(
 			(item) => {
-				const {name, ...formView} = parseItem(
-					formViews.find(({id}) => id === item.dataLayoutId)
+				const {name, ...formView} = formViews.find(
+					({id}) => id === item.dataLayoutId
 				);
 
 				return {...item, fields: getFormViewFields(formView), name};
@@ -102,13 +83,12 @@ export function populateConfigData([
 	const {appWorkflowStates = [], appWorkflowTasks = []} = appWorkflow;
 	const initialState = appWorkflowStates.find(({initial}) => initial);
 	const finalState = appWorkflowStates.find(({initial}) => !initial);
+	const formView = formViews.find(({id}) => id === app.dataLayoutId);
 
 	const config = {
 		currentStep: initialState,
-		dataObject: parseItem(
-			dataObjects.find(({id}) => id === app.dataDefinitionId)
-		),
-		formView: parseItem(formViews.find(({id}) => id === app.dataLayoutId)),
+		dataObject: dataObjects.find(({id}) => id === app.dataDefinitionId),
+		formView: {...formView, fields: getFormViewFields(formView)},
 		listItems: {
 			assigneeRoles,
 			dataObjects,
@@ -117,9 +97,7 @@ export function populateConfigData([
 			tableViews,
 		},
 		steps: [initialState, ...appWorkflowTasks, finalState],
-		tableView: parseItem(
-			tableViews.find(({id}) => id === app.dataListViewId)
-		),
+		tableView: tableViews.find(({id}) => id === app.dataListViewId),
 	};
 
 	return [app, config];

@@ -42,7 +42,7 @@ public class CTJSONObjectUtil {
 		JSONObject userInfoJSONObject = JSONFactoryUtil.createJSONObject();
 
 		List<User> users = userLocalService.dslQuery(
-			DSLQueryFactoryUtil.select(
+			DSLQueryFactoryUtil.selectDistinct(
 				UserTable.INSTANCE
 			).from(
 				UserTable.INSTANCE

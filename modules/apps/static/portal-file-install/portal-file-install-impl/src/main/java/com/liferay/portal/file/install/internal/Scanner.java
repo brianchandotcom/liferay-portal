@@ -49,7 +49,7 @@ public class Scanner implements Closeable {
 		watchedDirectory = _canon(directory);
 
 		if ((filterString != null) && (filterString.length() > 0)) {
-			_filter = new FilenameFilter() {
+			_filenameFilter = new FilenameFilter() {
 
 				@Override
 				public boolean accept(File dir, String name) {
@@ -63,7 +63,7 @@ public class Scanner implements Closeable {
 			};
 		}
 		else {
-			_filter = null;
+			_filenameFilter = null;
 		}
 
 		if ((subdirMode == null) || SUBDIR_MODE_JAR.equals(subdirMode)) {
@@ -96,7 +96,7 @@ public class Scanner implements Closeable {
 	}
 
 	public Set<File> scan(boolean reportImmediately) {
-		File[] list = watchedDirectory.listFiles(_filter);
+		File[] list = watchedDirectory.listFiles(_filenameFilter);
 
 		Set<File> files = _processFiles(reportImmediately, list);
 
@@ -179,7 +179,8 @@ public class Scanner implements Closeable {
 				else if (_recurseSubdir) {
 					files.addAll(
 						_processFiles(
-							reportImmediately, file.listFiles(_filter)));
+							reportImmediately,
+							file.listFiles(_filenameFilter)));
 
 					continue;
 				}
@@ -229,7 +230,7 @@ public class Scanner implements Closeable {
 		return files;
 	}
 
-	private final FilenameFilter _filter;
+	private final FilenameFilter _filenameFilter;
 	private final boolean _recurseSubdir;
 
 }

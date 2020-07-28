@@ -34,8 +34,8 @@ import java.util.Set;
  */
 public class TypedProperties extends AbstractMap<String, Object> {
 
-	public TypedProperties(SubstitutionalCallback callback) {
-		_callback = callback;
+	public TypedProperties(SubstitutionalCallback substitutionalCallback) {
+		_substitutionalCallback = substitutionalCallback;
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class TypedProperties extends AbstractMap<String, Object> {
 	public void load(Reader reader) throws IOException {
 		_storage.loadLayout(reader);
 
-		_substitute(_callback);
+		_substitute(_substitutionalCallback);
 	}
 
 	@Override
@@ -149,8 +149,6 @@ public class TypedProperties extends AbstractMap<String, Object> {
 
 	private static final String _ENV_PREFIX = "env:";
 
-	private final SubstitutionalCallback _callback;
-
 	private final SubstitutionalCallback _defaultSubstitutionCallback =
 		value -> {
 			if (value.startsWith(_ENV_PREFIX)) {
@@ -161,6 +159,7 @@ public class TypedProperties extends AbstractMap<String, Object> {
 		};
 
 	private final Properties _storage = new Properties();
+	private final SubstitutionalCallback _substitutionalCallback;
 
 	private static class DynamicMap extends AbstractMap<String, String> {
 

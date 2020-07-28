@@ -55,21 +55,22 @@ public class InterpolationUtil {
 
 	public static String substVars(
 			String value, String currentKey, Map<String, String> cycleMap,
-			Map<String, String> configProps, SubstitutionalCallback callback,
+			Map<String, String> configProps,
+			SubstitutionalCallback substitutionalCallback,
 			boolean substituteFromConfig)
 		throws IllegalArgumentException {
 
 		return _unescape(
 			_substVars(
-				value, currentKey, cycleMap, configProps, callback,
-				substituteFromConfig));
+				value, currentKey, cycleMap, configProps,
+				substitutionalCallback, substituteFromConfig));
 	}
 
 	public static class BundleContextSubstitutionCallback
 		implements SubstitutionalCallback {
 
-		public BundleContextSubstitutionCallback(BundleContext context) {
-			_bundleContext = context;
+		public BundleContextSubstitutionCallback(BundleContext bundleContext) {
+			_bundleContext = bundleContext;
 		}
 
 		@Override
@@ -129,7 +130,8 @@ public class InterpolationUtil {
 
 	private static String _substVars(
 			String value, String currentKey, Map<String, String> cycleMap,
-			Map<String, String> configProps, SubstitutionalCallback callback,
+			Map<String, String> configProps,
+			SubstitutionalCallback substitutionalCallback,
 			boolean substituteFromConfig)
 		throws IllegalArgumentException {
 
@@ -241,8 +243,8 @@ public class InterpolationUtil {
 		}
 
 		if ((substValue == null) && (variable.length() > 0)) {
-			if (callback != null) {
-				substValue = callback.getValue(variable);
+			if (substitutionalCallback != null) {
+				substValue = substitutionalCallback.getValue(variable);
 			}
 
 			if (substValue == null) {
@@ -289,7 +291,7 @@ public class InterpolationUtil {
 		// substitutions to make
 
 		value = _substVars(
-			value, currentKey, cycleMap, configProps, callback,
+			value, currentKey, cycleMap, configProps, substitutionalCallback,
 			substituteFromConfig);
 
 		cycleMap.remove(currentKey);

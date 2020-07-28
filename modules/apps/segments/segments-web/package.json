@@ -2,8 +2,8 @@
 	"dependencies": {
 		"@clayui/alert": "3.4.0",
 		"@clayui/badge": "3.1.0",
-		"@clayui/button": "3.3.1",
-		"@clayui/form": "3.9.0",
+		"@clayui/button": "3.4.0",
+		"@clayui/form": "3.10.0",
 		"@clayui/icon": "3.0.5",
 		"@clayui/layout": "3.1.1",
 		"@clayui/link": "3.2.0",

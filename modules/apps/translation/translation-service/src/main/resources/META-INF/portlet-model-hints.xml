@@ -18,5 +18,9 @@
 		</field>
 		<field name="contentType" type="String" />
 		<field name="languageId" type="String" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
 	</model>
 </model-hints>

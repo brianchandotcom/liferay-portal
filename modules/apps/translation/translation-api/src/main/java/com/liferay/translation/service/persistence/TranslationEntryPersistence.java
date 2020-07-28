@@ -390,6 +390,315 @@ public interface TranslationEntryPersistence
 	public int countByUuid_C(String uuid, long companyId);
 
 	/**
+	 * Returns all the translation entries where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @return the matching translation entries
+	 */
+	public java.util.List<TranslationEntry> findByG_S(long groupId, int status);
+
+	/**
+	 * Returns a range of all the translation entries where groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TranslationEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of translation entries
+	 * @param end the upper bound of the range of translation entries (not inclusive)
+	 * @return the range of matching translation entries
+	 */
+	public java.util.List<TranslationEntry> findByG_S(
+		long groupId, int status, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the translation entries where groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TranslationEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of translation entries
+	 * @param end the upper bound of the range of translation entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching translation entries
+	 */
+	public java.util.List<TranslationEntry> findByG_S(
+		long groupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TranslationEntry>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the translation entries where groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TranslationEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of translation entries
+	 * @param end the upper bound of the range of translation entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching translation entries
+	 */
+	public java.util.List<TranslationEntry> findByG_S(
+		long groupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TranslationEntry>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first translation entry in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching translation entry
+	 * @throws NoSuchEntryException if a matching translation entry could not be found
+	 */
+	public TranslationEntry findByG_S_First(
+			long groupId, int status,
+			com.liferay.portal.kernel.util.OrderByComparator<TranslationEntry>
+				orderByComparator)
+		throws NoSuchEntryException;
+
+	/**
+	 * Returns the first translation entry in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching translation entry, or <code>null</code> if a matching translation entry could not be found
+	 */
+	public TranslationEntry fetchByG_S_First(
+		long groupId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<TranslationEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the last translation entry in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching translation entry
+	 * @throws NoSuchEntryException if a matching translation entry could not be found
+	 */
+	public TranslationEntry findByG_S_Last(
+			long groupId, int status,
+			com.liferay.portal.kernel.util.OrderByComparator<TranslationEntry>
+				orderByComparator)
+		throws NoSuchEntryException;
+
+	/**
+	 * Returns the last translation entry in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching translation entry, or <code>null</code> if a matching translation entry could not be found
+	 */
+	public TranslationEntry fetchByG_S_Last(
+		long groupId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<TranslationEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the translation entries before and after the current translation entry in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param translationEntryId the primary key of the current translation entry
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next translation entry
+	 * @throws NoSuchEntryException if a translation entry with the primary key could not be found
+	 */
+	public TranslationEntry[] findByG_S_PrevAndNext(
+			long translationEntryId, long groupId, int status,
+			com.liferay.portal.kernel.util.OrderByComparator<TranslationEntry>
+				orderByComparator)
+		throws NoSuchEntryException;
+
+	/**
+	 * Removes all the translation entries where groupId = &#63; and status = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 */
+	public void removeByG_S(long groupId, int status);
+
+	/**
+	 * Returns the number of translation entries where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @return the number of matching translation entries
+	 */
+	public int countByG_S(long groupId, int status);
+
+	/**
+	 * Returns all the translation entries where companyId = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @return the matching translation entries
+	 */
+	public java.util.List<TranslationEntry> findByC_S(
+		long companyId, int status);
+
+	/**
+	 * Returns a range of all the translation entries where companyId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TranslationEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param start the lower bound of the range of translation entries
+	 * @param end the upper bound of the range of translation entries (not inclusive)
+	 * @return the range of matching translation entries
+	 */
+	public java.util.List<TranslationEntry> findByC_S(
+		long companyId, int status, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the translation entries where companyId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TranslationEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param start the lower bound of the range of translation entries
+	 * @param end the upper bound of the range of translation entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching translation entries
+	 */
+	public java.util.List<TranslationEntry> findByC_S(
+		long companyId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TranslationEntry>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the translation entries where companyId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TranslationEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param start the lower bound of the range of translation entries
+	 * @param end the upper bound of the range of translation entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching translation entries
+	 */
+	public java.util.List<TranslationEntry> findByC_S(
+		long companyId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TranslationEntry>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first translation entry in the ordered set where companyId = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching translation entry
+	 * @throws NoSuchEntryException if a matching translation entry could not be found
+	 */
+	public TranslationEntry findByC_S_First(
+			long companyId, int status,
+			com.liferay.portal.kernel.util.OrderByComparator<TranslationEntry>
+				orderByComparator)
+		throws NoSuchEntryException;
+
+	/**
+	 * Returns the first translation entry in the ordered set where companyId = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching translation entry, or <code>null</code> if a matching translation entry could not be found
+	 */
+	public TranslationEntry fetchByC_S_First(
+		long companyId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<TranslationEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the last translation entry in the ordered set where companyId = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching translation entry
+	 * @throws NoSuchEntryException if a matching translation entry could not be found
+	 */
+	public TranslationEntry findByC_S_Last(
+			long companyId, int status,
+			com.liferay.portal.kernel.util.OrderByComparator<TranslationEntry>
+				orderByComparator)
+		throws NoSuchEntryException;
+
+	/**
+	 * Returns the last translation entry in the ordered set where companyId = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching translation entry, or <code>null</code> if a matching translation entry could not be found
+	 */
+	public TranslationEntry fetchByC_S_Last(
+		long companyId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<TranslationEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the translation entries before and after the current translation entry in the ordered set where companyId = &#63; and status = &#63;.
+	 *
+	 * @param translationEntryId the primary key of the current translation entry
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next translation entry
+	 * @throws NoSuchEntryException if a translation entry with the primary key could not be found
+	 */
+	public TranslationEntry[] findByC_S_PrevAndNext(
+			long translationEntryId, long companyId, int status,
+			com.liferay.portal.kernel.util.OrderByComparator<TranslationEntry>
+				orderByComparator)
+		throws NoSuchEntryException;
+
+	/**
+	 * Removes all the translation entries where companyId = &#63; and status = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 */
+	public void removeByC_S(long companyId, int status);
+
+	/**
+	 * Returns the number of translation entries where companyId = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @return the number of matching translation entries
+	 */
+	public int countByC_S(long companyId, int status);
+
+	/**
 	 * Returns the translation entry where classNameId = &#63; and classPK = &#63; and languageId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
 	 *
 	 * @param classNameId the class name ID

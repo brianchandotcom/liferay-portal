@@ -21,7 +21,6 @@ import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistr
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -78,7 +77,7 @@ public class ViewDiscardDisplayContext {
 	public Map<String, Object> getReactData() {
 		JSONArray ctEntriesJSONArray = JSONFactoryUtil.createJSONArray();
 		Set<Long> ctEntryIds = new HashSet<>();
-		JSONObject typeNamesJSONObject = JSONFactoryUtil.createJSONObject();
+		Set<Long> classNameIds = new HashSet<>();
 
 		for (CTEntry ctEntry :
 				_ctCollectionLocalService.getDiscardCTEntries(
@@ -106,15 +105,7 @@ public class ViewDiscardDisplayContext {
 
 			ctEntryIds.add(ctEntry.getCtEntryId());
 
-			if (!typeNamesJSONObject.has(
-					String.valueOf(ctEntry.getModelClassNameId()))) {
-
-				typeNamesJSONObject.put(
-					String.valueOf(ctEntry.getModelClassNameId()),
-					_ctDisplayRendererRegistry.getTypeName(
-						_themeDisplay.getLocale(),
-						ctEntry.getModelClassNameId()));
-			}
+			classNameIds.add(ctEntry.getModelClassNameId());
 		}
 
 		return HashMapBuilder.<String, Object>put(
@@ -140,7 +131,9 @@ public class ViewDiscardDisplayContext {
 			"spritemap",
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
 		).put(
-			"typeNames", typeNamesJSONObject
+			"typeNames",
+			DisplayContextUtil.getTypeNamesJSONObject(
+				classNameIds, _ctDisplayRendererRegistry, _themeDisplay)
 		).put(
 			"userInfo",
 			DisplayContextUtil.getUserInfoJSONObject(

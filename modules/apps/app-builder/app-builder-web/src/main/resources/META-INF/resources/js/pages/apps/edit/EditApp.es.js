@@ -18,6 +18,7 @@ import React, {useEffect, useReducer, useState} from 'react';
 import ControlMenu from '../../../components/control-menu/ControlMenu.es';
 import {Loading} from '../../../components/loading/Loading.es';
 import MultiStepNav from '../../../components/multi-step-nav/MultiStepNav.es';
+import useDataDefinition from '../../../hooks/useDataDefinition.es';
 import {toQuery} from '../../../hooks/useQuery.es';
 import {getItem} from '../../../utils/client.es';
 import DeployApp from './DeployApp.es';
@@ -27,14 +28,17 @@ import EditAppFooter from './EditAppFooter.es';
 import EditAppHeader from './EditAppHeader.es';
 
 export default ({
-	availableLanguageIds,
-	defaultLanguageId,
 	location: {search},
 	match: {
 		params: {appId, dataDefinitionId},
 	},
 	scope,
 }) => {
+	const {
+		availableLanguageIds = [],
+		defaultLanguageId = '',
+	} = useDataDefinition(dataDefinitionId);
+
 	const [currentStep, setCurrentStep] = useState(0);
 	const [isLoading, setLoading] = useState(false);
 	const [editingLanguageId, setEditingLanguageId] = useState('');

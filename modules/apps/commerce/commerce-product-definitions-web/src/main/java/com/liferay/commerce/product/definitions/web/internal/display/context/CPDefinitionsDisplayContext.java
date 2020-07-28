@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -64,8 +65,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionURL;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -140,6 +144,26 @@ public class CPDefinitionsDisplayContext
 				dropdownItem.setTarget("event");
 			}
 		).build();
+	}
+
+	public List<DropdownItem> getBulkActionDropdownItems() {
+		List<DropdownItem> bulkActions = new ArrayList<>();
+
+		RenderResponse renderResponse = cpRequestHelper.getRenderResponse();
+
+		ActionURL actionURL = renderResponse.createActionURL();
+
+		actionURL.setParameter(
+			ActionRequest.ACTION_NAME, "/cp_definitions/edit_cp_definition");
+		actionURL.setParameter(Constants.CMD, Constants.DELETE);
+
+		bulkActions.add(
+			new ClayDataSetActionDropdownItem(
+				actionURL.toString(), "trash", "delete", "delete",
+				LanguageUtil.get(httpServletRequest, "delete"), "delete",
+				null));
+
+		return bulkActions;
 	}
 
 	public String getChannelItemSelectorUrl() throws PortalException {

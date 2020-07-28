@@ -36,6 +36,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 		<clay:headless-data-set-display
 			apiURL="/o/headless-commerce-admin-catalog/v1.0/products?nestedFields=skus,catalog"
+			bulkActionDropdownItems="<%= cpDefinitionsDisplayContext.getBulkActionDropdownItems() %>"
 			clayDataSetActionDropdownItems="<%= cpDefinitionsDisplayContext.getClayDataSetActionDropdownItems() %>"
 			creationMenu="<%= cpDefinitionsDisplayContext.getCreationMenu() %>"
 			formId="fm"
@@ -44,6 +45,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"
 			portletURL="<%= portletURL %>"
+			selectedItemsKey="id"
+			selectionType="multiple"
 			style="stacked"
 		/>
 	</aui:form>

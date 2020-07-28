@@ -86,6 +86,8 @@ definition {
 			PageEditor.addWidget(
 				portletName = "Asset Publisher",
 				targetFragmentName = "Image");
+
+			Refresh();
 		}
 
 		task ("Edit inline content of Heading") {

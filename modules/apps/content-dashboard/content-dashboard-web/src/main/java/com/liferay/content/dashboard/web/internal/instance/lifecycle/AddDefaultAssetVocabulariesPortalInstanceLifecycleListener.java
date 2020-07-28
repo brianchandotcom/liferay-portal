@@ -16,6 +16,7 @@ package com.liferay.content.dashboard.web.internal.instance.lifecycle;
 
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
@@ -46,13 +47,18 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		_addAssetVocabulary(
-			company, PropsValues.ASSET_VOCABULARY_DEFAULT, false);
-		_addAssetVocabulary(company, "audience", true);
-		_addAssetVocabulary(company, "stage", true);
+			company, PropsValues.ASSET_VOCABULARY_DEFAULT,
+			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC);
+		_addAssetVocabulary(
+			company, "audience",
+			AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL);
+		_addAssetVocabulary(
+			company, "stage",
+			AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL);
 	}
 
 	private void _addAssetVocabulary(
-			Company company, String name, boolean system)
+			Company company, String name, int visibilityType)
 		throws Exception {
 
 		AssetVocabulary assetVocabulary =
@@ -88,7 +94,7 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 						LocaleUtil.getSiteDefault(), getClass()),
 					name)),
 			Collections.emptyMap(), assetVocabularySettingsHelper.toString(),
-			system, serviceContext);
+			visibilityType, serviceContext);
 	}
 
 	@Reference

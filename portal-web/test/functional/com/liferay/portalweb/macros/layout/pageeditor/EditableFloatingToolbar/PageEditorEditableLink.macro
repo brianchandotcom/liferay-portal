@@ -55,6 +55,8 @@ definition {
 			locator1 = "PageEditorEditableLink#URL",
 			value1 = "${url}");
 
+		Click(locator1 = "PageEditor#FRAGMENT_BODY_FLOATING_TOOLBAR_PANEL");
+
 		PageEditor.waitForAutoSave();
 	}
 

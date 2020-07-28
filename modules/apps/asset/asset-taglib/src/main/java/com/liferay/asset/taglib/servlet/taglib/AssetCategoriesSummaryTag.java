@@ -15,6 +15,7 @@
 package com.liferay.asset.taglib.servlet.taglib;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -56,8 +57,8 @@ public class AssetCategoriesSummaryTag<R> extends IncludeTag {
 		return _portletURL;
 	}
 
-	public boolean isShowSystem() {
-		return _showSystem;
+	public int[] getVisibleTypes() {
+		return _visibleTypes;
 	}
 
 	public void setClassName(String className) {
@@ -91,8 +92,8 @@ public class AssetCategoriesSummaryTag<R> extends IncludeTag {
 		_portletURL = portletURL;
 	}
 
-	public void setShowSystem(boolean showSystem) {
-		_showSystem = showSystem;
+	public void setVisibleTypes(int[] visibleTypes) {
+		_visibleTypes = visibleTypes;
 	}
 
 	@Override
@@ -105,7 +106,7 @@ public class AssetCategoriesSummaryTag<R> extends IncludeTag {
 		_message = null;
 		_paramName = null;
 		_portletURL = null;
-		_showSystem = false;
+		_visibleTypes = null;
 	}
 
 	@Override
@@ -143,8 +144,16 @@ public class AssetCategoriesSummaryTag<R> extends IncludeTag {
 			"liferay-asset:asset-categories-summary:paramName", _paramName);
 		httpServletRequest.setAttribute(
 			"liferay-asset:asset-categories-summary:portletURL", _portletURL);
+
+		if (_visibleTypes == null) {
+			_visibleTypes = new int[] {
+				AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC
+			};
+		}
+
 		httpServletRequest.setAttribute(
-			"liferay-asset:asset-categories-summary:showSystem", _showSystem);
+			"liferay-asset:asset-categories-summary:visibleTypes",
+			_visibleTypes);
 	}
 
 	private static final String _PAGE = "/asset_categories_summary/page.jsp";
@@ -155,6 +164,6 @@ public class AssetCategoriesSummaryTag<R> extends IncludeTag {
 	private String _message;
 	private String _paramName;
 	private PortletURL _portletURL;
-	private boolean _showSystem;
+	private int[] _visibleTypes;
 
 }

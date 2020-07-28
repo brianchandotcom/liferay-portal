@@ -51,8 +51,8 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 	@Override
 	public AssetVocabulary addVocabulary(
 			long groupId, String title, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, String settings, boolean system,
-			ServiceContext serviceContext)
+			Map<Locale, String> descriptionMap, String settings,
+			int visibilityType, ServiceContext serviceContext)
 		throws PortalException {
 
 		AssetCategoriesPermission.check(
@@ -60,7 +60,7 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 
 		return assetVocabularyLocalService.addVocabulary(
 			getUserId(), groupId, title, titleMap, descriptionMap, settings,
-			system, serviceContext);
+			visibilityType, serviceContext);
 	}
 
 	@Override
@@ -396,14 +396,15 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 	@Override
 	public AssetVocabulary updateVocabulary(
 			long vocabularyId, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, String settings, boolean system)
+			Map<Locale, String> descriptionMap, String settings,
+			int visibilityType)
 		throws PortalException {
 
 		AssetVocabularyPermission.check(
 			getPermissionChecker(), vocabularyId, ActionKeys.UPDATE);
 
 		return assetVocabularyLocalService.updateVocabulary(
-			vocabularyId, titleMap, descriptionMap, settings, system);
+			vocabularyId, titleMap, descriptionMap, settings, visibilityType);
 	}
 
 	@Override

@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.exception.DuplicateVocabularyException;
 import com.liferay.asset.kernel.exception.VocabularyNameException;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -100,12 +101,12 @@ public class AssetVocabularyLocalServiceImpl
 	public AssetVocabulary addVocabulary(
 			long userId, long groupId, String title,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String settings, boolean system, ServiceContext serviceContext)
+			String settings, int visibilityType, ServiceContext serviceContext)
 		throws PortalException {
 
 		return assetVocabularyLocalService.addVocabulary(
 			userId, groupId, titleMap.get(LocaleUtil.getSiteDefault()), title,
-			titleMap, descriptionMap, settings, system, serviceContext);
+			titleMap, descriptionMap, settings, visibilityType, serviceContext);
 	}
 
 	@Override
@@ -144,7 +145,7 @@ public class AssetVocabularyLocalServiceImpl
 	public AssetVocabulary addVocabulary(
 			long userId, long groupId, String name, String title,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String settings, boolean system, ServiceContext serviceContext)
+			String settings, int visibilityType, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Vocabulary
@@ -181,7 +182,7 @@ public class AssetVocabularyLocalServiceImpl
 
 		vocabulary.setDescriptionMap(descriptionMap);
 		vocabulary.setSettings(settings);
-		vocabulary.setSystem(system);
+		vocabulary.setVisibilityType(visibilityType);
 
 		vocabulary = assetVocabularyPersistence.update(vocabulary);
 
@@ -211,7 +212,7 @@ public class AssetVocabularyLocalServiceImpl
 
 		return addVocabulary(
 			userId, groupId, name, title, titleMap, descriptionMap, settings,
-			false, serviceContext);
+			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC, serviceContext);
 	}
 
 	@Override
@@ -455,14 +456,16 @@ public class AssetVocabularyLocalServiceImpl
 		throws PortalException {
 
 		return assetVocabularyLocalService.updateVocabulary(
-			vocabularyId, titleMap, descriptionMap, settings, false);
+			vocabularyId, titleMap, descriptionMap, settings,
+			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public AssetVocabulary updateVocabulary(
 			long vocabularyId, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, String settings, boolean system)
+			Map<Locale, String> descriptionMap, String settings,
+			int visibilityType)
 		throws PortalException {
 
 		AssetVocabulary vocabulary =
@@ -471,7 +474,7 @@ public class AssetVocabularyLocalServiceImpl
 		vocabulary.setTitleMap(titleMap);
 		vocabulary.setDescriptionMap(descriptionMap);
 		vocabulary.setSettings(settings);
-		vocabulary.setSystem(system);
+		vocabulary.setVisibilityType(visibilityType);
 
 		return assetVocabularyPersistence.update(vocabulary);
 	}

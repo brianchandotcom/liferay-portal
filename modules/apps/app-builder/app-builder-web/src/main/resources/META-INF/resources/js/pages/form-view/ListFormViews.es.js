@@ -17,7 +17,7 @@ import React, {useContext} from 'react';
 import {AppContext} from '../../AppContext.es';
 import Button from '../../components/button/Button.es';
 import ListView from '../../components/list-view/ListView.es';
-import useDefaultLanguageId from '../../hooks/useDefaultLanguageId.es';
+import useDataDefinition from '../../hooks/useDataDefinition.es';
 import {confirmDelete} from '../../utils/client.es';
 import {getLocalizedValue} from '../../utils/lang.es';
 import {fromNow} from '../../utils/time.es';
@@ -28,7 +28,7 @@ export default ({
 	},
 }) => {
 	const {basePortletURL} = useContext(AppContext);
-	const defaultLanguageId = useDefaultLanguageId(dataDefinitionId);
+	const {defaultLanguageId} = useDataDefinition(dataDefinitionId);
 
 	const getItemURL = (item) =>
 		Liferay.Util.PortletURL.createRenderURL(basePortletURL, {

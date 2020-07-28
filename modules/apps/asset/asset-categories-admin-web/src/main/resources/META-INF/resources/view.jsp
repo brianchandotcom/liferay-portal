@@ -111,6 +111,15 @@
 														iconCssClass="text-muted"
 														markupView="lexicon"
 													/>
+
+													<c:if test="<%= (vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL) %>">
+														<liferay-ui:icon
+															icon="low-vision"
+															iconCssClass="text-muted"
+															markupView="lexicon"
+															message="for-internal-use-only"
+														/>
+													</c:if>
 												</a>
 											</li>
 
@@ -140,6 +149,15 @@
 
 												<a class="nav-link text-truncate <%= (assetCategoriesDisplayContext.getVocabularyId() == vocabulary.getVocabularyId()) ? "active" : StringPool.BLANK %>" href="<%= vocabularyURL.toString() %>">
 													<%= HtmlUtil.escape(vocabulary.getTitle(locale)) %>
+
+													<c:if test="<%= (vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL) %>">
+														<liferay-ui:icon
+															icon="low-vision"
+															iconCssClass="text-muted"
+															markupView="lexicon"
+															message="for-internal-use-only"
+														/>
+													</c:if>
 												</a>
 											</li>
 

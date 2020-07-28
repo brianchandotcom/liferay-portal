@@ -704,6 +704,51 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "userfn userln");
 	}
 
+	@description = "This is a use case for LPS-117171."
+	@priority = "3"
+	test NoFilterByNavigationForPersonAccount {
+		for (var accountType : list "Business,Person") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Accounts",
+				panel = "Applications",
+				portlet = "Accounts");
+
+			Accounts.addCP(
+				accountDescription = "This is a ${accountType} Account.",
+				accountName = "${accountType} Account",
+				accountType = "${accountType}");
+		}
+
+		for (var accountUser : list "1,2") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Accounts",
+				panel = "Applications",
+				portlet = "Account Users");
+
+			AccountUsers.addUsers(
+				accountName = "Business Account",
+				userEmailAddress = "userea${accountUser}@liferay.com",
+				userFirstName = "userfn${accountUser}",
+				userLastName = "userln${accountUser}",
+				userScreenName = "usersn${accountUser}");
+		}
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		Accounts.gotoEdit(accountName = "Person Account");
+
+		AssertClick(
+			locator1 = "Account#USER_SELECT",
+			value1 = "Select");
+
+		SelectFrame(locator1 = "IFrame#ASSIGN_USER");
+
+		ManagementBar.viewNoSubheaderInFilterAndOrder(subheaderItem = "Filter by Navigation");
+	}
+
 	@priority = "4"
 	test ImpersonateUser {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

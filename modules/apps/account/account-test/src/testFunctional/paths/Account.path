@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USER_SELECT</td>
+	<td>//span[normalize-space(text())='User']//../following-sibling::span//*[normalize-space(text())='Select']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOMAIN_REMOVE_DOMAIN</td>
 	<td>//tr[contains(.,'${key_domainName}')]//span[contains(@class,' lfr-portal-tooltip')]</td>
 	<td></td>

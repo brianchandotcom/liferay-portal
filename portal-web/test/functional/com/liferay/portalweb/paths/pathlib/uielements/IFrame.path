@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSIGN_USER</td>
+	<td>//div[contains(.,'Assign User')]//iframe</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFIGURATION</td>
 	<td>//div[contains(@class,'modal-body')]/iframe[contains(@src,'portlet_configuration')]</td>
 	<td></td>

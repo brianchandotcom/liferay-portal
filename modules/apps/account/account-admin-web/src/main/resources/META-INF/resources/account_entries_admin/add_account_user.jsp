@@ -125,29 +125,33 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-new-user-to-x", accoun
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<c:if test="<%= accountEntryDisplay.isEmailDomainValidationEnabled(themeDisplay) && ListUtil.isNotEmpty(accountEntryDisplay.getDomains()) && !Objects.equals(accountEntryDisplay.getType(), AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON) %>">
+<c:if test="<%= !Objects.equals(accountEntryDisplay.getType(), AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON) && (accountEntryDisplay.isValidateUserEmailAddress(themeDisplay) || Validator.isNotNull(AccountUserDisplay.getBlockedDomains(themeDisplay.getCompanyId()))) %>">
 
 	<%
-	PortletURL viewValidDomainsURL = renderResponse.createRenderURL();
+	HashMap<String, Object> context = HashMapBuilder.<String, Object>put(
+			"accountEntryNames", accountEntryDisplay.getName()
+	).build();
 
-	viewValidDomainsURL.setParameter("mvcPath", "/account_users_admin/account_user/view_valid_domains.jsp");
-	viewValidDomainsURL.setParameter("validDomains", StringUtil.merge(accountEntryDisplay.getDomains(), StringPool.COMMA));
-	viewValidDomainsURL.setWindowState(LiferayWindowState.POP_UP);
+	if (accountEntryDisplay.isValidateUserEmailAddress(themeDisplay)) {
+		context.put("validDomains", StringUtil.merge(accountEntryDisplay.getDomains(), StringPool.COMMA));
+
+		PortletURL viewValidDomainsURL = renderResponse.createRenderURL();
+
+		viewValidDomainsURL.setParameter("mvcPath", "/account_users_admin/account_user/view_valid_domains.jsp");
+		viewValidDomainsURL.setParameter("validDomains", StringUtil.merge(accountEntryDisplay.getDomains(), StringPool.COMMA));
+		viewValidDomainsURL.setWindowState(LiferayWindowState.POP_UP);
+
+		context.put("viewValidDomainsURL", viewValidDomainsURL.toString());
+	}
+
+	if (Validator.isNotNull(AccountUserDisplay.getBlockedDomains(themeDisplay.getCompanyId()))) {
+		context.put("blockedDomains", AccountUserDisplay.getBlockedDomains(themeDisplay.getCompanyId()));
+	}
 	%>
 
 	<liferay-frontend:component
 		componentId="AccountUserEmailDomainValidator"
-		context='<%=
-			HashMapBuilder.<String, Object>put(
-				"accountEntryNames", accountEntryDisplay.getName()
-			).put(
-				"blockedDomains", AccountUserDisplay.getBlockedDomains(themeDisplay.getCompanyId())
-			).put(
-				"validDomains", StringUtil.merge(accountEntryDisplay.getDomains(), StringPool.COMMA)
-			).put(
-				"viewValidDomainsURL", viewValidDomainsURL.toString()
-			).build()
-		%>'
+		context="<%= context %>"
 		module="account_users_admin/js/AccountUserEmailDomainValidator.es"
 	/>
 </c:if>

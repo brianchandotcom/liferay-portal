@@ -157,6 +157,16 @@ public class AccountEntryDisplay {
 		return false;
 	}
 
+	public boolean isValidateUserEmailAddress(ThemeDisplay themeDisplay) {
+		if (isEmailDomainValidationEnabled(themeDisplay) &&
+			ListUtil.isNotEmpty(getDomains())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private AccountEntryDisplay() {
 		_accountEntryId = 0;
 		_active = true;

@@ -27,7 +27,9 @@ class AccountUserEmailDomainValidator extends PortletBase {
 				);
 
 				if (field) {
-					this.addFieldMessage_(field);
+					if (this.viewValidDomainsURL) {
+						this.addFieldMessage_(field);
+					}
 
 					const emailDomainFieldRule = this.getEmailDomainFieldRule_();
 
@@ -71,8 +73,12 @@ class AccountUserEmailDomainValidator extends PortletBase {
 
 	getEmailDomainFieldRule_() {
 		const accountEntryNames = this.accountEntryNames;
-		const blockedDomains = this.blockedDomains.split(',');
-		const validDomains = this.validDomains.split(',');
+		const blockedDomains = this.blockedDomains
+			? this.blockedDomains.split(',')
+			: this.blockedDomains;
+		const validDomains = this.validDomains
+			? this.validDomains.split(',')
+			: this.validDomains;
 		const validatorName = 'emailDomain';
 
 		return {
@@ -81,7 +87,7 @@ class AccountUserEmailDomainValidator extends PortletBase {
 				var errorMessage;
 				var hasError = false;
 
-				if (blockedDomains.includes(emailDomain)) {
+				if (!!blockedDomains && blockedDomains.includes(emailDomain)) {
 					hasError = true;
 
 					errorMessage = Liferay.Util.sub(
@@ -89,7 +95,10 @@ class AccountUserEmailDomainValidator extends PortletBase {
 						emailDomain
 					);
 				}
-				else if (!validDomains.includes(emailDomain)) {
+				else if (
+					!!validDomains &&
+					!validDomains.includes(emailDomain)
+				) {
 					hasError = true;
 
 					errorMessage = Liferay.Util.sub(

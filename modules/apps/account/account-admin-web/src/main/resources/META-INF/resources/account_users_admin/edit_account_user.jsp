@@ -47,29 +47,35 @@ if (Validator.isNull(screenNavigationEntryKey)) {
 AccountUserDisplay accountUserDisplay = AccountUserDisplay.of(selUser);
 %>
 
-<c:if test="<%= accountUserDisplay.isValidateEmailAddress() && Objects.equals(AccountScreenNavigationEntryConstants.CATEGORY_KEY_GENERAL, screenNavigationCategoryKey) && Objects.equals(AccountScreenNavigationEntryConstants.ENTRY_KEY_INFORMATION, screenNavigationEntryKey) %>">
+<c:if test="<%= Objects.equals(AccountScreenNavigationEntryConstants.CATEGORY_KEY_GENERAL, screenNavigationCategoryKey) && Objects.equals(AccountScreenNavigationEntryConstants.ENTRY_KEY_INFORMATION, screenNavigationEntryKey) %>">
+	<c:if test="<%= accountUserDisplay.isValidateEmailAddress() || Validator.isNotNull(AccountUserDisplay.getBlockedDomains(themeDisplay.getCompanyId())) %>">
 
-	<%
-	PortletURL viewValidDomainsURL = renderResponse.createRenderURL();
-
-	viewValidDomainsURL.setParameter("mvcPath", "/account_users_admin/account_user/view_valid_domains.jsp");
-	viewValidDomainsURL.setParameter("validDomains", accountUserDisplay.getValidDomainsString());
-	viewValidDomainsURL.setWindowState(LiferayWindowState.POP_UP);
-	%>
-
-	<liferay-frontend:component
-		componentId="AccountUserEmailDomainValidator"
-		context='<%=
-			HashMapBuilder.<String, Object>put(
+		<%
+		HashMap<String, Object> context = HashMapBuilder.<String, Object>put(
 				"accountEntryNames", accountUserDisplay.getAccountEntryNamesString(request)
-			).put(
-				"blockedDomains", AccountUserDisplay.getBlockedDomains(themeDisplay.getCompanyId())
-			).put(
-				"validDomains", accountUserDisplay.getValidDomainsString()
-			).put(
-				"viewValidDomainsURL", viewValidDomainsURL.toString()
-			).build()
-		%>'
-		module="account_users_admin/js/AccountUserEmailDomainValidator.es"
-	/>
+		).build();
+
+		if (accountUserDisplay.isValidateEmailAddress()) {
+			context.put("validDomains", accountUserDisplay.getValidDomainsString());
+
+			PortletURL viewValidDomainsURL = renderResponse.createRenderURL();
+
+			viewValidDomainsURL.setParameter("mvcPath", "/account_users_admin/account_user/view_valid_domains.jsp");
+			viewValidDomainsURL.setParameter("validDomains", accountUserDisplay.getValidDomainsString());
+			viewValidDomainsURL.setWindowState(LiferayWindowState.POP_UP);
+
+			context.put("viewValidDomainsURL", viewValidDomainsURL.toString());
+		}
+
+		if (Validator.isNotNull(AccountUserDisplay.getBlockedDomains(themeDisplay.getCompanyId()))) {
+			context.put("blockedDomains", AccountUserDisplay.getBlockedDomains(themeDisplay.getCompanyId()));
+		}
+		%>
+
+		<liferay-frontend:component
+			componentId="AccountUserEmailDomainValidator"
+			context="<%= context %>"
+			module="account_users_admin/js/AccountUserEmailDomainValidator.es"
+		/>
+	</c:if>
 </c:if>

@@ -132,7 +132,11 @@ const OptionList = ({options = [], icon}) => {
 								'page-editor__sidebar__design-options__tab-card--active': isActive,
 							})}
 							displayType="file"
-							onClick={() => onClick(dispatch)}
+							onClick={() => {
+								if (!isActive) {
+									onClick(dispatch);
+								}
+							}}
 							selectable
 						>
 							<ClayCard.AspectRatio className="card-item-first">

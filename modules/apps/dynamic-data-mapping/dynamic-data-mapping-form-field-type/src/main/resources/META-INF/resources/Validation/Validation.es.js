@@ -13,7 +13,8 @@
  */
 
 import ClayForm from '@clayui/form';
-import React, {useState} from 'react';
+import {usePrevious} from 'frontend-js-react-web';
+import React, {useEffect, useState} from 'react';
 
 import Checkbox from '../Checkbox/Checkbox.es';
 import Numeric from '../Numeric/Numeric.es';
@@ -24,6 +25,7 @@ import {getSelectedValidation, transformData} from './transform.es';
 
 const Validation = ({
 	dataType,
+	defaultLanguageId,
 	editingLanguageId,
 	enableValidation: initialEnableValidation,
 	errorMessage: initialErrorMessage,
@@ -96,6 +98,26 @@ const Validation = ({
 	};
 
 	const transformSelectedValidation = getSelectedValidation(validations);
+
+	const prevEditingLanguageId = usePrevious(editingLanguageId);
+
+	useEffect(() => {
+		if (prevEditingLanguageId !== editingLanguageId) {
+			setState((prevState) => {
+				const {errorMessage, parameter} = value;
+
+				return {
+					...prevState,
+					errorMessage: errorMessage[editingLanguageId]
+						? errorMessage[editingLanguageId]
+						: errorMessage[defaultLanguageId],
+					parameter: parameter[editingLanguageId]
+						? parameter[editingLanguageId]
+						: parameter[defaultLanguageId],
+				};
+			});
+		}
+	}, [defaultLanguageId, editingLanguageId, prevEditingLanguageId, value]);
 
 	return (
 		<ClayForm.Group className="lfr-ddm-form-field-validation">
@@ -192,6 +214,7 @@ const Main = ({
 	return (
 		<Validation
 			{...data}
+			defaultLanguageId={defaultLanguageId}
 			editingLanguageId={editingLanguageId}
 			label={label}
 			name={name}

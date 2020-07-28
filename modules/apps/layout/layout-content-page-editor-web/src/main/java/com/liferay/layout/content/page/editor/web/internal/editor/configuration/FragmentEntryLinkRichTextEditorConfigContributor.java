@@ -99,6 +99,8 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 		).put(
 			"removePlugins", getRemovePluginsLists()
 		).put(
+			"skin", "moono-lisa"
+		).put(
 			"spritemap",
 			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
 		).put(

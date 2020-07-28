@@ -83,6 +83,8 @@ public class FragmentEntryLinkEditorConfigContributor
 		).put(
 			"removePlugins", getRemovePluginsLists()
 		).put(
+			"skin", "moono-lisa"
+		).put(
 			"toolbars", JSONFactoryUtil.createJSONObject()
 		);
 	}

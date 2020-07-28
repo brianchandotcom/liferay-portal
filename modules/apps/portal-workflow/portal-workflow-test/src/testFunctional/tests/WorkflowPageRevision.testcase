@@ -243,8 +243,8 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-58754"
-	@priority = "2"
 	@ignore = "true"
+	@priority = "2"
 	test WithdrawWorkflowSubmissionFromRemovedUser {
 
 		ApplicationsMenu.gotoPortlet(

@@ -22,7 +22,6 @@ import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -137,7 +136,6 @@ public class AnalyticsReportsPortletTest {
 		properties.put("trafficSourcesEnabled", true);
 
 		try {
-
 			MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
 				_getMockLiferayPortletRenderRequest();
 

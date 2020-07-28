@@ -80,7 +80,7 @@ export default function LinkField({field, onValueSelect, value}) {
 		if (nextValue.classNameId && nextValue.classPK && nextValue.fieldId) {
 			setMappedHrefPreview('');
 
-			InfoItemService.getAssetFieldValue({
+			InfoItemService.getItemFieldValue({
 				...nextValue,
 				languageId,
 				onNetworkStatus: () => {},

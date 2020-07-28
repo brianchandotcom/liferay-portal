@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-		"mvc.command.name=/content_layout/get_asset_mapping_fields"
+		"mvc.command.name=/content_layout/get_item_mapping_fields"
 	},
 	service = MVCResourceCommand.class
 )

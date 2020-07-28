@@ -106,7 +106,31 @@ describe('SidebarPanelInfoView', () => {
 		cleanup();
 	});
 
-	it('renders sidebar panel info view according to the API', () => {
+	it('renders', () => {
+		const {asFragment} = render(
+			<Sidebar>
+				<SidebarPanelInfoView
+					categories={mockCategories}
+					classPK={mockClassPK}
+					createDate={mockCreateDate}
+					data={mockData}
+					languageTag={'en'}
+					modifiedDate={mockModifiedDate}
+					subType={mockSubType}
+					tags={mockTags}
+					title={mockTitle}
+					userName={mockUserName}
+					userPortraitURL={''}
+					versions={mockVersions}
+					viewURLs={mockViewURLs}
+				/>
+			</Sidebar>
+		);
+
+		expect(asFragment()).toMatchSnapshot();
+	});
+
+	it('renders sidebar panel with info according to the API', () => {
 		const {getByText} = render(
 			<Sidebar>
 				<SidebarPanelInfoView

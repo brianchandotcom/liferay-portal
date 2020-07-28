@@ -34,20 +34,20 @@ import org.json.JSONObject;
 /**
  * @author Kenji Heigel
  */
-public class CISystemStatus {
+public class JenkinsCohort {
 
-	public CISystemStatus(String cohortName) {
-		_cohortName = cohortName;
+	public JenkinsCohort(String name) {
+		_name = name;
 
 		update();
 	}
 
-	public String getCohortName() {
-		return _cohortName;
-	}
-
 	public int getIdleCINodeCount() {
 		return _idleCINodeCount;
+	}
+
+	public String getName() {
+		return _name;
 	}
 
 	public int getOnlineCINodeCount() {
@@ -89,7 +89,7 @@ public class CISystemStatus {
 
 		List<JenkinsMaster> jenkinsMasters =
 			JenkinsResultsParserUtil.getJenkinsMasters(
-				buildProperties, 16, getCohortName());
+				buildProperties, 16, getName());
 
 		final List<String> jobURLs = new ArrayList<>();
 
@@ -142,6 +142,7 @@ public class CISystemStatus {
 		sb.append(");\nvar nodeData = ");
 
 		JSONArray nodeDataJSONArray = new JSONArray();
+
 		JSONObject nodeDataJSONObject = new JSONObject();
 
 		nodeDataJSONObject.put("CI Node Capacity", getOnlineCINodeCount());
@@ -226,9 +227,9 @@ public class CISystemStatus {
 	private static final Pattern _jobNamePattern = Pattern.compile(
 		"https?:.*job\\/(.*?)\\/");
 
-	private final String _cohortName;
 	private int _idleCINodeCount;
 	private final Map<String, JobDatum> _jobData = new HashMap<>();
+	private final String _name;
 	private int _onlineCINodeCount;
 
 	private class JobDatum {
@@ -247,8 +248,8 @@ public class CISystemStatus {
 
 		public double getLoadPercentage() {
 			return (double)getTotalBuildCount() /
-				(double)(CISystemStatus.this.getRunningBuildCount() +
-					CISystemStatus.this.getQueuedBuildCount());
+				(double)(JenkinsCohort.this.getRunningBuildCount() +
+					JenkinsCohort.this.getQueuedBuildCount());
 		}
 
 		public int getQueuedBuildCount() {

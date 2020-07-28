@@ -15,6 +15,7 @@
 package com.liferay.change.tracking.web.internal.display.context;
 
 import com.liferay.change.tracking.model.CTEntryTable;
+import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -29,11 +30,29 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Samuel Trong Tran
  */
 public class DisplayContextUtil {
+
+	public static JSONObject getTypeNamesJSONObject(
+		Set<Long> classNameIds,
+		CTDisplayRendererRegistry ctDisplayRendererRegistry,
+		ThemeDisplay themeDisplay) {
+
+		JSONObject typeNamesJSONObject = JSONFactoryUtil.createJSONObject();
+
+		for (long classNameId : classNameIds) {
+			String typeName = ctDisplayRendererRegistry.getTypeName(
+				themeDisplay.getLocale(), classNameId);
+
+			typeNamesJSONObject.put(String.valueOf(classNameId), typeName);
+		}
+
+		return typeNamesJSONObject;
+	}
 
 	public static JSONObject getUserInfoJSONObject(
 		Predicate predicate, ThemeDisplay themeDisplay,

@@ -313,20 +313,9 @@ public class ViewChangesDisplayContext {
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
 		).put(
 			"typeNames",
-			() -> {
-				JSONObject typeNamesJSONObject =
-					JSONFactoryUtil.createJSONObject();
-
-				for (long classNameId : classNameIdClassPKsMap.keySet()) {
-					String typeName = _ctDisplayRendererRegistry.getTypeName(
-						_themeDisplay.getLocale(), classNameId);
-
-					typeNamesJSONObject.put(
-						String.valueOf(classNameId), typeName);
-				}
-
-				return typeNamesJSONObject;
-			}
+			DisplayContextUtil.getTypeNamesJSONObject(
+				classNameIdClassPKsMap.keySet(), _ctDisplayRendererRegistry,
+				_themeDisplay)
 		).put(
 			"userInfo",
 			DisplayContextUtil.getUserInfoJSONObject(

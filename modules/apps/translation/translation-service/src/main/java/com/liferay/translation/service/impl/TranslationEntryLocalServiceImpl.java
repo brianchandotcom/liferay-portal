@@ -19,9 +19,12 @@ import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 import com.liferay.translation.importer.TranslationInfoItemFieldValuesImporter;
 import com.liferay.translation.model.TranslationEntry;
@@ -29,6 +32,10 @@ import com.liferay.translation.service.base.TranslationEntryLocalServiceBaseImpl
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.Serializable;
+
+import java.util.Date;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -71,7 +78,8 @@ public class TranslationEntryLocalServiceImpl
 	@Override
 	public TranslationEntry addOrUpdateTranslationEntry(
 		long groupId, String className, long classPK, String content,
-		String contentType, String languageId, ServiceContext serviceContext) {
+		String contentType, String languageId, ServiceContext serviceContext)
+		throws PortalException {
 
 		TranslationEntry translationEntry =
 			translationEntryPersistence.fetchByC_C_L(
@@ -92,6 +100,16 @@ public class TranslationEntryLocalServiceImpl
 
 		translationEntry.setContent(content);
 		translationEntry.setContentType(contentType);
+
+		User user = _userLocalService.getUser(serviceContext.getUserId());
+
+		int status = WorkflowConstants.STATUS_APPROVED;
+
+		translationEntry.setStatus(status);
+		translationEntry.setStatusByUserId(user.getUserId());
+		translationEntry.setStatusByUserName(user.getFullName());
+		translationEntry.setStatusDate(
+			serviceContext.getModifiedDate(new Date()));
 
 		return translationEntryPersistence.update(translationEntry);
 	}
@@ -120,8 +138,32 @@ public class TranslationEntryLocalServiceImpl
 		}
 	}
 
+	@Override
+	public TranslationEntry updateStatus(
+			long userId, long translationEntryId, int status,
+			ServiceContext serviceContext,
+			Map<String, Serializable> workflowContext)
+		throws PortalException {
+
+		TranslationEntry translationEntry =
+			translationEntryPersistence.findByPrimaryKey(translationEntryId);
+
+		User user = _userLocalService.getUser(userId);
+
+		translationEntry.setStatus(status);
+		translationEntry.setStatusByUserId(user.getUserId());
+		translationEntry.setStatusByUserName(user.getFullName());
+		translationEntry.setStatusDate(
+			serviceContext.getModifiedDate(new Date()));
+
+		return translationEntryPersistence.update(translationEntry);
+	}
+
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	@Reference(target = "(content.type=application/xliff+xml)")
 	private TranslationInfoItemFieldValuesExporter

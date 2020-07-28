@@ -52,10 +52,11 @@ public class TranslationEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.translation.model.TranslationEntry
-		addOrUpdateTranslationEntry(
-			long groupId, String className, long classPK, String content,
-			String contentType, String languageId,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+			addOrUpdateTranslationEntry(
+				long groupId, String className, long classPK, String content,
+				String contentType, String languageId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addOrUpdateTranslationEntry(
 			groupId, className, classPK, content, contentType, languageId,
@@ -403,6 +404,17 @@ public class TranslationEntryLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getTranslationEntryByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static com.liferay.translation.model.TranslationEntry updateStatus(
+			long userId, long translationEntryId, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext,
+			java.util.Map<String, java.io.Serializable> workflowContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateStatus(
+			userId, translationEntryId, status, serviceContext,
+			workflowContext);
 	}
 
 	/**

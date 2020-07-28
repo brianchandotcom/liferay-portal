@@ -170,6 +170,41 @@ class LayoutDataItem extends React.Component {
 		};
 	}
 
+	/**
+	 * Checks whether an item keeps exactly the same structure or not. In the
+	 * case of columns, we need to check all siblings, so when one of them
+	 * changes, all of them get rendered and have updated layoutData (this is
+	 * needed for resizing to work well)
+	 */
+	static itemIsEqual(props, nextProps) {
+		if (props.item.type === LAYOUT_DATA_ITEM_TYPES.column) {
+			const siblings =
+				props.layoutData.items[props.item.parentId].children;
+
+			return siblings.every((sibling) =>
+				deepEqual(
+					LayoutDataItem.destructureItem(
+						props.layoutData.items[sibling],
+						props.layoutData
+					),
+					LayoutDataItem.destructureItem(
+						nextProps.layoutData.items[sibling],
+						nextProps.layoutData
+					)
+				)
+			);
+		}
+		else {
+			return deepEqual(
+				LayoutDataItem.destructureItem(props.item, props.layoutData),
+				LayoutDataItem.destructureItem(
+					nextProps.item,
+					nextProps.layoutData
+				)
+			);
+		}
+	}
+
 	constructor(props) {
 		super(props);
 
@@ -182,16 +217,7 @@ class LayoutDataItem extends React.Component {
 		return (
 			nextState.error ||
 			!deepEqual(this.props.item, nextProps.item) ||
-			!deepEqual(
-				LayoutDataItem.destructureItem(
-					this.props.item,
-					this.props.layoutData
-				),
-				LayoutDataItem.destructureItem(
-					nextProps.item,
-					nextProps.layoutData
-				)
-			)
+			!LayoutDataItem.itemIsEqual(this.props, nextProps)
 		);
 	}
 

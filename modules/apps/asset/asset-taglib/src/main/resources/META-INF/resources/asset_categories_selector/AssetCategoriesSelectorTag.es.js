@@ -16,6 +16,7 @@ import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 import AssetCategoriesSelector from './AssetCategoriesSelector.es';
+import {ASSET_VOCABULARY_VISIBILITY_TYPES} from './assetVocabularyVisibilityTypes.es';
 
 function AssetCategoriesSelectorTag({
 	eventName,
@@ -52,10 +53,14 @@ AssetCategoriesSelectorTag.propTypes = {
 
 export default function (props) {
 	const initialPublicVocabularies = props.vocabularies.filter(
-		(vocabulary) => !vocabulary.system
+		(vocabulary) =>
+			vocabulary.visibilityType ===
+			ASSET_VOCABULARY_VISIBILITY_TYPES.public
 	);
-	const initialSystemVocabularies = props.vocabularies.filter(
-		(vocabulary) => vocabulary.system
+	const initialInternalVocabularies = props.vocabularies.filter(
+		(vocabulary) =>
+			vocabulary.visibilityType ===
+			ASSET_VOCABULARY_VISIBILITY_TYPES.internal
 	);
 
 	return (
@@ -94,24 +99,25 @@ export default function (props) {
 				</>
 			)}
 
-			{initialSystemVocabularies && initialSystemVocabularies.length > 0 && (
-				<>
-					<div className="border-0 mb-0 sheet-subtitle text-uppercase">
-						{Liferay.Language.get('internal-categories')}
-					</div>
+			{initialInternalVocabularies &&
+				initialInternalVocabularies.length > 0 && (
+					<>
+						<div className="border-0 mb-0 sheet-subtitle text-uppercase">
+							{Liferay.Language.get('internal-categories')}
+						</div>
 
-					<p className="text-secondary">
-						{Liferay.Language.get(
-							'they-are-displayed-inside-the-administration-only'
-						)}
-					</p>
+						<p className="text-secondary">
+							{Liferay.Language.get(
+								'they-are-displayed-inside-the-administration-only'
+							)}
+						</p>
 
-					<AssetCategoriesSelectorTag
-						{...props}
-						initialVocabularies={initialSystemVocabularies}
-					/>
-				</>
-			)}
+						<AssetCategoriesSelectorTag
+							{...props}
+							initialVocabularies={initialInternalVocabularies}
+						/>
+					</>
+				)}
 		</>
 	);
 }

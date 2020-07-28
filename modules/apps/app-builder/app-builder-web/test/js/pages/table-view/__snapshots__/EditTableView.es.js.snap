@@ -261,7 +261,7 @@ exports[`EditTableView renders 1`] = `
                     class="pr-2 autofit-col"
                   >
                     <span
-                      class="sticker data-layout-builder-field-sticker sticker-rounded sticker-light sticker-md"
+                      class="sticker data-layout-builder-field-sticker sticker-light sticker-md"
                     >
                       <span
                         class="sticker-overlay"

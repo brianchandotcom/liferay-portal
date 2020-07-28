@@ -34,6 +34,7 @@ const Button = (props) => {
 		<Button
 			className={classNames(className)}
 			data-title={tooltip}
+			monospaced={!!symbol}
 			ref={forwardRef}
 			symbol={symbol}
 			{...restProps}

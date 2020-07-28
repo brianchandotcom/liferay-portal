@@ -34,7 +34,6 @@ const BtnAction = ({angle = 'left', className, onClick}) => (
 	<Button
 		className={className}
 		displayType="secondary"
-		monospaced={false}
 		onClick={onClick}
 		symbol={`angle-${angle}`}
 	/>

@@ -138,7 +138,7 @@ exports[`SidebarPanelInfoView renders 1`] = `
             class="c-mb-4 sidebar-dl sidebar-section"
           >
             <span
-              class="sticker sticker-user-icon sticker-rounded"
+              class="sticker sticker-user-icon"
             >
               <span
                 class="sticker-overlay"

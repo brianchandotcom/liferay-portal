@@ -655,7 +655,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 			() -> {
 				DropdownItem dropdownItem = new DropdownItem();
 
-				dropdownItem.putData("action", "selectTag");
+				dropdownItem.putData("action", "selectAssetTag");
 				dropdownItem.putData(
 					"dialogTitle", LanguageUtil.get(request, "select-tags"));
 

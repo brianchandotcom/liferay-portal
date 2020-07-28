@@ -83,10 +83,10 @@ class ContentDashboardManagementToolbarDefaultEventHandler extends DefaultEventH
 		itemSelectorDialog.open();
 	}
 
-	selectedAssetTag(itemData) {
+	selectAssetTag(itemData) {
 		const itemSelectorDialog = new ItemSelectorDialog({
 			buttonAddLabel: Liferay.Language.get('select'),
-			eventName: this.ns('selectedTag'),
+			eventName: this.ns('selectedAssetTag'),
 			title: itemData.dialogTitle,
 			url: itemData.selectTagURL,
 		});

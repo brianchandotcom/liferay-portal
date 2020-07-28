@@ -44,6 +44,7 @@ const openModal = (props) => {
 
 const openPortletModal = ({
 	iframeBodyCssClass,
+	onClose,
 	portletSelector,
 	subTitle,
 	title,
@@ -80,6 +81,7 @@ const openPortletModal = ({
 		openModal({
 			headerHTML,
 			iframeBodyCssClass,
+			onClose,
 			title,
 			url,
 		});

@@ -247,7 +247,7 @@
 </tr>
 <tr>
     <td>FIELD_LABEL</td>
-    <td>//div[contains(@data-field-name,'${key_fieldName}')]//p | //div[contains(@class,'ddm-field-container')]//p[contains(text(),'${key_fieldName}')]</td>
+    <td>//div[@data-field-name='${key_fieldName}' and contains(@class,'ddm-field')]//p[contains(@class,'ddm-label')] | //div[contains(@class,'ddm-field-container')]//p[text()='${key_fieldName}']</td>
     <td></td>
 </tr>
 <tr>

@@ -398,6 +398,9 @@ definition {
 	macro selectGridRadioOption {
 		var key_categoryColumnName = "${categoryColumnName}";
 		var key_optionRowName = "${optionRowName}";
+		var optionNumber = ${optionNumber} - 1;
+		var key_optionNumber = "grid_${optionNumber}_${optionNumber}";
+		var key_fieldName = "${fieldName}";
 
 		Click.clickNoWaitForVisible(locator1 = "FormFields#GRID_RADIO_OPTIONS");
 	}

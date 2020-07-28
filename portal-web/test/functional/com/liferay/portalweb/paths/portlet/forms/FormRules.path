@@ -153,12 +153,12 @@
 </tr>
 <tr>
     <td>RULE_BUILDER_CALCULATE_ADD_FIELD_LIST</td>
-    <td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//span[contains(.,'${key_calculateFieldOption}')]</td>
+    <td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//li[contains(.,'${key_calculateFieldOption}')]</td>
     <td></td>
 </tr>
 <tr>
     <td>RULE_BUILDER_CALCULATE_RESULT_FIELD</td>
-    <td>//div[contains(@class,'calculate-container-fields')]//div[contains(@id,'action')] | //div[contains(@class,'target-action')]</td>
+    <td>//div[contains(@class,'calculate-container-fields')]//div[contains(@id,'action')] | //div[contains(@class,'target-action')]//div[contains(@class,'form-builder-select-field')]</td>
     <td></td>
 </tr>
 <tr>

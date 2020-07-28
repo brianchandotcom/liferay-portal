@@ -95,6 +95,15 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Countries");
 
+		FormFields.editOptionsRow(
+			optionName = "Select1",
+			optionValue = "Select 1");
+
+		FormFields.editOptionsRow(
+			optionName = "Select2",
+			optionValue = "Select 2",
+			rowNumber = "2");
+
 		Form.closeSidebar();
 
 		FormsAdminNavigator.gotoRules();

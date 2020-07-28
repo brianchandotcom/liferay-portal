@@ -61,14 +61,9 @@ definition {
 
 			Form.addTextField(fieldPositionNumber = "1");
 
-			Form.editFieldLabelMetal(fieldValue = "Label");
-
-			Form.closeSidebar();
-
-			Form.save();
-
-			ProductMenu.gotoPortlet(
+			Form.editFieldLabelMetal(
 				category = "Content &amp; Data",
+				fieldValue = "Label",
 				portlet = "Forms");
 		}
 	}
@@ -91,7 +86,11 @@ definition {
 		for (var number : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30") {
 			Form.addTextField(fieldPositionNumber = "${number}");
 
-			Form.editFieldLabelMetal(fieldValue = "Field${number}");
+			var fieldTextField = FormFields.getFieldName();
+
+			Form.editFieldLabelMetal(
+				fieldName = "${fieldTextField}",
+				fieldValue = "Field${number}");
 
 			Form.closeSidebar();
 		}
@@ -619,6 +618,8 @@ definition {
 
 		Form.addTextField(fieldPositionNumber = "1");
 
+		var fieldTextField = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Text Field On Spanish Portal");
 
 		Form.closeSidebar();
@@ -649,10 +650,10 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Text Field On Spanish Portal",
-			fieldName = "TextFieldOnSpanishPortal");
+			fieldName = "${fieldTextField}");
 
 		FormFields.editText(
-			fieldName = "TextFieldOnSpanishPortal",
+			fieldName = "${fieldTextField}",
 			fieldValue = "Text Field Value");
 
 		FormPortlet.submitLocalizedSuccessfully(buttonName = "Enviar");
@@ -673,7 +674,7 @@ definition {
 
 		FormsAdmin.viewTextEntry(
 			fieldLabel = "Text Field On Spanish Portal",
-			fieldName = "TextFieldOnSpanishPortal",
+			fieldName = "${fieldTextField}",
 			fieldValue = "Text Field Value");
 
 		Navigator.openURL();
@@ -707,6 +708,8 @@ definition {
 		Form.gotoAddField(
 			fieldPositionNumber = "1",
 			fieldType = "Select from List");
+
+		var fieldSelectFromField = FormFields.getFieldName();
 
 		Form.editFieldLabelMetal(fieldValue = "Testing Title");
 
@@ -944,6 +947,8 @@ definition {
 
 		Form.addTextField(fieldPositionNumber = "1");
 
+		var fieldTextField = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
 		Form.closeSidebar();
@@ -963,11 +968,11 @@ definition {
 		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.selectSelectOption(
-			fieldName = "TestingTitle",
+			fieldName = "${fieldSelectFromField}",
 			selectOption = "Select 2");
 
 		FormFields.editText(
-			fieldName = "TextField",
+			fieldName = "${fieldTextField}",
 			fieldValue = "Test");
 
 		FormPortlet.submitSuccessfully();
@@ -983,6 +988,13 @@ definition {
 		FormsAdminNavigator.gotoEditField(fieldName = "Text Field");
 
 		FormFields.changeFieldType(selectOption = "Single Selection");
+
+		for (var number : list "1,2,3") {
+			FormFields.editOptionsRow(
+				optionName = "Select${number}",
+				optionValue = "Select ${number}",
+				rowNumber = "${number}");
+		}
 
 		Form.closeSidebar();
 
@@ -1006,12 +1018,12 @@ definition {
 
 		FormsAdmin.viewSelectEntry(
 			fieldLabel = "Testing Title",
-			fieldName = "TestingTitle",
+			fieldName = "${fieldSelectFromField}",
 			selectOption = "Select 2");
 
 		FormsAdmin.viewTextEntry(
 			fieldLabel = "Text Field",
-			fieldName = "TextField",
+			fieldName = "${fieldTextField}",
 			fieldValue = "Test");
 	}
 
@@ -1191,6 +1203,8 @@ definition {
 
 		Form.addTextField(fieldPositionNumber = "1");
 
+		var fieldTextField = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
 		Form.closeSidebar();
@@ -1198,6 +1212,8 @@ definition {
 		Form.gotoAddField(
 			fieldPositionNumber = "2",
 			fieldType = "Date");
+
+		var fieldDateField = FormFields.getFieldName();
 
 		Form.editFieldLabelMetal(fieldValue = "Date Field");
 
@@ -1229,10 +1245,10 @@ definition {
 
 		FormFields.viewTextField(
 			fieldLabel = "Text Field",
-			fieldName = "TextField");
+			fieldName = "${fieldTextField}");
 
 		FormFields.editText(
-			fieldName = "TextField",
+			fieldName = "${fieldTextField}",
 			fieldValue = "Text Field Value");
 
 		FormFields.viewDateField(
@@ -1240,7 +1256,7 @@ definition {
 			fieldName = "${fieldDateField}");
 
 		FormFields.editDate(
-			fieldName = "DateField",
+			fieldName = "${fieldDateField}",
 			fieldValue = "01/01/2016");
 
 		FormPortlet.submitSuccessfully();
@@ -1451,16 +1467,14 @@ definition {
 			fieldPositionNumber = "1",
 			fieldType = "Select from List");
 
+		var fieldSelectFromListField = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Select");
 
 		for (var number : list "1,2,3") {
 			FormFields.editOptionsRow(
 				optionName = "Select${number}",
 				optionValue = "Select ${number}",
-				rowNumber = "${number}");
-
-			FormFields.viewOptionsRowFieldName(
-				fieldName = "Select${number}",
 				rowNumber = "${number}");
 		}
 
@@ -1517,13 +1531,11 @@ definition {
 			fieldPositionNumber = "1",
 			fieldType = "Paragraph");
 
+		var fieldParagraphField = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Paragraph");
 
-		FormFields.viewFieldName(fieldName = "Paragraph");
-
-		FormFields.editFieldName(fieldValue = "ParagraphName");
-
-		FormFields.viewFieldName(fieldName = "ParagraphName");
+		FormFields.viewFieldName(fieldName = "${fieldParagraphField}");
 
 		FormFields.editParagraphBody(content = "Paragraph body text.");
 
@@ -1531,13 +1543,11 @@ definition {
 
 		Form.addTextField(fieldPositionNumber = "1");
 
+		var fieldTextField = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Text");
 
-		FormFields.viewFieldName(fieldName = "Text");
-
-		FormFields.editFieldName(fieldValue = "TextName");
-
-		FormFields.viewFieldName(fieldName = "TextName");
+		FormFields.viewFieldName(fieldName = "${fieldTextField}");
 
 		Form.closeSidebar();
 
@@ -1545,33 +1555,19 @@ definition {
 			fieldPositionNumber = "2",
 			fieldType = "Select from List");
 
+		var fieldSelectFromListField = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Select");
 
-		FormFields.viewFieldName(fieldName = "Select");
-
-		FormFields.editFieldName(fieldValue = "SelectName");
-
-		FormFields.viewFieldName(fieldName = "SelectName");
+		FormFields.viewFieldName(fieldName = "${fieldSelectFromListField}");
 
 		FormFields.editOptionsRow(
 			optionName = "Select1",
 			optionValue = "Select 1");
 
-		FormFields.viewOptionsRowFieldName(fieldName = "Select1");
-
-		FormFields.editOptionsRowNameField(optionValue = "Select1Name");
-
 		FormFields.editOptionsRow(
 			optionName = "Select2",
 			optionValue = "Select 2",
-			rowNumber = "2");
-
-		FormFields.viewOptionsRowFieldName(
-			fieldName = "Select2",
-			rowNumber = "2");
-
-		FormFields.editOptionsRowNameField(
-			optionValue = "Select2Name",
 			rowNumber = "2");
 
 		Form.closeSidebar();
@@ -1580,33 +1576,19 @@ definition {
 			fieldPositionNumber = "3",
 			fieldType = "Single Selection");
 
+		var fieldSingleSelectionField = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Radio");
 
-		FormFields.viewFieldName(fieldName = "Radio");
-
-		FormFields.editFieldName(fieldValue = "RadioName");
-
-		FormFields.viewFieldName(fieldName = "RadioName");
+		FormFields.viewFieldName(fieldName = "${fieldSingleSelectionField}");
 
 		FormFields.editOptionsRow(
 			optionName = "Option1",
 			optionValue = "Option 1");
 
-		FormFields.viewOptionsRowFieldName(fieldName = "Option1");
-
-		FormFields.editOptionsRowNameField(optionValue = "Option1Name");
-
 		FormFields.editOptionsRow(
 			optionName = "Option2",
 			optionValue = "Option 2",
-			rowNumber = "2");
-
-		FormFields.viewOptionsRowFieldName(
-			fieldName = "Option2",
-			rowNumber = "2");
-
-		FormFields.editOptionsRowNameField(
-			optionValue = "Option2Name",
 			rowNumber = "2");
 
 		Form.closeSidebar();
@@ -1615,13 +1597,11 @@ definition {
 			fieldPositionNumber = "4",
 			fieldType = "Date");
 
+		var fieldDateField = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Date");
 
-		FormFields.viewFieldName(fieldName = "Date");
-
-		FormFields.editFieldName(fieldValue = "DateName");
-
-		FormFields.viewFieldName(fieldName = "DateName");
+		FormFields.viewFieldName(fieldName = "${fieldDateField}");
 
 		Form.closeSidebar();
 
@@ -1629,13 +1609,11 @@ definition {
 			fieldPositionNumber = "5",
 			fieldType = "Multiple Selection");
 
+		var fieldMultipleSelectionField = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Checkbox");
 
-		FormFields.viewFieldName(fieldName = "Checkbox");
-
-		FormFields.editFieldName(fieldValue = "CheckboxName");
-
-		FormFields.viewFieldName(fieldName = "CheckboxName");
+		FormFields.viewFieldName(fieldName = "${fieldMultipleSelectionField}");
 
 		FormFields.editOptionsRow(
 			optionName = "Checkbox1",
@@ -2230,6 +2208,8 @@ definition {
 
 		Form.addTextField(fieldPositionNumber = "1");
 
+		var fieldTextField = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
 		Form.closeSidebar();
@@ -2250,7 +2230,7 @@ definition {
 
 		Form.previewForm(
 			fieldLabel = "Text Field",
-			fieldName = "TextField",
+			fieldName = "${fieldTextField}",
 			fieldValue = "Preview Paragraph entry",
 			formName = "Test Preview and Publish Form");
 
@@ -2270,10 +2250,10 @@ definition {
 
 		FormFields.viewTextField(
 			fieldLabel = "Text Field",
-			fieldName = "TextField");
+			fieldName = "${fieldTextField}");
 
 		FormFields.editText(
-			fieldName = "TextField",
+			fieldName = "${fieldTextField}",
 			fieldValue = "Published Paragraph entry");
 
 		FormPortlet.submitSuccessfully();
@@ -2323,10 +2303,6 @@ definition {
 			FormFields.editOptionsRow(
 				optionName = "Checkbox${number}",
 				optionValue = "Checkbox ${number}",
-				rowNumber = "${number}");
-
-			FormFields.viewOptionsRowFieldName(
-				fieldName = "Checkbox${number}",
 				rowNumber = "${number}");
 		}
 
@@ -2398,6 +2374,8 @@ definition {
 
 		Form.addTextField(fieldPositionNumber = "1");
 
+		var fieldTextField = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
 		Form.closeSidebar();
@@ -2428,7 +2406,7 @@ definition {
 
 		for (var fieldValue : list "${fieldValueList}") {
 			FormFields.editText(
-				fieldName = "TextField",
+				fieldName = "${fieldTextField}",
 				fieldValue = "${fieldValue}");
 
 			FormPortlet.clickSubmit();
@@ -2495,16 +2473,14 @@ definition {
 			fieldPositionNumber = "1",
 			fieldType = "Select from List");
 
+		var fieldSelectFromListField = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Select");
 
 		for (var number : list "1,2,3,4") {
 			FormFields.editOptionsRow(
 				optionName = "Select${number}",
 				optionValue = "Select ${number}",
-				rowNumber = "${number}");
-
-			FormFields.viewOptionsRowFieldName(
-				fieldName = "Select${number}",
 				rowNumber = "${number}");
 		}
 
@@ -2521,23 +2497,23 @@ definition {
 		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.selectSelectWithMultipleOptions(
-			fieldName = "Select",
+			fieldName = "${fieldSelectFromListField}",
 			selectOptionsList = "Select 1,Select 2,Select 3");
 
 		FormFields.removeSelectOption(
-			fieldName = "Select",
+			fieldName = "${fieldSelectFromListField}",
 			selectOption = "Select 1");
 
 		FormFields.removeSelectOptionViaDropdown(
-			fieldName = "Select",
+			fieldName = "${fieldSelectFromListField}",
 			selectOption = "Select 2");
 
 		FormFields.selectSelectWithMultipleOptions(
-			fieldName = "Select",
+			fieldName = "${fieldSelectFromListField}",
 			selectOptionsList = "Select 4");
 
 		FormFields.viewSelectMultipleOptions(
-			fieldName = "Select",
+			fieldName = "${fieldSelectFromListField}",
 			selectOptionsList = "Select 3,Select 4");
 
 		FormPortlet.submitSuccessfully();
@@ -2577,6 +2553,8 @@ definition {
 			fieldPositionNumber = "1",
 			fieldType = "Paragraph");
 
+		var fieldParagraphField = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Paragraph");
 
 		FormFields.editParagraphBody(content = "Paragraph body text.");
@@ -2585,6 +2563,8 @@ definition {
 
 		Form.addTextField(fieldPositionNumber = "2");
 
+		var fieldTextField = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Text");
 
 		Form.closeSidebar();
@@ -2592,6 +2572,8 @@ definition {
 		Form.gotoAddField(
 			fieldPositionNumber = "3",
 			fieldType = "Select from List");
+
+		var fieldSelectFromListField = FormFields.getFieldName();
 
 		Form.editFieldLabelMetal(fieldValue = "Select");
 
@@ -2610,6 +2592,8 @@ definition {
 			fieldPositionNumber = "3",
 			fieldType = "Single Selection");
 
+		var fieldSingleSelectionField = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Radio");
 
 		FormFields.editOptionsRow(
@@ -2627,6 +2611,8 @@ definition {
 			fieldPositionNumber = "4",
 			fieldType = "Date");
 
+		var fieldDateField = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Date");
 
 		Form.closeSidebar();
@@ -2634,6 +2620,8 @@ definition {
 		Form.gotoAddField(
 			fieldPositionNumber = "5",
 			fieldType = "Multiple Selection");
+
+		var fieldMultipleSelectionField = FormFields.getFieldName();
 
 		Form.editFieldLabelMetal(fieldValue = "Checkbox");
 
@@ -2669,44 +2657,45 @@ definition {
 		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.viewParagraphField(
+			fieldName = "${fieldParagraphField}",
 			fieldTitle = "Paragraph",
 			fieldValue = "Paragraph body text.");
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Text",
-			fieldName = "Text");
+			fieldName = "${fieldTextField}");
 
 		FormFields.viewSelectLabel(
 			fieldLabel = "Select",
-			fieldName = "Select");
+			fieldName = "${fieldSelectFromListField}");
 
 		FormFields.selectSelectOption(
-			fieldName = "Select",
+			fieldName = "${fieldSelectFromListField}",
 			selectOption = "Select 1");
 
 		FormFields.selectSelectOption(
-			fieldName = "Select",
+			fieldName = "${fieldSelectFromListField}",
 			selectOption = "Select 2");
 
 		FormFields.viewRadioLabel(
 			fieldLabel = "Radio",
-			fieldName = "Radio");
+			fieldName = "${fieldSingleSelectionField}");
 
 		FormFields.selectRadioOption(
-			fieldName = "Radio",
+			fieldName = "${fieldSingleSelectionField}",
 			radioOption = "Option 1");
 
 		FormFields.selectRadioOption(
-			fieldName = "Radio",
+			fieldName = "${fieldSingleSelectionField}",
 			radioOption = "Option 2");
 
 		FormFields.viewDateLabel(
 			fieldLabel = "Date",
-			fieldName = "Date");
+			fieldName = "${fieldDateField}");
 
 		FormFields.viewCheckboxLabel(
 			fieldLabel = "Checkbox",
-			fieldName = "Checkbox");
+			fieldName = "${fieldMultipleSelectionField}");
 
 		Navigator.openURL();
 
@@ -2773,37 +2762,37 @@ definition {
 		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.viewParagraphField(
-			fieldName = "Paragraph",
+			fieldName = "${fieldParagraphField}",
 			fieldTitle = "New Paragraph",
 			fieldValue = "New Paragraph body text.");
 
 		FormFields.editText(
-			fieldName = "Text",
+			fieldName = "${fieldTextField}",
 			fieldValue = "Text");
 
 		FormFields.selectSelectOption(
-			fieldName = "Select",
+			fieldName = "${fieldSelectFromListField}",
 			selectOption = "New Select 1");
 
 		FormFields.selectSelectOption(
-			fieldName = "Select",
+			fieldName = "${fieldSelectFromListField}",
 			selectOption = "New Select 2");
 
 		FormFields.selectRadioOption(
-			fieldName = "Radio",
+			fieldName = "${fieldSingleSelectionField}",
 			radioOption = "New Option 1");
 
 		FormFields.selectRadioOption(
-			fieldName = "Radio",
+			fieldName = "${fieldSingleSelectionField}",
 			radioOption = "New Option 2");
 
 		FormFields.editDate(
-			fieldName = "Date",
+			fieldName = "${fieldDateField}",
 			fieldValue = "05/02/2016");
 
 		FormFields.selectCheckboxOption(
 			checkboxOption = "Checkbox 1",
-			fieldName = "Checkbox");
+			fieldName = "${fieldMultipleSelectionField}");
 
 		FormPortlet.submitSuccessfully();
 
@@ -2818,32 +2807,32 @@ definition {
 		FormsAdminNavigator.gotoView();
 
 		FormFields.viewParagraphField(
-			fieldName = "Paragraph",
+			fieldName = "${fieldParagraphField}",
 			fieldTitle = "New Paragraph",
 			fieldValue = "New Paragraph body text.");
 
 		FormsAdmin.viewTextEntry(
 			fieldLabel = "New Text",
-			fieldName = "Text",
+			fieldName = "${fieldTextField}",
 			fieldValue = "Text");
 
 		FormsAdmin.viewSelectEntry(
 			fieldLabel = "New Select",
-			fieldName = "Select",
+			fieldName = "${fieldSelectFromListField}",
 			selectOption = "New Select 2");
 
 		FormsAdmin.viewRadioEntry(
 			fieldLabel = "New Radio",
-			fieldName = "Radio",
+			fieldName = "${fieldSingleSelectionField}",
 			fieldValue = "Option 2");
 
 		FormsAdmin.viewDateEntry(
 			fieldLabel = "New Date",
-			fieldName = "Date",
+			fieldName = "${fieldDateField}",
 			fieldValue = "05/02/2016");
 
 		FormsAdmin.viewCheckboxEntry(
-			fieldName = "NewCheckbox",
+			fieldName = "${fieldMultipleSelectionField}",
 			fieldValue = "Checkbox 1");
 
 		ProductMenu.gotoPortlet(
@@ -2888,32 +2877,32 @@ definition {
 		FormsAdminNavigator.gotoView();
 
 		FormFields.viewParagraphField(
-			fieldName = "Paragraph",
+			fieldName = "${fieldParagraphField}",
 			fieldTitle = "New Paragraph",
 			fieldValue = "New Paragraph body text.");
 
 		FormsAdmin.viewTextEntry(
 			fieldLabel = "New Text",
-			fieldName = "Text",
+			fieldName = "${fieldTextField}",
 			fieldValue = "Text");
 
 		FormsAdmin.viewSelectEntry(
 			fieldLabel = "New Select",
-			fieldName = "Select",
+			fieldName = "${fieldSelectFromListField}",
 			selectOption = "New Select 2");
 
 		FormsAdmin.viewRadioEntry(
 			fieldLabel = "New Radio",
-			fieldName = "Radio",
+			fieldName = "${fieldSingleSelectionField}",
 			fieldValue = "Option 2");
 
 		FormsAdmin.viewDateEntry(
 			fieldLabel = "New Date",
-			fieldName = "Date",
+			fieldName = "${fieldDateField}",
 			fieldValue = "05/02/2016");
 
 		FormsAdmin.viewCheckboxEntry(
-			fieldName = "NewCheckbox",
+			fieldName = "${fieldMultipleSelectionField}",
 			fieldValue = "Checkbox 1");
 
 		Navigator.openURL();
@@ -2940,6 +2929,8 @@ definition {
 		Form.editDescription();
 
 		Form.addTextField(fieldPositionNumber = "1");
+
+		var fieldTextField = FormFields.getFieldName();
 
 		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
@@ -2979,10 +2970,10 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Text Field",
-			fieldName = "TextField");
+			fieldName = "${fieldTextField}");
 
 		FormFields.editText(
-			fieldName = "TextField",
+			fieldName = "${fieldTextField}",
 			fieldValue = "Text Field Value");
 
 		FormPortlet.submitSuccessfully();
@@ -3002,7 +2993,7 @@ definition {
 
 		FormsAdmin.viewTextEntry(
 			fieldLabel = "Text Field",
-			fieldName = "TextField",
+			fieldName = "${fieldTextField}",
 			fieldValue = "Text Field Value");
 	}
 
@@ -3026,6 +3017,8 @@ definition {
 		Form.editDescription();
 
 		Form.addTextField(fieldPositionNumber = "1");
+
+		var fieldTextField = FormFields.getFieldName();
 
 		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
@@ -3083,10 +3076,10 @@ definition {
 
 			FormFields.viewTextField(
 				fieldLabel = "Text Field",
-				fieldName = "TextField");
+				fieldName = "${fieldTextField}");
 
 			FormFields.editText(
-				fieldName = "TextField",
+				fieldName = "${fieldTextField}",
 				fieldValue = "Text Field Value");
 
 			FormFields.viewCaptchaField();
@@ -3096,7 +3089,7 @@ definition {
 			FormPortlet.submitWithError(errorMessage = "Text verification failed.");
 
 			FormFields.viewTextValue(
-				fieldName = "TextField",
+				fieldName = "${fieldTextField}",
 				fieldValue = "Text Field Value");
 		}
 	}
@@ -3128,6 +3121,8 @@ definition {
 			fieldPositionNumber = "1",
 			fieldType = "Paragraph");
 
+		var fieldParagraphField = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Paragraph");
 
 		FormFields.editParagraphBody(content = "Paragraph body text.");
@@ -3136,11 +3131,15 @@ definition {
 
 		Form.addTextField(fieldPositionNumber = "2");
 
+		var fieldTextField = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "SingleLineText");
 
 		Form.closeSidebar();
 
 		Form.addTextField(fieldPositionNumber = "3");
+
+		var fieldMultilineTextField = FormFields.getFieldName();
 
 		Form.editFieldLabelMetal(fieldValue = "MultilineText");
 
@@ -3153,6 +3152,8 @@ definition {
 		Form.gotoAddField(
 			fieldPositionNumber = "4",
 			fieldType = "Select from List");
+
+		var fieldSelectFromListField = FormFields.getFieldName();
 
 		Form.editFieldLabelMetal(fieldValue = "Select");
 
@@ -3170,6 +3171,8 @@ definition {
 		Form.gotoAddField(
 			fieldPositionNumber = "5",
 			fieldType = "Single Selection");
+
+		var fieldSingleSelectionField = FormFields.getFieldName();
 
 		Form.editFieldLabelMetal(fieldValue = "Radio");
 
@@ -3190,6 +3193,8 @@ definition {
 			fieldPositionNumber = "6",
 			fieldType = "Date");
 
+		var fieldDateField = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Date");
 
 		Form.closeSidebar();
@@ -3197,6 +3202,8 @@ definition {
 		Form.gotoAddField(
 			fieldPositionNumber = "7",
 			fieldType = "Multiple Selection");
+
+		var fieldMultipleSelectionField = FormFields.getFieldName();
 
 		Form.editFieldLabelMetal(fieldValue = "Checkbox");
 
@@ -3223,6 +3230,8 @@ definition {
 		Form.gotoAddField(
 			fieldPositionNumber = "9",
 			fieldType = "Grid");
+
+		var fieldGridField = FormFields.getFieldName();
 
 		Form.editFieldLabelMetal(fieldValue = "Grid Field Survey");
 
@@ -3252,6 +3261,8 @@ definition {
 			fieldPositionNumber = "11",
 			fieldType = "Upload");
 
+		var fieldUploadField = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(
 			fieldPositionNumber = "11",
 			fieldValue = "Upload Field");
@@ -3261,6 +3272,8 @@ definition {
 		Form.gotoAddField(
 			fieldPositionNumber = "12",
 			fieldType = "Numeric");
+
+		var fieldNumericField = FormFields.getFieldName();
 
 		Form.editFieldLabelMetal(fieldValue = "Value");
 
@@ -3291,32 +3304,33 @@ definition {
 		FormPortlet.waitFormRenderer(text = "Next");
 
 		FormFields.viewParagraphField(
+			fieldName = "${fieldParagraphField}",
 			fieldTitle = "Paragraph",
 			fieldValue = "Paragraph body text.");
 
 		FormFields.editText(
-			fieldName = "SingleLineText",
+			fieldName = "${fieldTextField}",
 			fieldValue = "Single Line Text");
 
 		FormFields.editTextMultiline(
-			fieldName = "MultilineText",
+			fieldName = "${fieldMultilineTextField}",
 			fieldValue = "Multiline Text");
 
 		FormFields.selectSelectOption(
-			fieldName = "Select",
+			fieldName = "${fieldSelectFromListField}",
 			selectOption = "Select 1");
 
 		FormFields.selectRadioOption(
-			fieldName = "Radio",
+			fieldName = "${fieldSingleSelectionField}",
 			radioOption = "Option 1");
 
 		FormFields.editDate(
-			fieldName = "Date",
+			fieldName = "${fieldDateField}",
 			fieldValue = "05/02/2016");
 
 		FormFields.selectCheckboxOption(
 			checkboxOption = "Checkbox 1",
-			fieldName = "Checkbox");
+			fieldName = "${fieldMultipleSelectionField}");
 
 		FormPortlet.nextPage(
 			formPageCurrent = "Page 1",
@@ -3324,8 +3338,10 @@ definition {
 
 		for (var optionNumber : list "1,2,3") {
 			FormFields.selectGridRadioOption(
-				categoryColumnName = "Category${optionNumber}",
-				optionRowName = "Option${optionNumber}");
+				categoryColumnName = "Category ${optionNumber}",
+				fieldName = "${fieldGridField}",
+				optionNumber = "${optionNumber}",
+				optionRowName = "Option ${optionNumber}");
 		}
 
 		FormPortlet.nextPage(
@@ -3334,10 +3350,10 @@ definition {
 
 		FormFields.viewUploadField(
 			fieldLabel = "Upload Field",
-			fieldName = "UploadField");
+			fieldName = "${fieldUploadField}");
 
 		AssertNotEditable(
-			key_fieldName = "UploadField",
+			key_fieldName = "${fieldUploadField}",
 			locator1 = "FormFields#UPLOAD_FIELD");
 
 		ItemSelector.gotoItemSelectorViaSelectButton();
@@ -3363,45 +3379,46 @@ definition {
 		FormsAdminNavigator.gotoView();
 
 		FormFields.viewParagraphField(
+			fieldName = "${fieldParagraphField}",
 			fieldTitle = "Paragraph",
 			fieldValue = "Paragraph body text.");
 
 		FormsAdmin.viewTextEntry(
 			fieldLabel = "SingleLineText",
-			fieldName = "SingleLineText",
+			fieldName = "${fieldTextField}",
 			fieldValue = "Single Line Text");
 
 		FormsAdmin.viewMultilineTextEntry(
 			fieldLabel = "MultilineText",
-			fieldName = "MultilineText",
+			fieldName = "${fieldMultilineTextField}",
 			fieldValue = "Multiline Text");
 
 		FormsAdmin.viewSelectEntry(
 			fieldLabel = "Select",
-			fieldName = "Select",
+			fieldName = "${fieldSelectFromListField}",
 			selectOption = "Select 1");
 
 		FormsAdmin.viewRadioEntry(
 			fieldLabel = "Radio",
-			fieldName = "Radio",
+			fieldName = "${fieldSingleSelectionField}",
 			fieldValue = "Option 1");
 
 		FormsAdmin.viewDateEntry(
 			fieldLabel = "Date",
-			fieldName = "Date",
+			fieldName = "${fieldDateField}",
 			fieldValue = "05/02/2016");
 
 		FormsAdmin.viewCheckboxEntry(
-			fieldName = "Checkbox",
+			fieldName = "${fieldMultipleSelectionField}",
 			fieldValue = "Checkbox 1");
 
 		FormPortlet.nextPage(
 			formPageCurrent = "Page 1",
 			formPageNext = "Page 2");
 
-		FormFields.viewTextLabel(
-			fieldLabel = "Grid Field Survey",
-			fieldName = "GridFieldSurvey");
+		//FormFields.viewTextLabel(
+		//	fieldLabel = "Grid Field Survey",
+		//	fieldName = "${fieldGridField}");
 
 		FormPortlet.nextPage(
 			formPageCurrent = "Page 2",
@@ -3409,12 +3426,12 @@ definition {
 
 		FormsAdmin.viewUploadFile(
 			fieldLabel = "Upload Field",
-			fieldName = "UploadField",
+			fieldName = "${fieldUploadField}",
 			uploadFileName = "Document_1.jpg");
 
 		FormFields.viewTextField(
 			fieldLabel = "Value",
-			fieldName = "Value");
+			fieldName = "${fieldNumericField}");
 	}
 
 	@priority = "5"
@@ -3435,6 +3452,8 @@ definition {
 		Form.editDescription();
 
 		Form.addTextField(fieldPositionNumber = "1");
+
+		var fieldTextField = FormFields.getFieldName();
 
 		Form.editFieldLabelMetal(fieldValue = "Text");
 
@@ -3475,16 +3494,16 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Text",
-			fieldName = "Text");
+			fieldName = "${fieldTextField}");
 
 		FormFields.editText(
-			fieldName = "Text",
+			fieldName = "${fieldTextField}",
 			fieldValue = "Text Field Value");
 
 		FormPortlet.submitWithValidationError(validationErrorMessage = "Text must contain &apos;&apos;Test&apos;&apos;");
 
 		FormFields.editText(
-			fieldName = "Text",
+			fieldName = "${fieldTextField}",
 			fieldValue = "test");
 
 		FormPortlet.waitForValidationErrorNotPresent(validationErrorMessage = "Text must contain &apos;&apos;Test&apos;&apos;");
@@ -3525,6 +3544,8 @@ definition {
 
 		Form.addTextField(fieldPositionNumber = "1");
 
+		var fieldTextField = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
 		Form.closeSidebar();
@@ -3532,6 +3553,8 @@ definition {
 		Form.gotoAddField(
 			fieldPositionNumber = "1",
 			fieldType = "Multiple Selection");
+
+		var fieldMultipleSelectionField = FormFields.getFieldName();
 
 		Form.editFieldLabelMetal(fieldValue = "Checkbox Field");
 
@@ -3545,6 +3568,8 @@ definition {
 		Form.gotoAddField(
 			fieldPositionNumber = "2",
 			fieldType = "Single Selection");
+
+		var fieldSingleSelectionField = FormFields.getFieldName();
 
 		Form.editFieldLabelMetal(fieldValue = "Radio Field");
 
@@ -3562,6 +3587,8 @@ definition {
 		Form.gotoAddField(
 			fieldPositionNumber = "3",
 			fieldType = "Select from List");
+
+		var fieldSelectFromListField = FormFields.getFieldName();
 
 		Form.editFieldLabelMetal(fieldValue = "Select Field");
 
@@ -3602,34 +3629,34 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Text Field",
-			fieldName = "TextField");
+			fieldName = "${fieldTextField}");
 
 		FormFields.editText(
-			fieldName = "TextField",
+			fieldName = "${fieldTextField}",
 			fieldValue = "Text Field Value");
 
 		FormFields.viewCheckboxLabel(
 			fieldLabel = "Checkbox Field",
-			fieldName = "CheckboxField");
+			fieldName = "${fieldMultipleSelectionField}");
 
 		FormFields.selectCheckboxOption(
 			checkboxOption = "Checkbox 1",
-			fieldName = "CheckboxField");
+			fieldName = "${fieldMultipleSelectionField}");
 
 		FormFields.viewRadioLabel(
 			fieldLabel = "Radio Field",
-			fieldName = "RadioField");
+			fieldName = "${fieldSingleSelectionField}");
 
 		FormFields.selectRadioOption(
-			fieldName = "RadioField",
+			fieldName = "${fieldSingleSelectionField}",
 			radioOption = "Option 1");
 
 		FormFields.viewSelectLabel(
 			fieldLabel = "Select Field",
-			fieldName = "SelectField");
+			fieldName = "${fieldSelectFromListField}");
 
 		FormFields.selectSelectOption(
-			fieldName = "SelectField",
+			fieldName = "${fieldSelectFromListField}",
 			selectOption = "Select 2");
 
 		FormPortlet.submitSuccessfully();
@@ -3664,21 +3691,21 @@ definition {
 
 		FormsAdmin.viewTextEntry(
 			fieldLabel = "Text Field",
-			fieldName = "TextField",
+			fieldName = "${fieldTextField}",
 			fieldValue = "Text Field Value");
 
 		FormsAdmin.viewCheckboxEntry(
-			fieldName = "CheckboxField",
+			fieldName = "${fieldMultipleSelectionField}",
 			fieldValue = "Checkbox 1");
 
 		FormsAdmin.viewRadioEntry(
 			fieldLabel = "Radio Field",
-			fieldName = "RadioField",
+			fieldName = "${fieldSingleSelectionField}",
 			fieldValue = "Option 1");
 
 		FormsAdmin.viewSelectEntry(
 			fieldLabel = "Select Field",
-			fieldName = "SelectField",
+			fieldName = "${fieldSelectFromListField}",
 			fieldValue = "Select 2");
 	}
 
@@ -3703,6 +3730,8 @@ definition {
 		Form.gotoAddField(
 			fieldPositionNumber = "1",
 			fieldType = "Multiple Selection");
+
+		var fieldMultipleSelectionField = FormFields.getFieldName();
 
 		Form.editFieldLabelMetal(fieldValue = "Checkbox Field");
 
@@ -3741,7 +3770,7 @@ definition {
 
 		FormFields.viewCheckboxLabel(
 			fieldLabel = "Checkbox Field",
-			fieldName = "CheckboxField");
+			fieldName = "${fieldMultipleSelectionField}");
 
 		FormFields.viewRequiredAsterisk();
 
@@ -3749,7 +3778,7 @@ definition {
 
 		FormFields.selectCheckboxOption(
 			checkboxOption = "Checkbox 1",
-			fieldName = "CheckboxField");
+			fieldName = "${fieldMultipleSelectionField}");
 
 		FormPortlet.waitForValidationErrorNotPresent();
 
@@ -3878,6 +3907,8 @@ definition {
 
 		Form.addTextField(fieldPositionNumber = "1");
 
+		var fieldTextField = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
 		FormFields.selectTextFieldLineOption(textFieldLineOption = "Multiple Lines");
@@ -3916,12 +3947,12 @@ definition {
 
 		FormFields.viewRequiredAsterisk();
 
-		FormFields.editBlankMultiTextFieldWithEnterKey(fieldName = "TextField");
+		FormFields.editBlankMultiTextFieldWithEnterKey(fieldName = "${fieldTextField}");
 
 		FormPortlet.submitWithValidationError();
 
 		FormFields.editTextMultiline(
-			fieldName = "TextField",
+			fieldName = "${fieldTextField}",
 			fieldValue = "Text Field Value");
 
 		FormPortlet.waitForValidationErrorNotPresent();
@@ -3959,6 +3990,8 @@ definition {
 		Form.gotoAddField(
 			fieldPositionNumber = "1",
 			fieldType = "Single Selection");
+
+		var fieldSingleSelectionField = FormFields.getFieldName();
 
 		Form.editFieldLabelMetal(fieldValue = "Radio Field");
 
@@ -4001,14 +4034,14 @@ definition {
 
 		FormFields.viewRadioLabel(
 			fieldLabel = "Radio Field",
-			fieldName = "RadioField");
+			fieldName = "${fieldSingleSelectionField}");
 
 		FormFields.viewRequiredAsterisk();
 
 		FormPortlet.submitWithValidationError();
 
 		FormFields.selectRadioOption(
-			fieldName = "RadioField",
+			fieldName = "${fieldSingleSelectionField}",
 			radioOption = "Option 1");
 
 		FormPortlet.waitForValidationErrorNotPresent();
@@ -4048,6 +4081,8 @@ definition {
 
 		Form.addTextField(fieldPositionNumber = "1");
 
+		var fieldTextField = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
 		FormFields.enableSwitcher(fieldName = "Required");
@@ -4083,11 +4118,11 @@ definition {
 		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.addRepeatableField(
-			fieldName = "TextField",
+			fieldName = "${fieldTextField}",
 			repeatableFieldNumber = "1");
 
 		FormFields.editRepeatingText(
-			fieldName = "TextField",
+			fieldName = "${fieldTextField}",
 			fieldValue = "Text Field Value",
 			fieldValueRepeat = "Text Field Value Repeat");
 
@@ -4127,6 +4162,8 @@ definition {
 
 		Form.addTextField(fieldPositionNumber = "1");
 
+		var fieldTextField = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
 		FormFields.enableSwitcher(fieldName = "Required");
@@ -4159,14 +4196,14 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Text Field",
-			fieldName = "TextField");
+			fieldName = "${fieldTextField}");
 
 		FormFields.viewRequiredAsterisk();
 
 		FormPortlet.submitWithValidationError();
 
 		FormFields.editText(
-			fieldName = "TextField",
+			fieldName = "${fieldTextField}",
 			fieldValue = "Text Field Value");
 
 		FormPortlet.waitForValidationErrorNotPresent();
@@ -4207,6 +4244,8 @@ definition {
 		Form.gotoAddField(
 			fieldPositionNumber = "1",
 			fieldType = "Multiple Selection");
+
+		var fieldMultipleSelectionField = FormFields.getFieldName();
 
 		Form.editFieldLabelMetal(fieldValue = "Checkbox Field");
 
@@ -4250,10 +4289,10 @@ definition {
 
 		FormFields.viewSwitcherLabel(
 			fieldLabel = "Checkbox Field",
-			fieldName = "CheckboxField");
+			fieldName = "${fieldMultipleSelectionField}");
 
 		FormFields.selectSwitcherOption(
-			fieldName = "CheckboxField",
+			fieldName = "${fieldMultipleSelectionField}",
 			switcherOption = "Switcher 1");
 
 		FormPortlet.clickSubmit();
@@ -4275,7 +4314,7 @@ definition {
 		FormsAdminNavigator.gotoView();
 
 		FormsAdmin.viewCheckboxEntry(
-			fieldName = "CheckboxField",
+			fieldName = "${fieldMultipleSelectionField}",
 			fieldValue = "Switcher 1");
 	}
 
@@ -4300,6 +4339,8 @@ definition {
 			fieldPositionNumber = "1",
 			fieldType = "Upload");
 
+		var fieldUploadField = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Upload Field");
 
 		Form.closeSidebar();
@@ -4320,10 +4361,10 @@ definition {
 
 		FormFields.viewUploadField(
 			fieldLabel = "Upload Field",
-			fieldName = "UploadField");
+			fieldName = "${fieldUploadField}");
 
 		AssertNotEditable(
-			key_fieldName = "UploadField",
+			key_fieldName = "${fieldUploadField}",
 			locator1 = "FormFields#UPLOAD_FIELD");
 
 		ItemSelector.gotoItemSelectorViaSelectButton();
@@ -4346,7 +4387,7 @@ definition {
 
 		FormsAdmin.viewUploadFile(
 			fieldLabel = "Upload Field",
-			fieldName = "UploadField",
+			fieldName = "${fieldUploadField}",
 			uploadFileName = "Document_1.jpg");
 	}
 
@@ -4372,6 +4413,8 @@ definition {
 			fieldPositionNumber = "1",
 			fieldType = "Date");
 
+		var fieldDateField = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Date Field");
 
 		FormFields.enableSwitcher(fieldName = "Required");
@@ -4394,26 +4437,26 @@ definition {
 
 		FormFields.viewDateField(
 			fieldLabel = "Date Field",
-			fieldName = "DateField");
+			fieldName = "${fieldDateField}");
 
 		FormFields.viewRequiredAsterisk();
 
 		FormPortlet.submitWithValidationError();
 
 		Type(
-			key_fieldName = "DateField",
+			key_fieldName = "${fieldDateField}",
 			locator1 = "FormFields#DATE_FIELD",
 			value1 = "Invalid Value, Date Field");
 
 		AssertTextEquals(
-			key_fieldName = "DateField",
+			key_fieldName = "${fieldDateField}",
 			locator1 = "FormFields#DATE_FIELD",
 			value1 = "__/__/____");
 
 		FormPortlet.submitWithValidationError();
 
 		FormFields.editDate(
-			fieldName = "DateField",
+			fieldName = "${fieldDateField}",
 			fieldValue = "01/01/2016");
 
 		FormPortlet.waitForValidationErrorNotPresent();
@@ -4432,7 +4475,7 @@ definition {
 
 		FormsAdmin.viewDateEntry(
 			fieldLabel = "Date Field",
-			fieldName = "DateField",
+			fieldName = "${fieldDateField}",
 			fieldValue = "01/01/2016");
 	}
 
@@ -4594,6 +4637,8 @@ definition {
 
 		Form.addTextField(fieldPositionNumber = "1");
 
+		var fieldTextField = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Text Field Page 1");
 
 		Form.closeSidebar();
@@ -4605,6 +4650,8 @@ definition {
 			formTitleNumber = "2");
 
 		Form.addTextField(fieldPositionNumber = "3");
+
+		var fieldTextField2 = FormFields.getFieldName();
 
 		Form.editFieldLabelMetal(fieldValue = "Text Field Page 2");
 
@@ -4620,6 +4667,8 @@ definition {
 
 		Form.addTextField(fieldPositionNumber = "5");
 
+		var fieldTextField3 = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Text Field Page 3");
 
 		Form.closeSidebar();
@@ -4631,7 +4680,7 @@ definition {
 		FormPortlet.waitFormRenderer(text = "Next");
 
 		FormFields.editText(
-			fieldName = "TextField",
+			fieldName = "${fieldTextField}",
 			fieldValue = "test");
 
 		FormPortlet.nextPage(
@@ -4643,13 +4692,13 @@ definition {
 		FormPortlet.clickNextPage();
 
 		FormFields.viewFieldValidationErrorMessage(
-			fieldName = "TextField",
+			fieldName = "${fieldTextField2}",
 			fieldValidationErrorMessage = "This field is required.");
 
 		DoubleClick(locator1 = "Button#NEXT");
 
 		FormFields.viewFieldValidationErrorMessage(
-			fieldName = "TextField",
+			fieldName = "${fieldTextField2}",
 			fieldValidationErrorMessage = "This field is required.");
 	}
 
@@ -4675,6 +4724,8 @@ definition {
 			fieldPositionNumber = "1",
 			fieldType = "Multiple Selection");
 
+		var fieldMultipleSelectionField = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Multiple Selection");
 
 		FormFields.enableSwitcher(fieldName = "Show as a Switcher");
@@ -4694,7 +4745,7 @@ definition {
 
 		FormFields.viewSwitcherLabelNotPresent(
 			fieldLabel = "Multiple Selection",
-			fieldName = "MultipleSelection");
+			fieldName = "${fieldMultipleSelectionField}");
 
 		Form.save();
 
@@ -4720,11 +4771,11 @@ definition {
 
 		FormPortlet.waitFormRenderer(text = "Submit");
 
-		FormFields.viewSwitcher(fieldName = "MultipleSelection");
+		FormFields.viewSwitcher(fieldName = "${fieldMultipleSelectionField}");
 
 		FormFields.viewSwitcherLabelNotPresent(
 			fieldLabel = "Multiple Selection",
-			fieldName = "MultipleSelection");
+			fieldName = "${fieldMultipleSelectionField}");
 
 		FormPortlet.submitSuccessfully();
 	}
@@ -4747,6 +4798,8 @@ definition {
 		Form.editDescription();
 
 		Form.addTextField(fieldPositionNumber = "1");
+
+		var fieldTextField = FormFields.getFieldName();
 
 		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
@@ -4781,12 +4834,12 @@ definition {
 		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.addRepeatableField(
-			fieldName = "TextField",
+			fieldName = "${fieldTextField}",
 			repeatableFieldNumber = "1");
 
 		FormFields.viewRepeatableTextFieldLabel(
 			fieldLabel = "Text Field",
-			fieldName = "TextField");
+			fieldName = "${fieldTextField}");
 	}
 
 	@description = "This is a use case for LPS-68390."
@@ -4843,6 +4896,8 @@ definition {
 
 		Form.addTextField(fieldPositionNumber = "1");
 
+		var fieldTextField = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
 		Form.closeSidebar();
@@ -4877,10 +4932,10 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Text Field",
-			fieldName = "TextField");
+			fieldName = "${fieldTextField}");
 
 		FormFields.editText(
-			fieldName = "TextField",
+			fieldName = "${fieldTextField}",
 			fieldValue = "Text Field Value");
 
 		FormPortlet.submitSuccessfully();

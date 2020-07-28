@@ -71,7 +71,7 @@
 </tr>
 <tr>
 	<td>CHECKBOX_OPTION_LABEL</td>
-	<td>//label[contains(.,'${key_checkboxOption}')]/input[@type='checkbox' and contains(@name,'${key_fieldName}')]/../span</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//label[contains(.,'${key_checkboxOption}')]/input[@type='checkbox' and contains(@name,'${key_fieldName}')]/../span</td>
 	<td></td>
 </tr>
 <tr>
@@ -170,7 +170,7 @@
 </tr>
 <tr>
 	<td>GRID_RADIO_OPTIONS</td>
-	<td>//div[contains(@data-field-name,'Grid')]//tr[contains(@name,'${key_optionRowName}')]//input[@value='${key_categoryColumnName}']</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//input[contains(@aria-label, '${key_optionNumber}')]</td>
 	<td></td>
 </tr>
 <tr>

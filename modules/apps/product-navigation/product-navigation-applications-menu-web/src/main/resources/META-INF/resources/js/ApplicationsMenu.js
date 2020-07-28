@@ -26,213 +26,77 @@ import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useRef, useState} from 'react';
 
-// remove PlaceholderSites when Sites is dynamic
-
-const PlaceholderSites = () => {
+const Site = ({label, logoURL, url}) => {
 	return (
-		<>
-			<li className="c-mt-3">
-				<a className="applications-menu-nav-link" href="#">
-					<ClayLayout.ContentRow verticalAlign="center">
-						<ClayLayout.ContentCol>
-							<ClaySticker size="sm">
-								<img
-									alt=""
-									height="20px"
-									src="http://localhost:8080/image/company_logo?img_id=0&t=1595865907262"
-								/>
-							</ClaySticker>
-						</ClayLayout.ContentCol>
+		<li className="c-mt-3">
+			<a className="applications-menu-nav-link" href={url}>
+				<ClayLayout.ContentRow verticalAlign="center">
+					<ClayLayout.ContentCol>
+						<ClaySticker size="sm">
+							<img alt="" height="20px" src={logoURL} />
+						</ClaySticker>
+					</ClayLayout.ContentCol>
 
-						<ClayLayout.ContentCol className="applications-menu-shrink c-ml-2">
-							<span className="text-truncate">
-								CyRay Cycles Very Long Name To Insert For You
-							</span>
-						</ClayLayout.ContentCol>
+					<ClayLayout.ContentCol className="applications-menu-shrink c-ml-2">
+						<span className="text-truncate">{label}</span>
+					</ClayLayout.ContentCol>
 
+					{!url && (
 						<ClayLayout.ContentCol className="c-ml-2">
 							<ClayLabel displayType="info">
-								{'current'}
+								{Liferay.Language.get('current')}
 							</ClayLabel>
 						</ClayLayout.ContentCol>
-					</ClayLayout.ContentRow>
-				</a>
-			</li>
-
-			<li className="c-mt-3">
-				<a className="applications-menu-nav-link" href="#">
-					<ClayLayout.ContentRow verticalAlign="center">
-						<ClayLayout.ContentCol>
-							<ClaySticker size="sm">
-								<img
-									alt=""
-									height="20px"
-									src="http://localhost:8080/image/company_logo?img_id=0&t=1595865907262"
-								/>
-							</ClaySticker>
-						</ClayLayout.ContentCol>
-
-						<ClayLayout.ContentCol className="applications-menu-shrink c-ml-2">
-							<span className="text-truncate">
-								CyRay Cycles Intranet
-							</span>
-						</ClayLayout.ContentCol>
-					</ClayLayout.ContentRow>
-				</a>
-			</li>
-
-			<li className="c-mt-3">
-				<a className="applications-menu-nav-link" href="#">
-					<ClayLayout.ContentRow verticalAlign="center">
-						<ClayLayout.ContentCol>
-							<ClaySticker size="sm">
-								<img
-									alt=""
-									height="20px"
-									src="http://localhost:8080/image/company_logo?img_id=0&t=1595865907262"
-								/>
-							</ClaySticker>
-						</ClayLayout.ContentCol>
-
-						<ClayLayout.ContentCol className="applications-menu-shrink c-ml-2">
-							<span className="text-truncate">Front Store</span>
-						</ClayLayout.ContentCol>
-					</ClayLayout.ContentRow>
-				</a>
-			</li>
-
-			<li className="applications-menu-nav-divider c-mt-3"></li>
-
-			<li className="c-mt-3">
-				<a className="applications-menu-nav-link" href="#">
-					<ClayLayout.ContentRow verticalAlign="center">
-						<ClayLayout.ContentCol>
-							<ClaySticker size="sm">
-								<img
-									alt=""
-									height="20px"
-									src="http://localhost:8080/image/company_logo?img_id=0&t=1595865907262"
-								/>
-							</ClaySticker>
-						</ClayLayout.ContentCol>
-
-						<ClayLayout.ContentCol className="applications-menu-shrink c-ml-2">
-							<span className="text-truncate">Front Store</span>
-						</ClayLayout.ContentCol>
-					</ClayLayout.ContentRow>
-				</a>
-			</li>
-
-			<li className="c-mt-3">
-				<a className="applications-menu-nav-link" href="#">
-					<ClayLayout.ContentRow verticalAlign="center">
-						<ClayLayout.ContentCol>
-							<ClaySticker size="sm">
-								<img
-									alt=""
-									height="20px"
-									src="http://localhost:8080/image/company_logo?img_id=0&t=1595865907262"
-								/>
-							</ClaySticker>
-						</ClayLayout.ContentCol>
-
-						<ClayLayout.ContentCol className="applications-menu-shrink c-ml-2">
-							<span className="text-truncate">
-								CyRay Magazine
-							</span>
-						</ClayLayout.ContentCol>
-					</ClayLayout.ContentRow>
-				</a>
-			</li>
-
-			<li className="c-mt-3">
-				<a className="applications-menu-nav-link" href="#">
-					<ClayLayout.ContentRow verticalAlign="center">
-						<ClayLayout.ContentCol>
-							<ClaySticker size="sm">
-								<img
-									alt=""
-									height="20px"
-									src="http://localhost:8080/image/company_logo?img_id=0&t=1595865907262"
-								/>
-							</ClaySticker>
-						</ClayLayout.ContentCol>
-
-						<ClayLayout.ContentCol className="applications-menu-shrink c-ml-2">
-							<span className="text-truncate">
-								CyRay Foundation
-							</span>
-						</ClayLayout.ContentCol>
-					</ClayLayout.ContentRow>
-				</a>
-			</li>
-
-			<li className="c-mt-3">
-				<a className="applications-menu-nav-link" href="#">
-					<ClayLayout.ContentRow verticalAlign="center">
-						<ClayLayout.ContentCol>
-							<ClaySticker size="sm">
-								<img
-									alt=""
-									height="20px"
-									src="http://localhost:8080/image/company_logo?img_id=0&t=1595865907262"
-								/>
-							</ClaySticker>
-						</ClayLayout.ContentCol>
-
-						<ClayLayout.ContentCol className="applications-menu-shrink c-ml-2">
-							<span className="text-truncate">
-								CyRay Partners
-							</span>
-						</ClayLayout.ContentCol>
-					</ClayLayout.ContentRow>
-				</a>
-			</li>
-
-			<li className="c-mt-3">
-				<ClayButton
-					className="applications-menu-btn btn-unstyled c-mb-0 c-mt-3"
-					displayType="link"
-					onClick={() => alert('Placeholder')}
-				>
-					{Liferay.Language.get('view-all')}
-				</ClayButton>
-			</li>
-		</>
+					)}
+				</ClayLayout.ContentRow>
+			</a>
+		</li>
 	);
 };
 
-// const Sites = ({label, sites}) => {
-// 	return (
-// 		<>
-// 			{sites.map(({key, label, logoURL, url}) => (
-// 				<li className="c-mt-3" key={key}>
-// 					<a className="applications-menu-nav-link" href={url}>
-// 						<ClayLayout.ContentRow verticalAlign="center">
-// 							<ClayLayout.ContentCol>
-// 								<ClaySticker size="sm">
-// 									<img alt="" height="20px" src={logoURL} />
-// 								</ClaySticker>
-// 							</ClayLayout.ContentCol>
+const SitesPanel = ({mySites, portletNamespace, recentSites, viewAllURL}) => {
+	return (
+		<>
+			{recentSites?.length > 0 &&
+				recentSites.map(({key, label, logoURL, url}) => (
+					<Site key={key} label={label} logoURL={logoURL} url={url} />
+				))}
 
-// 							<ClayLayout.ContentCol className="applications-menu-shrink c-ml-2">
-// 								<span className="text-truncate">{label}</span>
-// 							</ClayLayout.ContentCol>
+			{recentSites?.length > 0 && mySites?.length > 0 && (
+				<li className="applications-menu-nav-divider c-mt-3"></li>
+			)}
 
-// 							{!url && (
-// 								<ClayLayout.ContentCol className="c-ml-2">
-// 									<ClayLabel displayType="info">
-// 										{'current'}
-// 									</ClayLabel>
-// 								</ClayLayout.ContentCol>
-// 							)}
-// 						</ClayLayout.ContentRow>
-// 					</a>
-// 				</li>
-// 			))}
-// 		</>
-// 	);
-// };
+			{mySites?.length > 0 &&
+				mySites.map(({key, label, logoURL, url}) => (
+					<Site key={key} label={label} logoURL={logoURL} url={url} />
+				))}
+
+			{viewAllURL && (
+				<li className="c-mt-3">
+					<ClayButton
+						className="applications-menu-btn btn-unstyled c-mb-0 c-mt-3"
+						displayType="link"
+						onClick={() => {
+							Liferay.Util.openModal({
+								id: `${portletNamespace}selectSite`,
+								onSelect: (selectedItem) => {
+									Liferay.Util.navigate(selectedItem.url);
+								},
+								selectEventName: `${portletNamespace}selectSite`,
+								title: Liferay.Language.get(
+									'select-site-or-asset-library'
+								),
+								url: viewAllURL,
+							});
+						}}
+					>
+						{Liferay.Language.get('view-all')}
+					</ClayButton>
+				</li>
+			)}
+		</>
+	);
+};
 
 const AppsPanel = ({
 	categories = [],
@@ -381,49 +245,18 @@ const AppsPanel = ({
 						>
 							<div className="applications-menu-sites c-p-3 c-px-md-4">
 								<h2 className="applications-menu-sites-label c-mt-2 c-mt-md-0">
-									Sites
+									{Liferay.Language.get('sites')}
 								</h2>
 
 								<ul className="c-mb-2 list-unstyled">
-									<PlaceholderSites />
-									{/* {sites.mySites && sites.mySites.length > 0 && (
-										<Sites
-											label={Liferay.Language.get(
-												'my-sites'
-											)}
-											sites={sites.mySites}
+									{sites && (
+										<SitesPanel
+											mySites={sites.mySites}
+											portletNamespace={portletNamespace}
+											recentSites={sites.recentSites}
+											viewAllURL={sites.viewAllURL}
 										/>
 									)}
-
-									{sites.viewAllURL && (
-										<li className="c-mt-3">
-											<ClayButton
-												className="applications-menu-btn btn-unstyled c-mb-0 c-mt-3"
-												displayType="link"
-												onClick={() => {
-													Liferay.Util.openModal({
-														id: `${portletNamespace}selectSite`,
-														onSelect: (
-															selectedItem
-														) => {
-															Liferay.Util.navigate(
-																selectedItem.url
-															);
-														},
-														selectEventName: `${portletNamespace}selectSite`,
-														title: Liferay.Language.get(
-															'select-site-or-asset-library'
-														),
-														url: sites.viewAllURL,
-													});
-												}}
-											>
-												{Liferay.Language.get(
-													'view-all'
-												)}
-											</ClayButton>
-										</li>
-									)} */}
 								</ul>
 							</div>
 						</ClayLayout.Col>

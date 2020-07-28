@@ -248,14 +248,7 @@ public class FileInstallImplBundleActivator
 		String property = _bundleContext.getProperty(key);
 
 		if (property == null) {
-			key = StringUtil.toUpperCase(key);
-
-			property = System.getProperty(
-				StringUtil.replace(key, CharPool.PERIOD, CharPool.UNDERLINE));
-
-			if (property == null) {
-				return;
-			}
+			return;
 		}
 
 		map.put(key, property);

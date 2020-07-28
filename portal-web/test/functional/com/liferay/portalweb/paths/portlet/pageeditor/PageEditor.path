@@ -179,21 +179,6 @@
 </tr>
 <!--EDITABLE_FIELD_TOOLBAR-->
 <tr>
-	<td>EDITABLE_FIELD_TOOLBAR_EDIT_BUTTON</td>
-	<td>//button[@*='Edit']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDITABLE_FIELD_TOOLBAR_LINK_BUTTON</td>
-	<td>//button[@*='Link']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDITABLE_FIELD_TOOLBAR_MAP_BUTTON</td>
-	<td>//button[@*='Map']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>EDITABLE_FIELD_TOOLBAR_MAPPED_BUTTON</td>
 	<td>//div[contains(@class,'form-group') and contains(.,'${key_mappedField}')]//button[@*='Map' and contains(@class,'active')]</td>
 	<td></td>
@@ -206,11 +191,6 @@
 <tr>
 	<td>EDITABLE_FIELD_TOOLBAR_MAP_ASSET_SELECT_POPUP_BUTTON</td>
 	<td>//label[contains(.,'Content')]/following-sibling::div//button</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDITABLE_FIELD_TOOLBAR_IMAGE_PROPERTIES_BUTTON</td>
-	<td>//button[@*='Image Properties']</td>
 	<td></td>
 </tr>
 <tr>
@@ -247,32 +227,6 @@
 <tr>
 	<td>EXPERIENCE_NAME</td>
 	<td>//input[contains(@id,'segmentsExperienceName')]</td>
-	<td></td>
-</tr>
-<!--FRAGMENT_BODY_TOOLBAR-->
-<tr>
-	<td>FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON</td>
-	<td>//button[@*='${key_elementType} Configuration']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_BODY_TOOLBAR_STYLE_BUTTON</td>
-	<td>//button[@*='${key_elementType} Styles']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_BODY_FLOATING_TOOLBAR_PANEL</td>
-	<td>//div[contains(@class,'page-editor__floating-toolbar__panel')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_BODY_FLOATING_TOOLBAR_PLUS_BUTTON</td>
-	<td>//div[contains(@class,'floating-toolbar')]//div[contains(@class,'form-group')]//button[*[name()='svg'][contains(@class,'plus')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--FRAGMENT_SIDEBAR-->

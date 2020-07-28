@@ -77,8 +77,9 @@ public class TranslationEntryLocalServiceImpl
 
 	@Override
 	public TranslationEntry addOrUpdateTranslationEntry(
-		long groupId, String className, long classPK, String content,
-		String contentType, String languageId, ServiceContext serviceContext)
+			long groupId, String className, long classPK, String content,
+			String contentType, String languageId,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		TranslationEntry translationEntry =
@@ -106,6 +107,7 @@ public class TranslationEntryLocalServiceImpl
 		int status = WorkflowConstants.STATUS_APPROVED;
 
 		translationEntry.setStatus(status);
+
 		translationEntry.setStatusByUserId(user.getUserId());
 		translationEntry.setStatusByUserName(user.getFullName());
 		translationEntry.setStatusDate(

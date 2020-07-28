@@ -319,12 +319,12 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 				).put(
 					"selectedCategories", selectedCategoryIds
 				).put(
-					"system", vocabulary.isSystem()
-				).put(
 					"title",
 					vocabulary.getUnambiguousTitle(
 						vocabularies, themeDisplay.getScopeGroupId(),
 						themeDisplay.getLocale())
+				).put(
+					"visibilityType", vocabulary.getVisibilityType()
 				).build();
 
 			if (Validator.isNotNull(selectedCategoryIds)) {

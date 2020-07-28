@@ -323,7 +323,9 @@ definition {
 			fieldName = "url",
 			fieldValue = "${videoLink}");
 
-		Click(locator1 = "PageEditor#MANAGEMENT_BAR");
+		Click(
+			key_sidebarButton = "Page Structure",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 		PageEditor.waitForAutoSave();
 	}
@@ -571,6 +573,10 @@ definition {
 				key_fieldLabel = "Number Of Tabs",
 				locator1 = "FormFields#NUMBER_FIELD",
 				value1 = "${numberOfTabs}");
+
+			Click(
+				key_sidebarButton = "Page Structure",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 			AssertTextEquals(
 				key_fieldLabel = "Number Of Tabs",
@@ -906,7 +912,9 @@ definition {
 				locator1 = "TextInput#IMAGE_DESCRIPTION",
 				value1 = "${imageDescription}");
 
-			Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_IMAGE_PROPERTIES_BUTTON");
+			Click(
+				key_sidebarButton = "Page Structure",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 			PageEditor.waitForAutoSave();
 		}
@@ -1057,7 +1065,9 @@ definition {
 					locator1 = "FormFields#NUMBER_FIELD",
 					value1 = "${borderWidth}");
 
-				Click(locator1 = "PageEditor#FRAGMENT_BODY_FLOATING_TOOLBAR_PANEL");
+				Click(
+					key_sidebarButton = "Page Structure",
+					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 				Pause(locator1 = "3000");
 			}
@@ -1160,7 +1170,9 @@ definition {
 					locator1 = "FormFields#NUMBER_FIELD",
 					value1 = "${opacity}");
 
-				Click(locator1 = "PageEditor#FRAGMENT_BODY_FLOATING_TOOLBAR_PANEL");
+				Click(
+					key_sidebarButton = "Page Structure",
+					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 				Pause(locator1 = "3000");
 			}

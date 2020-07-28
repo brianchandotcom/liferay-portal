@@ -63,7 +63,9 @@ definition {
 			locator1 = "PageEditorEditableLink#URL",
 			value1 = "${url}");
 
-		Click(locator1 = "PageEditor#FRAGMENT_BODY_FLOATING_TOOLBAR_PANEL");
+		Click(
+			key_sidebarButton = "Page Structure",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 		PageEditor.waitForAutoSave();
 	}

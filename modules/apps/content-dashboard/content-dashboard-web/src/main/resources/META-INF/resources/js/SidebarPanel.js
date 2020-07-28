@@ -14,7 +14,7 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {useIsMounted, useTimeout} from 'frontend-js-react-web';
+import {useIsMounted} from 'frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useImperativeHandle, useReducer, useRef} from 'react';
 
@@ -84,17 +84,9 @@ const SidebarPanel = React.forwardRef(
 	({fetchURL, onClose, viewComponent: View}, ref) => {
 		const CurrentView = useRef(View);
 
-		const delay = useTimeout();
-
 		const isMounted = useIsMounted();
 
 		const [state, dispatch] = useReducer(dataReducer, initialState);
-
-		// Force 300 ms of waiting to render the response so loading
-		// looks more natural.
-
-		const dispatchWithDelay = (action) =>
-			delay(() => safeDispatch(action), 300);
 
 		const getData = (fetchURL) => {
 			safeDispatch({type: 'LOAD_DATA'});
@@ -107,16 +99,16 @@ const SidebarPanel = React.forwardRef(
 						? response
 								.json()
 								.then((data) =>
-									dispatchWithDelay({data, type: 'SET_JSON'})
+									safeDispatch({data, type: 'SET_JSON'})
 								)
 						: response
 								.text()
 								.then((html) =>
-									dispatchWithDelay({html, type: 'SET_HTML'})
+									safeDispatch({html, type: 'SET_HTML'})
 								)
 				)
 				.catch(() => {
-					dispatchWithDelay({
+					safeDispatch({
 						error: Liferay.Language.get(
 							'an-unexpected-error-occurred'
 						),

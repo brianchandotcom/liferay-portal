@@ -14,6 +14,8 @@
 
 package com.liferay.portal.file.install.internal;
 
+import com.liferay.petra.concurrent.DefaultNoticeableFuture;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -49,7 +51,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 import java.util.jar.Attributes;
@@ -64,6 +65,7 @@ import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.BundleListener;
 import org.osgi.framework.Constants;
+import org.osgi.framework.FrameworkEvent;
 import org.osgi.framework.Version;
 import org.osgi.framework.VersionRange;
 import org.osgi.framework.startlevel.BundleStartLevel;
@@ -1048,15 +1050,26 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	private void _refresh(Collection<Bundle> bundles)
 		throws InterruptedException {
 
-		CountDownLatch countDownLatch = new CountDownLatch(1);
-
 		FrameworkWiring frameworkWiring = _systemBundle.adapt(
 			FrameworkWiring.class);
 
-		frameworkWiring.refreshBundles(
-			bundles, event -> countDownLatch.countDown());
+		DefaultNoticeableFuture<FrameworkEvent> defaultNoticeableFuture =
+			new DefaultNoticeableFuture<>();
 
-		countDownLatch.await();
+		frameworkWiring.refreshBundles(
+			bundles,
+			frameworkEvent -> defaultNoticeableFuture.set(frameworkEvent));
+
+		try {
+			FrameworkEvent frameworkEvent = defaultNoticeableFuture.get();
+
+			if (frameworkEvent.getType() != FrameworkEvent.PACKAGES_REFRESHED) {
+				throw frameworkEvent.getThrowable();
+			}
+		}
+		catch (Throwable t) {
+			ReflectionUtil.throwException(t);
+		}
 	}
 
 	private void _removeArtifact(File file) {

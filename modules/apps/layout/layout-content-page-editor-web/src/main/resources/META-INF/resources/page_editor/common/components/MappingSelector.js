@@ -71,10 +71,7 @@ function loadFields({
 	if (promise) {
 		return promise.then((response) => {
 			if (Array.isArray(response)) {
-				return response.filter(
-					(field) =>
-						COMPATIBLE_TYPES[fieldType].indexOf(field.type) !== -1
-				);
+				return response;
 			}
 
 			return [];

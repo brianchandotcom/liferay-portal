@@ -19,34 +19,24 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFacto
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.file.install.FileInstaller;
 import com.liferay.portal.file.install.internal.properties.InterpolationUtil;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Dictionary;
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.ConfigurationAdmin;
-import org.osgi.service.cm.ConfigurationException;
-import org.osgi.service.cm.ManagedServiceFactory;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -268,7 +258,6 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 		@Override
 		public void run() {
 			_tracker.close();
-			_serviceRegistration.unregister();
 		}
 
 		private ConfigAdminSupport(
@@ -277,25 +266,16 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 
 			_tracker = new Tracker(bundleContext, fileInstall);
 
-			Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-			properties.put(Constants.SERVICE_PID, _tracker.getName());
-
-			_serviceRegistration = bundleContext.registerService(
-				ManagedServiceFactory.class.getName(), _tracker, properties);
-
 			_tracker.open();
 		}
 
-		private final ServiceRegistration<?> _serviceRegistration;
 		private final Tracker _tracker;
 
 		private class Tracker
-			extends ServiceTracker<ConfigurationAdmin, ConfigurationAdmin>
-			implements ManagedServiceFactory {
+			extends ServiceTracker<ConfigurationAdmin, ConfigInstaller> {
 
 			@Override
-			public ConfigurationAdmin addingService(
+			public ConfigInstaller addingService(
 				ServiceReference<ConfigurationAdmin> serviceReference) {
 
 				_writeLock.lock();
@@ -305,20 +285,15 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 						return null;
 					}
 
-					ConfigurationAdmin configurationAdmin = super.addingService(
+					ConfigurationAdmin configurationAdmin = context.getService(
 						serviceReference);
-
-					long id = (Long)serviceReference.getProperty(
-						Constants.SERVICE_ID);
 
 					ConfigInstaller configInstaller = new ConfigInstaller(
 						context, configurationAdmin, _fileInstall);
 
 					configInstaller.init();
 
-					_configInstallers.put(id, configInstaller);
-
-					return configurationAdmin;
+					return configInstaller;
 				}
 				finally {
 					_writeLock.unlock();
@@ -326,21 +301,9 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 			}
 
 			@Override
-			public void deleted(String string) {
-				_configs.remove(string);
-
-				_deleted(string);
-			}
-
-			@Override
-			public String getName() {
-				return "com.liferay.portal.file.install";
-			}
-
-			@Override
 			public void removedService(
 				ServiceReference<ConfigurationAdmin> serviceReference,
-				ConfigurationAdmin configurationAdmin) {
+				ConfigInstaller configInstaller) {
 
 				_writeLock.lock();
 
@@ -349,52 +312,13 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 						return;
 					}
 
-					Iterator<String> iterator = _configs.iterator();
+					configInstaller.destroy();
 
-					while (iterator.hasNext()) {
-						String string = iterator.next();
-
-						_deleted(string);
-
-						iterator.remove();
-					}
-
-					long id = (Long)serviceReference.getProperty(
-						Constants.SERVICE_ID);
-
-					ConfigInstaller configInstaller = _configInstallers.remove(
-						id);
-
-					if (configInstaller != null) {
-						configInstaller.destroy();
-					}
-
-					super.removedService(serviceReference, configurationAdmin);
+					context.ungetService(serviceReference);
 				}
 				finally {
 					_writeLock.unlock();
 				}
-			}
-
-			@Override
-			public void updated(String string, Dictionary<String, ?> dictionary)
-				throws ConfigurationException {
-
-				_configs.add(string);
-
-				Map<String, String> props = new HashMap<>();
-
-				Enumeration<String> enumeration = dictionary.keys();
-
-				while (enumeration.hasMoreElements()) {
-					String key = enumeration.nextElement();
-
-					Object value = dictionary.get(key);
-
-					props.put(key, value.toString());
-				}
-
-				_fileInstall._updated(string, props);
 			}
 
 			private Tracker(
@@ -406,22 +330,6 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 				_fileInstall = fileInstall;
 			}
 
-			private void _deleted(String pid) {
-				DirectoryWatcher directoryWatcher = null;
-
-				synchronized (_watchers) {
-					directoryWatcher = _watchers.remove(pid);
-				}
-
-				if (directoryWatcher != null) {
-					directoryWatcher.close();
-				}
-			}
-
-			private final Map<Long, ConfigInstaller> _configInstallers =
-				new HashMap<>();
-			private final Set<String> _configs = Collections.synchronizedSet(
-				new HashSet<>());
 			private final FileInstallImplBundleActivator _fileInstall;
 
 		}

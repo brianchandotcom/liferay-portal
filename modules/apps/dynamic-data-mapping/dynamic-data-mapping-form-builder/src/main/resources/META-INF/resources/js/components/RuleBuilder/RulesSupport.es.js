@@ -62,11 +62,15 @@ const syncActions = (pages, actions) => {
 	actions.forEach((action, index) => {
 		let targetFieldExists = false;
 
-		visitor.mapFields(({fieldName}) => {
-			if (action.target === fieldName) {
-				targetFieldExists = true;
-			}
-		});
+		visitor.mapFields(
+			({fieldName}) => {
+				if (action.target === fieldName) {
+					targetFieldExists = true;
+				}
+			},
+			true,
+			true
+		);
 
 		if (!targetFieldExists) {
 			actions = clearTargetValue(actions, index);

@@ -30,15 +30,19 @@ export const formatRules = (state, pages) => {
 
 			const secondOperand = condition.operands[1];
 
-			visitor.mapFields(({fieldName}) => {
-				if (condition.operands[0].value === fieldName) {
-					firstOperandFieldExists = true;
-				}
+			visitor.mapFields(
+				({fieldName}) => {
+					if (condition.operands[0].value === fieldName) {
+						firstOperandFieldExists = true;
+					}
 
-				if (secondOperand && secondOperand.value === fieldName) {
-					secondOperandFieldExists = true;
-				}
-			});
+					if (secondOperand && secondOperand.value === fieldName) {
+						secondOperandFieldExists = true;
+					}
+				},
+				true,
+				true
+			);
 
 			if (condition.operands[0].value === 'user') {
 				firstOperandFieldExists = true;

@@ -23,7 +23,6 @@ import Sidebar from './components/Sidebar';
 const initialState = {
 	data: null,
 	error: null,
-	html: null,
 	loading: false,
 	open: true,
 };
@@ -47,6 +46,9 @@ const SidebarPanel = React.forwardRef(
 
 					case 'LOAD_DATA':
 						return {
+							...state,
+							data: null,
+							error: null,
 							loading: true,
 						};
 
@@ -58,12 +60,15 @@ const SidebarPanel = React.forwardRef(
 
 					case 'SET_ERROR':
 						return {
+							...state,
+							data: null,
 							error: action.error,
 							loading: false,
 						};
 
 					case 'SET_HTML':
 						return {
+							...state,
 							data: {
 								html: action.html,
 							},
@@ -73,6 +78,7 @@ const SidebarPanel = React.forwardRef(
 
 					case 'SET_JSON':
 						return {
+							...state,
 							data: action.data,
 							error: action.data?.error,
 							loading: false,

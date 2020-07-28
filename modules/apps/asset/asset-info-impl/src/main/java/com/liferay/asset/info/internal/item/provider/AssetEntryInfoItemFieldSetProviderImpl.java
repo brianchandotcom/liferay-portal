@@ -22,6 +22,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
@@ -56,7 +57,7 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 
 	@Override
 	public InfoFieldSet getInfoFieldSet(AssetEntry assetEntry) {
-		return _getInfoFieldSet(_getNonsystemAssetVocabularies(assetEntry));
+		return _getInfoFieldSet(_getNoninternalAssetVocabularies(assetEntry));
 	}
 
 	@Override
@@ -69,7 +70,7 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 		String itemClassName, long itemClassTypeId, long scopeGroupId) {
 
 		return _getInfoFieldSet(
-			_getNonsystemAssetVocabularies(
+			_getNoninternalAssetVocabularies(
 				itemClassName, itemClassTypeId, scopeGroupId));
 	}
 
@@ -79,8 +80,8 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 
 		List<InfoFieldValue<Object>> infoFieldValues = new ArrayList<>();
 
-		Set<AssetVocabulary> assetVocabularies = _getNonsystemAssetVocabularies(
-			assetEntry);
+		Set<AssetVocabulary> assetVocabularies =
+			_getNoninternalAssetVocabularies(assetEntry);
 
 		for (AssetVocabulary assetVocabulary : assetVocabularies) {
 			infoFieldValues.add(
@@ -106,7 +107,7 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 			new InfoFieldValue<>(
 				_categoriesInfoField,
 				() -> _getCategories(
-					_filterBySystem(assetEntry.getCategories()))));
+					_filterByVisibilityType(assetEntry.getCategories()))));
 		infoFieldValues.add(
 			new InfoFieldValue<>(
 				_tagsInfoField, () -> _getTags(assetEntry.getTags())));
@@ -144,7 +145,7 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 		}
 	}
 
-	private List<AssetCategory> _filterBySystem(
+	private List<AssetCategory> _filterByVisibilityType(
 		List<AssetCategory> assetCategories) {
 
 		return ListUtil.filter(
@@ -154,7 +155,8 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 					_assetVocabularyLocalService.fetchAssetVocabulary(
 						assetCategory.getVocabularyId());
 
-				return !assetVocabulary.isSystem();
+				return !(assetVocabulary.getVisibilityType() ==
+					AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL);
 			});
 	}
 
@@ -249,11 +251,11 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 		).build();
 	}
 
-	private Set<AssetVocabulary> _getNonsystemAssetVocabularies(
+	private Set<AssetVocabulary> _getNoninternalAssetVocabularies(
 		AssetEntry assetEntry) {
 
 		Set<AssetVocabulary> assetVocabularies = new HashSet<>(
-			_getNonsystemAssetVocabularies(
+			_getNoninternalAssetVocabularies(
 				assetEntry.getClassName(), assetEntry.getClassTypeId(),
 				assetEntry.getGroupId()));
 
@@ -262,7 +264,9 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 				_assetVocabularyLocalService.fetchAssetVocabulary(
 					assetCategory.getVocabularyId());
 
-			if (!assetVocabulary.isSystem()) {
+			if (!(assetVocabulary.getVisibilityType() ==
+					AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL)) {
+
 				assetVocabularies.add(assetVocabulary);
 			}
 		}
@@ -270,7 +274,7 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 		return assetVocabularies;
 	}
 
-	private List<AssetVocabulary> _getNonsystemAssetVocabularies(
+	private List<AssetVocabulary> _getNoninternalAssetVocabularies(
 		String itemClassName, long itemClassTypeId, long scopeGroupId) {
 
 		try {
@@ -282,7 +286,8 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 
 				return ListUtil.filter(
 					groupsAssetVocabularies,
-					assetVocabulary -> !assetVocabulary.isSystem());
+					assetVocabulary -> !(assetVocabulary.getVisibilityType() ==
+						AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL));
 			}
 
 			List<AssetVocabulary> groupsAssetVocabularies =
@@ -292,7 +297,8 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 
 			return ListUtil.filter(
 				groupsAssetVocabularies,
-				assetVocabulary -> !assetVocabulary.isSystem());
+				assetVocabulary -> !(assetVocabulary.getVisibilityType() ==
+					AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL));
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);

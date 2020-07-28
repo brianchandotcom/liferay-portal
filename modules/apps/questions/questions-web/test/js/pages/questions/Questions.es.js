@@ -149,7 +149,7 @@ describe('Questions', () => {
 						),
 				})
 			)
-			.mockImplementationOnce(() =>
+			.mockImplementation(() =>
 				Promise.resolve({
 					json: () => Promise.resolve(mockThreads),
 					text: () => Promise.resolve(JSON.stringify(mockThreads)),
@@ -165,7 +165,7 @@ describe('Questions', () => {
 
 		const loading = container.querySelectorAll('.loading-animation');
 
-		expect(loading.length).toBe(2);
+		expect(loading.length).toBe(1);
 
 		const text = await findByText('body question end');
 		expect(text).toBeInTheDocument();

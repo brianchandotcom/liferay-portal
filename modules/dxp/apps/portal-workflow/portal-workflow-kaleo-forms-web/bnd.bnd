@@ -1,5 +1,9 @@
 Bundle-Name: Liferay Portal Workflow Kaleo Forms Web
 Bundle-SymbolicName: com.liferay.portal.workflow.kaleo.forms.web
 Bundle-Version: 4.0.15
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.portal.workflow.kaleo.forms.lang)";\
+		resource.bundle.base.name="content.Language"
 Web-ContextPath: /portal-workflow-kaleo-forms-web
 -dsannotations-options: inherit

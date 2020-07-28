@@ -658,6 +658,27 @@
 	<td>//button[contains(@aria-label,'History')]</td>
 	<td></td>
 </tr>
+<!--PAGE_STRUCTURE_ITEM_CONFIGURATION-->
+<tr>
+	<td>ACTIVE_NAV_ITEM_BUTTON</td>
+	<td>//div[contains(@class,'page-structure')]//button[contains(@class,'nav-link') and contains(@class,'active')][normalize-space()='${key_navItem}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ITEM_SELECTOR_CONTENT_INPUT</td>
+	<td>//input[contains(@class,'item-selector__content-input')][contains(@value,'${key_contentName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAV_ITEM_BUTTON</td>
+	<td>//div[contains(@class,'page-structure')]//button[contains(@class,'nav-link')][normalize-space()='${key_navItem}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PLUS_ICON_BUTTON</td>
+	<td>//div[contains(@class,'item-configuration')]//button[*[name()='svg'][contains(@class,'plus')]]</td>
+	<td></td>
+</tr>
 <!--WIDGETS-->
 <tr>
 	<td>WIDGETS_APPLICATION_SEARCH_FIELD</td>

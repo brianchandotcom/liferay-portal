@@ -115,6 +115,7 @@ public class FileInstallImplBundleActivator
 		_removeFileInstaller(serviceReference, fileInstaller);
 	}
 
+	@Override
 	public void start(BundleContext bundleContext) throws Exception {
 		_bundleContext = bundleContext;
 

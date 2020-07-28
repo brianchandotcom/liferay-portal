@@ -379,7 +379,7 @@
 		<column localized="true" name="title" type="String" />
 		<column localized="true" name="description" type="String" />
 		<column name="settings" type="String" />
-		<column name="visibilityType" type="boolean" />
+		<column name="visibilityType" type="int" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->

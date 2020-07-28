@@ -35,7 +35,11 @@ import com.liferay.info.type.Keyed;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -143,7 +147,10 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 			List<InfoItemCapability> itemCapabilities =
 				itemCapabilitiesProvider.getInfoItemCapabilities();
 
-			if (itemCapabilities.contains(itemCapability)) {
+			if (itemCapabilities.contains(itemCapability) &&
+				_validateItemCapability(
+					itemCapability, curItemClassDetails.getClassName())) {
+
 				itemClassDetails.add(curItemClassDetails);
 			}
 		}
@@ -235,6 +242,42 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 
 		return infoItemClassDetails;
 	}
+
+	private boolean _validateItemCapability(
+		InfoItemCapability itemCapability, String itemClassName) {
+
+		List<String> missingServiceClassNames = new ArrayList<>();
+
+		for (Class<?> serviceClass :
+				itemCapability.getRequiredServiceClasses()) {
+
+			if (getFirstInfoItemService(serviceClass, itemClassName) == null) {
+				missingServiceClassNames.add(serviceClass.getName());
+			}
+		}
+
+		if (!missingServiceClassNames.isEmpty()) {
+			StringBundler sb = new StringBundler(7);
+
+			sb.append("Failed validation of capability ");
+			sb.append(itemCapability.getKey());
+			sb.append(" for item class name ");
+			sb.append(itemClassName);
+			sb.append(". An implementation for the following services is ");
+			sb.append("required: ");
+			sb.append(
+				ListUtil.toString(missingServiceClassNames, StringPool.COMMA));
+
+			_log.error(sb.toString());
+
+			return false;
+		}
+
+		return true;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		InfoItemServiceTrackerImpl.class);
 
 	private final Map<String, ServiceTrackerMap<String, ? extends List<?>>>
 		_itemClassNameInfoItemServiceTrackerMap = new HashMap<>();

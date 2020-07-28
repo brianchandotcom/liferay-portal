@@ -558,7 +558,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 	private void _upgradeStructureDefinition() throws Exception {
 		try (PreparedStatement ps1 = connection.prepareStatement(
 				"select * from DDMStructure where classNameId = ? or " +
-					"classNameId = ? ");
+					"classNameId = ? order by createDate");
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

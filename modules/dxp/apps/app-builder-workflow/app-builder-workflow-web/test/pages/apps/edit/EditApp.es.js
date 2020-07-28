@@ -24,6 +24,7 @@ const history = {
 const customObjectItems = {
 	items: [
 		{
+			availableLanguageIds: ['en_US'],
 			contentType: 'app-builder',
 			dataDefinitionKey: '37496',
 			dateCreated: '2020-06-05T13:43:16Z',
@@ -218,7 +219,6 @@ describe('EditApp', () => {
 			dataListViewId: 37628,
 			dateCreated: '2020-06-08T12:13:14Z',
 			dateModified: '2020-06-08T12:13:14Z',
-			defaultLanguageId: 'en_US',
 			id: 37634,
 			name: {
 				en_US: 'Test',
@@ -278,6 +278,7 @@ describe('EditApp', () => {
 		fetch.mockResponseOnce(JSON.stringify(nativeObjectItems));
 		fetch.mockResponseOnce(JSON.stringify(app));
 		fetch.mockResponseOnce(JSON.stringify(workflow));
+		fetch.mockResponseOnce(JSON.stringify(customObjectItems.items[0]));
 		fetch.mockResponseOnce(JSON.stringify(formViewItems));
 		fetch.mockResponseOnce(JSON.stringify(tableViewItems));
 		fetch.mockResponseOnce(JSON.stringify(customObjectItems));

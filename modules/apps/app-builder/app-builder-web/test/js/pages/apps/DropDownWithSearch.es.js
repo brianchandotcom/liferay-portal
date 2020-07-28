@@ -25,7 +25,7 @@ const ITEMS = (size) => {
 	const items = [];
 
 	for (let i = 0; i < size; i++) {
-		items.push({id: i, name: {en_US: `object ${i}`}});
+		items.push({id: i, name: `object ${i}`});
 	}
 
 	return items;

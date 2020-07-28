@@ -20,11 +20,12 @@ import React from 'react';
 import ListStandardApps from '../../../../src/main/resources/META-INF/resources/js/pages/apps/ListStandardApps.es';
 import * as time from '../../../../src/main/resources/META-INF/resources/js/utils/time.es';
 import AppContextProviderWrapper from '../../AppContextProviderWrapper.es';
-import {RESPONSES} from '../../constants.es';
+import {DATA_DEFINITION_RESPONSES, RESPONSES} from '../../constants.es';
 
 const DROPDOWN_VALUES = {
 	items: [
 		{
+			defaultLanguageId: 'en_US',
 			id: 123,
 			name: {
 				en_US: 'Object test',
@@ -55,6 +56,7 @@ describe('ListStandardApps', () => {
 
 	it('renders opening a new app popover and lists 5 apps', async () => {
 		fetch.mockResponseOnce(JSON.stringify(RESPONSES.MANY_ITEMS(5)));
+		fetch.mockResponseOnce(JSON.stringify(DATA_DEFINITION_RESPONSES.ONE_ITEM));
 		fetch.mockResponse(JSON.stringify(DROPDOWN_VALUES));
 
 		const {container} = render(<ListStandardApps {...routeProps} />, {
@@ -99,6 +101,7 @@ describe('ListStandardApps', () => {
 
 	it('renders with empty state', async () => {
 		fetch.mockResponseOnce(JSON.stringify(RESPONSES.NO_ITEMS));
+		fetch.mockResponseOnce(JSON.stringify(DATA_DEFINITION_RESPONSES.ONE_ITEM));
 		fetch.mockResponse(JSON.stringify(DROPDOWN_VALUES));
 
 		const push = jest.fn();

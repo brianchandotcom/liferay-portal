@@ -19,11 +19,12 @@ import React from 'react';
 import ListApps from '../../../../src/main/resources/META-INF/resources/js/pages/apps/ListApps.es';
 import * as time from '../../../../src/main/resources/META-INF/resources/js/utils/time.es';
 import AppContextProviderWrapper from '../../AppContextProviderWrapper.es';
-import {RESPONSES} from '../../constants.es';
+import {DATA_DEFINITION_RESPONSES, RESPONSES} from '../../constants.es';
 
 const DROPDOWN_VALUES = {
 	items: [
 		{
+			defaultLanguageId: 'en_US',
 			id: 37568,
 			name: {
 				en_US: 'test',
@@ -49,6 +50,7 @@ describe('ListApps', () => {
 
 	it('renders', async () => {
 		fetch.mockResponseOnce(JSON.stringify(RESPONSES.ONE_ITEM));
+		fetch.mockResponseOnce(JSON.stringify(DATA_DEFINITION_RESPONSES.ONE_ITEM));
 		fetch.mockResponse(JSON.stringify(DROPDOWN_VALUES));
 
 		const {asFragment} = render(<ListApps {...routeProps} />, {
@@ -64,6 +66,7 @@ describe('ListApps', () => {
 
 	it('renders with 5 apps in the list', async () => {
 		fetch.mockResponseOnce(JSON.stringify(RESPONSES.MANY_ITEMS(5)));
+		fetch.mockResponseOnce(JSON.stringify(DATA_DEFINITION_RESPONSES.ONE_ITEM));
 		fetch.mockResponse(JSON.stringify(DROPDOWN_VALUES));
 
 		const {container} = render(<ListApps {...routeProps} />, {
@@ -79,6 +82,7 @@ describe('ListApps', () => {
 
 	it('renders with empty state', async () => {
 		fetch.mockResponseOnce(JSON.stringify(RESPONSES.NO_ITEMS));
+		fetch.mockResponseOnce(JSON.stringify(DATA_DEFINITION_RESPONSES.ONE_ITEM));
 		fetch.mockResponse(JSON.stringify(DROPDOWN_VALUES));
 
 		const {container} = render(<ListApps {...routeProps} />, {

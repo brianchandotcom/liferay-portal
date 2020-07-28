@@ -40,10 +40,10 @@ const instances = {
 
 describe('ViewEntry', () => {
 	it('renders with workflow info', async () => {
+		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_DEFINITION));
 		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_RECORDS(1)));
 		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_RECORD_APPS(1)));
 		fetch.mockResponseOnce(JSON.stringify(instances));
-		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_DEFINITION));
 		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_LAYOUT));
 
 		const {container} = render(

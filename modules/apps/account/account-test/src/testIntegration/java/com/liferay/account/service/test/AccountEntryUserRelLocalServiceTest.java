@@ -145,7 +145,7 @@ public class AccountEntryUserRelLocalServiceTest {
 			pid,
 			new HashMapDictionary() {
 				{
-					put("enableEmailDomainValidation", true);
+					put("enableEmailDomainValidation", false);
 					put("blockedEmailDomains", "test.com");
 				}
 			});

@@ -92,4 +92,12 @@ definition {
 			locator1 = "ManagementBar#FILTER_AND_ORDER_ACTIVE_ITEM");
 	}
 
+	macro viewNoSubheaderInFilterAndOrder {
+		Click(locator1 = "ManagementBar#FILTER_AND_ORDER");
+
+		AssertElementNotPresent(
+			key_subheaderItem = "${subheaderItem}",
+			locator1 = "ManagementBar#FILTER_AND_ORDER_SUBHEADER");
+	}
+
 }

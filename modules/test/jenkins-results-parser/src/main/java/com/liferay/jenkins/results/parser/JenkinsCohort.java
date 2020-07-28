@@ -57,9 +57,11 @@ public class JenkinsCohort {
 	public int getQueuedBuildCount() {
 		int queuedBuildCount = 0;
 
-		for (JobDatum jobDatum : _jobData.values()) {
+		for (JenkinsCohortJob jenkinsCohortJob :
+				_jenkinsCohortJobsMap.values()) {
+
 			queuedBuildCount =
-				queuedBuildCount + jobDatum.getQueuedBuildCount();
+				queuedBuildCount + jenkinsCohortJob.getQueuedBuildCount();
 		}
 
 		return queuedBuildCount;
@@ -68,9 +70,11 @@ public class JenkinsCohort {
 	public int getRunningBuildCount() {
 		int runningBuildCount = 0;
 
-		for (JobDatum jobDatum : _jobData.values()) {
+		for (JenkinsCohortJob jenkinsCohortJob :
+				_jenkinsCohortJobsMap.values()) {
+
 			runningBuildCount =
-				runningBuildCount + jobDatum.getRunningBuildCount();
+				runningBuildCount + jenkinsCohortJob.getRunningBuildCount();
 		}
 
 		return runningBuildCount;
@@ -158,21 +162,28 @@ public class JenkinsCohort {
 
 		JSONArray buildLoadDataJSONArray = new JSONArray();
 
-		for (JobDatum jobDatum : _jobData.values()) {
+		for (JenkinsCohortJob jenkinsCohortJob :
+				_jenkinsCohortJobsMap.values()) {
+
 			JSONObject jsonObject = new JSONObject();
 
-			jsonObject.put("Name", jobDatum.getJobName());
+			jsonObject.put("Name", jenkinsCohortJob.getJobName());
 
 			DecimalFormat decimalFormat = new DecimalFormat("###.###%");
 
 			jsonObject.put(
-				"Load %", decimalFormat.format(jobDatum.getLoadPercentage()));
+				"Load %",
+				decimalFormat.format(jenkinsCohortJob.getLoadPercentage()));
 
-			jsonObject.put("Current Builds", jobDatum.getRunningBuildCount());
-			jsonObject.put("Queued Builds", jobDatum.getQueuedBuildCount());
-			jsonObject.put("Total Builds", jobDatum.getTotalBuildCount());
+			jsonObject.put(
+				"Current Builds", jenkinsCohortJob.getRunningBuildCount());
+			jsonObject.put(
+				"Queued Builds", jenkinsCohortJob.getQueuedBuildCount());
+			jsonObject.put(
+				"Total Builds", jenkinsCohortJob.getTotalBuildCount());
 
-			List<String> topLevelBuildURLs = jobDatum.getTopLevelBuildURLs();
+			List<String> topLevelBuildURLs =
+				jenkinsCohortJob.getTopLevelBuildURLs();
 
 			jsonObject.put("Top Level Builds", topLevelBuildURLs.size());
 
@@ -202,23 +213,23 @@ public class JenkinsCohort {
 			jobName = jobName.replace("-batch", "");
 		}
 
-		if (!_jobData.containsKey(jobName)) {
-			_jobData.put(jobName, new JobDatum(jobName));
+		if (!_jenkinsCohortJobsMap.containsKey(jobName)) {
+			_jenkinsCohortJobsMap.put(jobName, new JenkinsCohortJob(jobName));
 		}
 
-		JobDatum jobDatum = _jobData.get(jobName);
+		JenkinsCohortJob jenkinsCohortJob = _jenkinsCohortJobsMap.get(jobName);
 
 		Matcher buildNumberMatcher = _buildNumberPattern.matcher(jobURL);
 
 		if (buildNumberMatcher.find()) {
-			jobDatum.incrementRunningJobCount();
+			jenkinsCohortJob.incrementRunningJobCount();
 		}
 		else {
-			jobDatum.incrementQueuedJobCount();
+			jenkinsCohortJob.incrementQueuedJobCount();
 		}
 
 		if (batchJobName == null) {
-			jobDatum.addTopLevelBuildURL(jobURL);
+			jenkinsCohortJob.addTopLevelBuildURL(jobURL);
 		}
 	}
 
@@ -228,14 +239,15 @@ public class JenkinsCohort {
 		"https?:.*job\\/(.*?)\\/");
 
 	private int _idleCINodeCount;
-	private final Map<String, JobDatum> _jobData = new HashMap<>();
+	private final Map<String, JenkinsCohortJob> _jenkinsCohortJobsMap =
+		new HashMap<>();
 	private final String _name;
 	private int _onlineCINodeCount;
 
-	private class JobDatum {
+	private class JenkinsCohortJob {
 
-		public JobDatum(String jobName) {
-			_jobName = jobName;
+		public JenkinsCohortJob(String jenkinsCohortJobName) {
+			_jenkinsCohortJobName = jenkinsCohortJobName;
 		}
 
 		public void addTopLevelBuildURL(String topLevelBuildURL) {
@@ -243,7 +255,7 @@ public class JenkinsCohort {
 		}
 
 		public String getJobName() {
-			return _jobName;
+			return _jenkinsCohortJobName;
 		}
 
 		public double getLoadPercentage() {
@@ -276,7 +288,7 @@ public class JenkinsCohort {
 			_runningBuildCount = _runningBuildCount + 1;
 		}
 
-		private final String _jobName;
+		private final String _jenkinsCohortJobName;
 		private int _queuedBuildCount;
 		private int _runningBuildCount;
 		private List<String> _topLevelBuildURLs = new ArrayList<>();

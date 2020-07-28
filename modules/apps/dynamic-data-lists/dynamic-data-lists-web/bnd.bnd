@@ -1,5 +1,9 @@
 Bundle-Name: Liferay Dynamic Data Lists Web
 Bundle-SymbolicName: com.liferay.dynamic.data.lists.web
 Bundle-Version: 5.0.16
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.dynamic.data.lists.lang)";\
+		resource.bundle.base.name="content.Language"
 Web-ContextPath: /dynamic-data-lists-web
 -dsannotations-options: inherit

@@ -119,7 +119,7 @@ Layout curLayout = (Layout)row.getObject();
 		'.<portlet:namespace />copy-layout-action-option',
 		function (event) {
 			Liferay.Util.openModal({
-				id: '<portlet:namespace />copyLayoutDialog',
+				id: '<portlet:namespace />addLayoutDialog',
 				title: '<liferay-ui:message key="copy-page" />',
 				url:
 					'<%= layoutsAdminDisplayContext.getCopyLayoutRenderURL(curLayout) %>',

@@ -149,9 +149,9 @@ const SidebarPanel = React.forwardRef(
 		return (
 			<Sidebar onClose={onCloseHandle} open={state.isOpen}>
 				{state?.loading ? (
-					<Sidebar.Body>
+					<div className="align-items-center d-flex loading-indicator-wrapper">
 						<ClayLoadingIndicator />
-					</Sidebar.Body>
+					</div>
 				) : state?.error ? (
 					<>
 						<Sidebar.Header />

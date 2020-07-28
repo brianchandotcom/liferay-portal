@@ -383,7 +383,8 @@
 
 			if (
 				!replaceContainer ||
-				!replaceContainer.hasClass('lfr-ac-content')
+				!replaceContainer.hasClass('lfr-ac-content') ||
+				prevTriggerPosition.value
 			) {
 				replaceContainer = prevTriggerPosition.container.split(
 					prevTriggerPosition.index

@@ -75,8 +75,6 @@ public class FileInstallImplBundleActivator
 
 			Collections.reverse(fileInstallers);
 
-			fileInstallers.add(_bundleTransformer);
-
 			return fileInstallers;
 		}
 	}
@@ -106,6 +104,9 @@ public class FileInstallImplBundleActivator
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
 		_bundleContext = bundleContext;
+
+		_jarFileInstallerServiceRegistration = _bundleContext.registerService(
+			FileInstaller.class, new DefaultJarInstaller(), null);
 
 		_writeLock.lock();
 
@@ -200,6 +201,8 @@ public class FileInstallImplBundleActivator
 
 			_writeLock.unlock();
 		}
+
+		_jarFileInstallerServiceRegistration.unregister();
 	}
 
 	public void updateChecksum(File file) {
@@ -286,12 +289,12 @@ public class FileInstallImplBundleActivator
 	}
 
 	private BundleContext _bundleContext;
-	private final DefaultJarInstaller _bundleTransformer =
-		new DefaultJarInstaller();
 	private Runnable _cmSupport;
 	private final Map<ServiceReference<FileInstaller>, FileInstaller>
 		_fileInstallers = new TreeMap<>();
 	private ServiceTracker<FileInstaller, FileInstaller> _fileInstallersTracker;
+	private ServiceRegistration<FileInstaller>
+		_jarFileInstallerServiceRegistration;
 	private final ReadWriteLock _lock = new ReentrantReadWriteLock();
 	private final Lock _readLock = _lock.readLock();
 	private volatile boolean _stopped;

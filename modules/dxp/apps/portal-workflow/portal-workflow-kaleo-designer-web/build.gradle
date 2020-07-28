@@ -1,5 +1,3 @@
-apply plugin: "com.liferay.lang.merger"
-
 dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
@@ -22,13 +20,4 @@ dependencies {
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
-}
-
-mergeLang {
-	sourceDirs = [
-		"../../../../apps/dynamic-data-lists/dynamic-data-lists-web/src/main/resources/content",
-		"../../../../apps/dynamic-data-mapping/dynamic-data-mapping-lang/src/main/resources/content",
-		"../../../../apps/portal-workflow/portal-workflow-lang/src/main/resources/content",
-		"src/main/resources/content"
-	]
 }

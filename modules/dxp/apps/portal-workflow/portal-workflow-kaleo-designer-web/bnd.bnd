@@ -5,7 +5,7 @@ Export-Package: com.liferay.portal.workflow.kaleo.designer.web.constants
 Liferay-JS-Config: /META-INF/resources/designer/js/config.js
 Provide-Capability:\
 	liferay.resource.bundle;\
-		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.portal.workflow.kaleo.designer.lang)";\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.dynamic.data.lists.lang),(bundle.symbolic.name=com.liferay.dynamic.data.mapping.lang),(bundle.symbolic.name=com.liferay.portal.workflow.kaleo.designer.lang),(bundle.symbolic.name=com.liferay.portal.workflow.lang)";\
 		resource.bundle.base.name="content.Language"
 Web-ContextPath: /portal-workflow-kaleo-designer-web
 -dsannotations-options: inherit

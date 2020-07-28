@@ -545,17 +545,20 @@ public interface BaseProjectTemplatesTestCase {
 
 		completeArgs.add("archetype:generate");
 		completeArgs.add("--batch-mode");
-		completeArgs.add("--settings");
 
-		String content = FileTestUtil.read(
-			BaseProjectTemplatesTestCase.class.getClassLoader(),
-			"com/liferay/project/templates/dependencies/settings.xml");
+		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
+			completeArgs.add("--settings");
 
-		Path tempPath = Files.createTempFile("settings", "xml");
+			String content = FileTestUtil.read(
+				BaseProjectTemplatesTestCase.class.getClassLoader(),
+				"com/liferay/project/templates/dependencies/settings.xml");
 
-		Files.write(tempPath, content.getBytes());
+			Path tempPath = Files.createTempFile("settings", "xml");
 
-		completeArgs.add(tempPath.toString());
+			Files.write(tempPath, content.getBytes());
+
+			completeArgs.add(tempPath.toString());
+		}
 
 		String archetypeArtifactId =
 			"com.liferay.project.templates." + template.replace('-', '.');

@@ -17,7 +17,7 @@
 <%@ include file="/data_layout_builder/init.jsp" %>
 
 <liferay-editor:resources
-	editorName="alloyeditor"
+	editorName="ckeditor"
 />
 
 <liferay-util:html-top>

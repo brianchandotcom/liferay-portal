@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.web.internal.display;
+package com.liferay.change.tracking.web.internal.display.context;
 
 import com.liferay.change.tracking.model.CTEntryTable;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;

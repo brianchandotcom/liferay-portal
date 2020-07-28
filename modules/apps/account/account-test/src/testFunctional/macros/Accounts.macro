@@ -154,13 +154,7 @@ definition {
 	}
 
 	macro editCP {
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "${accountName}");
-
-		AssertTextEquals(
-			locator1 = "Portlet#HEADER",
-			value1 = "Edit ${accountName}");
+		Accounts.gotoEdit(accountName = "${accountName}");
 
 		PortletEntry.inputName(name = "${accountNameEdit}");
 
@@ -190,6 +184,23 @@ definition {
 
 	macro gotoAssigneeTab {
 		Navigator.gotoNavItem(navItem = "${assigneeTab}");
+	}
+
+	macro gotoEdit {
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		Search.searchCP(searchTerm = "${accountName}");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${accountName}");
+
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Edit ${accountName}");
 	}
 
 	macro inactiveAccount {

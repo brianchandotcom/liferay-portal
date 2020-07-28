@@ -97,10 +97,6 @@ export const RowConfigurationPanel = ({item}) => {
 
 	return (
 		<>
-			<div className="page-editor__floating-toolbar__panel-header">
-				<p>{Liferay.Language.get('configuration')}</p>
-			</div>
-
 			<Select
 				configurationKey="numberOfColumns"
 				handleChange={handleConfigurationValueChanged}

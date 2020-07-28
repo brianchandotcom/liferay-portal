@@ -70,10 +70,6 @@ export const FragmentConfigurationPanel = ({item}) => {
 
 	return (
 		<>
-			<div className="page-editor__floating-toolbar__panel-header">
-				<p>{Liferay.Language.get('general')}</p>
-			</div>
-
 			{fieldSets.map((fieldSet, index) => {
 				return (
 					<FieldSet

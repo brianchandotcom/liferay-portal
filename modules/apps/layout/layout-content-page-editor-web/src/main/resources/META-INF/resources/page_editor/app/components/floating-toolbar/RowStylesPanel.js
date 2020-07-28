@@ -131,58 +131,52 @@ export const RowStylesPanel = ({item}) => {
 
 	return (
 		<>
-			<>
-				<div className="page-editor__floating-toolbar__panel-header">
-					<p>{Liferay.Language.get('styles')}</p>
+			<p className="page-editor__row-styles-panel__viewport-label">
+				{viewportSize.label}
+				<ClayIcon className="ml-1" symbol={viewportSize.icon} />
+			</p>
 
-					<p className="page-editor__floating-toolbar__panel-header__viewport-label">
-						{viewportSize.label}
-						<ClayIcon className="ml-1" symbol={viewportSize.icon} />
-					</p>
-				</div>
+			<Select
+				configurationKey="modulesPerRow"
+				handleChange={handleConfigurationValueChanged}
+				label={Liferay.Language.get('layout')}
+				options={modulesPerRowOptions[
+					rowConfig.numberOfColumns - 1
+				].map((option) => ({
+					disabled: option === CUSTOM_ROW,
+					label:
+						option === CUSTOM_ROW
+							? Liferay.Language.get('custom')
+							: Liferay.Util.sub(
+									getModulesPerRowOptionLabel(option),
+									option
+							  ),
+					value: option,
+				}))}
+				value={customRow ? CUSTOM_ROW : rowConfig.modulesPerRow}
+			/>
 
-				<Select
-					configurationKey="modulesPerRow"
-					handleChange={handleConfigurationValueChanged}
-					label={Liferay.Language.get('layout')}
-					options={modulesPerRowOptions[
-						rowConfig.numberOfColumns - 1
-					].map((option) => ({
-						disabled: option === CUSTOM_ROW,
-						label:
-							option === CUSTOM_ROW
-								? Liferay.Language.get('custom')
-								: Liferay.Util.sub(
-										getModulesPerRowOptionLabel(option),
-										option
-								  ),
-						value: option,
-					}))}
-					value={customRow ? CUSTOM_ROW : rowConfig.modulesPerRow}
-				/>
+			{rowConfig.numberOfColumns === 2 &&
+				rowConfig.modulesPerRow === 1 && (
+					<ClayCheckbox
+						checked={rowConfig.reverseOrder}
+						label={Liferay.Language.get('inverse-order')}
+						onChange={({target: {checked}}) =>
+							handleConfigurationValueChanged(
+								'reverseOrder',
+								checked
+							)
+						}
+					/>
+				)}
 
-				{rowConfig.numberOfColumns === 2 &&
-					rowConfig.modulesPerRow === 1 && (
-						<ClayCheckbox
-							checked={rowConfig.reverseOrder}
-							label={Liferay.Language.get('inverse-order')}
-							onChange={({target: {checked}}) =>
-								handleConfigurationValueChanged(
-									'reverseOrder',
-									checked
-								)
-							}
-						/>
-					)}
-
-				<Select
-					configurationKey="verticalAlignment"
-					handleChange={handleConfigurationValueChanged}
-					label={Liferay.Language.get('vertical-alignment')}
-					options={VERTICAL_ALIGNMENT_OPTIONS}
-					value={rowConfig.verticalAlignment}
-				/>
-			</>
+			<Select
+				configurationKey="verticalAlignment"
+				handleChange={handleConfigurationValueChanged}
+				label={Liferay.Language.get('vertical-alignment')}
+				options={VERTICAL_ALIGNMENT_OPTIONS}
+				value={rowConfig.verticalAlignment}
+			/>
 		</>
 	);
 };

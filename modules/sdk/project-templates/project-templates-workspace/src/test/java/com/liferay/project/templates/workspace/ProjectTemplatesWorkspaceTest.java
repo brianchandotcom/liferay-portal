@@ -217,6 +217,8 @@ public class ProjectTemplatesWorkspaceTest
 				":modules:foo-portlet" + GRADLE_TASK_PATH_BUILD);
 
 			testExists(modulesProjectDir, "build/libs/foo-portlet-1.0.0.jar");
+			testExists(workspaceProjectDir, "yarn.lock");
+			testExists(workspaceProjectDir, ".yarnrc");
 		}
 	}
 

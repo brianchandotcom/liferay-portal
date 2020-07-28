@@ -832,6 +832,58 @@ definition {
 	}
 
 	@priority = "4"
+	test PersonAccountSmoke {
+		for (var accountType : list "Business,Person") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Accounts",
+				panel = "Applications",
+				portlet = "Accounts");
+
+			Accounts.addCP(
+				accountDescription = "This is a ${accountType} Account.",
+				accountName = "${accountType} Account",
+				accountType = "${accountType}");
+		}
+
+		for (var accountUser : list "1,2") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Accounts",
+				panel = "Applications",
+				portlet = "Account Users");
+
+			AccountUsers.addUsers(
+				accountName = "Business Account",
+				userEmailAddress = "userea${accountUser}@liferay.com",
+				userFirstName = "userfn${accountUser}",
+				userLastName = "userln${accountUser}",
+				userScreenName = "usersn${accountUser}");
+		}
+
+		Accounts.gotoEdit(accountName = "Person Account");
+
+		for (var navTab : list "Details,Organizations,Roles") {
+			Accounts.viewAssigneeTab(navTab = "${navTab}");
+		}
+
+		Accounts.viewNoAssigneeTab(navTab = "Users");
+
+		Accounts.selectUser(accountUserName = "userfn1");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		Accounts.gotoEdit(accountName = "Person Account");
+
+		Accounts.selectUser(accountUserName = "userfn2");
+
+		AssertElementNotPresent(
+			key_userName = "userfn1",
+			locator1 = "Account#USER_TABLE_NAME");
+	}
+
+	@priority = "4"
 	test RemoveDomain {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

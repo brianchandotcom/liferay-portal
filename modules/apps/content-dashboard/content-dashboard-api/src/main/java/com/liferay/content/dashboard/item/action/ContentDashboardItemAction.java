@@ -14,12 +14,14 @@
 
 package com.liferay.content.dashboard.item.action;
 
+import java.util.Locale;
+
 /**
  * @author David Arques
  */
 public interface ContentDashboardItemAction {
 
-	public String getLabel();
+	public String getLabel(Locale locale);
 
 	public String getName();
 

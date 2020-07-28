@@ -177,7 +177,7 @@ class StateSyncronizer extends Component {
 			);
 		});
 
-		if (settingsDDMForm) {
+		if (settingsDDMForm && settingsDDMForm.reactComponentRef.current) {
 			document.querySelector(
 				`#${namespace}serializedSettingsContext`
 			).value = JSON.stringify({

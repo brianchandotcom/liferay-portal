@@ -655,7 +655,7 @@ class Form extends Component {
 
 		let requireAuthentication = false;
 
-		if (settingsDDMForm) {
+		if (settingsDDMForm && settingsDDMForm.reactComponentRef.current) {
 			const settingsPageVisitor = new PagesVisitor(
 				settingsDDMForm.reactComponentRef.current.get('pages')
 			);

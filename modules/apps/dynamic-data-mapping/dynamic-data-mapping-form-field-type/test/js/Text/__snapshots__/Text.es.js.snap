@@ -131,6 +131,24 @@ exports[`Field Text is not required 1`] = `
 </div>
 `;
 
+exports[`Field Text is readOnly 1`] = `
+<div>
+  <div
+    class="form-group hide"
+    data-field-name="textField"
+  >
+    <input
+      aria-label="text"
+      class="form-control ddm-field-text"
+      disabled=""
+      name="textField"
+      type="text"
+      value=""
+    />
+  </div>
+</div>
+`;
+
 exports[`Field Text renders Label if showLabel is true 1`] = `
 <div>
   <div

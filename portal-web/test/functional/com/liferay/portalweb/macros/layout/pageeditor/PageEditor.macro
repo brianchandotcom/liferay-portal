@@ -572,6 +572,12 @@ definition {
 				locator1 = "FormFields#NUMBER_FIELD",
 				value1 = "${numberOfTabs}");
 
+			Click(
+				key_content = "Place fragments here.",
+				key_fragmentClass = "content",
+				key_position = "1",
+				locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
+
 			AssertTextEquals(
 				key_fieldLabel = "Number Of Tabs",
 				locator1 = "FormFields#NUMBER_FIELD",

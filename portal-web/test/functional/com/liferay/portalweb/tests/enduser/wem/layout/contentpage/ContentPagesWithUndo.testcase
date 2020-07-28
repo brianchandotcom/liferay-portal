@@ -523,19 +523,11 @@ definition {
 			Click(locator1 = "PageEditor#MANAGEMENT_BAR");
 		}
 
-		PageEditor.removeFragment(fragmentName = "Tabs");
-
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Tabs");
-
-		for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18") {
-			PageEditor.gotoStyle(fragmentName = "Tabs");
-
-			PageEditor.configureFragment(numberOfTabs = "${i}");
-
-			Click(locator1 = "PageEditor#MANAGEMENT_BAR");
-		}
+		Click(
+			key_content = "Place fragments here.",
+			key_fragmentClass = "content",
+			key_position = "1",
+			locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
 
 		PageEditor.removeFragment(fragmentName = "Tabs");
 
@@ -551,6 +543,12 @@ definition {
 			Click(locator1 = "PageEditor#MANAGEMENT_BAR");
 		}
 
+		Click(
+			key_content = "Place fragments here.",
+			key_fragmentClass = "content",
+			key_position = "1",
+			locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
+
 		PageEditor.removeFragment(fragmentName = "Tabs");
 
 		PageEditor.addFragment(
@@ -564,6 +562,32 @@ definition {
 
 			Click(locator1 = "PageEditor#MANAGEMENT_BAR");
 		}
+
+		Click(
+			key_content = "Place fragments here.",
+			key_fragmentClass = "content",
+			key_position = "1",
+			locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
+
+		PageEditor.removeFragment(fragmentName = "Tabs");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Tabs");
+
+		for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18") {
+			PageEditor.gotoStyle(fragmentName = "Tabs");
+
+			PageEditor.configureFragment(numberOfTabs = "${i}");
+
+			Click(locator1 = "PageEditor#MANAGEMENT_BAR");
+		}
+
+		Click(
+			key_content = "Place fragments here.",
+			key_fragmentClass = "content",
+			key_position = "1",
+			locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
 
 		PageEditor.removeFragment(fragmentName = "Tabs");
 

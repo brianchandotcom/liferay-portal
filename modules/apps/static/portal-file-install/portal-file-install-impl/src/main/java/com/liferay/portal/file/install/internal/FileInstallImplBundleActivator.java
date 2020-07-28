@@ -278,26 +278,19 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 			public ConfigInstaller addingService(
 				ServiceReference<ConfigurationAdmin> serviceReference) {
 
-				_writeLock.lock();
-
-				try {
-					if (_stopped) {
-						return null;
-					}
-
-					ConfigurationAdmin configurationAdmin = context.getService(
-						serviceReference);
-
-					ConfigInstaller configInstaller = new ConfigInstaller(
-						context, configurationAdmin, _fileInstall);
-
-					configInstaller.init();
-
-					return configInstaller;
+				if (_stopped) {
+					return null;
 				}
-				finally {
-					_writeLock.unlock();
-				}
+
+				ConfigurationAdmin configurationAdmin = context.getService(
+					serviceReference);
+
+				ConfigInstaller configInstaller = new ConfigInstaller(
+					context, configurationAdmin, _fileInstall);
+
+				configInstaller.init();
+
+				return configInstaller;
 			}
 
 			@Override
@@ -305,20 +298,13 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 				ServiceReference<ConfigurationAdmin> serviceReference,
 				ConfigInstaller configInstaller) {
 
-				_writeLock.lock();
-
-				try {
-					if (_stopped) {
-						return;
-					}
-
-					configInstaller.destroy();
-
-					context.ungetService(serviceReference);
+				if (_stopped) {
+					return;
 				}
-				finally {
-					_writeLock.unlock();
-				}
+
+				configInstaller.destroy();
+
+				context.ungetService(serviceReference);
 			}
 
 			private Tracker(

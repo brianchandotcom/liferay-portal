@@ -13,6 +13,7 @@
  */
 
 import {act, cleanup, fireEvent, render} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import {PageProvider} from 'dynamic-data-mapping-form-renderer';
 import React from 'react';
 
@@ -112,6 +113,73 @@ describe('Options', () => {
 		unmockLiferayLanguage();
 	});
 
+	it('shows the options with not editable value', () => {
+		mockLiferayLanguage();
+
+		const {container} = render(
+			<OptionsWithProvider
+				keywordReadOnly={true}
+				name="options"
+				spritemap={spritemap}
+				value={{
+					[themeDisplay.getLanguageId()]: [
+						{
+							label: 'Option 1',
+							value: 'Option1',
+						},
+					],
+				}}
+			/>
+		);
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		const valueInputs = container.querySelectorAll('.key-value-input');
+
+		expect(valueInputs[0].value).toEqual('Option1');
+
+		expect(valueInputs[0].readOnly).toBeTruthy();
+
+		unmockLiferayLanguage();
+	});
+
+	it('shows the options with editable value', () => {
+		mockLiferayLanguage();
+
+		const {container, getByDisplayValue} = render(
+			<OptionsWithProvider
+				keywordReadOnly={false}
+				name="options"
+				onChange={jest.fn()}
+				spritemap={spritemap}
+				value={{
+					[themeDisplay.getLanguageId()]: [
+						{
+							label: 'Option 1',
+							value: 'Option1',
+						},
+					],
+				}}
+			/>
+		);
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		userEvent.type(getByDisplayValue('Option1'), 'Option2');
+
+		const valueInputs = container.querySelectorAll('.key-value-input');
+
+		expect(valueInputs[0].readOnly).toBeFalsy();
+
+		expect(valueInputs[0].value).toEqual('Option2');
+
+		unmockLiferayLanguage();
+	});
+
 	it('shows an empty option when value is an array of size 1', () => {
 		mockLiferayLanguage();
 
@@ -184,6 +252,40 @@ describe('Options', () => {
 		const labelInputs = container.querySelectorAll('.ddm-field-text');
 
 		expect(labelInputs.length).toEqual(2);
+	});
+
+	it('does not changes the option value when the option label changes', () => {
+		mockLiferayLanguage();
+
+		const {container, getByDisplayValue} = render(
+			<OptionsWithProvider
+				name="options"
+				onChange={jest.fn()}
+				spritemap={spritemap}
+				value={{
+					[themeDisplay.getLanguageId()]: [
+						{
+							label: 'Option 1',
+							value: 'Option1',
+						},
+					],
+				}}
+			/>
+		);
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		userEvent.type(getByDisplayValue('Option 1'), 'Option 2');
+
+		const labelInputs = container.querySelectorAll('.ddm-field-text');
+		expect(labelInputs[0].value).toEqual('Option 2');
+
+		const valueInputs = container.querySelectorAll('.key-value-input');
+		expect(valueInputs[0].value).toEqual('Option1');
+
+		unmockLiferayLanguage();
 	});
 
 	it('edits the value of an option based on the label', () => {

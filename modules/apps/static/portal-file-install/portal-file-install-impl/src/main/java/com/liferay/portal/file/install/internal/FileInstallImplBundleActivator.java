@@ -152,13 +152,13 @@ public class FileInstallImplBundleActivator
 						name = name + index;
 					}
 
-					updated(name, new HashMap<>(map));
+					_updated(name, new HashMap<>(map));
 
 					index++;
 				}
 			}
 			else {
-				updated("initial", map);
+				_updated("initial", map);
 			}
 		}
 		finally {
@@ -216,37 +216,6 @@ public class FileInstallImplBundleActivator
 		}
 	}
 
-	public void updated(String pid, Map<String, String> properties) {
-		InterpolationUtil.performSubstitution(properties, _bundleContext);
-
-		DirectoryWatcher directoryWatcher = null;
-
-		synchronized (_watchers) {
-			directoryWatcher = _watchers.get(pid);
-
-			if ((directoryWatcher != null) &&
-				Objects.equals(directoryWatcher.getProperties(), properties)) {
-
-				return;
-			}
-		}
-
-		if (directoryWatcher != null) {
-			directoryWatcher.close();
-		}
-
-		directoryWatcher = new DirectoryWatcher(
-			this, properties, _bundleContext);
-
-		directoryWatcher.setDaemon(true);
-
-		synchronized (_watchers) {
-			_watchers.put(pid, directoryWatcher);
-		}
-
-		directoryWatcher.start();
-	}
-
 	private void _addFileInstaller(
 		ServiceReference<FileInstaller> serviceReference,
 		FileInstaller fileInstaller) {
@@ -290,6 +259,37 @@ public class FileInstallImplBundleActivator
 		}
 
 		map.put(key, property);
+	}
+
+	private void _updated(String pid, Map<String, String> properties) {
+		InterpolationUtil.performSubstitution(properties, _bundleContext);
+
+		DirectoryWatcher directoryWatcher = null;
+
+		synchronized (_watchers) {
+			directoryWatcher = _watchers.get(pid);
+
+			if ((directoryWatcher != null) &&
+				Objects.equals(directoryWatcher.getProperties(), properties)) {
+
+				return;
+			}
+		}
+
+		if (directoryWatcher != null) {
+			directoryWatcher.close();
+		}
+
+		directoryWatcher = new DirectoryWatcher(
+			this, properties, _bundleContext);
+
+		directoryWatcher.setDaemon(true);
+
+		synchronized (_watchers) {
+			_watchers.put(pid, directoryWatcher);
+		}
+
+		directoryWatcher.start();
 	}
 
 	private BundleContext _bundleContext;
@@ -436,7 +436,7 @@ public class FileInstallImplBundleActivator
 					props.put(key, value.toString());
 				}
 
-				_fileInstall.updated(string, props);
+				_fileInstall._updated(string, props);
 			}
 
 			private Tracker(

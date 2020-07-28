@@ -1,0 +1,39 @@
+@import 'atlas-variables';
+
+.page-editor__color-palette {
+	.palette-container {
+		margin-bottom: 0.25rem;
+	}
+
+	.palette-item {
+		$paletteItemPadding: 5px;
+		$paletteItemSize: 20px;
+
+		border: $paletteItemPadding solid transparent;
+		border-radius: 50%;
+		height: $paletteItemSize + ($paletteItemPadding * 2);
+		transition: border-color ease 0.2s;
+		will-change: border-color;
+
+		&-selected,
+		&:hover {
+			border-color: $light;
+		}
+
+		&-inner {
+			border: none;
+			height: $paletteItemSize;
+			overflow: hidden;
+			width: $paletteItemSize;
+
+			&.bg-white {
+				box-shadow: inset 0 0 0 1px $gray-400;
+			}
+		}
+	}
+
+	.palette-items-container {
+		display: flex;
+		flex-wrap: wrap;
+	}
+}

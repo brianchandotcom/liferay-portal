@@ -29,7 +29,7 @@ export default function ColorPalette({
 	const colorPaletteId = useId();
 
 	return (
-		<>
+		<div className="page-editor__color-palette">
 			{label && <label htmlFor={colorPaletteId}>{label}</label>}
 
 			<div className="palette-container" id={colorPaletteId}>
@@ -64,7 +64,7 @@ export default function ColorPalette({
 					{Liferay.Language.get('clear')}
 				</ClayButton>
 			)}
-		</>
+		</div>
 	);
 }
 

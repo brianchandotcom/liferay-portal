@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.data.engine.internal.nativeobject;
+package com.liferay.data.engine.internal.nativeobject.tracker;
 
 import com.liferay.data.engine.nativeobject.DataEngineNativeObject;
 import com.liferay.data.engine.nativeobject.tracker.DataEngineNativeObjectTracker;

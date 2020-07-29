@@ -17,10 +17,20 @@ package com.liferay.asset.display.page.portlet;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
+import java.util.Locale;
+
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Alejandro Tardín
  */
+@ProviderType
 public interface AssetDisplayPageFriendlyURLProvider {
+
+	public String getFriendlyURL(
+			String className, long classPK, Locale locale,
+			ThemeDisplay themeDisplay)
+		throws PortalException;
 
 	public String getFriendlyURL(
 			String className, long classPK, ThemeDisplay themeDisplay)

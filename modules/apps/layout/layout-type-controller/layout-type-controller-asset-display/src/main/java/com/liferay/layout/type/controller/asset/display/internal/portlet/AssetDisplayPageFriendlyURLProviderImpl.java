@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.util.Locale;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -39,7 +41,8 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 
 	@Override
 	public String getFriendlyURL(
-			String className, long classPK, ThemeDisplay themeDisplay)
+			String className, long classPK, Locale locale,
+			ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		InfoDisplayContributor<?> infoDisplayContributor =
@@ -72,13 +75,21 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 
 		sb.append(
 			_portal.getGroupFriendlyURL(
-				group.getPublicLayoutSet(), themeDisplay));
+				group.getPublicLayoutSet(), themeDisplay, locale));
 
 		sb.append(infoDisplayContributor.getInfoURLSeparator());
-		sb.append(
-			infoDisplayObjectProvider.getURLTitle(themeDisplay.getLocale()));
+		sb.append(infoDisplayObjectProvider.getURLTitle(locale));
 
 		return sb.toString();
+	}
+
+	@Override
+	public String getFriendlyURL(
+			String className, long classPK, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		return getFriendlyURL(
+			className, classPK, themeDisplay.getLocale(), themeDisplay);
 	}
 
 	@Reference

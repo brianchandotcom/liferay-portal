@@ -18,6 +18,7 @@ import ClayTabs from '@clayui/tabs';
 import classNames from 'classnames';
 import React, {useMemo, useState} from 'react';
 
+import {LAYOUT_TYPES} from '../../../app/config/constants/layoutTypes';
 import {config} from '../../../app/config/index';
 import {useDispatch, useSelector} from '../../../app/store/index';
 import changeMasterLayout from '../../../app/thunks/changeMasterLayout';
@@ -35,42 +36,7 @@ export default function PageDesignOptionsSidebar() {
 		(state) => state.masterLayout?.masterLayoutPlid
 	);
 
-	const tabs = useMemo(
-		() => [
-			{
-				icon: 'page',
-				label: Liferay.Language.get('master'),
-				options: config.masterLayouts.map((masterLayout) => ({
-					...masterLayout,
-					isActive:
-						masterLayoutPlid === masterLayout.masterLayoutPlid,
-					isDefault: false,
-					onClick: (dispatch) =>
-						dispatch(
-							changeMasterLayout({
-								masterLayoutPlid: masterLayout.masterLayoutPlid,
-							})
-						),
-				})),
-				type: OPTIONS_TYPES.master,
-			},
-			{
-				icon: 'magic',
-				label: Liferay.Language.get('style-book'),
-				options: config.styleBooks.map((styleBook) => ({
-					...styleBook,
-					isActive:
-						config.styleBookEntryId === styleBook.styleBookEntryId,
-					isDefault:
-						config.defaultStyleBookEntryId ===
-						styleBook.styleBookEntryId,
-					onClick: () => {},
-				})),
-				type: OPTIONS_TYPES.styleBook,
-			},
-		],
-		[masterLayoutPlid]
-	);
+	const tabs = useMemo(() => getTabs(masterLayoutPlid), [masterLayoutPlid]);
 	const [activeTabId, setActiveTabId] = useState(0);
 	const tabIdNamespace = useId();
 
@@ -189,3 +155,44 @@ const OptionList = ({options = [], icon}) => {
 		</ul>
 	);
 };
+
+function getTabs(masterLayoutPlid) {
+	const tabs = [
+		{
+			icon: 'magic',
+			label: Liferay.Language.get('style-book'),
+			options: config.styleBooks.map((styleBook) => ({
+				...styleBook,
+				isActive:
+					config.styleBookEntryId === styleBook.styleBookEntryId,
+				isDefault:
+					config.defaultStyleBookEntryId ===
+					styleBook.styleBookEntryId,
+				onClick: () => {},
+			})),
+			type: OPTIONS_TYPES.styleBook,
+		},
+	];
+
+	if (config.layoutType !== LAYOUT_TYPES.master) {
+		tabs.splice(0, 0, {
+			disabled: config.layoutType === LAYOUT_TYPES.master,
+			icon: 'page',
+			label: Liferay.Language.get('master'),
+			options: config.masterLayouts.map((masterLayout) => ({
+				...masterLayout,
+				isActive: masterLayoutPlid === masterLayout.masterLayoutPlid,
+				isDefault: false,
+				onClick: (dispatch) =>
+					dispatch(
+						changeMasterLayout({
+							masterLayoutPlid: masterLayout.masterLayoutPlid,
+						})
+					),
+			})),
+			type: OPTIONS_TYPES.master,
+		});
+	}
+
+	return tabs;
+}

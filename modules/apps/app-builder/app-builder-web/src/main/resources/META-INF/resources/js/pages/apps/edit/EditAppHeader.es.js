@@ -31,7 +31,7 @@ export default ({
 		},
 	} = useContext(EditAppContext);
 
-	const appName = name[editingLanguageId];
+	const appName = name[editingLanguageId] || '';
 
 	useEffect(() => {
 		if (!editingLanguageId) {
@@ -69,7 +69,7 @@ export default ({
 				/>
 				<UpperToolbarInput
 					maxLength={30}
-					onInput={onAppNameChange}
+					onChange={onAppNameChange}
 					placeholder={Liferay.Language.get('untitled-app')}
 					value={appName}
 				/>

@@ -50,7 +50,9 @@ describe('ListApps', () => {
 
 	it('renders', async () => {
 		fetch.mockResponseOnce(JSON.stringify(RESPONSES.ONE_ITEM));
-		fetch.mockResponseOnce(JSON.stringify(DATA_DEFINITION_RESPONSES.ONE_ITEM));
+		fetch.mockResponseOnce(
+			JSON.stringify(DATA_DEFINITION_RESPONSES.ONE_ITEM)
+		);
 		fetch.mockResponse(JSON.stringify(DROPDOWN_VALUES));
 
 		const {asFragment} = render(<ListApps {...routeProps} />, {
@@ -66,7 +68,9 @@ describe('ListApps', () => {
 
 	it('renders with 5 apps in the list', async () => {
 		fetch.mockResponseOnce(JSON.stringify(RESPONSES.MANY_ITEMS(5)));
-		fetch.mockResponseOnce(JSON.stringify(DATA_DEFINITION_RESPONSES.ONE_ITEM));
+		fetch.mockResponseOnce(
+			JSON.stringify(DATA_DEFINITION_RESPONSES.ONE_ITEM)
+		);
 		fetch.mockResponse(JSON.stringify(DROPDOWN_VALUES));
 
 		const {container} = render(<ListApps {...routeProps} />, {
@@ -82,7 +86,9 @@ describe('ListApps', () => {
 
 	it('renders with empty state', async () => {
 		fetch.mockResponseOnce(JSON.stringify(RESPONSES.NO_ITEMS));
-		fetch.mockResponseOnce(JSON.stringify(DATA_DEFINITION_RESPONSES.ONE_ITEM));
+		fetch.mockResponseOnce(
+			JSON.stringify(DATA_DEFINITION_RESPONSES.ONE_ITEM)
+		);
 		fetch.mockResponse(JSON.stringify(DROPDOWN_VALUES));
 
 		const {container} = render(<ListApps {...routeProps} />, {

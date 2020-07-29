@@ -56,7 +56,9 @@ describe('ListStandardApps', () => {
 
 	it('renders opening a new app popover and lists 5 apps', async () => {
 		fetch.mockResponseOnce(JSON.stringify(RESPONSES.MANY_ITEMS(5)));
-		fetch.mockResponseOnce(JSON.stringify(DATA_DEFINITION_RESPONSES.ONE_ITEM));
+		fetch.mockResponseOnce(
+			JSON.stringify(DATA_DEFINITION_RESPONSES.ONE_ITEM)
+		);
 		fetch.mockResponse(JSON.stringify(DROPDOWN_VALUES));
 
 		const {container} = render(<ListStandardApps {...routeProps} />, {
@@ -101,7 +103,9 @@ describe('ListStandardApps', () => {
 
 	it('renders with empty state', async () => {
 		fetch.mockResponseOnce(JSON.stringify(RESPONSES.NO_ITEMS));
-		fetch.mockResponseOnce(JSON.stringify(DATA_DEFINITION_RESPONSES.ONE_ITEM));
+		fetch.mockResponseOnce(
+			JSON.stringify(DATA_DEFINITION_RESPONSES.ONE_ITEM)
+		);
 		fetch.mockResponse(JSON.stringify(DROPDOWN_VALUES));
 
 		const push = jest.fn();

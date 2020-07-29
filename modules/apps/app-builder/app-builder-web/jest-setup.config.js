@@ -44,4 +44,5 @@ window.Liferay = {
 		getDefaultLanguageId: () => 'en_US',
 		getLanguageId: () => 'en_US',
 	},
+	component: () => {},
 };

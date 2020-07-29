@@ -223,6 +223,29 @@ const DropdownItem = ({
 	</>
 );
 
+const DropdownList = ({
+	currentValue,
+	expand,
+	handleSelect,
+	multiple,
+	options,
+}) => (
+	<ClayDropDown.ItemList>
+		{options.map((item, index) => (
+			<DropdownItem
+				currentValue={currentValue}
+				expand={expand}
+				index={index}
+				key={`${item.value}-${index}`}
+				multiple={multiple}
+				onSelect={handleSelect}
+				option={item}
+				options={options}
+			/>
+		))}
+	</ClayDropDown.ItemList>
+);
+
 const DropdownWithSearch = ({
 	currentValue,
 	expand,
@@ -231,7 +254,7 @@ const DropdownWithSearch = ({
 	options,
 }) => {
 	const [query, setQuery] = useState('');
-	const [filteredItems, setFilteredItems] = useState([]);
+	const [filteredOptions, setFilteredOptions] = useState([]);
 
 	const emptyOption = {
 		label: Liferay.Language.get('choose-an-option'),
@@ -244,7 +267,8 @@ const DropdownWithSearch = ({
 				option.value &&
 				option.label.toLowerCase().includes(query.toLowerCase())
 		);
-		setFilteredItems([emptyOption, ...result]);
+		setFilteredOptions([emptyOption, ...result]);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [query]);
 
@@ -254,21 +278,14 @@ const DropdownWithSearch = ({
 				onChange={(event) => setQuery(event.target.value)}
 				value={query}
 			/>
-			{filteredItems.length > 1 ? (
-				<ClayDropDown.ItemList>
-					{filteredItems.map((item, index) => (
-						<DropdownItem
-							currentValue={currentValue}
-							expand={expand}
-							index={index}
-							key={`${item.value}-${index}`}
-							multiple={multiple}
-							onSelect={handleSelect}
-							option={item}
-							options={filteredItems}
-						/>
-					))}
-				</ClayDropDown.ItemList>
+			{filteredOptions.length > 1 ? (
+				<DropdownList
+					currentValue={currentValue}
+					expand={expand}
+					handleSelect={handleSelect}
+					multiple={multiple}
+					options={filteredOptions}
+				/>
 			) : (
 				<div className="dropdown-section text-muted">
 					{Liferay.Language.get('empty-list')}
@@ -473,20 +490,13 @@ const Select = ({
 						options={options}
 					/>
 				) : (
-					<ClayDropDown.ItemList>
-						{options.map((option, index) => (
-							<DropdownItem
-								currentValue={currentValue}
-								expand={expand}
-								index={index}
-								key={`${option.value}-${index}`}
-								multiple={multiple}
-								onSelect={handleSelect}
-								option={option}
-								options={options}
-							/>
-						))}
-					</ClayDropDown.ItemList>
+					<DropdownList
+						currentValue={currentValue}
+						expand={expand}
+						handleSelect={handleSelect}
+						multiple={multiple}
+						options={options}
+					/>
 				)}
 			</ClayDropDown.Menu>
 		</>

@@ -2263,6 +2263,26 @@ public class LayoutLocalServiceWrapper
 			userId, plid, status, serviceContext);
 	}
 
+	/**
+	 * Updates the layout replacing its style book entry id.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param layoutId the layout ID of the layout
+	 * @param styleBookEntryId the primary key of the style book entry
+	 * @return the updated layout
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public Layout updateStyleBookEntryId(
+			long groupId, boolean privateLayout, long layoutId,
+			long styleBookEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutLocalService.updateStyleBookEntryId(
+			groupId, privateLayout, layoutId, styleBookEntryId);
+	}
+
 	@Override
 	public Layout updateType(long plid, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -168,9 +168,16 @@ class LayoutProvider extends Component {
 			(field) => {
 				const {options, settingsContext} = field;
 
+				const newSettingsContext = {
+					...settingsContext,
+					availableLanguageIds,
+					defaultLanguageId,
+					pages: this.getLocalizedPages(settingsContext.pages),
+				};
+
 				return {
 					...getFieldProperties(
-						settingsContext,
+						newSettingsContext,
 						defaultLanguageId,
 						editingLanguageId
 					),
@@ -180,12 +187,7 @@ class LayoutProvider extends Component {
 					}),
 					options,
 					selected: focusedField.fieldName === field.fieldName,
-					settingsContext: {
-						...settingsContext,
-						availableLanguageIds,
-						defaultLanguageId,
-						pages: this.getLocalizedPages(settingsContext.pages),
-					},
+					settingsContext: newSettingsContext,
 				};
 			},
 			true,

@@ -43,11 +43,9 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class FriendlyURLMapper {
 
 	public static FriendlyURLMapper create(
-			AssetDisplayPageFriendlyURLProvider
-				assetDisplayPageFriendlyURLProvider,
-			ClassNameLocalService classNameLocalService, Language language,
-			HttpServletRequest httpServletRequest)
-		throws PortalException {
+		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
+		ClassNameLocalService classNameLocalService, Language language,
+		HttpServletRequest httpServletRequest) {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(

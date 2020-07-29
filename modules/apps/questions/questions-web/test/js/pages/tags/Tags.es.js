@@ -12,66 +12,72 @@
  * details.
  */
 
+import {HttpLink} from '@apollo/client';
 import {cleanup} from '@testing-library/react';
 import React from 'react';
+import {Route} from 'react-router-dom';
 
 import Tags from '../../../../src/main/resources/META-INF/resources/js/pages/tags/Tags.es';
-import {getTagsQuery} from '../../../../src/main/resources/META-INF/resources/js/utils/client.es';
 import {renderComponent} from '../../../helpers.es';
 
 import '@testing-library/jest-dom/extend-expect';
 
-const mockRequestVariables = {
-	page: 1,
-	pageSize: 20,
-	search: '',
-	siteKey: '20020',
-};
-
-const mocks = [
-	{
-		request: {
-			query: getTagsQuery,
-			variables: mockRequestVariables,
-		},
-		result: {
-			data: {
-				keywordsRanked: {
-					items: [
-						{
-							id: 37018,
-							keywordUsageCount: 1,
-							name: 'new',
-						},
-						{
-							id: 37019,
-							keywordUsageCount: 1,
-							name: 'osgi',
-						},
-						{
-							id: 37020,
-							keywordUsageCount: 1,
-							name: 'tag',
-						},
-					],
-					lastPage: 1,
-					page: 1,
-					pageSize: 20,
-					totalCount: 3,
+const mockTags = {
+	data: {
+		keywordsRanked: {
+			items: [
+				{
+					id: 37018,
+					keywordUsageCount: 1,
+					name: 'new',
 				},
-			},
+				{
+					id: 37019,
+					keywordUsageCount: 1,
+					name: 'osgi',
+				},
+				{
+					id: 37020,
+					keywordUsageCount: 1,
+					name: 'tag',
+				},
+			],
+			lastPage: 1,
+			page: 1,
+			pageSize: 20,
+			totalCount: 3,
 		},
 	},
-];
+};
 
 describe('Tags', () => {
-	afterEach(cleanup);
+	afterEach(() => {
+		jest.clearAllMocks();
+		cleanup();
+	});
 
 	it('Shows list of tags', async () => {
+		const path = '/questions/:sectionTitle';
+		const route = '/questions/:sectionTitle/tags';
+
+		const link = new HttpLink({
+			credentials: 'include',
+			fetch: global.fetch,
+			uri: '/o/graphql',
+		});
+
+		global.fetch.mockImplementation(() =>
+			Promise.resolve({
+				json: () => Promise.resolve(mockTags),
+				text: () => Promise.resolve(JSON.stringify(mockTags)),
+			})
+		);
+
 		const {findByText} = renderComponent({
-			apolloMocks: mocks,
-			contextValue: {siteKey: mockRequestVariables.siteKey},
-			ui: <Tags />,
+			contextValue: {siteKey: '20020'},
+			link,
+			route,
+			ui: <Route component={Tags} path={path} />,
 		});
 
 		const firstTag = await findByText('new');

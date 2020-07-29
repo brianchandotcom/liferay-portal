@@ -57,7 +57,7 @@ export const ImageSelectorField = ({field, onValueSelect, value = {}}) => {
 
 	return (
 		<>
-			<ClayForm.Group>
+			<ClayForm.Group small>
 				<label htmlFor={imageSourceInputId}>
 					{Liferay.Language.get('image-source')}
 				</label>

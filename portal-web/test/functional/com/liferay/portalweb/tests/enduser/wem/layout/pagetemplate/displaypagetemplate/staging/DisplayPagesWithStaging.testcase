@@ -112,7 +112,7 @@ definition {
 		task ("Assert the Collection Display and the Display Page Template are shown in display page template") {
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
-			AssertElementPresent(
+			Click.clickNoWaitForVisible(
 				key_fragmentName = "Collection Display",
 				locator1 = "Fragment#FRAGMENT_HEADER");
 

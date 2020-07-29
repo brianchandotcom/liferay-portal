@@ -225,7 +225,7 @@ definition {
 		task ("Assert the Collection Display containing mapping content is imported") {
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
-			AssertElementPresent(
+			Click.clickNoWaitForVisible(
 				key_fragmentName = "Collection Display",
 				locator1 = "Fragment#FRAGMENT_HEADER");
 

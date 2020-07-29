@@ -28,69 +28,18 @@ import Select from '../../../src/main/resources/META-INF/resources/Select/Select
 
 const spritemap = 'icons.svg';
 
-const optionsOfSearch = [
-	{
-		label: 'label1',
-		name: 'name1',
-		value: 'item1',
-	},
-	{
-		label: 'label2',
-		name: 'name2',
-		value: 'item2',
-	},
-	{
-		label: 'label3',
-		name: 'name3',
-		value: 'item3',
-	},
-	{
-		label: 'label4',
-		name: 'name4',
-		value: 'item4',
-	},
-	{
-		label: 'label5',
-		name: 'name5',
-		value: 'item5',
-	},
-	{
-		label: 'label6',
-		name: 'name6',
-		value: 'item6',
-	},
-	{
-		label: 'label7',
-		name: 'name7',
-		value: 'item7',
-	},
-	{
-		label: 'label8',
-		name: 'name8',
-		value: 'item8',
-	},
-	{
-		label: 'label9',
-		name: 'name9',
-		value: 'item9',
-	},
-	{
-		label: 'label10',
-		name: 'name10',
-		value: 'item10',
-	},
-	{
-		label: 'label11',
-		name: 'name11',
-		value: 'item11',
-	},
-	{
-		label: 'label12',
-		name: 'name12',
-		value: 'item12',
-	},
-];
+const createOptions = (totalOptions) => {
+	const options = [];
+	for (let item = 1; item <= totalOptions; item++) {
+		options.push({
+			label: 'label' + item,
+			name: 'name' + item,
+			value: 'item' + item,
+		});
+	}
 
+	return options;
+};
 const SelectWithProvider = (props) => (
 	<PageProvider value={{editingLanguageId: 'en_US'}}>
 		<Select {...props} />
@@ -340,16 +289,7 @@ describe('Select', () => {
 			<SelectWithProvider
 				dataSourceType="manual"
 				onChange={handleFieldEdited}
-				options={[
-					{
-						label: 'label',
-						value: 'item',
-					},
-					{
-						label: 'label2',
-						value: 'item2',
-					},
-				]}
+				options={createOptions(2)}
 				spritemap={spritemap}
 			/>
 		);
@@ -389,43 +329,7 @@ describe('Select', () => {
 				dataSourceType="manual"
 				multiple={true}
 				onChange={handleFieldEdited}
-				options={[
-					{
-						label: 'label1',
-						name: 'name1',
-						value: 'item1',
-					},
-					{
-						label: 'label2',
-						name: 'name2',
-						value: 'item2',
-					},
-					{
-						label: 'label3',
-						name: 'name3',
-						value: 'item3',
-					},
-					{
-						label: 'label4',
-						name: 'name4',
-						value: 'item4',
-					},
-					{
-						label: 'label5',
-						name: 'name5',
-						value: 'item5',
-					},
-					{
-						label: 'label6',
-						name: 'name6',
-						value: 'item6',
-					},
-					{
-						label: 'label7',
-						name: 'name7',
-						value: 'item7',
-					},
-				]}
+				options={createOptions(7)}
 				spritemap={spritemap}
 			/>
 		);
@@ -464,7 +368,7 @@ describe('Select', () => {
 				dataSourceType="manual"
 				multiple={true}
 				onChange={handleFieldEdited}
-				options={optionsOfSearch}
+				options={createOptions(12)}
 				spritemap={spritemap}
 			/>
 		);
@@ -490,7 +394,7 @@ describe('Select', () => {
 				dataSourceType="manual"
 				multiple={true}
 				onChange={handleFieldEdited}
-				options={optionsOfSearch}
+				options={createOptions(12)}
 				spritemap={spritemap}
 			/>
 		);

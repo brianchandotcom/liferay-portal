@@ -23,7 +23,6 @@ import UpperToolbar from '../../components/upper-toolbar/UpperToolbar.es';
 import usePermissions from '../../hooks/usePermissions.es';
 import {confirmDelete} from '../../utils/client.es';
 import {sub} from '../../utils/lang.es';
-import {successToast} from '../../utils/toast.es';
 import {navigateToEditPage} from './utils.es';
 
 function ViewEntryUpperToolbar({
@@ -44,11 +43,12 @@ function ViewEntryUpperToolbar({
 	};
 
 	const onDelete = () => {
-		confirmDelete('/o/data-engine/v2.0/data-records/')({
+		const successMessage = Liferay.Language.get('an-entry-was-deleted');
+
+		confirmDelete('/o/data-engine/v2.0/data-records/', {successMessage})({
 			id: dataRecordId,
 		}).then((confirmed) => {
 			if (confirmed) {
-				successToast(Liferay.Language.get('an-entry-was-deleted'));
 				history.push('/');
 			}
 		});

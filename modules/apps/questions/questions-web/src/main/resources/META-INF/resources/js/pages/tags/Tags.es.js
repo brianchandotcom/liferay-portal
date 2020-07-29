@@ -12,21 +12,38 @@
  * details.
  */
 
-import {useQuery} from '@apollo/client';
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayEmptyState from '@clayui/empty-state';
-import {ClayInput} from '@clayui/form';
+import {ClayInput, ClaySelect} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
+import Alert from '../../components/Alert.es';
 import Link from '../../components/Link.es';
 import PaginatedList from '../../components/PaginatedList.es';
 import useQueryParams from '../../hooks/useQueryParams.es';
-import {getTagsQuery} from '../../utils/client.es';
+import {getTags} from '../../utils/client.es';
 import lang from '../../utils/lang.es';
-import {historyPushWithSlug, useDebounceCallback} from '../../utils/utils.es';
+import {
+	dateToInternationalHuman,
+	historyPushWithSlug,
+	useDebounceCallback,
+} from '../../utils/utils.es';
+
+function getOrderByOptions() {
+	return [
+		{
+			label: Liferay.Language.get('latest-created'),
+			value: 'latest-created',
+		},
+		{
+			label: Liferay.Language.get('number-of-usages'),
+			value: 'number-of-usages',
+		},
+	];
+}
 
 export default withRouter(
 	({
@@ -38,13 +55,28 @@ export default withRouter(
 	}) => {
 		const context = useContext(AppContext);
 
+		const [error, setError] = useState({});
+		const [loading, setLoading] = useState(true);
+		const [orderBy, setOrderBy] = useState('number-of-usages');
 		const [page, setPage] = useState(1);
 		const [pageSize, setPageSize] = useState(20);
 		const [search, setSearch] = useState('');
+		const [tags, setTags] = useState([]);
 
-		const {data, loading} = useQuery(getTagsQuery, {
-			variables: {page, pageSize, search, siteKey: context.siteKey},
-		});
+		useEffect(() => {
+			getTags(orderBy, page, pageSize, search, context.siteKey)
+				.then(({data, loading}) => {
+					setTags(data || []);
+					setLoading(loading);
+				})
+				.catch((error) => {
+					if (process.env.NODE_ENV === 'development') {
+						console.error(error);
+					}
+					setLoading(false);
+					setError({message: 'Loading Tags', title: 'Error'});
+				});
+		}, [orderBy, page, pageSize, search, context.siteKey]);
 
 		const queryParams = useQueryParams(location);
 
@@ -64,6 +96,8 @@ export default withRouter(
 			);
 		};
 
+		const orderByOptions = getOrderByOptions();
+
 		const [debounceCallback] = useDebounceCallback((search) => {
 			setSearch(search);
 		}, 500);
@@ -71,17 +105,51 @@ export default withRouter(
 		return (
 			<>
 				<div className="container">
-					<div className="row">
-						<div className="col-md-4 offset-md-8">
+					<div className="d-flex flex-row">
+						<div className="d-flex flex-column flex-grow-1">
+							<ClayInput.Group className="c-mt-3 justify-content-end">
+								<ClayInput.GroupItem shrink>
+									<label
+										className="align-items-center d-inline-flex m-0 text-secondary"
+										htmlFor="tagsOrderBy"
+									>
+										{Liferay.Language.get('order-by')}
+									</label>
+								</ClayInput.GroupItem>
+
+								<ClayInput.GroupItem shrink>
+									<ClaySelect
+										className="bg-transparent border-0"
+										disabled={loading}
+										id="tagsOrderBy"
+										onChange={(event) => {
+											setLoading(true);
+											setOrderBy(event.target.value);
+										}}
+										value={orderBy}
+									>
+										{orderByOptions.map((option) => (
+											<ClaySelect.Option
+												key={option.value}
+												label={option.label}
+												value={option.value}
+											/>
+										))}
+									</ClaySelect>
+								</ClayInput.GroupItem>
+							</ClayInput.Group>
+						</div>
+
+						<div className="d-flex flex-column flex-grow-0">
 							<ClayInput.Group className="c-mt-3">
 								<ClayInput.GroupItem>
 									<ClayInput
 										className="bg-transparent form-control input-group-inset input-group-inset-after"
 										disabled={
 											!search &&
-											data &&
-											data.keywordsRanked &&
-											!data.keywordsRanked.items.length
+											tags &&
+											tags.items &&
+											!tags.items.length
 										}
 										onChange={(event) =>
 											debounceCallback(event.target.value)
@@ -121,7 +189,7 @@ export default withRouter(
 								changePage(page, pageSize)
 							}
 							changePage={(page) => changePage(page, pageSize)}
-							data={data && data.keywordsRanked}
+							data={tags}
 							emptyState={
 								<ClayEmptyState
 									className="empty-state-icon"
@@ -151,16 +219,32 @@ export default withRouter(
 																	{tag.name}
 																</span>
 															</div>
-															<div>
-																{lang.sub(
-																	Liferay.Language.get(
-																		'used-x-times'
-																	),
-																	[
-																		tag.keywordUsageCount,
-																	]
-																)}
-															</div>
+															{orderBy ===
+															'latest-created' ? (
+																<div>
+																	{lang.sub(
+																		Liferay.Language.get(
+																			'created-on'
+																		),
+																		[
+																			dateToInternationalHuman(
+																				tag.dateCreated
+																			),
+																		]
+																	)}
+																</div>
+															) : (
+																<div>
+																	{lang.sub(
+																		Liferay.Language.get(
+																			'used-x-times'
+																		),
+																		[
+																			tag.keywordUsageCount,
+																		]
+																	)}
+																</div>
+															)}
 														</div>
 													</div>
 												</div>
@@ -170,6 +254,8 @@ export default withRouter(
 								</div>
 							)}
 						</PaginatedList>
+
+						<Alert info={error} />
 					</div>
 				</div>
 			</>

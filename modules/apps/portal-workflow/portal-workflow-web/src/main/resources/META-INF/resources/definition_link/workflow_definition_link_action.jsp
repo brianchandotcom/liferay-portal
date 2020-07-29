@@ -22,7 +22,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 String randomNamespace = (String)row.getParameter("randomNamespace");
 %>
 
-<div class="btn-group btn-group-nowrap" hidden="true" id="<%= randomNamespace %>saveCancelGroup">
+<div class="btn-group btn-group-nowrap d-none" id="<%= randomNamespace %>saveCancelGroup">
 	<div class="btn-group-item">
 		<button class="btn btn-primary btn-sm" id="<%= randomNamespace %>saveButton" type="button")><%= LanguageUtil.get(request, "save") %></button>
 	</div>

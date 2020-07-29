@@ -163,13 +163,11 @@ AUI.add(
 				for (var index in elementsList) {
 					var element = elementsList[parseInt(index, 10)];
 
-					var hidden = element.getAttribute('hidden');
-
-					if (hidden) {
-						element.removeAttribute('hidden');
+					if (element.classList.contains('d-none')) {
+						element.classList.remove('d-none');
 					}
 					else {
-						element.setAttribute('hidden', true);
+						element.classList.add('d-none');
 					}
 				}
 			},

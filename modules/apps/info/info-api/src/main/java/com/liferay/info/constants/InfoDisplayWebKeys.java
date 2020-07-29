@@ -27,6 +27,8 @@ public class InfoDisplayWebKeys {
 
 	public static final String INFO_ITEM = "INFO_ITEM";
 
+	public static final String INFO_ITEM_DETAILS = "INFO_ITEM_DETAILS";
+
 	public static final String INFO_ITEM_FIELD_VALUES_PROVIDER =
 		"INFO_FIELD_VALUES_PROVIDER";
 

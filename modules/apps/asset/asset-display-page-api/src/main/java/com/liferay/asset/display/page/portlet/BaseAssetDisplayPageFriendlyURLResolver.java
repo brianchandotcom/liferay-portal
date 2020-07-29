@@ -34,6 +34,7 @@ import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemClassDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -96,10 +97,12 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER,
 			infoDisplayObjectProvider);
 
+		String infoItemClassName = portal.getClassName(
+			infoDisplayObjectProvider.getClassNameId());
+
 		InfoEditURLProvider<?> infoEditURLProvider =
 			infoEditURLProviderTracker.getInfoEditURLProvider(
-				portal.getClassName(
-					infoDisplayObjectProvider.getClassNameId()));
+				infoItemClassName);
 
 		httpServletRequest.setAttribute(
 			AssetDisplayPageWebKeys.INFO_EDIT_URL_PROVIDER,
@@ -109,11 +112,21 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 
 		httpServletRequest.setAttribute(InfoDisplayWebKeys.INFO_ITEM, infoItem);
 
+		InfoItemClassDetailsProvider infoItemClassDetailsProvider =
+			infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemClassDetailsProvider.class, infoItemClassName);
+
+		httpServletRequest.setAttribute(
+			InfoDisplayWebKeys.INFO_ITEM_DETAILS,
+			infoItemClassDetailsProvider.getInfoItemDetails(infoItem));
+
+		httpServletRequest.setAttribute(
+			InfoDisplayWebKeys.INFO_ITEM_SERVICE_TRACKER,
+			infoItemServiceTracker);
+
 		InfoItemFieldValuesProvider<?> infoItemFieldValuesProvider =
 			infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemFieldValuesProvider.class,
-				portal.getClassName(
-					infoDisplayObjectProvider.getClassNameId()));
+				InfoItemFieldValuesProvider.class, infoItemClassName);
 
 		httpServletRequest.setAttribute(
 			InfoDisplayWebKeys.INFO_ITEM_FIELD_VALUES_PROVIDER,

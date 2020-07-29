@@ -14,14 +14,18 @@
 
 package com.liferay.layout.type.controller.display.page.internal.display.context;
 
-import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.info.constants.InfoDisplayWebKeys;
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.info.item.provider.InfoItemPermissionProvider;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
@@ -38,19 +42,20 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 
 		_httpServletRequest = httpServletRequest;
 
-		_infoDisplayObjectProvider =
-			(InfoDisplayObjectProvider<Object>)httpServletRequest.getAttribute(
-				AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
+		_infoItem = httpServletRequest.getAttribute(
+			InfoDisplayWebKeys.INFO_ITEM);
+		_infoItemDetails = (InfoItemDetails)httpServletRequest.getAttribute(
+			InfoDisplayWebKeys.INFO_ITEM_DETAILS);
+
+		_infoItemServiceTracker =
+			(InfoItemServiceTracker)httpServletRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_ITEM_SERVICE_TRACKER);
 	}
 
 	public AssetRendererFactory<?> getAssetRendererFactory() {
-		if (_infoDisplayObjectProvider == null) {
-			return null;
-		}
-
 		return AssetRendererFactoryRegistryUtil.
 			getAssetRendererFactoryByClassNameId(
-				_infoDisplayObjectProvider.getClassNameId());
+				PortalUtil.getClassNameId(_infoItemDetails.getClassName()));
 	}
 
 	public Map<String, Object> getInfoDisplayFieldsValues() {
@@ -75,11 +80,39 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 		return infoItemFieldValues.getMap(themeDisplay.getLocale());
 	}
 
-	public InfoDisplayObjectProvider<?> getInfoDisplayObjectProvider() {
-		return _infoDisplayObjectProvider;
+	public boolean hasPermission(
+			PermissionChecker permissionChecker, String actionId)
+		throws Exception {
+
+		InfoItemPermissionProvider infoItemPermissionProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemPermissionProvider.class,
+				_infoItemDetails.getClassName());
+
+		if (infoItemPermissionProvider != null) {
+			return infoItemPermissionProvider.hasPermission(
+				permissionChecker, _infoItem, actionId);
+		}
+
+		AssetRendererFactory<?> assetRendererFactory =
+			getAssetRendererFactory();
+
+		if (assetRendererFactory != null) {
+			InfoItemReference infoItemReference =
+				_infoItemDetails.getItemReference();
+
+			long infoItemClassPK = infoItemReference.getClassPK();
+
+			return assetRendererFactory.hasPermission(
+				permissionChecker, infoItemClassPK, actionId);
+		}
+
+		return true;
 	}
 
 	private final HttpServletRequest _httpServletRequest;
-	private final InfoDisplayObjectProvider<Object> _infoDisplayObjectProvider;
+	private final Object _infoItem;
+	private final InfoItemDetails _infoItemDetails;
+	private final InfoItemServiceTracker _infoItemServiceTracker;
 
 }

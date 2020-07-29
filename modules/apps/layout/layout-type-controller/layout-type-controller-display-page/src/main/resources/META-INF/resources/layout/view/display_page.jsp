@@ -53,8 +53,6 @@ String ppid = ParamUtil.getString(request, "p_p_id");
 
 		<%
 		AssetRendererFactory<?> assetRendererFactory = displayPageLayoutTypeControllerDisplayContext.getAssetRendererFactory();
-
-		InfoDisplayObjectProvider<?> infoDisplayObjectProvider = displayPageLayoutTypeControllerDisplayContext.getInfoDisplayObjectProvider();
 		%>
 
 		<c:if test="<%= assetRendererFactory != null %>">
@@ -62,7 +60,7 @@ String ppid = ParamUtil.getString(request, "p_p_id");
 		</c:if>
 
 		<c:choose>
-			<c:when test="<%= (assetRendererFactory != null) && !assetRendererFactory.hasPermission(permissionChecker, infoDisplayObjectProvider.getClassPK(), ActionKeys.VIEW) %>">
+			<c:when test="<%= !displayPageLayoutTypeControllerDisplayContext.hasPermission(permissionChecker, ActionKeys.VIEW) %>">
 				<div class="layout-content" id="main-content" role="main">
 					<clay:container-fluid
 						cssClass="pt-3"

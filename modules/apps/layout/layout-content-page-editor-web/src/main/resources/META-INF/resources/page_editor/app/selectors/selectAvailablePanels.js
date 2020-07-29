@@ -14,7 +14,7 @@
 
 import {VIEWPORT_SIZES} from '../config/constants/viewportSizes';
 
-export const CONTENT_CHANGE_PANELS = ['comments', 'contents'];
+export const CONTENT_CHANGE_PANELS = ['comments', 'contents', 'page-structure'];
 export const RESPONSIVE_PANELS = ['comments', 'contents', 'page-structure'];
 
 /**

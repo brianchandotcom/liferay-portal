@@ -263,6 +263,16 @@ public class ContentPageEditorDisplayContext {
 				"defaultLanguageId",
 				LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale())
 			).put(
+				"defaultStyleBookEntryId",
+				() -> {
+					StyleBookEntry styleBookEntry =
+						StyleBookEntryLocalServiceUtil.
+							fetchDefaultStyleBookEntry(
+								themeDisplay.getScopeGroupId());
+
+					return styleBookEntry.getStyleBookEntryId();
+				}
+			).put(
 				"deleteFragmentEntryLinkCommentURL",
 				getFragmentEntryActionURL(
 					"/content_layout/delete_fragment_entry_link_comment")
@@ -415,6 +425,13 @@ public class ContentPageEditorDisplayContext {
 				getResourceURL("/content_layout/get_fragment_entry_link")
 			).put(
 				"sidebarPanels", getSidebarPanels()
+			).put(
+				"styleBookEntryId",
+				() -> {
+					Layout layout = themeDisplay.getLayout();
+
+					return layout.getStyleBookEntryId();
+				}
 			).put(
 				"styleBooks", _getStyleBooks()
 			).put(

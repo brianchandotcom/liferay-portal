@@ -138,11 +138,9 @@ public class TranslationEntryModelImpl
 
 	public static final long LANGUAGEID_COLUMN_BITMASK = 16L;
 
-	public static final long STATUS_COLUMN_BITMASK = 32L;
+	public static final long UUID_COLUMN_BITMASK = 32L;
 
-	public static final long UUID_COLUMN_BITMASK = 64L;
-
-	public static final long TRANSLATIONENTRYID_COLUMN_BITMASK = 128L;
+	public static final long TRANSLATIONENTRYID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -740,19 +738,7 @@ public class TranslationEntryModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		_columnBitmask |= STATUS_COLUMN_BITMASK;
-
-		if (!_setOriginalStatus) {
-			_setOriginalStatus = true;
-
-			_originalStatus = _status;
-		}
-
 		_status = status;
-	}
-
-	public int getOriginalStatus() {
-		return _originalStatus;
 	}
 
 	@JSON
@@ -1048,11 +1034,6 @@ public class TranslationEntryModelImpl
 		translationEntryModelImpl._originalLanguageId =
 			translationEntryModelImpl._languageId;
 
-		translationEntryModelImpl._originalStatus =
-			translationEntryModelImpl._status;
-
-		translationEntryModelImpl._setOriginalStatus = false;
-
 		translationEntryModelImpl._columnBitmask = 0;
 	}
 
@@ -1253,8 +1234,6 @@ public class TranslationEntryModelImpl
 	private String _languageId;
 	private String _originalLanguageId;
 	private int _status;
-	private int _originalStatus;
-	private boolean _setOriginalStatus;
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;

@@ -246,22 +246,6 @@ public class TranslationEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_S() throws Exception {
-		_persistence.countByG_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
-
-		_persistence.countByG_S(0L, 0);
-	}
-
-	@Test
-	public void testCountByC_S() throws Exception {
-		_persistence.countByC_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
-
-		_persistence.countByC_S(0L, 0);
-	}
-
-	@Test
 	public void testCountByC_C_L() throws Exception {
 		_persistence.countByC_C_L(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "");

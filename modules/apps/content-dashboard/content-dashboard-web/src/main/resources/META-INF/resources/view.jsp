@@ -151,45 +151,34 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 								>
 
 									<%
-									List<AssetCategory> assetCategories = (List<AssetCategory>)contentDashboardItem.getAssetCategories(assetVocabulary.getVocabularyId());
-
-									if (assetCategories.size() >= 1) {
+									List<String> assetCategories = contentDashboardAdminDisplayContext.getAssetCategoryTitles(contentDashboardItem, assetVocabulary.getVocabularyId());
 									%>
 
-									<clay:label
-										displayType="secondary"
-										large="<%= true %>"
-									>
-										<clay:label-item-expand><%= assetCategories.get(0).getTitle(locale) %></clay:label-item-expand>
-									</clay:label>
+									<c:if test="<%= assetCategories.size() > 0 %>">
+										<clay:label
+											displayType="secondary"
+											large="<%= true %>"
+										>
+											<clay:label-item-expand><%= assetCategories.get(0) %></clay:label-item-expand>
+										</clay:label>
+									</c:if>
 
-									<%} %>
+									<c:if test="<%= assetCategories.size() > 1 %>">
 
-									<%if (assetCategories.size() > 1) {
-										assetCategories.remove(assetCategories.get(0));
+										<%
+										String assetCategoriesSummary = StringUtil.merge(assetCategories.subList(1, assetCategories.size()), "\n");
+										%>
 
-										StringBuilder sb = new StringBuilder();
-											for (AssetCategory assetCategory : assetCategories) {
-												sb.append(
-													assetCategory.getTitle(
-														locale));
-												sb.append("\n");
-											} %>
-
-										<span class="lfr-portal-tooltip" title="<%= sb %>">
+										<span class="lfr-portal-tooltip" title="<%= assetCategoriesSummary %>">
 											<clay:label
-												aria-title="<%= sb %>"
+												aria-title="<%= assetCategoriesSummary %>"
 												displayType="secondary"
 												large="<%= true %>"
 											>
 												<span>...</span>
 											</clay:label>
 										</span>
-
-									<%
-									}
-									%>
-
+									</c:if>
 								</liferay-ui:search-container-column-text>
 
 							<%

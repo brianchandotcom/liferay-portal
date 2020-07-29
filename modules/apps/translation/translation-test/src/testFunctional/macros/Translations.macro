@@ -140,11 +140,26 @@ definition {
 			SelectFrame(value1 = "relative=top");
 		}
 
+		if (isSet(webContentSourceHTML)) {
+			Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON_2");
+
+			Type(
+				locator1 = "CKEditor#BODY_FIELD_SOURCE_ON_2",
+				value1 = "${webContentSourceHTML}");
+		}
+
 		if (isSet(webContentText)) {
 			Type(
 				key_fieldName = "Text",
 				locator1 = "TextInput#TRANSLATIONS_TARGET_FIELD",
 				value1 = "${webContentText}");
+		}
+
+		if (isSet(webContentTextBox)) {
+			Type(
+				key_fieldName = "TextBox",
+				locator1 = "TextArea#TRANSLATIONS_TARGET_TEXT_BOX_FIELD",
+				value1 = "${webContentTextBox}");
 		}
 
 		if (isSet(webContentInteger)) {
@@ -199,11 +214,26 @@ definition {
 				value1 = "${webContentDescription}");
 		}
 
+		if (isSet(webContentHTML)) {
+			AssertTextEquals.assertPartialText(
+				key_content = "${webContentHTML}",
+				key_fieldName = "HTML",
+				locator1 = "Translation#BASE_LANGUAGE_CONTENT_FIELD",
+				value1 = "${webContentHTML}");
+		}
+
 		if (isSet(webContentText)) {
 			AssertElementPresent(
 				key_fieldName = "Text",
 				key_fieldValue = "${webContentText}",
 				locator1 = "Translation#BASE_LANGUAGE_FIELD");
+		}
+
+		if (isSet(webContentTextBox)) {
+			AssertElementPresent(
+				key_fieldName = "Text Box",
+				key_fieldValue = "${webContentTextBox}",
+				locator1 = "Translation#BASE_LANGUAGE_TEXT_BOX_FIELD");
 		}
 
 		if (isSet(webContentInteger)) {
@@ -256,11 +286,28 @@ definition {
 			SelectFrame(value1 = "relative=top");
 		}
 
+		if (isSet(webContentHTML)) {
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "CKEditor#BODY",
+				value1 = "${webContentHTML}");
+
+			SelectFrame(value1 = "relative=top");
+		}
+
 		if (isSet(webContentText)) {
 			AssertElementPresent(
 				key_fieldName = "Text",
 				key_fieldValue = "${webContentText}",
 				locator1 = "Translation#TARGET_LANGUAGE_FIELD");
+		}
+
+		if (isSet(webContentTextBox)) {
+			AssertElementPresent(
+				key_fieldName = "TextBox",
+				key_fieldValue = "${webContentTextBox}",
+				locator1 = "Translation#TARGET_LANGUAGE_TEXT_BOX_FIELD");
 		}
 
 		if (isSet(webContentInteger)) {

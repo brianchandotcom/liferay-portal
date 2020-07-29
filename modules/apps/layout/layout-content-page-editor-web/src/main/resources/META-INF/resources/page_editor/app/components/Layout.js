@@ -29,6 +29,7 @@ import {LAYOUT_TYPES} from '../config/constants/layoutTypes';
 import {config} from '../config/index';
 import {useSelector} from '../store/index';
 import {deepEqual} from '../utils/checkDeepEqual';
+import {useSetCollectionActiveItemContext} from './CollectionActiveItemContext';
 import {useActivationOrigin, useIsActive, useSelectItem} from './Controls';
 import ShortcutManager from './ShortcutManager';
 import {EditableProcessorContextProvider} from './fragment-content/EditableProcessorContext';
@@ -274,6 +275,8 @@ LayoutDataItemContent.propTypes = {
 };
 
 const LayoutDataItemInteractionFilter = ({componentRef, item}) => {
+	useSetCollectionActiveItemContext(item.itemId);
+
 	const activationOrigin = useActivationOrigin();
 	const isActive = useIsActive()(item.itemId);
 	const isMounted = useIsMounted();

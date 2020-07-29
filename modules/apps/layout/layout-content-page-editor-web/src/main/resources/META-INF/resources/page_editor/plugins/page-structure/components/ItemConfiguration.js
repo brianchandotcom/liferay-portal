@@ -15,6 +15,8 @@
 import ClayTabs from '@clayui/tabs';
 import React, {useEffect, useMemo, useState} from 'react';
 
+import {useCollectionActiveItemContext} from '../../../app/components/CollectionActiveItemContext';
+import {CollectionItemContext} from '../../../app/components/CollectionItemContext';
 import {
 	useActiveItemId,
 	useActiveItemType,
@@ -26,6 +28,16 @@ import {PANELS, selectPanels} from '../selectors/selectPanels';
 import PageStructureSidebarSection from './PageStructureSidebarSection';
 
 export default function ItemConfiguration() {
+	const collectionContext = useCollectionActiveItemContext();
+
+	return (
+		<CollectionItemContext.Provider value={collectionContext}>
+			<ItemConfigurationContent />
+		</CollectionItemContext.Provider>
+	);
+}
+
+function ItemConfigurationContent() {
 	const activeItemId = useActiveItemId();
 	const activeItemType = useActiveItemType();
 	const [activePanelId, setActivePanelId] = useState(null);

@@ -214,6 +214,10 @@ public interface AccountGroupAccountEntryRelLocalService
 	public AccountGroupAccountEntryRel fetchAccountGroupAccountEntryRel(
 		long AccountGroupAccountEntryRelId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AccountGroupAccountEntryRel fetchAccountGroupAccountEntryRel(
+		long accountGroupId, long accountEntryId);
+
 	/**
 	 * Returns the account group account entry rel with the primary key.
 	 *

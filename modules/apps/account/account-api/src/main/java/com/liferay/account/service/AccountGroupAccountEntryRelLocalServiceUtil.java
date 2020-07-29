@@ -253,6 +253,14 @@ public class AccountGroupAccountEntryRelLocalServiceUtil {
 			AccountGroupAccountEntryRelId);
 	}
 
+	public static com.liferay.account.model.AccountGroupAccountEntryRel
+		fetchAccountGroupAccountEntryRel(
+			long accountGroupId, long accountEntryId) {
+
+		return getService().fetchAccountGroupAccountEntryRel(
+			accountGroupId, accountEntryId);
+	}
+
 	/**
 	 * Returns the account group account entry rel with the primary key.
 	 *

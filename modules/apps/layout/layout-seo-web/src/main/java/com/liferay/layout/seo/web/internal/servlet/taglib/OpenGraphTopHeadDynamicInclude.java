@@ -98,7 +98,7 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 			FriendlyURLMapper friendlyURLMapper = FriendlyURLMapper.create(
 				_assetDisplayPageFriendlyURLProvider, _classNameLocalService,
-				_language, httpServletRequest);
+				httpServletRequest);
 
 			String completeURL = _portal.getCurrentCompleteURL(
 				httpServletRequest);

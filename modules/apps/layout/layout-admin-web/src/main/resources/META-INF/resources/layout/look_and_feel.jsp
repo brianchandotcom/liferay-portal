@@ -96,7 +96,11 @@ if ((layoutPageTemplateEntry == null) || !Objects.equals(layoutPageTemplateEntry
 <%
 StyleBookEntry styleBookEntry = null;
 
-if (selLayout.getStyleBookEntryId() > 0) {
+int styleBookEntriesCount = StyleBookEntryLocalServiceUtil.getStyleBookEntriesCount(group.getGroupId());
+
+boolean hasStyleBooks = styleBookEntriesCount > 0;
+
+if (hasStyleBooks && (selLayout.getStyleBookEntryId() > 0)) {
 	styleBookEntry = StyleBookEntryLocalServiceUtil.fetchStyleBookEntry(selLayout.getStyleBookEntryId());
 }
 %>
@@ -148,6 +152,15 @@ else {
 >
 	<h3 class="sheet-subtitle"><liferay-ui:message key="theme" /></h3>
 
+	<c:if test="<%= hasStyleBooks %>">
+		<clay:alert
+			displayType="warning"
+			elementClasses="hide"
+			id='<%= liferayPortletResponse.getNamespace() + "styleBookWarning" %>'
+			message="style-book-may-not-work-as-expected-if-theme-is-changed"
+		/>
+	</c:if>
+
 	<aui:input checked="<%= selLayout.isInheritLookAndFeel() %>" id="regularInheritLookAndFeel" label="<%= taglibLabel %>" name="regularInheritLookAndFeel" type="radio" value="<%= true %>" />
 
 	<aui:input checked="<%= !selLayout.isInheritLookAndFeel() %>" id="regularUniqueLookAndFeel" label="define-a-specific-look-and-feel-for-this-page" name="regularInheritLookAndFeel" type="radio" value="<%= false %>" />
@@ -179,6 +192,34 @@ else {
 		'<portlet:namespace />inheritThemeOptions'
 	);
 </aui:script>
+
+<c:if test="<%= hasStyleBooks %>">
+	<aui:script>
+		var regularInheritLookAndFeel = document.getElementById(
+			'<portlet:namespace />regularInheritLookAndFeel'
+		);
+
+		var regularUniqueLookAndFeelCheckbox = document.getElementById(
+			'<portlet:namespace />regularUniqueLookAndFeel'
+		);
+
+		var styleBookWarning = document.getElementById(
+			'<portlet:namespace />styleBookWarning'
+		);
+
+		regularInheritLookAndFeel.addEventListener('change', function (event) {
+			if (event.target.checked) {
+				styleBookWarning.classList.add('hide');
+			}
+		});
+
+		regularUniqueLookAndFeelCheckbox.addEventListener('change', function (event) {
+			if (event.target.checked) {
+				styleBookWarning.classList.remove('hide');
+			}
+		});
+	</aui:script>
+</c:if>
 
 <c:if test="<%= editableMasterLayout %>">
 	<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">

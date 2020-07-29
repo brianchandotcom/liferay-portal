@@ -25,7 +25,9 @@ import EditTableViewContext, {
 } from './EditTableViewContext.es';
 
 export const MultipleSelectFilter = ({dataDefinitionField, useFieldLabel}) => {
-	const [{dataListView, editingLanguageId}, dispatch] = useContext(EditTableViewContext);
+	const [{dataListView, editingLanguageId}, dispatch] = useContext(
+		EditTableViewContext
+	);
 
 	const {
 		customProperties: {options = {}},
@@ -88,9 +90,7 @@ export const MultipleSelectFilter = ({dataDefinitionField, useFieldLabel}) => {
 	return (
 		<div className="multiple-select-filter table-view-filter">
 			{useFieldLabel ? (
-				<label>
-					{fieldLabel[editingLanguageId] || fieldName}
-				</label>
+				<label>{fieldLabel[editingLanguageId] || fieldName}</label>
 			) : (
 				<label>
 					{Liferay.Language.get('filter-entries')}

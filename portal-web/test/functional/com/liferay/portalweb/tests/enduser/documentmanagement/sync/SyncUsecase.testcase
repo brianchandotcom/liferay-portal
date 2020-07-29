@@ -1,7 +1,7 @@
 @component-name = "portal-document-management"
 definition {
 
-	property osgi.app.includes = "oauth, oauth-api, oauth-service, oauth-web, sync-encryptor, sync-oauth, sync-security, sync-service, sync-web";
+	property osgi.app.includes = "oauth,oauth-api,oauth-service,oauth-web,sync-encryptor,sync-oauth,sync-security,sync-service,sync-web";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property custom.properties = "default.layout.template.id=1_column";

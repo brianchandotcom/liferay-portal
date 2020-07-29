@@ -39,7 +39,9 @@ describe('ListTableViews', () => {
 	it('renders', async () => {
 		fetch
 			.mockResponseOnce(JSON.stringify(RESPONSES.ONE_ITEM))
-			.mockResponseOnce(JSON.stringify(DATA_DEFINITION_RESPONSES.ONE_ITEM));
+			.mockResponseOnce(
+				JSON.stringify(DATA_DEFINITION_RESPONSES.ONE_ITEM)
+			);
 
 		const {asFragment} = render(
 			<ListTableViews
@@ -63,7 +65,9 @@ describe('ListTableViews', () => {
 	it('renders with empty state', async () => {
 		fetch
 			.mockResponseOnce(JSON.stringify(RESPONSES.NO_ITEMS))
-			.mockResponseOnce(JSON.stringify(DATA_DEFINITION_RESPONSES.ONE_ITEM));
+			.mockResponseOnce(
+				JSON.stringify(DATA_DEFINITION_RESPONSES.ONE_ITEM)
+			);
 
 		const {queryByText} = render(
 			<ListTableViews
@@ -98,7 +102,9 @@ describe('ListTableViews', () => {
 	it('renders with data and click on actions', async () => {
 		fetch
 			.mockResponseOnce(JSON.stringify(RESPONSES.ONE_ITEM))
-			.mockResponseOnce(JSON.stringify(DATA_DEFINITION_RESPONSES.ONE_ITEM));
+			.mockResponseOnce(
+				JSON.stringify(DATA_DEFINITION_RESPONSES.ONE_ITEM)
+			);
 
 		const history = createMemoryHistory();
 

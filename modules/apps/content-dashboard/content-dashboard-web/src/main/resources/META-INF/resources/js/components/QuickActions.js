@@ -22,32 +22,30 @@ import {actions} from '../utils/showSidebar';
 const HoverItems = ({items, namespace}) => {
 	return (
 		<div className="quick-action-menu">
-			{items.map(({data, href, icon, quickAction}) => (
-				<>
-					{data?.action && quickAction ? (
-						<ClayButtonWithIcon
+			{items.map(({data, href, icon, quickAction}) =>
+				data?.action && quickAction ? (
+					<ClayButtonWithIcon
+						className="component-action quick-action-item"
+						displayType="unstyled"
+						onClick={() => {
+							actions[data.action](data.fetchURL, namespace);
+						}}
+						small={true}
+						symbol={icon}
+					/>
+				) : (
+					href &&
+					icon &&
+					quickAction && (
+						<ClayLink
 							className="component-action quick-action-item"
-							displayType="unstyled"
-							onClick={() => {
-								actions[data.action](data.fetchURL, namespace);
-							}}
-							small={true}
-							symbol={icon}
-						/>
-					) : (
-						href &&
-						icon &&
-						quickAction && (
-							<ClayLink
-								className="component-action quick-action-item"
-								href={href}
-							>
-								<ClayIcon symbol={icon} />
-							</ClayLink>
-						)
-					)}
-				</>
-			))}
+							href={href}
+						>
+							<ClayIcon symbol={icon} />
+						</ClayLink>
+					)
+				)
+			)}
 		</div>
 	);
 };

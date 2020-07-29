@@ -15,6 +15,7 @@
 import {TranslationManager} from 'data-engine-taglib';
 import React, {useContext, useEffect} from 'react';
 
+import {AppContext} from '../../../AppContext.es';
 import {UpperToolbarInput} from '../../../components/upper-toolbar/UpperToolbar.es';
 import EditAppContext, {UPDATE_NAME} from './EditAppContext.es';
 
@@ -24,6 +25,7 @@ export default ({
 	editingLanguageId,
 	setEditingLanguageId,
 }) => {
+	const {showTranslationManager} = useContext(AppContext);
 	const {
 		dispatch,
 		state: {
@@ -52,7 +54,7 @@ export default ({
 	};
 
 	const availableLanguages = availableLanguageIds.reduce((acc, cur) => {
-		acc[cur] = Liferay.Language.available[cur];
+		acc[cur] = cur;
 
 		return acc;
 	}, {});
@@ -60,13 +62,15 @@ export default ({
 	return (
 		<>
 			<div className="align-items-center bg-transparent card-header d-flex justify-content-between">
-				<TranslationManager
-					availableLanguageIds={availableLanguages}
-					defaultLanguageId={defaultLanguageId}
-					editingLanguageId={editingLanguageId}
-					onEditingLanguageIdChange={setEditingLanguageId}
-					translatedLanguageIds={name}
-				/>
+				{showTranslationManager && (
+					<TranslationManager
+						availableLanguageIds={availableLanguages}
+						defaultLanguageId={defaultLanguageId}
+						editingLanguageId={editingLanguageId}
+						onEditingLanguageIdChange={setEditingLanguageId}
+						translatedLanguageIds={name}
+					/>
+				)}
 				<UpperToolbarInput
 					maxLength={30}
 					onChange={onAppNameChange}

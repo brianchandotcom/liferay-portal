@@ -162,13 +162,13 @@ public class DataDefinitionResourceImpl
 
 		dataLayoutResource.deleteDataLayoutsDataDefinition(dataDefinitionId);
 
-		DataListViewResource.Builder builder = DataListViewResource.builder();
-
-		DataListViewResource dataListViewResource = builder.checkPermissions(
-			false
-		).user(
-			contextUser
-		).build();
+		DataListViewResource dataListViewResource =
+			DataListViewResource.builder(
+			).checkPermissions(
+				false
+			).user(
+				contextUser
+			).build();
 
 		dataListViewResource.deleteDataListViewsDataDefinition(
 			dataDefinitionId);
@@ -1138,13 +1138,13 @@ public class DataDefinitionResourceImpl
 			Set<Long> deDataListViewIds, String[] removedFieldNames)
 		throws Exception {
 
-		DataListViewResource.Builder builder = DataListViewResource.builder();
-
-		DataListViewResource dataListViewResource = builder.checkPermissions(
-			false
-		).user(
-			contextUser
-		).build();
+		DataListViewResource dataListViewResource =
+			DataListViewResource.builder(
+			).checkPermissions(
+				false
+			).user(
+				contextUser
+			).build();
 
 		for (Long deDataListViewId : deDataListViewIds) {
 			DataListView dataListView = dataListViewResource.getDataListView(

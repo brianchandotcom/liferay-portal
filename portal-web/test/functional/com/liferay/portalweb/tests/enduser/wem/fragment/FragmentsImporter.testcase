@@ -408,6 +408,8 @@ definition {
 		}
 
 		task ("Add the Heading fragment into Container") {
+			PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
 			PageEditor.gotoTab(tabName = "Fragments");
 
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
@@ -689,6 +691,10 @@ definition {
 			id = "image");
 
 		task ("Add a HTML fragment to column 3") {
+			PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+			Navigator.gotoNavTab(navTab = "Fragments");
+
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
@@ -870,6 +876,10 @@ definition {
 			id = "image");
 
 		task ("Add a HTML fragment to column 3") {
+			PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+			Navigator.gotoNavTab(navTab = "Fragments");
+
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			DragAndDrop.javaScriptDragAndDropToObject(

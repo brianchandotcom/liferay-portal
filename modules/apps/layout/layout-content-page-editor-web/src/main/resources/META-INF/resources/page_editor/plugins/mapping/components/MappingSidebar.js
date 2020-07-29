@@ -39,20 +39,37 @@ export default function MappingSidebar() {
 					</p>
 				</div>
 
-				{config.selectedMappingTypes.subtype && (
-					<div className="d-flex flex-column">
-						<p className="list-group-title">
-							{
-								config.selectedMappingTypes.subtype
-									.groupSubtypeTitle
-							}
-							:
-						</p>
-						<p className="small">
-							{config.selectedMappingTypes.subtype.label}
-						</p>
-					</div>
-				)}
+				{config.selectedMappingTypes.subtype &&
+					config.selectedMappingTypes.subtype.label && (
+						<div className="d-flex flex-column mb-4">
+							<p className="list-group-title">
+								{
+									config.selectedMappingTypes.subtype
+										.groupSubtypeTitle
+								}
+								:
+							</p>
+							<p className="mb-0 small">
+								{config.selectedMappingTypes.subtype.label}
+							</p>
+						</div>
+					)}
+
+				{config.selectedMappingTypes.itemType &&
+					config.selectedMappingTypes.itemType.label && (
+						<div className="d-flex flex-column">
+							<p className="list-group-title">
+								{
+									config.selectedMappingTypes.itemType
+										.groupItemTypeTitle
+								}
+								:
+							</p>
+							<p className="small">
+								{config.selectedMappingTypes.itemType.label}
+							</p>
+						</div>
+					)}
 			</SidebarPanelContent>
 		</>
 	);

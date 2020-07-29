@@ -47,7 +47,11 @@ definition {
 			collectionName = "Basic Components",
 			fragmentName = "Button");
 
-		PageEditor.gotoTab(tabName = "Page Structure");
+		Click.clickNoWaitForVisible(
+			key_fragmentName = "Button",
+			locator1 = "Fragment#FRAGMENT_HEADER");
+
+		Pause(locator1 = "3000");
 
 		var key_navItem = "Configuration";
 
@@ -193,7 +197,11 @@ definition {
 			fragmentName = "Text Fragment Example");
 
 		task ("Assert placeholder is exist") {
-			PageEditor.gotoTab(tabName = "Page Structure");
+			Click.clickNoWaitForVisible(
+				key_fragmentName = "Text Fragment Example",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+
+			Pause(locator1 = "3000");
 
 			AssertVisible(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_CONFIGURATION_PANEL");
 		}

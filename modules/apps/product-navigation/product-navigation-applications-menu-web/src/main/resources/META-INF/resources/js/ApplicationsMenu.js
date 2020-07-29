@@ -26,7 +26,7 @@ import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useRef, useState} from 'react';
 
-const Site = ({label, logoURL, url}) => {
+const Site = ({current, label, logoURL, url}) => {
 	return (
 		<li className="c-mt-3">
 			<a className="applications-menu-nav-link" href={url}>
@@ -41,7 +41,7 @@ const Site = ({label, logoURL, url}) => {
 						<span className="text-truncate">{label}</span>
 					</ClayLayout.ContentCol>
 
-					{!url && (
+					{current && (
 						<ClayLayout.ContentCol className="c-ml-2">
 							<ClayLabel displayType="info">
 								{Liferay.Language.get('current')}
@@ -58,8 +58,14 @@ const SitesPanel = ({mySites, portletNamespace, recentSites, viewAllURL}) => {
 	return (
 		<>
 			{recentSites?.length > 0 &&
-				recentSites.map(({key, label, logoURL, url}) => (
-					<Site key={key} label={label} logoURL={logoURL} url={url} />
+				recentSites.map(({current, key, label, logoURL, url}) => (
+					<Site
+						current={current}
+						key={key}
+						label={label}
+						logoURL={logoURL}
+						url={url}
+					/>
 				))}
 
 			{recentSites?.length > 0 && mySites?.length > 0 && (
@@ -67,8 +73,14 @@ const SitesPanel = ({mySites, portletNamespace, recentSites, viewAllURL}) => {
 			)}
 
 			{mySites?.length > 0 &&
-				mySites.map(({key, label, logoURL, url}) => (
-					<Site key={key} label={label} logoURL={logoURL} url={url} />
+				mySites.map(({current, key, label, logoURL, url}) => (
+					<Site
+						current={current}
+						key={key}
+						label={label}
+						logoURL={logoURL}
+						url={url}
+					/>
 				))}
 
 			{viewAllURL && (

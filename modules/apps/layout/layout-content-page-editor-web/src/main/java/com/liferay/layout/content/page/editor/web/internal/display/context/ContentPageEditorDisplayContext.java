@@ -252,6 +252,10 @@ public class ContentPageEditorDisplayContext {
 				getFragmentEntryActionURL(
 					"/content_layout/change_master_layout")
 			).put(
+				"changeStyleBookEntryURL",
+				getFragmentEntryActionURL(
+					"/content_layout/change_style_book_entry")
+			).put(
 				"collectionSelectorURL", _getCollectionSelectorURL()
 			).put(
 				"containerItemFlexEnabled",

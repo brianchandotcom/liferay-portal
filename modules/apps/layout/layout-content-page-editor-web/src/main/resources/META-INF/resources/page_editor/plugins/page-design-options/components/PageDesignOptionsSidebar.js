@@ -20,6 +20,7 @@ import React, {useMemo, useState} from 'react';
 
 import {LAYOUT_TYPES} from '../../../app/config/constants/layoutTypes';
 import {config} from '../../../app/config/index';
+import LayoutService from '../../../app/services/LayoutService';
 import {useDispatch, useSelector} from '../../../app/store/index';
 import changeMasterLayout from '../../../app/thunks/changeMasterLayout';
 import {useId} from '../../../app/utils/useId';
@@ -168,7 +169,14 @@ function getTabs(masterLayoutPlid) {
 				isDefault:
 					config.defaultStyleBookEntryId ===
 					styleBook.styleBookEntryId,
-				onClick: () => {},
+				onClick: () => {
+					LayoutService.changeStyleBookEntry({
+						onNetworkStatus: () => {},
+						styleBookEntryId: styleBook.styleBookEntryId,
+					}).then(() => {
+						Liferay.Util.navigate(window.location.href);
+					});
+				},
 			})),
 			type: OPTIONS_TYPES.styleBook,
 		},

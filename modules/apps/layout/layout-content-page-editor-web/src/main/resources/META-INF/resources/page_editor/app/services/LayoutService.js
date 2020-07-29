@@ -68,6 +68,25 @@ export default {
 	},
 
 	/**
+	 * Change the style book entry associated to the page
+	 * @param {object} options
+	 * @param {object} options.styleBookEntryId id of the style book entry
+	 * @param {function} options.onNetworkStatus
+	 * @return {Promise<object>}
+	 */
+	changeStyleBookEntry({onNetworkStatus, styleBookEntryId}) {
+		return layoutServiceFetch(
+			config.changeStyleBookEntryURL,
+			{
+				body: {
+					styleBookEntryId,
+				},
+			},
+			onNetworkStatus
+		);
+	},
+
+	/**
 	 * Remove an item inside layoutData
 	 * @param {object} options
 	 * @param {object} options.itemId id of the item to be removed

@@ -31,26 +31,10 @@ CKEDITOR.on('dialogDefinition', (event) => {
 		};
 
 		var centerDialog = function () {
-			var editorElement = dialog.getParentEditor().container;
-
-			var documentPosition = editorElement
-				.getLast()
-				.getDocumentPosition();
-
 			var dialogSize = dialog.getSize();
 
-			var x =
-				documentPosition.x +
-				((editorElement.getLast().getSize('width', true) -
-					dialogSize.width) /
-					2 -
-					window.scrollX);
-			var y =
-				documentPosition.y +
-				((editorElement.getLast().getSize('height', true) -
-					dialogSize.height) /
-					2 -
-					window.scrollY);
+			var x = window.innerWidth / 2 - dialogSize.width / 2;
+			var y = window.innerHeight / 2 - dialogSize.height / 2;
 
 			dialog.move(x, y, false);
 		};

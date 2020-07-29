@@ -20,12 +20,18 @@ import Sidebar from '../../../src/main/resources/META-INF/resources/js/component
 
 import '@testing-library/jest-dom/extend-expect';
 
-const ControlledSidebar = ({open}) => {
+const ControlledSidebar = ({
+	children = '',
+	open,
+	subtitle = '',
+	title = '',
+}) => {
 	const [isOpen, setIsOpen] = useState(open);
 
 	return (
 		<Sidebar onClose={() => setIsOpen(false)} open={isOpen}>
-			<Sidebar.Header subtitle={'Subtitle'} title={'Title'} />
+			<Sidebar.Header subtitle={subtitle} title={title} />
+			<Sidebar.Body>{children}</Sidebar.Body>
 		</Sidebar>
 	);
 };
@@ -40,7 +46,7 @@ describe('Sidebar', () => {
 		cleanup();
 	});
 
-	it('renders sidebar open', () => {
+	it('renders an open sidebar', () => {
 		render(<Sidebar />);
 
 		act(() => {
@@ -50,7 +56,7 @@ describe('Sidebar', () => {
 		expect(document.body).toHaveAttribute('class', 'sidebar-open');
 	});
 
-	it('renders sidebar close', () => {
+	it('renders a closed sidebar', () => {
 		render(<Sidebar open={false} />);
 
 		act(() => {
@@ -60,19 +66,14 @@ describe('Sidebar', () => {
 		expect(document.body).not.toHaveAttribute('class', 'sidebar-open');
 	});
 
-	it('renders sidebar closing', () => {
-		const {getByRole, getByText} = render(
-			<ControlledSidebar open={true} />
-		);
+	it('renders an open sidebar and close it on close button click', () => {
+		const {getByRole} = render(<ControlledSidebar open={true} />);
 
 		act(() => {
 			jest.runAllTimers();
 		});
 
 		expect(document.body).toHaveAttribute('class', 'sidebar-open');
-
-		expect(getByText('Subtitle')).toBeInTheDocument();
-		expect(getByText('Title')).toBeInTheDocument();
 
 		const closeIcon = getByRole('presentation');
 
@@ -85,5 +86,34 @@ describe('Sidebar', () => {
 		});
 
 		expect(document.body).not.toHaveAttribute('class', 'sidebar-open');
+	});
+
+	it('renders sidebar header with title and subtitle', () => {
+		const {getByText} = render(
+			<ControlledSidebar open={true} subtitle="Subtitle" title="Title" />
+		);
+
+		expect(getByText('Title')).toBeInTheDocument();
+		expect(getByText('Subtitle')).toBeInTheDocument();
+	});
+
+	it('renders sidebar body with custom children', () => {
+		const {getByText} = render(
+			<ControlledSidebar open={true}>
+				<div>Custom children text</div>
+			</ControlledSidebar>
+		);
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		const customChildren = getByText('Custom children text');
+
+		expect(customChildren).toBeInTheDocument();
+		expect(customChildren.parentNode).toHaveAttribute(
+			'class',
+			'sidebar-body'
+		);
 	});
 });

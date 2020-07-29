@@ -83,15 +83,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 	{DDMFormInstancePermission.class, DDMFormTaglibUtil.class, LocaleUtil.class}
 )
 @RunWith(PowerMockRunner.class)
-@SuppressStaticInitializationFor(
-	{
-		"com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceModelImpl",
-		"com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordModelImpl",
-		"com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordVersionModelImpl",
-		"com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceVersionModelImpl",
-		"com.liferay.taglib.util.IncludeTag"
-	}
-)
+@SuppressStaticInitializationFor("com.liferay.taglib.util.IncludeTag")
 public class DDMFormRendererTagTest extends PowerMockito {
 
 	@Before

@@ -35,19 +35,12 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Pedro Queiroz
  */
 @RunWith(PowerMockRunner.class)
-@SuppressStaticInitializationFor(
-	{
-		"com.liferay.dynamic.data.mapping.model.impl.DDMStructureModelImpl",
-		"com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionModelImpl"
-	}
-)
 public class DDMFormTaglibUtilTest {
 
 	@Before

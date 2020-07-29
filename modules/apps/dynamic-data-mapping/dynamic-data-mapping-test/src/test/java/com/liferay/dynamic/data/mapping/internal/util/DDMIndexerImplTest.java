@@ -79,10 +79,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 )
 @RunWith(PowerMockRunner.class)
 @SuppressStaticInitializationFor(
-	{
-		"com.liferay.dynamic.data.mapping.model.impl.DDMStructureModelImpl",
-		"com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil"
-	}
+	"com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil"
 )
 public class DDMIndexerImplTest {
 

@@ -54,8 +54,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @SuppressStaticInitializationFor(
 	{
 		"com.liferay.calendar.model.CalendarBooking",
-		"com.liferay.calendar.model.impl.CalendarBookingImpl",
-		"com.liferay.calendar.model.impl.CalendarBookingModelImpl"
+		"com.liferay.calendar.model.impl.CalendarBookingImpl"
 	}
 )
 public class RecurrenceUtilTest {

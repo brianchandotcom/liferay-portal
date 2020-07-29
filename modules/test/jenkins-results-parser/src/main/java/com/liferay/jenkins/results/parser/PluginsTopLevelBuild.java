@@ -25,6 +25,10 @@ public class PluginsTopLevelBuild
 		super(url, topLevelBuild);
 	}
 
+	public String getPluginName() {
+		return getParameterValue("TEST_PLUGIN_NAME");
+	}
+
 	@Override
 	public BranchInformation getPluginsBranchInformation() {
 		return getBranchInformation("plugins");

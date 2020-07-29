@@ -43,9 +43,9 @@ function ViewEntryUpperToolbar({
 	};
 
 	const onDelete = () => {
-		const successMessage = Liferay.Language.get('an-entry-was-deleted');
-
-		confirmDelete('/o/data-engine/v2.0/data-records/', {successMessage})({
+		confirmDelete('/o/data-engine/v2.0/data-records/', {
+			successMessage: Liferay.Language.get('an-entry-was-deleted'),
+		})({
 			id: dataRecordId,
 		}).then((confirmed) => {
 			if (confirmed) {

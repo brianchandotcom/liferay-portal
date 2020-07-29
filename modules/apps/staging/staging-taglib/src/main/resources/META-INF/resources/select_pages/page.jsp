@@ -217,4 +217,8 @@
 			</ul>
 		</c:if>
 	</clay:sheet-section>
+
+	<h5>
+		<liferay-ui:message key="child-page-publication-warning" />
+	</h5>
 </aui:fieldset>

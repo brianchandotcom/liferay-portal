@@ -19,7 +19,6 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import {useSelectItem} from '../../../app/components/Controls';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import selectSegmentsExperienceId from '../../../app/selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../../app/store/index';
@@ -31,7 +30,6 @@ import {useDragSymbol} from '../../../app/utils/useDragAndDrop';
 export default function TabItem({item}) {
 	const dispatch = useDispatch();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
-	const selectItem = useSelectItem();
 	const [showPreview, setShowPreview] = useState(false);
 
 	const {sourceRef} = useDragSymbol(
@@ -60,7 +58,6 @@ export default function TabItem({item}) {
 					...item.data,
 					parentItemId: parentId,
 					position,
-					selectItem,
 					store: {segmentsExperienceId},
 				})
 			);

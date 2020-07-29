@@ -109,6 +109,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GENERIC_SELECT_VALUE</td>
+	<td>//div[label[contains(.,'${key_fieldLabel}')]]/select/option[normalize-space(text())='${key_value}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>KNOWLEDGE_BASE_RATING</td>
 	<td>//select[contains(@id,'knowledge-base')]</td>
 	<td></td>

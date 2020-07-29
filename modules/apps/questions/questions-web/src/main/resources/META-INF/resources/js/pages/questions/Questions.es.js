@@ -79,6 +79,7 @@ export default withRouter(
 		const [questions, setQuestions] = useState([]);
 		const [search, setSearch] = useState('');
 		const [section, setSection] = useState({});
+		const [totalCount, setTotalCount] = useState(0);
 
 		const queryParams = useQueryParams(location);
 
@@ -104,6 +105,15 @@ export default withRouter(
 		useEffect(() => {
 			setSearch(queryParams.get('search') || '');
 		}, [queryParams]);
+
+		useEffect(() => {
+			setTotalCount(
+				(filter === 'latest-edited' || !!search) &&
+					questions.totalCount > MAX_NUMBER_OF_QUESTIONS
+					? MAX_NUMBER_OF_QUESTIONS
+					: questions.totalCount
+			);
+		}, [filter, questions.totalCount, search]);
 
 		useEffect(() => {
 			if (section.id == null && !currentTag) {
@@ -219,7 +229,7 @@ export default withRouter(
 									MAX_NUMBER_OF_QUESTIONS
 								}
 								searchCriteria={search}
-								totalCount={questions.totalCount}
+								totalCount={totalCount}
 							/>
 						)}
 
@@ -262,6 +272,7 @@ export default withRouter(
 									)
 								}
 								loading={loading}
+								totalCount={totalCount}
 							>
 								{(question) => (
 									<QuestionRow

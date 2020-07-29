@@ -14,7 +14,7 @@
 
 import ClayEmptyState from '@clayui/empty-state';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {withLoading} from './Loading.es';
 
@@ -29,10 +29,17 @@ const PaginatedList = ({
 	data,
 	emptyState,
 	showEmptyState,
+	totalCount,
 }) => {
 	const deltaValues = [4, 8, 20, 40, 60];
 
 	const deltas = deltaValues.map((label) => ({label}));
+
+	const [totalItems, setTotalItems] = useState(0);
+
+	useEffect(() => {
+		setTotalItems(totalCount ? totalCount : data.totalCount);
+	}, [data.totalCount, totalCount]);
 
 	return (
 		<>
@@ -59,7 +66,7 @@ const PaginatedList = ({
 								changePage(page);
 								scrollToTop(top);
 							}}
-							totalItems={data.totalCount}
+							totalItems={totalItems}
 						/>
 					)}
 				</>

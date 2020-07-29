@@ -408,4 +408,41 @@ describe('EditTableView', () => {
 			document.querySelector('.app-builder-table-view__sidebar--closed')
 		).toBeFalsy();
 	});
+
+	it('renders with defaultLanguageId from the dataDefinition instead of Liferay Object', async () => {
+		fetch
+			.mockResponseOnce(JSON.stringify(fieldTypeResponse))
+			.mockResponseOnce(
+				JSON.stringify({
+					...DATA_DEFINITION_RESPONSES.ONE_ITEM,
+					defaultLanguageId: 'pt_BR',
+				})
+			);
+
+		render(
+			<DndProvider backend={HTML5Backend}>
+				<EditTableView />
+			</DndProvider>,
+			{
+				wrapper: AppContextProviderWrapper,
+			}
+		);
+
+		await act(async () => {
+			jest.runAllTimers();
+		});
+
+		const localizableDropdown = document.querySelector(
+			'.localizable-dropdown'
+		);
+
+		expect(localizableDropdown.textContent).toEqual('pt-BR');
+
+		userEvent.click(localizableDropdown);
+
+		expect(
+			document.querySelector('.localizable-item-default .autofit-section')
+				.textContent
+		).toEqual('pt-BR');
+	});
 });

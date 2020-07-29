@@ -93,7 +93,9 @@ export default ({
 			<ClayDropDown.ItemList className="localizable-dropdown-ul">
 				{availableLanguages.map((languageId, index) => (
 					<ClayDropDown.Item
-						className="autofit-row"
+						className={classNames('autofit-row', {
+							['localizable-item-default']: languageId === defaultLanguageId
+						})}
 						key={index}
 						onClick={() => {
 							onEditingLanguageIdChange(languageId);

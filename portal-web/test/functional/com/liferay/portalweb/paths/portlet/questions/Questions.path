@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>ASK_QUESTION_BUTTON</td>
-	<td>//div[contains(@class,'input-group-item')]/button[contains(@class,'btn-primary')]</td>
+	<td>//*[contains(@class,'btn btn-primary') and contains(text(),'Ask Question')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -75,7 +75,7 @@
 </tr>
 <tr>
 	<td>QUESTIONS_CATEGORY_TITLE</td>
-	<td>//div[contains(@class,'questions-container')]//strong[contains(.,'${key_categoryTitle}')]</td>
+	<td>//div[contains(@class,'questions-breadcrumb')]//li[contains(.,'${key_categoryTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

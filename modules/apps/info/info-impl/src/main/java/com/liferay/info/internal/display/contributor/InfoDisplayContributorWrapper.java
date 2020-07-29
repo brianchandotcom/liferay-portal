@@ -29,6 +29,7 @@ import com.liferay.info.field.type.URLInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemClassPKReference;
+import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemReference;
@@ -152,6 +153,15 @@ public class InfoDisplayContributorWrapper
 			_infoDisplayContributor.getClassName(),
 			(InfoLocalizedValue<String>)InfoLocalizedValue.function(
 				locale -> _infoDisplayContributor.getLabel(locale)));
+	}
+
+	@Override
+	public InfoItemDetails getInfoItemDetails(Object itemObject) {
+		return new InfoItemDetails(
+			getInfoItemClassDetails(),
+			new InfoItemReference(
+				_infoDisplayContributor.getInfoDisplayObjectClassPK(
+					itemObject)));
 	}
 
 	@Override

@@ -79,7 +79,7 @@ String ppid = ParamUtil.getString(request, "p_p_id");
 						fieldValues="<%= displayPageLayoutTypeControllerDisplayContext.getInfoDisplayFieldsValues() %>"
 						mode="<%= FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE %>"
 					/>
-				<div
+				<div>
 			</c:otherwise>
 		</c:choose>
 	</c:otherwise>

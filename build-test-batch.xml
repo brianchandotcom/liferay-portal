@@ -669,6 +669,9 @@ mariadb.executable=${mariadb.executable}]]></echo>
 					<not>
 						<os family="windows" />
 					</not>
+					<not>
+						<contains string="${test.batch.name}" substring="functional" />
+					</not>
 				</and>
 				<then>
 					<var name="test.batch.app.server.start.executable.arg.line" value="jacoco ${test.batch.app.server.start.executable.arg.line}" />

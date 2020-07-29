@@ -114,14 +114,12 @@ definition {
 		}
 
 		task ("Add the created fragment into Container") {
-			PageEditor.gotoTab(tabName = "Fragments");
-
-			PageEditor.expandFragmentCollection(collectionName = "Collection Name");
-
-			Click(
+			Click.clickNoWaitForVisible(
 				key_elementType = "Container",
 				key_position = "1",
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+
+			PageEditor.expandFragmentCollection(collectionName = "Collection Name");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_collectionName = "Collection Name",
@@ -280,14 +278,12 @@ definition {
 		}
 
 		task ("Add an Image fragment into Container") {
-			PageEditor.gotoTab(tabName = "Fragments");
-
-			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
-
-			Click(
+			Click.clickNoWaitForVisible(
 				key_elementType = "Container",
 				key_position = "1",
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+
+			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_collectionName = "Basic Components",
@@ -408,16 +404,12 @@ definition {
 		}
 
 		task ("Add the Heading fragment into Container") {
-			PageEditor.gotoTab(tabName = "Fragments and Widgets");
-
-			PageEditor.gotoTab(tabName = "Fragments");
-
-			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
-
-			Click(
+			Click.clickNoWaitForVisible(
 				key_elementType = "Container",
 				key_position = "1",
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+
+			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_collectionName = "Basic Components",
@@ -524,14 +516,12 @@ definition {
 		}
 
 		task ("Add the Heading fragment into Section") {
-			PageEditor.gotoTab(tabName = "Fragments");
-
-			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
-
-			Click(
+			Click.clickNoWaitForVisible(
 				key_elementType = "Container",
 				key_position = "1",
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+
+			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_collectionName = "Basic Components",
@@ -632,8 +622,6 @@ definition {
 		}
 
 		task ("Add a Heading fragment to column 1") {
-			PageEditor.gotoTab(tabName = "Fragments");
-
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
@@ -662,8 +650,6 @@ definition {
 		}
 
 		task ("Add an Image fragment to column 2") {
-			PageEditor.gotoTab(tabName = "Fragments");
-
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
@@ -691,10 +677,6 @@ definition {
 			id = "image");
 
 		task ("Add a HTML fragment to column 3") {
-			PageEditor.gotoTab(tabName = "Fragments and Widgets");
-
-			Navigator.gotoNavTab(navTab = "Fragments");
-
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
@@ -817,8 +799,6 @@ definition {
 		}
 
 		task ("Add a Heading fragment to column 1") {
-			PageEditor.gotoTab(tabName = "Fragments");
-
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
@@ -847,8 +827,6 @@ definition {
 		}
 
 		task ("Add an Image fragment to column 2") {
-			PageEditor.gotoTab(tabName = "Fragments");
-
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
@@ -876,10 +854,6 @@ definition {
 			id = "image");
 
 		task ("Add a HTML fragment to column 3") {
-			PageEditor.gotoTab(tabName = "Fragments and Widgets");
-
-			Navigator.gotoNavTab(navTab = "Fragments");
-
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
@@ -1002,10 +976,12 @@ definition {
 		}
 
 		task ("Add a Grid element to Container") {
-			Click(
+			Click.clickNoWaitForVisible(
 				key_elementType = "Container",
 				key_position = "1",
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+
+			PageEditor.expandFragmentCollection(collectionName = "Layout Elements");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_collectionName = "Layout Elements",
@@ -1034,9 +1010,7 @@ definition {
 		}
 
 		task ("Add a Heading below Grid inside Container") {
-			PageEditor.gotoTab(tabName = "Fragments and Widgets");
-
-			Navigator.gotoNavTab(navTab = "Fragments");
+			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			DragAndDrop.javaScriptDragAndDropObjectToBottomOfNestedObject(
 				key_collectionName = "Basic Components",

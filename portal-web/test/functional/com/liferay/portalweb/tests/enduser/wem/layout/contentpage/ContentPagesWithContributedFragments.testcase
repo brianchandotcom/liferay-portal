@@ -783,6 +783,8 @@ definition {
 		}
 
 		task ("Add a Paragraph below Heading in Collection Display and Map View Count of collection items to editable field") {
+			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
+
 			DragAndDrop.javaScriptDragAndDropToBottom(
 				key_collectionName = "Basic Components",
 				key_fragmentName = "Paragraph",

@@ -567,6 +567,13 @@ definition {
 			collectionName = "Layout Elements",
 			fragmentName = "Container");
 
+		Click.clickNoWaitForVisible(
+			key_elementType = "Container",
+			key_position = "1",
+			locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+
+		PageEditor.expandFragmentCollection(collectionName = "Basic Components");
+
 		DragAndDrop.javaScriptDragAndDropToObject(
 			key_collectionName = "Basic Components",
 			key_fragmentName = "Heading",

@@ -92,10 +92,12 @@ definition {
 				collectionName = "Layout Elements",
 				fragmentName = "Container");
 
-			Click(
+			Click.clickNoWaitForVisible(
 				key_elementType = "Container",
 				key_position = "1",
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+
+			PageEditor.expandFragmentCollection(collectionName = "Layout Elements");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_collectionName = "Layout Elements",
@@ -188,10 +190,12 @@ definition {
 				collectionName = "Layout Elements",
 				fragmentName = "Container");
 
-			Click(
+			Click.clickNoWaitForVisible(
 				key_elementType = "Container",
 				key_position = "1",
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+
+			PageEditor.expandFragmentCollection(collectionName = "Layout Elements");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_collectionName = "Layout Elements",
@@ -651,10 +655,12 @@ definition {
 		}
 
 		task ("Add a Card fragment to Container") {
-			Click(
+			Click.clickNoWaitForVisible(
 				key_elementType = "Container",
 				key_position = "1",
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+
+			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_collectionName = "Basic Components",
@@ -1174,14 +1180,12 @@ definition {
 			collectionName = "Layout Elements",
 			fragmentName = "Container");
 
-		PageEditor.gotoTab(tabName = "Fragments");
-
-		PageEditor.expandFragmentCollection(collectionName = "Collection Name");
-
-		Click(
+		Click.clickNoWaitForVisible(
 			key_elementType = "Container",
 			key_position = "1",
 			locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+
+		PageEditor.expandFragmentCollection(collectionName = "Collection Name");
 
 		DragAndDrop.javaScriptDragAndDropToObject(
 			key_collectionName = "Collection Name",

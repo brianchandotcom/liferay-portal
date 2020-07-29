@@ -82,7 +82,7 @@ definition {
 				fragmentName = "Container",
 				scope = "Master");
 
-			Click(
+			Click.clickNoWaitForVisible(
 				key_elementType = "Container",
 				key_position = "1",
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
@@ -109,8 +109,6 @@ definition {
 				dropTarget = "Footer",
 				fragmentName = "Grid",
 				scope = "Master");
-
-			PageEditor.gotoTab(tabName = "Fragments");
 
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 

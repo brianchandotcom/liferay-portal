@@ -62,6 +62,11 @@ definition {
 			fragmentName = "Container",
 			scope = "Master");
 
+		Click.clickNoWaitForVisible(
+			key_elementType = "Container",
+			key_position = "1",
+			locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+
 		PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 		DragAndDrop.javaScriptDragAndDropToObject(

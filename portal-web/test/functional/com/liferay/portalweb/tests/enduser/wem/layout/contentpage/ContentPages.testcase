@@ -359,12 +359,14 @@ definition {
 		}
 
 		task ("Add the Language Selector into Container") {
-			Click(
+			Click.clickNoWaitForVisible(
 				key_elementType = "Container",
 				key_position = "1",
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 
-			PageEditor.gotoTab(tabName = "Widgets");
+			PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+			Navigator.gotoNavTab(navTab = "Widgets");
 
 			Type.sendKeysApplicationSearch(
 				locator1 = "PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",
@@ -784,8 +786,6 @@ definition {
 			key_position = "1",
 			locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
 
-		PageEditor.gotoTab(tabName = "Fragments");
-
 		PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 		DragAndDrop.javaScriptDragAndDropToObject(
@@ -818,10 +818,12 @@ definition {
 		}
 
 		task ("Add a Row into Section") {
-			Click(
+			Click.clickNoWaitForVisible(
 				key_elementType = "Container",
 				key_position = "1",
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+
+			PageEditor.expandFragmentCollection(collectionName = "Layout Elements");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_collectionName = "Layout Elements",
@@ -889,8 +891,6 @@ definition {
 		}
 
 		task ("Add a Heading fragment to column 2") {
-			PageEditor.gotoTab(tabName = "Fragments and Widgets");
-
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
@@ -973,10 +973,12 @@ definition {
 		}
 
 		task ("Add a Row into Container") {
-			Click(
+			Click.clickNoWaitForVisible(
 				key_elementType = "Container",
 				key_position = "1",
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+
+			PageEditor.expandFragmentCollection(collectionName = "Layout Elements");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_collectionName = "Layout Elements",
@@ -1424,7 +1426,7 @@ definition {
 		}
 
 		task ("Add a Heading fragment into Container") {
-			Click(
+			Click.clickNoWaitForVisible(
 				key_elementType = "Container",
 				key_position = "1",
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
@@ -1494,7 +1496,7 @@ definition {
 		}
 
 		task ("Add a Heading fragment into Container") {
-			Click(
+			Click.clickNoWaitForVisible(
 				key_elementType = "Container",
 				key_position = "1",
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
@@ -1744,7 +1746,7 @@ definition {
 		}
 
 		task ("Add a Heading fragment into Section") {
-			Click(
+			Click.clickNoWaitForVisible(
 				key_elementType = "Container",
 				key_position = "1",
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
@@ -1827,7 +1829,7 @@ definition {
 		}
 
 		task ("Add a Heading fragment into Container") {
-			Click(
+			Click.clickNoWaitForVisible(
 				key_elementType = "Container",
 				key_position = "1",
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");

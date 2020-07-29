@@ -6788,7 +6788,7 @@ public class JournalArticleLocalServiceImpl
 
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
 
-				if (!(jsonObject.has("groupId") && jsonObject.has("uuid"))) {
+				if (!jsonObject.has("groupId") || !jsonObject.has("uuid")) {
 					continue;
 				}
 

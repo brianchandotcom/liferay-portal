@@ -76,7 +76,9 @@ public class ContentDashboardDropdownItemsProvider {
 				dropdownItem.setHref(
 					_getURLWithBackURL(
 						contentDashboardItem.getViewURL(httpServletRequest)));
+				dropdownItem.setIcon("view");
 				dropdownItem.setLabel(_language.get(locale, "view"));
+				dropdownItem.setQuickAction(true);
 
 				return dropdownItem;
 			},
@@ -92,7 +94,9 @@ public class ContentDashboardDropdownItemsProvider {
 				dropdownItem.setHref(
 					_getURLWithBackURL(
 						contentDashboardItem.getEditURL(httpServletRequest)));
+				dropdownItem.setIcon("pencil");
 				dropdownItem.setLabel(_language.get(locale, "edit"));
+				dropdownItem.setQuickAction(true);
 
 				return dropdownItem;
 			},
@@ -123,7 +127,9 @@ public class ContentDashboardDropdownItemsProvider {
 						"fetchURL", String.valueOf(resourceURL)
 					).build());
 
+				dropdownItem.setIcon("info-circle-open");
 				dropdownItem.setLabel(_language.get(locale, "info"));
+				dropdownItem.setQuickAction(true);
 
 				return dropdownItem;
 			},
@@ -137,7 +143,9 @@ public class ContentDashboardDropdownItemsProvider {
 				DropdownItem dropdownItem = new DropdownItem();
 
 				dropdownItem.putData("action", "showMetrics");
+				dropdownItem.setIcon("analytics");
 				dropdownItem.setLabel(_language.get(locale, "metrics"));
+				dropdownItem.setQuickAction(true);
 
 				return dropdownItem;
 			});

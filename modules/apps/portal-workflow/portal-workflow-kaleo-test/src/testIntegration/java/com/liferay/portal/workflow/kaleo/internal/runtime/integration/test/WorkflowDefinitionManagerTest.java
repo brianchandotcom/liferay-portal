@@ -251,7 +251,7 @@ public class WorkflowDefinitionManagerTest {
 
 		error = _assertInvalid(inputStream);
 
-		_assertEquals("Fork fork3 and join join6 nodes must be paired", error);
+		_assertEquals("Fork fork3 and join join5 nodes must be paired", error);
 	}
 
 	@Test

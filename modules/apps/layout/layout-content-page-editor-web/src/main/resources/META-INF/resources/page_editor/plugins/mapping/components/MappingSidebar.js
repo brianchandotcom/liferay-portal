@@ -27,14 +27,12 @@ export default function MappingSidebar() {
 
 			<SidebarPanelContent>
 				<p className="mb-4 small text-secondary">
-					{Liferay.Language.get(
-						'content-source-selected-for-this-display-page-template'
-					)}
+					{config.selectedMappingTypes.mappingDescription}
 				</p>
 
 				<div className="d-flex flex-column mb-4">
 					<p className="list-group-title">
-						{Liferay.Language.get('content-type')}:
+						{config.selectedMappingTypes.type.groupTypeTitle}:
 					</p>
 					<p className="mb-0 small">
 						{config.selectedMappingTypes.type.label}
@@ -44,7 +42,11 @@ export default function MappingSidebar() {
 				{config.selectedMappingTypes.subtype && (
 					<div className="d-flex flex-column">
 						<p className="list-group-title">
-							{Liferay.Language.get('subtype')}:
+							{
+								config.selectedMappingTypes.subtype
+									.groupSubtypeTitle
+							}
+							:
 						</p>
 						<p className="small">
 							{config.selectedMappingTypes.subtype.label}

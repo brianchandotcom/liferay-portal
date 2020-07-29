@@ -33,27 +33,30 @@ else if (samlProviderConfigurationHelper.isRoleSp()) {
 }
 %>
 
-<liferay-ui:tabs
-	names="<%= tabs1Names %>"
-	url="<%= portletURL.toString() %>"
->
-	<clay:container-fluid>
-		<c:choose>
-			<c:when test='<%= tabs1.equals("general") %>'>
-				<liferay-util:include page="/admin/general.jsp" servletContext="<%= pageContext.getServletContext() %>" />
-			</c:when>
-			<c:when test='<%= tabs1.equals("identity-provider") %>'>
-				<liferay-util:include page="/admin/identity_provider.jsp" servletContext="<%= pageContext.getServletContext() %>" />
-			</c:when>
-			<c:when test='<%= tabs1.equals("identity-provider-connections") %>'>
-				<liferay-util:include page="/admin/view_identity_provider_connections.jsp" servletContext="<%= pageContext.getServletContext() %>" />
-			</c:when>
-			<c:when test='<%= tabs1.equals("service-provider") %>'>
-				<liferay-util:include page="/admin/service_provider.jsp" servletContext="<%= pageContext.getServletContext() %>" />
-			</c:when>
-			<c:when test='<%= tabs1.equals("service-provider-connections") %>'>
-				<liferay-util:include page="/admin/view_service_provider_connections.jsp" servletContext="<%= pageContext.getServletContext() %>" />
-			</c:when>
-		</c:choose>
-	</clay:container-fluid>
-</liferay-ui:tabs>
+<div class="container-fluid container-fluid-max-xl sheet">
+	<liferay-ui:tabs
+		cssClass="subnav-tbar-light"
+		names="<%= tabs1Names %>"
+		url="<%= portletURL.toString() %>"
+	>
+		<clay:container-fluid>
+			<c:choose>
+				<c:when test='<%= tabs1.equals("general") %>'>
+					<liferay-util:include page="/admin/general.jsp" servletContext="<%= pageContext.getServletContext() %>" />
+				</c:when>
+				<c:when test='<%= tabs1.equals("identity-provider") %>'>
+					<liferay-util:include page="/admin/identity_provider.jsp" servletContext="<%= pageContext.getServletContext() %>" />
+				</c:when>
+				<c:when test='<%= tabs1.equals("identity-provider-connections") %>'>
+					<liferay-util:include page="/admin/view_identity_provider_connections.jsp" servletContext="<%= pageContext.getServletContext() %>" />
+				</c:when>
+				<c:when test='<%= tabs1.equals("service-provider") %>'>
+					<liferay-util:include page="/admin/service_provider.jsp" servletContext="<%= pageContext.getServletContext() %>" />
+				</c:when>
+				<c:when test='<%= tabs1.equals("service-provider-connections") %>'>
+					<liferay-util:include page="/admin/view_service_provider_connections.jsp" servletContext="<%= pageContext.getServletContext() %>" />
+				</c:when>
+			</c:choose>
+		</clay:container-fluid>
+	</liferay-ui:tabs>
+</div>

@@ -1822,7 +1822,12 @@ definition {
 				key_rowPosition = "1",
 				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
 
-			Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_EDIT_BUTTON");
+			DoubleClick(
+				key_colPosition = "1",
+				key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
 
 			Type(
 				id = "element-text",
@@ -2244,9 +2249,7 @@ definition {
 
 		PageEditor.clickConfigurableField(fragmentName = "Content Display");
 
-		Click.clickNoMouseOver(
-			key_elementType = "Fragment",
-			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+		PageEditor.gotoTab(tabName = "Page Structure");
 
 		AssertSelectedLabel(
 			key_fieldLabel = "Template",
@@ -2318,9 +2321,7 @@ definition {
 
 		PageEditor.clickConfigurableField(fragmentName = "Content Display");
 
-		Click.clickNoMouseOver(
-			key_elementType = "Fragment",
-			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+		PageEditor.gotoTab(tabName = "Page Structure");
 
 		AssertSelectedLabel(
 			key_fieldLabel = "Template",
@@ -2648,9 +2649,7 @@ definition {
 
 		PageEditor.clickConfigurableField(fragmentName = "Content Display");
 
-		Click.clickNoMouseOver(
-			key_elementType = "Fragment",
-			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+		PageEditor.gotoTab(tabName = "Page Structure");
 
 		AssertSelectedLabel(
 			key_fieldLabel = "Template",
@@ -2764,9 +2763,7 @@ definition {
 
 		PageEditor.clickConfigurableField(fragmentName = "Content Display");
 
-		Click.clickNoMouseOver(
-			key_elementType = "Fragment",
-			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+		PageEditor.gotoTab(tabName = "Page Structure");
 
 		AssertSelectedLabel(
 			key_fieldLabel = "Template",

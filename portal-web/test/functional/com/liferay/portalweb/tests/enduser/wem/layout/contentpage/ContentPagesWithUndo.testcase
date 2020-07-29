@@ -403,8 +403,6 @@ definition {
 
 		PageEditor.configureFragment(numberOfTabs = "2");
 
-		Click(locator1 = "PageEditor#MANAGEMENT_BAR");
-
 		AssertVisible(
 			key_navItem = "Tab 2",
 			locator1 = "Fragment#NAV_ITEM_TAB");
@@ -517,8 +515,6 @@ definition {
 			PageEditor.gotoStyle(fragmentName = "Tabs");
 
 			PageEditor.configureFragment(numberOfTabs = "${i}");
-
-			Click(locator1 = "PageEditor#MANAGEMENT_BAR");
 		}
 
 		PageEditor.removeFragment(fragmentName = "Tabs");
@@ -531,8 +527,6 @@ definition {
 			PageEditor.gotoStyle(fragmentName = "Tabs");
 
 			PageEditor.configureFragment(numberOfTabs = "${i}");
-
-			Click(locator1 = "PageEditor#MANAGEMENT_BAR");
 		}
 
 		PageEditor.removeFragment(fragmentName = "Tabs");
@@ -545,8 +539,6 @@ definition {
 			PageEditor.gotoStyle(fragmentName = "Tabs");
 
 			PageEditor.configureFragment(numberOfTabs = "${i}");
-
-			Click(locator1 = "PageEditor#MANAGEMENT_BAR");
 		}
 
 		PageEditor.removeFragment(fragmentName = "Tabs");
@@ -559,8 +551,6 @@ definition {
 			PageEditor.gotoStyle(fragmentName = "Tabs");
 
 			PageEditor.configureFragment(numberOfTabs = "${i}");
-
-			Click(locator1 = "PageEditor#MANAGEMENT_BAR");
 		}
 
 		PageEditor.removeFragment(fragmentName = "Tabs");
@@ -573,8 +563,6 @@ definition {
 			PageEditor.gotoStyle(fragmentName = "Tabs");
 
 			PageEditor.configureFragment(numberOfTabs = "${i}");
-
-			Click(locator1 = "PageEditor#MANAGEMENT_BAR");
 		}
 
 		var count = "0";

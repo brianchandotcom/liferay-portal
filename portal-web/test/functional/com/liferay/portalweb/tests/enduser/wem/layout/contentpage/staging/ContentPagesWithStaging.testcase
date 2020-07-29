@@ -291,9 +291,7 @@ definition {
 
 		PageEditor.clickConfigurableField(fragmentName = "Collection Display");
 
-		Click.clickNoMouseOver(
-			key_elementType = "Collection Display",
-			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+		PageEditor.gotoTab(tabName = "Page Structure");
 
 		AssertTextEquals(
 			key_fieldLabel = "Collection",
@@ -327,9 +325,7 @@ definition {
 
 		PageEditor.clickConfigurableField(fragmentName = "Collection Display");
 
-		Click.clickNoMouseOver(
-			key_elementType = "Collection Display",
-			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+		PageEditor.gotoTab(tabName = "Page Structure");
 
 		AssertTextEquals(
 			key_fieldLabel = "Collection",

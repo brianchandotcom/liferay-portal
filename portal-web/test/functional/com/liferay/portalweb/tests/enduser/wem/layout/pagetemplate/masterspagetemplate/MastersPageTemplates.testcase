@@ -125,6 +125,8 @@ definition {
 			key_position = "5",
 			locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
 
+		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
 		Navigator.gotoNavTab(navTab = "Widgets");
 
 		DragAndDrop.javaScriptDragAndDropToObject(

@@ -117,7 +117,7 @@ const Header = ({onCloseSearch, onSearch, searchText}) => {
 
 	const [{dataDefinition}] = useContext(FormViewContext);
 	const {
-		name: {en_US: dataDefinitionName = ''},
+		name: {[dataDefinition.defaultLanguageId]: dataDefinitionName = ''},
 	} = dataDefinition;
 
 	return (

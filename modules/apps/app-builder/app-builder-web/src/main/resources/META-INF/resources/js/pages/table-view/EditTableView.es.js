@@ -139,11 +139,10 @@ const EditTableView = withRouter(({history}) => {
 							<UpperToolbar.Group>
 								<TranslationManager
 									availableLanguageIds={dataDefinition.availableLanguageIds.reduce(
-										(acc, cur) => {
-											acc[cur] = cur;
-
-											return acc;
-										},
+										(languages, languageId) => ({
+											...languages,
+											[languageId]: languageId,
+										}),
 										{}
 									)}
 									defaultLanguageId={defaultLanguageId}

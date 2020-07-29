@@ -49,7 +49,7 @@ export default function EditAppToolbar({isSaving, onCancel, onSave}) {
 	const availableLanguages = availableLanguageIds.reduce(
 		(languages, languageId) => ({
 			...languages,
-			[languageId]: Liferay.Language.available[languageId],
+			[languageId]: languageId,
 		}),
 		{}
 	);

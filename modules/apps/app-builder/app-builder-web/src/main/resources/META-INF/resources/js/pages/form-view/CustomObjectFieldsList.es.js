@@ -71,7 +71,7 @@ const getFieldTypes = ({
 	const customDataDefinitionFields = [];
 	const nativeDataDefinitionFields = [];
 	const {dataLayoutPages} = dataLayout;
-	const {dataDefinitionFields: fields} = dataDefinition;
+	const {dataDefinitionFields: fields, defaultLanguageId} = dataDefinition;
 
 	const setDefinitionField = (
 		{
@@ -142,9 +142,7 @@ const getFieldTypes = ({
 				},
 				useFieldName: name,
 			}),
-			label:
-				label[editingLanguageId] ??
-				label[Liferay.ThemeDisplay.getDefaultLanguageId()],
+			label: label[editingLanguageId] ?? label[defaultLanguageId],
 			name,
 			nestedDataDefinitionFields: nestedDataDefinitionFields.map(
 				(nestedField) => setDefinitionField(nestedField, true)

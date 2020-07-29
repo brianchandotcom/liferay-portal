@@ -220,7 +220,7 @@ definition {
 
 	@priority = "4"
 	test DeleteSiteTemplateAssociatedWithASite {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		SiteTemplates.addCP(
 			siteTemplateActive = "Yes",

@@ -854,15 +854,16 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	private void _assertAlternateLinkTag(
 		Document document, Set<Locale> locales) {
 
-		Elements elements = document.select("link[rel='alternate']");
+		Elements alternateLinkElements = document.select(
+			"link[rel='alternate']");
 
-		Assert.assertNotNull(elements);
+		Assert.assertNotNull(alternateLinkElements);
 
 		for (Locale locale : locales) {
-			Elements element = elements.select(
+			Elements localeAlternateLinkElements = alternateLinkElements.select(
 				"[hrefLang='" + LocaleUtil.toW3cLanguageId(locale) + "']");
 
-			Assert.assertEquals(1, element.size());
+			Assert.assertEquals(1, localeAlternateLinkElements.size());
 		}
 	}
 

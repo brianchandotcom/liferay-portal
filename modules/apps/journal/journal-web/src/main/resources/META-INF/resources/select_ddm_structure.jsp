@@ -53,7 +53,7 @@ SearchContainer<DDMStructure> ddmStructureSearch = journalSelectDDMStructureDisp
 						).put(
 							"ddmstructurekey", ddmStructure.getStructureKey()
 						).put(
-							"name", ddmStructure.getName(locale)
+							"name", HtmlUtil.escape(ddmStructure.getName(locale))
 						).build();
 						%>
 

@@ -36,9 +36,7 @@ List<Address> addresses = AddressServiceUtil.getAddresses(className, classPK);
 			<span class="heading-text"><liferay-ui:message key="addresses" /></span>
 		</clay:content-col>
 
-		<clay:content-col
-			expand="<%= true %>"
-		>
+		<clay:content-col>
 			<span class="heading-end">
 
 				<%

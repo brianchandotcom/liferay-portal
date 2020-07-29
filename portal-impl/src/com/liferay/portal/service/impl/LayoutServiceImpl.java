@@ -1340,6 +1340,69 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param  hasIconImage if the layout has a custom icon image
 	 * @param  iconBytes the byte array of the layout's new icon image
 	 * @param  masterLayoutPlid the primary key of the master layout
+	 * @param  styleBookEntryId the primary key of the style book entry
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         modification date and expando bridge attributes for the layout.
+	 * @return the updated layout
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public Layout updateLayout(
+			long groupId, boolean privateLayout, long layoutId,
+			long parentLayoutId, Map<Locale, String> localeNamesMap,
+			Map<Locale, String> localeTitlesMap,
+			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
+			Map<Locale, String> robotsMap, String type, boolean hidden,
+			Map<Locale, String> friendlyURLMap, boolean hasIconImage,
+			byte[] iconBytes, long masterLayoutPlid, long styleBookEntryId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		Layout layout = layoutLocalService.getLayout(
+			groupId, privateLayout, layoutId);
+
+		LayoutPermissionUtil.check(
+			getPermissionChecker(), layout, ActionKeys.UPDATE);
+
+		Layout updatedLayout = layoutLocalService.updateLayout(
+			groupId, privateLayout, layoutId, parentLayoutId, localeNamesMap,
+			localeTitlesMap, descriptionMap, keywordsMap, robotsMap, type,
+			hidden, friendlyURLMap, hasIconImage, iconBytes, masterLayoutPlid,
+			styleBookEntryId, serviceContext);
+
+		if (!(layout.getLayoutType() instanceof LayoutTypePortlet)) {
+			checkLayoutTypeSettings(
+				layout, StringPool.BLANK, updatedLayout.getTypeSettings());
+		}
+
+		return updatedLayout;
+	}
+
+	/**
+	 * Updates the layout with additional parameters.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  privateLayout whether the layout is private to the group
+	 * @param  layoutId the layout ID of the layout
+	 * @param  parentLayoutId the layout ID of the layout's new parent layout
+	 * @param  localeNamesMap the layout's locales and localized names
+	 * @param  localeTitlesMap the layout's locales and localized titles
+	 * @param  descriptionMap the locales and localized descriptions to merge
+	 *         (optionally <code>null</code>)
+	 * @param  keywordsMap the locales and localized keywords to merge
+	 *         (optionally <code>null</code>)
+	 * @param  robotsMap the locales and localized robots to merge (optionally
+	 *         <code>null</code>)
+	 * @param  type the layout's new type (optionally {@link
+	 *         LayoutConstants#TYPE_PORTLET})
+	 * @param  hidden whether the layout is hidden
+	 * @param  friendlyURLMap the layout's locales and localized friendly URLs.
+	 *         To see how the URL is normalized when accessed see {@link
+	 *         com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
+	 *         String)}.
+	 * @param  hasIconImage if the layout has a custom icon image
+	 * @param  iconBytes the byte array of the layout's new icon image
+	 * @param  masterLayoutPlid the primary key of the master layout
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         modification date and expando bridge attributes for the layout.
 	 * @return the updated layout
@@ -1357,24 +1420,11 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		Layout layout = layoutLocalService.getLayout(
-			groupId, privateLayout, layoutId);
-
-		LayoutPermissionUtil.check(
-			getPermissionChecker(), layout, ActionKeys.UPDATE);
-
-		Layout updatedLayout = layoutLocalService.updateLayout(
+		return updateLayout(
 			groupId, privateLayout, layoutId, parentLayoutId, localeNamesMap,
 			localeTitlesMap, descriptionMap, keywordsMap, robotsMap, type,
 			hidden, friendlyURLMap, hasIconImage, iconBytes, masterLayoutPlid,
-			serviceContext);
-
-		if (!(layout.getLayoutType() instanceof LayoutTypePortlet)) {
-			checkLayoutTypeSettings(
-				layout, StringPool.BLANK, updatedLayout.getTypeSettings());
-		}
-
-		return updatedLayout;
+			0, serviceContext);
 	}
 
 	/**

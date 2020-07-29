@@ -56,7 +56,7 @@ DDMFormInstance selFormInstance = DDMFormInstanceServiceUtil.fetchFormInstance(f
 						<liferay-ui:search-container
 							emptyResultsMessage="no-forms-were-found"
 							iteratorURL="<%= configurationRenderURL %>"
-							total="<%= DDMFormInstanceServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, keywords) %>"
+							total="<%= DDMFormInstanceServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, keywords, WorkflowConstants.STATUS_APPROVED) %>"
 						>
 							<div class="form-search input-append">
 								<liferay-ui:input-search
@@ -66,7 +66,7 @@ DDMFormInstance selFormInstance = DDMFormInstanceServiceUtil.fetchFormInstance(f
 							</div>
 
 							<liferay-ui:search-container-results
-								results="<%= DDMFormInstanceServiceUtil.search(company.getCompanyId(), scopeGroupId, keywords, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
+								results="<%= DDMFormInstanceServiceUtil.search(company.getCompanyId(), scopeGroupId, keywords, WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
 							/>
 
 							<liferay-ui:search-container-row

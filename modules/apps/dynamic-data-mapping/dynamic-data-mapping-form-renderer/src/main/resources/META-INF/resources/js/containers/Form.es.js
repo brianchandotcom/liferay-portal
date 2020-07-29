@@ -98,7 +98,7 @@ const Form = React.forwardRef(
 		);
 
 		useImperativeHandle(ref, () => ({
-			evaluate: () =>
+			evaluate: (editingLanguageId) =>
 				evaluate(null, {
 					defaultLanguageId,
 					editingLanguageId,

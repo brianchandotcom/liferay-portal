@@ -21,7 +21,7 @@ import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.capability.InfoItemCapability;
 import com.liferay.info.item.provider.InfoItemCapabilitiesProvider;
-import com.liferay.info.item.provider.InfoItemClassDetailsProvider;
+import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
@@ -183,8 +183,7 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 	protected void activate(BundleContext bundleContext) {
 		Class<?>[] serviceClasses = new Class<?>[] {
 			InfoCollectionTextFormatter.class, InfoTextFormatter.class,
-			InfoItemCapabilitiesProvider.class,
-			InfoItemClassDetailsProvider.class,
+			InfoItemCapabilitiesProvider.class, InfoItemDetailsProvider.class,
 			InfoItemFieldValuesProvider.class, InfoItemFormProvider.class,
 			InfoItemFormVariationsProvider.class, InfoItemObjectProvider.class,
 			InfoItemPermissionProvider.class, InfoItemRenderer.class,
@@ -227,9 +226,9 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 	private InfoItemClassDetails _getInfoItemClassDetails(
 		String itemClassName) {
 
-		InfoItemClassDetailsProvider infoItemClassDetailsProvider =
+		InfoItemDetailsProvider infoItemClassDetailsProvider =
 			getFirstInfoItemService(
-				InfoItemClassDetailsProvider.class, itemClassName);
+				InfoItemDetailsProvider.class, itemClassName);
 
 		InfoItemClassDetails infoItemClassDetails = null;
 

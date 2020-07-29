@@ -34,7 +34,7 @@ import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
-import com.liferay.info.item.provider.InfoItemClassDetailsProvider;
+import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -112,13 +112,13 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 
 		httpServletRequest.setAttribute(InfoDisplayWebKeys.INFO_ITEM, infoItem);
 
-		InfoItemClassDetailsProvider infoItemClassDetailsProvider =
+		InfoItemDetailsProvider infoItemDetailsProvider =
 			infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemClassDetailsProvider.class, infoItemClassName);
+				InfoItemDetailsProvider.class, infoItemClassName);
 
 		httpServletRequest.setAttribute(
 			InfoDisplayWebKeys.INFO_ITEM_DETAILS,
-			infoItemClassDetailsProvider.getInfoItemDetails(infoItem));
+			infoItemDetailsProvider.getInfoItemDetails(infoItem));
 
 		httpServletRequest.setAttribute(
 			InfoDisplayWebKeys.INFO_ITEM_SERVICE_TRACKER,

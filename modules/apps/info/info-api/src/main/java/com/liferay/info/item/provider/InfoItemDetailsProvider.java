@@ -20,7 +20,7 @@ import com.liferay.info.item.InfoItemDetails;
 /**
  * @author Jorge Ferrer
  */
-public interface InfoItemClassDetailsProvider<T> {
+public interface InfoItemDetailsProvider<T> {
 
 	public InfoItemClassDetails getInfoItemClassDetails();
 

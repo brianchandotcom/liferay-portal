@@ -550,6 +550,18 @@ definition {
 				value1 = "${webContentHTML}");
 		}
 
+		if (isSet(webContentSourceHTML)) {
+			Click(
+				key_editor = "HTML",
+				locator1 = "AlloyEditor#EDITOR");
+
+			Click(locator1 = "Button#EDITOR_SWITCH");
+
+			Type.typeAceEditor(
+				locator1 = "TextArea#ACE_EDITOR",
+				value1 = "${webContentSourceHTML}");
+		}
+
 		if (isSet(webContentImage)) {
 			Click(locator1 = "WCEditWebContent#IMAGE_FIELD_SELECT");
 
@@ -1620,6 +1632,13 @@ definition {
 				value1 = "${webContentNumber}");
 		}
 
+		if (isSet(webContentTextBox)) {
+			AssertTextEquals(
+				key_fieldName = "TextBox",
+				locator1 = "DDMField#TEXT_BOX",
+				value1 = "${webContentTextBox}");
+		}
+
 		if (isSet(webContentDocumentsAndMedia)) {
 			AssertTextEquals(
 				key_fieldName = "DocumentsAndMedia",
@@ -1628,15 +1647,31 @@ definition {
 		}
 
 		if (isSet(webContentDescription)) {
-			SelectFrame.selectFrameNoLoading(
-				key_fieldLabel = "Summary",
-				locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+			if (isSet(otherLocaleSummary)) {
+				SelectFrame.selectFrameNoLoading(
+					key_fieldLabel = "${otherLocaleSummary}",
+					locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+			}
+			else {
+				SelectFrame.selectFrameNoLoading(
+					key_fieldLabel = "Summary",
+					locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+			}
 
 			AssertTextEquals(
 				locator1 = "CKEditor#BODY",
 				value1 = "${webContentDescription}");
 
 			SelectFrameTop(value1 = "relative=top");
+		}
+
+		if (isSet(webContentHTML)) {
+			AssertTextEquals.assertPartialText(
+				key_editor = "HTML",
+				locator1 = "AlloyEditor#EDITOR",
+				value1 = "${webContentHTML}");
+
+			SelectFrame(value1 = "relative=top");
 		}
 	}
 

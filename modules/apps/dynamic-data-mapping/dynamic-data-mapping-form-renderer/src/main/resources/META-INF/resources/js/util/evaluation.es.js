@@ -118,8 +118,9 @@ export const mergePages = (
 	return newPagesVisitor.mapFields(
 		(field) => {
 			const sourceField =
-				sourcePagesVisitor.findField(({name}) => name === field.name) ||
-				{};
+				sourcePagesVisitor.findField(
+					({fieldName}) => fieldName === field.fieldName
+				) || {};
 
 			let newField = {
 				...sourceField,

@@ -50,9 +50,14 @@ export function useDDMFormValidation(ddmForm, onSubmitCallback) {
 					fieldName,
 					localizable,
 					repeatable,
+					type,
 					value,
 					visible,
 				}) => {
+					if (type === 'fieldset') {
+						return;
+					}
+
 					let _value = value;
 
 					if (!visible) {
@@ -82,13 +87,13 @@ export function useDDMFormValidation(ddmForm, onSubmitCallback) {
 					}
 				};
 
-				visitor.mapFields(({nestedFields, ...field}) => {
-					if (Array.isArray(nestedFields)) {
-						return nestedFields.forEach(setDataRecord);
-					}
-
-					setDataRecord(field);
-				});
+				visitor.mapFields(
+					(field) => {
+						setDataRecord(field);
+					},
+					true,
+					true
+				);
 
 				onSubmitCallback(dataRecord);
 			});

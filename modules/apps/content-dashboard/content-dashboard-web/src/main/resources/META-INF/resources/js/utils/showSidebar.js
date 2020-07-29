@@ -28,15 +28,7 @@ const actions = {
 };
 
 const showSidebar = ({View, fetchURL, namespace}) => {
-	const _getSidebarPanel = () => {
-		return Liferay.component(`${namespace}sidebar`);
-	};
-
-	const _setSidebarPanel = (element) => {
-		Liferay.component(`${namespace}sidebar`, element);
-	};
-
-	const sidebarPanel = _getSidebarPanel();
+	const sidebarPanel = Liferay.component(`${namespace}sidebar`);
 
 	if (!sidebarPanel) {
 		const container = document.body.appendChild(
@@ -47,7 +39,9 @@ const showSidebar = ({View, fetchURL, namespace}) => {
 			SidebarPanel,
 			{
 				fetchURL,
-				ref: _setSidebarPanel,
+				ref: (element) => {
+					Liferay.component(`${namespace}sidebar`, element);
+				},
 				viewComponent: View,
 			},
 			container

@@ -273,15 +273,13 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 								<div class="card card-horizontal card-interactive card-interactive-secondary card-type-directory">
 									<div class="card-body">
 										<div class="card-row">
-											<div class="autofit-col">
-												<span class="sticker sticker-rounded sticker-unstyled">
-													<span class="inline-item">
-														<clay:icon
-															symbol="folder"
-														/>
-													</span>
-												</span>
-											</div>
+											<clay:content-col>
+												<clay:sticker
+													displayType="secondary"
+													icon="folder"
+													inline="<%= true %>"
+												/>
+											</clay:content-col>
 
 											<div class="autofit-col autofit-col-expand autofit-col-gutters">
 												<a class="card-title text-truncate" href="<%= rowURL %>" title="<%= HtmlUtil.escapeAttribute(curFolder.getName()) %>">

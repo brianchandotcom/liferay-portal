@@ -14,6 +14,7 @@
 
 import ClayCard from '@clayui/card';
 import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import ClayTabs from '@clayui/tabs';
 import classNames from 'classnames';
 import React, {useMemo, useState} from 'react';
@@ -46,8 +47,15 @@ export default function PageDesignOptionsSidebar() {
 
 	return (
 		<>
-			<SidebarPanelHeader>
+			<SidebarPanelHeader className="justify-content-between">
 				{Liferay.Language.get('page-design-options')}
+
+				<ClayLink
+					className="font-weight-normal"
+					href={config.lookAndFeelURL}
+				>
+					{Liferay.Language.get('more')}
+				</ClayLink>
 			</SidebarPanelHeader>
 
 			<SidebarPanelContent>

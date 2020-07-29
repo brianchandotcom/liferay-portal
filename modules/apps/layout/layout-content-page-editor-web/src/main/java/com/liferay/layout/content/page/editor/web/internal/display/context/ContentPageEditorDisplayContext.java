@@ -365,6 +365,8 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"layoutType", String.valueOf(_getLayoutType())
 			).put(
+				"lookAndFeelURL", _getLookAndFeelURL()
+			).put(
 				"mappingFieldsURL",
 				getResourceURL("/content_layout/get_mapping_fields")
 			).put(
@@ -1543,6 +1545,38 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		return _layoutType;
+	}
+
+	private Object _getLookAndFeelURL() {
+		PortletURL lookAndFeelURL = PortalUtil.getControlPanelPortletURL(
+			httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+			PortletRequest.RENDER_PHASE);
+
+		lookAndFeelURL.setParameter(
+			"mvcRenderCommandName", "/layout/edit_layout");
+
+		lookAndFeelURL.setParameter(
+			"redirect",
+			ParamUtil.getString(
+				PortalUtil.getOriginalServletRequest(httpServletRequest),
+				"p_l_back_url"));
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		lookAndFeelURL.setParameter("backURL", themeDisplay.getURLCurrent());
+
+		Layout layout = themeDisplay.getLayout();
+
+		lookAndFeelURL.setParameter(
+			"groupId", String.valueOf(layout.getGroupId()));
+		lookAndFeelURL.setParameter(
+			"selPlid", String.valueOf(layout.getPlid()));
+		lookAndFeelURL.setParameter(
+			"privateLayout", String.valueOf(layout.isPrivateLayout()));
+
+		return lookAndFeelURL.toString();
 	}
 
 	private Set<Map<String, Object>> _getMappedInfoItems() throws Exception {

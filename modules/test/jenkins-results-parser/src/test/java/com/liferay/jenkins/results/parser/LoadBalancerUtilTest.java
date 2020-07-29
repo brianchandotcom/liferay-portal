@@ -162,13 +162,14 @@ public class LoadBalancerUtilTest
 			downloadSampleURL(
 				new File(sampleDir, jenkinsMaster.getName()),
 				JenkinsResultsParserUtil.createURL(jenkinsMaster.getURL()),
-				"/computer/api/json?pretty&tree=computer" +
-					"[displayName,idle,offline]");
+				JenkinsResultsParserUtil.combine(
+					"/computer/api/json?tree=computer[displayName,",
+					"executors[currentExecutable[url]],idle,offline]"));
 
 			downloadSampleURL(
 				new File(sampleDir, jenkinsMaster.getName()),
 				JenkinsResultsParserUtil.createURL(jenkinsMaster.getURL()),
-				"/queue/api/json");
+				"/queue/api/json?tree=items[task[name,url],why]");
 		}
 	}
 

@@ -87,27 +87,30 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 							<strong><liferay-ui:message key="<%= HtmlUtil.escape(assetListEntry.getTypeLabel()) %>" /></strong>
 						</h6>
 
-						<%
-						String assetEntryTypeLabel = ResourceActionsUtil.getModelResource(locale, assetListEntry.getAssetEntryType());
+						<c:if test="<%= Validator.isNotNull(assetListEntry.getAssetEntryType()) %>">
 
-						long classTypeId = GetterUtil.getLong(assetListEntry.getAssetEntrySubtype());
+							<%
+							String assetEntryTypeLabel = ResourceActionsUtil.getModelResource(locale, assetListEntry.getAssetEntryType());
 
-						if (classTypeId > 0) {
-							AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetListEntry.getAssetEntryType());
+							long classTypeId = GetterUtil.getLong(assetListEntry.getAssetEntrySubtype());
 
-							if ((assetRendererFactory != null) && assetRendererFactory.isSupportsClassTypes()) {
-								ClassTypeReader classTypeReader = assetRendererFactory.getClassTypeReader();
+							if (classTypeId > 0) {
+								AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetListEntry.getAssetEntryType());
 
-								ClassType classType = classTypeReader.getClassType(classTypeId, locale);
+								if ((assetRendererFactory != null) && assetRendererFactory.isSupportsClassTypes()) {
+									ClassTypeReader classTypeReader = assetRendererFactory.getClassTypeReader();
 
-								assetEntryTypeLabel = assetEntryTypeLabel + " - " + classType.getName();
+									ClassType classType = classTypeReader.getClassType(classTypeId, locale);
+
+									assetEntryTypeLabel = assetEntryTypeLabel + " - " + classType.getName();
+								}
 							}
-						}
-						%>
+							%>
 
-						<h6 class="text-default">
-							<strong><%= assetEntryTypeLabel %></strong>
-						</h6>
+							<h6 class="text-default">
+								<strong><%= assetEntryTypeLabel %></strong>
+							</h6>
+						</c:if>
 
 						<%
 						Date statusDate = assetListEntry.getCreateDate();

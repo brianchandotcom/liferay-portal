@@ -274,6 +274,10 @@ public class ContentPageEditorDisplayContext {
 							fetchDefaultStyleBookEntry(
 								themeDisplay.getScopeGroupId());
 
+					if (styleBookEntry == null) {
+						return 0;
+					}
+
 					return styleBookEntry.getStyleBookEntryId();
 				}
 			).put(

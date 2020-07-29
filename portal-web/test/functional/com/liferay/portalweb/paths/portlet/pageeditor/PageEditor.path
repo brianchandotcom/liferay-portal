@@ -313,7 +313,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_COMMENT_ENTRY_INPUT</td>
-	<td>//div[contains(@class,'alloy-editor-container') and contains(@id,'pageEditorCommentEditor')]/div[contains(@data-placeholder,'Type your comment here.')]/p[contains(.,'${fragmentComment}')]</td>
+	<td>//div[contains(@class,'alloy-editor-container') and contains(@id,'ContentPageEditorPortlet')]/div[contains(@data-placeholder,'Type your comment here.')]/p[contains(.,'${fragmentComment}')]</td>
 	<td></td>
 </tr>
 <tr>

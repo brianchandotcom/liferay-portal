@@ -47,7 +47,7 @@ public class ProjectTemplatesRestTest implements BaseProjectTemplatesTestCase {
 	@Parameterized.Parameters(name = "Testcase-{index}: testing {0}")
 	public static Iterable<Object[]> data() {
 		return Arrays.asList(
-			new Object[][] {{"7.0.6"}, {"7.1.3"}, {"7.2.1"}, {"7.3.2"}});
+			new Object[][] {{"7.0.6"}, {"7.1.3"}, {"7.2.1"}, {"7.3.3"}});
 	}
 
 	@BeforeClass
@@ -94,7 +94,7 @@ public class ProjectTemplatesRestTest implements BaseProjectTemplatesTestCase {
 
 		if (_liferayVersion.equals("7.1.3") ||
 			_liferayVersion.equals("7.2.1") ||
-			_liferayVersion.equals("7.3.2")) {
+			_liferayVersion.equals("7.3.3")) {
 
 			testContains(
 				gradleProjectDir, "build.gradle",

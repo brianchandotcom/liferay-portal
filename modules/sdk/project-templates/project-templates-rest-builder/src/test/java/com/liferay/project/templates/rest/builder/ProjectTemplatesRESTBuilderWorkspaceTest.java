@@ -58,13 +58,13 @@ public class ProjectTemplatesRESTBuilderWorkspaceTest
 			new Object[][] {
 				{"guestbook", "com.liferay.docs.guestbook", "7.1.3"},
 				{"guestbook", "com.liferay.docs.guestbook", "7.2.1"},
-				{"guestbook", "com.liferay.docs.guestbook", "7.3.2"},
+				{"guestbook", "com.liferay.docs.guestbook", "7.3.3"},
 				{"backend-integration", "com.liferay.docs.guestbook", "7.1.3"},
 				{"backend-integration", "com.liferay.docs.guestbook", "7.2.1"},
-				{"backend-integration", "com.liferay.docs.guestbook", "7.3.2"},
+				{"backend-integration", "com.liferay.docs.guestbook", "7.3.3"},
 				{"sample", "com.test.sample", "7.1.3"},
 				{"sample", "com.test.sample", "7.2.1"},
-				{"sample", "com.test.sample", "7.3.2"}
+				{"sample", "com.test.sample", "7.3.3"}
 			});
 	}
 

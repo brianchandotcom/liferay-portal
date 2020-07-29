@@ -634,6 +634,11 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				_targetLayout.getLayoutId(),
 				_sourceLayout.getMasterLayoutPlid());
 
+			_layoutLocalService.updateStyleBookEntryId(
+				_targetLayout.getGroupId(), _targetLayout.isPrivateLayout(),
+				_targetLayout.getLayoutId(),
+				_sourceLayout.getStyleBookEntryId());
+
 			UnicodeProperties unicodeProperties = new UnicodeProperties();
 
 			unicodeProperties.load(_sourceLayout.getTypeSettings());

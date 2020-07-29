@@ -51,6 +51,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -307,7 +308,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 						_getStatusLabel(status));
 			});
 
-		List<String> assetTagIds =
+		Set<String> assetTagIds =
 			_contentDashboardAdminDisplayContext.getAssetTagIds();
 
 		for (String assetTagId : assetTagIds) {
@@ -471,14 +472,31 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 			"eventName",
 			_liferayPortletResponse.getNamespace() + "selectedAssetTag");
 
-		List<String> assetTagIds =
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		List<Long> groupIds = _groupLocalService.getGroupIds(
+			themeDisplay.getCompanyId(), true);
+
+		Stream<Long> groupIdsStream = groupIds.stream();
+
+		portletURL.setParameter(
+			"groupIds",
+			groupIdsStream.map(
+				String::valueOf
+			).collect(
+				Collectors.joining(StringPool.COMMA)
+			));
+
+		Set<String> assetTagIds =
 			_contentDashboardAdminDisplayContext.getAssetTagIds();
 
-		Stream<String> stream = assetTagIds.stream();
+		Stream<String> assetTagIdsStream = assetTagIds.stream();
 
 		portletURL.setParameter(
 			"selectedTagNames",
-			stream.collect(Collectors.joining(StringPool.COMMA)));
+			assetTagIdsStream.collect(Collectors.joining(StringPool.COMMA)));
 
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 

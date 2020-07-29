@@ -5,7 +5,26 @@
 	flex-grow: 1;
 	overflow: auto;
 
-	& + & {
+	&.resized {
+		flex-basis: auto;
+		flex-grow: 0;
+		flex-shrink: 0;
+	}
+
+	& ~ & {
 		border-top: solid $gray-300 thin;
+	}
+
+	&__resize-handler {
+		cursor: row-resize;
+		height: 10px;
+
+		&:hover {
+			background: $gray-300;
+		}
+
+		&.active {
+			background: $gray-400;
+		}
 	}
 }

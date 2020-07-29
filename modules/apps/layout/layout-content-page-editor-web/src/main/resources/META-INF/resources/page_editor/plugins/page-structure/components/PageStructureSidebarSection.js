@@ -12,10 +12,96 @@
  * details.
  */
 
-import React from 'react';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import React, {useEffect, useState} from 'react';
 
-export default function PageStructureSidebarSection({children}) {
+import {NotDraggableArea} from '../../../app/utils/useDragAndDrop';
+
+export default function PageStructureSidebarSection({
+	children,
+	resizable = false,
+}) {
+	const [handlerElement, setHandlerElement] = useState(null);
+	const [panelElement, setPanelElement] = useState(null);
+	const [panelHeight, setPanelHeight] = useState();
+	const [resizing, setResizing] = useState(false);
+
+	useEffect(() => {
+		if (!handlerElement || !panelElement) {
+			return;
+		}
+
+		let initialHeight = 0;
+		let initialY = 0;
+		let maxHeight = 0;
+		const minHeight = 200;
+
+		const handleResizeStart = (event) => {
+			initialHeight = panelElement.getBoundingClientRect().height;
+			initialY = event.clientY;
+			maxHeight = window.innerHeight * 0.8;
+
+			document.body.addEventListener('mousemove', handleResize);
+			document.body.addEventListener('mouseleave', handleResizeEnd);
+			document.body.addEventListener('mouseup', handleResizeEnd);
+
+			setResizing(true);
+		};
+
+		const handleResize = (event) => {
+			const delta = event.clientY - initialY;
+
+			setPanelHeight(
+				Math.max(Math.min(maxHeight, initialHeight - delta), minHeight)
+			);
+		};
+
+		const handleResizeEnd = () => {
+			document.body.removeEventListener('mousemove', handleResize);
+			document.body.removeEventListener('mouseleave', handleResizeEnd);
+			document.body.removeEventListener('mouseup', handleResizeEnd);
+
+			setResizing(false);
+		};
+
+		handlerElement.addEventListener('mousedown', handleResizeStart);
+
+		return () => {
+			handlerElement.removeEventListener('mousedown', handleResizeStart);
+			handleResizeEnd();
+		};
+	}, [handlerElement, panelElement]);
+
 	return (
-		<div className="page-editor__page-structure__section">{children}</div>
+		<>
+			{resizable && (
+				<NotDraggableArea>
+					<div
+						className={classNames(
+							'page-editor__page-structure__section__resize-handler',
+							{
+								active: resizing,
+							}
+						)}
+						ref={setHandlerElement}
+					/>
+				</NotDraggableArea>
+			)}
+
+			<div
+				className={classNames('page-editor__page-structure__section', {
+					resized: !!panelHeight,
+				})}
+				ref={setPanelElement}
+				style={{height: panelHeight}}
+			>
+				{children}
+			</div>
+		</>
 	);
 }
+
+PageStructureSidebarSection.propTypes = {
+	resizable: PropTypes.bool,
+};

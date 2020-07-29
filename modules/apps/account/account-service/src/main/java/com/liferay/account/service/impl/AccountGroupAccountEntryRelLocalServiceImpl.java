@@ -88,6 +88,14 @@ public class AccountGroupAccountEntryRelLocalServiceImpl
 	}
 
 	@Override
+	public AccountGroupAccountEntryRel fetchAccountGroupAccountEntryRel(
+		long accountGroupId, long accountEntryId) {
+
+		return accountGroupAccountEntryRelPersistence.fetchByAGI_AEI(
+			accountGroupId, accountEntryId);
+	}
+
+	@Override
 	public List<AccountGroupAccountEntryRel>
 		getAccountGroupAccountEntryRelsByAccountEntryId(long accountEntryId) {
 

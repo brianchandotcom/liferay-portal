@@ -110,7 +110,7 @@ definition {
 			locator1 = "Account#ACCOUNT_DOMAIN_ADD_Link",
 			value1 = "Add");
 
-		IFrame.selectConfigurationFrame();
+		SelectFrame(locator1 = "IFrame#ADD_DOMAIN");
 
 		PortletEntry.inputText(
 			fieldLabel = "Domain",

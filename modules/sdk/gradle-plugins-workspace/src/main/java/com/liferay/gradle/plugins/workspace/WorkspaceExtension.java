@@ -538,7 +538,7 @@ public class WorkspaceExtension {
 		Project.DEFAULT_BUILD_DIR_NAME + File.separator + "docker");
 
 	private static final String _DOCKER_IMAGE_LIFERAY =
-		"liferay/portal:7.2.0-ga1";
+		"liferay/portal:7.3.3-ga4";
 
 	private static final String _NODE_PACKAGE_MANAGER = "npm";
 

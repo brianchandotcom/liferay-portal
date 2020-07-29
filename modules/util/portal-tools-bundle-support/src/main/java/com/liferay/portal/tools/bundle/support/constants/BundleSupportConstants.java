@@ -33,8 +33,8 @@ public class BundleSupportConstants {
 	public static final String DEFAULT_BUNDLE_FORMAT = "tar.gz";
 
 	public static final String DEFAULT_BUNDLE_URL =
-		"https://releases-cdn.liferay.com/portal/7.3.2-ga3" +
-			"/liferay-ce-portal-tomcat-7.3.2-ga3-20200519164024819.tar.gz";
+		"https://releases-cdn.liferay.com/portal/7.3.3-ga4" +
+			"/liferay-ce-portal-tomcat-7.3.3-ga4-20200701015330959.tar.gz";
 
 	public static final URL DEFAULT_BUNDLE_URL_OBJECT;
 

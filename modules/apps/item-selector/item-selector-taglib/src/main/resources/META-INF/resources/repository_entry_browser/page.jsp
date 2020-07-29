@@ -328,15 +328,13 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 										<div class="card card-horizontal card-interactive card-interactive-secondary">
 											<div class="card-body">
 												<div class="card-row">
-													<div class="autofit-col">
-														<span class="sticker sticker-rounded sticker-secondary">
-															<span class="sticker-overlay">
-																<clay:icon
-																	symbol="folder"
-																/>
-															</span>
-														</span>
-													</div>
+													<clay:content-col>
+														<clay:sticker
+															displayType="secondary"
+															icon="folder"
+															inline="<%= true %>"
+														/>
+													</clay:content-col>
 
 													<div class="autofit-col autofit-col-expand autofit-col-gutters">
 														<p class="card-title text-truncate">

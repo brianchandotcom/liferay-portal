@@ -246,6 +246,9 @@ public class ApplicationsMenuMVCResourceCommand extends BaseMVCResourceCommand {
 		for (Group group : groups) {
 			recentSitesJSONArray.put(
 				JSONUtil.put(
+					"current",
+					group.getGroupId() == themeDisplay.getScopeGroupId()
+				).put(
 					"key", group.getGroupKey()
 				).put(
 					"label", group.getDescriptiveName(themeDisplay.getLocale())

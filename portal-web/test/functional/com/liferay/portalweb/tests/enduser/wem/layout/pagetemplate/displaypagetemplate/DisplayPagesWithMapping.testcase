@@ -62,4 +62,86 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-118060. The contributed content types and their subtypes are available when creating a display page template."
+	@priority = "5"
+	test ViewTypesDuringCreation {
+		task ("Add a custom Web Content structure") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(
+				structureDescription = "WC Structure Description",
+				structureName = "WC Structure Name");
+
+			DynamicDataMapping.addField(
+				field = "Text",
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name");
+		}
+
+		task ("Add a custom Document type") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+			DMNavigator.gotoDocumentType();
+
+			DMDocumentType.add(
+				dmDocumentTypeDescription = "DM Document Type Description",
+				dmDocumentTypeFieldNames = "Text",
+				dmDocumentTypeName = "DM Document Type Name");
+		}
+
+		task ("View all contributed content types and their subtypes when creating a display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.gotoAdd();
+
+			LexiconCard.clickCard(card = "Blank");
+
+			PortletEntry.inputName(name = "Display Page Template Name");
+
+			for (var contentType : list "Web Content Article,Document,Blogs Entry") {
+				AssertElementPresent(
+					key_fieldLabel = "Content Type",
+					key_value = "${contentType}",
+					locator1 = "Select#GENERIC_SELECT_VALUE");
+			}
+
+			AssertElementNotPresent(
+				key_fieldLabel = "Content Type",
+				key_value = "Asset",
+				locator1 = "Select#GENERIC_SELECT_VALUE");
+
+			Select(
+				key_fieldLabel = "Content Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Web Content Article");
+
+			Pause(locator1 = "3000");
+
+			for (var subtype : list "Basic Web Content,WC Structure Name") {
+				AssertElementPresent(
+					key_fieldLabel = "Subtype",
+					key_value = "${subtype}",
+					locator1 = "Select#GENERIC_SELECT_VALUE");
+			}
+
+			Select(
+				key_fieldLabel = "Content Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Document");
+
+			Pause(locator1 = "3000");
+
+			for (var subtype : list "Basic Document,Google Drive Shortcut,DM Document Type Name") {
+				AssertElementPresent(
+					key_fieldLabel = "Subtype",
+					key_value = "${subtype}",
+					locator1 = "Select#GENERIC_SELECT_VALUE");
+			}
+		}
+	}
+
 }

@@ -12,18 +12,34 @@
  * details.
  */
 
-package com.liferay.info.item.provider;
-
-import com.liferay.info.item.InfoItemClassDetails;
-import com.liferay.info.item.InfoItemDetails;
+package com.liferay.info.item;
 
 /**
  * @author Jorge Ferrer
  */
-public interface InfoItemClassDetailsProvider<T> {
+public class InfoItemDetails {
 
-	public InfoItemClassDetails getInfoItemClassDetails();
+	public InfoItemDetails(
+		InfoItemClassDetails itemClassDetails,
+		InfoItemReference itemReference) {
 
-	public InfoItemDetails getInfoItemDetails(T t);
+		_itemClassDetails = itemClassDetails;
+		_itemReference = itemReference;
+	}
+
+	public String getClassName() {
+		return _itemClassDetails.getClassName();
+	}
+
+	public InfoItemClassDetails getItemClassDetails() {
+		return _itemClassDetails;
+	}
+
+	public InfoItemReference getItemReference() {
+		return _itemReference;
+	}
+
+	private final InfoItemClassDetails _itemClassDetails;
+	private final InfoItemReference _itemReference;
 
 }

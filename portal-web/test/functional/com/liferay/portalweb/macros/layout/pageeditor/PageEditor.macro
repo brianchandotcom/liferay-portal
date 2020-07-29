@@ -1327,6 +1327,10 @@ definition {
 	}
 
 	macro expandFragmentCollection {
+		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+		Navigator.gotoNavTab(navTab = "Fragments");
+
 		AssertVisible(
 			key_collectionName = "${collectionName}",
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL");

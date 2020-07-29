@@ -108,7 +108,7 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 							%>
 
 							<h6 class="text-default">
-								<strong><%= assetEntryTypeLabel %></strong>
+								<strong><%= HtmlUtil.escape(assetEntryTypeLabel) %></strong>
 							</h6>
 						</c:if>
 

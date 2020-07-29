@@ -6788,12 +6788,12 @@ public class JournalArticleLocalServiceImpl
 
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
 
-				String uuid = jsonObject.getString("uuid");
-				long groupId = jsonObject.getLong("groupId");
-
-				if (Validator.isNull(uuid) && (groupId == 0)) {
+				if (!(jsonObject.has("groupId") && jsonObject.has("uuid"))) {
 					continue;
 				}
+
+				String uuid = jsonObject.getString("uuid");
+				long groupId = jsonObject.getLong("groupId");
 
 				FileEntry fileEntry =
 					dlAppLocalService.getFileEntryByUuidAndGroupId(

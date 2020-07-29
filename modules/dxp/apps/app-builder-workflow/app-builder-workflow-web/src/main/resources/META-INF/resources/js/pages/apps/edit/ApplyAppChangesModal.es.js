@@ -29,7 +29,7 @@ export default function ApplyAppChangesModal({onSave}) {
 	}
 
 	return (
-		<ClayModal className="save-app-modal" observer={observer}>
+		<ClayModal center className="save-app-modal" observer={observer}>
 			<ClayModal.Header className="border-0">
 				<ClayIcon
 					className="circle-icon info mr-3"

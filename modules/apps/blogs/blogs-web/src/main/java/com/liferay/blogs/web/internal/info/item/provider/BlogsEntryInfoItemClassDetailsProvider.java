@@ -16,6 +16,8 @@ package com.liferay.blogs.web.internal.info.item.provider;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.info.item.InfoItemClassDetails;
+import com.liferay.info.item.InfoItemDetails;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemClassDetailsProvider;
 
 import org.osgi.framework.Constants;
@@ -35,6 +37,13 @@ public class BlogsEntryInfoItemClassDetailsProvider
 	@Override
 	public InfoItemClassDetails getInfoItemClassDetails() {
 		return new InfoItemClassDetails(BlogsEntry.class.getName());
+	}
+
+	@Override
+	public InfoItemDetails getInfoItemDetails(BlogsEntry blogsEntry) {
+		return new InfoItemDetails(
+			getInfoItemClassDetails(),
+			new InfoItemReference(blogsEntry.getEntryId()));
 	}
 
 }

@@ -15,6 +15,8 @@
 package com.liferay.journal.web.internal.info.item.provider;
 
 import com.liferay.info.item.InfoItemClassDetails;
+import com.liferay.info.item.InfoItemDetails;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemClassDetailsProvider;
 import com.liferay.journal.model.JournalArticle;
 
@@ -35,6 +37,13 @@ public class JournalArticleInfoItemClassDetailsProvider
 	@Override
 	public InfoItemClassDetails getInfoItemClassDetails() {
 		return new InfoItemClassDetails(JournalArticle.class.getName());
+	}
+
+	@Override
+	public InfoItemDetails getInfoItemDetails(JournalArticle journalArticle) {
+		return new InfoItemDetails(
+			getInfoItemClassDetails(),
+			new InfoItemReference(journalArticle.getResourcePrimKey()));
 	}
 
 }

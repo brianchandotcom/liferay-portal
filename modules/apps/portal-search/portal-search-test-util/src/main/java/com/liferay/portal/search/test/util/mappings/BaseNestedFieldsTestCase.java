@@ -54,28 +54,32 @@ public abstract class BaseNestedFieldsTestCase extends BaseIndexingTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		addDocumentWithDDMFields();
+		addDocumentWithDDMFieldArray();
 	}
 
 	@Test
-	public void testDDMFieldsDontMatchUnrelatedKeywordValue() throws Exception {
+	public void testDDMFieldArrayDontMatchUnrelatedKeywordValue()
+		throws Exception {
+
 		assertSearch(
 			"ddm__text__41523__TextBox7nkv_en_US",
-			"ddmFields.fieldValueKeyword", "true", false, 0);
+			"ddmFieldArray.fieldValueKeyword", "true", false, 0);
 	}
 
 	@Test
-	public void testDDMFieldsDontMatchUnrelatedTextValue() throws Exception {
+	public void testDDMFieldArrayDontMatchUnrelatedTextValue()
+		throws Exception {
+
 		assertSearch(
-			"ddm__text__41523__TextBox7nkv_en_US", "ddmFields.fieldValueText",
-			"bravo", false, 0);
+			"ddm__text__41523__TextBox7nkv_en_US",
+			"ddmFieldArray.fieldValueText", "bravo", false, 0);
 	}
 
 	@Test
 	public void testDDMNestedFieldsDontMatchPartialKeyword() throws Exception {
 		assertSearch(
 			"ddm__keyword__41523__Textggef_en_US",
-			"ddmFields.fieldValueKeyword", "alpha", true, 0);
+			"ddmFieldArray.fieldValueKeyword", "alpha", true, 0);
 	}
 
 	@Test
@@ -84,7 +88,7 @@ public abstract class BaseNestedFieldsTestCase extends BaseIndexingTestCase {
 
 		assertSearch(
 			"ddm__text__41523__TextBox7nkv_en_US",
-			"ddmFields.fieldValueKeyword", "true", true, 0);
+			"ddmFieldArray.fieldValueKeyword", "true", true, 0);
 	}
 
 	@Test
@@ -92,8 +96,8 @@ public abstract class BaseNestedFieldsTestCase extends BaseIndexingTestCase {
 		throws Exception {
 
 		assertSearch(
-			"ddm__text__41523__TextBox7nkv_en_US", "ddmFields.fieldValueText",
-			"bravo", true, 0);
+			"ddm__text__41523__TextBox7nkv_en_US",
+			"ddmFieldArray.fieldValueText", "bravo", true, 0);
 	}
 
 	@Test
@@ -108,8 +112,8 @@ public abstract class BaseNestedFieldsTestCase extends BaseIndexingTestCase {
 			new GetFieldMappingIndexRequest(
 				new String[] {String.valueOf(getCompanyId())}, getMappingName(),
 				new String[] {
-					"ddmFields.fieldValueText_en_US",
-					"ddmFields.fieldValueKeyword"
+					"ddmFieldArray.fieldValueText_en_US",
+					"ddmFieldArray.fieldValueKeyword"
 				});
 
 		GetFieldMappingIndexResponse getFieldMappingIndexResponse =
@@ -125,7 +129,7 @@ public abstract class BaseNestedFieldsTestCase extends BaseIndexingTestCase {
 		Assert.assertEquals(mapping, 2, jsonObject.length());
 
 		JSONObject jsonObject2 = jsonObject.getJSONObject(
-			"ddmFields.fieldValueText_en_US");
+			"ddmFieldArray.fieldValueText_en_US");
 
 		JSONObject jsonObject3 = jsonObject2.getJSONObject(
 			"fieldValueText_en_US");
@@ -139,33 +143,34 @@ public abstract class BaseNestedFieldsTestCase extends BaseIndexingTestCase {
 	public void testDDMNestedFieldsMatchKeyword() throws Exception {
 		assertSearch(
 			"ddm__keyword__41523__Textggef_en_US",
-			"ddmFields.fieldValueKeyword", "alpha keyword", "alpha keyword");
+			"ddmFieldArray.fieldValueKeyword", "alpha keyword",
+			"alpha keyword");
 	}
 
 	@Test
 	public void testDDMNestedFieldsMatchLocalizedText() throws Exception {
 		assertSearch(
 			"ddm__text__41523__TextBoxnj7s_en_US",
-			"ddmFields.fieldValueText_en_US", "charlie", "charlie text");
+			"ddmFieldArray.fieldValueText_en_US", "charlie", "charlie text");
 	}
 
 	@Test
 	public void testDDMNestedFieldsMatchMultipleValues() throws Exception {
 		assertSearch(
 			"ddm__text__41523__TextBoxo9us_ja_JP",
-			"ddmFields.fieldValueText_ja_JP", "作戦大成功",
+			"ddmFieldArray.fieldValueText_ja_JP", "作戦大成功",
 			Arrays.asList("作戦大成功", "新規作戦"));
 	}
 
 	@Test
 	public void testDDMNestedFieldsMatchText() throws Exception {
 		assertSearch(
-			"ddm__text__41523__TextBox7nkv_en_US", "ddmFields.fieldValueText",
-			"alpha", "alpha text");
+			"ddm__text__41523__TextBox7nkv_en_US",
+			"ddmFieldArray.fieldValueText", "alpha", "alpha text");
 	}
 
-	protected void addDocumentWithDDMFields() {
-		FieldArray fieldArray = new FieldArray("ddmFields");
+	protected void addDocumentWithDDMFieldArray() {
+		FieldArray fieldArray = new FieldArray("ddmFieldArray");
 
 		addNestedField(
 			"ddm__keyword__41523__Booleantua8_en_US_String_sortable",
@@ -197,7 +202,7 @@ public abstract class BaseNestedFieldsTestCase extends BaseIndexingTestCase {
 		FieldArray fieldArray) {
 
 		fieldArray.addField(
-			NestedDDMFieldsUtil.createField(name, valueFieldName, value));
+			NestedDDMFieldArrayUtil.createField(name, valueFieldName, value));
 	}
 
 	protected void addQuery(
@@ -265,10 +270,10 @@ public abstract class BaseNestedFieldsTestCase extends BaseIndexingTestCase {
 						).findAny(
 						).get();
 
-						List<?> values = document.getValues("ddmFields");
+						List<?> values = document.getValues("ddmFieldArray");
 
 						Optional<Object> optional =
-							NestedDDMFieldsUtil.getFieldValue(
+							NestedDDMFieldArrayUtil.getFieldValue(
 								fieldName,
 								(Stream<Map<String, Object>>)values.stream());
 
@@ -282,7 +287,7 @@ public abstract class BaseNestedFieldsTestCase extends BaseIndexingTestCase {
 		SearchRequestBuilder searchRequestBuilder) {
 
 		searchRequestBuilder.fetchSourceIncludes(
-			new String[] {"ddmFields.*", Field.GROUP_ID});
+			new String[] {"ddmFieldArray.*", Field.GROUP_ID});
 	}
 
 	protected abstract String getMappingName();
@@ -291,7 +296,7 @@ public abstract class BaseNestedFieldsTestCase extends BaseIndexingTestCase {
 		BooleanQuery booleanQuery, boolean mappedAsNested) {
 
 		if (mappedAsNested) {
-			return queries.nested("ddmFields", booleanQuery);
+			return queries.nested("ddmFieldArray", booleanQuery);
 		}
 
 		return booleanQuery;
@@ -305,11 +310,11 @@ public abstract class BaseNestedFieldsTestCase extends BaseIndexingTestCase {
 
 		if (mappedAsNested) {
 			booleanQuery.addMustQueryClauses(
-				queries.term("ddmFields.fieldName", fieldName));
+				queries.term("ddmFieldArray.fieldName", fieldName));
 		}
 		else {
 			booleanQuery.addMustQueryClauses(
-				queries.match("ddmFields.fieldName", fieldName));
+				queries.match("ddmFieldArray.fieldName", fieldName));
 		}
 
 		if (fieldName.startsWith("ddm__keyword")) {

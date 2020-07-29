@@ -21,7 +21,7 @@ import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.sort.FieldSort;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
-import com.liferay.portal.search.test.util.mappings.NestedDDMFieldsUtil;
+import com.liferay.portal.search.test.util.mappings.NestedDDMFieldArrayUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -56,10 +56,10 @@ public abstract class BaseNestedFieldsSortTestCase
 	protected void addDocumentWithOneDDMField(
 		String name, String valueFieldName, Object value) {
 
-		FieldArray fieldArray = new FieldArray("ddmFields");
+		FieldArray fieldArray = new FieldArray("ddmFieldArray");
 
 		fieldArray.addField(
-			NestedDDMFieldsUtil.createField(name, valueFieldName, value));
+			NestedDDMFieldArrayUtil.createField(name, valueFieldName, value));
 
 		addDocument(DocumentCreationHelpers.field(fieldArray));
 	}
@@ -72,9 +72,9 @@ public abstract class BaseNestedFieldsSortTestCase
 				fieldName, "fieldValueKeyword", value)
 		);
 
-		FieldSort fieldSort = sorts.field("ddmFields.fieldValueKeyword");
+		FieldSort fieldSort = sorts.field("ddmFieldArray.fieldValueKeyword");
 
-		fieldSort.setNestedSort(sorts.nested("ddmFields"));
+		fieldSort.setNestedSort(sorts.nested("ddmFieldArray"));
 
 		String expected = "[A, B, C]";
 
@@ -100,13 +100,13 @@ public abstract class BaseNestedFieldsSortTestCase
 		SearchRequestBuilder searchRequestBuilder) {
 
 		return searchRequestBuilder.fetchSourceIncludes(
-			new String[] {"ddmFields.*"});
+			new String[] {"ddmFieldArray.*"});
 	}
 
 	protected Object getDDMFieldValue(String fieldName, Document document) {
-		List<?> values = document.getValues("ddmFields");
+		List<?> values = document.getValues("ddmFieldArray");
 
-		Optional<Object> optional = NestedDDMFieldsUtil.getFieldValue(
+		Optional<Object> optional = NestedDDMFieldArrayUtil.getFieldValue(
 			fieldName, (Stream<Map<String, Object>>)values.stream());
 
 		return optional.get();

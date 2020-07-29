@@ -23,7 +23,7 @@ import java.util.stream.Stream;
 /**
  * @author André de Oliveira
  */
-public class NestedDDMFieldsUtil {
+public class NestedDDMFieldArrayUtil {
 
 	public static Field createField(
 		String name, String valueFieldName, Object value) {

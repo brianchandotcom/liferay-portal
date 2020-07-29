@@ -237,7 +237,7 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 	protected String populateHttpHeader(
 		String fieldName, String value, String ddmStructureId) {
 
-		Map<String, String> ddmFields = HashMapBuilder.put(
+		Map<String, String> ddmField = HashMapBuilder.put(
 			"fieldName",
 			StringBundler.concat(
 				"ddm__text__", ddmStructureId, "__HttpHeaders_", fieldName)
@@ -249,7 +249,7 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 			"valueFieldName", "fieldValueText"
 		).build();
 
-		return ddmFields.toString();
+		return ddmField.toString();
 	}
 
 	protected void populateHttpHeaders(
@@ -258,18 +258,18 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 
 		String ddmStructureId = String.valueOf(getDDMStructureId(fileEntry));
 
-		String[] ddmFields = new String[2];
+		String[] ddmFieldArray = new String[2];
 
-		ddmFields[0] = populateHttpHeader(
+		ddmFieldArray[0] = populateHttpHeader(
 			"CONTENT_TYPE", "text/plain; charset=UTF-8", ddmStructureId);
-		ddmFields[1] = populateHttpHeader(
+		ddmFieldArray[1] = populateHttpHeader(
 			"CONTENT_ENCODING", "UTF-8", ddmStructureId);
 
 		map.put(
-			"ddmFields",
+			"ddmFieldArray",
 			StringBundler.concat(
-				StringPool.OPEN_BRACKET, ddmFields[0],
-				StringPool.COMMA_AND_SPACE, ddmFields[1],
+				StringPool.OPEN_BRACKET, ddmFieldArray[0],
+				StringPool.COMMA_AND_SPACE, ddmFieldArray[1],
 				StringPool.CLOSE_BRACKET));
 	}
 

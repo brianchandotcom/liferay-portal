@@ -84,10 +84,10 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 		boolean legacyDDMIndexFieldsEnabled = isLegacyDDMIndexFieldsEnabled();
 
-		FieldArray fieldArray = (FieldArray)document.getField(DDM_FIELDS);
+		FieldArray fieldArray = (FieldArray)document.getField(DDM_FIELD_ARRAY);
 
 		if ((fieldArray == null) && !legacyDDMIndexFieldsEnabled) {
-			fieldArray = new FieldArray(DDM_FIELDS);
+			fieldArray = new FieldArray(DDM_FIELD_ARRAY);
 
 			document.add(fieldArray);
 		}
@@ -198,7 +198,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 			return new QueryFilter(booleanQuery);
 		}
 
-		return new QueryFilter(new NestedQuery(DDM_FIELDS, booleanQuery));
+		return new QueryFilter(new NestedQuery(DDM_FIELD_ARRAY, booleanQuery));
 	}
 
 	@Override
@@ -382,10 +382,12 @@ public class DDMIndexerImpl implements DDMIndexer {
 			ddmStructureFieldNameParts[1], locale);
 
 		booleanQuery.addRequiredTerm(
-			StringBundler.concat(DDM_FIELDS, StringPool.PERIOD, DDM_FIELD_NAME),
+			StringBundler.concat(
+				DDM_FIELD_ARRAY, StringPool.PERIOD, DDM_FIELD_NAME),
 			ddmStructureFieldName);
 		booleanQuery.addRequiredTerm(
-			StringBundler.concat(DDM_FIELDS, StringPool.PERIOD, valueFieldName),
+			StringBundler.concat(
+				DDM_FIELD_ARRAY, StringPool.PERIOD, valueFieldName),
 			StringPool.QUOTE + ddmStructureFieldValue + StringPool.QUOTE);
 	}
 

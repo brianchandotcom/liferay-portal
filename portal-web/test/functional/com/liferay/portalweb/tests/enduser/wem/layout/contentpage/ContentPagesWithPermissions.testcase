@@ -609,7 +609,7 @@ definition {
 
 		Click(locator1 = "//div[contains(@class,'fragment-rich-text')]/lfr-editable[contains(@id,'rich-text')]");
 
-		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_EDIT_BUTTON");
+		DoubleClick(locator1 = "//div[contains(@class,'fragment-rich-text')]/lfr-editable[contains(@id,'rich-text')]");
 
 		Type(
 			locator1 = "//div[contains(@class,'fragment-rich-text')]/lfr-editable[contains(@id,'rich-text')]//div[contains(@class,'cke_editable_inline')]",
@@ -717,7 +717,13 @@ definition {
 
 		Click(locator1 = "//div[contains(@class,'fragment-rich-text')]/lfr-editable[contains(@id,'rich-text')]");
 
-		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_BUTTON");
+		PageEditor.gotoTab(tabName = "Page Structure");
+
+		var key_navItem = "Mapping";
+
+		AssertClick(
+			locator1 = "PageEditor#NAV_ITEM_BUTTON",
+			value1 = "Mapping");
 
 		Select(
 			locator1 = "PageEditorEditableLink#FIELD",

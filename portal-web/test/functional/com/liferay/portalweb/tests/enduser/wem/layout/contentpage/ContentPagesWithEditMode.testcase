@@ -86,8 +86,6 @@ definition {
 			PageEditor.addWidget(
 				portletName = "Asset Publisher",
 				targetFragmentName = "Image");
-
-			Refresh();
 		}
 
 		task ("Edit inline content of Heading") {
@@ -157,14 +155,14 @@ definition {
 				value1 = "Content Edition");
 		}
 
-		task ("Assert only Contents and Comments are shown in sidebar") {
-			for (var tabName : list "Contents,Comments") {
+		task ("Assert only Page Structure, Contents and Comments are shown in sidebar") {
+			for (var tabName : list "Page Structure,Contents,Comments") {
 				AssertVisible(
 					key_tabName = "${tabName}",
 					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
 			}
 
-			for (var tabName : list "Fragments and Widgets,Page Structure,Look and Feel") {
+			for (var tabName : list "Fragments and Widgets,Look and Feel") {
 				AssertElementNotPresent(
 					key_tabName = "${tabName}",
 					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
@@ -179,24 +177,51 @@ definition {
 			}
 		}
 
-		task ("Assert floating toolbar of editable field is shown when select the editable field") {
-			for (var fragmentName : list "heading,paragraph,image") {
-				if ("${fragmentName}" == "image") {
-					Click(locator1 = "//div[contains(@class,'component-image')]/img[@data-lfr-editable-id='image-square']");
+		task ("Assert can edit editable field of Heading fragment") {
+			Click(
+				id = "element-text",
+				key_fragmentName = "heading",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_WITHOUT_TOPPER");
 
-					AssertVisible(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_IMAGE_PROPERTIES_BUTTON");
-				}
-				else {
-					Click(
-						id = "element-text",
-						key_fragmentName = "${fragmentName}",
-						locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_WITHOUT_TOPPER");
+			DoubleClick(
+				id = "element-text",
+				key_fragmentName = "heading",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_WITHOUT_TOPPER");
 
-					AssertVisible(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_EDIT_BUTTON");
-				}
+			AssertElementPresent(locator1 = "//*[contains(@class,'component-heading') and contains(@data-lfr-editable-id,'element-text')]/div[contains(@class,'cke_editable_inline')]");
 
-				Click(locator1 = "PageEditor#MANAGEMENT_BAR");
-			}
+			Click(locator1 = "PageEditor#MANAGEMENT_BAR");
+		}
+
+		task ("Assert can select mapped content of Paragraph fragment") {
+			Click(
+				id = "element-text",
+				key_fragmentName = "paragraph",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_WITHOUT_TOPPER");
+
+			PageEditor.gotoTab(tabName = "Page Structure");
+
+			var key_navItem = "Mapping";
+
+			AssertClick(
+				locator1 = "PageEditor#NAV_ITEM_BUTTON",
+				value1 = "Mapping");
+
+			AssertVisible(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_ASSET_SELECT_POPUP_BUTTON");
+
+			Click(locator1 = "PageEditor#MANAGEMENT_BAR");
+		}
+
+		task ("Assert can edit editable field of Image fragment") {
+			Click(locator1 = "//div[contains(@class,'component-image')]/img[@data-lfr-editable-id='image-square']");
+
+			DoubleClick(locator1 = "//div[contains(@class,'component-image')]/img[@data-lfr-editable-id='image-square']");
+
+			ItemSelector.selectDMImage(
+				imageFileName = "Document Title",
+				navTab = "Documents and Media");
+
+			Click(locator1 = "PageEditor#MANAGEMENT_BAR");
 		}
 
 		task ("Assert ellipsis button of Asset Publisher present") {

@@ -140,11 +140,6 @@ definition {
 
 		MultiFactorAuthentication.configureOTP(enableOTP = "true");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "API Authentication",
 			configurationName = "Auto Login Basic Authentication Header",
@@ -153,11 +148,6 @@ definition {
 		FormFields.disableCheckbox(fieldName = "enabled");
 
 		PortletEntry.save();
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "API Authentication",
@@ -530,11 +520,6 @@ definition {
 			userEmailAddress = "test@www.able.com",
 			virtualHostsURL = "http://www.able.com:8080");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Multi-Factor Authentication",
 			configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
@@ -565,11 +550,6 @@ definition {
 			password = "test",
 			specificURL = "http://www.able.com:8080",
 			userEmailAddress = "test@www.able.com");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Multi-Factor Authentication",
@@ -666,11 +646,6 @@ definition {
 			password = "test",
 			userEmailAddress = "test@www.able.com",
 			virtualHostsURL = "http://www.able.com:8080");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Multi-Factor Authentication",

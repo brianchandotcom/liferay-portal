@@ -229,7 +229,7 @@
 		"styles": [
 			{
 				"dataType": "string",
-				"defaultValue": "3",
+				"defaultValue": "0",
 				"dependencies": [
 				],
 				"label": "margin-top",
@@ -265,7 +265,7 @@
 			},
 			{
 				"dataType": "string",
-				"defaultValue": "3",
+				"defaultValue": "0",
 				"dependencies": [
 				],
 				"label": "margin-bottom",
@@ -301,7 +301,7 @@
 			},
 			{
 				"dataType": "string",
-				"defaultValue": "3",
+				"defaultValue": "0",
 				"dependencies": [
 				],
 				"label": "margin-left",
@@ -337,7 +337,7 @@
 			},
 			{
 				"dataType": "string",
-				"defaultValue": "3",
+				"defaultValue": "0",
 				"dependencies": [
 				],
 				"label": "margin-right",
@@ -373,7 +373,7 @@
 			},
 			{
 				"dataType": "string",
-				"defaultValue": "3",
+				"defaultValue": "0",
 				"dependencies": [
 				],
 				"label": "padding-top",
@@ -409,7 +409,7 @@
 			},
 			{
 				"dataType": "string",
-				"defaultValue": "3",
+				"defaultValue": "0",
 				"dependencies": [
 				],
 				"label": "padding-bottom",
@@ -445,7 +445,7 @@
 			},
 			{
 				"dataType": "string",
-				"defaultValue": "3",
+				"defaultValue": "0",
 				"dependencies": [
 				],
 				"label": "padding-left",
@@ -481,7 +481,7 @@
 			},
 			{
 				"dataType": "string",
-				"defaultValue": "3",
+				"defaultValue": "0",
 				"dependencies": [
 				],
 				"label": "padding-right",
@@ -726,7 +726,7 @@
 		"styles": [
 			{
 				"dataType": "number",
-				"defaultValue": 1,
+				"defaultValue": 100,
 				"dependencies": [
 				],
 				"label": "opacity",

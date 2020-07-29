@@ -12,53 +12,9 @@
  * details.
  */
 
-import {render} from 'frontend-js-react-web';
-
-import SidebarPanel from '../SidebarPanel';
-import SidebarPanelInfoView from '../components/SidebarPanelInfoView';
-import SidebarPanelMetricsView from '../components/SidebarPanelMetricsView';
+import {actions} from '../utils/showSidebar';
 
 export default function propsTransformer({items, namespace, ...otherProps}) {
-	const actions = {
-		showInfo(fetchURL) {
-			showSidebar(fetchURL, SidebarPanelInfoView);
-		},
-		showMetrics(fetchURL) {
-			showSidebar(fetchURL, SidebarPanelMetricsView);
-		},
-	};
-
-	const showSidebar = (fetchURL, View) => {
-		const sidebarPanel = _getSidebarPanel();
-
-		if (!sidebarPanel) {
-			const container = document.body.appendChild(
-				document.createElement('div')
-			);
-
-			render(
-				SidebarPanel,
-				{
-					fetchURL,
-					ref: _setSidebarPanel,
-					viewComponent: View,
-				},
-				container
-			);
-		}
-		else {
-			sidebarPanel.open(fetchURL, View);
-		}
-	};
-
-	const _getSidebarPanel = () => {
-		return Liferay.component(`${namespace}sidebar`);
-	};
-
-	const _setSidebarPanel = (element) => {
-		Liferay.component(`${namespace}sidebar`, element);
-	};
-
 	return {
 		...otherProps,
 		items: items.map((item) => {
@@ -70,7 +26,7 @@ export default function propsTransformer({items, namespace, ...otherProps}) {
 					if (action) {
 						event.preventDefault();
 
-						actions[action](item.data.fetchURL);
+						actions[action](item.data.fetchURL, namespace);
 					}
 				},
 			};

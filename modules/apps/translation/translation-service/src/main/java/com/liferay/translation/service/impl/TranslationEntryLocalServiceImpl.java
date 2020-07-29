@@ -61,14 +61,14 @@ public class TranslationEntryLocalServiceImpl
 		try {
 			return addOrUpdateTranslationEntry(
 				groupId, infoItemClassPKReference.getClassName(),
-				infoItemClassPKReference.getClassPK(), languageId,
+				infoItemClassPKReference.getClassPK(),
 				StreamUtil.toString(
 					_xliffTranslationInfoItemFieldValuesExporter.
 						exportInfoItemFieldValues(
 							infoItemFieldValues, LocaleUtil.getDefault(),
 							LocaleUtil.fromLanguageId(languageId))),
 				_xliffTranslationInfoItemFieldValuesExporter.getMimeType(),
-				serviceContext);
+				languageId, serviceContext);
 		}
 		catch (IOException ioException) {
 			throw new PortalException(ioException);

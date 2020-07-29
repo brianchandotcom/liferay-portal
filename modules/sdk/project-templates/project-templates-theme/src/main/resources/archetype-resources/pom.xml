@@ -20,7 +20,7 @@
 #elseif (${liferayVersion.startsWith("7.2")})
 		<liferay.bom.version>7.2.1</liferay.bom.version>
 #elseif (${liferayVersion.startsWith("7.3")})
-		<liferay.bom.version>7.3.2</liferay.bom.version>
+		<liferay.bom.version>7.3.3</liferay.bom.version>
 #end
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>

@@ -851,8 +851,8 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			serviceContext);
 	}
 
-	private void _assertAlternateLinkTag(
-		Document document, Set<Locale> locales) {
+	private void _assertAlternateLinkTag(Document document, Set<Locale> locales)
+		throws Exception {
 
 		Elements alternateLinkElements = document.select(
 			"link[rel='alternate']");
@@ -864,6 +864,15 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 				"[hrefLang='" + LocaleUtil.toW3cLanguageId(locale) + "']");
 
 			Assert.assertEquals(1, localeAlternateLinkElements.size());
+
+			Element localeAlternateLinkElement =
+				localeAlternateLinkElements.get(0);
+
+			Assert.assertEquals(
+				PortalUtil.getAlternateURL(
+					PortalUtil.getCanonicalURL("", _getThemeDisplay(), _layout),
+					_getThemeDisplay(), locale, _layout),
+				localeAlternateLinkElement.attr("href"));
 		}
 	}
 

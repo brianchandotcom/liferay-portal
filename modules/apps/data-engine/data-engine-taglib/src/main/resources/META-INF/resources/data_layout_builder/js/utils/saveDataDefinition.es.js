@@ -14,13 +14,76 @@
 
 import {addItem, updateItem} from './client.es';
 
+/**
+ * Normalize field
+ * @param {Array} availableLanguageIds
+ * @param {Object} field
+ * @description some fields are translated with the language of
+ * themeDisplay.getLanguageId() which is not necessarily the language of dataDefinition,
+ * so we need to normalize all fields so that they receive themeDisplay.getLanguageId()
+ */
+const normalizeField = (availableLanguageIds, field) => {
+	const defaultLanguageId = themeDisplay.getLanguageId();
+
+	const toArray = (value) =>
+		availableLanguageIds.reduce((accumulator, currentValue) => {
+			accumulator[currentValue] = value[currentValue] || '';
+
+			return accumulator;
+		}, {});
+
+	const toString = (value) =>
+		availableLanguageIds.reduce((accumulator, currentValue) => {
+			if (value[currentValue] && value[currentValue].length) {
+				accumulator[currentValue] = value[currentValue];
+			}
+			else {
+				accumulator[currentValue] = value[defaultLanguageId];
+			}
+
+			return accumulator;
+		}, {});
+
+	const {defaultValue, label, tip} = field;
+	const {options, placeholder, tooltip} = field.customProperties;
+
+	return {
+		...field,
+		...(defaultValue && {
+			defaultValue: Array.isArray(defaultValue[defaultLanguageId])
+				? toString(defaultValue)
+				: toArray(defaultValue),
+		}),
+		...(label && {label: toArray(label)}),
+		...(tip && {tip: toArray(tip)}),
+		customProperties: {
+			...field.customProperties,
+			...(options && {
+				options: toString(options),
+			}),
+			...(placeholder && {
+				placeholder: toArray(placeholder),
+			}),
+			...(tooltip && {
+				tooltip: toArray(tooltip),
+			}),
+		},
+		nestedDataDefinitionFields: field.nestedDataDefinitionFields.length
+			? field.nestedDataDefinitionFields.map((nestedField) => ({
+					...nestedField,
+					...normalizeField(availableLanguageIds, nestedField),
+			  }))
+			: [],
+	};
+};
+
 export default ({
 	dataDefinition,
 	dataDefinitionId,
 	dataLayout,
 	dataLayoutId,
 }) => {
-	const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+	const defaultLanguageId = themeDisplay.getLanguageId();
 
 	const normalizedDataLayout = {
 		...dataLayout,
@@ -56,78 +119,17 @@ export default ({
 	};
 
 	const availableLanguageIds = [
-		...new Set([...dataDefinition.availableLanguageIds, defaultLanguageId]),
+		...new Set([
+			...Object.keys(dataLayout.name).map((name) => name),
+			defaultLanguageId,
+		]),
 	];
-
-	const toArray = (value) =>
-		availableLanguageIds.reduce((accumulator, currentValue) => {
-			accumulator[currentValue] = value[currentValue] || '';
-
-			return accumulator;
-		}, {});
-
-	const toString = (value) =>
-		availableLanguageIds.reduce((accumulator, currentValue) => {
-			if (value[currentValue] && value[currentValue].length) {
-				accumulator[currentValue] = value[currentValue];
-			}
-			else {
-				accumulator[currentValue] = value[defaultLanguageId];
-			}
-
-			return accumulator;
-		}, {});
 
 	const normalizedDataDefinition = {
 		...dataDefinition,
 		availableLanguageIds,
-		dataDefinitionFields: dataDefinition.dataDefinitionFields.map(
-			(field) => {
-				const normalizeField = (field) => {
-					const {defaultValue, label, tip} = field;
-					const {
-						options,
-						placeholder,
-						tooltip,
-					} = field.customProperties;
-
-					return {
-						...field,
-						...(defaultValue && {
-							defaultValue: Array.isArray(
-								defaultValue[defaultLanguageId]
-							)
-								? toString(defaultValue)
-								: toArray(defaultValue),
-						}),
-						...(label && {label: toArray(label)}),
-						...(tip && {tip: toArray(tip)}),
-						customProperties: {
-							...field.customProperties,
-							...(options && {
-								options: toString(options),
-							}),
-							...(placeholder && {
-								placeholder: toArray(placeholder),
-							}),
-							...(tooltip && {
-								tooltip: toArray(tooltip),
-							}),
-						},
-						nestedDataDefinitionFields: field
-							.nestedDataDefinitionFields.length
-							? field.nestedDataDefinitionFields.map(
-									(nestedField) => ({
-										...nestedField,
-										...normalizeField(nestedField),
-									})
-							  )
-							: [],
-					};
-				};
-
-				return normalizeField(field);
-			}
+		dataDefinitionFields: dataDefinition.dataDefinitionFields.map((field) =>
+			normalizeField(availableLanguageIds, field)
 		),
 		name: {
 			...dataDefinition.name,

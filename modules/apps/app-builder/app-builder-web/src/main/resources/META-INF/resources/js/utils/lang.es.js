@@ -13,7 +13,7 @@
  */
 
 const getLocalizedValue = (defaultLanguageId, localizedValues) => {
-	const languageId = Liferay.ThemeDisplay.getLanguageId();
+	const languageId = themeDisplay.getLanguageId();
 
 	if (localizedValues[languageId]) {
 		return localizedValues[languageId];

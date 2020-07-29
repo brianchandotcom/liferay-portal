@@ -51,6 +51,10 @@ export default function ListEntries({history}) {
 		showFormView,
 	} = useContext(AppContext);
 
+	const actions = useEntriesActions({
+		update: ({completed}) => !completed,
+	});
+
 	const {appWorkflowDefinitionId, appWorkflowTasks = []} = useAppWorkflow(
 		appId
 	);
@@ -231,9 +235,16 @@ export default function ListEntries({history}) {
 
 	const isEmpty = totalCount === 0;
 	const showAddButton = showFormView && permissions.add;
-	const showOptions = {
-		update: ({completed}) => !completed,
-	};
+
+	const refetchActions = actions.map((action = {}) => ({
+		...action,
+		action: (entry) =>
+			action?.action(entry).then((isRefetch) => {
+				if (isRefetch) {
+					refetch();
+				}
+			}),
+	}));
 
 	return (
 		<Loading isLoading={isLoading}>
@@ -260,7 +271,7 @@ export default function ListEntries({history}) {
 				/>
 
 				<TableWithPagination
-					actions={useEntriesActions({refetch, showOptions})}
+					actions={refetchActions}
 					columns={COLUMNS}
 					emptyState={{
 						button: () =>

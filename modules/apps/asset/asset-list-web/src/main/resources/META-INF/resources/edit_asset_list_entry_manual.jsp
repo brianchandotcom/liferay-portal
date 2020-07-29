@@ -45,6 +45,10 @@ if (Validator.isNotNull(backURL)) {
 			<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 			<aui:input name="assetListEntryId" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryId() %>" />
 
+			<div class="mb-3 text-muted">
+				<liferay-ui:message key="choose-the-asset-type-you-want-to-use-for-this-manual-collection" />
+			</div>
+
 			<liferay-frontend:edit-form-body>
 				<liferay-util:include page="/asset_list/source.jsp" servletContext="<%= application %>" />
 			</liferay-frontend:edit-form-body>

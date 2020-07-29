@@ -38,7 +38,7 @@ String refererPortletName = ParamUtil.getString(request, "refererPortletName");
 	DDMTemplate defaultDDMTemplate = journalContentDisplayContext.getDefaultDDMTemplate();
 
 	if (defaultDDMTemplate != null) {
-		defaultDDMTemplateName = defaultDDMTemplate.getName(locale);
+		defaultDDMTemplateName = HtmlUtil.escape(defaultDDMTemplate.getName(locale));
 	}
 	%>
 

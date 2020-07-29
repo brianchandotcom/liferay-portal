@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -121,15 +122,21 @@ public class StyleBookScopedCSSVariablesProvider
 		Layout layout = themeDisplay.getLayout();
 
 		if (layout.getStyleBookEntryId() > 0) {
-			styleBookEntry =
-				_styleBookEntryLocalService.fetchDefaultStyleBookEntry(
-					layout.getGroupId());
+			styleBookEntry = _styleBookEntryLocalService.fetchStyleBookEntry(
+				layout.getStyleBookEntryId());
+		}
+
+		if ((styleBookEntry == null) && (layout.getMasterLayoutPlid() > 0)) {
+			Layout masterLayout = _layoutLocalService.fetchLayout(
+				layout.getMasterLayoutPlid());
+
+			styleBookEntry = _styleBookEntryLocalService.fetchStyleBookEntry(
+				masterLayout.getStyleBookEntryId());
 		}
 
 		if (styleBookEntry == null) {
-			styleBookEntry =
-				_styleBookEntryLocalService.fetchDefaultStyleBookEntry(
-					layout.getGroupId());
+			_styleBookEntryLocalService.fetchDefaultStyleBookEntry(
+				layout.getGroupId());
 		}
 
 		if (styleBookEntry == null) {
@@ -141,6 +148,9 @@ public class StyleBookScopedCSSVariablesProvider
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		StyleBookScopedCSSVariablesProvider.class);
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private StyleBookEntryLocalService _styleBookEntryLocalService;

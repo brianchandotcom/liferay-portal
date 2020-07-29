@@ -15,6 +15,7 @@
 package com.liferay.change.tracking.internal.closure;
 
 import com.liferay.change.tracking.closure.CTClosure;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -110,6 +111,13 @@ public class CTClosureImplTest {
 			Collections.emptyMap(),
 			ctClosure.getChildPKsMap(
 				node5.getClassNameId(), node5.getPrimaryKey()));
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"{\n\t(classNameId=1, classPK=1)\n\t\t(classNameId=2, ",
+				"classPK=2)\n\t\t\t(classNameId=3, classPK=3)\n\t\t\t\t(",
+				"classNameId=4, classPK=4)\n\t(classNameId=5, classPK=5)\n}"),
+			ctClosure.toString());
 	}
 
 }

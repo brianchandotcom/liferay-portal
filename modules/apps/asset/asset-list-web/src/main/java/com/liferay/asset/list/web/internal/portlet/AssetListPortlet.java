@@ -29,6 +29,7 @@ import com.liferay.asset.list.web.internal.display.context.InfoListProviderItems
 import com.liferay.asset.list.web.internal.servlet.taglib.util.ListItemsActionDropdownItems;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.url.provider.InfoEditURLProviderTracker;
 import com.liferay.info.item.InfoItemServiceTracker;
@@ -92,6 +93,8 @@ public class AssetListPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			AssetListWebKeys.ASSET_LIST_DISPLAY_CONTEXT,
 			assetListDisplayContext);
+
+		renderRequest.setAttribute(AssetListWebKeys.DDM_INDEXER, _ddmIndexer);
 		renderRequest.setAttribute(
 			AssetListWebKeys.EDIT_ASSET_LIST_DISPLAY_CONTEXT,
 			new EditAssetListDisplayContext(
@@ -162,6 +165,9 @@ public class AssetListPortlet extends MVCPortlet {
 	@Reference
 	private AssetRendererFactoryClassProvider
 		_assetRendererFactoryClassProvider;
+
+	@Reference
+	private DDMIndexer _ddmIndexer;
 
 	@Reference
 	private DLAppService _dlAppService;

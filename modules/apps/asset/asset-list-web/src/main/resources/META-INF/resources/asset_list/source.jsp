@@ -314,7 +314,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 				<%= className %>Options.classList.add('hide');
 			}
 
-			if (removeOrderBySubtype) {
+			if (removeOrderBySubtype && orderingPanel) {
 				Array.prototype.forEach.call(
 					orderingPanel.querySelectorAll('.order-by-subtype'),
 					function (option) {
@@ -421,33 +421,35 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 					subtypeFieldsWrapper
 				) {
 					if (selectedSubtype != 'false' && selectedSubtype != 'true') {
-						Array.prototype.forEach.call(
-							orderingPanel.querySelectorAll('.order-by-subtype'),
-							function (option) {
-								dom.exitDocument(option);
+						if (orderingPanel) {
+							Array.prototype.forEach.call(
+								orderingPanel.querySelectorAll('.order-by-subtype'),
+								function (option) {
+									dom.exitDocument(option);
+								}
+							);
+
+							var optTextOrderByColumn1 =
+								MAP_DDM_STRUCTURES[
+									'<%= className %>_' +
+										selectedSubtype +
+										'_optTextOrderByColumn1'
+								];
+
+							if (optTextOrderByColumn1) {
+								dom.append(orderByColumn1, optTextOrderByColumn1);
 							}
-						);
 
-						var optTextOrderByColumn1 =
-							MAP_DDM_STRUCTURES[
-								'<%= className %>_' +
-									selectedSubtype +
-									'_optTextOrderByColumn1'
-							];
+							var optTextOrderByColumn2 =
+								MAP_DDM_STRUCTURES[
+									'<%= className %>_' +
+										selectedSubtype +
+										'_optTextOrderByColumn2'
+								];
 
-						if (optTextOrderByColumn1) {
-							dom.append(orderByColumn1, optTextOrderByColumn1);
-						}
-
-						var optTextOrderByColumn2 =
-							MAP_DDM_STRUCTURES[
-								'<%= className %>_' +
-									selectedSubtype +
-									'_optTextOrderByColumn2'
-							];
-
-						if (optTextOrderByColumn2) {
-							dom.append(orderByColumn2, optTextOrderByColumn2);
+							if (optTextOrderByColumn2) {
+								dom.append(orderByColumn2, optTextOrderByColumn2);
+							}
 						}
 
 						if (structureOptions) {

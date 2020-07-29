@@ -45,26 +45,28 @@ export const addItem = (endpoint, item) =>
 		method: 'POST',
 	}).then((response) => parseResponse(response));
 
-export const confirmDelete = (endpoint) => (item) =>
+export const confirmDelete = (endpoint, options = {}) => (item) =>
 	new Promise((resolve, reject) => {
-		const confirmed = confirm(
-			Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-		);
+		const {
+			confirmMessage = Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-this'
+			),
+			errorMessage = Liferay.Language.get(
+				'the-item-could-not-be-deleted'
+			),
+			successMessage = Liferay.Language.get(
+				'the-item-was-deleted-successfully'
+			),
+		} = options;
+
+		const confirmed = confirm(confirmMessage);
 
 		if (confirmed) {
 			deleteItem(endpoint + item.id)
 				.then(() => resolve(true))
-				.then(() =>
-					successToast(
-						Liferay.Language.get(
-							'the-item-was-deleted-successfully'
-						)
-					)
-				)
+				.then(() => successToast(successMessage))
 				.catch((error) => {
-					errorToast(
-						Liferay.Language.get('the-item-could-not-be-deleted')
-					);
+					errorToast(errorMessage);
 					reject(error);
 				});
 		}

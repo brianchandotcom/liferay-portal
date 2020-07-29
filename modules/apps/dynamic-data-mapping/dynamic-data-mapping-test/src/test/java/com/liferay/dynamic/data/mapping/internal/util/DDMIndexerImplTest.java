@@ -131,10 +131,10 @@ public class DDMIndexerImplTest {
 
 		Map<String, String> map = _withSortableValues(
 			Collections.singletonMap(
-				"ddmFields.fieldValueText_ja_JP", fieldValue));
+				"ddmFieldArray.fieldValueText_ja_JP", fieldValue));
 
 		FieldValuesAssert.assertFieldValues(
-			map, "ddmFields.fieldValueText", document, fieldValue);
+			map, "ddmFieldArray.fieldValueText", document, fieldValue);
 	}
 
 	@Test
@@ -169,10 +169,10 @@ public class DDMIndexerImplTest {
 
 		Map<String, String> map = _withSortableValues(
 			Collections.singletonMap(
-				"ddmFields.fieldValueText_ja_JP", fieldValue));
+				"ddmFieldArray.fieldValueText_ja_JP", fieldValue));
 
 		FieldValuesAssert.assertFieldValues(
-			map, "ddmFields.fieldValueText", document, fieldValue);
+			map, "ddmFieldArray.fieldValueText", document, fieldValue);
 	}
 
 	@Test
@@ -213,13 +213,13 @@ public class DDMIndexerImplTest {
 
 		Map<String, String> map = _withSortableValues(
 			HashMapBuilder.put(
-				"ddmFields.fieldValueText_en_US", fieldValueUS
+				"ddmFieldArray.fieldValueText_en_US", fieldValueUS
 			).put(
-				"ddmFields.fieldValueText_ja_JP", fieldValueJP
+				"ddmFieldArray.fieldValueText_ja_JP", fieldValueJP
 			).build());
 
 		FieldValuesAssert.assertFieldValues(
-			map, "ddmFields.fieldValueText", document, fieldValueJP);
+			map, "ddmFieldArray.fieldValueText", document, fieldValueJP);
 	}
 
 	protected DDMFormField createDDMFormField(

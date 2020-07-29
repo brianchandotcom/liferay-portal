@@ -29,6 +29,8 @@ import java.util.Locale;
  */
 public interface DDMIndexer {
 
+	public static final String DDM_FIELD_ARRAY = "ddmFieldArray";
+
 	public static final String DDM_FIELD_NAME = "fieldName";
 
 	public static final String DDM_FIELD_NAMESPACE = "ddm";
@@ -38,8 +40,6 @@ public interface DDMIndexer {
 
 	public static final String DDM_FIELD_SEPARATOR =
 		StringPool.DOUBLE_UNDERLINE;
-
-	public static final String DDM_FIELDS = "ddmFields";
 
 	public static final String DDM_VALUE_FIELD_NAME = "valueFieldName";
 

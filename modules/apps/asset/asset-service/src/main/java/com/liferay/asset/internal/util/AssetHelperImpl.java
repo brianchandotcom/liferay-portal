@@ -616,7 +616,7 @@ public class AssetHelperImpl implements AssetHelper {
 				}
 			}
 			else {
-				sb.append(DDMIndexer.DDM_FIELDS);
+				sb.append(DDMIndexer.DDM_FIELD_ARRAY);
 				sb.append(StringPool.PERIOD);
 
 				try {
@@ -687,7 +687,7 @@ public class AssetHelperImpl implements AssetHelper {
 			return fieldSort;
 		}
 
-		NestedSort nestedSort = _sorts.nested(DDMIndexer.DDM_FIELDS);
+		NestedSort nestedSort = _sorts.nested(DDMIndexer.DDM_FIELD_ARRAY);
 
 		StringBundler sb = new StringBundler(3);
 
@@ -701,7 +701,7 @@ public class AssetHelperImpl implements AssetHelper {
 		nestedSort.setFilterQuery(
 			_queries.term(
 				StringBundler.concat(
-					DDMIndexer.DDM_FIELDS, StringPool.PERIOD,
+					DDMIndexer.DDM_FIELD_ARRAY, StringPool.PERIOD,
 					DDMIndexer.DDM_FIELD_NAME),
 				sb.toString()));
 

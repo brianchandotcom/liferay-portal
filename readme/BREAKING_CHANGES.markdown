@@ -785,9 +785,9 @@ This change was made because these properties are not useful for an entity.
 
 #### What changed?
 
-Dynamic Data Mapping fields in Elasticsearch that start with `ddm__keyword__` and `ddm__text__` have been moved to a new nested document `ddmFields`.
+Dynamic Data Mapping fields in Elasticsearch that start with `ddm__keyword__` and `ddm__text__` have been moved to a new nested document `ddmFieldArray`.
 
-The new nested document `ddmFields` has several entries with following fields:
+The new nested document `ddmFieldArray` has several entries with following fields:
  - `fieldName`: Contains the Dynamic Data Mapping structure field name. This name is generated using `DDMIndexer.encodeName` methods.
  - `fieldValue*`: Contains the indexed data. The name of this field is generated using `DDMIndexer.getValueFieldName` and depends on its data type and language.
  - `valueFieldName`: Contains the index field name where the indexed data is stored.
@@ -800,9 +800,9 @@ This affects anyone with custom developments that execute queries in the Elastic
 
 #### How should I update my code?
 
-You have to use the new nested document `ddmFields` in your Elasticsearch queries.
+You have to use the new nested document `ddmFieldArray` in your Elasticsearch queries.
 
-There are some examples in Liferay code, for example, you can see the usage of DDM_FIELDS constant in [DDMIndexerImpl](https://github.com/liferay/liferay-portal/blob/master/modules/apps/dynamic-data-mapping/dynamic-data-mapping-service/src/main/java/com/liferay/dynamic/data/mapping/internal/util/DDMIndexerImpl.java) and [AssetHelperImpl](https://github.com/liferay/liferay-portal/blob/master/modules/apps/asset/asset-service/src/main/java/com/liferay/asset/internal/util/AssetHelperImpl.java) java classes.
+There are some examples in Liferay code, for example, you can see the usage of DDM_FIELD_ARRAY constant in [DDMIndexerImpl](https://github.com/liferay/liferay-portal/blob/master/modules/apps/dynamic-data-mapping/dynamic-data-mapping-service/src/main/java/com/liferay/dynamic/data/mapping/internal/util/DDMIndexerImpl.java) and [AssetHelperImpl](https://github.com/liferay/liferay-portal/blob/master/modules/apps/asset/asset-service/src/main/java/com/liferay/asset/internal/util/AssetHelperImpl.java) java classes.
 
 You can also restore the legacy behavior from System Settings and continue using `ddm__keyword__*` and `ddm__text__*` fields.
  - Go to "System Settings" => "Dynamic Data Mapping" => "Dynamic Data Mapping Indexer"

@@ -148,12 +148,6 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 					ExportImportHelper.TEMP_FOLDER_NAME +
 						portlet.getPortletId());
 
-				SessionMessages.add(
-					actionRequest,
-					_portal.getPortletId(actionRequest) +
-						SessionMessages.KEY_SUFFIX_CLOSE_REFRESH_PORTLET,
-					portlet.getPortletId());
-
 				sendRedirect(actionRequest, actionResponse);
 			}
 		}

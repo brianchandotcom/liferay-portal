@@ -17,6 +17,7 @@ import {TranslationManager} from 'data-engine-taglib';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
+import {AppContext} from '../../AppContext.es';
 import ControlMenu from '../../components/control-menu/ControlMenu.es';
 import DragLayer from '../../components/drag-and-drop/DragLayer.es';
 import {Loading} from '../../components/loading/Loading.es';
@@ -38,6 +39,7 @@ import {
 } from './utils.es';
 
 const EditTableView = withRouter(({history}) => {
+	const {showTranslationManager} = useContext(AppContext);
 	const [{dataDefinition, dataListView}, dispatch] = useContext(
 		EditTableViewContext
 	);
@@ -133,25 +135,27 @@ const EditTableView = withRouter(({history}) => {
 					}}
 				>
 					<UpperToolbar>
-						<UpperToolbar.Group>
-							<TranslationManager
-								availableLanguageIds={dataDefinition.availableLanguageIds.reduce(
-									(acc, cur) => {
-										acc[cur] =
-											Liferay.Language.available[cur];
+						{showTranslationManager && (
+							<UpperToolbar.Group>
+								<TranslationManager
+									availableLanguageIds={dataDefinition.availableLanguageIds.reduce(
+										(acc, cur) => {
+											acc[cur] =
+												Liferay.Language.available[cur];
 
-										return acc;
-									},
-									{}
-								)}
-								defaultLanguageId={defaultLanguageId}
-								editingLanguageId={editingLanguageId}
-								onEditingLanguageIdChange={
-									onEditingLanguageIdChange
-								}
-								translatedLanguageIds={dataListView.name}
-							/>
-						</UpperToolbar.Group>
+											return acc;
+										},
+										{}
+									)}
+									defaultLanguageId={defaultLanguageId}
+									editingLanguageId={editingLanguageId}
+									onEditingLanguageIdChange={
+										onEditingLanguageIdChange
+									}
+									translatedLanguageIds={dataListView.name}
+								/>
+							</UpperToolbar.Group>
+						)}
 
 						<UpperToolbar.Input
 							onChange={onTableViewNameChange}

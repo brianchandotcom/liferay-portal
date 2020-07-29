@@ -18,11 +18,11 @@ import React from 'react';
 import {AppContextProvider} from '../../AppContext.es';
 import EditFormView from './EditFormView.es';
 
-const EditFormViewApp = ({basePortletURL, ...props}) => {
+const EditFormViewApp = ({basePortletURL, ...otherProps}) => {
 	return (
 		<AppContextProvider basePortletURL={basePortletURL}>
 			<ClayModalProvider>
-				<EditFormView {...props} />
+				<EditFormView {...otherProps} />
 			</ClayModalProvider>
 		</AppContextProvider>
 	);

@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>BORDER_BOTTOM_SELECT_FIELD</td>
-	<td>//div[contains(@class,'floating-toolbar__label')][normalize-space()='${key_borderBottom}']/following-sibling::div[1]//div[label[contains(.,'${key_fieldLabel}')]]/select</td>
+	<td>//div[contains(@class,'label')][normalize-space()='${key_borderBottom}']/following-sibling::div[1]//div[label[contains(.,'${key_fieldLabel}')]]/select</td>
 	<td></td>
 </tr>
 <tr>

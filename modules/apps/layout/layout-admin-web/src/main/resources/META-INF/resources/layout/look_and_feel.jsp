@@ -41,6 +41,8 @@ PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 
 <aui:input name="masterLayoutPlid" type="hidden" />
 
+<aui:input name="styleBookEntryId" type="hidden" />
+
 <%
 LayoutPageTemplateEntry layoutPageTemplateEntry = LayoutPageTemplateEntryLocalServiceUtil.fetchLayoutPageTemplateEntryByPlid(selLayout.getPlid());
 
@@ -90,6 +92,31 @@ if ((layoutPageTemplateEntry == null) || !Objects.equals(layoutPageTemplateEntry
 		</div>
 	</clay:sheet-section>
 </c:if>
+
+<%
+StyleBookEntry styleBookEntry = null;
+
+if (selLayout.getStyleBookEntryId() > 0) {
+	styleBookEntry = StyleBookEntryLocalServiceUtil.fetchStyleBookEntry(selLayout.getStyleBookEntryId());
+}
+%>
+
+<clay:sheet-section>
+	<h3 class="sheet-subtitle"><liferay-ui:message key="style-book" /></h3>
+
+	<p>
+		<b><liferay-ui:message key="style-book-name" />:</b> <span id="<portlet:namespace />styleBookName"><%= (styleBookEntry != null) ? styleBookEntry.getName() : LanguageUtil.get(request, "default") %></span>
+	</p>
+
+	<div class="button-holder">
+		<clay:button
+			displaytype="secondary"
+			id='<%= liferayPortletResponse.getNamespace() + "changeStyleBookButton" %>'
+			label="change-style-book"
+			small="<%= true %>"
+		/>
+	</div>
+</clay:sheet-section>
 
 <liferay-util:buffer
 	var="rootNodeNameLink"
@@ -239,3 +266,42 @@ else {
 		);
 	</aui:script>
 </c:if>
+
+<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
+	var changeStyleBookButton = document.getElementById(
+		'<portlet:namespace />changeStyleBookButton'
+	);
+
+	var changeStyleBookButtonEventListener = changeStyleBookButton.addEventListener(
+		'click',
+		function (event) {
+			var itemSelectorDialog = new ItemSelectorDialog.default({
+				buttonAddLabel: '<liferay-ui:message key="done" />',
+				eventName: '<portlet:namespace />selectStyleBook',
+				title: '<liferay-ui:message key="select-style-book" />',
+				url:
+					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_style_book.jsp" /></portlet:renderURL>',
+			});
+
+			itemSelectorDialog.open();
+
+			itemSelectorDialog.on('selectedItemChange', function (event) {
+				var selectedItem = event.selectedItem;
+
+				if (selectedItem) {
+					var styleBookName = document.getElementById(
+						'<portlet:namespace />styleBookName'
+					);
+
+					styleBookName.innerHTML = selectedItem.name;
+
+					var styleBookEntryId = document.getElementById(
+						'<portlet:namespace />styleBookEntryId'
+					);
+
+					styleBookEntryId.value = selectedItem.stylebookentryid;
+				}
+			});
+		}
+	);
+</aui:script>

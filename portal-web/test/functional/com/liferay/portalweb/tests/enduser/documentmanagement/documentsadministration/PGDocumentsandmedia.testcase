@@ -607,7 +607,7 @@ definition {
 
 	@priority = "5"
 	test DeleteDocumentInFolder {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

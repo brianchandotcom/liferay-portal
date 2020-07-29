@@ -22,6 +22,7 @@ CommerceOrderListDisplayContext commerceOrderListDisplayContext = (CommerceOrder
 
 <clay:headless-data-set-display
 	apiURL="/o/headless-commerce-admin-order/v1.0/orders?nestedFields=account,channel"
+	bulkActionDropdownItems="<%= commerceOrderListDisplayContext.getBulkActionDropdownItems() %>"
 	clayDataSetActionDropdownItems="<%= commerceOrderListDisplayContext.getClayDataSetActionDropdownItems() %>"
 	formId="fm"
 	id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_ALL_ORDERS %>"
@@ -29,6 +30,8 @@ CommerceOrderListDisplayContext commerceOrderListDisplayContext = (CommerceOrder
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"
 	portletURL="<%= commerceOrderListDisplayContext.getPortletURL() %>"
+	selectedItemsKey="id"
+	selectionType="multiple"
 	sortItemList="<%= commerceOrderListDisplayContext.getSortItemList() %>"
 	style="fluid"
 />

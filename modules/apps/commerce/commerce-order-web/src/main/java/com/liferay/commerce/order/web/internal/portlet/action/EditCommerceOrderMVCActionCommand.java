@@ -165,7 +165,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		}
 		else {
 			deleteCommerceOrderIds = ParamUtil.getLongValues(
-				actionRequest, "deleteCommerceOrderIds");
+				actionRequest, "id");
 		}
 
 		for (long deleteCommerceOrderId : deleteCommerceOrderIds) {

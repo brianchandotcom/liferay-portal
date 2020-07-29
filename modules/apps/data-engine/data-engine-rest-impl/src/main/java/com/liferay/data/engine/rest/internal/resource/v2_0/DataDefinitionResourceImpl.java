@@ -101,6 +101,7 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -560,6 +561,7 @@ public class DataDefinitionResourceImpl
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.getDDMStructure(
 			dataDefinitionId);
+
 		DDMForm ddmForm = DataDefinitionUtil.toDDMForm(
 			dataDefinition, _ddmFormFieldTypeServicesTracker);
 
@@ -697,8 +699,14 @@ public class DataDefinitionResourceImpl
 		LocaleThreadLocal.setThemeDisplayLocale(locale);
 
 		try {
+			Locale defaultLocale = _getDefaultLocale();
+
 			DDMForm ddmFormFieldTypeSettingsDDMForm = DDMFormFactory.create(
 				ddmFormFieldType.getDDMFormFieldTypeSettings());
+
+			ddmFormFieldTypeSettingsDDMForm.setAvailableLocales(
+				_getAvailableLocales());
+			ddmFormFieldTypeSettingsDDMForm.setDefaultLocale(defaultLocale);
 
 			DDMFormRenderingContext ddmFormRenderingContext =
 				new DDMFormRenderingContext();
@@ -714,7 +722,7 @@ public class DataDefinitionResourceImpl
 
 			ddmFormRenderingContext.setHttpServletRequest(
 				contextHttpServletRequest);
-			ddmFormRenderingContext.setLocale(locale);
+			ddmFormRenderingContext.setLocale(defaultLocale);
 			ddmFormRenderingContext.setPortletNamespace(
 				_portal.getPortletNamespace(
 					_portal.getPortletId(contextHttpServletRequest)));
@@ -738,6 +746,22 @@ public class DataDefinitionResourceImpl
 		}
 
 		return null;
+	}
+
+	private Set<Locale> _getAvailableLocales() {
+		DDMForm ddmForm = _getDDMForm();
+
+		if (ddmForm != null) {
+			return ddmForm.getAvailableLocales();
+		}
+
+		Locale defaultLocale = Optional.ofNullable(
+			LocaleThreadLocal.getSiteDefaultLocale()
+		).orElse(
+			LocaleThreadLocal.getDefaultLocale()
+		);
+
+		return Collections.singleton(defaultLocale);
 	}
 
 	private String _getDataEngineNativeObjectFieldName(
@@ -771,6 +795,29 @@ public class DataDefinitionResourceImpl
 		).build();
 	}
 
+	private DDMForm _getDDMForm() {
+		try {
+			long ddmStructureId = ParamUtil.getLong(
+				contextHttpServletRequest, "ddmStructureId");
+
+			DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+				ddmStructureId);
+
+			if (ddmStructure == null) {
+				return null;
+			}
+
+			return ddmStructure.getDDMForm();
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+
+			return null;
+		}
+	}
+
 	private long _getDefaultDataLayoutId(long dataDefinitionId)
 		throws Exception {
 
@@ -790,6 +837,20 @@ public class DataDefinitionResourceImpl
 				ddmStructure.getStructureKey());
 
 		return dataLayout.getId();
+	}
+
+	private Locale _getDefaultLocale() {
+		DDMForm ddmForm = _getDDMForm();
+
+		if (ddmForm != null) {
+			return ddmForm.getDefaultLocale();
+		}
+
+		return Optional.ofNullable(
+			LocaleThreadLocal.getSiteDefaultLocale()
+		).orElse(
+			LocaleThreadLocal.getDefaultLocale()
+		);
 	}
 
 	private String _getFieldType(String customType, int sqlType) {

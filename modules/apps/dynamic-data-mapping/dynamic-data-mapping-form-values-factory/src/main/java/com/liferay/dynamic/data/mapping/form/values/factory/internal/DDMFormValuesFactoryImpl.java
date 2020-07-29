@@ -643,10 +643,9 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 			httpServletRequest, "availableLocales");
 
 		if (ArrayUtil.isEmpty(availableLocalesString)) {
-			ddmFormValues.addAvailableLocale(
-				getDefaultLocale(
-					httpServletRequest, ddmForm.getDefaultLocale(),
-					ddmForm.getAvailableLocales()));
+			for (Locale availableLocale : ddmForm.getAvailableLocales()) {
+				ddmFormValues.addAvailableLocale(availableLocale);
+			}
 		}
 		else {
 			for (String availableLocaleString : availableLocalesString) {

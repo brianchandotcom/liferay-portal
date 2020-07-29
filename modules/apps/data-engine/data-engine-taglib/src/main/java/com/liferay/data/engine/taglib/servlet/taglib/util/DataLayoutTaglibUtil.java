@@ -284,7 +284,7 @@ public class DataLayoutTaglibUtil {
 
 			return new HashSet() {
 				{
-					add(LocaleThreadLocal.getDefaultLocale());
+					add(LocaleThreadLocal.getSiteDefaultLocale());
 				}
 			};
 		}
@@ -315,7 +315,7 @@ public class DataLayoutTaglibUtil {
 		catch (Exception exception) {
 			return new HashSet() {
 				{
-					add(LocaleThreadLocal.getDefaultLocale());
+					add(LocaleThreadLocal.getSiteDefaultLocale());
 				}
 			};
 		}

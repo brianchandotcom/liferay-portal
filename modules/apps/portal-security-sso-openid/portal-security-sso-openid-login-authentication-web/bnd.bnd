@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Portal Security SSO OpenId Login Authentication Web
-Bundle-SymbolicName: com.liferay.portal.security.sso.openid.login.authentication.web
-Bundle-Version: 2.0.9
-Web-ContextPath: /portal-security-sso-openid-login-authentication-web

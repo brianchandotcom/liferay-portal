@@ -1,8 +1,0 @@
-Bundle-Name: Liferay Portal Security SSO OpenID API
-Bundle-SymbolicName: com.liferay.portal.security.sso.openid.api
-Bundle-Version: 4.0.7
-Export-Package:\
-	com.liferay.portal.security.sso.openid,\
-	com.liferay.portal.security.sso.openid.configuration,\
-	com.liferay.portal.security.sso.openid.constants,\
-	com.liferay.portal.security.sso.openid.exception

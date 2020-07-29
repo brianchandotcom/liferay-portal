@@ -41,41 +41,41 @@ describe('Sidebar', () => {
 	});
 
 	it('renders an open sidebar', () => {
-		const {asFragment} = render(<Sidebar />);
+		const {container} = render(<Sidebar />);
 
 		act(() => {
 			jest.runAllTimers();
 		});
 
-		expect(asFragment()).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 		expect(document.body).toHaveAttribute('class', 'sidebar-open');
 	});
 
 	it('renders a closed sidebar', () => {
-		const {asFragment} = render(<Sidebar open={false} />);
+		const {container} = render(<Sidebar open={false} />);
 
 		act(() => {
 			jest.runAllTimers();
 		});
 
-		expect(asFragment()).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 		expect(document.body).not.toHaveAttribute('class', 'sidebar-open');
 	});
 
 	it('renders a sidebar with a header with title and subtitle', () => {
-		const {asFragment, getByText} = render(
+		const {container, getByText} = render(
 			<Sidebar>
 				<Sidebar.Header subtitle="Subtitle" title="Title" />
 			</Sidebar>
 		);
 
-		expect(asFragment()).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 		expect(getByText('Title')).toBeInTheDocument();
 		expect(getByText('Subtitle')).toBeInTheDocument();
 	});
 
 	it('renders a sidebar with body with custom content', () => {
-		const {asFragment, getByText} = render(
+		const {container, getByText} = render(
 			<Sidebar>
 				<Sidebar.Body>
 					<div>Custom content text</div>
@@ -83,13 +83,9 @@ describe('Sidebar', () => {
 			</Sidebar>
 		);
 
-		act(() => {
-			jest.runAllTimers();
-		});
-
 		const customChildren = getByText('Custom content text');
 
-		expect(asFragment()).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 		expect(customChildren).toBeInTheDocument();
 		expect(customChildren.parentNode).toHaveAttribute(
 			'class',

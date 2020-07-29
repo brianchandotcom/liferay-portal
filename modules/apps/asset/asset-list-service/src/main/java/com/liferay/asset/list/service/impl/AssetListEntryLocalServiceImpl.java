@@ -180,9 +180,6 @@ public class AssetListEntryLocalServiceImpl
 				_getAssetEntrySubtype(assetEntryType, typeSettings));
 			assetListEntry.setAssetEntryType(assetEntryType);
 		}
-		else {
-			assetListEntry.setAssetEntryType(AssetEntry.class.getName());
-		}
 
 		assetListEntry = assetListEntryPersistence.update(assetListEntry);
 

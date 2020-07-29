@@ -363,7 +363,12 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name");
 
-		for (var fieldName : list "Text,Integer,Number,Decimal") {
+		DynamicDataMapping.addField(
+			field = "Text Box",
+			fieldFieldLabel = "Text Box",
+			fieldName = "TextBox");
+
+		for (var fieldName : list "Text,HTML,Integer,Number,Decimal,") {
 			DynamicDataMapping.addField(
 				field = "${fieldName}",
 				fieldFieldLabel = "${fieldName}",
@@ -385,6 +390,11 @@ definition {
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
+		var webContentSourceHTML = '''
+<h2 class="text-center">This is a HTML title</h2>
+
+<p class="text-center">This is a HTML Content</p>''';
+
 		WebContent.addWithStructureCP(
 			description = "WC WebContent Description",
 			structureName = "WC Structure Name",
@@ -392,7 +402,9 @@ definition {
 			webContentDecimal = "1.1",
 			webContentInteger = "123",
 			webContentNumber = "100",
+			webContentSourceHTML = "${webContentSourceHTML}",
 			webContentText = "Text",
+			webContentTextBox = "This is a text box.",
 			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.publish();
@@ -403,20 +415,33 @@ definition {
 			currentTargetLocale = "ar-SA",
 			newTargetLocale = "es-ES");
 
+		var webContentHTML = '''This is a HTML title
+
+This is a HTML Content''';
+
 		Translations.viewBaseFields(
 			webContentDecimal = "1.1",
 			webContentDescription = "WC WebContent Description",
+			webContentHTML = "${webContentHTML}"
 			webContentInteger = "123",
 			webContentNumber = "100",
 			webContentText = "Text",
+			webContentTextBox = "This is a text box.",
 			webContentTitle = "WC WebContent Title");
+
+		var webContentSourceHTML = '''
+<h2 class="text-center">Este es un título HTML</h2>
+
+<p class="text-center">Este es un contenido HTML</p>''';
 
 		Translations.translateFields(
 			webContentDecimal = "2.2",
 			webContentDescription = "WC WebContent Descripción",
 			webContentInteger = "321",
 			webContentNumber = "200",
+			webContentSourceHTML = "${webContentSourceHTML}",
 			webContentText = "Mensaje de texto",
+			webContentTextBox = "Este es un cuadro de texto.",
 			webContentTitle = "WC WebContent Título");
 
 		PortletEntry.publish();
@@ -427,26 +452,41 @@ definition {
 			currentTargetLocale = "ar-SA",
 			newTargetLocale = "es-ES");
 
+		var webContentHTML = "Este es un título HTML Este es un contenido HTML";
+
 		Translations.viewTargetFields(
 			webContentDecimal = "22,0",
 			webContentDescription = "WC WebContent Descripción",
 			webContentInteger = "321",
 			webContentNumber = "200",
+			webContentHTML = "${webContentHTML}",
 			webContentText = "Mensaje de texto",
+			webContentTextBox = "Este es un cuadro de texto.",
 			webContentTitle = "WC WebContent Título");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		var portalURL = PropsUtil.get("portal.url");
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+		Navigator.openSpecificURL(url = "${portalURL}/es/group/guest/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "lista");
+
+		Click.waitForMenuToggleJSClick(
+			key_webContentTitle = "WC WebContent Título",
+			locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
+
+		MenuItem.click(menuItem = "Editar");
 
 		PortletEntry.changeLocale(locale = "es-ES");
 
 		WebContent.viewCP(
+			otherLocaleSummary = "Resumen",
 			webContentDecimal = "22,0",
 			webContentDescription = "WC WebContent Descripción",
 			webContentInteger = "321",
 			webContentNumber = "200",
+			webContentHTML = "${webContentHTML}",
 			webContentText = "Mensaje de texto",
+			webContentTextBox = "Este es un cuadro de texto.",
 			webContentTitle = "WC WebContent Título");
 	}
 

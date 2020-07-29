@@ -230,10 +230,6 @@ public class DataListViewResourceImpl
 				_deDataListViewLocalService.getDEDataListView(dataListViewId)),
 			ActionKeys.UPDATE);
 
-		if (ArrayUtil.isEmpty(dataListView.getFieldNames())) {
-			throw new ValidationException("View is empty");
-		}
-
 		dataListView = _toDataListView(
 			_deDataListViewLocalService.updateDEDataListView(
 				dataListViewId, _toJSON(dataListView.getAppliedFilters()),

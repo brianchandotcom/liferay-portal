@@ -112,7 +112,7 @@
 														markupView="lexicon"
 													/>
 
-													<c:if test="<%= (vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL) %>">
+													<c:if test="<%= vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL %>">
 														<liferay-ui:icon
 															icon="low-vision"
 															iconCssClass="text-muted"
@@ -150,7 +150,7 @@
 												<a class="nav-link text-truncate <%= (assetCategoriesDisplayContext.getVocabularyId() == vocabulary.getVocabularyId()) ? "active" : StringPool.BLANK %>" href="<%= vocabularyURL.toString() %>">
 													<%= HtmlUtil.escape(vocabulary.getTitle(locale)) %>
 
-													<c:if test="<%= (vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL) %>">
+													<c:if test="<%= vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL %>">
 														<liferay-ui:icon
 															icon="low-vision"
 															iconCssClass="text-muted"

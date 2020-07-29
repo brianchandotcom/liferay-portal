@@ -94,7 +94,8 @@ export default ({
 				{availableLanguages.map((languageId, index) => (
 					<ClayDropDown.Item
 						className={classNames('autofit-row', {
-							['localizable-item-default']: languageId === defaultLanguageId
+							['localizable-item-default']:
+								languageId === defaultLanguageId,
 						})}
 						key={index}
 						onClick={() => {

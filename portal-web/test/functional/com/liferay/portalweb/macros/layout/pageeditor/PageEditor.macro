@@ -634,15 +634,19 @@ definition {
 	macro editCollectionDisplay {
 		var key_fragmentName = "${fragmentName}";
 
-		Click(locator1 = "PageEditor#MANAGEMENT_BAR");
-
 		Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
 
-		Click.clickNoMouseOver(
-			key_elementType = "Collection Display",
-			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+		PageEditor.gotoTab(tabName = "Page Structure");
 
-		Click(locator1 = "PageEditor#FRAGMENT_BODY_FLOATING_TOOLBAR_PLUS_BUTTON");
+		var key_navItem = "Configuration";
+
+		if (IsElementNotPresent(locator1 = "PageEditor#ACTIVE_NAV_ITEM_BUTTON")) {
+			AssertClick(
+				locator1 = "PageEditor#NAV_ITEM_BUTTON",
+				value1 = "Configuration");
+		}
+
+		Click(locator1 = "PageEditor#PLUS_ICON_BUTTON");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -653,7 +657,7 @@ definition {
 
 			AssertElementPresent(
 				key_contentName = "${assetListName}",
-				locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_INPUT");
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
 
 			if (isSet(layout)) {
 				Select(
@@ -689,7 +693,7 @@ definition {
 
 			AssertElementPresent(
 				key_contentName = "${infoListProviderName}",
-				locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_INPUT");
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
 		}
 
 		Pause(locator1 = "1000");
@@ -718,9 +722,15 @@ definition {
 			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
 		}
 
-		Click.clickNoMouseOver(
-			key_elementType = "Fragment",
-			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+		PageEditor.gotoTab(tabName = "Page Structure");
+
+		var key_navItem = "Configuration";
+
+		if (IsElementNotPresent(locator1 = "PageEditor#ACTIVE_NAV_ITEM_BUTTON")) {
+			AssertClick(
+				locator1 = "PageEditor#NAV_ITEM_BUTTON",
+				value1 = "Configuration");
+		}
 
 		if (isSet(inCollectionDisplay)) {
 			Select(
@@ -736,7 +746,7 @@ definition {
 				value1 = "${templateOption}");
 		}
 		else {
-			Click(locator1 = "PageEditor#FRAGMENT_BODY_FLOATING_TOOLBAR_PLUS_BUTTON");
+			Click(locator1 = "PageEditor#PLUS_ICON_BUTTON");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -747,7 +757,7 @@ definition {
 
 				AssertElementPresent(
 					key_contentName = "${imageFileName}",
-					locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_INPUT");
+					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
 
 				var key_imageName = StringUtil.replace("${imageFileName}", " ", "+");
 
@@ -764,7 +774,7 @@ definition {
 
 				AssertElementPresent(
 					key_contentName = "${entryTitle}",
-					locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_INPUT");
+					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
 
 				AssertTextEquals(
 					locator1 = "Fragment#FRAGMENT_BODY",
@@ -805,7 +815,7 @@ definition {
 
 					AssertElementPresent(
 						key_contentName = "${webContentTitle}",
-						locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_INPUT");
+						locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
 
 					AssertElementPresent(
 						key_contentName = "${customWebcontenttemplate}",
@@ -818,7 +828,7 @@ definition {
 				else {
 					AssertElementPresent(
 						key_contentName = "${webContentTitle}",
-						locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_INPUT");
+						locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
 
 					AssertTextEquals(
 						locator1 = "Fragment#FRAGMENT_BODY",
@@ -845,10 +855,20 @@ definition {
 	}
 
 	macro editFragmentImage {
-		PageEditor.gotoEditableFieldImageProperties(
+		PageEditor.clickEditableField(
 			contributed = "${contributed}",
 			fragmentName = "${fragmentName}",
 			id = "${id}");
+
+		PageEditor.gotoTab(tabName = "Page Structure");
+
+		var key_navItem = "Image";
+
+		if (IsElementNotPresent(locator1 = "PageEditor#ACTIVE_NAV_ITEM_BUTTON")) {
+			AssertClick(
+				locator1 = "PageEditor#NAV_ITEM_BUTTON",
+				value1 = "Image");
+		}
 
 		Button.clickSelect();
 
@@ -926,8 +946,16 @@ definition {
 			Click.clickNoWaitForVisible(locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 		}
 
+		PageEditor.gotoTab(tabName = "Page Structure");
+
 		if ("${panel}" == "Styles") {
-			Click(locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_STYLE_BUTTON");
+			var key_navItem = "Styles";
+
+			if (IsElementNotPresent(locator1 = "PageEditor#ACTIVE_NAV_ITEM_BUTTON")) {
+				AssertClick(
+					locator1 = "PageEditor#NAV_ITEM_BUTTON",
+					value1 = "Styles");
+			}
 
 			if (isSet(backgroundColor)) {
 				Click(
@@ -1179,7 +1207,13 @@ definition {
 		}
 
 		if ("${panel}" == "Link") {
-			Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_LINK_BUTTON");
+			var key_navItem = "Link";
+
+			if (IsElementNotPresent(locator1 = "PageEditor#ACTIVE_NAV_ITEM_BUTTON")) {
+				AssertClick(
+					locator1 = "PageEditor#NAV_ITEM_BUTTON",
+					value1 = "Link");
+			}
 		}
 
 		PageEditor.waitForAutoSave();
@@ -1193,8 +1227,16 @@ definition {
 			Click.clickNoWaitForVisible(locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 		}
 
+		PageEditor.gotoTab(tabName = "Page Structure");
+
 		if ("${panel}" == "Configuration") {
-			Click(locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+			var key_navItem = "Configuration";
+
+			if (IsElementNotPresent(locator1 = "PageEditor#ACTIVE_NAV_ITEM_BUTTON")) {
+				AssertClick(
+					locator1 = "PageEditor#NAV_ITEM_BUTTON",
+					value1 = "Configuration");
+			}
 
 			if (isSet(columnCount)) {
 				Select(
@@ -1222,7 +1264,13 @@ definition {
 			}
 		}
 		else if ("${panel}" == "Styles") {
-			Click(locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_STYLE_BUTTON");
+			var key_navItem = "Styles";
+
+			if (IsElementNotPresent(locator1 = "PageEditor#ACTIVE_NAV_ITEM_BUTTON")) {
+				AssertClick(
+					locator1 = "PageEditor#NAV_ITEM_BUTTON",
+					value1 = "Styles");
+			}
 
 			if (isSet(layout)) {
 				Select(
@@ -1318,24 +1366,17 @@ definition {
 
 		PageEditor.gotoTab(tabName = "Page Structure");
 
-		if (IsElementNotPresent(key_nodeName = "${fragmentName}", locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_ACTIVE")) {
-			while (IsElementPresent(locator1 = "Treeview#NODE_COLLAPSED")) {
-				Click(locator1 = "Treeview#NODE_COLLAPSED");
-			}
-			Click(
-				key_nodeName = "${fragmentName}",
-				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
+		AssertElementPresent(
+			key_nodeName = "${fragmentName}",
+			locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_ACTIVE");
+
+		var key_navItem = "Configuration";
+
+		if (IsElementNotPresent(locator1 = "PageEditor#ACTIVE_NAV_ITEM_BUTTON")) {
+			AssertClick(
+				locator1 = "PageEditor#NAV_ITEM_BUTTON",
+				value1 = "Configuration");
 		}
-
-		key_fragmentName = "${fragmentName}";
-
-		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
-			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
-		}
-
-		Click.clickNoMouseOver(
-			key_elementType = "Fragment",
-			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 	}
 
 	macro gotoContentConfiguration {
@@ -1354,9 +1395,15 @@ definition {
 				locator1 = "Fragment#CONTENT_FRAGMENT_BODY");
 		}
 
-		Click.clickNoMouseOver(
-			key_elementType = "Fragment",
-			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+		PageEditor.gotoTab(tabName = "Page Structure");
+
+		var key_navItem = "Configuration";
+
+		if (IsElementNotPresent(locator1 = "PageEditor#ACTIVE_NAV_ITEM_BUTTON")) {
+			AssertClick(
+				locator1 = "PageEditor#NAV_ITEM_BUTTON",
+				value1 = "Configuration");
+		}
 	}
 
 	macro gotoDuplicate {
@@ -1386,15 +1433,6 @@ definition {
 		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_EDIT_BUTTON");
 	}
 
-	macro gotoEditableFieldImageProperties {
-		PageEditor.clickEditableField(
-			contributed = "${contributed}",
-			fragmentName = "${fragmentName}",
-			id = "${id}");
-
-		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_IMAGE_PROPERTIES_BUTTON");
-	}
-
 	macro gotoSaveAsFragment {
 		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
 
@@ -1420,27 +1458,37 @@ definition {
 	macro gotoSelectPanel {
 		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
 
-		Click(
-			key_elementType = "Fragment",
-			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+		PageEditor.gotoTab(tabName = "Page Structure");
 
-		Click(locator1 = "PageEditor#FRAGMENT_BODY_FLOATING_TOOLBAR_PLUS_BUTTON");
+		var key_navItem = "Configuration";
+
+		if (IsElementNotPresent(locator1 = "PageEditor#ACTIVE_NAV_ITEM_BUTTON")) {
+			AssertClick(
+				locator1 = "PageEditor#NAV_ITEM_BUTTON",
+				value1 = "Configuration");
+		}
+
+		Click(locator1 = "PageEditor#PLUS_ICON_BUTTON");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
 	macro gotoStyle {
-		key_fragmentName = "${fragmentName}";
-
 		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
 
-		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
-			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
-		}
+		PageEditor.gotoTab(tabName = "Page Structure");
 
-		Click(
-			key_elementType = "Fragment",
-			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_STYLE_BUTTON");
+		AssertElementPresent(
+			key_nodeName = "${fragmentName}",
+			locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_ACTIVE");
+
+		var key_navItem = "Styles";
+
+		if (IsElementNotPresent(locator1 = "PageEditor#ACTIVE_NAV_ITEM_BUTTON")) {
+			AssertClick(
+				locator1 = "PageEditor#NAV_ITEM_BUTTON",
+				value1 = "Styles");
+		}
 	}
 
 	macro gotoTab {

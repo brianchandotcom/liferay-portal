@@ -33,7 +33,15 @@ definition {
 			fragmentName = "${fragmentName}",
 			id = "${id}");
 
-		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_LINK_BUTTON");
+		PageEditor.gotoTab(tabName = "Page Structure");
+
+		var key_navItem = "Link";
+
+		if (IsElementNotPresent(locator1 = "PageEditor#ACTIVE_NAV_ITEM_BUTTON")) {
+			AssertClick(
+				locator1 = "PageEditor#NAV_ITEM_BUTTON",
+				value1 = "Link");
+		}
 	}
 
 	macro mapURLToAsset {

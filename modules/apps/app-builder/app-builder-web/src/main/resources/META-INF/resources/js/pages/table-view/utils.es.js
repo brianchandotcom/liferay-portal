@@ -60,7 +60,10 @@ export const getFieldLabel = (dataDefinition, editingLanguageId, fieldName) => {
 	);
 
 	if (field) {
-		return field.label[editingLanguageId];
+		return (
+			field.label[editingLanguageId] ||
+			field.label[dataDefinition.defaultLanguageId]
+		);
 	}
 
 	return fieldName;

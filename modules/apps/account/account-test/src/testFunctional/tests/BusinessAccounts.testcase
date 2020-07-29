@@ -310,12 +310,7 @@ definition {
 
 	@priority = "4"
 	test AddAccountWithMultiDomains {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
+		PortalSettings.gotoConfiguration(
 			configurationCategory = "Accounts",
 			configurationName = "Email Domains",
 			configurationScope = "Virtual Instance Scope");
@@ -373,12 +368,7 @@ definition {
 
 	@priority = "4"
 	test AssignExistingUserToAccount {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
+		PortalSettings.gotoConfiguration(
 			configurationCategory = "Accounts",
 			configurationName = "Email Domains",
 			configurationScope = "Virtual Instance Scope");
@@ -885,12 +875,7 @@ definition {
 
 	@priority = "4"
 	test RemoveDomain {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
+		PortalSettings.gotoConfiguration(
 			configurationCategory = "Accounts",
 			configurationName = "Email Domains",
 			configurationScope = "Virtual Instance Scope");

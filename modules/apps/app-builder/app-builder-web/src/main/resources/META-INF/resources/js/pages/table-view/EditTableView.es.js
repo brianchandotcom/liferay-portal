@@ -140,8 +140,7 @@ const EditTableView = withRouter(({history}) => {
 								<TranslationManager
 									availableLanguageIds={dataDefinition.availableLanguageIds.reduce(
 										(acc, cur) => {
-											acc[cur] =
-												Liferay.Language.available[cur];
+											acc[cur] = cur;
 
 											return acc;
 										},

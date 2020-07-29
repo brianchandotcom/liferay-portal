@@ -118,12 +118,7 @@ export default ({
 		}),
 	};
 
-	const availableLanguageIds = [
-		...new Set([
-			...Object.keys(dataLayout.name).map((name) => name),
-			defaultLanguageId,
-		]),
-	];
+	const availableLanguageIds = Object.keys(dataLayout.name);
 
 	const normalizedDataDefinition = {
 		...dataDefinition,

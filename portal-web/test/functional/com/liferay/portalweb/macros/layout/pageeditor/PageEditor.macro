@@ -235,7 +235,7 @@ definition {
 					var key_position = "1";
 				}
 
-				AssertVisible(
+				AssertElementPresent(
 					key_elementType = "${fragmentName}",
 					locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 			}
@@ -247,32 +247,32 @@ definition {
 					var key_position = "1";
 				}
 
-				AssertVisible(
+				AssertElementPresent(
 					key_elementType = "${fragmentName}",
 					locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 			}
 		}
 		else if ("${collectionName}" == "Content Display") {
 			if ("${fragmentName}" == "Collection Display") {
-				AssertVisible(
+				AssertElementPresent(
 					key_fragmentName = "${fragmentName}",
 					key_message = "No Collection Selected Yet",
 					locator1 = "Fragment#NOT_COLLECTION_SELECTED_MESSAGE");
 			}
 			else if ("${fragmentName}" == "Content") {
-				AssertVisible(
+				AssertElementPresent(
 					key_fragmentName = "${fragmentName}",
 					key_messageIfo = "The selected content will be shown here.",
 					locator1 = "Fragment#MESSAGE_INFO");
 			}
 			else if ("${fragmentName}" == "Display Page Content") {
-				AssertVisible(
+				AssertElementPresent(
 					key_fragmentName = "${fragmentName}",
 					key_messageIfo = "The display page content will be shown here.",
 					locator1 = "Fragment#MESSAGE_INFO");
 			}
 			else {
-				AssertVisible(
+				AssertElementPresent(
 					key_fragmentName = "${fragmentName}",
 					locator1 = "Fragment#FRAGMENT_HEADER");
 			}
@@ -281,7 +281,7 @@ definition {
 			echo("## Adding a composition of fragments");
 		}
 		else {
-			AssertVisible(
+			AssertElementPresent(
 				key_fragmentName = "${fragmentName}",
 				locator1 = "Fragment#FRAGMENT_HEADER");
 		}

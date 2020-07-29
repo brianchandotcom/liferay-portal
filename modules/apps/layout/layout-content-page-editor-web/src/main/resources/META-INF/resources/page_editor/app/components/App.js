@@ -21,6 +21,7 @@ import {config} from '../config/index';
 import {reducer} from '../reducers/index';
 import {StoreContextProvider, useSelector} from '../store/index';
 import {DragAndDropContextProvider} from '../utils/useDragAndDrop';
+import {CollectionActiveItemContextProvider} from './CollectionActiveItemContext';
 import {ControlsProvider} from './Controls';
 import DragPreview from './DragPreview';
 import LayoutViewport from './LayoutViewport';
@@ -38,12 +39,14 @@ export default function App({state}) {
 			<LanguageDirection />
 			<URLParser />
 			<ControlsProvider>
-				<DragAndDropContextProvider>
-					<DragPreview />
-					<Toolbar />
-					<LayoutViewport />
-					<Sidebar />
-				</DragAndDropContextProvider>
+				<CollectionActiveItemContextProvider>
+					<DragAndDropContextProvider>
+						<DragPreview />
+						<Toolbar />
+						<LayoutViewport />
+						<Sidebar />
+					</DragAndDropContextProvider>
+				</CollectionActiveItemContextProvider>
 			</ControlsProvider>
 		</StoreContextProvider>
 	);

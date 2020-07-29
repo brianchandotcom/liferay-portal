@@ -22,7 +22,7 @@ import {useDispatch} from '../store/index';
 const defaultFromControlsId = (itemId) => itemId;
 const defaultToControlsId = (controlId) => controlId;
 
-const INITIAL_STATE = {
+export const INITIAL_STATE = {
 	collectionFields: null,
 	collectionItem: null,
 	collectionItemIndex: null,

@@ -118,6 +118,18 @@ public class DDMFormInstanceServiceWrapper
 
 	@Override
 	public java.util.List<DDMFormInstance> search(
+		long companyId, long groupId, String keywords, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstance>
+			orderByComparator) {
+
+		return _ddmFormInstanceService.search(
+			companyId, groupId, keywords, status, start, end,
+			orderByComparator);
+	}
+
+	@Override
+	public java.util.List<DDMFormInstance> search(
 		long companyId, long groupId, String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstance>
 			orderByComparator) {
@@ -142,6 +154,14 @@ public class DDMFormInstanceServiceWrapper
 	public int searchCount(long companyId, long groupId, String keywords) {
 		return _ddmFormInstanceService.searchCount(
 			companyId, groupId, keywords);
+	}
+
+	@Override
+	public int searchCount(
+		long companyId, long groupId, String keywords, int status) {
+
+		return _ddmFormInstanceService.searchCount(
+			companyId, groupId, keywords, status);
 	}
 
 	@Override

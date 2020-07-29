@@ -117,6 +117,19 @@ public class DDMFormInstanceServiceUtil {
 
 	public static java.util.List
 		<com.liferay.dynamic.data.mapping.model.DDMFormInstance> search(
+			long companyId, long groupId, String keywords, int status,
+			int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.dynamic.data.mapping.model.DDMFormInstance>
+					orderByComparator) {
+
+		return getService().search(
+			companyId, groupId, keywords, status, start, end,
+			orderByComparator);
+	}
+
+	public static java.util.List
+		<com.liferay.dynamic.data.mapping.model.DDMFormInstance> search(
 			long companyId, long groupId, String keywords, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.dynamic.data.mapping.model.DDMFormInstance>
@@ -143,6 +156,12 @@ public class DDMFormInstanceServiceUtil {
 		long companyId, long groupId, String keywords) {
 
 		return getService().searchCount(companyId, groupId, keywords);
+	}
+
+	public static int searchCount(
+		long companyId, long groupId, String keywords, int status) {
+
+		return getService().searchCount(companyId, groupId, keywords, status);
 	}
 
 	public static int searchCount(

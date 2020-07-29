@@ -102,7 +102,8 @@ public class ProjectTemplatesWorkspaceProductKeyTest
 
 		if (isBuildProjects()) {
 			buildTemplateWithGradle(
-				new File(workspaceProjectDir, "modules"), "mvc-portlet", name);
+				new File(workspaceProjectDir, "modules"), "mvc-portlet", name,
+				"--liferay-version", _liferayVersion);
 
 			Optional<String> gradleResult = executeGradle(
 				workspaceProjectDir, true, _gradleDistribution,

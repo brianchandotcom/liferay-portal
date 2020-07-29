@@ -17,7 +17,6 @@ import ClayEmptyState from '@clayui/empty-state';
 import {ClayInput, ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {ClayResultsBar} from '@clayui/management-toolbar';
 import React, {useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
@@ -26,10 +25,10 @@ import Alert from '../../components/Alert.es';
 import Breadcrumb from '../../components/Breadcrumb.es';
 import PaginatedList from '../../components/PaginatedList.es';
 import QuestionRow from '../../components/QuestionRow.es';
+import ResultsMessage from '../../components/ResultsMessage.es';
 import SectionSubscription from '../../components/SectionSubscription.es';
 import useQueryParams from '../../hooks/useQueryParams.es';
 import {getQuestionThreads, getSections} from '../../utils/client.es';
-import lang from '../../utils/lang.es';
 import {
 	getBasePath,
 	historyPushWithSlug,
@@ -70,6 +69,7 @@ export default withRouter(
 			params: {creatorId, sectionTitle, tag},
 		},
 	}) => {
+		const MAX_NUMBER_OF_QUESTIONS = 500;
 		const [currentTag, setCurrentTag] = useState('');
 		const [error, setError] = useState({});
 		const [filter, setFilter] = useState();
@@ -214,38 +214,13 @@ export default withRouter(
 						</div>
 
 						{!!search && !loading && (
-							<div className="c-mt-5 c-mx-auto c-px-0 col-xl-12">
-								<ClayResultsBar className="c-mt-5">
-									<ClayResultsBar.Item expand>
-										<span className="component-text text-truncate-inline">
-											<span className="text-truncate">
-												{lang.sub(
-													Liferay.Language.get(
-														'x-results-for-x'
-													),
-													[
-														questions.totalCount,
-														slugToText(search),
-													]
-												)}
-											</span>
-										</span>
-									</ClayResultsBar.Item>
-									<ClayResultsBar.Item>
-										<ClayButton
-											className="component-link tbar-link"
-											displayType="unstyled"
-											onClick={() => {
-												historyPushParser(
-													`/questions/${sectionTitle}`
-												);
-											}}
-										>
-											{Liferay.Language.get('clear')}
-										</ClayButton>
-									</ClayResultsBar.Item>
-								</ClayResultsBar>
-							</div>
+							<ResultsMessage
+								maxNumberOfSearchResults={
+									MAX_NUMBER_OF_QUESTIONS
+								}
+								searchCriteria={search}
+								totalCount={questions.totalCount}
+							/>
 						)}
 
 						<div className="c-mx-auto c-px-0 col-xl-10">

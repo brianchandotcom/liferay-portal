@@ -101,11 +101,11 @@ export default function ListEntries({history}) {
 			)
 				.then((response) => {
 					setFetchState({
-						isFetching: response.totalCount !== 0,
+						isFetching: response.items.length !== 0,
 						...response,
 					});
 
-					if (response.totalCount > 0) {
+					if (response.items.length > 0) {
 						const classPKs = response.items.map(({id}) => id);
 
 						getItem(
@@ -233,7 +233,7 @@ export default function ListEntries({history}) {
 
 	const COLUMNS = [...columns, ...WORKFLOW_COLUMNS];
 
-	const isEmpty = totalCount === 0;
+	const isEmpty = items.length === 0;
 	const showAddButton = showFormView && permissions.add;
 
 	const refetchActions = actions.map((action = {}) => ({

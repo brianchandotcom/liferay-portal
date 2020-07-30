@@ -57,6 +57,11 @@ public class AnalyticsReportsContentDashboardItemAction
 		return _url;
 	}
 
+	@Override
+	public String getURL(Locale locale) {
+		return _url;
+	}
+
 	private static final String _NAME = "viewMetrics";
 
 	private final ResourceBundleLoader _resourceBundleLoader;

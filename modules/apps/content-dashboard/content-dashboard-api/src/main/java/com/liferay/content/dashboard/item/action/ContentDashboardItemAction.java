@@ -29,6 +29,8 @@ public interface ContentDashboardItemAction {
 
 	public String getURL();
 
+	public String getURL(Locale locale);
+
 	public enum Type {
 
 		DELETE, EDIT, VIEW, VIEW_IN_PANEL

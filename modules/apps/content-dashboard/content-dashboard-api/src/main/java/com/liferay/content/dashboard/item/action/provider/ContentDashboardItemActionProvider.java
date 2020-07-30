@@ -30,4 +30,6 @@ public interface ContentDashboardItemActionProvider<T> {
 
 	public String getKey();
 
+	public ContentDashboardItemAction.Type getType();
+
 }

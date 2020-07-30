@@ -77,12 +77,46 @@ public class SearchSolrQueryAssemblerImpl implements SearchSolrQueryAssembler {
 		solrQuery.addHighlightField(localizedFieldName);
 	}
 
+	protected SolrQuery.SortClause getFieldSortClause(
+		com.liferay.portal.kernel.search.Sort sort, String fieldName) {
+
+		if (sort.isReverse()) {
+			return SolrQuery.SortClause.desc(fieldName);
+		}
+
+		return SolrQuery.SortClause.asc(fieldName);
+	}
+
+	protected SolrQuery.SortClause getScoreSortClause(
+		com.liferay.portal.kernel.search.Sort sort) {
+
+		if (sort.isReverse()) {
+			return SolrQuery.SortClause.asc("score");
+		}
+
+		return SolrQuery.SortClause.desc("score");
+	}
+
+	protected SolrQuery.SortClause getSortClause(
+		com.liferay.portal.kernel.search.Sort sort, String fieldName) {
+
+		if (fieldName.equals("score")) {
+			return getScoreSortClause(sort);
+		}
+
+		return getFieldSortClause(sort, fieldName);
+	}
+
 	protected String getSortFieldName(
 		com.liferay.portal.kernel.search.Sort sort, String scoreFieldName) {
 
 		String sortFieldName = sort.getFieldName();
 
 		if (Objects.equals(sortFieldName, Field.PRIORITY)) {
+			return sortFieldName;
+		}
+
+		if (Objects.equals(sortFieldName, "score")) {
 			return sortFieldName;
 		}
 
@@ -251,13 +285,7 @@ public class SearchSolrQueryAssemblerImpl implements SearchSolrQueryAssembler {
 
 			sortFieldNames.add(sortFieldName);
 
-			SolrQuery.ORDER order = SolrQuery.ORDER.asc;
-
-			if (sort.isReverse() || sortFieldName.equals("score")) {
-				order = SolrQuery.ORDER.desc;
-			}
-
-			solrQuery.addSort(new SolrQuery.SortClause(sortFieldName, order));
+			solrQuery.addSort(getSortClause(sort, sortFieldName));
 		}
 	}
 

@@ -1,6 +1,7 @@
 @import 'atlas-variables';
 
 $controlMenuDesktopHeight: 56px;
+$previewInfoBarHeight: 32px;
 $toolbarDesktopHeight: 56px;
 
 .style-book-editor {
@@ -35,8 +36,21 @@ $toolbarDesktopHeight: 56px;
 
 		&-frame {
 			border: none;
-			height: 100%;
+			height: calc(100% - #{$previewInfoBarHeight});
 			width: 100%;
+		}
+
+		&-info-bar {
+			align-items: center;
+			background: $primary-l1;
+			color: $white;
+			display: flex;
+			font-size: 0.875rem;
+			height: $previewInfoBarHeight;
+			justify-content: space-between;
+			padding-bottom: 1px;
+			padding-left: 24px;
+			padding-right: 24px;
 		}
 
 		&-no-page-message {
@@ -54,10 +68,10 @@ $toolbarDesktopHeight: 56px;
 			content: '';
 			cursor: not-allowed;
 			display: block;
-			height: 100%;
+			height: calc(100% - #{$previewInfoBarHeight});
 			left: 0;
 			position: absolute;
-			top: 0;
+			top: $previewInfoBarHeight;
 			width: 100%;
 		}
 	}

@@ -26,14 +26,14 @@ import javax.annotation.Generated;
 @Generated("")
 public class Aggregation {
 
-	public Map<String, String> getTerms() {
-		return _terms;
+	public Map<String, String> getAggregationTerms() {
+		return _aggregationTerms;
 	}
 
-	public void setTerms(Map<String, String> terms) {
-		_terms = terms;
+	public void setAggregationTerms(Map<String, String> aggregationTerms) {
+		_aggregationTerms = aggregationTerms;
 	}
 
-	private Map<String, String> _terms = new HashMap<>();
+	private Map<String, String> _aggregationTerms = new HashMap<>();
 
 }

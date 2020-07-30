@@ -395,11 +395,15 @@ public interface BlogPostingImageResource {
 				httpInvoker.parameter("search", String.valueOf(search));
 			}
 
-			if ((aggregation != null) && (aggregation.getTerms() != null)) {
-				Map<String, String> terms = aggregation.getTerms();
+			if ((aggregation != null) &&
+				(aggregation.getAggregationTerms() != null)) {
+
+				Map<String, String> aggregationTerms =
+					aggregation.getAggregationTerms();
 
 				httpInvoker.parameter(
-					"terms", String.join(",", terms.values()));
+					"aggregationTerms",
+					String.join(",", aggregationTerms.values()));
 			}
 
 			if (filterString != null) {

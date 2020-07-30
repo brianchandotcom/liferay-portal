@@ -234,6 +234,7 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 
 				accountEntrySelectorURL.setParameter(
 					"mvcPath", "/account_users_admin/select_account_entry.jsp");
+				accountEntrySelectorURL.setParameter("singleSelect", "true");
 				accountEntrySelectorURL.setWindowState(
 					LiferayWindowState.POP_UP);
 

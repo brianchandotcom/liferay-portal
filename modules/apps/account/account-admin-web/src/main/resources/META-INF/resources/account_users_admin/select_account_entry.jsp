@@ -73,20 +73,22 @@ if (accountGroupId > 0) {
 				translate="<%= true %>"
 			/>
 
-			<liferay-ui:search-container-column-text>
+			<c:if test="<%= selectAccountEntryManagementToolbarDisplayContext.isSingleSelect() %>">
+				<liferay-ui:search-container-column-text>
 
-				<%
-				Map<String, Object> data = HashMapBuilder.<String, Object>put(
-					"accountentryid", accountEntryDisplay.getAccountEntryId()
-				).put(
-					"entityid", accountEntryDisplay.getAccountEntryId()
-				).put(
-					"entityname", accountEntryDisplay.getName()
-				).build();
-				%>
+					<%
+					Map<String, Object> data = HashMapBuilder.<String, Object>put(
+						"accountentryid", accountEntryDisplay.getAccountEntryId()
+					).put(
+						"entityid", accountEntryDisplay.getAccountEntryId()
+					).put(
+						"entityname", accountEntryDisplay.getName()
+					).build();
+					%>
 
-				<aui:button cssClass="choose-account selector-button" data="<%= data %>" disabled="<%= disabled %>" value="choose" />
-			</liferay-ui:search-container-column-text>
+					<aui:button cssClass="choose-account selector-button" data="<%= data %>" disabled="<%= disabled %>" value="choose" />
+				</liferay-ui:search-container-column-text>
+			</c:if>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
@@ -95,7 +97,30 @@ if (accountGroupId > 0) {
 	</liferay-ui:search-container>
 </clay:container-fluid>
 
-<aui:script>
+<aui:script use="liferay-search-container">
+	var searchContainer = Liferay.SearchContainer.get(
+		'<portlet:namespace />accountEntries'
+	);
+
+	searchContainer.on('rowToggled', function (event) {
+		var selectedItems = event.elements.allSelectedElements;
+
+		var result = {};
+
+		if (!selectedItems.isEmpty()) {
+			result = {
+				data: {
+					value: selectedItems.get('value').join(','),
+				},
+			};
+		}
+
+		Liferay.Util.getOpener().Liferay.fire(
+			'<%= HtmlUtil.escapeJS(liferayPortletResponse.getNamespace() + "selectAccountEntry") %>',
+			result
+		);
+	});
+
 	Liferay.Util.selectEntityHandler(
 		'#<portlet:namespace />selectAccountEntry',
 		'<%= HtmlUtil.escapeJS(liferayPortletResponse.getNamespace() + "selectAccountEntry") %>'

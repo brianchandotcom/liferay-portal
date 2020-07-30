@@ -93,6 +93,7 @@ renderResponse.setTitle(accountGroupDisplay.getName());
 	<portlet:param name="mvcPath" value="/account_users_admin/select_account_entry.jsp" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="accountGroupId" value="<%= String.valueOf(accountGroupDisplay.getAccountGroupId()) %>" />
+	<portlet:param name="singleSelect" value="<%= Boolean.FALSE.toString() %>" />
 	<portlet:param name="openModalOnRedirect" value="<%= Boolean.TRUE.toString() %>" />
 	<portlet:param name="showCreateButton" value="<%= Boolean.TRUE.toString() %>" />
 </portlet:renderURL>

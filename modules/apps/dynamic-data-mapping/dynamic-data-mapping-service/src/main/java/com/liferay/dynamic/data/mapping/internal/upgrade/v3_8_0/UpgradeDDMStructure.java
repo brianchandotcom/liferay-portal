@@ -52,7 +52,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
+import java.util.Set;
 
 /**
  * @author Marcos Martins
@@ -79,23 +82,17 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		_upgradeDDMStructure();
 	}
 
-	private String _generateFieldSetName(DDMForm ddmForm) {
-		Map<String, DDMFormField> ddmFormFieldsMap =
-			ddmForm.getDDMFormFieldsMap(false);
+	private String _generateDDMFormFieldName() {
+		String ddmFormFieldName = "Field";
 
-		String name = "FieldsGroup";
+		Random random = new Random();
 
-		if (ddmFormFieldsMap.get(name) == null) {
-			return name;
+		for (int i = 0; i < _DDM_FORM_FIELD_NAME_RANDOM_NUMBERS_LENGTH; i++) {
+			ddmFormFieldName = ddmFormFieldName.concat(
+				String.valueOf(random.nextInt(10)));
 		}
 
-		int count = 1;
-
-		while (ddmFormFieldsMap.get(name + count) != null) {
-			count++;
-		}
-
-		return name + count;
+		return ddmFormFieldName;
 	}
 
 	private DDMForm _getDDMForm(String definition) throws Exception {
@@ -245,8 +242,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 						ddmFormLayoutColumn.getDDMFormFieldNames();
 
 					if (ddmFormFieldNames.size() > 1) {
-						String ddmFormFieldName = _generateFieldSetName(
-							ddmForm);
+						String ddmFormFieldName = _generateDDMFormFieldName();
 
 						ddmFormFieldTuples.add(
 							new Tuple(
@@ -397,6 +393,8 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 		return ddmFormSerializerSerializeResponse.getContent();
 	}
+
+	private static final int _DDM_FORM_FIELD_NAME_RANDOM_NUMBERS_LENGTH = 8;
 
 	private static final int _DDM_FORM_FIELD_TUPLE_COLUMN_SIZE = 2;
 

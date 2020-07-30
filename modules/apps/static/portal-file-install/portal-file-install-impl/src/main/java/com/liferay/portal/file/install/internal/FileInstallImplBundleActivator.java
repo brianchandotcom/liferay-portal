@@ -90,7 +90,7 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 
 			String dirs = map.get(DirectoryWatcher.DIR);
 
-			if ((dirs != null) && (dirs.indexOf(CharPool.COMMA) != -1)) {
+			if (dirs.indexOf(CharPool.COMMA) != -1) {
 				int index = 0;
 
 				for (String dir : StringUtil.split(dirs, CharPool.COMMA)) {

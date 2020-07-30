@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Tuple;
@@ -97,13 +98,20 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		return name + count;
 	}
 
-	private DDMForm _getDDMForm(String definition) {
+	private DDMForm _getDDMForm(String definition) throws Exception {
 		DDMFormDeserializerDeserializeResponse
 			ddmFormDeserializerDeserializeResponse =
 				_ddmFormDeserializer.deserialize(
 					DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
 						definition
 					).build());
+
+		Exception exception =
+			ddmFormDeserializerDeserializeResponse.getException();
+
+		if (exception != null) {
+			throw new UpgradeException(exception);
+		}
 
 		return ddmFormDeserializerDeserializeResponse.getDDMForm();
 	}
@@ -300,7 +308,8 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 	}
 
 	private String _upgradeDDMStructureVersionDefinition(
-		String definition, long structureVersionId) {
+			String definition, long structureVersionId)
+		throws Exception {
 
 		DDMForm ddmForm = _getDDMForm(definition);
 

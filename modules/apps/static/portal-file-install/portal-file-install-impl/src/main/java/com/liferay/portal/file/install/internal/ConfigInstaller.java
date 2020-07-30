@@ -19,7 +19,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.file.install.FileInstaller;
 import com.liferay.portal.file.install.internal.properties.InterpolationUtil;
-import com.liferay.portal.file.install.internal.properties.InterpolationUtil.BundleContextSubstitutionCallback;
 import com.liferay.portal.file.install.internal.properties.TypedProperties;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -124,8 +123,7 @@ public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 
 				if ((file != null) && file.isFile()) {
 					_pidToFile.put(configuration.getPid(), fileName);
-					TypedProperties typedProperties = new TypedProperties(
-						new BundleContextSubstitutionCallback());
+					TypedProperties typedProperties = new TypedProperties();
 
 					try (InputStream inputStream = new FileInputStream(file);
 						Reader reader = new InputStreamReader(
@@ -414,8 +412,7 @@ public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 				}
 			}
 			else {
-				TypedProperties typedProperties = new TypedProperties(
-					new BundleContextSubstitutionCallback());
+				TypedProperties typedProperties = new TypedProperties();
 
 				try (Reader reader = new InputStreamReader(
 						inputStream, _encoding)) {

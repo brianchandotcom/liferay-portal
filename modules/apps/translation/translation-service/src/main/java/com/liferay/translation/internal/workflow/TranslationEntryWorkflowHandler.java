@@ -14,8 +14,6 @@
 
 package com.liferay.translation.internal.workflow;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -45,13 +43,6 @@ public class TranslationEntryWorkflowHandler
 	extends BaseWorkflowHandler<TranslationEntry> {
 
 	@Override
-	public AssetRendererFactory<TranslationEntry> getAssetRendererFactory() {
-		return (AssetRendererFactory<TranslationEntry>)
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				getClassName());
-	}
-
-	@Override
 	public String getClassName() {
 		return TranslationEntry.class.getName();
 	}
@@ -59,11 +50,6 @@ public class TranslationEntryWorkflowHandler
 	@Override
 	public String getType(Locale locale) {
 		return ResourceActionsUtil.getModelResource(locale, getClassName());
-	}
-
-	@Override
-	public boolean isVisible() {
-		return _VISIBLE;
 	}
 
 	@Override
@@ -83,8 +69,6 @@ public class TranslationEntryWorkflowHandler
 		return _translationEntryLocalService.updateStatus(
 			userId, classPK, status, serviceContext, workflowContext);
 	}
-
-	private static final boolean _VISIBLE = true;
 
 	@Reference
 	private TranslationEntryLocalService _translationEntryLocalService;

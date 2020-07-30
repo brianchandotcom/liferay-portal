@@ -197,7 +197,7 @@ definition {
 			key_questionNameField = "${categoryName}",
 			locator1 = "Questions#QUESTIONS_NAME_FIELD");
 
-		AssertElementPresent(locator1 = "Icon#HOME");
+		AssertElementPresent(locator1 = "Questions#QUESTIONS_HOME_ICON");
 
 		Pause(locator1 = "3000");
 

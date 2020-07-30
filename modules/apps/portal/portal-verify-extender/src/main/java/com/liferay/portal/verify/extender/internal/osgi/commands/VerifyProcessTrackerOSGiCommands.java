@@ -248,11 +248,6 @@ public class VerifyProcessTrackerOSGiCommands {
 		List<VerifyProcess> verifyProcesses = getVerifyProcesses(
 			verifyProcessTrackerMap, verifyProcessName);
 
-		boolean indexReadOnly = indexStatusManager.isIndexReadOnly();
-
-		indexStatusManager.setIndexReadOnly(
-			_verifyProcessTrackerConfiguration.indexReadOnly());
-
 		NotificationThreadLocal.setEnabled(false);
 		StagingAdvicesThreadLocal.setEnabled(false);
 		WorkflowThreadLocal.setEnabled(false);
@@ -313,7 +308,6 @@ public class VerifyProcessTrackerOSGiCommands {
 			}
 		}
 		finally {
-			indexStatusManager.setIndexReadOnly(indexReadOnly);
 			NotificationThreadLocal.setEnabled(true);
 			StagingAdvicesThreadLocal.setEnabled(true);
 			WorkflowThreadLocal.setEnabled(true);

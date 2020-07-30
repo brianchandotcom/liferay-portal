@@ -130,6 +130,13 @@ public class JenkinsSlave implements JenkinsNode<JenkinsSlave> {
 		return _name;
 	}
 
+	@Override
+	public int hashCode() {
+		String hashCodeString = _jenkinsMaster.getName() + "_" + _name;
+
+		return hashCodeString.hashCode();
+	}
+
 	public boolean isIdle() {
 		return _idle;
 	}

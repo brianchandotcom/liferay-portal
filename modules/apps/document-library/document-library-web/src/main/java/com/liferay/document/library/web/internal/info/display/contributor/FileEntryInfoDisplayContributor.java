@@ -65,6 +65,21 @@ public class FileEntryInfoDisplayContributor
 
 	@Override
 	public Set<InfoDisplayField> getInfoDisplayFields(
+			FileEntry fileEntry, Locale locale)
+		throws PortalException {
+
+		if (fileEntry.getModel() instanceof DLFileEntry) {
+			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+			return getInfoDisplayFields(
+				dlFileEntry.getFileEntryTypeId(), locale);
+		}
+
+		return getInfoDisplayFields(0, locale);
+	}
+
+	@Override
+	public Set<InfoDisplayField> getInfoDisplayFields(
 			long classTypeId, Locale locale)
 		throws PortalException {
 

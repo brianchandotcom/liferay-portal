@@ -55,7 +55,7 @@ export default ({
 	onActiveChange = () => {},
 	onEditingLanguageIdChange,
 	translatedLanguageIds,
-	className
+	className,
 }) => {
 	const [active, setActive] = useState(false);
 

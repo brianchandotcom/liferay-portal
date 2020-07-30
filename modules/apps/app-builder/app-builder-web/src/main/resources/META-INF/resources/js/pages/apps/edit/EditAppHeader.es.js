@@ -13,7 +13,7 @@
  */
 
 import {TranslationManager} from 'data-engine-taglib';
-import React, {useContext, useEffect} from 'react';
+import React, {useContext} from 'react';
 
 import {AppContext} from '../../../AppContext.es';
 import {UpperToolbarInput} from '../../../components/upper-toolbar/UpperToolbar.es';
@@ -23,24 +23,13 @@ export default ({
 	availableLanguageIds,
 	defaultLanguageId,
 	editingLanguageId,
-	setEditingLanguageId,
+	onEditingLanguageIdChange,
 }) => {
 	const {showTranslationManager} = useContext(AppContext);
-	const {
-		dispatch,
-		state: {
+	const [
+		{
 			app: {name},
 		},
-	} = useContext(EditAppContext);
-
-	const appName = name[editingLanguageId] || '';
-
-	useEffect(() => {
-		if (!editingLanguageId) {
-			setEditingLanguageId(defaultLanguageId);
-		}
-	}, [defaultLanguageId, editingLanguageId, setEditingLanguageId]);
-
 		dispatch,
 	] = useContext(EditAppContext);
 
@@ -54,22 +43,25 @@ export default ({
 		});
 	};
 
-	const availableLanguages = availableLanguageIds.reduce((acc, cur) => {
-		acc[cur] = cur;
-
-		return acc;
-	}, {});
-
 	return (
 		<>
 			<div className="align-items-center bg-transparent card-header d-flex justify-content-between">
 				{showTranslationManager && (
 					<TranslationManager
-						availableLanguageIds={availableLanguages}
+						availableLanguageIds={availableLanguageIds.reduce(
+							(acc, cur) => {
+								acc[cur] = cur;
+
+								return acc;
+							},
+							{}
+						)}
 						className="mr-1"
 						defaultLanguageId={defaultLanguageId}
 						editingLanguageId={editingLanguageId}
-						onEditingLanguageIdChange={setEditingLanguageId}
+						onEditingLanguageIdChange={(editingLanguageId) => {
+							onEditingLanguageIdChange(editingLanguageId);
+						}}
 						translatedLanguageIds={name}
 					/>
 				)}
@@ -77,7 +69,7 @@ export default ({
 					maxLength={30}
 					onChange={onAppNameChange}
 					placeholder={Liferay.Language.get('untitled-app')}
-					value={appName}
+					value={name[editingLanguageId] || ''}
 				/>
 			</div>
 

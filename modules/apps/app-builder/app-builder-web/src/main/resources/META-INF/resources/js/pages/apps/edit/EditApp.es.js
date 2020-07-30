@@ -58,6 +58,12 @@ export default ({
 	const {backUrl} = toQuery(search, {backUrl: '../'});
 
 	useEffect(() => {
+		if (!editingLanguageId) {
+			setEditingLanguageId(defaultLanguageId);
+		}
+	}, [defaultLanguageId, editingLanguageId]);
+
+	useEffect(() => {
 		if (appId) {
 			setLoading(true);
 
@@ -86,10 +92,6 @@ export default ({
 		};
 	};
 
-	const onCurrentStepChange = (step) => {
-		setCurrentStep(step);
-	};
-
 	return (
 		<>
 			<ControlMenu backURL={backUrl} title={title} />
@@ -102,7 +104,11 @@ export default ({
 								availableLanguageIds={availableLanguageIds}
 								defaultLanguageId={defaultLanguageId}
 								editingLanguageId={editingLanguageId}
-								setEditingLanguageId={setEditingLanguageId}
+								onEditingLanguageIdChange={(
+									editingLanguageId
+								) => {
+									setEditingLanguageId(editingLanguageId);
+								}}
 							/>
 
 							<div className="card-body p-0 shadowless-card-body">
@@ -162,7 +168,9 @@ export default ({
 								currentStep={currentStep}
 								defaultLanguageId={defaultLanguageId}
 								editingLanguageId={editingLanguageId}
-								onCurrentStepChange={onCurrentStepChange}
+								onCurrentStepChange={(step) => {
+									setCurrentStep(step);
+								}}
 							/>
 						</div>
 					</ClayLayout.ContainerFluid>

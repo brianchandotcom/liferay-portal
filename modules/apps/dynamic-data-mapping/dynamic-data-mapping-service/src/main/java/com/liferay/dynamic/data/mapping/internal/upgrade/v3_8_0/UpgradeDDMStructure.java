@@ -153,13 +153,11 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 	}
 
 	private void _upgradeDDMStructureLayout() throws Exception {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("select DDMStructureLayout.structureLayoutId, ");
 		sb.append("DDMStructureLayout.structureVersionId, ");
-		sb.append("DDMStructureLayout.definition as ");
-		sb.append("structureLayoutDefinition, DDMStructureVersion.definition ");
-		sb.append("as structureVersionDefinition from DDMStructureLayout ");
+		sb.append("DDMStructureLayout.definition from DDMStructureLayout ");
 		sb.append("inner join DDMStructureVersion on ");
 		sb.append("DDMStructureLayout.structureVersionId = ");
 		sb.append("DDMStructureVersion.structureVersionId inner join ");
@@ -179,19 +177,14 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 			try (ResultSet rs = ps1.executeQuery()) {
 				while (rs.next()) {
-					String ddmStructureLayoutDefinition = rs.getString(
-						"structureLayoutDefinition");
-
-					String ddmStructureVersionDefinition = rs.getString(
-						"structureVersionDefinition");
+					String definition = rs.getString("definition");
 
 					long structureVersionId = rs.getLong("structureVersionId");
 
 					ps2.setString(
 						1,
 						_upgradeDDMStructureLayoutDefinition(
-							_getDDMForm(ddmStructureVersionDefinition),
-							ddmStructureLayoutDefinition, structureVersionId));
+							definition, structureVersionId));
 
 					long structureLayoutId = rs.getLong("structureLayoutId");
 

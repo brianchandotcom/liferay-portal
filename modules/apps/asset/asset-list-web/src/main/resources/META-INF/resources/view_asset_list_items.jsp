@@ -42,8 +42,27 @@ ListItemsActionDropdownItems listItemsActionDropdownItems = (ListItemsActionDrop
 
 			<liferay-ui:search-container-column-text
 				name="title"
-				value="<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>"
-			/>
+			>
+
+				<%
+				String displayPageURL = StringPool.BLANK;
+
+				if (assetListItemsDisplayContext.isShowActions()) {
+					displayPageURL = listItemsActionDropdownItems.getViewDisplayPageURL(AssetEntry.class.getName(), assetEntry);
+				}
+				%>
+
+				<c:choose>
+					<c:when test="<%= Validator.isNull(displayPageURL) %>">
+						<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
+					</c:when>
+					<c:otherwise>
+						<aui:a href="<%= displayPageURL %>" target="_top">
+							<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
+						</aui:a>
+					</c:otherwise>
+				</c:choose>
+			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
 				name="type"
@@ -84,4 +103,8 @@ ListItemsActionDropdownItems listItemsActionDropdownItems = (ListItemsActionDrop
 <liferay-frontend:component
 	componentId="<%= AssetListWebKeys.LIST_ITEMS_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
 	module="js/ListItemsDropdownDefaultEventHandler.es"
+/>
+
+<liferay-frontend:component
+	module="js/TopLinkEventHandler.es"
 />

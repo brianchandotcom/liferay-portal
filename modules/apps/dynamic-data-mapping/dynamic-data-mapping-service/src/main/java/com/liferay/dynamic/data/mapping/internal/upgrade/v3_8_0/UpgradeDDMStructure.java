@@ -209,7 +209,8 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 	}
 
 	private String _upgradeDDMStructureLayoutDefinition(
-		DDMForm ddmForm, String definition, long structureVersionId) {
+			String definition, long structureVersionId)
+		throws Exception {
 
 		List<Tuple> tuples = new ArrayList<>();
 
@@ -220,6 +221,13 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 						newBuilder(
 							definition
 						).build());
+
+		Exception exception =
+			ddmFormLayoutDeserializerDeserializeResponse.getException();
+
+		if (exception != null) {
+			throw new UpgradeException(exception);
+		}
 
 		DDMFormLayout ddmFormLayout =
 			ddmFormLayoutDeserializerDeserializeResponse.getDDMFormLayout();

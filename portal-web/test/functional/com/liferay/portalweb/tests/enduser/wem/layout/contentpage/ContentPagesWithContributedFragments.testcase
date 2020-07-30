@@ -793,7 +793,7 @@ definition {
 				key_collectionName = "Basic Components",
 				key_fragmentName = "Paragraph",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "//div[contains(@class,'page-editor__topper__content')][div/div/div/*[contains(@class,'heading')]]",
+				locator2 = "//div[contains(@class,'page-editor__topper__content')][div/div/div/div/*[contains(@class,'heading')]]",
 				value1 = "");
 
 			PageEditor.waitForAutoSave();

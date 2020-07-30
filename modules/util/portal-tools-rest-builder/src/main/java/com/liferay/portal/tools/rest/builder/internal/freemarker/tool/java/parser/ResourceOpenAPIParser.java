@@ -469,9 +469,9 @@ public class ResourceOpenAPIParser {
 			String parameterName = parameter.getName();
 
 			if (StringUtil.equals(parameterName, "Accept-Language") ||
+				StringUtil.equals(parameterName, "aggregationTerms") ||
 				StringUtil.equals(parameterName, "filter") ||
-				StringUtil.equals(parameterName, "sort") ||
-				StringUtil.equals(parameterName, "terms")) {
+				StringUtil.equals(parameterName, "sort")) {
 
 				continue;
 			}
@@ -501,7 +501,7 @@ public class ResourceOpenAPIParser {
 					"permissions", Permission[].class.getName()));
 		}
 
-		if (parameterNames.contains("terms")) {
+		if (parameterNames.contains("aggregationTerms")) {
 			JavaMethodParameter javaMethodParameter = new JavaMethodParameter(
 				"aggregation", Aggregation.class.getName());
 
@@ -760,7 +760,7 @@ public class ResourceOpenAPIParser {
 		String parameterType = javaMethodParameter.getParameterType();
 
 		if (Objects.equals(parameterType, Aggregation.class.getName()) &&
-			parameterNames.contains("terms")) {
+			parameterNames.contains("aggregationTerms")) {
 
 			return "@Context";
 		}

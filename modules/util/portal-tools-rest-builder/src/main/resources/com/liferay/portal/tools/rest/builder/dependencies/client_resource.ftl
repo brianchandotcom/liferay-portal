@@ -226,10 +226,10 @@ public interface ${schemaName}Resource {
 
 				<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
 					<#if stringUtil.equals(javaMethodParameter.parameterName, "aggregation")>
-						if ((aggregation != null) && (aggregation.getTerms() != null)) {
-							Map<String, String> terms = aggregation.getTerms();
+						if ((aggregation != null) && (aggregation.getAggregationTerms() != null)) {
+							Map<String, String> aggregationTerms = aggregation.getAggregationTerms();
 
-							httpInvoker.parameter("terms", String.join(",", terms.values()));
+							httpInvoker.parameter("aggregationTerms", String.join(",", aggregationTerms.values()));
 						}
 					<#elseif stringUtil.equals(javaMethodParameter.parameterName, "filter")>
 						if (filterString != null) {

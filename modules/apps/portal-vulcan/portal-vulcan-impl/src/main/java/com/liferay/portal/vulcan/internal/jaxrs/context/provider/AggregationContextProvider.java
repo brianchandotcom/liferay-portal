@@ -48,9 +48,9 @@ public class AggregationContextProvider
 
 	public Aggregation createContext(
 		AcceptLanguage acceptLanguage, EntityModel entityModel,
-		String[] terms) {
+		String[] aggregationTerms) {
 
-		if ((entityModel == null) || (terms == null)) {
+		if ((entityModel == null) || (aggregationTerms == null)) {
 			return null;
 		}
 
@@ -59,11 +59,12 @@ public class AggregationContextProvider
 
 		Aggregation aggregation = new Aggregation();
 
-		Map<String, String> termsMap = aggregation.getTerms();
+		Map<String, String> aggregationTermsMap =
+			aggregation.getAggregationTerms();
 
-		for (String term : terms) {
-			if (entityFieldsMap.containsKey(term)) {
-				EntityField entityField = entityFieldsMap.get(term);
+		for (String aggregationTerm : aggregationTerms) {
+			if (entityFieldsMap.containsKey(aggregationTerm)) {
+				EntityField entityField = entityFieldsMap.get(aggregationTerm);
 
 				if (EntityField.Type.COLLECTION.equals(entityField.getType())) {
 					CollectionEntityField collectionEntityField =
@@ -72,13 +73,13 @@ public class AggregationContextProvider
 					entityField = collectionEntityField.getEntityField();
 				}
 
-				termsMap.put(
-					term,
+				aggregationTermsMap.put(
+					aggregationTerm,
 					entityField.getFilterableName(
 						acceptLanguage.getPreferredLocale()));
 			}
 			else {
-				termsMap.put(term, term);
+				aggregationTermsMap.put(aggregationTerm, aggregationTerm);
 			}
 		}
 
@@ -94,7 +95,8 @@ public class AggregationContextProvider
 			return createContext(
 				new AcceptLanguageImpl(httpServletRequest, _language, _portal),
 				ContextProviderUtil.getEntityModel(message),
-				ParamUtil.getStringValues(httpServletRequest, "terms"));
+				ParamUtil.getStringValues(
+					httpServletRequest, "aggregationTerms"));
 		}
 		catch (Exception exception) {
 			throw new ServerErrorException(500, exception);

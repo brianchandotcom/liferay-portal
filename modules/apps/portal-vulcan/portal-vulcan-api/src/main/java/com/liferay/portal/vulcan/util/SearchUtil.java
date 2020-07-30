@@ -202,13 +202,18 @@ public class SearchUtil {
 		extends com.liferay.portal.kernel.search.SearchContext {
 
 		public void addVulcanAggregation(Aggregation aggregation) {
-			if ((aggregation == null) || (aggregation.getTerms() == null)) {
+			if ((aggregation == null) ||
+				(aggregation.getAggregationTerms() == null)) {
+
 				return;
 			}
 
-			Map<String, String> terms = aggregation.getTerms();
+			Map<String, String> aggregationTerms =
+				aggregation.getAggregationTerms();
 
-			for (Map.Entry<String, String> entry : terms.entrySet()) {
+			for (Map.Entry<String, String> entry :
+					aggregationTerms.entrySet()) {
+
 				com.liferay.portal.kernel.search.facet.Facet facet =
 					new SimpleFacet(this);
 

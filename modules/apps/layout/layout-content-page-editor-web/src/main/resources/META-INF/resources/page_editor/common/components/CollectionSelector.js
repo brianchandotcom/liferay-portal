@@ -32,8 +32,9 @@ export default function CollectionSelector({
 			itemSelectorURL={itemSelectorURL || config.infoListSelectorURL}
 			label={label}
 			onItemSelect={onCollectionSelect}
+			quickMappedInfoItems={config.selectedMappingTypes?.linkedCollection}
 			selectedItemTitle={collectionTitle}
-			showMappedItems={false}
+			showMappedItems={!!config.selectedMappingTypes?.linkedCollection}
 		/>
 	);
 }

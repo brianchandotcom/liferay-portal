@@ -28,7 +28,7 @@ import org.json.JSONObject;
 /**
  * @author Peter Yoo
  */
-public class JenkinsMaster implements Comparable<JenkinsMaster> {
+public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 
 	public static final Integer SLAVE_RAM_DEFAULT = 16;
 
@@ -134,6 +134,11 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 		return idleSlavesCount;
 	}
 
+	@Override
+	public JenkinsMaster getJenkinsMaster() {
+		return this;
+	}
+
 	public JenkinsSlave getJenkinsSlave(String jenkinsSlaveName) {
 		if (_jenkinsSlavesMap.isEmpty()) {
 			update();
@@ -142,6 +147,7 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 		return _jenkinsSlavesMap.get(jenkinsSlaveName);
 	}
 
+	@Override
 	public String getName() {
 		return _masterName;
 	}

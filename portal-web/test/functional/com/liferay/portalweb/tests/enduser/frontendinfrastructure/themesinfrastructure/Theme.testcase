@@ -61,4 +61,78 @@ definition {
 		takeScreenshot();
 	}
 
+	@priority = "5"
+	test DeactivateAndReactivateTheme {
+		property test.name.skip.portal.instance = "Theme#DeactivateAndReactivateTheme";
+		var appName = "test-theme";
+
+		Theme.deployThemeWar(themeName = "${appName}");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Theme Test Page");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		Page.changeCurrentTheme(
+			pageName = "Theme Test Page",
+			themeName = "test-theme-7-3");
+
+		Navigator.openSitePage(
+			pageName = "Theme Test Page",
+			siteName = "Guest");
+
+		SikuliAssertElementPresent(locator1 = "Theme#TEST_THEME_7_3_HOME_PAGE_PNG");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "App Manager");
+
+		Search.searchCP(searchTerm = "${appName}");
+
+		AppManager.deactivateAppCP(appName = "${appName}");
+
+		AssertConsoleTextPresent(value1 = "STOPPED test-theme_1.0.0");
+
+		Navigator.openSitePage(
+			pageName = "Theme Test Page",
+			siteName = "Guest");
+
+		AssertConsoleTextPresent(value1 = "No theme found for specified theme id testtheme73_WAR_testtheme. Returning the default theme.");
+
+		SikuliAssertElementNotPresent(locator1 = "Theme#TEST_THEME_7_3_HOME_PAGE_PNG");
+
+		takeScreenshot();
+
+		Page.viewCurrentTheme(
+			page = "Public Pages",
+			pageName = "Theme Test Page",
+			themeName = "Classic");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "App Manager");
+
+		Search.searchCP(searchTerm = "${appName}");
+
+		AppManager.activateAppCP(appName = "${appName}");
+
+		Navigator.openSitePage(
+			pageName = "Theme Test Page",
+			siteName = "Guest");
+
+		SikuliAssertElementPresent(locator1 = "Theme#TEST_THEME_7_3_HOME_PAGE_PNG");
+
+		takeScreenshot();
+
+		Page.viewCurrentTheme(
+			page = "Public Pages",
+			pageName = "Theme Test Page",
+			themeName = "test-theme-7-3");
+	}
+
 }

@@ -33,21 +33,20 @@ public class InterpolationUtil {
 			String name = entry.getKey();
 
 			properties.put(
-				name, substVars(entry.getValue(), name, null, map, null, true));
+				name, substVars(entry.getValue(), name, null, map, null));
 		}
 	}
 
 	public static String substVars(
 			String value, String currentKey, Map<String, String> cycleMap,
 			Map<String, String> configProps,
-			SubstitutionalCallback substitutionalCallback,
-			boolean substituteFromConfig)
+			SubstitutionalCallback substitutionalCallback)
 		throws IllegalArgumentException {
 
 		return _unescape(
 			_substVars(
 				value, currentKey, cycleMap, configProps,
-				substitutionalCallback, substituteFromConfig));
+				substitutionalCallback));
 	}
 
 	private static int _indexOf(String value, int fromIndex) {
@@ -84,8 +83,7 @@ public class InterpolationUtil {
 	private static String _substVars(
 			String value, String currentKey, Map<String, String> cycleMap,
 			Map<String, String> configProps,
-			SubstitutionalCallback substitutionalCallback,
-			boolean substituteFromConfig)
+			SubstitutionalCallback substitutionalCallback)
 		throws IllegalArgumentException {
 
 		if (cycleMap == null) {
@@ -164,7 +162,7 @@ public class InterpolationUtil {
 		// Get the value of the deepest nested variable placeholder. Try the
 		// configuration properties first.
 
-		if (substituteFromConfig && (configProps != null)) {
+		if (configProps != null) {
 			substValue = configProps.get(variable);
 		}
 
@@ -199,8 +197,7 @@ public class InterpolationUtil {
 		// substitutions to make
 
 		value = _substVars(
-			value, currentKey, cycleMap, configProps, substitutionalCallback,
-			substituteFromConfig);
+			value, currentKey, cycleMap, configProps, substitutionalCallback);
 
 		cycleMap.remove(currentKey);
 

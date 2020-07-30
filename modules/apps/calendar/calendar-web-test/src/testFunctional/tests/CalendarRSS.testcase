@@ -73,7 +73,6 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test DeleteEventAndViewFeed {
-		property portal.upstream = "quarantine";
 
 		property test.name.skip.portal.instance = "CalendarRSS#DeleteEventAndViewFeed";
 
@@ -116,7 +115,6 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test DisableFeedForSiteCalendar {
-		property portal.upstream = "quarantine";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -158,7 +156,6 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test ViewSiteCalendarFeed {
-		property portal.upstream = "quarantine";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 

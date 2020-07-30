@@ -223,7 +223,7 @@ public class AppResourceImpl
 			},
 			sorts,
 			document -> _toApp(
-				_appBuilderAppLocalService.getAppBuilderApp(
+				_appBuilderAppLocalService.fetchAppBuilderApp(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
@@ -299,7 +299,7 @@ public class AppResourceImpl
 			},
 			sorts,
 			document -> _toApp(
-				_appBuilderAppLocalService.getAppBuilderApp(
+				_appBuilderAppLocalService.fetchAppBuilderApp(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
@@ -372,7 +372,7 @@ public class AppResourceImpl
 			},
 			sorts,
 			document -> _toApp(
-				_appBuilderAppLocalService.getAppBuilderApp(
+				_appBuilderAppLocalService.fetchAppBuilderApp(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 

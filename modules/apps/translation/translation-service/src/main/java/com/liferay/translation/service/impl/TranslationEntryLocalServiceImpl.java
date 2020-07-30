@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 import com.liferay.translation.importer.TranslationInfoItemFieldValuesImporter;
 import com.liferay.translation.model.TranslationEntry;
@@ -35,6 +36,7 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -113,7 +115,9 @@ public class TranslationEntryLocalServiceImpl
 		translationEntry.setStatusDate(
 			serviceContext.getModifiedDate(new Date()));
 
-		return translationEntryPersistence.update(translationEntry);
+		return _startWorkflowInstance(
+			translationEntryPersistence.update(translationEntry),
+			serviceContext);
 	}
 
 	@Override
@@ -159,6 +163,19 @@ public class TranslationEntryLocalServiceImpl
 			serviceContext.getModifiedDate(new Date()));
 
 		return translationEntryPersistence.update(translationEntry);
+	}
+
+	private TranslationEntry _startWorkflowInstance(
+			TranslationEntry entry, ServiceContext serviceContext)
+		throws PortalException {
+
+		Map<String, Serializable> workflowContext = new HashMap<>();
+
+		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			entry.getCompanyId(), entry.getGroupId(),
+			serviceContext.getUserId(), TranslationEntry.class.getName(),
+			entry.getTranslationEntryId(), entry, serviceContext,
+			workflowContext);
 	}
 
 	@Reference

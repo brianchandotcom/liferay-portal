@@ -88,7 +88,7 @@ List<String> domains = accountEntryDisplay.getDomains();
 			/>
 
 			<liferay-ui:search-container-column-text>
-				<a class="modify-link pull-right" data-rowId="<%= domain %>" href="javascript:;"><%= removeDomainIcon %></a>
+				<a class="float-right modify-link" data-rowId="<%= domain %>" href="javascript:;"><%= removeDomainIcon %></a>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
@@ -150,7 +150,7 @@ List<String> domains = accountEntryDisplay.getDomains();
 
 									rowColumns.push(Liferay.Util.escape(domain));
 									rowColumns.push(
-										'<a class="modify-link pull-right" data-rowId="' +
+										'<a class="float-right modify-link" data-rowId="' +
 											domain +
 											'" href="javascript:;"><%= UnicodeFormatter.toString(removeDomainIcon) %></a>'
 									);

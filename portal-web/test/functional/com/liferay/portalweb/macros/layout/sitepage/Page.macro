@@ -376,6 +376,12 @@ definition {
 			locator1 = "Home#PAGE_CHILD_PAGE");
 	}
 
+	macro gotoCollectionEntryEllipsisItem {
+		LexiconTable.clickEllipsisItem(
+			item = "${item}",
+			tableEntry = "${tableEntry}");
+	}
+
 	macro gotoFriendlyURLHistory {
 		Click(locator1 = "Icon#FRIENDLY_URL_HISTORY");
 	}

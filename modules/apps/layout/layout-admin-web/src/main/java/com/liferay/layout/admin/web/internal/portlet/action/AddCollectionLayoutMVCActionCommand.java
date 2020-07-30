@@ -86,7 +86,8 @@ public class AddCollectionLayoutMVCActionCommand
 		try {
 			Layout layout = _addCollectionLayout(actionRequest);
 
-			MultiSessionMessages.add(actionRequest, "layoutAdded", layout);
+			MultiSessionMessages.add(
+				actionRequest, "collectionLayoutAdded", layout);
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse,

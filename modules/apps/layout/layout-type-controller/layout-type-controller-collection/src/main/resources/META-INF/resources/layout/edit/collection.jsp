@@ -16,7 +16,7 @@
 
 <%@ include file="/layout/edit/init.jsp" %>
 
-<liferay-ui:success key="layoutAdded" message="the-page-was-created-succesfully" />
+<liferay-ui:success key="collectionLayoutAdded" message="the-collection-page-was-created-succesfully.-next-customize-how-the-collection-is-displayed-by-dropping-fragments-to-the-collection-display-already-added-to-the-page" />
 
 <liferay-ui:success key="layoutPublished" message="the-page-was-published-succesfully" />
 

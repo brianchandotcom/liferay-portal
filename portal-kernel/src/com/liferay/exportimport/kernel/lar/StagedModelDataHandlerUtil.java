@@ -450,21 +450,17 @@ public class StagedModelDataHandlerUtil {
 			}
 		}
 
-		boolean findReference = false;
-
 		try {
 			importStagedModel(portletDataContext, referenceElement);
+
+			return;
 		}
 		catch (PortletDataException portletDataException) {
-			if (portletDataException.getCause() instanceof
-					NullPointerException) {
+			if (!(portletDataException.getCause() instanceof
+					NullPointerException)) {
 
-				findReference = true;
+				throw portletDataException;
 			}
-		}
-
-		if (!findReference) {
-			return;
 		}
 
 		Element importDataRootElement =

@@ -15,6 +15,11 @@
 </tr>
 <!--ADT_MULTI_COLUMN-->
 <tr>
+	<td>ADT_MULTI_COLUMN</td>
+	<td>//div[contains(@class,'portlet-content')]//div[contains(@class,'col-md-3')][${key_column}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADT_MULTI_COLUMN_1</td>
 	<td>//div[contains(@class,'portlet-content')]//div[contains(@class,'col-md-3')][1]</td>
 	<td></td>
@@ -27,6 +32,16 @@
 <tr>
 	<td>ADT_MULTI_COLUMN_3</td>
 	<td>//div[contains(@class,'portlet-content')]//div[contains(@class,'col-md-3')][3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADT_MULTI_COLUMN_CATEGORY_NAME</td>
+	<td>//div[contains(@class,'portlet-content')]//div[contains(@class,'col-md-3')][${key_column}]//ul[@class='categories']/li/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADT_MULTI_COLUMN_VOCABULARY_NAME</td>
+	<td>//div[contains(@class,'portlet-content')]//div[contains(@class,'col-md-3')][${key_column}]//h3</td>
 	<td></td>
 </tr>
 <tr>

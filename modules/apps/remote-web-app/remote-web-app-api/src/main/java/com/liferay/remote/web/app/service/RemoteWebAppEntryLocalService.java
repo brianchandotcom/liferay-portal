@@ -64,7 +64,7 @@ public interface RemoteWebAppEntryLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link RemoteWebAppEntryLocalServiceUtil} to access the remote web app entry local service. Add custom service methods to <code>com.liferay.remote.web.app.service.impl.RemoteWebAppEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.remote.web.app.service.impl.RemoteWebAppEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the remote web app entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link RemoteWebAppEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public RemoteWebAppEntry addEntry(

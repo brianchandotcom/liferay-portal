@@ -147,17 +147,8 @@ public class TypedProperties extends AbstractMap<String, Object> {
 		_storage.putAllSubstituted(dynamic);
 	}
 
-	private static final String _ENV_PREFIX = "env:";
-
 	private final SubstitutionalCallback _defaultSubstitutionCallback =
-		value -> {
-			if (value.startsWith(_ENV_PREFIX)) {
-				return System.getenv(value.substring(_ENV_PREFIX.length()));
-			}
-
-			return System.getProperty(value);
-		};
-
+		value -> System.getProperty(value);
 	private final Properties _storage = new Properties();
 	private final SubstitutionalCallback _substitutionalCallback;
 

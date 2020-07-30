@@ -162,7 +162,7 @@ definition {
 					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
 			}
 
-			for (var tabName : list "Fragments and Widgets,Look and Feel") {
+			for (var tabName : list "Fragments and Widgets,Page Design Options") {
 				AssertElementNotPresent(
 					key_tabName = "${tabName}",
 					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");

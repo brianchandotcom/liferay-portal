@@ -1,0 +1,14 @@
+@default = "sikuliAssertElementNotPresent"
+definition {
+
+	function sikuliAssertElementNotPresent {
+		WaitForSPARefresh();
+
+		selenium.sikuliAssertElementNotPresent();
+
+		selenium.assertJavaScriptErrors();
+
+		selenium.assertLiferayErrors();
+	}
+
+}

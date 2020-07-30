@@ -95,7 +95,7 @@ function DatasetDisplay({
 		...currentViewProps
 	} = activeView;
 
-	const selectable = bulkActions?.length && selectedItemsKey;
+	const selectable = bulkActions?.length > 0 && selectedItemsKey;
 
 	useEffect(() => {
 		if (

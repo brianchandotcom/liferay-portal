@@ -77,7 +77,7 @@ export default function PagePreview() {
 								);
 							}}
 							ref={iframeRef}
-							src={previewPage?.pageURL}
+							src={urlWithPreviewParameter(previewPage?.pageURL)}
 						/>
 					</>
 				) : (
@@ -90,4 +90,12 @@ export default function PagePreview() {
 			</div>
 		</>
 	);
+}
+
+function urlWithPreviewParameter(url) {
+	const nextURL = new URL(url);
+
+	nextURL.searchParams.set('p_l_mode', 'preview');
+
+	return nextURL.href;
 }

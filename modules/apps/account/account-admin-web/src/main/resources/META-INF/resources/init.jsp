@@ -31,6 +31,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants" %><%@
 page import="com.liferay.account.admin.web.internal.constants.AccountWebKeys" %><%@
 page import="com.liferay.account.admin.web.internal.dao.search.AccountEntryDisplaySearchContainerFactory" %><%@
+page import="com.liferay.account.admin.web.internal.dao.search.AccountGroupAccountEntryRowChecker" %><%@
 page import="com.liferay.account.admin.web.internal.dao.search.AccountGroupDisplaySearchContainerFactory" %><%@
 page import="com.liferay.account.admin.web.internal.dao.search.AccountOrganizationSearchContainerFactory" %><%@
 page import="com.liferay.account.admin.web.internal.dao.search.AccountRoleDisplaySearchContainerFactory" %><%@

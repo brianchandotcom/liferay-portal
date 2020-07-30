@@ -19,11 +19,21 @@
 <%
 SearchContainer<AccountEntryDisplay> accountEntryDisplaySearchContainer = AccountEntryDisplaySearchContainerFactory.create(liferayPortletRequest, liferayPortletResponse);
 
-accountEntryDisplaySearchContainer.setRowChecker(null);
+SelectAccountEntryManagementToolbarDisplayContext selectAccountEntryManagementToolbarDisplayContext = new SelectAccountEntryManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountEntryDisplaySearchContainer);
+
+if (selectAccountEntryManagementToolbarDisplayContext.isSingleSelect()) {
+	accountEntryDisplaySearchContainer.setRowChecker(null);
+}
+
+long accountGroupId = ParamUtil.getLong(request, "accountGroupId");
+
+if (accountGroupId > 0) {
+	accountEntryDisplaySearchContainer.setRowChecker(new AccountGroupAccountEntryRowChecker(liferayPortletResponse, accountGroupId));
+}
 %>
 
 <clay:management-toolbar
-	displayContext="<%= new SelectAccountEntryManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountEntryDisplaySearchContainer) %>"
+	displayContext="<%= selectAccountEntryManagementToolbarDisplayContext %>"
 />
 
 <clay:container-fluid

@@ -14,6 +14,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayLayout from '@clayui/layout';
+import classNames from 'classnames';
 import {useTimeout} from 'frontend-js-react-web';
 import React, {useContext, useEffect, useState} from 'react';
 
@@ -21,8 +22,10 @@ const SidebarContext = React.createContext();
 
 const noop = () => {};
 
-const SidebarBody = ({children}) => {
-	return <div className="sidebar-body">{children}</div>;
+const SidebarBody = ({children, className}) => {
+	return (
+		<div className={classNames('sidebar-body', className)}>{children}</div>
+	);
 };
 
 const SidebarHeader = ({children, subtitle, title}) => {

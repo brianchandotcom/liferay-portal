@@ -191,34 +191,10 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 							/>
 
 							<liferay-ui:search-container-column-text>
-
-								<%
-								Map<String, Object> additionalProps = HashMapBuilder.<String, Object>put(
-									"namespace", liferayPortletResponse.getNamespace()
-								).build();
-								%>
-
 								<clay:dropdown-actions
-									additionalProps="<%= additionalProps %>"
 									dropdownItems="<%= contentDashboardAdminDisplayContext.getDropdownItems(contentDashboardItem) %>"
 									propsTransformer="js/transformers/ActionsComponentPropsTransformer"
 								/>
-
-								<div>
-
-									<%
-									Map<String, Object> quickActionsProps = HashMapBuilder.<String, Object>put(
-										"items", contentDashboardAdminDisplayContext.getDropdownItems(contentDashboardItem)
-									).put(
-										"namespace", liferayPortletResponse.getNamespace()
-									).build();
-									%>
-
-									<react:component
-										module="js/components/QuickActions"
-										props="<%= quickActionsProps %>"
-									/>
-								</div>
 							</liferay-ui:search-container-column-text>
 						</liferay-ui:search-container-row>
 

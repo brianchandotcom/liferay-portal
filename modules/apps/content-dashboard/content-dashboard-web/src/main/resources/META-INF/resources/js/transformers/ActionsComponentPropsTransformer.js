@@ -14,7 +14,11 @@
 
 import {actions} from '../utils/showSidebar';
 
-export default function propsTransformer({items, namespace, ...otherProps}) {
+export default function propsTransformer({
+	items,
+	portletNamespace,
+	...otherProps
+}) {
 	return {
 		...otherProps,
 		items: items.map((item) => {
@@ -26,7 +30,7 @@ export default function propsTransformer({items, namespace, ...otherProps}) {
 					if (action) {
 						event.preventDefault();
 
-						actions[action](item.data.fetchURL, namespace);
+						actions[action](item.data.fetchURL, portletNamespace);
 					}
 				},
 			};

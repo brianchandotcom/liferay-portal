@@ -19,16 +19,20 @@ import SidebarPanelInfoView from '../components/SidebarPanelInfoView';
 import SidebarPanelMetricsView from '../components/SidebarPanelMetricsView';
 
 const actions = {
-	showInfo(fetchURL, namespace) {
-		showSidebar({View: SidebarPanelInfoView, fetchURL, namespace});
+	showInfo(fetchURL, portletNamespace) {
+		showSidebar({View: SidebarPanelInfoView, fetchURL, portletNamespace});
 	},
-	showMetrics(fetchURL, namespace) {
-		showSidebar({View: SidebarPanelMetricsView, fetchURL, namespace});
+	showMetrics(fetchURL, portletNamespace) {
+		showSidebar({
+			View: SidebarPanelMetricsView,
+			fetchURL,
+			portletNamespace,
+		});
 	},
 };
 
-const showSidebar = ({View, fetchURL, namespace}) => {
-	const sidebarPanel = Liferay.component(`${namespace}sidebar`);
+const showSidebar = ({View, fetchURL, portletNamespace}) => {
+	const sidebarPanel = Liferay.component(`${portletNamespace}sidebar`);
 
 	if (!sidebarPanel) {
 		const container = document.body.appendChild(
@@ -40,7 +44,7 @@ const showSidebar = ({View, fetchURL, namespace}) => {
 			{
 				fetchURL,
 				ref: (element) => {
-					Liferay.component(`${namespace}sidebar`, element);
+					Liferay.component(`${portletNamespace}sidebar`, element);
 				},
 				viewComponent: View,
 			},

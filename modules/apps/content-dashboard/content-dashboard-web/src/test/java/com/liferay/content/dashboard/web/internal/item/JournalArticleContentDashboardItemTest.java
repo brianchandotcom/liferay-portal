@@ -14,9 +14,11 @@
 
 package com.liferay.content.dashboard.web.internal.item;
 
-import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
+import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
+import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardItemActionProviderTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
 import com.liferay.info.display.url.provider.InfoEditURLProvider;
 import com.liferay.journal.model.JournalArticle;
@@ -37,6 +39,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -424,23 +427,13 @@ public class JournalArticleContentDashboardItemTest {
 
 	@Test
 	public void testGetViewURL() throws Exception {
-		AssetDisplayPageFriendlyURLProvider
-			assetDisplayPageFriendlyURLProvider = Mockito.mock(
-				AssetDisplayPageFriendlyURLProvider.class);
-
-		Mockito.when(
-			assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				Mockito.anyString(), Mockito.anyLong(), Mockito.anyObject())
-		).thenReturn(
-			"validURL"
-		);
-
 		JournalArticle journalArticle = _getJournalArticle();
 
 		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
 			new JournalArticleContentDashboardItem(
-				null, null, assetDisplayPageFriendlyURLProvider, null, null,
-				null, journalArticle, _getLanguage(), null, null, null);
+				null, null,
+				_getContentDashboardItemActionProviderTracker("validURL"), null,
+				null, null, journalArticle, _getLanguage(), null, null, null);
 
 		Assert.assertEquals(
 			"validURL",
@@ -450,16 +443,13 @@ public class JournalArticleContentDashboardItemTest {
 
 	@Test
 	public void testGetViewURLWithNullFriendlyURL() throws Exception {
-		AssetDisplayPageFriendlyURLProvider
-			assetDisplayPageFriendlyURLProvider = Mockito.mock(
-				AssetDisplayPageFriendlyURLProvider.class);
-
 		JournalArticle journalArticle = _getJournalArticle();
 
 		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
 			new JournalArticleContentDashboardItem(
-				null, null, assetDisplayPageFriendlyURLProvider, null, null,
-				null, journalArticle, _getLanguage(), null, null, null);
+				null, null, _getContentDashboardItemActionProviderTracker(null),
+				null, null, null, journalArticle, _getLanguage(), null, null,
+				null);
 
 		Assert.assertEquals(
 			StringPool.BLANK,
@@ -519,23 +509,13 @@ public class JournalArticleContentDashboardItemTest {
 
 	@Test
 	public void testIsViewURLEnabled() throws Exception {
-		AssetDisplayPageFriendlyURLProvider
-			assetDisplayPageFriendlyURLProvider = Mockito.mock(
-				AssetDisplayPageFriendlyURLProvider.class);
-
-		Mockito.when(
-			assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				Mockito.anyString(), Mockito.anyLong(), Mockito.anyObject())
-		).thenReturn(
-			"validURL"
-		);
-
 		JournalArticle journalArticle = _getJournalArticle();
 
 		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
 			new JournalArticleContentDashboardItem(
-				null, null, assetDisplayPageFriendlyURLProvider, null, null,
-				null, journalArticle, _getLanguage(), null, null, null);
+				null, null,
+				_getContentDashboardItemActionProviderTracker("validURL"), null,
+				null, null, journalArticle, _getLanguage(), null, null, null);
 
 		Assert.assertTrue(
 			journalArticleContentDashboardItem.isViewURLEnabled(
@@ -544,9 +524,19 @@ public class JournalArticleContentDashboardItemTest {
 
 	@Test
 	public void testIsViewURLEnabledWithNotApprovedVersion() {
-		AssetDisplayPageFriendlyURLProvider
-			assetDisplayPageFriendlyURLProvider = Mockito.mock(
-				AssetDisplayPageFriendlyURLProvider.class);
+		ContentDashboardItemActionProvider contentDashboardItemActionProvider =
+			Mockito.mock(ContentDashboardItemActionProvider.class);
+
+		ContentDashboardItemActionProviderTracker
+			contentDashboardItemActionProviderTracker = Mockito.mock(
+				ContentDashboardItemActionProviderTracker.class);
+
+		Mockito.when(
+			contentDashboardItemActionProviderTracker.
+				getContentDashboardItemActionProviders(Mockito.anyString())
+		).thenReturn(
+			Collections.singletonList(contentDashboardItemActionProvider)
+		);
 
 		JournalArticle journalArticle = _getJournalArticle();
 
@@ -558,8 +548,8 @@ public class JournalArticleContentDashboardItemTest {
 
 		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
 			new JournalArticleContentDashboardItem(
-				null, null, assetDisplayPageFriendlyURLProvider, null, null,
-				null, journalArticle, null, null, null, null);
+				null, null, contentDashboardItemActionProviderTracker, null,
+				null, null, journalArticle, null, null, null, null);
 
 		Assert.assertFalse(
 			journalArticleContentDashboardItem.isViewURLEnabled(null));
@@ -567,20 +557,68 @@ public class JournalArticleContentDashboardItemTest {
 
 	@Test
 	public void testIsViewURLEnabledWithNullFriendlyURL() throws Exception {
-		AssetDisplayPageFriendlyURLProvider
-			assetDisplayPageFriendlyURLProvider = Mockito.mock(
-				AssetDisplayPageFriendlyURLProvider.class);
-
 		JournalArticle journalArticle = _getJournalArticle();
 
 		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
 			new JournalArticleContentDashboardItem(
-				null, null, assetDisplayPageFriendlyURLProvider, null, null,
-				null, journalArticle, _getLanguage(), null, null, null);
+				null, null, _getContentDashboardItemActionProviderTracker(null),
+				null, null, null, journalArticle, _getLanguage(), null, null,
+				null);
 
 		Assert.assertFalse(
 			journalArticleContentDashboardItem.isViewURLEnabled(
 				_getHttpServletRequest()));
+	}
+
+	private ContentDashboardItemActionProviderTracker
+			_getContentDashboardItemActionProviderTracker(String url)
+		throws Exception {
+
+		ContentDashboardItemActionProvider contentDashboardItemActionProvider =
+			Mockito.mock(ContentDashboardItemActionProvider.class);
+
+		ContentDashboardItemAction contentDashboardItemAction = Mockito.mock(
+			ContentDashboardItemAction.class);
+
+		Mockito.when(
+			contentDashboardItemAction.getURL()
+		).thenReturn(
+			url
+		);
+		Mockito.when(
+			contentDashboardItemAction.getURL(Mockito.any(Locale.class))
+		).thenReturn(
+			url
+		);
+
+		Mockito.when(
+			contentDashboardItemActionProvider.getContentDashboardItemAction(
+				Mockito.any(JournalArticle.class),
+				Mockito.any(HttpServletRequest.class))
+		).thenReturn(
+			contentDashboardItemAction
+		);
+
+		Mockito.when(
+			contentDashboardItemActionProvider.getType()
+		).thenReturn(
+			ContentDashboardItemAction.Type.VIEW
+		);
+
+		ContentDashboardItemActionProviderTracker
+			contentDashboardItemActionProviderTracker = Mockito.mock(
+				ContentDashboardItemActionProviderTracker.class);
+
+		Mockito.when(
+			contentDashboardItemActionProviderTracker.
+				getContentDashboardItemActionProviderOptional(
+					JournalArticle.class.getName(),
+					ContentDashboardItemAction.Type.VIEW)
+		).thenReturn(
+			Optional.of(contentDashboardItemActionProvider)
+		);
+
+		return contentDashboardItemActionProviderTracker;
 	}
 
 	private HttpServletRequest _getHttpServletRequest() throws Exception {

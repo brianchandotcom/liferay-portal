@@ -1,0 +1,16 @@
+{
+	"dependencies": {
+		"@clayui/alert": "3.4.0",
+		"@clayui/icon": "3.0.5",
+		"react": "16.12.0",
+		"react-dom": "16.12.0"
+	},
+	"main": "js/App.es",
+	"name": "frontend-js-clay-sample-web",
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix"
+	},
+	"version": "1.0.0"
+}

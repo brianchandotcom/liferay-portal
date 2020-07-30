@@ -28,13 +28,14 @@ import Select from '../../../src/main/resources/META-INF/resources/Select/Select
 
 const spritemap = 'icons.svg';
 
-const createOptions = (totalOptions) => {
+const createOptions = (length) => {
 	const options = [];
-	for (let item = 1; item <= totalOptions; item++) {
+
+	for (let counter = 1; counter <= length; counter++) {
 		options.push({
-			label: 'label' + item,
-			name: 'name' + item,
-			value: 'item' + item,
+			label: 'label' + counter,
+			name: 'name' + counter,
+			value: 'item' + counter,
 		});
 	}
 

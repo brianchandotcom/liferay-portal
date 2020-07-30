@@ -267,8 +267,8 @@ const DropdownWithSearch = ({
 				option.value &&
 				option.label.toLowerCase().includes(query.toLowerCase())
 		);
-		setFilteredOptions([emptyOption, ...result]);
 
+		setFilteredOptions([emptyOption, ...result]);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [query]);
 

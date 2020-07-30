@@ -52,6 +52,28 @@ const getDefaultRows = (nestedFields) => {
 	});
 };
 
+const FieldProperties = ({required, tooltip}) => {
+	return (
+		<>
+			{required && (
+				<span className="reference-mark">
+					<ClayIcon symbol="asterisk" />
+				</span>
+			)}
+
+			{tooltip && (
+				<span className="ddm-tooltip">
+					<ClayIcon
+						data-tooltip-align="right"
+						symbol="question-circle-full"
+						title={tooltip}
+					/>
+				</span>
+			)}
+		</>
+	);
+};
+
 function FieldBase({
 	children,
 	displayErrors,
@@ -68,6 +90,7 @@ function FieldBase({
 	showLabel = true,
 	tip,
 	tooltip,
+	type,
 	valid,
 	visible,
 }) {
@@ -89,6 +112,13 @@ function FieldBase({
 		return languageValues;
 	}, [localizedValue, editingLanguageId, name]);
 	const repeatedIndex = useMemo(() => getRepeatedIndex(name), [name]);
+
+	const showLegend =
+		type &&
+		(type === 'checkbox_multiple' ||
+			type === 'grid' ||
+			type === 'paragraph' ||
+			type === 'radio');
 
 	return (
 		<ClayTooltipProvider>
@@ -142,31 +172,33 @@ function FieldBase({
 					required ||
 					tooltip ||
 					repeatable) && (
-					<label
-						className={classNames({
-							'ddm-empty': !showLabel && !required,
-							'ddm-label': showLabel || required,
-						})}
-						htmlFor={id ? id : name}
-					>
-						{label && showLabel && label}
+					<>
+						{showLegend ? (
+							<legend className="lfr-ddm-legend">
+								{label && showLabel && label}
 
-						{required && (
-							<span className="reference-mark">
-								<ClayIcon symbol="asterisk" />
-							</span>
-						)}
-
-						{tooltip && (
-							<span className="ddm-tooltip">
-								<ClayIcon
-									data-tooltip-align="right"
-									symbol="question-circle-full"
-									title={tooltip}
+								<FieldProperties
+									required={required}
+									tooltip={tooltip}
 								/>
-							</span>
+							</legend>
+						) : (
+							<label
+								className={classNames({
+									'ddm-empty': !showLabel && !required,
+									'ddm-label': showLabel || required,
+								})}
+								htmlFor={id ? id : name}
+							>
+								{label && showLabel && label}
+
+								<FieldProperties
+									required={required}
+									tooltip={tooltip}
+								/>
+							</label>
 						)}
-					</label>
+					</>
 				)}
 
 				{children}

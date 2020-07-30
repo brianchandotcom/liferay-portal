@@ -109,7 +109,6 @@ const CheckboxMultiple = ({
 const Main = ({
 	inline,
 	name,
-	label,
 	options = [
 		{
 			label: 'Option 1',
@@ -129,13 +128,7 @@ const Main = ({
 	value,
 	...otherProps
 }) => (
-	<FieldBase
-		{...otherProps}
-		name={name}
-		readOnly={readOnly}
-		showLabel={false}
-	>
-		<legend className="lfr-ddm-legend">{label}</legend>
+	<FieldBase name={name} readOnly={readOnly} {...otherProps}>
 		<CheckboxMultiple
 			disabled={readOnly}
 			inline={inline}

@@ -679,7 +679,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 
 				PortletURL portletURL = getPortletURL();
 
-				portletURL.setParameter("tagId", (String)null);
+				portletURL.setParameter("assetTagId", (String)null);
 
 				dropdownItem.putData("redirectURL", String.valueOf(portletURL));
 

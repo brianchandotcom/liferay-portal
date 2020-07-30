@@ -562,6 +562,36 @@ export const getThreads = (
 		.then((result) => ({...result, data: result.data.messageBoardThreads}));
 };
 
+export const getSectionsFromRootSection = (rootSection, siteKey) => {
+	if (!rootSection) {
+		return client
+			.query({
+				query: getSectionsQuery,
+				variables: {
+					siteKey,
+				},
+			})
+			.then((result) => ({
+				...result,
+				data: result.data.messageBoardSections,
+			}));
+	}
+
+	return client
+		.query({
+			query: getSectionQuery,
+			variables: {
+				filter: `title eq '${rootSection}' or id eq '${rootSection}'`,
+				siteKey,
+			},
+		})
+		.then((result) => ({
+			...result,
+			data:
+				result.data.messageBoardSections.items[0].messageBoardSections,
+		}));
+};
+
 export const getSections = (sectionTitle, siteKey) =>
 	client
 		.query({
@@ -796,7 +826,9 @@ export const getSectionQuery = gql`
 				messageBoardSections(sort: "title:asc") {
 					items {
 						id
+						description
 						numberOfMessageBoardSections
+						numberOfMessageBoardThreads
 						parentMessageBoardSectionId
 						subscribed
 						title

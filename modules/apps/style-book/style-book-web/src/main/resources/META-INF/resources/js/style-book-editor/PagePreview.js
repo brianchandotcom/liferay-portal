@@ -14,6 +14,7 @@
 
 import React, {useCallback, useContext, useEffect, useRef} from 'react';
 
+import PreviewInfoBar from './PreviewInfoBar';
 import {StyleBookContext} from './StyleBookContext';
 import {config} from './config';
 
@@ -55,32 +56,37 @@ export default function PagePreview() {
 	}, [loadFrontendTokenValues, frontendTokensValues]);
 
 	return (
-		<div className="style-book-editor__page-preview">
-			{config.previewURL ? (
-				<iframe
-					className="style-book-editor__page-preview-frame"
-					onLoad={() => {
-						if (iframeRef.current?.contentWindow?.Liferay) {
-							iframeRef.current.contentWindow.Liferay.on(
-								'endNavigate',
-								loadFrontendTokenValues
-							);
-						}
-						loadFrontendTokenValues(
-							iframeRef.current,
-							frontendTokensValues
-						);
-					}}
-					ref={iframeRef}
-					src={config.previewURL}
-				/>
-			) : (
-				<div className="style-book-editor__page-preview-no-page-message">
-					{Liferay.Language.get(
-						'you-cannot-preview-the-style-book-because-there-are-no-pages-in-this-site'
-					)}
-				</div>
-			)}
-		</div>
+		<>
+			<div className="style-book-editor__page-preview">
+				{config.previewURL ? (
+					<>
+						<PreviewInfoBar />
+						<iframe
+							className="style-book-editor__page-preview-frame"
+							onLoad={() => {
+								if (iframeRef.current?.contentWindow?.Liferay) {
+									iframeRef.current.contentWindow.Liferay.on(
+										'endNavigate',
+										loadFrontendTokenValues
+									);
+								}
+								loadFrontendTokenValues(
+									iframeRef.current,
+									frontendTokensValues
+								);
+							}}
+							ref={iframeRef}
+							src={config.previewURL}
+						/>
+					</>
+				) : (
+					<div className="style-book-editor__page-preview-no-page-message">
+						{Liferay.Language.get(
+							'you-cannot-preview-the-style-book-because-there-are-no-pages-in-this-site'
+						)}
+					</div>
+				)}
+			</div>
+		</>
 	);
 }

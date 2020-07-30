@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,18 +12,14 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.layout.type.controller.collection.internal.constants;
+<%@ include file="/entries/init.jsp" %>
 
-/**
- * @author Pavel Savinov
- */
-public class CollectionPageLayoutTypeControllerWebKeys {
+<%
+CollectionItemsDetailDisplayContext collectionItemsDetailDisplayContext = (CollectionItemsDetailDisplayContext)request.getAttribute(CollectionPageLayoutTypeControllerWebKeys.COLLECTION_ITEMS_DETAIL_DISPLAY_CONTEXT);
+%>
 
-	public static final String ASSET_PUBLISHER_ADD_ITEM_HOLDERS =
-		"ASSET_PUBLISHER_ADD_ITEM_HOLDERS";
-
-	public static final String COLLECTION_ITEMS_DETAIL_DISPLAY_CONTEXT =
-		"COLLECTION_ITEMS_DETAIL_DISPLAY_CONTEXT";
-
-}
+<li class="control-menu-nav-item">
+	<span class="text-muted text-truncate">(<%= LanguageUtil.format(resourceBundle, "x-items", collectionItemsDetailDisplayContext.getCollectionItemsCount(), false) %>)</span>
+</li>

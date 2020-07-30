@@ -32,7 +32,9 @@ const actions = {
 };
 
 const showSidebar = ({View, fetchURL, portletNamespace}) => {
-	const sidebarPanel = Liferay.component(`${portletNamespace}sidebar`);
+	const id = `${portletNamespace}sidebar`;
+
+	const sidebarPanel = Liferay.component(id);
 
 	if (!sidebarPanel) {
 		const container = document.body.appendChild(
@@ -44,7 +46,7 @@ const showSidebar = ({View, fetchURL, portletNamespace}) => {
 			{
 				fetchURL,
 				ref: (element) => {
-					Liferay.component(`${portletNamespace}sidebar`, element);
+					Liferay.component(id, element);
 				},
 				viewComponent: View,
 			},

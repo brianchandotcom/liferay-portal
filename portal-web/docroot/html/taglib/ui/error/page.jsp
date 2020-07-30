@@ -49,8 +49,8 @@ String rowBreak = (String)request.getAttribute("liferay-ui:error:rowBreak");
 		<aui:script>
 			Liferay.Util.openToast({
 			   message: '<%= HtmlUtil.escapeJS(alertMessage) %>',
-			   title: '<%= alertTitle %>'
-			   type: '<%= alertStyle %>',
+			   title: '<%= alertTitle %>',
+			   type: '<%= alertStyle %>'
 			});
 		</aui:script>
 	</c:otherwise>

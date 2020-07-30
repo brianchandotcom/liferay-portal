@@ -422,7 +422,7 @@ This is a HTML Content''';
 		Translations.viewBaseFields(
 			webContentDecimal = "1.1",
 			webContentDescription = "WC WebContent Description",
-			webContentHTML = "${webContentHTML}"
+			webContentHTML = "${webContentHTML}",
 			webContentInteger = "123",
 			webContentNumber = "100",
 			webContentText = "Text",
@@ -457,9 +457,9 @@ This is a HTML Content''';
 		Translations.viewTargetFields(
 			webContentDecimal = "22,0",
 			webContentDescription = "WC WebContent Descripción",
+			webContentHTML = "${webContentHTML}",
 			webContentInteger = "321",
 			webContentNumber = "200",
-			webContentHTML = "${webContentHTML}",
 			webContentText = "Mensaje de texto",
 			webContentTextBox = "Este es un cuadro de texto.",
 			webContentTitle = "WC WebContent Título");
@@ -482,9 +482,9 @@ This is a HTML Content''';
 			otherLocaleSummary = "Resumen",
 			webContentDecimal = "22,0",
 			webContentDescription = "WC WebContent Descripción",
+			webContentHTML = "${webContentHTML}",
 			webContentInteger = "321",
 			webContentNumber = "200",
-			webContentHTML = "${webContentHTML}",
 			webContentText = "Mensaje de texto",
 			webContentTextBox = "Este es un cuadro de texto.",
 			webContentTitle = "WC WebContent Título");

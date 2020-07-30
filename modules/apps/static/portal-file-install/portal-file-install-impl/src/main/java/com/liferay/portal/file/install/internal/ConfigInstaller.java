@@ -405,7 +405,7 @@ public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 						key.toString(), properties.getProperty(key.toString()));
 				}
 
-				InterpolationUtil.performSubstitution(map, _bundleContext);
+				InterpolationUtil.performSubstitution(map);
 
 				for (Map.Entry<String, String> entry : map.entrySet()) {
 					dictionary.put(entry.getKey(), entry.getValue());

@@ -125,7 +125,7 @@ public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 				if ((file != null) && file.isFile()) {
 					_pidToFile.put(configuration.getPid(), fileName);
 					TypedProperties typedProperties = new TypedProperties(
-						new BundleContextSubstitutionCallback(_bundleContext));
+						new BundleContextSubstitutionCallback());
 
 					try (InputStream inputStream = new FileInputStream(file);
 						Reader reader = new InputStreamReader(
@@ -415,7 +415,7 @@ public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 			}
 			else {
 				TypedProperties typedProperties = new TypedProperties(
-					new BundleContextSubstitutionCallback(_bundleContext));
+					new BundleContextSubstitutionCallback());
 
 				try (Reader reader = new InputStreamReader(
 						inputStream, _encoding)) {

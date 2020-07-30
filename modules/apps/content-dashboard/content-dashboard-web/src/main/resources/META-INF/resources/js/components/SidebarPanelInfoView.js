@@ -18,6 +18,7 @@ import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import ClaySticker from '@clayui/sticker';
 import ClayTabs from '@clayui/tabs';
+import classnames from 'classnames';
 import React, {useMemo, useState} from 'react';
 
 import Sidebar from './Sidebar';
@@ -47,6 +48,7 @@ const SidebarPanelInfoView = ({
 	subType,
 	tags = [],
 	title,
+	userId,
 	userName,
 	userPortraitURL,
 	versions = [],
@@ -77,6 +79,8 @@ const SidebarPanelInfoView = ({
 				}),
 		[viewURLs]
 	);
+
+	const stickerColor = parseInt(userId, 10) % 10;
 
 	return (
 		<>
@@ -122,13 +126,21 @@ const SidebarPanelInfoView = ({
 						className="c-mt-3"
 					>
 						<div className="c-mb-4 sidebar-dl sidebar-section">
-							<ClaySticker className="sticker-user-icon">
-								<div className="sticker-overlay">
+							<ClaySticker
+								className={classnames('sticker-user-icon', {
+									[`user-icon-color-${stickerColor}`]: !userPortraitURL,
+								})}
+								shape="circle"
+							>
+								{userPortraitURL ? (
 									<img
+										alt={`${userName}.`}
 										className="sticker-img"
 										src={userPortraitURL}
 									/>
-								</div>
+								) : (
+									<ClayIcon symbol="user" />
+								)}
 							</ClaySticker>
 
 							<span className="c-ml-2 h5">{userName}</span>

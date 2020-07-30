@@ -58,5 +58,5 @@ const showSidebar = ({View, fetchURL, portletNamespace}) => {
 	}
 };
 
-export {showSidebar, actions};
+export {actions};
 export default showSidebar;

@@ -193,6 +193,7 @@ definition {
 	@priority = "5"
 	test ImportLiveSiteToStagingSite {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "SitesExportImportWithStaging#ImportLiveSiteToStagingSite";
 
 		task ("Export the first site") {
 			LAR.openExportAdmin(siteScopeName = "test-site-name-1");

@@ -20,11 +20,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
@@ -97,6 +95,10 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 
 				_updated(new HashMap<>(map));
 			}
+
+			for (DirectoryWatcher directoryWatcher : _directoryWatchers) {
+				directoryWatcher.start();
+			}
 		}
 		finally {
 			_writeLock.unlock();
@@ -108,15 +110,7 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 		_writeLock.lock();
 
 		try {
-			List<DirectoryWatcher> watchers = new ArrayList<>();
-
-			synchronized (_directoryWatchers) {
-				watchers.addAll(_directoryWatchers);
-
-				_directoryWatchers.clear();
-			}
-
-			for (DirectoryWatcher directoryWatcher : watchers) {
+			for (DirectoryWatcher directoryWatcher : _directoryWatchers) {
 				try {
 					directoryWatcher.close();
 				}
@@ -125,6 +119,8 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 			}
 
 			_tracker.close();
+
+			_directoryWatchers.clear();
 		}
 		finally {
 			_writeLock.unlock();
@@ -134,13 +130,7 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 	}
 
 	public void updateChecksum(File file) {
-		List<DirectoryWatcher> toUpdate = new ArrayList<>();
-
-		synchronized (_directoryWatchers) {
-			toUpdate.addAll(_directoryWatchers);
-		}
-
-		for (DirectoryWatcher directoryWatcher : toUpdate) {
+		for (DirectoryWatcher directoryWatcher : _directoryWatchers) {
 			Scanner scanner = directoryWatcher.getScanner();
 
 			scanner.updateChecksum(file);
@@ -165,11 +155,7 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 
 		directoryWatcher.setDaemon(true);
 
-		synchronized (_directoryWatchers) {
-			_directoryWatchers.add(directoryWatcher);
-		}
-
-		directoryWatcher.start();
+		_directoryWatchers.add(directoryWatcher);
 	}
 
 	private BundleContext _bundleContext;

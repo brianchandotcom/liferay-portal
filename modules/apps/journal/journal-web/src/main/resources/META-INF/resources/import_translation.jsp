@@ -76,7 +76,7 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 			<liferay-ui:error exception="<%= XLIFFFileException.MustBeValid.class %>" message="the-file-is-an-invalid-xliff-file" />
 			<liferay-ui:error exception="<%= XLIFFFileException.MustBeWellFormed.class %>" message="xliff-file-does-not-have-all-needed-fields" />
 			<liferay-ui:error exception="<%= XLIFFFileException.MustHaveCorrectEncoding.class %>" message="the-translation-file-has-an-incorrect-encoding.the-supported-encoding-format-is-utf-8" />
-			<liferay-ui:error exception="<%= XLIFFFileException.MustHaveValidId.class %>" message="the-translation-file-x-does-not-correspond-to-this-web-content" />
+			<liferay-ui:error exception="<%= XLIFFFileException.MustHaveValidId.class %>" message="the-translation-file-does-not-correspond-to-this-web-content" />
 			<liferay-ui:error exception="<%= XLIFFFileException.MustHaveValidParameter.class %>" message="xliff-file-has-invalid-parameters" />
 			<liferay-ui:error exception="<%= XLIFFFileException.MustNotHaveMoreThanOne.class %>" message="xliff-file-is-invalid" />
 

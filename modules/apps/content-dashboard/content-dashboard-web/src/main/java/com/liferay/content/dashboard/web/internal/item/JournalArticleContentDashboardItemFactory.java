@@ -14,9 +14,9 @@
 
 package com.liferay.content.dashboard.web.internal.item;
 
-import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardItemActionProviderTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemTypeFactory;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemTypeFactoryTracker;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -73,7 +73,7 @@ public class JournalArticleContentDashboardItemFactory
 
 		return new JournalArticleContentDashboardItem(
 			assetEntry.getCategories(), assetEntry.getTags(),
-			_assetDisplayPageFriendlyURLProvider,
+			_contentDashboardItemActionProviderTracker,
 			contentDashboardItemTypeFactory.create(
 				ddmStructure.getStructureId()),
 			_groupLocalService.fetchGroup(journalArticle.getGroupId()),
@@ -85,11 +85,11 @@ public class JournalArticleContentDashboardItemFactory
 	}
 
 	@Reference
-	private AssetDisplayPageFriendlyURLProvider
-		_assetDisplayPageFriendlyURLProvider;
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
+	private ContentDashboardItemActionProviderTracker
+		_contentDashboardItemActionProviderTracker;
 
 	@Reference
 	private ContentDashboardItemTypeFactoryTracker

@@ -38,10 +38,13 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalServiceUtil;
+import com.liferay.petra.reflect.GenericUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -57,6 +60,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -276,6 +280,26 @@ public class ContentPageLayoutEditorDisplayContext
 		return assetEntryTypeLabel;
 	}
 
+	private JSONArray _getAssetListEntryLinkedCollectionJSONArray(
+		AssetListEntry assetListEntry) {
+
+		return JSONUtil.put(
+			JSONUtil.put(
+				"classNameId",
+				PortalUtil.getClassNameId(AssetListEntry.class.getName())
+			).put(
+				"classPK", String.valueOf(assetListEntry.getAssetListEntryId())
+			).put(
+				"itemSubtype", assetListEntry.getAssetEntrySubtype()
+			).put(
+				"itemType", assetListEntry.getAssetEntryType()
+			).put(
+				"title", assetListEntry.getTitle()
+			).put(
+				"type", InfoListItemSelectorReturnType.class.getName()
+			));
+	}
+
 	private Map<String, Object> _getAvailableSegmentsEntries() {
 		Map<String, Object> availableSegmentsEntries = new HashMap<>();
 
@@ -459,6 +483,21 @@ public class ContentPageLayoutEditorDisplayContext
 		return StringPool.BLANK;
 	}
 
+	private JSONArray _getInfoListProviderLinkedCollectionJSONArray(
+		InfoListProvider<?> infoListProvider) {
+
+		return JSONUtil.put(
+			JSONUtil.put(
+				"itemType", GenericUtil.getGenericClassName(infoListProvider)
+			).put(
+				"key", infoListProvider.getKey()
+			).put(
+				"title", infoListProvider.getLabel(LocaleUtil.getDefault())
+			).put(
+				"type", InfoListProviderItemSelectorReturnType.class.getName()
+			));
+	}
+
 	private List<Map<String, Object>> _getLayoutDataList() throws Exception {
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			LayoutPageTemplateStructureLocalServiceUtil.
@@ -582,6 +621,7 @@ public class ContentPageLayoutEditorDisplayContext
 		}
 
 		String itemTypeLabel = StringPool.BLANK;
+		JSONArray linkedCollectionJSONArray = JSONFactoryUtil.createJSONArray();
 		String subtypeLabel = StringPool.BLANK;
 		String typeLabel = StringPool.BLANK;
 
@@ -595,6 +635,9 @@ public class ContentPageLayoutEditorDisplayContext
 			if (infoListProvider != null) {
 				itemTypeLabel = _getInfoListProviderItemTypeLabel(
 					infoListProvider);
+				linkedCollectionJSONArray =
+					_getInfoListProviderLinkedCollectionJSONArray(
+						infoListProvider);
 				subtypeLabel = infoListProvider.getLabel(
 					themeDisplay.getLocale());
 			}
@@ -610,6 +653,8 @@ public class ContentPageLayoutEditorDisplayContext
 
 			if (assetListEntry != null) {
 				itemTypeLabel = _getAssetListEntryItemTypeLabel(assetListEntry);
+				linkedCollectionJSONArray =
+					_getAssetListEntryLinkedCollectionJSONArray(assetListEntry);
 				subtypeLabel = assetListEntry.getTitle();
 			}
 
@@ -617,11 +662,6 @@ public class ContentPageLayoutEditorDisplayContext
 		}
 
 		return HashMapBuilder.<String, Object>put(
-			"mappingDescription",
-			LanguageUtil.get(
-				httpServletRequest,
-				"this-page-is-associated-to-the-following-collection")
-		).put(
 			"itemType",
 			HashMapBuilder.<String, Object>put(
 				"groupItemTypeTitle",
@@ -629,6 +669,13 @@ public class ContentPageLayoutEditorDisplayContext
 			).put(
 				"label", itemTypeLabel
 			).build()
+		).put(
+			"linkedCollection", linkedCollectionJSONArray
+		).put(
+			"mappingDescription",
+			LanguageUtil.get(
+				httpServletRequest,
+				"this-page-is-associated-to-the-following-collection")
 		).put(
 			"type",
 			HashMapBuilder.<String, Object>put(

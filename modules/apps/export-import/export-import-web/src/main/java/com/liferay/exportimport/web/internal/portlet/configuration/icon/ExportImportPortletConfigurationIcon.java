@@ -73,15 +73,15 @@ public class ExportImportPortletConfigurationIcon
 
 		sb.append(portletDisplay.getNamespace());
 
-		sb.append("', portletSelector: '#p_p_id_");
+		sb.append("', onClose: function(){ Liferay.Portlet.refresh('#p_p_id_");
+		sb.append(portletDisplay.getId());
+		sb.append("_')}, portletSelector: '#p_p_id_");
 		sb.append(portletDisplay.getId());
 		sb.append("_', portletId: '");
 		sb.append(portletDisplay.getId());
 		sb.append("', title: '");
 		sb.append(LanguageUtil.get(themeDisplay.getLocale(), "export-import"));
-		sb.append("', onClose: function(){ Liferay.Portlet.refresh('#p_p_id_");
-		sb.append(portletDisplay.getId());
-		sb.append("_')}, url: '");
+		sb.append("', url: '");
 		sb.append(HtmlUtil.escapeJS(portletDisplay.getURLExportImport()));
 		sb.append("'}); return false;");
 

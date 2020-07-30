@@ -231,22 +231,22 @@ const DropdownList = ({
 	options,
 }) => (
 	<ClayDropDown.ItemList>
-		{options.map((item, index) => (
+		{options.map((option, index) => (
 			<DropdownItem
 				currentValue={currentValue}
 				expand={expand}
 				index={index}
-				key={`${item.value}-${index}`}
+				key={`${option.value}-${index}`}
 				multiple={multiple}
 				onSelect={handleSelect}
-				option={item}
+				option={option}
 				options={options}
 			/>
 		))}
 	</ClayDropDown.ItemList>
 );
 
-const DropdownWithSearch = ({
+const DropdownListWithSearch = ({
 	currentValue,
 	expand,
 	handleSelect,
@@ -482,7 +482,7 @@ const Select = ({
 				ref={menuElementRef}
 			>
 				{options.length > MAX_ITEMS ? (
-					<DropdownWithSearch
+					<DropdownListWithSearch
 						currentValue={currentValue}
 						expand={expand}
 						handleSelect={handleSelect}

@@ -511,6 +511,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTAINER_CONFIGURATION_FIXED_WIDTH</td>
+	<td>xpath=(//div[contains(@class,'page-editor__topper__bar') and contains(.,'Container')])[${key_position}]/parent::div[contains(@class,'container')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTAINER_CONFIGURATION_HORIZONTAL_ALIGN</td>
 	<td>xpath=(//div[contains(@class,'page-editor__topper__bar') and contains(.,'Container')]//following-sibling::div[contains(@class,'page-editor__topper__content')])[${key_position}]/div[contains(@class,'page-editor__container')][contains(@class,'justify-content-${key_horizontalAlign}')]</td>
 	<td></td>

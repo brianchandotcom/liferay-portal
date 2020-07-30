@@ -342,11 +342,11 @@ public class CommentResourceImpl
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
+				searchContext.addVulcanAggregation(aggregation);
 				searchContext.setAttribute("discussion", Boolean.TRUE);
 				searchContext.setAttribute(
 					"searchPermissionContext", StringPool.BLANK);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
-				searchContext.addVulcanAggregation(aggregation);
 				searchContext.setVulcanCheckPermissions(false);
 			},
 			sorts,

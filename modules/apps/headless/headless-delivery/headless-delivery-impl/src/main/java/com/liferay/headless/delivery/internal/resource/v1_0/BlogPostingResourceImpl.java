@@ -139,11 +139,11 @@ public class BlogPostingResourceImpl
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
+				searchContext.addVulcanAggregation(aggregation);
 				searchContext.setAttribute(
 					Field.STATUS, WorkflowConstants.STATUS_APPROVED);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setGroupIds(new long[] {siteId});
-				searchContext.addVulcanAggregation(aggregation);
 			},
 			sorts,
 			document -> _toBlogPosting(

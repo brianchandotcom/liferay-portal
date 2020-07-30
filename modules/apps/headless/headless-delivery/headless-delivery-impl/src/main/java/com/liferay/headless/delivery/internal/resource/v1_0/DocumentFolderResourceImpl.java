@@ -267,9 +267,9 @@ public class DocumentFolderResourceImpl
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
+				searchContext.addVulcanAggregation(aggregation);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setGroupIds(new long[] {siteId});
-				searchContext.addVulcanAggregation(aggregation);
 			},
 			sorts,
 			document -> _toDocumentFolder(

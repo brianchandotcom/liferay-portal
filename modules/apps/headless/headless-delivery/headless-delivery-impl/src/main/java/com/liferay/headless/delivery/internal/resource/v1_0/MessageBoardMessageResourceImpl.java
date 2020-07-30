@@ -415,8 +415,8 @@ public class MessageBoardMessageResourceImpl
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
-				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.addVulcanAggregation(aggregation);
+				searchContext.setCompanyId(contextCompany.getCompanyId());
 			},
 			sorts,
 			document -> _toMessageBoardMessage(

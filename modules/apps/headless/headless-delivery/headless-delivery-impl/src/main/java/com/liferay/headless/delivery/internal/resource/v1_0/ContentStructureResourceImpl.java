@@ -79,11 +79,11 @@ public class ContentStructureResourceImpl
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
+				searchContext.addVulcanAggregation(aggregation);
 				searchContext.setAttribute(
 					"searchPermissionContext", StringPool.BLANK);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setGroupIds(new long[] {siteId});
-				searchContext.addVulcanAggregation(aggregation);
 			},
 			sorts,
 			document -> _toContentStructure(

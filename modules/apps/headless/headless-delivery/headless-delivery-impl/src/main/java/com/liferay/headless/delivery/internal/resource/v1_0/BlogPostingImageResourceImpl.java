@@ -99,9 +99,9 @@ public class BlogPostingImageResourceImpl
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
+				searchContext.addVulcanAggregation(aggregation);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setFolderIds(new long[] {folder.getFolderId()});
-				searchContext.addVulcanAggregation(aggregation);
 			},
 			sorts,
 			document -> _toBlogPostingImage(

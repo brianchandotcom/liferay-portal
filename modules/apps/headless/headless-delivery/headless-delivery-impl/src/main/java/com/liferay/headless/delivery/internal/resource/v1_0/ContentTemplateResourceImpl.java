@@ -93,6 +93,7 @@ public class ContentTemplateResourceImpl
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
+				searchContext.addVulcanAggregation(aggregation);
 				searchContext.setAttribute(
 					Field.STATUS, WorkflowConstants.STATUS_APPROVED);
 				searchContext.setAttribute(
@@ -101,7 +102,6 @@ public class ContentTemplateResourceImpl
 						JournalArticle.class));
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setGroupIds(new long[] {siteId});
-				searchContext.addVulcanAggregation(aggregation);
 			},
 			sorts,
 			document -> {

@@ -412,6 +412,7 @@ public class KnowledgeBaseArticleResourceImpl
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
+				searchContext.addVulcanAggregation(aggregation);
 				searchContext.setAttribute(
 					Field.STATUS, WorkflowConstants.STATUS_APPROVED);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
@@ -420,8 +421,6 @@ public class KnowledgeBaseArticleResourceImpl
 				if (keywords == null) {
 					searchContext.setKeywords("");
 				}
-
-				searchContext.addVulcanAggregation(aggregation);
 			},
 			sorts,
 			document -> _toKnowledgeBaseArticle(

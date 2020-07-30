@@ -796,6 +796,7 @@ public class StructuredContentResourceImpl
 				com.liferay.portal.kernel.search.Field.ARTICLE_ID,
 				com.liferay.portal.kernel.search.Field.SCOPE_GROUP_ID),
 			searchContext -> {
+				searchContext.addVulcanAggregation(aggregation);
 				searchContext.setAttribute(
 					com.liferay.portal.kernel.search.Field.STATUS,
 					WorkflowConstants.STATUS_APPROVED);
@@ -805,8 +806,6 @@ public class StructuredContentResourceImpl
 				if (siteId != null) {
 					searchContext.setGroupIds(new long[] {siteId});
 				}
-
-				searchContext.addVulcanAggregation(aggregation);
 			},
 			sorts,
 			document -> _toStructuredContent(

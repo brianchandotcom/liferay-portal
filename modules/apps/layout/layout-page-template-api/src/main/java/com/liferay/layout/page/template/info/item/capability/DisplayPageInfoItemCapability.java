@@ -40,4 +40,7 @@ public class DisplayPageInfoItemCapability implements InfoItemCapability {
 		};
 	}
 
+	private DisplayPageInfoItemCapability() {
+	}
+
 }

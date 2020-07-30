@@ -45,8 +45,8 @@ public class AccountEntryModelPreFilterContributor
 		BooleanFilter booleanFilter, ModelSearchSettings modelSearchSettings,
 		SearchContext searchContext) {
 
-		_filterByAccountUserIds(booleanFilter, searchContext);
 		_filterByAccountGroupIds(booleanFilter, searchContext);
+		_filterByAccountUserIds(booleanFilter, searchContext);
 		_filterByDomains(booleanFilter, searchContext);
 		_filterByOrganizationIds(booleanFilter, searchContext);
 		_filterByParentAccountEntryId(booleanFilter, searchContext);

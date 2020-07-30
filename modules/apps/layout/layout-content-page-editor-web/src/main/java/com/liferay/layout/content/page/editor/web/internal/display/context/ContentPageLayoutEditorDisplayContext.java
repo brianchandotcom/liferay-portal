@@ -241,7 +241,7 @@ public class ContentPageLayoutEditorDisplayContext
 				assetListEntry.getAssetEntryType(),
 				AssetEntry.class.getName())) {
 
-			return LanguageUtil.get(httpServletRequest, "multiple-assets");
+			return LanguageUtil.get(httpServletRequest, "multiple-item-types");
 		}
 
 		String assetEntryTypeLabel = ResourceActionsUtil.getModelResource(
@@ -472,7 +472,7 @@ public class ContentPageLayoutEditorDisplayContext
 		String className = _getClassName(infoListProvider);
 
 		if (Objects.equals(className, AssetEntry.class.getName())) {
-			return LanguageUtil.get(httpServletRequest, "multiple-assets");
+			return LanguageUtil.get(httpServletRequest, "multiple-item-types");
 		}
 
 		if (Validator.isNotNull(className)) {

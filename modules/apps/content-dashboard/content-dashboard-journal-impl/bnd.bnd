@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Content Dashboard Journal Implementation
+Bundle-SymbolicName: com.liferay.content.dashboard.journal.impl
+Bundle-Version: 1.0.0

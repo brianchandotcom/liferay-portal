@@ -77,17 +77,12 @@ public class InterpolationUtil {
 		public String getValue(String key) {
 			String value = null;
 
-			if (key.startsWith(_ENV_PREFIX)) {
-				value = System.getenv(key.substring(_ENV_PREFIX.length()));
+			if (_bundleContext != null) {
+				value = _bundleContext.getProperty(key);
 			}
-			else {
-				if (_bundleContext != null) {
-					value = _bundleContext.getProperty(key);
-				}
 
-				if (value == null) {
-					value = System.getProperty(key);
-				}
+			if (value == null) {
+				value = System.getProperty(key);
 			}
 
 			return value;
@@ -334,8 +329,6 @@ public class InterpolationUtil {
 	private static final String _DELIM_START = "${";
 
 	private static final String _DELIM_STOP = "}";
-
-	private static final String _ENV_PREFIX = "env:";
 
 	private static final char _ESCAPE_CHAR = '\\';
 

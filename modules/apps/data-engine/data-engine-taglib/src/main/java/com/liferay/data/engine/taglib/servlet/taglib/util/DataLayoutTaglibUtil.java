@@ -76,7 +76,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -282,11 +281,8 @@ public class DataLayoutTaglibUtil {
 		if (Validator.isNull(dataDefinitionId) &&
 			Validator.isNull(dataLayoutId)) {
 
-			return new HashSet() {
-				{
-					add(LocaleThreadLocal.getSiteDefaultLocale());
-				}
-			};
+			return SetUtil.fromArray(
+				new Locale[] {LocaleThreadLocal.getSiteDefaultLocale()});
 		}
 
 		try {
@@ -313,12 +309,13 @@ public class DataLayoutTaglibUtil {
 			);
 		}
 		catch (Exception exception) {
-			return new HashSet() {
-				{
-					add(LocaleThreadLocal.getSiteDefaultLocale());
-				}
-			};
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
 		}
+
+		return SetUtil.fromArray(
+			new Locale[] {LocaleThreadLocal.getSiteDefaultLocale()});
 	}
 
 	private DataDefinition _getDataDefinition(

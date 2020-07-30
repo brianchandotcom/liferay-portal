@@ -7264,24 +7264,6 @@ go</echo>
 		</if>
 	</target>
 
-	<target name="display-license-log-content">
-		<path id="license.log.content">
-			<fileset
-				dir="${liferay.home}/logs/"
-			>
-				<include name="lcs.*.log" />
-
-				<exclude name="liferay.*.log" />
-			</fileset>
-		</path>
-
-		<property name="content.output" refid="license.log.content" />
-
-		<echo message="${content.output}" />
-
-		<print-file file.name="${content.output}" />
-	</target>
-
 	<target name="execute-mysql">
 		<loadfile
 			property="mysql.statement"
@@ -10973,6 +10955,32 @@ cluster.link.bind.addr["cluster-link-control"]=127.0.0.1
 cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 	</target>
 
+	<target name="print-lcs-log-content">
+		<var name="lcs.log.files" unset="true" />
+
+		<fileset
+			dir="${liferay.home}/logs/"
+			id="lcs.log.files"
+		>
+			<include name="lcs.*.log" />
+		</fileset>
+
+		<pathconvert pathsep="," property="lcs.log.files" refid="lcs.log.files" />
+
+		<for list="${lcs.log.files}" param="lcs.log.file">
+			<sequential>
+				<print-file file.name="@{lcs.log.file}" />
+			</sequential>
+		</for>
+
+		<if>
+			<equals arg1="${lcs.log.files}" arg2="" />
+			<then>
+				<echo>No LCS logs found.</echo>
+			</then>
+		</if>
+	</target>
+
 	<target name="print-scm-revision">
 		<echo>Portal GIT ID:</echo>
 		<echo />
@@ -12776,7 +12784,7 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 		<if>
 			<equals arg1="${deploy.lcs.token.file}" arg2="true" />
 			<then>
-				<antcall target="display-license-log-content" />
+				<antcall target="print-lcs-log-content" />
 			</then>
 		</if>
 

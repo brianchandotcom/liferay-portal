@@ -197,10 +197,11 @@ definition {
 			key_questionNameField = "${categoryName}",
 			locator1 = "Questions#QUESTIONS_NAME_FIELD");
 
-		AssertTextEquals(
+		Pause(locator1 = "3000");
+
+		AssertVisible(
 			key_categoryTitle = "${categoryName}",
-			locator1 = "Questions#QUESTIONS_CATEGORY_TITLE",
-			value1 = "${categoryName}");
+			locator1 = "Questions#QUESTIONS_CATEGORY_TITLE");
 	}
 
 	macro gotoDetails {

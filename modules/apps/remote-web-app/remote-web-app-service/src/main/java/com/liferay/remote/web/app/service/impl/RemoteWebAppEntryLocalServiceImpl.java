@@ -15,7 +15,22 @@
 package com.liferay.remote.web.app.service.impl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.remote.web.app.exception.DuplicateEntryURLException;
+import com.liferay.remote.web.app.model.RemoteWebAppEntry;
 import com.liferay.remote.web.app.service.base.RemoteWebAppEntryLocalServiceBaseImpl;
+
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -39,10 +54,88 @@ import org.osgi.service.component.annotations.Component;
 public class RemoteWebAppEntryLocalServiceImpl
 	extends RemoteWebAppEntryLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.liferay.remote.web.app.service.RemoteWebAppEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.remote.web.app.service.RemoteWebAppEntryLocalServiceUtil</code>.
-	 */
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public RemoteWebAppEntry addEntry(
+			long userId, Map<Locale, String> nameMap, String url,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		// Entry
+
+		User user = userLocalService.getUser(userId);
+
+		long companyId = user.getCompanyId();
+
+		validate(companyId, 0, url);
+
+		long entryId = counterLocalService.increment();
+
+		RemoteWebAppEntry remoteWebAppEntry =
+			remoteWebAppEntryPersistence.create(entryId);
+
+		remoteWebAppEntry.setUuid(serviceContext.getUuid());
+		remoteWebAppEntry.setCompanyId(companyId);
+		remoteWebAppEntry.setUserId(user.getUserId());
+		remoteWebAppEntry.setUserName(user.getFullName());
+		remoteWebAppEntry.setNameMap(nameMap);
+		remoteWebAppEntry.setUrl(url);
+
+		try {
+			remoteWebAppEntry = remoteWebAppEntryPersistence.update(
+				remoteWebAppEntry);
+		}
+		catch (SystemException systemException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Add failed, fetch {companyId=",
+						String.valueOf(user.getCompanyId()), "url=", url, "}"));
+			}
+
+			remoteWebAppEntry = remoteWebAppEntryPersistence.fetchByC_U(
+				user.getCompanyId(), url);
+
+			if (remoteWebAppEntry == null) {
+				throw systemException;
+			}
+		}
+
+		return remoteWebAppEntry;
+	}
+
+	@Override
+	public RemoteWebAppEntry updateEntry(
+			long entryId, Map<Locale, String> nameMap, String url,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		validate(serviceContext.getCompanyId(), entryId, url);
+
+		RemoteWebAppEntry remoteWebAppEntry =
+			remoteWebAppEntryPersistence.findByPrimaryKey(entryId);
+
+		remoteWebAppEntry.setNameMap(nameMap);
+		remoteWebAppEntry.setUrl(url);
+
+		return remoteWebAppEntryPersistence.update(remoteWebAppEntry);
+	}
+
+	protected void validate(long companyId, long entryId, String url)
+		throws PortalException {
+
+		RemoteWebAppEntry remoteWebAppEntry =
+			remoteWebAppEntryPersistence.fetchByC_U(
+				companyId, StringUtil.trim(url));
+
+		if ((remoteWebAppEntry != null) &&
+			(remoteWebAppEntry.getEntryId() != entryId)) {
+
+			throw new DuplicateEntryURLException("{entryId=" + entryId + "}");
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		RemoteWebAppEntryLocalServiceImpl.class);
 
 }

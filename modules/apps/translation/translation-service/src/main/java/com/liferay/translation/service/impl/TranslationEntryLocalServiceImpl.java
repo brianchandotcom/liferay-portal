@@ -103,15 +103,13 @@ public class TranslationEntryLocalServiceImpl
 
 		translationEntry.setContent(content);
 		translationEntry.setContentType(contentType);
+		translationEntry.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
 
-		int status = WorkflowConstants.STATUS_APPROVED;
-
-		translationEntry.setStatus(status);
-
 		translationEntry.setStatusByUserId(user.getUserId());
 		translationEntry.setStatusByUserName(user.getFullName());
+
 		translationEntry.setStatusDate(
 			serviceContext.getModifiedDate(new Date()));
 
@@ -154,11 +152,13 @@ public class TranslationEntryLocalServiceImpl
 		TranslationEntry translationEntry =
 			translationEntryPersistence.findByPrimaryKey(translationEntryId);
 
+		translationEntry.setStatus(status);
+
 		User user = _userLocalService.getUser(userId);
 
-		translationEntry.setStatus(status);
 		translationEntry.setStatusByUserId(user.getUserId());
 		translationEntry.setStatusByUserName(user.getFullName());
+
 		translationEntry.setStatusDate(
 			serviceContext.getModifiedDate(new Date()));
 
@@ -166,16 +166,16 @@ public class TranslationEntryLocalServiceImpl
 	}
 
 	private TranslationEntry _startWorkflowInstance(
-			TranslationEntry entry, ServiceContext serviceContext)
+			TranslationEntry translationEntry, ServiceContext serviceContext)
 		throws PortalException {
 
 		Map<String, Serializable> workflowContext = new HashMap<>();
 
 		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			entry.getCompanyId(), entry.getGroupId(),
+			translationEntry.getCompanyId(), translationEntry.getGroupId(),
 			serviceContext.getUserId(), TranslationEntry.class.getName(),
-			entry.getTranslationEntryId(), entry, serviceContext,
-			workflowContext);
+			translationEntry.getTranslationEntryId(), translationEntry,
+			serviceContext, workflowContext);
 	}
 
 	@Reference

@@ -17,7 +17,7 @@ import React, {useCallback, useContext, useReducer} from 'react';
 import switchSidebarPanel from '../actions/switchSidebarPanel';
 import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../config/constants/itemTypes';
-import {useDispatch} from '../store/index';
+import {useDispatch, useSelector} from '../store/index';
 import {useFromControlsId, useToControlsId} from './CollectionItemContext';
 
 const ACTIVE_INITIAL_STATE = {
@@ -155,6 +155,9 @@ const useIsHovered = () => {
 
 const useSelectItem = () => {
 	const activeDispatch = useContext(ActiveDispatchContext);
+	const sidebarPanelId = useSelector((state) =>
+		state.sidebar?.open ? state.sidebar?.panelId : null
+	);
 	const storeDispatch = useDispatch();
 	const toControlsId = useToControlsId();
 
@@ -175,7 +178,10 @@ const useSelectItem = () => {
 				type: SELECT_ITEM,
 			});
 
-			if (itemId) {
+			if (
+				itemId &&
+				!['page-structure', 'comments'].includes(sidebarPanelId)
+			) {
 				storeDispatch(
 					switchSidebarPanel({
 						sidebarOpen: true,
@@ -184,7 +190,7 @@ const useSelectItem = () => {
 				);
 			}
 		},
-		[activeDispatch, storeDispatch, toControlsId]
+		[activeDispatch, sidebarPanelId, storeDispatch, toControlsId]
 	);
 };
 

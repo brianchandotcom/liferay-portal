@@ -15,6 +15,7 @@
 package com.liferay.portal.file.install.internal.properties;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -77,20 +78,7 @@ public class TypedPropertiesTest {
 	}
 
 	@Test
-	public void testLoadNontyped() throws IOException {
-		TypedProperties typedProperties = new TypedProperties();
-
-		try (StringReader stringReader = new StringReader(
-				"testKey = \"testvalue\"")) {
-
-			typedProperties.load(stringReader);
-		}
-
-		Assert.assertEquals("testvalue", typedProperties.get("testKey"));
-	}
-
-	@Test
-	public void testLoadSubstitution() throws IOException {
+	public void testLoadAndStoreSubstitution() throws IOException {
 		TypedProperties typedProperties = new TypedProperties();
 
 		String systemKey = "testSystemKey";
@@ -101,9 +89,9 @@ public class TypedPropertiesTest {
 
 		System.setProperty(systemKey, systemValue);
 
-		try (StringReader stringReader = new StringReader(
-				StringBundler.concat("testKey = \"${", systemKey, "}\""))) {
+		String line = StringBundler.concat("testKey = \"${", systemKey, "}\"");
 
+		try (StringReader stringReader = new StringReader(line)) {
 			typedProperties.load(stringReader);
 
 			Assert.assertEquals(
@@ -117,6 +105,26 @@ public class TypedPropertiesTest {
 				System.setProperty(systemKey, oldSystemValue);
 			}
 		}
+
+		try (StringWriter stringWriter = new StringWriter()) {
+			typedProperties.save(stringWriter);
+
+			Assert.assertEquals(
+				line.concat(StringPool.NEW_LINE), stringWriter.toString());
+		}
+	}
+
+	@Test
+	public void testLoadNontyped() throws IOException {
+		TypedProperties typedProperties = new TypedProperties();
+
+		try (StringReader stringReader = new StringReader(
+				"testKey = \"testvalue\"")) {
+
+			typedProperties.load(stringReader);
+		}
+
+		Assert.assertEquals("testvalue", typedProperties.get("testKey"));
 	}
 
 	@Test

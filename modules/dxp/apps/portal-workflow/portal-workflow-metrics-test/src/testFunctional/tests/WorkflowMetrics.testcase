@@ -2736,8 +2736,8 @@ definition {
 	@description = "LRQA-53631 Automate LPS-97666: [Performance] View top assignee performance"
 	@priority = "5"
 	test ViewTopAsigneePerformance {
+		property portal.acceptance = "quarantine";
 		property portal.upstream = "quarantine";
-		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewTopAsigneePerformance";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -2838,8 +2838,8 @@ definition {
 	@description = "LRQA-53641 Automate LPS-97669 [Dashboard] View overloaded assignees"
 	@priority = "5"
 	test ViewWorkloadByAssigneeCard {
+		property portal.acceptance = "quarantine";
 		property portal.upstream = "quarantine";
-		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewWorkloadByAssigneeCard";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

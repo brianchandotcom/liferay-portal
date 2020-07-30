@@ -168,7 +168,7 @@ public class TypedProperties extends AbstractMap<String, Object> {
 
 		private String _compute(final String key) {
 			return InterpolationUtil.substVars(
-				_properties.get(key), key, _cycles, this,
+				_properties.get(key), key, _cycles, null,
 				value -> {
 					String string = DynamicMap.this.get(value);
 
@@ -214,8 +214,7 @@ public class TypedProperties extends AbstractMap<String, Object> {
 					}
 
 					return (String)_convertFromString(string);
-				},
-				false);
+				});
 		}
 
 		private final Map<String, String> _cycles = new HashMap<>();

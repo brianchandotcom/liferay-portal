@@ -15,8 +15,8 @@
 package com.liferay.jenkins.results.parser.spira;
 
 import com.liferay.jenkins.results.parser.JenkinsMaster;
+import com.liferay.jenkins.results.parser.JenkinsNode;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-import com.liferay.jenkins.results.parser.JenkinsSlave;
 
 import java.io.IOException;
 
@@ -38,9 +38,9 @@ import org.json.JSONObject;
 public class SpiraAutomationHost extends BaseSpiraArtifact {
 
 	public static SpiraAutomationHost createSpiraAutomationHost(
-		SpiraProject spiraProject, JenkinsSlave jenkinsSlave) {
+		SpiraProject spiraProject, JenkinsNode jenkinsNode) {
 
-		String automationHostName = jenkinsSlave.getName();
+		String automationHostName = jenkinsNode.getName();
 
 		List<SpiraAutomationHost> spiraAutomationHosts =
 			getSpiraAutomationHosts(
@@ -70,7 +70,7 @@ public class SpiraAutomationHost extends BaseSpiraArtifact {
 
 		JSONObject jenkinsMasterJSONObject = new JSONObject();
 
-		JenkinsMaster jenkinsMaster = jenkinsSlave.getJenkinsMaster();
+		JenkinsMaster jenkinsMaster = jenkinsNode.getJenkinsMaster();
 
 		SpiraCustomProperty jenkinsMasterSpiraCustomProperty =
 			SpiraCustomProperty.createSpiraCustomProperty(
@@ -104,13 +104,6 @@ public class SpiraAutomationHost extends BaseSpiraArtifact {
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
-	}
-
-	public static SpiraAutomationHost createSpiraAutomationHost(
-		SpiraProject spiraProject, String automationHostName) {
-
-		return createSpiraAutomationHost(
-			spiraProject, new JenkinsSlave(automationHostName));
 	}
 
 	@Override

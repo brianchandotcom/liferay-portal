@@ -22,8 +22,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Javier Gamarra
  */
 @ExtendedObjectClassDefinition(
-	category = "third-party", generateUI = false,
-	scope = ExtendedObjectClassDefinition.Scope.SYSTEM
+	category = "third-party", generateUI = true,
+	scope = ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE
 )
 @Meta.OCD(
 	id = "com.liferay.questions.web.internal.configuration.QuestionsConfiguration",
@@ -35,5 +35,8 @@ public interface QuestionsConfiguration {
 		deflt = "false", name = "enable-redirect-to-login", required = false
 	)
 	public boolean enableRedirectToLogin();
+
+	@Meta.AD(deflt = "true", name = "show-section-landing", required = false)
+	public boolean showSectionLanding();
 
 }

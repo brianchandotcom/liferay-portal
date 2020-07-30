@@ -42,6 +42,8 @@ String questionsRootElementId = liferayPortletResponse.getNamespace() + "-questi
 			).put(
 				"redirectToLogin", questionsConfiguration.enableRedirectToLogin()
 			).put(
+				"rootTopic", renderRequest.getAttribute(QuestionsWebKeys.ROOT_TOPIC)
+			).put(
 				"siteKey", String.valueOf(themeDisplay.getScopeGroupId())
 			).put(
 				"tagSelectorURL", renderRequest.getAttribute(QuestionsWebKeys.TAG_SELECTOR_URL)

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.file.install.internal;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.concurrent.DefaultNoticeableFuture;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
@@ -66,12 +68,14 @@ import org.osgi.framework.BundleException;
 import org.osgi.framework.BundleListener;
 import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkEvent;
+import org.osgi.framework.ServiceReference;
 import org.osgi.framework.Version;
 import org.osgi.framework.VersionRange;
 import org.osgi.framework.startlevel.BundleStartLevel;
 import org.osgi.framework.startlevel.FrameworkStartLevel;
 import org.osgi.framework.wiring.BundleRevision;
 import org.osgi.framework.wiring.FrameworkWiring;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Matthew Tambara
@@ -191,6 +195,37 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		_webStartLevel = GetterUtil.getInteger(
 			properties.get(WEB_START_LEVEL), _startLevel);
 
+		_fileInstallers = ServiceTrackerListFactory.open(
+			_bundleContext, FileInstaller.class, null,
+			new ServiceTrackerCustomizer<FileInstaller, FileInstaller>() {
+
+				@Override
+				public FileInstaller addingService(
+					ServiceReference<FileInstaller> serviceReference) {
+
+					return _bundleContext.getService(serviceReference);
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<FileInstaller> serviceReference,
+					FileInstaller fileInstaller) {
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<FileInstaller> serviceReference,
+					FileInstaller fileInstaller) {
+
+					_bundleContext.ungetService(serviceReference);
+
+					_bundleContext.ungetService(serviceReference);
+
+					removeFileInstaller(fileInstaller);
+				}
+
+			});
+
 		_scanner = new Scanner(
 			_watchedDirectory, _filter, properties.get(SUBDIR_MODE));
 
@@ -245,6 +280,8 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		}
 		catch (InterruptedException interruptedException) {
 		}
+
+		_fileInstallers.close();
 	}
 
 	public Map<String, String> getProperties() {
@@ -825,7 +862,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 		try {
 			FileInstaller fileInstaller = _findFileInstaller(
-				path, _fileInstall.getFileInstallers());
+				path, _fileInstallers);
 
 			if (fileInstaller == null) {
 				_processingFailures.add(path);
@@ -1265,7 +1302,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			File path = artifact.getPath();
 
 			FileInstaller fileInstaller = _findFileInstaller(
-				path, _fileInstall.getFileInstallers());
+				path, _fileInstallers);
 
 			if (fileInstaller == null) {
 				_processingFailures.add(path);
@@ -1351,6 +1388,8 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		new HashMap<>();
 	private final Set<Bundle> _delayedStart = new HashSet<>();
 	private final FileInstallImplBundleActivator _fileInstall;
+	private final ServiceTrackerList<FileInstaller, FileInstaller>
+		_fileInstallers;
 	private final String _filter;
 	private final String _fragmentScope;
 	private int _frameworkStartLevel;

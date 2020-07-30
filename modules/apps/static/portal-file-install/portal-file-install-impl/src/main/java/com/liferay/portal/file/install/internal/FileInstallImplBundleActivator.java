@@ -14,8 +14,6 @@
 
 package com.liferay.portal.file.install.internal;
 
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.file.install.FileInstaller;
 import com.liferay.portal.file.install.internal.properties.InterpolationUtil;
@@ -38,7 +36,6 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.util.tracker.ServiceTracker;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Matthew Tambara
@@ -52,10 +49,6 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 		_writeLock = readWriteLock.writeLock();
 	}
 
-	public Iterable<FileInstaller> getFileInstallers() {
-		return _fileInstallers;
-	}
-
 	public Lock getReadLock() {
 		return _readLock;
 	}
@@ -66,46 +59,6 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 
 		_jarFileInstallerServiceRegistration = _bundleContext.registerService(
 			FileInstaller.class, new DefaultJarInstaller(), null);
-
-		_fileInstallers = ServiceTrackerListFactory.open(
-			_bundleContext, FileInstaller.class, null,
-			new ServiceTrackerCustomizer<FileInstaller, FileInstaller>() {
-
-				@Override
-				public FileInstaller addingService(
-					ServiceReference<FileInstaller> serviceReference) {
-
-					return _bundleContext.getService(serviceReference);
-				}
-
-				@Override
-				public void modifiedService(
-					ServiceReference<FileInstaller> serviceReference,
-					FileInstaller fileInstaller) {
-				}
-
-				@Override
-				public void removedService(
-					ServiceReference<FileInstaller> serviceReference,
-					FileInstaller fileInstaller) {
-
-					_bundleContext.ungetService(serviceReference);
-
-					List<DirectoryWatcher> directoryWatchers =
-						new ArrayList<>();
-
-					synchronized (_directoryWatchers) {
-						directoryWatchers.addAll(_directoryWatchers.values());
-					}
-
-					for (DirectoryWatcher directoryWatcher :
-							directoryWatchers) {
-
-						directoryWatcher.removeFileInstaller(fileInstaller);
-					}
-				}
-
-			});
 
 		_writeLock.lock();
 
@@ -190,8 +143,6 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 			_writeLock.unlock();
 		}
 
-		_fileInstallers.close();
-
 		_jarFileInstallerServiceRegistration.unregister();
 	}
 
@@ -253,7 +204,6 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 	private BundleContext _bundleContext;
 	private final Map<String, DirectoryWatcher> _directoryWatchers =
 		new HashMap<>();
-	private ServiceTrackerList<FileInstaller, FileInstaller> _fileInstallers;
 	private ServiceRegistration<FileInstaller>
 		_jarFileInstallerServiceRegistration;
 	private final Lock _readLock;

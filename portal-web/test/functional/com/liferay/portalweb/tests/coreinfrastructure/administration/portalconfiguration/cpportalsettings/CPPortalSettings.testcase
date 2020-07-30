@@ -260,7 +260,8 @@ definition {
 
 	@priority = "5"
 	test EnterReservedEmailAddress {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CPPortalSettings#EnterReservedEmailAddress";
 
 		PortalSettings.enterReservedEmailAddressCP(userEmailAddress = "userea@liferay.com");
@@ -279,7 +280,8 @@ definition {
 
 	@priority = "5"
 	test EnterReservedScreenName {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CPPortalSettings#EnterReservedScreenName";
 
 		PortalSettings.viewReservedCredentialsScreenNamesCP();

@@ -2176,7 +2176,7 @@ definition {
 	@description = "Set App Builder manage permission for User and Portal Content Reviewer and perform CRUD operations"
 	@priority = "5"
 	test SetAppBuilderManagePermissionFor2RolesAndPerformCRUD {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property portal.upstream = "quarantine";
 
 		JSONUser.addUser(

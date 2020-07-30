@@ -2737,7 +2737,7 @@ definition {
 	@priority = "5"
 	test ViewTopAsigneePerformance {
 		property portal.upstream = "quarantine";
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewTopAsigneePerformance";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -2839,7 +2839,7 @@ definition {
 	@priority = "5"
 	test ViewWorkloadByAssigneeCard {
 		property portal.upstream = "quarantine";
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewWorkloadByAssigneeCard";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

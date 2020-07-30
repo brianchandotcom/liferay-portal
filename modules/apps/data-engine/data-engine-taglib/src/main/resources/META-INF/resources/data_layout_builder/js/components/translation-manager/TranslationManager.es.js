@@ -55,6 +55,7 @@ export default ({
 	onActiveChange = () => {},
 	onEditingLanguageIdChange,
 	translatedLanguageIds,
+	className
 }) => {
 	const [active, setActive] = useState(false);
 
@@ -72,7 +73,7 @@ export default ({
 	return (
 		<ClayDropDown
 			active={active}
-			className="localizable-dropdown"
+			className={classNames('localizable-dropdown', className)}
 			onActiveChange={(newVal) => setActive(newVal)}
 			trigger={
 				<ClayButton

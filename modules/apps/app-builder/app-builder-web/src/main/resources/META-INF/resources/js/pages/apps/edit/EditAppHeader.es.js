@@ -65,6 +65,7 @@ export default ({
 				{showTranslationManager && (
 					<TranslationManager
 						availableLanguageIds={availableLanguages}
+						className="mr-1"
 						defaultLanguageId={defaultLanguageId}
 						editingLanguageId={editingLanguageId}
 						onEditingLanguageIdChange={setEditingLanguageId}

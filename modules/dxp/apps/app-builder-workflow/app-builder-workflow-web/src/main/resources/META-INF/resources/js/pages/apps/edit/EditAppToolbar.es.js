@@ -130,6 +130,7 @@ export default function EditAppToolbar({isSaving, onCancel, onSave}) {
 		<UpperToolbar className="align-items-center">
 			<TranslationManager
 				availableLanguageIds={availableLanguages}
+				className="mr-1"
 				defaultLanguageId={defaultLanguageId}
 				editingLanguageId={editingLanguageId}
 				onEditingLanguageIdChange={onChangeEditingLanguageId}

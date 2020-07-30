@@ -916,7 +916,7 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "Record Text");
 
-		SearchPortlets.viewSearchResultWithNoPermissions(searchTerm = "Record Text");
+		SearchResultPortlet.viewNoSearchResults(searchTerm = "Record Text");
 	}
 
 	@priority = "4"

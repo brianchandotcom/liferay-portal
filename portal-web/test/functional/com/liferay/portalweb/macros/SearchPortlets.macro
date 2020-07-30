@@ -488,16 +488,6 @@ definition {
 			value1 = "${searchAssetTitle}");
 	}
 
-	macro viewSearchHidden {
-		AssertElementNotPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
-	}
-
-	macro viewSearchResultWithNoPermissions {
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "No results were found that matched the keywords: ${searchTerm}.");
-	}
-
 	macro viewUserResultDetails {
 		AssertTextEquals(
 			locator1 = "Home#SITE_NAME",

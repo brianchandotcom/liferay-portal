@@ -68,7 +68,7 @@ definition {
 
 		takeScreenshot();
 
-		SearchPortlets.viewSearchHidden();
+		AssertElementNotPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
 
 		Portlet.addPG(portletName = "Hello World");
 

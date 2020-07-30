@@ -32,7 +32,7 @@ export default function Main({
 	trafficSources,
 }) {
 	return (
-		<>
+		<div className="c-p-3">
 			<BasicInformation
 				authorName={authorName}
 				languageTag={languageTag}
@@ -81,7 +81,7 @@ export default function Main({
 					trafficSources={trafficSources}
 				/>
 			)}
-		</>
+		</div>
 	);
 }
 

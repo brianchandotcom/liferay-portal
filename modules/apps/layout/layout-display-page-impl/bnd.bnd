@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Layout Display Page Implementation
+Bundle-SymbolicName: com.liferay.layout.display.page.impl
+Bundle-Version: 1.0.0

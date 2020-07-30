@@ -268,7 +268,9 @@ definition {
 				key_fragmentName = "button",
 				locator1 = "PageEditor#FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS");
 
-			PageEditor.gotoTab(tabName = "Look and Feel");
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
 
 			AssertTextEquals(
 				key_masterLayoutName = "Custom Masters Page Template",
@@ -426,7 +428,9 @@ definition {
 		}
 
 		task ("Set up Look and Feel") {
-			PageEditor.gotoTab(tabName = "Look and Feel");
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
 
 			Theme.configureLookAndFeelSpecificLook();
 
@@ -488,7 +492,9 @@ definition {
 
 			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
 
-			PageEditor.gotoTab(tabName = "Look and Feel");
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
 
 			Pause(locator1 = "3000");
 

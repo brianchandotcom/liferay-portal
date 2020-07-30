@@ -142,7 +142,9 @@ definition {
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
-			PageEditor.gotoTab(tabName = "Look and Feel");
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
 
 			Click(locator1 = "Radio#SPECIFIC_LOOK");
 
@@ -243,7 +245,9 @@ definition {
 		task ("Change the display page theme from Classic to Fjord") {
 			DisplayPageTemplate.clickPencilItem(item = "Edit Display Page Template");
 
-			PageEditor.gotoTab(tabName = "Look and Feel");
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
 
 			Click(locator1 = "Radio#SPECIFIC_LOOK");
 

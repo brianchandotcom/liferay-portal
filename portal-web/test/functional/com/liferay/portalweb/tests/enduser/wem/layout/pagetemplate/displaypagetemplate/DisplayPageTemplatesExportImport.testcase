@@ -125,7 +125,7 @@ definition {
 				key_type = "dark",
 				locator1 = "PageEditor#FOOTERS");
 
-			PageEditor.gotoTab(tabName = "Look and Feel");
+			PageEditor.gotoTab(tabName = "Page Design Options");
 
 			AssertTextEquals(
 				key_masterLayoutName = "Custom Masters Page Template",

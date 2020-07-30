@@ -203,7 +203,9 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Configure the display page template's 'Look and Feel' while it is still in draft status") {
-			PageEditor.gotoTab(tabName = "Look and Feel");
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
 
 			Click(locator1 = "Radio#SPECIFIC_LOOK");
 

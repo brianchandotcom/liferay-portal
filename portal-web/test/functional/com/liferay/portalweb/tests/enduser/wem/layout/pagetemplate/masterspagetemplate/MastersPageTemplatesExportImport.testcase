@@ -288,7 +288,9 @@ definition {
 				item = "Edit",
 				masterLayoutName = "Custom Masters Page Template");
 
-			PageEditor.gotoTab(tabName = "Look and Feel");
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
 
 			Theme.configureLookAndFeelShowFooter(showFooter = "true");
 
@@ -342,7 +344,9 @@ definition {
 
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
-			PageEditor.gotoTab(tabName = "Look and Feel");
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
 
 			Pause(locator1 = "3000");
 

@@ -7264,6 +7264,24 @@ go</echo>
 		</if>
 	</target>
 
+	<target name="display-license-log-content">
+		<path id="license.log.content">
+			<fileset
+				dir="${liferay.home}/logs/"
+			>
+				<include name="lcs.*.log" />
+
+				<exclude name="liferay.*.log" />
+			</fileset>
+		</path>
+
+		<property name="content.output" refid="license.log.content" />
+
+		<echo message="${content.output}" />
+
+		<print-file file.name="${content.output}" />
+	</target>
+
 	<target name="execute-mysql">
 		<loadfile
 			property="mysql.statement"
@@ -12752,6 +12770,13 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			<equals arg1="${deploy.lcs.token.file}" arg2="true" />
 			<then>
 				<antcall target="deploy-lcs-environment-token" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${deploy.lcs.token.file}" arg2="true" />
+			<then>
+				<antcall target="display-license-log-content" />
 			</then>
 		</if>
 

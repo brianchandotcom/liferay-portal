@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>LABEL</td>
-	<td>//p[contains(text(),'${key_fieldLabel}')] | //label[contains(text(),'${key_fieldLabel}')]</td>
+	<td>//p[contains(text(),'${key_fieldLabel}')] | //label[contains(text(),'${key_fieldLabel}')] | //legend[contains(text(),'${key_fieldLabel}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,7 +61,7 @@
 </tr>
 <tr>
 	<td>CHECKBOX_LABEL</td>
-	<td>//div[contains(@data-field-name,'${key_fieldName}')]//label | //div[contains(@class,'custom-control-input')]//div[contains(@data-field-name,'${key_fieldName}')]//label | //li[contains(.,'${key_fieldName}')]//label | //label[.//input[@type='checkbox' and contains(@id,'${key_fieldName}') or contains(@name,'${key_fieldName}')]] | //input[contains(@type,'checkbox')]//following-sibling::span[contains(.,'${key_fieldName}')]</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//label | //div[contains(@data-field-name,'${key_fieldName}')]//legend | //div[contains(@class,'custom-control-input')]//div[contains(@data-field-name,'${key_fieldName}')]//label | //li[contains(.,'${key_fieldName}')]//label | //label[.//input[@type='checkbox' and contains(@id,'${key_fieldName}') or contains(@name,'${key_fieldName}')]] | //input[contains(@type,'checkbox')]//following-sibling::span[contains(.,'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -269,7 +269,7 @@
 </tr>
 <tr>
 	<td>PARAGRAPH_TITLE</td>
-	<td>//div[(@class='form-group') and contains(@data-field-name,'${key_fieldName}')]/label</td>
+	<td>//div[(@class='form-group') and contains(@data-field-name,'${key_fieldName}')]/legend</td>
 	<td></td>
 </tr>
 <tr>

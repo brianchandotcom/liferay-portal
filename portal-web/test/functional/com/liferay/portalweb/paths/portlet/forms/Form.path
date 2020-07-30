@@ -242,12 +242,12 @@
 <!--FIELD-->
 <tr>
     <td>FIELD_BODY</td>
-    <td>//div[contains(@class,'form-group')]//label[contains(text(),'${key_fieldName}')] | //div[contains(@data-field-name,'${key_fieldName}')] | //div[contains(@class,'form-group')]//input[contains(@name,'${key_fieldName}')]/parent::div/parent::div</td>
+    <td>//div[contains(@class,'form-group')]//label[contains(text(),'${key_fieldName}')] | //div[contains(@class,'form-group')]//legend[contains(text(),'${key_fieldName}')] |//div[contains(@data-field-name,'${key_fieldName}')] | //div[contains(@class,'form-group')]//input[contains(@name,'${key_fieldName}')]/parent::div/parent::div</td>
     <td></td>
 </tr>
 <tr>
     <td>FIELD_LABEL</td>
-    <td>//div[@data-field-name='${key_fieldName}' and contains(@class,'ddm-field')]//label[contains(@class,'ddm-label')] | //div[contains(@class,'ddm-field-container')]//label[text()='${key_fieldName}']</td>
+    <td>//div[@data-field-name='${key_fieldName}' and contains(@class,'ddm-field')]//label[contains(@class,'ddm-label')] | //div[contains(@class,'ddm-field-container')]//label[text()='${key_fieldName}'] | //div[@data-field-name='${key_fieldName}' and contains(@class,'ddm-field')]//legend[contains(@class,'lfr-ddm-legend')] | //div[contains(@class,'ddm-field-container')]//legend[text()='${key_fieldName}']</td>
     <td></td>
 </tr>
 <tr>

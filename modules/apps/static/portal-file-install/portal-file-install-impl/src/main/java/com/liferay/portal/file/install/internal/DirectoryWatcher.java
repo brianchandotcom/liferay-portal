@@ -134,21 +134,11 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 	public static final String WEB_START_LEVEL = "file.install.web.start.level";
 
-	public static String getThreadName(Map<String, String> properties) {
-		String name = properties.get(DIR);
-
-		if (name != null) {
-			return name;
-		}
-
-		return "./load";
-	}
-
 	public DirectoryWatcher(
 		FileInstallImplBundleActivator fileInstall,
 		Map<String, String> properties, BundleContext bundleContext) {
 
-		super("fileinstall-" + getThreadName(properties));
+		super("fileinstall-" + properties.get(DIR));
 
 		_fileInstall = fileInstall;
 		_properties = properties;
@@ -169,7 +159,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		_useStartTransient = _getBoolean(
 			properties, USE_START_TRANSIENT, false);
 
-		_watchedDirectory = _getFile(properties, DIR, new File("./load"));
+		_watchedDirectory = new File(properties.get(DIR));
 
 		if (!_watchedDirectory.exists()) {
 			if (_log.isInfoEnabled()) {
@@ -727,18 +717,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 		if (value != null) {
 			return Boolean.valueOf(value);
-		}
-
-		return defaultValue;
-	}
-
-	private File _getFile(
-		Map<String, String> properties, String property, File defaultValue) {
-
-		String value = properties.get(property);
-
-		if (value != null) {
-			return new File(value);
 		}
 
 		return defaultValue;

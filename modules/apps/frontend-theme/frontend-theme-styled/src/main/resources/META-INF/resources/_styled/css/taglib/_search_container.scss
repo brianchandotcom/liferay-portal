@@ -61,8 +61,8 @@
 		}
 	}
 
-	a {
-		color: $body-color;
+	a:not(.component-action) {
+		color: $dark;
 	}
 
 	.lfr-icon-menu > .dropdown-toggle {
@@ -73,7 +73,7 @@
 		&:hover {
 			background-color: #f7f8f9;
 			border-radius: 4px;
-			color: $body-color;
+			color: $dark;
 		}
 	}
 

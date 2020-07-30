@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
+import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
@@ -658,7 +659,16 @@ public class ContentPageLayoutEditorDisplayContext
 				subtypeLabel = assetListEntry.getTitle();
 			}
 
-			typeLabel = LanguageUtil.get(httpServletRequest, "collection");
+			if (assetListEntry.getType() ==
+					AssetListEntryTypeConstants.TYPE_DYNAMIC) {
+
+				typeLabel = LanguageUtil.get(
+					httpServletRequest, "dynamic-collection");
+			}
+			else {
+				typeLabel = LanguageUtil.get(
+					httpServletRequest, "manual-collection");
+			}
 		}
 
 		return HashMapBuilder.<String, Object>put(

@@ -38,7 +38,8 @@ definition {
 	@description = "This is a use case for LPS-70446."
 	@priority = "5"
 	test ConfigureAutofillRule {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "FormRules#ConfigureAutofillRule";
 		var portalURL = PropsUtil.get("portal.url");
 

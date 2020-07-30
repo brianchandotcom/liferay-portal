@@ -12,7 +12,51 @@
  * details.
  */
 
-import {actions} from '../utils/showSidebar';
+import {render} from 'frontend-js-react-web';
+
+import SidebarPanel from '../SidebarPanel';
+import SidebarPanelInfoView from '../components/SidebarPanelInfoView';
+import SidebarPanelMetricsView from '../components/SidebarPanelMetricsView';
+
+const actions = {
+	showInfo(fetchURL, portletNamespace) {
+		showSidebar({View: SidebarPanelInfoView, fetchURL, portletNamespace});
+	},
+	showMetrics(fetchURL, portletNamespace) {
+		showSidebar({
+			View: SidebarPanelMetricsView,
+			fetchURL,
+			portletNamespace,
+		});
+	},
+};
+
+const showSidebar = ({View, fetchURL, portletNamespace}) => {
+	const id = `${portletNamespace}sidebar`;
+
+	const sidebarPanel = Liferay.component(id);
+
+	if (!sidebarPanel) {
+		const container = document.body.appendChild(
+			document.createElement('div')
+		);
+
+		render(
+			SidebarPanel,
+			{
+				fetchURL,
+				ref: (element) => {
+					Liferay.component(id, element);
+				},
+				viewComponent: View,
+			},
+			container
+		);
+	}
+	else {
+		sidebarPanel.open(fetchURL, View);
+	}
+};
 
 export default function propsTransformer({
 	items,

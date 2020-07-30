@@ -46,8 +46,8 @@
 			to right,
 			$white 0%,
 			$white 50%,
-			$light 51%,
-			$light 100%
+			$light-l1 51%,
+			$light-l1 100%
 		);
 
 		.container-fluid {
@@ -110,7 +110,7 @@
 }
 
 .applications-menu-sites-label {
-	background-color: $light;
+	background-color: $light-l1;
 	color: $secondary;
 	font-size: 0.875rem;
 	font-weight: 600;
@@ -126,7 +126,7 @@
 }
 
 .applications-menu-sites {
-	background-color: $light;
+	background-color: $light-l1;
 	height: 100%;
 }
 

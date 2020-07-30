@@ -80,6 +80,7 @@ body .ddm-user-view-content {
 }
 
 .lfr-ddm-form-field-container label,
+.lfr-ddm-form-field-container legend,
 .lfr-ddm-form-field-container p {
 	padding-right: 40px;
 }
@@ -523,6 +524,7 @@ body .ddm-user-view-content {
 
 .liferay-ddm-form-builder-sidebar-content {
 	label,
+	legend,
 	p {
 		padding-right: 0;
 	}
@@ -593,6 +595,7 @@ p.ddm-label {
 	word-wrap: break-word;
 }
 
+legend .reference-mark,
 p .reference-mark {
 	color: #b95000;
 	font-size: 6px;

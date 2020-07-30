@@ -29,7 +29,7 @@ export default function ColorFrontendToken({
 	onValueSelect,
 	value,
 }) {
-	const {label} = frontendToken;
+	const {label, name} = frontendToken;
 
 	const [customColors, setCustomColors] = useState([]);
 	const [color, setColor] = useState(value || '');

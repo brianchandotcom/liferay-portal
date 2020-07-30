@@ -66,7 +66,7 @@ public class TypedProperties extends AbstractMap<String, Object> {
 	public void load(Reader reader) throws IOException {
 		_storage.loadLayout(reader);
 
-		_substitute();
+		_storage.substitute();
 	}
 
 	@Override
@@ -129,91 +129,7 @@ public class TypedProperties extends AbstractMap<String, Object> {
 		}
 	}
 
-	private void _substitute() {
-		DynamicMap dynamic = new DynamicMap(_storage);
-
-		_storage.putAllSubstituted(dynamic);
-	}
-
 	private final Properties _storage = new Properties();
-
-	private static class DynamicMap extends AbstractMap<String, String> {
-
-		public DynamicMap(Properties properties) {
-			_properties = properties;
-		}
-
-		@Override
-		public Set<Entry<String, String>> entrySet() {
-			return new AbstractSet<Entry<String, String>>() {
-
-				@Override
-				public Iterator<Entry<String, String>> iterator() {
-					Set<String> keys = _properties.keySet();
-
-					return new ComputedIterator(keys.iterator());
-				}
-
-				@Override
-				public int size() {
-					return _properties.size();
-				}
-
-			};
-		}
-
-		private String _compute(final String key) {
-			return InterpolationUtil.substVars(_properties.get(key), key);
-		}
-
-		private final Properties _properties;
-
-		private class ComputedIterator
-			implements Iterator<Entry<String, String>> {
-
-			public ComputedIterator(Iterator<String> iterator) {
-				_iterator = iterator;
-			}
-
-			@Override
-			public boolean hasNext() {
-				return _iterator.hasNext();
-			}
-
-			@Override
-			public Entry<String, String> next() {
-				String key = _iterator.next();
-
-				return new Entry<String, String>() {
-
-					@Override
-					public String getKey() {
-						return key;
-					}
-
-					@Override
-					public String getValue() {
-						return _compute(key);
-					}
-
-					@Override
-					public String setValue(String value) {
-						throw new UnsupportedOperationException();
-					}
-
-				};
-			}
-
-			@Override
-			public void remove() {
-				throw new UnsupportedOperationException();
-			}
-
-			private final Iterator<String> _iterator;
-
-		}
-
-	}
 
 	private class KeyIterator implements Iterator<Entry<String, Object>> {
 

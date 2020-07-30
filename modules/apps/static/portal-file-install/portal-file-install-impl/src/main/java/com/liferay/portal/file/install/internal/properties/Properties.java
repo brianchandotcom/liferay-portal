@@ -249,6 +249,13 @@ public class Properties extends AbstractMap<String, String> {
 		_typed = typed;
 	}
 
+	public void substitute() {
+		for (Entry<String, String> entry : _storage.entrySet()) {
+			entry.setValue(
+				InterpolationUtil.substVars(entry.getValue(), entry.getKey()));
+		}
+	}
+
 	public static class PropertiesReader extends BufferedReader {
 
 		public PropertiesReader(Reader reader) {

@@ -26,12 +26,12 @@ export default ({
 	onEditingLanguageIdChange,
 }) => {
 	const {showTranslationManager} = useContext(AppContext);
-	const [
-		{
+	const {
+		dispatch,
+		state: {
 			app: {name},
 		},
-		dispatch,
-	] = useContext(EditAppContext);
+	} = useContext(EditAppContext);
 
 	const onAppNameChange = ({target: {value}}) => {
 		dispatch({

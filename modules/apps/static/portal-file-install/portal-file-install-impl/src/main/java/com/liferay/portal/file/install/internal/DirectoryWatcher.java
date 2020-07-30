@@ -221,7 +221,15 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 					_bundleContext.ungetService(serviceReference);
 
-					removeFileInstaller(fileInstaller);
+					for (Artifact artifact : _getArtifacts()) {
+						if (artifact.getFileInstaller() == fileInstaller) {
+							artifact.setFileInstaller(null);
+						}
+					}
+
+					synchronized (this) {
+						notifyAll();
+					}
 				}
 
 			});
@@ -290,18 +298,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 	public Scanner getScanner() {
 		return _scanner;
-	}
-
-	public void removeFileInstaller(FileInstaller fileInstaller) {
-		for (Artifact artifact : _getArtifacts()) {
-			if (artifact.getFileInstaller() == fileInstaller) {
-				artifact.setFileInstaller(null);
-			}
-		}
-
-		synchronized (this) {
-			notifyAll();
-		}
 	}
 
 	@Override

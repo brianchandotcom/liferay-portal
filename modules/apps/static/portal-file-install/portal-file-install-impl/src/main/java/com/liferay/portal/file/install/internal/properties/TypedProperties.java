@@ -34,10 +34,6 @@ import java.util.Set;
  */
 public class TypedProperties extends AbstractMap<String, Object> {
 
-	public TypedProperties(SubstitutionalCallback substitutionalCallback) {
-		_substitutionalCallback = substitutionalCallback;
-	}
-
 	@Override
 	public void clear() {
 		_storage.clear();
@@ -74,7 +70,7 @@ public class TypedProperties extends AbstractMap<String, Object> {
 	public void load(Reader reader) throws IOException {
 		_storage.loadLayout(reader);
 
-		_substitute(_substitutionalCallback);
+		_substitute();
 	}
 
 	@Override
@@ -137,29 +133,18 @@ public class TypedProperties extends AbstractMap<String, Object> {
 		}
 	}
 
-	private void _substitute(SubstitutionalCallback substitutionCallback) {
-		if (substitutionCallback == null) {
-			substitutionCallback = _defaultSubstitutionCallback;
-		}
-
-		DynamicMap dynamic = new DynamicMap(_storage, substitutionCallback);
+	private void _substitute() {
+		DynamicMap dynamic = new DynamicMap(_storage);
 
 		_storage.putAllSubstituted(dynamic);
 	}
 
-	private final SubstitutionalCallback _defaultSubstitutionCallback =
-		value -> System.getProperty(value);
 	private final Properties _storage = new Properties();
-	private final SubstitutionalCallback _substitutionalCallback;
 
 	private static class DynamicMap extends AbstractMap<String, String> {
 
-		public DynamicMap(
-			Properties properties,
-			SubstitutionalCallback substitutionCallback) {
-
+		public DynamicMap(Properties properties) {
 			_properties = properties;
-			_substitutionCallback = substitutionCallback;
 		}
 
 		@Override
@@ -188,7 +173,7 @@ public class TypedProperties extends AbstractMap<String, Object> {
 					String string = DynamicMap.this.get(value);
 
 					if (string == null) {
-						return _substitutionCallback.getValue(value);
+						return System.getProperty(value);
 					}
 
 					if (!_properties.isTyped()) {
@@ -235,7 +220,6 @@ public class TypedProperties extends AbstractMap<String, Object> {
 
 		private final Map<String, String> _cycles = new HashMap<>();
 		private final Properties _properties;
-		private final SubstitutionalCallback _substitutionCallback;
 
 		private class ComputedIterator
 			implements Iterator<Entry<String, String>> {

@@ -2374,8 +2374,8 @@ definition {
 
 		WorkflowMetrics.waitForSLAPendingNotChange(
 			key_expectedValue = "1",
-			key_status = "UNTRACKED",
-			key_pauseTime = "12");
+			key_pauseTime = "12",
+			key_status = "UNTRACKED");
 
 		WorkflowMetrics.checkPendingWorkflowValues(
 			key_ontime = "0",

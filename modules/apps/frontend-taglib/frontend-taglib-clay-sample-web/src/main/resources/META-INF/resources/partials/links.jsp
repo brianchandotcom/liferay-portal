@@ -37,7 +37,7 @@
 	displayType="primary"
 	href="#"
 	label="a button link"
-	target="blank"
 	rel="nofollow"
+	target="blank"
 	type="button"
 />

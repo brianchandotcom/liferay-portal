@@ -327,9 +327,13 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 				LocalizedValue localizedValue = new LocalizedValue();
 
-				localizedValue.addString(
-					ddmForm.getDefaultLocale(),
-					(String)tuple.getObject(_TUPLE_DDM_FORM_FIELD_LABEL));
+				Set<Locale> locales = ddmForm.getAvailableLocales();
+
+				locales.forEach(
+					locale -> localizedValue.addString(
+						locale,
+						(String)ddmFormFieldTuple.getObject(
+							_DDM_FORM_FIELD_TUPLE_LABEL)));
 
 				fieldSetDDMFormField.setLabel(localizedValue);
 

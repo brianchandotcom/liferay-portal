@@ -16,12 +16,13 @@ import React, {useCallback, useContext, useEffect, useRef} from 'react';
 
 import PreviewInfoBar from './PreviewInfoBar';
 import {StyleBookContext} from './StyleBookContext';
-import {config} from './config';
 
 export default function PagePreview() {
 	const iframeRef = useRef();
 
-	const {frontendTokensValues = {}} = useContext(StyleBookContext);
+	const {frontendTokensValues = {}, previewPage} = useContext(
+		StyleBookContext
+	);
 
 	const loadFrontendTokenValues = useCallback(() => {
 		if (iframeRef.current) {
@@ -58,7 +59,7 @@ export default function PagePreview() {
 	return (
 		<>
 			<div className="style-book-editor__page-preview">
-				{config.previewURL ? (
+				{previewPage?.pageURL ? (
 					<>
 						<PreviewInfoBar />
 						<iframe
@@ -76,7 +77,7 @@ export default function PagePreview() {
 								);
 							}}
 							ref={iframeRef}
-							src={config.previewURL}
+							src={previewPage?.pageURL}
 						/>
 					</>
 				) : (

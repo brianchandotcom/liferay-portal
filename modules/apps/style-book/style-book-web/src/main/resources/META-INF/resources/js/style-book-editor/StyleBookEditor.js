@@ -24,6 +24,7 @@ import {useCloseProductMenu} from './useCloseProductMenu';
 
 const StyleBookEditor = ({
 	frontendTokensValues: initialFrontendTokensValues,
+	initialPreviewPage,
 }) => {
 	useCloseProductMenu();
 
@@ -31,6 +32,7 @@ const StyleBookEditor = ({
 		initialFrontendTokensValues
 	);
 	const [draftStatus, setDraftStatus] = useState(DRAFT_STATUS.notSaved);
+	const [previewPage, setPreviewPage] = useState(initialPreviewPage);
 
 	useEffect(() => {
 		if (frontendTokensValues === initialFrontendTokensValues) {
@@ -63,7 +65,9 @@ const StyleBookEditor = ({
 			value={{
 				draftStatus,
 				frontendTokensValues,
+				previewPage,
 				setFrontendTokensValues,
+				setPreviewPage,
 			}}
 		>
 			<div className="style-book-editor">
@@ -76,9 +80,10 @@ const StyleBookEditor = ({
 
 export default function ({
 	frontendTokenDefinition = [],
+	initialPreviewPage,
 	namespace,
-	previewURL,
 	publishURL,
+	pagesTreeURL,
 	redirectURL,
 	saveDraftURL,
 	styleBookEntryId,
@@ -86,15 +91,21 @@ export default function ({
 } = {}) {
 	initializeConfig({
 		frontendTokenDefinition,
+		initialPreviewPage,
 		namespace,
-		previewURL,
+		pagesTreeURL,
 		publishURL,
 		redirectURL,
 		saveDraftURL,
 		styleBookEntryId,
 	});
 
-	return <StyleBookEditor frontendTokensValues={frontendTokensValues} />;
+	return (
+		<StyleBookEditor
+			frontendTokensValues={frontendTokensValues}
+			initialPreviewPage={initialPreviewPage}
+		/>
+	);
 }
 
 function saveDraft(frontendTokensValues, styleBookEntryId) {

@@ -33,7 +33,7 @@ public class InterpolationUtil {
 		Map<String, String> properties, BundleContext bundleContext) {
 
 		performSubstitution(
-			properties, new BundleContextSubstitutionCallback(bundleContext));
+			properties, new BundleContextSubstitutionCallback());
 	}
 
 	public static void performSubstitution(
@@ -69,26 +69,10 @@ public class InterpolationUtil {
 	public static class BundleContextSubstitutionCallback
 		implements SubstitutionalCallback {
 
-		public BundleContextSubstitutionCallback(BundleContext bundleContext) {
-			_bundleContext = bundleContext;
-		}
-
 		@Override
 		public String getValue(String key) {
-			String value = null;
-
-			if (_bundleContext != null) {
-				value = _bundleContext.getProperty(key);
-			}
-
-			if (value == null) {
-				value = System.getProperty(key);
-			}
-
-			return value;
+			return System.getProperty(key);
 		}
-
-		private final BundleContext _bundleContext;
 
 	}
 

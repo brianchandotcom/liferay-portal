@@ -501,8 +501,8 @@ definition {
 		task ("Assert the Container has Fixed Width, padding bottom 4 and padding top 2") {
 			PageEditor.viewContainerStyle(
 				containerWidth = "Fixed Width",
-				paddingBottom = "5",
-				paddingTop = "4",
+				paddingBottom = "4",
+				paddingTop = "2",
 				position = "1");
 		}
 	}

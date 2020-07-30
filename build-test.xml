@@ -6665,6 +6665,16 @@ go</echo>
 		</if>
 	</target>
 
+	<target name="deploy-dependency-war">
+		<property name="liferay.dependency.dir" value="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies" />
+		<property name="deploy.dir" value="${app.server.parent.dir}/deploy" />
+
+		<copy
+			file="${liferay.dependency.dir}/${liferay.dependency.war}"
+			todir="${deploy.dir}"
+		/>
+	</target>
+
 	<target name="deploy-extra-apps">
 		<get-testcase-property property.name="extraapps.plugins.includes" />
 

@@ -1983,7 +1983,6 @@ definition {
 	@priority = "4"
 	test CompleteProcessWithEditedSingleApproverWorkflow {
 		property test.name.skip.portal.instance = "KaleoformsUsecase#CompleteProcessWithEditedSingleApproverWorkflow";
-		property portal.upstream = "quarantine";
 
 		Navigator.openURL();
 

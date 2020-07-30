@@ -65,7 +65,6 @@ definition {
 
 	@priority = "5"
 	test DeleteRegular {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Calendar#DeleteEventRegular";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

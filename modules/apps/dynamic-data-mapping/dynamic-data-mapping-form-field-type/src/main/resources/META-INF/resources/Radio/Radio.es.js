@@ -53,7 +53,12 @@ const Radio = ({
 	);
 
 	return (
-		<FieldBase {...otherProps} name={name} readOnly={disabled} showLabel={false}>
+		<FieldBase
+			{...otherProps}
+			name={name}
+			readOnly={disabled}
+			showLabel={false}
+		>
 			<legend className="lfr-ddm-legend">{label}</legend>
 			<div className="ddm-radio" onBlur={onBlur} onFocus={onFocus}>
 				{options.map((option) => (

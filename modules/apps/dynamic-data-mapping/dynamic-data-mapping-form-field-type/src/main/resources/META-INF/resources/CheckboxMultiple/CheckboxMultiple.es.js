@@ -129,7 +129,12 @@ const Main = ({
 	value,
 	...otherProps
 }) => (
-	<FieldBase {...otherProps} name={name} readOnly={readOnly} showLabel={false}>
+	<FieldBase
+		{...otherProps}
+		name={name}
+		readOnly={readOnly}
+		showLabel={false}
+	>
 		<legend className="lfr-ddm-legend">{label}</legend>
 		<CheckboxMultiple
 			disabled={readOnly}

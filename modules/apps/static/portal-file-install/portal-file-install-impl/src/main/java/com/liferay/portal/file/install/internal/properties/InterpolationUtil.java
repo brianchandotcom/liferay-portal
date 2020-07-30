@@ -16,7 +16,6 @@ package com.liferay.portal.file.install.internal.properties;
 
 import com.liferay.petra.string.CharPool;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,26 +26,19 @@ import java.util.regex.Pattern;
 public class InterpolationUtil {
 
 	public static void performSubstitution(Map<String, String> properties) {
-		Map<String, String> map = new HashMap<>(properties);
-
 		for (Map.Entry<String, String> entry : properties.entrySet()) {
 			String name = entry.getKey();
 
-			properties.put(
-				name, substVars(entry.getValue(), name, null, map, null));
+			properties.put(name, substVars(entry.getValue(), name, null));
 		}
 	}
 
 	public static String substVars(
-			String value, String currentKey, Map<String, String> cycleMap,
-			Map<String, String> configProps,
+			String value, String currentKey,
 			SubstitutionalCallback substitutionalCallback)
 		throws IllegalArgumentException {
 
-		return _unescape(
-			_substVars(
-				value, currentKey, cycleMap, configProps,
-				substitutionalCallback));
+		return _unescape(_substVars(value, currentKey, substitutionalCallback));
 	}
 
 	private static int _indexOf(String value, int fromIndex) {
@@ -81,18 +73,9 @@ public class InterpolationUtil {
 	}
 
 	private static String _substVars(
-			String value, String currentKey, Map<String, String> cycleMap,
-			Map<String, String> configProps,
+			String value, String currentKey,
 			SubstitutionalCallback substitutionalCallback)
 		throws IllegalArgumentException {
-
-		if (cycleMap == null) {
-			cycleMap = new HashMap<>();
-		}
-
-		// Put the current key in the cycle map
-
-		cycleMap.put(currentKey, currentKey);
 
 		// Assume we have a value that is something like: "leading ${foo.${bar}}
 		// middle ${baz} trailing". Find the first ending "}" variable
@@ -137,8 +120,6 @@ public class InterpolationUtil {
 		// existing value
 
 		if ((startDelim < 0) || (stopDelim < 0)) {
-			cycleMap.remove(currentKey);
-
 			return value;
 		}
 
@@ -150,21 +131,10 @@ public class InterpolationUtil {
 		String variable = value.substring(
 			startDelim + _DELIM_START.length(), stopDelim);
 
-		// Verify that this is not a recursive variable reference
-
-		if (cycleMap.get(variable) != null) {
-			throw new IllegalArgumentException(
-				"recursive variable reference: " + variable);
-		}
-
 		String substValue = null;
 
 		// Get the value of the deepest nested variable placeholder. Try the
 		// configuration properties first.
-
-		if (configProps != null) {
-			substValue = configProps.get(variable);
-		}
 
 		if ((substValue == null) && (variable.length() > 0)) {
 			if (substitutionalCallback != null) {
@@ -180,12 +150,6 @@ public class InterpolationUtil {
 			substValue = "";
 		}
 
-		// Remove the found variable from the cycle map since it may appear more
-		// than once in the value and we do not want such situations to appear
-		// as a recursive reference
-
-		cycleMap.remove(variable);
-
 		// Append the leading characters, the substituted value of the variable,
 		// and the trailing characters to get the new value
 
@@ -196,10 +160,7 @@ public class InterpolationUtil {
 		// Perform the substitution again since there could still be
 		// substitutions to make
 
-		value = _substVars(
-			value, currentKey, cycleMap, configProps, substitutionalCallback);
-
-		cycleMap.remove(currentKey);
+		value = _substVars(value, currentKey, substitutionalCallback);
 
 		// Return the value
 

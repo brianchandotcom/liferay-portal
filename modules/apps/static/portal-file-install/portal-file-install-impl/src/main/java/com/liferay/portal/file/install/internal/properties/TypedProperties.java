@@ -14,8 +14,6 @@
 
 package com.liferay.portal.file.install.internal.properties;
 
-import com.liferay.petra.string.CharPool;
-
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
@@ -23,10 +21,8 @@ import java.io.Writer;
 import java.util.AbstractMap;
 import java.util.AbstractSet;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -167,57 +163,9 @@ public class TypedProperties extends AbstractMap<String, Object> {
 		}
 
 		private String _compute(final String key) {
-			return InterpolationUtil.substVars(
-				_properties.get(key), key, _cycles, null,
-				value -> {
-					String string = DynamicMap.this.get(value);
-
-					if (string == null) {
-						return System.getProperty(value);
-					}
-
-					if (!_properties.isTyped()) {
-						return string;
-					}
-
-					boolean mult = false;
-
-					boolean hasType = false;
-
-					char t = string.charAt(0);
-
-					if ((t == CharPool.OPEN_BRACKET) ||
-						(t == CharPool.OPEN_PARENTHESIS)) {
-
-						mult = true;
-					}
-					else {
-						t = string.charAt(1);
-
-						if ((t == CharPool.OPEN_BRACKET) ||
-							(t == CharPool.OPEN_PARENTHESIS)) {
-
-							mult = true;
-						}
-
-						hasType = true;
-					}
-
-					if (mult) {
-						throw new IllegalArgumentException(
-							"Cannot substitute from a collection/array " +
-								"value: " + value);
-					}
-
-					if (hasType) {
-						return (String)_convertFromString(string.substring(1));
-					}
-
-					return (String)_convertFromString(string);
-				});
+			return InterpolationUtil.substVars(_properties.get(key), key, null);
 		}
 
-		private final Map<String, String> _cycles = new HashMap<>();
 		private final Properties _properties;
 
 		private class ComputedIterator

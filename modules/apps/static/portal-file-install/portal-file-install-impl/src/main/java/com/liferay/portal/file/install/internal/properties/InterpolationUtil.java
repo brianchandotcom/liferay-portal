@@ -15,7 +15,6 @@
 package com.liferay.portal.file.install.internal.properties;
 
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringPool;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -153,33 +152,6 @@ public class InterpolationUtil {
 		String variable = value.substring(
 			startDelim + _DELIM_START.length(), stopDelim);
 
-		String original = variable;
-
-		// Strip expansion modifiers
-
-		int index1 = variable.lastIndexOf(":-");
-		int index2 = variable.lastIndexOf(":+");
-
-		int index = -1;
-
-		if ((index1 >= 0) && (index2 >= 0)) {
-			index = Math.min(index1, index1);
-		}
-		else if (index1 >= 0) {
-			index = index1;
-		}
-		else {
-			index = index2;
-		}
-
-		String op = null;
-
-		if ((index >= 0) && (index < variable.length())) {
-			op = variable.substring(index);
-
-			variable = variable.substring(0, index);
-		}
-
 		// Verify that this is not a recursive variable reference
 
 		if (cycleMap.get(variable) != null) {
@@ -203,24 +175,6 @@ public class InterpolationUtil {
 
 			if (substValue == null) {
 				substValue = System.getProperty(variable);
-			}
-		}
-
-		if (op != null) {
-			if (op.startsWith(":-")) {
-				if ((substValue == null) || (substValue.length() == 0)) {
-					substValue = op.substring(":-".length());
-				}
-			}
-			else if (op.startsWith(":+")) {
-				if ((substValue != null) && (substValue.length() != 0)) {
-					substValue = op.substring(":+".length());
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Bad substitution: ${" + original +
-						StringPool.CLOSE_CURLY_BRACE);
 			}
 		}
 

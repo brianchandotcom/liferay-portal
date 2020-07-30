@@ -70,12 +70,9 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 
 		StringBundler sb = new StringBundler(3);
 
-		Group group = _groupLocalService.getGroup(
-			infoDisplayObjectProvider.getGroupId());
-
 		sb.append(
-			_portal.getGroupFriendlyURL(
-				group.getPublicLayoutSet(), themeDisplay, locale));
+			_getGroupFriendlyURL(
+				infoDisplayObjectProvider.getGroupId(), locale, themeDisplay));
 
 		sb.append(infoDisplayContributor.getInfoURLSeparator());
 		sb.append(infoDisplayObjectProvider.getURLTitle(locale));
@@ -90,6 +87,21 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 
 		return getFriendlyURL(
 			className, classPK, themeDisplay.getLocale(), themeDisplay);
+	}
+
+	private String _getGroupFriendlyURL(
+			long groupId, Locale locale, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		Group group = _groupLocalService.getGroup(groupId);
+
+		if (locale != null) {
+			return _portal.getGroupFriendlyURL(
+				group.getPublicLayoutSet(), themeDisplay, locale);
+		}
+
+		return _portal.getGroupFriendlyURL(
+			group.getPublicLayoutSet(), themeDisplay);
 	}
 
 	@Reference

@@ -163,7 +163,7 @@ public class TypedProperties extends AbstractMap<String, Object> {
 		}
 
 		private String _compute(final String key) {
-			return InterpolationUtil.substVars(_properties.get(key), key, null);
+			return InterpolationUtil.substVars(_properties.get(key), key);
 		}
 
 		private final Properties _properties;

@@ -29,16 +29,14 @@ public class InterpolationUtil {
 		for (Map.Entry<String, String> entry : properties.entrySet()) {
 			String name = entry.getKey();
 
-			properties.put(name, substVars(entry.getValue(), name, null));
+			properties.put(name, substVars(entry.getValue(), name));
 		}
 	}
 
-	public static String substVars(
-			String value, String currentKey,
-			SubstitutionalCallback substitutionalCallback)
+	public static String substVars(String value, String currentKey)
 		throws IllegalArgumentException {
 
-		return _unescape(_substVars(value, currentKey, substitutionalCallback));
+		return _unescape(_substVars(value, currentKey));
 	}
 
 	private static int _indexOf(String value, int fromIndex) {
@@ -72,9 +70,7 @@ public class InterpolationUtil {
 		return index;
 	}
 
-	private static String _substVars(
-			String value, String currentKey,
-			SubstitutionalCallback substitutionalCallback)
+	private static String _substVars(String value, String currentKey)
 		throws IllegalArgumentException {
 
 		// Assume we have a value that is something like: "leading ${foo.${bar}}
@@ -137,13 +133,7 @@ public class InterpolationUtil {
 		// configuration properties first.
 
 		if ((substValue == null) && (variable.length() > 0)) {
-			if (substitutionalCallback != null) {
-				substValue = substitutionalCallback.getValue(variable);
-			}
-
-			if (substValue == null) {
-				substValue = System.getProperty(variable);
-			}
+			substValue = System.getProperty(variable);
 		}
 
 		if (substValue == null) {
@@ -160,7 +150,7 @@ public class InterpolationUtil {
 		// Perform the substitution again since there could still be
 		// substitutions to make
 
-		value = _substVars(value, currentKey, substitutionalCallback);
+		value = _substVars(value, currentKey);
 
 		// Return the value
 

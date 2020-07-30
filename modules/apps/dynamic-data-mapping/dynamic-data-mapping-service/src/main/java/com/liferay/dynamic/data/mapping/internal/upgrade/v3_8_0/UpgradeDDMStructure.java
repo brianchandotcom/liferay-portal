@@ -212,7 +212,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 			String definition, long structureVersionId)
 		throws Exception {
 
-		List<Tuple> tuples = new ArrayList<>();
+		List<Tuple> ddmFormFieldTuples = new ArrayList<>();
 
 		DDMFormLayoutDeserializerDeserializeResponse
 			ddmFormLayoutDeserializerDeserializeResponse =
@@ -248,7 +248,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 						String ddmFormFieldName = _generateFieldSetName(
 							ddmForm);
 
-						tuples.add(
+						ddmFormFieldTuples.add(
 							new Tuple(
 								ddmFormFieldName, "Fields Group",
 								ddmFormLayoutColumn.getSize(),
@@ -261,8 +261,8 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 			}
 		}
 
-		if (!tuples.isEmpty()) {
-			_nestedFieldsMap.put(structureVersionId, tuples);
+		if (!ddmFormFieldTuples.isEmpty()) {
+			_nestedFieldsMap.put(structureVersionId, ddmFormFieldTuples);
 		}
 
 		DDMFormLayoutSerializerSerializeResponse
@@ -324,15 +324,17 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(false);
 
-		List<Tuple> tuples = _nestedFieldsMap.get(structureVersionId);
+		List<Tuple> ddmFormFieldTuples = _nestedFieldsMap.get(
+			structureVersionId);
 
-		if (tuples != null) {
-			for (Tuple tuple : tuples) {
-				String fieldSetName = (String)tuple.getObject(
-					_TUPLE_DDM_FORM_FIELD_NAME);
+		if (ddmFormFieldTuples != null) {
+			for (Tuple ddmFormFieldTuple : ddmFormFieldTuples) {
+				String fieldSetDDMFormFieldName =
+					(String)ddmFormFieldTuple.getObject(
+						_DDM_FORM_FIELD_TUPLE_NAME);
 
 				DDMFormField fieldSetDDMFormField = new DDMFormField(
-					fieldSetName, "fieldset");
+					fieldSetDDMFormFieldName, "fieldset");
 
 				LocalizedValue localizedValue = new LocalizedValue();
 
@@ -349,34 +351,36 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 				JSONArray rows = _jsonFactory.createJSONArray();
 
-				List<String> nestedFieldNames = (List<String>)tuple.getObject(
-					_TUPLE_DDM_FORM_NESTED_FIELD_NAMES);
+				List<String> nestedNames =
+					(List<String>)ddmFormFieldTuple.getObject(
+						_DDM_FORM_FIELD_TUPLE_NESTED_FIELD_NAMES);
 
-				nestedFieldNames.forEach(
-					fieldName -> {
+				nestedNames.forEach(
+					ddmFormFieldName -> {
 						fieldSetDDMFormField.addNestedDDMFormField(
-							ddmFormFieldsMap.get(fieldName));
+							ddmFormFieldsMap.get(ddmFormFieldName));
 
 						rows.put(
 							JSONUtil.put(
 								"columns",
 								JSONUtil.put(
 									JSONUtil.put(
-										"fields", JSONUtil.put(fieldName)
+										"fields", JSONUtil.put(ddmFormFieldName)
 									).put(
 										"size",
-										tuple.getObject(
-											_TUPLE_DDM_FORM_FIELD_COLUMN_SIZE)
+										ddmFormFieldTuple.getObject(
+											_DDM_FORM_FIELD_TUPLE_COLUMN_SIZE)
 									))));
 
-						ddmFormFieldsMap.remove(fieldName);
+						ddmFormFieldsMap.remove(ddmFormFieldName);
 					});
 
 				fieldSetDDMFormField.setProperty("rows", rows);
 
 				fieldSetDDMFormField.setShowLabel(false);
 
-				ddmFormFieldsMap.put(fieldSetName, fieldSetDDMFormField);
+				ddmFormFieldsMap.put(
+					fieldSetDDMFormFieldName, fieldSetDDMFormField);
 			}
 
 			List<DDMFormField> ddmFormFields = new ArrayList<>(
@@ -394,13 +398,13 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		return ddmFormSerializerSerializeResponse.getContent();
 	}
 
-	private static final int _TUPLE_DDM_FORM_FIELD_COLUMN_SIZE = 2;
+	private static final int _DDM_FORM_FIELD_TUPLE_COLUMN_SIZE = 2;
 
-	private static final int _TUPLE_DDM_FORM_FIELD_LABEL = 1;
+	private static final int _DDM_FORM_FIELD_TUPLE_LABEL = 1;
 
-	private static final int _TUPLE_DDM_FORM_FIELD_NAME = 0;
+	private static final int _DDM_FORM_FIELD_TUPLE_NAME = 0;
 
-	private static final int _TUPLE_DDM_FORM_NESTED_FIELD_NAMES = 3;
+	private static final int _DDM_FORM_FIELD_TUPLE_NESTED_FIELD_NAMES = 3;
 
 	private final DDMFormDeserializer _ddmFormDeserializer;
 	private final DDMFormLayoutDeserializer _ddmFormLayoutDeserializer;

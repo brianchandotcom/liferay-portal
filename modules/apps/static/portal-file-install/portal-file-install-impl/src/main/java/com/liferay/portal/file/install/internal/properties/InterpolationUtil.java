@@ -22,34 +22,19 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.osgi.framework.BundleContext;
-
 /**
  * @author Matthew Tambara
  */
 public class InterpolationUtil {
 
-	public static void performSubstitution(
-		Map<String, String> properties, BundleContext bundleContext) {
-
-		performSubstitution(
-			properties, new BundleContextSubstitutionCallback());
-	}
-
-	public static void performSubstitution(
-		Map<String, String> properties,
-		SubstitutionalCallback substitutionCallback) {
-
+	public static void performSubstitution(Map<String, String> properties) {
 		Map<String, String> map = new HashMap<>(properties);
 
 		for (Map.Entry<String, String> entry : properties.entrySet()) {
 			String name = entry.getKey();
 
 			properties.put(
-				name,
-				substVars(
-					entry.getValue(), name, null, map, substitutionCallback,
-					true));
+				name, substVars(entry.getValue(), name, null, map, null, true));
 		}
 	}
 
@@ -64,16 +49,6 @@ public class InterpolationUtil {
 			_substVars(
 				value, currentKey, cycleMap, configProps,
 				substitutionalCallback, substituteFromConfig));
-	}
-
-	public static class BundleContextSubstitutionCallback
-		implements SubstitutionalCallback {
-
-		@Override
-		public String getValue(String key) {
-			return System.getProperty(key);
-		}
-
 	}
 
 	private static int _indexOf(String value, int fromIndex) {

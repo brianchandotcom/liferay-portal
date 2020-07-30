@@ -249,7 +249,7 @@ public class AssetTagsSelectorTag extends IncludeTag {
 			String[] curTagsParam = request.getParameterValues(_hiddenInput);
 
 			if (curTagsParam != null) {
-				return ListUtil.toList(curTagsParam);
+				return ListUtil.fromArray(curTagsParam);
 			}
 		}
 

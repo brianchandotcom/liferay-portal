@@ -56,7 +56,7 @@ export default function EditAppToolbar({isSaving, onCancel, onSave}) {
 
 	const onAppNameChange = ({target}) => {
 		dispatch({
-			appName: {
+			name: {
 				...app.name,
 				[editingLanguageId]: target.value,
 			},
@@ -70,7 +70,7 @@ export default function EditAppToolbar({isSaving, onCancel, onSave}) {
 
 			if (!app.name[newEditingLanguageId]) {
 				dispatch({
-					appName: {
+					name: {
 						...app.name,
 						[newEditingLanguageId]: app.name[editingLanguageId],
 					},
@@ -110,7 +110,7 @@ export default function EditAppToolbar({isSaving, onCancel, onSave}) {
 		}
 
 		dispatch({
-			appName: availableLanguageIds.reduce(
+			name: availableLanguageIds.reduce(
 				(name, languageId) => ({
 					...name,
 					[languageId]: app.name[languageId] || appName,

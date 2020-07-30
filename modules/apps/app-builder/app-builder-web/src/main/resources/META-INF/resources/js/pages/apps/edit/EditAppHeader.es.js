@@ -41,13 +41,14 @@ export default ({
 		}
 	}, [defaultLanguageId, editingLanguageId, setEditingLanguageId]);
 
-	const onAppNameChange = (event) => {
-		const appName = event.target.value;
+		dispatch,
+	] = useContext(EditAppContext);
 
+	const onAppNameChange = ({target: {value}}) => {
 		dispatch({
-			appName: {
+			name: {
 				...name,
-				[editingLanguageId]: appName,
+				[editingLanguageId]: value,
 			},
 			type: UPDATE_NAME,
 		});

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.file.install.internal;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.portal.file.install.FileInstaller;
 import com.liferay.portal.file.install.internal.properties.InterpolationUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -22,10 +21,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -88,27 +89,13 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 			_set(map, DirectoryWatcher.SUBDIR_MODE);
 			_set(map, DirectoryWatcher.WEB_START_LEVEL);
 
-			String dirs = map.get(DirectoryWatcher.DIR);
+			Set<String> dirs = new HashSet<>(
+				Arrays.asList(StringUtil.split(map.get(DirectoryWatcher.DIR))));
 
-			if (dirs.indexOf(CharPool.COMMA) != -1) {
-				int index = 0;
+			for (String dir : dirs) {
+				map.put(DirectoryWatcher.DIR, dir);
 
-				for (String dir : StringUtil.split(dirs, CharPool.COMMA)) {
-					map.put(DirectoryWatcher.DIR, dir);
-
-					String name = "initial";
-
-					if (index > 0) {
-						name = name + index;
-					}
-
-					_updated(name, new HashMap<>(map));
-
-					index++;
-				}
-			}
-			else {
-				_updated("initial", map);
+				_updated(new HashMap<>(map));
 			}
 		}
 		finally {
@@ -124,7 +111,7 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 			List<DirectoryWatcher> watchers = new ArrayList<>();
 
 			synchronized (_directoryWatchers) {
-				watchers.addAll(_directoryWatchers.values());
+				watchers.addAll(_directoryWatchers);
 
 				_directoryWatchers.clear();
 			}
@@ -150,7 +137,7 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 		List<DirectoryWatcher> toUpdate = new ArrayList<>();
 
 		synchronized (_directoryWatchers) {
-			toUpdate.addAll(_directoryWatchers.values());
+			toUpdate.addAll(_directoryWatchers);
 		}
 
 		for (DirectoryWatcher directoryWatcher : toUpdate) {
@@ -170,40 +157,23 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 		map.put(key, property);
 	}
 
-	private void _updated(String pid, Map<String, String> properties) {
+	private void _updated(Map<String, String> properties) {
 		InterpolationUtil.performSubstitution(properties, _bundleContext);
 
-		DirectoryWatcher directoryWatcher = null;
-
-		synchronized (_directoryWatchers) {
-			directoryWatcher = _directoryWatchers.get(pid);
-
-			if ((directoryWatcher != null) &&
-				Objects.equals(directoryWatcher.getProperties(), properties)) {
-
-				return;
-			}
-		}
-
-		if (directoryWatcher != null) {
-			directoryWatcher.close();
-		}
-
-		directoryWatcher = new DirectoryWatcher(
+		DirectoryWatcher directoryWatcher = new DirectoryWatcher(
 			this, properties, _bundleContext);
 
 		directoryWatcher.setDaemon(true);
 
 		synchronized (_directoryWatchers) {
-			_directoryWatchers.put(pid, directoryWatcher);
+			_directoryWatchers.add(directoryWatcher);
 		}
 
 		directoryWatcher.start();
 	}
 
 	private BundleContext _bundleContext;
-	private final Map<String, DirectoryWatcher> _directoryWatchers =
-		new HashMap<>();
+	private final Set<DirectoryWatcher> _directoryWatchers = new HashSet<>();
 	private ServiceRegistration<FileInstaller>
 		_jarFileInstallerServiceRegistration;
 	private final Lock _readLock;

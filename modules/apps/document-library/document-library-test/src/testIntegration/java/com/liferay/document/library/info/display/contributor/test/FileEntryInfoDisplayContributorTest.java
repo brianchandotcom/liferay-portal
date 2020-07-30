@@ -20,11 +20,20 @@ import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvide
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.display.contributor.InfoDisplayField;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.type.WebImage;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -45,6 +54,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -58,6 +68,10 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import java.text.Format;
 
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -178,6 +192,54 @@ public class FileEntryInfoDisplayContributorTest {
 	}
 
 	@Test
+	public void testFileEntryInfoDisplayContributorWithFileEntryType()
+		throws Exception {
+
+		_withAndWithoutAssetEntry(
+			fileEntry -> {
+				DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+					fileEntry.getGroupId(),
+					DLFileEntryMetadata.class.getName());
+
+				ServiceContext serviceContext =
+					ServiceContextTestUtil.getServiceContext(
+						fileEntry.getGroupId(), TestPropsValues.getUserId());
+
+				DLFileEntryType dlFileEntryType =
+					DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+						TestPropsValues.getUserId(), fileEntry.getGroupId(),
+						RandomTestUtil.randomString(),
+						RandomTestUtil.randomString(),
+						new long[] {ddmStructure.getStructureId()},
+						serviceContext);
+
+				DDMStructureManagerUtil.updateStructureKey(
+					ddmStructure.getStructureId(),
+					DLUtil.getDDMStructureKey(dlFileEntryType));
+
+				_dlFileEntryLocalService.updateFileEntryType(
+					TestPropsValues.getUserId(), fileEntry.getFileEntryId(),
+					dlFileEntryType.getFileEntryTypeId(), serviceContext);
+
+				Set<InfoDisplayField> infoDisplayFields =
+					_infoDisplayContributor.getInfoDisplayFields(
+						_dlAppLocalService.getFileEntry(
+							fileEntry.getFileEntryId()),
+						LocaleUtil.getDefault());
+
+				Stream<InfoDisplayField> stream = infoDisplayFields.stream();
+
+				Optional<InfoDisplayField> titleInfoDisplayFieldOptional =
+					stream.filter(
+						infoDisplayField -> Objects.equals(
+							infoDisplayField.getKey(), "name")
+					).findFirst();
+
+				Assert.assertTrue(titleInfoDisplayFieldOptional.isPresent());
+			});
+	}
+
+	@Test
 	public void testInfoDisplayObjectProvider() throws Exception {
 		_withAndWithoutAssetEntry(
 			fileEntry -> {
@@ -255,7 +317,7 @@ public class FileEntryInfoDisplayContributorTest {
 	}
 
 	private void _withAndWithoutAssetEntry(
-			UnsafeConsumer<FileEntry, PortalException> testFunction)
+			UnsafeConsumer<FileEntry, Exception> testFunction)
 		throws Exception {
 
 		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
@@ -285,6 +347,9 @@ public class FileEntryInfoDisplayContributorTest {
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
+
+	@Inject
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Inject
 	private DLURLHelper _dlurlHelper;

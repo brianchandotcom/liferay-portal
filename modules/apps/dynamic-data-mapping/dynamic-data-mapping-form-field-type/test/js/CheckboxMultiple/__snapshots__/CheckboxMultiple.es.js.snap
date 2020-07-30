@@ -5,6 +5,9 @@ exports[`Field Checkbox Multiple has a helptext 1`] = `
   <div
     class="form-group hide"
   >
+    <legend
+      class="lfr-ddm-legend"
+    />
     <div
       class="lfr-ddm-checkbox-multiple"
     >
@@ -75,6 +78,9 @@ exports[`Field Checkbox Multiple has a key 1`] = `
   <div
     class="form-group hide"
   >
+    <legend
+      class="lfr-ddm-legend"
+    />
     <div
       class="lfr-ddm-checkbox-multiple"
     >
@@ -140,11 +146,11 @@ exports[`Field Checkbox Multiple has a label 1`] = `
   <div
     class="form-group hide"
   >
-    <label
-      class="ddm-label"
+    <legend
+      class="lfr-ddm-legend"
     >
       label
-    </label>
+    </legend>
     <div
       class="lfr-ddm-checkbox-multiple"
     >
@@ -210,6 +216,9 @@ exports[`Field Checkbox Multiple has a predefined Value 1`] = `
   <div
     class="form-group hide"
   >
+    <legend
+      class="lfr-ddm-legend"
+    />
     <div
       class="lfr-ddm-checkbox-multiple"
     >
@@ -275,6 +284,9 @@ exports[`Field Checkbox Multiple has a spritemap 1`] = `
   <div
     class="form-group hide"
   >
+    <legend
+      class="lfr-ddm-legend"
+    />
     <div
       class="lfr-ddm-checkbox-multiple"
     >
@@ -340,6 +352,9 @@ exports[`Field Checkbox Multiple has a value 1`] = `
   <div
     class="form-group hide"
   >
+    <legend
+      class="lfr-ddm-legend"
+    />
     <div
       class="lfr-ddm-checkbox-multiple"
     >
@@ -405,6 +420,9 @@ exports[`Field Checkbox Multiple has an id 1`] = `
   <div
     class="form-group hide"
   >
+    <legend
+      class="lfr-ddm-legend"
+    />
     <div
       class="lfr-ddm-checkbox-multiple"
     >
@@ -470,6 +488,9 @@ exports[`Field Checkbox Multiple is not editable 1`] = `
   <div
     class="form-group hide"
   >
+    <legend
+      class="lfr-ddm-legend"
+    />
     <div
       class="lfr-ddm-checkbox-multiple"
     >
@@ -537,6 +558,9 @@ exports[`Field Checkbox Multiple is not required 1`] = `
   <div
     class="form-group hide"
   >
+    <legend
+      class="lfr-ddm-legend"
+    />
     <div
       class="lfr-ddm-checkbox-multiple"
     >
@@ -602,6 +626,9 @@ exports[`Field Checkbox Multiple is shown as a switcher 1`] = `
   <div
     class="form-group hide"
   >
+    <legend
+      class="lfr-ddm-legend"
+    />
     <div
       class="lfr-ddm-checkbox-multiple"
     >
@@ -667,6 +694,9 @@ exports[`Field Checkbox Multiple is shown as checkbox 1`] = `
   <div
     class="form-group hide"
   >
+    <legend
+      class="lfr-ddm-legend"
+    />
     <div
       class="lfr-ddm-checkbox-multiple"
     >
@@ -720,11 +750,11 @@ exports[`Field Checkbox Multiple renders Label if showLabel is true 1`] = `
   <div
     class="form-group hide"
   >
-    <label
-      class="ddm-label"
+    <legend
+      class="lfr-ddm-legend"
     >
       text
-    </label>
+    </legend>
     <div
       class="lfr-ddm-checkbox-multiple"
     >

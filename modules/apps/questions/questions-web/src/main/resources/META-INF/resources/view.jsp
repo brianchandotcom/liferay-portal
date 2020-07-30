@@ -44,6 +44,8 @@ String questionsRootElementId = liferayPortletResponse.getNamespace() + "-questi
 			).put(
 				"rootTopic", renderRequest.getAttribute(QuestionsWebKeys.ROOT_TOPIC)
 			).put(
+				"showSectionLanding", questionsConfiguration.showSectionLanding()
+			).put(
 				"siteKey", String.valueOf(themeDisplay.getScopeGroupId())
 			).put(
 				"tagSelectorURL", renderRequest.getAttribute(QuestionsWebKeys.TAG_SELECTOR_URL)

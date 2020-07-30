@@ -27,6 +27,7 @@ import NewTopicModal from '../../components/NewTopicModal.es';
 import {getSectionsFromRootSection} from '../../utils/client.es';
 import lang from '../../utils/lang.es';
 import {historyPushWithSlug} from '../../utils/utils.es';
+import {Redirect} from 'react-router-dom';
 
 export default withRouter(({history}) => {
 	const context = useContext(AppContext);
@@ -60,6 +61,9 @@ export default withRouter(({history}) => {
 
 	return (
 		<section className="c-mt-3 questions-section questions-section-cards">
+
+			{!context.showSectionLanding && <Redirect to="/questions/0" />}
+
 			<div className="questions-container">
 				<div className="row">
 					{loading && <ClayLoadingIndicator />}

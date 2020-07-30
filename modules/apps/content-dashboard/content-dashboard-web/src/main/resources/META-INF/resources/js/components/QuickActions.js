@@ -19,7 +19,7 @@ import React from 'react';
 
 import {actions} from '../utils/showSidebar';
 
-const HoverItems = ({items, namespace}) => {
+export default function({items, namespace}) {
 	return (
 		<div className="quick-action-menu">
 			{items.map(({data, href, icon, quickAction}) =>
@@ -49,5 +49,3 @@ const HoverItems = ({items, namespace}) => {
 		</div>
 	);
 };
-
-export default HoverItems;

@@ -18,7 +18,14 @@ import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {sub} from 'dynamic-data-mapping-form-field-type/util/strings.es';
 import MetalComponent from 'metal-component';
-import React, {Suspense, lazy, useCallback, useRef, useState} from 'react';
+import React, {
+	Suspense,
+	lazy,
+	useCallback,
+	useContext,
+	useRef,
+	useState,
+} from 'react';
 
 import {usePage} from '../../hooks/usePage.es';
 import {useStorage} from '../../hooks/useStorage.es';
@@ -152,7 +159,22 @@ const FieldLazy = ({
 	);
 };
 
+const getRootParentField = (field, {root}) => {
+	if (root) {
+		return {
+			...field,
+			root,
+		};
+	}
+
+	return {
+		...field,
+		root: field,
+	};
+};
+
 export const Field = ({field, ...otherProps}) => {
+	const parentField = useContext(ParentFieldContext);
 	const {fieldTypes} = usePage();
 	const [hasError, setHasError] = useState();
 
@@ -188,7 +210,9 @@ export const Field = ({field, ...otherProps}) => {
 	return (
 		<ErrorBoundary onError={setHasError}>
 			<Suspense fallback={<ClayLoadingIndicator />}>
-				<ParentFieldContext.Provider value={field}>
+				<ParentFieldContext.Provider
+					value={getRootParentField(field, parentField)}
+				>
 					<AutoFocus>
 						<div
 							className="ddm-field"

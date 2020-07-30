@@ -82,6 +82,7 @@ export const Column = ({
 	};
 
 	const firstField = column.fields[0];
+	const rootParentField = parentField.root ?? firstField;
 
 	return (
 		<ClayLayout.Col
@@ -96,12 +97,15 @@ export const Column = ({
 						'ddm-field-container ddm-target h-100',
 						{
 							'active-drop-child':
-								firstField.type === 'fieldset' && overTarget,
+								firstField.type === 'fieldset' &&
+								overTarget &&
+								!rootParentField.ddmStructureId,
 							'ddm-fieldset':
 								firstField.type === 'fieldset' &&
 								firstField.ddmStructureId,
 							selected: firstField.selected,
-							'target-over targetOver': overTarget,
+							'target-over targetOver':
+								!rootParentField.ddmStructureId && overTarget,
 						}
 					)}
 					data-field-name={firstField.fieldName}
@@ -118,7 +122,11 @@ export const Column = ({
 
 					<div
 						className="ddm-drag"
-						ref={allowNestedFields ? drop : undefined}
+						ref={
+							allowNestedFields && !rootParentField.ddmStructureId
+								? drop
+								: undefined
+						}
 					>
 						{fields}
 					</div>
@@ -228,9 +236,10 @@ export const Placeholder = ({
 		>
 			<div
 				className={classnames('ddm-target', {
-					'target-over targetOver': overTarget,
+					'target-over targetOver':
+						overTarget && !parentField.root?.ddmStructureId,
 				})}
-				ref={drop}
+				ref={!parentField.root?.ddmStructureId ? drop : undefined}
 			/>
 		</ClayLayout.Col>
 	);

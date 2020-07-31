@@ -1,5 +1,47 @@
 definition {
 
+	macro addAccountManager {
+		JSONUser.addUser(
+			userEmailAddress = "${userEmailAddress}",
+			userFirstName = "${userFirstName}",
+			userLastName = "${userLastName}",
+			userScreenName = "${userScreenName}");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "${userEmailAddress}");
+
+		JSONOrganization.addOrganization(organizationName = "${orgName}");
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "${orgName}",
+			userEmailAddress = "${userEmailAddress}");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.assignOrgRoleCP(
+			roleTitle = "${orgRoleTitle}",
+			userScreenName = "${userScreenName}");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		LexiconEntry.gotoEntry(rowEntry = "${accountName}");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Organizations");
+
+		Accounts.addAssignee(
+			accountName = "${accountName}",
+			assigneeName = "${orgName}",
+			assigneeType = "Organizations");
+	}
+
 	macro enableAccountEmailDomain {
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Accounts",

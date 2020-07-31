@@ -201,6 +201,8 @@ definition {
 			item = "Make Web Content Structures Available",
 			tableEntry = "${siteName}");
 
+		AssertConfirm(value1 = "You will not be able to disconnect this site when structure sharing is enabled. In order to disconnect this site from this asset library, you must disable structure sharing first.");
+
 		Alert.viewSuccessMessage();
 
 		AssertTextEquals(

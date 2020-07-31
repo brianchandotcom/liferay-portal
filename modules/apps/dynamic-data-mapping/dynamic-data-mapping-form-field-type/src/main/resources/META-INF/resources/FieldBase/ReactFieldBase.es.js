@@ -65,6 +65,7 @@ function FieldBase({
 	repeatable,
 	required,
 	showLabel = true,
+	style,
 	tip,
 	tooltip,
 	valid,
@@ -98,6 +99,7 @@ function FieldBase({
 				})}
 				data-field-name={name}
 				onClick={onClick}
+				style={style}
 			>
 				{repeatable && (
 					<div className="lfr-ddm-form-field-repeatable-toolbar">

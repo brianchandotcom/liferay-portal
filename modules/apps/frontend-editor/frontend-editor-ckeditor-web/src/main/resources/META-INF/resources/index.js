@@ -12,6 +12,6 @@
  * details.
  */
 
-export {default as ClassicEditor} from './editor/ClassicEditor';
+export {ClassicEditor} from './editor/ClassicEditor';
 export {Editor} from './editor/Editor';
 export {InlineEditor} from './editor/InlineEditor';

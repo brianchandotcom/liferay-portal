@@ -22,8 +22,9 @@ const CKEDITOR_CONFIG = {
 	autoGrow_bottomSpace: 50,
 	autoGrow_maxHeight: 600,
 	autoGrow_minHeight: 215,
+	extraPlugins: ',videoembed,autogrow,stylescombo',
 	resize_enabled: true,
-	toolbar: [
+	toolbar_ddm: [
 		['Undo', 'Redo'],
 		['Styles'],
 		['Bold', 'Italic', 'Underline'],
@@ -33,7 +34,7 @@ const CKEDITOR_CONFIG = {
 		['Link', 'Unlink'],
 		['Table', 'Image', 'VideoEmbed'],
 		['Source'],
-	]
+	],
 };
 
 const RichText = ({
@@ -56,14 +57,12 @@ const RichText = ({
 			return {};
 		}
 
-		const config =
-			editorConfig.editorConfig.JSONObject ??
-			editorConfig.editorConfig;
+		const config = editorConfig.JSONObject;
 
 		return {
 			...config,
 			...CKEDITOR_CONFIG,
-			extraPlugins: config.extraPlugins + ',videoembed,autogrow,stylescombo'
+			extraPlugins: config.extraPlugins + CKEDITOR_CONFIG.extraPlugins,
 		};
 	}, [editorConfig]);
 
@@ -72,16 +71,26 @@ const RichText = ({
 	}
 
 	return (
-		<FieldBase {...otherProps} id={id} name={name} readOnly={readOnly} visible={visible}>
+		<FieldBase
+			{...otherProps}
+			id={id}
+			name={name}
+			readOnly={readOnly}
+			style={readOnly ? {pointerEvents: 'none'} : null}
+			visible={visible}
+		>
 			<ClassicEditor
 				contents={currentValue}
 				data={currentValue}
 				editorConfig={normalizedEditorConfig}
+				initialToolbarSet="ddm"
 				name={name}
 				onChange={(data) => {
-					setCurrentValue(data);
+					if (currentValue !== data) {
+						setCurrentValue(data);
 
-					onChange({}, data);
+						onChange({}, data);
+					}
 				}}
 				readOnly={readOnly}
 			/>

@@ -19,21 +19,29 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServices
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.EventsProcessorUtil;
+import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
+import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -103,7 +111,8 @@ public class DDMFormFieldTypesServlet extends HttpServlet {
 
 		stream.map(
 			ddmFormFieldTypeName -> getFieldTypeMetadataJSONObject(
-				ddmFormFieldTypeName)
+				ddmFormFieldTypeName,
+				getFieldProperties(ddmFormFieldTypeName, httpServletRequest))
 		).forEach(
 			fieldTypesJSONArray::put
 		);
@@ -115,8 +124,27 @@ public class DDMFormFieldTypesServlet extends HttpServlet {
 			httpServletResponse, fieldTypesJSONArray.toJSONString());
 	}
 
+	protected Object getFieldProperties(
+		String ddmFormFieldName, HttpServletRequest httpServletRequest) {
+
+		if (StringUtil.equals(ddmFormFieldName, "rich_text")) {
+			EditorConfiguration richTextEditorConfiguration =
+				EditorConfigurationFactoryUtil.getEditorConfiguration(
+					StringPool.BLANK, ddmFormFieldName, "ckeditor",
+					Collections.emptyMap(),
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY),
+					RequestBackedPortletURLFactoryUtil.create(
+						httpServletRequest));
+
+			return richTextEditorConfiguration.getData();
+		}
+
+		return JSONFactoryUtil.createJSONObject();
+	}
+
 	protected JSONObject getFieldTypeMetadataJSONObject(
-		String ddmFormFieldName) {
+		String ddmFormFieldName, Object properties) {
 
 		return JSONUtil.put(
 			"javaScriptModule",
@@ -125,6 +153,8 @@ public class DDMFormFieldTypesServlet extends HttpServlet {
 					ddmFormFieldName))
 		).put(
 			"name", ddmFormFieldName
+		).put(
+			"properties", properties
 		);
 	}
 

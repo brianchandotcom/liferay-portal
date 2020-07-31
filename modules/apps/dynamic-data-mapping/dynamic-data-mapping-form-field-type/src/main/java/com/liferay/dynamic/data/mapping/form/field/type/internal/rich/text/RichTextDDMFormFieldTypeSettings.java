@@ -20,7 +20,6 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
-import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 
@@ -28,16 +27,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
  * @author Carlos Lancha
  * @author Marko Cikos
  */
-@DDMForm(
-	rules = {
-		@DDMFormRule(
-			actions = {
-				"setVisible('editorConfig', false)"
-			},
-			condition = "TRUE"
-		)
-	}
-)
+@DDMForm
 @DDMFormLayout(
 	paginationMode = com.liferay.dynamic.data.mapping.model.DDMFormLayout.TABBED_MODE,
 	value = {
@@ -61,7 +51,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 						@DDMFormLayoutColumn(
 							size = 12,
 							value = {
-								"editorConfig", "name", "predefinedValue",
+								"name", "predefinedValue",
 								"visibilityExpression", "fieldNamespace",
 								"indexType", "localizable", "readOnly",
 								"dataType", "type", "showLabel", "repeatable"
@@ -76,7 +66,6 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 public interface RichTextDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 
-	@DDMFormField(dataType = "json", type = "text")
 	public String editorConfig();
 
 	@DDMFormField(

@@ -16,10 +16,6 @@
 
 <%@ include file="/data_layout_builder/init.jsp" %>
 
-<liferay-editor:resources
-	editorName="ckeditor"
-/>
-
 <liferay-util:html-top>
 	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/dynamic-data-mapping-form-builder/css/main.css") %>" rel="stylesheet" />
 	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/dynamic-data-mapping-form-renderer/css/main.css") %>" rel="stylesheet" />

@@ -157,12 +157,8 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 	}
 
 	private void _updated(Map<String, String> properties) {
-		DirectoryWatcher directoryWatcher = new DirectoryWatcher(
-			properties, _bundleContext);
-
-		directoryWatcher.setDaemon(true);
-
-		_directoryWatchers.add(directoryWatcher);
+		_directoryWatchers.add(
+			new DirectoryWatcher(properties, _bundleContext));
 	}
 
 	private BundleContext _bundleContext;

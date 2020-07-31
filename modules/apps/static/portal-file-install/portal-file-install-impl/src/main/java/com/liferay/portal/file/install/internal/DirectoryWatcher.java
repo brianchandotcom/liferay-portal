@@ -138,6 +138,8 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 		super("fileinstall-" + properties.get(DIR));
 
+		setDaemon(true);
+
 		_properties = properties;
 		_bundleContext = bundleContext;
 

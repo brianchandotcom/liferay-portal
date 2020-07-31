@@ -145,17 +145,19 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		_activeLevel = GetterUtil.getInteger(properties.get(ACTIVE_LEVEL));
 		_filter = properties.get(FILTER);
 		_fragmentScope = properties.get(FRAGMENT_SCOPE);
-		_noInitialDelay = _getBoolean(properties, NO_INITIAL_DELAY, false);
+		_noInitialDelay = GetterUtil.getBoolean(
+			properties.get(NO_INITIAL_DELAY));
 		_optionalScope = properties.get(OPTIONAL_SCOPE);
 		_poll = GetterUtil.getLong(properties.get(POLL), 2000);
-		_startBundles = _getBoolean(properties, START_NEW_BUNDLES, true);
+		_startBundles = GetterUtil.getBoolean(
+			properties.get(START_NEW_BUNDLES), true);
 		_startLevel = GetterUtil.getInteger(properties.get(START_LEVEL));
 		_systemBundle = bundleContext.getBundle(
 			Constants.SYSTEM_BUNDLE_LOCATION);
-		_useStartActivationPolicy = _getBoolean(
-			properties, USE_START_ACTIVATION_POLICY, true);
-		_useStartTransient = _getBoolean(
-			properties, USE_START_TRANSIENT, false);
+		_useStartActivationPolicy = GetterUtil.getBoolean(
+			properties.get(USE_START_ACTIVATION_POLICY), true);
+		_useStartTransient = GetterUtil.getBoolean(
+			properties.get(USE_START_TRANSIENT));
 
 		_watchedDirectory = new File(properties.get(DIR));
 
@@ -592,18 +594,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		synchronized (_currentManagedArtifacts) {
 			return new ArrayList<>(_currentManagedArtifacts.values());
 		}
-	}
-
-	private boolean _getBoolean(
-		Map<String, String> properties, String property, boolean defaultValue) {
-
-		String value = properties.get(property);
-
-		if (value != null) {
-			return Boolean.valueOf(value);
-		}
-
-		return defaultValue;
 	}
 
 	private void _initializeCurrentManagedBundles() {

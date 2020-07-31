@@ -215,10 +215,11 @@ definition {
 	test MapBlogsToDisplayPage {
 		var portalURL = PropsUtil.get("portal.url");
 
-		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.addDisplayPage(
 			contentType = "Blogs Entry",
-			displayPageTemplateEntryName = "Display Page Template Name",
-			groupName = "Test Site Name");
+			displayPageName = "Display Page Template Name");
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
@@ -316,10 +317,11 @@ definition {
 	test MapDocumentToDisplayPage {
 		var portalURL = PropsUtil.get("portal.url");
 
-		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.addDisplayPage(
 			contentType = "Document",
-			displayPageTemplateEntryName = "Display Page Template Name",
-			groupName = "Test Site Name",
+			displayPageName = "Display Page Template Name",
 			subType = "Basic Document");
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");

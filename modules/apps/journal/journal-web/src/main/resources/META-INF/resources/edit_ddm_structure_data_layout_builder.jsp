@@ -133,15 +133,21 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 	function <portlet:namespace />saveDDMStructure() {
 		Liferay.componentReady('<portlet:namespace />dataLayoutBuilder').then(
 			function (dataLayoutBuilder) {
+				var description = <portlet:namespace />getInputLocalizedValues(
+					'description'
+				);
 				var name = <portlet:namespace />getInputLocalizedValues('name');
+
 				var formData = dataLayoutBuilder.getFormData();
 
 				var dataDefinition = formData.definition;
 
+				dataDefinition.description = description;
 				dataDefinition.name = name;
 
 				var dataLayout = formData.layout;
 
+				dataLayout.description = description;
 				dataLayout.name = name;
 
 				Liferay.Util.postForm(document.<portlet:namespace />fm, {

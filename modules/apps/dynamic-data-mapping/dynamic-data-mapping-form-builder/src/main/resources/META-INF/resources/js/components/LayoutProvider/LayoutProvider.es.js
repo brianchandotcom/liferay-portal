@@ -437,6 +437,7 @@ class LayoutProvider extends Component {
 	}
 
 	_handleFocusedFieldEvaluationEnded({
+		changedEditingLanguage,
 		changedFieldType,
 		instanceId,
 		settingsContext,
@@ -445,6 +446,7 @@ class LayoutProvider extends Component {
 			handleFocusedFieldEvaluationEnded(
 				this.props,
 				this.state,
+				changedEditingLanguage,
 				changedFieldType,
 				instanceId,
 				settingsContext

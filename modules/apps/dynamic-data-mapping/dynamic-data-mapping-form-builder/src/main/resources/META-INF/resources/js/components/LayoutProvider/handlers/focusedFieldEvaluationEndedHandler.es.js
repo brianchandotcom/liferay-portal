@@ -20,6 +20,7 @@ import handleFieldEdited from './fieldEditedHandler.es';
 const handleFocusedFieldEvaluationEnded = (
 	props,
 	state,
+	changedEditingLanguage = false,
 	changedFieldType = false,
 	instanceId,
 	settingsContext
@@ -30,6 +31,10 @@ const handleFocusedFieldEvaluationEnded = (
 		focusedField.settingsContext.pages,
 		'name'
 	);
+
+	if (changedEditingLanguage) {
+		return state;
+	}
 
 	if (
 		fieldName.instanceId !== focusedFieldName.instanceId &&

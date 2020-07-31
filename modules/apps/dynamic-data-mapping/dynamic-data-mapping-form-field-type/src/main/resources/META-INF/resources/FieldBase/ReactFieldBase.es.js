@@ -132,7 +132,7 @@ function FieldBase({
 					<p
 						className={classNames({
 							'ddm-empty': !showLabel && !required,
-							'ddm-label': showLabel,
+							'ddm-label': showLabel || required,
 						})}
 					>
 						{label && showLabel && label}

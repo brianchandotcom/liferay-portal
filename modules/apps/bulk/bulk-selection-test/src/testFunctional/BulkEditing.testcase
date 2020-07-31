@@ -121,15 +121,16 @@ definition {
 		property portal.acceptance = "quarantine";
 		property portal.upstream = "quarantine";
 
+		JSONCategory.addVocabulary(
+			groupName = "Guest",
+			title = "Vocabulary Name");
+
+		JSONCategory.addCategory(
+			groupName = "Guest",
+			title = "Books",
+			vocabularyName = "Vocabulary Name");
+
 		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc,Document_2.jpg");
-
-		ProductMenu.gotoPortlet(
-			category = "Categorization",
-			portlet = "Categories");
-
-		Category.addCP(
-			categoryName = "Books",
-			vocabularyName = "Topic");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

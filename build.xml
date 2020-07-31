@@ -945,7 +945,7 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 				<property name="dxp.version.current" value="${dxp.version.latest.prefix}${dxp.version.latest.micro}" />
 			</then>
 			<else>
-				<property name="dxp.version.current" value="1.0.0" />
+				<property name="dxp.version.current" value="${lp.version.major}.0" />
 			</else>
 		</if>
 

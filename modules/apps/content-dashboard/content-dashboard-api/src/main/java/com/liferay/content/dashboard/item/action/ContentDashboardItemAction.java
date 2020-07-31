@@ -21,6 +21,8 @@ import java.util.Locale;
  */
 public interface ContentDashboardItemAction {
 
+	public String getIcon();
+
 	public String getLabel(Locale locale);
 
 	public String getName();

@@ -16,6 +16,7 @@ import {SELECT_SEGMENTS_EXPERIENCE} from '../../../plugins/experience/actions';
 import {
 	ADD_FRAGMENT_ENTRY_LINKS,
 	ADD_ITEM,
+	CHANGE_MASTER_LAYOUT,
 	DELETE_ITEM,
 	DUPLICATE_ITEM,
 	MOVE_ITEM,
@@ -43,6 +44,25 @@ export default function getActionLabel(
 				Liferay.Language.get('add-x'),
 				action.itemName
 			);
+		case CHANGE_MASTER_LAYOUT:
+			return type === UNDO_TYPES.undo
+				? Liferay.Util.sub(
+						Liferay.Language.get('select-x-master-layout'),
+						config.masterLayouts.find(
+							(masterLayout) =>
+								masterLayout.masterLayoutPlid ===
+								action.nextMasterLayoutPlid
+						).name
+				  )
+				: Liferay.Util.sub(
+						Liferay.Language.get('select-x-master-layout'),
+						config.masterLayouts.find(
+							(masterLayout) =>
+								masterLayout.masterLayoutPlid ===
+								action.masterLayoutPlid
+						).name
+				  );
+
 		case DELETE_ITEM:
 			return Liferay.Util.sub(
 				Liferay.Language.get('delete-x'),

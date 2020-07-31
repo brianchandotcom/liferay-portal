@@ -14,13 +14,18 @@
 
 import React from 'react';
 
+import PageSelector from './PageSelector';
+
 export default function PreviewInfoBar() {
 	return (
 		<div className="style-book-editor__page-preview-info-bar">
 			<div className="align-items-center d-flex justify-content-center">
-				{Liferay.Language.get('page-preview')}
+				<span className="style-book-editor__page-preview-text">
+					{Liferay.Language.get('page-preview')}
+				</span>
+				<PageSelector />
 			</div>
-			<span>
+			<span className="d-none d-xl-block">
 				{Liferay.Language.get(
 					'edit-the-style-book-using-the-sidebar-form.-you-can-preview-the-changes-instantly'
 				)}

@@ -50,6 +50,10 @@ public class JenkinsCohort {
 		return _name;
 	}
 
+	public int getOfflineCINodeCount() {
+		return _offlineCINodeCount;
+	}
+
 	public int getOnlineCINodeCount() {
 		return _onlineCINodeCount;
 	}
@@ -107,6 +111,10 @@ public class JenkinsCohort {
 
 					jobURLs.addAll(jenkinsMaster.getRunningJobURLs());
 					jobURLs.addAll(jenkinsMaster.getQueuedJobURLs());
+
+					_offlineCINodeCount =
+						_offlineCINodeCount +
+							jenkinsMaster.getOfflineJenkinsSlavesCount();
 
 					_onlineCINodeCount =
 						_onlineCINodeCount +
@@ -241,6 +249,7 @@ public class JenkinsCohort {
 	private final Map<String, JenkinsCohortJob> _jenkinsCohortJobsMap =
 		new HashMap<>();
 	private final String _name;
+	private int _offlineCINodeCount;
 	private int _onlineCINodeCount;
 
 	private class JenkinsCohortJob {

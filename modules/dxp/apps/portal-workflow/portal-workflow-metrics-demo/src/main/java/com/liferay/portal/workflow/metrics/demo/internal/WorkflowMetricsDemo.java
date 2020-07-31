@@ -115,7 +115,6 @@ public class WorkflowMetricsDemo extends BasePortalInstanceLifecycleListener {
 
 		IntStream.range(
 			1, 201
-		).parallel(
 		).forEach(
 			i -> {
 				try {
@@ -377,7 +376,6 @@ public class WorkflowMetricsDemo extends BasePortalInstanceLifecycleListener {
 
 		IntStream.range(
 			0, 10
-		).parallel(
 		).forEach(
 			i -> {
 				try {

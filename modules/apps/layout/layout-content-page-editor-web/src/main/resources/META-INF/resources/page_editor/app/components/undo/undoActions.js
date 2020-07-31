@@ -16,6 +16,7 @@ import {SELECT_SEGMENTS_EXPERIENCE} from '../../../plugins/experience/actions';
 import {
 	ADD_FRAGMENT_ENTRY_LINKS,
 	ADD_ITEM,
+	CHANGE_MASTER_LAYOUT,
 	DELETE_ITEM,
 	DUPLICATE_ITEM,
 	MOVE_ITEM,
@@ -30,6 +31,7 @@ import {
 import {getItemNameFromAction} from './getItemNameFromAction';
 import * as undoAddFragmentEntryLinks from './undoAddFragmentEntryLinks';
 import * as undoAddItem from './undoAddItem';
+import * as undoChangeMasterLayout from './undoChangeMasterLayout';
 import * as undoDeleteItem from './undoDeleteItem';
 import * as undoDuplicateItem from './undoDuplicateItem';
 import * as undoMoveItem from './undoMoveItem';
@@ -45,6 +47,7 @@ import * as undoUpdateRowColumns from './undoUpdateRowColumns';
 const UNDO_ACTIONS = {
 	[ADD_FRAGMENT_ENTRY_LINKS]: undoAddFragmentEntryLinks,
 	[ADD_ITEM]: undoAddItem,
+	[CHANGE_MASTER_LAYOUT]: undoChangeMasterLayout,
 	[DELETE_ITEM]: undoDeleteItem,
 	[DUPLICATE_ITEM]: undoDuplicateItem,
 	[MOVE_ITEM]: undoMoveItem,

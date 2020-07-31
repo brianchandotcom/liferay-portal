@@ -192,9 +192,9 @@ const AutocompleteMultiSelect = ({
 	);
 };
 
-const Item = ({key, name, onRemove}) => {
+const Item = ({name, onRemove}) => {
 	return (
-		<span className="label label-dismissible label-secondary" key={key}>
+		<span className="label label-dismissible label-secondary">
 			<span className="label-item label-item-expand">{name}</span>
 
 			<span className="label-item label-item-after">

@@ -113,7 +113,7 @@ Layout curLayout = (Layout)row.getObject();
 </liferay-ui:icon-menu>
 
 <aui:script require="metal-dom/src/all/dom as dom">
-	var addLayoutPrototypeActionOptionQueryClickHandler = dom.delegate(
+	var copyLayoutActionOptionQueryClickHandler = dom.delegate(
 		document.body,
 		'click',
 		'.<portlet:namespace />copy-layout-action-option',
@@ -142,7 +142,7 @@ Layout curLayout = (Layout)row.getObject();
 	);
 
 	function handleDestroyPortlet() {
-		addLayoutPrototypeActionOptionQueryClickHandler.removeListener();
+		copyLayoutActionOptionQueryClickHandler.removeListener();
 		viewCollectionItemsActionOptionQueryClickHandler.removeListener();
 
 		Liferay.detach('destroyPortlet', handleDestroyPortlet);

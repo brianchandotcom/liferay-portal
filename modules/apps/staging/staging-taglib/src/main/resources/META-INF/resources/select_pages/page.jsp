@@ -80,7 +80,7 @@
 			</c:if>
 
 			<li class="layout-selector-options">
-				<aui:fieldset label='<%= "pages-to-" + action %>'>
+				<aui:fieldset helpMessage="child-page-publication-warning" label='<%= "pages-to-" + action %>'>
 
 					<%
 					long selPlid = ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PLID);
@@ -217,8 +217,4 @@
 			</ul>
 		</c:if>
 	</clay:sheet-section>
-
-	<h5>
-		<liferay-ui:message key="child-page-publication-warning" />
-	</h5>
 </aui:fieldset>

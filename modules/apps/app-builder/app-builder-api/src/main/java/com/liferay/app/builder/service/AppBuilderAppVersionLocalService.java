@@ -61,7 +61,7 @@ public interface AppBuilderAppVersionLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link AppBuilderAppVersionLocalServiceUtil} to access the app builder app version local service. Add custom service methods to <code>com.liferay.app.builder.service.impl.AppBuilderAppVersionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.app.builder.service.impl.AppBuilderAppVersionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the app builder app version local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link AppBuilderAppVersionLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**

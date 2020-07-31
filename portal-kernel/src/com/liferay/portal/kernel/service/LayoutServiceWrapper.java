@@ -1039,27 +1039,30 @@ public class LayoutServiceWrapper
 	 * @param groupId the primary key of the group
 	 * @param privateLayout whether the layout is private to the group
 	 * @param layoutId the layout ID of the layout
-	 * @param parentLayoutId the layout ID of the layout's new parent layout
+	 * @param parentLayoutId the layout ID of the layout's new parent
+	 layout
 	 * @param localeNamesMap the layout's locales and localized names
 	 * @param localeTitlesMap the layout's locales and localized titles
-	 * @param descriptionMap the locales and localized descriptions to merge
-	 (optionally <code>null</code>)
+	 * @param descriptionMap the locales and localized descriptions to
+	 merge (optionally <code>null</code>)
 	 * @param keywordsMap the locales and localized keywords to merge
 	 (optionally <code>null</code>)
-	 * @param robotsMap the locales and localized robots to merge (optionally
-	 <code>null</code>)
+	 * @param robotsMap the locales and localized robots to merge
+	 (optionally <code>null</code>)
 	 * @param type the layout's new type (optionally {@link
 	 LayoutConstants#TYPE_PORTLET})
 	 * @param hidden whether the layout is hidden
-	 * @param friendlyURLMap the layout's locales and localized friendly URLs.
-	 To see how the URL is normalized when accessed see {@link
+	 * @param friendlyURLMap the layout's locales and localized friendly
+	 URLs. To see how the URL is normalized when accessed see
+	 {@link
 	 com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	 String)}.
 	 * @param hasIconImage if the layout has a custom icon image
 	 * @param iconBytes the byte array of the layout's new icon image
 	 * @param masterLayoutPlid the primary key of the master layout
 	 * @param serviceContext the service context to be applied. Can set the
-	 modification date and expando bridge attributes for the layout.
+	 modification date and expando bridge attributes for the
+	 layout.
 	 * @return the updated layout
 	 * @throws PortalException if a portal exception occurred
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link

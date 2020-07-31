@@ -64,7 +64,7 @@ public interface KaleoTaskAssignmentInstanceLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link KaleoTaskAssignmentInstanceLocalServiceUtil} to access the kaleo task assignment instance local service. Add custom service methods to <code>com.liferay.portal.workflow.kaleo.service.impl.KaleoTaskAssignmentInstanceLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.workflow.kaleo.service.impl.KaleoTaskAssignmentInstanceLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the kaleo task assignment instance local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link KaleoTaskAssignmentInstanceLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**

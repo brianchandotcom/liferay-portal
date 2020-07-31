@@ -65,7 +65,7 @@ public interface JournalArticleResourceLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link JournalArticleResourceLocalServiceUtil} to access the journal article resource local service. Add custom service methods to <code>com.liferay.journal.service.impl.JournalArticleResourceLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.journal.service.impl.JournalArticleResourceLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the journal article resource local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link JournalArticleResourceLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**

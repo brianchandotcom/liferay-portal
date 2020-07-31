@@ -152,7 +152,8 @@ public class DEDataDefinitionFieldLinkLocalServiceUtil {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 DEDataDefinitionFieldLinkLocalServiceImpl#deleteDEDataDefinitionFieldLinks(long, long, String[])}
+	 DEDataDefinitionFieldLinkLocalServiceImpl#deleteDEDataDefinitionFieldLinks(
+	 long, long, String[])}
 	 */
 	@Deprecated
 	public static void deleteDEDataDefinitionFieldLinks(
@@ -376,7 +377,8 @@ public class DEDataDefinitionFieldLinkLocalServiceUtil {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 DEDataDefinitionFieldLinkLocalServiceImpl#getDEDataDefinitionFieldLinks(long, long, String[])}
+	 DEDataDefinitionFieldLinkLocalServiceImpl#getDEDataDefinitionFieldLinks(
+	 long, long, String[])}
 	 */
 	@Deprecated
 	public static java.util.List

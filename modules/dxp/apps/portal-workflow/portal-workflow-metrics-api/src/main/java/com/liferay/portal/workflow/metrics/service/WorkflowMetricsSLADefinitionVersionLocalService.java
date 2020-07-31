@@ -63,7 +63,7 @@ public interface WorkflowMetricsSLADefinitionVersionLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link WorkflowMetricsSLADefinitionVersionLocalServiceUtil} to access the workflow metrics sla definition version local service. Add custom service methods to <code>com.liferay.portal.workflow.metrics.service.impl.WorkflowMetricsSLADefinitionVersionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.workflow.metrics.service.impl.WorkflowMetricsSLADefinitionVersionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the workflow metrics sla definition version local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link WorkflowMetricsSLADefinitionVersionLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**

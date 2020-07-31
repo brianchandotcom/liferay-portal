@@ -60,7 +60,7 @@ public interface SyncDLObjectLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link SyncDLObjectLocalServiceUtil} to access the sync dl object local service. Add custom service methods to <code>com.liferay.sync.service.impl.SyncDLObjectLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.sync.service.impl.SyncDLObjectLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the sync dl object local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link SyncDLObjectLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public SyncDLObject addSyncDLObject(
 			long companyId, long userId, String userName, long modifiedTime,

@@ -48,7 +48,8 @@ public class DLFileEntryTypeServiceWrapper
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addFileEntryType(long, String, Map, Map, long, ServiceContext)}
+	 #addFileEntryType(long, String, Map, Map, long,
+	 ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -67,7 +68,8 @@ public class DLFileEntryTypeServiceWrapper
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addFileEntryType(long, String, Map, Map, long, ServiceContext)}
+	 #addFileEntryType(long, String, Map, Map, long,
+	 ServiceContext)}
 	 */
 	@Deprecated
 	@Override

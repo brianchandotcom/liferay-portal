@@ -59,7 +59,7 @@ public interface TasksEntryLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link TasksEntryLocalServiceUtil} to access the tasks entry local service. Add custom service methods to <code>com.liferay.tasks.service.impl.TasksEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.tasks.service.impl.TasksEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the tasks entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link TasksEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public TasksEntry addTasksEntry(
 			long userId, String title, int priority, long assigneeUserId,

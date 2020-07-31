@@ -61,7 +61,7 @@ public interface AuditEventLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link AuditEventLocalServiceUtil} to access the audit event local service. Add custom service methods to <code>com.liferay.portal.security.audit.storage.service.impl.AuditEventLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.security.audit.storage.service.impl.AuditEventLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the audit event local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link AuditEventLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**

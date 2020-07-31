@@ -65,7 +65,7 @@ public interface KaleoTaskInstanceTokenLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link KaleoTaskInstanceTokenLocalServiceUtil} to access the kaleo task instance token local service. Add custom service methods to <code>com.liferay.portal.workflow.kaleo.service.impl.KaleoTaskInstanceTokenLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.workflow.kaleo.service.impl.KaleoTaskInstanceTokenLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the kaleo task instance token local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link KaleoTaskInstanceTokenLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**

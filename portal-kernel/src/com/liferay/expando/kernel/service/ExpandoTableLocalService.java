@@ -65,7 +65,7 @@ public interface ExpandoTableLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link ExpandoTableLocalServiceUtil} to access the expando table local service. Add custom service methods to <code>com.liferay.portlet.expando.service.impl.ExpandoTableLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portlet.expando.service.impl.ExpandoTableLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the expando table local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ExpandoTableLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public ExpandoTable addDefaultTable(long companyId, long classNameId)
 		throws PortalException;

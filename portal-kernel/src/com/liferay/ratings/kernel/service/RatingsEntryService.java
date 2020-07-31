@@ -48,7 +48,7 @@ public interface RatingsEntryService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link RatingsEntryServiceUtil} to access the ratings entry remote service. Add custom service methods to <code>com.liferay.portlet.ratings.service.impl.RatingsEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portlet.ratings.service.impl.RatingsEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the ratings entry remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link RatingsEntryServiceUtil} if injection and service tracking are not available.
 	 */
 	public void deleteEntry(String className, long classPK)
 		throws PortalException;

@@ -64,7 +64,7 @@ public interface WorkflowInstanceLinkLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link WorkflowInstanceLinkLocalServiceUtil} to access the workflow instance link local service. Add custom service methods to <code>com.liferay.portal.service.impl.WorkflowInstanceLinkLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.WorkflowInstanceLinkLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the workflow instance link local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link WorkflowInstanceLinkLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public WorkflowInstanceLink addWorkflowInstanceLink(
 			long userId, long companyId, long groupId, String className,

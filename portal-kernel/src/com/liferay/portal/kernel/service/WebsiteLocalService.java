@@ -61,7 +61,7 @@ public interface WebsiteLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link WebsiteLocalServiceUtil} to access the website local service. Add custom service methods to <code>com.liferay.portal.service.impl.WebsiteLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.WebsiteLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the website local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link WebsiteLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public Website addWebsite(
 			long userId, String className, long classPK, String url,

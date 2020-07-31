@@ -59,7 +59,7 @@ public interface MFAEmailOTPEntryLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link MFAEmailOTPEntryLocalServiceUtil} to access the mfa email otp entry local service. Add custom service methods to <code>com.liferay.multi.factor.authentication.email.otp.service.impl.MFAEmailOTPEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.multi.factor.authentication.email.otp.service.impl.MFAEmailOTPEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the mfa email otp entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link MFAEmailOTPEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public MFAEmailOTPEntry addMFAEmailOTPEntry(long userId)
 		throws PortalException;

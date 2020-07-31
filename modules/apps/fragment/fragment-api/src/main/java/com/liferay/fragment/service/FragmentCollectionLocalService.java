@@ -64,7 +64,7 @@ public interface FragmentCollectionLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link FragmentCollectionLocalServiceUtil} to access the fragment collection local service. Add custom service methods to <code>com.liferay.fragment.service.impl.FragmentCollectionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.fragment.service.impl.FragmentCollectionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the fragment collection local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link FragmentCollectionLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**

@@ -116,8 +116,8 @@ public class TrashEntryServiceUtil {
 	 * @param start the lower bound of the range of trash entries to return
 	 * @param end the upper bound of the range of trash entries to return (not
 	 inclusive)
-	 * @param orderByComparator the comparator to order the trash entries (optionally
-	 <code>null</code>)
+	 * @param orderByComparator the comparator to order the trash entries
+	 (optionally <code>null</code>)
 	 * @return the range of matching trash entries ordered by comparator
 	 <code>orderByComparator</code>
 	 */
@@ -145,8 +145,8 @@ public class TrashEntryServiceUtil {
 	 * @param start the lower bound of the range of trash entries to return
 	 * @param end the upper bound of the range of trash entries to return (not
 	 inclusive)
-	 * @param orderByComparator the comparator to order the trash entries (optionally
-	 <code>null</code>)
+	 * @param orderByComparator the comparator to order the trash entries
+	 (optionally <code>null</code>)
 	 * @return the range of matching trash entries ordered by comparator
 	 <code>orderByComparator</code>
 	 */

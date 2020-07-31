@@ -69,7 +69,7 @@ public interface LayoutFriendlyURLLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link LayoutFriendlyURLLocalServiceUtil} to access the layout friendly url local service. Add custom service methods to <code>com.liferay.portal.service.impl.LayoutFriendlyURLLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.LayoutFriendlyURLLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the layout friendly url local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link LayoutFriendlyURLLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**

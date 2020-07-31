@@ -63,7 +63,7 @@ public interface UserGroupRoleLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link UserGroupRoleLocalServiceUtil} to access the user group role local service. Add custom service methods to <code>com.liferay.portal.service.impl.UserGroupRoleLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.UserGroupRoleLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the user group role local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link UserGroupRoleLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public UserGroupRole addUserGroupRole(
 		long userId, long groupId, long roleId);

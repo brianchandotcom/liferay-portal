@@ -61,7 +61,7 @@ public interface LocalizedEntryLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link LocalizedEntryLocalServiceUtil} to access the localized entry local service. Add custom service methods to <code>com.liferay.portal.tools.service.builder.test.service.impl.LocalizedEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.tools.service.builder.test.service.impl.LocalizedEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the localized entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link LocalizedEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**

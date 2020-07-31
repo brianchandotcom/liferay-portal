@@ -52,7 +52,7 @@ public interface ScreensDDLRecordService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link ScreensDDLRecordServiceUtil} to access the screens ddl record remote service. Add custom service methods to <code>com.liferay.screens.service.impl.ScreensDDLRecordServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.screens.service.impl.ScreensDDLRecordServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the screens ddl record remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ScreensDDLRecordServiceUtil} if injection and service tracking are not available.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JSONObject getDDLRecord(long ddlRecordId, Locale locale)

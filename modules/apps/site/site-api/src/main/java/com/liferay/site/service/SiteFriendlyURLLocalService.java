@@ -64,7 +64,7 @@ public interface SiteFriendlyURLLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link SiteFriendlyURLLocalServiceUtil} to access the site friendly url local service. Add custom service methods to <code>com.liferay.site.service.impl.SiteFriendlyURLLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.site.service.impl.SiteFriendlyURLLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the site friendly url local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link SiteFriendlyURLLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public SiteFriendlyURL addSiteFriendlyURL(
 			long userId, long companyId, long groupId, String friendlyURL,

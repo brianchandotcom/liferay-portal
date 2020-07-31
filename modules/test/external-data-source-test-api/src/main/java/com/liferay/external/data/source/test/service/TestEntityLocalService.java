@@ -59,7 +59,7 @@ public interface TestEntityLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link TestEntityLocalServiceUtil} to access the test entity local service. Add custom service methods to <code>com.liferay.external.data.source.test.service.impl.TestEntityLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.external.data.source.test.service.impl.TestEntityLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the test entity local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link TestEntityLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**

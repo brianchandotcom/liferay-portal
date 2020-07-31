@@ -47,7 +47,7 @@ public interface ERAssetVocabularyLocalService extends BaseLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link ERAssetVocabularyLocalServiceUtil} to access the er asset vocabulary local service. Add custom service methods to <code>com.liferay.external.reference.service.impl.ERAssetVocabularyLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.external.reference.service.impl.ERAssetVocabularyLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the er asset vocabulary local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ERAssetVocabularyLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public AssetVocabulary addOrUpdateVocabulary(
 			String externalReferenceCode, long userId, long groupId,

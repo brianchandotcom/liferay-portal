@@ -59,7 +59,7 @@ public interface DLSyncEventLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link DLSyncEventLocalServiceUtil} to access the dl sync event local service. Add custom service methods to <code>com.liferay.document.library.sync.service.impl.DLSyncEventLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.document.library.sync.service.impl.DLSyncEventLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the dl sync event local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link DLSyncEventLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**

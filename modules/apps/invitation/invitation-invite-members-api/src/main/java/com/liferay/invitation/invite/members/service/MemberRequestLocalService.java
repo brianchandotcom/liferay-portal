@@ -60,7 +60,7 @@ public interface MemberRequestLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link MemberRequestLocalServiceUtil} to access the member request local service. Add custom service methods to <code>com.liferay.invitation.invite.members.service.impl.MemberRequestLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.invitation.invite.members.service.impl.MemberRequestLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the member request local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link MemberRequestLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public MemberRequest addMemberRequest(
 			long userId, long groupId, long receiverUserId,

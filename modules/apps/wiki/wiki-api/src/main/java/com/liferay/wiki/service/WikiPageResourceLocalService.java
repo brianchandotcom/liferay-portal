@@ -59,7 +59,7 @@ public interface WikiPageResourceLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link WikiPageResourceLocalServiceUtil} to access the wiki page resource local service. Add custom service methods to <code>com.liferay.wiki.service.impl.WikiPageResourceLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.wiki.service.impl.WikiPageResourceLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the wiki page resource local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link WikiPageResourceLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public WikiPageResource addPageResource(
 		long groupId, long nodeId, String title);

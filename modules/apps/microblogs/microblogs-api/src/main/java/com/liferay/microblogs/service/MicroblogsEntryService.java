@@ -50,7 +50,7 @@ public interface MicroblogsEntryService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link MicroblogsEntryServiceUtil} to access the microblogs entry remote service. Add custom service methods to <code>com.liferay.microblogs.service.impl.MicroblogsEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.microblogs.service.impl.MicroblogsEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the microblogs entry remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link MicroblogsEntryServiceUtil} if injection and service tracking are not available.
 	 */
 	public MicroblogsEntry addMicroblogsEntry(
 			long userId, String content, int type, long parentMicroblogsEntryId,

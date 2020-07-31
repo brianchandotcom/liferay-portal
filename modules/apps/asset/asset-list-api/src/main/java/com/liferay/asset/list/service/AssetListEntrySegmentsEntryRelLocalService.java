@@ -70,7 +70,7 @@ public interface AssetListEntrySegmentsEntryRelLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link AssetListEntrySegmentsEntryRelLocalServiceUtil} to access the asset list entry segments entry rel local service. Add custom service methods to <code>com.liferay.asset.list.service.impl.AssetListEntrySegmentsEntryRelLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.asset.list.service.impl.AssetListEntrySegmentsEntryRelLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the asset list entry segments entry rel local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link AssetListEntrySegmentsEntryRelLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**

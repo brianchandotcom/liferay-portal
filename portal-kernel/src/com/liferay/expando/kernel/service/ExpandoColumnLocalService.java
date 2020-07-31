@@ -66,7 +66,7 @@ public interface ExpandoColumnLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link ExpandoColumnLocalServiceUtil} to access the expando column local service. Add custom service methods to <code>com.liferay.portlet.expando.service.impl.ExpandoColumnLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portlet.expando.service.impl.ExpandoColumnLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the expando column local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ExpandoColumnLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public ExpandoColumn addColumn(long tableId, String name, int type)
 		throws PortalException;

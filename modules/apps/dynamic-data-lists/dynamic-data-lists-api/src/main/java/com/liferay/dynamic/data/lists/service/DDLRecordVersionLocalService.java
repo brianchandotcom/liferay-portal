@@ -59,7 +59,7 @@ public interface DDLRecordVersionLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link DDLRecordVersionLocalServiceUtil} to access the ddl record version local service. Add custom service methods to <code>com.liferay.dynamic.data.lists.service.impl.DDLRecordVersionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.dynamic.data.lists.service.impl.DDLRecordVersionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the ddl record version local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link DDLRecordVersionLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**

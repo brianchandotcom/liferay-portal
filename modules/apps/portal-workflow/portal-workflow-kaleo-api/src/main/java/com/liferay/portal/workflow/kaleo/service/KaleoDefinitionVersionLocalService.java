@@ -61,7 +61,7 @@ public interface KaleoDefinitionVersionLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link KaleoDefinitionVersionLocalServiceUtil} to access the kaleo definition version local service. Add custom service methods to <code>com.liferay.portal.workflow.kaleo.service.impl.KaleoDefinitionVersionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.workflow.kaleo.service.impl.KaleoDefinitionVersionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the kaleo definition version local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link KaleoDefinitionVersionLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**

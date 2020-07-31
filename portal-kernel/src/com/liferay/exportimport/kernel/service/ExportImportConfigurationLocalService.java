@@ -66,7 +66,7 @@ public interface ExportImportConfigurationLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link ExportImportConfigurationLocalServiceUtil} to access the export import configuration local service. Add custom service methods to <code>com.liferay.portlet.exportimport.service.impl.ExportImportConfigurationLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portlet.exportimport.service.impl.ExportImportConfigurationLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the export import configuration local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ExportImportConfigurationLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public ExportImportConfiguration addDraftExportImportConfiguration(
 			long userId, int type, Map<String, Serializable> settingsMap)

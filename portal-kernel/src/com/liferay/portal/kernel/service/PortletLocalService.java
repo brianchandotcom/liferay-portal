@@ -67,7 +67,7 @@ public interface PortletLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link PortletLocalServiceUtil} to access the portlet local service. Add custom service methods to <code>com.liferay.portal.service.impl.PortletLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.PortletLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the portlet local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link PortletLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**

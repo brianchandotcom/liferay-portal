@@ -71,7 +71,7 @@ public interface OrganizationLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link OrganizationLocalServiceUtil} to access the organization local service. Add custom service methods to <code>com.liferay.portal.service.impl.OrganizationLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.OrganizationLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the organization local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link OrganizationLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public void addGroupOrganization(long groupId, long organizationId);
 
@@ -546,8 +546,8 @@ public interface OrganizationLocalService
 	 return
 	 * @param end the upper bound of the range of organizations and users to
 	 return (not inclusive)
-	 * @param orderByComparator the comparator to order the organizations and users
-	 (optionally <code>null</code>)
+	 * @param orderByComparator the comparator to order the organizations and
+	 users (optionally <code>null</code>)
 	 * @return the organizations and users belonging to the parent organization
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -946,9 +946,10 @@ public interface OrganizationLocalService
 	 * @param start the lower bound of the range of organizations to return
 	 * @param end the upper bound of the range of organizations to return (not
 	 inclusive)
-	 * @param orderByComparator the comparator to order the organizations (optionally
-	 <code>null</code>)
-	 * @return the matching organizations ordered by comparator <code>orderByComparator</code>
+	 * @param orderByComparator the comparator to order the organizations
+	 (optionally <code>null</code>)
+	 * @return the matching organizations ordered by comparator
+	 <code>orderByComparator</code>
 	 * @see com.liferay.portal.kernel.service.persistence.OrganizationFinder
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -1046,9 +1047,10 @@ public interface OrganizationLocalService
 	 * @param start the lower bound of the range of organizations to return
 	 * @param end the upper bound of the range of organizations to return (not
 	 inclusive)
-	 * @param orderByComparator the comparator to order the organizations (optionally
-	 <code>null</code>)
-	 * @return the matching organizations ordered by comparator <code>orderByComparator</code>
+	 * @param orderByComparator the comparator to order the organizations
+	 (optionally <code>null</code>)
+	 * @return the matching organizations ordered by comparator
+	 <code>orderByComparator</code>
 	 * @see com.liferay.portal.kernel.service.persistence.OrganizationFinder
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

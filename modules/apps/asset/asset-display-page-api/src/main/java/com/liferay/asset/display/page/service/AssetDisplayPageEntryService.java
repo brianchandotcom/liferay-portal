@@ -52,7 +52,7 @@ public interface AssetDisplayPageEntryService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link AssetDisplayPageEntryServiceUtil} to access the asset display page entry remote service. Add custom service methods to <code>com.liferay.asset.display.page.service.impl.AssetDisplayPageEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.asset.display.page.service.impl.AssetDisplayPageEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the asset display page entry remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link AssetDisplayPageEntryServiceUtil} if injection and service tracking are not available.
 	 */
 	public AssetDisplayPageEntry addAssetDisplayPageEntry(
 			long userId, long groupId, long classNameId, long classPK,

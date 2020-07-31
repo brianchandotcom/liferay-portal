@@ -52,7 +52,7 @@ public interface StagingService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link StagingServiceUtil} to access the staging remote service. Add custom service methods to <code>com.liferay.portlet.exportimport.service.impl.StagingServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portlet.exportimport.service.impl.StagingServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the staging remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link StagingServiceUtil} if injection and service tracking are not available.
 	 */
 	public void cleanUpStagingRequest(long stagingRequestId)
 		throws PortalException;

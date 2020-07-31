@@ -64,7 +64,7 @@ public interface SAPEntryLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link SAPEntryLocalServiceUtil} to access the sap entry local service. Add custom service methods to <code>com.liferay.portal.security.service.access.policy.service.impl.SAPEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.security.service.access.policy.service.impl.SAPEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the sap entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link SAPEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public SAPEntry addSAPEntry(
 			long userId, String allowedServiceSignatures,

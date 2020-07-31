@@ -57,7 +57,7 @@ public interface MembershipRequestLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link MembershipRequestLocalServiceUtil} to access the membership request local service. Add custom service methods to <code>com.liferay.portal.service.impl.MembershipRequestLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.MembershipRequestLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the membership request local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link MembershipRequestLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public MembershipRequest addMembershipRequest(
 			long userId, long groupId, String comments,

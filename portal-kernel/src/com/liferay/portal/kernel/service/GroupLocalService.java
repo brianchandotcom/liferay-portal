@@ -69,7 +69,7 @@ public interface GroupLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link GroupLocalServiceUtil} to access the group local service. Add custom service methods to <code>com.liferay.portal.service.impl.GroupLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.GroupLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the group local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link GroupLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**
@@ -1333,7 +1333,8 @@ public interface GroupLocalService
 	 inclusive)
 	 * @param orderByComparator the comparator to order the groups (optionally
 	 <code>null</code>)
-	 * @return the matching groups ordered by comparator <code>orderByComparator</code>
+	 * @return the matching groups ordered by comparator
+	 <code>orderByComparator</code>
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Group> search(
@@ -1413,7 +1414,8 @@ public interface GroupLocalService
 	 inclusive)
 	 * @param orderByComparator the comparator to order the groups (optionally
 	 <code>null</code>)
-	 * @return the matching groups ordered by comparator <code>orderByComparator</code>
+	 * @return the matching groups ordered by comparator
+	 <code>orderByComparator</code>
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Group> search(
@@ -1493,7 +1495,8 @@ public interface GroupLocalService
 	 inclusive)
 	 * @param orderByComparator the comparator to order the groups (optionally
 	 <code>null</code>)
-	 * @return the matching groups ordered by comparator <code>orderByComparator</code>
+	 * @return the matching groups ordered by comparator
+	 <code>orderByComparator</code>
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Group> search(
@@ -1579,7 +1582,8 @@ public interface GroupLocalService
 	 inclusive)
 	 * @param orderByComparator the comparator to order the groups (optionally
 	 <code>null</code>)
-	 * @return the matching groups ordered by comparator <code>orderByComparator</code>
+	 * @return the matching groups ordered by comparator
+	 <code>orderByComparator</code>
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Group> search(
@@ -1655,7 +1659,8 @@ public interface GroupLocalService
 	 inclusive)
 	 * @param orderByComparator the comparator to order the groups (optionally
 	 <code>null</code>)
-	 * @return the matching groups ordered by comparator <code>orderByComparator</code>
+	 * @return the matching groups ordered by comparator
+	 <code>orderByComparator</code>
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Group> search(
@@ -1739,7 +1744,8 @@ public interface GroupLocalService
 	 inclusive)
 	 * @param orderByComparator the comparator to order the groups (optionally
 	 <code>null</code>)
-	 * @return the matching groups ordered by comparator <code>orderByComparator</code>
+	 * @return the matching groups ordered by comparator
+	 <code>orderByComparator</code>
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Group> search(
@@ -1809,7 +1815,8 @@ public interface GroupLocalService
 	 inclusive)
 	 * @param orderByComparator the comparator to order the groups (optionally
 	 <code>null</code>)
-	 * @return the matching groups ordered by comparator <code>orderByComparator</code>
+	 * @return the matching groups ordered by comparator
+	 <code>orderByComparator</code>
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Group> search(
@@ -1886,7 +1893,8 @@ public interface GroupLocalService
 	 inclusive)
 	 * @param orderByComparator the comparator to order the groups (optionally
 	 <code>null</code>)
-	 * @return the matching groups ordered by comparator <code>orderByComparator</code>
+	 * @return the matching groups ordered by comparator
+	 <code>orderByComparator</code>
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Group> search(

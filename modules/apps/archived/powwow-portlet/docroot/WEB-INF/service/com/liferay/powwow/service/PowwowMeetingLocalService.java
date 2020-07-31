@@ -61,7 +61,7 @@ public interface PowwowMeetingLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link PowwowMeetingLocalServiceUtil} to access the powwow meeting local service. Add custom service methods to <code>com.liferay.powwow.service.impl.PowwowMeetingLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.powwow.service.impl.PowwowMeetingLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the powwow meeting local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link PowwowMeetingLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public PowwowMeeting addPowwowMeeting(

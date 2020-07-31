@@ -57,7 +57,7 @@ public interface RecentLayoutSetBranchLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link RecentLayoutSetBranchLocalServiceUtil} to access the recent layout set branch local service. Add custom service methods to <code>com.liferay.portal.service.impl.RecentLayoutSetBranchLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.RecentLayoutSetBranchLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the recent layout set branch local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link RecentLayoutSetBranchLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public RecentLayoutSetBranch addRecentLayoutSetBranch(
 			long userId, long layoutSetBranchId, long layoutSetId)

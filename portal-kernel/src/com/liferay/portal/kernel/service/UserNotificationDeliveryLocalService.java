@@ -57,7 +57,7 @@ public interface UserNotificationDeliveryLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link UserNotificationDeliveryLocalServiceUtil} to access the user notification delivery local service. Add custom service methods to <code>com.liferay.portal.service.impl.UserNotificationDeliveryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.UserNotificationDeliveryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the user notification delivery local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link UserNotificationDeliveryLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public UserNotificationDelivery addUserNotificationDelivery(
 			long userId, String portletId, long classNameId,

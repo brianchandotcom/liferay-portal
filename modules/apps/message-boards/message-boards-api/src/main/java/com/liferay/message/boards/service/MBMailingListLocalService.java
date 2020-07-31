@@ -68,7 +68,7 @@ public interface MBMailingListLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link MBMailingListLocalServiceUtil} to access the message boards mailing list local service. Add custom service methods to <code>com.liferay.message.boards.service.impl.MBMailingListLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.message.boards.service.impl.MBMailingListLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the message boards mailing list local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link MBMailingListLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public MBMailingList addMailingList(
 			long userId, long groupId, long categoryId, String emailAddress,

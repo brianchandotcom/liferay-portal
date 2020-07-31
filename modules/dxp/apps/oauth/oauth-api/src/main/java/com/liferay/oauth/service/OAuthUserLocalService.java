@@ -60,7 +60,7 @@ public interface OAuthUserLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link OAuthUserLocalServiceUtil} to access the o auth user local service. Add custom service methods to <code>com.liferay.oauth.service.impl.OAuthUserLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.oauth.service.impl.OAuthUserLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the o auth user local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link OAuthUserLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public OAuthUser addOAuthUser(
 			long userId, long oAuthApplicationId, String accessToken,

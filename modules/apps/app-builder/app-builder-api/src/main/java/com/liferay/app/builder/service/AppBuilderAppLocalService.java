@@ -63,7 +63,7 @@ public interface AppBuilderAppLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link AppBuilderAppLocalServiceUtil} to access the app builder app local service. Add custom service methods to <code>com.liferay.app.builder.service.impl.AppBuilderAppLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.app.builder.service.impl.AppBuilderAppLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the app builder app local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link AppBuilderAppLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**

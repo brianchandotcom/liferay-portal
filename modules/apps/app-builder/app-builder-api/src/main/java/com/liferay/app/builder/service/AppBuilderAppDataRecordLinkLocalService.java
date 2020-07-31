@@ -59,7 +59,7 @@ public interface AppBuilderAppDataRecordLinkLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link AppBuilderAppDataRecordLinkLocalServiceUtil} to access the app builder app data record link local service. Add custom service methods to <code>com.liferay.app.builder.service.impl.AppBuilderAppDataRecordLinkLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.app.builder.service.impl.AppBuilderAppDataRecordLinkLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the app builder app data record link local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link AppBuilderAppDataRecordLinkLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**
@@ -78,7 +78,8 @@ public interface AppBuilderAppDataRecordLinkLocalService
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addAppBuilderAppDataRecordLink(long, long, long, long, long)}
+	 #addAppBuilderAppDataRecordLink(long, long, long, long,
+	 long)}
 	 */
 	@Deprecated
 	public AppBuilderAppDataRecordLink addAppBuilderAppDataRecordLink(

@@ -59,7 +59,7 @@ public interface AnnouncementsDeliveryLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link AnnouncementsDeliveryLocalServiceUtil} to access the announcements delivery local service. Add custom service methods to <code>com.liferay.portlet.announcements.service.impl.AnnouncementsDeliveryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portlet.announcements.service.impl.AnnouncementsDeliveryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the announcements delivery local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link AnnouncementsDeliveryLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**

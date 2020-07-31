@@ -60,7 +60,7 @@ public interface WeDeployAuthAppLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link WeDeployAuthAppLocalServiceUtil} to access the we deploy auth app local service. Add custom service methods to <code>com.liferay.portal.security.wedeploy.auth.service.impl.WeDeployAuthAppLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.security.wedeploy.auth.service.impl.WeDeployAuthAppLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the we deploy auth app local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link WeDeployAuthAppLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public WeDeployAuthApp addWeDeployAuthApp(
 			long userId, String name, String redirectURI,

@@ -51,7 +51,7 @@ public interface LayoutSetPrototypeService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link LayoutSetPrototypeServiceUtil} to access the layout set prototype remote service. Add custom service methods to <code>com.liferay.portal.service.impl.LayoutSetPrototypeServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.LayoutSetPrototypeServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the layout set prototype remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link LayoutSetPrototypeServiceUtil} if injection and service tracking are not available.
 	 */
 	public LayoutSetPrototype addLayoutSetPrototype(
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,

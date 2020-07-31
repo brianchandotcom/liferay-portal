@@ -62,7 +62,7 @@ public interface KBFolderLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link KBFolderLocalServiceUtil} to access the kb folder local service. Add custom service methods to <code>com.liferay.knowledge.base.service.impl.KBFolderLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.knowledge.base.service.impl.KBFolderLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the kb folder local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link KBFolderLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**

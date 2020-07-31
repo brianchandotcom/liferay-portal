@@ -44,7 +44,7 @@ public interface ERAccountEntryLocalService extends BaseLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link ERAccountEntryLocalServiceUtil} to access the er account entry local service. Add custom service methods to <code>com.liferay.external.reference.service.impl.ERAccountEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.external.reference.service.impl.ERAccountEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the er account entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ERAccountEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public AccountEntry addOrUpdateAccountEntry(
 			String externalReferenceCode, long userId,

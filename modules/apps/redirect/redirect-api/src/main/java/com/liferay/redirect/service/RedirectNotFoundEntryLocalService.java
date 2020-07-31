@@ -61,7 +61,7 @@ public interface RedirectNotFoundEntryLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link RedirectNotFoundEntryLocalServiceUtil} to access the redirect not found entry local service. Add custom service methods to <code>com.liferay.redirect.service.impl.RedirectNotFoundEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.redirect.service.impl.RedirectNotFoundEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the redirect not found entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link RedirectNotFoundEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public RedirectNotFoundEntry addOrUpdateRedirectNotFoundEntry(

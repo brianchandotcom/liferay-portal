@@ -57,7 +57,7 @@ public interface ClassNameLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link ClassNameLocalServiceUtil} to access the class name local service. Add custom service methods to <code>com.liferay.portal.service.impl.ClassNameLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.ClassNameLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the class name local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ClassNameLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**

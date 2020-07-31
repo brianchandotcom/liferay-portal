@@ -55,7 +55,7 @@ public interface OrganizationService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link OrganizationServiceUtil} to access the organization remote service. Add custom service methods to <code>com.liferay.portal.service.impl.OrganizationServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.OrganizationServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the organization remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link OrganizationServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**

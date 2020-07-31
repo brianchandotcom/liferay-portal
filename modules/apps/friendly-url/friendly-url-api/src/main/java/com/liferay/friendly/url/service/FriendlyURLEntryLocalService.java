@@ -70,7 +70,7 @@ public interface FriendlyURLEntryLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link FriendlyURLEntryLocalServiceUtil} to access the friendly url entry local service. Add custom service methods to <code>com.liferay.friendly.url.service.impl.FriendlyURLEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.friendly.url.service.impl.FriendlyURLEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the friendly url entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link FriendlyURLEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**

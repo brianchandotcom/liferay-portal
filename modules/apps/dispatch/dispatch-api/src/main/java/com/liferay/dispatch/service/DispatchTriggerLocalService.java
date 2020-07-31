@@ -63,7 +63,7 @@ public interface DispatchTriggerLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link DispatchTriggerLocalServiceUtil} to access the dispatch trigger local service. Add custom service methods to <code>com.liferay.dispatch.service.impl.DispatchTriggerLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.dispatch.service.impl.DispatchTriggerLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the dispatch trigger local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link DispatchTriggerLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**

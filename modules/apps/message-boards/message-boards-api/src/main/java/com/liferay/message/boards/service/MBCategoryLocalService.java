@@ -71,7 +71,7 @@ public interface MBCategoryLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link MBCategoryLocalServiceUtil} to access the message boards category local service. Add custom service methods to <code>com.liferay.message.boards.service.impl.MBCategoryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.message.boards.service.impl.MBCategoryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the message boards category local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link MBCategoryLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public MBCategory addCategory(
 			long userId, long parentCategoryId, String name, String description,

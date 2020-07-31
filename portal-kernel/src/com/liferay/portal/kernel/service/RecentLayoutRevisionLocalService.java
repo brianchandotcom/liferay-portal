@@ -57,7 +57,7 @@ public interface RecentLayoutRevisionLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link RecentLayoutRevisionLocalServiceUtil} to access the recent layout revision local service. Add custom service methods to <code>com.liferay.portal.service.impl.RecentLayoutRevisionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.RecentLayoutRevisionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the recent layout revision local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link RecentLayoutRevisionLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public RecentLayoutRevision addRecentLayoutRevision(
 			long userId, long layoutRevisionId, long layoutSetBranchId,

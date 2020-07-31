@@ -59,7 +59,7 @@ public interface UserTrackerLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link UserTrackerLocalServiceUtil} to access the user tracker local service. Add custom service methods to <code>com.liferay.portal.service.impl.UserTrackerLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.UserTrackerLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the user tracker local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link UserTrackerLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public UserTracker addUserTracker(
 		long companyId, long userId, Date modifiedDate, String sessionId,

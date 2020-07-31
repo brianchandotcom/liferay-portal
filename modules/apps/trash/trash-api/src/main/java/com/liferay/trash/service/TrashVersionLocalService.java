@@ -66,7 +66,7 @@ public interface TrashVersionLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link TrashVersionLocalServiceUtil} to access the trash version local service. Add custom service methods to <code>com.liferay.trash.service.impl.TrashVersionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.trash.service.impl.TrashVersionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the trash version local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link TrashVersionLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public TrashVersion addTrashVersion(
 		long trashEntryId, String className, long classPK, int status,

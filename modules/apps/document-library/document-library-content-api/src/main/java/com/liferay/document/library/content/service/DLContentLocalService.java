@@ -67,7 +67,7 @@ public interface DLContentLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link DLContentLocalServiceUtil} to access the document library content local service. Add custom service methods to <code>com.liferay.document.library.content.service.impl.DLContentLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.document.library.content.service.impl.DLContentLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the document library content local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link DLContentLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**

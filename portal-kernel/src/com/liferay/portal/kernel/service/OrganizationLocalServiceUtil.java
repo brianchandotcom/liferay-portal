@@ -720,8 +720,8 @@ public class OrganizationLocalServiceUtil {
 	 return
 	 * @param end the upper bound of the range of organizations and users to
 	 return (not inclusive)
-	 * @param orderByComparator the comparator to order the organizations and users
-	 (optionally <code>null</code>)
+	 * @param orderByComparator the comparator to order the organizations and
+	 users (optionally <code>null</code>)
 	 * @return the organizations and users belonging to the parent organization
 	 */
 	public static java.util.List<Object> getOrganizationsAndUsers(
@@ -1210,9 +1210,10 @@ public class OrganizationLocalServiceUtil {
 	 * @param start the lower bound of the range of organizations to return
 	 * @param end the upper bound of the range of organizations to return (not
 	 inclusive)
-	 * @param orderByComparator the comparator to order the organizations (optionally
-	 <code>null</code>)
-	 * @return the matching organizations ordered by comparator <code>orderByComparator</code>
+	 * @param orderByComparator the comparator to order the organizations
+	 (optionally <code>null</code>)
+	 * @return the matching organizations ordered by comparator
+	 <code>orderByComparator</code>
 	 * @see com.liferay.portal.kernel.service.persistence.OrganizationFinder
 	 */
 	public static java.util.List<com.liferay.portal.kernel.model.Organization>
@@ -1323,9 +1324,10 @@ public class OrganizationLocalServiceUtil {
 	 * @param start the lower bound of the range of organizations to return
 	 * @param end the upper bound of the range of organizations to return (not
 	 inclusive)
-	 * @param orderByComparator the comparator to order the organizations (optionally
-	 <code>null</code>)
-	 * @return the matching organizations ordered by comparator <code>orderByComparator</code>
+	 * @param orderByComparator the comparator to order the organizations
+	 (optionally <code>null</code>)
+	 * @return the matching organizations ordered by comparator
+	 <code>orderByComparator</code>
 	 * @see com.liferay.portal.kernel.service.persistence.OrganizationFinder
 	 */
 	public static java.util.List<com.liferay.portal.kernel.model.Organization>

@@ -66,7 +66,7 @@ public interface KaleoLogLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link KaleoLogLocalServiceUtil} to access the kaleo log local service. Add custom service methods to <code>com.liferay.portal.workflow.kaleo.service.impl.KaleoLogLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.workflow.kaleo.service.impl.KaleoLogLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the kaleo log local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link KaleoLogLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public KaleoLog addActionExecutionKaleoLog(

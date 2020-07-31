@@ -58,7 +58,7 @@ public interface TicketLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link TicketLocalServiceUtil} to access the ticket local service. Add custom service methods to <code>com.liferay.portal.service.impl.TicketLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.TicketLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the ticket local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link TicketLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public Ticket addDistinctTicket(
 		long companyId, String className, long classPK, int type,

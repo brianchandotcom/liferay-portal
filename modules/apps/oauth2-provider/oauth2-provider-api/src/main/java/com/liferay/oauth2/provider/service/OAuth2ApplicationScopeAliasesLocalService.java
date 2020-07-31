@@ -61,7 +61,7 @@ public interface OAuth2ApplicationScopeAliasesLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link OAuth2ApplicationScopeAliasesLocalServiceUtil} to access the o auth2 application scope aliases local service. Add custom service methods to <code>com.liferay.oauth2.provider.service.impl.OAuth2ApplicationScopeAliasesLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.oauth2.provider.service.impl.OAuth2ApplicationScopeAliasesLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the o auth2 application scope aliases local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link OAuth2ApplicationScopeAliasesLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public OAuth2ApplicationScopeAliases addOAuth2ApplicationScopeAliases(
 			long companyId, long userId, String userName,

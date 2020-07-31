@@ -48,7 +48,7 @@ public interface ERUserLocalService extends BaseLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link ERUserLocalServiceUtil} to access the er user local service. Add custom service methods to <code>com.liferay.external.reference.service.impl.ERUserLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.external.reference.service.impl.ERUserLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the er user local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ERUserLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public User addOrUpdateUser(
 			String externalReferenceCode, long creatorUserId, long companyId,

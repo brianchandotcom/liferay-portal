@@ -71,7 +71,7 @@ public interface PortletPreferencesLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link PortletPreferencesLocalServiceUtil} to access the portlet preferences local service. Add custom service methods to <code>com.liferay.portal.service.impl.PortletPreferencesLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.PortletPreferencesLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the portlet preferences local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link PortletPreferencesLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public PortletPreferences addPortletPreferences(
 		long companyId, long ownerId, int ownerType, long plid,

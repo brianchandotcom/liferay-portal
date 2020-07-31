@@ -69,7 +69,7 @@ public interface DLFileEntryMetadataLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link DLFileEntryMetadataLocalServiceUtil} to access the document library file entry metadata local service. Add custom service methods to <code>com.liferay.portlet.documentlibrary.service.impl.DLFileEntryMetadataLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portlet.documentlibrary.service.impl.DLFileEntryMetadataLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the document library file entry metadata local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link DLFileEntryMetadataLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**

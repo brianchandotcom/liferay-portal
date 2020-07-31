@@ -62,12 +62,12 @@ public interface OAuthApplicationLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link OAuthApplicationLocalServiceUtil} to access the o auth application local service. Add custom service methods to <code>com.liferay.oauth.service.impl.OAuthApplicationLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.oauth.service.impl.OAuthApplicationLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the o auth application local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link OAuthApplicationLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by
-	 {@link #addOAuthApplication(long, String, String, String, int
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addOAuthApplication(long, String, String, String, int
 	 boolean, String, String, ServiceContext)}
 	 */
 	@Deprecated

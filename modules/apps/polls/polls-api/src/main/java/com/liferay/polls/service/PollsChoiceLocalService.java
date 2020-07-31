@@ -62,7 +62,7 @@ public interface PollsChoiceLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link PollsChoiceLocalServiceUtil} to access the polls choice local service. Add custom service methods to <code>com.liferay.polls.service.impl.PollsChoiceLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.polls.service.impl.PollsChoiceLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the polls choice local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link PollsChoiceLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public PollsChoice addChoice(
 			long userId, long questionId, String name, String description,

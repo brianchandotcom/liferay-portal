@@ -47,7 +47,7 @@ public interface ExportImportLocalService extends BaseLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link ExportImportLocalServiceUtil} to access the export import local service. Add custom service methods to <code>com.liferay.portlet.exportimport.service.impl.ExportImportLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portlet.exportimport.service.impl.ExportImportLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the export import local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ExportImportLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public File exportLayoutsAsFile(
 			ExportImportConfiguration exportImportConfiguration)

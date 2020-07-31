@@ -66,7 +66,7 @@ public interface RatingsStatsLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link RatingsStatsLocalServiceUtil} to access the ratings stats local service. Add custom service methods to <code>com.liferay.portlet.ratings.service.impl.RatingsStatsLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portlet.ratings.service.impl.RatingsStatsLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the ratings stats local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link RatingsStatsLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**

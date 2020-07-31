@@ -351,7 +351,8 @@ public class CompanyServiceWrapper
 	 * found in portal.properties.
 	 *
 	 * @param companyId the primary key of the company
-	 * @param unicodeProperties the company's properties. See {@link UnicodeProperties}
+	 * @param unicodeProperties the company's properties. See {@link
+	 UnicodeProperties}
 	 */
 	@Override
 	public void updatePreferences(

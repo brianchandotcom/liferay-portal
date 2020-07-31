@@ -65,7 +65,7 @@ public interface SharingEntryLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link SharingEntryLocalServiceUtil} to access the sharing entry local service. Add custom service methods to <code>com.liferay.sharing.service.impl.SharingEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.sharing.service.impl.SharingEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the sharing entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link SharingEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**

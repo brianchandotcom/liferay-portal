@@ -47,7 +47,7 @@ public interface FlagsEntryService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link FlagsEntryServiceUtil} to access the flags entry remote service. Add custom service methods to <code>com.liferay.flags.service.impl.FlagsEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.flags.service.impl.FlagsEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the flags entry remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link FlagsEntryServiceUtil} if injection and service tracking are not available.
 	 */
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	public void addEntry(

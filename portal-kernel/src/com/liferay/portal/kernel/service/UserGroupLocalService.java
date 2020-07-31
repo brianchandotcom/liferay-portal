@@ -70,7 +70,7 @@ public interface UserGroupLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link UserGroupLocalServiceUtil} to access the user group local service. Add custom service methods to <code>com.liferay.portal.service.impl.UserGroupLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.UserGroupLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the user group local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link UserGroupLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public void addGroupUserGroup(long groupId, long userGroupId);
 
@@ -535,9 +535,10 @@ public interface UserGroupLocalService
 	 * @param start the lower bound of the range of user groups to return
 	 * @param end the upper bound of the range of user groups to return (not
 	 inclusive)
-	 * @param orderByComparator the comparator to order the user groups (optionally
-	 <code>null</code>)
-	 * @return the matching user groups ordered by comparator <code>orderByComparator</code>
+	 * @param orderByComparator the comparator to order the user groups
+	 (optionally <code>null</code>)
+	 * @return the matching user groups ordered by comparator
+	 <code>orderByComparator</code>
 	 * @see com.liferay.portal.kernel.service.persistence.UserGroupFinder
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -603,9 +604,10 @@ public interface UserGroupLocalService
 	 * @param start the lower bound of the range of user groups to return
 	 * @param end the upper bound of the range of user groups to return (not
 	 inclusive)
-	 * @param orderByComparator the comparator to order the user groups (optionally
-	 <code>null</code>)
-	 * @return the matching user groups ordered by comparator <code>orderByComparator</code>
+	 * @param orderByComparator the comparator to order the user groups
+	 (optionally <code>null</code>)
+	 * @return the matching user groups ordered by comparator
+	 <code>orderByComparator</code>
 	 * @see com.liferay.portal.kernel.service.persistence.UserGroupFinder
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

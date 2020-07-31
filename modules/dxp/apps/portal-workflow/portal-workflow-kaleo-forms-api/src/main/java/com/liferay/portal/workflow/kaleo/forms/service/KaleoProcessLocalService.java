@@ -65,7 +65,7 @@ public interface KaleoProcessLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link KaleoProcessLocalServiceUtil} to access the kaleo process local service. Add custom service methods to <code>com.liferay.portal.workflow.kaleo.forms.service.impl.KaleoProcessLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.workflow.kaleo.forms.service.impl.KaleoProcessLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the kaleo process local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link KaleoProcessLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**

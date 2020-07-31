@@ -57,7 +57,7 @@ public interface KBArticleService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link KBArticleServiceUtil} to access the kb article remote service. Add custom service methods to <code>com.liferay.knowledge.base.service.impl.KBArticleServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.knowledge.base.service.impl.KBArticleServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the kb article remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link KBArticleServiceUtil} if injection and service tracking are not available.
 	 */
 	public KBArticle addKBArticle(
 			String portletId, long parentResourceClassNameId,

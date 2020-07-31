@@ -76,7 +76,7 @@ public interface DLFileEntryTypeLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link DLFileEntryTypeLocalServiceUtil} to access the document library file entry type local service. Add custom service methods to <code>com.liferay.portlet.documentlibrary.service.impl.DLFileEntryTypeLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portlet.documentlibrary.service.impl.DLFileEntryTypeLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the document library file entry type local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link DLFileEntryTypeLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public void addDDMStructureLinks(
 		long fileEntryTypeId, Set<Long> ddmStructureIds);
@@ -113,7 +113,8 @@ public interface DLFileEntryTypeLocalService
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addFileEntryType(long, long, String, Map, Map, long, ServiceContext)}
+	 #addFileEntryType(long, long, String, Map, Map, long,
+	 ServiceContext)}
 	 */
 	@Deprecated
 	public DLFileEntryType addFileEntryType(
@@ -124,7 +125,8 @@ public interface DLFileEntryTypeLocalService
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addFileEntryType(long, long, String, Map, Map, long, ServiceContext)}
+	 #addFileEntryType(long, long, String, Map, Map, long,
+	 ServiceContext)}
 	 */
 	@Deprecated
 	public DLFileEntryType addFileEntryType(

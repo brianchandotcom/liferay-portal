@@ -60,7 +60,7 @@ public interface DLOpenerFileEntryReferenceLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link DLOpenerFileEntryReferenceLocalServiceUtil} to access the dl opener file entry reference local service. Add custom service methods to <code>com.liferay.document.library.opener.service.impl.DLOpenerFileEntryReferenceLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.document.library.opener.service.impl.DLOpenerFileEntryReferenceLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the dl opener file entry reference local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link DLOpenerFileEntryReferenceLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**

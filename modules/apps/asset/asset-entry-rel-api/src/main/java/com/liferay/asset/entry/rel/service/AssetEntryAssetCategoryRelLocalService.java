@@ -65,7 +65,7 @@ public interface AssetEntryAssetCategoryRelLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link AssetEntryAssetCategoryRelLocalServiceUtil} to access the asset entry asset category rel local service. Add custom service methods to <code>com.liferay.asset.entry.rel.service.impl.AssetEntryAssetCategoryRelLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.asset.entry.rel.service.impl.AssetEntryAssetCategoryRelLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the asset entry asset category rel local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link AssetEntryAssetCategoryRelLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**

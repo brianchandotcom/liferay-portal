@@ -65,7 +65,7 @@ public interface KBTemplateLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link KBTemplateLocalServiceUtil} to access the kb template local service. Add custom service methods to <code>com.liferay.knowledge.base.service.impl.KBTemplateLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.knowledge.base.service.impl.KBTemplateLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the kb template local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link KBTemplateLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**

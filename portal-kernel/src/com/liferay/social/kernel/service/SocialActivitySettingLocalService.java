@@ -67,7 +67,7 @@ public interface SocialActivitySettingLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link SocialActivitySettingLocalServiceUtil} to access the social activity setting local service. Add custom service methods to <code>com.liferay.portlet.social.service.impl.SocialActivitySettingLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portlet.social.service.impl.SocialActivitySettingLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the social activity setting local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link SocialActivitySettingLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**

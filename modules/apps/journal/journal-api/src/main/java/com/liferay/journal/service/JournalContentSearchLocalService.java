@@ -65,7 +65,7 @@ public interface JournalContentSearchLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link JournalContentSearchLocalServiceUtil} to access the journal content search local service. Add custom service methods to <code>com.liferay.journal.service.impl.JournalContentSearchLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.journal.service.impl.JournalContentSearchLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the journal content search local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link JournalContentSearchLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**

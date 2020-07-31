@@ -50,7 +50,8 @@ public class DLFileEntryTypeServiceUtil {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addFileEntryType(long, String, Map, Map, long, ServiceContext)}
+	 #addFileEntryType(long, String, Map, Map, long,
+	 ServiceContext)}
 	 */
 	@Deprecated
 	public static com.liferay.document.library.kernel.model.DLFileEntryType
@@ -69,7 +70,8 @@ public class DLFileEntryTypeServiceUtil {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addFileEntryType(long, String, Map, Map, long, ServiceContext)}
+	 #addFileEntryType(long, String, Map, Map, long,
+	 ServiceContext)}
 	 */
 	@Deprecated
 	public static com.liferay.document.library.kernel.model.DLFileEntryType

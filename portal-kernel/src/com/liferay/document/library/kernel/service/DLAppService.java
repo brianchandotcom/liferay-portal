@@ -66,7 +66,7 @@ public interface DLAppService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link DLAppServiceUtil} to access the dl app remote service. Add custom service methods to <code>com.liferay.portlet.documentlibrary.service.impl.DLAppServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portlet.documentlibrary.service.impl.DLAppServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the dl app remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link DLAppServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**
@@ -558,8 +558,8 @@ public interface DLAppService extends BaseService {
 	 * @param folderId the primary key of the file entry's folder
 	 * @param start the lower bound of the range of results
 	 * @param end the upper bound of the range of results (not inclusive)
-	 * @param orderByComparator the comparator to order the file entries (optionally
-	 <code>null</code>)
+	 * @param orderByComparator the comparator to order the file entries
+	 (optionally <code>null</code>)
 	 * @return the range of file entries in the folder ordered by comparator
 	 <code>orderByComparator</code>
 	 * @throws PortalException if a portal exception occurred
@@ -611,8 +611,8 @@ public interface DLAppService extends BaseService {
 	 * @param fileEntryTypeId the primary key of the file entry type
 	 * @param start the lower bound of the range of results
 	 * @param end the upper bound of the range of results (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally
-	 <code>null</code>)
+	 * @param orderByComparator the comparator to order the results by
+	 (optionally <code>null</code>)
 	 * @return the range of file entries with the file entry type in the folder
 	 ordered by <code>null</code>
 	 * @throws PortalException if a portal exception occurred
@@ -1200,8 +1200,8 @@ public interface DLAppService extends BaseService {
 	 (optionally <code>0</code>)
 	 * @param start the lower bound of the range of results
 	 * @param end the upper bound of the range of results (not inclusive)
-	 * @param orderByComparator the comparator to order the file entries (optionally
-	 <code>null</code>)
+	 * @param orderByComparator the comparator to order the file entries
+	 (optionally <code>null</code>)
 	 * @return the range of matching file entries ordered by comparator
 	 <code>orderByComparator</code>
 	 * @throws PortalException if a portal exception occurred
@@ -1264,8 +1264,8 @@ public interface DLAppService extends BaseService {
 	 search
 	 * @param start the lower bound of the range of results
 	 * @param end the upper bound of the range of results (not inclusive)
-	 * @param orderByComparator the comparator to order the file entries (optionally
-	 <code>null</code>)
+	 * @param orderByComparator the comparator to order the file entries
+	 (optionally <code>null</code>)
 	 * @return the range of matching file entries ordered by comparator
 	 <code>orderByComparator</code>
 	 * @throws PortalException if a portal exception occurred

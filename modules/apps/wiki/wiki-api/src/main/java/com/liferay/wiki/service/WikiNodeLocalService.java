@@ -67,7 +67,7 @@ public interface WikiNodeLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link WikiNodeLocalServiceUtil} to access the wiki node local service. Add custom service methods to <code>com.liferay.wiki.service.impl.WikiNodeLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.wiki.service.impl.WikiNodeLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the wiki node local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link WikiNodeLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public WikiNode addDefaultNode(long userId, ServiceContext serviceContext)
 		throws PortalException;

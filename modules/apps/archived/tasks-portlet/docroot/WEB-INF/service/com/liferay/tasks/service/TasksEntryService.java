@@ -48,7 +48,7 @@ public interface TasksEntryService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link TasksEntryServiceUtil} to access the tasks entry remote service. Add custom service methods to <code>com.liferay.tasks.service.impl.TasksEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.tasks.service.impl.TasksEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the tasks entry remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link TasksEntryServiceUtil} if injection and service tracking are not available.
 	 */
 	public TasksEntry addTasksEntry(
 			String title, int priority, long assigneeUserId, int dueDateMonth,

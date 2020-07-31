@@ -59,7 +59,7 @@ public interface RepositoryEntryLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link RepositoryEntryLocalServiceUtil} to access the repository entry local service. Add custom service methods to <code>com.liferay.portal.service.impl.RepositoryEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.RepositoryEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the repository entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link RepositoryEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public RepositoryEntry addRepositoryEntry(
 			long userId, long groupId, long repositoryId, String mappedId,

@@ -64,7 +64,7 @@ public interface SiteNavigationMenuLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link SiteNavigationMenuLocalServiceUtil} to access the site navigation menu local service. Add custom service methods to <code>com.liferay.site.navigation.service.impl.SiteNavigationMenuLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.site.navigation.service.impl.SiteNavigationMenuLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the site navigation menu local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link SiteNavigationMenuLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public SiteNavigationMenu addSiteNavigationMenu(
 			long userId, long groupId, String name, int type, boolean auto,

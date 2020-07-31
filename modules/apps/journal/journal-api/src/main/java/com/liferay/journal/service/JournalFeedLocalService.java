@@ -71,7 +71,7 @@ public interface JournalFeedLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link JournalFeedLocalServiceUtil} to access the journal feed local service. Add custom service methods to <code>com.liferay.journal.service.impl.JournalFeedLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.journal.service.impl.JournalFeedLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the journal feed local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link JournalFeedLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public JournalFeed addFeed(
 			long userId, long groupId, String feedId, boolean autoFeedId,

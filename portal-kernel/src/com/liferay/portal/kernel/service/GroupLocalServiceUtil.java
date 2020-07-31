@@ -1780,7 +1780,8 @@ public class GroupLocalServiceUtil {
 	 inclusive)
 	 * @param orderByComparator the comparator to order the groups (optionally
 	 <code>null</code>)
-	 * @return the matching groups ordered by comparator <code>orderByComparator</code>
+	 * @return the matching groups ordered by comparator
+	 <code>orderByComparator</code>
 	 */
 	public static java.util.List<com.liferay.portal.kernel.model.Group> search(
 		long companyId, long parentGroupId, String keywords,
@@ -1869,7 +1870,8 @@ public class GroupLocalServiceUtil {
 	 inclusive)
 	 * @param orderByComparator the comparator to order the groups (optionally
 	 <code>null</code>)
-	 * @return the matching groups ordered by comparator <code>orderByComparator</code>
+	 * @return the matching groups ordered by comparator
+	 <code>orderByComparator</code>
 	 */
 	public static java.util.List<com.liferay.portal.kernel.model.Group> search(
 		long companyId, long parentGroupId, String name, String description,
@@ -1959,7 +1961,8 @@ public class GroupLocalServiceUtil {
 	 inclusive)
 	 * @param orderByComparator the comparator to order the groups (optionally
 	 <code>null</code>)
-	 * @return the matching groups ordered by comparator <code>orderByComparator</code>
+	 * @return the matching groups ordered by comparator
+	 <code>orderByComparator</code>
 	 */
 	public static java.util.List<com.liferay.portal.kernel.model.Group> search(
 		long companyId, long[] classNameIds, long parentGroupId,
@@ -2055,7 +2058,8 @@ public class GroupLocalServiceUtil {
 	 inclusive)
 	 * @param orderByComparator the comparator to order the groups (optionally
 	 <code>null</code>)
-	 * @return the matching groups ordered by comparator <code>orderByComparator</code>
+	 * @return the matching groups ordered by comparator
+	 <code>orderByComparator</code>
 	 */
 	public static java.util.List<com.liferay.portal.kernel.model.Group> search(
 		long companyId, long[] classNameIds, long parentGroupId, String name,
@@ -2139,7 +2143,8 @@ public class GroupLocalServiceUtil {
 	 inclusive)
 	 * @param orderByComparator the comparator to order the groups (optionally
 	 <code>null</code>)
-	 * @return the matching groups ordered by comparator <code>orderByComparator</code>
+	 * @return the matching groups ordered by comparator
+	 <code>orderByComparator</code>
 	 */
 	public static java.util.List<com.liferay.portal.kernel.model.Group> search(
 		long companyId, long[] classNameIds, String keywords,
@@ -2232,7 +2237,8 @@ public class GroupLocalServiceUtil {
 	 inclusive)
 	 * @param orderByComparator the comparator to order the groups (optionally
 	 <code>null</code>)
-	 * @return the matching groups ordered by comparator <code>orderByComparator</code>
+	 * @return the matching groups ordered by comparator
+	 <code>orderByComparator</code>
 	 */
 	public static java.util.List<com.liferay.portal.kernel.model.Group> search(
 		long companyId, long[] classNameIds, String name, String description,
@@ -2309,7 +2315,8 @@ public class GroupLocalServiceUtil {
 	 inclusive)
 	 * @param orderByComparator the comparator to order the groups (optionally
 	 <code>null</code>)
-	 * @return the matching groups ordered by comparator <code>orderByComparator</code>
+	 * @return the matching groups ordered by comparator
+	 <code>orderByComparator</code>
 	 */
 	public static java.util.List<com.liferay.portal.kernel.model.Group> search(
 		long companyId, String keywords,
@@ -2394,7 +2401,8 @@ public class GroupLocalServiceUtil {
 	 inclusive)
 	 * @param orderByComparator the comparator to order the groups (optionally
 	 <code>null</code>)
-	 * @return the matching groups ordered by comparator <code>orderByComparator</code>
+	 * @return the matching groups ordered by comparator
+	 <code>orderByComparator</code>
 	 */
 	public static java.util.List<com.liferay.portal.kernel.model.Group> search(
 		long companyId, String name, String description,

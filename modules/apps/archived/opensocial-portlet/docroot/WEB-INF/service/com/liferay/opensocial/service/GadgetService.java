@@ -47,7 +47,7 @@ public interface GadgetService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link GadgetServiceUtil} to access the gadget remote service. Add custom service methods to <code>com.liferay.opensocial.service.impl.GadgetServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.opensocial.service.impl.GadgetServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the gadget remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link GadgetServiceUtil} if injection and service tracking are not available.
 	 */
 	public Gadget addGadget(
 			long companyId, String url, String portletCategoryNames,

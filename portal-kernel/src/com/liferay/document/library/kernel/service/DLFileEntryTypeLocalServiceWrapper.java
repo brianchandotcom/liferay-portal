@@ -107,7 +107,8 @@ public class DLFileEntryTypeLocalServiceWrapper
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addFileEntryType(long, long, String, Map, Map, long, ServiceContext)}
+	 #addFileEntryType(long, long, String, Map, Map, long,
+	 ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -126,7 +127,8 @@ public class DLFileEntryTypeLocalServiceWrapper
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addFileEntryType(long, long, String, Map, Map, long, ServiceContext)}
+	 #addFileEntryType(long, long, String, Map, Map, long,
+	 ServiceContext)}
 	 */
 	@Deprecated
 	@Override

@@ -60,7 +60,7 @@ public interface SharepointOAuth2TokenEntryLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link SharepointOAuth2TokenEntryLocalServiceUtil} to access the sharepoint o auth2 token entry local service. Add custom service methods to <code>com.liferay.sharepoint.rest.oauth2.service.impl.SharepointOAuth2TokenEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.sharepoint.rest.oauth2.service.impl.SharepointOAuth2TokenEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the sharepoint o auth2 token entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link SharepointOAuth2TokenEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public SharepointOAuth2TokenEntry addSharepointOAuth2TokenEntry(
 			long userId, String configurationPid, String accessToken,

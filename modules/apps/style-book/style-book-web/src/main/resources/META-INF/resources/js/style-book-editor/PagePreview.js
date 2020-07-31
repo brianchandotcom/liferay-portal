@@ -38,22 +38,7 @@ export default function PagePreview() {
 	}, [frontendTokensValues]);
 
 	useEffect(() => {
-		loadFrontendTokenValues(iframeRef.current, frontendTokensValues);
-
-		const iframeLiferay = iframeRef.current?.contentWindow?.Liferay;
-
-		if (iframeLiferay) {
-			iframeRef.current.contentWindow.Liferay.on(
-				'endNavigate',
-				loadFrontendTokenValues
-			);
-		}
-
-		return () => {
-			if (iframeLiferay) {
-				iframeLiferay.detach('endNavigate', loadFrontendTokenValues);
-			}
-		};
+		loadFrontendTokenValues();
 	}, [loadFrontendTokenValues, frontendTokensValues]);
 
 	return (
@@ -64,18 +49,7 @@ export default function PagePreview() {
 						<PreviewInfoBar />
 						<iframe
 							className="style-book-editor__page-preview-frame"
-							onLoad={() => {
-								if (iframeRef.current?.contentWindow?.Liferay) {
-									iframeRef.current.contentWindow.Liferay.on(
-										'endNavigate',
-										loadFrontendTokenValues
-									);
-								}
-								loadFrontendTokenValues(
-									iframeRef.current,
-									frontendTokensValues
-								);
-							}}
+							onLoad={() => loadFrontendTokenValues()}
 							ref={iframeRef}
 							src={urlWithPreviewParameter(previewPage?.pageURL)}
 						/>

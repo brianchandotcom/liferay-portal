@@ -140,7 +140,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 		setDaemon(true);
 
-		_properties = properties;
 		_bundleContext = bundleContext;
 
 		_activeLevel = GetterUtil.getInteger(properties.get(ACTIVE_LEVEL));
@@ -279,10 +278,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		}
 
 		_fileInstallers.close();
-	}
-
-	public Map<String, String> getProperties() {
-		return _properties;
 	}
 
 	public Scanner getScanner() {
@@ -1334,7 +1329,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	private final String _optionalScope;
 	private final long _poll;
 	private final Set<File> _processingFailures = new HashSet<>();
-	private final Map<String, String> _properties;
 	private final Scanner _scanner;
 	private final boolean _startBundles;
 	private final int _startLevel;

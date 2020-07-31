@@ -17,9 +17,10 @@ package com.liferay.layout.type.controller.asset.display.internal.portlet;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.info.item.InfoItemReference;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -48,25 +49,30 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		InfoDisplayContributor<?> infoDisplayContributor =
-			_infoDisplayContributorTracker.getInfoDisplayContributor(className);
+		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
+			_layoutDisplayPageProviderTracker.getLayoutDisplayPageProvider(
+				className);
 
-		if (infoDisplayContributor == null) {
+		if (layoutDisplayPageProvider == null) {
 			return null;
 		}
 
-		InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
-			infoDisplayContributor.getInfoDisplayObjectProvider(classPK);
+		InfoItemReference infoItemReference = new InfoItemReference(
+			className, classPK);
 
-		if (infoDisplayObjectProvider == null) {
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+				infoItemReference);
+
+		if (layoutDisplayPageObjectProvider == null) {
 			return null;
 		}
 
 		if (!AssetDisplayPageUtil.hasAssetDisplayPage(
 				themeDisplay.getScopeGroupId(),
-				infoDisplayObjectProvider.getClassNameId(),
-				infoDisplayObjectProvider.getClassPK(),
-				infoDisplayObjectProvider.getClassTypeId())) {
+				layoutDisplayPageObjectProvider.getClassNameId(),
+				layoutDisplayPageObjectProvider.getClassPK(),
+				layoutDisplayPageObjectProvider.getClassTypeId())) {
 
 			return null;
 		}
@@ -75,10 +81,13 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 
 		sb.append(
 			_getGroupFriendlyURL(
-				infoDisplayObjectProvider.getGroupId(), locale, themeDisplay));
+				layoutDisplayPageObjectProvider.getGroupId(), locale,
+				themeDisplay));
 
-		sb.append(infoDisplayContributor.getInfoURLSeparator());
-		sb.append(infoDisplayObjectProvider.getURLTitle(locale));
+		sb.append(layoutDisplayPageProvider.getURLSeparator());
+		sb.append(
+			layoutDisplayPageObjectProvider.getURLTitle(
+				themeDisplay.getLocale()));
 
 		return sb.toString();
 	}
@@ -141,10 +150,10 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
+	private Language _language;
 
 	@Reference
-	private Language _language;
+	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
 
 	@Reference
 	private Portal _portal;

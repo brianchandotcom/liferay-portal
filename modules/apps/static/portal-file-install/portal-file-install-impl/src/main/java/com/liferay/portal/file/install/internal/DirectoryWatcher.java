@@ -575,93 +575,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		}
 	}
 
-	private void _doProcess(Set<File> files) throws InterruptedException {
-		List<Artifact> deleted = new ArrayList<>();
-		List<Artifact> modified = new ArrayList<>();
-		List<Artifact> created = new ArrayList<>();
-
-		synchronized (_processingFailures) {
-			files.addAll(_processingFailures);
-			_processingFailures.clear();
-		}
-
-		for (File file : files) {
-			Artifact artifact = _getArtifact(file);
-
-			if (!file.exists()) {
-				if (artifact != null) {
-					deleted.add(artifact);
-				}
-			}
-			else {
-				if (artifact != null) {
-					artifact.setChecksum(_scanner.getChecksum(file));
-
-					modified.add(artifact);
-				}
-				else {
-					artifact = new Artifact();
-
-					artifact.setPath(file);
-					artifact.setChecksum(_scanner.getChecksum(file));
-
-					created.add(artifact);
-				}
-			}
-		}
-
-		Collection<Bundle> uninstalledBundles = _uninstall(deleted);
-
-		Collection<Bundle> updatedBundles = _update(modified);
-
-		Collection<Bundle> installedBundles = _install(created);
-
-		if (!uninstalledBundles.isEmpty() || !updatedBundles.isEmpty() ||
-			!installedBundles.isEmpty()) {
-
-			Set<Bundle> toRefresh = new HashSet<>();
-
-			toRefresh.addAll(uninstalledBundles);
-
-			toRefresh.addAll(updatedBundles);
-
-			toRefresh.addAll(installedBundles);
-
-			findBundlesWithFragmentsToRefresh(toRefresh);
-
-			findBundlesWithOptionalPackagesToRefresh(toRefresh);
-
-			if (!toRefresh.isEmpty()) {
-				_refresh(toRefresh);
-
-				_setStateChanged(true);
-			}
-		}
-
-		if (_startBundles) {
-			FrameworkStartLevel frameworkStartLevel = _systemBundle.adapt(
-				FrameworkStartLevel.class);
-
-			int startLevel = frameworkStartLevel.getStartLevel();
-
-			if (_isStateChanged() || (startLevel != _frameworkStartLevel)) {
-				_frameworkStartLevel = startLevel;
-
-				_startAllBundles();
-
-				_delayedStart.addAll(installedBundles);
-				_delayedStart.removeAll(uninstalledBundles);
-
-				_startBundles(_delayedStart);
-
-				_consistentlyFailingBundles.clear();
-				_consistentlyFailingBundles.addAll(_delayedStart);
-
-				_setStateChanged(false);
-			}
-		}
-	}
-
 	private FileInstaller _findFileInstaller(
 		File artifact, Iterable<FileInstaller> iterable) {
 
@@ -1023,7 +936,90 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	}
 
 	private void _process(Set<File> files) throws InterruptedException {
-		_doProcess(files);
+		List<Artifact> deleted = new ArrayList<>();
+		List<Artifact> modified = new ArrayList<>();
+		List<Artifact> created = new ArrayList<>();
+
+		synchronized (_processingFailures) {
+			files.addAll(_processingFailures);
+			_processingFailures.clear();
+		}
+
+		for (File file : files) {
+			Artifact artifact = _getArtifact(file);
+
+			if (!file.exists()) {
+				if (artifact != null) {
+					deleted.add(artifact);
+				}
+			}
+			else {
+				if (artifact != null) {
+					artifact.setChecksum(_scanner.getChecksum(file));
+
+					modified.add(artifact);
+				}
+				else {
+					artifact = new Artifact();
+
+					artifact.setPath(file);
+					artifact.setChecksum(_scanner.getChecksum(file));
+
+					created.add(artifact);
+				}
+			}
+		}
+
+		Collection<Bundle> uninstalledBundles = _uninstall(deleted);
+
+		Collection<Bundle> updatedBundles = _update(modified);
+
+		Collection<Bundle> installedBundles = _install(created);
+
+		if (!uninstalledBundles.isEmpty() || !updatedBundles.isEmpty() ||
+			!installedBundles.isEmpty()) {
+
+			Set<Bundle> toRefresh = new HashSet<>();
+
+			toRefresh.addAll(uninstalledBundles);
+
+			toRefresh.addAll(updatedBundles);
+
+			toRefresh.addAll(installedBundles);
+
+			findBundlesWithFragmentsToRefresh(toRefresh);
+
+			findBundlesWithOptionalPackagesToRefresh(toRefresh);
+
+			if (!toRefresh.isEmpty()) {
+				_refresh(toRefresh);
+
+				_setStateChanged(true);
+			}
+		}
+
+		if (_startBundles) {
+			FrameworkStartLevel frameworkStartLevel = _systemBundle.adapt(
+				FrameworkStartLevel.class);
+
+			int startLevel = frameworkStartLevel.getStartLevel();
+
+			if (_isStateChanged() || (startLevel != _frameworkStartLevel)) {
+				_frameworkStartLevel = startLevel;
+
+				_startAllBundles();
+
+				_delayedStart.addAll(installedBundles);
+				_delayedStart.removeAll(uninstalledBundles);
+
+				_startBundles(_delayedStart);
+
+				_consistentlyFailingBundles.clear();
+				_consistentlyFailingBundles.addAll(_delayedStart);
+
+				_setStateChanged(false);
+			}
+		}
 	}
 
 	private void _refresh(Collection<Bundle> bundles)

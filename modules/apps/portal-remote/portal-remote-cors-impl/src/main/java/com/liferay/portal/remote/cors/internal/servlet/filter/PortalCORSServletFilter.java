@@ -18,6 +18,7 @@ import com.liferay.oauth2.provider.scope.liferay.OAuth2ProviderScopeLiferayAcces
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
+import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
@@ -40,8 +42,10 @@ import com.liferay.portal.remote.cors.internal.url.pattern.matcher.URLPatternMat
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -150,11 +154,93 @@ public class PortalCORSServletFilter
 		_rebuild(companyId);
 	}
 
+	public class PortalCORSConfigurationModelListener
+		implements ConfigurationModelListener {
+
+		@Override
+		public void onBeforeSave(
+				String pid, Dictionary<String, Object> newProperties)
+			throws ConfigurationModelListenerException {
+
+			Set<String> urlPatternSet = new HashSet<>();
+			Set<String> duplicatedURLPatternSet = new HashSet<>();
+
+			long companyId = GetterUtil.getLong(newProperties.get("companyId"));
+
+			PortalCORSConfiguration portalCORSConfiguration =
+				ConfigurableUtil.createConfigurable(
+					PortalCORSConfiguration.class, newProperties);
+
+			String[] urlPatterns =
+				portalCORSConfiguration.filterMappingURLPatterns();
+
+			for (String urlPattern : urlPatterns) {
+				if (urlPatternSet.contains(urlPattern)) {
+					throw new ConfigurationModelListenerException(
+						"Duplicated url path patterns: " + urlPattern,
+						PortalCORSConfiguration.class,
+						PortalCORSConfigurationModelListener.class,
+						newProperties);
+				}
+
+				urlPatternSet.add(urlPattern);
+			}
+
+			for (Map.Entry<String, Dictionary<String, ?>> entry :
+					_configurationPidsProperties.entrySet()) {
+
+				if (StringUtil.equals(pid, entry.getKey())) {
+					continue;
+				}
+
+				Dictionary<String, ?> properties = entry.getValue();
+
+				if (companyId != GetterUtil.getLong(
+						properties.get("companyId"))) {
+
+					continue;
+				}
+
+				portalCORSConfiguration = ConfigurableUtil.createConfigurable(
+					PortalCORSConfiguration.class, properties);
+
+				urlPatterns =
+					portalCORSConfiguration.filterMappingURLPatterns();
+
+				for (String urlPattern : urlPatterns) {
+					if (!urlPatternSet.add(urlPattern)) {
+						duplicatedURLPatternSet.add(urlPattern);
+					}
+				}
+			}
+
+			if (!duplicatedURLPatternSet.isEmpty()) {
+				throw new ConfigurationModelListenerException(
+					"Duplicated url patterns: " + duplicatedURLPatternSet,
+					PortalCORSConfiguration.class,
+					PortalCORSConfigurationModelListener.class, newProperties);
+			}
+		}
+
+	}
+
 	@Activate
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
 		_defaultURLPatternMatcher = _buildDefaultURLPatternMatcher();
+
+		_serviceRegistration = bundleContext.registerService(
+			ConfigurationModelListener.class,
+			new PortalCORSConfigurationModelListener(),
+			new HashMapDictionary<>(
+				HashMapBuilder.putAll(
+					properties
+				).put(
+					"model.class.name",
+					"com.liferay.portal.remote.cors.configuration." +
+						"PortalCORSConfiguration"
+				).build()));
 	}
 
 	@Deactivate

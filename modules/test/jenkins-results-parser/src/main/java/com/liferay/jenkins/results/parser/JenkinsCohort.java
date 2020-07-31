@@ -207,8 +207,7 @@ public class JenkinsCohort {
 
 		sb.append(";");
 
-		JenkinsResultsParserUtil.write(
-			filePath + "/ci-system-status-data.js", sb.toString());
+		JenkinsResultsParserUtil.write(filePath + "/data.js", sb.toString());
 	}
 
 	private void _loadJobURL(String jobURL) {

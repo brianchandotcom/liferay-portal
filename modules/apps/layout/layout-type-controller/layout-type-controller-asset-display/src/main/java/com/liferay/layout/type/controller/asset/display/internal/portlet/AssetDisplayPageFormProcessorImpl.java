@@ -18,9 +18,10 @@ import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageEntryFormProcessor;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.info.item.InfoItemReference;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -101,17 +102,22 @@ public class AssetDisplayPageFormProcessorImpl
 			String className, long classPK, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		InfoDisplayContributor<?> infoDisplayContributor =
-			_infoDisplayContributorTracker.getInfoDisplayContributor(className);
+		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
+			_layoutDisplayPageProviderTracker.getLayoutDisplayPageProvider(
+				className);
 
-		if (infoDisplayContributor == null) {
+		if (layoutDisplayPageProvider == null) {
 			return 0;
 		}
 
-		InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
-			infoDisplayContributor.getInfoDisplayObjectProvider(classPK);
+		InfoItemReference infoItemReference = new InfoItemReference(
+			className, classPK);
 
-		if (infoDisplayObjectProvider == null) {
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+				infoItemReference);
+
+		if (layoutDisplayPageObjectProvider == null) {
 			return 0;
 		}
 
@@ -119,7 +125,7 @@ public class AssetDisplayPageFormProcessorImpl
 			_layoutPageTemplateEntryService.fetchDefaultLayoutPageTemplateEntry(
 				themeDisplay.getScopeGroupId(),
 				_portal.getClassNameId(className),
-				infoDisplayObjectProvider.getClassTypeId());
+				layoutDisplayPageObjectProvider.getClassTypeId());
 
 		if (defaultAssetDisplayPage == null) {
 			return 0;
@@ -133,7 +139,7 @@ public class AssetDisplayPageFormProcessorImpl
 		_assetDisplayPageEntryLocalService;
 
 	@Reference
-	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
+	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
 
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;

@@ -86,7 +86,10 @@ function ItemConfigurationContent() {
 							key={panel.panelId}
 							onClick={() => setActivePanelId(panel.panelId)}
 						>
-							<span className="page-editor__page-structure__item-configuration-tab">
+							<span
+								className="c-inner page-editor__page-structure__item-configuration-tab"
+								tabIndex="-1"
+							>
 								{panel.label}
 							</span>
 						</ClayTabs.Item>

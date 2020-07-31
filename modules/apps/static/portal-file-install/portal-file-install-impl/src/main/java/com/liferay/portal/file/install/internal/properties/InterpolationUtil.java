@@ -29,14 +29,11 @@ public class InterpolationUtil {
 		}
 	}
 
-	public static String substVars(String value)
-		throws IllegalArgumentException {
-
+	public static String substVars(String value) {
 		return _substVars(value);
 	}
 
-	private static String _substVars(String value)
-		throws IllegalArgumentException {
+	private static String _substVars(String value) {
 
 		// Assume we have a value that is something like: "leading ${foo.${bar}}
 		// middle ${baz} trailing". Find the first ending "}" variable

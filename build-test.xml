@@ -8348,6 +8348,43 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 		<priority value="ERROR" />
 	</category>
 </log4j:configuration>]]></echo>
+
+		<get-testcase-property property.name="deploy.lcs.token.file" />
+
+		<if>
+			<equals arg1="${deploy.lcs.token.file}" arg2="true" />
+			<then>
+				<echo file="${liferay.home}/osgi/log4j/com.liferay.lcs.client.impl-log4j-ext.xml"><![CDATA[<?xml version="1.0"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<category name="com.liferay.lcs.client.internal.platform.http">
+		<priority value="TRACE" />
+	</category>
+	<category name="com.liferay.lcs.client.internal">
+		<priority value="TRACE" />
+	</category>
+	<category name="com.liferay.lcs.client.internal.advisor">
+		<priority value="TRACE" />
+	</category>
+	<category name="com.liferay.lcs.client.internal.lifecycle">
+		<priority value="TRACE" />
+	</category>
+	<category name="com.liferay.lcs.client.internal.task.advisor">
+		<priority value="TRACE" />
+	</category>
+	<category name="com.liferay.lcs.client.internal.task.scheduler">
+		<priority value="TRACE" />
+	</category>
+	<category name="com.liferay.lcs.client.internal.command">
+		<priority value="TRACE" />
+	</category>
+	<category name="com.liferay.lcs.client.internal.runnable">
+		<priority value="TRACE" />
+	</category>
+</log4j:configuration>]]></echo>
+			</then>
+		</if>
 	</target>
 
 	<target name="prepare-mobile-device">

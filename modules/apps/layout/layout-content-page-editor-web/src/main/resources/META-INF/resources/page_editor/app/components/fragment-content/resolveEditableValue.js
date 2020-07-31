@@ -20,7 +20,7 @@ export default function (
 	editableId,
 	processorType,
 	languageId,
-	getFieldValue = InfoItemService.getAssetFieldValue
+	getFieldValue = InfoItemService.getInfoItemFieldValue
 ) {
 	const editableValue = editableValues[processorType][editableId];
 

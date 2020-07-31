@@ -66,7 +66,7 @@ jest.mock(
 jest.mock(
 	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/InfoItemService',
 	() => ({
-		getAvailableAssetMappingFields: jest.fn(() =>
+		getAvailableInfoItemMappingFields: jest.fn(() =>
 			Promise.resolve([
 				{key: 'unmapped', label: 'unmapped'},
 				{key: 'text-field-1', label: 'Text Field 1', type: 'text'},
@@ -286,7 +286,7 @@ describe('MappingSelector', () => {
 	it('shows a warning and disables the selector if the fields array is empty', async () => {
 		config.layoutType = LAYOUT_TYPES.content;
 
-		InfoItemService.getAvailableAssetMappingFields.mockImplementation(() =>
+		InfoItemService.getAvailableInfoItemMappingFields.mockImplementation(() =>
 			Promise.resolve([])
 		);
 

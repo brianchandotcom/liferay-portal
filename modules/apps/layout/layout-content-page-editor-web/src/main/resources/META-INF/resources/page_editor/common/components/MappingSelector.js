@@ -60,9 +60,10 @@ function loadFields({
 		selectedItem.classNameId &&
 		selectedItem.classPK
 	) {
-		promise = InfoItemService.getAvailableAssetMappingFields({
+		promise = InfoItemService.getAvailableInfoItemMappingFields({
 			classNameId: selectedItem.classNameId,
 			classPK: selectedItem.classPK,
+			fieldType,
 			onNetworkStatus: dispatch,
 		});
 	}

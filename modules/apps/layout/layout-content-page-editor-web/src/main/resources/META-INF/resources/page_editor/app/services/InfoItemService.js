@@ -18,49 +18,26 @@ import serviceFetch from './serviceFetch';
 export default {
 
 	/**
-	 * Get an asset's value
+	 * Get available info item mapping fields
 	 * @param {object} options
 	 * @param {string} options.classNameId Asset's className
 	 * @param {string} options.classPK Asset's classPK
-	 * @param {string} options.fieldId
-	 * @param {string} [options.languageId]
+	 * @param {string} options.fieldType Type of field to which we are mapping
 	 * @param {function} options.onNetworkStatus
 	 */
-	getAssetFieldValue({
+	getAvailableInfoItemMappingFields({
 		classNameId,
 		classPK,
-		fieldId,
-		languageId,
+		fieldType,
 		onNetworkStatus,
 	}) {
 		return serviceFetch(
-			config.getAssetFieldValueURL,
+			config.getInfoItemMappingFieldsURL,
 			{
 				body: {
 					classNameId,
 					classPK,
-					fieldId,
-					languageId,
-				},
-			},
-			onNetworkStatus
-		);
-	},
-
-	/**
-	 * Get available asset mapping fields
-	 * @param {object} options
-	 * @param {string} options.classNameId Asset's className
-	 * @param {string} options.classPK Asset's classPK
-	 * @param {function} options.onNetworkStatus
-	 */
-	getAvailableAssetMappingFields({classNameId, classPK, onNetworkStatus}) {
-		return serviceFetch(
-			config.getAssetMappingFieldsURL,
-			{
-				body: {
-					classNameId,
-					classPK,
+					fieldType,
 				},
 			},
 			onNetworkStatus
@@ -150,6 +127,36 @@ export default {
 				body: {
 					className,
 					classPK,
+				},
+			},
+			onNetworkStatus
+		);
+	},
+
+	/**
+	 * Get an item's value
+	 * @param {object} options
+	 * @param {string} options.classNameId Asset's className
+	 * @param {string} options.classPK Asset's classPK
+	 * @param {string} options.fieldId
+	 * @param {string} [options.languageId]
+	 * @param {function} options.onNetworkStatus
+	 */
+	getInfoItemFieldValue({
+		classNameId,
+		classPK,
+		fieldId,
+		languageId,
+		onNetworkStatus,
+	}) {
+		return serviceFetch(
+			config.getInfoItemFieldValueURL,
+			{
+				body: {
+					classNameId,
+					classPK,
+					fieldId,
+					languageId,
 				},
 			},
 			onNetworkStatus

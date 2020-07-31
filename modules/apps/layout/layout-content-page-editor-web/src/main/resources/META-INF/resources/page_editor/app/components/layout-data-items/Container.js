@@ -62,7 +62,7 @@ const Container = React.forwardRef(
 				setLink(item.config.link);
 			}
 			else if (item.config.link.fieldId) {
-				InfoItemService.getAssetFieldValue({
+				InfoItemService.getInfoItemFieldValue({
 					...item.config.link,
 					languageId,
 					onNetworkStatus: () => {},
@@ -161,7 +161,7 @@ const loadBackgroundImage = (backgroundImage) => {
 		return Promise.resolve(backgroundImage.url);
 	}
 	else if (backgroundImage.fieldId) {
-		return InfoItemService.getAssetFieldValue({
+		return InfoItemService.getInfoItemFieldValue({
 			classNameId: backgroundImage.classNameId,
 			classPK: backgroundImage.classPK,
 			fieldId: backgroundImage.fieldId,

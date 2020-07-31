@@ -10,31 +10,41 @@ definition {
 	}
 
 	macro viewCustomADTMultiColumnPG {
-		AssertElementPresent(locator1 = "CategoriesNavigation#ADT_MULTI_COLUMN_1");
+		for (var column : list "${columnList}") {
+			var key_column = "${column}";
 
-		AssertElementPresent(locator1 = "CategoriesNavigation#ADT_MULTI_COLUMN_2");
+			AssertElementPresent(locator1 = "CategoriesNavigation#ADT_MULTI_COLUMN");
+		}
 
-		AssertElementPresent(locator1 = "CategoriesNavigation#ADT_MULTI_COLUMN_3");
+		var n = "1";
 
-		AssertTextEquals(
-			locator1 = "CategoriesNavigation#ADT_MULTI_COLUMN_1_VOCABULARY_NAME",
-			value1 = "Topic");
+		for (var vocabularyName : list "${vocabularyNameList}") {
+			var column = "${n}";
 
-		AssertTextEquals(
-			locator1 = "CategoriesNavigation#ADT_MULTI_COLUMN_2_VOCABULARY_NAME",
-			value1 = "${vocabularyName1}");
+			var key_column = "${column}";
 
-		AssertTextEquals(
-			locator1 = "CategoriesNavigation#ADT_MULTI_COLUMN_2_CATEGORY_NAME",
-			value1 = "${categoryName1}");
+			AssertTextEquals(
+				locator1 = "CategoriesNavigation#ADT_MULTI_COLUMN_VOCABULARY_NAME",
+				value1 = "${vocabularyName}");
 
-		AssertTextEquals(
-			locator1 = "CategoriesNavigation#ADT_MULTI_COLUMN_3_VOCABULARY_NAME",
-			value1 = "${vocabularyName2}");
+			var n = ${n} + 1;
+		}
 
-		AssertTextEquals(
-			locator1 = "CategoriesNavigation#ADT_MULTI_COLUMN_3_CATEGORY_NAME",
-			value1 = "${categoryName2}");
+		var n = "1";
+
+		for (var categoryName : list "${categoryNameList}") {
+			var column = "${n}";
+
+			var key_column = "${column}";
+
+			if (!("${categoryName}" == "Null")) {
+				AssertTextEquals(
+					locator1 = "CategoriesNavigation#ADT_MULTI_COLUMN_CATEGORY_NAME",
+					value1 = "${categoryName}");
+			}
+
+			var n = ${n} + 1;
+		}
 	}
 
 	macro viewDefaultPG {

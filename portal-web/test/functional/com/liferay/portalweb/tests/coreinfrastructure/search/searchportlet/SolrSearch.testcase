@@ -464,11 +464,11 @@ definition {
 
 		SearchPortlets.addWidgets(searchPortletList = "Type Facet,Search Results,Search Bar");
 
-		SearchPortlets.configureWidgetParameterNames(
+		SearchPortlets.configureSearchBarWidget(
 			keywordsParameterName = "keywordparameter",
 			scopeParameterName = "scopeparameter");
 
-		SearchPortlets.configureWidgetScope(searchScope = "Let the User Choose");
+		SearchPortlets.configureSearchBarWidget(searchScope = "Let the User Choose");
 
 		SearchPortlets.chooseWidgetScope(searchScope = "Everything");
 
@@ -1069,9 +1069,9 @@ definition {
 			pageName = "Site 3 Home Page",
 			siteName = "Site Name 3");
 
-		SearchPortlets.configureDestination(destinationPage = "Search Page");
+		SearchPortlets.configureEmbeddedSearchBar(destinationPage = "Search Page");
 
-		SearchPortlets.configureEmbeddedScope(searchScope = "Let the User Choose");
+		SearchPortlets.configureEmbeddedSearchBar(searchScope = "Let the User Choose");
 
 		SearchPortlets.chooseEmbeddedScope(searchScope = "Everything");
 
@@ -1128,7 +1128,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search");
 
-		SearchPortlets.configureEmbeddedScope(searchScope = "Everything");
+		SearchPortlets.configureEmbeddedSearchBar(searchScope = "Everything");
 
 		SearchPortlets.searchWidget(searchTerm = "Potato");
 
@@ -1145,7 +1145,7 @@ definition {
 			searchAssetType = "Document",
 			searchTerm = "Potato");
 
-		SearchPortlets.configureEmbeddedScope(searchScope = "This Site");
+		SearchPortlets.configureEmbeddedSearchBar(searchScope = "This Site");
 
 		SearchPortlets.searchWidget(searchTerm = "Potato");
 
@@ -1277,7 +1277,7 @@ definition {
 			pageName = "Search Global Template Page",
 			siteName = "Site Name");
 
-		SearchPortlets.configureDestination(destinationPage = "Search Global Template Page");
+		SearchPortlets.configureEmbeddedSearchBar(destinationPage = "Search Global Template Page");
 
 		for (var portlet : list "Category Facet,Folder Facet,Modified Facet,Search Bar,Search Options,Search Results,Tag Facet,Type Facet,User Facet") {
 			AssertElementPresent(
@@ -1817,7 +1817,7 @@ definition {
 
 		IFrame.closeFrame();
 
-		SearchPortlets.configureDestination(destinationPage = "Search Page");
+		SearchPortlets.configureEmbeddedSearchBar(destinationPage = "Search Page");
 
 		User.logoutPG();
 
@@ -1965,7 +1965,7 @@ definition {
 
 		SearchPortlets.addWidgets(searchPortletList = "Site Facet,Search Results,Search Bar");
 
-		SearchPortlets.configureWidgetScope(searchScope = "Everything");
+		SearchPortlets.configureSearchBarWidget(searchScope = "Everything");
 
 		SearchPortlets.searchWidget(searchTerm = "*");
 
@@ -2110,7 +2110,7 @@ definition {
 
 		Refresh();
 
-		SearchPortlets.configureWidgetScope(searchScope = "Everything");
+		SearchPortlets.configureSearchBarWidget(searchScope = "Everything");
 
 		SearchPortlets.configureSearchOptions(
 			allowEmptySearches = "true",

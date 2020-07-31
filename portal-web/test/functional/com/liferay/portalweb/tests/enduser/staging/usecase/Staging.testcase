@@ -4081,7 +4081,7 @@ definition {
 
 		Portlet.addPG(portletName = "Search Bar");
 
-		SearchPortlets.configureWidgetParameterNames(keywordsParameterName = "query");
+		SearchPortlets.configureSearchBarWidget(keywordsParameterName = "query");
 
 		SearchPortlets.searchWidget(searchTerm = "test");
 

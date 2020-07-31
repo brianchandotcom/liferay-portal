@@ -114,10 +114,21 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro configureDestination {
+	macro configureEmbeddedSearchBar {
 		SearchPortlets.gotoEmbeddedOptions(portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		if (isSet(searchScope)) {
+			if (("${searchScope}" == "Everything") || ("${searchScope}" == "Let the User Choose") || ("${searchScope}" == "This Site")) {
+				Select(
+					locator1 = "Select#SCOPE_CONFIGURATION",
+					value1 = "${searchScope}");
+			}
+			else {
+				fail("Invalid search scope. Must be (Everything|Let the User Choose|This Site).");
+			}
+		}
 
 		if (isSet(destinationPage)) {
 			if (contains("${destinationPage}", " ")) {
@@ -129,25 +140,6 @@ definition {
 			Type(
 				locator1 = "SearchConfiguration#DESTINATION_PAGE",
 				value1 = "${destinationPage}");
-		}
-
-		PortletEntry.save();
-
-		IFrame.closeFrame();
-	}
-
-	macro configureEmbeddedScope {
-		SearchPortlets.gotoEmbeddedOptions(portletOption = "Configuration");
-
-		if (("${searchScope}" == "Everything") || ("${searchScope}" == "Let the User Choose") || ("${searchScope}" == "This Site")) {
-			SelectFrame(locator1 = "IFrame#CONFIGURATION");
-
-			Select(
-				locator1 = "Select#SCOPE_CONFIGURATION",
-				value1 = "${searchScope}");
-		}
-		else {
-			fail("Invalid search scope. Must be (Everything|Let the User Choose|This Site).");
 		}
 
 		PortletEntry.save();
@@ -192,6 +184,29 @@ definition {
 		SearchPortlets.gotoWidgetOptions(portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		if (isSet(keywordsParameterName)) {
+			Type(
+				locator1 = "SearchConfiguration#KEYWORDS_PARAMETER_NAME",
+				value1 = "${keywordsParameterName}");
+		}
+
+		if (isSet(searchScope)) {
+			if (("${searchScope}" == "Everything") || ("${searchScope}" == "Let the User Choose") || ("${searchScope}" == "This Site")) {
+				Select(
+					locator1 = "Select#SCOPE_CONFIGURATION",
+					value1 = "${searchScope}");
+			}
+			else {
+				fail("Invalid search scope. Must be (Everything|Let the User Choose|This Site).");
+			}
+		}
+
+		if (isSet(scopeParameterName)) {
+			Type(
+				locator1 = "SearchConfiguration#SCOPE_PARAMETER_NAME",
+				value1 = "${scopeParameterName}");
+		}
 
 		if (isSet(federatedSearchKey)) {
 			Type(
@@ -328,28 +343,6 @@ definition {
 				key_fieldLabel = "Stop Words",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "${stopWords}");
-		}
-
-		PortletEntry.save();
-
-		IFrame.closeFrame();
-	}
-
-	macro configureWidgetParameterNames {
-		SearchPortlets.gotoWidgetOptions(portletOption = "Configuration");
-
-		SelectFrame(locator1 = "IFrame#CONFIGURATION");
-
-		if (isSet(keywordsParameterName)) {
-			Type(
-				locator1 = "SearchConfiguration#KEYWORDS_PARAMETER_NAME",
-				value1 = "${keywordsParameterName}");
-		}
-
-		if (isSet(scopeParameterName)) {
-			Type(
-				locator1 = "SearchConfiguration#SCOPE_PARAMETER_NAME",
-				value1 = "${scopeParameterName}");
 		}
 
 		PortletEntry.save();

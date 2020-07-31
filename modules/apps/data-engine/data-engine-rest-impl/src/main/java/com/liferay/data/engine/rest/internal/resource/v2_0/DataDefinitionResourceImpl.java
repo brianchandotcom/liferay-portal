@@ -613,21 +613,18 @@ public class DataDefinitionResourceImpl
 					_ddmStructureLayoutLocalService.getStructureLayout(
 						dataLayout.getId());
 
-				JSONObject jsonObject = _jsonFactory.createJSONObject(
-					StringUtil.replace(
-						ddmStructureLayout.getDefinition(),
-						new String[] {"fieldNames"}, new String[] {"fields"}));
-
-				JSONArray jsonArray = (JSONArray)jsonObject.get("pages");
-
-				JSONObject pageJSONObject = (JSONObject)jsonArray.get(0);
-
-				JSONArray rowsJSONArray = (JSONArray)pageJSONObject.get("rows");
+				JSONArray jsonArray = JSONUtil.getValueAsJSONArray(
+					_jsonFactory.createJSONObject(
+						StringUtil.replace(
+							ddmStructureLayout.getDefinition(),
+							new String[] {"fieldNames"},
+							new String[] {"fields"})),
+					"JSONArray/pages", "Object/0", "JSONArray/rows");
 
 				Map<String, Object> customProperties =
 					dataDefinitionField.getCustomProperties();
 
-				customProperties.put("rows", rowsJSONArray.toString());
+				customProperties.put("rows", jsonArray.toString());
 
 				dataDefinitionField.setNestedDataDefinitionFields(
 					dataDefinition.getDataDefinitionFields());

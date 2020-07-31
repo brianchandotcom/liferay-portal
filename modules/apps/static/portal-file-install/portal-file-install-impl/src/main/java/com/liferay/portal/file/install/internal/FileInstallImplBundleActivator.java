@@ -25,9 +25,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -41,17 +38,6 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class FileInstallImplBundleActivator implements BundleActivator {
 
-	public FileInstallImplBundleActivator() {
-		ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
-
-		_readLock = readWriteLock.readLock();
-		_writeLock = readWriteLock.writeLock();
-	}
-
-	public Lock getReadLock() {
-		return _readLock;
-	}
-
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
 		_bundleContext = bundleContext;
@@ -59,72 +45,58 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 		_jarFileInstallerServiceRegistration = _bundleContext.registerService(
 			FileInstaller.class, new DefaultJarInstaller(), null);
 
-		_writeLock.lock();
+		_tracker = new Tracker(bundleContext, this);
 
-		try {
-			_tracker = new Tracker(bundleContext, this);
+		_tracker.open();
 
-			_tracker.open();
+		Map<String, String> map = new HashMap<>();
 
-			Map<String, String> map = new HashMap<>();
+		_set(map, DirectoryWatcher.POLL);
+		_set(map, DirectoryWatcher.DIR);
+		_set(map, DirectoryWatcher.FILTER);
+		_set(map, DirectoryWatcher.TMPDIR);
+		_set(map, DirectoryWatcher.START_NEW_BUNDLES);
+		_set(map, DirectoryWatcher.USE_START_TRANSIENT);
+		_set(map, DirectoryWatcher.USE_START_ACTIVATION_POLICY);
+		_set(map, DirectoryWatcher.NO_INITIAL_DELAY);
+		_set(map, DirectoryWatcher.DISABLE_CONFIG_SAVE);
+		_set(map, DirectoryWatcher.ENABLE_CONFIG_SAVE);
+		_set(map, DirectoryWatcher.CONFIG_ENCODING);
+		_set(map, DirectoryWatcher.START_LEVEL);
+		_set(map, DirectoryWatcher.ACTIVE_LEVEL);
+		_set(map, DirectoryWatcher.UPDATE_WITH_LISTENERS);
+		_set(map, DirectoryWatcher.OPTIONAL_SCOPE);
+		_set(map, DirectoryWatcher.FRAGMENT_SCOPE);
+		_set(map, DirectoryWatcher.SUBDIR_MODE);
+		_set(map, DirectoryWatcher.WEB_START_LEVEL);
 
-			_set(map, DirectoryWatcher.POLL);
-			_set(map, DirectoryWatcher.DIR);
-			_set(map, DirectoryWatcher.FILTER);
-			_set(map, DirectoryWatcher.TMPDIR);
-			_set(map, DirectoryWatcher.START_NEW_BUNDLES);
-			_set(map, DirectoryWatcher.USE_START_TRANSIENT);
-			_set(map, DirectoryWatcher.USE_START_ACTIVATION_POLICY);
-			_set(map, DirectoryWatcher.NO_INITIAL_DELAY);
-			_set(map, DirectoryWatcher.DISABLE_CONFIG_SAVE);
-			_set(map, DirectoryWatcher.ENABLE_CONFIG_SAVE);
-			_set(map, DirectoryWatcher.CONFIG_ENCODING);
-			_set(map, DirectoryWatcher.START_LEVEL);
-			_set(map, DirectoryWatcher.ACTIVE_LEVEL);
-			_set(map, DirectoryWatcher.UPDATE_WITH_LISTENERS);
-			_set(map, DirectoryWatcher.OPTIONAL_SCOPE);
-			_set(map, DirectoryWatcher.FRAGMENT_SCOPE);
-			_set(map, DirectoryWatcher.SUBDIR_MODE);
-			_set(map, DirectoryWatcher.WEB_START_LEVEL);
+		Set<String> dirs = new HashSet<>(
+			Arrays.asList(StringUtil.split(map.get(DirectoryWatcher.DIR))));
 
-			Set<String> dirs = new HashSet<>(
-				Arrays.asList(StringUtil.split(map.get(DirectoryWatcher.DIR))));
+		for (String dir : dirs) {
+			map.put(DirectoryWatcher.DIR, dir);
 
-			for (String dir : dirs) {
-				map.put(DirectoryWatcher.DIR, dir);
-
-				_updated(new HashMap<>(map));
-			}
-
-			for (DirectoryWatcher directoryWatcher : _directoryWatchers) {
-				directoryWatcher.start();
-			}
+			_updated(new HashMap<>(map));
 		}
-		finally {
-			_writeLock.unlock();
+
+		for (DirectoryWatcher directoryWatcher : _directoryWatchers) {
+			directoryWatcher.start();
 		}
 	}
 
 	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
-		_writeLock.lock();
-
-		try {
-			for (DirectoryWatcher directoryWatcher : _directoryWatchers) {
-				try {
-					directoryWatcher.close();
-				}
-				catch (Exception exception) {
-				}
+		for (DirectoryWatcher directoryWatcher : _directoryWatchers) {
+			try {
+				directoryWatcher.close();
 			}
-
-			_tracker.close();
-
-			_directoryWatchers.clear();
+			catch (Exception exception) {
+			}
 		}
-		finally {
-			_writeLock.unlock();
-		}
+
+		_tracker.close();
+
+		_directoryWatchers.clear();
 
 		_jarFileInstallerServiceRegistration.unregister();
 	}
@@ -151,7 +123,7 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 		InterpolationUtil.performSubstitution(properties, _bundleContext);
 
 		DirectoryWatcher directoryWatcher = new DirectoryWatcher(
-			this, properties, _bundleContext);
+			properties, _bundleContext);
 
 		directoryWatcher.setDaemon(true);
 
@@ -162,9 +134,7 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 	private final Set<DirectoryWatcher> _directoryWatchers = new HashSet<>();
 	private ServiceRegistration<FileInstaller>
 		_jarFileInstallerServiceRegistration;
-	private final Lock _readLock;
 	private Tracker _tracker;
-	private final Lock _writeLock;
 
 	private class Tracker
 		extends ServiceTracker<ConfigurationAdmin, ConfigInstaller> {

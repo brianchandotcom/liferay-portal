@@ -54,7 +54,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.locks.Lock;
 import java.util.jar.Attributes;
 import java.util.jar.JarInputStream;
 import java.util.jar.Manifest;
@@ -135,12 +134,10 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	public static final String WEB_START_LEVEL = "file.install.web.start.level";
 
 	public DirectoryWatcher(
-		FileInstallImplBundleActivator fileInstall,
 		Map<String, String> properties, BundleContext bundleContext) {
 
 		super("fileinstall-" + properties.get(DIR));
 
-		_fileInstall = fileInstall;
 		_properties = properties;
 		_bundleContext = bundleContext;
 
@@ -292,38 +289,15 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 	@Override
 	public void run() {
-		Lock readLock = _fileInstall.getReadLock();
-
-		try {
-			readLock.lockInterruptibly();
-		}
-		catch (InterruptedException interruptedException) {
-			Thread currentThread = Thread.currentThread();
-
-			currentThread.interrupt();
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Watcher for " + _watchedDirectory + " is interrupted");
+		if (!_noInitialDelay) {
+			try {
+				Thread.sleep(_poll);
+			}
+			catch (InterruptedException interruptedException) {
+				return;
 			}
 
-			return;
-		}
-
-		try {
-			if (!_noInitialDelay) {
-				try {
-					Thread.sleep(_poll);
-				}
-				catch (InterruptedException interruptedException) {
-					return;
-				}
-
-				_initializeCurrentManagedBundles();
-			}
-		}
-		finally {
-			readLock.unlock();
+			_initializeCurrentManagedBundles();
 		}
 
 		while (!interrupted()) {
@@ -1047,16 +1021,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	}
 
 	private void _process(Set<File> files) throws InterruptedException {
-		Lock readLock = _fileInstall.getReadLock();
-
-		readLock.lockInterruptibly();
-
-		try {
-			_doProcess(files);
-		}
-		finally {
-			readLock.unlock();
-		}
+		_doProcess(files);
 	}
 
 	private void _refresh(Collection<Bundle> bundles)
@@ -1361,7 +1326,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	private final Map<File, Artifact> _currentManagedArtifacts =
 		new HashMap<>();
 	private final Set<Bundle> _delayedStart = new HashSet<>();
-	private final FileInstallImplBundleActivator _fileInstall;
 	private final ServiceTrackerList<FileInstaller, FileInstaller>
 		_fileInstallers;
 	private final String _filter;

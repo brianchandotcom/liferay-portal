@@ -122,11 +122,11 @@ public abstract class BaseNestedFieldsTestCase extends BaseIndexingTestCase {
 		Map<String, String> fieldMappings =
 			getFieldMappingIndexResponse.getFieldMappings();
 
-		String mapping = fieldMappings.get(String.valueOf(getCompanyId()));
+		String fieldMapping = fieldMappings.get(String.valueOf(getCompanyId()));
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(mapping);
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(fieldMapping);
 
-		Assert.assertEquals(mapping, 2, jsonObject.length());
+		Assert.assertEquals(fieldMapping, 2, jsonObject.length());
 
 		JSONObject jsonObject2 = jsonObject.getJSONObject(
 			"ddmFieldArray.fieldValueText_en_US");
@@ -136,7 +136,7 @@ public abstract class BaseNestedFieldsTestCase extends BaseIndexingTestCase {
 
 		String analyzer = jsonObject3.getString("analyzer");
 
-		Assert.assertEquals(mapping, "english", analyzer);
+		Assert.assertEquals(fieldMapping, "english", analyzer);
 	}
 
 	@Test

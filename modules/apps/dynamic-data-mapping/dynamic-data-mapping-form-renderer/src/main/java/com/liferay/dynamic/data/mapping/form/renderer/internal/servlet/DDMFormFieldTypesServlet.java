@@ -124,7 +124,7 @@ public class DDMFormFieldTypesServlet extends HttpServlet {
 			httpServletResponse, fieldTypesJSONArray.toJSONString());
 	}
 
-	protected Object getFieldProperties(
+	protected JSONObject getFieldProperties(
 		String ddmFormFieldName, HttpServletRequest httpServletRequest) {
 
 		if (StringUtil.equals(ddmFormFieldName, "rich_text")) {

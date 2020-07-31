@@ -53,10 +53,6 @@ const RichText = ({
 	);
 
 	const normalizedEditorConfig = useMemo(() => {
-		if (!editorConfig) {
-			return {};
-		}
-
 		const config = editorConfig.JSONObject;
 
 		return {
@@ -65,10 +61,6 @@ const RichText = ({
 			extraPlugins: config.extraPlugins + CKEDITOR_CONFIG.extraPlugins,
 		};
 	}, [editorConfig]);
-
-	if (!visible) {
-		return null;
-	}
 
 	return (
 		<FieldBase

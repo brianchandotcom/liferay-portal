@@ -66,8 +66,6 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 public interface RichTextDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 
-	public String editorConfig();
-
 	@DDMFormField(
 		label = "%searchable", optionLabels = {"%disable", "%text"},
 		optionValues = {"none", "text"}, predefinedValue = "text",

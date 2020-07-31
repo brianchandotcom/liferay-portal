@@ -217,7 +217,7 @@ const Sharing = ({
 		fetchRetry: {
 			attempts: 0,
 		},
-		link: multiSelectValue ? autocompleteUserURL : undefined,
+		link: autocompleteUserURL,
 		variables: {
 			[`${portletNamespace}query`]: multiSelectValue,
 		},

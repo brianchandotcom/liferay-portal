@@ -154,12 +154,16 @@ public class JenkinsCohort {
 
 		JSONArray nodeDataJSONArray = new JSONArray();
 
-		JSONObject nodeDataJSONObject = new JSONObject();
+		JSONObject nodeDataJSONObject = new OrderedJSONObject();
 
 		nodeDataJSONObject.put("CI Node Capacity", getOnlineCINodeCount());
-		nodeDataJSONObject.put("Idle Nodes", getIdleCINodeCount());
+
 		nodeDataJSONObject.put(
 			"Total CI Load", getRunningBuildCount() + getQueuedBuildCount());
+
+		nodeDataJSONObject.put("Offline Nodes", getOfflineCINodeCount());
+
+		nodeDataJSONObject.put("Idle Nodes", getIdleCINodeCount());
 
 		nodeDataJSONArray.put(nodeDataJSONObject);
 
@@ -172,7 +176,7 @@ public class JenkinsCohort {
 		for (JenkinsCohortJob jenkinsCohortJob :
 				_jenkinsCohortJobsMap.values()) {
 
-			JSONObject jsonObject = new JSONObject();
+			JSONObject jsonObject = new OrderedJSONObject();
 
 			jsonObject.put("Name", jenkinsCohortJob.getJobName());
 
@@ -183,11 +187,13 @@ public class JenkinsCohort {
 				decimalFormat.format(jenkinsCohortJob.getLoadPercentage()));
 
 			jsonObject.put(
+				"Total Builds", jenkinsCohortJob.getTotalBuildCount());
+
+			jsonObject.put(
 				"Current Builds", jenkinsCohortJob.getRunningBuildCount());
+
 			jsonObject.put(
 				"Queued Builds", jenkinsCohortJob.getQueuedBuildCount());
-			jsonObject.put(
-				"Total Builds", jenkinsCohortJob.getTotalBuildCount());
 
 			List<String> topLevelBuildURLs =
 				jenkinsCohortJob.getTopLevelBuildURLs();

@@ -64,6 +64,10 @@ $toolbarDesktopHeight: 56px;
 			justify-content: center;
 		}
 
+		&-text {
+			font-weight: 600;
+		}
+
 		&::after {
 			content: '';
 			cursor: not-allowed;
@@ -73,6 +77,47 @@ $toolbarDesktopHeight: 56px;
 			position: absolute;
 			top: $previewInfoBarHeight;
 			width: 100%;
+		}
+	}
+
+	&__page-type-selector {
+		border-bottom: 1px solid $gray-300;
+		padding: 16px;
+	}
+
+	&__page-selector {
+		min-width: 320px;
+		padding: 0;
+
+		.dropdown-item:hover {
+			background-color: $white;
+		}
+	}
+
+	&__page-tree {
+		padding: 16px 0;
+
+		.tree-expanded > .tree-hitarea {
+			padding-right: 4px;
+		}
+
+		.tree-container:not(.tree-root-container) {
+			margin-left: 22px;
+		}
+
+		.lexicon-icon:not(.lexicon-icon-hr):not(.lexicon-icon-plus) {
+			margin-right: 4px;
+		}
+
+		.tree-node {
+			margin-bottom: 8px;
+			margin-top: 8px;
+
+			.tree-hitarea {
+				font-size: 8px;
+				margin-right: 0;
+				text-align: center;
+			}
 		}
 	}
 

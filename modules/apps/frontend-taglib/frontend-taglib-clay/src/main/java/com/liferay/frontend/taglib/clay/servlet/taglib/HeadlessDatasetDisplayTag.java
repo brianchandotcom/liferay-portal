@@ -284,51 +284,57 @@ public class HeadlessDatasetDisplayTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
-		request.setAttribute("clay:dataset-display:apiURL", _apiURL);
+		request.setAttribute("clay:headless-dataset-display:apiURL", _apiURL);
 		request.setAttribute(
-			"clay:dataset-display:bulkActionDropdownItems",
+			"clay:headless-dataset-display:bulkActionDropdownItems",
 			_bulkActionDropdownItems);
 		request.setAttribute(
-			"clay:dataset-display:clayDataSetActionDropdownItems",
+			"clay:headless-dataset-display:clayDataSetActionDropdownItems",
 			_clayDataSetActionDropdownItems);
 		request.setAttribute(
-			"clay:dataset-display:clayDataSetDisplayViewsContext",
+			"clay:headless-dataset-display:clayDataSetDisplayViewsContext",
 			_clayDataSetDisplayViewsContext);
 		request.setAttribute(
-			"clay:dataset-display:clayDataSetFiltersContext",
+			"clay:headless-dataset-display:clayDataSetFiltersContext",
 			_clayDataSetFiltersContext);
 		request.setAttribute(
-			"clay:dataset-display:clayPaginationEntries",
+			"clay:headless-dataset-display:clayPaginationEntries",
 			_clayPaginationEntries);
 		request.setAttribute(
-			"clay:dataset-display:creationMenu", _creationMenu);
-		request.setAttribute("clay:dataset-display:formId", _formId);
-		request.setAttribute("clay:dataset-display:id", _id);
+			"clay:headless-dataset-display:creationMenu", _creationMenu);
+		request.setAttribute("clay:headless-dataset-display:formId", _formId);
+		request.setAttribute("clay:headless-dataset-display:id", _id);
 		request.setAttribute(
-			"clay:dataset-display:itemsPerPage", _itemsPerPage);
-		request.setAttribute("clay:dataset-display:namespace", _namespace);
+			"clay:headless-dataset-display:itemsPerPage", _itemsPerPage);
 		request.setAttribute(
-			"clay:dataset-display:nestedItemsKey", _nestedItemsKey);
+			"clay:headless-dataset-display:namespace", _namespace);
 		request.setAttribute(
-			"clay:dataset-display:nestedItemsReferenceKey",
+			"clay:headless-dataset-display:nestedItemsKey", _nestedItemsKey);
+		request.setAttribute(
+			"clay:headless-dataset-display:nestedItemsReferenceKey",
 			_nestedItemsReferenceKey);
-		request.setAttribute("clay:dataset-display:pageNumber", _pageNumber);
 		request.setAttribute(
-			"clay:dataset-display:paginationSelectedEntry",
+			"clay:headless-dataset-display:pageNumber", _pageNumber);
+		request.setAttribute(
+			"clay:headless-dataset-display:paginationSelectedEntry",
 			_paginationSelectedEntry);
-		request.setAttribute("clay:dataset-display:portletURL", _portletURL);
 		request.setAttribute(
-			"clay:dataset-display:selectedItems", _selectedItems);
+			"clay:headless-dataset-display:portletURL", _portletURL);
 		request.setAttribute(
-			"clay:dataset-display:selectedItemsKey", _selectedItemsKey);
+			"clay:headless-dataset-display:selectedItems", _selectedItems);
 		request.setAttribute(
-			"clay:dataset-display:selectionType", _selectionType);
+			"clay:headless-dataset-display:selectedItemsKey",
+			_selectedItemsKey);
 		request.setAttribute(
-			"clay:dataset-display:showManagementBar", _showManagementBar);
+			"clay:headless-dataset-display:selectionType", _selectionType);
 		request.setAttribute(
-			"clay:dataset-display:showPagination", _showPagination);
-		request.setAttribute("clay:dataset-display:showSearch", _showSearch);
-		request.setAttribute("clay:dataset-display:style", _style);
+			"clay:headless-dataset-display:showManagementBar",
+			_showManagementBar);
+		request.setAttribute(
+			"clay:headless-dataset-display:showPagination", _showPagination);
+		request.setAttribute(
+			"clay:headless-dataset-display:showSearch", _showSearch);
+		request.setAttribute("clay:headless-dataset-display:style", _style);
 	}
 
 	private List<ClayPaginationEntry> _getClayPaginationEntries() {

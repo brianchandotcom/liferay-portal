@@ -42,20 +42,40 @@ public class JenkinsCohort {
 		update();
 	}
 
-	public int getIdleCINodeCount() {
-		return _idleCINodeCount;
+	public int getIdleJenkinsSlaveCount() {
+		int idleJenkinsSlaveCount = 0;
+
+		for (JenkinsMaster jenkinsMaster : _jenkinsMastersMap.values()) {
+			idleJenkinsSlaveCount += jenkinsMaster.getIdleJenkinsSlavesCount();
+		}
+
+		return idleJenkinsSlaveCount;
 	}
 
 	public String getName() {
 		return _name;
 	}
 
-	public int getOfflineCINodeCount() {
-		return _offlineCINodeCount;
+	public int getOfflineJenkinsSlaveCount() {
+		int offlineJenkinsSlaveCount = 0;
+
+		for (JenkinsMaster jenkinsMaster : _jenkinsMastersMap.values()) {
+			offlineJenkinsSlaveCount +=
+				jenkinsMaster.getOfflineJenkinsSlavesCount();
+		}
+
+		return offlineJenkinsSlaveCount;
 	}
 
-	public int getOnlineCINodeCount() {
-		return _onlineCINodeCount;
+	public int getOnlineJenkinsSlaveCount() {
+		int onlineJenkinsSlaveCount = 0;
+
+		for (JenkinsMaster jenkinsMaster : _jenkinsMastersMap.values()) {
+			onlineJenkinsSlaveCount +=
+				jenkinsMaster.getOnlineJenkinsSlavesCount();
+		}
+
+		return onlineJenkinsSlaveCount;
 	}
 
 	public int getQueuedBuildCount() {
@@ -95,14 +115,20 @@ public class JenkinsCohort {
 				"Unable to get Jenkins properties", ioException);
 		}
 
+		if (_jenkinsMastersMap.isEmpty()) {
+			List<JenkinsMaster> jenkinsMasters =
+				JenkinsResultsParserUtil.getJenkinsMasters(
+					buildProperties, 16, getName());
+
+			for (JenkinsMaster jenkinsMaster : jenkinsMasters) {
+				_jenkinsMastersMap.put(jenkinsMaster.getName(), jenkinsMaster);
+			}
+		}
+
 		List<Callable<Void>> callables = new ArrayList<>();
 		final List<String> jobURLs = new ArrayList<>();
 
-		List<JenkinsMaster> jenkinsMasters =
-			JenkinsResultsParserUtil.getJenkinsMasters(
-				buildProperties, 16, getName());
-
-		for (final JenkinsMaster jenkinsMaster : jenkinsMasters) {
+		for (final JenkinsMaster jenkinsMaster : _jenkinsMastersMap.values()) {
 			Callable<Void> callable = new Callable<Void>() {
 
 				@Override
@@ -111,17 +137,6 @@ public class JenkinsCohort {
 
 					jobURLs.addAll(jenkinsMaster.getRunningJobURLs());
 					jobURLs.addAll(jenkinsMaster.getQueuedJobURLs());
-
-					_offlineCINodeCount =
-						_offlineCINodeCount +
-							jenkinsMaster.getOfflineJenkinsSlavesCount();
-
-					_onlineCINodeCount =
-						_onlineCINodeCount +
-							jenkinsMaster.getOnlineJenkinsSlavesCount();
-
-					_idleCINodeCount =
-						_idleCINodeCount + jenkinsMaster.getIdleSlavesCount();
 
 					return null;
 				}
@@ -133,7 +148,7 @@ public class JenkinsCohort {
 
 		ThreadPoolExecutor threadPoolExecutor =
 			JenkinsResultsParserUtil.getNewThreadPoolExecutor(
-				jenkinsMasters.size(), true);
+				_jenkinsMastersMap.size(), true);
 
 		ParallelExecutor<Void> parallelExecutor = new ParallelExecutor<>(
 			callables, threadPoolExecutor);
@@ -156,14 +171,15 @@ public class JenkinsCohort {
 
 		JSONObject nodeDataJSONObject = new OrderedJSONObject();
 
-		nodeDataJSONObject.put("CI Node Capacity", getOnlineCINodeCount());
+		nodeDataJSONObject.put(
+			"CI Node Capacity", getOnlineJenkinsSlaveCount());
 
 		nodeDataJSONObject.put(
 			"Total CI Load", getRunningBuildCount() + getQueuedBuildCount());
 
-		nodeDataJSONObject.put("Offline Nodes", getOfflineCINodeCount());
+		nodeDataJSONObject.put("Offline Nodes", getOfflineJenkinsSlaveCount());
 
-		nodeDataJSONObject.put("Idle Nodes", getIdleCINodeCount());
+		nodeDataJSONObject.put("Idle Nodes", getIdleJenkinsSlaveCount());
 
 		nodeDataJSONArray.put(nodeDataJSONObject);
 
@@ -250,12 +266,10 @@ public class JenkinsCohort {
 	private static final Pattern _jobNamePattern = Pattern.compile(
 		"https?:.*job\\/(.*?)\\/");
 
-	private int _idleCINodeCount;
 	private final Map<String, JenkinsCohortJob> _jenkinsCohortJobsMap =
 		new HashMap<>();
+	private Map<String, JenkinsMaster> _jenkinsMastersMap = new HashMap<>();
 	private final String _name;
-	private int _offlineCINodeCount;
-	private int _onlineCINodeCount;
 
 	private class JenkinsCohortJob {
 

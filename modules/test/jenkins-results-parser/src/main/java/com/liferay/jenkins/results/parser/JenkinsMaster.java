@@ -110,7 +110,8 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 	}
 
 	public int getAvailableSlavesCount() {
-		return getIdleSlavesCount() - _queueCount - _getRecentBatchSizesTotal();
+		return getIdleJenkinsSlavesCount() - _queueCount -
+			_getRecentBatchSizesTotal();
 	}
 
 	public float getAverageQueueLength() {
@@ -118,7 +119,7 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 			getOnlineJenkinsSlavesCount();
 	}
 
-	public int getIdleSlavesCount() {
+	public int getIdleJenkinsSlavesCount() {
 		int idleSlavesCount = 0;
 
 		for (JenkinsSlave jenkinsSlave : _jenkinsSlavesMap.values()) {

@@ -126,6 +126,141 @@ definition {
 		SitePages.viewCheckboxChecked(pageName = "Test Content Page");
 	}
 
+	@description = "This is a test for LPS-110183. Can access to edition of collection items in Collection Items modal."
+	@priority = "4"
+	test GoToCollectionItemEditMode {
+		JSONWebcontent.addWebContent(
+			content = "Webcontent Content",
+			groupName = "Test Site Name",
+			title = "Webcontent Title");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Test Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document Title",
+			groupName = "Test Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPublicCollectionPage(
+			collectionName = "Recent Content",
+			pageName = "Content Collection Page Name",
+			tabName = "Collection Providers");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "View Collection Items",
+			pageName = "Content Collection Page Name");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Page.gotoCollectionEntryEllipsisItem(
+			item = "Edit Content",
+			tableEntry = "Webcontent Title");
+
+		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
+
+		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "View Collection Items",
+			pageName = "Content Collection Page Name");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Page.gotoCollectionEntryEllipsisItem(
+			item = "Edit Content",
+			tableEntry = "Blogs Entry Title");
+
+		AssertTextEquals(
+			key_text = "Title",
+			locator1 = "TextArea#ANY",
+			value1 = "Blogs Entry Title");
+
+		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "View Collection Items",
+			pageName = "Content Collection Page Name");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Page.gotoCollectionEntryEllipsisItem(
+			item = "Edit Content",
+			tableEntry = "Document Title");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Document Title");
+
+		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
+
+		AssertVisible(
+			key_pageName = "Content Collection Page Name",
+			locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ENTRY_TITLE_LINK");
+
+		Navigator.openSiteURL(
+			pageName = "Content Collection Page Name",
+			siteName = "Test Site Name");
+
+		PagesFinder.goToFindAPage();
+
+		PagesFinder.gotoPageEllipsisItem(
+			item = "View Collection Items",
+			pageName = "Content Collection Page Name");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Page.gotoCollectionEntryEllipsisItem(
+			item = "Edit Content",
+			tableEntry = "Webcontent Title");
+
+		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
+
+		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
+
+		PagesFinder.gotoPageEllipsisItem(
+			item = "View Collection Items",
+			pageName = "Content Collection Page Name");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Page.gotoCollectionEntryEllipsisItem(
+			item = "Edit Content",
+			tableEntry = "Blogs Entry Title");
+
+		AssertTextEquals(
+			key_text = "Title",
+			locator1 = "TextArea#ANY",
+			value1 = "Blogs Entry Title");
+
+		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
+
+		PagesFinder.gotoPageEllipsisItem(
+			item = "View Collection Items",
+			pageName = "Content Collection Page Name");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Page.gotoCollectionEntryEllipsisItem(
+			item = "Edit Content",
+			tableEntry = "Document Title");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Document Title");
+
+		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
+
+		PagesFinder.viewPageNameInPagesFinder(pageName = "Content Collection Page Name");
+	}
+
 	@description = "This is for LPS-110108. The hovered item shows Add Page quick action and a Kebab menu with the actions available for that item. Clicking on item title navigates to the content."
 	@priority = "5"
 	test MouseOverNonRootPageAndViewPage {

@@ -961,6 +961,12 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 			]]>
 		</execute>
 
+		<execute dir="${project.dir}">
+			<![CDATA[
+				git log --format=format:%H -n 1 > ${project.dir}/modules/dxp/apps/${dxp.dir.name}/git-commit-${dxp.dir.name}
+			]]>
+		</execute>
+
 		<zip
 			destfile="${project.dir}/dist/${dxp.name}.zip"
 			duplicate="preserve"
@@ -970,6 +976,8 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 				prefix="${dxp.name}"
 			/>
 		</zip>
+
+		<delete file="${project.dir}/modules/dxp/apps/${dxp.dir.name}/git-commit-${dxp.dir.name}" />
 
 		<artifact:pom artifactId="com.liferay.portal.dxp.${dxp.dir.name}" groupId="com.liferay.portal" id="dxp.${dxp.dir.name}.pom" packaging="zip" version="${dxp.version.current}" />
 

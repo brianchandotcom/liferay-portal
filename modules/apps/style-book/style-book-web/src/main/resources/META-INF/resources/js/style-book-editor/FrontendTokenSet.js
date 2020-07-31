@@ -23,7 +23,7 @@ import ColorFrontendToken from './frontend_tokens/ColorFrontendToken';
 import SelectFrontendToken from './frontend_tokens/SelectFrontendToken';
 import TextFrontendToken from './frontend_tokens/TextFrontendToken';
 
-export default function FrontendTokenSet({frontendTokens, name}) {
+export default function FrontendTokenSet({frontendTokens, label}) {
 	const {frontendTokensValues = {}, setFrontendTokensValues} = useContext(
 		StyleBookContext
 	);
@@ -47,7 +47,7 @@ export default function FrontendTokenSet({frontendTokens, name}) {
 	};
 
 	return (
-		<Collapse label={name}>
+		<Collapse label={label}>
 			{frontendTokens.map((frontendToken) => {
 				const FrontendTokenComponent = getFrontendTokenComponent(
 					frontendToken

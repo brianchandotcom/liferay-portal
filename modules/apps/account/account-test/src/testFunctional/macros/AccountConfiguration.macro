@@ -1,0 +1,12 @@
+definition {
+
+	macro enableAccountEmailDomain {
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Accounts",
+			configurationName = "Email Domains",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.editConfigurationUsersPersonalMenuShowInControlMenu(toggleSwitchLabel = "Enable Email Domain Validation");
+	}
+
+}

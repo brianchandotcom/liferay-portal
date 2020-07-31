@@ -310,12 +310,7 @@ definition {
 
 	@priority = "4"
 	test AddAccountWithMultiDomains {
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Accounts",
-			configurationName = "Email Domains",
-			configurationScope = "Virtual Instance Scope");
-
-		PortalSettings.editConfigurationUsersPersonalMenuShowInControlMenu(toggleSwitchLabel = "Enable Email Domain Validation");
+		AccountConfiguration.enableAccountEmailDomain();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
@@ -368,12 +363,7 @@ definition {
 
 	@priority = "4"
 	test AssignExistingUserToAccount {
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Accounts",
-			configurationName = "Email Domains",
-			configurationScope = "Virtual Instance Scope");
-
-		PortalSettings.editConfigurationUsersPersonalMenuShowInControlMenu(toggleSwitchLabel = "Enable Email Domain Validation");
+		AccountConfiguration.enableAccountEmailDomain();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
@@ -875,12 +865,7 @@ definition {
 
 	@priority = "4"
 	test RemoveDomain {
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Accounts",
-			configurationName = "Email Domains",
-			configurationScope = "Virtual Instance Scope");
-
-		PortalSettings.editConfigurationUsersPersonalMenuShowInControlMenu(toggleSwitchLabel = "Enable Email Domain Validation");
+		AccountConfiguration.enableAccountEmailDomain();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",

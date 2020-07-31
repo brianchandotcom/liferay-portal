@@ -38,6 +38,8 @@ public interface ContentDashboardItem<T> {
 
 	public List<AssetTag> getAssetTags();
 
+	public List<Locale> getAvailableLocales();
+
 	public String getClassName();
 
 	public Long getClassPK();

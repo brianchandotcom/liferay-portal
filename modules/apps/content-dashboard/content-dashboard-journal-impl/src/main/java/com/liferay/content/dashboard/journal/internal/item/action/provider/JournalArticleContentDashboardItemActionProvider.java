@@ -20,6 +20,7 @@ import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemAc
 import com.liferay.content.dashboard.journal.internal.item.action.JournalArticleContentDashboardItemAction;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.util.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -53,6 +54,24 @@ public class JournalArticleContentDashboardItemActionProvider
 	@Override
 	public ContentDashboardItemAction.Type getType() {
 		return ContentDashboardItemAction.Type.VIEW;
+	}
+
+	@Override
+	public boolean isShow(
+		JournalArticle journalArticle, HttpServletRequest httpServletRequest) {
+
+		if (!journalArticle.hasApprovedVersion()) {
+			return false;
+		}
+
+		ContentDashboardItemAction contentDashboardItemAction =
+			getContentDashboardItemAction(journalArticle, httpServletRequest);
+
+		if (Validator.isNull(contentDashboardItemAction.getURL())) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Reference

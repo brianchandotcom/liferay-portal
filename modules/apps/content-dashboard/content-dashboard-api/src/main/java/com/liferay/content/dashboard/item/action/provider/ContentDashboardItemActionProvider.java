@@ -32,4 +32,6 @@ public interface ContentDashboardItemActionProvider<T> {
 
 	public ContentDashboardItemAction.Type getType();
 
+	public boolean isShow(T t, HttpServletRequest httpServletRequest);
+
 }

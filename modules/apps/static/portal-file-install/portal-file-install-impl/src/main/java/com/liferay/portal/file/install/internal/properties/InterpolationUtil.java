@@ -29,14 +29,14 @@ public class InterpolationUtil {
 		for (Map.Entry<String, String> entry : properties.entrySet()) {
 			String name = entry.getKey();
 
-			properties.put(name, substVars(entry.getValue(), name));
+			properties.put(name, substVars(entry.getValue()));
 		}
 	}
 
-	public static String substVars(String value, String currentKey)
+	public static String substVars(String value)
 		throws IllegalArgumentException {
 
-		return _unescape(_substVars(value, currentKey));
+		return _unescape(_substVars(value));
 	}
 
 	private static int _indexOf(String value, int fromIndex) {
@@ -70,7 +70,7 @@ public class InterpolationUtil {
 		return index;
 	}
 
-	private static String _substVars(String value, String currentKey)
+	private static String _substVars(String value)
 		throws IllegalArgumentException {
 
 		// Assume we have a value that is something like: "leading ${foo.${bar}}
@@ -150,7 +150,7 @@ public class InterpolationUtil {
 		// Perform the substitution again since there could still be
 		// substitutions to make
 
-		value = _substVars(value, currentKey);
+		value = _substVars(value);
 
 		// Return the value
 

@@ -251,8 +251,7 @@ public class Properties extends AbstractMap<String, String> {
 
 	public void substitute() {
 		for (Entry<String, String> entry : _storage.entrySet()) {
-			entry.setValue(
-				InterpolationUtil.substVars(entry.getValue(), entry.getKey()));
+			entry.setValue(InterpolationUtil.substVars(entry.getValue()));
 		}
 	}
 

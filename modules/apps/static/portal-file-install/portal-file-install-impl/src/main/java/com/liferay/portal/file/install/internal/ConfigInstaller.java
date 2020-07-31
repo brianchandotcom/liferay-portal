@@ -18,14 +18,12 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.file.install.FileInstaller;
-import com.liferay.portal.file.install.internal.properties.InterpolationUtil;
 import com.liferay.portal.file.install.internal.properties.TypedProperties;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -47,7 +45,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Properties;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
@@ -380,49 +377,14 @@ public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
 
 		try (FileInputStream fileInputStream = new FileInputStream(file);
-			InputStream inputStream = new BufferedInputStream(
-				fileInputStream)) {
+			Reader reader = new InputStreamReader(fileInputStream, _encoding)) {
 
-			inputStream.mark(1);
+			TypedProperties typedProperties = new TypedProperties();
 
-			boolean xml = false;
+			typedProperties.load(reader);
 
-			if (inputStream.read() == CharPool.LESS_THAN) {
-				xml = true;
-			}
-
-			inputStream.reset();
-
-			if (xml) {
-				Properties properties = new Properties();
-
-				properties.loadFromXML(inputStream);
-
-				Map<String, String> map = new HashMap<>();
-
-				for (Object key : properties.keySet()) {
-					map.put(
-						key.toString(), properties.getProperty(key.toString()));
-				}
-
-				InterpolationUtil.performSubstitution(map);
-
-				for (Map.Entry<String, String> entry : map.entrySet()) {
-					dictionary.put(entry.getKey(), entry.getValue());
-				}
-			}
-			else {
-				TypedProperties typedProperties = new TypedProperties();
-
-				try (Reader reader = new InputStreamReader(
-						inputStream, _encoding)) {
-
-					typedProperties.load(reader);
-				}
-
-				for (String key : typedProperties.keySet()) {
-					dictionary.put(key, typedProperties.get(key));
-				}
+			for (String key : typedProperties.keySet()) {
+				dictionary.put(key, typedProperties.get(key));
 			}
 		}
 

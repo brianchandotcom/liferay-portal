@@ -28,11 +28,11 @@ public class RankingIndexNameBuilderImpl implements RankingIndexNameBuilder {
 	@Override
 	public RankingIndexName getRankingIndexName(String companyIndexName) {
 		return new RankingIndexNameImpl(
-			companyIndexName + StringPool.MINUS + INDEX_NAME_SUFFIX);
+			companyIndexName + StringPool.MINUS + RANKINGS_INDEX_NAME);
 	}
 
-	protected static final String INDEX_NAME_SUFFIX =
-		"liferay-search-tuning-rankings";
+	protected static final String RANKINGS_INDEX_NAME =
+		"search-tuning-rankings";
 
 	protected class RankingIndexNameImpl implements RankingIndexName {
 

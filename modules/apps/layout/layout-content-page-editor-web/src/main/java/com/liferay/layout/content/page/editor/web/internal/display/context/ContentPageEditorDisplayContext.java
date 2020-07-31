@@ -267,19 +267,8 @@ public class ContentPageEditorDisplayContext {
 				"defaultLanguageId",
 				LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale())
 			).put(
-				"defaultStyleBookEntryId",
-				() -> {
-					StyleBookEntry styleBookEntry =
-						StyleBookEntryLocalServiceUtil.
-							fetchDefaultStyleBookEntry(
-								themeDisplay.getScopeGroupId());
-
-					if (styleBookEntry == null) {
-						return 0;
-					}
-
-					return styleBookEntry.getStyleBookEntryId();
-				}
+				"defaultStyleBookEntryName",
+				() -> _getDefaultStyleBookEntryName()
 			).put(
 				"deleteFragmentEntryLinkCommentURL",
 				getFragmentEntryActionURL(
@@ -849,6 +838,36 @@ public class ContentPageEditorDisplayContext {
 		).build();
 
 		return _defaultConfigurations;
+	}
+
+	private String _getDefaultStyleBookEntryName() {
+		StyleBookEntry styleBookEntry = null;
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (layout.getStyleBookEntryId() > 0) {
+			styleBookEntry = StyleBookEntryLocalServiceUtil.fetchStyleBookEntry(
+				layout.getStyleBookEntryId());
+		}
+
+		if ((styleBookEntry == null) && (layout.getMasterLayoutPlid() > 0)) {
+			Layout masterLayout = LayoutLocalServiceUtil.fetchLayout(
+				layout.getMasterLayoutPlid());
+
+			styleBookEntry = StyleBookEntryLocalServiceUtil.fetchStyleBookEntry(
+				masterLayout.getStyleBookEntryId());
+		}
+
+		if (styleBookEntry == null) {
+			styleBookEntry = StyleBookEntryLocalServiceUtil.fetchDefaultStyleBookEntry(
+				layout.getGroupId());
+		}
+
+		if (styleBookEntry != null) {
+			return styleBookEntry.getName();
+		}
+
+		return null;
 	}
 
 	private String _getDiscardDraftURL() {

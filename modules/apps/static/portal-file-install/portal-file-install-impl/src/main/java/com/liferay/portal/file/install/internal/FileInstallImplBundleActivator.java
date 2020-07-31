@@ -32,6 +32,7 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Matthew Tambara
@@ -45,9 +46,46 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 		_jarFileInstallerServiceRegistration = _bundleContext.registerService(
 			FileInstaller.class, new DefaultJarInstaller(), null);
 
-		_tracker = new Tracker(bundleContext, this);
+		_serviceTracker = new ServiceTracker<>(
+			bundleContext, ConfigurationAdmin.class.getName(),
+			new ServiceTrackerCustomizer
+				<ConfigurationAdmin, ConfigInstaller>() {
 
-		_tracker.open();
+				@Override
+				public ConfigInstaller addingService(
+					ServiceReference<ConfigurationAdmin> serviceReference) {
+
+					ConfigurationAdmin configurationAdmin =
+						bundleContext.getService(serviceReference);
+
+					ConfigInstaller configInstaller = new ConfigInstaller(
+						bundleContext, configurationAdmin,
+						FileInstallImplBundleActivator.this);
+
+					configInstaller.init();
+
+					return configInstaller;
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<ConfigurationAdmin> serviceReference,
+					ConfigInstaller configInstaller) {
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<ConfigurationAdmin> serviceReference,
+					ConfigInstaller configInstaller) {
+
+					configInstaller.destroy();
+
+					bundleContext.ungetService(serviceReference);
+				}
+
+			});
+
+		_serviceTracker.open();
 
 		Map<String, String> map = new HashMap<>();
 
@@ -94,7 +132,7 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 			}
 		}
 
-		_tracker.close();
+		_serviceTracker.close();
 
 		_directoryWatchers.clear();
 
@@ -134,47 +172,6 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 	private final Set<DirectoryWatcher> _directoryWatchers = new HashSet<>();
 	private ServiceRegistration<FileInstaller>
 		_jarFileInstallerServiceRegistration;
-	private Tracker _tracker;
-
-	private class Tracker
-		extends ServiceTracker<ConfigurationAdmin, ConfigInstaller> {
-
-		@Override
-		public ConfigInstaller addingService(
-			ServiceReference<ConfigurationAdmin> serviceReference) {
-
-			ConfigurationAdmin configurationAdmin = context.getService(
-				serviceReference);
-
-			ConfigInstaller configInstaller = new ConfigInstaller(
-				context, configurationAdmin, _fileInstall);
-
-			configInstaller.init();
-
-			return configInstaller;
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<ConfigurationAdmin> serviceReference,
-			ConfigInstaller configInstaller) {
-
-			configInstaller.destroy();
-
-			context.ungetService(serviceReference);
-		}
-
-		private Tracker(
-			BundleContext bundleContext,
-			FileInstallImplBundleActivator fileInstall) {
-
-			super(bundleContext, ConfigurationAdmin.class.getName(), null);
-
-			_fileInstall = fileInstall;
-		}
-
-		private final FileInstallImplBundleActivator _fileInstall;
-
-	}
+	private ServiceTracker<ConfigurationAdmin, ConfigInstaller> _serviceTracker;
 
 }

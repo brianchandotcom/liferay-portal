@@ -36,11 +36,18 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Adolfo Pérez
  */
-public abstract class FriendlyURLMapper {
+public class FriendlyURLMapperProvider {
 
-	public static FriendlyURLMapper create(
+	public FriendlyURLMapperProvider(
 		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
-		ClassNameLocalService classNameLocalService,
+		ClassNameLocalService classNameLocalService) {
+
+		_assetDisplayPageFriendlyURLProvider =
+			assetDisplayPageFriendlyURLProvider;
+		_classNameLocalService = classNameLocalService;
+	}
+
+	public FriendlyURLMapper getFriendlyURLMapper(
 		HttpServletRequest httpServletRequest) {
 
 		ThemeDisplay themeDisplay =
@@ -68,22 +75,16 @@ public abstract class FriendlyURLMapper {
 		).map(
 			infoDisplayObjectProvider ->
 				(FriendlyURLMapper)new AssetDisplayPageFriendlyURLMapper(
-					assetDisplayPageFriendlyURLProvider, classNameLocalService,
-					infoDisplayObjectProvider, themeDisplay)
+					_assetDisplayPageFriendlyURLProvider,
+					_classNameLocalService, infoDisplayObjectProvider,
+					themeDisplay)
 		).orElseGet(
 			() -> new DefaultPageFriendlyURLMapper()
 		);
 	}
 
-	public abstract String getMappedFriendlyURL(String url, Locale locale)
-		throws PortalException;
-
-	public abstract Map<Locale, String> getMappedFriendlyURLs(
-			Map<Locale, String> friendlyURLs)
-		throws PortalException;
-
 	public static class AssetDisplayPageFriendlyURLMapper
-		extends FriendlyURLMapper {
+		implements FriendlyURLMapper {
 
 		public String getMappedFriendlyURL(String url, Locale locale)
 			throws PortalException {
@@ -142,7 +143,8 @@ public abstract class FriendlyURLMapper {
 
 	}
 
-	public static class DefaultPageFriendlyURLMapper extends FriendlyURLMapper {
+	public static class DefaultPageFriendlyURLMapper
+		implements FriendlyURLMapper {
 
 		@Override
 		public String getMappedFriendlyURL(String url, Locale locale) {
@@ -158,7 +160,22 @@ public abstract class FriendlyURLMapper {
 
 	}
 
+	public interface FriendlyURLMapper {
+
+		public String getMappedFriendlyURL(String url, Locale locale)
+			throws PortalException;
+
+		public Map<Locale, String> getMappedFriendlyURLs(
+				Map<Locale, String> friendlyURLs)
+			throws PortalException;
+
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
-		FriendlyURLMapper.class);
+		FriendlyURLMapperProvider.class);
+
+	private AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
+	private ClassNameLocalService _classNameLocalService;
 
 }

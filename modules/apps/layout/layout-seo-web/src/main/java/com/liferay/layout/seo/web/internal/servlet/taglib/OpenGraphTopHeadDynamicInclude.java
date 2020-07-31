@@ -36,7 +36,7 @@ import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.open.graph.OpenGraphConfiguration;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
-import com.liferay.layout.seo.web.internal.util.FriendlyURLMapper;
+import com.liferay.layout.seo.web.internal.util.FriendlyURLMapperProvider;
 import com.liferay.layout.seo.web.internal.util.OpenGraphImageProvider;
 import com.liferay.layout.seo.web.internal.util.TitleProvider;
 import com.liferay.petra.string.StringBundler;
@@ -96,9 +96,9 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 				return;
 			}
 
-			FriendlyURLMapper friendlyURLMapper = FriendlyURLMapper.create(
-				_assetDisplayPageFriendlyURLProvider, _classNameLocalService,
-				httpServletRequest);
+			FriendlyURLMapperProvider.FriendlyURLMapper friendlyURLMapper =
+				_friendlyURLMapperProvider.getFriendlyURLMapper(
+					httpServletRequest);
 
 			String completeURL = _portal.getCurrentCompleteURL(
 				httpServletRequest);
@@ -282,6 +282,9 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 			_dlFileEntryMetadataLocalService, _dlurlHelper,
 			_layoutSEOSiteLocalService, _portal, _storageEngine);
 
+		_friendlyURLMapperProvider = new FriendlyURLMapperProvider(
+			_assetDisplayPageFriendlyURLProvider, _classNameLocalService);
+
 		_titleProvider = new TitleProvider(_layoutSEOLinkManager);
 	}
 
@@ -442,6 +445,8 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private DLURLHelper _dlurlHelper;
+
+	private FriendlyURLMapperProvider _friendlyURLMapperProvider;
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;

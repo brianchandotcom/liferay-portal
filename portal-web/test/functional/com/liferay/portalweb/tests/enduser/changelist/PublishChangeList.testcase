@@ -37,8 +37,8 @@ definition {
 	}
 
 	@priority = "5"
-	test PublishPublication {
-		property test.name.skip.portal.instance = "PublishChangeList#PublishPublication";
+	test PublishAndRevertPublication {
+		property test.name.skip.portal.instance = "PublishChangeList#PublishAndRevertPublication";
 
 		Navigator.openURL();
 
@@ -74,6 +74,25 @@ definition {
 		AssertElementPresent(
 			key_webContentTitle = "Web Content Title",
 			locator1 = "WC#ENTRY_LIST_TITLE");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Manage Publications");
+
+		Navigator.gotoNavTab(navTab = "History");
+
+		ChangeList.revertPublication(publicationName = "Publication Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No web content was found.");
 	}
 
 }

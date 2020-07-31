@@ -135,7 +135,7 @@ public class StyleBookScopedCSSVariablesProvider
 		}
 
 		if (styleBookEntry == null) {
-			_styleBookEntryLocalService.fetchDefaultStyleBookEntry(
+			styleBookEntry = _styleBookEntryLocalService.fetchDefaultStyleBookEntry(
 				layout.getGroupId());
 		}
 

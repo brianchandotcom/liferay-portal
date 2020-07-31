@@ -30,8 +30,8 @@ public class NestedDDMFieldArrayUtil {
 
 		Field field = new Field("");
 
-		field.addField(new Field("fieldName", name));
-		field.addField(new Field("valueFieldName", valueFieldName));
+		field.addField(new Field("ddmFieldName", name));
+		field.addField(new Field("ddmValueFieldName", valueFieldName));
 
 		if (value instanceof String) {
 			field.addField(new Field(valueFieldName, (String)value));
@@ -47,9 +47,9 @@ public class NestedDDMFieldArrayUtil {
 		String name, Stream<Map<String, Object>> stream) {
 
 		return stream.filter(
-			map -> name.equals(map.get("fieldName"))
+			map -> name.equals(map.get("ddmFieldName"))
 		).map(
-			map -> map.get(map.get("valueFieldName"))
+			map -> map.get(map.get("ddmValueFieldName"))
 		).findAny();
 	}
 

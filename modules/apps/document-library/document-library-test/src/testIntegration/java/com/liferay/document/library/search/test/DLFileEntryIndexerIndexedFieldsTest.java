@@ -238,15 +238,15 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 		String fieldName, String value, String ddmStructureId) {
 
 		Map<String, String> ddmField = HashMapBuilder.put(
-			"fieldName",
+			"ddmFieldName",
 			StringBundler.concat(
 				"ddm__text__", ddmStructureId, "__HttpHeaders_", fieldName)
 		).put(
-			"fieldValueText", value
+			"ddmFieldValueText", value
 		).put(
-			"fieldValueText_String_sortable", StringUtil.toLowerCase(value)
+			"ddmFieldValueText_String_sortable", StringUtil.toLowerCase(value)
 		).put(
-			"valueFieldName", "fieldValueText"
+			"ddmValueFieldName", "ddmFieldValueText"
 		).build();
 
 		return ddmField.toString();

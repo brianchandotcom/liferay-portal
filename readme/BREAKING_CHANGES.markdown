@@ -788,9 +788,9 @@ This change was made because these properties are not useful for an entity.
 Dynamic Data Mapping fields in Elasticsearch that start with `ddm__keyword__` and `ddm__text__` have been moved to a new nested document `ddmFieldArray`.
 
 The new nested document `ddmFieldArray` has several entries with following fields:
- - `fieldName`: Contains the Dynamic Data Mapping structure field name. This name is generated using `DDMIndexer.encodeName` methods.
- - `fieldValue*`: Contains the indexed data. The name of this field is generated using `DDMIndexer.getValueFieldName` and depends on its data type and language.
- - `valueFieldName`: Contains the index field name where the indexed data is stored.
+ - `ddmFieldName`: Contains the Dynamic Data Mapping structure field name. This name is generated using `DDMIndexer.encodeName` methods.
+ - `ddmFieldValue*`: Contains the indexed data. The name of this field is generated using `DDMIndexer.getValueFieldName` and depends on its data type and language.
+ - `ddmValueFieldName`: Contains the index field name where the indexed data is stored.
 
  This change is not applied if you are using SOLR search engine.
 

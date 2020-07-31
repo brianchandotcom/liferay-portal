@@ -5,13 +5,13 @@
 				"date_detection": false,
 				"dynamic_templates": [
 					{
-						"template_ddmFieldArray_fieldValue_Number_sortable": {
+						"template_ddmFieldArray_ddmFieldValue_Number_sortable": {
 							"mapping": {
 								"scaling_factor": 1000,
 								"store": true,
 								"type": "scaled_float"
 							},
-							"path_match": "ddmFieldArray.fieldValue*Number_sortable"
+							"path_match": "ddmFieldArray.ddmFieldValue*Number_sortable"
 						}
 					},
 					{
@@ -50,13 +50,13 @@
 						}
 					},
 					{
-						"template_ddmFieldArray_fieldValueKeyword": {
+						"template_ddmFieldArray_ddmFieldValueKeyword": {
 							"mapping": {
 								"store": true,
 								"type": "keyword"
 							},
 							"match_mapping_type": "string",
-							"path_match": "ddmFieldArray.fieldValueKeyword*"
+							"path_match": "ddmFieldArray.ddmFieldValueKeyword*"
 						}
 					},
 					{
@@ -477,13 +477,13 @@
 						}
 					},
 					{
-						"template_ddmFieldArray_fieldValueText": {
+						"template_ddmFieldArray_ddmFieldValueText": {
 							"mapping": {
 								"store": true,
 								"type": "text"
 							},
 							"match_mapping_type": "string",
-							"path_match": "ddmFieldArray.fieldValueText*"
+							"path_match": "ddmFieldArray.ddmFieldValueText*"
 						}
 					},
 					{
@@ -602,10 +602,10 @@
 					},
 					"ddmFieldArray": {
 						"properties": {
-							"fieldName": {
+							"ddmFieldName": {
 								"type": "keyword"
 							},
-							"valueFieldName": {
+							"ddmValueFieldName": {
 								"type": "keyword"
 							}
 						},

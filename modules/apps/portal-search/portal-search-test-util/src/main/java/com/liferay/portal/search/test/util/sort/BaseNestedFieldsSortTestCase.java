@@ -69,10 +69,10 @@ public abstract class BaseNestedFieldsSortTestCase
 			"C", "B", "A"
 		).forEach(
 			value -> addDocumentWithOneDDMField(
-				fieldName, "fieldValueKeyword", value)
+				fieldName, "ddmFieldValueKeyword", value)
 		);
 
-		FieldSort fieldSort = sorts.field("ddmFieldArray.fieldValueKeyword");
+		FieldSort fieldSort = sorts.field("ddmFieldArray.ddmFieldValueKeyword");
 
 		fieldSort.setNestedSort(sorts.nested("ddmFieldArray"));
 

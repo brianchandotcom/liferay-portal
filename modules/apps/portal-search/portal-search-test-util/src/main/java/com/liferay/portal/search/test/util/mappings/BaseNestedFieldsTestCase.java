@@ -63,7 +63,7 @@ public abstract class BaseNestedFieldsTestCase extends BaseIndexingTestCase {
 
 		assertSearch(
 			"ddm__text__41523__TextBox7nkv_en_US",
-			"ddmFieldArray.fieldValueKeyword", "true", false, 0);
+			"ddmFieldArray.ddmFieldValueKeyword", "true", false, 0);
 	}
 
 	@Test
@@ -72,14 +72,14 @@ public abstract class BaseNestedFieldsTestCase extends BaseIndexingTestCase {
 
 		assertSearch(
 			"ddm__text__41523__TextBox7nkv_en_US",
-			"ddmFieldArray.fieldValueText", "bravo", false, 0);
+			"ddmFieldArray.ddmFieldValueText", "bravo", false, 0);
 	}
 
 	@Test
 	public void testDDMNestedFieldsDontMatchPartialKeyword() throws Exception {
 		assertSearch(
 			"ddm__keyword__41523__Textggef_en_US",
-			"ddmFieldArray.fieldValueKeyword", "alpha", true, 0);
+			"ddmFieldArray.ddmFieldValueKeyword", "alpha", true, 0);
 	}
 
 	@Test
@@ -88,7 +88,7 @@ public abstract class BaseNestedFieldsTestCase extends BaseIndexingTestCase {
 
 		assertSearch(
 			"ddm__text__41523__TextBox7nkv_en_US",
-			"ddmFieldArray.fieldValueKeyword", "true", true, 0);
+			"ddmFieldArray.ddmFieldValueKeyword", "true", true, 0);
 	}
 
 	@Test
@@ -97,7 +97,7 @@ public abstract class BaseNestedFieldsTestCase extends BaseIndexingTestCase {
 
 		assertSearch(
 			"ddm__text__41523__TextBox7nkv_en_US",
-			"ddmFieldArray.fieldValueText", "bravo", true, 0);
+			"ddmFieldArray.ddmFieldValueText", "bravo", true, 0);
 	}
 
 	@Test
@@ -112,8 +112,8 @@ public abstract class BaseNestedFieldsTestCase extends BaseIndexingTestCase {
 			new GetFieldMappingIndexRequest(
 				new String[] {String.valueOf(getCompanyId())}, getMappingName(),
 				new String[] {
-					"ddmFieldArray.fieldValueText_en_US",
-					"ddmFieldArray.fieldValueKeyword"
+					"ddmFieldArray.ddmFieldValueText_en_US",
+					"ddmFieldArray.ddmFieldValueKeyword"
 				});
 
 		GetFieldMappingIndexResponse getFieldMappingIndexResponse =
@@ -129,10 +129,10 @@ public abstract class BaseNestedFieldsTestCase extends BaseIndexingTestCase {
 		Assert.assertEquals(fieldMapping, 2, jsonObject.length());
 
 		JSONObject jsonObject2 = jsonObject.getJSONObject(
-			"ddmFieldArray.fieldValueText_en_US");
+			"ddmFieldArray.ddmFieldValueText_en_US");
 
 		JSONObject jsonObject3 = jsonObject2.getJSONObject(
-			"fieldValueText_en_US");
+			"ddmFieldValueText_en_US");
 
 		String analyzer = jsonObject3.getString("analyzer");
 
@@ -143,7 +143,7 @@ public abstract class BaseNestedFieldsTestCase extends BaseIndexingTestCase {
 	public void testDDMNestedFieldsMatchKeyword() throws Exception {
 		assertSearch(
 			"ddm__keyword__41523__Textggef_en_US",
-			"ddmFieldArray.fieldValueKeyword", "alpha keyword",
+			"ddmFieldArray.ddmFieldValueKeyword", "alpha keyword",
 			"alpha keyword");
 	}
 
@@ -151,14 +151,14 @@ public abstract class BaseNestedFieldsTestCase extends BaseIndexingTestCase {
 	public void testDDMNestedFieldsMatchLocalizedText() throws Exception {
 		assertSearch(
 			"ddm__text__41523__TextBoxnj7s_en_US",
-			"ddmFieldArray.fieldValueText_en_US", "charlie", "charlie text");
+			"ddmFieldArray.ddmFieldValueText_en_US", "charlie", "charlie text");
 	}
 
 	@Test
 	public void testDDMNestedFieldsMatchMultipleValues() throws Exception {
 		assertSearch(
 			"ddm__text__41523__TextBoxo9us_ja_JP",
-			"ddmFieldArray.fieldValueText_ja_JP", "作戦大成功",
+			"ddmFieldArray.ddmFieldValueText_ja_JP", "作戦大成功",
 			Arrays.asList("作戦大成功", "新規作戦"));
 	}
 
@@ -166,7 +166,7 @@ public abstract class BaseNestedFieldsTestCase extends BaseIndexingTestCase {
 	public void testDDMNestedFieldsMatchText() throws Exception {
 		assertSearch(
 			"ddm__text__41523__TextBox7nkv_en_US",
-			"ddmFieldArray.fieldValueText", "alpha", "alpha text");
+			"ddmFieldArray.ddmFieldValueText", "alpha", "alpha text");
 	}
 
 	protected void addDocumentWithDDMFieldArray() {
@@ -174,24 +174,24 @@ public abstract class BaseNestedFieldsTestCase extends BaseIndexingTestCase {
 
 		addNestedField(
 			"ddm__keyword__41523__Booleantua8_en_US_String_sortable",
-			"fieldValueKeyword", "true", fieldArray);
+			"ddmFieldValueKeyword", "true", fieldArray);
 		addNestedField(
-			"ddm__keyword__41523__Textggef_en_US", "fieldValueKeyword",
+			"ddm__keyword__41523__Textggef_en_US", "ddmFieldValueKeyword",
 			"alpha keyword", fieldArray);
 		addNestedField(
-			"ddm__keyword__41523__Textp47b_en_US", "fieldValueKeyword",
+			"ddm__keyword__41523__Textp47b_en_US", "ddmFieldValueKeyword",
 			"bravo keyword", fieldArray);
 		addNestedField(
-			"ddm__text__41523__TextBox7nkv_en_US", "fieldValueText",
+			"ddm__text__41523__TextBox7nkv_en_US", "ddmFieldValueText",
 			"alpha text", fieldArray);
 		addNestedField(
-			"ddm__text__41523__TextBox6yh3_en_US", "fieldValueText",
+			"ddm__text__41523__TextBox6yh3_en_US", "ddmFieldValueText",
 			"bravo text", fieldArray);
 		addNestedField(
-			"ddm__text__41523__TextBoxnj7s_en_US", "fieldValueText_en_US",
+			"ddm__text__41523__TextBoxnj7s_en_US", "ddmFieldValueText_en_US",
 			"charlie text", fieldArray);
 		addNestedField(
-			"ddm__text__41523__TextBoxo9us_ja_JP", "fieldValueText_ja_JP",
+			"ddm__text__41523__TextBoxo9us_ja_JP", "ddmFieldValueText_ja_JP",
 			new String[] {"作戦大成功", "新規作戦"}, fieldArray);
 
 		addDocument(DocumentCreationHelpers.field(fieldArray));
@@ -310,11 +310,11 @@ public abstract class BaseNestedFieldsTestCase extends BaseIndexingTestCase {
 
 		if (mappedAsNested) {
 			booleanQuery.addMustQueryClauses(
-				queries.term("ddmFieldArray.fieldName", fieldName));
+				queries.term("ddmFieldArray.ddmFieldName", fieldName));
 		}
 		else {
 			booleanQuery.addMustQueryClauses(
-				queries.match("ddmFieldArray.fieldName", fieldName));
+				queries.match("ddmFieldArray.ddmFieldName", fieldName));
 		}
 
 		if (fieldName.startsWith("ddm__keyword")) {

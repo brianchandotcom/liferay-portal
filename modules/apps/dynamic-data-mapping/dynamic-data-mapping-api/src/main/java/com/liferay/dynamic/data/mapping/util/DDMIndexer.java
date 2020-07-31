@@ -31,7 +31,7 @@ public interface DDMIndexer {
 
 	public static final String DDM_FIELD_ARRAY = "ddmFieldArray";
 
-	public static final String DDM_FIELD_NAME = "fieldName";
+	public static final String DDM_FIELD_NAME = "ddmFieldName";
 
 	public static final String DDM_FIELD_NAMESPACE = "ddm";
 
@@ -41,9 +41,9 @@ public interface DDMIndexer {
 	public static final String DDM_FIELD_SEPARATOR =
 		StringPool.DOUBLE_UNDERLINE;
 
-	public static final String DDM_VALUE_FIELD_NAME = "valueFieldName";
+	public static final String DDM_VALUE_FIELD_NAME = "ddmValueFieldName";
 
-	public static final String DDM_VALUE_FIELD_NAME_PREFIX = "fieldValue";
+	public static final String DDM_VALUE_FIELD_NAME_PREFIX = "ddmFieldValue";
 
 	public void addAttributes(
 		Document document, DDMStructure ddmStructure,

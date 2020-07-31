@@ -135,7 +135,7 @@ describe('The SLAFormPage component should', () => {
 		};
 
 		const historyMock = {
-			push: jest.fn(),
+			goBack: jest.fn(),
 		};
 
 		beforeAll(() => {
@@ -316,10 +316,7 @@ describe('The SLAFormPage component should', () => {
 		});
 
 		test('Redirect to SLAListPage after successful submit', async () => {
-			expect(historyMock.push).toHaveBeenCalledWith({
-				pathname: `/sla/5678/list/20/1`,
-				search: '',
-			});
+			expect(historyMock.goBack).toHaveBeenCalled();
 		});
 	});
 

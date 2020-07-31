@@ -298,7 +298,7 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
-	public boolean isViewURLEnabled(HttpServletRequest httpServletRequest) {
+	public boolean isViewable(HttpServletRequest httpServletRequest) {
 		if (!_journalArticle.hasApprovedVersion()) {
 			return false;
 		}

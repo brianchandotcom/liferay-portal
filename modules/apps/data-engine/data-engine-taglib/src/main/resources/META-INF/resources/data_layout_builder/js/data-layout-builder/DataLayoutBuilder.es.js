@@ -415,9 +415,22 @@ class DataLayoutBuilder extends React.Component {
 					localizedValue = {...propertyValue};
 				}
 
+				let options = [];
+
+				if (
+					field.type === 'select' &&
+					field.fieldName === 'predefinedValue'
+				) {
+					options =
+						dataDefinitionField.customProperties.options[
+							editingLanguageId
+						];
+				}
+
 				return {
 					...field,
 					localizedValue,
+					options,
 					value,
 				};
 			}),

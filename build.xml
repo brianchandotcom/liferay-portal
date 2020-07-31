@@ -985,7 +985,7 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 
 		<artifact:deploy file="dist/${dxp.name}.zip">
 			<pom file="dist/dxp.${dxp.dir.name}.pom" />
-			<remoteRepository url="https://repository.liferay.com/nexus/content/repositories/liferay-private-releases">
+			<remoteRepository url="https://repository-cdn.liferay.com/nexus/content/repositories/liferay-private-releases">
 				<authentication password="${sonatype.release.password}" username="${sonatype.release.username}" />
 			</remoteRepository>
 		</artifact:deploy>

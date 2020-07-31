@@ -20,11 +20,14 @@ import React, {useContext, useState} from 'react';
 
 import PagesTree from './PagesTree';
 import {StyleBookContext} from './StyleBookContext';
+import {useId} from './useId';
 
 export default function PageSelector() {
 	const [active, setActive] = useState(false);
 	const [showPrivatePages, setShowPrivatePages] = useState(false);
 	const {previewPage} = useContext(StyleBookContext);
+
+	const id = useId();
 
 	return (
 		<ClayDropDown
@@ -49,7 +52,11 @@ export default function PageSelector() {
 			<ClayDropDown.ItemList>
 				<div className="style-book-editor__page-type-selector">
 					<ClayForm.Group small>
+						<label className="sr-only" htmlFor={id}>
+							{Liferay.Language.get('page-type-selector')}
+						</label>
 						<ClaySelectWithOption
+							id={id}
 							onChange={(event) =>
 								setShowPrivatePages(
 									event.target.value === 'private-pages'

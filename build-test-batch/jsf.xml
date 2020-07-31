@@ -142,6 +142,84 @@
 
 		<property name="gecko.driver.path" location="${selenium.executable.dir.name}${selenium.gecko.driver.executable}"/>
 
+		<!-- LRQA-60084 Temporary workaround until new release branch is available from faces repos  -->
+
+		<exec dir="${liferay.faces.alloy.dir}" executable="git">
+			<arg line="checkout" />
+			<arg line="c387002579a8883c737639310fb1000baee6e0b2" />
+		</exec>
+
+		<exec dir="${liferay.faces.alloy.dir}" executable="git">
+			<arg line="cherry-pick" />
+			<arg line="b51c1251c04bb8b130e364805f09e457220a1737" />
+			<arg line="--strategy-option " />
+			<arg line="theirs " />
+		</exec>
+
+		<exec dir="${liferay.faces.alloy.dir}" executable="git">
+			<arg line="cherry-pick" />
+			<arg line="2fe709c461ecc70bd416b855c15f5c6bebae1426" />
+			<arg line="--strategy-option " />
+			<arg line="theirs " />
+		</exec>
+
+		<exec dir="${liferay.faces.bridge.impl.dir}" executable="git">
+			<arg line="checkout" />
+			<arg line="31e19c170bbdce3e98e08a560a8c935392ebd69d" />
+		</exec>
+
+		<exec dir="${liferay.faces.bridge.impl.dir}" executable="git">
+			<arg line="cherry-pick" />
+			<arg line="c868b05d7abea77421c36b5ffb580ee9e2de8563" />
+			<arg line="--strategy-option " />
+			<arg line="theirs " />
+		</exec>
+
+		<exec dir="${liferay.faces.bridge.impl.dir}" executable="git">
+			<arg line="cherry-pick" />
+			<arg line="434358cb40c1ff30243062bfc1d8db5850efcbdf" />
+			<arg line="--strategy-option " />
+			<arg line="theirs " />
+		</exec>
+
+		<exec dir="${liferay.faces.portal.dir}" executable="git">
+			<arg line="checkout" />
+			<arg line="f7819860f0d4619f1e5214b50de9fdf54dbb4bae" />
+		</exec>
+
+		<exec dir="${liferay.faces.portal.dir}" executable="git">
+			<arg line="cherry-pick" />
+			<arg line="296dff949be89d4ca674f3e32be583d97c51bde6" />
+			<arg line="--strategy-option " />
+			<arg line="theirs " />
+		</exec>
+
+		<exec dir="${liferay.faces.portal.dir}" executable="git">
+			<arg line="cherry-pick" />
+			<arg line="b9e923481b6e842bb873cb100ab5576e4d4250b0" />
+			<arg line="--strategy-option " />
+			<arg line="theirs " />
+		</exec>
+
+		<exec dir="${liferay.faces.showcase.dir}" executable="git">
+			<arg line="checkout" />
+			<arg line="95dcd30f260ee3e219db7c1109c02832200dd517" />
+		</exec>
+
+		<exec dir="${liferay.faces.showcase.dir}" executable="git">
+			<arg line="cherry-pick" />
+			<arg line="cbaf33df7b508a990d30414a7e2f06bc815283e1" />
+			<arg line="--strategy-option " />
+			<arg line="theirs " />
+		</exec>
+
+		<exec dir="${liferay.faces.showcase.dir}" executable="git">
+			<arg line="cherry-pick" />
+			<arg line="6dfe2e3880caa28e13a5ae64cc48990d9e6d7612" />
+			<arg line="--strategy-option " />
+			<arg line="theirs " />
+		</exec>
+
 		<execute dir="${liferay.faces.bridge.impl.dir}/demo">
 			mvn clean package -P liferay,liferay73,mojarra,tomcat
 		</execute>
@@ -342,5 +420,27 @@
 		<execute dir="${liferay.faces.portal.dir}/test/integration" failonerror="false">
 			mvn verify -P selenium-portal-showcase,firefox -Dwebdriver.firefox.bin=${browser.firefox.bin.file} -Dwebdriver.gecko.driver=${gecko.driver.path} -Dintegration.browser.driver.wait.time.out=${liferay.faces.test.timeout}
 		</execute>
+
+		<!-- LRQA-60084 Temporary workaround cleanup  -->
+
+		<exec dir="${liferay.faces.alloy.dir}" executable="git">
+			<arg line="checkout" />
+			<arg line="2fe709c461ecc70bd416b855c15f5c6bebae1426" />
+		</exec>
+
+		<exec dir="${liferay.faces.bridge.impl.dir}" executable="git">
+			<arg line="checkout" />
+			<arg line="434358cb40c1ff30243062bfc1d8db5850efcbdf" />
+		</exec>
+
+		<exec dir="${liferay.faces.portal.dir}" executable="git">
+			<arg line="checkout" />
+			<arg line="b9e923481b6e842bb873cb100ab5576e4d4250b0" />
+		</exec>
+
+		<exec dir="${liferay.faces.showcase.dir}" executable="git">
+			<arg line="checkout" />
+			<arg line="6dfe2e3880caa28e13a5ae64cc48990d9e6d7612" />
+		</exec>
 	</target>
 </project>

@@ -113,8 +113,7 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 		for (String dir : dirs) {
 			map.put(DirectoryWatcher.DIR, dir);
 
-			_directoryWatchers.add(
-				new DirectoryWatcher(new HashMap<>(map), _bundleContext));
+			_directoryWatchers.add(new DirectoryWatcher(map, _bundleContext));
 		}
 
 		for (DirectoryWatcher directoryWatcher : _directoryWatchers) {

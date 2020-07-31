@@ -104,10 +104,7 @@ const OptionList = ({options = [], icon}) => {
 	return (
 		<ul className="list-unstyled mt-3">
 			{options.map(
-				(
-					{imagePreviewURL, isActive, isDefault, name, onClick},
-					index
-				) => (
+				({imagePreviewURL, isActive, name, onClick}, index) => (
 					<li key={index}>
 						<ClayCard
 							className={classNames({
@@ -140,18 +137,6 @@ const OptionList = ({options = [], icon}) => {
 										<section className="autofit-section">
 											<ClayCard.Description displayType="title">
 												{name}
-
-												{isDefault && (
-													<ClayIcon
-														className={classNames(
-															'ml-2',
-															{
-																'text-primary': isActive,
-															}
-														)}
-														symbol={'check-circle'}
-													/>
-												)}
 											</ClayCard.Description>
 										</section>
 									</div>
@@ -174,9 +159,6 @@ function getTabs(masterLayoutPlid) {
 				...styleBook,
 				isActive:
 					config.styleBookEntryId === styleBook.styleBookEntryId,
-				isDefault:
-					config.defaultStyleBookEntryId ===
-					styleBook.styleBookEntryId,
 				onClick: () => {
 					LayoutService.changeStyleBookEntry({
 						onNetworkStatus: () => {},
@@ -198,7 +180,6 @@ function getTabs(masterLayoutPlid) {
 			options: config.masterLayouts.map((masterLayout) => ({
 				...masterLayout,
 				isActive: masterLayoutPlid === masterLayout.masterLayoutPlid,
-				isDefault: false,
 				onClick: (dispatch) =>
 					dispatch(
 						changeMasterLayout({

@@ -1,0 +1,104 @@
+<html>
+<head>
+<title>BridgeDemos</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">BridgeDemos</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>ADD_ATTACHMENT</td>
+	<td>//input[@value='Add Attachment']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHOOSE_FILES</td>
+	<td>//input[@type='file']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION_FORM</td>
+	<td>//form[@method='post']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATE_PATTERN</td>
+	<td>//input[contains(@id,':datePattern')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_LINK</td>
+	<td>//a[contains(@id,'editLink')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_ERROR</td>>
+	<td>//*[contains(@id,'${key_fieldName}')]//span[contains(@class,'alloy-message') or contains(@class,'msg-err') or contains(@class,'message-error-detail')] | //*[contains(@id,'${key_fieldName}')]/../following-sibling::div/div[contains(@class,'alert-danger')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_ERROR_BUTTER_FACES</td>>
+	<td>//li[@class='portlet-msg-error' and contains(text(),'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_ERROR_BUTTER_FACES_TOAST</td>>
+	<td>//div[label[contains(.,'${key_fieldName}')]]//input[contains(@class,'butter-component-invalid')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_ERROR_JSF_JSP</td>>
+	<td>//span[@class='portlet-msg-error']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILE_NAME_TABLE</td>
+	<td>//tr[@class='portlet-section-body results-row']/td[2] | //table[contains(@class,'alloy-data-table')]/tbody/tr/td[2]/span | //*[contains(@id,'attachmentsTable')]//td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIBRARY_VERSION</td>
+	<td>//li[contains(.,'${key_libraryName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESET_BUTTON</td>
+	<td>//input[@type='submit'][@value='Reset']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHOW_HIDE_COMMENTS_LINK</td>
+	<td>//a[contains(text(),'Comments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STATE_PROVINCE</td>
+	<td>//div[label[contains(.,'State/Province')]]//select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STATE_PROVINCE_SELECTED</td>
+	<td>//div[label[contains(.,'State/Province')]]//select/option[@selected='selected' or @selected='true']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBMIT_BUTTON</td>
+	<td>//input[@type='submit'][@value='Submit'] | //button[contains(text(),'Submit')] | //span[contains(text(),'Submit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBMIT_FILE_BUTTON</td>//form[@method='post'][@enctype='multipart/form-data']/a[contains(.,'Submit')]
+	<td>//form[@method='post'][@enctype='multipart/form-data']/*[@type='submit' or @value='Submit' or contains(.,'Submit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UPLOAD_BUTTON</td>
+	<td>//span[text()='Upload']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

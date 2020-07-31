@@ -371,7 +371,10 @@ definition {
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "site-name");
 
-		DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+		DisplayPageTemplatesAdmin.addDisplayPage(
+			contentType = "Web Content Article",
+			displayPageName = "Display Page Name",
+			subType = "Basic Web Content");
 
 		PageEditor.addFragment(
 			collectionName = "Content Display",
@@ -499,7 +502,10 @@ definition {
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "site-name");
 
-		DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+		DisplayPageTemplatesAdmin.addDisplayPage(
+			contentType = "Web Content Article",
+			displayPageName = "Display Page Name",
+			subType = "Basic Web Content");
 
 		PageEditor.addWidget(portletName = "Web Content Display");
 

@@ -798,6 +798,7 @@ definition {
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 		DisplayPageTemplatesAdmin.addDisplayPage(
+			contentType = "Web Content Article",
 			displayPageName = "Display Page Name",
 			subType = "WC Structure Name");
 

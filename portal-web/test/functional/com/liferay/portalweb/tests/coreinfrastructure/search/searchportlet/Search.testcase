@@ -479,7 +479,7 @@ definition {
 
 		SearchPortlets.configureWidgetScope(searchScope = "Let the User Choose");
 
-		SearchPortlets.selectWidgetScopeInput(searchScope = "Everything");
+		SearchPortlets.chooseWidgetScope(searchScope = "Everything");
 
 		SearchPortlets.searchWidget(searchTerm = "Potato");
 
@@ -1102,7 +1102,7 @@ definition {
 
 		SearchPortlets.configureEmbeddedScope(searchScope = "Let the User Choose");
 
-		SearchPortlets.selectEmbeddedScopeInput(searchScope = "Everything");
+		SearchPortlets.chooseEmbeddedScope(searchScope = "Everything");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Apple");
 
@@ -1128,7 +1128,7 @@ definition {
 			key_fieldName = "Site Name 3",
 			locator1 = "FormFields#CHECKBOX_LABEL");
 
-		SearchPortlets.selectEmbeddedScopeInput(searchScope = "This Site");
+		SearchPortlets.chooseEmbeddedScope(searchScope = "This Site");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Apple");
 

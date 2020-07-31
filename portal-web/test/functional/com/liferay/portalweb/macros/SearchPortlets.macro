@@ -30,12 +30,34 @@ definition {
 		}
 	}
 
+	macro chooseEmbeddedScope {
+		if (("${searchScope}" == "Everything") || ("${searchScope}" == "This Site")) {
+			Select(
+				locator1 = "Search#EMBEDDED_SEARCH_BAR_SCOPE_SELECT",
+				value1 = "${searchScope}");
+		}
+		else {
+			fail("Invalid search scope. Must be (Everything|This Site).");
+		}
+	}
+
 	macro chooseSortOption {
 		Click(locator1 = "Search#SORT_PORTLET_DROPDOWN");
 
 		Click(
 			locator1 = "Search#SORT_PORTLET_SORT_OPTION",
 			sortOption = "${sortOption}");
+	}
+
+	macro chooseWidgetScope {
+		if (("${searchScope}" == "Everything") || ("${searchScope}" == "This Site")) {
+			Select(
+				locator1 = "Search#SEARCH_BAR_WIDGET_SCOPE_SELECT",
+				value1 = "${searchScope}");
+		}
+		else {
+			fail("Invalid search scope. Must be (Everything|This Site).");
+		}
 	}
 
 	macro configureCustomFilter {
@@ -438,28 +460,6 @@ definition {
 			value1 = "\RETURN");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
-	}
-
-	macro selectEmbeddedScopeInput {
-		if (("${searchScope}" == "Everything") || ("${searchScope}" == "This Site")) {
-			Select(
-				locator1 = "Search#EMBEDDED_SEARCH_BAR_SCOPE_SELECT",
-				value1 = "${searchScope}");
-		}
-		else {
-			fail("Invalid search scope. Must be (Everything|This Site).");
-		}
-	}
-
-	macro selectWidgetScopeInput {
-		if (("${searchScope}" == "Everything") || ("${searchScope}" == "This Site")) {
-			Select(
-				locator1 = "Search#SEARCH_BAR_WIDGET_SCOPE_SELECT",
-				value1 = "${searchScope}");
-		}
-		else {
-			fail("Invalid search scope. Must be (Everything|This Site).");
-		}
 	}
 
 	macro setupSimilarResultsPage {

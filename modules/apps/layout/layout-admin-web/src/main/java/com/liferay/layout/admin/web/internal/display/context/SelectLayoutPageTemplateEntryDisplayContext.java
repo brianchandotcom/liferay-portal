@@ -138,8 +138,9 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 		}
 
 		if (styleBookEntry == null) {
-			StyleBookEntryLocalServiceUtil.fetchDefaultStyleBookEntry(
-				layout.getGroupId());
+			styleBookEntry =
+				StyleBookEntryLocalServiceUtil.fetchDefaultStyleBookEntry(
+					layout.getGroupId());
 		}
 
 		return styleBookEntry;

@@ -1,5 +1,27 @@
 definition {
 
+	macro addUserInfos {
+		Type(
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
+			value1 = "${userScreenName}");
+
+		Type(
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
+			value1 = "${userEmailAddress}");
+
+		Type(
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD",
+			value1 = "${userFirstName}");
+
+		Type(
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
+			value1 = "${userLastName}");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro addUsers {
 		LexiconEntry.gotoAdd();
 
@@ -18,21 +40,15 @@ definition {
 			key_accountName = "${accountName}",
 			locator1 = "Account#ADD_USER_HEADER");
 
-		Type(
-			locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
-			value1 = "${userScreenName}");
-
-		Type(
-			locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
-			value1 = "${userEmailAddress}");
-
-		Type(
-			locator1 = "UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD",
-			value1 = "${userFirstName}");
-
-		Type(
-			locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
-			value1 = "${userLastName}");
+		AccountUsers.addUserInfos(
+			accountName = "${accountName}",
+			blockedDomainName = "${blockedDomainName}",
+			domainValidation = "${domainValidation}",
+			invalidDomainName = "${invalidDomainName}",
+			userEmailAddress = "${userEmailAddress}",
+			userFirstName = "${userFirstName}",
+			userLastName = "${userLastName}",
+			userScreenName = "${userScreenName}");
 
 		Button.clickSave();
 

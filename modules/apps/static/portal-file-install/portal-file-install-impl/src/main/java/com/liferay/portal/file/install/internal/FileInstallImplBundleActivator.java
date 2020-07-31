@@ -15,7 +15,6 @@
 package com.liferay.portal.file.install.internal;
 
 import com.liferay.portal.file.install.FileInstaller;
-import com.liferay.portal.file.install.internal.properties.InterpolationUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
@@ -158,8 +157,6 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 	}
 
 	private void _updated(Map<String, String> properties) {
-		InterpolationUtil.performSubstitution(properties, _bundleContext);
-
 		DirectoryWatcher directoryWatcher = new DirectoryWatcher(
 			properties, _bundleContext);
 

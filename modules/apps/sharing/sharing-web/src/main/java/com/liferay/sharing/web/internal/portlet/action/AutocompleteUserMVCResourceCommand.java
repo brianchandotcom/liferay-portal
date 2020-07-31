@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.UserScreenNameComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -94,6 +95,10 @@ public class AutocompleteUserMVCResourceCommand extends BaseMVCResourceCommand {
 		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
 
 		String query = ParamUtil.getString(httpServletRequest, "query");
+
+		if (Validator.isNull(query)) {
+			return Collections.emptyList();
+		}
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();

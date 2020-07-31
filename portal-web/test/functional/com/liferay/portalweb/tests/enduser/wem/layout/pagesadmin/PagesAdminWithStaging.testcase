@@ -121,4 +121,98 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-110183. Can view information about collection items of collection page when enable Live."
+	@priority = "3"
+	test ViewCollectionItemInformationInStaging {
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content",
+			groupName = "Test Site Name (Staging)",
+			site = "false",
+			title = "Webcontent Title");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Test Site Name (Staging)",
+			site = "false");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document Title",
+			groupName = "Test Site Name-staging",
+			mimeType = "image/jpeg",
+			site = "false",
+			sourceFileName = "Document_1.jpg");
+
+		JSONAssetlist.addDynamicAssetListEntryWithItemType(
+			groupName = "Test Site Name (Staging)",
+			itemType = "All Types",
+			site = "false",
+			title = "Dynamic Collection");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+		ContentPages.addPublicCollectionPage(
+			collectionName = "Dynamic Collection",
+			pageName = "Content Collection Page Name",
+			tabName = "Collections");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+		PagesFinder.goToFindAPage();
+
+		PagesFinder.viewPageNameInPagesFinder(pageName = "Content Collection Page Name");
+
+		PagesFinder.gotoPageEllipsisItem(
+			item = "View Collection Items",
+			pageName = "Content Collection Page Name");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		for (var tableHeader : list "Title,Type,Author,Modified Date,Create Date") {
+			AssertElementPresent(
+				key_tableHeader = "${tableHeader}",
+				locator1 = "LexiconTable#TABLE_HEADER");
+		}
+
+		Page.viewCollectionItem(itemName = "Document Title");
+
+		Page.viewCollectionItem(
+			itemName = "Blogs Entry Title",
+			key_rowNumber = "2");
+
+		Page.viewCollectionItem(
+			itemName = "Webcontent Title",
+			key_rowNumber = "3");
+
+		IFrame.closeFrame();
+
+		ProductMenuHelper.openProductMenu();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "View Collection Items",
+			pageName = "Content Collection Page Name");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		for (var tableHeader : list "Title,Type,Author,Modified Date,Create Date") {
+			AssertElementPresent(
+				key_tableHeader = "${tableHeader}",
+				locator1 = "LexiconTable#TABLE_HEADER");
+		}
+
+		Page.viewCollectionItem(itemName = "Document Title");
+
+		Page.viewCollectionItem(
+			itemName = "Blogs Entry Title",
+			key_rowNumber = "2");
+
+		Page.viewCollectionItem(
+			itemName = "Webcontent Title",
+			key_rowNumber = "3");
+	}
+
 }

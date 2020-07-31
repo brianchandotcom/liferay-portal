@@ -2,21 +2,17 @@ definition {
 
 	@summary = "Select a content type and subtype when adding a display page. These locators should not be needed to be reused."
 	macro _selectMappingTypes {
-		if (!(isSet(contentType))) {
-			var contentType = "Web Content Article";
+		if (isSet(contentType)) {
+			Select(
+				locator1 = "//div[contains(.,'Content Type')]/select",
+				value1 = "${contentType}");
 		}
 
-		if (!(isSet(subType))) {
-			var subType = "Basic Web Content";
+		if (isSet(subType)) {
+			Select(
+				locator1 = "//div[contains(.,'Subtype')]/select",
+				value1 = "${subType}");
 		}
-
-		Select(
-			locator1 = "//div[contains(.,'Content Type')]/select",
-			value1 = "${contentType}");
-
-		Select(
-			locator1 = "//div[contains(.,'Subtype')]/select",
-			value1 = "${subType}");
 	}
 
 	macro addDisplayPage {

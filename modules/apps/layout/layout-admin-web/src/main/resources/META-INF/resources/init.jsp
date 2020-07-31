@@ -49,6 +49,7 @@ page import="com.liferay.layout.admin.web.internal.display.context.SelectThemeDi
 page import="com.liferay.layout.admin.web.internal.display.context.SelectThemeManagementToolbarDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.servlet.taglib.clay.CollectionProvidersVerticalCard" %><%@
 page import="com.liferay.layout.admin.web.internal.servlet.taglib.clay.CollectionsVerticalCard" %><%@
+page import="com.liferay.layout.admin.web.internal.servlet.taglib.clay.DefaultStylebookLayoutVerticalCard" %><%@
 page import="com.liferay.layout.admin.web.internal.servlet.taglib.clay.SelectBasicTemplatesHorizontalCard" %><%@
 page import="com.liferay.layout.admin.web.internal.servlet.taglib.clay.SelectBasicTemplatesVerticalCard" %><%@
 page import="com.liferay.layout.admin.web.internal.servlet.taglib.clay.SelectGlobalTemplatesVerticalCard" %><%@

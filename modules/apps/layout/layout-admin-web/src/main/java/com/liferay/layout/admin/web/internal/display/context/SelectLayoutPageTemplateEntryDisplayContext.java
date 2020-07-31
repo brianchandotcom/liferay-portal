@@ -22,7 +22,9 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUt
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypeController;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -117,6 +119,30 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 				_themeDisplay.getScopeGroupId(),
 				getLayoutPageTemplateCollectionId(),
 				WorkflowConstants.STATUS_APPROVED);
+	}
+
+	public StyleBookEntry getLayoutStyleBookEntry(Layout layout) {
+		StyleBookEntry styleBookEntry = null;
+
+		if (layout.getStyleBookEntryId() > 0) {
+			styleBookEntry = StyleBookEntryLocalServiceUtil.fetchStyleBookEntry(
+				layout.getStyleBookEntryId());
+		}
+
+		if ((styleBookEntry == null) && (layout.getMasterLayoutPlid() > 0)) {
+			Layout masterLayout = LayoutLocalServiceUtil.fetchLayout(
+				layout.getMasterLayoutPlid());
+
+			styleBookEntry = StyleBookEntryLocalServiceUtil.fetchStyleBookEntry(
+				masterLayout.getStyleBookEntryId());
+		}
+
+		if (styleBookEntry == null) {
+			StyleBookEntryLocalServiceUtil.fetchDefaultStyleBookEntry(
+				layout.getGroupId());
+		}
+
+		return styleBookEntry;
 	}
 
 	public List<LayoutPageTemplateEntry> getMasterLayoutPageTemplateEntries() {

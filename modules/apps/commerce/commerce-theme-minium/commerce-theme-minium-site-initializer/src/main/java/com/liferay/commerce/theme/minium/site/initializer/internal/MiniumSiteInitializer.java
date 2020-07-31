@@ -84,12 +84,14 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
+import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -509,9 +511,11 @@ public class MiniumSiteInitializer implements SiteInitializer {
 			ServiceContext serviceContext, long commerceChannelId)
 		throws PortalException {
 
-		ModelPermissions modelPermissions = new ModelPermissions();
-
-		modelPermissions.addRolePermissions("Operations Manager", "VIEW");
+		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
+			HashMapBuilder.put(
+				"Operations Manager", new String[] {"VIEW"}
+			).build(),
+			null);
 
 		_resourcePermissionLocalService.addModelResourcePermissions(
 			serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),

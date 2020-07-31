@@ -148,6 +148,50 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
+	public List<ContentDashboardItemAction> getContentDashboardItemActions(
+		HttpServletRequest httpServletRequest,
+		ContentDashboardItemAction.Type... types) {
+
+		List<ContentDashboardItemActionProvider>
+			contentDashboardItemActionProviders =
+				_contentDashboardItemActionProviderTracker.
+					getContentDashboardItemActionProviders(
+						JournalArticle.class.getName(), types);
+
+		Stream<ContentDashboardItemActionProvider> stream =
+			contentDashboardItemActionProviders.stream();
+
+		return stream.map(
+			contentDashboardItemActionProvider -> {
+				try {
+					if (!contentDashboardItemActionProvider.isShow(
+							_journalArticle, httpServletRequest)) {
+
+						return null;
+					}
+
+					return contentDashboardItemActionProvider.
+						getContentDashboardItemAction(
+							_journalArticle, httpServletRequest);
+				}
+				catch (ContentDashboardItemActionException
+							contentDashboardItemActionException) {
+
+					_log.error(
+						contentDashboardItemActionException,
+						contentDashboardItemActionException);
+				}
+
+				return null;
+			}
+		).filter(
+			Objects::nonNull
+		).collect(
+			Collectors.toList()
+		);
+	}
+
+	@Override
 	public ContentDashboardItemType getContentDashboardItemType() {
 		return _contentDashboardItemType;
 	}

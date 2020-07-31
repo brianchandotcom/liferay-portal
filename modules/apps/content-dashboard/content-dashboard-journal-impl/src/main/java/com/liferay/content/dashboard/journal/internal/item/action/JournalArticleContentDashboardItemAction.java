@@ -50,6 +50,11 @@ public class JournalArticleContentDashboardItemAction
 	}
 
 	@Override
+	public String getIcon() {
+		return "view";
+	}
+
+	@Override
 	public String getLabel(Locale locale) {
 		return _language.get(locale, "view");
 	}

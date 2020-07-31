@@ -35,6 +35,11 @@ public class AnalyticsReportsContentDashboardItemAction
 	}
 
 	@Override
+	public String getIcon() {
+		return "analytics";
+	}
+
+	@Override
 	public String getLabel(Locale locale) {
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(locale);

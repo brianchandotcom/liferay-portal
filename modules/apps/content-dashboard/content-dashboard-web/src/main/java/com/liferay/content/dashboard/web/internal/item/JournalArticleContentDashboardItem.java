@@ -127,6 +127,17 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
+	public List<Locale> getAvailableLocales() {
+		return Stream.of(
+			_journalArticle.getAvailableLanguageIds()
+		).map(
+			LocaleUtil::fromLanguageId
+		).collect(
+			Collectors.toList()
+		);
+	}
+
+	@Override
 	public String getClassName() {
 		return JournalArticle.class.getName();
 	}
@@ -274,11 +285,11 @@ public class JournalArticleContentDashboardItem
 	public Map<Locale, String> getViewURLs(
 		HttpServletRequest httpServletRequest) {
 
-		return Stream.of(
-			_journalArticle.getAvailableLanguageIds()
-		).map(
-			LocaleUtil::fromLanguageId
-		).map(
+		List<Locale> locales = getAvailableLocales();
+
+		Stream<Locale> stream = locales.stream();
+
+		return stream.map(
 			locale -> new AbstractMap.SimpleEntry<>(
 				locale, _getViewURL(httpServletRequest, locale))
 		).collect(

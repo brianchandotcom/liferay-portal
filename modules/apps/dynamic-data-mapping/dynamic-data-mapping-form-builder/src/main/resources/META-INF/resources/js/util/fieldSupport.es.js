@@ -59,6 +59,7 @@ export const createField = (props, event) => {
 			...fieldType.settingsContext,
 			pages: normalizeSettingsContextPages(
 				fieldType.settingsContext.pages,
+				defaultLanguageId,
 				editingLanguageId,
 				fieldType,
 				newFieldName
@@ -220,6 +221,7 @@ export const localizeField = (field, defaultLanguageId, editingLanguageId) => {
 
 export const normalizeSettingsContextPages = (
 	pages,
+	defaultLanguageId,
 	editingLanguageId,
 	fieldType,
 	generatedFieldName
@@ -237,12 +239,21 @@ export const normalizeSettingsContextPages = (
 				};
 			}
 			else if (fieldName === 'label') {
+				const localizedValue = {
+					...field.localizedValue,
+					[editingLanguageId]: fieldType.label,
+				};
+
+				if (
+					editingLanguageId !== defaultLanguageId &&
+					!localizedValue[defaultLanguageId]
+				) {
+					localizedValue[defaultLanguageId] = fieldType.label;
+				}
+
 				field = {
 					...field,
-					localizedValue: {
-						...field.localizedValue,
-						[editingLanguageId]: fieldType.label,
-					},
+					localizedValue,
 					type: 'text',
 					value: fieldType.label,
 				};

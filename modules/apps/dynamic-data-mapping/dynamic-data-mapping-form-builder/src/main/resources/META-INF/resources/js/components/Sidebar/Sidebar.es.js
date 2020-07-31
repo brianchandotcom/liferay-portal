@@ -65,6 +65,7 @@ class Sidebar extends Component {
 			...newFieldType.settingsContext,
 			pages: normalizeSettingsContextPages(
 				newFieldType.settingsContext.pages,
+				defaultLanguageId,
 				editingLanguageId,
 				newFieldType,
 				focusedField.fieldName

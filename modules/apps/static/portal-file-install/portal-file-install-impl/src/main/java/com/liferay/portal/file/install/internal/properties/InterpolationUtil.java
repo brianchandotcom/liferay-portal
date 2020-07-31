@@ -14,11 +14,7 @@
 
 package com.liferay.portal.file.install.internal.properties;
 
-import com.liferay.petra.string.CharPool;
-
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Matthew Tambara
@@ -36,38 +32,7 @@ public class InterpolationUtil {
 	public static String substVars(String value)
 		throws IllegalArgumentException {
 
-		return _unescape(_substVars(value));
-	}
-
-	private static int _indexOf(String value, int fromIndex) {
-		Matcher escapedOpeningCurlyMatcher = _escapedOpeningCurly.matcher(
-			value);
-
-		Matcher escapedClosingCurlyMatcher = _escapedClosingCurly.matcher(
-			value);
-
-		int escapedOpeningCurlyMatcherIndex = Integer.MAX_VALUE;
-
-		if (escapedOpeningCurlyMatcher.find(fromIndex)) {
-			escapedOpeningCurlyMatcherIndex =
-				escapedOpeningCurlyMatcher.start();
-		}
-
-		int escapedClosingCurlyMatcherIndex = Integer.MAX_VALUE;
-
-		if (escapedClosingCurlyMatcher.find(fromIndex)) {
-			escapedClosingCurlyMatcherIndex =
-				escapedClosingCurlyMatcher.start();
-		}
-
-		int index = Math.min(
-			escapedOpeningCurlyMatcherIndex, escapedClosingCurlyMatcherIndex);
-
-		if (index == Integer.MAX_VALUE) {
-			return -1;
-		}
-
-		return index;
+		return _substVars(value);
 	}
 
 	private static String _substVars(String value)
@@ -157,33 +122,6 @@ public class InterpolationUtil {
 		return value;
 	}
 
-	private static String _unescape(String value) {
-		value = value.replaceAll("\\" + _MARKER, "\\$");
-
-		Matcher existingSubstVarMatcher = _existingSubstVar.matcher(value);
-
-		if (!existingSubstVarMatcher.matches()) {
-			return value;
-		}
-
-		int escape = _indexOf(value, 0);
-
-		while ((escape >= 0) && (escape < (value.length() - 1))) {
-			char c = value.charAt(escape + 1);
-
-			if ((c == CharPool.OPEN_CURLY_BRACE) ||
-				(c == CharPool.CLOSE_CURLY_BRACE) || (c == _ESCAPE_CHAR)) {
-
-				value =
-					value.substring(0, escape) + value.substring(escape + 1);
-			}
-
-			escape = _indexOf(value, escape + 1);
-		}
-
-		return value;
-	}
-
 	private InterpolationUtil() {
 	}
 
@@ -192,14 +130,5 @@ public class InterpolationUtil {
 	private static final String _DELIM_STOP = "}";
 
 	private static final char _ESCAPE_CHAR = '\\';
-
-	private static final String _MARKER = "$__";
-
-	private static final Pattern _escapedClosingCurly = Pattern.compile(
-		"\\\\+\\}");
-	private static final Pattern _escapedOpeningCurly = Pattern.compile(
-		"\\\\+\\{");
-	private static final Pattern _existingSubstVar = Pattern.compile(
-		".*\\$\\\\*\\{.*\\}.*");
 
 }

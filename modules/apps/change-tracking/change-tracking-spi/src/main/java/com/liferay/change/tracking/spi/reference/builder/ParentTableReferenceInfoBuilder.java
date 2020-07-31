@@ -42,13 +42,13 @@ public interface ParentTableReferenceInfoBuilder<T extends Table<T>> {
 			throw new IllegalArgumentException();
 		}
 
-		Table<?> table = pkColumn.getTable();
+		Table<?> table = classPKColumn.getTable();
 
 		return referenceInnerJoin(
 			fromStep -> fromStep.from(
-				table
+				pkColumn.getTable()
 			).innerJoinON(
-				classPKColumn.getTable(), pkColumn.eq(classPKColumn)
+				table, pkColumn.eq(classPKColumn)
 			).innerJoinON(
 				ClassNameTable.INSTANCE,
 				ClassNameTable.INSTANCE.value.eq(

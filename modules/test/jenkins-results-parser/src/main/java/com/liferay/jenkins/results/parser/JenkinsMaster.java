@@ -119,6 +119,10 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 			getOnlineJenkinsSlavesCount();
 	}
 
+	public List<String> getBuildURLs() {
+		return _buildURLs;
+	}
+
 	public int getIdleJenkinsSlavesCount() {
 		int idleSlavesCount = 0;
 
@@ -183,12 +187,8 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 		return onlineJenkinsSlavesCount;
 	}
 
-	public List<String> getQueuedJobURLs() {
-		return _queuedJobURLs;
-	}
-
-	public List<String> getRunningJobURLs() {
-		return _runningJobURLs;
+	public List<String> getQueuedBuildURLs() {
+		return _queuedBuildURLs;
 	}
 
 	public Integer getSlaveRAM() {
@@ -285,7 +285,7 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 								"currentExecutable");
 
 						if (currentExecutableJSONObject.has("url")) {
-							_runningJobURLs.add(
+							_buildURLs.add(
 								currentExecutableJSONObject.getString("url"));
 						}
 					}
@@ -309,7 +309,7 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 					"task");
 
 				if (taskJSONObject.has("url")) {
-					_queuedJobURLs.add(taskJSONObject.getString("url"));
+					_queuedBuildURLs.add(taskJSONObject.getString("url"));
 				}
 
 				String taskName = taskJSONObject.getString("name");
@@ -363,13 +363,13 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 
 	private boolean _available;
 	private final Map<Long, Integer> _batchSizes = new TreeMap<>();
+	private List<String> _buildURLs = new ArrayList<>();
 	private final Map<String, JenkinsSlave> _jenkinsSlavesMap = new HashMap<>();
 	private final String _masterName;
 	private final String _masterURL;
 	private int _queueCount;
-	private List<String> _queuedJobURLs = new ArrayList<>();
+	private List<String> _queuedBuildURLs = new ArrayList<>();
 	private int _reportedAvailableSlavesCount;
-	private List<String> _runningJobURLs = new ArrayList<>();
 	private final Integer _slaveRAM;
 
 }

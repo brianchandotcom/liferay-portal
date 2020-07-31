@@ -126,7 +126,7 @@ public class JenkinsCohort {
 		}
 
 		List<Callable<Void>> callables = new ArrayList<>();
-		final List<String> jobURLs = new ArrayList<>();
+		final List<String> buildURLs = new ArrayList<>();
 
 		for (final JenkinsMaster jenkinsMaster : _jenkinsMastersMap.values()) {
 			Callable<Void> callable = new Callable<Void>() {
@@ -135,8 +135,8 @@ public class JenkinsCohort {
 				public Void call() {
 					jenkinsMaster.update();
 
-					jobURLs.addAll(jenkinsMaster.getRunningJobURLs());
-					jobURLs.addAll(jenkinsMaster.getQueuedJobURLs());
+					buildURLs.addAll(jenkinsMaster.getBuildURLs());
+					buildURLs.addAll(jenkinsMaster.getQueuedBuildURLs());
 
 					return null;
 				}
@@ -155,8 +155,8 @@ public class JenkinsCohort {
 
 		parallelExecutor.execute();
 
-		for (String jobURL : jobURLs) {
-			_loadJobURL(jobURL);
+		for (String buildURL : buildURLs) {
+			_loadBuildURL(buildURL);
 		}
 	}
 
@@ -226,8 +226,8 @@ public class JenkinsCohort {
 		JenkinsResultsParserUtil.write(filePath + "/data.js", sb.toString());
 	}
 
-	private void _loadJobURL(String jobURL) {
-		Matcher jobNameMatcher = _jobNamePattern.matcher(jobURL);
+	private void _loadBuildURL(String buildURL) {
+		Matcher jobNameMatcher = _jobNamePattern.matcher(buildURL);
 
 		jobNameMatcher.find();
 
@@ -247,7 +247,7 @@ public class JenkinsCohort {
 
 		JenkinsCohortJob jenkinsCohortJob = _jenkinsCohortJobsMap.get(jobName);
 
-		Matcher buildNumberMatcher = _buildNumberPattern.matcher(jobURL);
+		Matcher buildNumberMatcher = _buildNumberPattern.matcher(buildURL);
 
 		if (buildNumberMatcher.find()) {
 			jenkinsCohortJob.incrementRunningJobCount();
@@ -257,7 +257,7 @@ public class JenkinsCohort {
 		}
 
 		if (batchJobName == null) {
-			jenkinsCohortJob.addTopLevelBuildURL(jobURL);
+			jenkinsCohortJob.addTopLevelBuildURL(buildURL);
 		}
 	}
 

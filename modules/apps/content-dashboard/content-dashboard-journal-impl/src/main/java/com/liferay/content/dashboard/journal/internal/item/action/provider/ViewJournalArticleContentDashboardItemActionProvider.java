@@ -17,7 +17,7 @@ package com.liferay.content.dashboard.journal.internal.item.action.provider;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
-import com.liferay.content.dashboard.journal.internal.item.action.JournalArticleContentDashboardItemAction;
+import com.liferay.content.dashboard.journal.internal.item.action.ViewJournalArticleContentDashboardItemAction;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.Validator;
@@ -30,18 +30,15 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Cristina González
  */
-@Component(
-	property = "content.dashboard.item.action.type=view",
-	service = ContentDashboardItemActionProvider.class
-)
-public class JournalArticleContentDashboardItemActionProvider
+@Component(service = ContentDashboardItemActionProvider.class)
+public class ViewJournalArticleContentDashboardItemActionProvider
 	implements ContentDashboardItemActionProvider<JournalArticle> {
 
 	@Override
 	public ContentDashboardItemAction getContentDashboardItemAction(
 		JournalArticle journalArticle, HttpServletRequest httpServletRequest) {
 
-		return new JournalArticleContentDashboardItemAction(
+		return new ViewJournalArticleContentDashboardItemAction(
 			_assetDisplayPageFriendlyURLProvider, httpServletRequest,
 			journalArticle, _language);
 	}

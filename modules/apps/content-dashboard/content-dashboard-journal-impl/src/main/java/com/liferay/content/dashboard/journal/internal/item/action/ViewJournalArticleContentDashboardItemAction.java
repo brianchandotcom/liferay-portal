@@ -34,10 +34,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Cristina González
  */
-public class JournalArticleContentDashboardItemAction
+public class ViewJournalArticleContentDashboardItemAction
 	implements ContentDashboardItemAction {
 
-	public JournalArticleContentDashboardItemAction(
+	public ViewJournalArticleContentDashboardItemAction(
 		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
 		HttpServletRequest httpServletRequest, JournalArticle journalArticle,
 		Language language) {
@@ -128,7 +128,7 @@ public class JournalArticleContentDashboardItemAction
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		JournalArticleContentDashboardItemAction.class);
+		ViewJournalArticleContentDashboardItemAction.class);
 
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;

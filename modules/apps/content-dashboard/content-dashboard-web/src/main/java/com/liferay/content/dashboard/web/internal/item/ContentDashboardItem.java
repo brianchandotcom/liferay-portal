@@ -57,8 +57,6 @@ public interface ContentDashboardItem<T> {
 
 	public Locale getDefaultLocale();
 
-	public String getEditURL(HttpServletRequest httpServletRequest);
-
 	public Date getExpirationDate();
 
 	public Date getModifiedDate();
@@ -76,13 +74,6 @@ public interface ContentDashboardItem<T> {
 	public String getUserPortraitURL(HttpServletRequest httpServletRequest);
 
 	public List<Version> getVersions(Locale locale);
-
-	public String getViewURL(HttpServletRequest httpServletRequest);
-
-	public Map<Locale, String> getViewURLs(
-		HttpServletRequest httpServletRequest);
-
-	public boolean isEditURLEnabled(HttpServletRequest httpServletRequest);
 
 	public boolean isViewURLEnabled(HttpServletRequest httpServletRequest);
 

@@ -30,17 +30,14 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.AbstractMap;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -219,22 +216,6 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
-	public String getEditURL(HttpServletRequest httpServletRequest) {
-		try {
-			return Optional.ofNullable(
-				_infoEditURLProvider.getURL(_journalArticle, httpServletRequest)
-			).orElse(
-				StringPool.BLANK
-			);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			return StringPool.BLANK;
-		}
-	}
-
-	@Override
 	public Date getExpirationDate() {
 		return _journalArticle.getExpirationDate();
 	}
@@ -317,63 +298,10 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
-	public String getViewURL(HttpServletRequest httpServletRequest) {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		return _getViewURL(httpServletRequest, themeDisplay.getLocale());
-	}
-
-	@Override
-	public Map<Locale, String> getViewURLs(
-		HttpServletRequest httpServletRequest) {
-
-		List<Locale> locales = getAvailableLocales();
-
-		Stream<Locale> stream = locales.stream();
-
-		return stream.map(
-			locale -> new AbstractMap.SimpleEntry<>(
-				locale, _getViewURL(httpServletRequest, locale))
-		).collect(
-			Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
-		);
-	}
-
-	@Override
-	public boolean isEditURLEnabled(HttpServletRequest httpServletRequest) {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		try {
-			return _modelResourcePermission.contains(
-				themeDisplay.getPermissionChecker(), _journalArticle,
-				ActionKeys.UPDATE);
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
-
-			return false;
-		}
-	}
-
-	@Override
 	public boolean isViewURLEnabled(HttpServletRequest httpServletRequest) {
 		if (!_journalArticle.hasApprovedVersion()) {
 			return false;
 		}
-
-		if (Validator.isNull(getViewURL(httpServletRequest))) {
-			return false;
-		}
-
-		return true;
-	}
-
-	private String _getViewURL(
-		HttpServletRequest httpServletRequest, Locale locale) {
 
 		Optional<ContentDashboardItemActionProvider>
 			contentDashboardItemActionProviderOptional =
@@ -383,29 +311,11 @@ public class JournalArticleContentDashboardItem
 						ContentDashboardItemAction.Type.VIEW);
 
 		return contentDashboardItemActionProviderOptional.map(
-			contentDashboardItemActionProvider -> {
-				try {
-					return contentDashboardItemActionProvider.
-						getContentDashboardItemAction(
-							_journalArticle, httpServletRequest);
-				}
-				catch (ContentDashboardItemActionException
-							contentDashboardItemActionException) {
-
-					_log.error(
-						contentDashboardItemActionException,
-						contentDashboardItemActionException);
-				}
-
-				return null;
-			}
-		).filter(
-			Objects::nonNull
-		).map(
-			contentDashboardItemAction -> contentDashboardItemAction.getURL(
-				locale)
+			contentDashboardItemActionProvider ->
+				contentDashboardItemActionProvider.isShow(
+					_journalArticle, httpServletRequest)
 		).orElse(
-			StringPool.BLANK
+			false
 		);
 	}
 

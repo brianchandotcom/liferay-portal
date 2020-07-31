@@ -163,58 +163,6 @@ public class JournalArticleContentDashboardItemTest {
 	}
 
 	@Test
-	public void testGetEditURL() throws Exception {
-		InfoEditURLProvider<JournalArticle> infoEditURLProvider = Mockito.mock(
-			InfoEditURLProvider.class);
-
-		Mockito.when(
-			infoEditURLProvider.getURL(
-				Mockito.any(JournalArticle.class),
-				Mockito.any(HttpServletRequest.class))
-		).thenReturn(
-			"validURL"
-		);
-
-		JournalArticle journalArticle = _getJournalArticle();
-
-		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
-			new JournalArticleContentDashboardItem(
-				null, null, null, null, null, infoEditURLProvider,
-				journalArticle, null, null, null, null);
-
-		Assert.assertEquals(
-			"validURL",
-			journalArticleContentDashboardItem.getEditURL(
-				_getHttpServletRequest()));
-	}
-
-	@Test
-	public void testGetEditURLWithNullURL() throws Exception {
-		InfoEditURLProvider<JournalArticle> infoEditURLProvider = Mockito.mock(
-			InfoEditURLProvider.class);
-
-		Mockito.when(
-			infoEditURLProvider.getURL(
-				Mockito.any(JournalArticle.class),
-				Mockito.any(HttpServletRequest.class))
-		).thenReturn(
-			null
-		);
-
-		JournalArticle journalArticle = _getJournalArticle();
-
-		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
-			new JournalArticleContentDashboardItem(
-				null, null, null, null, null, infoEditURLProvider,
-				journalArticle, null, null, null, null);
-
-		Assert.assertEquals(
-			StringPool.BLANK,
-			journalArticleContentDashboardItem.getEditURL(
-				_getHttpServletRequest()));
-	}
-
-	@Test
 	public void testGetExpirationDate() {
 		JournalArticle journalArticle = _getJournalArticle();
 
@@ -426,88 +374,6 @@ public class JournalArticleContentDashboardItemTest {
 	}
 
 	@Test
-	public void testGetViewURL() throws Exception {
-		JournalArticle journalArticle = _getJournalArticle();
-
-		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
-			new JournalArticleContentDashboardItem(
-				null, null,
-				_getContentDashboardItemActionProviderTracker("validURL"), null,
-				null, null, journalArticle, _getLanguage(), null, null, null);
-
-		Assert.assertEquals(
-			"validURL",
-			journalArticleContentDashboardItem.getViewURL(
-				_getHttpServletRequest()));
-	}
-
-	@Test
-	public void testGetViewURLWithNullFriendlyURL() throws Exception {
-		JournalArticle journalArticle = _getJournalArticle();
-
-		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
-			new JournalArticleContentDashboardItem(
-				null, null, _getContentDashboardItemActionProviderTracker(null),
-				null, null, null, journalArticle, _getLanguage(), null, null,
-				null);
-
-		Assert.assertEquals(
-			StringPool.BLANK,
-			journalArticleContentDashboardItem.getViewURL(
-				_getHttpServletRequest()));
-	}
-
-	@Test
-	public void testIsEditURLEnabled() throws Exception {
-		InfoEditURLProvider<JournalArticle> infoEditURLProvider = Mockito.mock(
-			InfoEditURLProvider.class);
-
-		ModelResourcePermission<JournalArticle> modelResourcePermission =
-			Mockito.mock(ModelResourcePermission.class);
-
-		Mockito.when(
-			modelResourcePermission.contains(
-				Mockito.any(PermissionChecker.class),
-				Mockito.any(JournalArticle.class), Mockito.anyString())
-		).thenReturn(
-			Boolean.TRUE
-		);
-
-		JournalArticle journalArticle = _getJournalArticle();
-
-		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
-			new JournalArticleContentDashboardItem(
-				null, null, null, null, null, infoEditURLProvider,
-				journalArticle, _getLanguage(), null, modelResourcePermission,
-				null);
-
-		Assert.assertTrue(
-			journalArticleContentDashboardItem.isEditURLEnabled(
-				_getHttpServletRequest()));
-	}
-
-	@Test
-	public void testIsEditURLEnabledWithoutPermissions() throws Exception {
-		InfoEditURLProvider<JournalArticle> infoEditURLProvider = Mockito.mock(
-			InfoEditURLProvider.class);
-
-		ModelResourcePermission<JournalArticle> modelResourcePermission =
-			Mockito.mock(ModelResourcePermission.class);
-
-		JournalArticle journalArticle = _getJournalArticle();
-
-		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
-			new JournalArticleContentDashboardItem(
-				null, null, null, null, null, infoEditURLProvider,
-				journalArticle, _getLanguage(), null, modelResourcePermission,
-				null);
-
-		Assert.assertFalse(
-			journalArticleContentDashboardItem.isEditURLEnabled(
-				_getHttpServletRequest()));
-	}
-
-	@Test
 	public void testIsViewURLEnabled() throws Exception {
 		JournalArticle journalArticle = _getJournalArticle();
 
@@ -518,54 +384,6 @@ public class JournalArticleContentDashboardItemTest {
 				null, null, journalArticle, _getLanguage(), null, null, null);
 
 		Assert.assertTrue(
-			journalArticleContentDashboardItem.isViewURLEnabled(
-				_getHttpServletRequest()));
-	}
-
-	@Test
-	public void testIsViewURLEnabledWithNotApprovedVersion() {
-		ContentDashboardItemActionProvider contentDashboardItemActionProvider =
-			Mockito.mock(ContentDashboardItemActionProvider.class);
-
-		ContentDashboardItemActionProviderTracker
-			contentDashboardItemActionProviderTracker = Mockito.mock(
-				ContentDashboardItemActionProviderTracker.class);
-
-		Mockito.when(
-			contentDashboardItemActionProviderTracker.
-				getContentDashboardItemActionProviders(Mockito.anyString())
-		).thenReturn(
-			Collections.singletonList(contentDashboardItemActionProvider)
-		);
-
-		JournalArticle journalArticle = _getJournalArticle();
-
-		Mockito.when(
-			journalArticle.hasApprovedVersion()
-		).thenReturn(
-			false
-		);
-
-		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
-			new JournalArticleContentDashboardItem(
-				null, null, contentDashboardItemActionProviderTracker, null,
-				null, null, journalArticle, null, null, null, null);
-
-		Assert.assertFalse(
-			journalArticleContentDashboardItem.isViewURLEnabled(null));
-	}
-
-	@Test
-	public void testIsViewURLEnabledWithNullFriendlyURL() throws Exception {
-		JournalArticle journalArticle = _getJournalArticle();
-
-		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
-			new JournalArticleContentDashboardItem(
-				null, null, _getContentDashboardItemActionProviderTracker(null),
-				null, null, null, journalArticle, _getLanguage(), null, null,
-				null);
-
-		Assert.assertFalse(
 			journalArticleContentDashboardItem.isViewURLEnabled(
 				_getHttpServletRequest()));
 	}
@@ -603,6 +421,14 @@ public class JournalArticleContentDashboardItemTest {
 			contentDashboardItemActionProvider.getType()
 		).thenReturn(
 			ContentDashboardItemAction.Type.VIEW
+		);
+
+		Mockito.when(
+			contentDashboardItemActionProvider.isShow(
+			Mockito.any(JournalArticle.class),
+				Mockito.any(HttpServletRequest.class))
+		).thenReturn(
+			true
 		);
 
 		ContentDashboardItemActionProviderTracker

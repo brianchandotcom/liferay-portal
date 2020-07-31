@@ -18,27 +18,29 @@ import ChildLink from '../../../shared/components/router/ChildLink.es';
 
 const Header = ({processId}) => {
 	return (
-		<ClayManagementToolbar className="autofit-row">
-			<ClayManagementToolbar.Item className="autofit-col-expand autofit-float-end">
-				<ClayTooltipProvider>
-					<span>
-						<span
-							className="workflow-tooltip"
-							data-testid="newSLA"
-							data-tooltip-align={'bottom'}
-							title={Liferay.Language.get('new-sla')}
-						>
-							<ChildLink
-								className="btn btn-primary nav-btn nav-btn-monospaced"
-								data-testid="newSLALink"
-								to={`/sla/${processId}/new`}
+		<ClayManagementToolbar>
+			<ClayManagementToolbar.ItemList expand>
+				<ClayManagementToolbar.Item className="autofit-col-expand autofit-float-end">
+					<ClayTooltipProvider>
+						<span>
+							<span
+								className="workflow-tooltip"
+								data-testid="newSLA"
+								data-tooltip-align={'bottom'}
+								title={Liferay.Language.get('new-sla')}
 							>
-								<ClayIcon symbol="plus" />
-							</ChildLink>
+								<ChildLink
+									className="btn btn-primary nav-btn nav-btn-monospaced"
+									data-testid="newSLALink"
+									to={`/sla/${processId}/new`}
+								>
+									<ClayIcon symbol="plus" />
+								</ChildLink>
+							</span>
 						</span>
-					</span>
-				</ClayTooltipProvider>
-			</ClayManagementToolbar.Item>
+					</ClayTooltipProvider>
+				</ClayManagementToolbar.Item>
+			</ClayManagementToolbar.ItemList>
 		</ClayManagementToolbar>
 	);
 };

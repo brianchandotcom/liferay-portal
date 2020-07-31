@@ -12,7 +12,10 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
+import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayModal, {useModal} from '@clayui/modal';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import {client, getSectionsByIdQuery} from '../utils/client.es';
@@ -22,6 +25,11 @@ import Link from './Link.es';
 export default ({section}) => {
 	const MAX_SECTIONS_IN_BREADCRUMB = 3;
 	const [breadcrumbNodes, setBreadcrumbNodes] = useState([]);
+	const [visible, setVisible] = useState(false);
+	const { observer, onClose } = useModal({
+		onClose: () => setVisible(false)
+	});
+
 
 	const getSubSections = (section) =>
 		(section &&
@@ -83,6 +91,8 @@ export default ({section}) => {
 
 	return (
 		<section className="align-items-center d-flex">
+			{visible &&
+				<NewTopicModal/>}
 			<div className="questions-breadcrumb">
 				<ol className="breadcrumb mb-0 ml-2">
 					{breadcrumbNodes.length > MAX_SECTIONS_IN_BREADCRUMB ? (
@@ -94,6 +104,38 @@ export default ({section}) => {
 			</div>
 		</section>
 	);
+
+	function NewTopicModal() {
+		return (
+			<ClayModal
+				observer={observer}
+				size="lg"
+				status="info"
+			>
+				<ClayModal.Header>{"New Topic"}</ClayModal.Header>
+				<ClayModal.Body>
+					<ClayForm>
+						<ClayForm.Group className="form-group-sm">
+							<label htmlFor="basicInput">Topic Name</label>
+							<ClayInput placeholder="Topic Name" type="text" />
+						</ClayForm.Group>
+						<ClayForm.Group className="form-group-sm">
+							<label htmlFor="basicInput">Description</label>
+							<textarea className="form-control" placeholder="Description" />
+						</ClayForm.Group>
+					</ClayForm>
+				</ClayModal.Body>
+				<ClayModal.Footer
+					last={
+						<ClayButton.Group spaced>
+							<ClayButton displayType="secondary" onClick={onClose}>{"Cancel"}</ClayButton>
+							<ClayButton displayType="primary" onClick={onClose}>{"Create"}</ClayButton>
+						</ClayButton.Group>
+					}
+				/>
+			</ClayModal>
+		);
+	}
 
 	function AllBreadcrumb() {
 		return (
@@ -107,6 +149,7 @@ export default ({section}) => {
 					</Link>
 				</li>
 				<BreadcrumbNode />
+				<NewTopicButton/>
 			</>
 		);
 	}
@@ -131,6 +174,7 @@ export default ({section}) => {
 					/>
 				</li>
 				<BreadcrumbNode start={-1} />
+				<NewTopicButton/>
 			</>
 		);
 	}
@@ -156,5 +200,13 @@ export default ({section}) => {
 				)}
 			</li>
 		));
+	}
+
+	function NewTopicButton() {
+		return (
+			<ClayButton displayType="secondary" onClick={() => setVisible(true)}>
+				{"New Topic"}
+			</ClayButton>
+		)
 	}
 };

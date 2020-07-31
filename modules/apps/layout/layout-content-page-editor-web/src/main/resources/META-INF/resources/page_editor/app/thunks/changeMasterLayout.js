@@ -17,7 +17,7 @@ import LayoutService from '../services/LayoutService';
 
 export default function changeMasterLayout({masterLayoutPlid}) {
 	return (dispatch) => {
-		LayoutService.changeMasterLayout({
+		return LayoutService.changeMasterLayout({
 			masterLayoutPlid,
 			onNetworkStatus: dispatch,
 		}).then(({fragmentEntryLinks, masterLayoutData}) => {

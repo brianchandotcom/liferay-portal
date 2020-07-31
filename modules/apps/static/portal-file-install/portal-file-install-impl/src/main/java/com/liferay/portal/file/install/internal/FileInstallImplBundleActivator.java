@@ -113,7 +113,8 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 		for (String dir : dirs) {
 			map.put(DirectoryWatcher.DIR, dir);
 
-			_updated(new HashMap<>(map));
+			_directoryWatchers.add(
+				new DirectoryWatcher(new HashMap<>(map), _bundleContext));
 		}
 
 		for (DirectoryWatcher directoryWatcher : _directoryWatchers) {
@@ -154,11 +155,6 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 		}
 
 		map.put(key, property);
-	}
-
-	private void _updated(Map<String, String> properties) {
-		_directoryWatchers.add(
-			new DirectoryWatcher(properties, _bundleContext));
 	}
 
 	private BundleContext _bundleContext;

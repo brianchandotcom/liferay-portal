@@ -126,6 +126,112 @@ definition {
 		SitePages.viewCheckboxChecked(pageName = "Test Content Page");
 	}
 
+	@description = "This is a test for LPS-110183. Can access to display page in Collection Items modal when the collection item has associated display page template."
+	@priority = "5"
+	test GoToCollectionItemDisplayPage {
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Web Content Article",
+			displayPageTemplateEntryName = "Display Page Name",
+			groupName = "Test Site Name",
+			subType = "Basic Web Content");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Display Page Content");
+
+		PageEditor.clickPublish();
+
+		for (var i : list "1,2,3") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content ${i}",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title ${i}");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title ${i}");
+
+			WebContent.editDisplayPage(
+				pageName = "Display Page Name",
+				pageType = "Display Page Templates");
+
+			PortletEntry.publish();
+		}
+
+		JSONAssetlist.addManualAssetListEntry(
+			groupName = "Test Site Name",
+			title = "Manual Collection");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+		AssetListsAdmin.selectAsset(
+			assetListName = "Manual Collection",
+			assetType = "Basic Web Content",
+			entryList = "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPublicCollectionPage(
+			collectionName = "Manual Collection",
+			pageName = "Content Collection Page Name",
+			tabName = "Collections");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		for (var i : list "1,2,3") {
+			SitePages.gotoPageMenuItem(
+				menuItem = "View Collection Items",
+				pageName = "Content Collection Page Name");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			Page.gotoCollectionEntryEllipsisItem(
+				item = "View Display Page",
+				tableEntry = "WC WebContent Title ${i}");
+
+			AssertVisible(
+				key_content = "WC WebContent Content ${i}",
+				locator1 = "Fragment#FRAGMENT_SECTION_CONTENT");
+
+			Navigator.gotoBack();
+		}
+
+		AssertVisible(
+			key_pageName = "Content Collection Page Name",
+			locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ENTRY_TITLE_LINK");
+
+		Navigator.openSiteURL(
+			pageName = "Content Collection Page Name",
+			siteName = "Test Site Name");
+
+		PagesFinder.goToFindAPage();
+
+		for (var i : list "1,2,3") {
+			PagesFinder.gotoPageEllipsisItem(
+				item = "View Collection Items",
+				pageName = "Content Collection Page Name");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			Page.gotoCollectionEntryEllipsisItem(
+				item = "View Display Page",
+				tableEntry = "WC WebContent Title ${i}");
+
+			AssertVisible(
+				key_content = "WC WebContent Content ${i}",
+				locator1 = "Fragment#FRAGMENT_SECTION_CONTENT",
+				pageName = "Content Collection Page Name");
+
+			Navigator.gotoBack();
+		}
+	}
+
 	@description = "This is a test for LPS-110183. Can access to edition of collection items in Collection Items modal."
 	@priority = "4"
 	test GoToCollectionItemEditMode {

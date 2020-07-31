@@ -69,6 +69,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_SECTION_CONTENT</td>
+	<td>//section[contains(@id,'content')]//p[contains(.,'${key_content}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_SITE_USAGE_CHECKBOX</td>
 	<td>//tr[contains(.,'${key_siteName}')]/td//input[@type='checkbox']</td>
 	<td></td>

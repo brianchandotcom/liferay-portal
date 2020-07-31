@@ -20,15 +20,12 @@ import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardItemActionProviderTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
-import com.liferay.info.display.url.provider.InfoEditURLProvider;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -374,7 +371,7 @@ public class JournalArticleContentDashboardItemTest {
 	}
 
 	@Test
-	public void testIsViewURLEnabled() throws Exception {
+	public void testIsViewable() throws Exception {
 		JournalArticle journalArticle = _getJournalArticle();
 
 		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
@@ -384,7 +381,7 @@ public class JournalArticleContentDashboardItemTest {
 				null, null, journalArticle, _getLanguage(), null, null, null);
 
 		Assert.assertTrue(
-			journalArticleContentDashboardItem.isViewURLEnabled(
+			journalArticleContentDashboardItem.isViewable(
 				_getHttpServletRequest()));
 	}
 
@@ -425,7 +422,7 @@ public class JournalArticleContentDashboardItemTest {
 
 		Mockito.when(
 			contentDashboardItemActionProvider.isShow(
-			Mockito.any(JournalArticle.class),
+				Mockito.any(JournalArticle.class),
 				Mockito.any(HttpServletRequest.class))
 		).thenReturn(
 			true

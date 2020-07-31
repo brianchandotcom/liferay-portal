@@ -83,7 +83,7 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 								cssClass="text-center"
 								name=""
 							>
-								<c:if test="<%= contentDashboardItem.isViewURLEnabled(request) %>">
+								<c:if test="<%= contentDashboardItem.isViewable(request) %>">
 									<span class="lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "this-content-has-a-display-page") %>">
 										<clay:icon
 											cssClass="text-secondary"

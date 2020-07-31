@@ -75,7 +75,7 @@ public interface ContentDashboardItem<T> {
 
 	public List<Version> getVersions(Locale locale);
 
-	public boolean isViewURLEnabled(HttpServletRequest httpServletRequest);
+	public boolean isViewable(HttpServletRequest httpServletRequest);
 
 	public static class Version {
 

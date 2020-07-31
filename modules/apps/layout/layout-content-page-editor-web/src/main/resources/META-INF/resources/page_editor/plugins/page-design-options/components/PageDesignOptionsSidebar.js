@@ -104,7 +104,10 @@ const OptionList = ({options = [], icon}) => {
 	return (
 		<ul className="list-unstyled mt-3">
 			{options.map(
-				({imagePreviewURL, isActive, name, onClick}, index) => (
+				(
+					{imagePreviewURL, isActive, name, onClick, subtitle},
+					index
+				) => (
 					<li key={index}>
 						<ClayCard
 							className={classNames({
@@ -138,6 +141,11 @@ const OptionList = ({options = [], icon}) => {
 											<ClayCard.Description displayType="title">
 												{name}
 											</ClayCard.Description>
+											{subtitle && (
+												<ClayCard.Description displayType="subtitle">
+													{subtitle}
+												</ClayCard.Description>
+											)}
 										</section>
 									</div>
 								</ClayCard.Row>
@@ -151,11 +159,25 @@ const OptionList = ({options = [], icon}) => {
 };
 
 function getTabs(masterLayoutPlid) {
+	const styleBooks = [
+		{
+			name:
+				config.layoutType === LAYOUT_TYPES.master
+					? Liferay.Language.get('default-style-book')
+					: Liferay.Language.get('inherited-from-master'),
+			styleBookEntryId: '0',
+			subtitle:
+				config.defaultStyleBookEntryName ||
+				Liferay.Language.get('provided-by-theme'),
+		},
+		...config.styleBooks,
+	];
+
 	const tabs = [
 		{
 			icon: 'magic',
 			label: Liferay.Language.get('style-book'),
-			options: config.styleBooks.map((styleBook) => ({
+			options: styleBooks.map((styleBook) => ({
 				...styleBook,
 				isActive:
 					config.styleBookEntryId === styleBook.styleBookEntryId,

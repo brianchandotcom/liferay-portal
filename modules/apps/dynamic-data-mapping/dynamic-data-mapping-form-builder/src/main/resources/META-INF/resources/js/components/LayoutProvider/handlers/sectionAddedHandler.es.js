@@ -14,9 +14,11 @@
 
 import {FormSupport, PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 
+import {FIELD_TYPE_FIELDSET} from '../../../util/constants.es';
 import {createField} from '../../../util/fieldSupport.es';
 import {createFieldSet} from '../util/fieldset.es';
 import {updateField} from '../util/settingsContext.es';
+import handleFieldAdded from './fieldAddedHandler.es';
 import handleFieldDeleted from './fieldDeletedHandler.es';
 
 const addNestedField = ({field, indexes, nestedField, props}) => {
@@ -82,6 +84,15 @@ const handleSectionAdded = (props, state, event) => {
 			false,
 			true
 		);
+	}
+	else if (existingField.type === FIELD_TYPE_FIELDSET) {
+		newPages = handleFieldAdded(props, state, {
+			...event,
+			data: {
+				...event.data,
+				parentFieldName: existingField.fieldName,
+			},
+		}).pages;
 	}
 	else {
 		newPages = visitor.mapFields((field) => {

@@ -62,6 +62,7 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 
 				<div class="sheet-section">
 					<liferay-ui:search-container
+						cssClass="table-hover"
 						id="content"
 						searchContainer="<%= contentDashboardAdminDisplayContext.getSearchContainer() %>"
 					>
@@ -69,7 +70,15 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 							className="com.liferay.content.dashboard.web.internal.item.ContentDashboardItem"
 							keyProperty="id"
 							modelVar="contentDashboardItem"
+							rowIdProperty="classPK"
 						>
+
+							<%
+							row.setData(HashMapBuilder.<String, Object>put(
+								"rowId", row.getRowId()
+							).build());
+							%>
+
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-expand table-title"
 								name="title"

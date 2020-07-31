@@ -14,20 +14,10 @@
 
 package com.liferay.portal.file.install.internal.properties;
 
-import java.util.Map;
-
 /**
  * @author Matthew Tambara
  */
 public class InterpolationUtil {
-
-	public static void performSubstitution(Map<String, String> properties) {
-		for (Map.Entry<String, String> entry : properties.entrySet()) {
-			String name = entry.getKey();
-
-			properties.put(name, substVars(entry.getValue()));
-		}
-	}
 
 	public static String substVars(String value) {
 		return _substVars(value);

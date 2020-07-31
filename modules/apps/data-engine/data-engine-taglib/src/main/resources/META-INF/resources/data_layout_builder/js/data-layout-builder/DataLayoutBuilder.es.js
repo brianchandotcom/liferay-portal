@@ -493,6 +493,10 @@ class DataLayoutBuilder extends React.Component {
 		];
 		const focusedField = layoutProvider.getFocusedField();
 
+		this.setState({
+			availableLanguageIds,
+		});
+
 		layoutProvider.props = {
 			...layoutProvider.props,
 			availableLanguageIds,
@@ -623,24 +627,14 @@ class DataLayoutBuilder extends React.Component {
 	}
 
 	_onLocaleChange(event) {
-		const selectedLanguageId = event.item.getAttribute('data-value');
-		let {availableLanguageIds = []} = this.props;
-
-		availableLanguageIds = [
-			...new Set([...availableLanguageIds, selectedLanguageId]),
-		];
-
-		this.setState({
-			availableLanguageIds,
-		});
-
 		const layoutProvider = this.getLayoutProvider();
+		const selectedLanguageId = event.item.getAttribute('data-value');
+		const {defaultLanguageId} = layoutProvider.props;
 
-		layoutProvider.props = {
-			...layoutProvider.props,
-			availableLanguageIds,
+		this.onEditingLanguageIdChange({
+			defaultLanguageId,
 			editingLanguageId: selectedLanguageId,
-		};
+		});
 	}
 
 	_setContext(context) {

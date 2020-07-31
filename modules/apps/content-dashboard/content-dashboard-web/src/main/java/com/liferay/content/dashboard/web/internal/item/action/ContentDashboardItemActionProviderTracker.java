@@ -20,12 +20,11 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFa
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.reflect.GenericUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
@@ -44,8 +43,8 @@ public class ContentDashboardItemActionProviderTracker {
 			String className, ContentDashboardItemAction.Type type) {
 
 		List<ContentDashboardItemActionProvider>
-			contentDashboardItemActionProviders =
-				getContentDashboardItemActionProviders(className);
+			contentDashboardItemActionProviders = _serviceTrackerMap.getService(
+				className);
 
 		Stream<ContentDashboardItemActionProvider> stream =
 			contentDashboardItemActionProviders.stream();
@@ -57,18 +56,21 @@ public class ContentDashboardItemActionProviderTracker {
 	}
 
 	public List<ContentDashboardItemActionProvider>
-		getContentDashboardItemActionProviders(String className) {
+		getContentDashboardItemActionProviders(
+			String className, ContentDashboardItemAction.Type... types) {
 
-		List<ContentDashboardItemActionProvider>
-			contentDashboardItemActionProviders = _serviceTrackerMap.getService(
-				className);
-
-		if (ListUtil.isEmpty(contentDashboardItemActionProviders)) {
-			return Collections.emptyList();
-		}
-
-		return Collections.unmodifiableList(
-			contentDashboardItemActionProviders);
+		return Stream.of(
+			types
+		).map(
+			type -> getContentDashboardItemActionProviderOptional(
+				className, type)
+		).filter(
+			Optional::isPresent
+		).map(
+			Optional::get
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	@Activate

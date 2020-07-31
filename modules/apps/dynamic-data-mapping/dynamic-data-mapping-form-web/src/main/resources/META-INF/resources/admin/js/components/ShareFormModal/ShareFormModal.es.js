@@ -44,6 +44,9 @@ class ShareFormModal extends Component {
 	}
 
 	disposeInternal() {
+		const modalBackdrop = document.querySelector('.modal-backdrop');
+		dom.exitDocument(modalBackdrop);
+
 		super.disposeInternal();
 		this._eventHandler.removeAllListeners();
 	}

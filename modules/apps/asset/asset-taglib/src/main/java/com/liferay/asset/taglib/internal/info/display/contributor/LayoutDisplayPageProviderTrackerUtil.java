@@ -14,7 +14,7 @@
 
 package com.liferay.asset.taglib.internal.info.display.contributor;
 
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -23,21 +23,22 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(immediate = true, service = {})
-public class InfoDisplayContributorTrackerUtil {
+public class LayoutDisplayPageProviderTrackerUtil {
 
-	public static final InfoDisplayContributorTracker
-		getInfoDisplayContributorTracker() {
+	public static final LayoutDisplayPageProviderTracker
+		getLayoutDisplayPageProviderTracker() {
 
-		return _infoDisplayContributorTracker;
+		return _layoutDisplayPageProviderTracker;
 	}
 
 	@Reference(unbind = "-")
 	protected void setServletContext(
-		InfoDisplayContributorTracker infoDisplayContributorTracker) {
+		LayoutDisplayPageProviderTracker layoutDisplayPageProviderTracker) {
 
-		_infoDisplayContributorTracker = infoDisplayContributorTracker;
+		_layoutDisplayPageProviderTracker = layoutDisplayPageProviderTracker;
 	}
 
-	private static InfoDisplayContributorTracker _infoDisplayContributorTracker;
+	private static LayoutDisplayPageProviderTracker
+		_layoutDisplayPageProviderTracker;
 
 }

@@ -17,9 +17,13 @@ definition {
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
 			value1 = "${userLastName}");
 
-		Button.clickSave();
-
-		Alert.viewSuccessMessage();
+		if (isSet(domainValidation)) {
+			AccountUsers.viewEmailDomainValidation(
+				accountName = "${accountName}",
+				blockedDomainName = "${blockedDomainName}",
+				domainValidation = "${domainValidation}",
+				invalidDomainName = "${invalidDomainName}");
+		}
 	}
 
 	macro addUsers {
@@ -129,6 +133,21 @@ definition {
 		Button.clickSelect();
 
 		AssertElementPresent(locator1 = "Search#SEARCH_INFO");
+	}
+
+	macro viewEmailDomainValidation {
+		if ("${domainValidation}" == "Blocked") {
+			AssertTextEquals(
+				key_alertMessage = "${blockedDomainName} is a blocked domain. Account administrators cannot add users with this domain to their accounts. You can still manually assign this email address to this user.",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
+				value1 = "${blockedDomainName} is a blocked domain. Account administrators cannot add users with this domain to their accounts. You can still manually assign this email address to this user.");
+		}
+		else if ("${domainValidation}" == "Invalid") {
+			AssertTextEquals(
+				key_alertMessage = "${invalidDomainName} is not a valid domain for the following accounts: ${accountName}. Account Administrators cannot add users with this domain to their accounts. You can still manually assign this email address to this user.",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
+				value1 = "${invalidDomainName} is not a valid domain for the following accounts: ${accountName}. Account Administrators cannot add users with this domain to their accounts. You can still manually assign this email address to this user.");
+		}
 	}
 
 }

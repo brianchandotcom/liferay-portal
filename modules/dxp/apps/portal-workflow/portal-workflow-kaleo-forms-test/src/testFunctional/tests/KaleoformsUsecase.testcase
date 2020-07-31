@@ -1921,7 +1921,7 @@ definition {
 
 		KaleoFormsAdmin.assignForm(
 			kfProcessName = "Kaleo Forms Process",
-			workflowTask = "create");
+			workflowTask = "create Edit");
 
 		KaleoFormsAdmin.addForm(kfFormName = "Created Task Form");
 

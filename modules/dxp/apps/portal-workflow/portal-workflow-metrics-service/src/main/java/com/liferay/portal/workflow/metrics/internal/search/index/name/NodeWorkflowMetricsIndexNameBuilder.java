@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.metrics.internal.search.index.name;
 
 import com.liferay.portal.search.index.IndexNameBuilder;
-import com.liferay.portal.workflow.metrics.internal.search.index.name.util.WorkflowMetricsIndexNameBuilderUtil;
 import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 
 import org.osgi.service.component.annotations.Component;
@@ -33,9 +32,8 @@ public class NodeWorkflowMetricsIndexNameBuilder
 
 	@Override
 	public String getIndexName(long companyId) {
-		return WorkflowMetricsIndexNameBuilderUtil.getIndexName(
-			companyId, indexNameBuilder.getIndexName(companyId),
-			"workflow-metrics-nodes");
+		return indexNameBuilder.getIndexName(companyId) +
+			"-workflow-metrics-nodes";
 	}
 
 	@Reference

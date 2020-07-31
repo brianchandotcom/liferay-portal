@@ -14,6 +14,7 @@
 
 package com.liferay.content.dashboard.web.internal.servlet.taglib.util;
 
+import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Stream;
 
 import javax.portlet.ResourceURL;
 
@@ -63,92 +65,71 @@ public class ContentDashboardDropdownItemsProvider {
 
 		Locale locale = _portal.getLocale(_liferayPortletRequest);
 
-		return DropdownItemList.of(
-			() -> {
-				if (!contentDashboardItem.isViewURLEnabled(
-						httpServletRequest)) {
+		List<ContentDashboardItemAction> contentDashboardItemActions =
+			contentDashboardItem.getContentDashboardItemActions(
+				httpServletRequest, ContentDashboardItemAction.Type.VIEW,
+				ContentDashboardItemAction.Type.EDIT);
 
-					return null;
-				}
+		Stream<ContentDashboardItemAction> stream =
+			contentDashboardItemActions.stream();
 
+		DropdownItemList dropdownItemList = new DropdownItemList();
+
+		stream.map(
+			contentDashboardItemAction -> {
 				DropdownItem dropdownItem = new DropdownItem();
 
 				dropdownItem.setHref(
-					_getURLWithBackURL(
-						contentDashboardItem.getViewURL(httpServletRequest)));
-				dropdownItem.setIcon("view");
-				dropdownItem.setLabel(_language.get(locale, "view"));
+					_getURLWithBackURL(contentDashboardItemAction.getURL()));
+				dropdownItem.setIcon(contentDashboardItemAction.getIcon());
+				dropdownItem.setLabel(
+					contentDashboardItemAction.getLabel(locale));
 				dropdownItem.setQuickAction(true);
 
 				return dropdownItem;
-			},
-			() -> {
-				if (!contentDashboardItem.isEditURLEnabled(
-						httpServletRequest)) {
+			}
+		).forEach(
+			dropdownItemList::add
+		);
 
-					return null;
-				}
+		dropdownItemList.addAll(
+			DropdownItemList.of(
+				() -> {
+					DropdownItem dropdownItem = new DropdownItem();
 
-				DropdownItem dropdownItem = new DropdownItem();
+					ResourceURL resourceURL =
+						_liferayPortletResponse.createResourceURL();
 
-				dropdownItem.setHref(
-					_getURLWithBackURL(
-						contentDashboardItem.getEditURL(httpServletRequest)));
-				dropdownItem.setIcon("pencil");
-				dropdownItem.setLabel(_language.get(locale, "edit"));
-				dropdownItem.setQuickAction(true);
+					resourceURL.setParameter(
+						"backURL",
+						_portal.getCurrentURL(_liferayPortletRequest));
+					resourceURL.setParameter(
+						"className", contentDashboardItem.getClassName());
+					resourceURL.setParameter(
+						"classPK",
+						String.valueOf(contentDashboardItem.getClassPK()));
+					resourceURL.setResourceID(
+						"/content_dashboard/get_content_dashboard_item_info");
 
-				return dropdownItem;
-			},
-			() -> {
-				DropdownItem dropdownItem = new DropdownItem();
+					dropdownItem.setData(
+						HashMapBuilder.<String, Object>put(
+							"action", "showInfo"
+						).put(
+							"className", contentDashboardItem.getClassName()
+						).put(
+							"classPK", contentDashboardItem.getClassPK()
+						).put(
+							"fetchURL", String.valueOf(resourceURL)
+						).build());
 
-				ResourceURL resourceURL =
-					_liferayPortletResponse.createResourceURL();
+					dropdownItem.setIcon("info-circle-open");
+					dropdownItem.setLabel(_language.get(locale, "info"));
+					dropdownItem.setQuickAction(true);
 
-				resourceURL.setParameter(
-					"backURL", _portal.getCurrentURL(_liferayPortletRequest));
-				resourceURL.setParameter(
-					"className", contentDashboardItem.getClassName());
-				resourceURL.setParameter(
-					"classPK",
-					String.valueOf(contentDashboardItem.getClassPK()));
-				resourceURL.setResourceID(
-					"/content_dashboard/get_content_dashboard_item_info");
+					return dropdownItem;
+				}));
 
-				dropdownItem.setData(
-					HashMapBuilder.<String, Object>put(
-						"action", "showInfo"
-					).put(
-						"className", contentDashboardItem.getClassName()
-					).put(
-						"classPK", contentDashboardItem.getClassPK()
-					).put(
-						"fetchURL", String.valueOf(resourceURL)
-					).build());
-
-				dropdownItem.setIcon("info-circle-open");
-				dropdownItem.setLabel(_language.get(locale, "info"));
-				dropdownItem.setQuickAction(true);
-
-				return dropdownItem;
-			},
-			() -> {
-				if (!contentDashboardItem.isViewURLEnabled(
-						httpServletRequest)) {
-
-					return null;
-				}
-
-				DropdownItem dropdownItem = new DropdownItem();
-
-				dropdownItem.putData("action", "showMetrics");
-				dropdownItem.setIcon("analytics");
-				dropdownItem.setLabel(_language.get(locale, "metrics"));
-				dropdownItem.setQuickAction(true);
-
-				return dropdownItem;
-			});
+		return dropdownItemList;
 	}
 
 	private String _getURLWithBackURL(String url) {

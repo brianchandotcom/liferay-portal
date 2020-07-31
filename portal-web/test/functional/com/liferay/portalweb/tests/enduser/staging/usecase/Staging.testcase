@@ -3175,7 +3175,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "Test Site");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site");
 
 		WebContent.subscribeToCurrentFolderCP();
 

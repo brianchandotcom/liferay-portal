@@ -53,7 +53,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 public class MVCExtension {
 

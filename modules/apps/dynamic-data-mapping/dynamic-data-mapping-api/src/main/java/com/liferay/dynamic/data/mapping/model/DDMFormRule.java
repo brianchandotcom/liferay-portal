@@ -52,7 +52,8 @@ public class DDMFormRule implements Serializable {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #DDMFormRule(List, String)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #DDMFormRule(List, String)}
 	 */
 	@Deprecated
 	public DDMFormRule(String condition, List<String> actions) {
@@ -61,7 +62,8 @@ public class DDMFormRule implements Serializable {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #DDMFormRule(List, String, LocalizedValue)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #DDMFormRule(List, String, LocalizedValue)}
 	 */
 	@Deprecated
 	public DDMFormRule(
@@ -73,7 +75,8 @@ public class DDMFormRule implements Serializable {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #DDMFormRule(List, String)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #DDMFormRule(List, String)}
 	 */
 	@Deprecated
 	public DDMFormRule(String condition, String... actions) {

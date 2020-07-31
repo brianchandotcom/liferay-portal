@@ -50,7 +50,7 @@ import javax.ws.rs.HeaderParam;
 import javax.ws.rs.QueryParam;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 @BeanValidationInterceptorBinding
 @Interceptor

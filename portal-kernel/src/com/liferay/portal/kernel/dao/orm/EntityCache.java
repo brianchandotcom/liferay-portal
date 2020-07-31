@@ -37,7 +37,7 @@ public interface EntityCache {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 * 				#getResult(Class, Serializable)}
+	 *             #getResult(Class, Serializable)}
 	 */
 	@Deprecated
 	public Serializable getResult(
@@ -57,7 +57,7 @@ public interface EntityCache {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 * 				#putResult(Class, Serializable, Serializable)}
+	 *             #putResult(Class, Serializable, Serializable)}
 	 */
 	@Deprecated
 	public void putResult(
@@ -66,7 +66,7 @@ public interface EntityCache {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 * 				#putResult(Class, Serializable, Serializable, boolean)}
+	 *             #putResult(Class, Serializable, Serializable, boolean)}
 	 */
 	@Deprecated
 	public void putResult(
@@ -84,7 +84,7 @@ public interface EntityCache {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 * 				#removeResult(Class, Serializable)}
+	 *             #removeResult(Class, Serializable)}
 	 */
 	@Deprecated
 	public void removeResult(

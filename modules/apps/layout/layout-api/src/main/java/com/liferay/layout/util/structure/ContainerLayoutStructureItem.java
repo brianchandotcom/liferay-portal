@@ -121,8 +121,7 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getWidthType()}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getWidthType()}
 	 */
 	@Deprecated
 	public String getContainerType() {
@@ -221,7 +220,7 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getPaddingLeft()} and {@link #getPaddingRight()}
+	 *             #getPaddingLeft()} and {@link #getPaddingRight()}
 	 */
 	@Deprecated
 	public int getPaddingHorizontal() {
@@ -281,7 +280,7 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #setWidthType(String)}
+	 *             #setWidthType(String)}
 	 */
 	@Deprecated
 	public void setContainerType(String containerType) {
@@ -326,7 +325,7 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #setPaddingLeft(int)} and {@link #setPaddingRight(int)}
+	 *             #setPaddingLeft(int)} and {@link #setPaddingRight(int)}
 	 */
 	@Deprecated
 	public void setPaddingHorizontal(int paddingHorizontal) {

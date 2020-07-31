@@ -18,7 +18,7 @@ import javax.mvc.engine.ViewEngine;
 import javax.mvc.event.AfterProcessViewEvent;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 public class AfterProcessViewEventImpl
 	extends BaseProcessViewEventImpl implements AfterProcessViewEvent {

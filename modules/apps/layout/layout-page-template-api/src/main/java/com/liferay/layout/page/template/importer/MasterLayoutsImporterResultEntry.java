@@ -15,7 +15,7 @@
 package com.liferay.layout.page.template.importer;
 
 /**
- * @author Rubén Pulido
+ * @author     Rubén Pulido
  * @deprecated As of Athanasius (7.3.x), in favour of {@link
  *             #LayoutPageTemplatesImporterResultEntry}
  */

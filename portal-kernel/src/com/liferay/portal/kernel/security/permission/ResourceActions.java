@@ -35,8 +35,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface ResourceActions {
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 * 				#check(String)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #check(String)}
 	 */
 	@Deprecated
 	public void check(Portlet portlet);

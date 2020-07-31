@@ -84,8 +84,8 @@ public interface BaseModel<T>
 	/**
 	 * Returns <code>true</code> if this model's entity cache is enabled.
 	 *
-	 * @return <code>true</code> if this model's entity cache is enabled;
-	 *         <code>false</code> otherwise
+	 * @return     <code>true</code> if this model's entity cache is enabled;
+	 *             <code>false</code> otherwise
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
 	@Deprecated
@@ -102,8 +102,8 @@ public interface BaseModel<T>
 	/**
 	 * Returns <code>true</code> if this model's finder cache is enabled.
 	 *
-	 * @return <code>true</code> if this model's finder cache is enabled;
-	 *         <code>false</code> otherwise
+	 * @return     <code>true</code> if this model's finder cache is enabled;
+	 *             <code>false</code> otherwise
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
 	@Deprecated

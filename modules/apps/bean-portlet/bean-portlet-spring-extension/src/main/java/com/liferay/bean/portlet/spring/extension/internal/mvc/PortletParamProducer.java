@@ -56,7 +56,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 @Configuration
 public class PortletParamProducer implements ApplicationContextAware {

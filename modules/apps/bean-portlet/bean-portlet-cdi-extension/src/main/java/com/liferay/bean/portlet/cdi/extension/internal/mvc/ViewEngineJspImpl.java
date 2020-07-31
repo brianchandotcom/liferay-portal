@@ -28,7 +28,7 @@ import javax.portlet.PortletResponse;
 import javax.ws.rs.core.Configuration;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 @Priority(ViewEngine.PRIORITY_BUILTIN)
 public class ViewEngineJspImpl implements ViewEngine {

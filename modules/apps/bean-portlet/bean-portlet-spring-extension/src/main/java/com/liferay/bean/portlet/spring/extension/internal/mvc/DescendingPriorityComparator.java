@@ -19,7 +19,7 @@ import java.util.Comparator;
 import javax.annotation.Priority;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 public class DescendingPriorityComparator<T> implements Comparator<Object> {
 

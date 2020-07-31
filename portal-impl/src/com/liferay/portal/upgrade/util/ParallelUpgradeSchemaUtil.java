@@ -57,8 +57,8 @@ public class ParallelUpgradeSchemaUtil {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #execute(
-	 *             DBProcess, String...)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #execute(DBProcess, String...)}
 	 */
 	@Deprecated
 	public static void execute(String... sqlFileNames) throws Exception {

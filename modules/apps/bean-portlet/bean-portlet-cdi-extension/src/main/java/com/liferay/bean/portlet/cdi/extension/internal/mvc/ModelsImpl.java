@@ -25,7 +25,7 @@ import java.util.Set;
 import javax.mvc.Models;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 public class ModelsImpl implements Models, Serializable {
 

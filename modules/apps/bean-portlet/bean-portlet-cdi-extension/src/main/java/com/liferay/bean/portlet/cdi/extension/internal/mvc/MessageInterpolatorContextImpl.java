@@ -19,7 +19,7 @@ import javax.validation.MessageInterpolator;
 import javax.validation.metadata.ConstraintDescriptor;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 public class MessageInterpolatorContextImpl
 	implements MessageInterpolator.Context {

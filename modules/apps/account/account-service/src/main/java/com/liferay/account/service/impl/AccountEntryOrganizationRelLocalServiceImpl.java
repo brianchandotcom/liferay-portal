@@ -147,8 +147,8 @@ public class AccountEntryOrganizationRelLocalServiceImpl
 	 * AccountEntryOrganizationRels if their organizationId is not present in
 	 * the given organizationIds.
 	 *
-	 * @param accountEntryId
-	 * @param organizationIds
+	 * @param  accountEntryId
+	 * @param  organizationIds
 	 * @throws PortalException
 	 * @review
 	 */

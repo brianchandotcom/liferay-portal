@@ -34,7 +34,7 @@ import javax.ws.rs.ext.ParamConverterProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 @ManagedBean
 public class ParamConverterProviderImpl implements ParamConverterProvider {

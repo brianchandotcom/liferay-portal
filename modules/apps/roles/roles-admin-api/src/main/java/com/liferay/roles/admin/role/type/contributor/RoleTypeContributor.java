@@ -39,8 +39,8 @@ public interface RoleTypeContributor {
 	}
 
 	/**
-	 * Returns a list of role names whose permissions cannot be manually
-	 * defined by users.
+	 * Returns a list of role names whose permissions cannot be manually defined
+	 * by users.
 	 *
 	 * @return
 	 */

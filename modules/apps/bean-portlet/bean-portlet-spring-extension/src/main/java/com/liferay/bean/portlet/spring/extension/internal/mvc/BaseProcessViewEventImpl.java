@@ -19,7 +19,7 @@ import javax.mvc.engine.ViewEngine;
 import org.springframework.context.ApplicationEvent;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 public class BaseProcessViewEventImpl extends ApplicationEvent {
 

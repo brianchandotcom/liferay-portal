@@ -15,9 +15,9 @@
 package com.liferay.asset.list.constants;
 
 /**
- * @author Pavel Savinov
+ * @author     Pavel Savinov
  * @deprecated As of Athanasius (7.3.x), replaced by {@link
- *			 com.liferay.asset.list.web.internal.constants.AssetListWebKeys}
+ *             com.liferay.asset.list.web.internal.constants.AssetListWebKeys}
  */
 @Deprecated
 public class AssetListWebKeys {

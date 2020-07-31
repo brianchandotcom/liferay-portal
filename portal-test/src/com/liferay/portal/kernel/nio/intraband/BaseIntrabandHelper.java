@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.nio.intraband;
 
 /**
- * @author Shuyang Zhou
+ * @author     Shuyang Zhou
  * @deprecated As of Athanasius (7.3.x), replaced by {@link BaseIntrabandUtil}
  */
 @Deprecated

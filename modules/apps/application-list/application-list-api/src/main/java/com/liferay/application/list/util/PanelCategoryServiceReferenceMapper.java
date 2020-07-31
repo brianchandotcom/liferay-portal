@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.Validator;
 import org.osgi.framework.ServiceReference;
 
 /**
- * @author Adolfo Pérez
+ * @author     Adolfo Pérez
  * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
 @Deprecated

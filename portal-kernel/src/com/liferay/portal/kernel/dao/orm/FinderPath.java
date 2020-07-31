@@ -34,7 +34,7 @@ public class FinderPath {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 * 				#FinderPath(Class, String, String, String[])}
+	 *             #FinderPath(Class, String, String, String[])}
 	 */
 	@Deprecated
 	public FinderPath(
@@ -47,7 +47,7 @@ public class FinderPath {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 * 				#FinderPath(Class, String, String, String[], long)}
+	 *             #FinderPath(Class, String, String, String[], long)}
 	 */
 	@Deprecated
 	public FinderPath(
@@ -95,8 +95,8 @@ public class FinderPath {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #encodeCacheKey(
-	 *             Object[])}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #encodeCacheKey(Object[])}
 	 */
 	@Deprecated
 	public String encodeArguments(Object[] arguments) {
@@ -137,8 +137,8 @@ public class FinderPath {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #encodeCacheKey(
-	 *             Object[])}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #encodeCacheKey(Object[])}
 	 */
 	@Deprecated
 	public Serializable encodeCacheKey(String encodedArguments) {

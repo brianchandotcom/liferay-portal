@@ -33,9 +33,9 @@ import com.liferay.taglib.util.IncludeTag;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Shuyang Zhou
- * @author Roberto Díaz
+ * @author     Brian Wing Shun Chan
+ * @author     Shuyang Zhou
+ * @author     Roberto Díaz
  * @deprecated As of Athanasius (7.3.x), replaced by {@link
  *             com.liferay.ratings.taglib.servlet.taglib.RatingsTag}
  */

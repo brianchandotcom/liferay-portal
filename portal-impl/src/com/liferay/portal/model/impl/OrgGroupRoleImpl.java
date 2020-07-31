@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.model.Organization;
 import java.util.List;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author     Brian Wing Shun Chan
  * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
 @Deprecated

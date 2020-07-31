@@ -15,10 +15,16 @@
 package com.liferay.app.builder.workflow.model.impl;
 
 /**
- * The extended model implementation for the AppBuilderWorkflowTaskLink service. Represents a row in the &quot;AppBuilderWorkflowTaskLink&quot; database table, with each column mapped to a property of this class.
+ * The extended model implementation for the AppBuilderWorkflowTaskLink service.
+ * Represents a row in the &quot;AppBuilderWorkflowTaskLink&quot; database
+ * table, with each column mapped to a property of this class.
  *
  * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.app.builder.workflow.model.AppBuilderWorkflowTaskLink</code> interface.
+ * Helper methods and all application logic should be put in this class.
+ * Whenever methods are added, rerun ServiceBuilder to copy their definitions
+ * into the
+ * <code>com.liferay.app.builder.workflow.model.AppBuilderWorkflowTaskLink</code>
+ * interface.
  * </p>
  *
  * @author Brian Wing Shun Chan
@@ -29,7 +35,10 @@ public class AppBuilderWorkflowTaskLinkImpl
 	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this class directly. All methods that expect a app builder workflow task link model instance should use the {@link com.liferay.app.builder.workflow.model.AppBuilderWorkflowTaskLink} interface instead.
+	 * Never reference this class directly. All methods that expect a app
+	 * builder workflow task link model instance should use the {@link
+	 * com.liferay.app.builder.workflow.model.AppBuilderWorkflowTaskLink}
+	 * interface instead.
 	 */
 	public AppBuilderWorkflowTaskLinkImpl() {
 	}

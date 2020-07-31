@@ -247,7 +247,8 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *			 #createServletResponse(HttpServletResponse, UnsyncStringWriter)}
+	 *             #createServletResponse(HttpServletResponse,
+	 *             UnsyncStringWriter)}
 	 */
 	@Deprecated
 	@Override

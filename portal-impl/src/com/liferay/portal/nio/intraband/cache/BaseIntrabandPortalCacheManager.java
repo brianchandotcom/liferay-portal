@@ -63,7 +63,7 @@ public abstract class BaseIntrabandPortalCacheManager
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *              #getPortalCache(String)}
+	 *             #getPortalCache(String)}
 	 */
 	@Deprecated
 	@Override

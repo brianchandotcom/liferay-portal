@@ -722,7 +722,8 @@ public class JournalTestUtil {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             JournalFolderFixture#addFolder(long, String, String, ServiceContext)}
+	 *             JournalFolderFixture#addFolder(long, String, String,
+	 *             ServiceContext)}
 	 */
 	@Deprecated
 	public static JournalFolder addFolder(

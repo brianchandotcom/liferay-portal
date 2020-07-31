@@ -142,7 +142,8 @@ public class UserRolesDisplayContext {
 	}
 
 	/**
-	 * @see com.liferay.depot.web.internal.display.context.DepotAdminMembershipsDisplayContext.Step2#_filterGroupRoles(List)
+	 * @see com.liferay.depot.web.internal.display.context.DepotAdminMembershipsDisplayContext.Step2#_filterGroupRoles(
+	 *      List)
 	 */
 	private List<Role> _filterGroupRoles(
 			PermissionChecker permissionChecker, long groupId, List<Role> roles)

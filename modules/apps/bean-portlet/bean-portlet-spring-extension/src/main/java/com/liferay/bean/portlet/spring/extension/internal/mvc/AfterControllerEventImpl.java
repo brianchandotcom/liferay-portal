@@ -20,7 +20,7 @@ import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.UriInfo;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 public class AfterControllerEventImpl
 	extends BaseControllerEventImpl implements AfterControllerEvent {

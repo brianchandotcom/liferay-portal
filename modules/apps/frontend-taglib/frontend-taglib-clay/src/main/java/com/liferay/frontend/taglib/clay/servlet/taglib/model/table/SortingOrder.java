@@ -15,7 +15,7 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib.model.table;
 
 /**
- * @author Iván Zaera Avellón
+ * @author     Iván Zaera Avellón
  * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
 @Deprecated

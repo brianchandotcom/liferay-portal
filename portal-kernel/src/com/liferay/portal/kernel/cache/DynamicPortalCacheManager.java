@@ -75,7 +75,7 @@ public class DynamicPortalCacheManager<K extends Serializable, V>
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *              #getPortalCache(String)}
+	 *             #getPortalCache(String)}
 	 */
 	@Deprecated
 	@Override

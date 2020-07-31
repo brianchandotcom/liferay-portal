@@ -154,8 +154,8 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 	protected class ResultImpl implements PortletLayoutFinder.Result {
 
 		/**
-		 * @deprecated As of Athanasius (7.3.x), replaced by {@link #ResultImpl(
-		 *             long, String, boolean)}
+		 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+		 *             #ResultImpl(long, String, boolean)}
 		 */
 		@Deprecated
 		public ResultImpl(long plid, String portletId) {

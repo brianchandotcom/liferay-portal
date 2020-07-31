@@ -31,7 +31,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 @Configuration
 public class ParamConverterProvidersProducer

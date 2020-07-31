@@ -36,7 +36,7 @@ import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author Shuyang Zhou
+ * @author     Shuyang Zhou
  * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
 @Deprecated

@@ -44,7 +44,7 @@ import javax.ws.rs.core.Configuration;
 import javax.ws.rs.core.UriBuilder;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 public class MVCContextImpl implements MvcContext {
 

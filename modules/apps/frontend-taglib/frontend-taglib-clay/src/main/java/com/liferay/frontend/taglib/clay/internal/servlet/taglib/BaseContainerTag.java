@@ -70,8 +70,7 @@ public class BaseContainerTag extends AttributesTagSupport {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getCssClass()}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getCssClass()}
 	 */
 	@Deprecated
 	public String getClassName() {
@@ -119,8 +118,7 @@ public class BaseContainerTag extends AttributesTagSupport {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getCssClass()}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getCssClass()}
 	 */
 	@Deprecated
 	public String getElementClasses() {
@@ -273,8 +271,7 @@ public class BaseContainerTag extends AttributesTagSupport {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #prepareProps()}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #prepareProps()}
 	 */
 	@Deprecated
 	protected Map<String, Object> processData(Map<String, Object> data) {

@@ -22,6 +22,9 @@ import java.lang.annotation.Target;
 
 import javax.interceptor.InterceptorBinding;
 
+/**
+ * @author Brian Wing Shun Chan
+ */
 @Inherited
 @InterceptorBinding
 @Retention(RetentionPolicy.RUNTIME)

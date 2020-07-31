@@ -29,7 +29,7 @@ import javax.portlet.PortletResponse;
 import javax.ws.rs.core.Configuration;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 @ManagedBean
 @Priority(ViewEngine.PRIORITY_BUILTIN)

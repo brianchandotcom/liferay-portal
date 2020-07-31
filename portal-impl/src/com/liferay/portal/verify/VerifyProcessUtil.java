@@ -25,9 +25,9 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Alexander Chow
- * @author Raymond Augé
+ * @author     Brian Wing Shun Chan
+ * @author     Alexander Chow
+ * @author     Raymond Augé
  * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
 @Deprecated

@@ -32,7 +32,7 @@ public interface MultiVMPool {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *              #getPortalCache(String)}
+	 *             #getPortalCache(String)}
 	 */
 	@Deprecated
 	public PortalCache<? extends Serializable, ? extends Serializable>

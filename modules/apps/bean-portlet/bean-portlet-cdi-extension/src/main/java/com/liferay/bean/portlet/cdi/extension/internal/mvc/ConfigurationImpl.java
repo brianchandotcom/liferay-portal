@@ -28,7 +28,7 @@ import javax.ws.rs.core.Configuration;
 import javax.ws.rs.core.Feature;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 public class ConfigurationImpl implements Configuration {
 

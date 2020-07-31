@@ -52,8 +52,6 @@ public class DLOpenerOneDriveFileReference<E extends PortalException> {
 	 * @param  fileEntryId the primary key of the file entry
 	 * @param  titleUnsafeSupplier the supplier that provides the document's
 	 *         title when invoked
-	 * @param  fileSupplier the supplier that provides the document's contents
-	 *         when invoked
 	 * @param  backgroundTaskId the background task ID
 	 * @review
 	 */

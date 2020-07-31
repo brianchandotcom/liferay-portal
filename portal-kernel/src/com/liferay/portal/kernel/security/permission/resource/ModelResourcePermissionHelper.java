@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 /**
- * @author Preston Crary
+ * @author     Preston Crary
  * @deprecated As of Athanasius (7.3.x), replaced by {@link
  *             ModelResourcePermissionUtil}
  */

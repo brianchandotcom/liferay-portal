@@ -30,8 +30,8 @@ public interface MessageListener {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #accept(String, List, Message)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #accept(String,
+	 *             List, Message)}
 	 */
 	@Deprecated
 	public boolean accept(String from, String recipient, Message message);
@@ -44,8 +44,8 @@ public interface MessageListener {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #deliver(String, List, Message)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #deliver(String,
+	 *             List, Message)}
 	 */
 	@Deprecated
 	public void deliver(String from, String recipient, Message message)

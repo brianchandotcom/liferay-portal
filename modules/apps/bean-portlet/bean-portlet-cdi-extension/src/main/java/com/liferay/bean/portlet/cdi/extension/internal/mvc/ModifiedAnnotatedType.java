@@ -25,7 +25,7 @@ import javax.enterprise.inject.spi.AnnotatedMethod;
 import javax.enterprise.inject.spi.AnnotatedType;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 public class ModifiedAnnotatedType<X> implements AnnotatedType<X> {
 

@@ -19,7 +19,7 @@ import javax.mvc.binding.ValidationError;
 import javax.validation.ConstraintViolation;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 public class ValidationErrorImpl
 	extends ParamErrorImpl implements ValidationError {

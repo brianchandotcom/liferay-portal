@@ -26,8 +26,8 @@ public class FailAppLicenseVerifier implements AppLicenseVerifier {
 	public static final Exception EXCEPTION = new Exception();
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #verify(String, String, String, String[])}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #verify(String,
+	 *             String, String, String[])}
 	 */
 	@Deprecated
 	@Override

@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.servlet.PortalWebResources;
  * Javascript content and needs to be notified every time a {@link JSBundle}
  * gets started in order, for example, to refresh its cached content.
  *
- * @author     Mariano Álvaro Sáiz
+ * @author Mariano Álvaro Sáiz
  */
 public interface JavaScriptAwarePortalWebResources extends PortalWebResources {
 

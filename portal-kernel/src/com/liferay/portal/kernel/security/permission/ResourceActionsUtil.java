@@ -31,8 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ResourceActionsUtil {
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 * 				#check(String)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #check(String)}
 	 */
 	@Deprecated
 	public static void check(Portlet portlet) {

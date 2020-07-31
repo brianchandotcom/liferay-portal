@@ -24,7 +24,7 @@ import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 public class UriInfoImpl implements UriInfo {
 

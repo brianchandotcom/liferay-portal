@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * @author Adolfo Pérez
+ * @author     Adolfo Pérez
  * @deprecated As of Wilberforce (7.0.x)
  */
 @Deprecated

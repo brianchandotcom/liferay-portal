@@ -29,8 +29,8 @@ import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.TaskAction;
 
 /**
- * @author Andrea Di Giorgi
- * @author Gregory Amerson
+ * @author     Andrea Di Giorgi
+ * @author     Gregory Amerson
  * @deprecated The token is no longer in use.
  */
 @Deprecated

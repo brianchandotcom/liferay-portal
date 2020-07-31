@@ -46,7 +46,8 @@ public class DynamicPortalCache<K extends Serializable, V>
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #DynamicPortalCache(PortalCacheManager, PortalCache, String, boolean)}
+	 *             #DynamicPortalCache(PortalCacheManager, PortalCache, String,
+	 *             boolean)}
 	 */
 	@Deprecated
 	public DynamicPortalCache(

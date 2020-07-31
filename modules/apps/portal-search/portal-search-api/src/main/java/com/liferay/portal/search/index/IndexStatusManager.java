@@ -25,17 +25,21 @@ public interface IndexStatusManager {
 	/**
 	 * Returns whether all model indexing is disabled.
 	 *
-	 * @return <code>true</code> if indexing is disabled; <code>false</code> otherwise
-	 * @see com.liferay.portal.search.configuration.IndexStatusManagerConfiguration#indexReadOnly()
+	 * @return <code>true</code> if indexing is disabled; <code>false</code>
+	 *         otherwise
+	 * @see    com.liferay.portal.search.configuration.IndexStatusManagerConfiguration#indexReadOnly(
+	 *         )
 	 */
 	public boolean isIndexReadOnly();
 
 	/**
 	 * Returns whether indexing is disabled for a given model.
 	 *
-	 * @param className the class name of the model
-	 * @return <code>true</code> if indexing is disabled; <code>false</code> otherwise
-	 * @see com.liferay.portal.search.configuration.IndexStatusManagerConfiguration#indexReadOnly()
+	 * @param  className the class name of the model
+	 * @return <code>true</code> if indexing is disabled; <code>false</code>
+	 *         otherwise
+	 * @see    com.liferay.portal.search.configuration.IndexStatusManagerConfiguration#indexReadOnly(
+	 *         )
 	 */
 	public boolean isIndexReadOnly(String className);
 
@@ -51,9 +55,11 @@ public interface IndexStatusManager {
 	 *
 	 * This API will be removed in a future version.
 	 *
+	 * @param      required <code>true</code> to enforce or <code>false</code>
+	 *             to forfeit requirement to index.
+	 * @see        com.liferay.portal.search.configuration.IndexStatusManagerConfiguration#indexReadOnly(
+	 *             )
 	 * @deprecated As of Athanasius (7.3.x)
-	 * @param required <code>true</code> to enforce or <code>false</code> to forfeit requirement to index.
-	 * @see com.liferay.portal.search.configuration.IndexStatusManagerConfiguration#indexReadOnly()
 	 */
 	@Deprecated
 	public void requireIndexReadWrite(boolean required);
@@ -69,9 +75,11 @@ public interface IndexStatusManager {
 	 *
 	 * This API will be removed in a future version.
 	 *
+	 * @param      indexReadOnly <code>true</code> to disable or
+	 *             <code>false</code> to enable indexing
+	 * @see        com.liferay.portal.search.configuration.IndexStatusManagerConfiguration#indexReadOnly(
+	 *             )
 	 * @deprecated As of Athanasius (7.3.x)
-	 * @param indexReadOnly <code>true</code> to disable or <code>false</code> to enable indexing
-	 * @see com.liferay.portal.search.configuration.IndexStatusManagerConfiguration#indexReadOnly()
 	 */
 	@Deprecated
 	public void setIndexReadOnly(boolean indexReadOnly);
@@ -87,10 +95,12 @@ public interface IndexStatusManager {
 	 *
 	 * This API will be removed in a future version.
 	 *
+	 * @param      className the class name of the model to disable indexing for
+	 * @param      indexReadOnly <code>true</code> to disable or
+	 *             <code>false</code> to enable indexing
+	 * @see        com.liferay.portal.search.configuration.IndexStatusManagerConfiguration#indexReadOnly(
+	 *             )
 	 * @deprecated As of Athanasius (7.3.x)
-	 * @param className the class name of the model to disable indexing for
-	 * @param indexReadOnly <code>true</code> to disable or <code>false</code> to enable indexing
-	 * @see com.liferay.portal.search.configuration.IndexStatusManagerConfiguration#indexReadOnly()
 	 */
 	@Deprecated
 	public void setIndexReadOnly(String className, boolean indexReadOnly);

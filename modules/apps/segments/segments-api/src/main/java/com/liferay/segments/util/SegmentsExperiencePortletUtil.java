@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 /**
- * @author Pavel Savinov
+ * @author     Pavel Savinov
  * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
 @Deprecated

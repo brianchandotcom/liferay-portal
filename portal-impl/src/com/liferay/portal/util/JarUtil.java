@@ -114,7 +114,7 @@ public class JarUtil {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #downloadAndInstallJar(URL, Path)}
+	 *             #downloadAndInstallJar(URL, Path)}
 	 */
 	@Deprecated
 	public static Path downloadAndInstallJar(
@@ -132,7 +132,7 @@ public class JarUtil {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #downloadAndInstallJar(URL, Path, URLClassLoader)}
+	 *             #downloadAndInstallJar(URL, Path, URLClassLoader)}
 	 */
 	@Deprecated
 	public static void downloadAndInstallJar(

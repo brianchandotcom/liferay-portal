@@ -26,7 +26,7 @@ import javax.ws.rs.core.Request;
 import javax.ws.rs.core.UriInfo;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 public class LocaleResolverContextImpl implements LocaleResolverContext {
 

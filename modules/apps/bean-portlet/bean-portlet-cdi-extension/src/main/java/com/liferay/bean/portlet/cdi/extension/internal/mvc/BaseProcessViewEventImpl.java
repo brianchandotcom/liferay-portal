@@ -17,7 +17,7 @@ package com.liferay.bean.portlet.cdi.extension.internal.mvc;
 import javax.mvc.engine.ViewEngine;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 public class BaseProcessViewEventImpl {
 

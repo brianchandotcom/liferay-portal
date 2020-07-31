@@ -96,8 +96,8 @@ public interface ItemSelectorView<T extends ItemSelectorCriterion> {
 	 * configuration, etc.
 	 * </p>
 	 *
-	 * @param  themeDisplay the current page {@link ThemeDisplay}
-	 * @return <code>true</code> if the view is visible
+	 * @param      themeDisplay the current page {@link ThemeDisplay}
+	 * @return     <code>true</code> if the view is visible
 	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated

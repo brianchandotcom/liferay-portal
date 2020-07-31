@@ -65,7 +65,8 @@ public class WorkflowHandlerRegistryUtil {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), in favor of {@link Registry#registerService(String, Object, Map)}
+	 * @deprecated As of Athanasius (7.3.x), in favor of {@link
+	 *             Registry#registerService(String, Object, Map)}
 	 */
 	@Deprecated
 	public static void register(List<WorkflowHandler<?>> workflowHandlers) {
@@ -75,7 +76,8 @@ public class WorkflowHandlerRegistryUtil {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), in favor of {@link Registry#registerService(String, Object, Map)}
+	 * @deprecated As of Athanasius (7.3.x), in favor of {@link
+	 *             Registry#registerService(String, Object, Map)}
 	 */
 	@Deprecated
 	public static void register(WorkflowHandler<?> workflowHandler) {
@@ -242,7 +244,8 @@ public class WorkflowHandlerRegistryUtil {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), use {@link ServiceRegistration#unregister()}
+	 * @deprecated As of Athanasius (7.3.x), use {@link
+	 *             ServiceRegistration#unregister()}
 	 */
 	@Deprecated
 	public static void unregister(List<WorkflowHandler<?>> workflowHandlers) {
@@ -252,7 +255,8 @@ public class WorkflowHandlerRegistryUtil {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), use {@link ServiceRegistration#unregister()}
+	 * @deprecated As of Athanasius (7.3.x), use {@link
+	 *             ServiceRegistration#unregister()}
 	 */
 	@Deprecated
 	public static void unregister(WorkflowHandler<?> workflowHandler) {

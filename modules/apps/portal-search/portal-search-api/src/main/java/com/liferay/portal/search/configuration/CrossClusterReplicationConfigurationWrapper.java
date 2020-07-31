@@ -26,7 +26,7 @@ public interface CrossClusterReplicationConfigurationWrapper {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getCCRLocalClusterConnectionConfigurations()}
+	 *             #getCCRLocalClusterConnectionConfigurations()}
 	 */
 	@Deprecated
 	public String getCCRLocalClusterConnectionId();

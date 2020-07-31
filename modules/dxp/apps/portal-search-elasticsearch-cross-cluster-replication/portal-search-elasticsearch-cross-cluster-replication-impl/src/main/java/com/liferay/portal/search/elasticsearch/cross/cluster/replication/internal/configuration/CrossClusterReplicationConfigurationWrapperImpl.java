@@ -42,7 +42,7 @@ public class CrossClusterReplicationConfigurationWrapperImpl
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getCCRLocalClusterConnectionConfigurations()}
+	 *             #getCCRLocalClusterConnectionConfigurations()}
 	 */
 	@Deprecated
 	@Override

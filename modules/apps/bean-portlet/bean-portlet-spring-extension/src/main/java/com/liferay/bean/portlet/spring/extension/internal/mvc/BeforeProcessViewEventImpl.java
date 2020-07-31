@@ -18,7 +18,7 @@ import javax.mvc.engine.ViewEngine;
 import javax.mvc.event.BeforeProcessViewEvent;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 public class BeforeProcessViewEventImpl
 	extends BaseProcessViewEventImpl implements BeforeProcessViewEvent {

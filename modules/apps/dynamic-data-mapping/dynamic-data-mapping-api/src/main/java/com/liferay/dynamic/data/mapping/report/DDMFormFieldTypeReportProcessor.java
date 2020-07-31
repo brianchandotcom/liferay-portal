@@ -33,7 +33,7 @@ public interface DDMFormFieldTypeReportProcessor {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #process(DDMFormFieldValue, JSONObject, long, String)}
+	 *             #process(DDMFormFieldValue, JSONObject, long, String)}
 	 */
 	@Deprecated
 	public default JSONObject process(

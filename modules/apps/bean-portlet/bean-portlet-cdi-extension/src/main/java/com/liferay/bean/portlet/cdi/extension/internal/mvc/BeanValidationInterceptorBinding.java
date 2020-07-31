@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
 import javax.interceptor.InterceptorBinding;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 @Inherited
 @InterceptorBinding

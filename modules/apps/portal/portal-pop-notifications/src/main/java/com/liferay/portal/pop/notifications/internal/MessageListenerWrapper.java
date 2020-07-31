@@ -54,8 +54,8 @@ public class MessageListenerWrapper implements MessageListener {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #accept(String, List, Message)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #accept(String,
+	 *             List, Message)}
 	 */
 	@Deprecated
 	@Override
@@ -78,8 +78,8 @@ public class MessageListenerWrapper implements MessageListener {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #deliver(String, List, Message)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #deliver(String,
+	 *             List, Message)}
 	 */
 	@Deprecated
 	@Override

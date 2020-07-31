@@ -28,7 +28,7 @@ import javax.mvc.locale.LocaleResolver;
 import javax.mvc.locale.LocaleResolverContext;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 @ApplicationScoped
 @Priority(0)

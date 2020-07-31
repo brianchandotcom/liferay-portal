@@ -15,7 +15,7 @@
 package com.liferay.portal.search.contributor;
 
 /**
- * @author Michael C. Han
+ * @author     Michael C. Han
  * @deprecated As of Athanasius (7.3.x), replaced by {@link
  *             com.liferay.portal.search.contributor.constants.ContributorConstants}
  */

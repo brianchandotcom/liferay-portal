@@ -56,7 +56,8 @@ public class LayoutPageTemplatesImporterResultEntry {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #LayoutPageTemplatesImporterResultEntry(String, int, Status, String)}
+	 *             #LayoutPageTemplatesImporterResultEntry(String, int, Status,
+	 *             String)}
 	 */
 	@Deprecated
 	public LayoutPageTemplatesImporterResultEntry(

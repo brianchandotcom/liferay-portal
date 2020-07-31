@@ -94,7 +94,7 @@ public class DB2Dialect extends org.hibernate.dialect.DB2Dialect {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *			 #addQueryForLimitedRows(StringBundler, String, int)}
+	 *             #addQueryForLimitedRows(StringBundler, String, int)}
 	 */
 	@Deprecated
 	protected void addQueryForLimitedRows(

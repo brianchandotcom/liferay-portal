@@ -20,7 +20,7 @@ import javax.ws.rs.core.UriInfo;
 import org.springframework.context.ApplicationEvent;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 public class BaseControllerEventImpl extends ApplicationEvent {
 

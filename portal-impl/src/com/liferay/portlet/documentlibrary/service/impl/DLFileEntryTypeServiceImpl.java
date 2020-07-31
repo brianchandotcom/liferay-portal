@@ -60,7 +60,8 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 * #addFileEntryType(long, String, Map, Map, long, ServiceContext)}
+	 *             #addFileEntryType(long, String, Map, Map, long,
+	 *             ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -80,7 +81,8 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 * #addFileEntryType(long, String, Map, Map, long, ServiceContext)}
+	 *             #addFileEntryType(long, String, Map, Map, long,
+	 *             ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -225,7 +227,7 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 * #updateFileEntryType(long, Map, Map)}
+	 *             #updateFileEntryType(long, Map, Map)}
 	 */
 	@Deprecated
 	@Override

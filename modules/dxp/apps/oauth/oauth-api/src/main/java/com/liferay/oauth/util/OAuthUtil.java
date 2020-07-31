@@ -31,9 +31,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Ivica Cardic
- * @author Raymond Augé
- * @author Igor Beslic
+ * @author     Ivica Cardic
+ * @author     Raymond Augé
+ * @author     Igor Beslic
  * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
 @Deprecated

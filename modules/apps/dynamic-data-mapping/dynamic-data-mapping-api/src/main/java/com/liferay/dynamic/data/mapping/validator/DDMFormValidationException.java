@@ -56,7 +56,8 @@ public class DDMFormValidationException extends PortalException {
 		}
 
 		/**
-		 * @deprecated As of Athanasius (7.3.x), replaced by {@link #MustNotDuplicateFieldName(Set)}
+		 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+		 *             #MustNotDuplicateFieldName(Set)}
 		 */
 		@Deprecated
 		public MustNotDuplicateFieldName(String fieldName) {
@@ -68,7 +69,8 @@ public class DDMFormValidationException extends PortalException {
 		}
 
 		/**
-		 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getDuplicatedFieldNames()}
+		 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+		 *             #getDuplicatedFieldNames()}
 		 */
 		@Deprecated
 		public String getFieldName() {

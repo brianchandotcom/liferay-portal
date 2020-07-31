@@ -68,7 +68,7 @@ public class LanguageResources {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *   LanguageBuilderUtil#fixValue(String)}
+	 *             LanguageBuilderUtil#fixValue(String)}
 	 */
 	@Deprecated
 	public static String fixValue(String value) {

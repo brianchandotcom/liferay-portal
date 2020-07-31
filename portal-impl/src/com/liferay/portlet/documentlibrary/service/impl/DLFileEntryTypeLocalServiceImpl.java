@@ -157,7 +157,8 @@ public class DLFileEntryTypeLocalServiceImpl
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 * #addFileEntryType(long, long, String, Map, Map, long, ServiceContext)}
+	 *             #addFileEntryType(long, long, String, Map, Map, long,
+	 *             ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -231,7 +232,8 @@ public class DLFileEntryTypeLocalServiceImpl
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 * #addFileEntryType(long, long, String, Map, Map, long, ServiceContext)}
+	 *             #addFileEntryType(long, long, String, Map, Map, long,
+	 *             ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -574,7 +576,7 @@ public class DLFileEntryTypeLocalServiceImpl
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 * #updateFileEntryType(long, Map, Map)}
+	 *             #updateFileEntryType(long, Map, Map)}
 	 */
 	@Deprecated
 	@Override
@@ -606,7 +608,7 @@ public class DLFileEntryTypeLocalServiceImpl
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 * #updateFileEntryType(long, Map, Map)}
+	 *             #updateFileEntryType(long, Map, Map)}
 	 */
 	@Deprecated
 	@Override
@@ -688,7 +690,7 @@ public class DLFileEntryTypeLocalServiceImpl
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {{@link
-	 * #_getFileEntryTypesPrimaryFolderId(long)}}
+	 *             #_getFileEntryTypesPrimaryFolderId(long)}}
 	 */
 	@Deprecated
 	protected static long getFileEntryTypesPrimaryFolderId(

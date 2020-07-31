@@ -52,7 +52,7 @@ import javax.ws.rs.ext.ParamConverter;
 import javax.ws.rs.ext.ParamConverterProvider;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 @Dependent
 public class PortletParamProducer {

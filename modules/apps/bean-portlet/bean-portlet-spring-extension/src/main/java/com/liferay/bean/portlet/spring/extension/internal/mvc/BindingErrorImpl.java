@@ -17,7 +17,7 @@ package com.liferay.bean.portlet.spring.extension.internal.mvc;
 import javax.mvc.binding.BindingError;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 public class BindingErrorImpl extends ParamErrorImpl implements BindingError {
 

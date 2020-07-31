@@ -30,7 +30,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 @ManagedBean("models")
 @Scope(proxyMode = ScopedProxyMode.INTERFACES, value = "portletRedirect")

@@ -54,8 +54,8 @@ public class OAuthApplicationLocalServiceImpl
 	extends OAuthApplicationLocalServiceBaseImpl {
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by
-	 *             {@link #addOAuthApplication(long, String, String, String, int
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #addOAuthApplication(long, String, String, String, int
 	 *             boolean, String, String, ServiceContext)}
 	 */
 	@Deprecated

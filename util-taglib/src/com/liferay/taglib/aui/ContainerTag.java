@@ -19,10 +19,10 @@ import com.liferay.taglib.aui.base.BaseContainerTag;
 import javax.servlet.jsp.JspWriter;
 
 /**
- * @author Eduardo Lundgren
- * @author Bruno Basto
- * @author Nathan Cavanaugh
- * @author Julio Camarero
+ * @author     Eduardo Lundgren
+ * @author     Bruno Basto
+ * @author     Nathan Cavanaugh
+ * @author     Julio Camarero
  * @deprecated As of Athanasius (7.3.x), replaced by clay:container
  */
 @Deprecated

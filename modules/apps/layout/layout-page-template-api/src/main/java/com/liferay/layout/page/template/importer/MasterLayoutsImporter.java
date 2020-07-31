@@ -21,7 +21,7 @@ import java.util.List;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author Rubén Pulido
+ * @author     Rubén Pulido
  * @deprecated As of Athanasius (7.3.x), in favour of {@link
  *             #LayoutPageTemplatesImporter}
  */

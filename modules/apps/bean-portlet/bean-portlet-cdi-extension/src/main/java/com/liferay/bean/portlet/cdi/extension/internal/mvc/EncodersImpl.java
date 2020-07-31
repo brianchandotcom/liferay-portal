@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import javax.mvc.security.Encoders;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 public class EncodersImpl implements Encoders {
 

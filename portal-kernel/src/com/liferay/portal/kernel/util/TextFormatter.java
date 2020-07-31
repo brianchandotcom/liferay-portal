@@ -193,7 +193,8 @@ public class TextFormatter {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             com.liferay.portal.kernel.language.LanguageUtil#formatStorageSize(double, Locale) }
+	 *             com.liferay.portal.kernel.language.LanguageUtil#formatStorageSize(
+	 *             double, Locale) }
 	 */
 	@Deprecated
 	public static String formatStorageSize(double size, Locale locale) {

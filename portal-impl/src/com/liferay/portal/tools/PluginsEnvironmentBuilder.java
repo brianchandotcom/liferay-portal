@@ -131,7 +131,7 @@ public class PluginsEnvironmentBuilder {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *			 #addClasspathEntry(StringBundler, String)}
+	 *             #addClasspathEntry(StringBundler, String)}
 	 */
 	@Deprecated
 	protected void addClasspathEntry(
@@ -142,7 +142,7 @@ public class PluginsEnvironmentBuilder {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *			 #addClasspathEntry(StringBundler, String, Map)}
+	 *             #addClasspathEntry(StringBundler, String, Map)}
 	 */
 	@Deprecated
 	protected void addClasspathEntry(
@@ -183,7 +183,7 @@ public class PluginsEnvironmentBuilder {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *			 #addIvyCacheJar(StringBundler, String, String, String)}
+	 *             #addIvyCacheJar(StringBundler, String, String, String)}
 	 */
 	@Deprecated
 	protected void addIvyCacheJar(
@@ -328,7 +328,7 @@ public class PluginsEnvironmentBuilder {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *			 #addIvyCacheJars(StringBundler, String, String)}
+	 *             #addIvyCacheJars(StringBundler, String, String)}
 	 */
 	@Deprecated
 	protected void addIvyCacheJars(

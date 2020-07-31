@@ -913,8 +913,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * @param  folderId the primary key of the file entry's folder
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
-	 * @param  orderByComparator the comparator to order the file entries (optionally
-	 *         <code>null</code>)
+	 * @param  orderByComparator the comparator to order the file entries
+	 *         (optionally <code>null</code>)
 	 * @return the range of file entries in the folder ordered by comparator
 	 *         <code>orderByComparator</code>
 	 * @throws PortalException if a portal exception occurred
@@ -982,8 +982,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * @param  fileEntryTypeId the primary key of the file entry type
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
-	 * @param  orderByComparator the comparator to order the results by (optionally
-	 *         <code>null</code>)
+	 * @param  orderByComparator the comparator to order the results by
+	 *         (optionally <code>null</code>)
 	 * @return the range of file entries with the file entry type in the folder
 	 *         ordered by <code>null</code>
 	 * @throws PortalException if a portal exception occurred
@@ -1799,8 +1799,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 *         (optionally <code>0</code>)
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
-	 * @param  orderByComparator the comparator to order the file entries (optionally
-	 *         <code>null</code>)
+	 * @param  orderByComparator the comparator to order the file entries
+	 *         (optionally <code>null</code>)
 	 * @return the range of matching file entries ordered by comparator
 	 *         <code>orderByComparator</code>
 	 * @throws PortalException if a portal exception occurred
@@ -1873,8 +1873,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 *         search
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
-	 * @param  orderByComparator the comparator to order the file entries (optionally
-	 *         <code>null</code>)
+	 * @param  orderByComparator the comparator to order the file entries
+	 *         (optionally <code>null</code>)
 	 * @return the range of matching file entries ordered by comparator
 	 *         <code>orderByComparator</code>
 	 * @throws PortalException if a portal exception occurred

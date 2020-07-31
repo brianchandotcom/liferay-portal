@@ -2614,7 +2614,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *         inclusive)
 	 * @param  orderByComparator the comparator to order the groups (optionally
 	 *         <code>null</code>)
-	 * @return the matching groups ordered by comparator <code>orderByComparator</code>
+	 * @return the matching groups ordered by comparator
+	 *         <code>orderByComparator</code>
 	 */
 	@Override
 	public List<Group> search(
@@ -2704,7 +2705,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *         inclusive)
 	 * @param  orderByComparator the comparator to order the groups (optionally
 	 *         <code>null</code>)
-	 * @return the matching groups ordered by comparator <code>orderByComparator</code>
+	 * @return the matching groups ordered by comparator
+	 *         <code>orderByComparator</code>
 	 */
 	@Override
 	public List<Group> search(
@@ -2794,7 +2796,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *         inclusive)
 	 * @param  orderByComparator the comparator to order the groups (optionally
 	 *         <code>null</code>)
-	 * @return the matching groups ordered by comparator <code>orderByComparator</code>
+	 * @return the matching groups ordered by comparator
+	 *         <code>orderByComparator</code>
 	 */
 	@Override
 	public List<Group> search(
@@ -2907,7 +2910,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *         inclusive)
 	 * @param  orderByComparator the comparator to order the groups (optionally
 	 *         <code>null</code>)
-	 * @return the matching groups ordered by comparator <code>orderByComparator</code>
+	 * @return the matching groups ordered by comparator
+	 *         <code>orderByComparator</code>
 	 */
 	@Override
 	public List<Group> search(
@@ -3004,7 +3008,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *         inclusive)
 	 * @param  orderByComparator the comparator to order the groups (optionally
 	 *         <code>null</code>)
-	 * @return the matching groups ordered by comparator <code>orderByComparator</code>
+	 * @return the matching groups ordered by comparator
+	 *         <code>orderByComparator</code>
 	 */
 	@Override
 	public List<Group> search(
@@ -3098,7 +3103,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *         inclusive)
 	 * @param  orderByComparator the comparator to order the groups (optionally
 	 *         <code>null</code>)
-	 * @return the matching groups ordered by comparator <code>orderByComparator</code>
+	 * @return the matching groups ordered by comparator
+	 *         <code>orderByComparator</code>
 	 */
 	@Override
 	public List<Group> search(
@@ -3178,7 +3184,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *         inclusive)
 	 * @param  orderByComparator the comparator to order the groups (optionally
 	 *         <code>null</code>)
-	 * @return the matching groups ordered by comparator <code>orderByComparator</code>
+	 * @return the matching groups ordered by comparator
+	 *         <code>orderByComparator</code>
 	 */
 	@Override
 	public List<Group> search(
@@ -3265,7 +3272,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *         inclusive)
 	 * @param  orderByComparator the comparator to order the groups (optionally
 	 *         <code>null</code>)
-	 * @return the matching groups ordered by comparator <code>orderByComparator</code>
+	 * @return the matching groups ordered by comparator
+	 *         <code>orderByComparator</code>
 	 */
 	@Override
 	public List<Group> search(

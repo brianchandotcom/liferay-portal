@@ -28,7 +28,7 @@ import java.util.stream.Stream;
 public class ExpressionParameterValueExtractor {
 
 	/**
-	 * @param expression Ex: equals('Country', "US")
+	 * @param  expression Ex: equals('Country', "US")
 	 * @return a list with the given expression parameters Ex: ['Country', "US"]
 	 */
 	public static List<String> extractParameterValues(String expression) {

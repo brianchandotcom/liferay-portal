@@ -28,7 +28,7 @@ import javax.inject.Inject;
 import javax.ws.rs.ext.ParamConverterProvider;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 @ApplicationScoped
 public class ParamConverterProvidersProducer {

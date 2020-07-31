@@ -24,7 +24,7 @@ import javax.enterprise.inject.spi.AnnotatedField;
 import javax.enterprise.inject.spi.AnnotatedType;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 public class ModifiedField<X> implements AnnotatedField<X> {
 

@@ -21,7 +21,7 @@ import javax.annotation.ManagedBean;
 import javax.mvc.security.Encoders;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 @ManagedBean
 public class EncodersImpl implements Encoders {

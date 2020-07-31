@@ -427,7 +427,8 @@ public abstract class UpgradeProcess
 	protected abstract void doUpgrade() throws Exception;
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getIndexSQLs(Class, String)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getIndexSQLs(Class, String)}
 	 */
 	@Deprecated
 	protected List<ObjectValuePair<String, IndexMetadata>> getIndexesSQL(

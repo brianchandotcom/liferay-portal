@@ -27,7 +27,7 @@ import javax.mvc.binding.ParamError;
 import javax.mvc.binding.ValidationError;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 public class BindingResultImpl implements MutableBindingResult, Serializable {
 

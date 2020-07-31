@@ -23,7 +23,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Variant;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 public class RequestImpl implements Request {
 

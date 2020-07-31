@@ -22,9 +22,9 @@ import com.liferay.petra.sql.dsl.Column;
 public class DataEngineNativeObjectField {
 
 	/**
+	 * @param      column
+	 * @param      customType
 	 * @deprecated As of Athanasius (7.3.x)
-	 * @param column
-	 * @param customType
 	 */
 	@Deprecated
 	public DataEngineNativeObjectField(Column<?, ?> column, String customType) {

@@ -34,7 +34,7 @@ public interface ElasticsearchConfiguration {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *			 #productionModeEnabled()}
+	 *             #productionModeEnabled()}
 	 */
 	@Deprecated
 	@Meta.AD(
@@ -172,7 +172,7 @@ public interface ElasticsearchConfiguration {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *			 #sidecarHttpPort()}
+	 *             #sidecarHttpPort()}
 	 */
 	@Deprecated
 	@Meta.AD(

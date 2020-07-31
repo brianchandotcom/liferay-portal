@@ -26,7 +26,7 @@ public abstract class BaseCacheKeyGenerator implements CacheKeyGenerator {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *			 #append(StringBundler)}
+	 *             #append(StringBundler)}
 	 */
 	@Deprecated
 	@Override

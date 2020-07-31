@@ -34,7 +34,7 @@ import javax.enterprise.inject.spi.BeanManager;
 import javax.mvc.binding.BindingResult;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 public class BeanUtil {
 

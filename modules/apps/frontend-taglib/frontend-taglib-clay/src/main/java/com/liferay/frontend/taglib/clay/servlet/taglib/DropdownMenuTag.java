@@ -34,8 +34,7 @@ public class DropdownMenuTag extends ButtonTag {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getLabel()}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getLabel()}
 	 */
 	@Deprecated
 	public String getButtonLabel() {
@@ -96,8 +95,7 @@ public class DropdownMenuTag extends ButtonTag {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getCssClass()}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getCssClass()}
 	 */
 	@Deprecated
 	public String getTriggerCssClasses() {

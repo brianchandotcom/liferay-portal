@@ -39,7 +39,8 @@ public class AppBuilderAppDataRecordLinkLocalServiceImpl
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #addAppBuilderAppDataRecordLink(long, long, long, long, long)}
+	 *             #addAppBuilderAppDataRecordLink(long, long, long, long,
+	 *             long)}
 	 */
 	@Deprecated
 	@Override

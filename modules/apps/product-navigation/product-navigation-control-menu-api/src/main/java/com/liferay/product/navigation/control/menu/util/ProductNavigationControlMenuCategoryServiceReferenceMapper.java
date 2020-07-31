@@ -23,7 +23,7 @@ import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuC
 import org.osgi.framework.ServiceReference;
 
 /**
- * @author Julio Camarero
+ * @author     Julio Camarero
  * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
 @Deprecated

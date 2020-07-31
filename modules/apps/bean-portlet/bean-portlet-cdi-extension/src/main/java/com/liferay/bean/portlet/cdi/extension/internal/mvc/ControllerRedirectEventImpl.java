@@ -22,7 +22,7 @@ import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.UriInfo;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 public class ControllerRedirectEventImpl
 	extends BaseControllerEventImpl implements ControllerRedirectEvent {

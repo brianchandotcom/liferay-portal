@@ -27,7 +27,7 @@ import javax.portlet.PortletRequest;
 import javax.ws.rs.core.Configuration;
 
 /**
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 @ApplicationScoped
 public class ViewEngineContextProducer {

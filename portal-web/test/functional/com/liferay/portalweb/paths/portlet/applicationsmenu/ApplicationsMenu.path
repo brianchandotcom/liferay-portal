@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>CATEGORY</td>
-	<td>//ul[contains(@class,'list') and not(contains(@class,'rounded'))]//li[contains(@class,'dropdown-subheader') and contains(.,'${key_category}')]</td>
+	<td>//div[contains(@class,'applications-menu-nav-columns')]//li[contains(.,'${key_category}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -30,12 +30,12 @@
 </tr>
 <tr>
 	<td>PORTLET</td>
-	<td>//li[contains(@class,'applications-menu-nav-header') and contains(.,'${key_category}')]/following-sibling::li//span[normalize-space(text())='${key_portlet}']</td>
+	<td>//div[contains(@class,'applications-menu-nav-columns')]//li[contains(.,'${key_category}')]/following-sibling::li//span[normalize-space(text())='${key_portlet}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_LINK</td>
-	<td>//div[contains(@aria-labelledby,'ApplicationsMenuPortlet') and contains(@class,'active')]//a[span][normalize-space(text())='${key_site}']</td>
+	<td>//div[contains(@class,'applications-menu-sites')]//span[normalize-space(text())='${key_site}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>VIEW_ALL_LINK</td>
-	<td>//div[contains(@aria-labelledby,'ApplicationsMenuPortlet') and contains(@class,'active')]//button[contains(@class,'btn-link') and contains(.,'View All')]</td>
+	<td>//div[contains(@class,'applications-menu-sites')]//button[contains(@class,'btn-link') and contains(.,'View All')]</td>
 	<td></td>
 </tr>
 <tr>

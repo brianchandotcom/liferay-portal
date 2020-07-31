@@ -26,12 +26,13 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -92,15 +93,15 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 		JournalArticle journalArticle = _getJournalArticle(
 			groupId, friendlyURL);
 
-		InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
-			_getInfoDisplayObjectProvider(journalArticle);
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+			_getLayoutDisplayPageObjectProvider(journalArticle);
 
 		if (Validator.isNull(journalArticle.getLayoutUuid()) &&
-			(infoDisplayObjectProvider != null) &&
+			(layoutDisplayPageObjectProvider != null) &&
 			AssetDisplayPageUtil.hasAssetDisplayPage(
-				groupId, infoDisplayObjectProvider.getClassNameId(),
-				infoDisplayObjectProvider.getClassPK(),
-				infoDisplayObjectProvider.getClassTypeId())) {
+				groupId, layoutDisplayPageObjectProvider.getClassNameId(),
+				layoutDisplayPageObjectProvider.getClassPK(),
+				layoutDisplayPageObjectProvider.getClassTypeId())) {
 
 			return super.getActualURL(
 				companyId, groupId, privateLayout, mainPath, friendlyURL,
@@ -145,15 +146,15 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 			}
 		}
 
-		InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
-			_getInfoDisplayObjectProvider(journalArticle);
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+			_getLayoutDisplayPageObjectProvider(journalArticle);
 
 		if (Validator.isNull(journalArticle.getLayoutUuid()) &&
-			(infoDisplayObjectProvider != null) &&
+			(layoutDisplayPageObjectProvider != null) &&
 			AssetDisplayPageUtil.hasAssetDisplayPage(
-				groupId, infoDisplayObjectProvider.getClassNameId(),
-				infoDisplayObjectProvider.getClassPK(),
-				infoDisplayObjectProvider.getClassTypeId())) {
+				groupId, layoutDisplayPageObjectProvider.getClassNameId(),
+				layoutDisplayPageObjectProvider.getClassPK(),
+				layoutDisplayPageObjectProvider.getClassTypeId())) {
 
 			return super.getLayoutFriendlyURLComposite(
 				companyId, groupId, privateLayout, friendlyURL, params,
@@ -307,14 +308,14 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 			_portal.addPageDescription(pageDescription, httpServletRequest);
 		}
 
-		InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
-			_getInfoDisplayObjectProvider(journalArticle);
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+			_getLayoutDisplayPageObjectProvider(journalArticle);
 
-		if (infoDisplayObjectProvider == null) {
+		if (layoutDisplayPageObjectProvider == null) {
 			return layoutActualURL;
 		}
 
-		String keywords = infoDisplayObjectProvider.getKeywords(locale);
+		String keywords = layoutDisplayPageObjectProvider.getKeywords(locale);
 
 		if (Validator.isNotNull(keywords)) {
 			_portal.addPageKeywords(keywords, httpServletRequest);
@@ -357,18 +358,6 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 		}
 
 		return GetterUtil.getLong(paths.get(paths.size() - 1));
-	}
-
-	private InfoDisplayObjectProvider<?> _getInfoDisplayObjectProvider(
-			JournalArticle journalArticle)
-		throws PortalException {
-
-		InfoDisplayContributor<?> infoDisplayContributor =
-			infoDisplayContributorTracker.getInfoDisplayContributor(
-				JournalArticle.class.getName());
-
-		return infoDisplayContributor.getInfoDisplayObjectProvider(
-			journalArticle.getResourcePrimKey());
 	}
 
 	private JournalArticle _getJournalArticle(long groupId, String friendlyURL)
@@ -463,6 +452,22 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 		}
 
 		return journalArticle;
+	}
+
+	private LayoutDisplayPageObjectProvider<?>
+			_getLayoutDisplayPageObjectProvider(JournalArticle journalArticle)
+		throws PortalException {
+
+		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
+			layoutDisplayPageProviderTracker.getLayoutDisplayPageProvider(
+				JournalArticle.class.getName());
+
+		InfoItemReference infoItemReference = new InfoItemReference(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
+
+		return layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+			infoItemReference);
 	}
 
 	private String _getURLTitle(String friendlyURL) {

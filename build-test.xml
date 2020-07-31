@@ -12781,13 +12781,6 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</then>
 		</if>
 
-		<if>
-			<equals arg1="${deploy.lcs.token.file}" arg2="true" />
-			<then>
-				<antcall target="print-lcs-log-content" />
-			</then>
-		</if>
-
 		<get-testcase-property property.name="skip.start-app-server" />
 
 		<if>
@@ -12983,6 +12976,13 @@ url=${short.hostname}:8080</echo>
 			</then>
 			<else>
 				<antcall target="run-selenium-test" />
+
+				<if>
+					<equals arg1="${deploy.lcs.token.file}" arg2="true" />
+					<then>
+						<antcall target="print-lcs-log-content" />
+					</then>
+				</if>
 			</else>
 		</if>
 

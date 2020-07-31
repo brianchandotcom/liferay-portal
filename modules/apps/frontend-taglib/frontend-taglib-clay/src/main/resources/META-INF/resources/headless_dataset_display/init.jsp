@@ -34,29 +34,29 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 <liferay-theme:defineObjects />
 
 <%
-String apiURL = (String)request.getAttribute("clay:dataset-display:apiURL");
-List<DropdownItem> bulkActionDropdownItems = (List<DropdownItem>)request.getAttribute("clay:dataset-display:bulkActionDropdownItems");
-Object clayDataSetDisplayViewsContext = request.getAttribute("clay:dataset-display:clayDataSetDisplayViewsContext");
-Object clayDataSetFiltersContext = request.getAttribute("clay:dataset-display:clayDataSetFiltersContext");
-List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems = (List<ClayDataSetActionDropdownItem>)request.getAttribute("clay:dataset-display:clayDataSetActionDropdownItems");
-CreationMenu creationMenu = (CreationMenu)request.getAttribute("clay:dataset-display:creationMenu");
-String formId = (String)request.getAttribute("clay:dataset-display:formId");
-String id = (String)request.getAttribute("clay:dataset-display:id");
-int itemsPerPage = (int)request.getAttribute("clay:dataset-display:itemsPerPage");
-String module = (String)request.getAttribute("clay:dataset-display:module");
-String namespace = (String)request.getAttribute("clay:dataset-display:namespace");
-String nestedItemsKey = (String)request.getAttribute("clay:dataset-display:nestedItemsKey");
-String nestedItemsReferenceKey = (String)request.getAttribute("clay:dataset-display:nestedItemsReferenceKey");
-int pageNumber = (int)request.getAttribute("clay:dataset-display:pageNumber");
-List<ClayPaginationEntry> paginationEntries = (List<ClayPaginationEntry>)request.getAttribute("clay:dataset-display:paginationEntries");
-PortletURL portletURL = (PortletURL)request.getAttribute("clay:dataset-display:portletURL");
-List<String> selectedItems = (List<String>)request.getAttribute("clay:dataset-display:selectedItems");
-String selectedItemsKey = (String)request.getAttribute("clay:dataset-display:selectedItemsKey");
-String selectionType = (String)request.getAttribute("clay:dataset-display:selectionType");
-boolean showManagementBar = (boolean)request.getAttribute("clay:dataset-display:showManagementBar");
-boolean showPagination = (boolean)request.getAttribute("clay:dataset-display:showPagination");
-boolean showSearch = (boolean)request.getAttribute("clay:dataset-display:showSearch");
-String style = (String)request.getAttribute("clay:dataset-display:style");
+String apiURL = (String)request.getAttribute("clay:headless-dataset-display:apiURL");
+List<DropdownItem> bulkActionDropdownItems = (List<DropdownItem>)request.getAttribute("clay:headless-dataset-display:bulkActionDropdownItems");
+Object clayDataSetDisplayViewsContext = request.getAttribute("clay:headless-dataset-display:clayDataSetDisplayViewsContext");
+Object clayDataSetFiltersContext = request.getAttribute("clay:headless-dataset-display:clayDataSetFiltersContext");
+List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems = (List<ClayDataSetActionDropdownItem>)request.getAttribute("clay:headless-dataset-display:clayDataSetActionDropdownItems");
+CreationMenu creationMenu = (CreationMenu)request.getAttribute("clay:headless-dataset-display:creationMenu");
+String formId = (String)request.getAttribute("clay:headless-dataset-display:formId");
+String id = (String)request.getAttribute("clay:headless-dataset-display:id");
+int itemsPerPage = (int)request.getAttribute("clay:headless-dataset-display:itemsPerPage");
+String module = (String)request.getAttribute("clay:headless-dataset-display:module");
+String namespace = (String)request.getAttribute("clay:headless-dataset-display:namespace");
+String nestedItemsKey = (String)request.getAttribute("clay:headless-dataset-display:nestedItemsKey");
+String nestedItemsReferenceKey = (String)request.getAttribute("clay:headless-dataset-display:nestedItemsReferenceKey");
+int pageNumber = (int)request.getAttribute("clay:headless-dataset-display:pageNumber");
+List<ClayPaginationEntry> paginationEntries = (List<ClayPaginationEntry>)request.getAttribute("clay:headless-dataset-display:paginationEntries");
+PortletURL portletURL = (PortletURL)request.getAttribute("clay:headless-dataset-display:portletURL");
+List<String> selectedItems = (List<String>)request.getAttribute("clay:headless-dataset-display:selectedItems");
+String selectedItemsKey = (String)request.getAttribute("clay:headless-dataset-display:selectedItemsKey");
+String selectionType = (String)request.getAttribute("clay:headless-dataset-display:selectionType");
+boolean showManagementBar = (boolean)request.getAttribute("clay:headless-dataset-display:showManagementBar");
+boolean showPagination = (boolean)request.getAttribute("clay:headless-dataset-display:showPagination");
+boolean showSearch = (boolean)request.getAttribute("clay:headless-dataset-display:showSearch");
+String style = (String)request.getAttribute("clay:headless-dataset-display:style");
 
 JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 

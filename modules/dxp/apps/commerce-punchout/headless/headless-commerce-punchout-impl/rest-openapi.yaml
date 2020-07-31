@@ -270,10 +270,10 @@ components:
             required:
                 - buyerAccountReferenceCode
                 - buyerGroup
-                - punchOutReturnURL
-                - punchOutSessionType
                 - buyerUser
                 - cart
+                - punchOutReturnURL
+                - punchOutSessionType
             type: object
         Settings:
             properties:

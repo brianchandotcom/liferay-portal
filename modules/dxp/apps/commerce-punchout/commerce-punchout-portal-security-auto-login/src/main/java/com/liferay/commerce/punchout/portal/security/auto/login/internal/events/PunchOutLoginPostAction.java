@@ -85,10 +85,9 @@ public class PunchOutLoginPostAction extends Action {
 			long punchOutUserId = (long)httpServletRequest.getAttribute(
 				"punchOutUserId");
 
-			long companyId = _portal.getCompanyId(httpServletRequest);
-
 			_startNewPunchOutSession(
-				companyId, punchOutAccessToken.getGroupId(),
+				_portal.getCompanyId(httpServletRequest),
+				punchOutAccessToken.getGroupId(),
 				punchOutAccessToken.getCommerceAccountId(),
 				punchOutAccessToken.getCurrencyCode(), punchOutAccessToken,
 				punchOutUserId, httpServletRequest, httpServletResponse);
@@ -97,8 +96,8 @@ public class PunchOutLoginPostAction extends Action {
 
 			httpServletRequest.removeAttribute("punchOutUserId");
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 
@@ -179,8 +178,10 @@ public class PunchOutLoginPostAction extends Action {
 		HashMap<String, Object> punchOutSessionAttributes =
 			punchOutAccessToken.getPunchOutSessionAttributes();
 
-		for (Map.Entry mapElement : punchOutSessionAttributes.entrySet()) {
-			String key = (String)mapElement.getKey();
+		for (Map.Entry<String, Object> mapElement :
+				punchOutSessionAttributes.entrySet()) {
+
+			String key = mapElement.getKey();
 
 			if (_log.isDebugEnabled()) {
 				StringBundler sb = new StringBundler(7);

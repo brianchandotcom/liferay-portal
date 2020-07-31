@@ -40,7 +40,6 @@ import com.liferay.headless.commerce.punchout.helper.PunchOutSessionContributor;
 import com.liferay.headless.commerce.punchout.resource.v1_0.PunchOutSessionResource;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -55,6 +54,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.net.URLEncoder;
@@ -154,8 +154,10 @@ public class PunchOutSessionResourceImpl
 
 		CommerceOrder editCartCommerceOrder = null;
 
-		if (punchOutSessionType.equalsIgnoreCase(_EDIT_REQUEST_TYPE) ||
-			punchOutSessionType.equalsIgnoreCase(_INSPECT_REQUEST_TYPE)) {
+		if (StringUtil.equalsIgnoreCase(
+				punchOutSessionType, _EDIT_REQUEST_TYPE) ||
+			StringUtil.equalsIgnoreCase(
+				punchOutSessionType, _INSPECT_REQUEST_TYPE)) {
 
 			if (!_userBelongsToCart(
 					buyerLiferayUser.getUserId(), cart.getId())) {
@@ -268,7 +270,7 @@ public class PunchOutSessionResourceImpl
 
 	private void _addBuyerUserToAccount(
 			CommerceAccount commerceAccount, long userId, long groupId)
-		throws PortalException {
+		throws Exception {
 
 		Role role = _roleLocalService.fetchRole(
 			contextCompany.getCompanyId(),
@@ -292,7 +294,7 @@ public class PunchOutSessionResourceImpl
 	}
 
 	private void _checkAllowUserCreation(long companyId, String email)
-		throws PortalException {
+		throws Exception {
 
 		Company company = _companyLocalService.getCompany(companyId);
 
@@ -358,8 +360,10 @@ public class PunchOutSessionResourceImpl
 				new GroupServiceSettingsLocator(
 					commerceChannelGroupId, PunchOutConstants.SERVICE_NAME));
 		}
-		catch (ConfigurationException ce) {
-			_log.error("Unable to get punch out configuration", ce);
+		catch (ConfigurationException configurationException) {
+			_log.error(
+				"Unable to get punch out configuration",
+				configurationException);
 		}
 
 		return null;
@@ -376,9 +380,7 @@ public class PunchOutSessionResourceImpl
 		return punchOutConfiguration.punchOutStartURL();
 	}
 
-	private void _mergeCartItems(Cart cart, long groupId)
-		throws PortalException {
-
+	private void _mergeCartItems(Cart cart, long groupId) throws Exception {
 		CommerceOrder commerceOrder =
 			_commerceOrderLocalService.fetchCommerceOrder(cart.getId());
 

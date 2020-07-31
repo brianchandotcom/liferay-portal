@@ -71,7 +71,7 @@ public class PunchOutAccessTokenProviderImpl
 			try {
 				future.get(_timeout, TimeUnit.SECONDS);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				_log.error(
 					"Timeout setting punch out access token to master node");
 			}
@@ -94,7 +94,7 @@ public class PunchOutAccessTokenProviderImpl
 		try {
 			return future.get(_timeout, TimeUnit.SECONDS);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				"Timeout getting punch out access token from master node");
 
@@ -116,7 +116,7 @@ public class PunchOutAccessTokenProviderImpl
 		try {
 			return future.get(_timeout, TimeUnit.SECONDS);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				"Timeout removing punch out access token from master node");
 
@@ -143,7 +143,7 @@ public class PunchOutAccessTokenProviderImpl
 		_cleanUp();
 
 		_punchOutAccessTokenDelayQueue.add(
-			new PunchoutAccessTokenDelayed(punchOutAccessToken));
+			new PunchOutAccessTokenDelayed(punchOutAccessToken));
 	}
 
 	private static PunchOutAccessToken _removePunchOutAccessToken(
@@ -227,7 +227,7 @@ public class PunchOutAccessTokenProviderImpl
 	private PunchOutAccessToken _getPunchOutAccessToken(String token) {
 		_cleanUp();
 
-		for (PunchoutAccessTokenDelayed punchOutAccessTokenDelayed :
+		for (PunchOutAccessTokenDelayed punchOutAccessTokenDelayed :
 				_punchOutAccessTokenDelayQueue) {
 
 			PunchOutAccessToken punchOutAccessToken =
@@ -252,7 +252,7 @@ public class PunchOutAccessTokenProviderImpl
 		new MethodKey(
 			PunchOutAccessTokenProviderImpl.class, "_getPunchOutAccessToken",
 			String.class);
-	private static final DelayQueue<PunchoutAccessTokenDelayed>
+	private static final DelayQueue<PunchOutAccessTokenDelayed>
 		_punchOutAccessTokenDelayQueue = new DelayQueue<>();
 	private static final MethodKey _putPunchOutAccessTokenMethodKey =
 		new MethodKey(
@@ -270,9 +270,9 @@ public class PunchOutAccessTokenProviderImpl
 		_punchOutAccessTokenProviderConfiguration;
 	private int _timeout;
 
-	private static class PunchoutAccessTokenDelayed implements Delayed {
+	private static class PunchOutAccessTokenDelayed implements Delayed {
 
-		public PunchoutAccessTokenDelayed(
+		public PunchOutAccessTokenDelayed(
 			PunchOutAccessToken punchOutAccessToken) {
 
 			_punchOutAccessToken = punchOutAccessToken;
@@ -281,7 +281,7 @@ public class PunchOutAccessTokenProviderImpl
 		@Override
 		public int compareTo(Delayed delayed) {
 			return _comparator.compare(
-				this, (PunchoutAccessTokenDelayed)delayed);
+				this, (PunchOutAccessTokenDelayed)delayed);
 		}
 
 		@Override
@@ -302,9 +302,9 @@ public class PunchOutAccessTokenProviderImpl
 				_punchOutAccessToken.getExpiresIn();
 		}
 
-		private static final Comparator<PunchoutAccessTokenDelayed>
+		private static final Comparator<PunchOutAccessTokenDelayed>
 			_comparator = Comparator.comparing(
-				PunchoutAccessTokenDelayed::_getExpirationTime);
+				PunchOutAccessTokenDelayed::_getExpirationTime);
 
 		private final PunchOutAccessToken _punchOutAccessToken;
 

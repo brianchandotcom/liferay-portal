@@ -12,10 +12,10 @@
  *
  */
 
-package com.liferay.commerce.punchout.portal.security.auto.login.module.configuration.definition;
+package com.liferay.commerce.punchout.portal.security.auto.login.internal.module.configuration.definition;
 
 import com.liferay.commerce.punchout.portal.security.auto.login.internal.constants.PunchOutAutoLoginConstants;
-import com.liferay.commerce.punchout.portal.security.auto.login.module.configuration.PunchOutAccessTokenAutoLoginConfiguration;
+import com.liferay.commerce.punchout.portal.security.auto.login.internal.module.configuration.PunchOutAccessTokenAutoLoginConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 
 import org.osgi.service.component.annotations.Component;

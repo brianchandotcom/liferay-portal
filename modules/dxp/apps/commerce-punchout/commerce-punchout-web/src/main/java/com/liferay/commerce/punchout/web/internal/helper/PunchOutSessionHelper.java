@@ -85,7 +85,7 @@ public class PunchOutSessionHelper {
 				commerceOrder.getUserId(),
 				commerceAccount.getCommerceAccountId());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				"Failed to determine whether user has " +
 					PunchOutConstants.ROLE_NAME_ACCOUNT_PUNCH_OUT +
@@ -115,17 +115,15 @@ public class PunchOutSessionHelper {
 				return punchOutConfiguration.enabled();
 			}
 		}
-		catch (Exception e) {
-			_log.error("Failed to load punch out configuration", e);
+		catch (Exception exception) {
+			_log.error("Failed to load punch out configuration", exception);
 		}
 
 		return false;
 	}
 
-	public boolean punchOutSession(HttpServletRequest request) {
-		String punchOutReturnURL = getPunchOutReturnURL(request);
-
-		return !Validator.isBlank(punchOutReturnURL);
+	public boolean punchOutSession(HttpServletRequest httpServletRequest) {
+		return !Validator.isBlank(getPunchOutReturnURL(httpServletRequest));
 	}
 
 	private CommerceOrder _getCommerceOrder(
@@ -158,8 +156,10 @@ public class PunchOutSessionHelper {
 				new GroupServiceSettingsLocator(
 					channelGroupId, PunchOutConstants.SERVICE_NAME));
 		}
-		catch (ConfigurationException ce) {
-			_log.error("Unable to get punch out configuration", ce);
+		catch (ConfigurationException configurationException) {
+			_log.error(
+				"Unable to get punch out configuration",
+				configurationException);
 		}
 
 		return null;

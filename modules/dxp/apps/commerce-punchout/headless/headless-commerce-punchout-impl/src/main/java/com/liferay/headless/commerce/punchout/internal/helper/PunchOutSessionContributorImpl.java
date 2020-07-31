@@ -18,6 +18,7 @@ import com.liferay.commerce.punchout.constants.PunchOutConstants;
 import com.liferay.headless.commerce.punchout.dto.v1_0.PunchOutSession;
 import com.liferay.headless.commerce.punchout.helper.PunchOutContext;
 import com.liferay.headless.commerce.punchout.helper.PunchOutSessionContributor;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.HashMap;
 
@@ -33,15 +34,15 @@ public class PunchOutSessionContributorImpl
 	public HashMap<String, Object> getPunchOutSessionAttributes(
 		PunchOutContext punchOutContext) {
 
-		HashMap<String, Object> punchOutSessionAttributes = new HashMap<>();
-
-		PunchOutSession punchOutSession = punchOutContext.getPunchOutSession();
-
-		punchOutSessionAttributes.put(
+		return HashMapBuilder.<String, Object>put(
 			PunchOutConstants.PUNCH_OUT_RETURN_URL_ATTRIBUTE_NAME,
-			punchOutSession.getPunchOutReturnURL());
+			() -> {
+				PunchOutSession punchOutSession =
+					punchOutContext.getPunchOutSession();
 
-		return punchOutSessionAttributes;
+				return punchOutSession.getPunchOutReturnURL();
+			}
+		).build();
 	}
 
 }

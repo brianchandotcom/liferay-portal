@@ -115,8 +115,8 @@ public class CommerceChannelPunchOutScreenNavigationEntry
 			return _commerceChannelLocalService.getCommerceChannel(
 				commerceChannelId);
 		}
-		catch (Exception e) {
-			_log.error("Unable to get commerce channel", e);
+		catch (Exception exception) {
+			_log.error("Unable to get commerce channel", exception);
 		}
 
 		return null;
@@ -131,8 +131,8 @@ public class CommerceChannelPunchOutScreenNavigationEntry
 				new GroupServiceSettingsLocator(
 					commerceChannelGroupId, PunchOutConstants.SERVICE_NAME));
 		}
-		catch (Exception e) {
-			_log.error("Unable to get punch out configuration", e);
+		catch (Exception exception) {
+			_log.error("Unable to get punch out configuration", exception);
 		}
 
 		return null;

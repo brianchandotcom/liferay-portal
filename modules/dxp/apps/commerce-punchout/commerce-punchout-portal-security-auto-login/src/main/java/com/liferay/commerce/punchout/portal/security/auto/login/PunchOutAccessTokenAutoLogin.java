@@ -15,7 +15,7 @@
 package com.liferay.commerce.punchout.portal.security.auto.login;
 
 import com.liferay.commerce.punchout.portal.security.auto.login.internal.constants.PunchOutAutoLoginConstants;
-import com.liferay.commerce.punchout.portal.security.auto.login.module.configuration.PunchOutAccessTokenAutoLoginConfiguration;
+import com.liferay.commerce.punchout.portal.security.auto.login.internal.module.configuration.PunchOutAccessTokenAutoLoginConfiguration;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -35,23 +35,22 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jaclyn Ong
  */
 @Component(
-	configurationPid = "com.liferay.commerce.punchout.portal.security.auto.login.module.configuration.PunchOutAccessTokenAutoLoginConfiguration",
+	configurationPid = "com.liferay.commerce.punchout.portal.security.auto.login.internal.module.configuration.PunchOutAccessTokenAutoLoginConfiguration",
 	immediate = true, service = AutoLogin.class
 )
 public class PunchOutAccessTokenAutoLogin extends BaseAutoLogin {
 
 	@Override
 	protected String[] doLogin(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		long companyId = _portal.getCompanyId(request);
-
-		if (!isEnabled(companyId)) {
+		if (!isEnabled(_portal.getCompanyId(httpServletRequest))) {
 			return null;
 		}
 
-		return _autoLogin.login(request, response);
+		return _autoLogin.login(httpServletRequest, httpServletResponse);
 	}
 
 	protected boolean isEnabled(long companyId) {
@@ -93,10 +92,10 @@ public class PunchOutAccessTokenAutoLogin extends BaseAutoLogin {
 				new CompanyServiceSettingsLocator(
 					companyId, PunchOutAutoLoginConstants.SERVICE_NAME));
 		}
-		catch (ConfigurationException ce) {
+		catch (ConfigurationException configurationException) {
 			_log.error(
 				"Unable to get punch out access token auto login configuration",
-				ce);
+				configurationException);
 		}
 
 		return null;

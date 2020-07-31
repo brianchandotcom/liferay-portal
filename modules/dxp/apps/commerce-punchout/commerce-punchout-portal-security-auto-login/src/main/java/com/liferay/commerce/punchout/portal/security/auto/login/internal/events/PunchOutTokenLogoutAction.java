@@ -37,15 +37,18 @@ import org.osgi.service.component.annotations.Component;
 public class PunchOutTokenLogoutAction extends Action {
 
 	@Override
-	public void run(HttpServletRequest request, HttpServletResponse response) {
+	public void run(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
 		try {
-			String pathInfo = request.getPathInfo();
+			String pathInfo = httpServletRequest.getPathInfo();
 
 			if (!pathInfo.contains("/portal/logout")) {
 				return;
 			}
 
-			HttpSession session = request.getSession();
+			HttpSession session = httpServletRequest.getSession();
 
 			Object punchOutReturnUrlObject = session.getAttribute(
 				PunchOutConstants.PUNCH_OUT_REDIRECT_URL_ATTRIBUTE_NAME);
@@ -78,10 +81,10 @@ public class PunchOutTokenLogoutAction extends Action {
 				_log.debug("Redirecting to " + redirectURL);
 			}
 
-			response.sendRedirect(redirectURL);
+			httpServletResponse.sendRedirect(redirectURL);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 

@@ -12,24 +12,29 @@
  *
  */
 
-package com.liferay.commerce.punchout.portal.security.auto.login.module.configuration.definition;
+package com.liferay.commerce.punchout.internal.configuration.definition;
 
-import com.liferay.commerce.punchout.portal.security.auto.login.module.configuration.PunchOutAccessTokenAutoLoginConfiguration;
-import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.commerce.punchout.configuration.PunchOutConfiguration;
+import com.liferay.commerce.punchout.constants.PunchOutConstants;
+import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jaclyn Ong
  */
-@Component(service = ConfigurationBeanDeclaration.class)
-public class
-	PunchOutAccessTokenAutoLoginCompanyServiceConfigurationBeanDeclaration
-		implements ConfigurationBeanDeclaration {
+@Component(service = ConfigurationPidMapping.class)
+public class PunchOutCompanyServiceConfigurationPidMapping
+	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return PunchOutAccessTokenAutoLoginConfiguration.class;
+		return PunchOutConfiguration.class;
+	}
+
+	@Override
+	public String getConfigurationPid() {
+		return PunchOutConstants.SERVICE_NAME;
 	}
 
 }

@@ -12,29 +12,23 @@
  *
  */
 
-package com.liferay.commerce.punchout.internal.configuration;
+package com.liferay.commerce.punchout.internal.settings.definition;
 
 import com.liferay.commerce.punchout.configuration.PunchOutConfiguration;
-import com.liferay.commerce.punchout.constants.PunchOutConstants;
-import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jaclyn Ong
  */
-@Component(service = ConfigurationPidMapping.class)
-public class PunchOutCompanyServiceConfigurationPidMapping
-	implements ConfigurationPidMapping {
+@Component(service = ConfigurationBeanDeclaration.class)
+public class PunchOutCompanyServiceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
 		return PunchOutConfiguration.class;
-	}
-
-	@Override
-	public String getConfigurationPid() {
-		return PunchOutConstants.SERVICE_NAME;
 	}
 
 }

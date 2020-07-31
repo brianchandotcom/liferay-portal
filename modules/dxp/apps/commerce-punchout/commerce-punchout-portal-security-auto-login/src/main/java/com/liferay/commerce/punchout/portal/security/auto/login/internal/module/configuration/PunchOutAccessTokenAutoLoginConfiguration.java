@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.commerce.punchout.portal.security.auto.login.module.configuration;
+package com.liferay.commerce.punchout.portal.security.auto.login.internal.module.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "api-authentication")
 @Meta.OCD(
-	id = "com.liferay.commerce.punchout.portal.security.auto.login.module.configuration.PunchOutAccessTokenAutoLoginConfiguration",
+	id = "com.liferay.commerce.punchout.portal.security.auto.login.internal.module.configuration.PunchOutAccessTokenAutoLoginConfiguration",
 	localization = "content/Language",
 	name = "punch-out-access-token-auto-login-configuration-name"
 )

@@ -55,11 +55,11 @@ public class CommerceOrderModelListener
 				WorkflowConstants.STATUS_APPROVED, serviceContext,
 				Collections.emptyMap());
 		}
-		catch (PortalException e) {
+		catch (PortalException portalException) {
 			_log.error(
 				"Failed to update workflow status to Approved on punch out " +
 					"order (" + commerceOrder.getCommerceOrderId() + ")",
-				e);
+				portalException);
 		}
 	}
 

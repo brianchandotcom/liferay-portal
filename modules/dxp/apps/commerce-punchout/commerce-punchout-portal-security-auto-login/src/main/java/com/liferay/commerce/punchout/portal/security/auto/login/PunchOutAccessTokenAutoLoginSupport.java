@@ -44,11 +44,12 @@ public class PunchOutAccessTokenAutoLoginSupport extends BaseAutoLogin {
 
 	@Override
 	protected String[] doLogin(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		String punchOutAccessTokenFromParam = ParamUtil.getString(
-			request, _PUNCH_OUT_ACCESS_TOKEN_PARAM);
+			httpServletRequest, _PUNCH_OUT_ACCESS_TOKEN_PARAM);
 
 		if (Validator.isNull(punchOutAccessTokenFromParam)) {
 			if (_log.isDebugEnabled()) {
@@ -84,10 +85,8 @@ public class PunchOutAccessTokenAutoLoginSupport extends BaseAutoLogin {
 			return null;
 		}
 
-		long companyId = _portal.getCompanyId(request);
-
 		User punchOutUser = _userLocalService.getUserByEmailAddress(
-			companyId, userEmailAddress);
+			_portal.getCompanyId(httpServletRequest), userEmailAddress);
 
 		if (punchOutUser == null) {
 			if (_log.isWarnEnabled()) {
@@ -97,8 +96,10 @@ public class PunchOutAccessTokenAutoLoginSupport extends BaseAutoLogin {
 			return null;
 		}
 
-		request.setAttribute("punchOutAccessToken", punchOutAccessToken);
-		request.setAttribute("punchOutUserId", punchOutUser.getUserId());
+		httpServletRequest.setAttribute(
+			"punchOutAccessToken", punchOutAccessToken);
+		httpServletRequest.setAttribute(
+			"punchOutUserId", punchOutUser.getUserId());
 
 		_punchOutAccessTokenProvider.removePunchOutAccessToken(
 			punchOutAccessTokenFromParam);

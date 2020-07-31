@@ -17,7 +17,7 @@ import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {config} from '../config';
+import {useId} from '../useId';
 
 const debouncedOnValueSelect = debounce(
 	(onValueSelect, value) => onValueSelect(value),
@@ -29,9 +29,9 @@ export default function TextFrontendToken({
 	onValueSelect,
 	value,
 }) {
-	const {label, name} = frontendToken;
+	const {label} = frontendToken;
 
-	const id = `${config.namespace}_frontendTokenId_${name}`;
+	const id = useId();
 
 	return (
 		<ClayForm.Group small>

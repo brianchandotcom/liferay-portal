@@ -16,12 +16,12 @@ package com.liferay.content.dashboard.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPortletKeys;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItem;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactory;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
-import com.liferay.content.dashboard.web.internal.searcher.ContentDashboardSearchRequestBuilderFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.searcher.Searcher;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -263,23 +262,30 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 		ContentDashboardItem contentDashboardItem,
 		HttpServletRequest httpServletRequest) {
 
-		Map<Locale, String> viewURLs = contentDashboardItem.getViewURLs(
-			httpServletRequest);
+		List<ContentDashboardItemAction> contentDashboardItemActions =
+			contentDashboardItem.getContentDashboardItemActions(
+				httpServletRequest, ContentDashboardItemAction.Type.VIEW);
 
-		Set<Map.Entry<Locale, String>> entries = viewURLs.entrySet();
+		ContentDashboardItemAction contentDashboardItemAction =
+			contentDashboardItemActions.get(0);
 
-		Stream<Map.Entry<Locale, String>> stream = entries.stream();
+		List<Locale> locales = contentDashboardItem.getAvailableLocales();
+
+		Stream<Locale> stream = locales.stream();
 
 		return JSONUtil.putAll(
 			stream.map(
-				entry -> JSONUtil.put(
+				locale -> JSONUtil.put(
 					"default",
 					Objects.equals(
-						entry.getKey(), contentDashboardItem.getDefaultLocale())
+						locale, contentDashboardItem.getDefaultLocale())
 				).put(
-					"languageId", _language.getBCP47LanguageId(entry.getKey())
+					"languageId", _language.getBCP47LanguageId(locale)
 				).put(
-					"viewURL", _getViewURL(httpServletRequest, entry.getValue())
+					"viewURL",
+					_getViewURL(
+						httpServletRequest,
+						contentDashboardItemAction.getURL(locale))
 				)
 			).toArray());
 	}
@@ -314,10 +320,6 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 		_contentDashboardItemFactoryTracker;
 
 	@Reference
-	private ContentDashboardSearchRequestBuilderFactory
-		_contentDashboardSearchRequestBuilderFactory;
-
-	@Reference
 	private Http _http;
 
 	@Reference
@@ -325,8 +327,5 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private Searcher _searcher;
 
 }

@@ -84,6 +84,7 @@ export default withRouter(
 					className={classnames('questions-answer c-p-3', {
 						'questions-answer-success': showAsAnswer,
 					})}
+					data-testid="mark-as-answer-style"
 				>
 					<div className="align-items-center align-items-md-start row">
 						<div className="col-6 col-md-1 order-1 order-md-0 text-md-center text-right">
@@ -100,7 +101,10 @@ export default withRouter(
 
 						<div className="c-mb-4 c-mb-md-0 col-lg-9 col-md-8">
 							{showAsAnswer && (
-								<p className="c-mb-0 font-weight-bold text-success">
+								<p
+									className="c-mb-0 font-weight-bold text-success"
+									data-testid="mark-as-answer-check"
+								>
 									<ClayIcon symbol="check-circle-full" />
 
 									<span className="c-ml-3">
@@ -147,6 +151,7 @@ export default withRouter(
 								{canMarkAsAnswer && (
 									<ClayButton
 										className="text-reset"
+										data-testid="mark-as-answer-button"
 										displayType="unstyled"
 										onClick={() => {
 											markAsAnswerMessageBoardMessage({

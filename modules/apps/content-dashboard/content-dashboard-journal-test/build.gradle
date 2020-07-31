@@ -7,5 +7,6 @@ dependencies {
 	testIntegrationCompile project(":apps:journal:journal-api")
 	testIntegrationCompile project(":apps:journal:journal-test-util")
 	testIntegrationCompile project(":apps:layout:layout-page-template-api")
+	testIntegrationCompile project(":apps:layout:layout-test-util")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

@@ -49,9 +49,6 @@ public class ContainerLayoutStructureItem extends StyledLayoutStructureItem {
 				_linkJSONObject.toJSONString(),
 				containerLayoutStructureItem._linkJSONObject.toJSONString()) ||
 			!Objects.equals(
-				stylesJSONObject.toString(),
-				containerLayoutStructureItem.stylesJSONObject.toString()) ||
-			!Objects.equals(
 				_widthType, containerLayoutStructureItem._widthType)) {
 
 			return false;

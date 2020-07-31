@@ -3,17 +3,11 @@
 		"pageElements": [
 			{
 				"definition": {
+					"backgroundColor": "",
 					"backgroundFragmentImage": {
-					},
-					"fragmentLink": {
-						"href": {
-							"value": "https://www.liferay.com/"
-						},
-						"target": "Parent"
 					},
 					"layout": {
 						"borderWidth": 0,
-						"contentDisplay": "Block",
 						"marginBottom": 0,
 						"marginLeft": 0,
 						"marginRight": 0,
@@ -23,7 +17,35 @@
 						"paddingLeft": 0,
 						"paddingRight": 0,
 						"paddingTop": 0,
+						"shadow": "None",
 						"widthType": "Fluid"
+					},
+					"styles": {
+						"backgroundImage": {
+						},
+						"borderRadius": "rounded-0",
+						"borderWidth": 0,
+						"fontFamily": "sans-serif",
+						"fontSize": "medium",
+						"fontWeight": "font-weight-normal",
+						"height": "h-auto",
+						"marginBottom": "0",
+						"marginLeft": "0",
+						"marginRight": "0",
+						"marginTop": "0",
+						"maxHeight": "none",
+						"maxWidth": "none",
+						"minHeight": "auto",
+						"minWidth": "auto",
+						"opacity": 100,
+						"overflow": "visible",
+						"paddingBottom": "0",
+						"paddingLeft": "0",
+						"paddingRight": "0",
+						"paddingTop": "0",
+						"shadow": "shadow-none",
+						"textAlign": "none",
+						"width": "w-auto"
 					}
 				},
 				"type": "Section"

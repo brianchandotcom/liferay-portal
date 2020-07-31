@@ -14,6 +14,7 @@
 
 package com.liferay.layout.util.structure;
 
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Pavel Savinov
@@ -34,11 +36,36 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 		super(parentItemId);
 	}
 
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof StyledLayoutStructureItem)) {
+			return false;
+		}
+
+		StyledLayoutStructureItem styledLayoutStructureItem =
+			(StyledLayoutStructureItem)object;
+
+		JSONObject stylesJSONObject =
+			styledLayoutStructureItem.stylesJSONObject;
+
+		for (String key : this.stylesJSONObject.keySet()) {
+			if (!Objects.deepEquals(
+					GetterUtil.getString(this.stylesJSONObject.get(key)),
+					GetterUtil.getString(stylesJSONObject.get(key)))) {
+
+				return false;
+			}
+		}
+
+		return super.equals(object);
+	}
+
 	public String getAlign() {
-		return stylesJSONObject.getString(
-			"align",
-			GetterUtil.getString(
-				CommonStylesUtil.getDefaultStyleValue("align")));
+		return GetterUtil.getString(_getStyleProperty("align"));
 	}
 
 	public String getBackgroundColorCssClass() {
@@ -46,7 +73,7 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 	}
 
 	public JSONObject getBackgroundImageJSONObject() {
-		return stylesJSONObject.getJSONObject("backgroundImage");
+		return (JSONObject)_getStyleProperty("backgroundImage");
 	}
 
 	public String getBorderColor() {
@@ -54,52 +81,31 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 	}
 
 	public String getBorderRadius() {
-		return stylesJSONObject.getString(
-			"borderRadius",
-			GetterUtil.getString(
-				CommonStylesUtil.getDefaultStyleValue("borderRadius")));
+		return GetterUtil.getString(_getStyleProperty("borderRadius"));
 	}
 
 	public int getBorderWidth() {
-		return stylesJSONObject.getInt(
-			"borderWidth",
-			GetterUtil.getInteger(
-				CommonStylesUtil.getDefaultStyleValue("borderWidth")));
+		return GetterUtil.getInteger(_getStyleProperty("borderWidth"));
 	}
 
 	public String getContentDisplay() {
-		return stylesJSONObject.getString(
-			"display",
-			GetterUtil.getString(
-				CommonStylesUtil.getDefaultStyleValue("display")));
+		return GetterUtil.getString(_getStyleProperty("display"));
 	}
 
 	public String getFontFamily() {
-		return stylesJSONObject.getString(
-			"fontFamily",
-			GetterUtil.getString(
-				CommonStylesUtil.getDefaultStyleValue("fontFamily")));
+		return GetterUtil.getString(_getStyleProperty("fontFamily"));
 	}
 
 	public String getFontSizeCssClass() {
-		return stylesJSONObject.getString(
-			"fontSize",
-			GetterUtil.getString(
-				CommonStylesUtil.getDefaultStyleValue("fontSize")));
+		return GetterUtil.getString(_getStyleProperty("fontSize"));
 	}
 
 	public String getFontWeightCssClass() {
-		return stylesJSONObject.getString(
-			"fontWeight",
-			GetterUtil.getString(
-				CommonStylesUtil.getDefaultStyleValue("fontWeight")));
+		return GetterUtil.getString(_getStyleProperty("fontWeight"));
 	}
 
 	public String getHeightCssClass() {
-		return stylesJSONObject.getString(
-			"height",
-			GetterUtil.getString(
-				CommonStylesUtil.getDefaultStyleValue("height")));
+		return GetterUtil.getString(_getStyleProperty("height"));
 	}
 
 	@Override
@@ -122,116 +128,71 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 	}
 
 	public String getJustify() {
-		return stylesJSONObject.getString("justify");
+		return GetterUtil.getString(_getStyleProperty("justify"));
 	}
 
 	public int getMarginBottom() {
-		return stylesJSONObject.getInt(
-			"marginBottom",
-			GetterUtil.getInteger(
-				CommonStylesUtil.getDefaultStyleValue("marginBottom")));
+		return GetterUtil.getInteger(_getStyleProperty("marginBottom"));
 	}
 
 	public int getMarginLeft() {
-		return stylesJSONObject.getInt(
-			"marginLeft",
-			GetterUtil.getInteger(
-				CommonStylesUtil.getDefaultStyleValue("marginLeft")));
+		return GetterUtil.getInteger(_getStyleProperty("marginLeft"));
 	}
 
 	public int getMarginRight() {
-		return stylesJSONObject.getInt(
-			"marginRight",
-			GetterUtil.getInteger(
-				CommonStylesUtil.getDefaultStyleValue("marginRight")));
+		return GetterUtil.getInteger(_getStyleProperty("marginRight"));
 	}
 
 	public int getMarginTop() {
-		return stylesJSONObject.getInt(
-			"marginTop",
-			GetterUtil.getInteger(
-				CommonStylesUtil.getDefaultStyleValue("marginTop")));
+		return GetterUtil.getInteger(_getStyleProperty("marginTop"));
 	}
 
 	public String getMaxHeight() {
-		return stylesJSONObject.getString("maxHeight");
+		return GetterUtil.getString(_getStyleProperty("maxHeight"));
 	}
 
 	public String getMaxWidth() {
-		return stylesJSONObject.getString(
-			"maxWidth",
-			GetterUtil.getString(
-				CommonStylesUtil.getDefaultStyleValue("maxWidth")));
+		return GetterUtil.getString(_getStyleProperty("maxWidth"));
 	}
 
 	public String getMinHeight() {
-		return stylesJSONObject.getString(
-			"minHeight",
-			GetterUtil.getString(
-				CommonStylesUtil.getDefaultStyleValue("minHeight")));
+		return GetterUtil.getString(_getStyleProperty("minHeight"));
 	}
 
 	public String getMinWidth() {
-		return stylesJSONObject.getString(
-			"minWidth",
-			GetterUtil.getString(
-				CommonStylesUtil.getDefaultStyleValue("minWidth")));
+		return GetterUtil.getString(_getStyleProperty("minWidth"));
 	}
 
 	public int getOpacity() {
-		return stylesJSONObject.getInt(
-			"opacity",
-			GetterUtil.getInteger(
-				CommonStylesUtil.getDefaultStyleValue("opacity")));
+		return GetterUtil.getInteger(_getStyleProperty("opacity"));
 	}
 
 	public String getOverflow() {
-		return stylesJSONObject.getString(
-			"overflow",
-			GetterUtil.getString(
-				CommonStylesUtil.getDefaultStyleValue("overflow")));
+		return GetterUtil.getString(_getStyleProperty("overflow"));
 	}
 
 	public int getPaddingBottom() {
-		return stylesJSONObject.getInt(
-			"paddingBottom",
-			GetterUtil.getInteger(
-				CommonStylesUtil.getDefaultStyleValue("paddingBottom")));
+		return GetterUtil.getInteger(_getStyleProperty("paddingBottom"));
 	}
 
 	public int getPaddingLeft() {
-		return stylesJSONObject.getInt(
-			"paddingLeft",
-			GetterUtil.getInteger(
-				CommonStylesUtil.getDefaultStyleValue("paddingLeft")));
+		return GetterUtil.getInteger(_getStyleProperty("paddingLeft"));
 	}
 
 	public int getPaddingRight() {
-		return stylesJSONObject.getInt(
-			"paddingRight",
-			GetterUtil.getInteger(
-				CommonStylesUtil.getDefaultStyleValue("paddingRight")));
+		return GetterUtil.getInteger(_getStyleProperty("paddingRight"));
 	}
 
 	public int getPaddingTop() {
-		return stylesJSONObject.getInt(
-			"paddingTop",
-			GetterUtil.getInteger(
-				CommonStylesUtil.getDefaultStyleValue("paddingTop")));
+		return GetterUtil.getInteger(_getStyleProperty("paddingTop"));
 	}
 
 	public String getShadow() {
-		return stylesJSONObject.getString(
-			"shadow",
-			GetterUtil.getString(
-				CommonStylesUtil.getDefaultStyleValue("shadow")));
+		return GetterUtil.getString(_getStyleProperty("shadow"));
 	}
 
 	public String getTextAlignCssClass() {
-		return stylesJSONObject.getString(
-			"textAlign",
-			GetterUtil.getString(
-				CommonStylesUtil.getDefaultStyleValue("textAlign")));
+		return GetterUtil.getString(_getStyleProperty("textAlign"));
 	}
 
 	public String getTextColorCssClass() {
@@ -239,21 +200,30 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 	}
 
 	public String getWidthCssClass() {
-		return stylesJSONObject.getString(
-			"width",
-			GetterUtil.getString(
-				CommonStylesUtil.getDefaultStyleValue("width")));
+		return GetterUtil.getString(_getStyleProperty("width"));
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, getItemId());
 	}
 
 	@Override
 	public void updateItemConfig(JSONObject itemConfigJSONObject) {
-		if (itemConfigJSONObject.has("styles")) {
-			JSONObject newStylesJSONObject = itemConfigJSONObject.getJSONObject(
-				"styles");
+		try {
+			List<String> availableStyleNames =
+				CommonStylesUtil.getAvailableStyleNames();
 
-			try {
-				List<String> availableStyleNames =
-					CommonStylesUtil.getAvailableStyleNames();
+			for (String styleName : availableStyleNames) {
+				if (itemConfigJSONObject.has(styleName)) {
+					stylesJSONObject.put(
+						styleName, itemConfigJSONObject.get(styleName));
+				}
+			}
+
+			if (itemConfigJSONObject.has("styles")) {
+				JSONObject newStylesJSONObject =
+					itemConfigJSONObject.getJSONObject("styles");
 
 				for (String styleName : availableStyleNames) {
 					if (newStylesJSONObject.has(styleName)) {
@@ -262,22 +232,56 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 					}
 				}
 			}
-			catch (Exception exception) {
-				_log.error("Unable to get available style names", exception);
-			}
+		}
+		catch (Exception exception) {
+			_log.error("Unable to get available style names", exception);
 		}
 	}
 
 	protected JSONObject stylesJSONObject = JSONFactoryUtil.createJSONObject();
 
 	private String _getColorCssClass(String property) {
-		JSONObject colorJSONObject = stylesJSONObject.getJSONObject(property);
+		JSONObject configJSONObject = getItemConfigJSONObject();
 
-		if ((colorJSONObject == null) || !colorJSONObject.has("cssClass")) {
+		JSONObject configColorJSONObject = configJSONObject.getJSONObject(
+			property);
+
+		JSONObject styleColorJSONObject = stylesJSONObject.getJSONObject(
+			property);
+
+		if (((styleColorJSONObject == null) ||
+			 !styleColorJSONObject.has("cssClass")) &&
+			(configColorJSONObject != null)) {
+
+			return configColorJSONObject.getString(
+				"cssClass", StringPool.BLANK);
+		}
+		else if (styleColorJSONObject == null) {
 			return StringPool.BLANK;
 		}
 
-		return colorJSONObject.getString("cssClass");
+		return styleColorJSONObject.getString("cssClass", StringPool.BLANK);
+	}
+
+	private Object _getStyleProperty(String propertyKey) {
+		JSONObject configJSONObject = getItemConfigJSONObject();
+
+		Object configValue = configJSONObject.get(propertyKey);
+
+		Object defaultValue = CommonStylesUtil.getDefaultStyleValue(
+			propertyKey);
+
+		Object styleValue = stylesJSONObject.get(propertyKey);
+
+		if ((styleValue == null) && (configValue != null)) {
+			return configValue;
+		}
+
+		if (styleValue != null) {
+			return styleValue;
+		}
+
+		return defaultValue;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

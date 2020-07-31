@@ -3,24 +3,49 @@
 		"pageElements": [
 			{
 				"definition": {
+					"backgroundColor": "",
 					"backgroundFragmentImage": {
 					},
 					"layout": {
-						"borderColor": "danger",
-						"borderRadius": "Circle",
-						"borderWidth": 99,
-						"contentDisplay": "Block",
-						"justify": "Center",
-						"marginBottom": 6,
-						"marginLeft": 1,
-						"marginRight": 2,
-						"marginTop": 4,
-						"opacity": 99,
-						"paddingBottom": 6,
-						"paddingLeft": 1,
-						"paddingRight": 2,
-						"paddingTop": 4,
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"opacity": 100,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"shadow": "None",
 						"widthType": "Fluid"
+					},
+					"styles": {
+						"backgroundImage": {
+						},
+						"borderRadius": "rounded-0",
+						"borderWidth": 0,
+						"fontFamily": "sans-serif",
+						"fontSize": "medium",
+						"fontWeight": "font-weight-normal",
+						"height": "h-auto",
+						"marginBottom": "0",
+						"marginLeft": "0",
+						"marginRight": "0",
+						"marginTop": "0",
+						"maxHeight": "none",
+						"maxWidth": "none",
+						"minHeight": "auto",
+						"minWidth": "auto",
+						"opacity": 100,
+						"overflow": "visible",
+						"paddingBottom": "0",
+						"paddingLeft": "0",
+						"paddingRight": "0",
+						"paddingTop": "0",
+						"shadow": "shadow-none",
+						"textAlign": "none",
+						"width": "w-auto"
 					}
 				},
 				"type": "Section"

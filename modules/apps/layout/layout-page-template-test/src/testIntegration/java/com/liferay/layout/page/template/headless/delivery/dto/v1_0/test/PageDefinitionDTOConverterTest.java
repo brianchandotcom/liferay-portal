@@ -533,9 +533,6 @@ public class PageDefinitionDTOConverterTest {
 		PageSectionDefinition pageSectionDefinition1 =
 			(PageSectionDefinition)sectionPageElement1.getDefinition();
 
-		Assert.assertEquals(
-			"primary", pageSectionDefinition1.getBackgroundColor());
-
 		FragmentImage fragmentImage1 =
 			pageSectionDefinition1.getBackgroundFragmentImage();
 
@@ -558,11 +555,11 @@ public class PageDefinitionDTOConverterTest {
 
 		Assert.assertEquals("Fluid", sectionLayout.getWidthTypeAsString());
 		Assert.assertEquals(
-			Integer.valueOf(8), sectionLayout.getPaddingBottom());
+			Integer.valueOf(10), sectionLayout.getPaddingBottom());
 		Assert.assertEquals(Integer.valueOf(4), sectionLayout.getPaddingLeft());
 		Assert.assertEquals(
 			Integer.valueOf(4), sectionLayout.getPaddingRight());
-		Assert.assertEquals(Integer.valueOf(1), sectionLayout.getPaddingTop());
+		Assert.assertEquals(Integer.valueOf(4), sectionLayout.getPaddingTop());
 
 		PageElement sectionPageElement2 = pageElements[1];
 

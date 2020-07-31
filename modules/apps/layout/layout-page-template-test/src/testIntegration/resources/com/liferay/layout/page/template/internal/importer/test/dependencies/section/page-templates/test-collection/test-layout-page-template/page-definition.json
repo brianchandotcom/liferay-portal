@@ -3,20 +3,41 @@
 		"pageElements": [
 			{
 				"definition": {
-					"backgroundColor": "danger",
-					"backgroundImage": {
-						"title": {
-							"value": "test.jpg"
-						},
-						"url": {
-							"value": "test-image.jpg"
-						}
-					},
 					"layout": {
-						"containerType": "Fluid",
-						"paddingBottom": 4,
-						"paddingHorizontal": 4,
-						"paddingTop": 4
+						"containerType": "Fluid"
+					},
+					"styles": {
+						"backgroundImage": {
+							"title": {
+								"value": "test.jpg"
+							},
+							"url": {
+								"value": "test-image.jpg"
+							}
+						},
+						"borderRadius": "rounded-0",
+						"borderWidth": 0,
+						"fontFamily": "sans-serif",
+						"fontSize": "medium",
+						"fontWeight": "font-weight-normal",
+						"height": "h-auto",
+						"marginBottom": "0",
+						"marginLeft": "0",
+						"marginRight": "0",
+						"marginTop": "0",
+						"maxHeight": "none",
+						"maxWidth": "none",
+						"minHeight": "auto",
+						"minWidth": "auto",
+						"opacity": 1,
+						"overflow": "visible",
+						"paddingBottom": "5",
+						"paddingLeft": "5",
+						"paddingRight": "0",
+						"paddingTop": "5",
+						"shadow": "shadow-none",
+						"textAlign": "none",
+						"width": "w-auto"
 					}
 				},
 				"type": "Section"

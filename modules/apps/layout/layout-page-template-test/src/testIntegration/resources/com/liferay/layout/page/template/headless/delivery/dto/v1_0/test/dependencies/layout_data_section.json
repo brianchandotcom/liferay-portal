@@ -12,6 +12,35 @@
 				"paddingBottom": 7,
 				"paddingHorizontal": 5,
 				"paddingTop": 3,
+				"styles": {
+					"backgroundImage": {
+						"title": "My Example1 Background Image Title",
+						"url": "http://myexample1.com/myexample1.png"
+					},
+					"borderRadius": "rounded-0",
+					"borderWidth": 0,
+					"fontFamily": "sans-serif",
+					"fontSize": "medium",
+					"fontWeight": "font-weight-normal",
+					"height": "h-auto",
+					"marginBottom": "0",
+					"marginLeft": "0",
+					"marginRight": "0",
+					"marginTop": "0",
+					"maxHeight": "none",
+					"maxWidth": "none",
+					"minHeight": "auto",
+					"minWidth": "auto",
+					"opacity": 1,
+					"overflow": "visible",
+					"paddingBottom": "8",
+					"paddingLeft": "5",
+					"paddingRight": "5",
+					"paddingTop": "5",
+					"shadow": "shadow-none",
+					"textAlign": "none",
+					"width": "w-auto"
+				},
 				"type": "fluid"
 			},
 			"itemId": "247d4dd8-6743-403f-927a-ff3f3015497c",
@@ -22,9 +51,34 @@
 			"children": [
 			],
 			"config": {
-				"backgroundImage": {
-					"title": "http://myexample2.com/myexample2.png",
-					"url": "http://myexample2.com/myexample2.png"
+				"styles": {
+					"backgroundImage": {
+						"title": "http://myexample2.com/myexample2.png",
+						"url": "http://myexample2.com/myexample2.png"
+					},
+					"borderRadius": "rounded-0",
+					"borderWidth": 0,
+					"fontFamily": "sans-serif",
+					"fontSize": "medium",
+					"fontWeight": "font-weight-normal",
+					"height": "h-auto",
+					"marginBottom": "0",
+					"marginLeft": "0",
+					"marginRight": "0",
+					"marginTop": "0",
+					"maxHeight": "none",
+					"maxWidth": "none",
+					"minHeight": "auto",
+					"minWidth": "auto",
+					"opacity": 1,
+					"overflow": "visible",
+					"paddingBottom": "0",
+					"paddingLeft": "0",
+					"paddingRight": "0",
+					"paddingTop": "0",
+					"shadow": "shadow-none",
+					"textAlign": "none",
+					"width": "w-auto"
 				},
 				"type": "fluid"
 			},

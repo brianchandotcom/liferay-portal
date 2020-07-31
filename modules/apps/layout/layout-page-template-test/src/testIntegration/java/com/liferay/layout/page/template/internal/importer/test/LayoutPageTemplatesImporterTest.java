@@ -259,9 +259,6 @@ public class LayoutPageTemplatesImporterTest {
 		Assert.assertNotNull(layoutStructure);
 
 		Assert.assertEquals(
-			"danger",
-			containerLayoutStructureItem.getBackgroundColorCssClass());
-		Assert.assertEquals(
 			"fluid", containerLayoutStructureItem.getContainerType());
 		Assert.assertEquals(5, containerLayoutStructureItem.getPaddingBottom());
 		Assert.assertEquals(5, containerLayoutStructureItem.getPaddingLeft());

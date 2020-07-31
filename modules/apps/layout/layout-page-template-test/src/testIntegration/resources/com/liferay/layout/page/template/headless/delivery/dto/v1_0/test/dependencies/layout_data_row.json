@@ -17,7 +17,34 @@
 			],
 			"config": {
 				"gutters": false,
-				"numberOfColumns": 2
+				"numberOfColumns": 2,
+				"styles": {
+					"backgroundImage": {
+					},
+					"borderRadius": "rounded-0",
+					"borderWidth": 0,
+					"fontFamily": "sans-serif",
+					"fontSize": "medium",
+					"fontWeight": "font-weight-normal",
+					"height": "h-auto",
+					"marginBottom": "0",
+					"marginLeft": "0",
+					"marginRight": "0",
+					"marginTop": "0",
+					"maxHeight": "none",
+					"maxWidth": "none",
+					"minHeight": "auto",
+					"minWidth": "auto",
+					"opacity": 1,
+					"overflow": "visible",
+					"paddingBottom": "0",
+					"paddingLeft": "0",
+					"paddingRight": "0",
+					"paddingTop": "0",
+					"shadow": "shadow-none",
+					"textAlign": "none",
+					"width": "w-auto"
+				}
 			},
 			"itemId": "896232e5-04a2-4bd1-a687-f1e0983f16bb",
 			"parentId": "7b620b26-53f8-4fd2-a459-2c5aa85b90c1",

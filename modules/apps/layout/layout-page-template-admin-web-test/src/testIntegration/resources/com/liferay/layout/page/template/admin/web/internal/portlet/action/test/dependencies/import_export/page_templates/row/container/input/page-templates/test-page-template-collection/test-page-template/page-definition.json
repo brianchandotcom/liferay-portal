@@ -6,36 +6,54 @@
 					"gutters": true,
 					"modulesPerRow": 1,
 					"numberOfColumns": 1,
-					"rowViewportConfig": {
-						"landscapeMobile": {
+					"rowViewports": [
+						{
+							"id": "landscapeMobile",
+							"rowViewportDefinition": {
+							}
 						},
-						"portraitMobile": {
+						{
+							"id": "portraitMobile",
+							"rowViewportDefinition": {
+							}
 						},
-						"tablet": {
+						{
+							"id": "tablet",
+							"rowViewportDefinition": {
+							}
 						}
-					}
+					]
 				},
 				"pageElements": [
 					{
 						"definition": {
-							"columnViewportConfig": {
-								"landscapeMobile": {
+							"columnViewports": [
+								{
+									"columnViewportDefinition": {
+									},
+									"id": "landscapeMobile"
 								},
-								"portraitMobile": {
+								{
+									"columnViewportDefinition": {
+									},
+									"id": "portraitMobile"
 								},
-								"tablet": {
+								{
+									"columnViewportDefinition": {
+									},
+									"id": "tablet"
 								}
-							},
+							],
 							"size": 12
 						},
 						"pageElements": [
 							{
 								"definition": {
+									"backgroundColor": "",
 									"backgroundFragmentImage": {
 									},
 									"layout": {
 										"borderWidth": 0,
-										"contentDisplay": "Block",
 										"marginBottom": 0,
 										"marginLeft": 0,
 										"marginRight": 0,
@@ -45,7 +63,35 @@
 										"paddingLeft": 0,
 										"paddingRight": 0,
 										"paddingTop": 0,
+										"shadow": "None",
 										"widthType": "Fluid"
+									},
+									"styles": {
+										"backgroundImage": {
+										},
+										"borderRadius": "rounded-0",
+										"borderWidth": 0,
+										"fontFamily": "sans-serif",
+										"fontSize": "medium",
+										"fontWeight": "font-weight-normal",
+										"height": "h-auto",
+										"marginBottom": "0",
+										"marginLeft": "0",
+										"marginRight": "0",
+										"marginTop": "0",
+										"maxHeight": "none",
+										"maxWidth": "none",
+										"minHeight": "auto",
+										"minWidth": "auto",
+										"opacity": 100,
+										"overflow": "visible",
+										"paddingBottom": "0",
+										"paddingLeft": "0",
+										"paddingRight": "0",
+										"paddingTop": "0",
+										"shadow": "shadow-none",
+										"textAlign": "none",
+										"width": "w-auto"
 									}
 								},
 								"pageElements": [
@@ -55,9 +101,6 @@
 												"key": "BASIC_COMPONENT-paragraph"
 											},
 											"fragmentConfig": {
-												"marginBottom": "3",
-												"textAlign": "left",
-												"textColor": ""
 											},
 											"fragmentFields": [
 												{

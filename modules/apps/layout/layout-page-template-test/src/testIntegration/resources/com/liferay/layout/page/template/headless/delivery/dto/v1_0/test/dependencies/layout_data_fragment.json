@@ -4,7 +4,34 @@
 			"children": [
 			],
 			"config": {
-				"fragmentEntryLinkId": "${FRAGMENT_ENTRY_LINK_ID}"
+				"fragmentEntryLinkId": "${FRAGMENT_ENTRY_LINK_ID}",
+				"styles": {
+					"backgroundImage": {
+					},
+					"borderRadius": "rounded-0",
+					"borderWidth": 0,
+					"fontFamily": "sans-serif",
+					"fontSize": "medium",
+					"fontWeight": "font-weight-normal",
+					"height": "h-auto",
+					"marginBottom": "0",
+					"marginLeft": "0",
+					"marginRight": "0",
+					"marginTop": "0",
+					"maxHeight": "none",
+					"maxWidth": "none",
+					"minHeight": "auto",
+					"minWidth": "auto",
+					"opacity": 1,
+					"overflow": "visible",
+					"paddingBottom": "0",
+					"paddingLeft": "0",
+					"paddingRight": "0",
+					"paddingTop": "0",
+					"shadow": "shadow-none",
+					"textAlign": "none",
+					"width": "w-auto"
+				}
 			},
 			"itemId": "75d9f756-a7fb-4b9a-b949-601d5d4461e9",
 			"parentId": "9ae245cb-f716-494b-b51c-b23836cff3fe",

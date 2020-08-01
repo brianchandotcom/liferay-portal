@@ -15,8 +15,8 @@
 package com.liferay.journal.web.internal.portlet.action;
 
 import com.liferay.document.library.kernel.exception.FileSizeException;
-import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
@@ -84,7 +84,7 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 					_translationInfoItemFieldValuesImporter.
 						importInfoItemFieldValues(
 							themeDisplay.getScopeGroupId(),
-							new InfoItemClassPKReference(
+							new InfoItemReference(
 								JournalArticle.class.getName(),
 								article.getResourcePrimKey()),
 							inputStream);

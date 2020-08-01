@@ -97,8 +97,17 @@ public class InfoItemFieldValues {
 			infoFieldName, Collections.emptyList());
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 * #getInfoItemReference()}
+	 */
+	@Deprecated
 	public InfoItemClassPKReference getInfoItemClassPKReference() {
 		return _builder._infoItemClassPKReference;
+	}
+
+	public InfoItemReference getInfoItemReference() {
+		return _builder._infoItemReference;
 	}
 
 	public Map<String, Object> getMap(Locale locale) {
@@ -177,10 +186,21 @@ public class InfoItemFieldValues {
 			return this;
 		}
 
+		/**
+		 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+		 * #infoItemReference(InfoItemReference)}
+		 */
+		@Deprecated
 		public Builder infoItemClassPKReference(
 			InfoItemClassPKReference infoItemClassPKReference) {
 
 			_infoItemClassPKReference = infoItemClassPKReference;
+
+			return this;
+		}
+
+		public Builder infoItemReference(InfoItemReference infoItemReference) {
+			_infoItemReference = infoItemReference;
 
 			return this;
 		}
@@ -190,6 +210,7 @@ public class InfoItemFieldValues {
 		private final Map<String, Collection<InfoFieldValue<Object>>>
 			_infoFieldValuesMap = new HashMap<>();
 		private InfoItemClassPKReference _infoItemClassPKReference;
+		private InfoItemReference _infoItemReference;
 
 	}
 

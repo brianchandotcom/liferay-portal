@@ -17,8 +17,8 @@ package com.liferay.translation.web.internal.importer;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.TextInfoFieldType;
-import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
@@ -84,7 +84,7 @@ public class XLIFFInfoFormTranslationImporter
 
 	@Override
 	public InfoItemFieldValues importInfoItemFieldValues(
-			long groupId, InfoItemClassPKReference infoItemClassPKReference,
+			long groupId, InfoItemReference infoItemReference,
 			InputStream inputStream)
 		throws IOException, XLIFFFileException {
 
@@ -128,11 +128,10 @@ public class XLIFFInfoFormTranslationImporter
 
 			if (_isVersion20(events)) {
 				return _getInfoItemFieldValuesXLIFFv20(
-					groupId, infoItemClassPKReference, tempFile);
+					groupId, infoItemReference, tempFile);
 			}
 
-			return _getInfoItemFieldValuesXLIFFv12(
-				events, infoItemClassPKReference);
+			return _getInfoItemFieldValuesXLIFFv12(events, infoItemReference);
 		}
 		catch (OkapiIllegalFilterOperationException | XLIFFException
 					exception) {
@@ -170,16 +169,14 @@ public class XLIFFInfoFormTranslationImporter
 	}
 
 	private InfoItemFieldValues _getInfoItemFieldValuesXLIFFv12(
-			List<Event> events,
-			InfoItemClassPKReference infoItemClassPKReference)
+			List<Event> events, InfoItemReference infoItemReference)
 		throws XLIFFFileException {
 
 		_validateDocumentPartVersion(events);
 
 		StartSubDocument startSubDocument = _getStartSubDocument(events);
 
-		_validateXLIFFStartSubDocument(
-			infoItemClassPKReference, startSubDocument);
+		_validateXLIFFStartSubDocument(infoItemReference, startSubDocument);
 
 		Locale targetLocale = _getTargetLocale(startSubDocument);
 
@@ -225,21 +222,20 @@ public class XLIFFInfoFormTranslationImporter
 					}
 				}
 			}
-		).infoItemClassPKReference(
-			infoItemClassPKReference
+		).infoItemReference(
+			infoItemReference
 		).build();
 	}
 
 	private InfoItemFieldValues _getInfoItemFieldValuesXLIFFv20(
-			long groupId, InfoItemClassPKReference infoItemClassPKReference,
-			File tempFile)
+			long groupId, InfoItemReference infoItemReference, File tempFile)
 		throws XLIFFFileException {
 
 		XLIFFDocument xliffDocument = new XLIFFDocument();
 
 		xliffDocument.load(tempFile);
 
-		_validateXLIFFFile(groupId, infoItemClassPKReference, xliffDocument);
+		_validateXLIFFFile(groupId, infoItemReference, xliffDocument);
 
 		StartXliffData startXliffData = xliffDocument.getStartXliffData();
 
@@ -287,8 +283,8 @@ public class XLIFFInfoFormTranslationImporter
 							).build()));
 				}
 			}
-		).infoItemClassPKReference(
-			infoItemClassPKReference
+		).infoItemReference(
+			infoItemReference
 		).build();
 	}
 
@@ -441,18 +437,17 @@ public class XLIFFInfoFormTranslationImporter
 	}
 
 	private void _validateXLIFFFile(
-			long groupId, InfoItemClassPKReference infoItemClassPKReference,
+			long groupId, InfoItemReference infoItemReference,
 			XLIFFDocument xliffDocument)
 		throws XLIFFFileException {
 
 		_validateXLIFFCompletion(groupId, xliffDocument);
 
-		_validateXLIFFFileNode(infoItemClassPKReference, xliffDocument);
+		_validateXLIFFFileNode(infoItemReference, xliffDocument);
 	}
 
 	private void _validateXLIFFFileNode(
-			InfoItemClassPKReference infoItemClassPKReference,
-			XLIFFDocument xliffDocument)
+			InfoItemReference infoItemReference, XLIFFDocument xliffDocument)
 		throws XLIFFFileException {
 
 		List<String> fileNodeIds = xliffDocument.getFileNodeIds();
@@ -463,8 +458,8 @@ public class XLIFFInfoFormTranslationImporter
 		}
 
 		FileNode fileNode = xliffDocument.getFileNode(
-			infoItemClassPKReference.getClassName() + StringPool.COLON +
-				infoItemClassPKReference.getClassPK());
+			infoItemReference.getClassName() + StringPool.COLON +
+				infoItemReference.getClassPK());
 
 		if (fileNode == null) {
 			throw new XLIFFFileException.MustHaveValidId("File ID is invalid");
@@ -472,7 +467,7 @@ public class XLIFFInfoFormTranslationImporter
 	}
 
 	private void _validateXLIFFStartSubDocument(
-			InfoItemClassPKReference infoItemClassPKReference,
+			InfoItemReference infoItemReference,
 			StartSubDocument startSubDocument)
 		throws XLIFFFileException {
 
@@ -482,8 +477,8 @@ public class XLIFFInfoFormTranslationImporter
 		}
 
 		String original =
-			infoItemClassPKReference.getClassName() + StringPool.COLON +
-				infoItemClassPKReference.getClassPK();
+			infoItemReference.getClassName() + StringPool.COLON +
+				infoItemReference.getClassPK();
 
 		if (!Objects.equals(startSubDocument.getName(), original)) {
 			throw new XLIFFFileException.MustHaveValidId("File ID is invalid");

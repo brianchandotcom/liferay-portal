@@ -29,11 +29,11 @@ import com.liferay.info.field.type.URLInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemClassDetails;
-import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.capability.InfoItemCapability;
 import com.liferay.info.item.provider.InfoItemCapabilitiesProvider;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
@@ -182,7 +182,7 @@ public class InfoDisplayContributorWrapper
 			return _convertToInfoItemFieldValues(
 				_infoDisplayContributor.getInfoDisplayFieldsValues(
 					itemObject, locale),
-				new InfoItemClassPKReference(
+				new InfoItemReference(
 					_infoDisplayContributor.getClassName(),
 					_infoDisplayContributor.getInfoDisplayObjectClassPK(
 						itemObject)));
@@ -251,7 +251,7 @@ public class InfoDisplayContributorWrapper
 
 	private InfoItemFieldValues _convertToInfoItemFieldValues(
 		Map<String, Object> infoDisplayFieldsValues,
-		InfoItemClassPKReference infoItemClassPKReference) {
+		InfoItemReference infoItemReference) {
 
 		return InfoItemFieldValues.builder(
 		).infoFieldValue(
@@ -280,8 +280,8 @@ public class InfoDisplayContributorWrapper
 						new InfoFieldValue<>(infoField, entry.getValue()));
 				}
 			}
-		).infoItemClassPKReference(
-			infoItemClassPKReference
+		).infoItemReference(
+			infoItemReference
 		).build();
 	}
 

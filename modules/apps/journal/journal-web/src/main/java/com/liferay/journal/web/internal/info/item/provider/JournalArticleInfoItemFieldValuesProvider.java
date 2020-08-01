@@ -24,8 +24,8 @@ import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.TextInfoFieldType;
-import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
@@ -90,8 +90,8 @@ public class JournalArticleInfoItemFieldValuesProvider
 				_getDDMStructureInfoFieldValues(journalArticle)
 			).infoFieldValues(
 				_getDDMTemplateInfoFieldValues(journalArticle)
-			).infoItemClassPKReference(
-				new InfoItemClassPKReference(
+			).infoItemReference(
+				new InfoItemReference(
 					JournalArticle.class.getName(),
 					journalArticle.getResourcePrimKey())
 			).build();

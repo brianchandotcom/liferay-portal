@@ -17,8 +17,8 @@ package com.liferay.journal.web.internal.portlet.action;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.form.InfoForm;
-import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
@@ -68,15 +68,13 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			JournalArticle article = ActionUtil.getArticle(actionRequest);
 
-			InfoItemClassPKReference infoItemClassPKReference =
-				new InfoItemClassPKReference(
-					JournalArticle.class.getName(),
-					article.getResourcePrimKey());
+			InfoItemReference infoItemReference = new InfoItemReference(
+				JournalArticle.class.getName(), article.getResourcePrimKey());
 
 			InfoItemFieldValues infoItemFieldValues =
 				InfoItemFieldValues.builder(
-				).infoItemClassPKReference(
-					infoItemClassPKReference
+				).infoItemReference(
+					infoItemReference
 				).infoFieldValues(
 					_getInfoFieldValues(actionRequest, article)
 				).build();
@@ -86,7 +84,7 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 			_translationEntryLocalService.addOrUpdateTranslationEntry(
 				article.getGroupId(), _getTargetLanguageId(actionRequest),
-				infoItemClassPKReference, infoItemFieldValues, serviceContext);
+				infoItemReference, infoItemFieldValues, serviceContext);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

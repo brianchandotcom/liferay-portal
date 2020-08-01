@@ -18,8 +18,8 @@ import com.liferay.asset.info.internal.item.AssetEntryInfoItemFields;
 import com.liferay.asset.info.item.provider.AssetEntryInfoItemFieldSetProvider;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.type.WebImage;
 import com.liferay.petra.string.StringPool;
@@ -58,8 +58,8 @@ public class AssetEntryInfoItemFieldValuesProvider
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldValues(assetEntry)
 		).infoFieldValues(
 			_getAssetEntryInfoFieldValues(assetEntry)
-		).infoItemClassPKReference(
-			new InfoItemClassPKReference(
+		).infoItemReference(
+			new InfoItemReference(
 				AssetEntry.class.getName(), assetEntry.getEntryId())
 		).build();
 	}

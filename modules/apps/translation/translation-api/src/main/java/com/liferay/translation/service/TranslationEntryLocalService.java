@@ -15,7 +15,7 @@
 package com.liferay.translation.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.info.item.InfoItemClassPKReference;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -69,7 +69,7 @@ public interface TranslationEntryLocalService
 	 */
 	public TranslationEntry addOrUpdateTranslationEntry(
 			long groupId, String languageId,
-			InfoItemClassPKReference infoItemClassPKReference,
+			InfoItemReference infoItemReference,
 			InfoItemFieldValues infoItemFieldValues,
 			ServiceContext serviceContext)
 		throws PortalException;

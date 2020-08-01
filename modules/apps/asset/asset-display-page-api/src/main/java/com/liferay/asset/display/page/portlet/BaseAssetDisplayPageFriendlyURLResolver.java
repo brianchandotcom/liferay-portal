@@ -32,6 +32,7 @@ import com.liferay.info.display.url.provider.InfoEditURLProvider;
 import com.liferay.info.display.url.provider.InfoEditURLProviderTracker;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
@@ -349,7 +350,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 					portal.getClassName(
 						infoDisplayObjectProvider.getClassNameId()));
 
-		InfoItemIdentifier infoItemIdentifier = new InfoItemIdentifier(
+		InfoItemIdentifier infoItemIdentifier = new ClassPKInfoItemIdentifier(
 			infoDisplayObjectProvider.getClassPK());
 
 		infoItemIdentifier.setVersion(InfoItemIdentifier.VERSION_LATEST);

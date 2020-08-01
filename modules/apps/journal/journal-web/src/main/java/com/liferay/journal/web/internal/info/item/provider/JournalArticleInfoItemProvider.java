@@ -15,6 +15,7 @@
 package com.liferay.journal.web.internal.info.item.provider;
 
 import com.liferay.info.exception.NoSuchInfoItemException;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.journal.exception.NoSuchArticleException;
@@ -45,6 +46,14 @@ public class JournalArticleInfoItemProvider
 	public JournalArticle getInfoItem(InfoItemIdentifier infoItemIdentifier)
 		throws NoSuchInfoItemException {
 
+		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+			throw new NoSuchInfoItemException(
+				"Unsupported info item identifier type " + infoItemIdentifier);
+		}
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)infoItemIdentifier;
+
 		JournalArticle article = null;
 
 		String version = null;
@@ -62,14 +71,14 @@ public class JournalArticleInfoItemProvider
 					version, InfoItemIdentifier.VERSION_LATEST_APPROVED)) {
 
 				article = _journalArticleLocalService.fetchLatestArticle(
-					infoItemIdentifier.getClassPK());
+					classPKInfoItemIdentifier.getClassPK());
 			}
 			else if (Objects.equals(
 						version, InfoItemIdentifier.VERSION_LATEST)) {
 
 				JournalArticleResource articleResource =
 					_journalArticleResourceLocalService.getArticleResource(
-						infoItemIdentifier.getClassPK());
+						classPKInfoItemIdentifier.getClassPK());
 
 				article = _journalArticleLocalService.fetchLatestArticle(
 					articleResource.getGroupId(),
@@ -79,7 +88,7 @@ public class JournalArticleInfoItemProvider
 			else {
 				JournalArticleResource articleResource =
 					_journalArticleResourceLocalService.getArticleResource(
-						infoItemIdentifier.getClassPK());
+						classPKInfoItemIdentifier.getClassPK());
 
 				_journalArticleLocalService.getArticle(
 					articleResource.getGroupId(),
@@ -92,7 +101,7 @@ public class JournalArticleInfoItemProvider
 
 			throw new NoSuchInfoItemException(
 				"Unable to get journal article " +
-				infoItemIdentifier.getClassPK(),
+					classPKInfoItemIdentifier.getClassPK(),
 				exception);
 		}
 		catch (PortalException portalException) {
@@ -102,7 +111,7 @@ public class JournalArticleInfoItemProvider
 		if ((article == null) || article.isInTrash()) {
 			throw new NoSuchInfoItemException(
 				"Unable to get journal article " +
-				infoItemIdentifier.getClassPK());
+					classPKInfoItemIdentifier.getClassPK());
 		}
 
 		return article;
@@ -112,7 +121,8 @@ public class JournalArticleInfoItemProvider
 	public JournalArticle getInfoItem(long classPK)
 		throws NoSuchInfoItemException {
 
-		InfoItemIdentifier infoItemIdentifier = new InfoItemIdentifier(classPK);
+		InfoItemIdentifier infoItemIdentifier = new ClassPKInfoItemIdentifier(
+			classPK);
 
 		return getInfoItem(infoItemIdentifier);
 	}

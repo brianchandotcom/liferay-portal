@@ -71,19 +71,14 @@ public class JournalArticleInfoItemProvider
 					version, InfoItemIdentifier.VERSION_LATEST_APPROVED)) {
 
 				article = _journalArticleLocalService.fetchLatestArticle(
-					classPKInfoItemIdentifier.getClassPK());
+					classPKInfoItemIdentifier.getClassPK(),
+					WorkflowConstants.STATUS_APPROVED);
 			}
 			else if (Objects.equals(
 						version, InfoItemIdentifier.VERSION_LATEST)) {
 
-				JournalArticleResource articleResource =
-					_journalArticleResourceLocalService.getArticleResource(
-						classPKInfoItemIdentifier.getClassPK());
-
 				article = _journalArticleLocalService.fetchLatestArticle(
-					articleResource.getGroupId(),
-					articleResource.getArticleId(),
-					WorkflowConstants.STATUS_ANY);
+					classPKInfoItemIdentifier.getClassPK());
 			}
 			else {
 				JournalArticleResource articleResource =

@@ -286,8 +286,8 @@ describe('MappingSelector', () => {
 	it('shows a warning and disables the selector if the fields array is empty', async () => {
 		config.layoutType = LAYOUT_TYPES.content;
 
-		InfoItemService.getAvailableInfoItemMappingFields.mockImplementation(() =>
-			Promise.resolve([])
+		InfoItemService.getAvailableInfoItemMappingFields.mockImplementation(
+			() => Promise.resolve([])
 		);
 
 		await act(async () => {

@@ -173,11 +173,11 @@ public class JenkinsCohort {
 
 		JSONObject nodeDataJSONObject = new OrderedJSONObject();
 
-		nodeDataJSONObject.put(
-			"CI Node Capacity", getOnlineJenkinsSlaveCount());
+		nodeDataJSONObject.put("Occupied Nodes", getRunningBuildCount());
 
-		nodeDataJSONObject.put(
-			"Total CI Load", getRunningBuildCount() + getQueuedBuildCount());
+		nodeDataJSONObject.put("Online Nodes", getOnlineJenkinsSlaveCount());
+
+		nodeDataJSONObject.put("Queued Builds", getQueuedBuildCount());
 
 		nodeDataJSONObject.put("Offline Nodes", getOfflineJenkinsSlaveCount());
 

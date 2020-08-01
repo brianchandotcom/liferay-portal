@@ -15,7 +15,7 @@
 package com.liferay.journal.web.internal.info.item.provider;
 
 import com.liferay.info.exception.NoSuchInfoItemException;
-import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.exception.NoSuchArticleResourceException;
@@ -42,7 +42,7 @@ public class JournalArticleInfoItemProvider
 	implements InfoItemObjectProvider<JournalArticle> {
 
 	@Override
-	public JournalArticle getInfoItem(InfoItemReference infoItemReference)
+	public JournalArticle getInfoItem(InfoItemIdentifier infoItemIdentifier)
 		throws NoSuchInfoItemException {
 
 		JournalArticle article = null;
@@ -50,7 +50,7 @@ public class JournalArticleInfoItemProvider
 		String version = null;
 
 		Optional<String> versionOptional =
-			infoItemReference.getVersionOptional();
+			infoItemIdentifier.getVersionOptional();
 
 		if (versionOptional.isPresent()) {
 			version = versionOptional.get();
@@ -59,17 +59,17 @@ public class JournalArticleInfoItemProvider
 		try {
 			if (Validator.isNull(version) ||
 				Objects.equals(
-					version, InfoItemReference.VERSION_LATEST_APPROVED)) {
+					version, InfoItemIdentifier.VERSION_LATEST_APPROVED)) {
 
 				article = _journalArticleLocalService.fetchLatestArticle(
-					infoItemReference.getClassPK());
+					infoItemIdentifier.getClassPK());
 			}
 			else if (Objects.equals(
-						version, InfoItemReference.VERSION_LATEST)) {
+						version, InfoItemIdentifier.VERSION_LATEST)) {
 
 				JournalArticleResource articleResource =
 					_journalArticleResourceLocalService.getArticleResource(
-						infoItemReference.getClassPK());
+						infoItemIdentifier.getClassPK());
 
 				article = _journalArticleLocalService.fetchLatestArticle(
 					articleResource.getGroupId(),
@@ -79,7 +79,7 @@ public class JournalArticleInfoItemProvider
 			else {
 				JournalArticleResource articleResource =
 					_journalArticleResourceLocalService.getArticleResource(
-						infoItemReference.getClassPK());
+						infoItemIdentifier.getClassPK());
 
 				_journalArticleLocalService.getArticle(
 					articleResource.getGroupId(),
@@ -92,7 +92,7 @@ public class JournalArticleInfoItemProvider
 
 			throw new NoSuchInfoItemException(
 				"Unable to get journal article " +
-					infoItemReference.getClassPK(),
+				infoItemIdentifier.getClassPK(),
 				exception);
 		}
 		catch (PortalException portalException) {
@@ -102,7 +102,7 @@ public class JournalArticleInfoItemProvider
 		if ((article == null) || article.isInTrash()) {
 			throw new NoSuchInfoItemException(
 				"Unable to get journal article " +
-					infoItemReference.getClassPK());
+				infoItemIdentifier.getClassPK());
 		}
 
 		return article;
@@ -112,9 +112,9 @@ public class JournalArticleInfoItemProvider
 	public JournalArticle getInfoItem(long classPK)
 		throws NoSuchInfoItemException {
 
-		InfoItemReference infoItemReference = new InfoItemReference(classPK);
+		InfoItemIdentifier infoItemIdentifier = new InfoItemIdentifier(classPK);
 
-		return getInfoItem(infoItemReference);
+		return getInfoItem(infoItemIdentifier);
 	}
 
 	@Reference

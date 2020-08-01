@@ -18,7 +18,7 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
-import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.web.internal.security.permission.resource.JournalArticlePermission;
@@ -94,7 +94,7 @@ public class JournalArticleLayoutClassedModelUsageActionMenuContributor
 								_getURL(
 									layoutClassedModelUsage,
 									AssetRendererFactory.TYPE_LATEST_APPROVED,
-									InfoItemReference.VERSION_LATEST_APPROVED,
+									InfoItemIdentifier.VERSION_LATEST_APPROVED,
 									httpServletRequest));
 							dropdownItem.setLabel(
 								LanguageUtil.get(
@@ -128,7 +128,7 @@ public class JournalArticleLayoutClassedModelUsageActionMenuContributor
 										_getURL(
 											layoutClassedModelUsage,
 											AssetRendererFactory.TYPE_LATEST,
-											InfoItemReference.VERSION_LATEST,
+											InfoItemIdentifier.VERSION_LATEST,
 											httpServletRequest));
 									dropdownItem.setLabel(label);
 								});

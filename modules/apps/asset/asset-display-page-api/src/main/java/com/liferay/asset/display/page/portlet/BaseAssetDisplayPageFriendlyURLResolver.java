@@ -32,7 +32,7 @@ import com.liferay.info.display.url.provider.InfoEditURLProvider;
 import com.liferay.info.display.url.provider.InfoEditURLProviderTracker;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
@@ -349,12 +349,12 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 					portal.getClassName(
 						infoDisplayObjectProvider.getClassNameId()));
 
-		InfoItemReference infoItemReference = new InfoItemReference(
+		InfoItemIdentifier infoItemIdentifier = new InfoItemIdentifier(
 			infoDisplayObjectProvider.getClassPK());
 
-		infoItemReference.setVersion(InfoItemReference.VERSION_LATEST);
+		infoItemIdentifier.setVersion(InfoItemIdentifier.VERSION_LATEST);
 
-		return infoItemObjectProvider.getInfoItem(infoItemReference);
+		return infoItemObjectProvider.getInfoItem(infoItemIdentifier);
 	}
 
 	private String _getInfoURLSeparator(String friendlyURL) {

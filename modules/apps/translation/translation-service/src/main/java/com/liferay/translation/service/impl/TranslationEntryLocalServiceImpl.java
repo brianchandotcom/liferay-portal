@@ -14,8 +14,8 @@
 
 package com.liferay.translation.service.impl;
 
-import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -55,15 +55,15 @@ public class TranslationEntryLocalServiceImpl
 	@Override
 	public TranslationEntry addOrUpdateTranslationEntry(
 			long groupId, String languageId,
-			InfoItemClassPKReference infoItemClassPKReference,
+			InfoItemReference infoItemReference,
 			InfoItemFieldValues infoItemFieldValues,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		try {
 			return addOrUpdateTranslationEntry(
-				groupId, infoItemClassPKReference.getClassName(),
-				infoItemClassPKReference.getClassPK(),
+				groupId, infoItemReference.getClassName(),
+				infoItemReference.getClassPK(),
 				StreamUtil.toString(
 					_xliffTranslationInfoItemFieldValuesExporter.
 						exportInfoItemFieldValues(
@@ -138,7 +138,7 @@ public class TranslationEntryLocalServiceImpl
 		try {
 			return _xliffTranslationInfoItemFieldValuesImporter.
 				importInfoItemFieldValues(
-					groupId, new InfoItemClassPKReference(className, classPK),
+					groupId, new InfoItemReference(className, classPK),
 					new ByteArrayInputStream(content.getBytes()));
 		}
 		catch (IOException ioException) {

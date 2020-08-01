@@ -14,8 +14,8 @@
 
 package com.liferay.translation.importer;
 
-import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.IOException;
@@ -27,7 +27,7 @@ import java.io.InputStream;
 public interface TranslationInfoItemFieldValuesImporter {
 
 	public InfoItemFieldValues importInfoItemFieldValues(
-			long groupId, InfoItemClassPKReference infoItemClassPKReference,
+			long groupId, InfoItemReference infoItemReference,
 			InputStream inputStream)
 		throws IOException, PortalException;
 

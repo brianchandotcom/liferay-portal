@@ -152,8 +152,8 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 					translationEntry.getContent());
 
 			return InfoItemFieldValues.builder(
-			).infoItemClassPKReference(
-				journalArticleInfoItemFieldValues.getInfoItemClassPKReference()
+			).infoItemReference(
+				journalArticleInfoItemFieldValues.getInfoItemReference()
 			).infoFieldValues(
 				journalArticleInfoItemFieldValues.getInfoFieldValues(
 				).stream(

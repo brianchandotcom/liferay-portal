@@ -16,6 +16,7 @@ package com.liferay.journal.web.internal.info.item.provider;
 
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.GroupKeyInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.journal.exception.NoSuchArticleException;
@@ -46,13 +47,12 @@ public class JournalArticleInfoItemProvider
 	public JournalArticle getInfoItem(InfoItemIdentifier infoItemIdentifier)
 		throws NoSuchInfoItemException {
 
-		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier) &&
+			!(infoItemIdentifier instanceof GroupKeyInfoItemIdentifier)) {
+
 			throw new NoSuchInfoItemException(
 				"Unsupported info item identifier type " + infoItemIdentifier);
 		}
-
-		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-			(ClassPKInfoItemIdentifier)infoItemIdentifier;
 
 		JournalArticle article = null;
 
@@ -66,37 +66,28 @@ public class JournalArticleInfoItemProvider
 		}
 
 		try {
-			if (Validator.isNull(version) ||
-				Objects.equals(
-					version, InfoItemIdentifier.VERSION_LATEST_APPROVED)) {
+			if (infoItemIdentifier instanceof ClassPKInfoItemIdentifier) {
+				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+					(ClassPKInfoItemIdentifier)infoItemIdentifier;
 
-				article = _journalArticleLocalService.fetchLatestArticle(
-					classPKInfoItemIdentifier.getClassPK(),
-					WorkflowConstants.STATUS_APPROVED);
+				article = _getArticle(
+					classPKInfoItemIdentifier.getClassPK(), version);
 			}
-			else if (Objects.equals(
-						version, InfoItemIdentifier.VERSION_LATEST)) {
+			else if (infoItemIdentifier instanceof GroupKeyInfoItemIdentifier) {
+				GroupKeyInfoItemIdentifier groupKeyInfoItemIdentifier =
+					(GroupKeyInfoItemIdentifier)infoItemIdentifier;
 
-				article = _journalArticleLocalService.fetchLatestArticle(
-					classPKInfoItemIdentifier.getClassPK());
-			}
-			else {
-				JournalArticleResource articleResource =
-					_journalArticleResourceLocalService.getArticleResource(
-						classPKInfoItemIdentifier.getClassPK());
-
-				_journalArticleLocalService.getArticle(
-					articleResource.getGroupId(),
-					articleResource.getArticleId(),
-					GetterUtil.getDouble(version));
+				article = _getArticle(
+					groupKeyInfoItemIdentifier.getGroupId(),
+					groupKeyInfoItemIdentifier.getKey(), version);
 			}
 		}
 		catch (NoSuchArticleException | NoSuchArticleResourceException
 					exception) {
 
 			throw new NoSuchInfoItemException(
-				"Unable to get journal article " +
-					classPKInfoItemIdentifier.getClassPK(),
+				"Unable to get journal article with identifier " +
+					infoItemIdentifier,
 				exception);
 		}
 		catch (PortalException portalException) {
@@ -105,8 +96,7 @@ public class JournalArticleInfoItemProvider
 
 		if ((article == null) || article.isInTrash()) {
 			throw new NoSuchInfoItemException(
-				"Unable to get journal article " +
-					classPKInfoItemIdentifier.getClassPK());
+				"Unable to get journal article " + infoItemIdentifier);
 		}
 
 		return article;
@@ -120,6 +110,51 @@ public class JournalArticleInfoItemProvider
 			classPK);
 
 		return getInfoItem(infoItemIdentifier);
+	}
+
+	private JournalArticle _getArticle(long classPK, String version)
+		throws PortalException {
+
+		if (Validator.isNull(version) ||
+			Objects.equals(
+				version, InfoItemIdentifier.VERSION_LATEST_APPROVED)) {
+
+			return _journalArticleLocalService.fetchLatestArticle(
+				classPK, WorkflowConstants.STATUS_APPROVED);
+		}
+		else if (Objects.equals(version, InfoItemIdentifier.VERSION_LATEST)) {
+			return _journalArticleLocalService.fetchLatestArticle(
+				classPK, WorkflowConstants.STATUS_ANY);
+		}
+		else {
+			JournalArticleResource articleResource =
+				_journalArticleResourceLocalService.getArticleResource(classPK);
+
+			return _journalArticleLocalService.getArticle(
+				articleResource.getGroupId(), articleResource.getArticleId(),
+				GetterUtil.getDouble(version));
+		}
+	}
+
+	private JournalArticle _getArticle(
+			long groupId, String articleId, String version)
+		throws PortalException {
+
+		if (Validator.isNull(version) ||
+			Objects.equals(
+				version, InfoItemIdentifier.VERSION_LATEST_APPROVED)) {
+
+			return _journalArticleLocalService.fetchLatestArticle(
+				groupId, articleId, WorkflowConstants.STATUS_APPROVED);
+		}
+		else if (Objects.equals(version, InfoItemIdentifier.VERSION_LATEST)) {
+			return _journalArticleLocalService.fetchLatestArticle(
+				groupId, articleId, WorkflowConstants.STATUS_ANY);
+		}
+		else {
+			return _journalArticleLocalService.getArticle(
+				groupId, articleId, GetterUtil.getDouble(version));
+		}
 	}
 
 	@Reference

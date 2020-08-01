@@ -28,6 +28,7 @@ import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.field.type.URLInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.GroupUrlTitleInfoItemIdentifier;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemFieldValues;
@@ -124,18 +125,36 @@ public class InfoDisplayContributorWrapper
 	public Object getInfoItem(InfoItemIdentifier infoItemIdentifier)
 		throws NoSuchInfoItemException {
 
-		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier) &&
+			!(infoItemIdentifier instanceof GroupUrlTitleInfoItemIdentifier)) {
+
 			throw new NoSuchInfoItemException(
 				"Unsupported info item identifier type " + infoItemIdentifier);
 		}
 
-		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-			(ClassPKInfoItemIdentifier)infoItemIdentifier;
+		InfoDisplayObjectProvider<?> infoDisplayObjectProvider = null;
 
 		try {
-			InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
-				_infoDisplayContributor.getInfoDisplayObjectProvider(
-					classPKInfoItemIdentifier.getClassPK());
+			if (infoItemIdentifier instanceof ClassPKInfoItemIdentifier) {
+				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+					(ClassPKInfoItemIdentifier) infoItemIdentifier;
+
+				infoDisplayObjectProvider =
+					_infoDisplayContributor.getInfoDisplayObjectProvider(
+						classPKInfoItemIdentifier.getClassPK());
+			}
+			else if (infoItemIdentifier
+				instanceof GroupUrlTitleInfoItemIdentifier) {
+
+				GroupUrlTitleInfoItemIdentifier
+					groupURLTitleInfoItemIdentifier =
+						(GroupUrlTitleInfoItemIdentifier)infoItemIdentifier;
+
+				infoDisplayObjectProvider =
+					_infoDisplayContributor.getInfoDisplayObjectProvider(
+						groupURLTitleInfoItemIdentifier.getGroupId(),
+						groupURLTitleInfoItemIdentifier.getUrlTitle());
+			}
 
 			return infoDisplayObjectProvider.getDisplayObject();
 		}

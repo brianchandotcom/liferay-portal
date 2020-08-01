@@ -18,6 +18,7 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.GroupUrlTitleInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 
@@ -35,23 +36,40 @@ public class BlogsEntryInfoItemObjectProvider
 	public BlogsEntry getInfoItem(InfoItemIdentifier infoItemIdentifier)
 		throws NoSuchInfoItemException {
 
-		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier) &&
+			!(infoItemIdentifier instanceof GroupUrlTitleInfoItemIdentifier)) {
+
 			throw new NoSuchInfoItemException(
 				"Unsupported info item identifier type " + infoItemIdentifier);
 		}
 
-		ClassPKInfoItemIdentifier classPKInfoItemReference =
-			(ClassPKInfoItemIdentifier)infoItemIdentifier;
+		BlogsEntry blogsEntry = null;
 
-		BlogsEntry blogsEntry = _blogsEntryLocalService.fetchBlogsEntry(
-			classPKInfoItemReference.getClassPK());
+		if (infoItemIdentifier instanceof ClassPKInfoItemIdentifier) {
+			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+				(ClassPKInfoItemIdentifier) infoItemIdentifier;
+
+			blogsEntry = _blogsEntryLocalService.fetchBlogsEntry(
+				classPKInfoItemIdentifier.getClassPK());
+		}
+		else if (infoItemIdentifier
+					instanceof GroupUrlTitleInfoItemIdentifier) {
+
+			GroupUrlTitleInfoItemIdentifier
+				groupURLTitleInfoItemIdentifier =
+					(GroupUrlTitleInfoItemIdentifier)infoItemIdentifier;
+
+			blogsEntry = _blogsEntryLocalService.fetchEntry(
+				groupURLTitleInfoItemIdentifier.getGroupId(),
+				groupURLTitleInfoItemIdentifier.getUrlTitle());
+		}
 
 		if ((blogsEntry == null) || blogsEntry.isDraft() ||
 			blogsEntry.isInTrash()) {
 
 			throw new NoSuchInfoItemException(
-				"Unable to get blogs entry " +
-					classPKInfoItemReference.getClassPK());
+				"Unable to get blogs entry with info item identifier " +
+					infoItemIdentifier);
 		}
 
 		return blogsEntry;

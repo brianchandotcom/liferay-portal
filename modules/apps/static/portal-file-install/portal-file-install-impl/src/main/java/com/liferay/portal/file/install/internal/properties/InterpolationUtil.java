@@ -109,9 +109,6 @@ public class InterpolationUtil {
 		return value;
 	}
 
-	private InterpolationUtil() {
-	}
-
 	private static final String _DELIM_START = "${";
 
 	private static final String _DELIM_STOP = "}";

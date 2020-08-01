@@ -22,6 +22,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
@@ -113,9 +114,8 @@ public class GetFragmentEntryLinkMVCResourceCommand
 						InfoItemObjectProvider.class, collectionItemClassName);
 
 				if (infoItemObjectProvider != null) {
-					InfoItemIdentifier
-						infoItemIdentifier = new InfoItemIdentifier(
-						collectionItemClassPK);
+					InfoItemIdentifier infoItemIdentifier =
+						new ClassPKInfoItemIdentifier(collectionItemClassPK);
 
 					Object infoItemObject = infoItemObjectProvider.getInfoItem(
 						infoItemIdentifier);

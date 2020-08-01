@@ -27,6 +27,7 @@ import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.field.type.URLInfoFieldType;
 import com.liferay.info.form.InfoForm;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemDetails;
@@ -123,10 +124,18 @@ public class InfoDisplayContributorWrapper
 	public Object getInfoItem(InfoItemIdentifier infoItemIdentifier)
 		throws NoSuchInfoItemException {
 
+		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+			throw new NoSuchInfoItemException(
+				"Unsupported info item identifier type " + infoItemIdentifier);
+		}
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)infoItemIdentifier;
+
 		try {
 			InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
 				_infoDisplayContributor.getInfoDisplayObjectProvider(
-					infoItemIdentifier.getClassPK());
+					classPKInfoItemIdentifier.getClassPK());
 
 			return infoDisplayObjectProvider.getDisplayObject();
 		}
@@ -137,7 +146,8 @@ public class InfoDisplayContributorWrapper
 
 	@Override
 	public Object getInfoItem(long classPK) throws NoSuchInfoItemException {
-		InfoItemIdentifier infoItemIdentifier = new InfoItemIdentifier(classPK);
+		InfoItemIdentifier infoItemIdentifier = new ClassPKInfoItemIdentifier(
+			classPK);
 
 		return getInfoItem(infoItemIdentifier);
 	}

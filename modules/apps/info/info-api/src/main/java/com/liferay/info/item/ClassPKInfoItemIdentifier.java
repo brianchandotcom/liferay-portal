@@ -14,26 +14,34 @@
 
 package com.liferay.info.item;
 
-import java.util.Optional;
+import com.liferay.petra.string.StringBundler;
 
 /**
- * @author Jürgen Kappler
+ * @author Jorge Ferrer
  */
-public abstract class InfoItemIdentifier {
+public class ClassPKInfoItemIdentifier extends InfoItemIdentifier {
 
-	public static final String VERSION_LATEST = "VERSION_LATEST";
-
-	public static final String VERSION_LATEST_APPROVED =
-		"VERSION_LATEST_APPROVED";
-
-	public Optional<String> getVersionOptional() {
-		return Optional.ofNullable(_version);
+	public ClassPKInfoItemIdentifier(long classPK) {
+		_classPK = classPK;
 	}
 
-	public void setVersion(String version) {
-		_version = version;
+	public long getClassPK() {
+		return _classPK;
 	}
 
-	private String _version;
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("{type=");
+		sb.append(ClassPKInfoItemIdentifier.class.getName());
+		sb.append(", classPK=");
+		sb.append(_classPK);
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	private final long _classPK;
 
 }

@@ -17,6 +17,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.form.InfoForm;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormProvider;
@@ -103,7 +104,8 @@ public class GetInfoItemMappingFieldsMVCResourceCommand
 
 		long classPK = ParamUtil.getLong(resourceRequest, "classPK");
 
-		InfoItemIdentifier infoItemIdentifier = new InfoItemIdentifier(classPK);
+		InfoItemIdentifier infoItemIdentifier = new ClassPKInfoItemIdentifier(
+			classPK);
 
 		Object infoItemObject = infoItemObjectProvider.getInfoItem(
 			infoItemIdentifier);

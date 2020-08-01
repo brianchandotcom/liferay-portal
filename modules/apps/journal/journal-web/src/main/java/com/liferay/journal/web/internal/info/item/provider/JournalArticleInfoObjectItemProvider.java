@@ -17,6 +17,7 @@ package com.liferay.journal.web.internal.info.item.provider;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.GroupKeyInfoItemIdentifier;
+import com.liferay.info.item.GroupUrlTitleInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.journal.exception.NoSuchArticleException;
@@ -48,7 +49,8 @@ public class JournalArticleInfoObjectItemProvider
 		throws NoSuchInfoItemException {
 
 		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier) &&
-			!(infoItemIdentifier instanceof GroupKeyInfoItemIdentifier)) {
+			!(infoItemIdentifier instanceof GroupKeyInfoItemIdentifier) &&
+			!(infoItemIdentifier instanceof GroupUrlTitleInfoItemIdentifier)) {
 
 			throw new NoSuchInfoItemException(
 				"Unsupported info item identifier type " + infoItemIdentifier);
@@ -80,6 +82,17 @@ public class JournalArticleInfoObjectItemProvider
 				article = _getArticle(
 					groupKeyInfoItemIdentifier.getGroupId(),
 					groupKeyInfoItemIdentifier.getKey(), version);
+			}
+			else if (infoItemIdentifier
+						instanceof GroupUrlTitleInfoItemIdentifier) {
+
+				GroupUrlTitleInfoItemIdentifier
+					groupURLTitleInfoItemIdentifier =
+						(GroupUrlTitleInfoItemIdentifier)infoItemIdentifier;
+
+				article = _getArticleByUrlTitle(
+					groupURLTitleInfoItemIdentifier.getGroupId(),
+					groupURLTitleInfoItemIdentifier.getUrlTitle(), version);
 			}
 		}
 		catch (NoSuchArticleException | NoSuchArticleResourceException
@@ -154,6 +167,32 @@ public class JournalArticleInfoObjectItemProvider
 		else {
 			return _journalArticleLocalService.getArticle(
 				groupId, articleId, GetterUtil.getDouble(version));
+		}
+	}
+
+	private JournalArticle _getArticleByUrlTitle(
+			long groupId, String urlTitle, String version)
+		throws PortalException {
+
+		if (Validator.isNull(version) ||
+			Objects.equals(
+				version, InfoItemIdentifier.VERSION_LATEST_APPROVED)) {
+
+			return _journalArticleLocalService.fetchLatestArticleByUrlTitle(
+				groupId, urlTitle, WorkflowConstants.STATUS_APPROVED);
+		}
+		else if (Objects.equals(version, InfoItemIdentifier.VERSION_LATEST)) {
+			return _journalArticleLocalService.fetchLatestArticleByUrlTitle(
+				groupId, urlTitle, WorkflowConstants.STATUS_ANY);
+		}
+		else {
+			JournalArticle journalArticle =
+				_journalArticleLocalService.fetchLatestArticleByUrlTitle(
+					groupId, urlTitle, WorkflowConstants.STATUS_ANY);
+
+			return _journalArticleLocalService.getArticle(
+				groupId, journalArticle.getArticleId(),
+				GetterUtil.getDouble(version));
 		}
 	}
 

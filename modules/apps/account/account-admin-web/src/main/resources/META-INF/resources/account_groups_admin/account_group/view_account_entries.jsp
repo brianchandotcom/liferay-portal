@@ -76,6 +76,22 @@ renderResponse.setTitle(accountGroupDisplay.getName());
 						label="<%= accountEntryDisplay.getStatusLabel() %>"
 					/>
 				</liferay-ui:search-container-column-text>
+
+				<liferay-ui:search-container-column-text>
+					<portlet:actionURL name="/account_groups_admin/remove_account_group_account_entries" var="removeAccountGroupAccountEntryURL">
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="accountEntryIds" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
+						<portlet:param name="accountGroupId" value="<%= String.valueOf(accountGroupDisplay.getAccountGroupId()) %>" />
+					</portlet:actionURL>
+
+					<liferay-ui:icon-delete
+						confirmation="are-you-sure-you-want-to-remove-this-account"
+						icon="times-circle"
+						message="remove"
+						showIcon="<%= true %>"
+						url="<%= removeAccountGroupAccountEntryURL %>"
+					/>
+				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator

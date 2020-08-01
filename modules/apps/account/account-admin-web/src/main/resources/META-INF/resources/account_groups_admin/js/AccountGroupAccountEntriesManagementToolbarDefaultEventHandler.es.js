@@ -16,6 +16,27 @@ import {DefaultEventHandler, ItemSelectorDialog} from 'frontend-js-web';
 import {Config} from 'metal-state';
 
 class AccountGroupAccountEntriesManagementToolbarDefaultEventHandler extends DefaultEventHandler {
+	removeAccountGroupAccountEntries(itemData) {
+		if (
+			confirm(
+				Liferay.Language.get(
+					'are-you-sure-you-want-to-remove-the-selected-accounts'
+				)
+			)
+		) {
+			const form = this.one('#fm');
+
+			Liferay.Util.postForm(form, {
+				data: {
+					accountEntryIds: Liferay.Util.listCheckedExcept(
+						form,
+						this.ns('allRowIds')
+					),
+				},
+				url: itemData.removeAccountGroupAccountEntriesURL,
+			});
+		}
+	}
 
 	selectAccountGroupAccountEntries() {
 		const itemSelectorDialog = new ItemSelectorDialog({

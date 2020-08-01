@@ -304,14 +304,13 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 		for (int i = 0; i < itemsJSONArray.length(); i++) {
 			JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
 
+			JSONObject taskJSONObject = null;
+
 			if (itemJSONObject.has("task")) {
-				JSONObject taskJSONObject = itemJSONObject.getJSONObject(
-					"task");
+				taskJSONObject = itemJSONObject.getJSONObject("task");
+			}
 
-				if (taskJSONObject.has("url")) {
-					_queuedBuildURLs.add(taskJSONObject.getString("url"));
-				}
-
+			if (taskJSONObject != null) {
 				String taskName = taskJSONObject.getString("name");
 
 				if (taskName.equals("verification-node")) {
@@ -327,6 +326,10 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 					why.endsWith("is offline")) {
 
 					continue;
+				}
+
+				if ((taskJSONObject != null) && taskJSONObject.has("url")) {
+					_queuedBuildURLs.add(taskJSONObject.getString("url"));
 				}
 			}
 

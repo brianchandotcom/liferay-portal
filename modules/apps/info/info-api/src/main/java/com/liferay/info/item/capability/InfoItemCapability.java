@@ -14,6 +14,7 @@
 
 package com.liferay.info.item.capability;
 
+import com.liferay.info.exception.CapabilityVerificationException;
 import com.liferay.info.type.Keyed;
 import com.liferay.info.type.Labeled;
 
@@ -27,6 +28,7 @@ public interface InfoItemCapability extends Keyed, Labeled {
 	@Override
 	public String getLabel(Locale locale);
 
-	public Class<?>[] getRequiredServiceClasses();
+	public void verify(String itemClassName)
+		throws CapabilityVerificationException;
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.info.internal.item;
 
+import com.liferay.info.exception.CapabilityVerificationException;
 import com.liferay.info.formatter.InfoCollectionTextFormatter;
 import com.liferay.info.formatter.InfoTextFormatter;
 import com.liferay.info.internal.util.ItemClassNameServiceReferenceMapper;
@@ -36,11 +37,7 @@ import com.liferay.info.type.Keyed;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -116,6 +113,14 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 	}
 
 	@Override
+	public InfoItemCapability getInfoItemCapability(
+		String infoItemCapabilityKey) {
+
+		return _infoItemCapabilityServiceTrackerMap.getService(
+			infoItemCapabilityKey);
+	}
+
+	@Override
 	public <P> List<InfoItemClassDetails> getInfoItemClassDetails(
 		Class<P> serviceClass) {
 
@@ -132,9 +137,10 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 
 	@Override
 	public List<InfoItemClassDetails> getInfoItemClassDetails(
-		InfoItemCapability infoItemCapability) {
+			InfoItemCapability infoItemCapability)
+		throws CapabilityVerificationException {
 
-		List<InfoItemClassDetails> infoItemClassDetails = new ArrayList<>();
+		List<InfoItemClassDetails> infoItemClassDetailsList = new ArrayList<>();
 
 		for (InfoItemClassDetails curInfoItemClassDetails :
 				getInfoItemClassDetails(InfoItemCapabilitiesProvider.class)) {
@@ -147,16 +153,33 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 			List<InfoItemCapability> infoItemCapabilities =
 				infoItemCapabilitiesProvider.getInfoItemCapabilities();
 
-			if (infoItemCapabilities.contains(infoItemCapability) &&
-				_validateInfoItemCapability(
-					infoItemCapability,
-					curInfoItemClassDetails.getClassName())) {
-
-				infoItemClassDetails.add(curInfoItemClassDetails);
+			if (infoItemCapabilities.contains(infoItemCapability)) {
+				infoItemCapability.verify(
+					curInfoItemClassDetails.getClassName());
 			}
+
+			infoItemClassDetailsList.add(curInfoItemClassDetails);
 		}
 
-		return infoItemClassDetails;
+		return infoItemClassDetailsList;
+	}
+
+	@Override
+	public List<InfoItemClassDetails> getInfoItemClassDetails(
+			String infoItemCapabilityKey)
+		throws CapabilityVerificationException {
+
+		InfoItemCapability infoItemCapability =
+			_infoItemCapabilityServiceTrackerMap.getService(
+				infoItemCapabilityKey);
+
+		if (infoItemCapability == null) {
+			throw new RuntimeException(
+				"Unable to find info item capability with key " +
+					infoItemCapabilityKey);
+		}
+
+		return getInfoItemClassDetails(infoItemCapability);
 	}
 
 	@Override
@@ -181,6 +204,13 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		_infoItemCapabilityServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, InfoItemCapability.class, null,
+				ServiceReferenceMapperFactory.create(
+					bundleContext,
+					(service, emitter) -> emitter.emit(service.getKey())));
+
 		Class<?>[] serviceClasses = new Class<?>[] {
 			InfoCollectionTextFormatter.class, InfoTextFormatter.class,
 			InfoItemCapabilitiesProvider.class, InfoItemDetailsProvider.class,
@@ -244,42 +274,8 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 		return infoItemClassDetails;
 	}
 
-	private boolean _validateInfoItemCapability(
-		InfoItemCapability infoItemCapability, String itemClassName) {
-
-		List<String> missingServiceClassNames = new ArrayList<>();
-
-		for (Class<?> serviceClass :
-				infoItemCapability.getRequiredServiceClasses()) {
-
-			if (getFirstInfoItemService(serviceClass, itemClassName) == null) {
-				missingServiceClassNames.add(serviceClass.getName());
-			}
-		}
-
-		if (!missingServiceClassNames.isEmpty()) {
-			StringBundler sb = new StringBundler(7);
-
-			sb.append("Failed validation of capability ");
-			sb.append(infoItemCapability.getKey());
-			sb.append(" for item class name ");
-			sb.append(itemClassName);
-			sb.append(". An implementation for the following services is ");
-			sb.append("required: ");
-			sb.append(
-				ListUtil.toString(missingServiceClassNames, StringPool.COMMA));
-
-			_log.error(sb.toString());
-
-			return false;
-		}
-
-		return true;
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		InfoItemServiceTrackerImpl.class);
-
+	private ServiceTrackerMap<String, InfoItemCapability>
+		_infoItemCapabilityServiceTrackerMap;
 	private final Map<String, ServiceTrackerMap<String, ? extends List<?>>>
 		_itemClassNameInfoItemServiceTrackerMap = new HashMap<>();
 	private final Map<String, ServiceTrackerMap<String, ?>>

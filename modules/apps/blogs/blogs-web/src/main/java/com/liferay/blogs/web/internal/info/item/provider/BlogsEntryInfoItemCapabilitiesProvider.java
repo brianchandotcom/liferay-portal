@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jorge Ferrer
@@ -33,7 +34,10 @@ public class BlogsEntryInfoItemCapabilitiesProvider
 
 	@Override
 	public List<InfoItemCapability> getInfoItemCapabilities() {
-		return ListUtil.fromArray(DisplayPageInfoItemCapability.INSTANCE);
+		return ListUtil.fromArray(_displayPageInfoItemCapability);
 	}
+
+	@Reference
+	private DisplayPageInfoItemCapability _displayPageInfoItemCapability;
 
 }

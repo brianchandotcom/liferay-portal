@@ -12,23 +12,22 @@
  * details.
  */
 
-package com.liferay.layout.page.template.info.item.capability;
+package com.liferay.info.item;
 
-import com.liferay.info.item.capability.InfoItemCapability;
-import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
-import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.exception.CapabilityVerificationException;
+
+import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Jorge Ferrer
  */
-public interface DisplayPageInfoItemCapability extends InfoItemCapability {
+@ProviderType
+public interface InfoItemServiceVerifier {
 
-	public static final String KEY =
-		DisplayPageInfoItemCapability.class.getName();
-
-	public static final Class<?>[] REQUIRED_INFO_ITEM_SERVICE_CLASSES =
-		new Class<?>[] {
-			InfoItemFormProvider.class, InfoItemFieldValuesProvider.class
-		};
+	public List<Class<?>> getMissingServiceClasses(
+			Class<?>[] requiredInfoItemServiceClasses, String itemClassName)
+		throws CapabilityVerificationException;
 
 }

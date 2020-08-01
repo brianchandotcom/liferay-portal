@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -126,7 +127,8 @@ public class JenkinsCohort {
 		}
 
 		List<Callable<Void>> callables = new ArrayList<>();
-		final List<String> buildURLs = new ArrayList<>();
+		final List<String> buildURLs = Collections.synchronizedList(
+			new ArrayList<String>());
 
 		for (final JenkinsMaster jenkinsMaster : _jenkinsMastersMap.values()) {
 			Callable<Void> callable = new Callable<Void>() {

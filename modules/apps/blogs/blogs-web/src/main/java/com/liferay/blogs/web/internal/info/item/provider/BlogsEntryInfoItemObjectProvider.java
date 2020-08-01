@@ -17,7 +17,7 @@ package com.liferay.blogs.web.internal.info.item.provider;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.info.exception.NoSuchInfoItemException;
-import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 
 import org.osgi.service.component.annotations.Component;
@@ -31,17 +31,17 @@ public class BlogsEntryInfoItemObjectProvider
 	implements InfoItemObjectProvider<BlogsEntry> {
 
 	@Override
-	public BlogsEntry getInfoItem(InfoItemReference infoItemReference)
+	public BlogsEntry getInfoItem(InfoItemIdentifier infoItemIdentifier)
 		throws NoSuchInfoItemException {
 
 		BlogsEntry blogsEntry = _blogsEntryLocalService.fetchBlogsEntry(
-			infoItemReference.getClassPK());
+			infoItemIdentifier.getClassPK());
 
 		if ((blogsEntry == null) || blogsEntry.isDraft() ||
 			blogsEntry.isInTrash()) {
 
 			throw new NoSuchInfoItemException(
-				"Unable to get blogs entry " + infoItemReference.getClassPK());
+				"Unable to get blogs entry " + infoItemIdentifier.getClassPK());
 		}
 
 		return blogsEntry;
@@ -49,9 +49,9 @@ public class BlogsEntryInfoItemObjectProvider
 
 	@Override
 	public BlogsEntry getInfoItem(long classPK) throws NoSuchInfoItemException {
-		InfoItemReference infoItemReference = new InfoItemReference(classPK);
+		InfoItemIdentifier infoItemIdentifier = new InfoItemIdentifier(classPK);
 
-		return getInfoItem(infoItemReference);
+		return getInfoItem(infoItemIdentifier);
 	}
 
 	@Reference

@@ -19,14 +19,14 @@ import java.util.Optional;
 /**
  * @author Jürgen Kappler
  */
-public class InfoItemReference {
+public class InfoItemIdentifier {
 
 	public static final String VERSION_LATEST = "VERSION_LATEST";
 
 	public static final String VERSION_LATEST_APPROVED =
 		"VERSION_LATEST_APPROVED";
 
-	public InfoItemReference(long classPK) {
+	public InfoItemIdentifier(long classPK) {
 		_classPK = classPK;
 	}
 

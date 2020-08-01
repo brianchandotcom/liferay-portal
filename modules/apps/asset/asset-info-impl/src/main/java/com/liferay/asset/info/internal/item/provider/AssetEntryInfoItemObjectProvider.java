@@ -18,7 +18,7 @@ import com.liferay.asset.kernel.exception.NoSuchEntryException;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.info.exception.NoSuchInfoItemException;
-import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -33,16 +33,16 @@ public class AssetEntryInfoItemObjectProvider
 	implements InfoItemObjectProvider<AssetEntry> {
 
 	@Override
-	public AssetEntry getInfoItem(InfoItemReference infoItemReference)
+	public AssetEntry getInfoItem(InfoItemIdentifier infoItemIdentifier)
 		throws NoSuchInfoItemException {
 
 		try {
 			return _assetEntryLocalService.getEntry(
-				infoItemReference.getClassPK());
+				infoItemIdentifier.getClassPK());
 		}
 		catch (NoSuchEntryException noSuchEntryException) {
 			throw new NoSuchInfoItemException(
-				"Unable to get asset entry " + infoItemReference.getClassPK(),
+				"Unable to get asset entry " + infoItemIdentifier.getClassPK(),
 				noSuchEntryException);
 		}
 		catch (PortalException portalException) {
@@ -52,9 +52,9 @@ public class AssetEntryInfoItemObjectProvider
 
 	@Override
 	public AssetEntry getInfoItem(long classPK) throws NoSuchInfoItemException {
-		InfoItemReference infoItemReference = new InfoItemReference(classPK);
+		InfoItemIdentifier infoItemIdentifier = new InfoItemIdentifier(classPK);
 
-		return getInfoItem(infoItemReference);
+		return getInfoItem(infoItemIdentifier);
 	}
 
 	@Reference

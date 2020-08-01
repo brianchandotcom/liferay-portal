@@ -15,7 +15,7 @@
 package com.liferay.fragment.processor;
 
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.item.InfoItemIdentifier;
 
 import java.util.Locale;
 import java.util.Map;
@@ -132,7 +132,7 @@ public class DefaultFragmentEntryProcessorContext
 	private long _previewClassNameId;
 	private long _previewClassPK;
 	private int _previewType = AssetRendererFactory.TYPE_LATEST_APPROVED;
-	private String _previewVersion = InfoItemReference.VERSION_LATEST_APPROVED;
+	private String _previewVersion = InfoItemIdentifier.VERSION_LATEST_APPROVED;
 	private long[] _segmentsExperienceIds = new long[0];
 
 }

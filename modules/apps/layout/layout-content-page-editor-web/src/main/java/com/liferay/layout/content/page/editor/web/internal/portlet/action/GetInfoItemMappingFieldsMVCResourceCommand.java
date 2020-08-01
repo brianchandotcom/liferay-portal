@@ -17,7 +17,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.form.InfoForm;
-import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
@@ -103,10 +103,10 @@ public class GetInfoItemMappingFieldsMVCResourceCommand
 
 		long classPK = ParamUtil.getLong(resourceRequest, "classPK");
 
-		InfoItemReference infoItemReference = new InfoItemReference(classPK);
+		InfoItemIdentifier infoItemIdentifier = new InfoItemIdentifier(classPK);
 
 		Object infoItemObject = infoItemObjectProvider.getInfoItem(
-			infoItemReference);
+			infoItemIdentifier);
 
 		if (infoItemObject == null) {
 			JSONPortletResponseUtil.writeJSON(

@@ -16,9 +16,12 @@ package com.liferay.info.item;
 
 import java.util.Optional;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Jürgen Kappler
  */
+@ProviderType
 public abstract class InfoItemIdentifier {
 
 	public static final String VERSION_LATEST = "VERSION_LATEST";

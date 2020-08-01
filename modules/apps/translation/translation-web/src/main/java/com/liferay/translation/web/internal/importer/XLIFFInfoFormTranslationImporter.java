@@ -174,9 +174,9 @@ public class XLIFFInfoFormTranslationImporter
 
 		_validateDocumentPartVersion(events);
 
-		StartSubDocument startSubDocument = _getStartSubDocument(events);
+		StartSubDocument startSubDocument = _getStartSubdocument(events);
 
-		_validateXLIFFStartSubDocument(infoItemReference, startSubDocument);
+		_validateXLIFFStartSubdocument(infoItemReference, startSubDocument);
 
 		Locale targetLocale = _getTargetLocale(startSubDocument);
 
@@ -288,7 +288,7 @@ public class XLIFFInfoFormTranslationImporter
 		).build();
 	}
 
-	private StartSubDocument _getStartSubDocument(List<Event> events) {
+	private StartSubDocument _getStartSubdocument(List<Event> events) {
 		for (Event event : events) {
 			if (event.isStartSubDocument()) {
 				return event.getStartSubDocument();
@@ -466,7 +466,7 @@ public class XLIFFInfoFormTranslationImporter
 		}
 	}
 
-	private void _validateXLIFFStartSubDocument(
+	private void _validateXLIFFStartSubdocument(
 			InfoItemReference infoItemReference,
 			StartSubDocument startSubDocument)
 		throws XLIFFFileException {

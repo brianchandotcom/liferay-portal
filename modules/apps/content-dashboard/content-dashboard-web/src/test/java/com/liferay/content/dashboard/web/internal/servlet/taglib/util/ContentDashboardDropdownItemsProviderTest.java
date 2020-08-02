@@ -111,39 +111,7 @@ public class ContentDashboardDropdownItemsProviderTest {
 				Mockito.eq(ContentDashboardItemAction.Type.EDIT))
 		).thenReturn(
 			Collections.singletonList(
-				new ContentDashboardItemAction() {
-
-					@Override
-					public String getIcon() {
-						return null;
-					}
-
-					@Override
-					public String getLabel(Locale locale) {
-						return "edit";
-					}
-
-					@Override
-					public String getName() {
-						return null;
-					}
-
-					@Override
-					public Type getType() {
-						return ContentDashboardItemAction.Type.EDIT;
-					}
-
-					@Override
-					public String getURL() {
-						return "validURL";
-					}
-
-					@Override
-					public String getURL(Locale locale) {
-						return null;
-					}
-
-				})
+				_getEditContentDashboardItemAction("validURL"))
 		);
 
 		List<DropdownItem> dropdownItems =
@@ -193,39 +161,7 @@ public class ContentDashboardDropdownItemsProviderTest {
 				Mockito.eq(ContentDashboardItemAction.Type.EDIT))
 		).thenReturn(
 			Collections.singletonList(
-				new ContentDashboardItemAction() {
-
-					@Override
-					public String getIcon() {
-						return null;
-					}
-
-					@Override
-					public String getLabel(Locale locale) {
-						return "view";
-					}
-
-					@Override
-					public String getName() {
-						return null;
-					}
-
-					@Override
-					public Type getType() {
-						return ContentDashboardItemAction.Type.EDIT;
-					}
-
-					@Override
-					public String getURL() {
-						return "validURL";
-					}
-
-					@Override
-					public String getURL(Locale locale) {
-						return null;
-					}
-
-				})
+				_getViewContentDashboardItemAction("validURL"))
 		);
 
 		List<DropdownItem> dropdownItems =
@@ -277,39 +213,7 @@ public class ContentDashboardDropdownItemsProviderTest {
 				Mockito.eq(ContentDashboardItemAction.Type.EDIT))
 		).thenReturn(
 			Collections.singletonList(
-				new ContentDashboardItemAction() {
-
-					@Override
-					public String getIcon() {
-						return null;
-					}
-
-					@Override
-					public String getLabel(Locale locale) {
-						return "view";
-					}
-
-					@Override
-					public String getName() {
-						return null;
-					}
-
-					@Override
-					public Type getType() {
-						return ContentDashboardItemAction.Type.EDIT;
-					}
-
-					@Override
-					public String getURL() {
-						return "validURL";
-					}
-
-					@Override
-					public String getURL(Locale locale) {
-						return null;
-					}
-
-				})
+				_getViewContentDashboardItemAction("validURL"))
 		);
 
 		List<DropdownItem> dropdownItems =
@@ -363,39 +267,7 @@ public class ContentDashboardDropdownItemsProviderTest {
 				Mockito.eq(ContentDashboardItemAction.Type.EDIT))
 		).thenReturn(
 			Collections.singletonList(
-				new ContentDashboardItemAction() {
-
-					@Override
-					public String getIcon() {
-						return null;
-					}
-
-					@Override
-					public String getLabel(Locale locale) {
-						return "view";
-					}
-
-					@Override
-					public String getName() {
-						return null;
-					}
-
-					@Override
-					public Type getType() {
-						return ContentDashboardItemAction.Type.EDIT;
-					}
-
-					@Override
-					public String getURL() {
-						return "validURL";
-					}
-
-					@Override
-					public String getURL(Locale locale) {
-						return null;
-					}
-
-				})
+				_getViewContentDashboardItemAction("validURL"))
 		);
 
 		List<DropdownItem> dropdownItems =
@@ -415,6 +287,82 @@ public class ContentDashboardDropdownItemsProviderTest {
 		Assert.assertEquals(
 			"validURL",
 			_http.getPath(String.valueOf(viewDropdownItem.get("href"))));
+	}
+
+	private ContentDashboardItemAction _getEditContentDashboardItemAction(
+		String url) {
+
+		return new ContentDashboardItemAction() {
+
+			@Override
+			public String getIcon() {
+				return null;
+			}
+
+			@Override
+			public String getLabel(Locale locale) {
+				return "edit";
+			}
+
+			@Override
+			public String getName() {
+				return null;
+			}
+
+			@Override
+			public Type getType() {
+				return ContentDashboardItemAction.Type.EDIT;
+			}
+
+			@Override
+			public String getURL() {
+				return url;
+			}
+
+			@Override
+			public String getURL(Locale locale) {
+				return getURL();
+			}
+
+		};
+	}
+
+	private ContentDashboardItemAction _getViewContentDashboardItemAction(
+		String url) {
+
+		return new ContentDashboardItemAction() {
+
+			@Override
+			public String getIcon() {
+				return null;
+			}
+
+			@Override
+			public String getLabel(Locale locale) {
+				return "view";
+			}
+
+			@Override
+			public String getName() {
+				return null;
+			}
+
+			@Override
+			public Type getType() {
+				return ContentDashboardItemAction.Type.VIEW;
+			}
+
+			@Override
+			public String getURL() {
+				return url;
+			}
+
+			@Override
+			public String getURL(Locale locale) {
+				return getURL();
+			}
+
+		};
 	}
 
 	private static Http _http;

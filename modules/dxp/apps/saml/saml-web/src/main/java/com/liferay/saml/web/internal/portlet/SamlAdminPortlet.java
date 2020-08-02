@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.saml.web.internal.constants.SamlAdminPortletKeys;
+import com.liferay.saml.constants.SamlAdminPortletKeys;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletRequest;

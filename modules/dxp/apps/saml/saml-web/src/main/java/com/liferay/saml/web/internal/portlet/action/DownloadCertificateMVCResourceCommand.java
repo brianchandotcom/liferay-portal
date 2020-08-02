@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.saml.constants.SamlAdminPortletKeys;
 import com.liferay.saml.runtime.metadata.LocalEntityManager;
-import com.liferay.saml.web.internal.constants.SamlAdminPortletKeys;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;

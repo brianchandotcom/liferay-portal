@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.saml.constants.SamlAdminPortletKeys;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.runtime.certificate.CertificateEntityId;
 import com.liferay.saml.runtime.certificate.CertificateTool;
@@ -37,7 +38,6 @@ import com.liferay.saml.runtime.exception.CertificateKeyPasswordException;
 import com.liferay.saml.runtime.exception.UnsupportedBindingException;
 import com.liferay.saml.runtime.metadata.LocalEntityManager;
 import com.liferay.saml.util.PortletPropsKeys;
-import com.liferay.saml.web.internal.constants.SamlAdminPortletKeys;
 import com.liferay.saml.web.internal.util.SamlTempFileEntryUtil;
 
 import java.io.IOException;

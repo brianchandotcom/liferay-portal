@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.saml.web.internal.constants.SamlAdminPortletKeys;
+import com.liferay.saml.constants.SamlAdminPortletKeys;
 import com.liferay.saml.web.internal.upload.CertificateUploadFileEntryHandler;
 import com.liferay.saml.web.internal.upload.CertificateUploadResponseHandler;
 import com.liferay.saml.web.internal.util.SamlTempFileEntryUtil;

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.saml.constants.SamlAdminPortletKeys;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.persistence.model.SamlIdpSpConnection;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
@@ -30,7 +31,6 @@ import com.liferay.saml.runtime.certificate.CertificateTool;
 import com.liferay.saml.runtime.configuration.SamlConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.metadata.LocalEntityManager;
-import com.liferay.saml.web.internal.constants.SamlAdminPortletKeys;
 import com.liferay.saml.web.internal.display.context.GeneralTabDefaultViewDisplayContext;
 
 import java.util.List;

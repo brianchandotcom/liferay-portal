@@ -15,7 +15,7 @@
 package com.liferay.saml.web.internal.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
-import com.liferay.saml.web.internal.constants.SamlAdminPortletKeys;
+import com.liferay.saml.constants.SamlAdminPortletKeys;
 
 /**
  * @author Carlos Sierra Andrés

@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.saml.web.internal.constants;
+package com.liferay.saml.constants;
 
 /**
  * @author Michael C. Han

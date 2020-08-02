@@ -127,6 +127,8 @@ definition {
 
 			PageEditor.gotoTab(tabName = "Page Design Options");
 
+			Click(locator1 = "PageEditor#MORE_LINK");
+
 			AssertTextEquals(
 				key_masterLayoutName = "Custom Masters Page Template",
 				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",

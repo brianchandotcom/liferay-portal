@@ -44,7 +44,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -164,12 +163,13 @@ public class JournalArticleContentDashboardItem
 					if (!contentDashboardItemActionProvider.isShow(
 							_journalArticle, httpServletRequest)) {
 
-						return null;
+						return Optional.<ContentDashboardItemAction>empty();
 					}
 
-					return contentDashboardItemActionProvider.
-						getContentDashboardItemAction(
-							_journalArticle, httpServletRequest);
+					return Optional.of(
+						contentDashboardItemActionProvider.
+							getContentDashboardItemAction(
+								_journalArticle, httpServletRequest));
 				}
 				catch (ContentDashboardItemActionException
 							contentDashboardItemActionException) {
@@ -179,10 +179,12 @@ public class JournalArticleContentDashboardItem
 						contentDashboardItemActionException);
 				}
 
-				return null;
+				return Optional.<ContentDashboardItemAction>empty();
 			}
 		).filter(
-			Objects::nonNull
+			Optional::isPresent
+		).map(
+			Optional::get
 		).collect(
 			Collectors.toList()
 		);

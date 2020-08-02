@@ -285,6 +285,10 @@ definition {
 			collectionName = "Layout Elements",
 			fragmentName = "Grid");
 
+		Click.clickNoWaitForVisible(
+			key_fragmentName = "Grid",
+			locator1 = "Fragment#FRAGMENT_HEADER");
+
 		DragAndDrop.DragAndDropObject(
 			key_position = "3",
 			locator1 = "PageEditor#GRID_COLUMN_RESIZER",

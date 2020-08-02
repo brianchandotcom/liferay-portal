@@ -48,6 +48,12 @@ public interface ContentElementResource {
 		return FactoryHolder.factory.create();
 	}
 
+	public Page<ContentElement> getAssetLibraryContentElementsPage(
+			Long assetLibraryId, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
 	public Page<ContentElement> getSiteContentElementsPage(
 			Long siteId, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,

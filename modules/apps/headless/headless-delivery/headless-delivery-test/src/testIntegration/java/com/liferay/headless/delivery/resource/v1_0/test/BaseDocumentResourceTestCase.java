@@ -22,6 +22,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.headless.delivery.client.dto.v1_0.Document;
 import com.liferay.headless.delivery.client.dto.v1_0.Rating;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
@@ -42,8 +44,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -118,6 +122,17 @@ public abstract class BaseDocumentResourceTestCase {
 
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
+
+		testDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+			null,
+			new ServiceContext() {
+				{
+					setCompanyId(testGroup.getCompanyId());
+					setUserId(TestPropsValues.getUserId());
+				}
+			});
 
 		_documentResource.setContextCompany(testCompany);
 
@@ -214,6 +229,334 @@ public abstract class BaseDocumentResourceTestCase {
 		Assert.assertEquals(regex, document.getEncodingFormat());
 		Assert.assertEquals(regex, document.getFileExtension());
 		Assert.assertEquals(regex, document.getTitle());
+	}
+
+	@Test
+	public void testGetAssetLibraryDocumentsPage() throws Exception {
+		Page<Document> page = documentResource.getAssetLibraryDocumentsPage(
+			testGetAssetLibraryDocumentsPage_getAssetLibraryId(), null,
+			RandomTestUtil.randomString(), null, null, Pagination.of(1, 2),
+			null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		Long assetLibraryId =
+			testGetAssetLibraryDocumentsPage_getAssetLibraryId();
+		Long irrelevantAssetLibraryId =
+			testGetAssetLibraryDocumentsPage_getIrrelevantAssetLibraryId();
+
+		if ((irrelevantAssetLibraryId != null)) {
+			Document irrelevantDocument =
+				testGetAssetLibraryDocumentsPage_addDocument(
+					irrelevantAssetLibraryId, randomIrrelevantDocument());
+
+			page = documentResource.getAssetLibraryDocumentsPage(
+				irrelevantAssetLibraryId, null, null, null, null,
+				Pagination.of(1, 2), null);
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantDocument),
+				(List<Document>)page.getItems());
+			assertValid(page);
+		}
+
+		Document document1 = testGetAssetLibraryDocumentsPage_addDocument(
+			assetLibraryId, randomDocument());
+
+		Document document2 = testGetAssetLibraryDocumentsPage_addDocument(
+			assetLibraryId, randomDocument());
+
+		page = documentResource.getAssetLibraryDocumentsPage(
+			assetLibraryId, null, null, null, null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(document1, document2),
+			(List<Document>)page.getItems());
+		assertValid(page);
+
+		documentResource.deleteDocument(document1.getId());
+
+		documentResource.deleteDocument(document2.getId());
+	}
+
+	@Test
+	public void testGetAssetLibraryDocumentsPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long assetLibraryId =
+			testGetAssetLibraryDocumentsPage_getAssetLibraryId();
+
+		Document document1 = randomDocument();
+
+		document1 = testGetAssetLibraryDocumentsPage_addDocument(
+			assetLibraryId, document1);
+
+		for (EntityField entityField : entityFields) {
+			Page<Document> page = documentResource.getAssetLibraryDocumentsPage(
+				assetLibraryId, null, null, null,
+				getFilterString(entityField, "between", document1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(document1),
+				(List<Document>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetAssetLibraryDocumentsPageWithFilterStringEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long assetLibraryId =
+			testGetAssetLibraryDocumentsPage_getAssetLibraryId();
+
+		Document document1 = testGetAssetLibraryDocumentsPage_addDocument(
+			assetLibraryId, randomDocument());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Document document2 = testGetAssetLibraryDocumentsPage_addDocument(
+			assetLibraryId, randomDocument());
+
+		for (EntityField entityField : entityFields) {
+			Page<Document> page = documentResource.getAssetLibraryDocumentsPage(
+				assetLibraryId, null, null, null,
+				getFilterString(entityField, "eq", document1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(document1),
+				(List<Document>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetAssetLibraryDocumentsPageWithPagination()
+		throws Exception {
+
+		Long assetLibraryId =
+			testGetAssetLibraryDocumentsPage_getAssetLibraryId();
+
+		Document document1 = testGetAssetLibraryDocumentsPage_addDocument(
+			assetLibraryId, randomDocument());
+
+		Document document2 = testGetAssetLibraryDocumentsPage_addDocument(
+			assetLibraryId, randomDocument());
+
+		Document document3 = testGetAssetLibraryDocumentsPage_addDocument(
+			assetLibraryId, randomDocument());
+
+		Page<Document> page1 = documentResource.getAssetLibraryDocumentsPage(
+			assetLibraryId, null, null, null, null, Pagination.of(1, 2), null);
+
+		List<Document> documents1 = (List<Document>)page1.getItems();
+
+		Assert.assertEquals(documents1.toString(), 2, documents1.size());
+
+		Page<Document> page2 = documentResource.getAssetLibraryDocumentsPage(
+			assetLibraryId, null, null, null, null, Pagination.of(2, 2), null);
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<Document> documents2 = (List<Document>)page2.getItems();
+
+		Assert.assertEquals(documents2.toString(), 1, documents2.size());
+
+		Page<Document> page3 = documentResource.getAssetLibraryDocumentsPage(
+			assetLibraryId, null, null, null, null, Pagination.of(1, 3), null);
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(document1, document2, document3),
+			(List<Document>)page3.getItems());
+	}
+
+	@Test
+	public void testGetAssetLibraryDocumentsPageWithSortDateTime()
+		throws Exception {
+
+		testGetAssetLibraryDocumentsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, document1, document2) -> {
+				BeanUtils.setProperty(
+					document1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetAssetLibraryDocumentsPageWithSortInteger()
+		throws Exception {
+
+		testGetAssetLibraryDocumentsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, document1, document2) -> {
+				BeanUtils.setProperty(document1, entityField.getName(), 0);
+				BeanUtils.setProperty(document2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetAssetLibraryDocumentsPageWithSortString()
+		throws Exception {
+
+		testGetAssetLibraryDocumentsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, document1, document2) -> {
+				Class<?> clazz = document1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						document1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						document2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanUtils.setProperty(
+						document1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanUtils.setProperty(
+						document2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanUtils.setProperty(
+						document1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanUtils.setProperty(
+						document2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetAssetLibraryDocumentsPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, Document, Document, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long assetLibraryId =
+			testGetAssetLibraryDocumentsPage_getAssetLibraryId();
+
+		Document document1 = randomDocument();
+		Document document2 = randomDocument();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, document1, document2);
+		}
+
+		document1 = testGetAssetLibraryDocumentsPage_addDocument(
+			assetLibraryId, document1);
+
+		document2 = testGetAssetLibraryDocumentsPage_addDocument(
+			assetLibraryId, document2);
+
+		for (EntityField entityField : entityFields) {
+			Page<Document> ascPage =
+				documentResource.getAssetLibraryDocumentsPage(
+					assetLibraryId, null, null, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(document1, document2),
+				(List<Document>)ascPage.getItems());
+
+			Page<Document> descPage =
+				documentResource.getAssetLibraryDocumentsPage(
+					assetLibraryId, null, null, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(document2, document1),
+				(List<Document>)descPage.getItems());
+		}
+	}
+
+	protected Document testGetAssetLibraryDocumentsPage_addDocument(
+			Long assetLibraryId, Document document)
+		throws Exception {
+
+		return documentResource.postAssetLibraryDocument(
+			assetLibraryId, document, getMultipartFiles());
+	}
+
+	protected Long testGetAssetLibraryDocumentsPage_getAssetLibraryId()
+		throws Exception {
+
+		return testDepotEntry.getDepotEntryId();
+	}
+
+	protected Long
+			testGetAssetLibraryDocumentsPage_getIrrelevantAssetLibraryId()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
+	public void testPostAssetLibraryDocument() throws Exception {
+		Document randomDocument = randomDocument();
+
+		Map<String, File> multipartFiles = getMultipartFiles();
+
+		Document postDocument = testPostAssetLibraryDocument_addDocument(
+			randomDocument, multipartFiles);
+
+		assertEquals(randomDocument, postDocument);
+		assertValid(postDocument);
+
+		assertValid(postDocument, multipartFiles);
+	}
+
+	protected Document testPostAssetLibraryDocument_addDocument(
+			Document document, Map<String, File> multipartFiles)
+		throws Exception {
+
+		return documentResource.postAssetLibraryDocument(
+			testGetAssetLibraryDocumentsPage_getAssetLibraryId(), document,
+			multipartFiles);
 	}
 
 	@Test
@@ -2348,6 +2691,7 @@ public abstract class BaseDocumentResourceTestCase {
 	protected DocumentResource documentResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
+	protected DepotEntry testDepotEntry;
 	protected Group testGroup;
 
 	protected class GraphQLField {

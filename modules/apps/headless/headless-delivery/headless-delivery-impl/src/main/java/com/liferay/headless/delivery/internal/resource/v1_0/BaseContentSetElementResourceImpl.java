@@ -79,6 +79,69 @@ public abstract class BaseContentSetElementResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/content-sets/by-key/{key}/content-set-elements'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "assetLibraryId"),
+			@Parameter(in = ParameterIn.PATH, name = "key"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path(
+		"/asset-libraries/{assetLibraryId}/content-sets/by-key/{key}/content-set-elements"
+	)
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "ContentSetElement")})
+	public Page<ContentSetElement>
+			getAssetLibraryContentSetByKeyContentSetElementsPage(
+				@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId")
+					Long assetLibraryId,
+				@NotNull @Parameter(hidden = true) @PathParam("key") String key,
+				@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/content-sets/by-uuid/{uuid}/content-set-elements'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "assetLibraryId"),
+			@Parameter(in = ParameterIn.PATH, name = "uuid"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path(
+		"/asset-libraries/{assetLibraryId}/content-sets/by-uuid/{uuid}/content-set-elements"
+	)
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "ContentSetElement")})
+	public Page<ContentSetElement>
+			getAssetLibraryContentSetByUuidContentSetElementsPage(
+				@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId")
+					Long assetLibraryId,
+				@NotNull @Parameter(hidden = true) @PathParam("uuid") String
+					uuid,
+				@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/content-sets/{contentSetId}/content-set-elements'  -u 'test@liferay.com:test'
 	 */
 	@Override

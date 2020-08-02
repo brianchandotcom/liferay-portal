@@ -190,7 +190,7 @@ const APIGUI = () => {
 									setShowGraphQL(!showGraphQL);
 								}}
 							>
-								{showGraphQL ? 'GraphQL' : 'Swagger'}
+								{showGraphQL ? 'Swagger' : 'GraphQL'}
 							</ClayButton>
 						</li>
 					</ul>

@@ -45,3 +45,22 @@ h4 span {
 .value {
 	font-family: monospace;
 }
+
+.swagger-ui .servers-title {
+	line-height: 2.5rem;
+}
+
+.swagger-ui .servers>label select {
+	background-color: #f1f2f5;
+	border: .0625rem solid #e7e7ed;
+	border-radius: .25rem;
+	box-shadow: 0 0 transparent;
+	color: #272833;
+	cursor: pointer;
+	display: block;
+	font-size: 1rem;
+	font-weight: 400;
+	height: 2.5rem;
+	line-height: 1.5;
+	padding: 0.5rem 2.5rem 0.5rem 0.5rem;
+}

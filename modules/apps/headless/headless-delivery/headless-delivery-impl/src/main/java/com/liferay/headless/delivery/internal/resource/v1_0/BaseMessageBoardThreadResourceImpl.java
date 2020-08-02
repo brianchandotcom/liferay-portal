@@ -223,8 +223,6 @@ public abstract class BaseMessageBoardThreadResourceImpl
 				dateModified,
 			@Parameter(hidden = true) @QueryParam("messageBoardSectionId") Long
 				messageBoardSectionId,
-			@Context com.liferay.portal.vulcan.aggregation.Aggregation
-				aggregation,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 

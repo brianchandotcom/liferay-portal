@@ -80,15 +80,15 @@ public interface MessageBoardThreadResource {
 
 	public Page<MessageBoardThread> getMessageBoardThreadsRankedPage(
 			java.util.Date dateCreated, java.util.Date dateModified,
-			Long messageBoardSectionId, Aggregation aggregation,
-			Pagination pagination, String sortString)
+			Long messageBoardSectionId, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getMessageBoardThreadsRankedPageHttpResponse(
 				java.util.Date dateCreated, java.util.Date dateModified,
-				Long messageBoardSectionId, Aggregation aggregation,
-				Pagination pagination, String sortString)
+				Long messageBoardSectionId, Pagination pagination,
+				String sortString)
 		throws Exception;
 
 	public void deleteMessageBoardThread(Long messageBoardThreadId)
@@ -511,14 +511,14 @@ public interface MessageBoardThreadResource {
 
 		public Page<MessageBoardThread> getMessageBoardThreadsRankedPage(
 				java.util.Date dateCreated, java.util.Date dateModified,
-				Long messageBoardSectionId, Aggregation aggregation,
-				Pagination pagination, String sortString)
+				Long messageBoardSectionId, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getMessageBoardThreadsRankedPageHttpResponse(
 					dateCreated, dateModified, messageBoardSectionId,
-					aggregation, pagination, sortString);
+					pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -543,8 +543,8 @@ public interface MessageBoardThreadResource {
 		public HttpInvoker.HttpResponse
 				getMessageBoardThreadsRankedPageHttpResponse(
 					java.util.Date dateCreated, java.util.Date dateModified,
-					Long messageBoardSectionId, Aggregation aggregation,
-					Pagination pagination, String sortString)
+					Long messageBoardSectionId, Pagination pagination,
+					String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -586,17 +586,6 @@ public interface MessageBoardThreadResource {
 				httpInvoker.parameter(
 					"messageBoardSectionId",
 					String.valueOf(messageBoardSectionId));
-			}
-
-			if ((aggregation != null) &&
-				(aggregation.getAggregationTerms() != null)) {
-
-				Map<String, String> aggregationTerms =
-					aggregation.getAggregationTerms();
-
-				httpInvoker.parameter(
-					"aggregationTerms",
-					String.join(",", aggregationTerms.values()));
 			}
 
 			if (pagination != null) {

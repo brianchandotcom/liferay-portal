@@ -72,6 +72,33 @@ public class Mutation {
 			taxonomyVocabularyResourceComponentServiceObjects;
 	}
 
+	@GraphQLField
+	public Keyword createAssetLibraryKeyword(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("keyword") Keyword keyword)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_keywordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			keywordResource -> keywordResource.postAssetLibraryKeyword(
+				Long.valueOf(assetLibraryId), keyword));
+	}
+
+	@GraphQLField
+	public Response createAssetLibraryKeywordBatch(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_keywordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			keywordResource -> keywordResource.postAssetLibraryKeywordBatch(
+				Long.valueOf(assetLibraryId), callbackURL, object));
+	}
+
 	@GraphQLField(
 		description = "Deletes the keyword and returns a 204 if the operation succeeds."
 	)
@@ -275,6 +302,37 @@ public class Mutation {
 				taxonomyCategoryResource.
 					postTaxonomyVocabularyTaxonomyCategoryBatch(
 						taxonomyVocabularyId, callbackURL, object));
+	}
+
+	@GraphQLField
+	public TaxonomyVocabulary createAssetLibraryTaxonomyVocabulary(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("taxonomyVocabulary") TaxonomyVocabulary
+				taxonomyVocabulary)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyVocabularyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyVocabularyResource ->
+				taxonomyVocabularyResource.postAssetLibraryTaxonomyVocabulary(
+					Long.valueOf(assetLibraryId), taxonomyVocabulary));
+	}
+
+	@GraphQLField
+	public Response createAssetLibraryTaxonomyVocabularyBatch(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyVocabularyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyVocabularyResource ->
+				taxonomyVocabularyResource.
+					postAssetLibraryTaxonomyVocabularyBatch(
+						Long.valueOf(assetLibraryId), callbackURL, object));
 	}
 
 	@GraphQLField(description = "Inserts a new taxonomy vocabulary in a Site.")

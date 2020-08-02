@@ -68,7 +68,6 @@ public interface MessageBoardThreadResource {
 
 	public Page<MessageBoardThread> getMessageBoardThreadsRankedPage(
 			Date dateCreated, Date dateModified, Long messageBoardSectionId,
-			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 

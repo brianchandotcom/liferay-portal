@@ -200,7 +200,7 @@
 </tr>
 <tr>
 	<td>ERROR_REQUEST_FAILED</td>
-	<td>//div[contains(@class,'alert-danger')][contains(@class,'alert-dismissible')][contains(@class,'show')]</td>
+	<td>//div[contains(@class,'alert-danger')][contains(@class,'alert-dismissible')][contains(.,'Your request failed to complete.')]</td>
 	<td></td>
 </tr>
 <tr>

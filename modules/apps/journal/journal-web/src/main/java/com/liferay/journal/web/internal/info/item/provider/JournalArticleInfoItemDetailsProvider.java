@@ -43,7 +43,9 @@ public class JournalArticleInfoItemDetailsProvider
 	public InfoItemDetails getInfoItemDetails(JournalArticle journalArticle) {
 		return new InfoItemDetails(
 			getInfoItemClassDetails(),
-			new InfoItemReference(journalArticle.getResourcePrimKey()));
+			new InfoItemReference(
+				JournalArticle.class.getName(),
+				journalArticle.getResourcePrimKey()));
 	}
 
 }

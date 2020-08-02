@@ -43,7 +43,8 @@ public class BlogsEntryInfoItemDetailsProvider
 	public InfoItemDetails getInfoItemDetails(BlogsEntry blogsEntry) {
 		return new InfoItemDetails(
 			getInfoItemClassDetails(),
-			new InfoItemReference(blogsEntry.getEntryId()));
+			new InfoItemReference(
+				BlogsEntry.class.getName(), blogsEntry.getEntryId()));
 	}
 
 }

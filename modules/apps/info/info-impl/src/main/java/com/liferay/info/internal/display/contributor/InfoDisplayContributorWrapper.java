@@ -189,6 +189,7 @@ public class InfoDisplayContributorWrapper
 		return new InfoItemDetails(
 			getInfoItemClassDetails(),
 			new InfoItemReference(
+				_infoDisplayContributor.getClassName(),
 				_infoDisplayContributor.getInfoDisplayObjectClassPK(
 					itemObject)));
 	}

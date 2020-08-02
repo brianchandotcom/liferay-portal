@@ -161,7 +161,9 @@ definition {
 			AssetListsAdmin.selectAsset(
 				assetListName = "Manual Asset List Test",
 				assetName = "WC WebContent Title",
-				assetType = "Basic Web Content");
+				assetType = "Basic Web Content",
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article");
 		}
 
 		task ("Assert the selected web content article is viewable from the View Content action for the asset list") {

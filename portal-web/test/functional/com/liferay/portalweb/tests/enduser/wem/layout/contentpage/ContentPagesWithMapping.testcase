@@ -275,7 +275,9 @@ definition {
 			AssetListsAdmin.selectAsset(
 				assetListName = "Manual Collection",
 				assetName = "DM Document Title",
-				assetType = "DM Document Type Name");
+				assetType = "DM Document Type Name",
+				itemSubtype = "DM Document Type Name",
+				itemType = "Document");
 		}
 
 		task ("Map custom ddmfield of web content structure to Heading fragment in Collection Display based on the dynamic collection") {

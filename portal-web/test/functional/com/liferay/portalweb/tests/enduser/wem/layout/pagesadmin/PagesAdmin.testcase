@@ -171,7 +171,9 @@ definition {
 		AssetListsAdmin.selectAsset(
 			assetListName = "Manual Collection",
 			assetType = "Basic Web Content",
-			entryList = "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3");
+			entryList = "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3",
+			itemSubtype = "Basic Web Content",
+			itemType = "Web Content Article");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 

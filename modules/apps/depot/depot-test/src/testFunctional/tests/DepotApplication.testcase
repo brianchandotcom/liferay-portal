@@ -53,7 +53,8 @@ definition {
 		AssetListsAdmin.selectAsset(
 			assetListName = "Depot Manual Asset List",
 			assetName = "Document_2.jpeg",
-			assetType = "Basic Document");
+			assetType = "Basic Document",
+			itemType = "All Types");
 
 		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
 

@@ -1283,7 +1283,8 @@ definition {
 			AssetListsAdmin.selectAsset(
 				assetListName = "Manual Collection",
 				assetName = "Web Content Title",
-				assetType = "Basic Web Content");
+				assetType = "Basic Web Content",
+				itemType = "All Types");
 
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
@@ -1949,7 +1950,8 @@ definition {
 			AssetListsAdmin.selectAsset(
 				assetListName = "Manual Collection",
 				assetType = "Blogs Entry",
-				entryList = "First Blogs Entry,Second Blogs Entry,Third Blogs Entry");
+				entryList = "First Blogs Entry,Second Blogs Entry,Third Blogs Entry",
+				itemType = "Blogs Entry");
 		}
 
 		task ("Add a Collection Display to page") {

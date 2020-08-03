@@ -131,6 +131,18 @@ repositories {
 	maven {
 		url System.properties["repository.url"] ?: "https://repository-cdn.liferay.com/nexus/content/groups/public"
 	}
+
+	String repositoryPrivateURL = System.getProperty("repository.private.url")
+
+	if (repositoryPrivateURL) {
+		maven {
+			credentials {
+				password System.properties["repository.private.password"]
+				username System.properties["repository.private.username"]
+			}
+			url repositoryPrivateURL
+		}
+	}
 }
 
 setUpYarnOfflineCache {

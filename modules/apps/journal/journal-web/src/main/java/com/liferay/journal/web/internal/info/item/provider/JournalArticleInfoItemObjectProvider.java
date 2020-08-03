@@ -132,12 +132,15 @@ public class JournalArticleInfoItemObjectProvider
 			Objects.equals(
 				version, InfoItemIdentifier.VERSION_LATEST_APPROVED)) {
 
-			return _journalArticleLocalService.fetchLatestArticle(
-				classPK, WorkflowConstants.STATUS_APPROVED);
+			return _journalArticleLocalService.fetchLatestArticle(classPK);
 		}
 		else if (Objects.equals(version, InfoItemIdentifier.VERSION_LATEST)) {
+			JournalArticleResource articleResource =
+				_journalArticleResourceLocalService.getArticleResource(classPK);
+
 			return _journalArticleLocalService.fetchLatestArticle(
-				classPK, WorkflowConstants.STATUS_ANY);
+				articleResource.getGroupId(), articleResource.getArticleId(),
+				WorkflowConstants.STATUS_ANY);
 		}
 		else {
 			JournalArticleResource articleResource =

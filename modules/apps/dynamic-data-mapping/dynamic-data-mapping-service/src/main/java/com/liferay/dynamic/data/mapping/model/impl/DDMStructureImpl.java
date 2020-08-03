@@ -601,7 +601,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 						GetterUtil.getLong(
 							ddmFormField.getProperty("ddmStructureId")));
 
-				DDMForm ddmForm = ddmStructure.createFullHierarchyDDMForm();
+				DDMForm ddmForm = ddmStructure.getDDMForm();
 
 				ddmFormField.setNestedDDMFormFields(ddmForm.getDDMFormFields());
 			}

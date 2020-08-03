@@ -139,6 +139,10 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 
 				ddmFormFieldParameterNames.add(
 					defaultDDMFormFieldParameterName);
+
+				checkDDMFormFieldParameterNames(
+					ddmFormField.getNestedDDMFormFields(), StringPool.BLANK,
+					ddmFormFieldParameterNames);
 			}
 
 			for (String filteredDDMFormFieldParameterName :

@@ -51,6 +51,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
@@ -219,6 +220,10 @@ public class AnalyticsReportsDisplayContext<T> {
 				_analyticsReportsInfoItemObject, _getLocale())
 		).put(
 			"trafficSources", _getTrafficSourcesJSONArray()
+		).put(
+			"viewURLs",
+			_getViewURLsJSONArray(
+				_analyticsReportsInfoItem, _analyticsReportsInfoItemObject)
 		).build();
 	}
 
@@ -325,6 +330,37 @@ public class AnalyticsReportsDisplayContext<T> {
 			});
 
 		return trafficSourcesJSONArray;
+	}
+
+	private String _getViewURL(Locale locale) {
+		PortletURL portletURL = _renderResponse.createRenderURL();
+
+		portletURL.setParameter("languageId", LocaleUtil.toLanguageId(locale));
+
+		return String.valueOf(portletURL);
+	}
+
+	private <T> JSONArray _getViewURLsJSONArray(
+		AnalyticsReportsInfoItem<T> analyticsReportsInfoItem, T model) {
+
+		List<Locale> locales = analyticsReportsInfoItem.getAvailableLocales(
+			model);
+
+		Stream<Locale> stream = locales.stream();
+
+		return JSONUtil.putAll(
+			stream.map(
+				locale -> JSONUtil.put(
+					"default",
+					Objects.equals(
+						locale,
+						analyticsReportsInfoItem.getDefaultLocale(model))
+				).put(
+					"languageId", LocaleUtil.toBCP47LanguageId(locale)
+				).put(
+					"viewURL", _getViewURL(locale)
+				)
+			).toArray());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

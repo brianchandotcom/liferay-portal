@@ -52,6 +52,10 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 	}
 
 	public AssetRendererFactory<?> getAssetRendererFactory() {
+		if (_infoItemDetails == null) {
+			return null;
+		}
+
 		return AssetRendererFactoryRegistryUtil.
 			getAssetRendererFactoryByClassNameId(
 				PortalUtil.getClassNameId(_infoItemDetails.getClassName()));

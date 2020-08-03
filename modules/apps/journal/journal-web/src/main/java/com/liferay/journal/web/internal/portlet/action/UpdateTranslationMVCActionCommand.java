@@ -35,9 +35,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.translation.info.item.updater.InfoItemFieldValuesUpdater;
-import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalService;
 
 import java.util.ArrayList;
@@ -86,29 +84,9 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				actionRequest);
 
-			if (serviceContext.getWorkflowAction() ==
-					WorkflowConstants.ACTION_SAVE_DRAFT) {
-
-				_translationEntryLocalService.addOrUpdateTranslationEntry(
-					article.getGroupId(), _getTargetLanguageId(actionRequest),
-					infoItemClassPKReference, infoItemFieldValues,
-					serviceContext);
-			}
-			else {
-				_journalArticleInfoItemFieldValuesUpdater.
-					updateFromInfoItemFieldValues(article, infoItemFieldValues);
-
-				TranslationEntry translationEntry =
-					_translationEntryLocalService.fetchTranslationEntry(
-						infoItemClassPKReference.getClassName(),
-						infoItemClassPKReference.getClassPK(),
-						_getTargetLanguageId(actionRequest));
-
-				if (translationEntry != null) {
-					_translationEntryLocalService.deleteTranslationEntry(
-						translationEntry);
-				}
-			}
+			_translationEntryLocalService.addOrUpdateTranslationEntry(
+				article.getGroupId(), _getTargetLanguageId(actionRequest),
+				infoItemClassPKReference, infoItemFieldValues, serviceContext);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

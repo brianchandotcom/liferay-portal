@@ -13,27 +13,16 @@
  */
 
 import {useEventListener} from 'frontend-js-react-web';
-import {debounce, isPhone, isTablet} from 'frontend-js-web';
+import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import {Editor} from './Editor';
 
-const getToolbarSet = (toolbarSet) => {
-	if (isPhone()) {
-		toolbarSet = 'phone';
-	}
-	else if (isTablet()) {
-		toolbarSet = 'tablet';
-	}
-
-	return toolbarSet;
-};
-
 const ClassicEditor = ({
 	contents = '',
 	editorConfig,
-	initialToolbarSet,
+	initialToolbarSet = 'simple',
 	name,
 	onChangeMethodName,
 	title,
@@ -80,7 +69,7 @@ const ClassicEditor = ({
 	};
 
 	useEffect(() => {
-		setToolbarSet(getToolbarSet(initialToolbarSet));
+		setToolbarSet(initialToolbarSet);
 	}, [initialToolbarSet]);
 
 	useEffect(() => {
@@ -93,7 +82,7 @@ const ClassicEditor = ({
 	}, [contents, getHTML, name]);
 
 	const onResize = debounce(() => {
-		setToolbarSet(getToolbarSet(initialToolbarSet));
+		setToolbarSet(initialToolbarSet);
 	}, 200);
 
 	useEventListener('resize', onResize, true, window);

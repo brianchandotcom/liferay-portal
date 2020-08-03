@@ -52,7 +52,7 @@ public class AssetEntryInfoItemObjectProvider
 		catch (NoSuchEntryException noSuchEntryException) {
 			throw new NoSuchInfoItemException(
 				"Unable to get asset entry " +
-				classPKInfoItemIdentifier.getClassPK(),
+					classPKInfoItemIdentifier.getClassPK(),
 				noSuchEntryException);
 		}
 		catch (PortalException portalException) {

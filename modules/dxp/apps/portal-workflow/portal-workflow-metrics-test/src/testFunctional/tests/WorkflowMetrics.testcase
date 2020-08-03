@@ -504,11 +504,9 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Blogs Entry");
 
-		for (var blogNumber : list "1,2,3,4,5,6") {
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry ${blogNumber} Content",
-				entryTitle = "Blogs Entry Title ${blogNumber}");
-		}
+		WorkflowMetrics.createAlternativeInstances(
+			numberOfBlogInstances = "6",
+			numberOfUsers = "6");
 
 		WorkflowMetrics.goToWorkflowAllItems();
 
@@ -1285,93 +1283,6 @@ definition {
 			key_category = "Workflow",
 			key_portlet = "Metrics",
 			locator1 = "ApplicationsMenu#PORTLET");
-	}
-
-	@description = "LRQA-55606 Automate LPS-106225: [Dashboard] Apply pagination on bulk reassign workflow instances"
-	@priority = "5"
-	test ReassignBulkExceptOne {
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WorkflowMetrics#ReassignBulkExceptOne";
-
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		WorkflowMetrics.createUsersGroovy(numberOfUsers = "1");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Site Administration",
-			portlet = "Workflow",
-			site = "${siteName}");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
-
-		for (var blogNumber : list "1,2,3,4,5,6") {
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry ${blogNumber} Content",
-				entryTitle = "Blogs Entry Title ${blogNumber}");
-		}
-
-		WorkflowMetrics.goToWorkflowAllItems();
-
-		WorkflowMetrics.goToBulkReassignSelectTasks();
-		AssertElementPresent(locator1 = "WorkflowReassignModal#BULK_REASSIGN_MODAL");
-		WorkflowMetrics.assertSelectTasksModalTable();
-
-		WorkflowMetrics.selectReassignTasks(taskList = "Blogs Entry: Blogs Entry Title 1,Blogs Entry: Blogs Entry Title 2,Blogs Entry: Blogs Entry Title 3,Blogs Entry: Blogs Entry Title 4,Blogs Entry: Blogs Entry Title 5");
-		WorkflowMetrics.assertNewAssigneeModalTable();
-		AssertElementPresent(locator1 = "WorkflowReassignModal#PERMISSION_TOOLTIP");
-		AssertElementPresent(locator1 = "WorkflowReassignModal#NEXT_BUTTON_DISABLED");
-		WorkflowMetrics.selectNewAssignee(taskList = "Blogs Entry: Blogs Entry Title 1,Blogs Entry: Blogs Entry Title 2,Blogs Entry: Blogs Entry Title 3,Blogs Entry: Blogs Entry Title 4,Blogs Entry: Blogs Entry Title 5");
-
-		WorkflowMetrics.goToBulkReassignSelectTasks();
-		WorkflowMetrics.selectReassignTasks(taskList = "Blogs Entry: Blogs Entry Title 6");
-		WorkflowMetrics.selectNewAssigneeBulkTask(nameOfAssignee = "1user user1");
-		WorkflowMetrics.goToWorkflowAllItems();
-
-		AssertElementPresent(
-			key_workflowInstanceAssignee = "Test Test",
-			key_workflowInstanceName = "Blogs Entry: Blogs Entry Title 1",
-			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE");
-		AssertElementPresent(
-			key_workflowInstanceAssignee = "Test Test",
-			key_workflowInstanceName = "Blogs Entry: Blogs Entry Title 2",
-			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE");
-		AssertElementPresent(
-			key_workflowInstanceAssignee = "Test Test",
-			key_workflowInstanceName = "Blogs Entry: Blogs Entry Title 3",
-			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE");
-		AssertElementPresent(
-			key_workflowInstanceAssignee = "Test Test",
-			key_workflowInstanceName = "Blogs Entry: Blogs Entry Title 4",
-			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE");
-		AssertElementPresent(
-			key_workflowInstanceAssignee = "Test Test",
-			key_workflowInstanceName = "Blogs Entry: Blogs Entry Title 5",
-			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE");
-		AssertElementPresent(
-			key_workflowInstanceAssignee = "1user user1",
-			key_workflowInstanceName = "Blogs Entry: Blogs Entry Title 6",
-			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE");
-
-		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
-
-		AssertElementPresent(
-			key_workflowAssetTitle = "Blogs Entry Title 1",
-			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
-		AssertElementPresent(
-			key_workflowAssetTitle = "Blogs Entry Title 2",
-			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
-		AssertElementPresent(
-			key_workflowAssetTitle = "Blogs Entry Title 3",
-			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
-		AssertElementPresent(
-			key_workflowAssetTitle = "Blogs Entry Title 4",
-			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
-		AssertElementPresent(
-			key_workflowAssetTitle = "Blogs Entry Title 5",
-			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
 	}
 
 	@description = "LRQA-55452 Automate LPS-102663: [Dashboard] Reassign Workflow instances individually"

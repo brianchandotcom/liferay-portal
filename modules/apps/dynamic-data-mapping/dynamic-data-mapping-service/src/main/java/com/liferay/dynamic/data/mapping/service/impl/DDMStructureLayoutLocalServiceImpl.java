@@ -66,6 +66,18 @@ public class DDMStructureLayoutLocalServiceImpl
 			DDMFormLayout ddmFormLayout, ServiceContext serviceContext)
 		throws PortalException {
 
+		return addStructureLayout(
+			userId, groupId, 0, null, structureVersionId, ddmFormLayout,
+			serviceContext);
+	}
+
+	@Override
+	public DDMStructureLayout addStructureLayout(
+			long userId, long groupId, long classNameId,
+			String structureLayoutKey, long structureVersionId,
+			DDMFormLayout ddmFormLayout, ServiceContext serviceContext)
+		throws PortalException {
+
 		User user = userLocalService.getUser(userId);
 
 		validate(ddmFormLayout);
@@ -80,8 +92,13 @@ public class DDMStructureLayoutLocalServiceImpl
 		structureLayout.setCompanyId(user.getCompanyId());
 		structureLayout.setUserId(user.getUserId());
 		structureLayout.setUserName(user.getFullName());
+		structureLayout.setClassNameId(classNameId);
 		structureLayout.setStructureLayoutKey(
-			String.valueOf(counterLocalService.increment()));
+			Optional.ofNullable(
+				structureLayoutKey
+			).orElseGet(
+				() -> String.valueOf(counterLocalService.increment())
+			));
 		structureLayout.setStructureVersionId(structureVersionId);
 		structureLayout.setDefinition(serialize(ddmFormLayout));
 

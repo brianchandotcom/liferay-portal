@@ -925,12 +925,8 @@ public class DataFactory {
 				_cpDefinitionModels.add(cpDefinitionModel);
 
 				_assetEntryModels.add(
-					newAssetEntryModel(
-						commerceCatalogGroupModel.getGroupId(), new Date(),
-						new Date(), getClassNameId(CPDefinition.class),
-						cpDefinitionId, SequentialUUID.generate(), 0, true,
-						true, "text/plain",
-						cpDefinitionLocalizationModel.getName()));
+					newCPDefinitionAssetEntryModel(
+						cpDefinitionModel, commerceCatalogGroupModel));
 
 				_cpFriendlyURLEntryModels.add(
 					newCPFriendlyURLEntryModel(cProductModel));
@@ -1469,6 +1465,18 @@ public class DataFactory {
 		counterModels.add(counterModel);
 
 		return counterModels;
+	}
+
+	public AssetEntryModel newCPDefinitionAssetEntryModel(
+		CPDefinitionModel cpDefinitionModel,
+		GroupModel commerceCatalogGroupModel) {
+
+		return newAssetEntryModel(
+			commerceCatalogGroupModel.getGroupId(), new Date(), new Date(),
+			getClassNameId(CPDefinition.class),
+			cpDefinitionModel.getCPDefinitionId(), SequentialUUID.generate(), 0,
+			true, true, "text/plain",
+			"Definition " + cpDefinitionModel.getCPDefinitionId());
 	}
 
 	public CPDefinitionLocalizationModel newCPDefinitionLocalizationModel(

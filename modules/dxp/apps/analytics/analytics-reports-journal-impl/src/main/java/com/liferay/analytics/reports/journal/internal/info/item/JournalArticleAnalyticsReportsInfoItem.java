@@ -25,11 +25,15 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -61,6 +65,22 @@ public class JournalArticleAnalyticsReportsInfoItem
 		).orElse(
 			0L
 		);
+	}
+
+	@Override
+	public List<Locale> getAvailableLocales(JournalArticle journalArticle) {
+		return Stream.of(
+			journalArticle.getAvailableLanguageIds()
+		).map(
+			LocaleUtil::fromLanguageId
+		).collect(
+			Collectors.toList()
+		);
+	}
+
+	@Override
+	public Locale getDefaultLocale(JournalArticle journalArticle) {
+		return LocaleUtil.fromLanguageId(journalArticle.getDefaultLanguageId());
 	}
 
 	@Override

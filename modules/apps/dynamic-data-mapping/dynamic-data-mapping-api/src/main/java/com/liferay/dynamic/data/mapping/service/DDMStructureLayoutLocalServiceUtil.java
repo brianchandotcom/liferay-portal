@@ -72,6 +72,20 @@ public class DDMStructureLayoutLocalServiceUtil {
 			addStructureLayout(
 				long userId, long groupId, long classNameId,
 				String structureLayoutKey, long structureVersionId,
+				com.liferay.dynamic.data.mapping.model.DDMFormLayout
+					ddmFormLayout,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addStructureLayout(
+			userId, groupId, classNameId, structureLayoutKey,
+			structureVersionId, ddmFormLayout, serviceContext);
+	}
+
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureLayout
+			addStructureLayout(
+				long userId, long groupId, long classNameId,
+				String structureLayoutKey, long structureVersionId,
 				java.util.Map<java.util.Locale, String> name,
 				java.util.Map<java.util.Locale, String> description,
 				String definition,

@@ -135,4 +135,89 @@ definition {
 			themeName = "test-theme-7-3");
 	}
 
+	@priority = "5"
+	test UninstallAndRedeployTheme {
+		property test.name.skip.portal.instance = "Theme#UninstallAndRedeployTheme";
+		var appName = "test-theme";
+
+		Theme.deployThemeWar(themeName = "${appName}");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Theme Test Page");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		Page.changeCurrentTheme(
+			pageName = "Theme Test Page",
+			themeName = "test-theme-7-3");
+
+		Navigator.openSitePage(
+			pageName = "Theme Test Page",
+			siteName = "Guest");
+
+		SikuliAssertElementPresent(locator1 = "Theme#TEST_THEME_7_3_HOME_PAGE_PNG");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "App Manager");
+
+		Search.searchCP(searchTerm = "${appName}");
+
+		AppManager.uninstallAppCP(appName = "${appName}");
+
+		AssertConsoleTextPresent(value1 = "Stopping blacklisted bundle test-theme_1.0.0");
+
+		Navigator.openSitePage(
+			pageName = "Theme Test Page",
+			siteName = "Guest");
+
+		AssertConsoleTextPresent(value1 = "No theme found for specified theme id testtheme73_WAR_testtheme. Returning the default theme.");
+
+		SikuliAssertElementNotPresent(locator1 = "Theme#TEST_THEME_7_3_HOME_PAGE_PNG");
+
+		takeScreenshot();
+
+		Page.viewCurrentTheme(
+			page = "Public Pages",
+			pageName = "Theme Test Page",
+			themeName = "Classic");
+
+		Click(locator1 = "SitePagesEditPage#CHANGE_CURRENT_THEME_BUTTON");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertTextNotPresent(
+			locator1 = "Card#SPECIFIC_LARGE_TEXT",
+			value1 = "test-theme-7-3");
+
+		FileInstall.deleteWarOffline(liferayDependencyWars = "test-theme.war");
+
+		Theme.deployThemeWar(themeName = "${appName}");
+
+		Navigator.openSitePage(
+			pageName = "Theme Test Page",
+			siteName = "Guest");
+
+		SikuliAssertElementNotPresent(locator1 = "Theme#TEST_THEME_7_3_HOME_PAGE_PNG");
+
+		takeScreenshot();
+
+		Page.viewCurrentTheme(
+			page = "Public Pages",
+			pageName = "Theme Test Page",
+			themeName = "Classic");
+
+		Click(locator1 = "SitePagesEditPage#CHANGE_CURRENT_THEME_BUTTON");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertTextNotPresent(
+			locator1 = "Card#SPECIFIC_LARGE_TEXT",
+			value1 = "test-theme-7-3");
+	}
+
 }

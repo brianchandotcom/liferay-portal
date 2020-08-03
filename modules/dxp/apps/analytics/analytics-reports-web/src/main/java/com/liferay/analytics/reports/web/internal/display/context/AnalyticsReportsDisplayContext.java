@@ -20,6 +20,7 @@ import com.liferay.analytics.reports.web.internal.data.provider.AnalyticsReports
 import com.liferay.analytics.reports.web.internal.model.TimeRange;
 import com.liferay.analytics.reports.web.internal.model.TimeSpan;
 import com.liferay.analytics.reports.web.internal.model.TrafficSource;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -61,13 +62,15 @@ public class AnalyticsReportsDisplayContext<T> {
 		AnalyticsReportsDataProvider analyticsReportsDataProvider,
 		AnalyticsReportsInfoItem<T> analyticsReportsInfoItem,
 		T analyticsReportsInfoItemObject, String canonicalURL,
-		Portal portal, RenderResponse renderResponse,
-		ResourceBundle resourceBundle, ThemeDisplay themeDisplay, User user) {
+		InfoDisplayObjectProvider<T> infoDisplayObjectProvider, Portal portal,
+		RenderResponse renderResponse, ResourceBundle resourceBundle,
+		ThemeDisplay themeDisplay, User user) {
 
 		_analyticsReportsDataProvider = analyticsReportsDataProvider;
 		_analyticsReportsInfoItem = analyticsReportsInfoItem;
 		_analyticsReportsInfoItemObject = analyticsReportsInfoItemObject;
 		_canonicalURL = canonicalURL;
+		_infoDisplayObjectProvider = infoDisplayObjectProvider;
 		_portal = portal;
 		_renderResponse = renderResponse;
 		_resourceBundle = resourceBundle;
@@ -122,48 +125,20 @@ public class AnalyticsReportsDisplayContext<T> {
 			"endpoints",
 			HashMapBuilder.<String, Object>put(
 				"getAnalyticsReportsHistoricalReadsURL",
-				() -> {
-					ResourceURL resourceURL =
-						_renderResponse.createResourceURL();
-
-					resourceURL.setResourceID(
-						"/analytics_reports/get_historical_reads");
-
-					return resourceURL.toString();
-				}
+				() -> String.valueOf(
+					_getResourceURL("/analytics_reports/get_historical_reads"))
 			).put(
 				"getAnalyticsReportsHistoricalViewsURL",
-				() -> {
-					ResourceURL resourceURL =
-						_renderResponse.createResourceURL();
-
-					resourceURL.setResourceID(
-						"/analytics_reports/get_historical_views");
-
-					return resourceURL.toString();
-				}
+				() -> String.valueOf(
+					_getResourceURL("/analytics_reports/get_historical_views"))
 			).put(
 				"getAnalyticsReportsTotalReadsURL",
-				() -> {
-					ResourceURL resourceURL =
-						_renderResponse.createResourceURL();
-
-					resourceURL.setResourceID(
-						"/analytics_reports/get_total_reads");
-
-					return resourceURL.toString();
-				}
+				() -> String.valueOf(
+					_getResourceURL("/analytics_reports/get_total_reads"))
 			).put(
 				"getAnalyticsReportsTotalViewsURL",
-				() -> {
-					ResourceURL resourceURL =
-						_renderResponse.createResourceURL();
-
-					resourceURL.setResourceID(
-						"/analytics_reports/get_total_views");
-
-					return resourceURL.toString();
-				}
+				() -> String.valueOf(
+					_getResourceURL("/analytics_reports/get_total_views"))
 			).build()
 		).put(
 			"languageTag",
@@ -233,6 +208,20 @@ public class AnalyticsReportsDisplayContext<T> {
 		).put(
 			"trafficSources", _getTrafficSourcesJSONArray()
 		).build();
+	}
+
+	private ResourceURL _getResourceURL(String resourceID) {
+		ResourceURL resourceURL = _renderResponse.createResourceURL();
+
+		resourceURL.setParameter(
+			"classNameId",
+			String.valueOf(_infoDisplayObjectProvider.getClassNameId()));
+		resourceURL.setParameter(
+			"classPK", String.valueOf(_infoDisplayObjectProvider.getClassPK()));
+
+		resourceURL.setResourceID(resourceID);
+
+		return resourceURL;
 	}
 
 	private JSONArray _getTimeSpansJSONArray() {
@@ -335,6 +324,7 @@ public class AnalyticsReportsDisplayContext<T> {
 	private final T _analyticsReportsInfoItemObject;
 	private final String _canonicalURL;
 	private Map<String, Object> _data;
+	private final InfoDisplayObjectProvider<T> _infoDisplayObjectProvider;
 	private final Portal _portal;
 	private final RenderResponse _renderResponse;
 	private final ResourceBundle _resourceBundle;

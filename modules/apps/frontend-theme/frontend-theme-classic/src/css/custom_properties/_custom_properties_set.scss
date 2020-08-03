@@ -187,48 +187,6 @@
 	box-shadow: var(--box-shadow-lg) !important;
 }
 
-// Nav and Navbar
-
-.navbar {
-	font-size: var(--navbar-font-size);
-}
-
-.navbar-brand {
-	color: var(--navbar-brand-color);
-	font-size: var(--navbar-brand-font-size);
-
-	.navbar-light & {
-		@include hover-focus() {
-			color: var(--navbar-light-active-color);
-		}
-	}
-}
-
-.nav {
-	font-size: var(--nav-font-size);
-}
-
-.nav-link:not(.disabled) {
-	color: var(--nav-link-color);
-	padding: var(--nav-link-padding-y) var(--nav-link-padding-x);
-
-	:not(.nav-pills) > .nav-item &:hover {
-		color: var(--nav-link-hover-color);
-	}
-
-	.nav-item.active > & {
-		color: var(--nav-link-active-color);
-	}
-
-	.navbar-light .navbar .nav-item & {
-		color: var(--navbar-light-color);
-	}
-
-	.navbar-light .navbar .nav-item.active & {
-		color: var(--navbar-light-active-color);
-	}
-}
-
 // Forms
 
 .form-control {

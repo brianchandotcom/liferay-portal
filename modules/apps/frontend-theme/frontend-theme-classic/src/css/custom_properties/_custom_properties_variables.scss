@@ -161,24 +161,6 @@ $theme-colors-cp: map-deep-merge(
 	--input-font-size-lg: #{$input-font-size-lg};
 	--input-height-lg: #{$input-height-lg};
 
-	// Nav and Navbar
-
-	--navbar-active-color: #{$navbar-light-active-color};
-	--navbar-brand-color: inherit;
-	--navbar-brand-font-size: #{$navbar-brand-font-size};
-	--navbar-color: #{$navbar-light-color};
-	--navbar-font-size: #{$navbar-font-size};
-	--navbar-hover-color: #{$navbar-light-hover-color};
-	--navbar-light-active-color: #{$navbar-light-active-color};
-	--navbar-light-hover-color: #{$navbar-light-hover-color};
-
-	--nav-font-size: #{$nav-font-size};
-	--nav-link-active-color: inherit;
-	--nav-link-color: inherit;
-	--nav-link-hover-color: inherit;
-	--nav-link-padding-x: #{$nav-link-padding-x};
-	--nav-link-padding-y: #{$nav-link-padding-y};
-
 	// Portlet vars
 
 	--portlet-bg: transparent;

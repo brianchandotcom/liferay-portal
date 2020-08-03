@@ -65,16 +65,16 @@ public class ContentDashboardDropdownItemsProvider {
 
 		Locale locale = _portal.getLocale(_liferayPortletRequest);
 
-		List<DropdownItem> dropdownItems = TransformUtil.transform(
-			(List<ContentDashboardItemAction>)
-				contentDashboardItem.getContentDashboardItemActions(
-					httpServletRequest, ContentDashboardItemAction.Type.VIEW,
-					ContentDashboardItemAction.Type.EDIT),
-			contentDashboardItemAction -> _toDropdownItem(
-				contentDashboardItemAction, locale));
-
 		DropdownItemList dropdownItemList = DropdownItemList.of(
-			dropdownItems.toArray(new DropdownItem[0]));
+			(DropdownItem[])TransformUtil.transformToArray(
+				(List<ContentDashboardItemAction>)
+					contentDashboardItem.getContentDashboardItemActions(
+						httpServletRequest,
+						ContentDashboardItemAction.Type.VIEW,
+						ContentDashboardItemAction.Type.EDIT),
+				contentDashboardItemAction -> _toDropdownItem(
+					contentDashboardItemAction, locale),
+				DropdownItem.class));
 
 		dropdownItemList.addAll(
 			DropdownItemList.of(

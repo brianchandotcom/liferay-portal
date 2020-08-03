@@ -19,14 +19,13 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServices
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.EventsProcessorUtil;
+import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
@@ -113,7 +112,7 @@ public class DDMFormFieldTypesServlet extends HttpServlet {
 		stream.map(
 			ddmFormFieldTypeName -> getFieldTypeMetadataJSONObject(
 				ddmFormFieldTypeName,
-				getFieldProperties(ddmFormFieldTypeName, httpServletRequest))
+				getFieldConfiguration(ddmFormFieldTypeName, httpServletRequest))
 		).forEach(
 			fieldTypesJSONArray::put
 		);
@@ -125,7 +124,7 @@ public class DDMFormFieldTypesServlet extends HttpServlet {
 			httpServletResponse, fieldTypesJSONArray.toJSONString());
 	}
 
-	protected Map<String, Object> getFieldProperties(
+	protected Map<String, Object> getFieldConfiguration(
 		String ddmFormFieldName, HttpServletRequest httpServletRequest) {
 
 		if (StringUtil.equals(ddmFormFieldName, "rich_text")) {
@@ -145,17 +144,21 @@ public class DDMFormFieldTypesServlet extends HttpServlet {
 	}
 
 	protected JSONObject getFieldTypeMetadataJSONObject(
-		String ddmFormFieldName, Map<String, Object> properties) {
+		String ddmFormFieldName, Map<String, Object> configuration) {
 
-		return JSONUtil.put(
+		JSONObject jsonObject = new JSONObjectImpl();
+
+		if (!configuration.isEmpty()) {
+			jsonObject.put("configuration", configuration);
+		}
+
+		return jsonObject.put(
 			"javaScriptModule",
 			resolveModuleName(
 				_ddmFormFieldTypeServicesTracker.getDDMFormFieldType(
 					ddmFormFieldName))
 		).put(
 			"name", ddmFormFieldName
-		).put(
-			"properties", properties
 		);
 	}
 

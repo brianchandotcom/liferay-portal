@@ -137,9 +137,12 @@ const FieldLazy = ({
 }) => {
 	const focusDurationRef = useRef({end: null, start: null});
 
-	const module = getModule(fieldTypes, field.type);
+	const {configuration = {}, javaScriptModule} = getModule(
+		fieldTypes,
+		field.type
+	);
 
-	const ComponentLazy = useLazy()(module.javaScriptModule);
+	const ComponentLazy = useLazy()(javaScriptModule);
 
 	return (
 		<ComponentLazy
@@ -157,7 +160,7 @@ const FieldLazy = ({
 			visible
 			{...field}
 			{...otherProps}
-			{...module.properties}
+			{...configuration}
 		/>
 	);
 };

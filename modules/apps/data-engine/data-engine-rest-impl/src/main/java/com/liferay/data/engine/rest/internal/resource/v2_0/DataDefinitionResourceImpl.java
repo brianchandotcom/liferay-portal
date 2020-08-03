@@ -611,7 +611,11 @@ public class DataDefinitionResourceImpl
 
 				DDMStructureLayout ddmStructureLayout =
 					_ddmStructureLayoutLocalService.getStructureLayout(
-						dataLayout.getId());
+						Optional.ofNullable(
+							dataLayout.getId()
+						).orElse(
+							_getDefaultDataLayoutId(dataDefinitionId)
+						));
 
 				JSONObject jsonObject = _jsonFactory.createJSONObject(
 					StringUtil.replace(

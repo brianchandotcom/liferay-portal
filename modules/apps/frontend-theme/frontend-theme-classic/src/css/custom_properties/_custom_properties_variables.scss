@@ -131,36 +131,6 @@ $theme-colors-cp: map-deep-merge(
 	--body-color: $body-color;
 	--body-bg: $body-bg;
 
-	// Forms
-
-	--input-bg: #{$input-bg};
-	--input-border-color: #{$input-border-color};
-	--input-border-radius: #{$input-border-radius};
-	--input-border-width: #{$input-border-width};
-	--input-color: #{$input-color};
-	--input-height: #{$input-height};
-	--input-group-inset-item-padding-left: #{$input-group-inset-item-padding-left};
-	--input-group-inset-item-padding-right: #{$input-group-inset-item-padding-right};
-	--input-line-height: #{$input-line-height};
-	--input-padding-x: #{$input-padding-x};
-	--input-padding-y: #{$input-padding-y};
-
-	--input-focus-color: #{$input-focus-color};
-	--input-focus-bg: #{$input-focus-bg};
-	--input-focus-border-color: #{$input-focus-border-color};
-
-	--custom-control-indicator-checked-border-color: #{$custom-control-indicator-checked-border-color};
-	--custom-control-indicator-checked-bg: #{$custom-control-indicator-checked-bg};
-
-	--input-label-font-size: inherit;
-	--input-label-margin-bottom: #{$input-label-margin-bottom};
-
-	--input-font-size-sm: #{$input-font-size-sm};
-	--input-height-sm: #{$input-height-sm};
-
-	--input-font-size-lg: #{$input-font-size-lg};
-	--input-height-lg: #{$input-height-lg};
-
 	// Portlet vars
 
 	--portlet-bg: transparent;

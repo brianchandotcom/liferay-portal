@@ -187,63 +187,6 @@
 	box-shadow: var(--box-shadow-lg) !important;
 }
 
-// Forms
-
-.form-control {
-	background-color: var(--input-bg);
-	border: var(--input-border-width) solid var(--input-border-color);
-	border-radius: var(--input-border-radius);
-	color: var(--input-color);
-	height: var(--input-height);
-	line-height: var(--input-line-height);
-	padding: var(--input-padding-y) var(--input-padding-x);
-
-	&:focus {
-		background-color: var(--input-focus-bg);
-		border-color: var(--input-focus-border-color);
-		color: var(--input-focus-color);
-	}
-}
-
-.form-control-lg {
-	font-size: var(--input-font-size-lg);
-	height: var(--input-height-lg);
-}
-
-.form-control-sm {
-	font-size: var(--input-font-size-sm);
-	height: var(--input-height-sm);
-}
-
-.input-group-inset-item {
-	background-color: var(--input-bg);
-	border-color: var(--input-border-color);
-	border-radius: 0 var(--input-border-radius) var(--input-border-radius) 0;
-	border-width: var(--input-border-width) var(--input-border-width)
-		var(--input-border-width) 0;
-	color: var(--input-color);
-	height: var(--input-height);
-	line-height: var(--input-line-height);
-	padding-left: var(--input-group-inset-item-padding-left);
-	padding-right: var(--input-group-inset-item-padding-right);
-
-	&.input-group-inset-item-before {
-		border-radius: var(--input-border-radius) 0 0 var(--input-border-radius);
-		border-width: var(--input-border-width) 0 var(--input-border-width)
-			var(--input-border-width);
-	}
-}
-
-.custom-control-input:checked ~ .custom-control-label::before {
-	background-color: var(--custom-control-indicator-checked-border-color);
-	border-color: var(--custom-control-indicator-checked-bg);
-}
-
-label {
-	font-size: var(--input-label-font-size);
-	margin-bottom: var(--input-label-margin-bottom);
-}
-
 // Body
 
 body {

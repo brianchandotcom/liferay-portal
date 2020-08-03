@@ -389,13 +389,6 @@ public class DataFactory {
 		initUserNames();
 	}
 
-	public ResourcePermissionModel commerceCatalogResourcePermission() {
-		return newResourcePermissionModel(
-			CommerceCatalog.class.getName(),
-			String.valueOf(_commerceCatalogModel.getCommerceCatalogId()),
-			_guestRoleModel.getRoleId(), _sampleUserId);
-	}
-
 	public RoleModel getAdministratorRoleModel() {
 		return _administratorRoleModel;
 	}
@@ -557,6 +550,10 @@ public class DataFactory {
 
 	public CommerceCatalogModel getCommerceCatalogModel() {
 		return _commerceCatalogModel;
+	}
+
+	public ResourcePermissionModel getCommerceCatalogResourcePermissionModel() {
+		return newCommerceCatalogResourcePermissionModel(_commerceCatalogModel);
 	}
 
 	public GroupModel getCommerceChannelGroupModel() {
@@ -1251,6 +1248,15 @@ public class DataFactory {
 		commerceCatalogModel.setSystem(true);
 
 		return commerceCatalogModel;
+	}
+
+	public ResourcePermissionModel newCommerceCatalogResourcePermissionModel(
+		CommerceCatalogModel commerceCatalogModel) {
+
+		return newResourcePermissionModel(
+			CommerceCatalog.class.getName(),
+			String.valueOf(commerceCatalogModel.getCommerceCatalogId()),
+			_guestRoleModel.getRoleId(), _sampleUserId);
 	}
 
 	public GroupModel newCommerceChannelGroupModel(

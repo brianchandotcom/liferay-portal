@@ -14,7 +14,11 @@
 
 package com.liferay.analytics.reports.info.item;
 
+import com.liferay.portal.kernel.util.LocaleUtil;
+
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -26,6 +30,14 @@ public interface AnalyticsReportsInfoItem<T> {
 
 	public default long getAuthorUserId(T model) {
 		return 0L;
+	}
+
+	public default List<Locale> getAvailableLocales(T model) {
+		return Collections.singletonList(LocaleUtil.getDefault());
+	}
+
+	public default Locale getDefaultLocale(T model) {
+		return LocaleUtil.getDefault();
 	}
 
 	public Date getPublishDate(T model);

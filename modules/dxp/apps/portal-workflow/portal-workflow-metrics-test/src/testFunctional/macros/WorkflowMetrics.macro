@@ -143,7 +143,7 @@ definition {
 		}
 	}
 
-	macro assertCheckbox {
+	macro assertCheckboxChecked {
 
 		for (var itemName : list "${taskList}") {
 			var key_itemName = "${itemName}";
@@ -719,7 +719,7 @@ definition {
 		Click(locator1 = "WorkflowReassignModal#NEXT_PAGINATION_BUTTON");
 		WorkflowMetrics.assertCheckboxUnchecked(taskListUnchecked = "${taskListUnchecked}");
 		Click(locator1 = "WorkflowReassignModal#PREVIOUS_PAGINATION_BUTTON");
-		WorkflowMetrics.assertCheckbox(taskList = "${taskList}");
+		WorkflowMetrics.assertCheckboxChecked(taskList = "${taskList}");
 		AssertElementPresent(locator1 = "WorkflowReassignModal#SELECT_ALL_REASSIGN");
 		Click(locator1 = "WorkflowReassignModal#SELECT_ALL_REASSIGN");
 		Click(locator1 = "WorkflowReassignModal#NEXT_BUTTON");

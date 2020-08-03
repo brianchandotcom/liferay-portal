@@ -13,15 +13,17 @@
  */
 
 import React from 'react';
-
-import Alert from './components/Alert';
+import ClayAlert from '@clayui/alert';
 
 import '../css/main.scss';
 
 export default () => {
 	return (
 		<div>
-			<Alert />
+			<ClayAlert title="Info">
+				This widget is used to test out clay components. Simply add
+				whatever js you want to App.es.js and redeploy.
+			</ClayAlert>
 
 			<div className="clay-test-class">This is where your code goes</div>
 		</div>

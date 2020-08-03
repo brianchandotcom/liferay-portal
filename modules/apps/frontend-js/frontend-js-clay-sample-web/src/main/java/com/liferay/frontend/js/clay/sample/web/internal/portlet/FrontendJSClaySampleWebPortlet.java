@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.display-category=category.sample",
-		"com.liferay.portlet.instanceable=true",
 		"javax.portlet.display-name=JS Clay Sample Web",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",

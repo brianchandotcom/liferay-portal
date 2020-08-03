@@ -18,9 +18,7 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
 import {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import ClayLink from '@clayui/link';
 import ClayManagementToolbar from '@clayui/management-toolbar';
-import ClayNavigationBar from '@clayui/navigation-bar';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayTable from '@clayui/table';
 import {fetch} from 'frontend-js-web';
@@ -64,24 +62,24 @@ class ChangeTrackingChangesView extends React.Component {
 			}
 		}
 
-		const node = this._getNode('everything', 'changes', 0);
+		const node = this._getNode('everything', 0, 'changes');
 
 		this.state = {
 			ascending: true,
 			breadcrumbItems: this._getBreadcrumbItems(
 				node,
 				'everything',
-				'changes',
-				0
+				0,
+				'changes'
 			),
 			column: 'title',
 			delta: 20,
 			filterClass: 'everything',
-			navigation: 'changes',
 			node,
 			page: 1,
 			renderInnerHTML: null,
 			sortDirectionClass: 'order-arrow-down-active',
+			viewType: 'changes',
 		};
 	}
 
@@ -199,8 +197,8 @@ class ChangeTrackingChangesView extends React.Component {
 		return nodes;
 	}
 
-	_getBreadcrumbItems(node, filterClass, navigation, nodeId) {
-		if (navigation === 'changes') {
+	_getBreadcrumbItems(node, filterClass, nodeId, viewType) {
+		if (viewType === 'changes') {
 			if (nodeId === 0) {
 				return [
 					{
@@ -312,7 +310,7 @@ class ChangeTrackingChangesView extends React.Component {
 	}
 
 	_getColumn() {
-		if (this.state.navigation === 'contextView') {
+		if (this.state.viewType === 'context') {
 			return 'title';
 		}
 
@@ -347,8 +345,8 @@ class ChangeTrackingChangesView extends React.Component {
 		return models;
 	}
 
-	_getNode(filterClass, navigation, nodeId) {
-		if (navigation === 'changes') {
+	_getNode(filterClass, nodeId, viewType) {
+		if (viewType === 'changes') {
 			if (nodeId === 0) {
 				return {children: this._getModels(this.changes)};
 			}
@@ -468,7 +466,7 @@ class ChangeTrackingChangesView extends React.Component {
 	}
 
 	_getTableHead() {
-		if (this.state.navigation === 'contextView') {
+		if (this.state.viewType === 'context') {
 			return '';
 		}
 
@@ -509,9 +507,7 @@ class ChangeTrackingChangesView extends React.Component {
 				rows.push(
 					<ClayTable.Row divider>
 						<ClayTable.Cell
-							colSpan={
-								this.state.navigation === 'changes' ? 3 : 1
-							}
+							colSpan={this.state.viewType === 'changes' ? 3 : 1}
 						>
 							{node.typeName}
 						</ClayTable.Cell>
@@ -521,7 +517,7 @@ class ChangeTrackingChangesView extends React.Component {
 
 			const cells = [];
 
-			if (this.state.navigation === 'changes') {
+			if (this.state.viewType === 'changes') {
 				const portraitURL = this._getPortraitURL(node);
 
 				if (portraitURL) {
@@ -598,7 +594,7 @@ class ChangeTrackingChangesView extends React.Component {
 				</ClayTable.Cell>
 			);
 
-			if (this.state.navigation === 'changes') {
+			if (this.state.viewType === 'changes') {
 				cells.push(
 					<ClayTable.Cell>{node.timeDescription}</ClayTable.Cell>
 				);
@@ -612,6 +608,60 @@ class ChangeTrackingChangesView extends React.Component {
 
 	_getUserName(node) {
 		return this.userInfo[node.userId.toString()].userName;
+	}
+
+	_getViewTypes() {
+		if (!this.contextView) {
+			return '';
+		}
+
+		const items = [
+			{
+				active: this.state.viewType === 'changes',
+				label: Liferay.Language.get('changes'),
+				onClick: () =>
+					this._handleNavigationUpdate({
+						filterClass: 'everything',
+						nodeId: 0,
+						viewType: 'changes',
+					}),
+				symbolLeft: 'list',
+			},
+			{
+				active: this.state.viewType === 'context',
+				label: Liferay.Language.get('context'),
+				onClick: () =>
+					this._handleNavigationUpdate({
+						nodeId: 0,
+						viewType: 'context',
+					}),
+				symbolLeft: 'pages-tree',
+			},
+		];
+
+		return (
+			<ClayManagementToolbar.Item expand>
+				<ClayDropDownWithItems
+					items={items}
+					spritemap={this.spritemap}
+					trigger={
+						<ClayButton
+							className="nav-link nav-link-monospaced"
+							displayType="unstyled"
+						>
+							<ClayIcon
+								spritemap={this.spritemap}
+								symbol={
+									this.state.viewType === 'changes'
+										? 'list'
+										: 'pages-tree'
+								}
+							/>
+						</ClayButton>
+					}
+				/>
+			</ClayManagementToolbar.Item>
+		);
 	}
 
 	_handleDeltaChange(delta) {
@@ -628,37 +678,37 @@ class ChangeTrackingChangesView extends React.Component {
 			filterClass = this.state.filterClass;
 		}
 
-		let navigation = json.navigation;
+		const nodeId = json.nodeId;
 
-		if (!navigation) {
-			navigation = this.state.navigation;
+		let viewType = json.viewType;
+
+		if (!viewType) {
+			viewType = this.state.viewType;
 		}
 
-		if (navigation === 'contextView' && this.contextView.errorMessage) {
+		if (viewType === 'context' && this.contextView.errorMessage) {
 			this.setState({
-				navigation,
 				renderInnerHTML: null,
+				viewType,
 			});
 
 			return;
 		}
 
-		const nodeId = json.nodeId;
-
-		const node = this._getNode(filterClass, navigation, nodeId);
+		const node = this._getNode(filterClass, nodeId, viewType);
 
 		this.setState({
 			breadcrumbItems: this._getBreadcrumbItems(
 				node,
 				filterClass,
-				navigation,
-				nodeId
+				nodeId,
+				viewType
 			),
 			filterClass,
-			navigation,
 			node,
 			page: 1,
 			renderInnerHTML: null,
+			viewType,
 		});
 
 		if (nodeId > 0) {
@@ -756,48 +806,6 @@ class ChangeTrackingChangesView extends React.Component {
 		);
 	}
 
-	_renderMainContent() {
-		if (
-			this.state.navigation === 'contextView' &&
-			this.contextView.errorMessage
-		) {
-			return (
-				<ClayAlert displayType="danger">
-					{this.contextView.errorMessage}
-				</ClayAlert>
-			);
-		}
-
-		return (
-			<>
-				{this._renderManagementToolbar()}
-
-				<div className="container-fluid container-fluid-max-xl">
-					<ClayBreadcrumb
-						ellipsisBuffer={1}
-						items={this.state.breadcrumbItems}
-						spritemap={this.spritemap}
-					/>
-
-					<div className="change-lists-changes-content row">
-						{this._renderPanel()}
-
-						<div
-							className={
-								this.state.navigation === 'changes'
-									? 'col-md-12'
-									: 'col-md-9'
-							}
-						>
-							{this._renderEntry()}
-							{this._renderTable()}
-						</div>
-					</div>
-				</div>
-			</>
-		);
-	}
-
 	_renderManagementToolbar() {
 		const items = [
 			{
@@ -807,7 +815,7 @@ class ChangeTrackingChangesView extends React.Component {
 			},
 		];
 
-		if (this.state.navigation === 'changes') {
+		if (this.state.viewType === 'changes') {
 			items.push({
 				active: this._getColumn() === 'modifiedDate',
 				label: Liferay.Language.get('modified-date'),
@@ -871,6 +879,10 @@ class ChangeTrackingChangesView extends React.Component {
 							/>
 						</ClayButton>
 					</ClayManagementToolbar.Item>
+
+					<ClayManagementToolbar.Item className="nav-item-expand" />
+
+					{this._getViewTypes()}
 				</ClayManagementToolbar.ItemList>
 			</ClayManagementToolbar>
 		);
@@ -897,7 +909,7 @@ class ChangeTrackingChangesView extends React.Component {
 	}
 
 	_renderPanel() {
-		if (this.state.navigation === 'changes') {
+		if (this.state.viewType === 'changes') {
 			return '';
 		}
 
@@ -948,53 +960,49 @@ class ChangeTrackingChangesView extends React.Component {
 	}
 
 	render() {
-		const items = [];
+		let content;
 
-		items.push(
-			<ClayNavigationBar.Item
-				active={this.state.navigation === 'changes'}
-				onClick={() =>
-					this._handleNavigationUpdate({
-						filterClass: 'everything',
-						navigation: 'changes',
-						nodeId: 0,
-					})
-				}
-			>
-				<ClayLink className="nav-link" displayType="unstyled">
-					{Liferay.Language.get('changes')}
-				</ClayLink>
-			</ClayNavigationBar.Item>
-		);
+		if (
+			this.state.viewType === 'context' &&
+			this.contextView.errorMessage
+		) {
+			content = (
+				<ClayAlert displayType="danger">
+					{this.contextView.errorMessage}
+				</ClayAlert>
+			);
+		}
+		else {
+			content = (
+				<div className="container-fluid container-fluid-max-xl">
+					<ClayBreadcrumb
+						ellipsisBuffer={1}
+						items={this.state.breadcrumbItems}
+						spritemap={this.spritemap}
+					/>
 
-		if (this.contextView) {
-			items.push(
-				<ClayNavigationBar.Item
-					active={this.state.navigation === 'contextView'}
-					onClick={() =>
-						this._handleNavigationUpdate({
-							navigation: 'contextView',
-							nodeId: 0,
-						})
-					}
-				>
-					<ClayLink className="nav-link" displayType="unstyled">
-						{Liferay.Language.get('context-view')}
-					</ClayLink>
-				</ClayNavigationBar.Item>
+					<div className="change-lists-changes-content row">
+						{this._renderPanel()}
+
+						<div
+							className={
+								this.state.viewType === 'changes'
+									? 'col-md-12'
+									: 'col-md-9'
+							}
+						>
+							{this._renderEntry()}
+							{this._renderTable()}
+						</div>
+					</div>
+				</div>
 			);
 		}
 
 		return (
 			<>
-				<ClayNavigationBar
-					className="navigation-bar"
-					triggerLabel={Liferay.Language.get(this.state.navigation)}
-				>
-					{items}
-				</ClayNavigationBar>
-
-				{this._renderMainContent()}
+				{this._renderManagementToolbar()}
+				{content}
 			</>
 		);
 	}

@@ -101,6 +101,14 @@
 
 	.management-bar {
 		margin-bottom: 0;
+
+		.navbar-nav {
+			flex-grow: 1;
+
+			.nav-item-expand {
+				flex-grow: 1;
+			}
+		}
 	}
 
 	.navigation-bar {

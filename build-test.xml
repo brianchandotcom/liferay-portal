@@ -6497,6 +6497,15 @@ go</echo>
 
 	<target name="delete-dependency-file">
 		<if>
+			<not>
+				<isset property="test.app.server.liferay.home" />
+			</not>
+			<then>
+				<set-app-server-properties />
+			</then>
+		</if>
+
+		<if>
 			<isset property="liferay.dependency.wars" />
 			<then>
 				<delete file="${test.app.server.liferay.home}/osgi/war/${liferay.dependency.wars}" />

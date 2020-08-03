@@ -1302,7 +1302,13 @@ public abstract class Base${schemaName}ResourceTestCase {
 									<#if stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
 										put("siteKey", "\"" + ${javaMethodParameter.parameterName} + "\"");
 									<#else>
-										put("${javaMethodParameter.parameterName}", ${javaMethodParameter.parameterName});
+										put("${javaMethodParameter.parameterName}",
+											<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
+												"\"" + ${javaMethodParameter.parameterName} + "\""
+											<#else>
+												${javaMethodParameter.parameterName}
+											</#if>
+										);
 									</#if>
 								</#list>
 							}

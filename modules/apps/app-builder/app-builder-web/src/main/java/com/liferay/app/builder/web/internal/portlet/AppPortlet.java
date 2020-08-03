@@ -20,13 +20,17 @@ import com.liferay.app.builder.portlet.tab.AppBuilderAppPortletTab;
 import com.liferay.app.builder.web.internal.constants.AppBuilderWebKeys;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -147,6 +151,14 @@ public class AppPortlet extends MVCPortlet {
 			appBuilderAppPortletTab.getAppBuilderAppPortletTabContext(
 				_appBuilderApp,
 				ParamUtil.getLong(renderRequest, "dataRecordId")));
+
+		String locale = ParamUtil.get(
+			renderRequest, "locale", StringPool.BLANK);
+
+		if (Validator.isNotNull(locale)) {
+			renderRequest.setAttribute(
+				WebKeys.LOCALE, LocaleUtil.fromLanguageId(locale));
+		}
 
 		renderRequest.setAttribute(
 			AppBuilderWebKeys.SHOW_FORM_VIEW, _showFormView);

@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge Ferrer
  */
 @Component(immediate = true, service = InfoItemObjectProvider.class)
-public class JournalArticleInfoObjectItemProvider
+public class JournalArticleInfoItemObjectProvider
 	implements InfoItemObjectProvider<JournalArticle> {
 
 	@Override

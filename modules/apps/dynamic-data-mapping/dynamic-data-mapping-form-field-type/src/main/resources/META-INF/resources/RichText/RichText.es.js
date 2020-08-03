@@ -22,19 +22,7 @@ const CKEDITOR_CONFIG = {
 	autoGrow_bottomSpace: 50,
 	autoGrow_maxHeight: 600,
 	autoGrow_minHeight: 215,
-	extraPlugins: ',videoembed,autogrow,stylescombo',
 	resize_enabled: true,
-	toolbar_ddm: [
-		['Undo', 'Redo'],
-		['Styles'],
-		['Bold', 'Italic', 'Underline'],
-		['RemoveFormat'],
-		['NumberedList', 'BulletedList'],
-		['Blockquote'],
-		['Link', 'Unlink'],
-		['Table', 'Image', 'VideoEmbed'],
-		['Source'],
-	],
 };
 
 const RichText = ({
@@ -52,16 +40,6 @@ const RichText = ({
 		value ? value : predefinedValue
 	);
 
-	const normalizedEditorConfig = useMemo(() => {
-		const config = editorConfig.JSONObject;
-
-		return {
-			...config,
-			...CKEDITOR_CONFIG,
-			extraPlugins: config.extraPlugins + CKEDITOR_CONFIG.extraPlugins,
-		};
-	}, [editorConfig]);
-
 	return (
 		<FieldBase
 			{...otherProps}
@@ -74,8 +52,7 @@ const RichText = ({
 			<ClassicEditor
 				contents={currentValue}
 				data={currentValue}
-				editorConfig={normalizedEditorConfig}
-				initialToolbarSet="ddm"
+				editorConfig={editorConfig.JSONObject}
 				name={name}
 				onChange={(data) => {
 					if (currentValue !== data) {

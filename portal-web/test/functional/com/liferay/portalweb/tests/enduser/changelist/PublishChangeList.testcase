@@ -92,13 +92,15 @@ definition {
 			gotoManagePublications = "true",
 			publicationName = "Publication Name");
 
-		AssertElementNotPresent(locator1 = "ChangeList#NEEDS_MANUAL_RESOLUTION_TABLE");
+		// Workaround LPS-115599
+
+		/*AssertElementNotPresent(locator1 = "ChangeList#NEEDS_MANUAL_RESOLUTION_TABLE");
 
 		AssertElementNotPresent(
 			key_warningMessage = "The conflict cannot be automatically resolved.",
 			locator1 = "Message#WARNING_SPECIFIC");
 
-		ChangeList.publishPublication(publicationName = "Publication Name");
+		ChangeList.publishPublication(publicationName = "Publication Name");*/
 	}
 
 	@priority = "5"

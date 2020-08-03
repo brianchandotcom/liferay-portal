@@ -281,6 +281,15 @@ public class EntityModelFieldMapper {
 						String.valueOf(value), String.valueOf(value)));
 			}
 		}
+		else if (expandoColumn.getType() ==
+					ExpandoColumnConstants.FLOAT_ARRAY) {
+
+			for (float value : (float[])expandoColumn.getDefaultValue()) {
+				fieldOptions.add(
+					new Field.Option(
+						String.valueOf(value), String.valueOf(value)));
+			}
+		}
 		else if (expandoColumn.getType() == ExpandoColumnConstants.LONG_ARRAY) {
 			for (long value : (long[])expandoColumn.getDefaultValue()) {
 				fieldOptions.add(

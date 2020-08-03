@@ -22,16 +22,37 @@ import com.liferay.layout.type.controller.collection.internal.display.context.Co
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletPreferencesIds;
+import com.liferay.portal.kernel.portlet.InvokerPortlet;
+import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
+import com.liferay.portal.kernel.portlet.LiferayRenderResponse;
+import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.RenderRequestFactory;
+import com.liferay.portlet.RenderResponseFactory;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
+import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuPortletKeys;
 
 import java.io.IOException;
 
 import java.util.Objects;
+
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
+import javax.portlet.PortletMode;
+import javax.portlet.PortletPreferences;
+import javax.portlet.PortletResponse;
+import javax.portlet.WindowState;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -66,20 +87,33 @@ public class CollectionItemsDetailProductNavigationControlMenuEntry
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		try {
+			LiferayRenderRequest liferayRenderRequest = _createRenderRequest(
+				httpServletRequest, httpServletResponse);
 
-		CollectionItemsDetailDisplayContext
-			collectionItemsDetailDisplayContext =
-				new CollectionItemsDetailDisplayContext(
-					_assetListEntryLocalService, _assetListAssetEntryProvider,
-					_infoItemServiceTracker, themeDisplay);
+			LiferayRenderResponse liferayRenderResponse = _createRenderResponse(
+				liferayRenderRequest, httpServletResponse);
 
-		httpServletRequest.setAttribute(
-			CollectionPageLayoutTypeControllerWebKeys.
-				COLLECTION_ITEMS_DETAIL_DISPLAY_CONTEXT,
-			collectionItemsDetailDisplayContext);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			CollectionItemsDetailDisplayContext
+				collectionItemsDetailDisplayContext =
+					new CollectionItemsDetailDisplayContext(
+						liferayRenderRequest, liferayRenderResponse,
+						_assetListEntryLocalService,
+						_assetListAssetEntryProvider, _infoItemServiceTracker,
+						themeDisplay);
+
+			httpServletRequest.setAttribute(
+				CollectionPageLayoutTypeControllerWebKeys.
+					COLLECTION_ITEMS_DETAIL_DISPLAY_CONTEXT,
+				collectionItemsDetailDisplayContext);
+		}
+		catch (Exception exception) {
+			throw new IOException(exception);
+		}
 
 		return super.includeIcon(httpServletRequest, httpServletResponse);
 	}
@@ -122,6 +156,65 @@ public class CollectionItemsDetailProductNavigationControlMenuEntry
 		super.setServletContext(servletContext);
 	}
 
+	private LiferayRenderRequest _createRenderRequest(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws Exception {
+
+		ServletContext servletContext =
+			(ServletContext)httpServletRequest.getAttribute(WebKeys.CTX);
+
+		Portlet portlet = _portletLocalService.getPortletById(
+			ProductNavigationControlMenuPortletKeys.
+				PRODUCT_NAVIGATION_CONTROL_MENU);
+
+		InvokerPortlet invokerPortlet = PortletInstanceFactoryUtil.create(
+			portlet, servletContext);
+
+		PortletPreferencesIds portletPreferencesIds =
+			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
+				httpServletRequest, portlet.getPortletId());
+
+		PortletPreferences portletPreferences =
+			_portletPreferencesLocalService.getStrictPreferences(
+				portletPreferencesIds);
+
+		PortletConfig portletConfig = PortletConfigFactoryUtil.create(
+			portlet, servletContext);
+
+		PortletContext portletContext = portletConfig.getPortletContext();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		LiferayRenderRequest liferayRenderRequest = RenderRequestFactory.create(
+			httpServletRequest, portlet, invokerPortlet, portletContext,
+			WindowState.NORMAL, PortletMode.VIEW, portletPreferences,
+			themeDisplay.getPlid());
+
+		liferayRenderRequest.setPortletRequestDispatcherRequest(
+			httpServletRequest);
+
+		PortletResponse portletResponse = RenderResponseFactory.create(
+			httpServletResponse, liferayRenderRequest);
+
+		liferayRenderRequest.defineObjects(portletConfig, portletResponse);
+
+		return liferayRenderRequest;
+	}
+
+	private LiferayRenderResponse _createRenderResponse(
+		LiferayRenderRequest liferayRenderRequest,
+		HttpServletResponse httpServletResponse) {
+
+		BufferCacheServletResponse bufferCacheServletResponse =
+			new BufferCacheServletResponse(httpServletResponse);
+
+		return RenderResponseFactory.create(
+			bufferCacheServletResponse, liferayRenderRequest);
+	}
+
 	@Reference
 	private AssetListAssetEntryProvider _assetListAssetEntryProvider;
 
@@ -130,5 +223,11 @@ public class CollectionItemsDetailProductNavigationControlMenuEntry
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private PortletLocalService _portletLocalService;
+
+	@Reference
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 }

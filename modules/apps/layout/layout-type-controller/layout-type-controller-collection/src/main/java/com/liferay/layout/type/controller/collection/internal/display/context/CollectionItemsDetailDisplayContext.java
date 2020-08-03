@@ -23,7 +23,14 @@ import com.liferay.info.list.provider.InfoListProvider;
 import com.liferay.info.list.provider.InfoListProviderContext;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
+import com.liferay.portal.kernel.portlet.LiferayRenderResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -33,17 +40,24 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import javax.portlet.PortletURL;
+import javax.portlet.WindowStateException;
+
 /**
  * @author Jürgen Kappler
  */
 public class CollectionItemsDetailDisplayContext {
 
 	public CollectionItemsDetailDisplayContext(
+		LiferayRenderRequest liferayRenderRequest,
+		LiferayRenderResponse liferayRenderResponse,
 		AssetListEntryLocalService assetListEntryLocalService,
 		AssetListAssetEntryProvider assetListAssetEntryProvider,
 		InfoItemServiceTracker infoItemServiceTracker,
 		ThemeDisplay themeDisplay) {
 
+		_liferayRenderRequest = liferayRenderRequest;
+		_liferayRenderResponse = liferayRenderResponse;
 		_assetListEntryLocalService = assetListEntryLocalService;
 		_assetListAssetEntryProvider = assetListAssetEntryProvider;
 		_infoItemServiceTracker = infoItemServiceTracker;
@@ -77,6 +91,44 @@ public class CollectionItemsDetailDisplayContext {
 		}
 
 		return 0;
+	}
+
+	public String getNamespace() {
+		return _liferayRenderResponse.getNamespace();
+	}
+
+	public String getViewCollectionItemsURL()
+		throws PortalException, WindowStateException {
+
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			_liferayRenderRequest, AssetListEntry.class.getName(),
+			PortletProvider.Action.BROWSE);
+
+		if (portletURL == null) {
+			return StringPool.BLANK;
+		}
+
+		Layout layout = _themeDisplay.getLayout();
+
+		String collectionPK = layout.getTypeSettingsProperty("collectionPK");
+		String collectionType = layout.getTypeSettingsProperty(
+			"collectionType");
+
+		if (Validator.isNull(collectionType) ||
+			Validator.isNull(collectionPK)) {
+
+			return StringPool.BLANK;
+		}
+
+		portletURL.setParameter("redirect", _themeDisplay.getURLCurrent());
+
+		portletURL.setParameter("collectionPK", collectionPK);
+		portletURL.setParameter("collectionType", collectionType);
+		portletURL.setParameter("showActions", String.valueOf(Boolean.TRUE));
+
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+		return portletURL.toString();
 	}
 
 	private long _getAssetListEntryItemCount(String classPK) {
@@ -121,6 +173,8 @@ public class CollectionItemsDetailDisplayContext {
 	private final AssetListAssetEntryProvider _assetListAssetEntryProvider;
 	private final AssetListEntryLocalService _assetListEntryLocalService;
 	private final InfoItemServiceTracker _infoItemServiceTracker;
+	private final LiferayRenderRequest _liferayRenderRequest;
+	private final LiferayRenderResponse _liferayRenderResponse;
 	private final ThemeDisplay _themeDisplay;
 
 }

@@ -18,8 +18,34 @@
 
 <%
 CollectionItemsDetailDisplayContext collectionItemsDetailDisplayContext = (CollectionItemsDetailDisplayContext)request.getAttribute(CollectionPageLayoutTypeControllerWebKeys.COLLECTION_ITEMS_DETAIL_DISPLAY_CONTEXT);
+
+String namespace = collectionItemsDetailDisplayContext.getNamespace();
 %>
 
 <li class="control-menu-nav-item">
-	<span class="text-muted text-truncate">(<%= LanguageUtil.format(resourceBundle, "x-items", collectionItemsDetailDisplayContext.getCollectionItemsCount(), false) %>)</span>
+	<button class="btn btn-unstyled text-muted" id="<%= namespace %>viewCollectionItems" />
+		(<%= LanguageUtil.format(resourceBundle, "x-items", collectionItemsDetailDisplayContext.getCollectionItemsCount(), false) %>)
+	</button>
 </li>
+
+<aui:script>
+
+	var viewCollectionItems = document.getElementById(
+		'<%= namespace %>viewCollectionItems'
+	);
+
+	viewCollectionItems.addEventListener('click', function (event) {
+		Liferay.Util.openModal({
+			id: '<%= namespace %>viewCollectionItemsDialog',
+			title: '<liferay-ui:message key="collection-items" />',
+			url: '<%= collectionItemsDetailDisplayContext.getViewCollectionItemsURL() %>'
+		});
+	});
+
+	var onDestroyPortlet = function () {
+		document.removeEventListener('click', viewCollectionItems);
+	};
+
+	Liferay.on('destroyPortlet', onDestroyPortlet);
+
+</aui:script>

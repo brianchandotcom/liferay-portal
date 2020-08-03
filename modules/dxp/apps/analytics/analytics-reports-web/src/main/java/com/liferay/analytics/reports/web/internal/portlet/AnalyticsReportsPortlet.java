@@ -95,7 +95,7 @@ public class AnalyticsReportsPortlet extends MVCPortlet {
 			return;
 		}
 
-		InfoDisplayObjectProvider<Object> infoDisplayObjectProvider =
+		InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
 			_getInfoDisplayObjectProvider(httpServletRequest);
 
 		AnalyticsReportsInfoItem<Object> analyticsReportsInfoItem = null;
@@ -156,28 +156,26 @@ public class AnalyticsReportsPortlet extends MVCPortlet {
 		super.doDispatch(renderRequest, renderResponse);
 	}
 
-	private InfoDisplayObjectProvider<Object> _getInfoDisplayObjectProvider(
+	private InfoDisplayObjectProvider<?> _getInfoDisplayObjectProvider(
 		HttpServletRequest httpServletRequest) {
 
-		InfoDisplayObjectProvider<Object> infoDisplayObjectProvider =
-			(InfoDisplayObjectProvider<Object>)httpServletRequest.getAttribute(
+		InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
+			(InfoDisplayObjectProvider<?>)httpServletRequest.getAttribute(
 				AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
 
 		if (infoDisplayObjectProvider != null) {
 			return infoDisplayObjectProvider;
 		}
 
-		InfoDisplayContributor<Object> infoDisplayContributor =
-			(InfoDisplayContributor<Object>)
+		InfoDisplayContributor<?> infoDisplayContributor =
 				_infoDisplayContributorTracker.getInfoDisplayContributor(
 					_portal.getClassName(
 						ParamUtil.getLong(httpServletRequest, "classNameId")));
 
 		try {
 			infoDisplayObjectProvider =
-				(InfoDisplayObjectProvider<Object>)
-					infoDisplayContributor.getInfoDisplayObjectProvider(
-						ParamUtil.getLong(httpServletRequest, "classPK"));
+				infoDisplayContributor.getInfoDisplayObjectProvider(
+					ParamUtil.getLong(httpServletRequest, "classPK"));
 		}
 		catch (Exception exception) {
 			_log.error("Unable to get info display object provider", exception);

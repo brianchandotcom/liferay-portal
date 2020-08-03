@@ -2592,7 +2592,7 @@ definition {
 	@description = "This is a test for LPS-112093. The Web Content Articles of collection are displayed using Default Template when add a Content Display to Collection Display."
 	@priority = "5"
 	test ViewWebContentViaContentInCollectionDisplay {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		for (var i : list "1,2,3") {
 			JSONWebcontent.addWebContent(
@@ -2664,7 +2664,7 @@ definition {
 	@description = "This is a test for LPS-112093. Can display Web Content Articles of collection using custom template when add a Content Display to Collection Display."
 	@priority = "5"
 	test ViewWebContentWithCustomTemplateViaContentDisplayInCollectionDisplay {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

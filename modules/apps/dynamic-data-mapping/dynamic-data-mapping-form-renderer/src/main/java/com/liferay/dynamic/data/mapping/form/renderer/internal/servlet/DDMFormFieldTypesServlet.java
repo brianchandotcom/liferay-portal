@@ -42,6 +42,7 @@ import com.liferay.portal.util.PropsValues;
 import java.io.IOException;
 
 import java.util.Collections;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -124,13 +125,13 @@ public class DDMFormFieldTypesServlet extends HttpServlet {
 			httpServletResponse, fieldTypesJSONArray.toJSONString());
 	}
 
-	protected JSONObject getFieldProperties(
+	protected Map<String, Object> getFieldProperties(
 		String ddmFormFieldName, HttpServletRequest httpServletRequest) {
 
 		if (StringUtil.equals(ddmFormFieldName, "rich_text")) {
 			EditorConfiguration richTextEditorConfiguration =
 				EditorConfigurationFactoryUtil.getEditorConfiguration(
-					StringPool.BLANK, ddmFormFieldName, "ckeditor",
+					StringPool.BLANK, ddmFormFieldName, "ckeditor_classic",
 					Collections.emptyMap(),
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY),
@@ -140,11 +141,11 @@ public class DDMFormFieldTypesServlet extends HttpServlet {
 			return richTextEditorConfiguration.getData();
 		}
 
-		return JSONFactoryUtil.createJSONObject();
+		return Collections.emptyMap();
 	}
 
 	protected JSONObject getFieldTypeMetadataJSONObject(
-		String ddmFormFieldName, Object properties) {
+		String ddmFormFieldName, Map<String, Object> properties) {
 
 		return JSONUtil.put(
 			"javaScriptModule",

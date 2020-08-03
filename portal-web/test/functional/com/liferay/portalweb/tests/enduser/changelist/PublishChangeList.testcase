@@ -249,4 +249,71 @@ definition {
 			locator1 = "WC#ENTRY_LIST_TITLE");
 	}
 
+	@priority = "5"
+	test SearchPublishedPublications {
+		property test.name.skip.portal.instance = "PublishChangeList#SearchPublishedPublications";
+
+		ChangeList.createNewPublication(publicationName = "Apple");
+
+		ChangeList.createNewPublication(publicationName = "Banana");
+
+		ChangeList.createNewPublication(publicationName = "Cherry");
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Manage Publications");
+
+		Navigator.gotoNavTab(navTab = "Ongoing");
+
+		for (var publicationName : list "Apple,Banana,Cherry") {
+			ChangeList.searchCP(publicationName = "${publicationName}");
+		}
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "Cherry");
+
+		ChangeList.prepareToPublish(publicationName = "Cherry");
+
+		ChangeList.publishPublication(publicationName = "Cherry");
+
+		ChangeList.selectPublication(publicationName = "Banana");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "Banana");
+
+		ChangeList.prepareToPublish(publicationName = "Banana");
+
+		ChangeList.publishPublication(publicationName = "Banana");
+
+		ChangeList.selectPublication(publicationName = "Apple");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "Apple");
+
+		ChangeList.prepareToPublish(publicationName = "Apple");
+
+		ChangeList.publishPublication(publicationName = "Apple");
+
+		Navigator.gotoNavTab(navTab = "History");
+
+		for (var publicationName : list "Apple,Banana,Cherry") {
+			ChangeList.searchCP(publicationName = "${publicationName}");
+		}
+	}
+
 }

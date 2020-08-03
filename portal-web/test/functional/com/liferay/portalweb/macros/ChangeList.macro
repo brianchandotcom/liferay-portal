@@ -147,6 +147,16 @@ definition {
 			value1 = "Revert &quot;${publicationName}&quot;");
 	}
 
+	macro searchCP {
+		Search.searchCP(searchTerm = "${publicationName}");
+
+		key_publicationName = "${publicationName}";
+
+		AssertTextEquals(
+			locator1 = "ChangeList#PUBLISHED_PUBLICATIONS_NAME",
+			value1 = "${publicationName}");
+	}
+
 	macro selectPublication {
 		Click(locator1 = "ChangeList#CHANGE_LIST_INDICATOR_BUTTON");
 

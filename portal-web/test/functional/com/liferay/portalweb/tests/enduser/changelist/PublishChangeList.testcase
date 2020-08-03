@@ -103,6 +103,71 @@ definition {
 		ChangeList.publishPublication(publicationName = "Publication Name");*/
 	}
 
+	@priority = "4"
+	test ConflictingChangesNeedsManualResolution {
+		property test.name.skip.portal.instance = "PublishChangeList#ConflictingChangesNeedsManualResolution";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		ChangeList.createNewPublication(publicationName = "Publication Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		WebContent.deleteCP(
+			siteURLKey = "Guest",
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		ChangeList.createNewPublication(publicationName = "Publication 2 Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.editCP(
+			webContentContentEdit = "WC WebContent Content 2 Edit",
+			webContentTitle = "WC WebContent Title",
+			webContentTitleEdit = "WC WebContent Title 2 Edit");
+
+		ChangeList.selectPublication(publicationName = "Publication Name");
+
+		ChangeList.prepareToPublish(publicationName = "Publication Name");
+
+		ChangeList.publishPublication(publicationName = "Publication Name");
+
+		ChangeList.selectPublication(publicationName = "Publication 2 Name");
+
+		ChangeList.prepareToPublish(publicationName = "Publication 2 Name");
+
+		AssertElementPresent(locator1 = "ChangeList#NEEDS_MANUAL_RESOLUTION_TABLE");
+
+		AssertElementPresent(
+			key_warningMessage = "Modification conflicts with a deletion.",
+			locator1 = "Message#WARNING_SPECIFIC");
+
+		AssertVisible(locator1 = "ChangeList#DISABLED_PUBLISH_BUTTON");
+	}
+
 	@priority = "5"
 	test PublishAndRevertPublication {
 		property test.name.skip.portal.instance = "PublishChangeList#PublishAndRevertPublication";

@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISABLED_PUBLISH_BUTTON</td>
+	<td>//*[contains(@class,'btn')][normalize-space(text())='Publish']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HISTORY_PUBLICATION_STATUS</td>
 	<td>//td[contains(.,'${key_publicationName}')]//following-sibling::td/span[contains(@class,'label-success')]//span</td>
 	<td></td>

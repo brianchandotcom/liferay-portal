@@ -19,10 +19,6 @@
 <clay:container-fluid
 	cssClass="container-view"
 >
-	<liferay-ui:breadcrumb
-		showLayout="<%= false %>"
-	/>
-
 	<liferay-frontend:screen-navigation
 		containerCssClass="col-lg-8"
 		containerWrapperCssClass=""

@@ -22,6 +22,20 @@ const getLocalizedValue = (defaultLanguageId, localizedValues) => {
 	return localizedValues[defaultLanguageId];
 };
 
+const getLocalizedUserPreferenceValue = (
+	localizedValues,
+	userLanguageId,
+	defaultLanguageId
+) => {
+	const languageId = themeDisplay.getLanguageId();
+
+	if (localizedValues[userLanguageId]) {
+		return localizedValues[userLanguageId];
+	}
+
+	return localizedValues[languageId] ?? localizedValues[defaultLanguageId];
+};
+
 const sub = (langKey, args) => {
 	const SPLIT_REGEX = /({\d+})/g;
 
@@ -46,4 +60,4 @@ const sub = (langKey, args) => {
 	return keyArray.join('');
 };
 
-export {getLocalizedValue, sub};
+export {getLocalizedValue, getLocalizedUserPreferenceValue, sub};

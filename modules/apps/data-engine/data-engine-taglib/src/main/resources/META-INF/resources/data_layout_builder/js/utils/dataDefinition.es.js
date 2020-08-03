@@ -61,22 +61,6 @@ export const forEachDataDefinitionField = (
 	return false;
 };
 
-/**
- * @param {Array} fieldSets
- * @returns {Array} fields
- */
-export const getAllDataDefinitionFieldsFromAllFieldSets = (fieldSets = []) => {
-	const fields = [];
-
-	fieldSets.forEach(({dataDefinitionFields = []}) => {
-		dataDefinitionFields.forEach((field) => {
-			fields.push(field);
-		});
-	});
-
-	return fields;
-};
-
 export const getDataDefinitionField = (
 	dataDefinition = {dataDefinitionFields: []},
 	fieldName

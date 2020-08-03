@@ -23,7 +23,6 @@ import {
 	UPDATE_CONFIG,
 	UPDATE_EDITING_DATA_DEFINITION_ID,
 } from '../../actions.es';
-import {getAllDataDefinitionFieldsFromAllFieldSets} from '../../utils/dataDefinition.es';
 import {
 	containsField,
 	isDataLayoutEmpty,
@@ -40,13 +39,7 @@ const ModalContent = ({
 	fieldSet,
 	onClose,
 }) => {
-	const [
-		{
-			appProps,
-			dataDefinition: {dataDefinitionFields},
-			fieldSets,
-		},
-	] = useContext(AppContext);
+	const [{appProps}] = useContext(AppContext);
 	const [childrenContext, setChildrenContext] = useState({
 		dataLayoutBuilder: null,
 		dispatch: () => {},
@@ -57,14 +50,7 @@ const ModalContent = ({
 	const {
 		dataLayoutBuilder,
 		dispatch,
-		state: {
-			config,
-			dataLayout,
-			dataDefinition: {
-				dataDefinitionFields: childrenDataDefinitionFields = [],
-			} = {},
-			editingLanguageId = defaultLanguageId,
-		},
+		state: {config, dataLayout, editingLanguageId = defaultLanguageId},
 	} = childrenContext;
 
 	const {contentType} = appProps;
@@ -72,22 +58,6 @@ const ModalContent = ({
 	const availableLanguageIds = [
 		...new Set([...Object.keys(name), editingLanguageId]),
 	];
-
-	const normalizeDataDefinitionFields = (dataDefinitionFields) => {
-		const fields = [];
-
-		dataDefinitionFields.forEach(
-			({fieldType, name, nestedDataDefinitionFields}) => {
-				if (fieldType === 'fieldset') {
-					return fields.push(...nestedDataDefinitionFields);
-				}
-
-				return fields.push({name});
-			}
-		);
-
-		return fields;
-	};
 
 	const changeZIndex = (zIndex) => {
 		document
@@ -124,18 +94,6 @@ const ModalContent = ({
 			setDataLayoutIsEmpty(isDataLayoutEmpty(dataLayoutPages));
 		}
 	}, [dataLayout]);
-
-	const mergedAllDataDefinitionFields = normalizeDataDefinitionFields([
-		...dataDefinitionFields,
-		...childrenDataDefinitionFields,
-		...getAllDataDefinitionFieldsFromAllFieldSets(fieldSets),
-	]);
-
-	useEffect(() => {
-		if (dataLayoutBuilder) {
-			dataLayoutBuilder.fieldNameGenerator(mergedAllDataDefinitionFields);
-		}
-	}, [dataLayoutBuilder, mergedAllDataDefinitionFields]);
 
 	useEffect(() => {
 		if (dataLayoutBuilder) {

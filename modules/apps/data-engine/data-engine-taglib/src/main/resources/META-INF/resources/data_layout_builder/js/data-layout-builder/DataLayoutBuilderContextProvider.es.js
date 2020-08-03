@@ -25,11 +25,10 @@ import {
 	UPDATE_PAGES,
 } from '../actions.es';
 import {getDropHandler} from '../drag-and-drop/getDropHandler.es';
-import {getAllDataDefinitionFieldsFromAllFieldSets} from '../utils/dataDefinition.es';
 import DataLayoutBuilderContext from './DataLayoutBuilderContext.es';
 
 export default ({children, dataLayoutBuilder}) => {
-	const [{dataDefinition, fieldSets}, dispatch] = useContext(AppContext);
+	const [{dataDefinition}, dispatch] = useContext(AppContext);
 
 	useEffect(() => {
 		const provider = dataLayoutBuilder.getLayoutProvider();
@@ -71,15 +70,6 @@ export default ({children, dataLayoutBuilder}) => {
 
 		return () => eventHandler.removeListener();
 	}, [dataLayoutBuilder, dispatch]);
-
-	useEffect(() => {
-		if (dataLayoutBuilder) {
-			dataLayoutBuilder.fieldNameGenerator([
-				...dataDefinition.dataDefinitionFields,
-				...getAllDataDefinitionFieldsFromAllFieldSets(fieldSets),
-			]);
-		}
-	}, [dataDefinition.dataDefinitionFields, dataLayoutBuilder, fieldSets]);
 
 	useEffect(() => {
 		const provider = dataLayoutBuilder.getLayoutProvider();

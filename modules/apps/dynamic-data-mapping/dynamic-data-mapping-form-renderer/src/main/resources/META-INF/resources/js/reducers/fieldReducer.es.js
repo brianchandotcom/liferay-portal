@@ -98,11 +98,21 @@ export default (state, action) => {
 
 			return {
 				pages: pageVisitor.mapColumns((column) => {
+					const filter = (fields) =>
+						fields
+							.filter((field) => field.name !== action.payload)
+							.map((field) => {
+								return {
+									...field,
+									nestedFields: field.nestedFields
+										? filter(field.nestedFields)
+										: [],
+								};
+							});
+
 					return {
 						...column,
-						fields: column.fields.filter(
-							(field) => field.name !== action.payload
-						),
+						fields: filter(column.fields),
 					};
 				}),
 			};

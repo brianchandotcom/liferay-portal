@@ -378,7 +378,10 @@ public class DataFactory {
 		_commerceChannelGroupModel = newCommerceChannelGroupModel(
 			_commerceChannelModel);
 
-		initCommerceProductModels();
+		_cpTaxCategoryModel = newCPTaxCategoryModel();
+
+		initCommerceProductModels(
+			_cpTaxCategoryModel, _commerceCatalogGroupModel);
 
 		initJournalArticleContent();
 
@@ -873,8 +876,9 @@ public class DataFactory {
 		}
 	}
 
-	public void initCommerceProductModels() {
-		_cpTaxCategoryModel = newCPTaxCategoryModel();
+	public void initCommerceProductModels(
+		CPTaxCategoryModel cpTaxCategoryModel,
+		GroupModel commerceCatalogGroupModel) {
 
 		_cProductModels = new ArrayList<>(
 			BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_COUNT);
@@ -910,7 +914,7 @@ public class DataFactory {
 			long cProductId = _counter.get();
 
 			CProductModel cProductModel = newCProductModel(
-				_commerceCatalogGroupModel.getGroupId(), cProductId,
+				commerceCatalogGroupModel.getGroupId(), cProductId,
 				cpDefinitionIds
 					[BenchmarksPropsValues.
 						MAX_COMMERCE_PRODUCT_DEFINITION_COUNT - 1]);
@@ -933,13 +937,13 @@ public class DataFactory {
 
 				_cpDefinitionModels.add(
 					newCPDefinitionModel(
-						_commerceCatalogGroupModel.getGroupId(), cpDefinitionId,
-						cProductId, _cpTaxCategoryModel.getCPTaxCategoryId(),
+						commerceCatalogGroupModel.getGroupId(), cpDefinitionId,
+						cProductId, cpTaxCategoryModel.getCPTaxCategoryId(),
 						definitionIndex + 1));
 
 				_assetEntryModels.add(
 					newAssetEntryModel(
-						_commerceCatalogGroupModel.getGroupId(), new Date(),
+						commerceCatalogGroupModel.getGroupId(), new Date(),
 						new Date(), getClassNameId(CPDefinition.class),
 						cpDefinitionId, SequentialUUID.generate(), 0, true,
 						true, "text/plain",
@@ -956,7 +960,7 @@ public class DataFactory {
 
 					_cpInstanceModels.add(
 						newCPInstanceModel(
-							_commerceCatalogGroupModel.getGroupId(),
+							commerceCatalogGroupModel.getGroupId(),
 							cpDefinitionId, instanceIndex));
 				}
 			}
@@ -4447,7 +4451,7 @@ public class DataFactory {
 	private List<CPFriendlyURLEntryModel> _cpFriendlyURLEntryModels;
 	private List<CPInstanceModel> _cpInstanceModels;
 	private List<CProductModel> _cProductModels;
-	private CPTaxCategoryModel _cpTaxCategoryModel;
+	private final CPTaxCategoryModel _cpTaxCategoryModel;
 	private final PortletPreferencesImpl
 		_defaultAssetPublisherPortletPreferencesImpl;
 	private AssetVocabularyModel _defaultAssetVocabularyModel;

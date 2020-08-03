@@ -199,6 +199,10 @@ public class WorkflowTaskPermissionChecker {
 			AssetRenderer<?> assetRenderer = workflowHandler.getAssetRenderer(
 				classPK);
 
+			if (assetRenderer == null) {
+				return false;
+			}
+
 			return assetRenderer.hasViewPermission(permissionChecker);
 		}
 		catch (PortalException portalException) {

@@ -52,6 +52,10 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 	}
 
 	public AssetRendererFactory<?> getAssetRendererFactory() {
+		if (_infoItemDetails == null) {
+			return null;
+		}
+
 		return AssetRendererFactoryRegistryUtil.
 			getAssetRendererFactoryByClassNameId(
 				PortalUtil.getClassNameId(_infoItemDetails.getClassName()));
@@ -82,6 +86,10 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 	public boolean hasPermission(
 			PermissionChecker permissionChecker, String actionId)
 		throws Exception {
+
+		if (_infoItemDetails == null) {
+			return false;
+		}
 
 		InfoItemPermissionProvider infoItemPermissionProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(

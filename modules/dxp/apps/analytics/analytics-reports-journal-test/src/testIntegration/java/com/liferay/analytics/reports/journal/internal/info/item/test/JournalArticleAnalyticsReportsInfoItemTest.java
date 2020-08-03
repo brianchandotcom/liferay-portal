@@ -20,6 +20,7 @@ import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -36,10 +37,15 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.util.Arrays;
+import java.util.Locale;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -116,6 +122,36 @@ public class JournalArticleAnalyticsReportsInfoItemTest {
 	}
 
 	@Test
+	public void testGetAvailableLocales() throws Exception {
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), 0,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, _getLocalizedMap(),
+			_getLocalizedMap(), _getLocalizedMap(), LocaleUtil.SPAIN, false,
+			false,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+
+		Assert.assertEquals(
+			Arrays.asList(LocaleUtil.US, LocaleUtil.SPAIN),
+			_analyticsReportsInfoItem.getAvailableLocales(journalArticle));
+	}
+
+	@Test
+	public void testGetDefaultLocale() throws Exception {
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), 0,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, _getLocalizedMap(),
+			_getLocalizedMap(), _getLocalizedMap(), LocaleUtil.SPAIN, false,
+			false,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+
+		Assert.assertEquals(
+			LocaleUtil.fromLanguageId(journalArticle.getDefaultLanguageId()),
+			_analyticsReportsInfoItem.getDefaultLocale(journalArticle));
+	}
+
+	@Test
 	public void testGetPublishDate() throws Exception {
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(), RandomTestUtil.randomString(),
@@ -168,6 +204,14 @@ public class JournalArticleAnalyticsReportsInfoItemTest {
 		Assert.assertEquals(
 			journalArticle.getTitle(LocaleUtil.US),
 			_analyticsReportsInfoItem.getTitle(journalArticle, LocaleUtil.US));
+	}
+
+	private Map<Locale, String> _getLocalizedMap() {
+		return HashMapBuilder.put(
+			LocaleUtil.SPAIN, RandomTestUtil.randomString()
+		).put(
+			LocaleUtil.US, RandomTestUtil.randomString()
+		).build();
 	}
 
 	@Inject(filter = "component.name=*.JournalArticleAnalyticsReportsInfoItem")

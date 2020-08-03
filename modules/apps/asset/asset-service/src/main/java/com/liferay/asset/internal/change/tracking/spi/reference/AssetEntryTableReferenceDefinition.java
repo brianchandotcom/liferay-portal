@@ -21,6 +21,7 @@ import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.layout.model.LayoutClassedModelUsageTable;
+import com.liferay.message.boards.model.MBDiscussionTable;
 import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.model.Portlet;
@@ -54,6 +55,18 @@ public class AssetEntryTableReferenceDefinition
 				).and(
 					AssetEntryTable.INSTANCE.classPK.eq(
 						AssetDisplayPageEntryTable.INSTANCE.classPK)
+				)
+			)
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
+				MBDiscussionTable.INSTANCE
+			).innerJoinON(
+				AssetEntryTable.INSTANCE,
+				AssetEntryTable.INSTANCE.classNameId.eq(
+					MBDiscussionTable.INSTANCE.classNameId
+				).and(
+					AssetEntryTable.INSTANCE.classPK.eq(
+						MBDiscussionTable.INSTANCE.classPK)
 				)
 			)
 		).referenceInnerJoin(

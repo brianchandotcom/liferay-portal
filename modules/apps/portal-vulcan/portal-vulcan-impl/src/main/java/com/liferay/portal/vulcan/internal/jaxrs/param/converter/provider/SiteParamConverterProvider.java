@@ -60,8 +60,8 @@ public class SiteParamConverterProvider
 
 		if (multivaluedMap.containsKey("assetLibraryId")) {
 			siteId = getDepotGroupId(
-				_company.getCompanyId(),
-				multivaluedMap.getFirst("assetLibraryId"));
+				multivaluedMap.getFirst("assetLibraryId"),
+				_company.getCompanyId());
 		}
 		else {
 			siteId = getGroupId(
@@ -87,12 +87,12 @@ public class SiteParamConverterProvider
 		return null;
 	}
 
-	public Long getDepotGroupId(long companyId, String assetLibraryId) {
+	public Long getDepotGroupId(String assetLibraryId, long companyId) {
 		if (assetLibraryId == null) {
 			return null;
 		}
 
-		return _fetchDepotGroupId(companyId, assetLibraryId);
+		return _fetchDepotGroupId(assetLibraryId, companyId);
 	}
 
 	public Long getGroupId(long companyId, String siteId) {
@@ -118,7 +118,7 @@ public class SiteParamConverterProvider
 		return false;
 	}
 
-	private Long _fetchDepotGroupId(long companyId, String assetLibraryId) {
+	private Long _fetchDepotGroupId(String assetLibraryId, long companyId) {
 		Group group = _groupLocalService.fetchGroup(companyId, assetLibraryId);
 
 		if (group == null) {

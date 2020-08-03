@@ -680,8 +680,8 @@ public class GraphQLServletExtender {
 				try {
 					argument = String.valueOf(
 						siteParamConverterProvider.getDepotGroupId(
-							CompanyThreadLocal.getCompanyId(),
-							(String)argument));
+							(String)argument,
+							CompanyThreadLocal.getCompanyId()));
 				}
 				catch (Exception exception) {
 					throw new Exception(

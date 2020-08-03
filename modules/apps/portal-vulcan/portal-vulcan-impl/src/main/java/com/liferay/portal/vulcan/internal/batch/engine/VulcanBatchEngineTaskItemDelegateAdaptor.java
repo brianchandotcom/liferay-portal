@@ -152,7 +152,7 @@ public class VulcanBatchEngineTaskItemDelegateAdaptor<T>
 					key,
 					String.valueOf(
 						siteParamConverterProvider.getDepotGroupId(
-							_company.getCompanyId(), String.valueOf(value))));
+							String.valueOf(value), _company.getCompanyId())));
 			}
 			else if (key.equals("siteId") && (value != null)) {
 				parameters.put(

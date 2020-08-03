@@ -992,6 +992,18 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 			<arg value="--build-file=${project.dir}/modules/profile-dxp.gradle" />
 		</gradle-execute>
 
+		<if>
+			<and>
+				<isset property="build.setup.profile.dxp.app.lcs.version" />
+				<not>
+					<equals arg1="${build.setup.profile.dxp.app.lcs.version}" arg2="" />
+				</not>
+			</and>
+			<then>
+				<setup-dxp-app appname="lcs" />
+			</then>
+		</if>
+
 		<update-gradle-properties />
 
 		<if>

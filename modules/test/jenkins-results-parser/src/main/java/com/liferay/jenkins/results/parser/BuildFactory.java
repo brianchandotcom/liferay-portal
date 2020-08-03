@@ -36,6 +36,10 @@ public class BuildFactory {
 				return new CucumberAxisBuild(url, (BatchBuild)parentBuild);
 			}
 
+			if ((jobVariant != null) && jobVariant.contains("functional")) {
+				return new PoshiAxisBuild(url, (BatchBuild)parentBuild);
+			}
+
 			return new AxisBuild(url, (BatchBuild)parentBuild);
 		}
 

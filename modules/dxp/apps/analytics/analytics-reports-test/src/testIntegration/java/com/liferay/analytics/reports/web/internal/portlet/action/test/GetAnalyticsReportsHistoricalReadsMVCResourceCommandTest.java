@@ -15,8 +15,11 @@
 package com.liferay.analytics.reports.web.internal.portlet.action.test;
 
 import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockHttpUtil;
+import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockInfoDisplayObjectProviderUtil;
 import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockThemeDisplayUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -34,6 +37,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -125,6 +129,10 @@ public class GetAnalyticsReportsHistoricalReadsMVCResourceCommandTest {
 
 		try {
 			mockLiferayResourceRequest.setAttribute(
+				AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER,
+				MockInfoDisplayObjectProviderUtil.getInfoDisplayObjectProvider(
+					_infoDisplayContributorTracker, _portal));
+			mockLiferayResourceRequest.setAttribute(
 				WebKeys.THEME_DISPLAY,
 				MockThemeDisplayUtil.getThemeDisplay(
 					_companyLocalService.getCompany(
@@ -149,6 +157,9 @@ public class GetAnalyticsReportsHistoricalReadsMVCResourceCommandTest {
 	@Inject
 	private Http _http;
 
+	@Inject
+	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
+
 	private Layout _layout;
 
 	@Inject
@@ -156,5 +167,8 @@ public class GetAnalyticsReportsHistoricalReadsMVCResourceCommandTest {
 
 	@Inject(filter = "mvc.command.name=/analytics_reports/get_historical_reads")
 	private MVCResourceCommand _mvcResourceCommand;
+
+	@Inject
+	private Portal _portal;
 
 }

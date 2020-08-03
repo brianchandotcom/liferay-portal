@@ -19,6 +19,7 @@ import com.liferay.analytics.reports.web.internal.data.provider.AnalyticsReports
 import com.liferay.analytics.reports.web.internal.model.CountrySearchKeywords;
 import com.liferay.analytics.reports.web.internal.model.SearchKeyword;
 import com.liferay.analytics.reports.web.internal.model.TrafficSource;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -94,7 +95,8 @@ public class AnalyticsReportsDisplayContextTest {
 					RandomTestUtil.randomDouble(), null,
 					RandomTestUtil.randomInt(), RandomTestUtil.randomDouble(),
 					false),
-				_getAnalyticsReportsItem(), null, null, new PortalImpl(),
+				_getAnalyticsReportsItem(), null, null,
+				_getInfoDisplayObjectProvider(), new PortalImpl(),
 				_getRenderResponse(), _getResourceBundle(),
 				_getThemeDisplay(_getLayout()),
 				_getUser(RandomTestUtil.randomString()));
@@ -131,8 +133,9 @@ public class AnalyticsReportsDisplayContextTest {
 		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
 			new AnalyticsReportsDisplayContext(
 				analyticsReportsDataProvider, analyticsReportsInfoItem, null,
-				null, new PortalImpl(), _getRenderResponse(),
-				_getResourceBundle(), _getThemeDisplay(_getLayout()), null);
+				null, _getInfoDisplayObjectProvider(), new PortalImpl(),
+				_getRenderResponse(), _getResourceBundle(),
+				_getThemeDisplay(_getLayout()), null);
 
 		Map<String, Object> data = analyticsReportsDisplayContext.getData();
 
@@ -166,8 +169,9 @@ public class AnalyticsReportsDisplayContextTest {
 		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
 			new AnalyticsReportsDisplayContext(
 				analyticsReportsDataProvider, analyticsReportsInfoItem, null,
-				null, new PortalImpl(), _getRenderResponse(),
-				_getResourceBundle(), _getThemeDisplay(_getLayout()), user);
+				null, _getInfoDisplayObjectProvider(), new PortalImpl(),
+				_getRenderResponse(), _getResourceBundle(),
+				_getThemeDisplay(_getLayout()), user);
 
 		Map<String, Object> data = analyticsReportsDisplayContext.getData();
 
@@ -199,9 +203,9 @@ public class AnalyticsReportsDisplayContextTest {
 		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
 			new AnalyticsReportsDisplayContext(
 				analyticsReportsDataProvider, analyticsReportsInfoItem, null,
-				null, new PortalImpl(), _getRenderResponse(),
-				_getResourceBundle(), _getThemeDisplay(layout),
-				_getUser(authorPortraitURL));
+				null, _getInfoDisplayObjectProvider(), new PortalImpl(),
+				_getRenderResponse(), _getResourceBundle(),
+				_getThemeDisplay(layout), _getUser(authorPortraitURL));
 
 		Map<String, Object> data = analyticsReportsDisplayContext.getData();
 
@@ -277,9 +281,9 @@ public class AnalyticsReportsDisplayContextTest {
 		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
 			new AnalyticsReportsDisplayContext(
 				analyticsReportsDataProvider, analyticsReportsInfoItem, null,
-				null, new PortalImpl(), _getRenderResponse(),
-				_getResourceBundle(), _getThemeDisplay(layout),
-				_getUser(authorPortraitURL));
+				null, _getInfoDisplayObjectProvider(), new PortalImpl(),
+				_getRenderResponse(), _getResourceBundle(),
+				_getThemeDisplay(layout), _getUser(authorPortraitURL));
 
 		Map<String, Object> data = analyticsReportsDisplayContext.getData();
 
@@ -440,6 +444,10 @@ public class AnalyticsReportsDisplayContextTest {
 			}
 
 		};
+	}
+
+	private InfoDisplayObjectProvider<Object> _getInfoDisplayObjectProvider() {
+		return Mockito.mock(InfoDisplayObjectProvider.class);
 	}
 
 	private Layout _getLayout() {

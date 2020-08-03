@@ -47,17 +47,16 @@ public class BlogsEntryInfoItemObjectProvider
 
 		if (infoItemIdentifier instanceof ClassPKInfoItemIdentifier) {
 			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-				(ClassPKInfoItemIdentifier) infoItemIdentifier;
+				(ClassPKInfoItemIdentifier)infoItemIdentifier;
 
 			blogsEntry = _blogsEntryLocalService.fetchBlogsEntry(
 				classPKInfoItemIdentifier.getClassPK());
 		}
-		else if (infoItemIdentifier
-					instanceof GroupUrlTitleInfoItemIdentifier) {
+		else if (infoItemIdentifier instanceof
+					GroupUrlTitleInfoItemIdentifier) {
 
-			GroupUrlTitleInfoItemIdentifier
-				groupURLTitleInfoItemIdentifier =
-					(GroupUrlTitleInfoItemIdentifier)infoItemIdentifier;
+			GroupUrlTitleInfoItemIdentifier groupURLTitleInfoItemIdentifier =
+				(GroupUrlTitleInfoItemIdentifier)infoItemIdentifier;
 
 			blogsEntry = _blogsEntryLocalService.fetchEntry(
 				groupURLTitleInfoItemIdentifier.getGroupId(),

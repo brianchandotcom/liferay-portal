@@ -137,14 +137,14 @@ public class InfoDisplayContributorWrapper
 		try {
 			if (infoItemIdentifier instanceof ClassPKInfoItemIdentifier) {
 				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-					(ClassPKInfoItemIdentifier) infoItemIdentifier;
+					(ClassPKInfoItemIdentifier)infoItemIdentifier;
 
 				infoDisplayObjectProvider =
 					_infoDisplayContributor.getInfoDisplayObjectProvider(
 						classPKInfoItemIdentifier.getClassPK());
 			}
-			else if (infoItemIdentifier
-				instanceof GroupUrlTitleInfoItemIdentifier) {
+			else if (infoItemIdentifier instanceof
+						GroupUrlTitleInfoItemIdentifier) {
 
 				GroupUrlTitleInfoItemIdentifier
 					groupURLTitleInfoItemIdentifier =

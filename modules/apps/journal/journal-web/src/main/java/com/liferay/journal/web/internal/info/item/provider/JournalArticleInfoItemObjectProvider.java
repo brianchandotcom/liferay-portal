@@ -83,8 +83,8 @@ public class JournalArticleInfoItemObjectProvider
 					groupKeyInfoItemIdentifier.getGroupId(),
 					groupKeyInfoItemIdentifier.getKey(), version);
 			}
-			else if (infoItemIdentifier
-						instanceof GroupUrlTitleInfoItemIdentifier) {
+			else if (infoItemIdentifier instanceof
+						GroupUrlTitleInfoItemIdentifier) {
 
 				GroupUrlTitleInfoItemIdentifier
 					groupURLTitleInfoItemIdentifier =

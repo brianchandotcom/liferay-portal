@@ -338,8 +338,6 @@ public class DataFactory {
 		};
 
 		_accountId = _counter.get();
-		_commerceCatalogGroupId = _counter.get();
-		_commerceChannelGroupId = _counter.get();
 		_companyId = _counter.get();
 		_defaultDDLDDMStructureVersionId = _counter.get();
 		_defaultDLDDMStructureId = _counter.get();
@@ -370,8 +368,8 @@ public class DataFactory {
 		initCommerceCurrencyModel();
 		initCommerceCatalogModel();
 		initCommerceChannelModel();
-		initCommerceProductModels();
 		initGroupModels();
+		initCommerceProductModels();
 
 		initJournalArticleContent();
 
@@ -972,7 +970,7 @@ public class DataFactory {
 			long cProductId = _counter.get();
 
 			CProductModel cProductModel = newCProductModel(
-				_commerceCatalogGroupId, cProductId,
+				_commerceCatalogGroupModel.getGroupId(), cProductId,
 				cpDefinitionIds
 					[BenchmarksPropsValues.
 						MAX_COMMERCE_PRODUCT_DEFINITION_COUNT - 1]);
@@ -995,15 +993,16 @@ public class DataFactory {
 
 				_cpDefinitionModels.add(
 					newCPDefinitionModel(
-						_commerceCatalogGroupId, cpDefinitionId, cProductId,
-						_cpTaxCategoryModel.getCPTaxCategoryId(),
+						_commerceCatalogGroupModel.getGroupId(), cpDefinitionId,
+						cProductId, _cpTaxCategoryModel.getCPTaxCategoryId(),
 						definitionIndex + 1));
 
 				_assetEntryModels.add(
 					newAssetEntryModel(
-						_commerceCatalogGroupId, new Date(), new Date(),
-						getClassNameId(CPDefinition.class), cpDefinitionId,
-						SequentialUUID.generate(), 0, true, true, "text/plain",
+						_commerceCatalogGroupModel.getGroupId(), new Date(),
+						new Date(), getClassNameId(CPDefinition.class),
+						cpDefinitionId, SequentialUUID.generate(), 0, true,
+						true, "text/plain",
 						cpDefinitionLocalizationModel.getName()));
 
 				_cpFriendlyURLEntryModels.add(
@@ -1017,8 +1016,8 @@ public class DataFactory {
 
 					_cpInstanceModels.add(
 						newCPInstanceModel(
-							_commerceCatalogGroupId, cpDefinitionId,
-							instanceIndex));
+							_commerceCatalogGroupModel.getGroupId(),
+							cpDefinitionId, instanceIndex));
 				}
 			}
 		}
@@ -1026,12 +1025,12 @@ public class DataFactory {
 
 	public void initGroupModels() {
 		_commerceChannelGroupModel = newGroupModel(
-			_commerceChannelGroupId, getClassNameId(CommerceChannel.class),
+			_counter.get(), getClassNameId(CommerceChannel.class),
 			_commerceChannelModel.getCommerceChannelId(),
 			_commerceChannelModel.getName(), false);
 
 		_commerceCatalogGroupModel = newGroupModel(
-			_commerceCatalogGroupId, getClassNameId(CommerceCatalog.class),
+			_counter.get(), getClassNameId(CommerceCatalog.class),
 			_commerceCatalogModel.getCommerceCatalogId(),
 			_commerceCatalogModel.getName(), false);
 	}
@@ -4408,10 +4407,8 @@ public class DataFactory {
 	private List<AssetVocabularyModel>[] _assetVocabularyModelsArray;
 	private final Map<String, ClassNameModel> _classNameModels =
 		new HashMap<>();
-	private final long _commerceCatalogGroupId;
 	private GroupModel _commerceCatalogGroupModel;
 	private CommerceCatalogModel _commerceCatalogModel;
-	private final long _commerceChannelGroupId;
 	private GroupModel _commerceChannelGroupModel;
 	private CommerceChannelModel _commerceChannelModel;
 	private CommerceCurrencyModel _commerceCurrencyModel;

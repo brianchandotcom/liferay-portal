@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -49,6 +51,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
+import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
 
@@ -63,8 +66,8 @@ public class AnalyticsReportsDisplayContext<T> {
 		AnalyticsReportsInfoItem<T> analyticsReportsInfoItem,
 		T analyticsReportsInfoItemObject, String canonicalURL,
 		InfoDisplayObjectProvider<T> infoDisplayObjectProvider, Portal portal,
-		RenderResponse renderResponse, ResourceBundle resourceBundle,
-		ThemeDisplay themeDisplay, User user) {
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		ResourceBundle resourceBundle, ThemeDisplay themeDisplay, User user) {
 
 		_analyticsReportsDataProvider = analyticsReportsDataProvider;
 		_analyticsReportsInfoItem = analyticsReportsInfoItem;
@@ -72,6 +75,7 @@ public class AnalyticsReportsDisplayContext<T> {
 		_canonicalURL = canonicalURL;
 		_infoDisplayObjectProvider = infoDisplayObjectProvider;
 		_portal = portal;
+		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_resourceBundle = resourceBundle;
 		_themeDisplay = themeDisplay;
@@ -143,7 +147,7 @@ public class AnalyticsReportsDisplayContext<T> {
 		).put(
 			"languageTag",
 			() -> {
-				Locale locale = _themeDisplay.getLocale();
+				Locale locale = _getLocale();
 
 				return locale.toLanguageTag();
 			}
@@ -166,6 +170,14 @@ public class AnalyticsReportsDisplayContext<T> {
 		).put(
 			"validAnalyticsConnection", _validAnalyticsConnection
 		).build();
+	}
+
+	private Locale _getLocale() {
+		return LocaleUtil.fromLanguageId(
+			ParamUtil.getString(
+				_portal.getOriginalServletRequest(
+					_portal.getHttpServletRequest(_renderRequest)),
+				"languageId", _themeDisplay.getLanguageId()));
 	}
 
 	private Map<String, Object> _getProps() {
@@ -204,7 +216,7 @@ public class AnalyticsReportsDisplayContext<T> {
 		).put(
 			"title",
 			_analyticsReportsInfoItem.getTitle(
-				_analyticsReportsInfoItemObject, _themeDisplay.getLocale())
+				_analyticsReportsInfoItemObject, _getLocale())
 		).put(
 			"trafficSources", _getTrafficSourcesJSONArray()
 		).build();
@@ -300,8 +312,7 @@ public class AnalyticsReportsDisplayContext<T> {
 					).findFirst(
 					).map(
 						trafficSource -> trafficSource.toJSONObject(
-							helpMessageMap.get(name), _themeDisplay.getLocale(),
-							title)
+							helpMessageMap.get(name), _getLocale(), title)
 					).orElse(
 						JSONUtil.put(
 							"helpMessage", helpMessageMap.get(name)
@@ -326,6 +337,7 @@ public class AnalyticsReportsDisplayContext<T> {
 	private Map<String, Object> _data;
 	private final InfoDisplayObjectProvider<T> _infoDisplayObjectProvider;
 	private final Portal _portal;
+	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final ResourceBundle _resourceBundle;
 	private final ThemeDisplay _themeDisplay;

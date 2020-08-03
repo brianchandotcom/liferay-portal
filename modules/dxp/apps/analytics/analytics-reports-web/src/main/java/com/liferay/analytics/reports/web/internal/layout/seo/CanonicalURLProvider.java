@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -61,10 +63,15 @@ public class CanonicalURLProvider {
 	}
 
 	public String getCanonicalURL() throws PortalException {
+		Locale locale = LocaleUtil.fromLanguageId(
+			ParamUtil.getString(
+				_portal.getOriginalServletRequest(_httpServletRequest),
+				"languageId", _themeDisplay.getLanguageId()));
+
 		return _getCanonicalURL(
 			_portal.getCanonicalURL(
-				_getCanonicalURL(_portal.getLocale(_httpServletRequest)),
-				_themeDisplay, _themeDisplay.getLayout(), false, false));
+				_getCanonicalURL(locale), _themeDisplay,
+				_themeDisplay.getLayout(), false, false));
 	}
 
 	private Map<Locale, String> _getAlternateURLS() {

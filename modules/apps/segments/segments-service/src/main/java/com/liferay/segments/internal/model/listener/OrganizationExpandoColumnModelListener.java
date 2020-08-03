@@ -194,8 +194,14 @@ public class OrganizationExpandoColumnModelListener
 				encodedName, locale -> encodedIndexedFieldName);
 		}
 		else if ((expandoColumn.getType() == ExpandoColumnConstants.INTEGER) ||
+				 (expandoColumn.getType() ==
+					 ExpandoColumnConstants.INTEGER_ARRAY) ||
 				 (expandoColumn.getType() == ExpandoColumnConstants.LONG) ||
-				 (expandoColumn.getType() == ExpandoColumnConstants.SHORT)) {
+				 (expandoColumn.getType() ==
+					 ExpandoColumnConstants.LONG_ARRAY) ||
+				 (expandoColumn.getType() == ExpandoColumnConstants.SHORT) ||
+				 (expandoColumn.getType() ==
+					 ExpandoColumnConstants.SHORT_ARRAY)) {
 
 			entityField = new IntegerEntityField(
 				encodedName, locale -> encodedIndexedFieldName);

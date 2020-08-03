@@ -36,14 +36,20 @@ export default function useDataListView(dataListViewId, dataDefinitionId) {
 			.then(([dataDefinition, dataListView]) => {
 				setState((prevState) => ({
 					...prevState,
-					columns: dataListView.fieldNames.map((column) => ({
-						key: 'dataRecordValues/' + column,
-						sortable: true,
-						value: DataDefinitionUtils.getFieldLabel(
+					columns: dataListView.fieldNames.map((column) => {
+						const {
+							label: value,
+						} = DataDefinitionUtils.getDataDefinitionField(
 							dataDefinition,
 							column
-						),
-					})),
+						);
+
+						return {
+							key: 'dataRecordValues/' + column,
+							sortable: true,
+							value,
+						};
+					}),
 					dataDefinition: {
 						...prevState.dataDefinition,
 						...dataDefinition,

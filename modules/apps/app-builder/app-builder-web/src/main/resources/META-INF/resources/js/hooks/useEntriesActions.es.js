@@ -22,7 +22,9 @@ import usePermissions from './usePermissions.es';
 
 export default function useEntriesActions(showOptions) {
 	const actions = [];
-	const {basePortletURL, showFormView} = useContext(AppContext);
+	const {basePortletURL, showFormView, userLanguageId} = useContext(
+		AppContext
+	);
 	const {history} = useContext(RouterContext);
 	const permissions = usePermissions();
 
@@ -39,7 +41,10 @@ export default function useEntriesActions(showOptions) {
 			actions.push({
 				action: ({id}) =>
 					Promise.resolve(
-						navigateToEditPage(basePortletURL, {dataRecordId: id})
+						navigateToEditPage(basePortletURL, {
+							dataRecordId: id,
+							locale: userLanguageId,
+						})
 					),
 				name: Liferay.Language.get('edit'),
 				show: showOptions?.update,

@@ -587,6 +587,7 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 		searchContext.setAttributes(searchAttributes);
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
+		searchContext.setGroupIds(new long[] {-1L});
 		searchContext.setStart(start);
 
 		if (orderByComparator != null) {

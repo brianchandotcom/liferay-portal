@@ -23,6 +23,10 @@ definition {
 				domainValidation = "${domainValidation}",
 				emailDomainName = "${emailDomainName}");
 		}
+
+		if (isSet(validDomainNames)) {
+			AccountUsers.viewValidDomains(validDomainNames = "${validDomainNames}");
+		}
 	}
 
 	macro addUsers {
@@ -50,7 +54,8 @@ definition {
 			userEmailAddress = "${userEmailAddress}",
 			userFirstName = "${userFirstName}",
 			userLastName = "${userLastName}",
-			userScreenName = "${userScreenName}");
+			userScreenName = "${userScreenName}",
+			validDomainNames = "${validDomainNames}");
 
 		Button.clickSave();
 
@@ -151,6 +156,33 @@ definition {
 				key_alertMessage = "${emailDomainName} is",
 				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE");
 		}
+	}
+
+	macro viewValidDomains {
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		AssertClick(
+			key_text = "View Valid Domains",
+			locator1 = "Button#ANY",
+			value1 = "View Valid Domains");
+
+		Pause(locator1 = "3000");
+
+		SelectFrame(locator1 = "IFrame#VALID_DOMAINS");
+
+		AssertTextEquals(
+			locator1 = "Message#INFO",
+			value1 = "Info:The following email domains are shared across all of this user's accounts.");
+
+		for (var validDomainName : list "${validDomainNames}") {
+			LexiconEntry.viewEntryName(rowEntry = "${validDomainName}");
+		}
+
+		SelectFrame.selectFrameTop();
+
+		Click(locator1 = "Modal#CLOSE_BUTTON");
+
+		SelectFrame.selectFrameTop();
 	}
 
 }

@@ -219,6 +219,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VALID_DOMAINS</td>
+	<td>//iframe[@title='Valid Domains']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WEB_APPLICATION</td>
 	<td>//iframe[contains(@id,'WebApplicationFrame')]</td>
 	<td></td>

@@ -20,7 +20,8 @@ definition {
 				userEmailAddress = "${userEmailAddress}",
 				userFirstName = "${userFirstName}",
 				userLastName = "${userLastName}",
-				userScreenName = "${userScreenName}");
+				userScreenName = "${userScreenName}",
+				validDomainNames = "${validDomainNames}");
 
 			Button.clickSave();
 		}

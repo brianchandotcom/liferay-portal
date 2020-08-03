@@ -58,8 +58,14 @@ public class MFAUserAccountSetupCheckerTracker {
 				MFAEmailOTPConfiguration.class, properties);
 
 		if (mfaEmailOTPConfiguration.enabled()) {
+			long companyId = GetterUtil.getLong(properties.get("companyId"));
+
+			String filterString =
+				"(&(objectClass=" + SetupMFAChecker.class.getName() +
+					")(companyId=" + companyId + "))";
+
 			_serviceTracker = ServiceTrackerFactory.open(
-				bundleContext, SetupMFAChecker.class,
+				bundleContext, filterString,
 				new MFACheckerSetupServiceTrackerCustomizer());
 		}
 	}
@@ -73,7 +79,7 @@ public class MFAUserAccountSetupCheckerTracker {
 
 	private BundleContext _bundleContext;
 	private ServiceTracker
-		<SetupMFAChecker, ServiceRegistration<ScreenNavigationEntry<User>>>
+		<Object, ServiceRegistration<ScreenNavigationEntry<User>>>
 			_serviceTracker;
 
 	@Reference(
@@ -83,14 +89,13 @@ public class MFAUserAccountSetupCheckerTracker {
 
 	private class MFACheckerSetupServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
-			<SetupMFAChecker,
-			 ServiceRegistration<ScreenNavigationEntry<User>>> {
+			<Object, ServiceRegistration<ScreenNavigationEntry<User>>> {
 
 		@Override
 		public ServiceRegistration<ScreenNavigationEntry<User>> addingService(
-			ServiceReference<SetupMFAChecker> serviceReference) {
+			ServiceReference<Object> serviceReference) {
 
-			SetupMFAChecker setupMFAChecker = _bundleContext.getService(
+			Object setupMFAChecker = _bundleContext.getService(
 				serviceReference);
 
 			if (setupMFAChecker == null) {
@@ -100,13 +105,14 @@ public class MFAUserAccountSetupCheckerTracker {
 			return (ServiceRegistration)_bundleContext.registerService(
 				ScreenNavigationEntry.class,
 				new MFAUserAccountSetupScreenNavigationEntry(
-					serviceReference, _servletContext, setupMFAChecker),
+					serviceReference, _servletContext,
+					(SetupMFAChecker)setupMFAChecker),
 				_buildProperties(serviceReference));
 		}
 
 		@Override
 		public void modifiedService(
-			ServiceReference<SetupMFAChecker> serviceReference,
+			ServiceReference<Object> serviceReference,
 			ServiceRegistration<ScreenNavigationEntry<User>>
 				serviceRegistration) {
 
@@ -116,7 +122,7 @@ public class MFAUserAccountSetupCheckerTracker {
 
 		@Override
 		public void removedService(
-			ServiceReference<SetupMFAChecker> serviceReference,
+			ServiceReference<Object> serviceReference,
 			ServiceRegistration<ScreenNavigationEntry<User>>
 				serviceRegistration) {
 
@@ -126,7 +132,7 @@ public class MFAUserAccountSetupCheckerTracker {
 		}
 
 		private Dictionary<String, Object> _buildProperties(
-			ServiceReference<SetupMFAChecker> serviceReference) {
+			ServiceReference<Object> serviceReference) {
 
 			Dictionary<String, Object> dictionary = new HashMapDictionary<>();
 

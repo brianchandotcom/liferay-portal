@@ -113,9 +113,13 @@ public class TranslationEntryLocalServiceImpl
 		translationEntry.setStatusDate(
 			serviceContext.getModifiedDate(new Date()));
 
-		return _startWorkflowInstance(
-			translationEntryPersistence.update(translationEntry),
-			serviceContext);
+		translationEntry = translationEntryPersistence.update(translationEntry);
+
+		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			translationEntry.getCompanyId(), translationEntry.getGroupId(),
+			serviceContext.getUserId(), TranslationEntry.class.getName(),
+			translationEntry.getTranslationEntryId(), translationEntry,
+			serviceContext, new HashMap<>());
 	}
 
 	@Override
@@ -163,19 +167,6 @@ public class TranslationEntryLocalServiceImpl
 			serviceContext.getModifiedDate(new Date()));
 
 		return translationEntryPersistence.update(translationEntry);
-	}
-
-	private TranslationEntry _startWorkflowInstance(
-			TranslationEntry translationEntry, ServiceContext serviceContext)
-		throws PortalException {
-
-		Map<String, Serializable> workflowContext = new HashMap<>();
-
-		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			translationEntry.getCompanyId(), translationEntry.getGroupId(),
-			serviceContext.getUserId(), TranslationEntry.class.getName(),
-			translationEntry.getTranslationEntryId(), translationEntry,
-			serviceContext, workflowContext);
 	}
 
 	@Reference

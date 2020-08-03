@@ -89,22 +89,21 @@ public class MFAUserAccountSetupMVCActionCommand extends BaseMVCActionCommand {
 		if (ParamUtil.getBoolean(actionRequest, "mfaRemoveExistingSetup")) {
 			setupMFAChecker.removeExistingSetup(themeDisplay.getUserId());
 		}
-		else if (setupMFAChecker.setUp(
+		else if (!setupMFAChecker.setUp(
 					_portal.getHttpServletRequest(actionRequest),
 					themeDisplay.getUserId())) {
 
-			String redirect = _portal.escapeRedirect(
-				ParamUtil.getString(actionRequest, "redirect"));
-
-			if (Validator.isBlank(redirect)) {
-				redirect = themeDisplay.getPortalURL();
-			}
-
-			actionResponse.sendRedirect(redirect);
-		}
-		else {
 			SessionErrors.add(actionRequest, "userAccountSetupFailed");
 		}
+
+		String redirect = _portal.escapeRedirect(
+			ParamUtil.getString(actionRequest, "redirect"));
+
+		if (Validator.isBlank(redirect)) {
+			redirect = themeDisplay.getPortalURL();
+		}
+
+		actionResponse.sendRedirect(redirect);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

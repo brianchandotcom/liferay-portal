@@ -112,30 +112,28 @@ export default (state, action) => {
 
 			return {
 				pages: pageVisitor.mapColumns((column) => {
-					const {fields} = column;
-					const sourceFieldIndex = fields.reduce(
-						(sourceFieldIndex = -1, field, index) => {
-							if (field.name === action.payload) {
-								sourceFieldIndex = index;
-							}
+					const addRepeatedField = (fields) => {
+						const sourceFieldIndex = fields.reduce(
+							(sourceFieldIndex = -1, field, index) => {
+								if (field.name === action.payload) {
+									sourceFieldIndex = index;
+								}
 
-							return sourceFieldIndex;
-						},
-						-1
-					);
-
-					if (sourceFieldIndex > -1) {
-						const newFieldIndex = sourceFieldIndex + 1;
-						const newField = createRepeatedField(
-							fields[sourceFieldIndex],
-							newFieldIndex
+								return sourceFieldIndex;
+							},
+							-1
 						);
 
-						let currentRepeatedIndex = 0;
+						if (sourceFieldIndex > -1) {
+							const newFieldIndex = sourceFieldIndex + 1;
+							const newField = createRepeatedField(
+								fields[sourceFieldIndex],
+								newFieldIndex
+							);
 
-						return {
-							...column,
-							fields: [
+							let currentRepeatedIndex = 0;
+
+							return [
 								...fields.slice(0, newFieldIndex),
 								newField,
 								...fields.slice(newFieldIndex),
@@ -162,11 +160,23 @@ export default (state, action) => {
 								}
 
 								return currentField;
-							}),
-						};
-					}
+							});
+						}
 
-					return column;
+						return fields.map((field) => {
+							return {
+								...field,
+								nestedFields: field.nestedFields
+									? addRepeatedField(field.nestedFields)
+									: [],
+							};
+						});
+					};
+
+					return {
+						...column,
+						fields: addRepeatedField(column.fields),
+					};
 				}),
 			};
 		}

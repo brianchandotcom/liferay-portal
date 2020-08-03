@@ -101,9 +101,9 @@ public class CollectionItemsDetailProductNavigationControlMenuEntry
 			CollectionItemsDetailDisplayContext
 				collectionItemsDetailDisplayContext =
 					new CollectionItemsDetailDisplayContext(
-						liferayRenderRequest, liferayRenderResponse,
 						_assetListEntryLocalService,
 						_assetListAssetEntryProvider, _infoItemServiceTracker,
+						liferayRenderRequest, liferayRenderResponse,
 						themeDisplay);
 
 			httpServletRequest.setAttribute(

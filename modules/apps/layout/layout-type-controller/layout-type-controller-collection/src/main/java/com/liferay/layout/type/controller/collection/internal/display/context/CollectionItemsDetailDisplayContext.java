@@ -49,18 +49,18 @@ import javax.portlet.WindowStateException;
 public class CollectionItemsDetailDisplayContext {
 
 	public CollectionItemsDetailDisplayContext(
-		LiferayRenderRequest liferayRenderRequest,
-		LiferayRenderResponse liferayRenderResponse,
 		AssetListEntryLocalService assetListEntryLocalService,
 		AssetListAssetEntryProvider assetListAssetEntryProvider,
 		InfoItemServiceTracker infoItemServiceTracker,
+		LiferayRenderRequest liferayRenderRequest,
+		LiferayRenderResponse liferayRenderResponse,
 		ThemeDisplay themeDisplay) {
 
-		_liferayRenderRequest = liferayRenderRequest;
-		_liferayRenderResponse = liferayRenderResponse;
 		_assetListEntryLocalService = assetListEntryLocalService;
 		_assetListAssetEntryProvider = assetListAssetEntryProvider;
 		_infoItemServiceTracker = infoItemServiceTracker;
+		_liferayRenderRequest = liferayRenderRequest;
+		_liferayRenderResponse = liferayRenderResponse;
 		_themeDisplay = themeDisplay;
 	}
 

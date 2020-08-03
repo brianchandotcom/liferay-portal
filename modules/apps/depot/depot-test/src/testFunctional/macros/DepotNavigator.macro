@@ -79,6 +79,44 @@ definition {
 			portlet = "${portlet}");
 	}
 
+	macro gotoDepotPortletViaBreadcrumb {
+		if (isSet(otherDepotName)) {
+			Click(
+				key_breadcrumbName = "Asset Libraries",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK");
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+			Click(
+				key_card = "${otherDepotName}",
+				locator1 = "LexiconCard#CARD_TITLE");
+
+			DepotNavigator.gotoPortlet(
+				depotName = "${otherDepotName}",
+				portlet = "${portlet}");
+		}
+		else {
+			Click(
+				key_breadcrumbName = "${depotName}",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK");
+
+			DepotNavigator.gotoPortlet(
+				depotName = "${depotName}",
+				portlet = "${portlet}");
+		}
+
+		if ("${portlet}" == "Recycle Bin") {
+			AssertTextEquals(
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_ACTIVE_ENTRY",
+				value1 = "Recycle Bin");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_ACTIVE_ENTRY",
+				value1 = "Home");
+		}
+	}
+
 	macro gotoDepotViaSpaceIcon {
 		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
 			ApplicationsMenu.gotoSite(site = "Guest");

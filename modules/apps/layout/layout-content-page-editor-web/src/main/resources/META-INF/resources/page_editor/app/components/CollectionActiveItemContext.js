@@ -15,7 +15,7 @@
 import React, {useContext, useReducer} from 'react';
 
 import {CollectionItemContext, INITIAL_STATE} from './CollectionItemContext';
-import {useActiveItemId} from './Controls';
+import {useIsActive} from './Controls';
 
 const CollectionActiveItemDispatchContext = React.createContext(() => {});
 const CollectionActiveItemStateContext = React.createContext(INITIAL_STATE);
@@ -36,11 +36,11 @@ export function CollectionActiveItemContextProvider({children}) {
 }
 
 export function useSetCollectionActiveItemContext(itemId) {
-	const activeItemId = useActiveItemId();
+	const isActive = useIsActive();
 	const collectionContext = useContext(CollectionItemContext);
 	const dispatch = useContext(CollectionActiveItemDispatchContext);
 
-	if (itemId === activeItemId) {
+	if (isActive(itemId)) {
 		dispatch(collectionContext);
 	}
 }

@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REVERT_BUTTON</td>
+	<td>//td[contains(.,'${key_publicationName}')]//following-sibling::td[contains(.,'Revert')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_PUBLICATION_NAME</td>
 	<td>//a[contains(.,'${key_publicationName}')]</td>
 	<td></td>

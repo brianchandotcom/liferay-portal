@@ -112,6 +112,25 @@ definition {
 			value1 = "Published");
 	}
 
+	macro revertPublication {
+		var key_publicationName = "${publicationName}";
+
+		Click(locator1 = "ChangeList#REVERT_BUTTON");
+
+		AssertTextEquals(
+			locator1 = "ChangeList#PUBLICATION_NAME",
+			value1 = "Revert &quot;${publicationName}&quot;");
+
+		Button.click(button = "Revert and Create Publication");
+
+		Alert.viewSuccessMessage();
+
+		AssertTextPresent(
+			key_publicationName = "Revert &quot;${publicationName}&quot;",
+			locator1 = "ChangeList#CHANGE_LIST_INDICATOR_TITLE",
+			value1 = "Revert &quot;${publicationName}&quot;");
+	}
+
 	macro selectPublication {
 		Click(locator1 = "ChangeList#CHANGE_LIST_INDICATOR_BUTTON");
 

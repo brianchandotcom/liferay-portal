@@ -36,7 +36,14 @@ if (followRedirect && (redirectPage != null)) {
 
 String title = wikiPage.getTitle();
 String parentTitle = wikiPage.getParentTitle();
-List<WikiPage> childPages = wikiPage.getViewableChildPages();
+
+List<WikiPage> childPages = new ArrayList<>();
+
+for (WikiPage curChildPage : wikiPage.getViewableChildPages()) {
+	if (curChildPage.getRedirectPage() == null) {
+		childPages.add(curChildPage);
+	}
+}
 
 boolean preview = false;
 boolean print = Objects.equals(ParamUtil.getString(request, "viewMode"), Constants.PRINT);

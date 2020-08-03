@@ -282,6 +282,10 @@ const createReducer = (dataLayoutBuilder) => {
 					dataLayout: {dataRules},
 				} = state;
 
+				dataLayoutBuilder.dispatch('ruleDeleted', {
+					ruleId: ruleEditedIndex,
+				});
+
 				return {
 					...state,
 					dataLayout: {

@@ -103,7 +103,8 @@ public class BaseCKEditorConfigContributor extends BaseEditorConfigContributor {
 
 		return GetterUtil.getBoolean(
 			inputEditorTaglibAttributes.get(
-				CKEditorConstants.ATTRIBUTE_NAMESPACE + ":showSource"));
+				CKEditorConstants.ATTRIBUTE_NAMESPACE + ":showSource"),
+			true);
 	}
 
 }

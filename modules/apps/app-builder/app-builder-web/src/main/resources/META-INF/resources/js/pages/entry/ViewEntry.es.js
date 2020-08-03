@@ -54,6 +54,7 @@ export function ViewDataLayoutPageValues({
 	dataRecordValues,
 }) {
 	const {dataLayoutRows} = dataLayoutPage;
+	const {defaultLanguageId} = dataDefinition;
 	const sections = getSections(dataDefinition);
 
 	return dataLayoutRows
@@ -84,6 +85,7 @@ export function ViewDataLayoutPageValues({
 										fieldGroup.nestedDataDefinitionFields,
 								}}
 								dataRecordValues={dataRecordValues}
+								defaultLanguageId={defaultLanguageId}
 								fieldName={field}
 								key={field}
 							/>
@@ -96,6 +98,7 @@ export function ViewDataLayoutPageValues({
 				<FieldPreview
 					dataDefinition={dataDefinition}
 					dataRecordValues={dataRecordValues}
+					defaultLanguageId={defaultLanguageId}
 					fieldName={fieldName}
 					key={fieldName}
 				/>

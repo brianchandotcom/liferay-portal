@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xuggler.XugglerUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -46,9 +45,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Ambrín Chaudhary
  */
 @Component(
-	property = {
-		"editor.name=ckeditor", "editor.name=ckeditor_classic"
-	},
+	property = {"editor.name=ckeditor", "editor.name=ckeditor_classic"},
 	service = EditorConfigContributor.class
 )
 public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
@@ -82,7 +79,8 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 		);
 
 		String extraPlugins =
-			"a11yhelpbtn,addimages,itemselector,lfrpopup,media";
+			"addimages,autogrow,itemselector,lfrpopup," +
+				"media,stylescombo,videoembed";
 
 		boolean inlineEdit = GetterUtil.getBoolean(
 			(String)inputEditorTaglibAttributes.get(
@@ -107,27 +105,31 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 			"stylesSet", getStyleFormatsJSONArray(themeDisplay.getLocale())
 		).put(
 			"title", false
+		);
+
+		JSONArray toolbarSimpleJSONArray = getToolbarSimpleJSONArray(
+			inputEditorTaglibAttributes);
+
+		jsonObject.put(
+			"toolbar_editInPlace", toolbarSimpleJSONArray
 		).put(
-			"toolbar_editInPlace",
-			getToolbarEditInPlaceJSONArray(inputEditorTaglibAttributes)
+			"toolbar_email", toolbarSimpleJSONArray
 		).put(
-			"toolbar_email",
-			getToolbarEmailJSONArray(inputEditorTaglibAttributes)
+			"toolbar_liferay", toolbarSimpleJSONArray
 		).put(
-			"toolbar_liferay",
-			getToolbarLiferayJSONArray(inputEditorTaglibAttributes)
+			"toolbar_liferayArticle", toolbarSimpleJSONArray
 		).put(
-			"toolbar_liferayArticle",
-			getToolbarLiferayArticleJSONArray(inputEditorTaglibAttributes)
+			"toolbar_phone", toolbarSimpleJSONArray
 		).put(
-			"toolbar_phone",
-			getToolbarPhoneJSONArray(inputEditorTaglibAttributes)
+			"toolbar_simple", toolbarSimpleJSONArray
 		).put(
-			"toolbar_simple",
-			getToolbarSimpleJSONArray(inputEditorTaglibAttributes)
+			"toolbar_tablet", toolbarSimpleJSONArray
 		).put(
-			"toolbar_tablet",
-			getToolbarTabletJSONArray(inputEditorTaglibAttributes)
+			"toolbar_text_advanced",
+			getToolbarTextAdvancedJSONArray(inputEditorTaglibAttributes)
+		).put(
+			"toolbar_text_simple",
+			getToolbarTextSimpleJSONArray(inputEditorTaglibAttributes)
 		);
 	}
 
@@ -195,169 +197,15 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 				"portlet-msg-error"));
 	}
 
-	protected JSONArray getToolbarEditInPlaceJSONArray(
-		Map<String, Object> inputEditorTaglibAttributes) {
-
-		JSONArray jsonArray = JSONUtil.putAll(
-			toJSONArray(
-				"['Bold', 'Italic', 'Underline', 'Strike', '-', 'Subscript', " +
-					"'Superscript', '-', 'RemoveFormat']"),
-			toJSONArray(
-				"['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent']"),
-			"/", toJSONArray("['Styles']"),
-			toJSONArray("['SpellChecker', 'Scayt', '-', 'SpecialChar']"),
-			toJSONArray("['Undo', 'Redo']"));
-
-		if (isShowSource(inputEditorTaglibAttributes)) {
-			jsonArray.put(toJSONArray("['Source']"));
-		}
-
-		jsonArray.put(toJSONArray("['A11YBtn']"));
-
-		return jsonArray;
-	}
-
-	protected JSONArray getToolbarEmailJSONArray(
-		Map<String, Object> inputEditorTaglibAttributes) {
-
-		JSONArray jsonArray = JSONUtil.putAll(
-			toJSONArray(
-				"['Bold', 'Italic', 'Underline', 'Strike', '-', " +
-					"'RemoveFormat']"),
-			toJSONArray("['TextColor', 'BGColor']"),
-			toJSONArray(
-				"['JustifyLeft', 'JustifyCenter', 'JustifyRight', " +
-					"'JustifyBlock']"),
-			toJSONArray("['FontSize']"), toJSONArray("['Link', 'Unlink']"),
-			toJSONArray("['ImageSelector']"), "/",
-			toJSONArray(
-				"['Cut', 'Copy', 'Paste', '-', 'PasteText', 'PasteFromWord', " +
-					"'-', 'SelectAll', '-', 'Undo', 'Redo' ]"),
-			toJSONArray("['SpellChecker', 'Scayt']"));
-
-		if (isShowSource(inputEditorTaglibAttributes)) {
-			jsonArray.put(toJSONArray("['Source']"));
-		}
-
-		jsonArray.put(toJSONArray("['A11YBtn']"));
-
-		return jsonArray;
-	}
-
-	protected JSONArray getToolbarLiferayArticleJSONArray(
-		Map<String, Object> inputEditorTaglibAttributes) {
-
-		String buttons = "['Table', '-', 'ImageSelector',";
-
-		if (XugglerUtil.isEnabled()) {
-			buttons += " 'AudioSelector', 'VideoSelector',";
-		}
-
-		buttons +=
-			" 'Flash', '-', 'LiferayPageBreak', '-', 'Smiley', 'SpecialChar']";
-
-		JSONArray jsonArray = JSONUtil.putAll(
-			toJSONArray(
-				"['Bold', 'Italic', 'Underline', 'Strike', '-', 'Subscript', " +
-					"'Superscript', '-', 'RemoveFormat']"),
-			toJSONArray("['TextColor', 'BGColor']"),
-			toJSONArray(
-				"['JustifyLeft', 'JustifyCenter', 'JustifyRight', " +
-					"'JustifyBlock']"),
-			toJSONArray(
-				"['NumberedList', 'BulletedList', '-' ,'Outdent', 'Indent', " +
-					"'-', 'Blockquote']"),
-			"/", toJSONArray("['Styles', 'FontSize']"),
-			toJSONArray("['Link', 'Unlink', 'Anchor']"), toJSONArray(buttons),
-			"/",
-			toJSONArray(
-				"['Cut', 'Copy', 'Paste', '-', 'PasteText', 'PasteFromWord', " +
-					"'-', 'SelectAll' , '-', 'Undo', 'Redo']"),
-			toJSONArray("['Find', 'Replace', '-', 'SpellChecker', 'Scayt']"));
-
-		if (isShowSource(inputEditorTaglibAttributes)) {
-			jsonArray.put(toJSONArray("['Source']"));
-		}
-
-		jsonArray.put(toJSONArray("['A11YBtn']"));
-
-		return jsonArray;
-	}
-
-	protected JSONArray getToolbarLiferayJSONArray(
-		Map<String, Object> inputEditorTaglibAttributes) {
-
-		String buttons = "['Table', '-', 'ImageSelector',";
-
-		if (XugglerUtil.isEnabled()) {
-			buttons = buttons.concat(" 'AudioSelector', 'VideoSelector',");
-		}
-
-		buttons = buttons.concat(" 'Flash', '-', 'Smiley', 'SpecialChar']");
-
-		JSONArray jsonArray = JSONUtil.putAll(
-			toJSONArray(
-				"['Bold', 'Italic', 'Underline', 'Strike', '-', 'Subscript', " +
-					"'Superscript', '-', 'RemoveFormat']"),
-			toJSONArray("['TextColor', 'BGColor']"),
-			toJSONArray(
-				"['JustifyLeft', 'JustifyCenter', 'JustifyRight', " +
-					"'JustifyBlock']"),
-			toJSONArray(
-				"['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent']"),
-			"/", toJSONArray("['Styles', 'FontSize']"),
-			toJSONArray("['Link', 'Unlink', 'Anchor']"), toJSONArray(buttons),
-			"/");
-
-		boolean inlineEdit = GetterUtil.getBoolean(
-			(String)inputEditorTaglibAttributes.get(
-				CKEditorConstants.ATTRIBUTE_NAMESPACE + ":inlineEdit"));
-
-		if (inlineEdit) {
-			jsonArray.put(toJSONArray("['AjaxSave', '-', 'Restore']"));
-		}
-
-		jsonArray.put(
-			toJSONArray(
-				"['Cut', 'Copy', 'Paste', '-', 'PasteText', 'PasteFromWord', " +
-					"'-', 'SelectAll' , '-', 'Undo', 'Redo']")
-		).put(
-			toJSONArray("['Find', 'Replace', '-', 'SpellChecker', 'Scayt']")
-		);
-
-		if (!inlineEdit && isShowSource(inputEditorTaglibAttributes)) {
-			jsonArray.put(toJSONArray("['Source']"));
-		}
-
-		jsonArray.put(toJSONArray("['A11YBtn']"));
-
-		return jsonArray;
-	}
-
-	protected JSONArray getToolbarPhoneJSONArray(
-		Map<String, Object> inputEditorTaglibAttributes) {
-
-		JSONArray jsonArray = JSONUtil.putAll(
-			toJSONArray("['Bold', 'Italic', 'Underline']"),
-			toJSONArray("['NumberedList', 'BulletedList']"),
-			toJSONArray("['Link', 'Unlink']"),
-			toJSONArray("['ImageSelector']"));
-
-		if (isShowSource(inputEditorTaglibAttributes)) {
-			jsonArray.put(toJSONArray("['Source']"));
-		}
-
-		return jsonArray;
-	}
-
 	protected JSONArray getToolbarSimpleJSONArray(
 		Map<String, Object> inputEditorTaglibAttributes) {
 
 		JSONArray jsonArray = JSONUtil.putAll(
-			toJSONArray("['Bold', 'Italic', 'Underline', 'Strike']"),
+			toJSONArray("['Undo', 'Redo']"),
+			toJSONArray("['Styles', 'Bold', 'Italic', 'Underline']"),
 			toJSONArray("['NumberedList', 'BulletedList']"),
-			toJSONArray("['Link', 'Unlink']"),
-			toJSONArray("['Table', 'ImageSelector']"));
+			toJSONArray("['Link', Unlink]"),
+			toJSONArray("['Table', 'ImageSelector', 'VideoEmbed']"));
 
 		if (isShowSource(inputEditorTaglibAttributes)) {
 			jsonArray.put(toJSONArray("['Source']"));
@@ -366,18 +214,34 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 		return jsonArray;
 	}
 
-	protected JSONArray getToolbarTabletJSONArray(
+	protected JSONArray getToolbarTextAdvancedJSONArray(
 		Map<String, Object> inputEditorTaglibAttributes) {
 
 		JSONArray jsonArray = JSONUtil.putAll(
-			toJSONArray("['Bold', 'Italic', 'Underline', 'Strike']"),
-			toJSONArray(
-				"['JustifyLeft', 'JustifyCenter', 'JustifyRight', " +
-					"'JustifyBlock']"),
+			toJSONArray("['Undo', 'Redo']"), toJSONArray("['Styles']"),
+			toJSONArray("['FontColor', 'BGColor']"),
+			toJSONArray("['Bold', 'Italic', 'Underline', 'Strikethrough']"),
+			toJSONArray("['RemoveFormat']"),
 			toJSONArray("['NumberedList', 'BulletedList']"),
-			toJSONArray("['Styles', 'FontSize']"),
-			toJSONArray("['Link', 'Unlink']"),
-			toJSONArray("['ImageSelector']"));
+			toJSONArray("['IncreaseIndent', 'DecreaseIndent']"),
+			toJSONArray("['IncreaseIndent', 'DecreaseIndent']"),
+			toJSONArray("['Link', Unlink]"));
+
+		if (isShowSource(inputEditorTaglibAttributes)) {
+			jsonArray.put(toJSONArray("['Source']"));
+		}
+
+		return jsonArray;
+	}
+
+	protected JSONArray getToolbarTextSimpleJSONArray(
+		Map<String, Object> inputEditorTaglibAttributes) {
+
+		JSONArray jsonArray = JSONUtil.putAll(
+			toJSONArray("['Undo', 'Redo']"),
+			toJSONArray("['Styles', 'Bold', 'Italic', 'Underline']"),
+			toJSONArray("['NumberedList', 'BulletedList']"),
+			toJSONArray("['Link', Unlink]"));
 
 		if (isShowSource(inputEditorTaglibAttributes)) {
 			jsonArray.put(toJSONArray("['Source']"));

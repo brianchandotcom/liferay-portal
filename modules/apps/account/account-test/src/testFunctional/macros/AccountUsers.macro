@@ -17,12 +17,11 @@ definition {
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
 			value1 = "${userLastName}");
 
-		if (isSet(domainValidation)) {
+		if (isSet(emailDomainName)) {
 			AccountUsers.viewEmailDomainValidation(
 				accountName = "${accountName}",
-				blockedDomainName = "${blockedDomainName}",
 				domainValidation = "${domainValidation}",
-				invalidDomainName = "${invalidDomainName}");
+				emailDomainName = "${emailDomainName}");
 		}
 	}
 
@@ -46,9 +45,8 @@ definition {
 
 		AccountUsers.addUserInfos(
 			accountName = "${accountName}",
-			blockedDomainName = "${blockedDomainName}",
 			domainValidation = "${domainValidation}",
-			invalidDomainName = "${invalidDomainName}",
+			emailDomainName = "${emailDomainName}",
 			userEmailAddress = "${userEmailAddress}",
 			userFirstName = "${userFirstName}",
 			userLastName = "${userLastName}",
@@ -138,15 +136,20 @@ definition {
 	macro viewEmailDomainValidation {
 		if ("${domainValidation}" == "Blocked") {
 			AssertTextEquals(
-				key_alertMessage = "${blockedDomainName} is a blocked domain. Account administrators cannot add users with this domain to their accounts. You can still manually assign this email address to this user.",
+				key_alertMessage = "${emailDomainName} is a blocked domain. Account administrators cannot add users with this domain to their accounts. You can still manually assign this email address to this user.",
 				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
-				value1 = "${blockedDomainName} is a blocked domain. Account administrators cannot add users with this domain to their accounts. You can still manually assign this email address to this user.");
+				value1 = "${emailDomainName} is a blocked domain. Account administrators cannot add users with this domain to their accounts. You can still manually assign this email address to this user.");
 		}
 		else if ("${domainValidation}" == "Invalid") {
 			AssertTextEquals(
-				key_alertMessage = "${invalidDomainName} is not a valid domain for the following accounts: ${accountName}. Account Administrators cannot add users with this domain to their accounts. You can still manually assign this email address to this user.",
+				key_alertMessage = "${emailDomainName} is not a valid domain for the following accounts: ${accountName}. Account Administrators cannot add users with this domain to their accounts. You can still manually assign this email address to this user.",
 				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
-				value1 = "${invalidDomainName} is not a valid domain for the following accounts: ${accountName}. Account Administrators cannot add users with this domain to their accounts. You can still manually assign this email address to this user.");
+				value1 = "${emailDomainName} is not a valid domain for the following accounts: ${accountName}. Account Administrators cannot add users with this domain to their accounts. You can still manually assign this email address to this user.");
+		}
+		else {
+			AssertElementNotPresent(
+				key_alertMessage = "${emailDomainName} is",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE");
 		}
 	}
 

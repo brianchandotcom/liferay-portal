@@ -15,9 +15,8 @@ definition {
 
 			AccountUsers.addUserInfos(
 				accountName = "${accountName}",
-				blockedDomainName = "${blockedDomainName}",
 				domainValidation = "${domainValidation}",
-				invalidDomainName = "${invalidDomainName}",
+				emailDomainName = "${emailDomainName}",
 				userEmailAddress = "${userEmailAddress}",
 				userFirstName = "${userFirstName}",
 				userLastName = "${userLastName}",

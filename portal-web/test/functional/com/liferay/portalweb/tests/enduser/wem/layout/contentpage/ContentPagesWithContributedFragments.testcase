@@ -2338,7 +2338,7 @@ definition {
 	@description = "This is a test for LPS-112249. The flags of each collection item are shown when add a Content Flags fragment to Collection Display."
 	@priority = "5"
 	test ViewFlagsViaContentFlagsInCollectionDisplay {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		for (var i : list "1,2,3") {
 			JSONWebcontent.addWebContent(
@@ -2517,7 +2517,7 @@ definition {
 	@description = "This is a test for LPS-112249. The ratings of each collection item are shown when add a Content Ratings fragment to Collection Display."
 	@priority = "5"
 	test ViewRatingsViaContentRatingsInCollectionDisplay {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		for (var i : list "1,2,3") {
 			JSONWebcontent.addWebContent(

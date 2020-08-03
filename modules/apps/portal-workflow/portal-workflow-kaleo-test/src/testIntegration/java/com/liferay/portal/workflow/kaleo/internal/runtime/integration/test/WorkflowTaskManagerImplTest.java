@@ -74,6 +74,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -1036,6 +1037,25 @@ public class WorkflowTaskManagerImplTest {
 	}
 
 	@Test
+	public void testSearchWorkflowTaskByUserRolesWhenGroupIsInactive()
+		throws Exception {
+
+		_activateSingleApproverWorkflow(BlogsEntry.class.getName(), 0, 0);
+
+		_addBlogsEntry();
+
+		_group.setActive(false);
+
+		_groupLocalService.updateGroup(_group);
+
+		int total = _searchCountByUserRoles(_siteContentReviewerUser);
+
+		Assert.assertEquals(1, total);
+
+		_deactivateWorkflow(BlogsEntry.class.getName(), 0, 0);
+	}
+
+	@Test
 	public void testUpdateDueDate() throws Exception {
 		_activateSingleApproverWorkflow(BlogsEntry.class.getName(), 0, 0);
 
@@ -1802,6 +1822,9 @@ public class WorkflowTaskManagerImplTest {
 	private DLTrashService _dlTrashService;
 
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private JournalArticleLocalService _journalArticleLocalService;

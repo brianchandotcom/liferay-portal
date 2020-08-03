@@ -1564,6 +1564,15 @@ public class DataFactory {
 		return cpDefinitionModel;
 	}
 
+	public CPFriendlyURLEntryModel newCPFriendlyURLEntryModel(
+		CProductModel cProductModel) {
+
+		return newCPFriendlyURLEntryModel(
+			0, getClassNameId(CProduct.class), cProductModel.getCProductId(),
+			FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(
+				"Definition " + cProductModel.getPublishedCPDefinitionId()));
+	}
+
 	public CPInstanceModel newCPInstanceModel(
 		CPDefinitionModel cpDefinitionModel,
 		GroupModel commerceCatalogGroupModel, int index) {
@@ -3712,15 +3721,6 @@ public class DataFactory {
 		blogsEntryModel.setStatusDate(new Date());
 
 		return blogsEntryModel;
-	}
-
-	protected CPFriendlyURLEntryModel newCPFriendlyURLEntryModel(
-		CProductModel cProductModel) {
-
-		return newCPFriendlyURLEntryModel(
-			0, getClassNameId(CProduct.class), cProductModel.getCProductId(),
-			FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(
-				"Definition " + cProductModel.getPublishedCPDefinitionId()));
 	}
 
 	protected CPFriendlyURLEntryModel newCPFriendlyURLEntryModel(

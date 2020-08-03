@@ -146,7 +146,7 @@ public class AnalyticsReportsPortlet extends MVCPortlet {
 			new AnalyticsReportsDisplayContext(
 				new AnalyticsReportsDataProvider(_http),
 				analyticsReportsInfoItem, analyticsReportsInfoItemObject,
-				canonicalURL, infoDisplayObjectProvider, _portal,
+				canonicalURL, infoDisplayObjectProvider, _portal, renderRequest,
 				renderResponse,
 				ResourceBundleUtil.getBundle(
 					"content.Language", themeDisplay.getLocale(), getClass()),

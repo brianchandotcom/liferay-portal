@@ -1686,6 +1686,55 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 		</sequential>
 	</macrodef>
 
+	<macrodef name="setup-dxp-app">
+		<attribute name="appname" />
+
+		<sequential>
+			<gradle-execute outputproperty="dxp.app.zip.file" task="printDependencyPath">
+				<arg value="--build-file=${project.dir}/modules/util.gradle" />
+				<arg value="--quiet" />
+				<arg value="-Dorg.gradle.internal.launcher.welcomeMessageEnabled=false" />
+				<arg value="-PdependencyNotation=com.liferay.portal:com.liferay.portal.dxp.apps.@{appname}:latest.release" />
+			</gradle-execute>
+
+			<propertyregex
+				input="${dxp.app.zip.file}"
+				override="true"
+				property="dxp.app.zip.file"
+				regexp="(.*$)"
+				select="\1"
+			/>
+
+			<dirname file="${dxp.app.zip.file}" property="dxp.app.zip.dir" />
+
+			<if>
+				<not>
+					<uptodate>
+						<mapper
+							to="${project.dir}/modules/dxp/@{appname}"
+							type="merge"
+						/>
+						<srcfiles dir="${dxp.app.zip.dir}" includes="com.liferay.portal.dxp.apps.@{appname}-${build.setup.profile.dxp.app.lcs.version}.zip" />
+					</uptodate>
+				</not>
+				<then>
+					<delete dir="${project.dir}/modules/dxp/@{appname}" />
+
+					<unzip
+						dest="${project.dir}/modules/dxp/apps"
+						src="${dxp.app.zip.dir}/com.liferay.portal.dxp.apps.@{appname}-${build.setup.profile.dxp.app.lcs.version}.zip"
+					>
+						<mapper
+							from="com.liferay.portal.dxp.apps.@{appname}-${build.setup.profile.dxp.app.lcs.version}/*"
+							to="@{appname}/*"
+							type="glob"
+						/>
+					</unzip>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="setup-libs">
 		<sequential>
 			<gradle-execute task="setUpLibs">

@@ -390,10 +390,7 @@ definition {
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-		var webContentSourceHTML = '''
-<h2 class="text-center">This is a HTML title</h2>
-
-<p class="text-center">This is a HTML Content</p>''';
+		var webContentSourceHTML = '''<h2 class="text-center">This is a HTML title</h2>''';
 
 		WebContent.addWithStructureCP(
 			description = "WC WebContent Description",
@@ -415,9 +412,7 @@ definition {
 			currentTargetLocale = "ar-SA",
 			newTargetLocale = "es-ES");
 
-		var webContentHTML = '''This is a HTML title
-
-This is a HTML Content''';
+		var webContentHTML = "This is a HTML title";
 
 		Translations.viewBaseFields(
 			webContentDecimal = "1.1",
@@ -429,10 +424,7 @@ This is a HTML Content''';
 			webContentTextBox = "This is a text box.",
 			webContentTitle = "WC WebContent Title");
 
-		var webContentSourceHTML = '''
-<h2 class="text-center">Este es un título HTML</h2>
-
-<p class="text-center">Este es un contenido HTML</p>''';
+		var webContentSourceHTML = '''<h2 class="text-center">Este es un título HTML</h2>''';
 
 		Translations.translateFields(
 			webContentDecimal = "2.2",
@@ -452,7 +444,7 @@ This is a HTML Content''';
 			currentTargetLocale = "ar-SA",
 			newTargetLocale = "es-ES");
 
-		var webContentHTML = "Este es un título HTML Este es un contenido HTML";
+		var webContentHTML = "Este es un título HTML";
 
 		Translations.viewTargetFields(
 			webContentDecimal = "22,0",

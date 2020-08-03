@@ -22,6 +22,7 @@ import com.liferay.analytics.reports.web.internal.data.provider.AnalyticsReports
 import com.liferay.analytics.reports.web.internal.display.context.AnalyticsReportsDisplayContext;
 import com.liferay.analytics.reports.web.internal.info.display.contributor.util.InfoDisplayContributorUtil;
 import com.liferay.analytics.reports.web.internal.layout.seo.CanonicalURLProvider;
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
@@ -128,8 +129,10 @@ public class AnalyticsReportsPortlet extends MVCPortlet {
 		String canonicalURL = null;
 
 		CanonicalURLProvider canonicalURLProvider = new CanonicalURLProvider(
-			_portal.getHttpServletRequest(renderRequest), _language,
-			_layoutSEOLinkManager, _portal);
+			_assetDisplayPageFriendlyURLProvider,
+			_portal.getHttpServletRequest(renderRequest),
+			infoDisplayObjectProvider, _language, _layoutSEOLinkManager,
+			_portal);
 
 		try {
 			canonicalURL = canonicalURLProvider.getCanonicalURL();
@@ -156,6 +159,10 @@ public class AnalyticsReportsPortlet extends MVCPortlet {
 
 	@Reference
 	private AnalyticsReportsInfoItemTracker _analyticsReportsInfoItemTracker;
+
+	@Reference
+	private AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
 
 	@Reference
 	private Http _http;

@@ -16,7 +16,10 @@ package com.liferay.analytics.reports.web.internal.portlet.action;
 
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
 import com.liferay.analytics.reports.web.internal.data.provider.AnalyticsReportsDataProvider;
+import com.liferay.analytics.reports.web.internal.info.display.contributor.util.InfoDisplayContributorUtil;
 import com.liferay.analytics.reports.web.internal.layout.seo.CanonicalURLProvider;
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -36,6 +39,8 @@ import java.util.ResourceBundle;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -62,9 +67,14 @@ public class GetAnalyticsReportsTotalViewsMVCResourceCommand
 		AnalyticsReportsDataProvider analyticsReportsDataProvider =
 			new AnalyticsReportsDataProvider(_http);
 
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			resourceRequest);
+
 		CanonicalURLProvider canonicalURLProvider = new CanonicalURLProvider(
-			_portal.getHttpServletRequest(resourceRequest), _language,
-			_layoutSEOLinkManager, _portal);
+			_assetDisplayPageFriendlyURLProvider, httpServletRequest,
+			InfoDisplayContributorUtil.getInfoDisplayObjectProvider(
+				httpServletRequest, _infoDisplayContributorTracker, _portal),
+			_language, _layoutSEOLinkManager, _portal);
 
 		try {
 			JSONObject jsonObject = JSONUtil.put(
@@ -101,7 +111,14 @@ public class GetAnalyticsReportsTotalViewsMVCResourceCommand
 		GetAnalyticsReportsTotalViewsMVCResourceCommand.class);
 
 	@Reference
+	private AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
+
+	@Reference
 	private Http _http;
+
+	@Reference
+	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
 	private Language _language;

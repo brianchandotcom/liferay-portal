@@ -16,9 +16,12 @@ package com.liferay.analytics.reports.web.internal.portlet.action;
 
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
 import com.liferay.analytics.reports.web.internal.data.provider.AnalyticsReportsDataProvider;
+import com.liferay.analytics.reports.web.internal.info.display.contributor.util.InfoDisplayContributorUtil;
 import com.liferay.analytics.reports.web.internal.layout.seo.CanonicalURLProvider;
 import com.liferay.analytics.reports.web.internal.model.HistoricalMetric;
 import com.liferay.analytics.reports.web.internal.model.TimeSpan;
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -37,6 +40,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -73,10 +78,17 @@ public class GetAnalyticsReportsHistoricalViewsMVCResourceCommand
 
 			int timeSpanOffset = ParamUtil.getInteger(
 				resourceRequest, "timeSpanOffset");
+
+			HttpServletRequest httpServletRequest =
+				_portal.getHttpServletRequest(resourceRequest);
+
 			CanonicalURLProvider canonicalURLProvider =
 				new CanonicalURLProvider(
-					_portal.getHttpServletRequest(resourceRequest), _language,
-					_layoutSEOLinkManager, _portal);
+					_assetDisplayPageFriendlyURLProvider, httpServletRequest,
+					InfoDisplayContributorUtil.getInfoDisplayObjectProvider(
+						httpServletRequest, _infoDisplayContributorTracker,
+						_portal),
+					_language, _layoutSEOLinkManager, _portal);
 
 			HistoricalMetric historicalMetric =
 				analyticsReportsDataProvider.getHistoricalViewsHistoricalMetric(
@@ -109,7 +121,14 @@ public class GetAnalyticsReportsHistoricalViewsMVCResourceCommand
 		GetAnalyticsReportsHistoricalViewsMVCResourceCommand.class);
 
 	@Reference
+	private AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
+
+	@Reference
 	private Http _http;
+
+	@Reference
+	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
 	private Language _language;

@@ -407,7 +407,7 @@ definition {
 			assigneeName = "userfn",
 			assigneeType = "Users",
 			domainValidation = "Invalid",
-			invalidDomainName = "nodomain.com",
+			emailDomainName = "nodomain.com",
 			userEmailAddress = "userea@nodomain.com",
 			userFirstName = "userfn",
 			userLastName = "userln",

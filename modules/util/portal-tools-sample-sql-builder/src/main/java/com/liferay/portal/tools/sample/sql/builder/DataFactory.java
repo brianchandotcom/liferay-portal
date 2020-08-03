@@ -899,25 +899,8 @@ public class DataFactory {
 			 productIndex < BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_COUNT;
 			 productIndex++) {
 
-			long[] cpDefinitionIds = new long
-				[BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_DEFINITION_COUNT];
-
-			for (int i = 0;
-				 i <
-					 BenchmarksPropsValues.
-						 MAX_COMMERCE_PRODUCT_DEFINITION_COUNT;
-				 i++) {
-
-				cpDefinitionIds[i] = _counter.get();
-			}
-
-			long cProductId = _counter.get();
-
 			CProductModel cProductModel = newCProductModel(
-				commerceCatalogGroupModel.getGroupId(), cProductId,
-				cpDefinitionIds
-					[BenchmarksPropsValues.
-						MAX_COMMERCE_PRODUCT_DEFINITION_COUNT - 1]);
+				commerceCatalogGroupModel);
 
 			_cProductModels.add(cProductModel);
 
@@ -927,7 +910,11 @@ public class DataFactory {
 						 MAX_COMMERCE_PRODUCT_DEFINITION_COUNT;
 				 definitionIndex++) {
 
-				long cpDefinitionId = cpDefinitionIds[definitionIndex];
+				CPDefinitionModel cpDefinitionModel = newCPDefinitionModel(
+					cpTaxCategoryModel, cProductModel,
+					commerceCatalogGroupModel, definitionIndex);
+
+				long cpDefinitionId = cpDefinitionModel.getCPDefinitionId();
 
 				CPDefinitionLocalizationModel cpDefinitionLocalizationModel =
 					newCPDefinitionLocalizationModel(cpDefinitionId);
@@ -935,11 +922,7 @@ public class DataFactory {
 				_cpDefinitionLocalizationModels.add(
 					cpDefinitionLocalizationModel);
 
-				_cpDefinitionModels.add(
-					newCPDefinitionModel(
-						commerceCatalogGroupModel.getGroupId(), cpDefinitionId,
-						cProductId, cpTaxCategoryModel.getCPTaxCategoryId(),
-						definitionIndex + 1));
+				_cpDefinitionModels.add(cpDefinitionModel);
 
 				_assetEntryModels.add(
 					newAssetEntryModel(
@@ -1486,6 +1469,83 @@ public class DataFactory {
 		counterModels.add(counterModel);
 
 		return counterModels;
+	}
+
+	public CPDefinitionModel newCPDefinitionModel(
+		CPTaxCategoryModel cpTaxCategoryModel, CProductModel cProductModel,
+		GroupModel commerceCatalogGroupModel, int version) {
+
+		CPDefinitionModel cpDefinitionModel = new CPDefinitionModelImpl();
+
+		long cpDefinitionId = _counter.get();
+
+		cpDefinitionModel.setUuid(SequentialUUID.generate());
+		cpDefinitionModel.setCPDefinitionId(cpDefinitionId);
+		cpDefinitionModel.setGroupId(commerceCatalogGroupModel.getGroupId());
+		cpDefinitionModel.setCompanyId(_companyId);
+		cpDefinitionModel.setUserId(_sampleUserId);
+		cpDefinitionModel.setUserName(_SAMPLE_USER_NAME);
+		cpDefinitionModel.setCreateDate(new Date());
+		cpDefinitionModel.setModifiedDate(new Date());
+		cpDefinitionModel.setCProductId(cProductModel.getCProductId());
+		cpDefinitionModel.setCPTaxCategoryId(
+			cpTaxCategoryModel.getCPTaxCategoryId());
+		cpDefinitionModel.setProductTypeName("simple");
+		cpDefinitionModel.setAvailableIndividually(true);
+		cpDefinitionModel.setIgnoreSKUCombinations(true);
+		cpDefinitionModel.setShippable(true);
+		cpDefinitionModel.setFreeShipping(false);
+		cpDefinitionModel.setShipSeparately(true);
+		cpDefinitionModel.setShippingExtraPrice(3.0);
+		cpDefinitionModel.setWidth(0);
+		cpDefinitionModel.setHeight(0);
+		cpDefinitionModel.setDepth(0);
+		cpDefinitionModel.setWeight(0);
+		cpDefinitionModel.setTaxExempt(false);
+		cpDefinitionModel.setTelcoOrElectronics(false);
+		cpDefinitionModel.setDDMStructureKey(null);
+		cpDefinitionModel.setPublished(true);
+		cpDefinitionModel.setDisplayDate(new Date());
+		cpDefinitionModel.setExpirationDate(null);
+		cpDefinitionModel.setLastPublishDate(null);
+		cpDefinitionModel.setSubscriptionEnabled(false);
+		cpDefinitionModel.setSubscriptionLength(0);
+		cpDefinitionModel.setSubscriptionType(null);
+		cpDefinitionModel.setSubscriptionTypeSettings(null);
+		cpDefinitionModel.setMaxSubscriptionCycles(0);
+		cpDefinitionModel.setVersion(version);
+		cpDefinitionModel.setStatus(WorkflowConstants.STATUS_APPROVED);
+		cpDefinitionModel.setStatusByUserId(_sampleUserId);
+		cpDefinitionModel.setStatusByUserName(_SAMPLE_USER_NAME);
+		cpDefinitionModel.setStatusDate(new Date());
+
+		if (version ==
+				(BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_DEFINITION_COUNT -
+					1)) {
+
+			cProductModel.setPublishedCPDefinitionId(cpDefinitionId);
+		}
+
+		return cpDefinitionModel;
+	}
+
+	public CProductModel newCProductModel(
+		GroupModel commerceCatalogGroupModel) {
+
+		CProductModel cProductModel = new CProductModelImpl();
+
+		cProductModel.setUuid(SequentialUUID.generate());
+		cProductModel.setCProductId(_counter.get());
+		cProductModel.setGroupId(commerceCatalogGroupModel.getGroupId());
+		cProductModel.setCompanyId(_companyId);
+		cProductModel.setUserId(_sampleUserId);
+		cProductModel.setUserName(_SAMPLE_USER_NAME);
+		cProductModel.setCreateDate(new Date());
+		cProductModel.setModifiedDate(new Date());
+		cProductModel.setLatestVersion(
+			BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_DEFINITION_COUNT);
+
+		return cProductModel;
 	}
 
 	public CPTaxCategoryModel newCPTaxCategoryModel() {
@@ -3594,54 +3654,6 @@ public class DataFactory {
 		return cpDefinitionLocalizationModel;
 	}
 
-	protected CPDefinitionModel newCPDefinitionModel(
-		long groupId, long cpDefinitionId, long cProductId,
-		long cpTaxCategoryId, int version) {
-
-		CPDefinitionModel cpDefinitionModel = new CPDefinitionModelImpl();
-
-		cpDefinitionModel.setUuid(SequentialUUID.generate());
-		cpDefinitionModel.setCPDefinitionId(cpDefinitionId);
-		cpDefinitionModel.setGroupId(groupId);
-		cpDefinitionModel.setCompanyId(_companyId);
-		cpDefinitionModel.setUserId(_sampleUserId);
-		cpDefinitionModel.setUserName(_SAMPLE_USER_NAME);
-		cpDefinitionModel.setCreateDate(new Date());
-		cpDefinitionModel.setModifiedDate(new Date());
-		cpDefinitionModel.setCProductId(cProductId);
-		cpDefinitionModel.setCPTaxCategoryId(cpTaxCategoryId);
-		cpDefinitionModel.setProductTypeName("simple");
-		cpDefinitionModel.setAvailableIndividually(true);
-		cpDefinitionModel.setIgnoreSKUCombinations(true);
-		cpDefinitionModel.setShippable(true);
-		cpDefinitionModel.setFreeShipping(false);
-		cpDefinitionModel.setShipSeparately(true);
-		cpDefinitionModel.setShippingExtraPrice(3.0);
-		cpDefinitionModel.setWidth(0);
-		cpDefinitionModel.setHeight(0);
-		cpDefinitionModel.setDepth(0);
-		cpDefinitionModel.setWeight(0);
-		cpDefinitionModel.setTaxExempt(false);
-		cpDefinitionModel.setTelcoOrElectronics(false);
-		cpDefinitionModel.setDDMStructureKey(null);
-		cpDefinitionModel.setPublished(true);
-		cpDefinitionModel.setDisplayDate(new Date());
-		cpDefinitionModel.setExpirationDate(null);
-		cpDefinitionModel.setLastPublishDate(null);
-		cpDefinitionModel.setSubscriptionEnabled(false);
-		cpDefinitionModel.setSubscriptionLength(0);
-		cpDefinitionModel.setSubscriptionType(null);
-		cpDefinitionModel.setSubscriptionTypeSettings(null);
-		cpDefinitionModel.setMaxSubscriptionCycles(0);
-		cpDefinitionModel.setVersion(version);
-		cpDefinitionModel.setStatus(WorkflowConstants.STATUS_APPROVED);
-		cpDefinitionModel.setStatusByUserId(_sampleUserId);
-		cpDefinitionModel.setStatusByUserName(_SAMPLE_USER_NAME);
-		cpDefinitionModel.setStatusDate(new Date());
-
-		return cpDefinitionModel;
-	}
-
 	protected CPFriendlyURLEntryModel newCPFriendlyURLEntryModel(
 		CProductModel cProductModel) {
 
@@ -3721,26 +3733,6 @@ public class DataFactory {
 		cpInstanceModel.setStatusDate(new Date());
 
 		return cpInstanceModel;
-	}
-
-	protected CProductModel newCProductModel(
-		long groupId, long cProductId, long publishedCPDefinitionId) {
-
-		CProductModel cProductModel = new CProductModelImpl();
-
-		cProductModel.setUuid(SequentialUUID.generate());
-		cProductModel.setCProductId(cProductId);
-		cProductModel.setGroupId(groupId);
-		cProductModel.setCompanyId(_companyId);
-		cProductModel.setUserId(_sampleUserId);
-		cProductModel.setUserName(_SAMPLE_USER_NAME);
-		cProductModel.setCreateDate(new Date());
-		cProductModel.setModifiedDate(new Date());
-		cProductModel.setPublishedCPDefinitionId(publishedCPDefinitionId);
-		cProductModel.setLatestVersion(
-			BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_DEFINITION_COUNT);
-
-		return cProductModel;
 	}
 
 	protected DDMContentModel newDDMContentModel(

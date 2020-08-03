@@ -25,6 +25,7 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Layout;
@@ -40,6 +41,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
+import com.liferay.portal.util.HttpImpl;
 import com.liferay.portal.util.PortalImpl;
 
 import java.time.LocalDate;
@@ -58,15 +60,12 @@ import java.util.ResourceBundle;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * @author David Arques
  */
-@RunWith(MockitoJUnitRunner.class)
 public class AnalyticsReportsDisplayContextTest {
 
 	@BeforeClass
@@ -97,7 +96,7 @@ public class AnalyticsReportsDisplayContextTest {
 					RandomTestUtil.randomDouble(), null,
 					RandomTestUtil.randomInt(), RandomTestUtil.randomDouble(),
 					false),
-				_getAnalyticsReportsItem(), null, null,
+				_getAnalyticsReportsItem(LocaleUtil.US), null, null,
 				_getInfoDisplayObjectProvider(), new PortalImpl(),
 				new MockLiferayPortletRenderRequest(),
 				new MockLiferayPortletRenderResponse(), _getResourceBundle(),
@@ -183,6 +182,107 @@ public class AnalyticsReportsDisplayContextTest {
 		Map<String, Object> props = (Map<String, Object>)data.get("props");
 
 		Assert.assertEquals(StringPool.BLANK, props.get("authorPortraitURL"));
+	}
+
+	@Test
+	public void testGetPropsViewURLs() throws Exception {
+		AnalyticsReportsDataProvider analyticsReportsDataProvider =
+			_getAnalyticsReportsDataProvider(
+				Collections.emptyList(), RandomTestUtil.randomInt(),
+				RandomTestUtil.randomDouble(), Collections.emptyList(),
+				RandomTestUtil.randomInt(), RandomTestUtil.randomDouble(),
+				true);
+
+		AnalyticsReportsInfoItem<Object> analyticsReportsInfoItem =
+			_getAnalyticsReportsItem(LocaleUtil.US);
+
+		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
+			new AnalyticsReportsDisplayContext(
+				analyticsReportsDataProvider, analyticsReportsInfoItem, null,
+				null, _getInfoDisplayObjectProvider(), new PortalImpl(),
+				new MockLiferayPortletRenderRequest(),
+				new MockLiferayPortletRenderResponse(), _getResourceBundle(),
+				_getThemeDisplay(_getLayout()), null);
+
+		Map<String, Object> data = analyticsReportsDisplayContext.getData();
+
+		Map<String, Object> props = (Map<String, Object>)data.get("props");
+
+		JSONArray jsonArray = (JSONArray)props.get("viewURLs");
+
+		Assert.assertEquals(String.valueOf(jsonArray), 1, jsonArray.length());
+
+		JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+		Assert.assertEquals(Boolean.TRUE, jsonObject.getBoolean("default"));
+
+		Assert.assertEquals(
+			LocaleUtil.toBCP47LanguageId(LocaleUtil.getDefault()),
+			jsonObject.getString("languageId"));
+
+		Http http = new HttpImpl();
+
+		Assert.assertEquals(
+			LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
+			http.getParameter(
+				jsonObject.getString("viewURL"), "param_languageId"));
+	}
+
+	@Test
+	public void testGetPropsViewURLsWithMultipleLocales() throws Exception {
+		AnalyticsReportsDataProvider analyticsReportsDataProvider =
+			_getAnalyticsReportsDataProvider(
+				Collections.emptyList(), RandomTestUtil.randomInt(),
+				RandomTestUtil.randomDouble(), Collections.emptyList(),
+				RandomTestUtil.randomInt(), RandomTestUtil.randomDouble(),
+				true);
+
+		AnalyticsReportsInfoItem<Object> analyticsReportsInfoItem =
+			_getAnalyticsReportsItem(LocaleUtil.SPAIN, LocaleUtil.US);
+
+		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
+			new AnalyticsReportsDisplayContext(
+				analyticsReportsDataProvider, analyticsReportsInfoItem, null,
+				null, _getInfoDisplayObjectProvider(), new PortalImpl(),
+				new MockLiferayPortletRenderRequest(),
+				new MockLiferayPortletRenderResponse(), _getResourceBundle(),
+				_getThemeDisplay(_getLayout()), null);
+
+		Map<String, Object> data = analyticsReportsDisplayContext.getData();
+
+		Map<String, Object> props = (Map<String, Object>)data.get("props");
+
+		JSONArray jsonArray = (JSONArray)props.get("viewURLs");
+
+		Assert.assertEquals(String.valueOf(jsonArray), 2, jsonArray.length());
+
+		JSONObject jsonObject1 = jsonArray.getJSONObject(0);
+
+		Assert.assertEquals(Boolean.TRUE, jsonObject1.getBoolean("default"));
+
+		Assert.assertEquals(
+			LocaleUtil.toBCP47LanguageId(LocaleUtil.SPAIN),
+			jsonObject1.getString("languageId"));
+
+		Http http = new HttpImpl();
+
+		Assert.assertEquals(
+			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
+			http.getParameter(
+				jsonObject1.getString("viewURL"), "param_languageId"));
+
+		JSONObject jsonObject2 = jsonArray.getJSONObject(1);
+
+		Assert.assertEquals(Boolean.FALSE, jsonObject2.getBoolean("default"));
+
+		Assert.assertEquals(
+			LocaleUtil.toBCP47LanguageId(LocaleUtil.US),
+			jsonObject2.getString("languageId"));
+
+		Assert.assertEquals(
+			LocaleUtil.toLanguageId(LocaleUtil.US),
+			http.getParameter(
+				jsonObject2.getString("viewURL"), "param_languageId"));
 	}
 
 	@Test
@@ -422,7 +522,9 @@ public class AnalyticsReportsDisplayContextTest {
 		};
 	}
 
-	private AnalyticsReportsInfoItem<Object> _getAnalyticsReportsItem() {
+	private AnalyticsReportsInfoItem<Object> _getAnalyticsReportsItem(
+		Locale... locales) {
+
 		String authorName = StringUtil.randomString();
 		long authorUserId = RandomTestUtil.randomLong();
 		Date publishDate = RandomTestUtil.nextDate();
@@ -438,6 +540,16 @@ public class AnalyticsReportsDisplayContextTest {
 			@Override
 			public long getAuthorUserId(Object model) {
 				return authorUserId;
+			}
+
+			@Override
+			public List<Locale> getAvailableLocales(Object model) {
+				return Arrays.asList(locales);
+			}
+
+			@Override
+			public Locale getDefaultLocale(Object model) {
+				return locales[0];
 			}
 
 			@Override

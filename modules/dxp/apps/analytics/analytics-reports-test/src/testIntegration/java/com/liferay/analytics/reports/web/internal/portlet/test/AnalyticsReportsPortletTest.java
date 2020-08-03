@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
@@ -51,6 +52,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.HttpImpl;
 import com.liferay.portal.util.PrefsPropsImpl;
 
 import java.util.Dictionary;
@@ -87,7 +89,7 @@ public class AnalyticsReportsPortletTest {
 	}
 
 	@Test
-	public void testGetData() throws Exception {
+	public void testGetPropsTrafficSources() throws Exception {
 		PrefsProps prefsProps = PrefsPropsUtil.getPrefsProps();
 
 		PrefsPropsWrapper prefsPropsWrapper = _getPrefsPropsWrapper(prefsProps);
@@ -143,10 +145,10 @@ public class AnalyticsReportsPortletTest {
 				mockLiferayPortletRenderRequest,
 				_getMockLiferayPortletRenderResponse());
 
-			Map<String, Object> data = _getProps(
+			Map<String, Object> props = _getProps(
 				mockLiferayPortletRenderRequest);
 
-			JSONArray jsonArray = (JSONArray)data.get("trafficSources");
+			JSONArray jsonArray = (JSONArray)props.get("trafficSources");
 
 			Assert.assertEquals(2, jsonArray.length());
 
@@ -195,6 +197,37 @@ public class AnalyticsReportsPortletTest {
 
 			ReflectionTestUtil.setFieldValue(_portlet, "_http", _http);
 		}
+	}
+
+	@Test
+	public void testGetPropsViewURLs() throws Exception {
+		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
+			_getMockLiferayPortletRenderRequest();
+
+		_portlet.render(
+			mockLiferayPortletRenderRequest,
+			_getMockLiferayPortletRenderResponse());
+
+		Map<String, Object> props = _getProps(mockLiferayPortletRenderRequest);
+
+		JSONArray jsonArray = (JSONArray)props.get("viewURLs");
+
+		Assert.assertEquals(String.valueOf(jsonArray), jsonArray.length(), 1);
+
+		JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+		Assert.assertEquals(Boolean.TRUE, jsonObject.getBoolean("default"));
+
+		Assert.assertEquals(
+			LocaleUtil.toBCP47LanguageId(LocaleUtil.getDefault()),
+			jsonObject.getString("languageId"));
+
+		Http http = new HttpImpl();
+
+		Assert.assertEquals(
+			LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
+			http.getParameter(
+				jsonObject.getString("viewURL"), "param_languageId"));
 	}
 
 	private MockLiferayPortletRenderRequest

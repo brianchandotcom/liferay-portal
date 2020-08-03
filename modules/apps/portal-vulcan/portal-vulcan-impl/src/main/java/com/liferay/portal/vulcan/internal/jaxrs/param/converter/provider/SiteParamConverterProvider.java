@@ -87,12 +87,12 @@ public class SiteParamConverterProvider
 		return null;
 	}
 
-	public Long getDepotGroupId(long companyId, String depotId) {
-		if (depotId == null) {
+	public Long getDepotGroupId(long companyId, String assetLibraryId) {
+		if (assetLibraryId == null) {
 			return null;
 		}
 
-		return _fetchDepot(companyId, depotId);
+		return _fetchDepotGroupId(companyId, assetLibraryId);
 	}
 
 	public Long getGroupId(long companyId, String siteId) {
@@ -118,13 +118,13 @@ public class SiteParamConverterProvider
 		return false;
 	}
 
-	private Long _fetchDepot(long companyId, String depotKey) {
-		Group group = _groupLocalService.fetchGroup(companyId, depotKey);
+	private Long _fetchDepotGroupId(long companyId, String assetLibraryId) {
+		Group group = _groupLocalService.fetchGroup(companyId, assetLibraryId);
 
 		if (group == null) {
 			try {
 				DepotEntry depotEntry = _depotEntryLocalService.fetchDepotEntry(
-					GetterUtil.getLong(depotKey));
+					GetterUtil.getLong(assetLibraryId));
 
 				group = depotEntry.getGroup();
 			}

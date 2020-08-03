@@ -57,7 +57,9 @@ definition {
 			userScreenName = "${userScreenName}",
 			validDomainNames = "${validDomainNames}");
 
-		Button.clickSave();
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
 
 		Alert.viewSuccessMessage();
 	}

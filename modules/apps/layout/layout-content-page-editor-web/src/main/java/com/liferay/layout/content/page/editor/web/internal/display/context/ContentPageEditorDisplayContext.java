@@ -203,11 +203,11 @@ public class ContentPageEditorDisplayContext {
 		_fragmentRendererTracker = fragmentRendererTracker;
 		_itemSelector = itemSelector;
 		_pageEditorConfiguration = pageEditorConfiguration;
-		_portletRequest = portletRequest;
 		_renderResponse = renderResponse;
 
 		this.httpServletRequest = httpServletRequest;
 		this.infoItemServiceTracker = infoItemServiceTracker;
+		this.portletRequest = portletRequest;
 
 		themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -365,7 +365,7 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"layoutConversionWarningMessages",
 				MultiSessionMessages.get(
-					_portletRequest, "layoutConversionWarningMessages")
+					portletRequest, "layoutConversionWarningMessages")
 			).put(
 				"layoutType", String.valueOf(_getLayoutType())
 			).put(
@@ -684,6 +684,7 @@ public class ContentPageEditorDisplayContext {
 
 	protected final HttpServletRequest httpServletRequest;
 	protected final InfoItemServiceTracker infoItemServiceTracker;
+	protected final PortletRequest portletRequest;
 	protected final ThemeDisplay themeDisplay;
 
 	private Map<String, Object> _getAvailableLanguages() {
@@ -2123,7 +2124,6 @@ public class ContentPageEditorDisplayContext {
 	private Integer _layoutType;
 	private LayoutStructure _masterLayoutStructure;
 	private final PageEditorConfiguration _pageEditorConfiguration;
-	private final PortletRequest _portletRequest;
 	private Layout _publishedLayout;
 	private String _redirect;
 	private final RenderResponse _renderResponse;

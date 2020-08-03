@@ -89,6 +89,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DELETE_ATTACHMENT</td>
+	<td>//div[contains(@class,'card-body') and contains(.,'${key_fileName}')]//a[*[name()='svg'][contains(@class,'icon-times')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DELETE_CUSTOM_META_TAG</td>
 	<td>//div[contains(@class,'field-wrapper')][${key_tagNum}]//*[*[name()='svg'][contains(@class,'icon-hr')]]</td>
 	<td></td>

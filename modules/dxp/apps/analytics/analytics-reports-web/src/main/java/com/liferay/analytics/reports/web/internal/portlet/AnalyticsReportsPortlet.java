@@ -20,16 +20,13 @@ import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPort
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsWebKeys;
 import com.liferay.analytics.reports.web.internal.data.provider.AnalyticsReportsDataProvider;
 import com.liferay.analytics.reports.web.internal.display.context.AnalyticsReportsDisplayContext;
+import com.liferay.analytics.reports.web.internal.info.display.contributor.util.InfoDisplayContributorUtil;
 import com.liferay.analytics.reports.web.internal.layout.seo.CanonicalURLProvider;
-import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -96,7 +93,8 @@ public class AnalyticsReportsPortlet extends MVCPortlet {
 		}
 
 		InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
-			_getInfoDisplayObjectProvider(httpServletRequest);
+			InfoDisplayContributorUtil.getInfoDisplayObjectProvider(
+				httpServletRequest, _infoDisplayContributorTracker, _portal);
 
 		AnalyticsReportsInfoItem<Object> analyticsReportsInfoItem = null;
 		Object analyticsReportsInfoItemObject = null;
@@ -155,37 +153,6 @@ public class AnalyticsReportsPortlet extends MVCPortlet {
 
 		super.doDispatch(renderRequest, renderResponse);
 	}
-
-	private InfoDisplayObjectProvider<?> _getInfoDisplayObjectProvider(
-		HttpServletRequest httpServletRequest) {
-
-		InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
-			(InfoDisplayObjectProvider<?>)httpServletRequest.getAttribute(
-				AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
-
-		if (infoDisplayObjectProvider != null) {
-			return infoDisplayObjectProvider;
-		}
-
-		InfoDisplayContributor<?> infoDisplayContributor =
-				_infoDisplayContributorTracker.getInfoDisplayContributor(
-					_portal.getClassName(
-						ParamUtil.getLong(httpServletRequest, "classNameId")));
-
-		try {
-			infoDisplayObjectProvider =
-				infoDisplayContributor.getInfoDisplayObjectProvider(
-					ParamUtil.getLong(httpServletRequest, "classPK"));
-		}
-		catch (Exception exception) {
-			_log.error("Unable to get info display object provider", exception);
-		}
-
-		return infoDisplayObjectProvider;
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AnalyticsReportsPortlet.class);
 
 	@Reference
 	private AnalyticsReportsInfoItemTracker _analyticsReportsInfoItemTracker;

@@ -366,7 +366,7 @@ public class GraphQLServletExtender {
 
 					@Override
 					public Object invoke(
-							Object proxy, Method method, Object[] args)
+							Object proxy, Method method, Object[] arguments)
 						throws Throwable {
 
 						String methodName = method.getName();
@@ -383,8 +383,10 @@ public class GraphQLServletExtender {
 							return hashCode();
 						}
 
-						if (methodName.equals("init") && (args.length > 0)) {
-							_servletConfig = (ServletConfig)args[0];
+						if (methodName.equals("init") &&
+							(arguments.length > 0)) {
+
+							_servletConfig = (ServletConfig)arguments[0];
 
 							return null;
 						}
@@ -394,7 +396,7 @@ public class GraphQLServletExtender {
 						servlet.init(_servletConfig);
 
 						try {
-							return method.invoke(servlet, args);
+							return method.invoke(servlet, arguments);
 						}
 						catch (InvocationTargetException
 									invocationTargetException) {
@@ -637,9 +639,10 @@ public class GraphQLServletExtender {
 
 		Parameter[] parameters = method.getParameters();
 
-		Map<String, Object> arguments = dataFetchingEnvironment.getArguments();
+		Map<String, Object> argumentsMap =
+			dataFetchingEnvironment.getArguments();
 
-		Object[] args = new Object[parameters.length];
+		Object[] arguments = new Object[parameters.length];
 
 		SiteParamConverterProvider siteParamConverterProvider =
 			new SiteParamConverterProvider(
@@ -659,7 +662,7 @@ public class GraphQLServletExtender {
 				parameterName = NamingKit.toGraphqlName(graphQLName);
 			}
 
-			Object argument = arguments.get(parameterName);
+			Object argument = argumentsMap.get(parameterName);
 
 			if (argument == null) {
 				if (parameter.isAnnotationPresent(NotNull.class)) {
@@ -751,12 +754,12 @@ public class GraphQLServletExtender {
 				ValidationUtil.validate(argument);
 			}
 
-			args[i] = argument;
+			arguments[i] = argument;
 		}
 
-		ValidationUtil.validateArguments(instance, method, args);
+		ValidationUtil.validateArguments(instance, method, arguments);
 
-		return method.invoke(instance, args);
+		return method.invoke(instance, arguments);
 	}
 
 	private Object _createQueryInstance(

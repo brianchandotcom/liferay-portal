@@ -131,31 +131,6 @@ $theme-colors-cp: map-deep-merge(
 	--body-color: $body-color;
 	--body-bg: $body-bg;
 
-	// Alerts
-
-	--alert-padding-y: #{$alert-padding-y};
-	--alert-padding-x: #{$alert-padding-x};
-
-	--alert-primary-color: #{$alert-primary-color};
-	--alert-primary-bg: #{$alert-primary-bg};
-	--alert-primary-border-color: #{$alert-primary-border-color};
-
-	--alert-success-color: #{$alert-success-color};
-	--alert-success-bg: #{$alert-success-bg};
-	--alert-success-border-color: #{$alert-success-border-color};
-
-	--alert-info-color: #{$alert-info-color};
-	--alert-info-bg: #{$alert-info-bg};
-	--alert-info-border-color: #{$alert-info-border-color};
-
-	--alert-warning-color: #{$alert-warning-color};
-	--alert-warning-bg: #{$alert-warning-bg};
-	--alert-warning-border-color: #{$alert-warning-border-color};
-
-	--alert-danger-color: #{$alert-danger-color};
-	--alert-danger-bg: #{$alert-danger-bg};
-	--alert-danger-border-color: #{$alert-danger-border-color};
-
 	// Cards
 
 	--card-bg: #{$card-bg};

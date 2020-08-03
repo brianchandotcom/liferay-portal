@@ -157,61 +157,16 @@ public class DDMStructureLocalServiceImpl
 
 		// Structure
 
-		User user = userLocalService.getUser(userId);
-
-		if (Validator.isNull(structureKey)) {
-			structureKey = String.valueOf(counterLocalService.increment());
-		}
-		else {
-			structureKey = StringUtil.toUpperCase(structureKey.trim());
-		}
-
-		validate(
-			groupId, parentStructureId, classNameId, structureKey, nameMap,
-			ddmForm);
-
-		long structureId = counterLocalService.increment();
-
-		DDMStructure structure = ddmStructurePersistence.create(structureId);
-
-		structure.setUuid(serviceContext.getUuid());
-		structure.setGroupId(groupId);
-		structure.setCompanyId(user.getCompanyId());
-		structure.setUserId(user.getUserId());
-		structure.setUserName(user.getFullName());
-		structure.setVersionUserId(user.getUserId());
-		structure.setVersionUserName(user.getFullName());
-		structure.setParentStructureId(parentStructureId);
-		structure.setClassNameId(classNameId);
-		structure.setStructureKey(structureKey);
-		structure.setVersion(DDMStructureConstants.VERSION_DEFAULT);
-		structure.setDescriptionMap(descriptionMap, ddmForm.getDefaultLocale());
-		structure.setNameMap(nameMap, ddmForm.getDefaultLocale());
-		structure.setDefinition(serializeJSONDDMForm(ddmForm));
-		structure.setStorageType(storageType);
-		structure.setType(type);
-
-		structure = ddmStructurePersistence.update(structure);
-
-		// Resources
-
-		if (serviceContext.isAddGroupPermissions() ||
-			serviceContext.isAddGuestPermissions()) {
-
-			addStructureResources(
-				structure, serviceContext.isAddGroupPermissions(),
-				serviceContext.isAddGuestPermissions());
-		}
-		else {
-			addStructureResources(
-				structure, serviceContext.getModelPermissions());
-		}
+		DDMStructure structure = addStructure(
+			userId, groupId, parentStructureId, classNameId, structureKey,
+			nameMap, descriptionMap, ddmForm, storageType, type,
+			serviceContext);
 
 		// Structure version
 
 		DDMStructureVersion structureVersion = addStructureVersion(
-			user, structure, DDMStructureConstants.VERSION_DEFAULT,
-			serviceContext);
+			userLocalService.getUser(userId), structure,
+			DDMStructureConstants.VERSION_DEFAULT, serviceContext);
 
 		// Structure layout
 
@@ -221,7 +176,38 @@ public class DDMStructureLocalServiceImpl
 
 		// Data provider instance links
 
-		addDataProviderInstanceLinks(groupId, structureId, ddmForm);
+		addDataProviderInstanceLinks(
+			groupId, structure.getStructureId(), ddmForm);
+
+		return structure;
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public DDMStructure addStructure(
+			long userId, long groupId, long parentStructureId, long classNameId,
+			String structureKey, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, DDMForm ddmForm,
+			String storageType, ServiceContext serviceContext)
+		throws PortalException {
+
+		// Structure
+
+		DDMStructure structure = addStructure(
+			userId, groupId, parentStructureId, classNameId, structureKey,
+			nameMap, descriptionMap, ddmForm, storageType,
+			DDMStructureConstants.TYPE_DEFAULT, serviceContext);
+
+		// Structure version
+
+		addStructureVersion(
+			userLocalService.getUser(userId), structure,
+			DDMStructureConstants.VERSION_DEFAULT, serviceContext);
+
+		// Data provider instance links
+
+		addDataProviderInstanceLinks(
+			groupId, structure.getStructureId(), ddmForm);
 
 		return structure;
 	}
@@ -1495,6 +1481,68 @@ public class DDMStructureLocalServiceImpl
 				addDataProviderInstanceLink(
 					dataProviderInstanceId, structureId);
 		}
+	}
+
+	protected DDMStructure addStructure(
+			long userId, long groupId, long parentStructureId, long classNameId,
+			String structureKey, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, DDMForm ddmForm,
+			String storageType, int type, ServiceContext serviceContext)
+		throws PortalException {
+
+		// Structure
+
+		User user = userLocalService.getUser(userId);
+
+		if (Validator.isNull(structureKey)) {
+			structureKey = String.valueOf(counterLocalService.increment());
+		}
+		else {
+			structureKey = StringUtil.toUpperCase(structureKey.trim());
+		}
+
+		validate(
+			groupId, parentStructureId, classNameId, structureKey, nameMap,
+			ddmForm);
+
+		long structureId = counterLocalService.increment();
+
+		DDMStructure structure = ddmStructurePersistence.create(structureId);
+
+		structure.setUuid(serviceContext.getUuid());
+		structure.setGroupId(groupId);
+		structure.setCompanyId(user.getCompanyId());
+		structure.setUserId(user.getUserId());
+		structure.setUserName(user.getFullName());
+		structure.setVersionUserId(user.getUserId());
+		structure.setVersionUserName(user.getFullName());
+		structure.setParentStructureId(parentStructureId);
+		structure.setClassNameId(classNameId);
+		structure.setStructureKey(structureKey);
+		structure.setVersion(DDMStructureConstants.VERSION_DEFAULT);
+		structure.setDescriptionMap(descriptionMap, ddmForm.getDefaultLocale());
+		structure.setNameMap(nameMap, ddmForm.getDefaultLocale());
+		structure.setDefinition(serializeJSONDDMForm(ddmForm));
+		structure.setStorageType(storageType);
+		structure.setType(type);
+
+		structure = ddmStructurePersistence.update(structure);
+
+		// Resources
+
+		if (serviceContext.isAddGroupPermissions() ||
+			serviceContext.isAddGuestPermissions()) {
+
+			addStructureResources(
+				structure, serviceContext.isAddGroupPermissions(),
+				serviceContext.isAddGuestPermissions());
+		}
+		else {
+			addStructureResources(
+				structure, serviceContext.getModelPermissions());
+		}
+
+		return structure;
 	}
 
 	protected DDMStructureVersion addStructureVersion(

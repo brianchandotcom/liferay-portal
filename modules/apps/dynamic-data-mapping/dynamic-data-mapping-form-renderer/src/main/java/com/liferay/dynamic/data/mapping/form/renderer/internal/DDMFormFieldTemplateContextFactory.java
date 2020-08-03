@@ -252,17 +252,23 @@ public class DDMFormFieldTemplateContextFactory {
 		Map<String, List<DDMFormFieldValue>> nestedDDMFormFieldValuesMap =
 			parentDDMFormFieldValue.getNestedDDMFormFieldValuesMap();
 
-		for (DDMFormFieldValue nestedDDMFormFieldValue :
-				parentDDMFormFieldValue.getNestedDDMFormFieldValues()) {
+		List<DDMFormFieldValue> nestedDDMFormFieldValues =
+			parentDDMFormFieldValue.getNestedDDMFormFieldValues();
 
-			List<DDMFormFieldValue> nestedDDMFormFieldValues =
-				nestedDDMFormFieldValuesMap.get(
-					nestedDDMFormFieldValue.getName());
+		Stream<DDMFormFieldValue> nestedDDMFormFieldValuesStream =
+			nestedDDMFormFieldValues.stream();
 
-			nestedDDMFormFieldTemplateContext.addAll(
-				createDDMFormFieldTemplateContexts(
-					nestedDDMFormFieldValues, parentDDMFormFieldParameterName));
-		}
+		nestedDDMFormFieldValuesStream.map(
+			DDMFormFieldValue::getName
+		).distinct(
+		).map(
+			nestedDDMFormFieldValuesMap::get
+		).map(
+			ddmFormFieldValues -> createDDMFormFieldTemplateContexts(
+				ddmFormFieldValues, parentDDMFormFieldParameterName)
+		).forEach(
+			nestedDDMFormFieldTemplateContext::addAll
+		);
 
 		return nestedDDMFormFieldTemplateContext;
 	}

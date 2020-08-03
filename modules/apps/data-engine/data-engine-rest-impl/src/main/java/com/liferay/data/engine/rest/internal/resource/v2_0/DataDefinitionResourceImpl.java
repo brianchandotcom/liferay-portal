@@ -199,10 +199,6 @@ public class DataDefinitionResourceImpl
 				_ddmStructureLocalService.getStructure(
 					deDataDefinitionFieldLink.getClassPK()));
 
-			_removeFieldsFromDataLayoutsAndDataListViews(
-				dataDefinition, deDataDefinitionFieldLink.getClassPK(),
-				new String[] {deDataDefinitionFieldLink.getFieldName()});
-
 			dataDefinition.setDataDefinitionFields(
 				ArrayUtil.filter(
 					dataDefinition.getDataDefinitionFields(),
@@ -214,6 +210,10 @@ public class DataDefinitionResourceImpl
 				dataDefinition, dataDefinition.getId(),
 				DataDefinitionUtil.toDDMForm(
 					dataDefinition, _ddmFormFieldTypeServicesTracker));
+
+			_removeFieldsFromDataLayoutsAndDataListViews(
+				dataDefinition, deDataDefinitionFieldLink.getClassPK(),
+				new String[] {deDataDefinitionFieldLink.getFieldName()});
 		}
 	}
 

@@ -289,8 +289,6 @@ definition {
 
 		LAR.importPortlet(larFileName = "site-template-name.lar");
 
-		Refresh();
-
 		SiteTemplates.viewCP(siteTemplateName = "Site Template Name");
 
 		SiteTemplatesNavigator.openSiteTemplatesAdmin(baseURL = "http://www.able.com:8080");

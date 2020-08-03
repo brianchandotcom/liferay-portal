@@ -708,8 +708,6 @@ definition {
 
 		LAR.importPortlet(larFileName = "site-template-name.lar");
 
-		Refresh();
-
 		SiteTemplates.viewCP(siteTemplateName = "Site Template Name");
 
 		JSONGroup.addGroup(groupName = "Site B");

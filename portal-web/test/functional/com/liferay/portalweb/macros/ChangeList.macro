@@ -86,11 +86,27 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro publishPublication {
-		Click(locator1 = "ChangeList#CHANGE_LIST_INDICATOR_BUTTON");
+	macro prepareToPublish {
+		if ("${gotoManagePublications}" == "true") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Manage Publications");
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+			Click(
+				key_publicationName = "${publicationName}",
+				locator1 = "ChangeList#LIST_PUBLICATION_ELLIPSIS");
+		}
+		else {
+			Click(locator1 = "ChangeList#CHANGE_LIST_INDICATOR_BUTTON");
+		}
 
 		MenuItem.click(menuItem = "Prepare to Publish");
+	}
 
+	macro publishPublication {
 		Click(locator1 = "ChangeList#PUBLISH_BUTTON");
 
 		Alert.viewSuccessMessage();

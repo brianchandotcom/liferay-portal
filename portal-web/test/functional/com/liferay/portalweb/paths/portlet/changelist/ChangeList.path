@@ -39,8 +39,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NEEDS_MANUAL_RESOLUTION_TABLE</td>
+	<td>//table[contains(@class,'change-lists-conflicts-table')]//td[contains(.,'Needs Manual Resolution')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLICATION_NAME</td>
 	<td>//input[contains(@name,'name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_PUBLICATION_ELLIPSIS</td>
+	<td>//li[@data-qa-id='row'][contains(.,'${key_publicationName}')]//a[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>

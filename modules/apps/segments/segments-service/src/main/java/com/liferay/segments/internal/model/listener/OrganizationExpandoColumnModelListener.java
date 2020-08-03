@@ -188,7 +188,11 @@ public class OrganizationExpandoColumnModelListener
 				locale -> encodedIndexedFieldName);
 		}
 		else if ((expandoColumn.getType() == ExpandoColumnConstants.DOUBLE) ||
-				 (expandoColumn.getType() == ExpandoColumnConstants.FLOAT)) {
+				 (expandoColumn.getType() ==
+					 ExpandoColumnConstants.DOUBLE_ARRAY) ||
+				 (expandoColumn.getType() == ExpandoColumnConstants.FLOAT) ||
+				 (expandoColumn.getType() ==
+					 ExpandoColumnConstants.FLOAT_ARRAY)) {
 
 			entityField = new DoubleEntityField(
 				encodedName, locale -> encodedIndexedFieldName);

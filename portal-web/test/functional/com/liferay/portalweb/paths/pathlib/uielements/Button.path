@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>ADD</td>
-	<td>//a[contains(text(),'Add')] | //button[contains(@type,'submit') and contains(.,'Add')] | //button[contains(@type,'button') and contains(.,'Add')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_ACTION</td>
 	<td>//span[contains(.,'Add Action')]</td>
 	<td></td>
@@ -65,7 +60,7 @@
 </tr>
 <tr>
 	<td>ANY</td>
-	<td>//*[contains(@class,'btn')][normalize-space(text())='${key_text}'] | //button[normalize-space(text())='${key_text}']</td>
+	<td>//*[contains(@class,'btn')][normalize-space(text())='${key_text}']</td>
 	<td></td>
 </tr>
 <tr>

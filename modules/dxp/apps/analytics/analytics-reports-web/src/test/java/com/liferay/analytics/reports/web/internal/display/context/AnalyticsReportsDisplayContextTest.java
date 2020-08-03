@@ -28,6 +28,9 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -50,9 +53,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
-
-import javax.portlet.RenderResponse;
-import javax.portlet.ResourceURL;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -79,6 +79,8 @@ public class AnalyticsReportsDisplayContextTest {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
+
+		PropsTestUtil.setProps(Collections.emptyMap());
 	}
 
 	@Test
@@ -95,7 +97,8 @@ public class AnalyticsReportsDisplayContextTest {
 					RandomTestUtil.randomInt(), RandomTestUtil.randomDouble(),
 					false),
 				_getAnalyticsReportsItem(), null, null, new PortalImpl(),
-				_getRenderResponse(), _getResourceBundle(),
+				new MockLiferayPortletRenderRequest(),
+				new MockLiferayPortletRenderResponse(), _getResourceBundle(),
 				_getThemeDisplay(_getLayout()),
 				_getUser(RandomTestUtil.randomString()));
 
@@ -131,8 +134,9 @@ public class AnalyticsReportsDisplayContextTest {
 		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
 			new AnalyticsReportsDisplayContext(
 				analyticsReportsDataProvider, analyticsReportsInfoItem, null,
-				null, new PortalImpl(), _getRenderResponse(),
-				_getResourceBundle(), _getThemeDisplay(_getLayout()), null);
+				null, new PortalImpl(), new MockLiferayPortletRenderRequest(),
+				new MockLiferayPortletRenderResponse(), _getResourceBundle(),
+				_getThemeDisplay(_getLayout()), null);
 
 		Map<String, Object> data = analyticsReportsDisplayContext.getData();
 
@@ -166,8 +170,9 @@ public class AnalyticsReportsDisplayContextTest {
 		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
 			new AnalyticsReportsDisplayContext(
 				analyticsReportsDataProvider, analyticsReportsInfoItem, null,
-				null, new PortalImpl(), _getRenderResponse(),
-				_getResourceBundle(), _getThemeDisplay(_getLayout()), user);
+				null, new PortalImpl(), new MockLiferayPortletRenderRequest(),
+				new MockLiferayPortletRenderResponse(), _getResourceBundle(),
+				_getThemeDisplay(_getLayout()), user);
 
 		Map<String, Object> data = analyticsReportsDisplayContext.getData();
 
@@ -199,9 +204,9 @@ public class AnalyticsReportsDisplayContextTest {
 		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
 			new AnalyticsReportsDisplayContext(
 				analyticsReportsDataProvider, analyticsReportsInfoItem, null,
-				null, new PortalImpl(), _getRenderResponse(),
-				_getResourceBundle(), _getThemeDisplay(layout),
-				_getUser(authorPortraitURL));
+				null, new PortalImpl(), new MockLiferayPortletRenderRequest(),
+				new MockLiferayPortletRenderResponse(), _getResourceBundle(),
+				_getThemeDisplay(layout), _getUser(authorPortraitURL));
 
 		Map<String, Object> data = analyticsReportsDisplayContext.getData();
 
@@ -277,9 +282,9 @@ public class AnalyticsReportsDisplayContextTest {
 		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
 			new AnalyticsReportsDisplayContext(
 				analyticsReportsDataProvider, analyticsReportsInfoItem, null,
-				null, new PortalImpl(), _getRenderResponse(),
-				_getResourceBundle(), _getThemeDisplay(layout),
-				_getUser(authorPortraitURL));
+				null, new PortalImpl(), new MockLiferayPortletRenderRequest(),
+				new MockLiferayPortletRenderResponse(), _getResourceBundle(),
+				_getThemeDisplay(layout), _getUser(authorPortraitURL));
 
 		Map<String, Object> data = analyticsReportsDisplayContext.getData();
 
@@ -454,18 +459,6 @@ public class AnalyticsReportsDisplayContextTest {
 		).getPublishDate();
 
 		return layout;
-	}
-
-	private RenderResponse _getRenderResponse() {
-		RenderResponse renderResponse = Mockito.mock(RenderResponse.class);
-
-		Mockito.when(
-			renderResponse.createResourceURL()
-		).thenReturn(
-			Mockito.mock(ResourceURL.class)
-		);
-
-		return renderResponse;
 	}
 
 	private ResourceBundle _getResourceBundle() {

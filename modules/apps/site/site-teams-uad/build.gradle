@@ -1,16 +1,6 @@
-apply plugin: "com.liferay.lang.merger"
-
 dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	compileOnly project(":apps:user-associated-data:user-associated-data-api")
 	compileOnly project(":core:petra:petra-string")
-}
-
-mergeLang {
-	setting("../site-teams-web/src/main/resources/content") {
-		transformKey "javax.portlet.title.com_liferay_site_teams_web_portlet_SiteTeamsPortlet", "application.name.com.liferay.site.teams.uad"
-	}
-
-	sourceDirs = ["../site-teams-web/src/main/resources/content"]
 }

@@ -610,6 +610,13 @@ public class GraphQLServletExtender {
 			DataFetchingEnvironment dataFetchingEnvironment, Method method)
 		throws Exception {
 
+		Map<String, Object> argumentsMap =
+			dataFetchingEnvironment.getArguments();
+
+		Parameter[] parameters = method.getParameters();
+
+		Object[] arguments = new Object[parameters.length];
+
 		Object instance = null;
 
 		GraphQLFieldDefinition graphQLFieldDefinition =
@@ -636,13 +643,6 @@ public class GraphQLServletExtender {
 				constructors[0], queryInstance,
 				dataFetchingEnvironment.getSource());
 		}
-
-		Parameter[] parameters = method.getParameters();
-
-		Map<String, Object> argumentsMap =
-			dataFetchingEnvironment.getArguments();
-
-		Object[] arguments = new Object[parameters.length];
 
 		SiteParamConverterProvider siteParamConverterProvider =
 			new SiteParamConverterProvider(

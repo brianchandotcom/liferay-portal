@@ -1,11 +1,5 @@
 package ${configYAML.apiPackagePath}.resource.${escapedVersion}.test;
 
-<#assign
-	javaMethodSignatures = freeMarkerTool.getResourceTestCaseJavaMethodSignatures(configYAML, openAPIYAML, schemaName)
-
-	generateDepotEntry = freeMarkerTool.containsJavaMethodSignature(javaMethodSignatures, "AssetLibrary")
-/>
-
 <#list allExternalSchemas?keys as schemaName>
 	import ${configYAML.apiPackagePath}.client.dto.${escapedVersion}.${schemaName};
 	import ${configYAML.apiPackagePath}.client.resource.${escapedVersion}.${schemaName}Resource;
@@ -33,6 +27,12 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+
+<#assign
+	javaMethodSignatures = freeMarkerTool.getResourceTestCaseJavaMethodSignatures(configYAML, openAPIYAML, schemaName)
+
+	generateDepotEntry = freeMarkerTool.containsJavaMethodSignature(javaMethodSignatures, "AssetLibrary")
+/>
 
 <#if generateDepotEntry>
 	import com.liferay.depot.model.DepotEntry;

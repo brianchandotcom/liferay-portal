@@ -19,6 +19,7 @@ import com.liferay.analytics.demo.data.creator.configuration.AnalyticsDemoDataCr
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.exception.DuplicateGroupException;
 import com.liferay.portal.kernel.exception.DuplicateOrganizationException;
 import com.liferay.portal.kernel.exception.DuplicateRoleException;
 import com.liferay.portal.kernel.exception.DuplicateTeamException;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Team;
@@ -43,7 +45,9 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.TeamLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -54,6 +58,7 @@ import java.nio.charset.Charset;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.csv.CSVFormat;
@@ -197,6 +202,9 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 		else if (StringUtil.equalsIgnoreCase(header, "userGroups")) {
 			ids = _addUserGroups(values);
 		}
+		else if (StringUtil.equalsIgnoreCase(header, "sites")) {
+			ids = _addSites(values);
+		}
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -269,6 +277,47 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 		return ids;
 	}
 
+	private long[] _addSites(String[] values) throws PortalException {
+		long[] ids = new long[values.length];
+
+		for (int i = 0; i < values.length; i++) {
+			String name = values[i].trim();
+
+			Map<Locale, String> nameMap = HashMapBuilder.put(
+				LocaleUtil.getDefault(), name
+			).build();
+
+			Map<Locale, String> descriptionMap = new HashMap<>();
+
+			Group group = null;
+
+			try {
+				group = _groupLocalService.addGroup(
+					_defaultUserId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
+					null, 0, GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap,
+					descriptionMap, GroupConstants.TYPE_SITE_OPEN, true,
+					GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
+					StringPool.SLASH +
+						FriendlyURLNormalizerUtil.normalize(name),
+					true, true, null);
+			}
+			catch (DuplicateGroupException duplicateGroupException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						duplicateGroupException, duplicateGroupException);
+				}
+
+				group = _groupLocalService.getGroup(_companyId, name);
+			}
+
+			_groups.put(name, group);
+
+			ids[i] = group.getPrimaryKey();
+		}
+
+		return ids;
+	}
+
 	private long[] _addTeams(String[] values) throws PortalException {
 		long[] ids = new long[values.length];
 
@@ -321,6 +370,12 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 
 		if (teamIds != null) {
 			_teamLocalService.addUserTeams(user.getPrimaryKey(), teamIds);
+		}
+
+		long[] siteIds = _addEntries(csvRecord, "sites");
+
+		if (siteIds != null) {
+			_groupLocalService.addUserGroups(user.getPrimaryKey(), siteIds);
 		}
 
 		return user;
@@ -390,6 +445,8 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	private final HashMap<String, Group> _groups = new HashMap<>();
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;

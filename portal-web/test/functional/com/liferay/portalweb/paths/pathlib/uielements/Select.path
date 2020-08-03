@@ -94,6 +94,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPORT_FILE_FORMAT</td>
+	<td>//div[contains(.,'Export File Format')]//select</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FEED_ITEM_CONTENT</td>
 	<td>//select[contains(@id,'contentFieldSelector')]</td>
 	<td></td>

@@ -103,7 +103,7 @@ export default ({section}) => {
 						className="breadcrumb-item questions-breadcrumb-unstyled"
 						to={'/'}
 					>
-						<ClayIcon symbol="home" />
+						<ClayIcon symbol="home-full" />
 					</Link>
 				</li>
 				<BreadcrumbNode />
@@ -119,7 +119,7 @@ export default ({section}) => {
 						className="breadcrumb-item questions-breadcrumb-unstyled"
 						to={'/'}
 					>
-						<ClayIcon symbol="home" />
+						<ClayIcon symbol="home-full" />
 					</Link>
 				</li>
 				<BreadcrumbNode end={1} start={0} />

@@ -336,6 +336,72 @@ definition {
 		}
 	}
 
+	@priority = "3"
+	test AddBlockedEmailDomain {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		AccountConfiguration.enableAccountEmailDomain();
+
+		AccountConfiguration.addBlockedEmailDomain(settingValues = "yahoo.com,blocked.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		Accounts.addCP(
+			accountDescription = "This is an Account with Multi Domains",
+			accountName = "AM Account",
+			domainNames = "liferay.com,Google.com");
+
+		AccountConfiguration.addAccountManager(
+			accountName = "AM Account",
+			orgName = "AM Organization",
+			orgRoleTitle = "Account Manager",
+			userEmailAddress = "useramea@liferay.com",
+			userFirstName = "useramfn",
+			userLastName = "useramln",
+			userScreenName = "useramsn");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "useramea@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		LexiconEntry.gotoEntry(rowEntry = "AM Account");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
+		Accounts.addAssignee(
+			accountName = "AM Account",
+			addNewAssignee = "true",
+			assigneeName = "userfn",
+			assigneeType = "Users",
+			domainValidation = "Blocked",
+			invalidDomainName = "blocked.com",
+			userEmailAddress = "userea@blocked.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		LexiconEntry.gotoEntry(rowEntry = "AM Account");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
+		LexiconEntry.viewEntryName(rowEntry = "userfn userln");
+	}
+
 	@priority = "4"
 	test AddPersonAccount {
 		ApplicationsMenu.gotoPortlet(

@@ -79,7 +79,7 @@ public class KeywordResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return _getKeywordsPage(
+		return getSiteKeywordsPage(
 			assetLibraryId, search, filter, pagination, sorts);
 	}
 
@@ -133,36 +133,6 @@ public class KeywordResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
-		return _getKeywordsPage(siteId, search, filter, pagination, sorts);
-	}
-
-	@Override
-	public Keyword postAssetLibraryKeyword(Long assetLibraryId, Keyword keyword)
-		throws Exception {
-
-		return _postKeyword(assetLibraryId, keyword);
-	}
-
-	@Override
-	public Keyword postSiteKeyword(Long siteId, Keyword keyword)
-		throws Exception {
-
-		return _postKeyword(siteId, keyword);
-	}
-
-	@Override
-	public Keyword putKeyword(Long keywordId, Keyword keyword)
-		throws Exception {
-
-		return _toKeyword(
-			_assetTagService.updateTag(keywordId, keyword.getName(), null));
-	}
-
-	private Page<Keyword> _getKeywordsPage(
-			Long siteId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
-		throws Exception {
-
 		return SearchUtil.search(
 			HashMapBuilder.put(
 				"create",
@@ -188,6 +158,30 @@ public class KeywordResourceImpl
 			document -> _toKeyword(
 				_assetTagService.getTag(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+	}
+
+	@Override
+	public Keyword postAssetLibraryKeyword(Long assetLibraryId, Keyword keyword)
+		throws Exception {
+
+		return postSiteKeyword(assetLibraryId, keyword);
+	}
+
+	@Override
+	public Keyword postSiteKeyword(Long siteId, Keyword keyword)
+		throws Exception {
+
+		return _toKeyword(
+			_assetTagService.addTag(
+				siteId, keyword.getName(), new ServiceContext()));
+	}
+
+	@Override
+	public Keyword putKeyword(Long keywordId, Keyword keyword)
+		throws Exception {
+
+		return _toKeyword(
+			_assetTagService.updateTag(keywordId, keyword.getName(), null));
 	}
 
 	private ProjectionList _getProjectionList() {
@@ -229,14 +223,6 @@ public class KeywordResourceImpl
 					"this_.tagId)"));
 
 		return _assetTagLocalService.dynamicQueryCount(dynamicQuery);
-	}
-
-	private Keyword _postKeyword(Long siteId, Keyword keyword)
-		throws Exception {
-
-		return _toKeyword(
-			_assetTagService.addTag(
-				siteId, keyword.getName(), new ServiceContext()));
 	}
 
 	private AssetTag _toAssetTag(Object[] assetTags) {

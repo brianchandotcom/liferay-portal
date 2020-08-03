@@ -62,7 +62,7 @@ public class ContentTemplateResourceImpl
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return _getContentTemplatesPage(
+		return getSiteContentTemplatesPage(
 			assetLibraryId, search, aggregation, filter, pagination, sorts);
 	}
 
@@ -91,21 +91,12 @@ public class ContentTemplateResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return _getContentTemplatesPage(
-			siteId, search, aggregation, filter, pagination, sorts);
-	}
-
-	private Page<ContentTemplate> _getContentTemplatesPage(
-			Long groupId, String search, Aggregation aggregation, Filter filter,
-			Pagination pagination, Sort[] sorts)
-		throws Exception {
-
 		return SearchUtil.search(
 			Collections.singletonMap(
 				"get",
 				addAction(
 					"MANAGE_LAYOUTS", "getSiteContentTemplatesPage",
-					Group.class.getName(), groupId)),
+					Group.class.getName(), siteId)),
 			booleanQuery -> {
 			},
 			filter, DDMTemplate.class, search, pagination,
@@ -120,7 +111,7 @@ public class ContentTemplateResourceImpl
 					_classNameLocalService.getClassNameId(
 						JournalArticle.class));
 				searchContext.setCompanyId(contextCompany.getCompanyId());
-				searchContext.setGroupIds(new long[] {groupId});
+				searchContext.setGroupIds(new long[] {siteId});
 			},
 			sorts,
 			document -> {

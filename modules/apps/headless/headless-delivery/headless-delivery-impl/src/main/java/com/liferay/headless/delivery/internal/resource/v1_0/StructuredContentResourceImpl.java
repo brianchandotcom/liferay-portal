@@ -151,7 +151,7 @@ public class StructuredContentResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
-		return _getStructuredContentsPage(
+		return getSiteStructuredContentsPage(
 			assetLibraryId, flatten, search, aggregation, filter, pagination,
 			sorts);
 	}
@@ -247,7 +247,32 @@ public class StructuredContentResourceImpl
 		throws Exception {
 
 		return _getStructuredContentsPage(
-			siteId, flatten, search, aggregation, filter, pagination, sorts);
+			HashMapBuilder.put(
+				"create",
+				addAction(
+					"ADD_ARTICLE", "postSiteStructuredContent",
+					"com.liferay.journal", siteId)
+			).put(
+				"get",
+				addAction(
+					"VIEW", "getSiteStructuredContentsPage",
+					"com.liferay.journal", siteId)
+			).build(),
+			booleanQuery -> {
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				if (!GetterUtil.getBoolean(flatten)) {
+					booleanFilter.add(
+						new TermFilter(
+							com.liferay.portal.kernel.search.Field.FOLDER_ID,
+							String.valueOf(
+								JournalFolderConstants.
+									DEFAULT_PARENT_FOLDER_ID)),
+						BooleanClauseOccur.MUST);
+				}
+			},
+			siteId, search, aggregation, filter, pagination, sorts);
 	}
 
 	@Override
@@ -402,9 +427,7 @@ public class StructuredContentResourceImpl
 			Long assetLibraryId, StructuredContent structuredContent)
 		throws Exception {
 
-		return _addStructuredContent(
-			assetLibraryId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			structuredContent);
+		return postSiteStructuredContent(assetLibraryId, structuredContent);
 	}
 
 	@Override
@@ -777,41 +800,6 @@ public class StructuredContentResourceImpl
 			contextAcceptLanguage.getPreferredLocale());
 
 		return _toStructuredContent(journalArticle);
-	}
-
-	private Page<StructuredContent> _getStructuredContentsPage(
-			Long groupId, Boolean flatten, String search,
-			Aggregation aggregation, Filter filter, Pagination pagination,
-			Sort[] sorts)
-		throws Exception {
-
-		return _getStructuredContentsPage(
-			HashMapBuilder.put(
-				"create",
-				addAction(
-					"ADD_ARTICLE", "postSiteStructuredContent",
-					"com.liferay.journal", groupId)
-			).put(
-				"get",
-				addAction(
-					"VIEW", "getSiteStructuredContentsPage",
-					"com.liferay.journal", groupId)
-			).build(),
-			booleanQuery -> {
-				BooleanFilter booleanFilter =
-					booleanQuery.getPreBooleanFilter();
-
-				if (!GetterUtil.getBoolean(flatten)) {
-					booleanFilter.add(
-						new TermFilter(
-							com.liferay.portal.kernel.search.Field.FOLDER_ID,
-							String.valueOf(
-								JournalFolderConstants.
-									DEFAULT_PARENT_FOLDER_ID)),
-						BooleanClauseOccur.MUST);
-				}
-			},
-			groupId, search, aggregation, filter, pagination, sorts);
 	}
 
 	private Page<StructuredContent> _getStructuredContentsPage(

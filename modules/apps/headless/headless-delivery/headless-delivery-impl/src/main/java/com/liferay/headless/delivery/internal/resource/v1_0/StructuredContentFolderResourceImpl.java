@@ -81,7 +81,7 @@ public class StructuredContentFolderResourceImpl
 				Sort[] sorts)
 		throws Exception {
 
-		return _getStructuredContentFoldersPage(
+		return getSiteStructuredContentFoldersPage(
 			assetLibraryId, flatten, search, aggregation, filter, pagination,
 			sorts);
 	}
@@ -102,8 +102,27 @@ public class StructuredContentFolderResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
-		return _getStructuredContentFoldersPage(
-			siteId, flatten, search, aggregation, filter, pagination, sorts);
+		Long parentStructuredContentFolderId = null;
+
+		if (!GetterUtil.getBoolean(flatten)) {
+			parentStructuredContentFolderId =
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		}
+
+		return _getFoldersPage(
+			HashMapBuilder.put(
+				"create",
+				addAction(
+					"UPDATE", "postSiteStructuredContentFolder",
+					"com.liferay.journal", siteId)
+			).put(
+				"get",
+				addAction(
+					"VIEW", "getSiteStructuredContentFoldersPage",
+					"com.liferay.journal", siteId)
+			).build(),
+			parentStructuredContentFolderId, siteId, search, aggregation,
+			filter, pagination, sorts);
 	}
 
 	@Override
@@ -158,9 +177,8 @@ public class StructuredContentFolderResourceImpl
 			StructuredContentFolder structuredContentFolder)
 		throws Exception {
 
-		return _addStructuredContentFolder(
-			assetLibraryId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			structuredContentFolder);
+		return postSiteStructuredContentFolder(
+			assetLibraryId, structuredContentFolder);
 	}
 
 	@Override
@@ -289,35 +307,6 @@ public class StructuredContentFolderResourceImpl
 			document -> _toStructuredContentFolder(
 				_journalFolderService.getFolder(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
-	}
-
-	private Page<StructuredContentFolder> _getStructuredContentFoldersPage(
-			Long groupId, Boolean flatten, String search,
-			Aggregation aggregation, Filter filter, Pagination pagination,
-			Sort[] sorts)
-		throws Exception {
-
-		Long parentStructuredContentFolderId = null;
-
-		if (!GetterUtil.getBoolean(flatten)) {
-			parentStructuredContentFolderId =
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-		}
-
-		return _getFoldersPage(
-			HashMapBuilder.put(
-				"create",
-				addAction(
-					"UPDATE", "postSiteStructuredContentFolder",
-					"com.liferay.journal", groupId)
-			).put(
-				"get",
-				addAction(
-					"VIEW", "getSiteStructuredContentFoldersPage",
-					"com.liferay.journal", groupId)
-			).build(),
-			parentStructuredContentFolderId, groupId, search, aggregation,
-			filter, pagination, sorts);
 	}
 
 	private StructuredContentFolder _toStructuredContentFolder(

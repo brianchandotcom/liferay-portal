@@ -56,9 +56,8 @@ public class ContentSetElementResourceImpl
 				Long assetLibraryId, String key, Pagination pagination)
 		throws Exception {
 
-		return _getContentSetContentSetElementsPage(
-			_assetListEntryService.getAssetListEntry(assetLibraryId, key),
-			pagination);
+		return getSiteContentSetByKeyContentSetElementsPage(
+			assetLibraryId, key, pagination);
 	}
 
 	@Override
@@ -67,11 +66,8 @@ public class ContentSetElementResourceImpl
 				Long assetLibraryId, String uuid, Pagination pagination)
 		throws Exception {
 
-		AssetListEntry assetListEntry =
-			_assetListEntryService.getAssetListEntryByUuidAndGroupId(
-				uuid, assetLibraryId);
-
-		return _getContentSetContentSetElementsPage(assetListEntry, pagination);
+		return getSiteContentSetByUuidContentSetElementsPage(
+			assetLibraryId, uuid, pagination);
 	}
 
 	@Override

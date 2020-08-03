@@ -77,7 +77,7 @@ public class DocumentFolderResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
-		return _getDocumentFoldersPage(
+		return getSiteDocumentFoldersPage(
 			assetLibraryId, flatten, search, aggregation, filter, pagination,
 			sorts);
 	}
@@ -134,8 +134,26 @@ public class DocumentFolderResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
+		Long documentFolderId = null;
+
+		if (!GetterUtil.getBoolean(flatten)) {
+			documentFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		}
+
 		return _getDocumentFoldersPage(
-			siteId, flatten, search, aggregation, filter, pagination, sorts);
+			HashMapBuilder.put(
+				"create",
+				addAction(
+					"ADD_FOLDER", "postSiteDocumentFolder",
+					"com.liferay.document.library", siteId)
+			).put(
+				"get",
+				addAction(
+					"VIEW", "getSiteDocumentFoldersPage",
+					"com.liferay.document.library", siteId)
+			).build(),
+			documentFolderId, siteId, flatten, search, aggregation, filter,
+			pagination, sorts);
 	}
 
 	@Override
@@ -164,7 +182,7 @@ public class DocumentFolderResourceImpl
 			Long assetLibraryId, DocumentFolder documentFolder)
 		throws Exception {
 
-		return _addFolder(assetLibraryId, 0L, documentFolder);
+		return postSiteDocumentFolder(assetLibraryId, documentFolder);
 	}
 
 	@Override
@@ -233,34 +251,6 @@ public class DocumentFolderResourceImpl
 						documentFolder.getCustomFields(),
 						contextAcceptLanguage.getPreferredLocale()),
 					siteId, documentFolder.getViewableByAsString())));
-	}
-
-	private Page<DocumentFolder> _getDocumentFoldersPage(
-			Long groupId, Boolean flatten, String search,
-			Aggregation aggregation, Filter filter, Pagination pagination,
-			Sort[] sorts)
-		throws Exception {
-
-		Long documentFolderId = null;
-
-		if (!GetterUtil.getBoolean(flatten)) {
-			documentFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-		}
-
-		return _getDocumentFoldersPage(
-			HashMapBuilder.put(
-				"create",
-				addAction(
-					"ADD_FOLDER", "postSiteDocumentFolder",
-					"com.liferay.document.library", groupId)
-			).put(
-				"get",
-				addAction(
-					"VIEW", "getSiteDocumentFoldersPage",
-					"com.liferay.document.library", groupId)
-			).build(),
-			documentFolderId, groupId, flatten, search, aggregation, filter,
-			pagination, sorts);
 	}
 
 	private Page<DocumentFolder> _getDocumentFoldersPage(

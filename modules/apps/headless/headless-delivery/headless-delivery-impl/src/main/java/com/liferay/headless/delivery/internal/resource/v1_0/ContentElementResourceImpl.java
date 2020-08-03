@@ -71,7 +71,7 @@ public class ContentElementResourceImpl extends BaseContentElementResourceImpl {
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return _getContentElementsPage(
+		return getSiteContentElementsPage(
 			assetLibraryId, search, aggregation, filter, pagination, sorts);
 	}
 
@@ -189,29 +189,6 @@ public class ContentElementResourceImpl extends BaseContentElementResourceImpl {
 		searchContext.setUserId(contextUser.getUserId());
 
 		return searchContext;
-	}
-
-	private Page<ContentElement> _getContentElementsPage(
-			Long groupId, String search, Aggregation aggregation, Filter filter,
-			Pagination pagination, Sort[] sorts)
-		throws Exception {
-
-		AssetSearcher assetSearcher =
-			(AssetSearcher)AssetSearcher.getInstance();
-
-		assetSearcher.setAssetEntryQuery(new AssetEntryQuery());
-
-		SearchContext searchContext = _getAssetSearchContext(
-			groupId, search, aggregation, filter, pagination, sorts);
-
-		return Page.of(
-			new HashMap<>(),
-			transform(
-				_assetHelper.getAssetEntries(
-					assetSearcher.search(searchContext)),
-				this::_toContentElement),
-			pagination,
-			_assetHelper.searchCount(searchContext, new AssetEntryQuery()));
 	}
 
 	private ContentElement _toContentElement(AssetEntry assetEntry) {

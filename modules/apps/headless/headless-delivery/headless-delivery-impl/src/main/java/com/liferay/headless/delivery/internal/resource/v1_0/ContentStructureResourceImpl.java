@@ -58,7 +58,7 @@ public class ContentStructureResourceImpl
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return _getContentStructuresPage(
+		return getSiteContentStructuresPage(
 			assetLibraryId, search, aggregation, filter, pagination, sorts);
 	}
 
@@ -81,15 +81,6 @@ public class ContentStructureResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return _getContentStructuresPage(
-			siteId, search, aggregation, filter, pagination, sorts);
-	}
-
-	private Page<ContentStructure> _getContentStructuresPage(
-			Long groupId, String search, Aggregation aggregation, Filter filter,
-			Pagination pagination, Sort[] sorts)
-		throws Exception {
-
 		return SearchUtil.search(
 			Collections.emptyMap(),
 			booleanQuery -> {
@@ -102,7 +93,7 @@ public class ContentStructureResourceImpl
 				searchContext.setAttribute(
 					"searchPermissionContext", StringPool.BLANK);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
-				searchContext.setGroupIds(new long[] {groupId});
+				searchContext.setGroupIds(new long[] {siteId});
 			},
 			sorts,
 			document -> _toContentStructure(

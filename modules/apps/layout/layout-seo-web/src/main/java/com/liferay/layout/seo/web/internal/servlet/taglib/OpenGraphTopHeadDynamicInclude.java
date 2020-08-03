@@ -277,14 +277,12 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Activate
 	protected void activate() {
+		_friendlyURLMapperProvider = new FriendlyURLMapperProvider(
+			_assetDisplayPageFriendlyURLProvider, _classNameLocalService);
 		_openGraphImageProvider = new OpenGraphImageProvider(
 			_ddmStructureLocalService, _dlAppLocalService,
 			_dlFileEntryMetadataLocalService, _dlurlHelper,
 			_layoutSEOSiteLocalService, _portal, _storageEngine);
-
-		_friendlyURLMapperProvider = new FriendlyURLMapperProvider(
-			_assetDisplayPageFriendlyURLProvider, _classNameLocalService);
-
 		_titleProvider = new TitleProvider(_layoutSEOLinkManager);
 	}
 

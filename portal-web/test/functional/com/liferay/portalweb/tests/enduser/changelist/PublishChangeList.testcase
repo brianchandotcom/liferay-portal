@@ -16,8 +16,6 @@ definition {
 			portlet = "Settings");
 
 		ChangeList.enableChangeList();
-
-		ChangeList.createNewPublication(publicationName = "Publication Name");
 	}
 
 	tearDown {
@@ -40,6 +38,8 @@ definition {
 	test PublishAndRevertPublication {
 		property test.name.skip.portal.instance = "PublishChangeList#PublishAndRevertPublication";
 
+		ChangeList.createNewPublication(publicationName = "Publication Name");
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -53,6 +53,8 @@ definition {
 			webContentTitle = "Web Content Title");
 
 		PortletEntry.publish();
+
+		ChangeList.prepareToPublish(publicationName = "Publication Name");
 
 		ChangeList.publishPublication(publicationName = "Publication Name");
 

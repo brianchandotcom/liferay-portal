@@ -143,12 +143,10 @@ public class TCKtoJUnitConverter {
 		propertyNames.sort(null);
 
 		for (String propertyName : propertyNames) {
-			String propertyValue = properties.getProperty(propertyName);
-
 			sb.append("\t\t<property name=\"");
 			sb.append(HtmlUtil.escape(propertyName));
 			sb.append("\" value=\"");
-			sb.append(HtmlUtil.escape(propertyValue));
+			sb.append(HtmlUtil.escape(properties.getProperty(propertyName)));
 			sb.append("\" />\n");
 		}
 

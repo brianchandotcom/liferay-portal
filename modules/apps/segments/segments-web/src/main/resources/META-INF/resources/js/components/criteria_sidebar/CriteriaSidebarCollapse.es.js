@@ -52,6 +52,9 @@ function getDefaultValue(property) {
 	else if (type === PROPERTY_TYPES.BOOLEAN) {
 		defaultValue = 'true';
 	}
+	else if (type === PROPERTY_TYPES.INTEGER && options && options.length) {
+		defaultValue = options[0].value;
+	}
 	else if (type === PROPERTY_TYPES.INTEGER) {
 		defaultValue = 0;
 	}

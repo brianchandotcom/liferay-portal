@@ -18,6 +18,8 @@ import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockH
 import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockThemeDisplayUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.UnsafeSupplier;
@@ -53,6 +55,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PrefsPropsImpl;
 
 import java.util.Dictionary;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -202,8 +205,14 @@ public class AnalyticsReportsPortletTest {
 
 			@Override
 			public long getClassNameId() {
+				List<InfoDisplayContributor<?>> infoDisplayContributors =
+					_infoDisplayContributorTracker.getInfoDisplayContributors();
+
+				InfoDisplayContributor<?> infoDisplayContributor =
+					infoDisplayContributors.get(0);
+
 				return _portal.getClassNameId(
-					"com.liferay.journal.model.JournalArticle");
+					infoDisplayContributor.getClassName());
 			}
 
 			@Override
@@ -358,6 +367,9 @@ public class AnalyticsReportsPortletTest {
 
 	@Inject
 	private Http _http;
+
+	@Inject
+	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	private Layout _layout;
 

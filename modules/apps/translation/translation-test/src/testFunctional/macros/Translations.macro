@@ -54,6 +54,12 @@ definition {
 
 		AssertElementPresent(locator1 = "Button#EXPORT_MODAL_DISABLED");
 
+		if (isSet(exportFileFormat)) {
+			Select(
+				locator1 = "Select#EXPORT_FILE_FORMAT",
+				value1 = "${exportFileFormat}");
+		}
+
 		for (var languageList : list "${languageList}") {
 			Check.checkNotVisible(
 				checkboxName = "${languageList}",

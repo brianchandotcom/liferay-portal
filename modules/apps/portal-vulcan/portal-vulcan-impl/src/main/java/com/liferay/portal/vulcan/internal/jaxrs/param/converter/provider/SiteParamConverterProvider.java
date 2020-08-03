@@ -108,7 +108,7 @@ public class SiteParamConverterProvider
 		return String.valueOf(parameter);
 	}
 
-	private boolean _checkValidGroup(Group group) {
+	private boolean _checkGroup(Group group) {
 		if ((group != null) &&
 			(_isDepotOrSite(group) || _isDepotOrSite(group.getLiveGroup()))) {
 
@@ -137,7 +137,7 @@ public class SiteParamConverterProvider
 			}
 		}
 
-		if (_checkValidGroup(group)) {
+		if (_checkGroup(group)) {
 			return group.getGroupId();
 		}
 
@@ -151,7 +151,7 @@ public class SiteParamConverterProvider
 			group = _groupLocalService.fetchGroup(GetterUtil.getLong(groupKey));
 		}
 
-		if (_checkValidGroup(group)) {
+		if (_checkGroup(group)) {
 			return group.getGroupId();
 		}
 

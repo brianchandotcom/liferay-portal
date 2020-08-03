@@ -187,37 +187,6 @@
 	box-shadow: var(--box-shadow-lg) !important;
 }
 
-// Cards
-
-.card {
-	background-color: var(--card-bg);
-	border: var(--card-border-width) solid var(--card-border-color);
-	border-radius: var(--card-border-radius);
-	color: var(--card-color);
-	overflow: var(--card-overflow);
-}
-
-.card-subtitle,
-.card-title {
-	color: var(--card-color);
-}
-
-.card-body {
-	padding: var(--card-spacer-x);
-}
-
-.card-header {
-	background-color: var(--card-cap-bg);
-	border-bottom: var(--card-border-width) solid var(--card-border-color);
-	color: var(--card-cap-color);
-	padding: var(--card-spacer-y) var(--card-spacer-x);
-}
-
-.card-footer {
-	background-color: var(--card-cap-bg);
-	padding: var(--card-spacer-y) var(--card-spacer-x);
-}
-
 // Nav and Navbar
 
 .navbar {

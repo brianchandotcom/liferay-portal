@@ -131,19 +131,6 @@ $theme-colors-cp: map-deep-merge(
 	--body-color: $body-color;
 	--body-bg: $body-bg;
 
-	// Cards
-
-	--card-bg: #{$card-bg};
-	--card-border-color: #{$card-border-color};
-	--card-border-radius: #{$card-border-radius};
-	--card-border-width: #{$card-border-width};
-	--card-cap-bg: #{$card-cap-bg};
-	--card-cap-color: inherit;
-	--card-color: inherit;
-	--card-overflow: inherit;
-	--card-spacer-x: #{$card-spacer-x};
-	--card-spacer-y: #{$card-spacer-y};
-
 	// Forms
 
 	--input-bg: #{$input-bg};

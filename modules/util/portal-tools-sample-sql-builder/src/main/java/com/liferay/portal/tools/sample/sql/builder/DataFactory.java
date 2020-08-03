@@ -914,8 +914,6 @@ public class DataFactory {
 					cpTaxCategoryModel, cProductModel,
 					commerceCatalogGroupModel, definitionIndex);
 
-				long cpDefinitionId = cpDefinitionModel.getCPDefinitionId();
-
 				CPDefinitionLocalizationModel cpDefinitionLocalizationModel =
 					newCPDefinitionLocalizationModel(cpDefinitionModel);
 
@@ -939,8 +937,8 @@ public class DataFactory {
 
 					_cpInstanceModels.add(
 						newCPInstanceModel(
-							commerceCatalogGroupModel.getGroupId(),
-							cpDefinitionId, instanceIndex));
+							cpDefinitionModel, commerceCatalogGroupModel,
+							instanceIndex));
 				}
 			}
 		}
@@ -1564,6 +1562,58 @@ public class DataFactory {
 		}
 
 		return cpDefinitionModel;
+	}
+
+	public CPInstanceModel newCPInstanceModel(
+		CPDefinitionModel cpDefinitionModel,
+		GroupModel commerceCatalogGroupModel, int index) {
+
+		CPInstanceModel cpInstanceModel = new CPInstanceModelImpl();
+
+		long cpDefinitionId = cpDefinitionModel.getCPDefinitionId();
+
+		cpInstanceModel.setUuid(SequentialUUID.generate());
+		cpInstanceModel.setCPInstanceId(_counter.get());
+		cpInstanceModel.setGroupId(commerceCatalogGroupModel.getGroupId());
+		cpInstanceModel.setCompanyId(_companyId);
+		cpInstanceModel.setUserId(_sampleUserId);
+		cpInstanceModel.setUserName(_SAMPLE_USER_NAME);
+		cpInstanceModel.setCreateDate(new Date());
+		cpInstanceModel.setModifiedDate(new Date());
+		cpInstanceModel.setCPDefinitionId(cpDefinitionId);
+		cpInstanceModel.setCPInstanceUuid(SequentialUUID.generate());
+
+		String instanceKey = cpDefinitionId + StringPool.POUND + index;
+
+		cpInstanceModel.setSku("SKU" + instanceKey);
+		cpInstanceModel.setGtin("GTIN" + instanceKey);
+		cpInstanceModel.setManufacturerPartNumber("MPN" + instanceKey);
+
+		cpInstanceModel.setPurchasable(true);
+		cpInstanceModel.setJson("[]");
+		cpInstanceModel.setWidth((index * 2) + 1);
+		cpInstanceModel.setHeight(index + 5);
+		cpInstanceModel.setDepth(index);
+		cpInstanceModel.setWeight((index * 3) + 1);
+		cpInstanceModel.setPrice(BigDecimal.valueOf(index + 10.1));
+		cpInstanceModel.setPromoPrice(BigDecimal.valueOf(index + 9.2));
+		cpInstanceModel.setCost(BigDecimal.valueOf(index + 6.4));
+		cpInstanceModel.setPublished(true);
+		cpInstanceModel.setDisplayDate(new Date());
+		cpInstanceModel.setExpirationDate(null);
+		cpInstanceModel.setLastPublishDate(null);
+		cpInstanceModel.setOverrideSubscriptionInfo(false);
+		cpInstanceModel.setSubscriptionEnabled(false);
+		cpInstanceModel.setSubscriptionLength(0);
+		cpInstanceModel.setSubscriptionType(null);
+		cpInstanceModel.setSubscriptionTypeSettings(null);
+		cpInstanceModel.setMaxSubscriptionCycles(0);
+		cpInstanceModel.setStatus(WorkflowConstants.STATUS_APPROVED);
+		cpInstanceModel.setStatusByUserId(_sampleUserId);
+		cpInstanceModel.setStatusByUserName(_SAMPLE_USER_NAME);
+		cpInstanceModel.setStatusDate(new Date());
+
+		return cpInstanceModel;
 	}
 
 	public CProductModel newCProductModel(
@@ -3694,55 +3744,6 @@ public class DataFactory {
 		cpFriendlyURLEntryModel.setMain(true);
 
 		return cpFriendlyURLEntryModel;
-	}
-
-	protected CPInstanceModel newCPInstanceModel(
-		long groupId, long cpDefinitionId, int index) {
-
-		CPInstanceModel cpInstanceModel = new CPInstanceModelImpl();
-
-		cpInstanceModel.setUuid(SequentialUUID.generate());
-		cpInstanceModel.setCPInstanceId(_counter.get());
-		cpInstanceModel.setGroupId(groupId);
-		cpInstanceModel.setCompanyId(_companyId);
-		cpInstanceModel.setUserId(_sampleUserId);
-		cpInstanceModel.setUserName(_SAMPLE_USER_NAME);
-		cpInstanceModel.setCreateDate(new Date());
-		cpInstanceModel.setModifiedDate(new Date());
-		cpInstanceModel.setCPDefinitionId(cpDefinitionId);
-		cpInstanceModel.setCPInstanceUuid(SequentialUUID.generate());
-
-		String instanceKey = cpDefinitionId + StringPool.POUND + index;
-
-		cpInstanceModel.setSku("SKU" + instanceKey);
-		cpInstanceModel.setGtin("GTIN" + instanceKey);
-		cpInstanceModel.setManufacturerPartNumber("MPN" + instanceKey);
-
-		cpInstanceModel.setPurchasable(true);
-		cpInstanceModel.setJson("[]");
-		cpInstanceModel.setWidth((index * 2) + 1);
-		cpInstanceModel.setHeight(index + 5);
-		cpInstanceModel.setDepth(index);
-		cpInstanceModel.setWeight((index * 3) + 1);
-		cpInstanceModel.setPrice(BigDecimal.valueOf(index + 10.1));
-		cpInstanceModel.setPromoPrice(BigDecimal.valueOf(index + 9.2));
-		cpInstanceModel.setCost(BigDecimal.valueOf(index + 6.4));
-		cpInstanceModel.setPublished(true);
-		cpInstanceModel.setDisplayDate(new Date());
-		cpInstanceModel.setExpirationDate(null);
-		cpInstanceModel.setLastPublishDate(null);
-		cpInstanceModel.setOverrideSubscriptionInfo(false);
-		cpInstanceModel.setSubscriptionEnabled(false);
-		cpInstanceModel.setSubscriptionLength(0);
-		cpInstanceModel.setSubscriptionType(null);
-		cpInstanceModel.setSubscriptionTypeSettings(null);
-		cpInstanceModel.setMaxSubscriptionCycles(0);
-		cpInstanceModel.setStatus(WorkflowConstants.STATUS_APPROVED);
-		cpInstanceModel.setStatusByUserId(_sampleUserId);
-		cpInstanceModel.setStatusByUserName(_SAMPLE_USER_NAME);
-		cpInstanceModel.setStatusDate(new Date());
-
-		return cpInstanceModel;
 	}
 
 	protected DDMContentModel newDDMContentModel(

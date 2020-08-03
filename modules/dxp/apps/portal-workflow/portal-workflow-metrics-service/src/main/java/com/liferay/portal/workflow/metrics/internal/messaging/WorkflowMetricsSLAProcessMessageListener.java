@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.background.task.constants.BackgroundTaskContextMapConstants;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -204,5 +205,11 @@ public class WorkflowMetricsSLAProcessMessageListener
 	@Reference
 	private WorkflowMetricsSLADefinitionLocalService
 		_workflowMetricsSLADefinitionLocalService;
+
+	@Reference(
+		target = "(background.task.executor.class.name=com.liferay.portal.workflow.metrics.internal.background.task.WorkflowMetricsSLAProcessBackgroundTaskExecutor)"
+	)
+	private BackgroundTaskExecutor
+		_workflowMetricsSLAProcessBackgroundTaskExecutor;
 
 }

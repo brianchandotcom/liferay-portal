@@ -42,6 +42,33 @@ definition {
 			assigneeType = "Organizations");
 	}
 
+	macro addBlockedEmailDomain {
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Accounts",
+			configurationName = "Email Domains",
+			configurationScope = "Virtual Instance Scope");
+
+		for (var settingValue : list "${settingValues}") {
+			Type.sendKeys(
+				key_label = "Blocked Email Domains",
+				locator1 = "TextArea#ANY_LABELED",
+				value1 = "${settingValue}");
+
+			KeyPress(
+				key_label = "Blocked Email Domains",
+				locator1 = "TextArea#ANY_LABELED",
+				value1 = "\RETURN");
+		}
+
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			PortletEntry.update();
+		}
+
+		else if (IsElementPresent(locator1 = "Button#SAVE")) {
+			PortletEntry.save();
+		}
+	}
+
 	macro enableAccountEmailDomain {
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Accounts",

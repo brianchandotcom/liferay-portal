@@ -546,6 +546,10 @@ public class AppResourceImpl
 	}
 
 	private App _toApp(AppBuilderApp appBuilderApp) {
+		if (appBuilderApp == null) {
+			return null;
+		}
+
 		return new App() {
 			{
 				active = appBuilderApp.isActive();

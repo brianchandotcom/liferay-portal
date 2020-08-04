@@ -13,7 +13,6 @@
  */
 
 import {SET_FRAGMENT_EDITABLES, UPDATE_LAYOUT_DATA} from '../actions/types';
-import getEditableUniqueId from '../components/fragment-content/getEditableUniqueId';
 
 export default function editablesReducer(editables = {}, action) {
 	switch (action.type) {
@@ -21,10 +20,7 @@ export default function editablesReducer(editables = {}, action) {
 			const editablesMap = {};
 
 			action.editables.forEach((editable) => {
-				const editableUniqueId = getEditableUniqueId(
-					action.fragmentEntryLinkId,
-					editable.editableId
-				);
+				const editableUniqueId = `${action.fragmentEntryLinkId}-${editable.editableId}`;
 
 				editablesMap[editableUniqueId] = {
 					...editable,

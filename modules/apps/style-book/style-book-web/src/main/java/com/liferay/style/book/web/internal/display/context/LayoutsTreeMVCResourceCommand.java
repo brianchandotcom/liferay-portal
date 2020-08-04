@@ -30,18 +30,18 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + StyleBookPortletKeys.STYLE_BOOK,
-		"mvc.command.name=/style_book/pages_tree"
+		"mvc.command.name=/style_book/layouts_tree"
 	},
 	service = MVCResourceCommand.class
 )
-public class PagesTreeMVCResourceCommand extends BaseMVCResourceCommand {
+public class LayoutsTreeMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Override
 	protected void doServeResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		include(resourceRequest, resourceResponse, "/pages_tree.jsp");
+		include(resourceRequest, resourceResponse, "/layouts_tree.jsp");
 	}
 
 }

@@ -88,18 +88,18 @@ public class EditStyleBookEntryDisplayContext {
 					styleBookEntry.getFrontendTokensValues());
 			}
 		).put(
-			"initialPreviewPage", _getInitialPreviewPage()
+			"initialPreviewLayout", _getInitialPreviewLayout()
 		).put(
-			"namespace", _renderResponse.getNamespace()
-		).put(
-			"pagesTreeURL",
+			"layoutsTreeURL",
 			() -> {
 				ResourceURL resourceURL = _renderResponse.createResourceURL();
 
-				resourceURL.setResourceID("/style_book/pages_tree");
+				resourceURL.setResourceID("/style_book/layouts_tree");
 
 				return resourceURL.toString();
 			}
+		).put(
+			"namespace", _renderResponse.getNamespace()
 		).put(
 			"publishURL", _getActionURL("/style_book/publish_style_book_entry")
 		).put(
@@ -134,7 +134,7 @@ public class EditStyleBookEntryDisplayContext {
 			frontendTokenDefinition.getJSON(_themeDisplay.getLocale()));
 	}
 
-	private JSONObject _getInitialPreviewPage() throws Exception {
+	private JSONObject _getInitialPreviewLayout() throws Exception {
 		Layout layout = LayoutLocalServiceUtil.fetchFirstLayout(
 			_themeDisplay.getScopeGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
@@ -154,9 +154,9 @@ public class EditStyleBookEntryDisplayContext {
 			Constants.PREVIEW);
 
 		return JSONUtil.put(
-			"pageName", layout.getName(_themeDisplay.getLocale())
+			"layoutName", layout.getName(_themeDisplay.getLocale())
 		).put(
-			"pageURL", layoutURL
+			"layoutURL", layoutURL
 		);
 	}
 

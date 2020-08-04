@@ -36,5 +36,5 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 	privateLayout="<%= privateLayout %>"
 	rootLinkTemplate='<span class="{cssClass}" id="{id}" title="{title}">{label}</span>'
 	rootNodeName="<%= siteGroup.getLayoutRootNodeName(privateLayout, locale) %>"
-	treeId="pagesTree"
+	treeId="layoutsTree"
 />

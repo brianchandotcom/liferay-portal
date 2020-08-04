@@ -21,8 +21,11 @@ import AppContext from '../../AppContext.es';
 import {DELETE_DATA_LAYOUT_RULE} from '../../actions.es';
 import {
 	forEachDataDefinitionField,
+	getDataDefinitionField,
 	getFieldLabel,
+	getOptionLabel,
 } from '../../utils/dataDefinition.es';
+import {getLocalizedValue} from '../../utils/lang.es';
 import CollapsablePanel from '../collapsable-panel/CollapsablePanel.es';
 
 const ACTION_LABELS = {
@@ -55,13 +58,9 @@ const Text = ({capitalize = false, children = '', lowercase = false}) => (
 );
 
 export default function RuleItem({rule, toggleRulesEditorVisibility}) {
-	const {
-		actions,
-		conditions,
-		logicalOperator,
-		name: {[Liferay.ThemeDisplay.getDefaultLanguageId()]: name},
-	} = rule;
+	const {actions, conditions, logicalOperator, name: ruleName} = rule;
 	const [{dataDefinition}, dispatch] = useContext(AppContext);
+	const name = getLocalizedValue(dataDefinition.defaultLanguageId, ruleName);
 
 	const dropDownActions = [
 		{
@@ -106,6 +105,32 @@ export default function RuleItem({rule, toggleRulesEditorVisibility}) {
 
 				{conditions.map(({operands, operator}, index) => {
 					const [first, last] = operands;
+					const lastValue = last?.value;
+
+					const _getFieldLabel = () => {
+						const field = getDataDefinitionField(
+							dataDefinition,
+							lastValue
+						);
+
+						if (field) {
+							return getFieldLabel(dataDefinition, lastValue);
+						}
+
+						const parent = getDataDefinitionField(
+							dataDefinition,
+							first.value
+						);
+
+						if (parent) {
+							return getOptionLabel(
+								parent.customProperties?.options,
+								lastValue
+							);
+						}
+
+						return lastValue;
+					};
 
 					return (
 						<>
@@ -121,9 +146,9 @@ export default function RuleItem({rule, toggleRulesEditorVisibility}) {
 								{OPERATOR_LABELS[operator] || operator}
 							</ClayLabel>
 
-							{last && last.value && (
+							{lastValue && (
 								<ClayLabel displayType="info">
-									{getFieldLabel(dataDefinition, last.value)}
+									{_getFieldLabel()}
 								</ClayLabel>
 							)}
 

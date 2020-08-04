@@ -77,15 +77,6 @@ public class ContentDashboardDropdownItemsProvider {
 				DropdownItem.class));
 
 		dropdownItemList.addAll(
-			TransformUtil.transform(
-				(List<ContentDashboardItemAction>)
-					contentDashboardItem.getContentDashboardItemActions(
-						httpServletRequest,
-						ContentDashboardItemAction.Type.VIEW_IN_PANEL),
-				contentDashboardItemAction -> _toViewInPanelDropdownItem(
-					contentDashboardItemAction, locale)));
-
-		dropdownItemList.addAll(
 			DropdownItemList.of(
 				() -> {
 					DropdownItem dropdownItem = new DropdownItem();
@@ -122,6 +113,15 @@ public class ContentDashboardDropdownItemsProvider {
 					return dropdownItem;
 				}));
 
+		dropdownItemList.addAll(
+			TransformUtil.transform(
+				(List<ContentDashboardItemAction>)
+					contentDashboardItem.getContentDashboardItemActions(
+						httpServletRequest,
+						ContentDashboardItemAction.Type.VIEW_IN_PANEL),
+				contentDashboardItemAction -> _toViewInPanelDropdownItem(
+					contentDashboardItem, contentDashboardItemAction, locale)));
+
 		return dropdownItemList;
 	}
 
@@ -154,6 +154,7 @@ public class ContentDashboardDropdownItemsProvider {
 	}
 
 	private DropdownItem _toViewInPanelDropdownItem(
+		ContentDashboardItem contentDashboardItem,
 		ContentDashboardItemAction contentDashboardItemAction, Locale locale) {
 
 		DropdownItem dropdownItem = new DropdownItem();
@@ -161,6 +162,10 @@ public class ContentDashboardDropdownItemsProvider {
 		dropdownItem.setData(
 			HashMapBuilder.<String, Object>put(
 				"action", "showMetrics"
+			).put(
+				"className", contentDashboardItem.getClassName()
+			).put(
+				"classPK", contentDashboardItem.getClassPK()
 			).put(
 				"fetchURL", contentDashboardItemAction.getURL(locale)
 			).build());

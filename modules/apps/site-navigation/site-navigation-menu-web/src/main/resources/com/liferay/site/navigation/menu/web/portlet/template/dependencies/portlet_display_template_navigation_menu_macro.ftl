@@ -12,7 +12,7 @@
 			nav_child_css_class = ""
 		/>
 
-		<#if childNavigationItem.isSelected()>
+		<#if childNavigationItem.isSelected() || childNavigationItem.isChildSelected()>
 			<#assign
 				nav_child_css_class = "active selected"
 			/>
@@ -53,7 +53,7 @@
 					<#assign nav_item_css_class = "${nav_item_css_class} open" />
 				</#if>
 
-				<#if navItem.isSelected()>
+				<#if navItem.isSelected() || navItem.isChildSelected()>
 					<#assign
 						nav_item_css_class = "${nav_item_css_class} selected active"
 					/>

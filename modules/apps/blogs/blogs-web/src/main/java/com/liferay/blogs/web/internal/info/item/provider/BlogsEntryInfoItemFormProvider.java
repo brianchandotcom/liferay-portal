@@ -68,6 +68,13 @@ public class BlogsEntryInfoItemFormProvider
 		}
 	}
 
+	@Override
+	public InfoForm getInfoForm(String formVariationKey, long groupId) {
+		return _getInfoForm(
+			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
+				BlogsEntry.class.getName(), 0, groupId));
+	}
+
 	private Collection<InfoFieldSetEntry> _getBlogsEntryInfoFieldSetEntries() {
 		return Arrays.asList(
 			BlogsEntryInfoItemFields.titleInfoField,

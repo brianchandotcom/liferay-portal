@@ -37,6 +37,11 @@ public class AccountGroupAccountEntryRowChecker extends EmptyOnClickRowChecker {
 	}
 
 	@Override
+	public boolean isChecked(Object object) {
+		return isDisabled(object);
+	}
+
+	@Override
 	public boolean isDisabled(Object object) {
 		AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)object;
 

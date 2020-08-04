@@ -12,20 +12,17 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
-import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import ClayModal, {useModal} from '@clayui/modal';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import {client, getSectionsByIdQuery} from '../utils/client.es';
 import BreadcrumbDropdown from './BreadcrumbDropdown.es';
 import Link from './Link.es';
+import NewTopic from './NewTopic.es';
 
 export default ({section}) => {
 	const MAX_SECTIONS_IN_BREADCRUMB = 3;
 	const [breadcrumbNodes, setBreadcrumbNodes] = useState([]);
-	const [visible, setVisible] = useState(false);
 
 	const getSubSections = (section) =>
 		(section &&
@@ -87,10 +84,6 @@ export default ({section}) => {
 
 	return (
 		<>
-			<NewTopicModal
-				onClose={() => setVisible(false)}
-				visible={visible}
-			/>
 			<section className="align-items-center d-flex">
 				<div className="d-flex questions-breadcrumb">
 					<ol className="breadcrumb mb-0 ml-2">
@@ -100,75 +93,11 @@ export default ({section}) => {
 							<AllBreadcrumb />
 						)}
 					</ol>
-					<ClayButton
-						displayType="secondary"
-						onClick={() => setVisible(true)}
-					>
-						<ClayIcon symbol="plus" />
-						{Liferay.Language.get('new-topic')}
-					</ClayButton>
+					<NewTopic />
 				</div>
 			</section>
 		</>
 	);
-
-	function NewTopicModal({onClose, visible}) {
-		const {observer, onClose: close} = useModal({
-			onClose,
-		});
-
-		return (
-			<>
-				{visible && (
-					<ClayModal observer={observer} size="lg" status="info">
-						<ClayModal.Header>
-							{Liferay.Language.get('new-topic')}
-						</ClayModal.Header>
-						<ClayModal.Body>
-							<ClayForm>
-								<ClayForm.Group className="form-group-sm">
-									<label htmlFor="basicInput">
-										{Liferay.Language.get('topic-name')}
-									</label>
-									<ClayInput
-										placeholder={Liferay.Language.get('please-enter-a-valid-topic-name')}
-										type="text"
-									/>
-								</ClayForm.Group>
-								<ClayForm.Group className="form-group-sm">
-									<label htmlFor="basicInput">
-										{Liferay.Language.get('description')}
-									</label>
-									<textarea
-										className="form-control"
-										placeholder={Liferay.Language.get('description')}
-									/>
-								</ClayForm.Group>
-							</ClayForm>
-						</ClayModal.Body>
-						<ClayModal.Footer
-							last={
-								<ClayButton.Group spaced>
-									<ClayButton
-										displayType="secondary"
-										onClick={close}
-									>
-										{Liferay.Language.get('cancel')}
-									</ClayButton>
-									<ClayButton
-										displayType="primary"
-										onClick={close}
-									>
-										{Liferay.Language.get('create')}
-									</ClayButton>
-								</ClayButton.Group>
-							}
-						/>
-					</ClayModal>
-				)}
-			</>
-		);
-	}
 
 	function AllBreadcrumb() {
 		return (

@@ -33,7 +33,7 @@ public class ClassPKInfoItemIdentifier extends InfoItemIdentifier {
 	public String toString() {
 		StringBundler sb = new StringBundler(5);
 
-		sb.append("{type=");
+		sb.append("{className=");
 		sb.append(ClassPKInfoItemIdentifier.class.getName());
 		sb.append(", classPK=");
 		sb.append(_classPK);

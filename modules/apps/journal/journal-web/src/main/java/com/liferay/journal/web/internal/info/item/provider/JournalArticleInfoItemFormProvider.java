@@ -103,6 +103,17 @@ public class JournalArticleInfoItemFormProvider
 				AssetEntry.class.getName()));
 	}
 
+	@Override
+	public InfoForm getInfoForm(String formVariationKey, long groupId)
+		throws NoSuchFormVariationException {
+
+		return _getInfoForm(
+			GetterUtil.getLong(formVariationKey),
+			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
+				JournalArticle.class.getName(),
+				GetterUtil.getLong(formVariationKey), groupId));
+	}
+
 	private InfoForm _getInfoForm(
 			long ddmStructureId, InfoFieldSet assetEntryInfoFieldSet)
 		throws NoSuchFormVariationException {

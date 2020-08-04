@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {useContext, useReducer} from 'react';
+import React, {useContext, useState} from 'react';
 
 import {CollectionItemContext, INITIAL_STATE} from './CollectionItemContext';
 import {useIsActive} from './Controls';
@@ -21,13 +21,10 @@ const CollectionActiveItemDispatchContext = React.createContext(() => {});
 const CollectionActiveItemStateContext = React.createContext(INITIAL_STATE);
 
 export function CollectionActiveItemContextProvider({children}) {
-	const [state, dispatch] = useReducer(
-		(state, action) => (state !== action ? action : state),
-		INITIAL_STATE
-	);
+	const [state, setState] = useState(INITIAL_STATE);
 
 	return (
-		<CollectionActiveItemDispatchContext.Provider value={dispatch}>
+		<CollectionActiveItemDispatchContext.Provider value={setState}>
 			<CollectionActiveItemStateContext.Provider value={state}>
 				{children}
 			</CollectionActiveItemStateContext.Provider>
@@ -38,10 +35,10 @@ export function CollectionActiveItemContextProvider({children}) {
 export function useSetCollectionActiveItemContext(itemId) {
 	const isActive = useIsActive();
 	const collectionContext = useContext(CollectionItemContext);
-	const dispatch = useContext(CollectionActiveItemDispatchContext);
+	const setState = useContext(CollectionActiveItemDispatchContext);
 
 	if (isActive(itemId)) {
-		dispatch(collectionContext);
+		setState(collectionContext);
 	}
 }
 

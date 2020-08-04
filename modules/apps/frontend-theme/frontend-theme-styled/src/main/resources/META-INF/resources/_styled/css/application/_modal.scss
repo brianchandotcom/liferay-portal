@@ -36,6 +36,10 @@
 	&.modal-dialog-sm {
 		max-width: $modal-md;
 	}
+
+	.yui3-resize-handles-wrapper {
+		pointer-events: all;
+	}
 }
 
 .modal-hidden {

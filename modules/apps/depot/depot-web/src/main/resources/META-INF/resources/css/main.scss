@@ -1,12 +1,19 @@
-@import 'atlas';
-
 .lfr-depot-dashboard-container {
 	.card .autofit-col {
 		position: initial;
 	}
 
 	a.card-title {
-		@extend .stretched-link;
+		&::after {
+			bottom: 0;
+			content: '';
+			left: 0;
+			pointer-events: auto;
+			position: absolute;
+			right: 0;
+			top: 0;
+			z-index: 1;
+		}
 
 		&:hover {
 			color: inherit;

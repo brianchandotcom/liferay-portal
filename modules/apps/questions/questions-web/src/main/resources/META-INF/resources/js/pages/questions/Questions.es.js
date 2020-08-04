@@ -213,12 +213,9 @@ export default withRouter(
 
 		return (
 			<section className="questions-section questions-section-list">
+				<Breadcrumb section={section} />
 				<div className="questions-container">
 					<div className="row">
-						<div className="c-mt-3 col col-xl-12">
-							<Breadcrumb section={section} />
-						</div>
-
 						<div className="c-mt-3 col col-xl-12">
 							<QuestionsNavigationBar />
 						</div>

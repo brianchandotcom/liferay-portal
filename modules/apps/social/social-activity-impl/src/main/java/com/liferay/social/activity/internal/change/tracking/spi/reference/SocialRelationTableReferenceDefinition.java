@@ -14,13 +14,14 @@
 
 package com.liferay.social.activity.internal.change.tracking.spi.reference;
 
-import com.liferay.asset.kernel.model.AssetEntryTable;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
+import com.liferay.portal.kernel.model.CompanyTable;
+import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.social.kernel.model.SocialActivitySetTable;
-import com.liferay.social.kernel.service.persistence.SocialActivitySetPersistence;
+import com.liferay.social.kernel.model.SocialRelationTable;
+import com.liferay.social.kernel.service.persistence.SocialRelationPersistence;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,48 +30,41 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(service = TableReferenceDefinition.class)
-public class SocialActivitySetTableReferenceDefinition
-	implements TableReferenceDefinition<SocialActivitySetTable> {
+public class SocialRelationTableReferenceDefinition
+	implements TableReferenceDefinition<SocialRelationTable> {
 
 	@Override
 	public void defineChildTableReferences(
-		ChildTableReferenceInfoBuilder<SocialActivitySetTable>
+		ChildTableReferenceInfoBuilder<SocialRelationTable>
 			childTableReferenceInfoBuilder) {
 	}
 
 	@Override
 	public void defineParentTableReferences(
-		ParentTableReferenceInfoBuilder<SocialActivitySetTable>
+		ParentTableReferenceInfoBuilder<SocialRelationTable>
 			parentTableReferenceInfoBuilder) {
 
-		parentTableReferenceInfoBuilder.groupedModel(
-			SocialActivitySetTable.INSTANCE
-		).referenceInnerJoin(
-			fromStep -> fromStep.from(
-				AssetEntryTable.INSTANCE
-			).innerJoinON(
-				SocialActivitySetTable.INSTANCE,
-				SocialActivitySetTable.INSTANCE.classNameId.eq(
-					AssetEntryTable.INSTANCE.classNameId
-				).and(
-					SocialActivitySetTable.INSTANCE.classPK.eq(
-						AssetEntryTable.INSTANCE.classPK)
-				)
-			)
+		parentTableReferenceInfoBuilder.singleColumnReference(
+			SocialRelationTable.INSTANCE.companyId,
+			CompanyTable.INSTANCE.companyId
+		).singleColumnReference(
+			SocialRelationTable.INSTANCE.userId1, UserTable.INSTANCE.userId
+		).singleColumnReference(
+			SocialRelationTable.INSTANCE.userId2, UserTable.INSTANCE.userId
 		);
 	}
 
 	@Override
 	public BasePersistence<?> getBasePersistence() {
-		return _socialActivitySetPersistence;
+		return _socialRelationPersistence;
 	}
 
 	@Override
-	public SocialActivitySetTable getTable() {
-		return SocialActivitySetTable.INSTANCE;
+	public SocialRelationTable getTable() {
+		return SocialRelationTable.INSTANCE;
 	}
 
 	@Reference
-	private SocialActivitySetPersistence _socialActivitySetPersistence;
+	private SocialRelationPersistence _socialRelationPersistence;
 
 }

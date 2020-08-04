@@ -18,9 +18,11 @@ import com.liferay.asset.kernel.model.AssetEntryTable;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
+import com.liferay.petra.sql.dsl.spi.expression.Scalar;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.social.kernel.model.SocialActivitySetTable;
-import com.liferay.social.kernel.service.persistence.SocialActivitySetPersistence;
+import com.liferay.social.kernel.model.SocialActivitySettingTable;
+import com.liferay.social.kernel.service.persistence.SocialActivitySettingPersistence;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,32 +31,38 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(service = TableReferenceDefinition.class)
-public class SocialActivitySetTableReferenceDefinition
-	implements TableReferenceDefinition<SocialActivitySetTable> {
+public class SocialActivitySettingTableReferenceDefinition
+	implements TableReferenceDefinition<SocialActivitySettingTable> {
 
 	@Override
 	public void defineChildTableReferences(
-		ChildTableReferenceInfoBuilder<SocialActivitySetTable>
+		ChildTableReferenceInfoBuilder<SocialActivitySettingTable>
 			childTableReferenceInfoBuilder) {
 	}
 
 	@Override
 	public void defineParentTableReferences(
-		ParentTableReferenceInfoBuilder<SocialActivitySetTable>
+		ParentTableReferenceInfoBuilder<SocialActivitySettingTable>
 			parentTableReferenceInfoBuilder) {
 
 		parentTableReferenceInfoBuilder.groupedModel(
-			SocialActivitySetTable.INSTANCE
+			SocialActivitySettingTable.INSTANCE
 		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				AssetEntryTable.INSTANCE
 			).innerJoinON(
-				SocialActivitySetTable.INSTANCE,
-				SocialActivitySetTable.INSTANCE.classNameId.eq(
-					AssetEntryTable.INSTANCE.classNameId
+				SocialActivitySettingTable.INSTANCE,
+				SocialActivitySettingTable.INSTANCE.groupId.eq(
+					AssetEntryTable.INSTANCE.groupId
 				).and(
-					SocialActivitySetTable.INSTANCE.classPK.eq(
-						AssetEntryTable.INSTANCE.classPK)
+					SocialActivitySettingTable.INSTANCE.classNameId.eq(
+						AssetEntryTable.INSTANCE.classNameId)
+				).and(
+					SocialActivitySettingTable.INSTANCE.name.eq(
+						DSLFunctionFactoryUtil.concat(
+							new Scalar<>("_LFR_CLASS_PK_"),
+							DSLFunctionFactoryUtil.castText(
+								AssetEntryTable.INSTANCE.classPK)))
 				)
 			)
 		);
@@ -62,15 +70,15 @@ public class SocialActivitySetTableReferenceDefinition
 
 	@Override
 	public BasePersistence<?> getBasePersistence() {
-		return _socialActivitySetPersistence;
+		return _socialActivitySettingPersistence;
 	}
 
 	@Override
-	public SocialActivitySetTable getTable() {
-		return SocialActivitySetTable.INSTANCE;
+	public SocialActivitySettingTable getTable() {
+		return SocialActivitySettingTable.INSTANCE;
 	}
 
 	@Reference
-	private SocialActivitySetPersistence _socialActivitySetPersistence;
+	private SocialActivitySettingPersistence _socialActivitySettingPersistence;
 
 }

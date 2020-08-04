@@ -19,8 +19,8 @@ import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.social.kernel.model.SocialActivitySetTable;
-import com.liferay.social.kernel.service.persistence.SocialActivitySetPersistence;
+import com.liferay.social.kernel.model.SocialActivityCounterTable;
+import com.liferay.social.kernel.service.persistence.SocialActivityCounterPersistence;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,31 +29,31 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(service = TableReferenceDefinition.class)
-public class SocialActivitySetTableReferenceDefinition
-	implements TableReferenceDefinition<SocialActivitySetTable> {
+public class SocialActivityCounterTableReferenceDefinition
+	implements TableReferenceDefinition<SocialActivityCounterTable> {
 
 	@Override
 	public void defineChildTableReferences(
-		ChildTableReferenceInfoBuilder<SocialActivitySetTable>
+		ChildTableReferenceInfoBuilder<SocialActivityCounterTable>
 			childTableReferenceInfoBuilder) {
 	}
 
 	@Override
 	public void defineParentTableReferences(
-		ParentTableReferenceInfoBuilder<SocialActivitySetTable>
+		ParentTableReferenceInfoBuilder<SocialActivityCounterTable>
 			parentTableReferenceInfoBuilder) {
 
 		parentTableReferenceInfoBuilder.groupedModel(
-			SocialActivitySetTable.INSTANCE
+			SocialActivityCounterTable.INSTANCE
 		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				AssetEntryTable.INSTANCE
 			).innerJoinON(
-				SocialActivitySetTable.INSTANCE,
-				SocialActivitySetTable.INSTANCE.classNameId.eq(
+				SocialActivityCounterTable.INSTANCE,
+				SocialActivityCounterTable.INSTANCE.classNameId.eq(
 					AssetEntryTable.INSTANCE.classNameId
 				).and(
-					SocialActivitySetTable.INSTANCE.classPK.eq(
+					SocialActivityCounterTable.INSTANCE.classPK.eq(
 						AssetEntryTable.INSTANCE.classPK)
 				)
 			)
@@ -62,15 +62,15 @@ public class SocialActivitySetTableReferenceDefinition
 
 	@Override
 	public BasePersistence<?> getBasePersistence() {
-		return _socialActivitySetPersistence;
+		return _socialActivityCounterPersistence;
 	}
 
 	@Override
-	public SocialActivitySetTable getTable() {
-		return SocialActivitySetTable.INSTANCE;
+	public SocialActivityCounterTable getTable() {
+		return SocialActivityCounterTable.INSTANCE;
 	}
 
 	@Reference
-	private SocialActivitySetPersistence _socialActivitySetPersistence;
+	private SocialActivityCounterPersistence _socialActivityCounterPersistence;
 
 }

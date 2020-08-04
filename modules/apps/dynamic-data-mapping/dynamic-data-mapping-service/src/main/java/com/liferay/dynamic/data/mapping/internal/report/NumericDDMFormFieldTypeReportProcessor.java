@@ -20,11 +20,13 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.report.DDMFormFieldTypeReportProcessor;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
@@ -169,7 +171,7 @@ public class NumericDDMFormFieldTypeReportProcessor
 		}
 
 		summaryJSONObject.put(
-			"average", average
+			"average", formatBigDecimal(average)
 		).put(
 			"sum", sum.toString()
 		);
@@ -177,6 +179,37 @@ public class NumericDDMFormFieldTypeReportProcessor
 		jsonObject.put("summary", summaryJSONObject);
 
 		return jsonObject;
+	}
+
+	protected String formatBigDecimal(BigDecimal bigDecimal) {
+		String bigDecimalString = bigDecimal.toString();
+
+		String[] bigDecimalStringParts = bigDecimalString.split("\\.");
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(bigDecimalStringParts[0]);
+
+		if (bigDecimalStringParts.length > 1) {
+			String decimalPart = bigDecimalStringParts[1];
+
+			int decimalPartIndex = decimalPart.length() - 1;
+
+			while ((decimalPartIndex > 0) &&
+				   (decimalPart.charAt(decimalPartIndex) == '0')) {
+
+				decimalPartIndex--;
+			}
+
+			if (decimalPartIndex > 0) {
+				decimalPart = decimalPart.substring(0, decimalPartIndex + 1);
+
+				sb.append(StringPool.PERIOD);
+				sb.append(decimalPart);
+			}
+		}
+
+		return sb.toString();
 	}
 
 	private BigDecimal _getBigDecimalValue(

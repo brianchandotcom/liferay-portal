@@ -365,10 +365,19 @@ public class DataFactory {
 
 		initAssetCategoryModels();
 		initAssetTagModels();
-		initCommerceCurrencyModel();
-		initCommerceCatalogModel();
-		initCommerceChannelModel();
-		initGroupModels();
+
+		_commerceCurrencyModel = newCommerceCurrencyModel();
+
+		_commerceCatalogModel = newCommerceCatalogModel(_commerceCurrencyModel);
+
+		_commerceChannelModel = newCommerceChannelModel(_commerceCurrencyModel);
+
+		_commerceCatalogGroupModel = newCommerceCatalogGroupModel(
+			_commerceCatalogModel);
+
+		_commerceChannelGroupModel = newCommerceChannelGroupModel(
+			_commerceChannelModel);
+
 		initCommerceProductModels();
 
 		initJournalArticleContent();
@@ -864,75 +873,6 @@ public class DataFactory {
 		}
 	}
 
-	public void initCommerceCatalogModel() {
-		_commerceCatalogModel = new CommerceCatalogModelImpl();
-
-		_commerceCatalogModel.setCommerceCatalogId(_counter.get());
-		_commerceCatalogModel.setCompanyId(_companyId);
-		_commerceCatalogModel.setUserName(_SAMPLE_USER_NAME);
-		_commerceCatalogModel.setCreateDate(new Date());
-		_commerceCatalogModel.setModifiedDate(new Date());
-		_commerceCatalogModel.setName("Master");
-		_commerceCatalogModel.setCommerceCurrencyCode(
-			_commerceCurrencyModel.getCode());
-		_commerceCatalogModel.setCatalogDefaultLanguageId("en_US");
-		_commerceCatalogModel.setSystem(true);
-	}
-
-	public void initCommerceChannelModel() {
-		_commerceChannelModel = new CommerceChannelModelImpl();
-
-		_commerceChannelModel.setCommerceChannelId(_counter.get());
-		_commerceChannelModel.setCompanyId(_companyId);
-		_commerceChannelModel.setUserId(_sampleUserId);
-		_commerceChannelModel.setUserName(_SAMPLE_USER_NAME);
-		_commerceChannelModel.setCreateDate(new Date());
-		_commerceChannelModel.setModifiedDate(new Date());
-		_commerceChannelModel.setSiteGroupId(1);
-		_commerceChannelModel.setName(_SAMPLE_USER_NAME + " Channel");
-		_commerceChannelModel.setType("site");
-		_commerceChannelModel.setTypeSettings(String.valueOf(_guestGroupId));
-		_commerceChannelModel.setCommerceCurrencyCode(
-			_commerceCurrencyModel.getCode());
-	}
-
-	public void initCommerceCurrencyModel() {
-		_commerceCurrencyModel = new CommerceCurrencyModelImpl();
-
-		_commerceCurrencyModel.setUuid(SequentialUUID.generate());
-		_commerceCurrencyModel.setCommerceCurrencyId(_counter.get());
-		_commerceCurrencyModel.setCompanyId(_companyId);
-		_commerceCurrencyModel.setUserId(_sampleUserId);
-		_commerceCurrencyModel.setUserName(_SAMPLE_USER_NAME);
-		_commerceCurrencyModel.setCreateDate(new Date());
-		_commerceCurrencyModel.setModifiedDate(new Date());
-		_commerceCurrencyModel.setCode("USD");
-
-		String name = StringBundler.concat(
-			"<?xml version=\"1.0\" encoding=\"UTF-8\"?><root available-locales",
-			"=\"en_US\" default-locale=\"en_US\"><Name language-id=\"en_US\">",
-			"US Dollar</Name></root>");
-
-		_commerceCurrencyModel.setName(name);
-
-		_commerceCurrencyModel.setRate(BigDecimal.valueOf(1));
-
-		String formatPattern = StringBundler.concat(
-			"<?xml version=\"1.0\" encoding=\"UTF-8\"?><root available-locales",
-			"=\"en_US\" default-locale=\"en_US\"><FormatPattern language-id",
-			"=\"en_US\">$###,##0.00</FormatPattern></root>");
-
-		_commerceCurrencyModel.setFormatPattern(formatPattern);
-
-		_commerceCurrencyModel.setMaxFractionDigits(2);
-		_commerceCurrencyModel.setMinFractionDigits(2);
-		_commerceCurrencyModel.setRoundingMode("HALF_EVEN");
-		_commerceCurrencyModel.setPrimary(true);
-		_commerceCurrencyModel.setPriority(1);
-		_commerceCurrencyModel.setActive(true);
-		_commerceCurrencyModel.setLastPublishDate(new Date());
-	}
-
 	public void initCommerceProductModels() {
 		_cpTaxCategoryModel = newCPTaxCategoryModel();
 
@@ -1021,18 +961,6 @@ public class DataFactory {
 				}
 			}
 		}
-	}
-
-	public void initGroupModels() {
-		_commerceChannelGroupModel = newGroupModel(
-			_counter.get(), getClassNameId(CommerceChannel.class),
-			_commerceChannelModel.getCommerceChannelId(),
-			_commerceChannelModel.getName(), false);
-
-		_commerceCatalogGroupModel = newGroupModel(
-			_counter.get(), getClassNameId(CommerceCatalog.class),
-			_commerceCatalogModel.getCommerceCatalogId(),
-			_commerceCatalogModel.getName(), false);
 	}
 
 	public void initJournalArticleContent() {
@@ -1313,6 +1241,106 @@ public class DataFactory {
 		blogsStatsUserModel.setLastPostDate(new Date());
 
 		return blogsStatsUserModel;
+	}
+
+	public GroupModel newCommerceCatalogGroupModel(
+		CommerceCatalogModel commerceCatalogModel) {
+
+		return newGroupModel(
+			_counter.get(), getClassNameId(CommerceCatalog.class),
+			commerceCatalogModel.getCommerceCatalogId(),
+			commerceCatalogModel.getName(), false);
+	}
+
+	public CommerceCatalogModel newCommerceCatalogModel(
+		CommerceCurrencyModel commerceCurrencyModel) {
+
+		CommerceCatalogModel commerceCatalogModel =
+			new CommerceCatalogModelImpl();
+
+		commerceCatalogModel.setCommerceCatalogId(_counter.get());
+		commerceCatalogModel.setCompanyId(_companyId);
+		commerceCatalogModel.setUserName(_SAMPLE_USER_NAME);
+		commerceCatalogModel.setCreateDate(new Date());
+		commerceCatalogModel.setModifiedDate(new Date());
+		commerceCatalogModel.setName("Master");
+		commerceCatalogModel.setCommerceCurrencyCode(
+			commerceCurrencyModel.getCode());
+		commerceCatalogModel.setCatalogDefaultLanguageId("en_US");
+		commerceCatalogModel.setSystem(true);
+
+		return commerceCatalogModel;
+	}
+
+	public GroupModel newCommerceChannelGroupModel(
+		CommerceChannelModel commerceChannelModel) {
+
+		return newGroupModel(
+			_counter.get(), getClassNameId(CommerceChannel.class),
+			commerceChannelModel.getCommerceChannelId(),
+			commerceChannelModel.getName(), false);
+	}
+
+	public CommerceChannelModel newCommerceChannelModel(
+		CommerceCurrencyModel commerceCurrencyModel) {
+
+		CommerceChannelModel commerceChannelModel =
+			new CommerceChannelModelImpl();
+
+		commerceChannelModel.setCommerceChannelId(_counter.get());
+		commerceChannelModel.setCompanyId(_companyId);
+		commerceChannelModel.setUserId(_sampleUserId);
+		commerceChannelModel.setUserName(_SAMPLE_USER_NAME);
+		commerceChannelModel.setCreateDate(new Date());
+		commerceChannelModel.setModifiedDate(new Date());
+		commerceChannelModel.setSiteGroupId(1);
+		commerceChannelModel.setName(_SAMPLE_USER_NAME + " Channel");
+		commerceChannelModel.setType("site");
+		commerceChannelModel.setTypeSettings(String.valueOf(_guestGroupId));
+		commerceChannelModel.setCommerceCurrencyCode(
+			commerceCurrencyModel.getCode());
+
+		return commerceChannelModel;
+	}
+
+	public CommerceCurrencyModel newCommerceCurrencyModel() {
+		CommerceCurrencyModel commerceCurrencyModel =
+			new CommerceCurrencyModelImpl();
+
+		commerceCurrencyModel.setUuid(SequentialUUID.generate());
+		commerceCurrencyModel.setCommerceCurrencyId(_counter.get());
+		commerceCurrencyModel.setCompanyId(_companyId);
+		commerceCurrencyModel.setUserId(_sampleUserId);
+		commerceCurrencyModel.setUserName(_SAMPLE_USER_NAME);
+		commerceCurrencyModel.setCreateDate(new Date());
+		commerceCurrencyModel.setModifiedDate(new Date());
+		commerceCurrencyModel.setCode("USD");
+
+		String name = StringBundler.concat(
+			"<?xml version=\"1.0\" encoding=\"UTF-8\"?><root available-locales",
+			"=\"en_US\" default-locale=\"en_US\"><Name language-id=\"en_US\">",
+			"US Dollar</Name></root>");
+
+		commerceCurrencyModel.setName(name);
+
+		commerceCurrencyModel.setRate(BigDecimal.valueOf(1));
+
+		String formatPattern = StringBundler.concat(
+			"<?xml version=\"1.0\" encoding=\"UTF-8\"?><root available-locales",
+			"=\"en_US\" default-locale=\"en_US\"><FormatPattern language-id",
+			"=\"en_US\">$###,##0.00</FormatPattern></root>");
+
+		commerceCurrencyModel.setFormatPattern(formatPattern);
+
+		commerceCurrencyModel.setMaxFractionDigits(2);
+		commerceCurrencyModel.setMinFractionDigits(2);
+		commerceCurrencyModel.setRoundingMode("HALF_EVEN");
+		commerceCurrencyModel.setPrimary(true);
+		commerceCurrencyModel.setPriority(1);
+		commerceCurrencyModel.setActive(true);
+		commerceCurrencyModel.setLastPublishDate(new Date());
+
+		return commerceCurrencyModel;
 	}
 
 	public CompanyModel newCompanyModel() {
@@ -4407,11 +4435,11 @@ public class DataFactory {
 	private List<AssetVocabularyModel>[] _assetVocabularyModelsArray;
 	private final Map<String, ClassNameModel> _classNameModels =
 		new HashMap<>();
-	private GroupModel _commerceCatalogGroupModel;
-	private CommerceCatalogModel _commerceCatalogModel;
-	private GroupModel _commerceChannelGroupModel;
-	private CommerceChannelModel _commerceChannelModel;
-	private CommerceCurrencyModel _commerceCurrencyModel;
+	private final GroupModel _commerceCatalogGroupModel;
+	private final CommerceCatalogModel _commerceCatalogModel;
+	private final GroupModel _commerceChannelGroupModel;
+	private final CommerceChannelModel _commerceChannelModel;
+	private final CommerceCurrencyModel _commerceCurrencyModel;
 	private final long _companyId;
 	private final SimpleCounter _counter;
 	private List<CPDefinitionLocalizationModel> _cpDefinitionLocalizationModels;

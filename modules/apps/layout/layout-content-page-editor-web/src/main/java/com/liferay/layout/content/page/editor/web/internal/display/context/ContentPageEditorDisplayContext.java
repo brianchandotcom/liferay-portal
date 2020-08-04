@@ -859,8 +859,9 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		if (styleBookEntry == null) {
-			styleBookEntry = StyleBookEntryLocalServiceUtil.fetchDefaultStyleBookEntry(
-				layout.getGroupId());
+			styleBookEntry =
+				StyleBookEntryLocalServiceUtil.fetchDefaultStyleBookEntry(
+					layout.getGroupId());
 		}
 
 		if (styleBookEntry != null) {

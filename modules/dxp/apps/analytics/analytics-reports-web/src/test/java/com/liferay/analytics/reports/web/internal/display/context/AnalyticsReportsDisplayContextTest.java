@@ -95,8 +95,8 @@ public class AnalyticsReportsDisplayContextTest {
 					RandomTestUtil.randomDouble(), null,
 					RandomTestUtil.randomInt(), RandomTestUtil.randomDouble(),
 					false),
-				_getAnalyticsReportsItem(), null, null, new PortalImpl(),
-				new MockLiferayPortletRenderRequest(),
+				_getAnalyticsReportsItem(LocaleUtil.US), null, null,
+				new PortalImpl(), new MockLiferayPortletRenderRequest(),
 				new MockLiferayPortletRenderResponse(), _getResourceBundle(),
 				_getThemeDisplay(_getLayout()),
 				_getUser(RandomTestUtil.randomString()));
@@ -190,7 +190,7 @@ public class AnalyticsReportsDisplayContextTest {
 				true);
 
 		AnalyticsReportsInfoItem<Object> analyticsReportsInfoItem =
-			_getAnalyticsReportsItem();
+			_getAnalyticsReportsItem(LocaleUtil.US);
 
 		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
 			new AnalyticsReportsDisplayContext(
@@ -233,8 +233,7 @@ public class AnalyticsReportsDisplayContextTest {
 				true);
 
 		AnalyticsReportsInfoItem<Object> analyticsReportsInfoItem =
-			_getAnalyticsReportsItem(
-				Arrays.asList(LocaleUtil.SPAIN, LocaleUtil.US));
+			_getAnalyticsReportsItem(LocaleUtil.SPAIN, LocaleUtil.US);
 
 		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
 			new AnalyticsReportsDisplayContext(
@@ -515,39 +514,8 @@ public class AnalyticsReportsDisplayContextTest {
 		};
 	}
 
-	private AnalyticsReportsInfoItem<Object> _getAnalyticsReportsItem() {
-		String authorName = StringUtil.randomString();
-		long authorUserId = RandomTestUtil.randomLong();
-		Date publishDate = RandomTestUtil.nextDate();
-		String title = StringUtil.randomString();
-
-		return new AnalyticsReportsInfoItem<Object>() {
-
-			@Override
-			public String getAuthorName(Object model) {
-				return authorName;
-			}
-
-			@Override
-			public long getAuthorUserId(Object model) {
-				return authorUserId;
-			}
-
-			@Override
-			public Date getPublishDate(Object model) {
-				return publishDate;
-			}
-
-			@Override
-			public String getTitle(Object model, Locale locale) {
-				return title;
-			}
-
-		};
-	}
-
 	private AnalyticsReportsInfoItem<Object> _getAnalyticsReportsItem(
-		List<Locale> locales) {
+		Locale... locales) {
 
 		String authorName = StringUtil.randomString();
 		long authorUserId = RandomTestUtil.randomLong();
@@ -568,12 +536,12 @@ public class AnalyticsReportsDisplayContextTest {
 
 			@Override
 			public List<Locale> getAvailableLocales(Object model) {
-				return Collections.unmodifiableList(locales);
+				return Arrays.asList(locales);
 			}
 
 			@Override
 			public Locale getDefaultLocale(Object model) {
-				return locales.get(0);
+				return locales[0];
 			}
 
 			@Override

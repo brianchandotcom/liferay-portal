@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -45,6 +44,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Arrays;
+import java.util.Locale;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -122,34 +123,13 @@ public class JournalArticleAnalyticsReportsInfoItemTest {
 
 	@Test
 	public void testGetAvailableLocales() throws Exception {
-		User user = TestPropsValues.getUser();
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), user.getUserId());
-
-		serviceContext.setCommand(Constants.ADD);
-		serviceContext.setLayoutFullURL("http://localhost");
-
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(), 0,
-			JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
-			HashMapBuilder.put(
-				LocaleUtil.SPAIN, "spanishTitle"
-			).put(
-				LocaleUtil.US, "englishTitle"
-			).build(),
-			HashMapBuilder.put(
-				LocaleUtil.SPAIN, "spanishDescription"
-			).put(
-				LocaleUtil.US, "englishDescription"
-			).build(),
-			HashMapBuilder.put(
-				LocaleUtil.SPAIN, "spanishContent"
-			).put(
-				LocaleUtil.US, "englishContent"
-			).build(),
-			LocaleUtil.SPAIN, false, false, serviceContext);
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, _getLocalizeMap(),
+			_getLocalizeMap(), _getLocalizeMap(), LocaleUtil.SPAIN, false,
+			false,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		Assert.assertEquals(
 			Arrays.asList(LocaleUtil.US, LocaleUtil.SPAIN),
@@ -158,34 +138,13 @@ public class JournalArticleAnalyticsReportsInfoItemTest {
 
 	@Test
 	public void testGetDefaultLocale() throws Exception {
-		User user = TestPropsValues.getUser();
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), user.getUserId());
-
-		serviceContext.setCommand(Constants.ADD);
-		serviceContext.setLayoutFullURL("http://localhost");
-
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(), 0,
-			JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
-			HashMapBuilder.put(
-				LocaleUtil.SPAIN, "spanishTitle"
-			).put(
-				LocaleUtil.US, "englishTitle"
-			).build(),
-			HashMapBuilder.put(
-				LocaleUtil.SPAIN, "spanishDescription"
-			).put(
-				LocaleUtil.US, "englishDescription"
-			).build(),
-			HashMapBuilder.put(
-				LocaleUtil.SPAIN, "spanishContent"
-			).put(
-				LocaleUtil.US, "englishContent"
-			).build(),
-			LocaleUtil.SPAIN, false, false, serviceContext);
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, _getLocalizeMap(),
+			_getLocalizeMap(), _getLocalizeMap(), LocaleUtil.SPAIN, false,
+			false,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		Assert.assertEquals(
 			LocaleUtil.fromLanguageId(journalArticle.getDefaultLanguageId()),
@@ -245,6 +204,14 @@ public class JournalArticleAnalyticsReportsInfoItemTest {
 		Assert.assertEquals(
 			journalArticle.getTitle(LocaleUtil.US),
 			_analyticsReportsInfoItem.getTitle(journalArticle, LocaleUtil.US));
+	}
+
+	private Map<Locale, String> _getLocalizeMap() {
+		return HashMapBuilder.put(
+			LocaleUtil.SPAIN, RandomTestUtil.randomString()
+		).put(
+			LocaleUtil.US, RandomTestUtil.randomString()
+		).build();
 	}
 
 	@Inject(filter = "component.name=*.JournalArticleAnalyticsReportsInfoItem")

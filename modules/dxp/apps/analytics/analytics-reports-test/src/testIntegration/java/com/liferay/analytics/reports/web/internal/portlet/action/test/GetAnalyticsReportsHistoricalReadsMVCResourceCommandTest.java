@@ -15,12 +15,11 @@
 package com.liferay.analytics.reports.web.internal.portlet.action.test;
 
 import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockHttpUtil;
+import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockInfoDisplayObjectProviderUtil;
 import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockThemeDisplayUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -49,8 +48,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -126,64 +123,6 @@ public class GetAnalyticsReportsHistoricalReadsMVCResourceCommandTest {
 		}
 	}
 
-	private InfoDisplayObjectProvider<Object> _getInfoDisplayObjectProvider() {
-		return new InfoDisplayObjectProvider() {
-
-			@Override
-			public long getClassNameId() {
-				List<InfoDisplayContributor<?>> infoDisplayContributors =
-					_infoDisplayContributorTracker.getInfoDisplayContributors();
-
-				InfoDisplayContributor<?> infoDisplayContributor =
-					infoDisplayContributors.get(0);
-
-				return _portal.getClassNameId(
-					infoDisplayContributor.getClassName());
-			}
-
-			@Override
-			public long getClassPK() {
-				return 0;
-			}
-
-			@Override
-			public long getClassTypeId() {
-				return 0;
-			}
-
-			@Override
-			public String getDescription(Locale locale) {
-				return null;
-			}
-
-			@Override
-			public Object getDisplayObject() {
-				return null;
-			}
-
-			@Override
-			public long getGroupId() {
-				return 0;
-			}
-
-			@Override
-			public String getKeywords(Locale locale) {
-				return null;
-			}
-
-			@Override
-			public String getTitle(Locale locale) {
-				return null;
-			}
-
-			@Override
-			public String getURLTitle(Locale locale) {
-				return null;
-			}
-
-		};
-	}
-
 	private MockLiferayResourceRequest _getMockLiferayResourceRequest() {
 		MockLiferayResourceRequest mockLiferayResourceRequest =
 			new MockLiferayResourceRequest();
@@ -191,7 +130,8 @@ public class GetAnalyticsReportsHistoricalReadsMVCResourceCommandTest {
 		try {
 			mockLiferayResourceRequest.setAttribute(
 				AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER,
-				_getInfoDisplayObjectProvider());
+				MockInfoDisplayObjectProviderUtil.getInfoDisplayObjectProvider(
+					_infoDisplayContributorTracker, _portal));
 			mockLiferayResourceRequest.setAttribute(
 				WebKeys.THEME_DISPLAY,
 				MockThemeDisplayUtil.getThemeDisplay(

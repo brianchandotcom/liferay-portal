@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -60,6 +62,22 @@ public class NumericDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 				_ddmFormInstanceRecordLocalService;
 
 		_setUpJSONFactoryUtil();
+	}
+
+	@Test
+	public void testFormatBigDecimal() {
+		Assert.assertEquals(
+			"12",
+			_numericDDMFormFieldTypeReportProcessor.formatBigDecimal(
+				new BigDecimal("12.00000000000000")));
+		Assert.assertEquals(
+			"12.00000000000001",
+			_numericDDMFormFieldTypeReportProcessor.formatBigDecimal(
+				new BigDecimal("12.00000000000001")));
+		Assert.assertEquals(
+			"12.000000001",
+			_numericDDMFormFieldTypeReportProcessor.formatBigDecimal(
+				new BigDecimal("12.0000000010000")));
 	}
 
 	@Test

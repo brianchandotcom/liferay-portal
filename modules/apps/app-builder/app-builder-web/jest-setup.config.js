@@ -12,6 +12,10 @@
  * details.
  */
 
+AUI = () => ({
+	use: (key, callback) => callback(key)
+});
+
 window.themeDisplay = {
 	...window.themeDisplay,
 	getDefaultLanguageId: () => 'en_US',

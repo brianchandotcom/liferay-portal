@@ -28,9 +28,11 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterTracker;
 
@@ -100,16 +102,19 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 						() -> new PortalException(
 							"Unknown export mime type: " + exportMimeType));
 
+			String escapedTitle = StringUtil.removeSubstrings(
+				article.getTitle(themeDisplay.getLocale()),
+				PropsValues.DL_CHAR_BLACKLIST);
+
 			for (String targetLanguageId :
 					ParamUtil.getStringValues(
 						resourceRequest, "targetLanguageIds")) {
 
 				zipWriter.addEntry(
 					StringBundler.concat(
-						StringPool.FORWARD_SLASH,
-						article.getTitle(themeDisplay.getLocale()),
-						StringPool.DASH, sourceLanguageId, StringPool.DASH,
-						targetLanguageId, ".xlf"),
+						StringPool.FORWARD_SLASH, escapedTitle, StringPool.DASH,
+						sourceLanguageId, StringPool.DASH, targetLanguageId,
+						".xlf"),
 					translationInfoItemFieldValuesExporter.
 						exportInfoItemFieldValues(
 							infoItemFieldValuesProvider.getInfoItemFieldValues(
@@ -124,8 +129,8 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 				PortletResponseUtil.sendFile(
 					resourceRequest, resourceResponse,
 					StringBundler.concat(
-						article.getTitle(themeDisplay.getLocale()),
-						StringPool.DASH, sourceLanguageId, ".zip"),
+						escapedTitle, StringPool.DASH, sourceLanguageId,
+						".zip"),
 					inputStream, ContentTypes.APPLICATION_ZIP);
 			}
 

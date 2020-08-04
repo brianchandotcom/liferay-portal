@@ -21,11 +21,11 @@ export default () => {
 	return (
 		<div>
 			<ClayAlert title="Info">
-				This widget is used to test out clay components. Simply add
-				whatever js you want to App.es.js and redeploy.
+				This widget is used to test out Clay components. Simply add
+				whatever JS you want to App.js and redeploy.
 			</ClayAlert>
 
-			<div className="clay-test-class">This is where your code goes</div>
+			<div className="clay-test-class">This is where your code goes.</div>
 		</div>
 	);
 };

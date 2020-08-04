@@ -105,6 +105,11 @@ renderResponse.setTitle(accountGroupDisplay.getName());
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
+<portlet:actionURL name="/account_groups_admin/remove_account_group_account_entries" var="removeAccountGroupAccountEntriesURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="accountGroupId" value="<%= String.valueOf(accountGroupDisplay.getAccountGroupId()) %>" />
+</portlet:actionURL>
+
 <portlet:renderURL var="selectAccountGroupAccountEntriesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcPath" value="/account_users_admin/select_account_entry.jsp" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -121,6 +126,8 @@ renderResponse.setTitle(accountGroupDisplay.getName());
 			"accountGroupName", accountGroupDisplay.getName()
 		).put(
 			"assignAccountGroupAccountEntriesURL", assignAccountGroupAccountEntriesURL
+		).put(
+			"removeAccountGroupAccountEntriesURL", removeAccountGroupAccountEntriesURL
 		).put(
 			"selectAccountGroupAccountEntriesURL", selectAccountGroupAccountEntriesURL
 		).build()

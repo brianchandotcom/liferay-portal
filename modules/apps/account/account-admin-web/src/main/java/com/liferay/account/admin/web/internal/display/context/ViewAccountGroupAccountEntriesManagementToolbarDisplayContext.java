@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -61,21 +60,6 @@ public class ViewAccountGroupAccountEntriesManagementToolbarDisplayContext
 
 				dropdownItem.putData(
 					"action", "removeAccountGroupAccountEntries");
-
-				PortletURL removeAccountGroupAccountEntriesURL =
-					liferayPortletResponse.createActionURL();
-
-				removeAccountGroupAccountEntriesURL.setParameter(
-					ActionRequest.ACTION_NAME,
-					"/account_groups_admin" +
-						"/remove_account_group_account_entries");
-				removeAccountGroupAccountEntriesURL.setParameter(
-					"redirect", currentURLObj.toString());
-
-				dropdownItem.putData(
-					"removeAccountGroupAccountEntriesURL",
-					removeAccountGroupAccountEntriesURL.toString());
-
 				dropdownItem.setIcon("times-circle");
 				dropdownItem.setLabel(LanguageUtil.get(request, "remove"));
 				dropdownItem.setQuickAction(true);

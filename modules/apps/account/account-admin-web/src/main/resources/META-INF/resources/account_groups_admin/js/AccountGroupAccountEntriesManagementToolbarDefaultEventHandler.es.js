@@ -16,7 +16,7 @@ import {DefaultEventHandler, ItemSelectorDialog} from 'frontend-js-web';
 import {Config} from 'metal-state';
 
 class AccountGroupAccountEntriesManagementToolbarDefaultEventHandler extends DefaultEventHandler {
-	removeAccountGroupAccountEntries(itemData) {
+	removeAccountGroupAccountEntries() {
 		if (
 			confirm(
 				Liferay.Language.get(
@@ -33,7 +33,7 @@ class AccountGroupAccountEntriesManagementToolbarDefaultEventHandler extends Def
 						this.ns('allRowIds')
 					),
 				},
-				url: itemData.removeAccountGroupAccountEntriesURL,
+				url: this.removeAccountGroupAccountEntriesURL,
 			});
 		}
 	}
@@ -71,6 +71,7 @@ class AccountGroupAccountEntriesManagementToolbarDefaultEventHandler extends Def
 AccountGroupAccountEntriesManagementToolbarDefaultEventHandler.STATE = {
 	accountGroupName: Config.string().required(),
 	assignAccountGroupAccountEntriesURL: Config.string().required(),
+	removeAccountGroupAccountEntriesURL: Config.string().required(),
 	selectAccountGroupAccountEntriesURL: Config.string().required(),
 };
 

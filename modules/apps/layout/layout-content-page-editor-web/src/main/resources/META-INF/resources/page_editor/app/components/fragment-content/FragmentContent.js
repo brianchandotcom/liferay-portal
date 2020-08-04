@@ -21,6 +21,7 @@ import setFragmentEditables from '../../actions/setFragmentEditables';
 import selectCanConfigureWidgets from '../../selectors/selectCanConfigureWidgets';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector, useSelectorCallback} from '../../store/index';
+import {deepEqual} from '../../utils/checkDeepEqual';
 import {useGetContent, useGetFieldValue} from '../CollectionItemContext';
 import {useGlobalContext} from '../GlobalContext';
 import Layout from '../Layout';
@@ -41,7 +42,8 @@ const FragmentContent = ({elementRef, fragmentEntryLinkId, itemId}) => {
 
 	const editables = useSelectorCallback(
 		(state) => Object.values(state.editables?.[fragmentEntryLinkId] || {}),
-		[fragmentEntryLinkId]
+		[fragmentEntryLinkId],
+		deepEqual
 	);
 
 	const canConfigureWidgets = useSelector(selectCanConfigureWidgets);

@@ -25,8 +25,10 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import java.util.Comparator;
 import java.util.List;
@@ -56,9 +58,9 @@ public class NumericDDMFormFieldTypeReportProcessor
 			ddmFormFieldValue, fieldJSONObject, formInstanceRecordId,
 			ddmFormInstanceReportEvent);
 
-		Number numberValue = _getNumberValue(ddmFormFieldValue);
+		BigDecimal bigDecimalValue = _getBigDecimalValue(ddmFormFieldValue);
 
-		if (numberValue == null) {
+		if (bigDecimalValue == null) {
 			return jsonObject;
 		}
 
@@ -68,26 +70,37 @@ public class NumericDDMFormFieldTypeReportProcessor
 			summaryJSONObject = JSONFactoryUtil.createJSONObject();
 		}
 
-		double sum = summaryJSONObject.getDouble("sum", 0);
+		BigDecimal sum = new BigDecimal(
+			summaryJSONObject.getString("sum", "0"));
 
 		if (ddmFormInstanceReportEvent.equals(
 				DDMFormInstanceReportConstants.EVENT_ADD_RECORD_VERSION)) {
 
-			if (!summaryJSONObject.has("max") ||
-				(numberValue.doubleValue() > summaryJSONObject.getDouble(
-					"max"))) {
+			BigDecimal maxValue = null;
 
-				summaryJSONObject.put("max", numberValue.doubleValue());
+			if (summaryJSONObject.has("max")) {
+				maxValue = new BigDecimal(summaryJSONObject.getString("max"));
 			}
 
-			if (!summaryJSONObject.has("min") ||
-				(numberValue.doubleValue() < summaryJSONObject.getDouble(
-					"min"))) {
+			if ((maxValue == null) ||
+				(bigDecimalValue.compareTo(maxValue) == 1)) {
 
-				summaryJSONObject.put("min", numberValue.doubleValue());
+				summaryJSONObject.put("max", bigDecimalValue.toString());
 			}
 
-			sum += numberValue.doubleValue();
+			BigDecimal minValue = null;
+
+			if (summaryJSONObject.has("min")) {
+				minValue = new BigDecimal(summaryJSONObject.getString("min"));
+			}
+
+			if ((minValue == null) ||
+				(bigDecimalValue.compareTo(minValue) == -1)) {
+
+				summaryJSONObject.put("min", bigDecimalValue.toString());
+			}
+
+			sum = sum.add(bigDecimalValue);
 		}
 		else if (ddmFormInstanceReportEvent.equals(
 					DDMFormInstanceReportConstants.
@@ -126,37 +139,39 @@ public class NumericDDMFormFieldTypeReportProcessor
 				(number1, number2) -> Double.compare(
 					number1.doubleValue(), number2.doubleValue());
 
-			Number maxValue = _getNumberValuesStream(
+			BigDecimal maxValue = _getBigDecimalValuesStream(
 				ddmFormFieldValue.getName(), streamSupplier.get()
 			).max(
 				comparator
 			).get();
 
-			Number minValue = _getNumberValuesStream(
+			BigDecimal minValue = _getBigDecimalValuesStream(
 				ddmFormFieldValue.getName(), streamSupplier.get()
 			).min(
 				comparator
 			).get();
 
 			summaryJSONObject.put(
-				"max", maxValue.doubleValue()
+				"max", maxValue.toString()
 			).put(
-				"min", minValue.doubleValue()
+				"min", minValue.toString()
 			);
 
-			sum -= numberValue.doubleValue();
+			sum = sum.subtract(bigDecimalValue);
 		}
 
-		double average = 0.0;
+		BigDecimal average = new BigDecimal("0.0");
 
 		if (jsonObject.getInt("totalEntries") > 0) {
-			average = sum / jsonObject.getInt("totalEntries");
+			average = sum.divide(
+				new BigDecimal(jsonObject.getInt("totalEntries")), 10,
+				RoundingMode.HALF_UP);
 		}
 
 		summaryJSONObject.put(
 			"average", average
 		).put(
-			"sum", sum
+			"sum", sum.toString()
 		);
 
 		jsonObject.put("summary", summaryJSONObject);
@@ -164,17 +179,19 @@ public class NumericDDMFormFieldTypeReportProcessor
 		return jsonObject;
 	}
 
-	private Number _getNumberValue(DDMFormFieldValue ddmFormFieldValue) {
+	private BigDecimal _getBigDecimalValue(
+		DDMFormFieldValue ddmFormFieldValue) {
+
 		String value = getValue(ddmFormFieldValue);
 
 		if (Validator.isNull(value)) {
 			return null;
 		}
 
-		return GetterUtil.getNumber(value);
+		return new BigDecimal(value);
 	}
 
-	private Stream<Number> _getNumberValuesStream(
+	private Stream<BigDecimal> _getBigDecimalValuesStream(
 		String ddmFormFieldValueName,
 		Stream<DDMFormInstanceRecord> ddmFormInstanceRecordsStream) {
 
@@ -194,7 +211,8 @@ public class NumericDDMFormFieldTypeReportProcessor
 						ddmFormFieldValues.stream();
 
 					return ddmFormFieldValuesStream.map(
-						ddmFormFieldValue -> _getNumberValue(ddmFormFieldValue)
+						ddmFormFieldValue -> _getBigDecimalValue(
+							ddmFormFieldValue)
 					).findFirst(
 					).get();
 				}

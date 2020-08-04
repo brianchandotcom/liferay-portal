@@ -189,6 +189,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TAGS_LIST_TAB_NO_RESULTS</td>
+	<td>//div[contains(@class,'container')]//div[contains(@class,'questions')]//span[@class='text-truncate']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TAGS_LIST_TAB_USED_TIMES</td>
 	<td>//a[contains(@href, '${key_tagName}')]//*[contains(.,'Used ${key_amountOfUsedTimes} Times')]</td>
 	<td></td>

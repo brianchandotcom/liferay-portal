@@ -382,6 +382,13 @@ definition {
 				key_tagName = "${tagName}",
 				locator1 = "Questions#TAGS_LIST_TAB_NAMES");
 		}
+
+		if (isSet(amountOfUsedTimes)) {
+			AssertElementPresent(
+				key_amountOfUsedTimes = "${amountOfUsedTimes}",
+				key_tagName = "${tagName}",
+				locator1 = "Questions#TAGS_LIST_TAB_USED_TIMES");
+		}
 	}
 
 }

@@ -96,6 +96,21 @@ public class BuildFactory {
 				url, (TopLevelBuild)parentBuild);
 		}
 
+		if (jobName.startsWith("test-plugins-acceptance-pullrequest")) {
+			return new PullRequestPluginsTopLevelBuild(
+				url, (TopLevelBuild)parentBuild);
+		}
+
+		if (jobName.equals("test-plugins-extraapps")) {
+			return new ExtraAppsPluginsTopLevelBuild(
+				url, (TopLevelBuild)parentBuild);
+		}
+
+		if (jobName.equals("test-plugins-marketplaceapp")) {
+			return new MarketplaceAppPluginsTopLevelBuild(
+				url, (TopLevelBuild)parentBuild);
+		}
+
 		if (jobName.equals("test-portal-fixpack-release")) {
 			return new PortalFixpackReleasePortalTopLevelBuild(
 				url, (TopLevelBuild)parentBuild);

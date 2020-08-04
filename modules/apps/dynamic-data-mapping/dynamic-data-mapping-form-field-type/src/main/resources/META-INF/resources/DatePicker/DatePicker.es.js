@@ -79,15 +79,13 @@ const getDelimiter = (dateFormat) => {
 };
 
 const useDateFormat = () => {
-	return useMemo(() => {
-		const dateFormat = Liferay.AUI.getDateFormat();
-		const dateDelimiter = getDelimiter(dateFormat);
+	const dateFormat = Liferay.AUI.getDateFormat();
+	const dateDelimiter = getDelimiter(dateFormat);
 
-		return {
-			dateMask: getDateMask(dateFormat, dateDelimiter),
-			inputMask: getInputMask(dateFormat, dateDelimiter),
-		};
-	}, []);
+	return {
+		dateMask: getDateMask(dateFormat, dateDelimiter),
+		inputMask: getInputMask(dateFormat, dateDelimiter),
+	};
 };
 
 const transformToDate = (date) => {
@@ -154,7 +152,7 @@ const DatePicker = ({
 			});
 			maskInstance.current.update(inputRef.current.value);
 		}
-	}, [inputMask, dateMask, inputRef]);
+	}, [inputMask, dateMask]);
 
 	const handleNavigation = (date) => {
 		const currentYear = date.getFullYear();

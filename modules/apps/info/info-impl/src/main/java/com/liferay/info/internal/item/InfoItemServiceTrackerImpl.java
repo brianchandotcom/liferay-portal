@@ -34,6 +34,7 @@ import com.liferay.info.list.provider.InfoListProvider;
 import com.liferay.info.list.renderer.InfoListRenderer;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.type.Keyed;
+import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -246,7 +247,9 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 							}
 
 							emitter.emit(key);
-						}));
+						}),
+					new PropertyServiceReferenceComparator<>(
+						"service.ranking"));
 
 			_keyedInfoItemServiceTrackerMap.put(
 				serviceClass.getName(), infoItemServiceTrackerMap);

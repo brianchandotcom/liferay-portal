@@ -33,3 +33,7 @@ ${dataFactory.toInsertSQL(dataFactory.commerceCurrencyModel)}
 </#list>
 
 ${dataFactory.toInsertSQL(dataFactory.CPTaxCategoryModel)}
+
+<@insertGroup _groupModel=dataFactory.commerceCatalogGroupModel />
+
+<@insertGroup _groupModel=dataFactory.commerceChannelGroupModel />

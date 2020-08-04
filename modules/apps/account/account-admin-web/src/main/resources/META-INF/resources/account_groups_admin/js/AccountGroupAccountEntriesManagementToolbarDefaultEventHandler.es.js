@@ -41,7 +41,7 @@ class AccountGroupAccountEntriesManagementToolbarDefaultEventHandler extends Def
 	selectAccountGroupAccountEntries() {
 		const itemSelectorDialog = new ItemSelectorDialog({
 			buttonAddLabel: Liferay.Language.get('assign'),
-			eventName: this.ns('selectAccountEntry'),
+			eventName: this.ns('selectAccountEntries'),
 			title: Liferay.Util.sub(
 				Liferay.Language.get('assign-accounts-to-x'),
 				this.accountGroupName

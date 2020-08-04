@@ -19,16 +19,16 @@
 <%
 SearchContainer<AccountEntryDisplay> accountEntryDisplaySearchContainer = AccountEntryDisplaySearchContainerFactory.create(liferayPortletRequest, liferayPortletResponse);
 
-SelectAccountEntryManagementToolbarDisplayContext selectAccountEntryManagementToolbarDisplayContext = new SelectAccountEntryManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountEntryDisplaySearchContainer);
-
-if (selectAccountEntryManagementToolbarDisplayContext.isSingleSelect()) {
-	accountEntryDisplaySearchContainer.setRowChecker(null);
-}
-
 long accountGroupId = ParamUtil.getLong(request, "accountGroupId");
 
 if (accountGroupId > 0) {
 	accountEntryDisplaySearchContainer.setRowChecker(new AccountGroupAccountEntryRowChecker(liferayPortletResponse, accountGroupId));
+}
+
+SelectAccountEntryManagementToolbarDisplayContext selectAccountEntryManagementToolbarDisplayContext = new SelectAccountEntryManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountEntryDisplaySearchContainer);
+
+if (selectAccountEntryManagementToolbarDisplayContext.isSingleSelect()) {
+	accountEntryDisplaySearchContainer.setRowChecker(null);
 }
 %>
 
@@ -97,32 +97,39 @@ if (accountGroupId > 0) {
 	</liferay-ui:search-container>
 </clay:container-fluid>
 
-<aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get(
-		'<portlet:namespace />accountEntries'
-	);
+<c:choose>
+	<c:when test="<%= selectAccountEntryManagementToolbarDisplayContext.isSingleSelect() %>">
+		<aui:script>
+			Liferay.Util.selectEntityHandler(
+				'#<portlet:namespace />selectAccountEntry',
+				'<%= HtmlUtil.escapeJS(liferayPortletResponse.getNamespace() + "selectAccountEntry") %>'
+			);
+		</aui:script>
+	</c:when>
+	<c:otherwise>
+		<aui:script use="liferay-search-container">
+			var searchContainer = Liferay.SearchContainer.get(
+				'<portlet:namespace />accountEntries'
+			);
 
-	searchContainer.on('rowToggled', function (event) {
-		var selectedItems = event.elements.allSelectedElements;
+			searchContainer.on('rowToggled', function (event) {
+				var selectedItems = event.elements.allSelectedElements;
 
-		var result = {};
+				var result = {};
 
-		if (!selectedItems.isEmpty()) {
-			result = {
-				data: {
-					value: selectedItems.get('value').join(','),
-				},
-			};
-		}
+				if (!selectedItems.isEmpty()) {
+					result = {
+						data: {
+							value: selectedItems.get('value').join(','),
+						},
+					};
+				}
 
-		Liferay.Util.getOpener().Liferay.fire(
-			'<%= HtmlUtil.escapeJS(liferayPortletResponse.getNamespace() + "selectAccountEntry") %>',
-			result
-		);
-	});
-
-	Liferay.Util.selectEntityHandler(
-		'#<portlet:namespace />selectAccountEntry',
-		'<%= HtmlUtil.escapeJS(liferayPortletResponse.getNamespace() + "selectAccountEntry") %>'
-	);
-</aui:script>
+				Liferay.Util.getOpener().Liferay.fire(
+					'<%= HtmlUtil.escapeJS(liferayPortletResponse.getNamespace() + "selectAccountEntries") %>',
+					result
+				);
+			});
+		</aui:script>
+	</c:otherwise>
+</c:choose>

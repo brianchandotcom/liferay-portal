@@ -135,6 +135,9 @@ const AppsPanel = ({
 
 	return (
 		<div className="applications-menu-wrapper">
+			<h1 className="sr-only">
+				{Liferay.Language.get('applications-menu')}
+			</h1>
 			<div className="applications-menu-header">
 				<ClayLayout.ContainerFluid>
 					<ClayLayout.Row>

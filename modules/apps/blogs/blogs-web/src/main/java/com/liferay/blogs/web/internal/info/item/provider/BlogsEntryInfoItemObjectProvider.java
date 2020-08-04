@@ -28,7 +28,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jorge Ferrer
  */
-@Component(immediate = true, service = InfoItemObjectProvider.class)
+@Component(
+	immediate = true, property = "service.ranking:Integer=100",
+	service = InfoItemObjectProvider.class
+)
 public class BlogsEntryInfoItemObjectProvider
 	implements InfoItemObjectProvider<BlogsEntry> {
 

@@ -66,6 +66,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -140,6 +141,7 @@ public class DLExportImportPortletPreferencesProcessorTest {
 		_portletPreferences.setValue("selectionStyle", "manual");
 	}
 
+	@Ignore
 	@Test
 	public void testExportDLFileEntryIdWithComments() throws Exception {
 		FileEntry fileEntry = _addDLFileEntry(

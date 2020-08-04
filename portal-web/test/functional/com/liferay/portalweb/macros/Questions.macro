@@ -361,4 +361,17 @@ definition {
 		}
 	}
 
+	macro viewTags {
+		if (isSet(noTagResults)) {
+			AssertTextEquals(
+				locator1 = "Questions#TAGS_LIST_TAB_NO_RESULTS",
+				value1 = "There are no results.");
+		}
+		else {
+			AssertElementPresent(
+				key_tagName = "${tagName}",
+				locator1 = "Questions#TAGS_LIST_TAB_NAMES");
+		}
+	}
+
 }

@@ -260,7 +260,7 @@ definition {
 			workflowDefinition = "Single Approver Alternative",
 			workflowResourceValue = "Blogs Entry");
 
-		WorkflowMetrics.createAlternativeInstances(
+		WorkflowMetrics.createAlternativeBlogInstances(
 			numberOfBlogInstances = "3",
 			numberOfUsers = "3");
 
@@ -356,7 +356,7 @@ definition {
 		Click(locator1 = "WorkflowMetrics#FILTER_CLEAR_ALL");
 	}
 
-	macro createAlternativeInstances {
+	macro createAlternativeBlogInstances {
 		var iterator = "1";
 		var numberOfBlogInstances = MathUtil.sum("${numberOfBlogInstances}", "1");
 
@@ -364,6 +364,19 @@ definition {
 			JSONBlog.addEntry(
 				entryContent = "Blogs Alternative Entry ${iterator} Content",
 				entryTitle = "Blogs Alternative Title ${iterator}");
+
+			var iterator = MathUtil.sum("${iterator}", "1");
+		}
+	}
+
+	macro createBlogInstances {
+		var iterator = "1";
+		var numberOfBlogInstances = MathUtil.sum("${numberOfBlogInstances}", "1");
+
+		while ("${iterator}" != "${numberOfBlogInstances}") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry ${iterator} Content",
+				entryTitle = "Blogs Entry Title ${iterator}");
 
 			var iterator = MathUtil.sum("${iterator}", "1");
 		}
@@ -592,6 +605,7 @@ definition {
 	}
 
 	macro goToBulkReassignSelectTasks {
+		Pause(locator1 = "2000");
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL");
 		Click(
 			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",

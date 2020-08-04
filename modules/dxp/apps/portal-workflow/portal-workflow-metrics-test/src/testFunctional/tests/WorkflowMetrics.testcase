@@ -504,7 +504,7 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Blogs Entry");
 
-		WorkflowMetrics.createAlternativeInstances(
+		WorkflowMetrics.createBlogInstances(
 			numberOfBlogInstances = "6",
 			numberOfUsers = "6");
 

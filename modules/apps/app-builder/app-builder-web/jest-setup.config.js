@@ -13,7 +13,7 @@
  */
 
 AUI = () => ({
-	use: (key, callback) => callback(key)
+	use: (key, callback) => callback(key),
 });
 
 window.themeDisplay = {

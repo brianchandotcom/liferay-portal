@@ -186,8 +186,10 @@ describe('EditTableView', () => {
 			queryByText('drag-columns-from-the-sidebar-and-drop-here')
 		).toBeTruthy();
 
-		userEvent.dblClick(columnName);
-		userEvent.dblClick(columnOptions);
+		act(() => {
+			userEvent.dblClick(columnName);
+			userEvent.dblClick(columnOptions);
+		});
 
 		expect(
 			queryByText('drag-columns-from-the-sidebar-and-drop-here')
@@ -290,8 +292,10 @@ describe('EditTableView', () => {
 		const [columnName] = queryAllByText('Name');
 		const [columnOptions] = queryAllByText('Options');
 
-		userEvent.dblClick(columnName);
-		userEvent.dblClick(columnOptions);
+		act(() => {
+			userEvent.dblClick(columnName);
+			userEvent.dblClick(columnOptions);
+		});
 
 		const [search] = queryAllByPlaceholderText('search...');
 		expect(search.value).toBe('');
@@ -422,6 +426,7 @@ describe('EditTableView', () => {
 			.mockResponseOnce(
 				JSON.stringify({
 					...DATA_DEFINITION_RESPONSES.ONE_ITEM,
+					availableLanguageIds: ['en_US', 'pt_BR'],
 					defaultLanguageId: 'pt_BR',
 				})
 			);
@@ -445,7 +450,9 @@ describe('EditTableView', () => {
 
 		expect(localizableDropdown.textContent).toEqual('pt-BR');
 
-		userEvent.click(localizableDropdown);
+		await act(async () => {
+			userEvent.click(localizableDropdown);
+		});
 
 		expect(
 			document.querySelector('.localizable-item-default .autofit-section')

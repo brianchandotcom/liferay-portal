@@ -58,17 +58,19 @@ function FragmentContentInteractionsFilter({
 }) {
 	const activationOrigin = useActivationOrigin();
 	const hoverItem = useHoverItem();
-	const isActive = useIsActive();
-	const isHovered = useIsHovered();
-	const activeItemId = useActiveItemId();
-	const activeItemType = useActiveItemType();
 	const hoveredItemId = useHoveredItemId();
 	const hoveredItemType = useHoveredItemType();
+	const isActive = useIsActive();
+	const isHovered = useIsHovered();
+	const languageId = useSelector((state) => state.languageId);
 	const selectItem = useSelectItem();
 	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
-	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
-	const canUpdateEditables = useSelector(selectCanUpdateEditables);
-	const languageId = useSelector((state) => state.languageId);
+	const toControlsId = useToControlsId();
+
+	const editables = useSelectorCallback(
+		(state) => Object.values(state.editables?.[toControlsId(itemId)] || {}),
+		[itemId, toControlsId]
+	);
 
 	const editableValues = useSelectorCallback(
 		(state) =>

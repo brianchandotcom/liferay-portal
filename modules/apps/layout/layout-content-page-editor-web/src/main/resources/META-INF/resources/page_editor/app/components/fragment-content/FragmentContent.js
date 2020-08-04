@@ -15,7 +15,7 @@
 import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import setFragmentEditables from '../../actions/setFragmentEditables';
 import selectCanConfigureWidgets from '../../selectors/selectCanConfigureWidgets';
@@ -43,18 +43,7 @@ const FragmentContent = ({elementRef, fragmentEntryLinkId, itemId}) => {
 	const toControlsId = useToControlsId();
 	const getFieldValue = useGetFieldValue();
 
-	const editables = useSelectorCallback(
-		(state) => Object.values(state.editables?.[fragmentEntryLinkId] || {}),
-		[fragmentEntryLinkId],
-		deepEqual
-	);
-
 	const canConfigureWidgets = useSelector(selectCanConfigureWidgets);
-
-	const editableElements = useMemo(
-		() => editables.map((editable) => editable.element),
-		[editables]
-	);
 
 	/**
 	 * Updates editables array for the rendered fragment.
@@ -177,7 +166,6 @@ const FragmentContent = ({elementRef, fragmentEntryLinkId, itemId}) => {
 	return (
 		<>
 			<FragmentContentInteractionsFilter
-				editableElements={editableElements}
 				fragmentEntryLinkId={fragmentEntryLinkId}
 				itemId={itemId}
 			>
@@ -194,8 +182,8 @@ const FragmentContent = ({elementRef, fragmentEntryLinkId, itemId}) => {
 			</FragmentContentInteractionsFilter>
 
 			<FragmentContentProcessor
-				editables={editables}
 				fragmentEntryLinkId={fragmentEntryLinkId}
+				itemId={itemId}
 			/>
 		</>
 	);

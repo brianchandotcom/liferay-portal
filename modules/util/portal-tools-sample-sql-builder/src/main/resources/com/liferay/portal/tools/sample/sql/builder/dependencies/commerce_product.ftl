@@ -32,6 +32,4 @@ ${dataFactory.toInsertSQL(dataFactory.commerceCurrencyModel)}
 	${dataFactory.toInsertSQL(cProductModel)}
 </#list>
 
-<#list dataFactory.CPTaxCategoryModels as cpTaxCategoryModel>
-	${dataFactory.toInsertSQL(cpTaxCategoryModel)}
-</#list>
+${dataFactory.toInsertSQL(dataFactory.CPTaxCategoryModel)}

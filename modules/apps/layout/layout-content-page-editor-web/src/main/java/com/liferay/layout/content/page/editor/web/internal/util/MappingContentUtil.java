@@ -71,7 +71,8 @@ public class MappingContentUtil {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		InfoForm infoForm = infoItemFormProvider.getInfoForm(formVariationKey);
+		InfoForm infoForm = infoItemFormProvider.getInfoForm(
+			formVariationKey, themeDisplay.getScopeGroupId());
 
 		for (InfoField infoField : infoForm.getAllInfoFields()) {
 			InfoFieldType infoFieldType = infoField.getInfoFieldType();

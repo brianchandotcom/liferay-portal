@@ -81,10 +81,10 @@ describe('TranslationManager', () => {
 		expect(list.length).toBe(13);
 
 		expect(labels).toEqual([
-			{label: 'default', languageId: 'en-US'},
 			{label: 'translated', languageId: 'ar-SA'},
 			{label: 'not-translated', languageId: 'ca-ES'},
 			{label: 'translated', languageId: 'de-DE'},
+			{label: 'default', languageId: 'en-US'},
 			{label: 'translated', languageId: 'es-ES'},
 			{label: 'not-translated', languageId: 'fi-FI'},
 			{label: 'translated', languageId: 'fr-FR'},

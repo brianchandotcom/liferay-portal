@@ -854,7 +854,7 @@ public class JenkinsResultsParserUtil {
 	public static String getBuildProperty(String propertyName)
 		throws IOException {
 
-		return getBuildProperty(false, propertyName);
+		return getBuildProperty(true, propertyName);
 	}
 
 	public static List<String> getBuildPropertyAsList(

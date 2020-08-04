@@ -73,10 +73,10 @@ public class Properties extends AbstractMap<String, String> {
 		Layout layout = _layoutMap.get(key);
 
 		if (layout != null) {
-			List<String> commentLines = layout.getCommentLines();
+			List<String> comments = layout.getComments();
 
-			if (commentLines != null) {
-				return new ArrayList<>(commentLines);
+			if (comments != null) {
+				return new ArrayList<>(comments);
 			}
 		}
 
@@ -99,24 +99,23 @@ public class Properties extends AbstractMap<String, String> {
 				propertiesReader.getPropertyName(),
 				propertiesReader.getPropertyValue());
 
-			int index = _checkHeaderComment(propertiesReader.getCommentLines());
+			int index = _checkHeaderComment(propertiesReader.getComments());
 
-			List<String> commentLines = propertiesReader.getCommentLines();
+			List<String> comments = propertiesReader.getComments();
 
-			int size = commentLines.size();
+			int size = comments.size();
 
-			if (index < commentLines.size()) {
-				commentLines = commentLines.subList(index, size);
+			if (index < comments.size()) {
+				comments = comments.subList(index, size);
 			}
 			else {
-				commentLines = null;
+				comments = null;
 			}
 
 			_layoutMap.put(
 				propertiesReader.getPropertyName(),
 				new Layout(
-					commentLines,
-					new ArrayList<>(propertiesReader.getValueLines())));
+					comments, new ArrayList<>(propertiesReader.getValues())));
 		}
 
 		Boolean typed = propertiesReader.isTyped();
@@ -133,32 +132,30 @@ public class Properties extends AbstractMap<String, String> {
 		}
 
 		if (hasProperty) {
-			_footer = new ArrayList<>(propertiesReader.getCommentLines());
+			_footers = new ArrayList<>(propertiesReader.getComments());
 		}
 		else {
-			_header = new ArrayList<>(propertiesReader.getCommentLines());
+			_headers = new ArrayList<>(propertiesReader.getComments());
 		}
 	}
 
-	public String put(
-		String key, List<String> commentLines, List<String> valueLines) {
+	public String put(String key, List<String> comments, List<String> values) {
+		comments = new ArrayList<>(comments);
 
-		commentLines = new ArrayList<>(commentLines);
-
-		valueLines = new ArrayList<>(valueLines);
+		values = new ArrayList<>(values);
 
 		String escapedKey = _escapeKey(key);
 
 		StringBundler sb = new StringBundler();
 
-		if (valueLines.isEmpty()) {
-			valueLines.add(escapedKey + StringPool.EQUAL);
+		if (values.isEmpty()) {
+			values.add(escapedKey + StringPool.EQUAL);
 
 			sb.append(escapedKey);
 			sb.append(StringPool.EQUAL);
 		}
 		else {
-			String value = valueLines.get(0);
+			String value = values.get(0);
 
 			String realValue = value;
 
@@ -169,26 +166,26 @@ public class Properties extends AbstractMap<String, String> {
 			value = value.trim();
 
 			if (!value.startsWith(escapedKey)) {
-				valueLines.set(0, escapedKey + " = " + realValue);
+				values.set(0, escapedKey + " = " + realValue);
 
 				sb.append(escapedKey);
 				sb.append(" = ");
 				sb.append(realValue);
 			}
 			else {
-				valueLines.set(0, realValue);
+				values.set(0, realValue);
 				sb.append(realValue);
 			}
 		}
 
-		for (int i = 1; i < valueLines.size(); i++) {
-			String value = valueLines.get(i);
+		for (int i = 1; i < values.size(); i++) {
+			String value = values.get(i);
 
 			if (_typed) {
-				valueLines.set(i, value);
+				values.set(i, value);
 			}
 			else {
-				valueLines.set(i, _escapeJava(value));
+				values.set(i, _escapeJava(value));
 			}
 
 			while ((value.length() > 0) &&
@@ -202,7 +199,7 @@ public class Properties extends AbstractMap<String, String> {
 
 		String[] property = PropertiesReader._parseProperty(sb.toString());
 
-		_layoutMap.put(key, new Layout(commentLines, valueLines));
+		_layoutMap.put(key, new Layout(comments, values));
 
 		return _storage.put(key, property[1]);
 	}
@@ -237,8 +234,8 @@ public class Properties extends AbstractMap<String, String> {
 		saveLayout(writer, _typed);
 	}
 
-	public void setHeader(List<String> header) {
-		_header = header;
+	public void setHeader(List<String> headers) {
+		_headers = headers;
 	}
 
 	public void setTyped(boolean typed) {
@@ -257,8 +254,8 @@ public class Properties extends AbstractMap<String, String> {
 			super(reader);
 		}
 
-		public List<String> getCommentLines() {
-			return _commentLines;
+		public List<String> getComments() {
+			return _comments;
 		}
 
 		public String getPropertyName() {
@@ -269,8 +266,8 @@ public class Properties extends AbstractMap<String, String> {
 			return _propertyValue;
 		}
 
-		public List<String> getValueLines() {
-			return _valueLines;
+		public List<String> getValues() {
+			return _values;
 		}
 
 		public Boolean isTyped() {
@@ -311,8 +308,8 @@ public class Properties extends AbstractMap<String, String> {
 		}
 
 		public String readProperty() throws IOException {
-			_commentLines.clear();
-			_valueLines.clear();
+			_comments.clear();
+			_values.clear();
 
 			StringBundler sb = new StringBundler();
 
@@ -327,7 +324,7 @@ public class Properties extends AbstractMap<String, String> {
 				}
 
 				if (_isCommentLine(line)) {
-					_commentLines.add(line);
+					_comments.add(line);
 
 					continue;
 				}
@@ -338,7 +335,7 @@ public class Properties extends AbstractMap<String, String> {
 					line = line.substring(0, line.length() - 1);
 				}
 
-				_valueLines.add(line);
+				_values.add(line);
 
 				while ((line.length() > 0) &&
 					   _contains(_WHITE_SPACE, line.charAt(0))) {
@@ -489,14 +486,14 @@ public class Properties extends AbstractMap<String, String> {
 			return result;
 		}
 
-		private final List<String> _commentLines = new ArrayList<>();
+		private final List<String> _comments = new ArrayList<>();
 		private Pattern _pattern = Pattern.compile(
 			"\\s*[TILFDXSCBilfdxscb]?(\\[[\\S\\s]*\\]|\\{[\\S\\s]*\\}|" +
 				"\"[\\S\\s]*\")\\s*");
 		private String _propertyName;
 		private String _propertyValue;
 		private Boolean _typed;
-		private final List<String> _valueLines = new ArrayList<>();
+		private final List<String> _values = new ArrayList<>();
 
 	}
 
@@ -538,8 +535,8 @@ public class Properties extends AbstractMap<String, String> {
 		try (PropertiesWriter propertiesWriter = new PropertiesWriter(
 				writer, typed)) {
 
-			if (_header != null) {
-				for (String s : _header) {
+			if (_headers != null) {
+				for (String s : _headers) {
 					propertiesWriter.writeln(s);
 				}
 			}
@@ -557,26 +554,26 @@ public class Properties extends AbstractMap<String, String> {
 					continue;
 				}
 
-				List<String> commentLines = layout.getCommentLines();
+				List<String> comments = layout.getComments();
 
-				if (commentLines != null) {
-					for (String string : commentLines) {
+				if (comments != null) {
+					for (String string : comments) {
 						propertiesWriter.writeln(string);
 					}
 				}
 
-				List<String> valueLines = layout.getValueLines();
+				List<String> values = layout.getValues();
 
-				if (valueLines == null) {
+				if (values == null) {
 					propertiesWriter.writeProperty(key, value);
 
 					continue;
 				}
 
-				int size = valueLines.size();
+				int size = values.size();
 
 				for (int i = 0; i < size; i++) {
-					String string = valueLines.get(i);
+					String string = values.get(i);
 
 					if (i < (size - 1)) {
 						propertiesWriter.writeln(string + "\\");
@@ -587,8 +584,8 @@ public class Properties extends AbstractMap<String, String> {
 				}
 			}
 
-			if (_footer != null) {
-				for (String string : _footer) {
+			if (_footers != null) {
+				for (String string : _footers) {
 					propertiesWriter.writeln(string);
 				}
 			}
@@ -837,15 +834,15 @@ public class Properties extends AbstractMap<String, String> {
 		return sb.toString();
 	}
 
-	private int _checkHeaderComment(List<String> commentLines) {
-		if ((_header == null) && _layoutMap.isEmpty()) {
+	private int _checkHeaderComment(List<String> comments) {
+		if ((_headers == null) && _layoutMap.isEmpty()) {
 
 			// This is the first comment. Search for blank lines.
 
-			int index = commentLines.size() - 1;
+			int index = comments.size() - 1;
 
 			while (index >= 0) {
-				String commentLine = commentLines.get(index);
+				String commentLine = comments.get(index);
 
 				if (commentLine.length() <= 0) {
 					break;
@@ -854,7 +851,7 @@ public class Properties extends AbstractMap<String, String> {
 				index--;
 			}
 
-			setHeader(new ArrayList<>(commentLines.subList(0, index + 1)));
+			setHeader(new ArrayList<>(comments.subList(0, index + 1)));
 
 			return index + 1;
 		}
@@ -875,33 +872,33 @@ public class Properties extends AbstractMap<String, String> {
 
 	private static final char[] _WHITE_SPACE = {CharPool.SPACE, '\t', '\f'};
 
-	private List<String> _footer;
-	private List<String> _header;
+	private List<String> _footers;
+	private List<String> _headers;
 	private final Map<String, Layout> _layoutMap = new LinkedHashMap<>();
 	private final Map<String, String> _storage = new LinkedHashMap<>();
 	private boolean _typed;
 
 	private static class Layout {
 
-		public Layout(List<String> commentLines, List<String> valueLines) {
-			_commentLines = commentLines;
-			_valueLines = valueLines;
+		public Layout(List<String> comments, List<String> values) {
+			_comments = comments;
+			_values = values;
 		}
 
 		public void clearValue() {
-			_valueLines = null;
+			_values = null;
 		}
 
-		public List<String> getCommentLines() {
-			return _commentLines;
+		public List<String> getComments() {
+			return _comments;
 		}
 
-		public List<String> getValueLines() {
-			return _valueLines;
+		public List<String> getValues() {
+			return _values;
 		}
 
-		private final List<String> _commentLines;
-		private List<String> _valueLines;
+		private final List<String> _comments;
+		private List<String> _values;
 
 	}
 

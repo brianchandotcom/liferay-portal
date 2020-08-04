@@ -356,12 +356,14 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		super.start();
 	}
 
-	protected void findBundlesWithFragmentsToRefresh(Set<Bundle> toRefresh) {
+	protected void findBundlesWithFragmentsToRefresh(
+		Set<Bundle> refreshBundles) {
+
 		Set<Bundle> fragments = new HashSet<>();
 
 		Set<Bundle> bundles = getScopedBundles(_fragmentScope);
 
-		for (Bundle bundle : toRefresh) {
+		for (Bundle bundle : refreshBundles) {
 			if (bundle.getState() != Bundle.UNINSTALLED) {
 				Dictionary<String, String> headers = bundle.getHeaders(
 					StringPool.BLANK);
@@ -411,21 +413,21 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			}
 		}
 
-		toRefresh.addAll(fragments);
+		refreshBundles.addAll(fragments);
 	}
 
 	protected void findBundlesWithOptionalPackagesToRefresh(
-		Set<Bundle> toRefresh) {
+		Set<Bundle> refreshBundles) {
 
 		Set<Bundle> bundles = getScopedBundles(_optionalScope);
 
-		bundles.removeAll(toRefresh);
+		bundles.removeAll(refreshBundles);
 
 		if (bundles.isEmpty()) {
 			return;
 		}
 
-		Map<Bundle, List<Clause>> imports = new HashMap<>();
+		Map<Bundle, List<Clause>> importMap = new HashMap<>();
 
 		Iterator<Bundle> iterator = bundles.iterator();
 
@@ -435,15 +437,15 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			Dictionary<String, String> header = bundle.getHeaders(
 				StringPool.BLANK);
 
-			String importsString = header.get(Constants.IMPORT_PACKAGE);
+			String imports = header.get(Constants.IMPORT_PACKAGE);
 
-			List<Clause> importsList = getOptionalImports(importsString);
+			List<Clause> importClauses = getOptionalImports(imports);
 
-			if (importsList.isEmpty()) {
+			if (importClauses.isEmpty()) {
 				iterator.remove();
 			}
 			else {
-				imports.put(bundle, importsList);
+				importMap.put(bundle, importClauses);
 			}
 		}
 
@@ -451,19 +453,18 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			return;
 		}
 
-		List<Clause> exports = new ArrayList<>();
+		List<Clause> exportClauses = new ArrayList<>();
 
-		for (Bundle bundle : toRefresh) {
+		for (Bundle bundle : refreshBundles) {
 			if (bundle.getState() != Bundle.UNINSTALLED) {
 				Dictionary<String, String> headers = bundle.getHeaders(
 					StringPool.BLANK);
 
-				String exportsString = headers.get(Constants.EXPORT_PACKAGE);
+				String exports = headers.get(Constants.EXPORT_PACKAGE);
 
-				if (exportsString != null) {
-					Clause[] exportsList = Parser.parseHeader(exportsString);
-
-					Collections.addAll(exports, exportsList);
+				if (exports != null) {
+					Collections.addAll(
+						exportClauses, Parser.parseHeader(exports));
 				}
 			}
 		}
@@ -473,16 +474,16 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		while (iterator.hasNext()) {
 			Bundle bundle = iterator.next();
 
-			List<Clause> importsList = imports.get(bundle);
+			List<Clause> importClauses = importMap.get(bundle);
 
-			Iterator<Clause> importIterator = importsList.iterator();
+			Iterator<Clause> importIterator = importClauses.iterator();
 
 			while (importIterator.hasNext()) {
 				Clause importClause = importIterator.next();
 
 				boolean matching = false;
 
-				for (Clause exportClause : exports) {
+				for (Clause exportClause : exportClauses) {
 					if (Objects.equals(
 							importClause.getName(), exportClause.getName())) {
 
@@ -495,20 +496,20 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 							break;
 						}
 
-						Version exported = Version.emptyVersion;
+						Version exportedVersion = Version.emptyVersion;
 
 						String exportVersionString = exportClause.getAttribute(
 							Constants.VERSION_ATTRIBUTE);
 
 						if (exportVersionString != null) {
-							exported = Version.parseVersion(
+							exportedVersion = Version.parseVersion(
 								exportVersionString);
 						}
 
-						VersionRange imported = new VersionRange(
+						VersionRange importedVersionRange = new VersionRange(
 							importVersionString);
 
-						if (imported.includes(exported)) {
+						if (importedVersionRange.includes(exportedVersion)) {
 							matching = true;
 
 							break;
@@ -521,29 +522,29 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 				}
 			}
 
-			if (importsList.isEmpty()) {
+			if (importClauses.isEmpty()) {
 				iterator.remove();
 			}
 		}
 
-		toRefresh.addAll(bundles);
+		refreshBundles.addAll(bundles);
 	}
 
 	protected List<Clause> getOptionalImports(String importsString) {
-		Clause[] imports = Parser.parseHeader(importsString);
+		Clause[] importClauses = Parser.parseHeader(importsString);
 
-		List<Clause> result = new LinkedList<>();
+		List<Clause> clauses = new LinkedList<>();
 
-		for (Clause importClause : imports) {
+		for (Clause importClause : importClauses) {
 			String resolution = importClause.getDirective(
 				Constants.RESOLUTION_DIRECTIVE);
 
 			if (Constants.RESOLUTION_OPTIONAL.equals(resolution)) {
-				result.add(importClause);
+				clauses.add(importClause);
 			}
 		}
 
-		return result;
+		return clauses;
 	}
 
 	protected Set<Bundle> getScopedBundles(String scope) {
@@ -573,10 +574,10 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	}
 
 	private FileInstaller _findFileInstaller(
-		File artifact, Iterable<FileInstaller> iterable) {
+		File file, Iterable<FileInstaller> iterable) {
 
 		for (FileInstaller fileInstaller : iterable) {
-			if (fileInstaller.canTransformURL(artifact)) {
+			if (fileInstaller.canTransformURL(file)) {
 				return fileInstaller;
 			}
 		}
@@ -702,7 +703,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	}
 
 	private Bundle _install(Artifact artifact) {
-		File path = artifact.getPath();
+		File file = artifact.getFile();
 
 		Bundle bundle = null;
 
@@ -710,10 +711,10 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 		try {
 			FileInstaller fileInstaller = _findFileInstaller(
-				path, _fileInstallers);
+				file, _fileInstallers);
 
 			if (fileInstaller == null) {
-				_processingFailures.add(path);
+				_processingFailures.add(file);
 
 				return null;
 			}
@@ -722,7 +723,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 			long checksum = artifact.getChecksum();
 
-			Artifact badArtifact = _installationFailures.get(path);
+			Artifact badArtifact = _installationFailures.get(file);
 
 			if ((badArtifact != null) &&
 				(badArtifact.getChecksum() == checksum)) {
@@ -730,7 +731,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 				return null;
 			}
 
-			URL url = fileInstaller.transformURL(path);
+			URL url = fileInstaller.transformURL(file);
 
 			if (url != null) {
 				String location = url.toString();
@@ -745,13 +746,13 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 				}
 			}
 
-			_installationFailures.remove(path);
-			_setArtifact(path, artifact);
+			_installationFailures.remove(file);
+			_setArtifact(file, artifact);
 		}
 		catch (Exception exception) {
-			_log.error("Unable to install artifact: " + path, exception);
+			_log.error("Unable to install artifact: " + file, exception);
 
-			_installationFailures.put(path, artifact);
+			_installationFailures.put(file, artifact);
 		}
 
 		if (modified.get()) {
@@ -776,11 +777,11 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	}
 
 	private Bundle _installOrUpdateBundle(
-			String bundleLocation, BufferedInputStream bufferedInputStream,
+			String location, BufferedInputStream bufferedInputStream,
 			long checksum, AtomicBoolean modified)
 		throws Exception {
 
-		Bundle bundle = _bundleContext.getBundle(bundleLocation);
+		Bundle bundle = _bundleContext.getBundle(location);
 
 		if ((bundle != null) &&
 			(Util.loadChecksum(bundle, _bundleContext) != checksum)) {
@@ -802,7 +803,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			if (manifest == null) {
 				throw new BundleException(
 					StringBundler.concat(
-						"The bundle ", bundleLocation, " does not have a ",
+						"The bundle ", location, " does not have a ",
 						"META-INF/MANIFEST.MF! Make sure, META-INF and ",
 						"MANIFEST.MF are the first 2 entries in your JAR!"));
 			}
@@ -878,7 +879,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			}
 
 			bundle = _bundleContext.installBundle(
-				bundleLocation, bufferedInputStream);
+				location, bufferedInputStream);
 
 			if (bundle.getState() == Bundle.UNINSTALLED) {
 				return bundle;
@@ -921,9 +922,9 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	}
 
 	private void _process(Set<File> files) throws InterruptedException {
-		List<Artifact> deleted = new ArrayList<>();
-		List<Artifact> modified = new ArrayList<>();
-		List<Artifact> created = new ArrayList<>();
+		List<Artifact> deletedArtifacts = new ArrayList<>();
+		List<Artifact> modifiedArtifacts = new ArrayList<>();
+		List<Artifact> createdArtifacts = new ArrayList<>();
 
 		synchronized (_processingFailures) {
 			files.addAll(_processingFailures);
@@ -935,14 +936,14 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 			if (!file.exists()) {
 				if (artifact != null) {
-					deleted.add(artifact);
+					deletedArtifacts.add(artifact);
 				}
 			}
 			else {
 				if (artifact != null) {
 					artifact.setChecksum(_scanner.getChecksum(file));
 
-					modified.add(artifact);
+					modifiedArtifacts.add(artifact);
 				}
 				else {
 					artifact = new Artifact();
@@ -950,34 +951,34 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 					artifact.setPath(file);
 					artifact.setChecksum(_scanner.getChecksum(file));
 
-					created.add(artifact);
+					createdArtifacts.add(artifact);
 				}
 			}
 		}
 
-		Collection<Bundle> uninstalledBundles = _uninstall(deleted);
+		Collection<Bundle> uninstalledBundles = _uninstall(deletedArtifacts);
 
-		Collection<Bundle> updatedBundles = _update(modified);
+		Collection<Bundle> updatedBundles = _update(modifiedArtifacts);
 
-		Collection<Bundle> installedBundles = _install(created);
+		Collection<Bundle> installedBundles = _install(createdArtifacts);
 
 		if (!uninstalledBundles.isEmpty() || !updatedBundles.isEmpty() ||
 			!installedBundles.isEmpty()) {
 
-			Set<Bundle> toRefresh = new HashSet<>();
+			Set<Bundle> bundles = new HashSet<>();
 
-			toRefresh.addAll(uninstalledBundles);
+			bundles.addAll(uninstalledBundles);
 
-			toRefresh.addAll(updatedBundles);
+			bundles.addAll(updatedBundles);
 
-			toRefresh.addAll(installedBundles);
+			bundles.addAll(installedBundles);
 
-			findBundlesWithFragmentsToRefresh(toRefresh);
+			findBundlesWithFragmentsToRefresh(bundles);
 
-			findBundlesWithOptionalPackagesToRefresh(toRefresh);
+			findBundlesWithOptionalPackagesToRefresh(bundles);
 
-			if (!toRefresh.isEmpty()) {
-				_refresh(toRefresh);
+			if (!bundles.isEmpty()) {
+				_refresh(bundles);
 
 				_setStateChanged(true);
 			}
@@ -1148,14 +1149,14 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 	private Bundle _uninstall(Artifact artifact) {
 		try {
-			File path = artifact.getPath();
+			File file = artifact.getFile();
 
-			_removeArtifact(path);
+			_removeArtifact(file);
 
 			FileInstaller fileInstaller = artifact.getFileInstaller();
 
 			if (fileInstaller != null) {
-				fileInstaller.uninstall(path);
+				fileInstaller.uninstall(file);
 			}
 
 			long bundleId = artifact.getBundleId();
@@ -1168,7 +1169,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 						StringBundler sb = new StringBundler(5);
 
 						sb.append("Unable to uninstall bundle: ");
-						sb.append(path);
+						sb.append(file);
 						sb.append(" with id: ");
 						sb.append(bundleId);
 						sb.append(". The bundle has already been uninstalled");
@@ -1195,7 +1196,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to uninstall artifact: " + artifact.getPath(),
+					"Unable to uninstall artifact: " + artifact.getFile(),
 					exception);
 			}
 		}
@@ -1221,20 +1222,20 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		Bundle bundle = null;
 
 		try {
-			File path = artifact.getPath();
+			File file = artifact.getFile();
 
 			FileInstaller fileInstaller = _findFileInstaller(
-				path, _fileInstallers);
+				file, _fileInstallers);
 
 			if (fileInstaller == null) {
-				_processingFailures.add(path);
+				_processingFailures.add(file);
 
 				return null;
 			}
 
 			artifact.setFileInstaller(fileInstaller);
 
-			URL url = fileInstaller.transformURL(path);
+			URL url = fileInstaller.transformURL(file);
 
 			if (url == null) {
 				return null;
@@ -1249,7 +1250,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 					StringBundler sb = new StringBundler(5);
 
 					sb.append("Unable to update bundle: ");
-					sb.append(path);
+					sb.append(file);
 					sb.append(" with ID ");
 					sb.append(bundleId);
 					sb.append(". The bundle has been uninstalled");
@@ -1278,7 +1279,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		catch (Throwable throwable) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to update artifact " + artifact.getPath(),
+					"Unable to update artifact " + artifact.getFile(),
 					throwable);
 			}
 		}

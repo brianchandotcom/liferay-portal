@@ -150,9 +150,7 @@ definition {
 
 		Pause(locator = "3000");
 
-		AssertElementPresent(
-			key_tagName = "tagvalidatesearchbyquestiontags",
-			locator1 = "Questions#TAGS_LIST_TAB_NAMES");
+		Questions.viewTags(tagName = "tagvalidatesearchbyquestiontags");
 	}
 
 	@description = "Validate if the Tags tab of the question portlet, the tags are ordered by occurrences"

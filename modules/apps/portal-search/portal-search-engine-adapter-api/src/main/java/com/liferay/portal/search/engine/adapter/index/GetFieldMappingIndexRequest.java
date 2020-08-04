@@ -26,11 +26,11 @@ public class GetFieldMappingIndexRequest
 	public GetFieldMappingIndexRequest(
 		String[] indexNames, String mappingName, String[] fields) {
 
-		setPreferLocalCluster(true);
-
 		_indexNames = indexNames;
 		_mappingName = mappingName;
 		_fields = fields;
+
+		setPreferLocalCluster(true);
 	}
 
 	@Override

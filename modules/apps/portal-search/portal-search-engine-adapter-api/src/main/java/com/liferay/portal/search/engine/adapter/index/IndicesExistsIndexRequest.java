@@ -24,9 +24,9 @@ public class IndicesExistsIndexRequest
 	implements IndexRequest<IndicesExistsIndexResponse> {
 
 	public IndicesExistsIndexRequest(String... indexNames) {
-		setPreferLocalCluster(true);
-
 		_indexNames = indexNames;
+
+		setPreferLocalCluster(true);
 	}
 
 	@Override

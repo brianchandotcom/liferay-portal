@@ -24,10 +24,10 @@ public class GetMappingIndexRequest
 	implements MappingIndexRequest<GetMappingIndexResponse> {
 
 	public GetMappingIndexRequest(String[] indexNames, String mappingName) {
-		setPreferLocalCluster(true);
-
 		_indexNames = indexNames;
 		_mappingName = mappingName;
+
+		setPreferLocalCluster(true);
 	}
 
 	@Override

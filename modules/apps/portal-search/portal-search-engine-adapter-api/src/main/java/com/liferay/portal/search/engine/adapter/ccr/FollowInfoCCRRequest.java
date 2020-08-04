@@ -21,9 +21,9 @@ public class FollowInfoCCRRequest
 	extends CrossClusterRequest implements CCRRequest<FollowInfoCCRResponse> {
 
 	public FollowInfoCCRRequest(String indexName) {
-		setPreferLocalCluster(true);
-
 		_indexName = indexName;
+
+		setPreferLocalCluster(true);
 	}
 
 	@Override

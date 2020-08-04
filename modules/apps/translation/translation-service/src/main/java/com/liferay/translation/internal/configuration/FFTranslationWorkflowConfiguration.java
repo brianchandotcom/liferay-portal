@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.web.internal.configuration;
+package com.liferay.translation.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
-	id = "com.liferay.journal.web.internal.configuration.FFTranslationWorkflowConfiguration"
+	id = "com.liferay.translation.internal.configuration.FFTranslationWorkflowConfiguration"
 )
 public interface FFTranslationWorkflowConfiguration {
 

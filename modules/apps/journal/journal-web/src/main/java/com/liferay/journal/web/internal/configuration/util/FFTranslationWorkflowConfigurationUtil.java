@@ -14,8 +14,7 @@
 
 package com.liferay.journal.web.internal.configuration.util;
 
-import com.liferay.journal.web.internal.configuration.FFTranslationWorkflowConfiguration;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Map;
 
@@ -27,24 +26,21 @@ import org.osgi.service.component.annotations.Modified;
  * @author Ambrín Chaudhary
  */
 @Component(
-	configurationPid = "com.liferay.journal.web.internal.configuration.FFImportExportTranslationConfiguration",
+	configurationPid = "com.liferay.translation.internal.configuration.FFTranslationWorkflowConfiguration",
 	immediate = true, service = {}
 )
 public class FFTranslationWorkflowConfigurationUtil {
 
 	public static boolean enabled() {
-		return _ffTranslationWorkflowConfiguration.enabled();
+		return _enabled;
 	}
 
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_ffTranslationWorkflowConfiguration =
-			ConfigurableUtil.createConfigurable(
-				FFTranslationWorkflowConfiguration.class, properties);
+		_enabled = GetterUtil.getBoolean(properties.get("enabled"));
 	}
 
-	private static volatile FFTranslationWorkflowConfiguration
-		_ffTranslationWorkflowConfiguration;
+	private static volatile boolean _enabled;
 
 }

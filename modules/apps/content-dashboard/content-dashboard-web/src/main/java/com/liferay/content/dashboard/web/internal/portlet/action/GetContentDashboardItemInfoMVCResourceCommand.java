@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -265,6 +266,10 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 		List<ContentDashboardItemAction> contentDashboardItemActions =
 			contentDashboardItem.getContentDashboardItemActions(
 				httpServletRequest, ContentDashboardItemAction.Type.VIEW);
+
+		if (ListUtil.isEmpty(contentDashboardItemActions)) {
+			return JSONFactoryUtil.createJSONArray();
+		}
 
 		ContentDashboardItemAction contentDashboardItemAction =
 			contentDashboardItemActions.get(0);

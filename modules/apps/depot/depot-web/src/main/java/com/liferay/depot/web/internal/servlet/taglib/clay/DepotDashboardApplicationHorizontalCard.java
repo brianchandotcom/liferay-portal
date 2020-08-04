@@ -31,8 +31,8 @@ public class DepotDashboardApplicationHorizontalCard implements HorizontalCard {
 
 	@Override
 	public String getElementClasses() {
-		return "card-interactive card-interactive-primary " +
-			"card-type-template template-card-horizontal";
+		return "card-interactive card-interactive-primary card-type-template " +
+			"template-card-horizontal";
 	}
 
 	@Override

@@ -31,8 +31,8 @@ public class DepotDashboardApplicationVerticalCard implements VerticalCard {
 
 	@Override
 	public String getElementClasses() {
-		return "card-interactive card-interactive-primary " +
-			"card-type-template template-card";
+		return "card-interactive card-interactive-primary card-type-template " +
+			"template-card";
 	}
 
 	@Override

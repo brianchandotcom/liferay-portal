@@ -1,31 +1,3 @@
-.change-lists-table {
-	.change-list-description {
-		color: #6b6c7e;
-	}
-
-	.change-list-name {
-		color: #272833;
-		font-weight: 600;
-	}
-}
-
-.change-lists-tbar {
-	font-size: 14px;
-	height: auto;
-	min-height: 3.5rem;
-
-	.change-list-name {
-		color: #272833;
-		font-size: 18px;
-		font-weight: 600;
-
-		.label {
-			margin-left: 0.5rem;
-			vertical-align: middle;
-		}
-	}
-}
-
 .change-lists-conflicts-table {
 	.autofit-col {
 		padding-left: 0;
@@ -51,6 +23,59 @@
 		border-right: solid 1px #e7e7ed;
 		vertical-align: top;
 	}
+}
+
+.change-lists-discard-container {
+	padding-top: 48px;
+
+	button:hover {
+		cursor: pointer;
+	}
+}
+
+.change-lists-table {
+	.change-list-description {
+		color: #6b6c7e;
+	}
+
+	.change-list-name {
+		color: #272833;
+		font-weight: 600;
+	}
+
+	.change-row-button {
+		background-color: inherit;
+		border: none;
+		padding: 0;
+		text-align: left;
+
+		&:active:focus,
+		&:focus {
+			box-shadow: none;
+			outline: none;
+		}
+	}
+}
+
+.change-lists-tbar {
+	font-size: 14px;
+	height: auto;
+	min-height: 3.5rem;
+
+	.change-list-name {
+		color: #272833;
+		font-size: 18px;
+		font-weight: 600;
+
+		.label {
+			margin-left: 0.5rem;
+			vertical-align: middle;
+		}
+	}
+}
+
+.change-lists-view-entry-wrapper {
+	margin-top: 16px;
 }
 
 .select-change-list-table {
@@ -87,19 +112,6 @@
 			button:hover {
 				cursor: pointer;
 			}
-
-			.change-row-button {
-				background-color: inherit;
-				border: none;
-				padding: 0;
-				text-align: left;
-
-				&:active:focus,
-				&:focus {
-					box-shadow: none;
-					outline: none;
-				}
-			}
 		}
 	}
 
@@ -122,8 +134,4 @@
 	.taglib-empty-result-message {
 		margin-top: 20px;
 	}
-}
-
-.change-lists-view-entry-wrapper {
-	margin-top: 16px;
 }

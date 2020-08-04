@@ -26,9 +26,9 @@ portletDisplay.setShowBackIcon(true);
 %>
 
 <clay:container-fluid
-	cssClass="container-form-lg"
+	cssClass="change-lists-discard-container"
 >
-	<clay:sheet>
+	<div class="sheet">
 		<clay:sheet-section>
 			<h2 class="sheet-title"><liferay-ui:message key="discarded-changes" /></h2>
 
@@ -49,5 +49,5 @@ portletDisplay.setShowBackIcon(true);
 
 			<aui:button href="<%= viewDiscardDisplayContext.getRedirectURL() %>" type="cancel" />
 		</clay:sheet-footer>
-	</clay:sheet>
+	</div>
 </clay:container-fluid>

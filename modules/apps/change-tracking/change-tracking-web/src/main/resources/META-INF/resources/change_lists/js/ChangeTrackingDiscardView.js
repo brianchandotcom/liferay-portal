@@ -12,18 +12,20 @@
  * details.
  */
 
+import ClayBreadcrumb from '@clayui/breadcrumb';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayTable from '@clayui/table';
+import {fetch} from 'frontend-js-web';
 import React from 'react';
 
 class ChangeTrackingDiscardView extends React.Component {
 	constructor(props) {
 		super(props);
 
-		const {ctEntries, diffURL, spritemap, typeNames, userInfo} = props;
+		const {ctEntries, renderURL, spritemap, typeNames, userInfo} = props;
 
 		this.ctEntries = ctEntries;
-		this.diffURL = diffURL;
+		this.renderURL = renderURL;
 		this.spritemap = spritemap;
 		this.typeNames = typeNames;
 		this.userInfo = userInfo;
@@ -68,21 +70,11 @@ class ChangeTrackingDiscardView extends React.Component {
 			ascending: true,
 			column: 'title',
 			delta: 20,
+			entry: null,
 			page: 1,
+			renderInnerHTML: null,
 			sortDirectionClass: 'order-arrow-down-active',
 		};
-
-		AUI().use('liferay-portlet-url', () => {
-			for (let i = 0; i < this.ctEntries.length; i++) {
-				const entry = this.ctEntries[i];
-
-				entry.diffURL = this._getDiffURL(entry);
-			}
-
-			this.setState({
-				showDiff: true,
-			});
-		});
 	}
 
 	_filterDisplayEntries(entries) {
@@ -96,18 +88,12 @@ class ChangeTrackingDiscardView extends React.Component {
 		return entries;
 	}
 
-	_getDiffURL(entry) {
-		const portletURL = Liferay.PortletURL.createURL(this.diffURL);
+	_getRenderURL(entry) {
+		const portletURL = Liferay.PortletURL.createURL(this.renderURL);
 
 		portletURL.setParameter('ctEntryId', entry.ctEntryId);
 
-		return (
-			"javascript:Liferay.Util.openWindow({dialog: {destroyOnHide: true}, title: '" +
-			entry.title +
-			"', uri: '" +
-			portletURL.toString() +
-			"'});"
-		);
+		return portletURL.toString();
 	}
 
 	_getTableRows() {
@@ -125,7 +111,7 @@ class ChangeTrackingDiscardView extends React.Component {
 
 				rows.push(
 					<ClayTable.Row divider>
-						<ClayTable.Cell colSpan={3}>
+						<ClayTable.Cell colSpan={2}>
 							{entry.typeName}
 						</ClayTable.Cell>
 					</ClayTable.Row>
@@ -180,29 +166,17 @@ class ChangeTrackingDiscardView extends React.Component {
 
 			cells.push(
 				<ClayTable.Cell>
-					<div className="change-list-name">{entry.title}</div>
-					<div className="change-list-description">
-						{entry.description}
-					</div>
+					<button
+						className="change-row-button"
+						onClick={() => this._handleNavigation(entry.ctEntryId)}
+					>
+						<div className="change-list-name">{entry.title}</div>
+						<div className="change-list-description">
+							{entry.description}
+						</div>
+					</button>
 				</ClayTable.Cell>
 			);
-
-			if (this.state.showDiff) {
-				cells.push(
-					<ClayTable.Cell>
-						<a
-							className="btn btn-secondary btn-sm"
-							href={entry.diffURL}
-							type="button"
-						>
-							{Liferay.Language.get('view')}
-						</a>
-					</ClayTable.Cell>
-				);
-			}
-			else {
-				cells.push(<ClayTable.Cell />);
-			}
 
 			rows.push(<ClayTable.Row>{cells}</ClayTable.Row>);
 		}
@@ -215,6 +189,39 @@ class ChangeTrackingDiscardView extends React.Component {
 			delta,
 			page: 1,
 		});
+	}
+
+	_handleNavigation(entryId) {
+		if (entryId === 0) {
+			this.setState({
+				entry: null,
+				renderInnerHTML: null,
+			});
+
+			return;
+		}
+
+		for (let i = 0; i < this.ctEntries.length; i++) {
+			const entry = this.ctEntries[i];
+
+			if (entry.ctEntryId === entryId) {
+				this.setState({
+					entry,
+				});
+
+				AUI().use('liferay-portlet-url', () => {
+					fetch(this._getRenderURL(entry))
+						.then((response) => response.text())
+						.then((text) => {
+							this.setState({
+								renderInnerHTML: {__html: text},
+							});
+						});
+				});
+
+				return;
+			}
+		}
 	}
 
 	_handlePageChange(page) {
@@ -245,6 +252,57 @@ class ChangeTrackingDiscardView extends React.Component {
 		});
 	}
 
+	_renderBreadcrumbs() {
+		let items = [
+			{
+				active: true,
+				label: Liferay.Language.get('home'),
+			},
+		];
+
+		if (this.state.entry !== null) {
+			items = [
+				{
+					label: Liferay.Language.get('home'),
+					onClick: () => this._handleNavigation(0),
+				},
+				{
+					active: true,
+					label: this.state.entry.title,
+				},
+			];
+		}
+
+		return (
+			<ClayBreadcrumb
+				ellipsisBuffer={1}
+				items={items}
+				spritemap={this.spritemap}
+			/>
+		);
+	}
+
+	_renderEntry() {
+		let content = '';
+
+		if (this.state.renderInnerHTML !== null) {
+			content = (
+				<div
+					className="sheet-section"
+					dangerouslySetInnerHTML={this.state.renderInnerHTML}
+				/>
+			);
+		}
+
+		return (
+			<div className="sheet">
+				<h2 className="sheet-title">{this.state.entry.description}</h2>
+
+				{content}
+			</div>
+		);
+	}
+
 	_renderPagination() {
 		if (this.ctEntries.length <= 5) {
 			return '';
@@ -265,7 +323,7 @@ class ChangeTrackingDiscardView extends React.Component {
 		);
 	}
 
-	render() {
+	_renderTable() {
 		return (
 			<>
 				<ClayTable className="change-lists-table" hover={false}>
@@ -275,17 +333,33 @@ class ChangeTrackingDiscardView extends React.Component {
 								{Liferay.Language.get('user')}
 							</ClayTable.Cell>
 
-							<ClayTable.Cell headingCell style={{width: '90%'}}>
+							<ClayTable.Cell headingCell style={{width: '95%'}}>
 								{Liferay.Language.get('change')}
 							</ClayTable.Cell>
-
-							<ClayTable.Cell headingCell style={{width: '5%'}} />
 						</ClayTable.Row>
 					</ClayTable.Head>
 					<ClayTable.Body>{this._getTableRows()}</ClayTable.Body>
 				</ClayTable>
 
 				{this._renderPagination()}
+			</>
+		);
+	}
+
+	render() {
+		let content;
+
+		if (this.state.entry === null) {
+			content = this._renderTable();
+		}
+		else {
+			content = this._renderEntry();
+		}
+
+		return (
+			<>
+				{this._renderBreadcrumbs()}
+				{content}
 			</>
 		);
 	}

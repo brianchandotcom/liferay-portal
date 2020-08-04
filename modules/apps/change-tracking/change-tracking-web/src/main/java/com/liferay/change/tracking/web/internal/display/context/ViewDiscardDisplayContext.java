@@ -18,11 +18,9 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryTable;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -40,7 +38,7 @@ import javax.portlet.ActionURL;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.WindowStateException;
+import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -118,21 +116,13 @@ public class ViewDiscardDisplayContext {
 				return ctEntriesJSONArray;
 			}
 		).put(
-			"diffURL",
+			"renderURL",
 			() -> {
-				PortletURL diffURL = _renderResponse.createRenderURL();
+				ResourceURL renderURL = _renderResponse.createResourceURL();
 
-				diffURL.setParameter(
-					"mvcRenderCommandName", "/change_lists/view_diff");
+				renderURL.setResourceID("/change_lists/render_diff");
 
-				try {
-					diffURL.setWindowState(LiferayWindowState.POP_UP);
-				}
-				catch (WindowStateException windowStateException) {
-					ReflectionUtil.throwException(windowStateException);
-				}
-
-				return diffURL.toString();
+				return renderURL.toString();
 			}
 		).put(
 			"spritemap",

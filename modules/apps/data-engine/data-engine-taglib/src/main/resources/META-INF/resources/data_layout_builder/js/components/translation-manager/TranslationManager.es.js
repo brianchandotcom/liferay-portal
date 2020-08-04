@@ -60,9 +60,11 @@ export default ({
 }) => {
 	const [active, setActive] = useState(false);
 	const [_availableLanguageIds, setAvailableLanguageIds] = useState({});
+	const [available, setAvailable] = useState({});
 
 	useEffect(() => {
 		AUI().use('portal-available-languages', () => {
+			setAvailable(Liferay.Language.available);
 			setAvailableLanguageIds(
 				availableLanguageIds || Liferay.Language.available
 			);
@@ -91,7 +93,7 @@ export default ({
 
 					{showUserView ? (
 						<span className="localizable-dropdown-label ml-2">
-							{_availableLanguageIds[editingLanguageId]}
+							{available[editingLanguageId]}
 						</span>
 					) : (
 						<span className="btn-section">
@@ -125,7 +127,7 @@ export default ({
 								</span>
 
 								{showUserView
-									? _availableLanguageIds[languageId]
+									? available[languageId]
 									: formatLabel(languageId)}
 							</span>
 						</span>

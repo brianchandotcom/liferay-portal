@@ -13,7 +13,7 @@
  */
 
 import ClayLayout from '@clayui/layout';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import CollectionService from '../../services/CollectionService';
 import {useDispatch, useSelector} from '../../store/index';
@@ -68,52 +68,55 @@ const Grid = ({
 	const maxNumberOfItems = Math.min(collectionLength, numberOfItems);
 	const numberOfRows = Math.ceil(maxNumberOfItems / numberOfColumns);
 
-	const createRows = () => {
-		const rows = [];
+	return Array.from({length: numberOfRows}).map((_, i) => (
+		<ClayLayout.Row key={`row-${i}`}>
+			{Array.from({length: numberOfColumns}).map((_, j) => {
+				const key = `col-${i}-${j}`;
+				const index = i * numberOfColumns + j;
 
-		for (let i = 0; i < numberOfRows; i++) {
-			const columns = [];
-
-			for (let j = 0; j < numberOfColumns; j++) {
-				const index = [i, j].join('-');
-				const itemCount = i * numberOfColumns + j;
-
-				columns.push(
-					<ClayLayout.Col key={index} size={12 / numberOfColumns}>
-						{itemCount < maxNumberOfItems && (
-							<CollectionItemContextProvider
-								key={index}
-								value={{
-									collectionFields,
-									collectionItem:
-										collection[i * numberOfColumns + j],
-									collectionItemIndex:
-										i * numberOfColumns + j,
-									fromControlsId:
-										itemCount === 0 ? null : fromControlsId,
-									toControlsId:
-										itemCount === 0
-											? null
-											: getToControlsId(
-													collectionId,
-													index
-											  ),
-								}}
+				return (
+					<ClayLayout.Col key={key} size={12 / numberOfColumns}>
+						{index < maxNumberOfItems && (
+							<ColumnContext
+								collectionFields={collectionFields}
+								collectionId={collectionId}
+								collectionItem={collection[index]}
+								index={index}
 							>
 								{React.cloneElement(child)}
-							</CollectionItemContextProvider>
+							</ColumnContext>
 						)}
 					</ClayLayout.Col>
 				);
-			}
+			})}
+		</ClayLayout.Row>
+	));
+};
 
-			rows.push(<ClayLayout.Row key={i}>{columns}</ClayLayout.Row>);
-		}
+const ColumnContext = ({
+	children,
+	collectionFields,
+	collectionId,
+	collectionItem,
+	index,
+}) => {
+	const contextValue = useMemo(
+		() => ({
+			collectionFields,
+			collectionItem,
+			collectionItemIndex: index,
+			fromControlsId: index === 0 ? null : fromControlsId,
+			toControlsId:
+				index === 0 ? null : getToControlsId(collectionId, index),
+		}),
+		[collectionFields, collectionId, collectionItem, index]
+	);
 
-		return rows;
-	};
-
-	return createRows();
+	return (
+		<CollectionItemContextProvider value={contextValue}>
+			{children}
+		</CollectionItemContextProvider>
+	);
 };
 
 const DEFAULT_COLLECTION = {

@@ -155,7 +155,7 @@
 		<name>approved</name>
 		<metadata>
 			<![CDATA[
-				{"xy":[380,51]}
+				{"terminal":true,"xy":[380,51]}
 			]]>
 		</metadata>
 		<actions>

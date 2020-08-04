@@ -180,7 +180,7 @@
 		<name>approved</name>
 		<metadata>
 			<![CDATA[
-				{"xy":[540,285]}
+				{"terminal":true,"xy":[540,285]}
 			]]>
 		</metadata>
 		<actions>

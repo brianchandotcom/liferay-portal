@@ -38,7 +38,7 @@
 	<state>
 		<name>approved</name>
 		<metadata>
-			<![CDATA[{"xy":[380,51]}]]>
+			<![CDATA[{"terminal":true,"xy":[380,51]}]]>
 		</metadata>
 		<actions>
 			<action>

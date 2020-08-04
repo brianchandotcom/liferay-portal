@@ -159,6 +159,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>QUESTIONS_TAGS_SELECT_FILTER</td>
+	<td>//select[contains(@id,'tagsOrderBy')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>QUESTIONS_SELECT_FILTER_VALUE</td>
 	<td>//option[contains(text(),'${key_filter}')]</td>
 	<td></td>

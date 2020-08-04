@@ -75,8 +75,7 @@ public class JQueryTopHeadDynamicInclude extends BaseDynamicInclude {
 			sb.append("<script data-senna-track=\"permanent\" src=\"");
 
 			String comboPath = _portal.getStaticResourceURL(
-				httpServletRequest, _portal.getPathContext() + "/combo",
-				"minifierType=js", _lastModified);
+				httpServletRequest, "/combo", "minifierType=js", _lastModified);
 
 			sb.append(
 				absolutePortalURLBuilder.forResource(

@@ -23,8 +23,6 @@
  * distribution rights of the Software.
  */
 
-import numeral from 'numeral';
-
 import ellipsize from './ellipsize.es';
 
 const _MAX_DELIMITED_NUMBER_LENGTH = 10;
@@ -38,19 +36,6 @@ function getDelimiter(key, defaultValue) {
 
 	return delimiter;
 }
-
-function setupLocale(locale) {
-	numeral.register('locale', locale, {
-		delimiters: {
-			decimal: getDelimiter('decimal-delimiter', '.'),
-			thousands: getDelimiter('thousands-delimiter', ','),
-		},
-	});
-
-	numeral.locale(locale);
-}
-
-setupLocale(Liferay.ThemeDisplay.getLanguageId());
 
 export function formatNumber(number, delimit) {
 	let formattedNumber = number.toString();

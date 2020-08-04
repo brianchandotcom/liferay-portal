@@ -78,7 +78,9 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		_upgradeDDMStructureLayout();
+
 		_upgradeDDMStructureVersion();
+
 		_upgradeDDMStructure();
 	}
 

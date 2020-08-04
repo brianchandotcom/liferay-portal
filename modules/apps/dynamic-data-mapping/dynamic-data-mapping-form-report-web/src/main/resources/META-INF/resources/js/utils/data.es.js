@@ -21,7 +21,10 @@ const toArray = (values) => values.map(({value}) => value);
 
 const toDataArray = (options, values) =>
 	Object.entries(values)
-		.map(([name, count]) => ({count, label: options[name] || name}))
+		.map(([name, count]) => ({
+			count,
+			label: options[name] ? options[name].value : name,
+		}))
 		.sort((a, b) => (a.count > b.count ? -1 : b.count > a.count ? 1 : 0));
 
 export default toDataArray;

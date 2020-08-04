@@ -156,22 +156,24 @@ definition {
 	@description = "Validate if the Tags tab of the question portlet, the tags are ordered by occurrences"
 	@priority = "4"
 	test ValidateTagsOccurrences {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Question ValidateTagsOccurrences",
-			userEmailAddress = "test@liferay.com");
+		for (var num : list "1,2") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Question ValidateTagsOccurrences${num}",
+				userEmailAddress = "test@liferay.com");
+		}
 
 		for (var num : list "1,2") {
 			Questions.addQuestionByAPI(
 				bodyField = "${num}- Body ValidateTagsOccurrences",
-				categoryName = "Question ValidateTagsOccurrences",
+				categoryName = "Question ValidateTagsOccurrences1",
 				tagField = "tag1",
 				titleField = "${num}- Title ValidateTagsOccurrences");
 		}
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
-		Questions.gotoCategory(categoryName = "Question ValidateTagsOccurrences");
+		Questions.gotoCategory(categoryName = "Question ValidateTagsOccurrences1");
 
 		Pause(locator = "3000");
 
@@ -179,10 +181,33 @@ definition {
 			key_questionTabField = "Tags",
 			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
 
-		AssertElementPresent(
-			key_amountOfUsedTimes = "2",
-			key_tagName = "tag1",
-			locator1 = "Questions#TAGS_LIST_TAB_USED_TIMES");
+		Questions.viewTags(
+			amountOfUsedTimes = "2",
+			tagName = "tag1");
+
+		Questions.gotoTab(questionTabField = "Questions");
+
+		Click(locator1 = "Questions#QUESTIONS_HOME_ICON");
+
+		Questions.gotoCategory(categoryName = "Question ValidateTagsOccurrences2");
+
+		Questions.askQuestionFillingTheMandatoryFields(
+			contentField = "Content AddQuestion",
+			titleField = "Title AddQuestion");
+
+		Questions.addTags(tagLocator = "Tag1");
+
+		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
+
+		Questions.gotoTab(questionTabField = "Tags");
+
+		Click(
+			key_questionTabField = "Tags",
+			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
+
+		Questions.viewTags(
+			amountOfUsedTimes = "3",
+			tagName = "tag1");
 	}
 
 }

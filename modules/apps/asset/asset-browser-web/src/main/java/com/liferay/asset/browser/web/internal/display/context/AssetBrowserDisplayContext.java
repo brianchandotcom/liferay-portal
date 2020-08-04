@@ -23,8 +23,11 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.util.AssetHelper;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryServiceUtil;
 import com.liferay.item.selector.constants.ItemSelectorPortletKeys;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -40,6 +43,8 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -78,7 +83,9 @@ public class AssetBrowserDisplayContext {
 			_httpServletRequest);
 	}
 
-	public AssetBrowserSearch getAssetBrowserSearch() throws PortletException {
+	public AssetBrowserSearch getAssetBrowserSearch()
+		throws PortalException, PortletException {
+
 		AssetBrowserSearch assetBrowserSearch = new AssetBrowserSearch(
 			_renderRequest, getPortletURL());
 
@@ -470,11 +477,23 @@ public class AssetBrowserDisplayContext {
 		return _classNameIds;
 	}
 
-	private long[] _getFilterGroupIds() {
+	private long[] _getFilterGroupIds() throws PortalException {
 		long[] filterGroupIds = getSelectedGroupIds();
 
 		if (getGroupId() > 0) {
 			filterGroupIds = new long[] {getGroupId()};
+
+			if (_isEverywhereScopeFilter()) {
+				filterGroupIds = ArrayUtil.append(
+					filterGroupIds,
+					ListUtil.toLongArray(
+						DepotEntryServiceUtil.getGroupConnectedDepotEntries(
+							getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+						DepotEntry::getGroupId));
+			}
+			else {
+				filterGroupIds = new long[] {getGroupId()};
+			}
 		}
 
 		return filterGroupIds;
@@ -546,6 +565,17 @@ public class AssetBrowserDisplayContext {
 		}
 
 		return statuses;
+	}
+
+	private boolean _isEverywhereScopeFilter() {
+		if (Objects.equals(
+				ParamUtil.getString(_httpServletRequest, "scope"),
+				"everywhere")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isShowNonindexable() {

@@ -93,6 +93,9 @@ definition {
 		if (isSet(domainNames)) {
 			Accounts.addDomains(domainNames = "${domainNames}");
 		}
+		else {
+			AssertElementNotPresent(locator1 = "Account#DOMAIN_SECTION");
+		}
 
 		Button.clickSave();
 

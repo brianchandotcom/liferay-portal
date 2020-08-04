@@ -222,10 +222,6 @@ public class Properties extends AbstractMap<String, String> {
 		return old;
 	}
 
-	public void putAllSubstituted(Map<? extends String, ? extends String> map) {
-		_storage.putAll(map);
-	}
-
 	@Override
 	public String remove(Object key) {
 		Layout layout = _layoutMap.get(key);

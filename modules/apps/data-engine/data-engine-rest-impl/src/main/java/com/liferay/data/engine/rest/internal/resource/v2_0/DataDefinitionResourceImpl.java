@@ -177,8 +177,6 @@ public class DataDefinitionResourceImpl
 		_ddlRecordSetLocalService.deleteDDMStructureRecordSets(
 			dataDefinitionId);
 
-		_ddmStructureLocalService.deleteStructure(dataDefinitionId);
-
 		_deDataDefinitionFieldLinkLocalService.deleteDEDataDefinitionFieldLinks(
 			_portal.getClassNameId(DDMStructure.class), dataDefinitionId);
 
@@ -215,6 +213,8 @@ public class DataDefinitionResourceImpl
 				DataDefinitionUtil.toDDMForm(
 					dataDefinition, _ddmFormFieldTypeServicesTracker));
 		}
+
+		_ddmStructureLocalService.deleteStructure(dataDefinitionId);
 	}
 
 	@Override

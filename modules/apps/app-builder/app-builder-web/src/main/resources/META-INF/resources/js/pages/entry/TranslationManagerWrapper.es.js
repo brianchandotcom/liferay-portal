@@ -91,26 +91,33 @@ export default ({
 		return defaultLanguageId;
 	};
 
+	const appStandaloneName = document.querySelector('#appStandaloneName');
+	const appTranslationManager = document.querySelector(
+		'#appTranslationManager'
+	);
+
 	return (
 		<div>
-			{createPortal(
-				getLocalizedUserPreferenceValue(
-					app.name,
-					userLanguageId,
-					defaultLanguageId
-				),
-				document.querySelector('#appStandaloneName')
-			)}
+			{appStandaloneName &&
+				createPortal(
+					getLocalizedUserPreferenceValue(
+						app.name,
+						userLanguageId,
+						defaultLanguageId
+					),
+					appStandaloneName
+				)}
 
-			{createPortal(
-				<TranslationManager
-					availableLanguageIds={availableLanguageIds}
-					editingLanguageId={getEditingLanguageId()}
-					onEditingLanguageIdChange={onEditingLanguageIdChange}
-					showUserView
-				/>,
-				document.querySelector('#appTranslationManager')
-			)}
+			{appTranslationManager &&
+				createPortal(
+					<TranslationManager
+						availableLanguageIds={availableLanguageIds}
+						editingLanguageId={getEditingLanguageId()}
+						onEditingLanguageIdChange={onEditingLanguageIdChange}
+						showUserView
+					/>,
+					appTranslationManager
+				)}
 		</div>
 	);
 };

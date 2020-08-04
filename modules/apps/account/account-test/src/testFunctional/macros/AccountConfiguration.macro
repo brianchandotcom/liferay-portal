@@ -48,25 +48,11 @@ definition {
 			configurationName = "Email Domains",
 			configurationScope = "Virtual Instance Scope");
 
-		for (var settingValue : list "${settingValues}") {
-			Type.sendKeys(
-				key_label = "Blocked Email Domains",
-				locator1 = "TextArea#ANY_LABELED",
-				value1 = "${settingValue}");
+		SystemSettings.editTextAreaSettingMultiLines(
+			settingName = "Blocked Email Domains",
+			settingValues = "${settingValues}");
 
-			KeyPress(
-				key_label = "Blocked Email Domains",
-				locator1 = "TextArea#ANY_LABELED",
-				value1 = "\RETURN");
-		}
-
-		if (IsElementPresent(locator1 = "Button#UPDATE")) {
-			PortletEntry.update();
-		}
-
-		else if (IsElementPresent(locator1 = "Button#SAVE")) {
-			PortletEntry.save();
-		}
+		SystemSettings.saveConfiguration();
 	}
 
 	macro enableAccountEmailDomain {

@@ -23,9 +23,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
-	id = "com.liferay.journal.web.internal.configuration.FFImportExportTranslationConfiguration"
+	id = "com.liferay.journal.web.internal.configuration.FFTranslationWorkflowConfiguration"
 )
-public interface FFImportExportTranslationConfiguration {
+public interface FFTranslationWorkflowConfiguration {
 
 	@Meta.AD(deflt = "false", name = "enabled", required = false)
 	public boolean enabled();

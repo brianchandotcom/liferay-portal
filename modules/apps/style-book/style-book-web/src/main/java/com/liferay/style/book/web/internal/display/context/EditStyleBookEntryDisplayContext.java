@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.util.GroupURLProvider;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 
@@ -53,9 +52,8 @@ import javax.servlet.http.HttpServletRequest;
 public class EditStyleBookEntryDisplayContext {
 
 	public EditStyleBookEntryDisplayContext(
-			HttpServletRequest httpServletRequest, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
+		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
 		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
@@ -64,16 +62,10 @@ public class EditStyleBookEntryDisplayContext {
 		_frontendTokenDefinitionRegistry =
 			(FrontendTokenDefinitionRegistry)_renderRequest.getAttribute(
 				FrontendTokenDefinitionRegistry.class.getName());
-		_groupURLProvider = (GroupURLProvider)_renderRequest.getAttribute(
-			GroupURLProvider.class.getName());
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_setViewAttributes();
-	}
-
-	public long getGroupId() {
-		return _themeDisplay.getScopeGroupId();
 	}
 
 	public Map<String, Object> getStyleBookEditorData() throws Exception {
@@ -88,7 +80,7 @@ public class EditStyleBookEntryDisplayContext {
 					styleBookEntry.getFrontendTokensValues());
 			}
 		).put(
-			"initialPreviewLayout", _getInitialPreviewLayout()
+			"initialPreviewLayout", _getInitialPreviewLayoutJSONObject()
 		).put(
 			"layoutsTreeURL",
 			() -> {
@@ -134,7 +126,7 @@ public class EditStyleBookEntryDisplayContext {
 			frontendTokenDefinition.getJSON(_themeDisplay.getLocale()));
 	}
 
-	private JSONObject _getInitialPreviewLayout() throws Exception {
+	private JSONObject _getInitialPreviewLayoutJSONObject() throws Exception {
 		Layout layout = LayoutLocalServiceUtil.fetchFirstLayout(
 			_themeDisplay.getScopeGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
@@ -211,7 +203,7 @@ public class EditStyleBookEntryDisplayContext {
 		return styleBookEntry.getName();
 	}
 
-	private void _setViewAttributes() throws Exception {
+	private void _setViewAttributes() {
 		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
 		portletDisplay.setShowBackIcon(true);
@@ -222,7 +214,6 @@ public class EditStyleBookEntryDisplayContext {
 
 	private final FrontendTokenDefinitionRegistry
 		_frontendTokenDefinitionRegistry;
-	private final GroupURLProvider _groupURLProvider;
 	private final HttpServletRequest _httpServletRequest;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

@@ -20,6 +20,10 @@ import {testControlledInput} from '../../utils';
 
 const INTEGER_NUMBER_INPUT_TESTID = 'integer-number';
 
+const OPTIONS_INTEGER_NUMBER_INPUT_TESTID = 'options-integer';
+
+const defaultValue = '1';
+
 describe('IntegerInput', () => {
 	afterEach(cleanup);
 
@@ -41,6 +45,75 @@ describe('IntegerInput', () => {
 			mockFunc: mockOnChange,
 			newValue: '2',
 			value: defaultNumberValue,
+		});
+	});
+
+	it('renders type integer number with options', () => {
+		const mockOnChange = jest.fn();
+
+		const options = [
+			{
+				label: '1',
+				value: '1',
+			},
+			{
+				label: '2',
+				value: '2',
+			},
+		];
+
+		const {asFragment, getByTestId} = render(
+			<IntegerInput
+				onChange={mockOnChange}
+				options={options}
+				value={defaultValue}
+			/>
+		);
+
+		expect(asFragment()).toMatchSnapshot();
+
+		const element = getByTestId(OPTIONS_INTEGER_NUMBER_INPUT_TESTID);
+
+		testControlledInput({
+			element,
+			mockFunc: mockOnChange,
+			newValue: '2',
+			value: defaultValue,
+		});
+	});
+
+	it('renders type integer number with options disabled', () => {
+		const mockOnChange = jest.fn();
+
+		const options = [
+			{
+				disabled: true,
+				label: '1',
+				value: '1',
+			},
+			{
+				label: '2',
+				value: '2',
+			},
+		];
+
+		const {asFragment, getByTestId} = render(
+			<IntegerInput
+				onChange={mockOnChange}
+				options={options}
+				value={defaultValue}
+			/>
+		);
+
+		expect(asFragment()).toMatchSnapshot();
+
+		const element = getByTestId(OPTIONS_INTEGER_NUMBER_INPUT_TESTID);
+
+		testControlledInput({
+			element,
+			mockFunc: mockOnChange,
+			newValue: '2',
+			value: defaultValue,
 		});
 	});
 });

@@ -1097,6 +1097,27 @@ definition {
 	}
 
 	@priority = "4"
+	test RemoveDomainFromBlacklist {
+		AccountConfiguration.addBlockedEmailDomain(settingValues = "yahoo.com,blocked.com,google.com");
+
+		for (var settingValue : list "yahoo.com,blocked.com,google.com") {
+			SystemSettings.viewTextareaPartialText(
+				settingName = "Blocked Email Domains",
+				settingValue = "${settingValue}");
+		}
+
+		SystemSettings.editTextAreaSetting(
+			settingName = "Blocked Email Domains",
+			settingValue = "blocked.com");
+
+		SystemSettings.saveConfiguration();
+
+		SystemSettings.viewTextareaValue(
+			fieldName = "blockedEmailDomains",
+			fieldValue = "blocked.com");
+	}
+
+	@priority = "4"
 	test RemoveUserFromAccount {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",

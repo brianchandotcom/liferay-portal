@@ -176,6 +176,13 @@ definition {
 			locator1 = "SystemSettings#DROPDOWN_MENU_OPTION");
 	}
 
+	macro viewTextareaPartialText {
+		AssertTextEquals.assertPartialText(
+			key_label = "${settingName}",
+			locator1 = "TextArea#ANY_LABELED",
+			value1 = "${settingValue}");
+	}
+
 	macro viewTextareaValue {
 		if (isSet(repeatableFieldNumber)) {
 			AssertTextEquals.assertValue(

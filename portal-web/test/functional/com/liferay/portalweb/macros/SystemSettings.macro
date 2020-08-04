@@ -83,6 +83,20 @@ definition {
 			value1 = "${settingValue}");
 	}
 
+	macro editTextAreaSettingMultiLines {
+		for (var settingValue : list "${settingValues}") {
+			Type.sendKeys(
+				key_label = "${settingName}",
+				locator1 = "TextArea#ANY_LABELED",
+				value1 = "${settingValue}");
+
+			KeyPress(
+				key_label = "${settingName}",
+				locator1 = "TextArea#ANY_LABELED",
+				value1 = "\RETURN");
+		}
+	}
+
 	macro editTextSetting {
 		Type(
 			key_fieldLabel = "${settingName}",

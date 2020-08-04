@@ -82,25 +82,6 @@ class PagesVisitor {
 										};
 									}
 
-									if (
-										mappedNestedField.nestedFields &&
-										mappedNestedField.nestedFields.length &&
-										mappedNestedField.rows === ''
-									) {
-										mappedNestedField.rows = JSON.stringify(
-											mappedNestedField.nestedFields.map(
-												({fieldName}) => ({
-													columns: [
-														{
-															fields: [fieldName],
-															size: 12,
-														},
-													],
-												})
-											)
-										);
-									}
-
 									return mapNestedFields(mappedNestedField);
 								}
 							),

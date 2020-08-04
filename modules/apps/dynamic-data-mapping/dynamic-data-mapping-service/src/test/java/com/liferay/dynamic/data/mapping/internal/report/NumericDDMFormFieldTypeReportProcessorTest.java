@@ -117,13 +117,13 @@ public class NumericDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 				JSONUtil.put(
 					"summary",
 					JSONUtil.put(
-						"average", 3
+						"average", "3"
 					).put(
-						"max", 5
+						"max", "5"
 					).put(
-						"min", 1
+						"min", "1"
 					).put(
-						"sum", 15
+						"sum", "15"
 					)
 				).put(
 					"totalEntries", 5
@@ -164,10 +164,10 @@ public class NumericDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 		JSONObject summaryJSONObject = processedFieldJSONObject.getJSONObject(
 			"summary");
 
-		Assert.assertEquals(3, summaryJSONObject.getInt("average"));
-		Assert.assertEquals(5, summaryJSONObject.getInt("max"));
-		Assert.assertEquals(1, summaryJSONObject.getInt("min"));
-		Assert.assertEquals(12, summaryJSONObject.getInt("sum"));
+		Assert.assertEquals("3", summaryJSONObject.getString("average"));
+		Assert.assertEquals("5", summaryJSONObject.getString("max"));
+		Assert.assertEquals("1", summaryJSONObject.getString("min"));
+		Assert.assertEquals("12", summaryJSONObject.getString("sum"));
 	}
 
 	@Test
@@ -195,10 +195,10 @@ public class NumericDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 		JSONObject summaryJSONObject = processedFieldJSONObject.getJSONObject(
 			"summary");
 
-		Assert.assertEquals(1, summaryJSONObject.getInt("average"));
-		Assert.assertEquals(1, summaryJSONObject.getInt("max"));
-		Assert.assertEquals(1, summaryJSONObject.getInt("min"));
-		Assert.assertEquals(1, summaryJSONObject.getInt("sum"));
+		Assert.assertEquals("1", summaryJSONObject.getString("average"));
+		Assert.assertEquals("1", summaryJSONObject.getString("max"));
+		Assert.assertEquals("1", summaryJSONObject.getString("min"));
+		Assert.assertEquals("1", summaryJSONObject.getString("sum"));
 	}
 
 	@Test
@@ -218,13 +218,13 @@ public class NumericDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 				JSONUtil.put(
 					"summary",
 					JSONUtil.put(
-						"average", 1
+						"average", "1"
 					).put(
-						"max", 1
+						"max", "1"
 					).put(
-						"min", 1
+						"min", "1"
 					).put(
-						"sum", 1
+						"sum", "1"
 					)
 				).put(
 					"totalEntries", 1
@@ -245,10 +245,10 @@ public class NumericDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 		JSONObject summaryJSONObject = processedFieldJSONObject.getJSONObject(
 			"summary");
 
-		Assert.assertEquals(2, summaryJSONObject.getInt("average"));
-		Assert.assertEquals(3, summaryJSONObject.getInt("max"));
-		Assert.assertEquals(1, summaryJSONObject.getInt("min"));
-		Assert.assertEquals(4, summaryJSONObject.getInt("sum"));
+		Assert.assertEquals("2", summaryJSONObject.getString("average"));
+		Assert.assertEquals("3", summaryJSONObject.getString("max"));
+		Assert.assertEquals("1", summaryJSONObject.getString("min"));
+		Assert.assertEquals("4", summaryJSONObject.getString("sum"));
 	}
 
 	private DDMFormInstanceRecord _createDDMFormInstanceRecord(

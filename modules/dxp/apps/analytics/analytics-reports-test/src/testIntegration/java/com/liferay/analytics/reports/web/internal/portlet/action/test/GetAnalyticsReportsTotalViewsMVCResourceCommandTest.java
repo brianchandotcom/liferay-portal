@@ -229,7 +229,6 @@ public class GetAnalyticsReportsTotalViewsMVCResourceCommandTest {
 			mockLiferayResourceRequest.setAttribute(
 				AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER,
 				_getInfoDisplayObjectProvider());
-
 			mockLiferayResourceRequest.setAttribute(
 				WebKeys.THEME_DISPLAY,
 				MockThemeDisplayUtil.getThemeDisplay(

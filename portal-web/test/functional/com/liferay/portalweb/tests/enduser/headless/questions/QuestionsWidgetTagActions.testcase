@@ -50,6 +50,22 @@ definition {
 			categoryName = "Question ListOfTagsAppearsInTheTagsTab",
 			userEmailAddress = "test@liferay.com");
 
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Question ListOfTagsAppearsInTheTagsTab");
+
+		Questions.gotoTab(questionTabField = "Tags");
+
+		Questions.viewTags(noTagResults = "true");
+
+		Questions.configureTagsFilter(filterBy = "Latest Created");
+
+		Questions.viewTags(noTagResults = "true");
+
+		JSONAssettag.addTag(
+			groupName = "Guest",
+			tagName = "tag2");
+
 		Questions.addQuestionByAPI(
 			bodyField = "Body ListOfTagsAppearsInTheTagsTab",
 			categoryName = "Question ListOfTagsAppearsInTheTagsTab",
@@ -62,13 +78,13 @@ definition {
 
 		Pause(locator = "3000");
 
-		Click(
-			key_questionTabField = "Tags",
-			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
+		Questions.gotoTab(questionTabField = "Tags");
 
-		AssertElementPresent(
-			key_tagName = "tag1",
-			locator1 = "Questions#TAGS_LIST_TAB_NAMES");
+		Questions.configureTagsFilter(filterBy = "Latest Created");
+
+		for (var tagName : list "tag1,tag2") {
+			Questions.viewTags(tagName = "${tagName}");
+		}
 	}
 
 	@description = "Validate if when the user click in the tag of the Tags tab, the user is redirected to the questions that use this tag"

@@ -22,22 +22,22 @@ import React, {useContext, useEffect, useState} from 'react';
 import {StyleBookContext} from './StyleBookContext';
 import {config} from './config';
 
-export default function PagesTree({showPrivatePages}) {
+export default function LayoutsTree({showPrivateLayouts}) {
 	const [loading, setLoading] = useState(true);
 	const [content, setContent] = useState('');
 	const isMounted = useIsMounted();
-	const {setPreviewPage} = useContext(StyleBookContext);
+	const {setPreviewLayout} = useContext(StyleBookContext);
 
 	useEffect(() => {
 		setLoading(true);
 
-		Liferay.destroyComponent(`${config.namespace}pagesTree`);
+		Liferay.destroyComponent(`${config.namespace}layoutsTree`);
 
-		const url = new URL(config.pagesTreeURL);
+		const url = new URL(config.layoutsTreeURL);
 
 		url.searchParams.set(
 			`${config.namespace}privateLayout`,
-			showPrivatePages
+			showPrivateLayouts
 		);
 
 		fetch(url.href)
@@ -53,16 +53,16 @@ export default function PagesTree({showPrivatePages}) {
 					console.error(error);
 				}
 			});
-	}, [isMounted, showPrivatePages]);
+	}, [isMounted, showPrivateLayouts]);
 
 	return loading ? (
 		<ClayLoadingIndicator />
 	) : (
-		<PagesTreeContent content={content} onPageClick={setPreviewPage} />
+		<LayoutsTreeContent content={content} onPageClick={setPreviewLayout} />
 	);
 }
 
-class PagesTreeContent extends React.Component {
+class LayoutsTreeContent extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -90,8 +90,8 @@ class PagesTreeContent extends React.Component {
 
 					if (target?.dataset?.label && target?.dataset?.url) {
 						this.props.onPageClick({
-							pageName: target.dataset.label,
-							pageURL: target.dataset.url,
+							layoutName: target.dataset.label,
+							layoutURL: target.dataset.url,
 						});
 					}
 				}}
@@ -101,6 +101,6 @@ class PagesTreeContent extends React.Component {
 	}
 }
 
-PagesTree.propTypes = {
-	showPrivatePages: PropTypes.bool.isRequired,
+LayoutsTree.propTypes = {
+	showPrivateLayouts: PropTypes.bool.isRequired,
 };

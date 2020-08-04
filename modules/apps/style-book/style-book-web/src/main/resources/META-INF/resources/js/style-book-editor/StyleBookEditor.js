@@ -15,7 +15,7 @@
 import {fetch, objectToFormData, openToast} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import PagePreview from './PagePreview';
+import LayoutPreview from './LayoutPreview';
 import Sidebar from './Sidebar';
 import {StyleBookContextProvider} from './StyleBookContext';
 import {config, initializeConfig} from './config';
@@ -24,7 +24,7 @@ import {useCloseProductMenu} from './useCloseProductMenu';
 
 const StyleBookEditor = ({
 	frontendTokensValues: initialFrontendTokensValues,
-	initialPreviewPage,
+	initialPreviewLayout,
 }) => {
 	useCloseProductMenu();
 
@@ -32,7 +32,7 @@ const StyleBookEditor = ({
 		initialFrontendTokensValues
 	);
 	const [draftStatus, setDraftStatus] = useState(DRAFT_STATUS.notSaved);
-	const [previewPage, setPreviewPage] = useState(initialPreviewPage);
+	const [previewLayout, setPreviewLayout] = useState(initialPreviewLayout);
 
 	useEffect(() => {
 		if (frontendTokensValues === initialFrontendTokensValues) {
@@ -65,13 +65,13 @@ const StyleBookEditor = ({
 			value={{
 				draftStatus,
 				frontendTokensValues,
-				previewPage,
+				previewLayout,
 				setFrontendTokensValues,
-				setPreviewPage,
+				setPreviewLayout,
 			}}
 		>
 			<div className="style-book-editor">
-				<PagePreview />
+				<LayoutPreview />
 				<Sidebar />
 			</div>
 		</StyleBookContextProvider>
@@ -80,10 +80,10 @@ const StyleBookEditor = ({
 
 export default function ({
 	frontendTokenDefinition = [],
-	initialPreviewPage,
+	initialPreviewLayout,
 	namespace,
 	publishURL,
-	pagesTreeURL,
+	layoutsTreeURL,
 	redirectURL,
 	saveDraftURL,
 	styleBookEntryId,
@@ -91,9 +91,9 @@ export default function ({
 } = {}) {
 	initializeConfig({
 		frontendTokenDefinition,
-		initialPreviewPage,
+		initialPreviewLayout,
+		layoutsTreeURL,
 		namespace,
-		pagesTreeURL,
 		publishURL,
 		redirectURL,
 		saveDraftURL,
@@ -103,7 +103,7 @@ export default function ({
 	return (
 		<StyleBookEditor
 			frontendTokensValues={frontendTokensValues}
-			initialPreviewPage={initialPreviewPage}
+			initialPreviewLayout={initialPreviewLayout}
 		/>
 	);
 }

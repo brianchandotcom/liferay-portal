@@ -17,7 +17,7 @@ import ClayPopover from '@clayui/popover';
 import {Align} from 'metal-position';
 import React, {useLayoutEffect, useRef, useState} from 'react';
 
-import PageSelector from './PageSelector';
+import LayoutSelector from './LayoutSelector';
 
 export default function PreviewInfoBar() {
 	const [isShowPopover, setIsShowPopover] = useState(false);
@@ -41,7 +41,7 @@ export default function PreviewInfoBar() {
 				<span className="style-book-editor__page-preview-text">
 					{Liferay.Language.get('page-preview')}
 				</span>
-				<PageSelector />
+				<LayoutSelector />
 			</div>
 			<span className="d-none d-xl-block">
 				{Liferay.Language.get(

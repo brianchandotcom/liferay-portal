@@ -18,14 +18,14 @@ import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import React, {useContext, useState} from 'react';
 
-import PagesTree from './PagesTree';
+import LayoutsTree from './LayoutsTree';
 import {StyleBookContext} from './StyleBookContext';
 import {useId} from './useId';
 
-export default function PageSelector() {
+export default function LayoutSelector() {
 	const [active, setActive] = useState(false);
-	const [showPrivatePages, setShowPrivatePages] = useState(false);
-	const {previewPage} = useContext(StyleBookContext);
+	const [showPrivateLayouts, setShowPrivateLayouts] = useState(false);
+	const {previewLayout} = useContext(StyleBookContext);
 
 	const id = useId();
 
@@ -44,7 +44,7 @@ export default function PageSelector() {
 					small
 					symbol="time"
 				>
-					{previewPage?.pageName}
+					{previewLayout?.layoutName}
 					<ClayIcon className="mt-0" symbol={'caret-bottom-l'} />
 				</ClayButton>
 			}
@@ -58,7 +58,7 @@ export default function PageSelector() {
 						<ClaySelectWithOption
 							id={id}
 							onChange={(event) =>
-								setShowPrivatePages(
+								setShowPrivateLayouts(
 									event.target.value === 'private-pages'
 								)
 							}
@@ -78,7 +78,7 @@ export default function PageSelector() {
 					</ClayForm.Group>
 				</div>
 
-				<PagesTree showPrivatePages={showPrivatePages} />
+				<LayoutsTree showPrivateLayouts={showPrivateLayouts} />
 			</ClayDropDown.ItemList>
 		</ClayDropDown>
 	);

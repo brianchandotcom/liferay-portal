@@ -138,9 +138,8 @@ describe('Options', () => {
 
 		const valueInputs = container.querySelectorAll('.key-value-input');
 
-		expect(valueInputs[0].value).toEqual('Option1');
-
 		expect(valueInputs[0].readOnly).toBeTruthy();
+		expect(valueInputs[0].value).toEqual('Option1');
 
 		unmockLiferayLanguage();
 	});
@@ -174,7 +173,6 @@ describe('Options', () => {
 		const valueInputs = container.querySelectorAll('.key-value-input');
 
 		expect(valueInputs[0].readOnly).toBeFalsy();
-
 		expect(valueInputs[0].value).toEqual('Option2');
 
 		unmockLiferayLanguage();

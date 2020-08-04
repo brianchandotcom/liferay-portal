@@ -140,9 +140,9 @@
 
 		<prepare-gecko-driver />
 
-		<property name="gecko.driver.path" location="${selenium.executable.dir.name}${selenium.gecko.driver.executable}"/>
+		<property location="${selenium.executable.dir.name}${selenium.gecko.driver.executable}" name="gecko.driver.path" />
 
-		<!-- LRQA-60084 Temporary workaround until new release branch is available from faces repos  -->
+		<!-- LRQA-60084 Temporary workaround until new release branch is available from faces repos -->
 
 		<exec dir="${liferay.faces.alloy.dir}" executable="git">
 			<arg line="checkout" />
@@ -421,7 +421,7 @@
 			mvn verify -P selenium-portal-showcase,firefox -Dwebdriver.firefox.bin=${browser.firefox.bin.file} -Dwebdriver.gecko.driver=${gecko.driver.path} -Dintegration.browser.driver.wait.time.out=${liferay.faces.test.timeout}
 		</execute>
 
-		<!-- LRQA-60084 Temporary workaround cleanup  -->
+		<!-- LRQA-60084 Temporary workaround cleanup -->
 
 		<exec dir="${liferay.faces.alloy.dir}" executable="git">
 			<arg line="checkout" />

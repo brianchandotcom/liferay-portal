@@ -1,7 +1,7 @@
 @import 'atlas-variables';
 
 $controlMenuDesktopHeight: 56px;
-$previewInfoBarHeight: 32px;
+$previewInfoBarHeight: 36px;
 $toolbarDesktopHeight: 56px;
 
 .style-book-editor {
@@ -51,6 +51,15 @@ $toolbarDesktopHeight: 56px;
 			padding-bottom: 1px;
 			padding-left: 24px;
 			padding-right: 24px;
+
+			.dropdown-toggle.btn {
+				&:active {
+					background-color: rgba($white, 0.25);
+				}
+				&:hover {
+					background-color: rgba($white, 0.15);
+				}
+			}
 		}
 
 		&-no-page-message {
@@ -65,14 +74,13 @@ $toolbarDesktopHeight: 56px;
 		}
 
 		&-text {
-			font-weight: 600;
+			font-weight: 700;
 		}
 
 		&::after {
 			content: '';
 			cursor: not-allowed;
 			display: block;
-			height: calc(100% - #{$previewInfoBarHeight});
 			left: 0;
 			position: absolute;
 			top: $previewInfoBarHeight;

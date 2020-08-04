@@ -39,7 +39,7 @@ export default function LayoutSelector() {
 			onActiveChange={setActive}
 			trigger={
 				<ClayButton
-					className="ml-1 px-2"
+					className="ml-2 pl-2 pr-1"
 					displayType="unstyled"
 					small
 					symbol="time"

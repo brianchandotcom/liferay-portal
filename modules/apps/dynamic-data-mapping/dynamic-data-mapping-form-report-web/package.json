@@ -4,7 +4,6 @@
 		"frontend-js-react-web": "*",
 		"frontend-js-web": "*",
 		"moment": "^2.22.2",
-		"numeral": "2.0.6",
 		"react": "16.12.0",
 		"recharts": "1.8.5"
 	},

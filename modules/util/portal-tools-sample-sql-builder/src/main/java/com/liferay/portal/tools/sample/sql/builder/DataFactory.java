@@ -366,23 +366,6 @@ public class DataFactory {
 		initAssetCategoryModels();
 		initAssetTagModels();
 
-		_commerceCurrencyModel = newCommerceCurrencyModel();
-
-		_commerceCatalogModel = newCommerceCatalogModel(_commerceCurrencyModel);
-
-		_commerceChannelModel = newCommerceChannelModel(_commerceCurrencyModel);
-
-		_commerceCatalogGroupModel = newCommerceCatalogGroupModel(
-			_commerceCatalogModel);
-
-		_commerceChannelGroupModel = newCommerceChannelGroupModel(
-			_commerceChannelModel);
-
-		_cpTaxCategoryModel = newCPTaxCategoryModel();
-
-		initCommerceProductModels(
-			_cpTaxCategoryModel, _commerceCatalogGroupModel);
-
 		initJournalArticleContent();
 
 		initRoleModels();
@@ -452,10 +435,6 @@ public class DataFactory {
 		}
 
 		return allAssetCategoryModels;
-	}
-
-	public List<AssetEntryModel> getAssetEntryModels() {
-		return new ArrayList<>(_assetEntryModels);
 	}
 
 	public List<Long> getAssetTagIds(AssetEntryModel assetEntryModel) {
@@ -544,58 +523,8 @@ public class DataFactory {
 		return _classNameModels.values();
 	}
 
-	public GroupModel getCommerceCatalogGroupModel() {
-		return _commerceCatalogGroupModel;
-	}
-
-	public CommerceCatalogModel getCommerceCatalogModel() {
-		return _commerceCatalogModel;
-	}
-
-	public ResourcePermissionModel getCommerceCatalogResourcePermissionModel() {
-		return newCommerceCatalogResourcePermissionModel(_commerceCatalogModel);
-	}
-
-	public GroupModel getCommerceChannelGroupModel() {
-		return _commerceChannelGroupModel;
-	}
-
-	public CommerceChannelModel getCommerceChannelModel() {
-		return _commerceChannelModel;
-	}
-
-	public CommerceCurrencyModel getCommerceCurrencyModel() {
-		return _commerceCurrencyModel;
-	}
-
 	public long getCounterNext() {
 		return _counter.get();
-	}
-
-	public List<CPDefinitionLocalizationModel>
-		getCPDefinitionLocalizationModels() {
-
-		return new ArrayList<>(_cpDefinitionLocalizationModels);
-	}
-
-	public List<CPDefinitionModel> getCPDefinitionModels() {
-		return new ArrayList<>(_cpDefinitionModels);
-	}
-
-	public List<CPFriendlyURLEntryModel> getCPFriendlyURLEntryModels() {
-		return new ArrayList<>(_cpFriendlyURLEntryModels);
-	}
-
-	public List<CPInstanceModel> getCPInstanceModels() {
-		return new ArrayList<>(_cpInstanceModels);
-	}
-
-	public List<CProductModel> getCProductModels() {
-		return new ArrayList<>(_cProductModels);
-	}
-
-	public CPTaxCategoryModel getCPTaxCategoryModel() {
-		return _cpTaxCategoryModel;
 	}
 
 	public long getDefaultDLDDMStructureId() {
@@ -882,74 +811,6 @@ public class DataFactory {
 			}
 
 			_assetTagModelsMaps[i - 1] = assetTagModelsMap;
-		}
-	}
-
-	public void initCommerceProductModels(
-		CPTaxCategoryModel cpTaxCategoryModel,
-		GroupModel commerceCatalogGroupModel) {
-
-		_cProductModels = new ArrayList<>(
-			BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_COUNT);
-
-		int cpDefinitionCount =
-			BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_COUNT *
-				BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_DEFINITION_COUNT;
-
-		_assetEntryModels = new ArrayList<>(cpDefinitionCount);
-		_cpDefinitionLocalizationModels = new ArrayList<>(cpDefinitionCount);
-		_cpDefinitionModels = new ArrayList<>(cpDefinitionCount);
-		_cpFriendlyURLEntryModels = new ArrayList<>(cpDefinitionCount);
-		_cpInstanceModels = new ArrayList<>(
-			cpDefinitionCount *
-				BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_INSTANCE_COUNT);
-
-		for (int productIndex = 0;
-			 productIndex < BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_COUNT;
-			 productIndex++) {
-
-			CProductModel cProductModel = newCProductModel(
-				commerceCatalogGroupModel);
-
-			_cProductModels.add(cProductModel);
-
-			for (int definitionIndex = 0;
-				 definitionIndex <
-					 BenchmarksPropsValues.
-						 MAX_COMMERCE_PRODUCT_DEFINITION_COUNT;
-				 definitionIndex++) {
-
-				CPDefinitionModel cpDefinitionModel = newCPDefinitionModel(
-					cpTaxCategoryModel, cProductModel,
-					commerceCatalogGroupModel, definitionIndex);
-
-				CPDefinitionLocalizationModel cpDefinitionLocalizationModel =
-					newCPDefinitionLocalizationModel(cpDefinitionModel);
-
-				_cpDefinitionLocalizationModels.add(
-					cpDefinitionLocalizationModel);
-
-				_cpDefinitionModels.add(cpDefinitionModel);
-
-				_assetEntryModels.add(
-					newCPDefinitionAssetEntryModel(
-						cpDefinitionModel, commerceCatalogGroupModel));
-
-				_cpFriendlyURLEntryModels.add(
-					newCPFriendlyURLEntryModel(cProductModel));
-
-				for (int instanceIndex = 0;
-					 instanceIndex <
-						 BenchmarksPropsValues.
-							 MAX_COMMERCE_PRODUCT_INSTANCE_COUNT;
-					 instanceIndex++) {
-
-					_cpInstanceModels.add(
-						newCPInstanceModel(
-							cpDefinitionModel, commerceCatalogGroupModel,
-							instanceIndex));
-				}
-			}
 		}
 	}
 
@@ -4451,7 +4312,6 @@ public class DataFactory {
 	private final long[] _assetClassNameIds;
 	private final Map<Long, Integer> _assetClassNameIdsIndexes =
 		new HashMap<>();
-	private List<AssetEntryModel> _assetEntryModels;
 	private final Map<Long, Integer> _assetPublisherQueryStartIndexes =
 		new HashMap<>();
 	private Map<Long, SimpleCounter>[] _assetTagCounters;
@@ -4460,19 +4320,8 @@ public class DataFactory {
 	private List<AssetVocabularyModel>[] _assetVocabularyModelsArray;
 	private final Map<String, ClassNameModel> _classNameModels =
 		new HashMap<>();
-	private final GroupModel _commerceCatalogGroupModel;
-	private final CommerceCatalogModel _commerceCatalogModel;
-	private final GroupModel _commerceChannelGroupModel;
-	private final CommerceChannelModel _commerceChannelModel;
-	private final CommerceCurrencyModel _commerceCurrencyModel;
 	private final long _companyId;
 	private final SimpleCounter _counter;
-	private List<CPDefinitionLocalizationModel> _cpDefinitionLocalizationModels;
-	private List<CPDefinitionModel> _cpDefinitionModels;
-	private List<CPFriendlyURLEntryModel> _cpFriendlyURLEntryModels;
-	private List<CPInstanceModel> _cpInstanceModels;
-	private List<CProductModel> _cProductModels;
-	private final CPTaxCategoryModel _cpTaxCategoryModel;
 	private final PortletPreferencesImpl
 		_defaultAssetPublisherPortletPreferencesImpl;
 	private AssetVocabularyModel _defaultAssetVocabularyModel;

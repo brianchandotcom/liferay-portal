@@ -12,8 +12,8 @@
  * details.
  */
 
-import React from 'react';
 import ClayAlert from '@clayui/alert';
+import React from 'react';
 
 import '../css/main.scss';
 

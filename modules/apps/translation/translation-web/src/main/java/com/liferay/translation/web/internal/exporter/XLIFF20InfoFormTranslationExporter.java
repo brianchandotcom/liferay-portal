@@ -16,8 +16,8 @@ package com.liferay.translation.web.internal.exporter;
 
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.xml.Document;
@@ -65,13 +65,13 @@ public class XLIFF20InfoFormTranslationExporter
 
 		Element fileElement = xliffElement.addElement("file");
 
-		InfoItemClassPKReference infoItemClassPKReference =
-			infoItemFieldValues.getInfoItemClassPKReference();
+		InfoItemReference infoItemReference =
+			infoItemFieldValues.getInfoItemReference();
 
 		fileElement.addAttribute(
 			"id",
-			infoItemClassPKReference.getClassName() + StringPool.COLON +
-				infoItemClassPKReference.getClassPK());
+			infoItemReference.getClassName() + StringPool.COLON +
+				infoItemReference.getClassPK());
 
 		Collection<InfoFieldValue<Object>> infoFieldValues =
 			infoItemFieldValues.getInfoFieldValues();

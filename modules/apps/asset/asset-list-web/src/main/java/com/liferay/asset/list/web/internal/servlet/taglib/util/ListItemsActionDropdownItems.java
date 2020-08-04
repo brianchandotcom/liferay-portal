@@ -25,8 +25,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.info.display.url.provider.InfoEditURLProvider;
 import com.liferay.info.display.url.provider.InfoEditURLProviderTracker;
-import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -93,10 +93,10 @@ public class ListItemsActionDropdownItems {
 		InfoItemFieldValues infoItemFieldValues =
 			infoItemFieldValuesProvider.getInfoItemFieldValues(object);
 
-		InfoItemClassPKReference infoItemClassPKReference =
-			infoItemFieldValues.getInfoItemClassPKReference();
+		InfoItemReference infoItemReference =
+			infoItemFieldValues.getInfoItemReference();
 
-		long classPK = infoItemClassPKReference.getClassPK();
+		long classPK = infoItemReference.getClassPK();
 
 		if (object instanceof AssetEntry) {
 			AssetEntry assetEntry = (AssetEntry)object;

@@ -633,6 +633,18 @@ public class DataFactory {
 		return BenchmarksPropsValues.MAX_BLOGS_ENTRY_COMMENT_COUNT;
 	}
 
+	public int getMaxCommerceProductCount() {
+		return BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_COUNT;
+	}
+
+	public int getMaxCommerceProductDefinitionCount() {
+		return BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_DEFINITION_COUNT;
+	}
+
+	public int getMaxCommerceProductInstanceCount() {
+		return BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_INSTANCE_COUNT;
+	}
+
 	public int getMaxDDLRecordCount() {
 		return BenchmarksPropsValues.MAX_DDL_RECORD_COUNT;
 	}

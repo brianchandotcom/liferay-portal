@@ -46,6 +46,10 @@ public class QuartzConnectionProvider implements ConnectionProvider {
 	}
 
 	@Override
+	public void initialize() {
+	}
+
+	@Override
 	public void shutdown() {
 	}
 

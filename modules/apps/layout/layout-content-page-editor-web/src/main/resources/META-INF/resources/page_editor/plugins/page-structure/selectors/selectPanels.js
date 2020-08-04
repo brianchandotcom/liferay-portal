@@ -107,7 +107,14 @@ export const selectPanels = (activeItemId, activeItemType, state) => {
 	}
 	else if (activeItemType === ITEM_TYPES.editable) {
 		const [fragmentEntryLinkId] = activeItemId.split('-');
-		activeItem = state.editables[fragmentEntryLinkId]?.[activeItemId];
+
+		const {itemId} =
+			Object.values(state.layoutData.items).find(
+				(item) =>
+					item.config.fragmentEntryLinkId === fragmentEntryLinkId
+			) || {};
+
+		activeItem = state.editables[itemId]?.[activeItemId];
 	}
 
 	if (!activeItem) {

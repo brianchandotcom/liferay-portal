@@ -14,10 +14,15 @@
 
 import {SET_FRAGMENT_EDITABLES} from './types';
 
-export default function setFragmentEditables(fragmentEntryLinkId, editables) {
+export default function setFragmentEditables(
+	fragmentEntryLinkId,
+	itemId,
+	editables
+) {
 	return {
 		editables,
 		fragmentEntryLinkId,
+		itemId,
 		type: SET_FRAGMENT_EDITABLES,
 	};
 }

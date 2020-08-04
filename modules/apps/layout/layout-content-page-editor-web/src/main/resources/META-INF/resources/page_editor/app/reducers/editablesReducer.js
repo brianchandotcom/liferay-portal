@@ -35,7 +35,7 @@ export default function editablesReducer(editables = {}, action) {
 
 			return {
 				...editables,
-				[action.fragmentEntryLinkId]: editablesMap,
+				[action.itemId]: editablesMap,
 			};
 		}
 

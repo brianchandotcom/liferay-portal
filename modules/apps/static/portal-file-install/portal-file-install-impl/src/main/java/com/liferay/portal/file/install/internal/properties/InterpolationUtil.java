@@ -20,10 +20,6 @@ package com.liferay.portal.file.install.internal.properties;
 public class InterpolationUtil {
 
 	public static String substVars(String value) {
-		return _substVars(value);
-	}
-
-	private static String _substVars(String value) {
 
 		// Assume we have a value that is something like: "leading ${foo.${bar}}
 		// middle ${baz} trailing". Find the first ending "}" variable
@@ -102,7 +98,7 @@ public class InterpolationUtil {
 		// Perform the substitution again since there could still be
 		// substitutions to make
 
-		value = _substVars(value);
+		value = substVars(value);
 
 		// Return the value
 

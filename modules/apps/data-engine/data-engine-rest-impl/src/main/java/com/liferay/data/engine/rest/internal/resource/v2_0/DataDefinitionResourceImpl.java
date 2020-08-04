@@ -206,14 +206,14 @@ public class DataDefinitionResourceImpl
 						dataDefinitionField.getName(),
 						deDataDefinitionFieldLink.getFieldName())));
 
+			_removeFieldsFromDataLayoutsAndDataListViews(
+				dataDefinition, deDataDefinitionFieldLink.getClassPK(),
+				_getRemovedFieldNames(dataDefinition, dataDefinition.getId()));
+
 			_updateDataDefinition(
 				dataDefinition, dataDefinition.getId(),
 				DataDefinitionUtil.toDDMForm(
 					dataDefinition, _ddmFormFieldTypeServicesTracker));
-
-			_removeFieldsFromDataLayoutsAndDataListViews(
-				dataDefinition, deDataDefinitionFieldLink.getClassPK(),
-				new String[] {deDataDefinitionFieldLink.getFieldName()});
 		}
 	}
 

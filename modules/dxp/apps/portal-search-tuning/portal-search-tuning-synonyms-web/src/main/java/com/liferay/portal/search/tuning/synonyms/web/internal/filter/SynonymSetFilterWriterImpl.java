@@ -77,6 +77,8 @@ public class SynonymSetFilterWriterImpl implements SynonymSetFilterWriter {
 	protected void openIndex(String indexName) {
 		OpenIndexRequest openIndexRequest = new OpenIndexRequest(indexName);
 
+		openIndexRequest.setWaitForActiveShards(1);
+
 		searchEngineAdapter.execute(openIndexRequest);
 	}
 

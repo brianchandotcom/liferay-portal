@@ -228,7 +228,7 @@ public class DataDefinitionResourceImpl
 		return DataDefinitionUtil.toDataDefinition(
 			_dataDefinitionContentTypeTracker, _ddmFormFieldTypeServicesTracker,
 			_ddmStructureLocalService.getStructure(dataDefinitionId),
-			_spiDDMFormRuleConverter);
+			_ddmStructureLayoutLocalService, _spiDDMFormRuleConverter);
 	}
 
 	@Override
@@ -307,7 +307,7 @@ public class DataDefinitionResourceImpl
 				siteId,
 				_dataDefinitionContentTypeTracker.getClassNameId(contentType),
 				dataDefinitionKey),
-			_spiDDMFormRuleConverter);
+			_ddmStructureLayoutLocalService, _spiDDMFormRuleConverter);
 	}
 
 	@Override
@@ -440,7 +440,7 @@ public class DataDefinitionResourceImpl
 				_ddmFormFieldTypeServicesTracker,
 				_ddmStructureLocalService.getStructure(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
-				_spiDDMFormRuleConverter));
+				_ddmStructureLayoutLocalService, _spiDDMFormRuleConverter));
 	}
 
 	@Override
@@ -512,7 +512,8 @@ public class DataDefinitionResourceImpl
 
 		dataDefinition = DataDefinitionUtil.toDataDefinition(
 			_dataDefinitionContentTypeTracker, _ddmFormFieldTypeServicesTracker,
-			ddmStructure, _spiDDMFormRuleConverter);
+			ddmStructure, _ddmStructureLayoutLocalService,
+			_spiDDMFormRuleConverter);
 
 		_resourceLocalService.addResources(
 			contextCompany.getCompanyId(), siteId,
@@ -596,7 +597,7 @@ public class DataDefinitionResourceImpl
 					_ddmFormFieldTypeServicesTracker,
 					_ddmStructureLocalService.getStructure(
 						deDataDefinitionFieldLink.getClassPK()),
-					_spiDDMFormRuleConverter);
+					_ddmStructureLayoutLocalService, _spiDDMFormRuleConverter);
 
 			for (DataDefinitionField dataDefinitionField :
 					existingDataDefinition.getDataDefinitionFields()) {
@@ -1023,7 +1024,7 @@ public class DataDefinitionResourceImpl
 				_dataDefinitionContentTypeTracker,
 				_ddmFormFieldTypeServicesTracker,
 				_ddmStructureLocalService.getStructure(dataDefinitionId),
-				_spiDDMFormRuleConverter);
+				_ddmStructureLayoutLocalService, _spiDDMFormRuleConverter);
 
 		DDMForm existingDDMForm = DataDefinitionUtil.toDDMForm(
 			existingDataDefinition, _ddmFormFieldTypeServicesTracker);
@@ -1247,7 +1248,8 @@ public class DataDefinitionResourceImpl
 
 		return DataDefinitionUtil.toDataDefinition(
 			_dataDefinitionContentTypeTracker, _ddmFormFieldTypeServicesTracker,
-			ddmStructure, _spiDDMFormRuleConverter);
+			ddmStructure, _ddmStructureLayoutLocalService,
+			_spiDDMFormRuleConverter);
 	}
 
 	private DataDefinitionField[] _toDataDefinitionFields(
@@ -1579,7 +1581,7 @@ public class DataDefinitionResourceImpl
 					dataDefinition.getDescription()),
 				ddmFormSerializerSerializeResponse.getContent(),
 				new ServiceContext()),
-			_spiDDMFormRuleConverter);
+			_ddmStructureLayoutLocalService, _spiDDMFormRuleConverter);
 	}
 
 	private void _validate(

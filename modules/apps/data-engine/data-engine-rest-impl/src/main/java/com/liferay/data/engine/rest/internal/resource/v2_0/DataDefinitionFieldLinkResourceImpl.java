@@ -179,7 +179,7 @@ public class DataDefinitionFieldLinkResourceImpl
 					_dataDefinitionContentTypeTracker,
 					_ddmFormFieldTypeServicesTracker,
 					_ddmStructureLocalService.getDDMStructure(dataDefinitionId),
-					_spiDDMFormRuleConverter);
+					_ddmStructureLayoutLocalService, _spiDDMFormRuleConverter);
 				dataLayouts = new DataLayout[0];
 				dataListViews = new DataListView[0];
 			}

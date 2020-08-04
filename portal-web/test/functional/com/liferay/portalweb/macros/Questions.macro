@@ -172,6 +172,16 @@ definition {
 		Pause(locator1 = "1000");
 	}
 
+	macro configureTagsFilter {
+		Click(locator1 = "Questions#QUESTIONS_TAGS_SELECT_FILTER");
+
+		Pause(locator1 = "1000");
+
+		Click(
+			key_filter = "${filterBy}",
+			locator1 = "Questions#QUESTIONS_SELECT_FILTER_VALUE");
+	}
+
 	macro createSomethingInMessageBoards {
 		LexiconEntry.gotoAdd();
 

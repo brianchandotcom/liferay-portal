@@ -72,7 +72,7 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 		<clay:sheet
 			cssClass="import-body-form"
 		>
-			<liferay-ui:error exception="<%= XLIFFFileException.MustBeSupportedLanguage.class %>" message="xliff-file-has-unavailable-language-translation" />
+			<liferay-ui:error exception="<%= XLIFFFileException.MustBeSupportedLanguage.class %>" message="the-xliff-file-has-an-unavailable-language-translation" />
 			<liferay-ui:error exception="<%= XLIFFFileException.MustBeValid.class %>" message="the-file-is-an-invalid-xliff-file" />
 			<liferay-ui:error exception="<%= XLIFFFileException.MustBeWellFormed.class %>" message="xliff-file-does-not-have-all-needed-fields" />
 			<liferay-ui:error exception="<%= XLIFFFileException.MustHaveCorrectEncoding.class %>" message="the-translation-file-has-an-incorrect-encoding.the-supported-encoding-format-is-utf-8" />

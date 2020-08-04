@@ -238,7 +238,13 @@ export default function ListEntries({history}) {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [appWorkflowDefinitionId]);
 
-	const COLUMNS = [...columns, ...WORKFLOW_COLUMNS];
+	const COLUMNS = [
+		...columns.map(({value, ...column}) => ({
+			...column,
+			value: value[themeDisplay.getLanguageId()],
+		})),
+		...WORKFLOW_COLUMNS,
+	];
 
 	const isEmpty = items.length === 0;
 	const showAddButton = showFormView && permissions.add;

@@ -729,6 +729,12 @@ public class QuartzSchedulerEngineTest {
 				new Tuple(jobDetail, null, TriggerState.UNSCHEDULED));
 		}
 
+		@Override
+		public void addJob(
+			JobDetail jobDetail, boolean replace,
+			boolean storeNondurableWhileAwaitingScheduling) {
+		}
+
 		public final void addJob(
 			String jobName, String groupName, StorageType storageType,
 			org.quartz.Trigger trigger) {
@@ -1003,6 +1009,10 @@ public class QuartzSchedulerEngineTest {
 		}
 
 		@Override
+		public void resetTriggerFromErrorState(TriggerKey triggerKey) {
+		}
+
+		@Override
 		public void resumeAll() {
 		}
 
@@ -1052,13 +1062,20 @@ public class QuartzSchedulerEngineTest {
 		}
 
 		@Override
+		public void scheduleJob(
+			JobDetail jobDetail,
+			Set<? extends org.quartz.Trigger> triggersForJob, boolean replace) {
+		}
+
+		@Override
 		public Date scheduleJob(org.quartz.Trigger trigger) {
 			return null;
 		}
 
 		@Override
 		public void scheduleJobs(
-			Map<JobDetail, List<org.quartz.Trigger>> map, boolean replace) {
+			Map<JobDetail, Set<? extends org.quartz.Trigger>> triggersAndJobs,
+			boolean replace) {
 		}
 
 		@Override

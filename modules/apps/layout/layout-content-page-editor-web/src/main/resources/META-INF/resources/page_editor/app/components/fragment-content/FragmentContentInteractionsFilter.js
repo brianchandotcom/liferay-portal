@@ -21,7 +21,8 @@ import {ITEM_TYPES} from '../../config/constants/itemTypes';
 import {config} from '../../config/index';
 import selectCanUpdateEditables from '../../selectors/selectCanUpdateEditables';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
-import {useSelector} from '../../store/index';
+import {useSelector, useSelectorCallback} from '../../store/index';
+import {deepEqual} from '../../utils/checkDeepEqual';
 import {
 	useActivationOrigin,
 	useActiveItemId,
@@ -49,7 +50,7 @@ const EDITABLE_CLASS_NAMES = {
 const isTranslated = (defaultLanguageId, languageId, editableValue) =>
 	defaultLanguageId !== languageId && editableValue?.[languageId];
 
-export default function FragmentContentInteractionsFilter({
+function FragmentContentInteractionsFilter({
 	children,
 	editableElements,
 	fragmentEntryLinkId,
@@ -69,12 +70,15 @@ export default function FragmentContentInteractionsFilter({
 	const canUpdateEditables = useSelector(selectCanUpdateEditables);
 	const languageId = useSelector((state) => state.languageId);
 
-	const editableValues = useSelector((state) =>
-		state.fragmentEntryLinks[fragmentEntryLinkId]
-			? state.fragmentEntryLinks[fragmentEntryLinkId].editableValues[
-					EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-			  ]
-			: {}
+	const editableValues = useSelectorCallback(
+		(state) =>
+			state.fragmentEntryLinks[fragmentEntryLinkId]
+				? state.fragmentEntryLinks[fragmentEntryLinkId].editableValues[
+						EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+				  ]
+				: {},
+		[fragmentEntryLinkId],
+		deepEqual
 	);
 
 	const siblingIds = useMemo(
@@ -329,3 +333,5 @@ FragmentContentInteractionsFilter.propTypes = {
 	fragmentEntryLinkId: PropTypes.string.isRequired,
 	itemId: PropTypes.string.isRequired,
 };
+
+export default React.memo(FragmentContentInteractionsFilter);

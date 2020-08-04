@@ -201,9 +201,9 @@ const AppsPanel = ({
 													>
 														<ul className="list-unstyled">
 															<li className="c-my-3">
-																<h3 className="applications-menu-nav-header">
+																<h2 className="applications-menu-nav-header">
 																	{label}
-																</h3>
+																</h2>
 															</li>
 
 															{panelApps.map(
@@ -300,21 +300,21 @@ const AppsPanel = ({
 										</ClayLayout.ContentCol>
 
 										<ClayLayout.ContentCol className="c-ml-2">
-											<h1 className="applications-menu-company c-mb-0">
+											<div className="applications-menu-company c-mb-0">
 												{companyName}
-											</h1>
+											</div>
 										</ClayLayout.ContentCol>
 									</ClayLayout.ContentRow>
 								</ClayLayout.ContentCol>
 
 								<ClayLayout.ContentCol expand>
-									<p className="applications-menu-powered c-mb-0">
+									<span className="applications-menu-powered c-mb-0">
 										Powered by
-									</p>
+									</span>
 
-									<p className="applications-menu-copyright c-mb-0 c-mt-n1">
+									<span className="applications-menu-copyright c-mb-0 c-mt-n1">
 										Liferay DXP
-									</p>
+									</span>
 								</ClayLayout.ContentCol>
 							</ClayLayout.ContentRow>
 						</ClayLayout.Col>

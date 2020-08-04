@@ -1062,6 +1062,10 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 	</target>
 
 	<target name="setup-profile-dxp">
+		<condition else="master-private" property="profile.dxp.branch.name" value="${build.setup.profile.dxp.branch.name}">
+			<isset property="build.setup.profile.dxp.branch.name" />
+		</condition>
+
 		<if>
 			<and>
 				<isset property="env.JENKINS_HOME" />
@@ -1073,17 +1077,21 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 
 						<gradle-execute setupbinariescache="false" task="checkoutDXPScript">
 							<arg value="--build-file=${project.dir}/modules/profile-dxp.gradle" />
-							<arg value="-Dprofile.dxp.branch.name=${build.setup.profile.dxp.branch.name}" />
+							<arg value="-Dprofile.dxp.branch.name=${profile.dxp.branch.name}" />
 							<arg value="-Dprofile.dxp.repository.url=git@github-dev.liferay.com:liferay/liferay-portal-ee.git" />
 						</gradle-execute>
 					</sequential>
 				</retry>
 			</then>
 			<else>
+				<condition else="git@github.com:liferay/liferay-portal-ee.git" property="profile.dxp.repository.url" value="${build.setup.profile.dxp.repository.url}">
+					<isset property="build.setup.profile.dxp.repository.url" />
+				</condition>
+
 				<gradle-execute setupbinariescache="false" task="checkoutDXPScript">
 					<arg value="--build-file=${project.dir}/modules/profile-dxp.gradle" />
-					<arg value="-Dprofile.dxp.branch.name=${build.setup.profile.dxp.branch.name}" />
-					<arg value="-Dprofile.dxp.repository.url=${build.setup.profile.dxp.repository.url}" />
+					<arg value="-Dprofile.dxp.branch.name=${profile.dxp.branch.name}" />
+					<arg value="-Dprofile.dxp.repository.url=${profile.dxp.repository.url}" />
 				</gradle-execute>
 			</else>
 		</if>

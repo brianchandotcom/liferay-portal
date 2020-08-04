@@ -376,8 +376,8 @@ public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 	private boolean _setConfig(File file) throws Exception {
 		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
 
-		try (FileInputStream fileInputStream = new FileInputStream(file);
-			Reader reader = new InputStreamReader(fileInputStream, _encoding)) {
+		try (InputStream inputStream = new FileInputStream(file);
+			Reader reader = new InputStreamReader(inputStream, _encoding)) {
 
 			TypedProperties typedProperties = new TypedProperties();
 

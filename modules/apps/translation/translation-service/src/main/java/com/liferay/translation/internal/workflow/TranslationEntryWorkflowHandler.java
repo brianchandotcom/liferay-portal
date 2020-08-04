@@ -14,6 +14,7 @@
 
 package com.liferay.translation.internal.workflow;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
+import com.liferay.translation.internal.configuration.FFTranslationWorkflowConfiguration;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalService;
 
@@ -29,13 +31,16 @@ import java.io.Serializable;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alicia Garcia
  */
 @Component(
+	configurationPid = "com.liferay.translation.internal.configuration.FFTranslationWorkflowConfiguration",
 	property = "model.class.name=com.liferay.translation.model.TranslationEntry",
 	service = WorkflowHandler.class
 )
@@ -50,6 +55,11 @@ public class TranslationEntryWorkflowHandler
 	@Override
 	public String getType(Locale locale) {
 		return ResourceActionsUtil.getModelResource(locale, getClassName());
+	}
+
+	@Override
+	public boolean isVisible() {
+		return _ffTranslationWorkflowConfiguration.enabled();
 	}
 
 	@Override
@@ -69,6 +79,17 @@ public class TranslationEntryWorkflowHandler
 		return _translationEntryLocalService.updateStatus(
 			userId, classPK, status, serviceContext, workflowContext);
 	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_ffTranslationWorkflowConfiguration =
+			ConfigurableUtil.createConfigurable(
+				FFTranslationWorkflowConfiguration.class, properties);
+	}
+
+	private FFTranslationWorkflowConfiguration
+		_ffTranslationWorkflowConfiguration;
 
 	@Reference
 	private TranslationEntryLocalService _translationEntryLocalService;

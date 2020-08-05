@@ -13,7 +13,9 @@ import ClayAutocomplete from '@clayui/autocomplete';
 import ClayDropDown from '@clayui/drop-down';
 import React from 'react';
 
-const DropDown = ({
+import '../../../css/AutocompleteDropDown.scss';
+
+export default function AutocompleteDropDown({
 	active,
 	activeItem,
 	emptyMessage = Liferay.Language.get('no-results-were-found'),
@@ -23,7 +25,7 @@ const DropDown = ({
 	match,
 	onSelect,
 	setActiveItem,
-}) => {
+}) {
 	return (
 		<ClayAutocomplete.DropDown active={active}>
 			<ClayDropDown.ItemList id={`dropDownList${id}`}>
@@ -47,6 +49,4 @@ const DropDown = ({
 			</ClayDropDown.ItemList>
 		</ClayAutocomplete.DropDown>
 	);
-};
-
-export {DropDown};
+}

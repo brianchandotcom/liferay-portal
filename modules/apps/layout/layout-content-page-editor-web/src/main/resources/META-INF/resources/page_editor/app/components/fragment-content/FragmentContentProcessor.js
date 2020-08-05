@@ -65,7 +65,11 @@ export default function FragmentContentProcessor({
 	);
 
 	useEffect(() => {
-		if (!editable.element || !editableValues) {
+		if (
+			!editable.element ||
+			!editableValues ||
+			!editableProcessorUniqueId
+		) {
 			return;
 		}
 

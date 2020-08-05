@@ -84,6 +84,13 @@ $theme-colors-cp: map-deep-merge(
 		--container-max-#{$key}: #{$value};
 	}
 
+	// Aspect ratios
+
+	--aspect-ratio: 100%;
+	--aspect-ratio-4-to-3: 75%;
+	--aspect-ratio-8-to-3: 37.5%;
+	--aspect-ratio-16-to-9: 56.25%;
+
 	// Border radius
 	--border-radius-circle: 50%;
 	--border-radius-lg: #{$border-radius-lg};

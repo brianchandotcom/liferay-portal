@@ -66,6 +66,24 @@
 	}
 }
 
+// Aspect ratio
+
+.aspect-ratio:not([class*="aspect-ratio-"]) {
+	padding-bottom: var(--aspect-ratio);
+}
+
+.aspect-ratio-4-to-3 {
+	padding-bottom: var(--aspect-ratio-4-to-3);
+}
+
+.aspect-ratio-8-to-3 {
+	padding-bottom: var(--aspect-ratio-8-to-3);
+}
+
+.aspect-ratio-16-to-9 {
+	padding-bottom: var(--aspect-ratio-16-to-9);
+}
+
 // Container max
 
 @each $breakpoint, $container-max-width in $container-max-widths {

@@ -76,16 +76,6 @@ $toolbarDesktopHeight: 56px;
 		&-text {
 			font-weight: 700;
 		}
-
-		&::after {
-			content: '';
-			cursor: not-allowed;
-			display: block;
-			left: 0;
-			position: absolute;
-			top: $previewInfoBarHeight;
-			width: 100%;
-		}
 	}
 
 	&__page-type-selector {

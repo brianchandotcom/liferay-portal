@@ -41,6 +41,10 @@ export default function LayoutPreview() {
 		loadFrontendTokenValues();
 	}, [loadFrontendTokenValues, frontendTokensValues]);
 
+	useEffect(() => {
+		iframeRef.current.style['pointer-events'] = 'none';
+	}, [previewLayout]);
+
 	return (
 		<>
 			<div className="style-book-editor__page-preview">
@@ -49,7 +53,10 @@ export default function LayoutPreview() {
 						<PreviewInfoBar />
 						<iframe
 							className="style-book-editor__page-preview-frame"
-							onLoad={() => loadFrontendTokenValues()}
+							onLoad={() => {
+								loadOverlay(iframeRef);
+								loadFrontendTokenValues();
+							}}
 							ref={iframeRef}
 							src={urlWithPreviewParameter(
 								previewLayout?.layoutURL
@@ -74,4 +81,26 @@ function urlWithPreviewParameter(url) {
 	nextURL.searchParams.set('p_l_mode', 'preview');
 
 	return nextURL.href;
+}
+
+function loadOverlay(iframeRef) {
+	const style = {
+		cursor: 'not-allowed',
+		height: '100%',
+		left: 0,
+		position: 'fixed',
+		top: 0,
+		width: '100%',
+	};
+
+	if (iframeRef.current) {
+		const overlay = document.createElement('div');
+
+		Object.keys(style).forEach((key) => {
+			overlay.style[key] = style[key];
+		});
+
+		iframeRef.current.removeAttribute('style');
+		iframeRef.current.contentDocument.body.append(overlay);
+	}
 }

@@ -690,13 +690,13 @@ definition {
 
 		if (isSet(dmFolderName)) {
 			Click(
-				key_dmDocumentName = "${dmFolderName}",
-				locator1 = "Link#DOCUMENT_IN_FTP");
+				key_text = "${dmFolderName}",
+				locator1 = "Link#ANY");
 		}
 
 		AssertTextEquals(
-			key_dmDocumentName = "${dmDocumentTitle}",
-			locator1 = "Link#DOCUMENT_IN_FTP",
+			key_text = "${dmDocumentTitle}",
+			locator1 = "Link#ANY",
 			value1 = "${dmDocumentTitle}");
 	}
 
@@ -832,13 +832,13 @@ definition {
 
 		if (isSet(dmFolderName)) {
 			Click(
-				key_dmDocumentName = "${dmFolderName}",
-				locator1 = "Link#DOCUMENT_IN_FTP");
+				key_text = "${dmFolderName}",
+				locator1 = "Link#ANY");
 		}
 
 		AssertElementNotPresent(
-			key_dmDocumentName = "${dmDocumentTitle}",
-			locator1 = "Link#DOCUMENT_IN_FTP");
+			key_text = "${dmDocumentTitle}",
+			locator1 = "Link#ANY");
 	}
 
 	macro viewNoWorkflowResource {

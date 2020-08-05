@@ -54,7 +54,8 @@ function ItemConfigurationContent() {
 		() =>
 			Object.entries(panelsIds)
 				.filter(([, show]) => show)
-				.map(([key]) => ({...PANELS[key], panelId: key})),
+				.map(([key]) => ({...PANELS[key], panelId: key}))
+				.sort((panelA, panelB) => panelB.priority - panelA.priority),
 		[panelsIds]
 	);
 

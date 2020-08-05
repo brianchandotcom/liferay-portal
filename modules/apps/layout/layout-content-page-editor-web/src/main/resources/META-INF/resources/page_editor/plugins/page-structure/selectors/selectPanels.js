@@ -49,42 +49,52 @@ export const PANELS = {
 	[PANEL_IDS.collectionConfiguration]: {
 		component: CollectionConfigurationPanel,
 		label: Liferay.Language.get('configuration'),
+		priority: 0,
 	},
 	[PANEL_IDS.containerLink]: {
 		component: ContainerLinkPanel,
 		label: Liferay.Language.get('link'),
+		priority: 0,
 	},
 	[PANEL_IDS.containerStyles]: {
 		component: ContainerStylesPanel,
 		label: Liferay.Language.get('styles'),
+		priority: 0,
 	},
 	[PANEL_IDS.editableLink]: {
 		component: EditableLinkPanel,
 		label: Liferay.Language.get('link'),
+		priority: 0,
 	},
 	[PANEL_IDS.editableMapping]: {
 		component: MappingPanel,
 		label: Liferay.Language.get('mapping'),
+		priority: 1,
 	},
 	[PANEL_IDS.fragmentConfiguration]: {
 		component: FragmentConfigurationPanel,
 		label: Liferay.Language.get('configuration'),
+		priority: 0,
 	},
 	[PANEL_IDS.fragmentStyles]: {
 		component: FragmentStylesPanel,
 		label: Liferay.Language.get('styles'),
+		priority: 0,
 	},
 	[PANEL_IDS.imageProperties]: {
 		component: ImagePropertiesPanel,
 		label: Liferay.Language.get('image'),
+		priority: 0,
 	},
 	[PANEL_IDS.rowConfiguration]: {
 		component: RowConfigurationPanel,
 		label: Liferay.Language.get('configuration'),
+		priority: 0,
 	},
 	[PANEL_IDS.rowStyles]: {
 		component: RowStylesPanel,
 		label: Liferay.Language.get('styles'),
+		priority: 0,
 	},
 };
 

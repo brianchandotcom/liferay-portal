@@ -24,6 +24,13 @@ const DEFAULT_RENDER_DATA = {
 	portletId: 'UNKNOWN_PORTLET_ID',
 };
 
+const DEFAULT_TOAST_TYPE_TITLES = {
+	danger: Liferay.Language.get('error'),
+	info: Liferay.Language.get('info'),
+	success: Liferay.Language.get('success'),
+	warning: Liferay.Language.get('warning'),
+};
+
 const TOAST_AUTO_CLOSE_INTERVAL = 5000;
 
 const TPL_ALERT_CONTAINER = `
@@ -94,7 +101,7 @@ function openToast({
 	onClick = () => {},
 	onClose = () => {},
 	renderData = DEFAULT_RENDER_DATA,
-	title = '',
+	title,
 	toastProps = {},
 	type = 'success',
 	variant,
@@ -127,7 +134,12 @@ function openToast({
 			<div
 				dangerouslySetInnerHTML={{
 					__html: `${
-						title ? `<strong class="lead">${title}</strong>` : ''
+						title ||
+						(title === undefined && DEFAULT_TOAST_TYPE_TITLES[type])
+							? `<strong class="lead">${
+									title || DEFAULT_TOAST_TYPE_TITLES[type]
+							  }:</strong>`
+							: ''
 					}${message}`,
 				}}
 			/>

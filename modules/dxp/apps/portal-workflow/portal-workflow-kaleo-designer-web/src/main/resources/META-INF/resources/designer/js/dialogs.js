@@ -195,7 +195,6 @@ AUI.add(
 			Liferay.Util.openToast({
 				container: document.querySelector('.lfr-alert-container'),
 				message,
-				messageType: 'html',
 			});
 		};
 

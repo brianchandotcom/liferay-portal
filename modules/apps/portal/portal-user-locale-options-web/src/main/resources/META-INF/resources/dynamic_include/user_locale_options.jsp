@@ -45,7 +45,6 @@ Locale userLocale = user.getLocale();
 <aui:script>
 	Liferay.Util.openToast({
 		message: '<%= HtmlUtil.escapeJS(alertMessage) %>',
-		messageType: 'html',
 		onClose: function (data) {
 			if (data.event) {
 				Liferay.Util.Session.set(

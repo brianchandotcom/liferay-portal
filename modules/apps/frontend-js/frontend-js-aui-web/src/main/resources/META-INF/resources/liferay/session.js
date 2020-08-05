@@ -563,7 +563,6 @@ AUI.add(
 											remainingTimeFormatted,
 									  ])
 									: instance._expiredText,
-							messageType: 'html',
 							onClick(eventPayload) {
 								var event = eventPayload.event;
 								var onClose = eventPayload.onClose;

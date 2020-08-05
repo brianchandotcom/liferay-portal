@@ -16,6 +16,7 @@ import React from 'react';
 
 import {ACTION_UPDATE_ACTIVE_VIEW} from '../actions/updateActiveView';
 import {ACTION_UPDATE_VIEW_COMPONENT} from '../actions/updateViewComponent';
+import {ACTION_UPDATE_VISIBLE_FIELD_NAMES} from '../actions/updateVisibleFieldNames';
 
 export const viewsReducer = (state, {type, value}) => {
 	const {activeView, views} = state;
@@ -48,6 +49,12 @@ export const viewsReducer = (state, {type, value}) => {
 			),
 		};
 	}
+	else if (type === ACTION_UPDATE_VISIBLE_FIELD_NAMES) {
+		return {
+			...state,
+			visibleFieldNames: value,
+		};
+	}
 
 	return state;
 };
@@ -55,4 +62,5 @@ export const viewsReducer = (state, {type, value}) => {
 export default React.createContext({
 	activeView: null,
 	views: [],
+	visibleFieldNames: {},
 });

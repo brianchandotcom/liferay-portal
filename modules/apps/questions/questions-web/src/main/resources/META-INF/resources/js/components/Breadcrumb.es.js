@@ -83,8 +83,8 @@ export default ({section}) => {
 	}, [buildBreadcrumbNodesData, section]);
 
 	return (
-		<section className="align-items-center d-flex questions-breadcrumb">
-			<ol className="breadcrumb mb-0 ml-2">
+		<section className="align-items-center d-flex mb-0 questions-breadcrumb">
+			<ol className="breadcrumb ml-0">
 				{breadcrumbNodes.length > MAX_SECTIONS_IN_BREADCRUMB ? (
 					<ShortenedBreadcrumb />
 				) : (

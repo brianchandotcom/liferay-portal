@@ -477,7 +477,7 @@ definition {
 			extractFirstText = "<br />",
 			recipient = "test1@liferay.com",
 			sender = "Joe Bloggs",
-			specificText = "Liferay DXP Message Boards<br />",
+			specificText = "${siteName} Message Boards<br />",
 			subject = "Home - ${siteName} New Message: MB Thread Message Subject GMMB2");
 
 		MockMock._backtoInbox();
@@ -519,18 +519,10 @@ definition {
 	@priority = "3"
 	test ViewSecureContentAndPageAsSiteMember {
 		property test.name.skip.portal.instance = "WidgetPagesUseCase#ViewSecureContentAndPageAsSiteMember";
+		property test.smtp.server.enabled = "true";
 		property testray.component.names = "Message Boards,Site Pages Administration";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Server Administration");
-
-		ServerAdministration.configureMailServerSettings(
-			userName = PropsUtil.get("email.address.1"),
-			userPassword = PropsUtil.get("email.password.1"));
 
 		JSONUser.addUser(
 			userEmailAddress = PropsUtil.get("email.address.2"),
@@ -612,58 +604,35 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blog and Message Board Page");
 
-		Pause(locator1 = "30000");
+		MockMock.viewMail(
+			asset = "Blogs Entry",
+			content = "Blogs Entry Title GMB2",
+			recipient = "userfn1 userln1",
+			sender = "Joe Bloggs",
+			subject = "Test Test Published &quot;Blogs Entry Title GMB2&quot; on ${siteName} Blogs");
 
-		Gmail.login(
-			userEmailAddress = PropsUtil.get("email.address.2"),
-			userPassword = PropsUtil.get("email.password.2"));
-
-		Gmail.gotoHtmlMode();
-
-		Gmail.viewMail(
-			emailFromUserName = "Joe Bloggs",
-			gmailAssetType = "GMB2",
-			gmailMessageBody = "Blogs Entry Title GMB2",
-			gmailMessageTitle = "Test Test Published &quot;Blogs Entry Title GMB2&quot; on ${siteName} Blogs");
-
-		Gmail.openMessageContinueReadingButton(
-			contentTitle = "Blogs Entry Title GMB2",
-			pageName = "Blog and Message Board Page",
-			siteName = "${siteName}");
+		MockMock.clickBodyLink(
+			asset = "Blogs Entry Title GMB2",
+			bodyLink = "CONTINUE READING");
 
 		var blogEntryURL = selenium.getLocation();
 
-		Close();
+		var messageBoardsThreadURL = MockMock.getBodySpecificText(
+			asset = "MB",
+			content = "MB Thread Message Body",
+			extractFirstText = "<br />",
+			recipient = "test1@liferay.com",
+			sender = "Test Test",
+			specificText = "${siteName} Message Boards<br />",
+			subject = "Home - ${siteName} New Message: MB Thread Message Subject GMMB3");
 
-		SelectWindow(locator1 = "null");
+		MockMock._backtoInbox();
 
-		Navigator.gotoPage(pageName = "Blog and Message Board Page");
-
-		Gmail.gotoHtmlMode();
-
-		Gmail.viewMail(
-			emailFromUserName = "Test Test",
-			gmailAssetType = "GMMB3",
-			gmailMessageBody = "MB Thread Message Body",
-			gmailMessageTitle = "Message Boards Home - ${siteName} New Message: MB Thread Message Subject GMMB3");
-
-		Gmail.openMessageLink(
-			contentTitle = "MB Thread Message Subject GMMB3",
-			gmailAssetType = "Message Boards",
-			pageName = "Blog and Message Board Page",
-			siteName = "${siteName}");
-
-		var messageBoardsThreadURL = selenium.getLocation();
-
-		Close();
-
-		SelectWindow(locator1 = "null");
+		Click(
+			key_text = "Delete all",
+			locator1 = "Link#ANY");
 
 		Navigator.gotoPage(pageName = "Blog and Message Board Page");
-
-		Gmail.gotoHtmlMode();
-
-		Gmail.deleteSpecificMail(gmailMessageTitleList = "Test Test Published &quot;Blogs Entry Title GMB2&quot; on ${siteName} Blogs,Message Boards Home - ${siteName} New Message: MB Thread Message Subject GMMB3,Your New Account,Your New Password,GMB2,GMMB3");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea2@liferay.com",
@@ -707,15 +676,6 @@ definition {
 		property testray.component.names = "Message Boards,Site Pages Administration,Training";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Server Administration");
-
-		ServerAdministration.configureMailServerSettings(
-			userName = PropsUtil.get("email.address.1"),
-			userPassword = PropsUtil.get("email.password.1"));
 
 		JSONUser.addUser(
 			userEmailAddress = PropsUtil.get("email.address.2"),
@@ -793,58 +753,35 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blog and Message Board Page");
 
-		Pause(locator1 = "30000");
+		MockMock.viewMail(
+			asset = "Blogs Entry",
+			content = "Blogs Entry Title GMB3",
+			recipient = "userfn1 userln1",
+			sender = "Joe Bloggs",
+			subject = "Test Test Published &quot;Blogs Entry Title GMB3&quot; on ${siteName} Blogs");
 
-		Gmail.login(
-			userEmailAddress = PropsUtil.get("email.address.2"),
-			userPassword = PropsUtil.get("email.password.2"));
-
-		Gmail.gotoHtmlMode();
-
-		Gmail.viewMail(
-			emailFromUserName = "Joe Bloggs",
-			gmailAssetType = "GMB3",
-			gmailMessageBody = "Blogs Entry Title GMB3",
-			gmailMessageTitle = "Test Test Published &quot;Blogs Entry Title GMB3&quot; on ${siteName} Blogs");
-
-		Gmail.openMessageContinueReadingButton(
-			contentTitle = "Blogs Entry Title GMB3",
-			pageName = "Blog and Message Board Page",
-			siteName = "${siteName}");
+		MockMock.clickBodyLink(
+			asset = "Blogs Entry Title GMB3",
+			bodyLink = "CONTINUE READING");
 
 		var blogEntryURL = selenium.getLocation();
 
-		Close();
+		var messageBoardsThreadURL = MockMock.getBodySpecificText(
+			asset = "MB",
+			content = "MB Thread Message Body",
+			extractFirstText = "<br />",
+			recipient = "test1@liferay.com",
+			sender = "Test Test",
+			specificText = "${siteName} Message Boards<br />",
+			subject = "Home - ${siteName} New Message: MB Thread Message Subject GMMB4");
 
-		SelectWindow(locator1 = "null");
+		MockMock._backtoInbox();
 
-		Navigator.gotoPage(pageName = "Blog and Message Board Page");
-
-		Gmail.gotoHtmlMode();
-
-		Gmail.viewMail(
-			emailFromUserName = "Test Test",
-			gmailAssetType = "GMMB4",
-			gmailMessageBody = "MB Thread Message Body",
-			gmailMessageTitle = "Message Boards Home - ${siteName} New Message: MB Thread Message Subject GMMB4");
-
-		Gmail.openMessageLink(
-			contentTitle = "MB Thread Message Subject GMMB4",
-			gmailAssetType = "Message Boards",
-			pageName = "Blog and Message Board Page",
-			siteName = "${siteName}");
-
-		var messageBoardsThreadURL = selenium.getLocation();
-
-		Close();
-
-		SelectWindow(locator1 = "null");
+		Click(
+			key_text = "Delete all",
+			locator1 = "Link#ANY");
 
 		Navigator.gotoPage(pageName = "Blog and Message Board Page");
-
-		Gmail.gotoHtmlMode();
-
-		Gmail.deleteSpecificMail(gmailMessageTitleList = "Test Test Published &quot;Blogs Entry Title GMB3&quot; on ${siteName} Blogs,Message Boards Home - ${siteName} New Message: MB Thread Message Subject GMMB4,Your New Account,Your New Password,GMB3,GMMB4");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea2@liferay.com",
@@ -861,7 +798,7 @@ definition {
 		Alert.viewRequestFailedToComplete();
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "Message#ERROR_2",
+			locator1 = "Message#ERROR",
 			value1 = "You do not have the required permissions.");
 
 		Navigator.gotoPage(pageName = "Blog and Message Board Page");
@@ -871,7 +808,7 @@ definition {
 		Alert.viewRequestFailedToComplete();
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "Message#ERROR_2",
+			locator1 = "Message#ERROR",
 			value1 = "You do not have the required permissions.");
 	}
 

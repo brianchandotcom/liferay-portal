@@ -137,22 +137,24 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 		_bundleContext = bundleContext;
 
-		_activeLevel = GetterUtil.getInteger(properties.get(ACTIVE_LEVEL));
-		_filter = properties.get(FILTER);
-		_fragmentScope = properties.get(FRAGMENT_SCOPE);
+		_activeLevel = GetterUtil.getInteger(
+			bundleContext.getProperty(ACTIVE_LEVEL));
+		_filter = bundleContext.getProperty(FILTER);
+		_fragmentScope = bundleContext.getProperty(FRAGMENT_SCOPE);
 		_noInitialDelay = GetterUtil.getBoolean(
-			properties.get(NO_INITIAL_DELAY));
-		_optionalScope = properties.get(OPTIONAL_SCOPE);
-		_poll = GetterUtil.getLong(properties.get(POLL), 2000);
+			bundleContext.getProperty(NO_INITIAL_DELAY));
+		_optionalScope = bundleContext.getProperty(OPTIONAL_SCOPE);
+		_poll = GetterUtil.getLong(bundleContext.getProperty(POLL), 2000);
 		_startBundles = GetterUtil.getBoolean(
-			properties.get(START_NEW_BUNDLES), true);
-		_startLevel = GetterUtil.getInteger(properties.get(START_LEVEL));
+			bundleContext.getProperty(START_NEW_BUNDLES), true);
+		_startLevel = GetterUtil.getInteger(
+			bundleContext.getProperty(START_LEVEL));
 		_systemBundle = bundleContext.getBundle(
 			Constants.SYSTEM_BUNDLE_LOCATION);
 		_useStartActivationPolicy = GetterUtil.getBoolean(
-			properties.get(USE_START_ACTIVATION_POLICY), true);
+			bundleContext.getProperty(USE_START_ACTIVATION_POLICY), true);
 		_useStartTransient = GetterUtil.getBoolean(
-			properties.get(USE_START_TRANSIENT));
+			bundleContext.getProperty(USE_START_TRANSIENT));
 
 		_watchedDirectory = new File(properties.get(DIR));
 
@@ -178,7 +180,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		}
 
 		_webStartLevel = GetterUtil.getInteger(
-			properties.get(WEB_START_LEVEL), _startLevel);
+			bundleContext.getProperty(WEB_START_LEVEL), _startLevel);
 
 		_fileInstallers = ServiceTrackerListFactory.open(
 			_bundleContext, FileInstaller.class, null,
@@ -220,7 +222,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			});
 
 		_scanner = new Scanner(
-			_watchedDirectory, _filter, properties.get(SUBDIR_MODE));
+			_watchedDirectory, _filter, bundleContext.getProperty(SUBDIR_MODE));
 
 		_bundleContext.addBundleListener(this);
 	}

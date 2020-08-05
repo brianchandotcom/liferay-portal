@@ -88,19 +88,7 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 
 		Map<String, String> map = new HashMap<>();
 
-		_set(map, DirectoryWatcher.POLL);
 		_set(map, DirectoryWatcher.DIR);
-		_set(map, DirectoryWatcher.FILTER);
-		_set(map, DirectoryWatcher.START_NEW_BUNDLES);
-		_set(map, DirectoryWatcher.USE_START_TRANSIENT);
-		_set(map, DirectoryWatcher.USE_START_ACTIVATION_POLICY);
-		_set(map, DirectoryWatcher.NO_INITIAL_DELAY);
-		_set(map, DirectoryWatcher.START_LEVEL);
-		_set(map, DirectoryWatcher.ACTIVE_LEVEL);
-		_set(map, DirectoryWatcher.OPTIONAL_SCOPE);
-		_set(map, DirectoryWatcher.FRAGMENT_SCOPE);
-		_set(map, DirectoryWatcher.SUBDIR_MODE);
-		_set(map, DirectoryWatcher.WEB_START_LEVEL);
 
 		Set<String> dirs = new HashSet<>(
 			Arrays.asList(StringUtil.split(map.get(DirectoryWatcher.DIR))));

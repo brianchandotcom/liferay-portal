@@ -20,6 +20,8 @@
 int backgroundTaskStatus = GetterUtil.getInteger(request.getAttribute("liferay-staging:process-status:backgroundTaskStatus"));
 String backgroundTaskStatusLabel = GetterUtil.getString(request.getAttribute("liferay-staging:process-status:backgroundTaskStatusLabel"));
 
+String backgroundTaskStatusLabelCss = "process-status background-task-status-" + backgroundTaskStatusLabel;
+
 String clayClassPostfix = "info";
 
 if (backgroundTaskStatus == BackgroundTaskConstants.STATUS_FAILED) {

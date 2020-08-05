@@ -34,8 +34,6 @@ public class Scanner {
 
 	public static final String SUBDIR_MODE_RECURSE = "recurse";
 
-	public static final String SUBDIR_MODE_SKIP = "skip";
-
 	public Scanner(
 		File directory, final String filterString, String subdirMode) {
 
@@ -59,7 +57,6 @@ public class Scanner {
 			_filenameFilter = null;
 		}
 
-		_skipSubdir = SUBDIR_MODE_SKIP.equals(subdirMode);
 		_recurseSubdir = SUBDIR_MODE_RECURSE.equals(subdirMode);
 	}
 
@@ -149,17 +146,14 @@ public class Scanner {
 
 		for (File file : list) {
 			if (file.isDirectory()) {
-				if (_skipSubdir) {
-					continue;
-				}
-				else if (_recurseSubdir) {
+				if (_recurseSubdir) {
 					files.addAll(
 						_processFiles(
 							reportImmediately,
 							file.listFiles(_filenameFilter)));
-
-					continue;
 				}
+
+				continue;
 			}
 
 			long lastChecksum = 0;
@@ -209,7 +203,6 @@ public class Scanner {
 	private final FilenameFilter _filenameFilter;
 	private final Map<File, Long> _lastChecksums = new HashMap<>();
 	private final boolean _recurseSubdir;
-	private final boolean _skipSubdir;
 	private final Map<File, Long> _storedChecksums = new HashMap<>();
 	private final File _watchedDirectory;
 

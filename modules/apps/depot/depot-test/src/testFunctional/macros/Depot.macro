@@ -197,19 +197,36 @@ definition {
 
 		DepotNavigator.gotoSites(depotName = "${depotName}");
 
-		LexiconTable.clickEllipsisItem(
-			item = "Make Web Content Structures Available",
-			tableEntry = "${siteName}");
+		if (isSet(makeWCUnavailable)) {
+			LexiconTable.clickEllipsisItem(
+				item = "Make Web Content Structures Unavailable",
+				tableEntry = "${siteName}");
 
-		AssertConfirm(value1 = "You will not be able to disconnect this site when structure sharing is enabled. In order to disconnect this site from this asset library, you must disable structure sharing first.");
+			AssertConfirm(value1 = "After disabling structure sharing, any site content that uses the structures will be invalid. Do you want to disable structure sharing?");
 
-		Alert.viewSuccessMessage();
+			Alert.viewSuccessMessage();
 
-		AssertTextEquals(
-			key_tableEntry = "${siteName}",
-			key_tableEntryText = "${tableEntryText}",
-			locator1 = "LexiconTable#TABLE_ENTRY_TEXT_2",
-			value1 = "${tableEntryText}");
+			AssertTextEquals(
+				key_tableEntry = "${siteName}",
+				key_tableEntryText = "${tableEntryText}",
+				locator1 = "LexiconTable#TABLE_ENTRY_TEXT",
+				value1 = "${tableEntryText}");
+		}
+		else {
+			LexiconTable.clickEllipsisItem(
+				item = "Make Web Content Structures Available",
+				tableEntry = "${siteName}");
+
+			AssertConfirm(value1 = "You will not be able to disconnect this site when structure sharing is enabled. In order to disconnect this site from this asset library, you must disable structure sharing first.");
+
+			Alert.viewSuccessMessage();
+
+			AssertTextEquals(
+				key_tableEntry = "${siteName}",
+				key_tableEntryText = "${tableEntryText}",
+				locator1 = "LexiconTable#TABLE_ENTRY_TEXT_2",
+				value1 = "${tableEntryText}");
+		}
 	}
 
 	macro configureDefaultLanguage {

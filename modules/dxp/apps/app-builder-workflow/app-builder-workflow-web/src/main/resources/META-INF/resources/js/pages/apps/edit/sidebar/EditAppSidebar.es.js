@@ -18,7 +18,7 @@ import classNames from 'classnames';
 import {Sidebar} from 'data-engine-taglib';
 import React, {useContext, useEffect, useState} from 'react';
 
-import {AutocompleteMultiSelect} from '../../../../components/autocomplete/AutocompleteMultiSelect.es';
+import AutocompleteMultiSelect from '../../../../components/autocomplete/AutocompleteMultiSelect.es';
 import ButtonInfo from '../../../../components/button-info/ButtonInfo.es';
 import {UPDATE_STEP} from '../configReducer.es';
 import ActionsTab from './ActionsTab.es';

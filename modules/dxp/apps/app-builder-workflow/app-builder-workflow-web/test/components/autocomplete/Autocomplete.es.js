@@ -12,7 +12,7 @@
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
-import {Autocomplete} from '../../../src/main/resources/META-INF/resources/js/components/autocomplete/Autocomplete.es';
+import Autocomplete from '../../../src/main/resources/META-INF/resources/js/components/autocomplete/Autocomplete.es';
 
 import '@testing-library/jest-dom/extend-expect';
 

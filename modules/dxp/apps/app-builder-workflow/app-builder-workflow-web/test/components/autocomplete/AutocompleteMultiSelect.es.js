@@ -12,7 +12,7 @@
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import React, {cloneElement, useState} from 'react';
 
-import {AutocompleteMultiSelect} from '../../../src/main/resources/META-INF/resources/js/components/autocomplete/AutocompleteMultiSelect.es';
+import AutocompleteMultiSelect from '../../../src/main/resources/META-INF/resources/js/components/autocomplete/AutocompleteMultiSelect.es';
 
 import '@testing-library/jest-dom/extend-expect';
 

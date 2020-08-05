@@ -70,7 +70,15 @@ function ItemConfigurationContent() {
 	}, [panels]);
 
 	if (!activeItem || !panels.length) {
-		return null;
+		return (
+			<PageStructureSidebarSection resizable size={0.6}>
+				<p className="bg-light m-3 p-5 rounded small text-center text-secondary">
+					{Liferay.Language.get(
+						'select-an-element-of-the-page-to-show-this-panel'
+					)}
+				</p>
+			</PageStructureSidebarSection>
+		);
 	}
 
 	return (

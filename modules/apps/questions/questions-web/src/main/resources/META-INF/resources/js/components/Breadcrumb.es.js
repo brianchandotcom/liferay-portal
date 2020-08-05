@@ -84,16 +84,14 @@ export default ({section}) => {
 	return (
 		
 		<section className="align-items-center d-flex">
-			<div className="questions-breadcrumb">
-				<div className="questions-container">
-					<ol className="breadcrumb mb-0 ml-2">
-						{breadcrumbNodes.length > MAX_SECTIONS_IN_BREADCRUMB ? (
-							<ShortenedBreadcrumb />
-						) : (
-							<AllBreadcrumb />
-						)}
-					</ol>
-				</div>
+			<div className="questions-breadcrumb ml-0">
+				<ol className="breadcrumb mb-0">
+					{breadcrumbNodes.length > MAX_SECTIONS_IN_BREADCRUMB ? (
+						<ShortenedBreadcrumb />
+					) : (
+						<AllBreadcrumb />
+					)}
+				</ol>
 			</div>
 		</section>
 	);

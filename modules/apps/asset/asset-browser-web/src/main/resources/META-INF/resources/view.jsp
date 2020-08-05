@@ -104,6 +104,19 @@
 							</c:choose>
 						</h5>
 
+						<c:if test="<%= assetBrowserDisplayContext.isSearchEverywhere() %>">
+							<h6 class="text-default">
+								<liferay-ui:message key="location" />:
+								<span class="text-secondary">
+									<clay:icon
+										symbol="<%= assetBrowserDisplayContext.getGroupCssIcon(assetRenderer.getGroupId()) %>"
+									/>
+
+									<small><%= assetBrowserDisplayContext.getGroupLabel(assetRenderer.getGroupId(), locale) %></small>
+								</span>
+							</h6>
+						</c:if>
+
 						<c:if test="<%= Validator.isNull(assetBrowserDisplayContext.getTypeSelection()) %>">
 							<h6 class="text-muted">
 								<%= HtmlUtil.escape(assetRendererFactory.getTypeName(locale, assetBrowserDisplayContext.getSubtypeSelectionId())) %>

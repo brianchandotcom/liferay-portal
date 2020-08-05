@@ -1,3 +1,5 @@
+@import 'atlas-variables';
+
 .lfr-depot-dashboard-container {
 	.card .autofit-col {
 		position: initial;
@@ -16,8 +18,12 @@
 		}
 
 		&:hover {
-			color: inherit;
+			color: $dark;
 			text-decoration: unset;
 		}
+	}
+
+	.template-card-horizontal .card-title {
+		color: $dark;
 	}
 }

@@ -378,7 +378,6 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test ViewSecureContentAndPageAsGuest {
 		property test.name.skip.portal.instance = "WidgetPagesUseCase#ViewSecureContentAndPageAsGuest";
@@ -475,7 +474,7 @@ definition {
 			asset = "MB",
 			content = "MB Thread Message Body",
 			extractFirstText = "<br />",
-			recipient = "test1@liferay.com",
+			recipient = "userfn1 userln1",
 			sender = "Joe Bloggs",
 			specificText = "${siteName} Message Boards<br />",
 			subject = "Home - ${siteName} New Message: MB Thread Message Subject GMMB2");
@@ -515,7 +514,6 @@ definition {
 			value1 = "You do not have the required permissions.");
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test ViewSecureContentAndPageAsSiteMember {
 		property test.name.skip.portal.instance = "WidgetPagesUseCase#ViewSecureContentAndPageAsSiteMember";
@@ -621,7 +619,7 @@ definition {
 			asset = "MB",
 			content = "MB Thread Message Body",
 			extractFirstText = "<br />",
-			recipient = "test1@liferay.com",
+			recipient = "userfn1 userln1",
 			sender = "Test Test",
 			specificText = "${siteName} Message Boards<br />",
 			subject = "Home - ${siteName} New Message: MB Thread Message Subject GMMB3");
@@ -669,7 +667,6 @@ definition {
 			threadSubject = "MB Thread Message Subject GMMB3");
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewSecureContentAndPageAsUser {
 		property test.name.skip.portal.instance = "WidgetPagesUseCase#ViewSecureContentAndPageAsUser";
@@ -770,7 +767,7 @@ definition {
 			asset = "MB",
 			content = "MB Thread Message Body",
 			extractFirstText = "<br />",
-			recipient = "test1@liferay.com",
+			recipient = "userfn1 userln1",
 			sender = "Test Test",
 			specificText = "${siteName} Message Boards<br />",
 			subject = "Home - ${siteName} New Message: MB Thread Message Subject GMMB4");

@@ -16,9 +16,9 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import isClickOutside from 'app-builder-web/js/utils/clickOutside.es';
 import React, {useEffect, useRef, useState} from 'react';
 
-import {Autocomplete} from './Autocomplete.es';
+import AutocompleteDropDown from './AutocompleteDropDown.es';
 
-const AutocompleteMultiSelect = ({
+function AutocompleteMultiSelect({
 	emptyMessage,
 	emptyResultMessage,
 	items,
@@ -26,13 +26,14 @@ const AutocompleteMultiSelect = ({
 	placeholder = Liferay.Language.get('select-or-type-an-option'),
 	onChange,
 	selectedItems = [],
-}) => {
-	const [active, setActive] = useState(false);
-	const [currentIndex, setCurrentIndex] = useState(-1);
+}) {
+	const [activeItem, setActiveItem] = useState(-1);
+	const [dropDownVisible, setDropDownVisible] = useState(false);
 	const [filteredItems, setFilteredItems] = useState(items);
 	const [highlighted, setHighlighted] = useState(false);
 	const [search, setSearch] = useState('');
 
+	const inputRef = useRef();
 	const wrapperRef = useRef();
 
 	const className = `${
@@ -40,40 +41,47 @@ const AutocompleteMultiSelect = ({
 	} align-items-start form-control form-control-tag-group multi-select-wrapper`;
 
 	const onBlur = () => {
-		setActive(false);
+		setDropDownVisible(false);
 		setHighlighted(false);
-		setCurrentIndex(-1);
+		setActiveItem(-1);
 		setSearch('');
 	};
 
 	const onFocus = ({target}) => {
 		setHighlighted(true);
-		setActive(true);
+		setDropDownVisible(true);
 		setSearch('');
 		target.value = '';
 	};
 
-	const onKeyDown = ({keyCode}) => {
-		const keyArrowDown = 40;
-		const keyArrowUp = 38;
-		const keyEnter = 13;
-		const keyTab = 9;
+	const onKeyDown = ({key}) => {
+		const item = filteredItems[activeItem];
 
-		const item = filteredItems[currentIndex];
+		const updateIndex = (index) => {
+			setActiveItem(index);
 
-		if (keyCode === keyArrowUp && currentIndex > 0) {
-			setCurrentIndex(currentIndex - 1);
+			const element = document.querySelector(
+				`#dropDownList${id} > li:nth-child(${index})`
+			);
+
+			if (typeof element?.scrollIntoView === 'function') {
+				element.scrollIntoView();
+			}
+		};
+
+		if (key === 'ArrowUp' && activeItem > 0) {
+			updateIndex(activeItem - 1);
 		}
-		else if (
-			keyCode === keyArrowDown &&
-			currentIndex < filteredItems.length - 1
-		) {
-			setCurrentIndex(currentIndex + 1);
+
+		if (key === 'ArrowDown' && activeItem < filteredItems.length - 1) {
+			updateIndex(activeItem + 1);
 		}
-		else if (keyCode === keyEnter && item) {
+
+		if (key === 'Enter' && item) {
 			onSelect(item);
 		}
-		else if (keyCode === keyTab) {
+
+		if (key === 'Tab') {
 			onBlur();
 		}
 	};
@@ -91,6 +99,10 @@ const AutocompleteMultiSelect = ({
 
 		setSearch('');
 		onChange(newSelectedItems);
+
+		if (inputRef.current) {
+			inputRef.current.focus();
+		}
 	};
 
 	useEffect(() => {
@@ -131,87 +143,80 @@ const AutocompleteMultiSelect = ({
 	}, [items, search, selectedItems]);
 
 	return (
-		<ClayAutocomplete>
-			<div className={className} ref={wrapperRef}>
-				<div className="col-12 d-flex flex-wrap p-0">
-					{selectedItems.map(({id, name}, index) => (
-						<AutocompleteMultiSelect.Item
-							key={index}
-							name={name}
-							onRemove={() => onRemove(id)}
-						/>
-					))}
-
-					<input
-						className="form-control-inset"
-						onChange={({target}) => setSearch(target.value)}
-						onFocus={onFocus}
-						onKeyDown={onKeyDown}
-						placeholder={!selectedItems.length ? placeholder : ''}
-						style={selectedItems && {width: 0}}
-						type="text"
-						value={search}
+		<ClayAutocomplete className={className} ref={wrapperRef}>
+			<div className="col-12 d-flex flex-wrap p-0">
+				{selectedItems.map(({id, name}, index) => (
+					<AutocompleteMultiSelect.Item
+						key={index}
+						name={name}
+						onRemove={() => onRemove(id)}
 					/>
+				))}
 
-					{selectedItems.length > 0 && (
-						<ClayTooltipProvider>
-							<ClayButton
-								borderless
-								className="ml-2 pl-0 pr-1 py-0"
-								displayType="light"
-								onClick={() => {
-									onChange([]);
-								}}
-								style={{position: 'absolute', right: 0}}
-							>
-								<ClayIcon
-									className="text-secondary tooltip-icon"
-									data-tooltip-align="top"
-									data-tooltip-delay="0"
-									symbol="times-circle"
-									title={Liferay.Language.get('clear-all')}
-								/>
-							</ClayButton>
-						</ClayTooltipProvider>
-					)}
-				</div>
-
-				<Autocomplete.DropDown
-					active={active}
-					activeItem={currentIndex}
-					emptyMessage={emptyMessage}
-					emptyResultMessage={emptyResultMessage}
-					id={id}
-					items={filteredItems}
-					match={search}
-					onSelect={onSelect}
-					setActive={setActive}
-					setActiveItem={setCurrentIndex}
+				<input
+					className="form-control-inset"
+					onChange={({target}) => setSearch(target.value)}
+					onFocus={onFocus}
+					onKeyDown={onKeyDown}
+					placeholder={!selectedItems.length ? placeholder : ''}
+					ref={inputRef}
+					style={selectedItems && {width: 0}}
+					type="text"
+					value={search}
 				/>
+
+				{selectedItems.length > 0 && (
+					<ClayTooltipProvider>
+						<ClayButton
+							borderless
+							className="ml-2 pl-0 pr-1 py-0"
+							displayType="light"
+							onClick={() => onChange([])}
+							style={{position: 'absolute', right: 0}}
+						>
+							<ClayIcon
+								className="text-secondary tooltip-icon"
+								data-tooltip-align="top"
+								data-tooltip-delay="0"
+								symbol="times-circle"
+								title={Liferay.Language.get('clear-all')}
+							/>
+						</ClayButton>
+					</ClayTooltipProvider>
+				)}
 			</div>
+
+			<AutocompleteDropDown
+				active={dropDownVisible}
+				activeItem={activeItem}
+				emptyMessage={emptyMessage}
+				emptyResultMessage={emptyResultMessage}
+				id={id}
+				items={filteredItems}
+				match={search}
+				onSelect={onSelect}
+				setActiveItem={setActiveItem}
+				setDropDownVisible={setDropDownVisible}
+			/>
 		</ClayAutocomplete>
 	);
-};
+}
 
-const Item = ({name, onRemove}) => {
-	return (
-		<span className="label label-dismissible label-secondary">
-			<span className="label-item label-item-expand">{name}</span>
+AutocompleteMultiSelect.Item = ({name, onRemove}) => (
+	<span className="label label-dismissible label-secondary">
+		<span className="label-item label-item-expand">{name}</span>
 
-			<span className="label-item label-item-after">
-				<button
-					aria-label="Close"
-					className="close"
-					onClick={onRemove}
-					type="button"
-				>
-					<ClayIcon symbol="times" />
-				</button>
-			</span>
+		<span className="label-item label-item-after">
+			<button
+				aria-label="Close"
+				className="close"
+				onClick={onRemove}
+				type="button"
+			>
+				<ClayIcon symbol="times" />
+			</button>
 		</span>
-	);
-};
+	</span>
+);
 
-AutocompleteMultiSelect.Item = Item;
-
-export {AutocompleteMultiSelect};
+export default AutocompleteMultiSelect;

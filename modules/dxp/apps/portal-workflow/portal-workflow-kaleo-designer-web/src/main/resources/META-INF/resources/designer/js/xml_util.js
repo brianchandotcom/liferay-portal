@@ -122,7 +122,7 @@ AUI.add(
 					pad += indent;
 				});
 
-				return formatted;
+				return formatted.trim();
 			},
 
 			validateDefinition(definition) {

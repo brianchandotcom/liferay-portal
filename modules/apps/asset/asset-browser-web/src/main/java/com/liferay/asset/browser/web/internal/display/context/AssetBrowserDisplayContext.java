@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -54,6 +55,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import javax.portlet.PortletException;
@@ -202,6 +204,16 @@ public class AssetBrowserDisplayContext {
 		return _eventName;
 	}
 
+	public String getGroupCssIcon(long groupId) throws PortalException {
+		Group group = GroupServiceUtil.getGroup(groupId);
+
+		if (group.isSite()) {
+			return "sites";
+		}
+
+		return "books";
+	}
+
 	public long getGroupId() {
 		if (_groupId != null) {
 			return _groupId;
@@ -210,6 +222,14 @@ public class AssetBrowserDisplayContext {
 		_groupId = ParamUtil.getLong(_renderRequest, "groupId");
 
 		return _groupId;
+	}
+
+	public String getGroupLabel(long groupId, Locale locale)
+		throws PortalException {
+
+		Group group = GroupServiceUtil.getGroup(groupId);
+
+		return group.getDescriptiveName(locale);
 	}
 
 	public String getGroupTypeTitle() {
@@ -373,6 +393,24 @@ public class AssetBrowserDisplayContext {
 			_httpServletRequest, "multipleSelection");
 
 		return _multipleSelection;
+	}
+
+	public boolean isSearchEverywhere() {
+		if (_searchEverywhere != null) {
+			return _searchEverywhere;
+		}
+
+		if (Objects.equals(
+				ParamUtil.getString(_httpServletRequest, "scope"),
+				"everywhere")) {
+
+			_searchEverywhere = true;
+		}
+		else {
+			_searchEverywhere = false;
+		}
+
+		return _searchEverywhere;
 	}
 
 	public boolean isShowAddButton() {
@@ -619,6 +657,7 @@ public class AssetBrowserDisplayContext {
 	private Long _refererAssetEntryId;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
+	private Boolean _searchEverywhere;
 	private Boolean _showAddButton;
 	private Boolean _showNonindexable;
 	private Boolean _showScheduled;

@@ -173,6 +173,8 @@ describe('Navigation', () => {
 	it('displays an alert error message if there is no valid connection', () => {
 		const testProps = {
 			authorName: 'John Tester',
+			authorPortraitURL: '',
+			authorUserId: '',
 			defaultTimeRange: {endDate: '2020-01-27', startDate: '2020-02-02'},
 			defaultTimeSpanKey: 'last-7-days',
 			languageTag: 'en-US',
@@ -189,6 +191,8 @@ describe('Navigation', () => {
 				<Navigation
 					api={{}}
 					authorName={testProps.authorName}
+					authorPortraitURL={testProps.authorPortraitURL}
+					authorUserId={testProps.authorUserId}
 					defaultTimeRange={testProps.defaultTimeRange}
 					defaultTimeSpanKey={testProps.defaultTimeSpanKey}
 					languageTag={testProps.languageTag}
@@ -206,6 +210,8 @@ describe('Navigation', () => {
 	it('displays an alert warning message if some data is temporarily unavailable', async () => {
 		const testProps = {
 			authorName: 'John Tester',
+			authorPortraitURL: '',
+			authorUserId: '',
 			defaultTimeRange: {endDate: '2020-01-27', startDate: '2020-02-02'},
 			defaultTimeSpanKey: 'last-7-days',
 			languageTag: 'en-US',
@@ -218,6 +224,8 @@ describe('Navigation', () => {
 				<Navigation
 					api={mockApi}
 					authorName={testProps.authorName}
+					authorPortraitURL={testProps.authorPortraitURL}
+					authorUserId={testProps.authorUserId}
 					defaultTimeRange={testProps.defaultTimeRange}
 					defaultTimeSpanKey={testProps.defaultTimeSpanKey}
 					languageTag={testProps.languageTag}

@@ -22,6 +22,8 @@ describe('BasicInformation', () => {
 	it('renders author, publish date and title', () => {
 		const testProps = {
 			authorName: 'John Tester',
+			authorPortraitURL: '',
+			authorUserId: '',
 			publishDate: 1581957977840,
 			title: 'A testing page',
 		};
@@ -29,6 +31,8 @@ describe('BasicInformation', () => {
 		const {getByText} = render(
 			<BasicInformation
 				authorName={testProps.authorName}
+				authorPortraitURL={testProps.authorPortraitURL}
+				authorUserId={testProps.authorUserId}
 				publishDate={testProps.publishDate}
 				title={testProps.title}
 			/>

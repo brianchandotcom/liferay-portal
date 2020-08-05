@@ -60,7 +60,7 @@ function ViewEntryUpperToolbar({
 	const onEdit = () => {
 		navigateToEditPage(basePortletURL, {
 			dataRecordId,
-			locale: userLanguageId,
+			languageId: userLanguageId,
 			redirect: location.href,
 		});
 	};

@@ -43,7 +43,7 @@ export default function useEntriesActions(showOptions) {
 					Promise.resolve(
 						navigateToEditPage(basePortletURL, {
 							dataRecordId: id,
-							locale: userLanguageId,
+							languageId: userLanguageId,
 						})
 					),
 				name: Liferay.Language.get('edit'),

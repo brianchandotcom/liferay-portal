@@ -26,7 +26,13 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -62,6 +68,20 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 	private DDMFormRenderingContext _toDDMFormRenderingContext(
 		DataLayoutRendererContext dataLayoutRendererContext, DDMForm ddmForm) {
 
+		Locale locale = null;
+
+		String languageId = ParamUtil.get(
+			dataLayoutRendererContext.getHttpServletRequest(), "languageId",
+			StringPool.BLANK);
+
+		if (Validator.isNull(languageId)) {
+			locale = _portal.getLocale(
+				dataLayoutRendererContext.getHttpServletRequest());
+		}
+		else {
+			locale = LocaleUtil.fromLanguageId(languageId);
+		}
+
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
 
@@ -70,15 +90,12 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 		ddmFormRenderingContext.setDDMFormValues(
 			DataRecordValuesUtil.toDDMFormValues(
 				dataLayoutRendererContext.getDataRecordValues(), ddmForm,
-				_portal.getLocale(
-					dataLayoutRendererContext.getHttpServletRequest())));
+				locale));
 		ddmFormRenderingContext.setHttpServletRequest(
 			dataLayoutRendererContext.getHttpServletRequest());
 		ddmFormRenderingContext.setHttpServletResponse(
 			dataLayoutRendererContext.getHttpServletResponse());
-		ddmFormRenderingContext.setLocale(
-			_portal.getLocale(
-				dataLayoutRendererContext.getHttpServletRequest()));
+		ddmFormRenderingContext.setLocale(locale);
 		ddmFormRenderingContext.setPortletNamespace(
 			dataLayoutRendererContext.getPortletNamespace());
 		ddmFormRenderingContext.setReadOnly(

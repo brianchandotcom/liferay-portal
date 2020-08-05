@@ -38,10 +38,6 @@ public class Scanner {
 
 	public static final String SUBDIR_MODE_SKIP = "skip";
 
-	public Scanner(File directory) {
-		this(directory, null, null);
-	}
-
 	public Scanner(
 		File directory, final String filterString, String subdirMode) {
 

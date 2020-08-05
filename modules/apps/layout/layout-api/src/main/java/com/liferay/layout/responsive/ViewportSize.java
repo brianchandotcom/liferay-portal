@@ -21,7 +21,7 @@ import com.liferay.petra.string.StringPool;
  */
 public enum ViewportSize {
 
-	DESKTOP("desktop", "-lg-", "desktop", "desktop", 992, 960, 3, 1),
+	DESKTOP("desktop", "-lg-", "display", "desktop", 992, 960, 3, 1),
 	MOBILE_LANDSCAPE(
 		"landscapeMobile", "-sm-", "mobile-landscape", "landscape-phone", 767,
 		576, 2, 3),

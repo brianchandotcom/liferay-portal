@@ -10,7 +10,14 @@
 	<condition>
 		<name>proceed-to-full-application</name>
 		<metadata>
-			<![CDATA[{"xy":[95,37]}]]>
+			<![CDATA[
+				{
+					"xy": [
+						95,
+						37
+					]
+				}
+			]]>
 		</metadata>
 		<script>
 			<![CDATA[returnValue = "Yes";]]>
@@ -32,7 +39,14 @@
 	<state>
 		<name>start-online-application</name>
 		<metadata>
-			<![CDATA[{"xy":[10,8]}]]>
+			<![CDATA[
+				{
+					"xy": [
+						10,
+						8
+					]
+				}
+			]]>
 		</metadata>
 		<initial>true</initial>
 		<transitions>
@@ -46,7 +60,15 @@
 	<state>
 		<name>application-completed</name>
 		<metadata>
-			<![CDATA[{"terminal":true,"xy":[752,447]}]]>
+			<![CDATA[
+				{
+					"terminal": true,
+					"xy": [
+						752,
+						447
+					]
+				}
+			]]>
 		</metadata>
 		<actions>
 			<action>
@@ -63,7 +85,15 @@
 	<state>
 		<name>application-canceled</name>
 		<metadata>
-			<![CDATA[{"terminal":true,"xy":[100,444]}]]>
+			<![CDATA[
+				{
+					"terminal": true,
+					"xy": [
+						100,
+						444
+					]
+				}
+			]]>
 		</metadata>
 		<actions>
 			<action>
@@ -80,7 +110,14 @@
 	<state>
 		<name>deliver-temporary-policy-terms</name>
 		<metadata>
-			<![CDATA[{"xy":[426,235]}]]>
+			<![CDATA[
+				{
+					"xy": [
+						426,
+						235
+					]
+				}
+			]]>
 		</metadata>
 		<transitions>
 			<transition>
@@ -93,7 +130,14 @@
 	<state>
 		<name>deliver-policy-docs</name>
 		<metadata>
-			<![CDATA[{"xy":[613,393]}]]>
+			<![CDATA[
+				{
+					"xy": [
+						613,
+						393
+					]
+				}
+			]]>
 		</metadata>
 		<transitions>
 			<transition>
@@ -106,7 +150,14 @@
 	<task>
 		<name>additional-rating-questions</name>
 		<metadata>
-			<![CDATA[{"xy":[238,13]}]]>
+			<![CDATA[
+				{
+					"xy": [
+						238,
+						13
+					]
+				}
+			]]>
 		</metadata>
 		<assignments>
 			<roles>
@@ -133,7 +184,14 @@
 	<task>
 		<name>underwriter-review</name>
 		<metadata>
-			<![CDATA[{"xy":[268,194]}]]>
+			<![CDATA[
+				{
+					"xy": [
+						268,
+						194
+					]
+				}
+			]]>
 		</metadata>
 		<assignments>
 			<roles>
@@ -160,10 +218,17 @@
 	<task>
 		<name>insurance-payment</name>
 		<metadata>
-			<![CDATA[{"xy":[498,14]}]]>
+			<![CDATA[
+				{
+					"xy": [
+						498,
+						14
+					]
+				}
+			]]>
 		</metadata>
 		<assignments>
-			<user/>
+			<user />
 		</assignments>
 		<transitions>
 			<transition>
@@ -176,10 +241,17 @@
 	<task>
 		<name>manual-billing-process</name>
 		<metadata>
-			<![CDATA[{"xy":[601,194]}]]>
+			<![CDATA[
+				{
+					"xy": [
+						601,
+						194
+					]
+				}
+			]]>
 		</metadata>
 		<assignments>
-			<user/>
+			<user />
 		</assignments>
 		<transitions>
 			<transition>
@@ -192,7 +264,14 @@
 	<task>
 		<name>underwriter-final-review</name>
 		<metadata>
-			<![CDATA[{"xy":[327,409]}]]>
+			<![CDATA[
+				{
+					"xy": [
+						327,
+						409
+					]
+				}
+			]]>
 		</metadata>
 		<assignments>
 			<roles>

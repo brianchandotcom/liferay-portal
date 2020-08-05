@@ -11,7 +11,14 @@
 	<state>
 		<name>created</name>
 		<metadata>
-			<![CDATA[{"xy":[36,51]}]]>
+			<![CDATA[
+				{
+					"xy": [
+						36,
+						51
+					]
+				}
+			]]>
 		</metadata>
 		<initial>true</initial>
 		<transitions>
@@ -22,15 +29,63 @@
 			</transition>
 		</transitions>
 	</state>
+	<state>
+		<name>approved</name>
+		<metadata>
+			<![CDATA[
+				{
+					"terminal": true,
+					"xy": [
+						380,
+						51
+					]
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>approve</name>
+				<script>
+					<![CDATA[
+						import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;
+						import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+						WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("approved"), workflowContext);
+					]]>
+				</script>
+				<script-language>groovy</script-language>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
+	</state>
 	<task>
 		<name>update</name>
 		<metadata>
-			<![CDATA[{"transitions":{"resubmit":{"bendpoints":[[303,140]]}},"xy":[328,199]}]]>
+			<![CDATA[
+				{
+					"transitions": {
+						"resubmit": {
+							"bendpoints": [
+								[
+									303,
+									140
+								]
+							]
+						}
+					},
+					"xy": [
+						328,
+						199
+					]
+				}
+			]]>
 		</metadata>
 		<actions>
 			<notification>
 				<name>Creator Modification Notification</name>
-				<template>Your submission was rejected by ${userName}, please modify and resubmit.</template>
+				<template>
+					<![CDATA[Your submission was rejected by ${userName}, please modify and resubmit.]]>
+				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
 				<notification-type>user-notification</notification-type>
@@ -51,12 +106,21 @@
 	<task>
 		<name>review</name>
 		<metadata>
-			<![CDATA[{"xy":[168,36]}]]>
+			<![CDATA[
+				{
+					"xy": [
+						168,
+						36
+					]
+				}
+			]]>
 		</metadata>
 		<actions>
 			<notification>
 				<name>Review Completion Notification</name>
-				<template><![CDATA[Your submission was reviewed<#if taskComments?has_content> and the reviewer applied the following ${taskComments}</#if>.]]></template>
+				<template>
+					<![CDATA[Your submission was reviewed<#if taskComments?has_content> and the reviewer applied the following ${taskComments}</#if>.]]>
+				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
 				<recipients>
@@ -66,7 +130,9 @@
 			</notification>
 			<notification>
 				<name>Review Notification</name>
-				<template>${userName} sent you a ${entryType} for review in the workflow.</template>
+				<template>
+					<![CDATA[${userName} sent you a ${entryType} for review in the workflow.]]>
+				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
 				<notification-type>user-notification</notification-type>
@@ -126,27 +192,4 @@
 			</transition>
 		</transitions>
 	</task>
-	<state>
-		<name>approved</name>
-		<metadata>
-			<![CDATA[
-				{"terminal":true,"xy":[380,51]}
-			]]>
-		</metadata>
-		<actions>
-			<action>
-				<name>approve</name>
-				<script>
-					<![CDATA[
-						import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;
-						import com.liferay.portal.kernel.workflow.WorkflowConstants;
-
-						WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("approved"), workflowContext);
-					]]>
-				</script>
-				<script-language>groovy</script-language>
-				<execution-type>onEntry</execution-type>
-			</action>
-		</actions>
-	</state>
 </workflow-definition>

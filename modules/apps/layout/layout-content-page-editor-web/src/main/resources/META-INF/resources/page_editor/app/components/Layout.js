@@ -138,7 +138,7 @@ export default function Layout({mainItemId}) {
 
 			{mainItem && (
 				<div
-					className={classNames('page-editor')}
+					className="page-editor"
 					id="page-editor"
 					onClick={onClick}
 					ref={layoutRef}

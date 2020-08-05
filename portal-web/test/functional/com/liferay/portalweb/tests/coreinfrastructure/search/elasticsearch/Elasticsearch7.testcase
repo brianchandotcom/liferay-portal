@@ -496,4 +496,57 @@ definition {
 			value1 = "1 results for bicycle");
 	}
 
+	test SwitchSidecarToRemote {
+		property test.name.skip.portal.instance = "Elasticsearch7#SwitchSidecarToRemote";
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
+
+		AntCommand(
+			locator1 = "build-test-elasticsearch7.xml",
+			value1 = "start-elasticsearch");
+
+		AssertConsoleTextPresent(value1 = "Stopping sidecar Elasticsearch");
+
+		Navigator.openSpecificURL(url = "http://localhost:9201");
+
+		AssertTextNotPresent(value1 = "cluster_name");
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.assertEngineVendorAndVersions(
+			clientVersion = "7.3.0",
+			engineVendor = "Elasticsearch",
+			serverVersion = "7.7.0");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "SearchAdmin#CONNECTION_ID",
+			value1 = "__REMOTE__");
+
+		AssertTextNotEquals.assertNotPartialText(
+			locator1 = "SearchAdmin#SEARCH_ENGINE_VENDOR",
+			value1 = "(Sidecar)");
+
+		AssertTextNotEquals.assertNotPartialText(
+			locator1 = "SearchAdmin#CONNECTION_ID",
+			value1 = "__SIDECAR__");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "WebContent");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "WC WebContent Title",
+			searchAssetType = "Web Content Article");
+	}
+
 }

@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONNECTION_ID</td>
+	<td>//div[contains(@class,'connection-info-item')]//*[contains(@class,'connection-id')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_ENGINE_VENDOR</td>
 	<td>//div[contains(@class,'value')][preceding-sibling::div[contains(.,'Search Engine Vendor')]]</td>
 	<td></td>

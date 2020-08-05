@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>TITLE_HEADER</td>
-	<td>//h3</td>
+	<td>//div[contains(@class,'message_boards')]//h3</td>
 	<td></td>
 </tr>
 <tr>

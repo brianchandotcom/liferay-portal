@@ -41,7 +41,7 @@ public class Scanner {
 	public Scanner(
 		File directory, final String filterString, String subdirMode) {
 
-		watchedDirectory = _canon(directory);
+		_watchedDirectory = _canon(directory);
 
 		if ((filterString != null) && (filterString.length() > 0)) {
 			_filenameFilter = new FilenameFilter() {
@@ -62,18 +62,18 @@ public class Scanner {
 		}
 
 		if ((subdirMode == null) || SUBDIR_MODE_JAR.equals(subdirMode)) {
-			jarSubdir = true;
+			_jarSubdir = true;
 		}
 		else {
-			jarSubdir = false;
+			_jarSubdir = false;
 		}
 
-		skipSubdir = SUBDIR_MODE_SKIP.equals(subdirMode);
+		_skipSubdir = SUBDIR_MODE_SKIP.equals(subdirMode);
 		_recurseSubdir = SUBDIR_MODE_RECURSE.equals(subdirMode);
 	}
 
 	public long getChecksum(File file) {
-		Long checksum = storedChecksums.get(file);
+		Long checksum = _storedChecksums.get(file);
 
 		if (checksum != null) {
 			return checksum;
@@ -83,11 +83,11 @@ public class Scanner {
 	}
 
 	public void initialize(Map<File, Long> checksums) {
-		storedChecksums.putAll(checksums);
+		_storedChecksums.putAll(checksums);
 	}
 
 	public Set<File> scan(boolean reportImmediately) {
-		File[] list = watchedDirectory.listFiles(_filenameFilter);
+		File[] list = _watchedDirectory.listFiles(_filenameFilter);
 
 		Set<File> files = _processFiles(reportImmediately, list);
 
@@ -95,26 +95,12 @@ public class Scanner {
 	}
 
 	public void updateChecksum(File file) {
-		if ((file != null) && storedChecksums.containsKey(file)) {
-			long newChecksum = checksum(file);
+		if ((file != null) && _storedChecksums.containsKey(file)) {
+			long newChecksum = _checksum(file);
 
-			storedChecksums.put(file, newChecksum);
+			_storedChecksums.put(file, newChecksum);
 		}
 	}
-
-	protected static long checksum(File file) {
-		CRC32 crc32 = new CRC32();
-
-		_checksum(file, crc32);
-
-		return crc32.getValue();
-	}
-
-	protected final boolean jarSubdir;
-	protected final Map<File, Long> lastChecksums = new HashMap<>();
-	protected final boolean skipSubdir;
-	protected final Map<File, Long> storedChecksums = new HashMap<>();
-	protected final File watchedDirectory;
 
 	private static File _canon(File file) {
 		try {
@@ -123,6 +109,14 @@ public class Scanner {
 		catch (IOException ioException) {
 			return file;
 		}
+	}
+
+	private static long _checksum(File file) {
+		CRC32 crc32 = new CRC32();
+
+		_checksum(file, crc32);
+
+		return crc32.getValue();
 	}
 
 	private static void _checksum(File file, CRC32 crc32) {
@@ -160,11 +154,11 @@ public class Scanner {
 
 		Set<File> files = new HashSet<>();
 
-		Set<File> removed = new HashSet<>(storedChecksums.keySet());
+		Set<File> removed = new HashSet<>(_storedChecksums.keySet());
 
 		for (File file : list) {
 			if (file.isDirectory()) {
-				if (skipSubdir) {
+				if (_skipSubdir) {
 					continue;
 				}
 				else if (_recurseSubdir) {
@@ -179,19 +173,19 @@ public class Scanner {
 
 			long lastChecksum = 0;
 
-			if (lastChecksums.get(file) != null) {
-				lastChecksum = lastChecksums.get(file);
+			if (_lastChecksums.get(file) != null) {
+				lastChecksum = _lastChecksums.get(file);
 			}
 
 			long storedChecksum = 0;
 
-			if (storedChecksums.get(file) != null) {
-				storedChecksum = storedChecksums.get(file);
+			if (_storedChecksums.get(file) != null) {
+				storedChecksum = _storedChecksums.get(file);
 			}
 
-			long newChecksum = checksum(file);
+			long newChecksum = _checksum(file);
 
-			lastChecksums.put(file, newChecksum);
+			_lastChecksums.put(file, newChecksum);
 
 			// Only handle file when it does not change anymore and it has
 			// changed since last reported
@@ -199,7 +193,7 @@ public class Scanner {
 			if (((newChecksum == lastChecksum) || reportImmediately) &&
 				(newChecksum != storedChecksum)) {
 
-				storedChecksums.put(file, newChecksum);
+				_storedChecksums.put(file, newChecksum);
 				files.add(file);
 			}
 
@@ -214,14 +208,19 @@ public class Scanner {
 
 			// Remove no longer used checksums
 
-			lastChecksums.remove(file);
-			storedChecksums.remove(file);
+			_lastChecksums.remove(file);
+			_storedChecksums.remove(file);
 		}
 
 		return files;
 	}
 
 	private final FilenameFilter _filenameFilter;
+	private final boolean _jarSubdir;
+	private final Map<File, Long> _lastChecksums = new HashMap<>();
 	private final boolean _recurseSubdir;
+	private final boolean _skipSubdir;
+	private final Map<File, Long> _storedChecksums = new HashMap<>();
+	private final File _watchedDirectory;
 
 }

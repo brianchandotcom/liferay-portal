@@ -75,7 +75,7 @@ public class PortalCORSConfigurationModelListener
 
 			Dictionary<String, ?> properties = entry.getValue();
 
-			if (Objects.equals(
+			if (!Objects.equals(
 					GetterUtil.getLong(newProperties.get("companyId")),
 					GetterUtil.getLong(properties.get("companyId")))) {
 

@@ -557,8 +557,6 @@ definition {
 
 	@priority = "4"
 	test AssignExistingUserToAccount {
-		AccountConfiguration.enableAccountEmailDomain();
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Applications",
@@ -579,6 +577,8 @@ definition {
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
+
+		AccountConfiguration.enableAccountEmailDomain();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",

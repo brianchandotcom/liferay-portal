@@ -91,8 +91,20 @@ public interface DDMStructureLayoutLocalService
 	public DDMStructureLayout addDDMStructureLayout(
 		DDMStructureLayout ddmStructureLayout);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addStructureLayout(long, long, long, String, long,
+	 DDMFormLayout, ServiceContext)}
+	 */
+	@Deprecated
 	public DDMStructureLayout addStructureLayout(
 			long userId, long groupId, long structureVersionId,
+			DDMFormLayout ddmFormLayout, ServiceContext serviceContext)
+		throws PortalException;
+
+	public DDMStructureLayout addStructureLayout(
+			long userId, long groupId, long classNameId,
+			String structureLayoutKey, long structureVersionId,
 			DDMFormLayout ddmFormLayout, ServiceContext serviceContext)
 		throws PortalException;
 

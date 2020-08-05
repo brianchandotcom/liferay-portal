@@ -56,6 +56,12 @@ public class DDMStructureLayoutLocalServiceUtil {
 		return getService().addDDMStructureLayout(ddmStructureLayout);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addStructureLayout(long, long, long, String, long,
+	 DDMFormLayout, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.dynamic.data.mapping.model.DDMStructureLayout
 			addStructureLayout(
 				long userId, long groupId, long structureVersionId,
@@ -66,6 +72,20 @@ public class DDMStructureLayoutLocalServiceUtil {
 
 		return getService().addStructureLayout(
 			userId, groupId, structureVersionId, ddmFormLayout, serviceContext);
+	}
+
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureLayout
+			addStructureLayout(
+				long userId, long groupId, long classNameId,
+				String structureLayoutKey, long structureVersionId,
+				com.liferay.dynamic.data.mapping.model.DDMFormLayout
+					ddmFormLayout,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addStructureLayout(
+			userId, groupId, classNameId, structureLayoutKey,
+			structureVersionId, ddmFormLayout, serviceContext);
 	}
 
 	public static com.liferay.dynamic.data.mapping.model.DDMStructureLayout

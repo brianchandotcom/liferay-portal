@@ -104,6 +104,14 @@ public interface DDMStructureLocalService
 	public DDMStructure addStructure(
 			long userId, long groupId, long parentStructureId, long classNameId,
 			String structureKey, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, DDMForm ddmForm,
+			String storageType, ServiceContext serviceContext)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public DDMStructure addStructure(
+			long userId, long groupId, long parentStructureId, long classNameId,
+			String structureKey, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String definition,
 			String storageType, ServiceContext serviceContext)
 		throws PortalException;

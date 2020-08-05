@@ -518,7 +518,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 	}
 
 	@Override
-	public void update() {
+	public synchronized void update() {
 		long start = System.currentTimeMillis();
 
 		super.update();

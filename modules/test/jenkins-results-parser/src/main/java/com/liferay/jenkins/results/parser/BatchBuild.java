@@ -390,7 +390,7 @@ public class BatchBuild extends BaseBuild {
 	}
 
 	@Override
-	public void update() {
+	public synchronized void update() {
 		super.update();
 
 		if (badBuildNumbers.size() >= REINVOCATIONS_SIZE_MAX) {

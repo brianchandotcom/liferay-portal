@@ -1503,7 +1503,7 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public void update() {
+	public synchronized void update() {
 		String status = getStatus();
 
 		if ((status.equals("completed") &&

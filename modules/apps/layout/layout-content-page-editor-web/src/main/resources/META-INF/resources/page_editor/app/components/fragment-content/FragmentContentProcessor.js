@@ -116,11 +116,6 @@ export default function FragmentContentProcessor({
 				);
 			},
 			() => {
-				editable.processor.destroyEditor(
-					editable.element,
-					editableValue.config
-				);
-
 				setEditableProcessorUniqueId(null);
 			},
 			editableProcessorClickPosition

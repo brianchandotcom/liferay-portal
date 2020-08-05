@@ -19,6 +19,8 @@ AUI.add(
 
 		var STR_CDATA_OPEN = '<![CDATA[';
 
+		var STR_CHAR_CRLF = '\r\n';
+
 		var STR_ELLIPSIS = '...';
 
 		var KaleoDesignerUtils = {};
@@ -72,7 +74,13 @@ AUI.add(
 				.replace(STR_CDATA_OPEN, '')
 				.replace(STR_CDATA_CLOSE, '');
 
-			return STR_CDATA_OPEN + value + STR_CDATA_CLOSE;
+			return (
+				STR_CHAR_CRLF +
+				STR_CDATA_OPEN +
+				value +
+				STR_CDATA_CLOSE +
+				STR_CHAR_CRLF
+			);
 		};
 
 		KaleoDesignerUtils.cdata = cdata;

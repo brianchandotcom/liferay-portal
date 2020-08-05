@@ -75,7 +75,7 @@ function ItemConfigurationContent() {
 	return (
 		<PageStructureSidebarSection resizable>
 			<div className="page-editor__page-structure__item-configuration">
-				<ClayTabs className="border-bottom" modern>
+				<ClayTabs className="border-bottom pt-2 px-3" modern>
 					{panels.map((panel) => (
 						<ClayTabs.Item
 							active={panel.panelId === activePanelId}

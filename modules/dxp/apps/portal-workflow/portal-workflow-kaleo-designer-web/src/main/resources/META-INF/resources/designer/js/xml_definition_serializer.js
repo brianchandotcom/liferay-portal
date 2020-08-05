@@ -413,17 +413,17 @@ AUI.add(
 						});
 					}
 					else {
-						buffer.push('<user/>');
+						buffer.push('<user />');
 					}
 				}
 				else if (assignmentType === 'taskAssignees') {
-					buffer.push('<assignees/>');
+					buffer.push('<assignees />');
 				}
 				else if (
 					!dataAssignments.address ||
 					dataAssignments.address.filter(isValue).length === 0
 				) {
-					buffer.push('<user/>');
+					buffer.push('<user />');
 				}
 
 				buffer.push(xmlAssignments.close);

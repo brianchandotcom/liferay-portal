@@ -173,6 +173,20 @@
 						value="<%= HtmlUtil.escape(assetRenderer.getSummary(renderRequest, renderResponse)) %>"
 					/>
 
+					<c:if test="<%= assetBrowserDisplayContext.isSearchEverywhere() %>">
+						<liferay-ui:search-container-column-text
+							name="location"
+						>
+							<span class="text-secondary">
+								<clay:icon
+									symbol="<%= assetBrowserDisplayContext.getGroupCssIcon(assetRenderer.getGroupId()) %>"
+								/>
+
+								<small><%= assetBrowserDisplayContext.getGroupLabel(assetRenderer.getGroupId(), locale) %></small>
+							</span>
+						</liferay-ui:search-container-column-text>
+					</c:if>
+
 					<liferay-ui:search-container-column-text
 						name="author"
 						value="<%= PortalUtil.getUserName(assetEntry) %>"

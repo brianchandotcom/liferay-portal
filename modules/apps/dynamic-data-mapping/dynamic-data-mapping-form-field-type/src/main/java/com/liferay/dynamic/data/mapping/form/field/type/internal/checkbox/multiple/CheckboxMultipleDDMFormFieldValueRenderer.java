@@ -15,14 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.field.type.internal.checkbox.multiple;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRenderer;
-import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
-import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.util.HtmlUtil;
 
 import java.util.Locale;
 
@@ -41,44 +34,8 @@ public class CheckboxMultipleDDMFormFieldValueRenderer
 
 	@Override
 	public String render(DDMFormFieldValue ddmFormFieldValue, Locale locale) {
-		JSONArray optionsValuesJSONArray =
-			checkboxMultipleDDMFormFieldValueAccessor.getValue(
-				ddmFormFieldValue, locale);
-
-		if (optionsValuesJSONArray.length() == 0) {
-			return StringPool.BLANK;
-		}
-
-		DDMFormFieldOptions ddmFormFieldOptions = getDDMFormFieldOptions(
-			ddmFormFieldValue);
-
-		StringBundler sb = new StringBundler(
-			(optionsValuesJSONArray.length() * 2) - 1);
-
-		for (int i = 0; i < optionsValuesJSONArray.length(); i++) {
-			LocalizedValue optionLabel = ddmFormFieldOptions.getOptionLabels(
-				optionsValuesJSONArray.getString(i));
-
-			if (optionLabel != null) {
-				sb.append(HtmlUtil.escape(optionLabel.getString(locale)));
-
-				sb.append(StringPool.COMMA_AND_SPACE);
-			}
-		}
-
-		if (sb.index() > 0) {
-			sb.setIndex(sb.index() - 1);
-		}
-
-		return sb.toString();
-	}
-
-	protected DDMFormFieldOptions getDDMFormFieldOptions(
-		DDMFormFieldValue ddmFormFieldValue) {
-
-		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
-
-		return ddmFormField.getDDMFormFieldOptions();
+		return checkboxMultipleDDMFormFieldValueAccessor.getOptionsLabels(
+			ddmFormFieldValue, locale);
 	}
 
 	@Reference

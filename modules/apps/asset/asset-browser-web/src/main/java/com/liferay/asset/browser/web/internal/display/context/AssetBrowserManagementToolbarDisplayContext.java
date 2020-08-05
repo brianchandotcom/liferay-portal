@@ -143,10 +143,12 @@ public class AssetBrowserManagementToolbarDisplayContext
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setActive(
-							_assetBrowserDisplayContext.getGroupId() == 0);
-						dropdownItem.setHref(getPortletURL(), "groupId", 0);
-						dropdownItem.setLabel(LanguageUtil.get(request, "all"));
+						dropdownItem.setActive(_isEverywhereScopeFilter());
+						dropdownItem.setHref(
+							getPortletURL(), "scope", "everywhere", "groupId",
+							null);
+						dropdownItem.setLabel(
+							LanguageUtil.get(request, "everywhere"));
 					});
 
 				for (long groupId : groupIds) {
@@ -162,7 +164,8 @@ public class AssetBrowserManagementToolbarDisplayContext
 								_assetBrowserDisplayContext.getGroupId() ==
 									groupId);
 							dropdownItem.setHref(
-								getPortletURL(), "groupId", groupId);
+								getPortletURL(), "groupId", groupId, "scope",
+								"current");
 							dropdownItem.setLabel(
 								HtmlUtil.escape(
 									group.getDescriptiveName(

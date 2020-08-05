@@ -482,17 +482,17 @@ public class AssetBrowserDisplayContext {
 
 		if (getGroupId() > 0) {
 			filterGroupIds = new long[] {getGroupId()};
+		}
 
-			if (_isEverywhereScopeFilter()) {
+		if (_isEverywhereScopeFilter()) {
+			for (long filterGroupId : filterGroupIds) {
 				filterGroupIds = ArrayUtil.append(
 					filterGroupIds,
 					ListUtil.toLongArray(
 						DepotEntryServiceUtil.getGroupConnectedDepotEntries(
-							getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+							filterGroupId, QueryUtil.ALL_POS,
+							QueryUtil.ALL_POS),
 						DepotEntry::getGroupId));
-			}
-			else {
-				filterGroupIds = new long[] {getGroupId()};
 			}
 		}
 

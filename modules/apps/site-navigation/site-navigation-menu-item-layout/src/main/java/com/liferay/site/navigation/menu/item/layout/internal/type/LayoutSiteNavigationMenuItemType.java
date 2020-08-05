@@ -21,6 +21,9 @@ import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -56,10 +59,10 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeContext;
 
 import java.io.IOException;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Stack;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
@@ -393,26 +396,35 @@ public class LayoutSiteNavigationMenuItemType
 			return false;
 		}
 
-		Stack<SiteNavigationMenuItem> descendants = new Stack<>();
+		DynamicQuery dynamicQuery =
+			_siteNavigationMenuItemLocalService.dynamicQuery();
 
-		descendants.addAll(
-			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItems(
-				siteNavigationMenuItem.getSiteNavigationMenuId(),
-				siteNavigationMenuItem.getSiteNavigationMenuItemId()));
+		StringBuilder sb = new StringBuilder(5);
 
-		while (!descendants.isEmpty()) {
-			SiteNavigationMenuItem descendant = descendants.pop();
+		sb.append(StringPool.PERCENT);
+		sb.append("layoutUuid");
+		sb.append(StringPool.EQUAL);
+		sb.append(curLayout.getUuid());
+		sb.append(StringPool.PERCENT);
 
-			Layout descendantLayout = _fetchLayout(descendant);
+		Property property = PropertyFactoryUtil.forName("typeSettings");
 
-			if (descendantLayout.getPlid() == curLayout.getPlid()) {
+		dynamicQuery.add(property.like(sb.toString()));
+
+		property = PropertyFactoryUtil.forName("siteNavigationMenuId");
+
+		dynamicQuery.add(
+			property.eq(siteNavigationMenuItem.getSiteNavigationMenuId()));
+
+		List<SiteNavigationMenuItem> siteNavigationMenuItems =
+			_siteNavigationMenuItemLocalService.dynamicQuery(dynamicQuery);
+
+		for (SiteNavigationMenuItem siteNavigationMenuItem2 :
+				siteNavigationMenuItems) {
+
+			if (_isAncestor(siteNavigationMenuItem, siteNavigationMenuItem2)) {
 				return true;
 			}
-
-			descendants.addAll(
-				_siteNavigationMenuItemLocalService.getSiteNavigationMenuItems(
-					descendant.getSiteNavigationMenuId(),
-					descendant.getSiteNavigationMenuItemId()));
 		}
 
 		return false;
@@ -543,6 +555,29 @@ public class LayoutSiteNavigationMenuItemType
 		}
 
 		return layout;
+	}
+
+	private boolean _isAncestor(
+		SiteNavigationMenuItem siteNavigationMenuItem1,
+		SiteNavigationMenuItem siteNavigationMenuItem2) {
+
+		long parentSiteNavigationMenuItemId =
+			siteNavigationMenuItem2.getParentSiteNavigationMenuItemId();
+
+		if (parentSiteNavigationMenuItemId == 0) {
+			return false;
+		}
+
+		if (parentSiteNavigationMenuItemId ==
+				siteNavigationMenuItem1.getSiteNavigationMenuItemId()) {
+
+			return true;
+		}
+
+		return _isAncestor(
+			siteNavigationMenuItem1,
+			_siteNavigationMenuItemLocalService.fetchSiteNavigationMenuItem(
+				parentSiteNavigationMenuItemId));
 	}
 
 	private boolean _isUseCustomName(

@@ -399,8 +399,16 @@ public interface WebKeys {
 
 	public static final String NOTES_LIST = "NOTES_LIST";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String OPEN_ID_LOGIN = "OPEN_ID_LOGIN";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String OPEN_ID_LOGIN_PENDING = "OPEN_ID_LOGIN_PENDING";
 
 	public static final String ORG_LABOR = "ORG_LABOR";

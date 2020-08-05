@@ -268,12 +268,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		interrupt();
 
 		try {
-			_scanner.close();
-		}
-		catch (IOException ioException) {
-		}
-
-		try {
 			join(10000);
 		}
 		catch (InterruptedException interruptedException) {

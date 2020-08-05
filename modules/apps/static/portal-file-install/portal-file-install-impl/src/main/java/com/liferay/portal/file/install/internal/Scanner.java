@@ -14,7 +14,6 @@
 
 package com.liferay.portal.file.install.internal;
 
-import java.io.Closeable;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -31,7 +30,7 @@ import java.util.zip.CRC32;
 /**
  * @author Matthew Tambara
  */
-public class Scanner implements Closeable {
+public class Scanner {
 
 	public static final String SUBDIR_MODE_JAR = "jar";
 
@@ -75,10 +74,6 @@ public class Scanner implements Closeable {
 
 		skipSubdir = SUBDIR_MODE_SKIP.equals(subdirMode);
 		_recurseSubdir = SUBDIR_MODE_RECURSE.equals(subdirMode);
-	}
-
-	@Override
-	public void close() throws IOException {
 	}
 
 	public long getChecksum(File file) {

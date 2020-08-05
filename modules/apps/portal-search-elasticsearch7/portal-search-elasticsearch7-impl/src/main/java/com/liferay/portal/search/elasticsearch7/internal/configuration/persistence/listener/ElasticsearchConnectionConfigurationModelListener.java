@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.configuration.persistence.listener;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.log.Log;
@@ -122,6 +123,23 @@ public class ElasticsearchConnectionConfigurationModelListener
 				_getMessage("the-id-you-entered-is-reserved-x", connectionId));
 		}
 
+		Configuration configuration = configurationAdmin.getConfiguration(
+			pid, StringPool.QUESTION);
+
+		Dictionary<String, Object> properties = configuration.getProperties();
+
+		if (properties != null) {
+			String previousConnectionId = StringUtil.unquote(
+				(String)properties.get("connectionId"));
+
+			if (!previousConnectionId.equals(connectionId)) {
+				_log.error("The connection ID can not be changed");
+
+				throw new Exception(
+					_getMessage("the-connection-id-can-not-be-changed"));
+			}
+		}
+
 		String filterString = String.format(
 			"(&(service.factoryPid=%s)(connectionId=%s))",
 			ElasticsearchConnectionConfiguration.class.getName(), connectionId);
@@ -133,7 +151,7 @@ public class ElasticsearchConnectionConfigurationModelListener
 			return;
 		}
 
-		Configuration configuration = configurations[0];
+		configuration = configurations[0];
 
 		if (pid.equals(configuration.getPid())) {
 			return;

@@ -3,6 +3,8 @@
 		${field_name.getContent()}
 	[#elseif field_name?is_date_like]
 		${field_name?datetime?string}
+	[#elseif field_name?is_sequence && field_name?size > 0 && field_name?first?is_hash]
+		${field_name?map(labeled -> labeled.getLabel(locale))?join(", ")}
 	[#elseif field_name?is_sequence]
 		${field_name?join(", ")}
 	[#else]

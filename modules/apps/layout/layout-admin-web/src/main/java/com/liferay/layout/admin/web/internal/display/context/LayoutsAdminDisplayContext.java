@@ -295,7 +295,7 @@ public class LayoutsAdminDisplayContext {
 
 	public String getCopyLayoutRenderURL(Layout layout) throws Exception {
 		PortletURL copyLayoutRenderURL =
-			_liferayPortletResponse.createActionURL();
+			_liferayPortletResponse.createRenderURL();
 
 		copyLayoutRenderURL.setParameter(
 			"mvcRenderCommandName", "/layout/add_layout");

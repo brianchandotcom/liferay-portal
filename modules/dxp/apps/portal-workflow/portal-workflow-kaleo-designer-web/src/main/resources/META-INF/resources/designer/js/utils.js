@@ -21,6 +21,8 @@ AUI.add(
 
 		var STR_CHAR_CRLF = '\r\n';
 
+		var STR_CHAR_TAB = '\t';
+
 		var STR_ELLIPSIS = '...';
 
 		var KaleoDesignerUtils = {};
@@ -102,7 +104,10 @@ AUI.add(
 			var jsonString = null;
 
 			try {
-				jsonString = JSON.stringify(val);
+				jsonString =
+					STR_CHAR_CRLF +
+					JSON.stringify(val, null, STR_CHAR_TAB) +
+					STR_CHAR_CRLF;
 			}
 			catch (e) {}
 

@@ -15,8 +15,14 @@
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.function;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
+import java.math.BigDecimal;
+
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -29,19 +35,7 @@ public class EqualsFunction
 
 	@Override
 	public Boolean apply(Object object1, Object object2) {
-		Object value1 = object1;
-
-		if (object1 instanceof JSONArray) {
-			value1 = _getValue((JSONArray)object1);
-		}
-
-		Object value2 = object2;
-
-		if (object2 instanceof JSONArray) {
-			value2 = _getValue((JSONArray)object2);
-		}
-
-		return Objects.equals(value1, value2);
+		return Objects.equals(_getValue(object1), _getValue(object2));
 	}
 
 	@Override
@@ -49,12 +43,31 @@ public class EqualsFunction
 		return NAME;
 	}
 
-	private Object _getValue(JSONArray jsonArray) {
-		if (jsonArray.length() == 1) {
-			return jsonArray.get(0);
+	private Object _getValue(Object object) {
+		if (object instanceof BigDecimal) {
+			return object.toString();
+		}
+		else if (object instanceof JSONArray) {
+			JSONArray jsonArray = (JSONArray)object;
+
+			String[] stringArray = ArrayUtil.toStringArray(jsonArray);
+
+			Arrays.sort(stringArray);
+
+			StringBundler sb = new StringBundler((stringArray.length * 2) - 1);
+
+			for (int i = 0; i < stringArray.length; i++) {
+				sb.append(stringArray[i]);
+
+				if (i < (stringArray.length - 1)) {
+					sb.append(CharPool.COMMA);
+				}
+			}
+
+			return sb.toString();
 		}
 
-		return jsonArray;
+		return object;
 	}
 
 }

@@ -47,10 +47,11 @@ export default withRouter(({currentSectionId, history}) => {
 				visible={visible}
 			/>
 			<ClayButton
-				displayType="secondary"
+				className="breadcrumb-button c-ml-3 c-p-2"
+				displayType="unstyled"
 				onClick={() => setVisible(true)}
 			>
-				<ClayIcon symbol="plus" />
+				<ClayIcon className="c-mr-2" symbol="plus" />
 				{Liferay.Language.get('new-topic')}
 			</ClayButton>
 		</>

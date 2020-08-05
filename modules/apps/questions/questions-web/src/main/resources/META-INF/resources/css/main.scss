@@ -223,6 +223,16 @@
 		width: 100vw;
 	}
 
+	.breadcrumb-button {
+		color: $secondary;
+		height: fit-content;
+	}
+
+	.breadcrumb-button:hover {
+		background-color: rgba($dark, 0.04);
+		color: $dark;
+	}
+
 	.breadcrumb {
 		.breadcrumb-item {
 			color: $secondary;

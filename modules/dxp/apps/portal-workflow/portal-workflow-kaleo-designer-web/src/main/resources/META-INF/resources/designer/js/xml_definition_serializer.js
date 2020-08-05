@@ -27,6 +27,8 @@ AUI.add(
 
 		var STR_BLANK = '';
 
+		var STR_CHAR_CRLF = '\r\n';
+
 		var isNotEmptyValue = function (item) {
 			return isValue(item) && item !== STR_BLANK;
 		};
@@ -43,7 +45,11 @@ AUI.add(
 				xmlNamespace
 			);
 
-			buffer.push('<?xml version="1.0"?>', xmlWorkflowDefinition.open);
+			buffer.push(
+				'<?xml version="1.0"?>',
+				STR_CHAR_CRLF,
+				xmlWorkflowDefinition.open
+			);
 
 			if (name) {
 				buffer.push(XMLUtil.create('name', A.Escape.html(name)));

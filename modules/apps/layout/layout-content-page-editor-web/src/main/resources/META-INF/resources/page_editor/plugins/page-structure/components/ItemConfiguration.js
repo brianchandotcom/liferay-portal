@@ -74,7 +74,7 @@ function ItemConfigurationContent() {
 	}
 
 	return (
-		<PageStructureSidebarSection resizable>
+		<PageStructureSidebarSection resizable size={1.5}>
 			<div className="page-editor__page-structure__item-configuration">
 				<ClayTabs className="border-bottom pt-2 px-3" modern>
 					{panels.map((panel) => (

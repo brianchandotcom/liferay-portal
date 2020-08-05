@@ -115,8 +115,6 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			actionRequest);
 
-		HttpSession session = httpServletRequest.getSession();
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -159,18 +157,6 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 			password2 = ParamUtil.getString(actionRequest, "password2");
 		}
 
-		boolean openIdPending = false;
-
-		Boolean openIdLoginPending = (Boolean)session.getAttribute(
-			WebKeys.OPEN_ID_LOGIN_PENDING);
-
-		if ((openIdLoginPending != null) && openIdLoginPending.booleanValue() &&
-			Validator.isNotNull(openId)) {
-
-			sendEmail = false;
-			openIdPending = true;
-		}
-
 		User user = _userService.addUserWithWorkflow(
 			company.getCompanyId(), autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId, openId,
@@ -179,24 +165,15 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 			birthdayYear, jobTitle, groupIds, organizationIds, roleIds,
 			userGroupIds, sendEmail, serviceContext);
 
-		if (openIdPending) {
-			session.setAttribute(
-				WebKeys.OPEN_ID_LOGIN, Long.valueOf(user.getUserId()));
+		// Session messages
 
-			session.removeAttribute(WebKeys.OPEN_ID_LOGIN_PENDING);
+		if (user.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			SessionMessages.add(
+				httpServletRequest, "userAdded", user.getEmailAddress());
 		}
 		else {
-
-			// Session messages
-
-			if (user.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-				SessionMessages.add(
-					httpServletRequest, "userAdded", user.getEmailAddress());
-			}
-			else {
-				SessionMessages.add(
-					httpServletRequest, "userPending", user.getEmailAddress());
-			}
+			SessionMessages.add(
+				httpServletRequest, "userPending", user.getEmailAddress());
 		}
 
 		// Send redirect

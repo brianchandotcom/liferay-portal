@@ -1,5 +1,12 @@
 # Poshi Runner Change Log
 
+## 1.0.272
+
+### WebDriver
+
+* [POSHI-91](https://issues.liferay.com/browse/POSHI-91) - As an Edge browser tester, I would like to use the new built-in webdriver
+* [POSHI-93](https://issues.liferay.com/browse/POSHI-93) - Make waitForLiferayEvent not fail the test
+
 ## 1.0.271
 
 ### WebDriver

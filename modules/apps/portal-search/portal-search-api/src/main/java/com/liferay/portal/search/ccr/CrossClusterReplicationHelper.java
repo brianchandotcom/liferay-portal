@@ -22,8 +22,21 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CrossClusterReplicationHelper {
 
+	public void addRemoteCluster(
+		String remoteClusterAlias, String remoteClusterSeedNodeTransportAddress,
+		String localClusterConnectionId);
+
+	public void deleteRemoteCluster(
+		String remoteClusterAlias, String localClusterConnectionId);
+
 	public void follow(String indexName);
 
+	public void follow(
+		String remoteClusterAlias, String indexName,
+		String localClusterConnectionId);
+
 	public void unfollow(String indexName);
+
+	public void unfollow(String indexName, String localClusterConnectionId);
 
 }

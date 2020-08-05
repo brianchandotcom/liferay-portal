@@ -48,4 +48,17 @@ public interface CrossClusterReplicationConfiguration {
 	)
 	public String remoteClusterAlias();
 
+	@Meta.AD(
+		deflt = "localhost:9300",
+		description = "remote-cluster-seed-node-transport-address-help",
+		name = "remote-cluster-seed-node-transport-address", required = false
+	)
+	public String remoteClusterSeedNodeTransportAddress();
+
+	@Meta.AD(
+		description = "excluded-indexes-help", name = "excluded-indexes",
+		required = false
+	)
+	public String[] excludedIndexes();
+
 }

@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>FIELD</td>
-	<td>//label[contains(.,'Field')]/following-sibling::select</td>
+	<td>//div[contains(@role,'tabpanel') and contains(@class,'active')]//label[contains(.,'Field')]/following-sibling::select</td>
 	<td></td>
 </tr>
 <tr>

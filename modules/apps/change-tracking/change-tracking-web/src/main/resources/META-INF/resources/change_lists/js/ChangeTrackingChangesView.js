@@ -33,6 +33,7 @@ class ChangeTrackingChangesView extends React.Component {
 		const {
 			changes,
 			contextView,
+			discardURL,
 			models,
 			renderCTEntryURL,
 			renderDiffURL,
@@ -44,6 +45,7 @@ class ChangeTrackingChangesView extends React.Component {
 
 		this.changes = changes;
 		this.contextView = contextView;
+		this.discardURL = discardURL;
 		this.models = models;
 		this.renderCTEntryURL = renderCTEntryURL;
 		this.renderDiffURL = renderDiffURL;
@@ -76,6 +78,7 @@ class ChangeTrackingChangesView extends React.Component {
 			),
 			column: 'title',
 			delta: 20,
+			dropdown: '',
 			filterClass: 'everything',
 			navigation: 'changes',
 			node,
@@ -317,6 +320,15 @@ class ChangeTrackingChangesView extends React.Component {
 		}
 
 		return this.state.column;
+	}
+
+	_getDiscardURL(node) {
+		const portletURL = Liferay.PortletURL.createURL(this.discardURL);
+
+		portletURL.setParameter('modelClassNameId', node.modelClassNameId);
+		portletURL.setParameter('modelClassPK', node.modelClassPK);
+
+		return portletURL.toString();
 	}
 
 	_getModels(nodes) {
@@ -654,11 +666,16 @@ class ChangeTrackingChangesView extends React.Component {
 				navigation,
 				nodeId
 			),
+			dropdown: '',
 			filterClass,
 			navigation,
 			node,
 			page: 1,
 			renderInnerHTML: null,
+		});
+
+		AUI().use('liferay-portlet-url', () => {
+			this._setDropdown(node);
 		});
 
 		if (nodeId > 0) {
@@ -702,33 +719,6 @@ class ChangeTrackingChangesView extends React.Component {
 		});
 	}
 
-	_renderDropdown() {
-		if (
-			!this.state.node.dropdownItems ||
-			this.state.node.dropdownItems.length === 0
-		) {
-			return '';
-		}
-
-		return (
-			<div className="autofit-col">
-				<ClayDropDownWithItems
-					alignmentPosition={Align.BottomLeft}
-					items={this.state.node.dropdownItems}
-					spritemap={this.spritemap}
-					trigger={
-						<ClayButtonWithIcon
-							displayType="unstyled"
-							small
-							spritemap={this.spritemap}
-							symbol="ellipsis-v"
-						/>
-					}
-				/>
-			</div>
-		);
-	}
-
 	_renderEntry() {
 		if (this.state.renderInnerHTML === null) {
 			return '';
@@ -745,7 +735,7 @@ class ChangeTrackingChangesView extends React.Component {
 						</span>
 					</div>
 
-					{this._renderDropdown()}
+					{this.state.dropdown}
 				</h2>
 
 				<div
@@ -945,6 +935,42 @@ class ChangeTrackingChangesView extends React.Component {
 				{this._renderPagination()}
 			</>
 		);
+	}
+
+	_setDropdown(node) {
+		let dropdownItems = node.dropdownItems;
+
+		if (!dropdownItems) {
+			dropdownItems = [];
+		}
+		else {
+			dropdownItems = dropdownItems.slice(0);
+		}
+
+		dropdownItems.push({
+			href: this._getDiscardURL(node),
+			label: Liferay.Language.get('discard'),
+		});
+
+		this.setState({
+			dropdown: (
+				<div className="autofit-col">
+					<ClayDropDownWithItems
+						alignmentPosition={Align.BottomLeft}
+						items={dropdownItems}
+						spritemap={this.spritemap}
+						trigger={
+							<ClayButtonWithIcon
+								displayType="unstyled"
+								small
+								spritemap={this.spritemap}
+								symbol="ellipsis-v"
+							/>
+						}
+					/>
+				</div>
+			),
+		});
 	}
 
 	render() {

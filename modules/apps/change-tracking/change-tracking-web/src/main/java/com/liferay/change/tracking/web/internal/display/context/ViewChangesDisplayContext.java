@@ -26,7 +26,6 @@ import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
 import com.liferay.change.tracking.web.internal.display.CTClosureUtil;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.petra.lang.HashUtil;
-import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,8 +37,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserTable;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -65,6 +63,7 @@ import java.util.Set;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.RenderURL;
 import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -238,6 +237,25 @@ public class ViewChangesDisplayContext {
 				ctClosure, modelInfoMap, rootClassNameIds,
 				contextViewJSONObject)
 		).put(
+			"discardURL",
+			() -> {
+				RenderURL discardURL = _renderResponse.createRenderURL();
+
+				discardURL.setParameter(
+					"mvcRenderCommandName", "/change_lists/view_discard");
+
+				PortletURL redirect = PortletURLUtil.getCurrent(
+					_renderRequest, _renderResponse);
+
+				discardURL.setParameter("redirect", redirect.toString());
+
+				discardURL.setParameter(
+					"ctCollectionId",
+					String.valueOf(_ctCollection.getCtCollectionId()));
+
+				return discardURL.toString();
+			}
+		).put(
 			"models",
 			() -> {
 				JSONObject modelsJSONObject =
@@ -295,22 +313,15 @@ public class ViewChangesDisplayContext {
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
 		).put(
 			"typeNames",
-			() -> {
-				JSONObject typeNamesJSONObject =
-					JSONFactoryUtil.createJSONObject();
-
-				for (long classNameId : classNameIdClassPKsMap.keySet()) {
-					String typeName = _ctDisplayRendererRegistry.getTypeName(
-						_themeDisplay.getLocale(), classNameId);
-
-					typeNamesJSONObject.put(
-						String.valueOf(classNameId), typeName);
-				}
-
-				return typeNamesJSONObject;
-			}
+			DisplayContextUtil.getTypeNamesJSONObject(
+				classNameIdClassPKsMap.keySet(), _ctDisplayRendererRegistry,
+				_themeDisplay)
 		).put(
-			"userInfo", _getUserInfoJSONObject()
+			"userInfo",
+			DisplayContextUtil.getUserInfoJSONObject(
+				CTEntryTable.INSTANCE.ctCollectionId.eq(
+					_ctCollection.getCtCollectionId()),
+				_themeDisplay, _userLocalService)
 		).build();
 	}
 
@@ -444,43 +455,6 @@ public class ViewChangesDisplayContext {
 		}
 
 		return rootClassNameIds;
-	}
-
-	private JSONObject _getUserInfoJSONObject() {
-		JSONObject userInfoJSONObject = JSONFactoryUtil.createJSONObject();
-
-		List<User> users = _userLocalService.dslQuery(
-			DSLQueryFactoryUtil.select(
-				UserTable.INSTANCE
-			).from(
-				UserTable.INSTANCE
-			).innerJoinON(
-				CTEntryTable.INSTANCE,
-				CTEntryTable.INSTANCE.userId.eq(UserTable.INSTANCE.userId)
-			).where(
-				CTEntryTable.INSTANCE.ctCollectionId.eq(
-					_ctCollection.getCtCollectionId())
-			));
-
-		for (User user : users) {
-			JSONObject userJSONObject = JSONUtil.put(
-				"userName", user.getFullName());
-
-			if (user.getPortraitId() != 0) {
-				try {
-					userJSONObject.put(
-						"portraitURL", user.getPortraitURL(_themeDisplay));
-				}
-				catch (PortalException portalException) {
-					_log.error(portalException, portalException);
-				}
-			}
-
-			userInfoJSONObject.put(
-				String.valueOf(user.getUserId()), userJSONObject);
-		}
-
-		return userInfoJSONObject;
 	}
 
 	private <T extends BaseModel<T>> void _populateEntryValues(

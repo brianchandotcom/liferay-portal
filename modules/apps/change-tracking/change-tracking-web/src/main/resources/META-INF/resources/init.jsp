@@ -45,6 +45,7 @@ page import="com.liferay.change.tracking.web.internal.display.context.ChangeList
 page import="com.liferay.change.tracking.web.internal.display.context.ChangeListsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.SelectChangeListManagementToolbarDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.ViewChangesDisplayContext" %><%@
+page import="com.liferay.change.tracking.web.internal.display.context.ViewDiscardDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.ViewEntryDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.ViewHistoryDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.ViewHistoryManagementToolbarDisplayContext" %><%@

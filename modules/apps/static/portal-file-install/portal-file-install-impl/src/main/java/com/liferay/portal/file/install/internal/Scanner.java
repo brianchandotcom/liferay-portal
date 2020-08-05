@@ -32,8 +32,6 @@ import java.util.zip.CRC32;
  */
 public class Scanner {
 
-	public static final String SUBDIR_MODE_JAR = "jar";
-
 	public static final String SUBDIR_MODE_RECURSE = "recurse";
 
 	public static final String SUBDIR_MODE_SKIP = "skip";
@@ -59,13 +57,6 @@ public class Scanner {
 		}
 		else {
 			_filenameFilter = null;
-		}
-
-		if ((subdirMode == null) || SUBDIR_MODE_JAR.equals(subdirMode)) {
-			_jarSubdir = true;
-		}
-		else {
-			_jarSubdir = false;
 		}
 
 		_skipSubdir = SUBDIR_MODE_SKIP.equals(subdirMode);
@@ -216,7 +207,6 @@ public class Scanner {
 	}
 
 	private final FilenameFilter _filenameFilter;
-	private final boolean _jarSubdir;
 	private final Map<File, Long> _lastChecksums = new HashMap<>();
 	private final boolean _recurseSubdir;
 	private final boolean _skipSubdir;

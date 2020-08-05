@@ -168,7 +168,7 @@ Navigation.proptypes = {
 	api: PropTypes.object.isRequired,
 	authorName: PropTypes.string.isRequired,
 	authorPortraitURL: PropTypes.string.isRequired,
-	authorUserId: PropTypes.number.isRequired,
+	authorUserId: PropTypes.string.isRequired,
 	defaultTimeRange: PropTypes.objectOf(
 		PropTypes.shape({
 			endDate: PropTypes.string.isRequired,

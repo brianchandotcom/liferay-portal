@@ -74,6 +74,10 @@ export default function PageStructureSidebarSection({
 		};
 	}, [handlerElement, panelElement]);
 
+	useEffect(() => {
+		setPanelHeight(null);
+	}, [resizable, size]);
+
 	return (
 		<>
 			{resizable && (

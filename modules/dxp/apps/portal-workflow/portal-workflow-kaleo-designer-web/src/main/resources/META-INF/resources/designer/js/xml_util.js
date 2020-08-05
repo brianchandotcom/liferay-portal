@@ -135,6 +135,23 @@ AUI.add(
 								STR_CHAR_CRLF;
 						}
 					}
+					else if (item.indexOf(STR_CDATA_OPEN) > -1) {
+						var cdata = item.split(STR_CDATA_OPEN);
+
+						item = LString.repeat(STR_CHAR_TAB, pad) + cdata[0];
+
+						cdata = cdata[1].split(STR_CDATA_CLOSE);
+
+						item +=
+							LString.repeat(STR_CHAR_TAB, pad + 1) +
+							STR_CDATA_OPEN +
+							cdata[0] +
+							STR_CDATA_CLOSE +
+							STR_CHAR_CRLF +
+							LString.repeat(STR_CHAR_TAB, pad) +
+							cdata[1].trim();
+					}
+
 					formatted += item.trim() + STR_CHAR_CRLF;
 
 					if (item.indexOf(STR_CDATA_CLOSE) > -1) {

@@ -1126,6 +1126,10 @@ public class PropsValues {
 	public static final int INDEX_ON_STARTUP_DELAY = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.INDEX_ON_STARTUP_DELAY));
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final boolean INDEX_ON_UPGRADE = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.INDEX_ON_UPGRADE));
 

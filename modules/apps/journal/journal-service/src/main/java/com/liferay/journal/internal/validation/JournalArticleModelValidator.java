@@ -206,7 +206,12 @@ public class JournalArticleModelValidator
 		}
 
 		if (!validSmallImageExtension) {
-			throw new ArticleSmallImageNameException(smallImageName);
+			String smallImageExtension = smallImageName.substring(
+				smallImageName.indexOf(".") + 1);
+
+			throw new ArticleSmallImageNameException(
+				"Extension " + smallImageExtension +
+					" is not an allowed file upload type.");
 		}
 
 		long smallImageMaxSize =
@@ -366,6 +371,7 @@ public class JournalArticleModelValidator
 		String smallImageURL = article.getSmallImageURL();
 
 		byte[] smallImageBytes = null;
+		String smallImageExtension = null;
 		File smallImageFile = null;
 
 		if (smallImage) {
@@ -374,9 +380,15 @@ public class JournalArticleModelValidator
 
 			if (image != null) {
 				smallImageBytes = image.getTextObj();
+				smallImageExtension = image.getType();
 
 				try {
-					smallImageFile = FileUtil.createTempFile(smallImageBytes);
+					if (smallImageBytes != null) {
+						smallImageFile = FileUtil.createTempFile(
+							smallImageExtension);
+
+						FileUtil.write(smallImageFile, smallImageBytes, false);
+					}
 				}
 				catch (IOException ioException) {
 					smallImageBytes = null;
@@ -481,8 +493,9 @@ public class JournalArticleModelValidator
 
 			Image image = _imageLocalService.fetchImage(smallImageId);
 
-			if (image == null) {
-				throw new NoSuchImageException();
+			if ((image == null) || (smallImageBytes == null)) {
+				throw new NoSuchImageException(
+					"The featured image was not found");
 			}
 		}
 

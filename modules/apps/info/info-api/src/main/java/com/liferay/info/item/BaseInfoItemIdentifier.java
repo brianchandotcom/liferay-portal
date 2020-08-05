@@ -14,25 +14,26 @@
 
 package com.liferay.info.item;
 
+import java.util.Optional;
+
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
- * @author Jorge Ferrer
+ * @author Jürgen Kappler
  */
-public class GroupKeyInfoItemIdentifier extends BaseInfoItemIdentifier {
+@ProviderType
+public abstract class BaseInfoItemIdentifier implements InfoItemIdentifier {
 
-	public GroupKeyInfoItemIdentifier(long groupId, String key) {
-		_groupId = groupId;
-		_key = key;
+	@Override
+	public Optional<String> getVersionOptional() {
+		return Optional.ofNullable(_version);
 	}
 
-	public long getGroupId() {
-		return _groupId;
+	@Override
+	public void setVersion(String version) {
+		_version = version;
 	}
 
-	public String getKey() {
-		return _key;
-	}
-
-	private final long _groupId;
-	private final String _key;
+	private String _version;
 
 }

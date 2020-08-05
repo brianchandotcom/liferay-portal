@@ -19,7 +19,7 @@ import com.liferay.petra.string.StringBundler;
 /**
  * @author Jorge Ferrer
  */
-public class ClassPKInfoItemIdentifier extends InfoItemIdentifier {
+public class ClassPKInfoItemIdentifier extends BaseInfoItemIdentifier {
 
 	public ClassPKInfoItemIdentifier(long classPK) {
 		_classPK = classPK;

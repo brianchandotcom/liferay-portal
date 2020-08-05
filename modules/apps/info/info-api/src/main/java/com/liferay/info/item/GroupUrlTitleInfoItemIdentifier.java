@@ -17,7 +17,7 @@ package com.liferay.info.item;
 /**
  * @author Jorge Ferrer
  */
-public class GroupUrlTitleInfoItemIdentifier extends InfoItemIdentifier {
+public class GroupUrlTitleInfoItemIdentifier extends BaseInfoItemIdentifier {
 
 	public GroupUrlTitleInfoItemIdentifier(long groupId, String urlTitle) {
 		_groupId = groupId;

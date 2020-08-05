@@ -15,6 +15,7 @@
 package com.liferay.journal.info.item.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
@@ -89,6 +90,29 @@ public class JournalArticleInfoItemProviderTest {
 			journalArticleInfoItemProvider.getInfoItem(infoItemReference);
 
 		Assert.assertEquals(updateArticle.getTitle(), draftVersion.getTitle());
+	}
+
+	@Test
+	public void testGetInfoFormWithInvalidInfoItemReference() throws Exception {
+		JournalArticle article = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		InfoItemObjectProvider<JournalArticle> journalArticleInfoItemProvider =
+			(InfoItemObjectProvider<JournalArticle>)
+				_infoItemServiceTracker.getFirstInfoItemService(
+					InfoItemObjectProvider.class,
+					JournalArticle.class.getName());
+
+		InfoItemReference infoItemReference = new InfoItemReference(
+			article.getClassPK());
+
+		try {
+			journalArticleInfoItemProvider.getInfoItem(infoItemReference);
+		}
+		catch (NoSuchInfoItemException noSuchInfoItemException) {
+			Assert.assertNotNull(noSuchInfoItemException);
+		}
 	}
 
 	@DeleteAfterTestRun

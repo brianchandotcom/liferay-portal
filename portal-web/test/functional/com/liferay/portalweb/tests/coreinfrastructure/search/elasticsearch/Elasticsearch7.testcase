@@ -343,11 +343,13 @@ definition {
 			portlet = "Search");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "SearchAdmin#REMOTE_CLUSTER_NAME",
+			key_connectionID = "__REMOTE__",
+			locator1 = "SearchAdmin#CLUSTER_NAME",
 			value1 = "LiferayElasticsearchCluster");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "SearchAdmin#LOCAL_CLUSTER_NAME",
+			key_connectionID = "connection2",
+			locator1 = "SearchAdmin#CLUSTER_NAME",
 			value1 = "LiferayElasticsearchClusterTwo");
 
 		JSONWebcontent.addWebContent(

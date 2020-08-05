@@ -14,13 +14,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LOCAL_CLUSTER_NAME</td>
-	<td>//div[contains(@class,'search-engine')]//div[3]//span[contains(@class,'cluster-name')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REMOTE_CLUSTER_NAME</td>
-	<td>//div[contains(@class,'search-engine')]//div[2]//span[contains(@class,'cluster-name')]</td>
+	<td>CLUSTER_NAME</td>
+	<td>//div[contains(@class,'connection-info-item')][.//*[contains(@class,'connection-id') and contains(.,'${key_connectionID}')]]//span[contains(@class,'cluster-name')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -302,11 +302,13 @@ definition {
 			value1 = "Search");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "SearchAdmin#REMOTE_CLUSTER_NAME",
+			key_connectionID = "__REMOTE__",
+			locator1 = "SearchAdmin#CLUSTER_NAME",
 			value1 = "LiferayElasticsearchCluster");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "SearchAdmin#LOCAL_CLUSTER_NAME",
+			key_connectionID = "ccr",
+			locator1 = "SearchAdmin#CLUSTER_NAME",
 			value1 = "LiferayElasticsearchClusterTwo");
 
 		Navigator.openURL();
@@ -331,14 +333,17 @@ definition {
 			value1 = "Search");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "SearchAdmin#LOCAL_CLUSTER_NAME",
+			key_connectionID = "ccr",
+			locator1 = "SearchAdmin#CLUSTER_NAME",
 			value1 = "LiferayElasticsearchClusterTwo");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR",
 			value1 = "Connection refused");
 
-		AssertElementNotPresent(locator1 = "SearchAdmin#REMOTE_CLUSTER_NAME");
+		AssertElementNotPresent(
+			key_connectionID = "__REMOTE__",
+			locator1 = "SearchAdmin#CLUSTER_NAME");
 
 		Navigator.openURL();
 
@@ -368,14 +373,17 @@ definition {
 			value1 = "Search");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "SearchAdmin#REMOTE_CLUSTER_NAME",
+			key_connectionID = "__REMOTE__",
+			locator1 = "SearchAdmin#CLUSTER_NAME",
 			value1 = "LiferayElasticsearchCluster");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR",
 			value1 = "Connection refused");
 
-		AssertElementNotPresent(locator1 = "SearchAdmin#LOCAL_CLUSTER_NAME");
+		AssertElementNotPresent(
+			key_connectionID = "ccr",
+			locator1 = "SearchAdmin#CLUSTER_NAME");
 
 		Navigator.openURL();
 

@@ -19,15 +19,16 @@ import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {FRAGMENT_CONFIGURATION_ROLES} from '../../config/constants/fragmentConfigurationRoles';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/freemarkerFragmentEntryProcessor';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
-import {useDispatch, useSelector} from '../../store/index';
+import {useDispatch, useSelector, useSelectorCallback} from '../../store/index';
 import updateFragmentConfiguration from '../../thunks/updateFragmentConfiguration';
 import {FieldSet} from './FieldSet';
 
 export const FragmentConfigurationPanel = ({item}) => {
 	const dispatch = useDispatch();
 
-	const fragmentEntryLink = useSelector(
-		(state) => state.fragmentEntryLinks[item.config.fragmentEntryLinkId]
+	const fragmentEntryLink = useSelectorCallback(
+		(state) => state.fragmentEntryLinks[item.config.fragmentEntryLinkId],
+		[item.config.fragmentEntryLinkId]
 	);
 
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);

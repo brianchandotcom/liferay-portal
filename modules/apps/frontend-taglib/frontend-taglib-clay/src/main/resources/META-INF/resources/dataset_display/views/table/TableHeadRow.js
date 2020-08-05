@@ -12,13 +12,88 @@
  * details.
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
+import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
+import DatasetDisplayContext from '../../DatasetDisplayContext';
 import Checkbox from '../../data_renderers/CheckboxRenderer';
+import persistVisibleFieldNames from '../../thunks/persistVisibleFieldNames';
+import ViewsContext from '../ViewsContext';
+
+const FieldsSelectorDropdown = ({fields}) => {
+	const {id} = useContext(DatasetDisplayContext);
+	const [{visibleFieldNames}, dispatch] = useContext(ViewsContext);
+
+	const [active, setActive] = useState(false);
+	const [filteredFields, setFilteredFields] = useState(fields);
+	const [query, setQuery] = useState('');
+
+	useEffect(() => {
+		setFilteredFields(
+			fields.filter((field) =>
+				field.label.toLowerCase().includes(query.toLowerCase())
+			)
+		);
+	}, [fields, query]);
+
+	return (
+		<ClayDropDown
+			active={active}
+			className="dataset-fields-selector-dropdown"
+			onActiveChange={setActive}
+			trigger={
+				<ClayButtonWithIcon
+					borderless
+					className="p-0"
+					displayType="secondary"
+					monospaced={false}
+					symbol={active ? 'caret-top' : 'caret-bottom'}
+				/>
+			}
+		>
+			<ClayDropDown.Search
+				onChange={(event) => setQuery(event.target.value)}
+				value={query}
+			/>
+			{filteredFields.length ? (
+				<ClayDropDown.ItemList>
+					{filteredFields.map(({fieldName, label}) => (
+						<ClayDropDown.Item
+							key={fieldName}
+							onClick={() => {
+								dispatch(
+									persistVisibleFieldNames({
+										id,
+										visibleFieldNames: {
+											...visibleFieldNames,
+											[fieldName]: !visibleFieldNames[
+												fieldName
+											],
+										},
+									})
+								);
+							}}
+						>
+							{visibleFieldNames[fieldName] && (
+								<ClayIcon symbol="check" />
+							)}
+							{label}
+						</ClayDropDown.Item>
+					))}
+				</ClayDropDown.ItemList>
+			) : (
+				<div className="dropdown-section text-muted">
+					{Liferay.Language.get('no-fields-were-found')}
+				</div>
+			)}
+		</ClayDropDown>
+	);
+};
 
 function TableHeadCell({
 	contentRenderer,
@@ -117,25 +192,12 @@ function TableHeadRow({
 	showActionItems,
 	sorting,
 	updateSorting,
+	visibleFields,
 }) {
-	const getColumns = (fields) => {
-		const expandableColumns = fields.reduce(
-			(expandable, field) => expandable || Boolean(field.expand),
-			false
-		);
-
-		return fields.map((field, i) => {
-			return (
-				<TableHeadCell
-					{...field}
-					expandableColumns={expandableColumns}
-					key={field.sortingKey || i}
-					sorting={sorting}
-					updateSorting={updateSorting}
-				/>
-			);
-		});
-	};
+	const expandableColumns = visibleFields.reduce(
+		(expandable, field) => expandable || Boolean(field.expand),
+		false
+	);
 
 	function handleCheckboxClick() {
 		if (selectedItemsValue.length === items.length) {
@@ -163,8 +225,22 @@ function TableHeadRow({
 						) : null}
 					</ClayTable.Cell>
 				)}
-				{getColumns(schema.fields)}
-				{showActionItems && <ClayTable.Cell headingCell />}
+				{visibleFields.map((field, i) => (
+					<TableHeadCell
+						{...field}
+						expandableColumns={expandableColumns}
+						key={field.sortingKey || i}
+						sorting={sorting}
+						updateSorting={updateSorting}
+					/>
+				))}
+				{showActionItems ? (
+					<ClayTable.Cell className="text-right" headingCell>
+						<FieldsSelectorDropdown fields={schema.fields} />
+					</ClayTable.Cell>
+				) : (
+					<FieldsSelectorDropdown fields={schema.fields} />
+				)}
 			</ClayTable.Row>
 		</ClayTable.Head>
 	);

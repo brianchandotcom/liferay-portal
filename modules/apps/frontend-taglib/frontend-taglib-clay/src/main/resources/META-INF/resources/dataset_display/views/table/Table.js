@@ -27,6 +27,7 @@ import {
 	getDataRendererByUrl,
 } from '../../data_renderers/index';
 import {getValueFromItem} from '../../utilities/index';
+import ViewsContext from '../ViewsContext';
 import TableHeadRow from './TableHeadRow';
 
 function CustomTableCell({
@@ -113,6 +114,14 @@ function getItemFields(item, fields, itemId, itemsActions) {
 	});
 }
 
+export const getVisibleFields = (fields, visibleFieldNames) => {
+	const visibleFields = fields.filter(
+		({fieldName}) => visibleFieldNames[fieldName]
+	);
+
+	return visibleFields.length ? visibleFields : fields;
+};
+
 function Table({items, itemsActions, schema, style}) {
 	const {
 		highlightedItemsValue,
@@ -126,6 +135,9 @@ function Table({items, itemsActions, schema, style}) {
 		sorting,
 		updateSorting,
 	} = useContext(DatasetDisplayContext);
+	const [{visibleFieldNames}] = useContext(ViewsContext);
+
+	const visibleFields = getVisibleFields(schema.fields, visibleFieldNames);
 
 	const showActionItems = Boolean(
 		itemsActions?.length ||
@@ -149,6 +161,7 @@ function Table({items, itemsActions, schema, style}) {
 					showActionItems={showActionItems}
 					sorting={sorting}
 					updateSorting={updateSorting}
+					visibleFields={visibleFields}
 				/>
 				<ClayTable.Body>
 					{items.map((item, i) => {
@@ -190,7 +203,7 @@ function Table({items, itemsActions, schema, style}) {
 									)}
 									{getItemFields(
 										item,
-										schema.fields,
+										visibleFields,
 										itemId,
 										itemsActions
 									)}

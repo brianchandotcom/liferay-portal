@@ -78,7 +78,7 @@ public class JournalArticleItemSelectorVerticalCard implements VerticalCard {
 
 			Group group = GroupServiceUtil.getGroup(_article.getGroupId());
 
-			return group.getName(_themeDisplay.getLocale());
+			return group.getDescriptiveName(_themeDisplay.getLocale());
 		}
 		catch (PortalException portalException) {
 			return ReflectionUtil.throwException(portalException);

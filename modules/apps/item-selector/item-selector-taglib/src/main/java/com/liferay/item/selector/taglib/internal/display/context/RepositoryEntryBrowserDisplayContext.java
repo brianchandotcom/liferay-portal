@@ -50,7 +50,7 @@ public class RepositoryEntryBrowserDisplayContext {
 
 		Group group = GroupServiceUtil.getGroup(groupId);
 
-		return group.getName(locale);
+		return group.getDescriptiveName(locale);
 	}
 
 	public boolean isSearchEverywhere() {

@@ -147,7 +147,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 
 		Group group = GroupServiceUtil.getGroup(groupId);
 
-		return group.getName(locale);
+		return group.getDescriptiveName(locale);
 	}
 
 	public String getItemSelectedEventName() {

@@ -138,19 +138,19 @@ exports[`SidebarPanelInfoView renders 1`] = `
             class="c-mb-4 sidebar-dl sidebar-section"
           >
             <span
-              class="sticker sticker-user-icon"
+              class="sticker sticker-user-icon user-icon-color-6 sticker-circle"
             >
               <span
                 class="sticker-overlay"
               >
-                <div
-                  class="sticker-overlay"
+                <svg
+                  class="lexicon-icon lexicon-icon-user"
+                  role="presentation"
                 >
-                  <img
-                    class="sticker-img"
-                    src=""
+                  <use
+                    xlink:href="#user"
                   />
-                </div>
+                </svg>
               </span>
             </span>
             <span

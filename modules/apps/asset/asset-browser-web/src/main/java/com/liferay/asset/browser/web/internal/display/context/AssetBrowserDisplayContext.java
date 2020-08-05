@@ -232,22 +232,6 @@ public class AssetBrowserDisplayContext {
 		return group.getDescriptiveName(locale);
 	}
 
-	public String getGroupTypeTitle() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Group group = themeDisplay.getScopeGroup();
-
-		String groupTypeTitle = "site";
-
-		if (group.getType() == GroupConstants.TYPE_DEPOT) {
-			groupTypeTitle = "asset-library";
-		}
-
-		return LanguageUtil.get(_httpServletRequest, groupTypeTitle);
-	}
-
 	public List<BreadcrumbEntry> getPortletBreadcrumbEntries()
 		throws PortalException, PortletException {
 

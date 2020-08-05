@@ -203,11 +203,6 @@
 							status="<%= assetRenderer.getStatus() %>"
 						/>
 					</c:if>
-
-					<liferay-ui:search-container-column-text
-						name="<%= assetBrowserDisplayContext.getGroupTypeTitle() %>"
-						value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
-					/>
 				</c:when>
 			</c:choose>
 		</liferay-ui:search-container-row>

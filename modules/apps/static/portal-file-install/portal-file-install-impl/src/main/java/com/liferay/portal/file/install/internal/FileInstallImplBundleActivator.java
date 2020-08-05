@@ -95,9 +95,6 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 		_set(map, DirectoryWatcher.USE_START_TRANSIENT);
 		_set(map, DirectoryWatcher.USE_START_ACTIVATION_POLICY);
 		_set(map, DirectoryWatcher.NO_INITIAL_DELAY);
-		_set(map, DirectoryWatcher.DISABLE_CONFIG_SAVE);
-		_set(map, DirectoryWatcher.ENABLE_CONFIG_SAVE);
-		_set(map, DirectoryWatcher.CONFIG_ENCODING);
 		_set(map, DirectoryWatcher.START_LEVEL);
 		_set(map, DirectoryWatcher.ACTIVE_LEVEL);
 		_set(map, DirectoryWatcher.OPTIONAL_SCOPE);

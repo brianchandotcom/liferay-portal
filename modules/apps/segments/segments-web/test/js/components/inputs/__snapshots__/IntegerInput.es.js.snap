@@ -10,3 +10,44 @@ exports[`IntegerInput renders type integer number 1`] = `
   />
 </DocumentFragment>
 `;
+
+exports[`IntegerInput renders type integer number with options 1`] = `
+<DocumentFragment>
+  <select
+    class="form-control criterion-input form-control"
+    data-testid="options-integer"
+  >
+    <option
+      value="1"
+    >
+      1
+    </option>
+    <option
+      value="2"
+    >
+      2
+    </option>
+  </select>
+</DocumentFragment>
+`;
+
+exports[`IntegerInput renders type integer number with options disabled 1`] = `
+<DocumentFragment>
+  <select
+    class="form-control criterion-input form-control"
+    data-testid="options-integer"
+  >
+    <option
+      disabled=""
+      value="1"
+    >
+      1
+    </option>
+    <option
+      value="2"
+    >
+      2
+    </option>
+  </select>
+</DocumentFragment>
+`;

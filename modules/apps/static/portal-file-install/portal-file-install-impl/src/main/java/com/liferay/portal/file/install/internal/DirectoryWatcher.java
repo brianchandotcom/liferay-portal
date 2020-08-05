@@ -128,10 +128,8 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 	public static final String WEB_START_LEVEL = "file.install.web.start.level";
 
-	public DirectoryWatcher(
-		Map<String, String> properties, BundleContext bundleContext) {
-
-		super("fileinstall-" + properties.get(DIR));
+	public DirectoryWatcher(String dir, BundleContext bundleContext) {
+		super("fileinstall-" + dir);
 
 		setDaemon(true);
 
@@ -156,7 +154,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		_useStartTransient = GetterUtil.getBoolean(
 			bundleContext.getProperty(USE_START_TRANSIENT));
 
-		_watchedDirectory = new File(properties.get(DIR));
+		_watchedDirectory = new File(dir);
 
 		if (!_watchedDirectory.exists()) {
 			if (_log.isInfoEnabled()) {

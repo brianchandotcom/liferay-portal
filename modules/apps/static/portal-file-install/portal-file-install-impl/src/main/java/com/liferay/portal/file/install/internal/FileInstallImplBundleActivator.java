@@ -20,9 +20,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.io.File;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import org.osgi.framework.BundleActivator;
@@ -86,17 +84,13 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 
 		_serviceTracker.open();
 
-		Map<String, String> map = new HashMap<>();
-
-		_set(map, DirectoryWatcher.DIR);
-
 		Set<String> dirs = new HashSet<>(
-			Arrays.asList(StringUtil.split(map.get(DirectoryWatcher.DIR))));
+			Arrays.asList(
+				StringUtil.split(
+					bundleContext.getProperty(DirectoryWatcher.DIR))));
 
 		for (String dir : dirs) {
-			map.put(DirectoryWatcher.DIR, dir);
-
-			_directoryWatchers.add(new DirectoryWatcher(map, _bundleContext));
+			_directoryWatchers.add(new DirectoryWatcher(dir, _bundleContext));
 		}
 
 		for (DirectoryWatcher directoryWatcher : _directoryWatchers) {
@@ -127,16 +121,6 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 
 			scanner.updateChecksum(file);
 		}
-	}
-
-	private void _set(Map<String, String> map, String key) {
-		String property = _bundleContext.getProperty(key);
-
-		if (property == null) {
-			return;
-		}
-
-		map.put(key, property);
 	}
 
 	private BundleContext _bundleContext;

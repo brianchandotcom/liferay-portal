@@ -772,11 +772,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			<#if entity.isChangeTrackingEnabled()>
 				if (${ctPersistenceHelper}.isInsert(${entity.varName})) {
 					if (!isNew) {
-						${entity.name} old${entity.name} = (${entity.name})session.get(${entity.name}Impl.class, ${entity.varName}.getPrimaryKeyObj());
-
-						if (old${entity.name} != null) {
-							session.evict(old${entity.name});
-						}
+						session.evict(${entity.varName});
 					}
 			<#else>
 				if (${entity.varName}.isNew()) {

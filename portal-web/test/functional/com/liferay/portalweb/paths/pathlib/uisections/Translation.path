@@ -56,7 +56,7 @@
 </tr>
 <tr>
 	<td>BASE_LANGUAGE_CONTENT_FIELD</td>
-	<td>//div[contains(@class,'col-md-6') and contains(.,'${key_fieldName}')]//div[contains(.,'${key_content}') and @contenteditable='false']</td>
+	<td>//div[contains(@class,'col-md-6') and contains(.,'${key_fieldName}')]//div[contains(.,'${key_content}') and not(@contenteditable='true')]</td>
 	<td></td>
 </tr>
 <tr>

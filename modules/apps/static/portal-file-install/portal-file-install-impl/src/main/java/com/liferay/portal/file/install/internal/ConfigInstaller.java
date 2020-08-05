@@ -205,10 +205,6 @@ public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 		_serviceRegistration.unregister();
 	}
 
-	public ConfigurationAdmin getConfigurationAdmin() {
-		return _configurationAdmin;
-	}
-
 	public void init() {
 		_serviceRegistration = _bundleContext.registerService(
 			new String[] {

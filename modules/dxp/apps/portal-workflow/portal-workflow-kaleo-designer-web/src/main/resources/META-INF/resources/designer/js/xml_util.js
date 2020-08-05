@@ -30,11 +30,15 @@ AUI.add(
 
 		var STR_CDATA_OPEN = '<![CDATA[';
 
+		var STR_CHAR_CR_LF_CRLF = /\r\n|\r|\n/;
+
 		var STR_CHAR_CRLF = '\r\n';
 
 		var STR_CHAR_TAB = '\t';
 
 		var STR_DASH = '-';
+
+		var STR_METADATA = '<metadata';
 
 		var STR_SPACE = ' ';
 
@@ -110,6 +114,27 @@ AUI.add(
 						formatted += LString.repeat(STR_CHAR_TAB, pad);
 					}
 
+					if (item.indexOf(STR_METADATA) > -1) {
+						var metadata = item.split(STR_CHAR_CR_LF_CRLF);
+						item = '';
+						for (var i = 0; i < metadata.length; i++) {
+							if (i == 0 || i == 2) {
+								pad += 1;
+							}
+
+							if (
+								i == metadata.length - 2 ||
+								i == metadata.length - 1
+							) {
+								pad -= 1;
+							}
+
+							item +=
+								LString.repeat(STR_CHAR_TAB, pad) +
+								metadata[i] +
+								STR_CHAR_CRLF;
+						}
+					}
 					formatted += item.trim() + STR_CHAR_CRLF;
 
 					if (item.indexOf(STR_CDATA_CLOSE) > -1) {

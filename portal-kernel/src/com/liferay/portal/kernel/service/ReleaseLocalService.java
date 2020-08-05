@@ -290,6 +290,16 @@ public interface ReleaseLocalService
 
 	public void updateRelease(
 			String servletContextName, List<UpgradeProcess> upgradeProcesses,
+			int buildNumber, int previousBuildNumber)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #updateRelease(String, List, int, int)}
+	 */
+	@Deprecated
+	public void updateRelease(
+			String servletContextName, List<UpgradeProcess> upgradeProcesses,
 			int buildNumber, int previousBuildNumber, boolean indexOnUpgrade)
 		throws PortalException;
 

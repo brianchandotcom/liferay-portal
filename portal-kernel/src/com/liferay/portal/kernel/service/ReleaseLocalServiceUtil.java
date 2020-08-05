@@ -353,6 +353,23 @@ public class ReleaseLocalServiceUtil {
 			String servletContextName,
 			java.util.List<com.liferay.portal.kernel.upgrade.UpgradeProcess>
 				upgradeProcesses,
+			int buildNumber, int previousBuildNumber)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().updateRelease(
+			servletContextName, upgradeProcesses, buildNumber,
+			previousBuildNumber);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #updateRelease(String, List, int, int)}
+	 */
+	@Deprecated
+	public static void updateRelease(
+			String servletContextName,
+			java.util.List<com.liferay.portal.kernel.upgrade.UpgradeProcess>
+				upgradeProcesses,
 			int buildNumber, int previousBuildNumber, boolean indexOnUpgrade)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

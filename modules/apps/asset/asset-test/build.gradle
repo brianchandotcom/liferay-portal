@@ -8,7 +8,6 @@ dependencies {
 	testIntegrationCompile project(":apps:asset:asset-api")
 	testIntegrationCompile project(":apps:asset:asset-categories-admin-web-api")
 	testIntegrationCompile project(":apps:asset:asset-categories-navigation-api")
-	testIntegrationCompile project(":apps:asset:asset-info-api")
 	testIntegrationCompile project(":apps:asset:asset-tags-api")
 	testIntegrationCompile project(":apps:asset:asset-test-util")
 	testIntegrationCompile project(":apps:blogs:blogs-api")

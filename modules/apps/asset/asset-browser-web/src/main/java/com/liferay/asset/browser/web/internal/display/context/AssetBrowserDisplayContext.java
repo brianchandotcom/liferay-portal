@@ -207,7 +207,7 @@ public class AssetBrowserDisplayContext {
 			return _groupId;
 		}
 
-		_groupId = ParamUtil.getLong(_httpServletRequest, "groupId");
+		_groupId = ParamUtil.getLong(_renderRequest, "groupId");
 
 		return _groupId;
 	}

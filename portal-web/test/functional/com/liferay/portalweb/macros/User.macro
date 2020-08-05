@@ -2528,6 +2528,7 @@ definition {
 			var bodySpecificText = MockMock.getBodySpecificText(
 				asset = "${portalURL}: Email Address Verification",
 				content = "Please verify your email address for ${portalURL}",
+				extractFirstText = "&",
 				recipient = "${recipient}",
 				sender = "Joe Bloggs",
 				specificText = "ticketKey=",

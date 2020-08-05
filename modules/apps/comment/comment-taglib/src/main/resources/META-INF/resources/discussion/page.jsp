@@ -426,8 +426,6 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 							<%= randomNamespace %>showStatusMessage({
 								id: '<%= randomNamespace %>',
 								message: errorKey,
-								title:
-									'<%= UnicodeLanguageUtil.get(resourceBundle, "error") %>',
 								type: 'danger',
 							});
 						}
@@ -439,8 +437,6 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 							id: '<%= randomNamespace %>',
 							message:
 								'<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>',
-							title:
-								'<%= UnicodeLanguageUtil.get(resourceBundle, "error") %>',
 							type: 'danger',
 						});
 
@@ -657,8 +653,6 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 								id: '<%= randomNamespace %>',
 								message:
 									'<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>',
-								title:
-									'<%= UnicodeLanguageUtil.get(resourceBundle, "error") %>',
 								type: 'danger',
 							});
 						});
@@ -689,8 +683,6 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 									id: randomId,
 									message:
 										'<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-completed-successfully") %>',
-									title:
-										'<%= UnicodeLanguageUtil.get(resourceBundle, "success") %>',
 									type: 'success',
 								});
 							}

@@ -50,7 +50,6 @@ export default function EditCommentForm({
 					message: Liferay.Language.get(
 						'the-comment-could-not-be-edited'
 					),
-					title: Liferay.Language.get('error'),
 					type: 'danger',
 				});
 

@@ -112,7 +112,6 @@ const FragmentEditor = ({
 
 				openToast({
 					message,
-					title: Liferay.Language.get('error'),
 					type: 'danger',
 				});
 			});
@@ -164,7 +163,6 @@ const FragmentEditor = ({
 
 					openToast({
 						message,
-						title: Liferay.Language.get('error'),
 						type: 'danger',
 					});
 				});

@@ -412,7 +412,6 @@
 
 					Liferay.Util.openToast({
 						message,
-						title: Liferay.Language.get('error'),
 						type: 'danger',
 					});
 				});

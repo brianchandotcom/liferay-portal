@@ -43,7 +43,6 @@ export default function persistActiveView({activeViewName, id}) {
 
 			openToast({
 				message: Liferay.Language.get('unexpected-error'),
-				title: Liferay.Language.get('error'),
 				type: 'danger',
 			});
 		});

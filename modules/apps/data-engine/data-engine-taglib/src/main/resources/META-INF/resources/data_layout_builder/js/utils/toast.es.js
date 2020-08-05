@@ -20,7 +20,7 @@ export const errorToast = (
 ) => {
 	openToast({
 		message,
-		title: `${title}:`,
+		title: `${title}`,
 		type: 'danger',
 	});
 };
@@ -31,7 +31,7 @@ export const successToast = (
 ) => {
 	openToast({
 		message,
-		title: `${title}:`,
+		title: `${title}`,
 		type: 'success',
 	});
 };

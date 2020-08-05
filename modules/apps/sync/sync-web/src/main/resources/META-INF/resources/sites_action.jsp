@@ -103,7 +103,6 @@ String groupId = String.valueOf(group.getGroupId());
 							message: Liferay.Language.get(
 								'an-unexpected-system-error-occurred'
 							),
-							title: Liferay.Language.get('error'),
 							type: 'danger',
 						});
 					});

@@ -87,7 +87,6 @@ DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoo
 			function showError(message) {
 				showStatusMessage({
 					message: message,
-					title: '<liferay-ui:message key="error" />:',
 					type: 'danger',
 				});
 			}

@@ -46,7 +46,6 @@ class ErrorBoundary extends Component {
 		if (this.props.toast) {
 			openToast({
 				message: this.state.message,
-				title: Liferay.Language.get('error'),
 				type: 'danger',
 			});
 		}

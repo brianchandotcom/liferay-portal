@@ -303,7 +303,6 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 
 						Liferay.Util.openToast({
 							message: error.message,
-							title: '<liferay-ui:message key="warning" />',
 							type: 'warning',
 						});
 					});

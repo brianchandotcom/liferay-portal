@@ -65,7 +65,6 @@ const NetworkStatusBar = ({error, status}) => {
 		if (status === SERVICE_NETWORK_STATUS_TYPES.error) {
 			openToast({
 				message: error,
-				title: Liferay.Language.get('error'),
 				type: 'danger',
 			});
 		}

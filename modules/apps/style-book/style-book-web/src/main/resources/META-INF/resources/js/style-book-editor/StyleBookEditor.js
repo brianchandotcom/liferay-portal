@@ -54,7 +54,6 @@ const StyleBookEditor = ({
 
 				openToast({
 					message: error.message,
-					title: Liferay.Language.get('error'),
 					type: 'danger',
 				});
 			});

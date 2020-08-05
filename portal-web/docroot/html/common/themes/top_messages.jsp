@@ -45,7 +45,6 @@ if (Validator.isNotNull(jspPath) || Validator.isNotNull(message)) {
 			renderData: {
 				portletId: <%= portletId %>
 			},
-			title: null,
 			toastProps: {
 				autoClose: <%= timeout %>,
 				className: '<%= cssClass %>',

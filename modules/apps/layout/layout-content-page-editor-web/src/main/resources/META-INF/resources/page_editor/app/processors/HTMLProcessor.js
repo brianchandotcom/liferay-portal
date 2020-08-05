@@ -53,7 +53,6 @@ function createEditor(element, changeCallback, destroyCallback) {
 
 						openToast({
 							message: errorMessage,
-							title: Liferay.Language.get('error'),
 							type: 'danger',
 						});
 					}

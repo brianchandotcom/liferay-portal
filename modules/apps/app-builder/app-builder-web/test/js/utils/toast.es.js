@@ -39,7 +39,7 @@ describe('toast', () => {
 			message: Liferay.Language.get(
 				'your-request-completed-successfully'
 			),
-			title: `${Liferay.Language.get('success')}:`,
+			title: Liferay.Language.get('success'),
 			type: 'success',
 		});
 	});
@@ -49,7 +49,7 @@ describe('toast', () => {
 
 		expect(openToast).toBeCalledWith({
 			message: 'message',
-			title: 'title:',
+			title: 'title',
 			type: 'success',
 		});
 	});
@@ -59,7 +59,7 @@ describe('toast', () => {
 
 		expect(openToast).toBeCalledWith({
 			message: Liferay.Language.get('an-unexpected-error-occurred'),
-			title: `${Liferay.Language.get('error')}:`,
+			title: Liferay.Language.get('error'),
 			type: 'danger',
 		});
 	});
@@ -69,7 +69,7 @@ describe('toast', () => {
 
 		expect(openToast).toBeCalledWith({
 			message: 'message',
-			title: 'title:',
+			title: 'title',
 			type: 'danger',
 		});
 	});

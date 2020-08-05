@@ -235,7 +235,6 @@ AUI.add(
 				Liferay.Util.openToast({
 					container,
 					message,
-					title: Liferay.Language.get('success'),
 					type: 'success',
 				});
 			},

@@ -101,7 +101,6 @@ export default function FragmentComment({
 						: Liferay.Language.get(
 								'the-comment-could-not-be-resolved'
 						  ),
-					title: Liferay.Language.get('error'),
 					type: 'danger',
 				});
 
@@ -277,7 +276,6 @@ export default function FragmentComment({
 								message: Liferay.Language.get(
 									'the-comment-could-not-be-deleted'
 								),
-								title: Liferay.Language.get('error'),
 								type: 'danger',
 							});
 						})

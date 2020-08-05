@@ -581,7 +581,6 @@ AUI.add(
 									instance._alertClosed = true;
 								}
 							},
-							title: Liferay.Language.get('warning'),
 							toastProps: {
 								autoClose: config.remainingTime,
 								role: 'alert',

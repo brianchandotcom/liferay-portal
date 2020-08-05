@@ -118,7 +118,6 @@ function DatasetDisplay({
 					);
 					openToast({
 						message: Liferay.Language.get('unexpected-error'),
-						title: Liferay.Language.get('error'),
 						type: 'danger',
 					});
 					setLoading(false);
@@ -170,7 +169,6 @@ function DatasetDisplay({
 						message:
 							message ||
 							Liferay.Language.get('table-data-updated'),
-						title: Liferay.Language.get('success'),
 						type: 'success',
 					});
 				}
@@ -183,7 +181,6 @@ function DatasetDisplay({
 				setLoading(false);
 				openToast({
 					message: Liferay.Language.get('unexpected-error'),
-					title: Liferay.Language.get('error'),
 					type: 'danger',
 				});
 			});
@@ -396,7 +393,6 @@ function DatasetDisplay({
 				logError(error);
 				openToast({
 					message: Liferay.Language.get('unexpected-error'),
-					title: Liferay.Language.get('error'),
 					type: 'danger',
 				});
 			});

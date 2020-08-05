@@ -201,9 +201,9 @@ if (!ddlDisplayContext.isAdminPortlet()) {
 		deleteRecords: deleteRecords,
 	};
 
-	Liferay.componentReady('<%= randomNamespace + "ddlViewRecordsManagementToolbar" %>').then(function (
-		managementToolbar
-	) {
+	Liferay.componentReady(
+		'<%= randomNamespace + "ddlViewRecordsManagementToolbar" %>'
+	).then(function (managementToolbar) {
 		managementToolbar.on('actionItemClicked', function (event) {
 			var itemData = event.data.item.data;
 

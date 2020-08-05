@@ -89,7 +89,6 @@ if ((ddmForm != null) && (ddmForm.getDefaultLocale() != null)) {
 	var displayWarning = function (message) {
 		Liferay.Util.openToast({
 			message: message,
-			title: '<liferay-ui:message key="warning" />',
 			type: 'warning',
 		});
 	};

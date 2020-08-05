@@ -55,7 +55,6 @@ Locale userLocale = user.getLocale();
 				Liferay.Util.Session.set('useHttpSession', true);
 			}
 		},
-		title: '<liferay-ui:message key="info" />',
 		type: 'info',
 	});
 </aui:script>

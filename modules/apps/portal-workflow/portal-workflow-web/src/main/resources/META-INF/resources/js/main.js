@@ -392,7 +392,6 @@ AUI.add(
 				Liferay.Util.openToast({
 					container: document.querySelector('.portlet-column'),
 					message: successMessage,
-					title: Liferay.Language.get('success'),
 					type: 'success',
 				});
 			},

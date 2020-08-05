@@ -470,7 +470,7 @@ describe('LayoutProvider', () => {
 				component = new Parent();
 
 				const {child, provider} = component.refs;
-				const mockEvent = {
+				let mockEvent = {
 					data: {
 						parentFieldName: undefined,
 					},
@@ -488,26 +488,27 @@ describe('LayoutProvider', () => {
 
 				jest.runAllTimers();
 
-				const fieldNameCreated =
+				const expectedFieldName =
 					provider.state.pages[0].rows[0].columns[0].fields[0]
 						.fieldName;
 
-				const mockEvent2 = {
-					fieldName: fieldNameCreated,
+				mockEvent = {
+					fieldName: expectedFieldName,
 					propertyName: 'label',
 					propertyValue: 'newLabel',
 				};
 
-				dispatch('fieldEdited', mockEvent2);
+				dispatch('fieldEdited', mockEvent);
 
 				jest.runAllTimers();
 
 				expect(
 					provider.state.pages[0].rows[0].columns[0].fields[0]
 						.fieldName
-				).toEqual(fieldNameCreated);
+				).toEqual(expectedFieldName);
 			});
 		});
+
 		describe('fieldDuplicated', () => {
 			it('listens the duplicate field event and add this field in the pages', () => {
 				component = new Parent();

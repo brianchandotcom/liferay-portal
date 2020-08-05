@@ -354,7 +354,7 @@ export const rowHasFields = (pages, pageIndex, rowIndex) => {
 	if (page) {
 		const row = page.rows[Number(rowIndex)];
 
-		if (row) {
+		if (row && row.columns) {
 			hasFields = row.columns.some((column) => column.fields.length);
 		}
 	}

@@ -24,6 +24,7 @@ import {archiveExperiment} from '../state/actions.es';
 import {DispatchContext, StateContext} from '../state/context.es';
 import {SegmentsExperienceType} from '../types.es';
 import {NO_EXPERIMENT_ILLUSTRATION_FILE_NAME} from '../util/contants.es';
+import {navigateToExperience} from '../util/navigation.es';
 import {
 	STATUS_COMPLETED,
 	STATUS_DRAFT,
@@ -324,6 +325,7 @@ function SegmentsExperiments({
 							status: segmentsExperiment.status,
 						})
 					);
+					navigateToExperience(experienceId);
 				})
 				.catch((_error) => {
 					openErrorToast();

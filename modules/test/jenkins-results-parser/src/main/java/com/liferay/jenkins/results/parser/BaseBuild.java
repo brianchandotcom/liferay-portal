@@ -1368,6 +1368,10 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public void reinvoke(ReinvokeRule reinvokeRule) {
+		if (badBuildNumbers.size() >= REINVOCATIONS_SIZE_MAX) {
+			return;
+		}
+
 		Build parentBuild = getParentBuild();
 
 		String parentBuildStatus = parentBuild.getStatus();

@@ -214,6 +214,14 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
+		Depot.configureDDMStructures(
+			depotName = "Test Depot Name",
+			makeWCUnavailable = "true",
+			siteName = "Site Name",
+			tableEntryText = "No");
+
+		DepotNavigator.openDepotAdmin();
+
 		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
 
 		DepotNavigator.gotoSites(depotName = "Test Depot Name");

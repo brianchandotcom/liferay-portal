@@ -145,7 +145,6 @@
 				<c:when test='<%= Objects.equals(assetBrowserDisplayContext.getDisplayStyle(), "list") %>'>
 					<liferay-ui:search-container-column-text
 						name="title"
-						truncate="<%= true %>"
 					>
 						<c:choose>
 							<c:when test="<%= (assetEntry.getEntryId() != assetBrowserDisplayContext.getRefererAssetEntryId()) && !assetBrowserDisplayContext.isMultipleSelection() %>">
@@ -162,14 +161,12 @@
 					<c:if test="<%= Validator.isNull(assetBrowserDisplayContext.getTypeSelection()) %>">
 						<liferay-ui:search-container-column-text
 							name="type"
-							truncate="<%= true %>"
 							value="<%= HtmlUtil.escape(assetRendererFactory.getTypeName(locale, assetBrowserDisplayContext.getSubtypeSelectionId())) %>"
 						/>
 					</c:if>
 
 					<liferay-ui:search-container-column-text
 						name="description"
-						truncate="<%= true %>"
 						value="<%= HtmlUtil.escape(assetRenderer.getSummary(renderRequest, renderResponse)) %>"
 					/>
 

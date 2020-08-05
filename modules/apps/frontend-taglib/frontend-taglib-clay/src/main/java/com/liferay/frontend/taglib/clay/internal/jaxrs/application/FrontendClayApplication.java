@@ -24,6 +24,8 @@ import com.liferay.frontend.taglib.clay.internal.jaxrs.context.provider.Paginati
 import com.liferay.frontend.taglib.clay.internal.jaxrs.context.provider.SortContextProvider;
 import com.liferay.frontend.taglib.clay.internal.jaxrs.context.provider.ThemeDisplayContextProvider;
 import com.liferay.frontend.taglib.clay.internal.servlet.ServletContextUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
@@ -144,10 +146,27 @@ public class FrontendClayApplication extends Application {
 				PortletPreferencesFactoryUtil.getPortalPreferences(
 					httpServletRequest);
 
+			String currentActiveViewSettingsJSON = portalPreferences.getValue(
+				ServletContextUtil.getClayDataSetDisplaySettingsNamespace(
+					httpServletRequest, id),
+				"activeViewSettingsJSON", "{}");
+
+			JSONObject currentActiveViewSettingsJSONObject =
+				_jsonFactory.createJSONObject(currentActiveViewSettingsJSON);
+
+			JSONObject activeViewSettingsJSONObject =
+				_jsonFactory.createJSONObject(activeViewSettingsJSON);
+
+			for (String key : activeViewSettingsJSONObject.keySet()) {
+				currentActiveViewSettingsJSONObject.put(
+					key, activeViewSettingsJSONObject.get(key));
+			}
+
 			portalPreferences.setValue(
 				ServletContextUtil.getClayDataSetDisplaySettingsNamespace(
 					httpServletRequest, id),
-				"activeViewSettingsJSON", activeViewSettingsJSON);
+				"activeViewSettingsJSON",
+				currentActiveViewSettingsJSONObject.toJSONString());
 
 			return Response.ok(
 			).build();
@@ -172,6 +191,9 @@ public class FrontendClayApplication extends Application {
 
 	@Reference
 	private FilterFactoryRegistry _filterFactoryRegistry;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

@@ -54,6 +54,8 @@ public class DepotAdminWebKeys {
 
 	public static final String JSP_PATH = "JSP_PATH";
 
+	public static final String SHOW_BREADCRUMB = "SHOW_BREADCRUMB";
+
 	public static final String SHOW_CONTROLS = "SHOW_CONTROLS";
 
 }

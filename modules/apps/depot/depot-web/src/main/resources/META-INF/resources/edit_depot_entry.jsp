@@ -19,6 +19,17 @@
 <clay:container-fluid
 	cssClass="container-view"
 >
+
+	<%
+	Boolean showBreadcrumb = (Boolean)request.getAttribute("show_breadcrumb");
+	%>
+
+	<c:if test="<%= (showBreadcrumb != null) && showBreadcrumb %>">
+		<liferay-ui:breadcrumb
+			showLayout="<%= false %>"
+		/>
+	</c:if>
+
 	<liferay-frontend:screen-navigation
 		containerCssClass="col-lg-8"
 		containerWrapperCssClass=""

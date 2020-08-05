@@ -14,6 +14,7 @@
 
 import React, {useContext, useState} from 'react';
 
+import fieldTypes from '../../utils/fieldTypes.es';
 import {SidebarContext} from '../sidebar/SidebarContext.es';
 
 const INDEX_REGEX = /.*(\d+)$/;
@@ -30,21 +31,27 @@ export default ({fields}) => {
 
 	const {portletNamespace} = useContext(SidebarContext);
 
-	const shortcuts = fields.map((field, index) => (
-		<li
-			key={`card-item-${index}`}
-			onClick={() => setItemSelectedIndex(index)}
-		>
-			<a
-				className={`${itemSelectedIndex == index ? 'selected' : ''}`}
-				data-senna-off
-				href={`#${portletNamespace}card_${index}`}
-			>
-				<div className="indicator"></div>
-				<div className="field-label">{field.label}</div>
-			</a>
-		</li>
-	));
+	const shortcuts = fields.map((field, index) => {
+		if (Object.keys(fieldTypes).includes(field.type)) {
+			return (
+				<li
+					key={`card-item-${index}`}
+					onClick={() => setItemSelectedIndex(index)}
+				>
+					<a
+						className={`${
+							itemSelectedIndex == index ? 'selected' : ''
+						}`}
+						data-senna-off
+						href={`#${portletNamespace}card_${index}`}
+					>
+						<div className="indicator"></div>
+						<div className="field-label">{field.label}</div>
+					</a>
+				</li>
+			);
+		}
+	});
 
 	return <ul>{shortcuts}</ul>;
 };

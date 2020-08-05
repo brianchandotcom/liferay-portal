@@ -16,7 +16,6 @@ package com.liferay.portal.vulcan.internal.graphql.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.language.Language;
@@ -650,8 +649,7 @@ public class GraphQLServletExtender {
 		}
 
 		SiteParamConverterProvider siteParamConverterProvider =
-			new SiteParamConverterProvider(
-				_depotEntryLocalService, _groupLocalService);
+			new SiteParamConverterProvider(_groupLocalService);
 
 		for (int i = 0; i < parameters.length; i++) {
 			Parameter parameter = parameters[i];
@@ -1529,9 +1527,6 @@ public class GraphQLServletExtender {
 	private ConfigurationAdmin _configurationAdmin;
 
 	private DefaultTypeFunction _defaultTypeFunction;
-
-	@Reference
-	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference(
 		target = "(result.class.name=com.liferay.portal.kernel.search.filter.Filter)"

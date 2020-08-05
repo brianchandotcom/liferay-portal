@@ -15,7 +15,6 @@
 package com.liferay.portal.vulcan.internal.batch.engine;
 
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 
@@ -47,7 +46,7 @@ public class VulcanBatchEngineTaskItemDelegateAdaptorFactory {
 		_serviceTracker = new ServiceTracker<>(
 			bundleContext, filter,
 			new VulcanBatchEngineTaskItemDelegateServiceTrackerCustomizer(
-				bundleContext, _depotEntryLocalService, _groupLocalService));
+				bundleContext, _groupLocalService));
 
 		_serviceTracker.open();
 	}
@@ -56,9 +55,6 @@ public class VulcanBatchEngineTaskItemDelegateAdaptorFactory {
 	protected void deactivate() {
 		_serviceTracker.close();
 	}
-
-	@Reference
-	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;
@@ -82,8 +78,7 @@ public class VulcanBatchEngineTaskItemDelegateAdaptorFactory {
 			VulcanBatchEngineTaskItemDelegateAdaptor<?>
 				vulcanBatchEngineTaskItemDelegateAdaptor =
 					new VulcanBatchEngineTaskItemDelegateAdaptor<>(
-						_depotEntryLocalService, _groupLocalService,
-						vulcanBatchEngineTaskItemDelegate);
+						_groupLocalService, vulcanBatchEngineTaskItemDelegate);
 
 			return _bundleContext.registerService(
 				BatchEngineTaskItemDelegate.class,
@@ -109,17 +104,13 @@ public class VulcanBatchEngineTaskItemDelegateAdaptorFactory {
 		}
 
 		private VulcanBatchEngineTaskItemDelegateServiceTrackerCustomizer(
-			BundleContext bundleContext,
-			DepotEntryLocalService depotEntryLocalService,
-			GroupLocalService groupLocalService) {
+			BundleContext bundleContext, GroupLocalService groupLocalService) {
 
 			_bundleContext = bundleContext;
-			_depotEntryLocalService = depotEntryLocalService;
 			_groupLocalService = groupLocalService;
 		}
 
 		private final BundleContext _bundleContext;
-		private final DepotEntryLocalService _depotEntryLocalService;
 		private final GroupLocalService _groupLocalService;
 
 	}

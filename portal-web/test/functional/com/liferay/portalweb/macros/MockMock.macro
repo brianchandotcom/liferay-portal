@@ -114,6 +114,7 @@ definition {
 			var bodyContent = selenium.getText("MockMock#MOCKMOCK_MESSAGE_BODY");
 			var bodyContent = StringUtil.extractLast("${bodyContent}", "${specificText}");
 			var bodySpecificText = StringUtil.extractFirst("${bodyContent}", "${extractFirstText}");
+			var bodySpecificText = StringUtil.trim("${bodySpecificText}");
 		}
 
 		return "${bodySpecificText}";

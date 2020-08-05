@@ -120,11 +120,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 	public static final String SUBDIR_MODE = "file.install.subdir.mode";
 
-	public static final String TMPDIR = "file.install.tmpdir";
-
-	public static final String UPDATE_WITH_LISTENERS =
-		"file.install.bundles.updateWithListeners";
-
 	public static final String USE_START_ACTIVATION_POLICY =
 		"file.install.bundles.startActivationPolicy";
 

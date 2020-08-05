@@ -91,7 +91,6 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 		_set(map, DirectoryWatcher.POLL);
 		_set(map, DirectoryWatcher.DIR);
 		_set(map, DirectoryWatcher.FILTER);
-		_set(map, DirectoryWatcher.TMPDIR);
 		_set(map, DirectoryWatcher.START_NEW_BUNDLES);
 		_set(map, DirectoryWatcher.USE_START_TRANSIENT);
 		_set(map, DirectoryWatcher.USE_START_ACTIVATION_POLICY);
@@ -101,7 +100,6 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 		_set(map, DirectoryWatcher.CONFIG_ENCODING);
 		_set(map, DirectoryWatcher.START_LEVEL);
 		_set(map, DirectoryWatcher.ACTIVE_LEVEL);
-		_set(map, DirectoryWatcher.UPDATE_WITH_LISTENERS);
 		_set(map, DirectoryWatcher.OPTIONAL_SCOPE);
 		_set(map, DirectoryWatcher.FRAGMENT_SCOPE);
 		_set(map, DirectoryWatcher.SUBDIR_MODE);

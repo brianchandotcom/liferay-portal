@@ -300,6 +300,7 @@ definition {
 		AssetListsAdmin.viewAssetTypeList(
 			assetListName = "Depot Manual Asset List",
 			assetType = "Web Content Folder,Basic Web Content,WC Structure Name",
+			itemType = "All Types",
 			manualSelection = "true");
 
 		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
@@ -347,6 +348,7 @@ definition {
 		AssetListsAdmin.viewAssetTypeList(
 			assetListName = "Depot Manual Asset List",
 			assetType = "Basic Document,Documents Folder,DM Document Type Name",
+			itemType = "All Types",
 			manualSelection = "true");
 
 		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");

@@ -50,6 +50,8 @@ page import="javax.portlet.PortletURL" %>
 
 <liferay-theme:defineObjects />
 
+<portlet:defineObjects />
+
 <%
 PortletRequest portletRequest = (PortletRequest)request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
 

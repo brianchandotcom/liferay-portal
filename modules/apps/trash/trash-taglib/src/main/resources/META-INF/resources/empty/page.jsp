@@ -25,20 +25,31 @@ int totalEntries = GetterUtil.getInteger(request.getAttribute("liferay-trash:emp
 %>
 
 <c:if test="<%= totalEntries > 0 %>">
-	<div class="alert alert-info taglib-trash-empty">
-		<aui:form action="<%= portletURL %>" name="emptyForm">
+	<liferay-util:buffer
+		var="stripeMessage"
+	>
+		<aui:form action="<%= portletURL %>" cssClass="d-inline" name="emptyForm">
 			<c:if test="<%= Validator.isNotNull(infoMessage) %>">
 				<liferay-ui:message key="<%= infoMessage %>" />
 			</c:if>
 
-			<aui:a cssClass="alert-link trash-empty-link" href="javascript:;" id="empty" label="<%= emptyMessage %>" />
-
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EMPTY_TRASH %>" />
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-			<aui:button cssClass="trash-empty-button" type="submit" value="<%= emptyMessage %>" />
+			<clay:button
+				cssClass="trash-empty-button"
+				displayType="link"
+				id='<%= liferayPortletResponse.getNamespace() + "empty" %>'
+				label="<%= emptyMessage %>"
+				small="<%= true %>"
+				type="submit"
+			/>
 		</aui:form>
-	</div>
+	</liferay-util:buffer>
+
+	<clay:stripe
+		message="<%= stripeMessage %>"
+	/>
 </c:if>
 
 <aui:script>
@@ -46,6 +57,8 @@ int totalEntries = GetterUtil.getInteger(request.getAttribute("liferay-trash:emp
 
 	if (<%= namespace %>empty) {
 		<%= namespace %>empty.addEventListener('click', function (event) {
+			event.preventDefault();
+
 			if (
 				confirm('<%= UnicodeLanguageUtil.get(request, confirmMessage) %>')
 			) {

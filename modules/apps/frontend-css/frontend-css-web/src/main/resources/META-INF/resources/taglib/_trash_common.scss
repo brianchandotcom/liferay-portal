@@ -1,10 +1,6 @@
-.alert-trash-form {
-	display: inline-block;
-}
-
-.trash-undo-button.btn-link {
+.trash-undo-button.btn-link,
+.trash-empty-button.btn-link {
 	font-weight: 600;
-	margin-left: 0.5rem;
 
 	&:hover {
 		text-decoration: none;
@@ -16,30 +12,4 @@
 
 	padding: 0;
 	vertical-align: inherit;
-}
-
-.taglib-trash-empty,
-.taglib-trash-undo {
-	.trash-empty-button,
-	.trash-undo-button {
-		display: inline;
-	}
-
-	.trash-empty-link,
-	.trash-undo-link {
-		display: none;
-	}
-}
-
-.js .taglib-trash-empty,
-.js .taglib-trash-undo {
-	.trash-empty-button,
-	.trash-undo-button {
-		display: none;
-	}
-
-	.trash-empty-link,
-	.trash-undo-link {
-		display: inline-block;
-	}
 }

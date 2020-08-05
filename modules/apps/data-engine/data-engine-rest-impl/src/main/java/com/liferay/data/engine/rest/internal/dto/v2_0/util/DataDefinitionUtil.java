@@ -196,9 +196,9 @@ public class DataDefinitionUtil {
 			customProperties.put(
 				"rows",
 				_getRows(
-					ddmStructureLayoutLocalService,
 					GetterUtil.getLong(
-						ddmFormField.getProperty("ddmStructureLayoutId"))));
+						ddmFormField.getProperty("ddmStructureLayoutId")),
+					ddmStructureLayoutLocalService));
 		}
 
 		return customProperties;
@@ -310,13 +310,13 @@ public class DataDefinitionUtil {
 	}
 
 	private static String _getRows(
-		DDMStructureLayoutLocalService ddmStructureLayoutLocalService,
-		long structureLayoutId) {
+		long ddmStructureLayoutId,
+		DDMStructureLayoutLocalService ddmStructureLayoutLocalService) {
 
 		try {
 			DDMStructureLayout ddmStructureLayout =
 				ddmStructureLayoutLocalService.getStructureLayout(
-					structureLayoutId);
+					ddmStructureLayoutId);
 
 			JSONArray jsonArray = JSONUtil.getValueAsJSONArray(
 				JSONFactoryUtil.createJSONObject(

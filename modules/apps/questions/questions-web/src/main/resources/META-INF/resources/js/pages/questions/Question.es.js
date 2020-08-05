@@ -276,9 +276,12 @@ export default withRouter(
 											{question.actions.delete && (
 												<>
 													<DeleteThread
-														question={question}
-														showDeleteModalPanel={
+														deleteModalVisibility={
 															showDeleteModalPanel
+														}
+														question={question}
+														setDeleteModalVisibility={
+															setShowDeleteModalPanel
 														}
 													/>
 													<ClayButton

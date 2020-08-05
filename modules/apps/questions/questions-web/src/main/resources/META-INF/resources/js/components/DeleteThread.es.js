@@ -26,55 +26,53 @@
  * details.
  */
 import {useMutation} from '@apollo/client';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {deleteMessageBoardThreadQuery} from '../utils/client.es';
 import {historyPushWithSlug} from '../utils/utils.es';
 import Modal from './Modal.es';
 
-export default withRouter(({history, question, showDeleteModalPanel}) => {
-	const historyPushParser = historyPushWithSlug(history.push);
+export default withRouter(
+	({deleteModalVisibility, history, question, setDeleteModalVisibility}) => {
+		const historyPushParser = historyPushWithSlug(history.push);
 
-	const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+		const [deleteThread] = useMutation(deleteMessageBoardThreadQuery, {
+			onCompleted() {
+				historyPushParser(
+					`/questions/${question.messageBoardSection.title}`
+				);
+			},
+			update(proxy) {
+				proxy.evict(`MessageBoardThread:${question.id}`);
+				proxy.gc();
+			},
+		});
 
-	const [deleteThread] = useMutation(deleteMessageBoardThreadQuery, {
-		onCompleted() {
-			historyPushParser(
-				`/questions/${question.messageBoardSection.title}`
-			);
-		},
-		update(proxy) {
-			proxy.evict(`MessageBoardThread:${question.id}`);
-			proxy.gc();
-		},
-	});
-
-	useEffect(() => {
-		setDeleteModalVisible(showDeleteModalPanel);
-	}, [showDeleteModalPanel]);
-
-	return (
-		<>
-			{question.actions && question.actions.delete && (
-				<Modal
-					body={Liferay.Language.get(
-						'do-you-want-to-delete–this-thread'
-					)}
-					callback={() => {
-						deleteThread({
-							variables: {
-								messageBoardThreadId: question.id,
-							},
-						});
-					}}
-					onClose={() => setDeleteModalVisible(false)}
-					status="warning"
-					textPrimaryButton={Liferay.Language.get('delete')}
-					title={Liferay.Language.get('delete-thread')}
-					visible={deleteModalVisible}
-				/>
-			)}
-		</>
-	);
-});
+		return (
+			<>
+				{question.actions && question.actions.delete && (
+					<Modal
+						body={Liferay.Language.get(
+							'do-you-want-to-delete–this-thread'
+						)}
+						callback={() => {
+							deleteThread({
+								variables: {
+									messageBoardThreadId: question.id,
+								},
+							});
+						}}
+						onClose={() => {
+							setDeleteModalVisibility(false);
+						}}
+						status="warning"
+						textPrimaryButton={Liferay.Language.get('delete')}
+						title={Liferay.Language.get('delete-thread')}
+						visible={deleteModalVisibility}
+					/>
+				)}
+			</>
+		);
+	}
+);

@@ -1,13 +1,13 @@
-[#if field_name??]
-	[#if contentAccessorUtil.isContentAccessor(field_name)]
-		${field_name.getContent()}
-	[#elseif field_name?is_date_like]
-		${field_name?datetime?string}
-	[#elseif field_name?is_sequence && field_name?size > 0 && field_name?first?is_hash]
-		${field_name?map(labeled -> labeled.getLabel(locale))?join(", ")}
-	[#elseif field_name?is_sequence]
-		${field_name?join(", ")}
+[#if .vars["field_name"]??]
+	[#if contentAccessorUtil.isContentAccessor(.vars["field_name"])]
+		${.vars["field_name"].getContent()}
+	[#elseif .vars["field_name"]?is_date_like]
+		${.vars["field_name"]?datetime?string}
+	[#elseif .vars["field_name"]?is_sequence && .vars["field_name"]?size > 0 && .vars["field_name"]?first?is_hash]
+		${.vars["field_name"]?map(labeled -> labeled.getLabel(locale))?join(", ")}
+	[#elseif .vars["field_name"]?is_sequence]
+		${.vars["field_name"]?join(", ")}
 	[#else]
-		${field_name}
+		${.vars["field_name"]}
 	[/#if]
 [/#if]

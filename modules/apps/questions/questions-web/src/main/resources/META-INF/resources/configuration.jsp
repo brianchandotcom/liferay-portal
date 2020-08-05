@@ -39,6 +39,8 @@ QuestionsConfiguration questionsConfiguration = portletDisplay.getPortletInstanc
 				label="general-settings"
 			>
 				<aui:input name="preferences--showSectionLanding--" type="checkbox" value="<%= questionsConfiguration.showSectionLanding() %>" />
+
+				<aui:input name="preferences--rootTopic--" type="text" value="<%= questionsConfiguration.rootTopic() %>" />
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>

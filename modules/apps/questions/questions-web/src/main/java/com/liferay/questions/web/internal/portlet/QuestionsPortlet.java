@@ -63,7 +63,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.display-category=category.collaboration",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.preferences-owned-by-group=true",
-		"com.liferay.portlet.preferences-unique-per-layout=false",
+		"com.liferay.portlet.preferences-unique-per-layout=true",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.scopeable=true",

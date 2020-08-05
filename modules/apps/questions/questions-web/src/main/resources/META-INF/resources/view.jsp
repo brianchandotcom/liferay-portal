@@ -25,7 +25,7 @@ String questionsRootElementId = liferayPortletResponse.getNamespace() + "-questi
 <div id="<%= questionsRootElementId %>">
 
 	<%
-	QuestionsConfiguration questionsConfiguration = (QuestionsConfiguration)request.getAttribute(QuestionsConfiguration.class.getName());
+	QuestionsConfiguration questionsConfiguration = portletDisplay.getPortletInstanceConfiguration(QuestionsConfiguration.class);
 	%>
 
 	<react:component
@@ -42,7 +42,7 @@ String questionsRootElementId = liferayPortletResponse.getNamespace() + "-questi
 			).put(
 				"redirectToLogin", questionsConfiguration.enableRedirectToLogin()
 			).put(
-				"rootTopic", renderRequest.getAttribute(QuestionsWebKeys.ROOT_TOPIC)
+				"rootTopic", questionsConfiguration.rootTopic()
 			).put(
 				"showSectionLanding", questionsConfiguration.showSectionLanding()
 			).put(

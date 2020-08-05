@@ -39,4 +39,7 @@ public interface QuestionsConfiguration {
 	@Meta.AD(deflt = "true", name = "show-section-landing", required = false)
 	public boolean showSectionLanding();
 
+	@Meta.AD(deflt = "0", name = "root-topic", required = false)
+	public long rootTopic();
+
 }

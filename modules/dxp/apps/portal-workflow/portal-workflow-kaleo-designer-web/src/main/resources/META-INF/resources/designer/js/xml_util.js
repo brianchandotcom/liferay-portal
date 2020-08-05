@@ -66,12 +66,24 @@ AUI.add(
 					STR_DASH
 				).toLowerCase();
 
+				if (attrs !== undefined && attrs.xmlns) {
+					attrBuffer = [STR_CHAR_CRLF];
+				}
+
 				A.each(attrs, (item, index) => {
 					if (item !== undefined) {
 						BUFFER_ATTR[0] = index;
 						BUFFER_ATTR[2] = item;
 
-						attrBuffer.push(BUFFER_ATTR.join(STR_BLANK));
+						if (attrs.xmlns) {
+							attrBuffer.push(STR_CHAR_TAB);
+						}
+
+						attrBuffer.push(BUFFER_ATTR.join(STR_BLANK).trim());
+
+						if (attrs.xmlns) {
+							attrBuffer.push(STR_CHAR_CRLF);
+						}
 					}
 				});
 
@@ -81,6 +93,13 @@ AUI.add(
 
 				BUFFER_OPEN_NODE[1] = normalizedName;
 				BUFFER_OPEN_NODE[2] = attributes;
+
+				if (attrs !== undefined && attrs.xmlns) {
+					BUFFER_OPEN_NODE[3] = STR_CHAR_CRLF + '>';
+				}
+				else {
+					BUFFER_OPEN_NODE[3] = '>';
+				}
 
 				return {
 					close: BUFFER_CLOSE_NODE.join(STR_BLANK),

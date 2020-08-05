@@ -12,39 +12,13 @@
  * details.
  */
 
-import {fetch, openToast} from 'frontend-js-web';
-
 import {updateActiveView} from '../actions/updateActiveView';
-import {config} from '../config';
-import {logError} from '../utilities/logError';
+import {saveViewSettings} from '../utilities/saveViewSettings';
 
 export default function persistActiveView({activeViewName, id}) {
-	const {appURL, portletId} = config;
-	const url = new URL(`${appURL}/data-set/${id}/save-active-view-settings`);
-
-	url.searchParams.append('groupId', themeDisplay.getScopeGroupId());
-	url.searchParams.append('plid', themeDisplay.getPlid());
-	url.searchParams.append('portletId', portletId);
-
 	return (dispatch) => {
 		dispatch(updateActiveView(activeViewName));
 
-		return fetch(url, {
-			body: JSON.stringify({
-				name: activeViewName,
-			}),
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-			method: 'POST',
-		}).catch((error) => {
-			logError(error);
-
-			openToast({
-				message: Liferay.Language.get('unexpected-error'),
-				type: 'danger',
-			});
-		});
+		return saveViewSettings(id, {name: activeViewName});
 	};
 }

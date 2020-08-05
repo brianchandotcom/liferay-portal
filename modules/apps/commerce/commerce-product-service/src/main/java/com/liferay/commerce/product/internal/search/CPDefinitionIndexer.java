@@ -70,6 +70,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -745,17 +747,27 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 		document.addKeyword(
 			"commerceCatalogId", commerceCatalog.getCommerceCatalogId());
 
-		int cpInstanceCount =
-			_cpInstanceLocalService.getCPDefinitionInstancesCount(
-				cpDefinition.getCPDefinitionId(),
-				WorkflowConstants.STATUS_APPROVED);
+		List<CPInstance> cpInstances = cpDefinition.getCPInstances();
 
-		if (cpInstanceCount == 1) {
-			List<CPInstance> cpInstances = cpDefinition.getCPInstances();
-
+		if (cpInstances.size() == 1) {
 			CPInstance cpInstance = cpInstances.get(0);
 
 			document.addNumber(CPField.BASE_PRICE, cpInstance.getPrice());
+		}
+		else if (!cpInstances.isEmpty()) {
+			CPInstance firstCPInstance = cpInstances.get(0);
+
+			BigDecimal lowestPrice = firstCPInstance.getPrice();
+
+			for (CPInstance cpInstance : cpInstances) {
+				BigDecimal price = cpInstance.getPrice();
+
+				if (lowestPrice.compareTo(price) < 0) {
+					lowestPrice = price;
+				}
+			}
+
+			document.addNumber(CPField.BASE_PRICE, lowestPrice);
 		}
 
 		if (_log.isDebugEnabled()) {

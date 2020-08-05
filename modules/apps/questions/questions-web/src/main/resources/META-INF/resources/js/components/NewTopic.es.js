@@ -12,14 +12,33 @@
  * details.
  */
 
+import {useMutation} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
+import {withRouter} from 'react-router-dom';
 
-export default () => {
+import {createTopicQuery} from '../utils/client.es';
+import {historyPushWithSlug, stringToSlug} from '../utils/utils.es';
+
+export default withRouter(({currentSectionId, history}) => {
+	const historyPushParser = historyPushWithSlug(history.push);
 	const [visible, setVisible] = useState(false);
+
+	const topicName = useRef(null);
+	const topicDescription = useRef(null);
+
+	const [createNewTopic] = useMutation(createTopicQuery, {
+		onCompleted(data) {
+			historyPushParser(
+				`/questions/${stringToSlug(
+					data.createMessageBoardSectionMessageBoardSection.title
+				)}`
+			);
+		},
+	});
 
 	return (
 		<>
@@ -59,6 +78,7 @@ export default () => {
 										placeholder={Liferay.Language.get(
 											'please-enter-a-valid-topic-name'
 										)}
+										ref={topicName}
 										type="text"
 									/>
 								</ClayForm.Group>
@@ -66,11 +86,13 @@ export default () => {
 									<label htmlFor="basicInput">
 										{Liferay.Language.get('description')}
 									</label>
-									<textarea
+									<ClayInput
 										className="form-control"
+										component="textarea"
 										placeholder={Liferay.Language.get(
 											'description'
 										)}
+										ref={topicDescription}
 									/>
 								</ClayForm.Group>
 							</ClayForm>
@@ -86,7 +108,20 @@ export default () => {
 									</ClayButton>
 									<ClayButton
 										displayType="primary"
-										onClick={close}
+										onClick={() => {
+											createNewTopic({
+												variables: {
+													description:
+														topicDescription.current
+															.value,
+													parentMessageBoardSectionId: currentSectionId,
+													title:
+														topicName.current.value,
+												},
+											});
+											setVisible(false);
+											close();
+										}}
 									>
 										{Liferay.Language.get('create')}
 									</ClayButton>
@@ -98,4 +133,4 @@ export default () => {
 			</>
 		);
 	}
-};
+});

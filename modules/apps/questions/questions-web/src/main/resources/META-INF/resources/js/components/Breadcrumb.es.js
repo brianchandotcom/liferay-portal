@@ -93,7 +93,7 @@ export default ({section}) => {
 							<AllBreadcrumb />
 						)}
 					</ol>
-					<NewTopic />
+					<NewTopic currentSectionId={section.id} />
 				</div>
 			</section>
 		</>

@@ -104,6 +104,22 @@ export const createQuestionQuery = gql`
 	}
 `;
 
+export const createTopicQuery = gql`
+	mutation createMessageBoardSectionMessageBoardSection(
+		$description: String
+		$parentMessageBoardSectionId: Long!
+		$title: String!
+	) {
+		createMessageBoardSectionMessageBoardSection(
+			parentMessageBoardSectionId: $parentMessageBoardSectionId
+			messageBoardSection: {description: $description, title: $title}
+		) {
+			id
+			title
+		}
+	}
+`;
+
 export const createVoteMessageQuery = gql`
 	mutation createMessageBoardMessageMyRating(
 		$messageBoardMessageId: Long!

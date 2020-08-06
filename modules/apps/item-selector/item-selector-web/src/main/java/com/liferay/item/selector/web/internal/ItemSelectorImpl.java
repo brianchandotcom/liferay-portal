@@ -137,7 +137,7 @@ public class ItemSelectorImpl implements ItemSelector {
 		if (matcher.matches()) {
 			parameters.put(
 				namespace + PARAMETER_CRITERIA,
-				new String[] {matcher.group(1)});
+				new String[] {_http.decodePath(matcher.group(1))});
 			parameters.put(
 				namespace + PARAMETER_ITEM_SELECTED_EVENT_NAME,
 				new String[] {matcher.group(2)});

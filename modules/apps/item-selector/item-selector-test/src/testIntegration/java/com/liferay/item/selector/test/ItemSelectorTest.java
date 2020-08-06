@@ -107,7 +107,7 @@ public class ItemSelectorTest {
 			_itemSelector.getItemSelectorCriteria(
 				StringBundler.concat(
 					"http://localhost:8080/group/guest/~/control_panel/manage",
-					"/-/select/file,audio/eventName",
+					"/-/select/file%2Caudio/eventName",
 					"?_com_liferay_item_selector_web_portlet",
 					"_ItemSelectorPortlet_0_json=",
 					URLCodec.encodeURL(
@@ -159,6 +159,32 @@ public class ItemSelectorTest {
 		Assert.assertTrue(
 			desiredItemSelectorReturnTypes.get(0) instanceof
 				DownloadURLItemSelectorReturnType);
+	}
+
+	@Test
+	public void testGetItemSelectorCriteriaWithTwoCriteriaAndExplicitComma() {
+		List<ItemSelectorCriterion> itemSelectorCriteria =
+			_itemSelector.getItemSelectorCriteria(
+				StringBundler.concat(
+					"http://localhost:8080/group/guest/~/control_panel/manage",
+					"/-/select/file,audio/eventName",
+					"?_com_liferay_item_selector_web_portlet",
+					"_ItemSelectorPortlet_0_json=",
+					URLCodec.encodeURL(
+						JSONUtil.put(
+							"desiredItemSelectorReturnTypes",
+							URLItemSelectorReturnType.class.getName()
+						).toJSONString()),
+					"&_com_liferay_item_selector_web_portlet",
+					"_ItemSelectorPortlet_1_json=",
+					URLCodec.encodeURL(
+						JSONUtil.put(
+							"desiredItemSelectorReturnTypes",
+							DownloadURLItemSelectorReturnType.class.getName()
+						).toJSONString())));
+
+		Assert.assertEquals(
+			itemSelectorCriteria.toString(), 2, itemSelectorCriteria.size());
 	}
 
 	@Inject

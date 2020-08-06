@@ -23,15 +23,15 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--REVIEW_DATA_SCOPE_SELECT-->
+<!--REVIEW_DATA_SELECT-->
 <tr>
-	<td>REVIEW_DATA_SCOPE_SELECT</td>
-	<td>//div[label[contains(.,'${key_scope}')]]//input</td>
+	<td>REVIEW_DATA_SELECT</td>
+	<td>//div[label[contains(.,'${key_selectData}')]]//input</td>
 	<td></td>
 </tr>
 <tr>
-	<td>REVIEW_DATA_SCOPE_SELECTED</td>
-	<td>//div[label[contains(.,'${key_scope}')]]//input[@checked]</td>
+	<td>REVIEW_DATA_SELECTED</td>
+	<td>//div[label[contains(.,'${key_dataSelected}')]]//input[@checked]</td>
 	<td></td>
 </tr>
 <tr>
@@ -40,16 +40,6 @@
 	<td></td>
 </tr>
 <!--REVIEW_DATA_APPLICATIONS_SELECT-->
-<tr>
-	<td>REVIEW_DATA_APPLICATIONS_SELECT</td>
-	<td>//div[label[contains(.,'${key_applications}')]]//input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REVIEW_DATA_APPLICATIONS_SELECTED</td>
-	<td>//div[label[contains(.,'${key_applications}')]]//input[@checked]</td>
-	<td></td>
-</tr>
 <tr>
 	<td>APPLICATIONS_COUNT</td>
 	<td>//div[label[contains(.,'${key_applications}')]]//span</td>

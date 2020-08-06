@@ -12,7 +12,9 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayTabs from '@clayui/tabs';
+import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import {useCollectionActiveItemContext} from '../../../app/components/CollectionActiveItemContext';
@@ -110,22 +112,57 @@ function ItemConfigurationContent() {
 						(panel) => panel.panelId === activePanelId
 					)}
 				>
-					{panels.map((panel) => {
-						const Component = panel.component;
-
-						return (
-							<ClayTabs.TabPane
-								aria-labelledby={`${tabIdPrefix}-${panel.panelId}`}
-								className="p-3"
-								id={`${panelIdPrefix}-${panel.panelId}`}
-								key={panel.panelId}
-							>
-								<Component item={activeItem} />
-							</ClayTabs.TabPane>
-						);
-					})}
+					{panels.map((panel) => (
+						<ClayTabs.TabPane
+							aria-labelledby={`${tabIdPrefix}-${panel.panelId}`}
+							className="p-3"
+							id={`${panelIdPrefix}-${panel.panelId}`}
+							key={panel.panelId}
+						>
+							<ItemConfigurationComponent
+								Component={panel.component}
+								item={activeItem}
+							/>
+						</ClayTabs.TabPane>
+					))}
 				</ClayTabs.Content>
 			</div>
 		</PageStructureSidebarSection>
 	);
 }
+
+class ItemConfigurationComponent extends React.Component {
+	static getDerivedStateFromError(error) {
+		return {error};
+	}
+
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			error: null,
+		};
+	}
+
+	render() {
+		const {Component, item} = this.props;
+
+		return this.state.error ? (
+			<ClayAlert
+				displayType="danger"
+				title={Liferay.Language.get('error')}
+			>
+				{Liferay.Language.get(
+					'an-unexpected-error-occurred-while-rendering-this-item'
+				)}
+			</ClayAlert>
+		) : (
+			<Component item={item} />
+		);
+	}
+}
+
+ItemConfigurationComponent.propTypes = {
+	Component: PropTypes.func.isRequired,
+	item: PropTypes.object.isRequired,
+};

@@ -206,11 +206,7 @@ public class AssetBrowserDisplayContext {
 	public String getGroupCssIcon(long groupId) throws PortalException {
 		Group group = GroupServiceUtil.getGroup(groupId);
 
-		if (group.isSite()) {
-			return "sites";
-		}
-
-		return "books";
+		return group.getIconCssClass();
 	}
 
 	public long getGroupId() {

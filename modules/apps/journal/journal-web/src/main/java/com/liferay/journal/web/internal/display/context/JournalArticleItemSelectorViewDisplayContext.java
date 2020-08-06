@@ -135,11 +135,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 	public String getGroupCssIcon(long groupId) throws PortalException {
 		Group group = GroupServiceUtil.getGroup(groupId);
 
-		if (group.isSite()) {
-			return "sites";
-		}
-
-		return "books";
+		return group.getIconCssClass();
 	}
 
 	public String getGroupLabel(long groupId, Locale locale)

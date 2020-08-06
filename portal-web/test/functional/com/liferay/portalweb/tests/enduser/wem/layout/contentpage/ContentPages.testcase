@@ -289,10 +289,10 @@ definition {
 			key_fragmentName = "Grid",
 			locator1 = "Fragment#FRAGMENT_HEADER");
 
-		DragAndDrop.DragAndDropObject(
+		DragAndDrop.dragAndDrop(
 			key_position = "3",
 			locator1 = "PageEditor#GRID_COLUMN_RESIZER",
-			position = "530,0");
+			value1 = "530,0");
 
 		PageEditor.waitForAutoSave();
 

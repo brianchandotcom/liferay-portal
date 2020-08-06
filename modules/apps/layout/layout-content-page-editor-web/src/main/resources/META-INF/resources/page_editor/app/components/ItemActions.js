@@ -126,7 +126,7 @@ export default function ItemActions({item}) {
 							}}
 							symbolLeft={itemAction.icon}
 						>
-							<p className="d-inline-block m-0 ml-2">
+							<p className="d-inline-block m-0 ml-4">
 								{itemAction.label}
 							</p>
 						</ClayDropDown.Item>

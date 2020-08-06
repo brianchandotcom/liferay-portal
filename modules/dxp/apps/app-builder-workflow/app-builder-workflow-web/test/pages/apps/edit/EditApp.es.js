@@ -52,7 +52,7 @@ const formViewItems = {
 							dataLayoutColumns: [
 								{
 									columnSize: 12,
-									fieldNames: ['Text'],
+									fieldNames: ['Text1'],
 								},
 							],
 						},
@@ -72,6 +72,41 @@ const formViewItems = {
 			id: 37625,
 			name: {
 				en_US: 'Form 01',
+			},
+			paginationMode: 'wizard',
+			siteId: 20124,
+			userId: 20126,
+		},
+		{
+			dataDefinitionId: 37497,
+			dataLayoutKey: '37627',
+			dataLayoutPages: [
+				{
+					dataLayoutRows: [
+						{
+							dataLayoutColumns: [
+								{
+									columnSize: 12,
+									fieldNames: ['Text2'],
+								},
+							],
+						},
+					],
+					description: {
+						en_US: '',
+					},
+					title: {
+						en_US: '',
+					},
+				},
+			],
+			dataRules: [],
+			dateCreated: '2020-06-09T12:12:23Z',
+			dateModified: '2020-06-09T12:12:23Z',
+			description: {},
+			id: 37626,
+			name: {
+				en_US: 'Form 02',
 			},
 			paginationMode: 'wizard',
 			siteId: 20124,
@@ -120,7 +155,7 @@ describe('EditApp', () => {
 		jest.restoreAllMocks();
 	});
 
-	it('renders control menu, upperToolbar and sidebar component correctly when creating a new app', async () => {
+	it('renders control menu, upperToolbar, sidebar and steps components correctly when creating a new app', async () => {
 		fetch.mockResponseOnce(JSON.stringify(roleItems));
 		fetch.mockResponseOnce(JSON.stringify(customObjectItems));
 		fetch.mockResponseOnce(JSON.stringify(nativeObjectItems));
@@ -136,6 +171,9 @@ describe('EditApp', () => {
 
 		const {
 			container,
+			getAllByText,
+			getAllByTitle,
+			getByDisplayValue,
 			getByLabelText,
 			getByPlaceholderText,
 			getByText,
@@ -144,14 +182,13 @@ describe('EditApp', () => {
 			wrapper: AppContextProviderWrapper,
 		});
 
-		const dataAndViewsButton = getByText('data-and-views');
 		const deployButton = getByText('deploy');
 		const nameInput = getByPlaceholderText('untitled-app');
 		const saveButton = getByText('save');
-		const steps = container.querySelectorAll('.step');
-		const stepNameInput = container.querySelector(
+		let stepNameInput = container.querySelector(
 			'.form-group-outlined input'
 		);
+		const steps = container.querySelectorAll('.step');
 
 		expect(queryByText('step-configuration')).toBeTruthy();
 		expect(queryByText('new-workflow-powered-app')).toBeTruthy();
@@ -164,7 +201,7 @@ describe('EditApp', () => {
 		expect(nameInput.value).toBe('');
 		expect(saveButton).toBeDisabled();
 
-		await fireEvent.click(dataAndViewsButton);
+		await fireEvent.click(getByText('data-and-views'));
 
 		const sidebarHeader = document.querySelector('div.tab-title');
 
@@ -198,6 +235,50 @@ describe('EditApp', () => {
 		expect(getByLabelText('table-view')).toHaveTextContent('Table 01');
 
 		await fireEvent.change(nameInput, {target: {value: 'Test'}});
+
+		expect(deployButton).toBeEnabled();
+
+		await fireEvent.click(container.querySelector('.arrow-plus-button'));
+
+		expect(deployButton).toBeDisabled();
+
+		stepNameInput = container.querySelector('.form-group-outlined input');
+
+		expect(stepNameInput.value).toBe('step-x');
+
+		await fireEvent.mouseDown(getByText('Account Manager'));
+
+		expect(
+			container.querySelector('.label-dismissible span')
+		).toHaveTextContent('Account Manager');
+
+		await fireEvent.click(getByText('data-and-views'));
+
+		await fireEvent.click(getByText('add-new-form-view'));
+
+		const stepFormViews = container.querySelectorAll('.step-form-view');
+
+		expect(stepFormViews[0]).toHaveTextContent('Form 01');
+
+		await fireEvent.click(getAllByText('Form 02')[1]);
+
+		expect(stepFormViews[1]).toHaveTextContent('Form 02');
+
+		await fireEvent.click(getAllByTitle('remove')[1]);
+
+		await fireEvent.click(container.querySelector('.arrow-plus-button'));
+
+		await fireEvent.click(getByText('actions'));
+
+		await fireEvent.change(getByDisplayValue('submit'), {
+			target: {value: 'Submit to'},
+		});
+
+		await fireEvent.click(getByText('add-new-action'));
+
+		await fireEvent.click(getByText('remove'));
+
+		await fireEvent.click(getAllByText('delete-step')[1]);
 
 		expect(deployButton).toBeEnabled();
 	});

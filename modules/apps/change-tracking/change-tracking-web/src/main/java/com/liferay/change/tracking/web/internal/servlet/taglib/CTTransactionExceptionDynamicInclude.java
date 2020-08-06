@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.web.internal.servlet.taglib;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.change.tracking.CTTransactionException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.taglib.aui.ScriptTag;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -29,6 +31,7 @@ import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.JspException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -51,25 +54,46 @@ public class CTTransactionExceptionDynamicInclude extends BaseDynamicInclude {
 			return;
 		}
 
-		Writer writer = httpServletResponse.getWriter();
+		try {
+			ScriptTag scriptTag = new ScriptTag();
 
-		writer.write(
-			"<script>Liferay.Util.openToast({autoClose:10000,message:'");
+			scriptTag.setPosition("inline");
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			_portal.getLocale(httpServletRequest),
-			CTTransactionExceptionDynamicInclude.class);
+			scriptTag.doBodyTag(
+				httpServletRequest, httpServletResponse,
+				pageContext -> {
+					try {
+						Writer writer = pageContext.getOut();
 
-		writer.write(
-			_language.get(
-				resourceBundle,
-				"this-action-can-only-be-performed-in-production-mode"));
+						writer.write(
+							"Liferay.Util.openToast({autoClose:10000," +
+								"message:'");
 
-		writer.write("',title:'");
+						ResourceBundle resourceBundle =
+							ResourceBundleUtil.getBundle(
+								_portal.getLocale(httpServletRequest),
+								CTTransactionExceptionDynamicInclude.class);
 
-		writer.write(_language.get(resourceBundle, "error"));
+						writer.write(
+							_language.get(
+								resourceBundle,
+								"this-action-can-only-be-performed-in-" +
+									"production-mode"));
 
-		writer.write(":',type:'danger',});</script>");
+						writer.write("',title:'");
+
+						writer.write(_language.get(resourceBundle, "error"));
+
+						writer.write(":',type:'danger',});");
+					}
+					catch (IOException ioException) {
+						ReflectionUtil.throwException(ioException);
+					}
+				});
+		}
+		catch (JspException jspException) {
+			ReflectionUtil.throwException(jspException);
+		}
 	}
 
 	@Override

@@ -47,7 +47,8 @@ import org.powermock.api.mockito.PowerMockito;
  * @author Leonardo Barros
  */
 @RunWith(MockitoJUnitRunner.class)
-public class DataRecordValuesUtilTest extends PowerMockito {
+public class DefaultMapToDDMFormValuesConverterStrategyTest
+	extends PowerMockito {
 
 	@Before
 	public void setUp() {
@@ -60,16 +61,17 @@ public class DataRecordValuesUtilTest extends PowerMockito {
 		DDMFormField ddmFormField = _createDDMFormField("field1", "text", true);
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
-			DataRecordValuesUtil.createDDMFormFieldValues(
-				HashMapBuilder.<String, Object>put(
-					"field2",
-					HashMapBuilder.put(
-						"en_US", "Value 2"
-					).put(
-						"pt_BR", "Valor 2"
-					).build()
-				).build(),
-				ddmFormField, null);
+			_defaultMapToDDMFormValuesConverterStrategy.
+				createDDMFormFieldValues(
+					HashMapBuilder.<String, Object>put(
+						"field2",
+						HashMapBuilder.put(
+							"en_US", "Value 2"
+						).put(
+							"pt_BR", "Valor 2"
+						).build()
+					).build(),
+					ddmFormField, null);
 
 		DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
 
@@ -87,22 +89,23 @@ public class DataRecordValuesUtilTest extends PowerMockito {
 			_createDDMFormField("child", "text", true));
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
-			DataRecordValuesUtil.createDDMFormFieldValues(
-				HashMapBuilder.<String, Object>put(
-					"parent",
+			_defaultMapToDDMFormValuesConverterStrategy.
+				createDDMFormFieldValues(
 					HashMapBuilder.<String, Object>put(
-						"instanceId",
+						"parent",
 						HashMapBuilder.<String, Object>put(
-							"child",
+							"instanceId",
 							HashMapBuilder.<String, Object>put(
-								"en_US", "Child Value 1"
-							).put(
-								"pt_BR", "Filho Valor 1"
+								"child",
+								HashMapBuilder.<String, Object>put(
+									"en_US", "Child Value 1"
+								).put(
+									"pt_BR", "Filho Valor 1"
+								).build()
 							).build()
 						).build()
-					).build()
-				).build(),
-				ddmFormField, null);
+					).build(),
+					ddmFormField, null);
 
 		DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
 
@@ -136,16 +139,17 @@ public class DataRecordValuesUtilTest extends PowerMockito {
 		DDMFormField ddmFormField = _createDDMFormField("field1", "text", true);
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
-			DataRecordValuesUtil.createDDMFormFieldValues(
-				HashMapBuilder.<String, Object>put(
-					"field1",
-					HashMapBuilder.put(
-						"en_US", "Value 1"
-					).put(
-						"pt_BR", "Valor 1"
-					).build()
-				).build(),
-				ddmFormField, null);
+			_defaultMapToDDMFormValuesConverterStrategy.
+				createDDMFormFieldValues(
+					HashMapBuilder.<String, Object>put(
+						"field1",
+						HashMapBuilder.put(
+							"en_US", "Value 1"
+						).put(
+							"pt_BR", "Valor 1"
+						).build()
+					).build(),
+					ddmFormField, null);
 
 		DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
 
@@ -167,7 +171,7 @@ public class DataRecordValuesUtilTest extends PowerMockito {
 	public void testCreateValueWithArray1() {
 		DDMFormField ddmFormField = _createDDMFormField("field1", "text", true);
 
-		Value value = DataRecordValuesUtil.createValue(
+		Value value = _defaultMapToDDMFormValuesConverterStrategy.createValue(
 			ddmFormField, null,
 			HashMapBuilder.put(
 				"en_US", new Object[] {1, 2}
@@ -189,7 +193,7 @@ public class DataRecordValuesUtilTest extends PowerMockito {
 	public void testCreateValueWithArray2() {
 		DDMFormField ddmFormField = _createDDMFormField("field1", "text", true);
 
-		Value value = DataRecordValuesUtil.createValue(
+		Value value = _defaultMapToDDMFormValuesConverterStrategy.createValue(
 			ddmFormField, LocaleUtil.BRAZIL,
 			HashMapBuilder.put(
 				"pt_BR", new Object[] {3, 4}
@@ -208,7 +212,7 @@ public class DataRecordValuesUtilTest extends PowerMockito {
 		DDMFormField ddmFormField = _createDDMFormField(
 			"field1", "text", false);
 
-		DataRecordValuesUtil.createValue(
+		_defaultMapToDDMFormValuesConverterStrategy.createValue(
 			ddmFormField, LocaleUtil.BRAZIL,
 			HashMapBuilder.put(
 				"en_US", "Value 1"
@@ -219,7 +223,7 @@ public class DataRecordValuesUtilTest extends PowerMockito {
 	public void testCreateValueWithLocalizableField1() {
 		DDMFormField ddmFormField = _createDDMFormField("field1", "text", true);
 
-		Value value = DataRecordValuesUtil.createValue(
+		Value value = _defaultMapToDDMFormValuesConverterStrategy.createValue(
 			ddmFormField, null,
 			HashMapBuilder.put(
 				"en_US", "Value 1"
@@ -241,7 +245,7 @@ public class DataRecordValuesUtilTest extends PowerMockito {
 	public void testCreateValueWithLocalizableField2() {
 		DDMFormField ddmFormField = _createDDMFormField("field1", "text", true);
 
-		Value value = DataRecordValuesUtil.createValue(
+		Value value = _defaultMapToDDMFormValuesConverterStrategy.createValue(
 			ddmFormField, LocaleUtil.BRAZIL,
 			HashMapBuilder.put(
 				"en_US", "Value 1"
@@ -268,7 +272,7 @@ public class DataRecordValuesUtilTest extends PowerMockito {
 		DDMFormField ddmFormField = _createDDMFormField(
 			"field1", "text", false);
 
-		Value value = DataRecordValuesUtil.createValue(
+		Value value = _defaultMapToDDMFormValuesConverterStrategy.createValue(
 			ddmFormField, LocaleUtil.BRAZIL, "Valor");
 
 		Assert.assertTrue(value instanceof UnlocalizedValue);
@@ -290,23 +294,24 @@ public class DataRecordValuesUtilTest extends PowerMockito {
 		ddmForm.addDDMFormField(_createDDMFormField("field1", "text", true));
 		ddmForm.addDDMFormField(_createDDMFormField("field2", "text", true));
 
-		DDMFormValues ddmFormValues = DataRecordValuesUtil.toDDMFormValues(
-			HashMapBuilder.<String, Object>put(
-				"field1",
-				HashMapBuilder.put(
-					"en_US", "Value 1"
+		DDMFormValues ddmFormValues =
+			MapToDDMFormValuesConverterUtil.toDDMFormValues(
+				HashMapBuilder.<String, Object>put(
+					"field1",
+					HashMapBuilder.put(
+						"en_US", "Value 1"
+					).put(
+						"pt_BR", "Valor 1"
+					).build()
 				).put(
-					"pt_BR", "Valor 1"
-				).build()
-			).put(
-				"field2",
-				HashMapBuilder.put(
-					"en_US", "Value 2"
-				).put(
-					"pt_BR", "Valor 2"
-				).build()
-			).build(),
-			ddmForm, null);
+					"field2",
+					HashMapBuilder.put(
+						"en_US", "Value 2"
+					).put(
+						"pt_BR", "Valor 2"
+					).build()
+				).build(),
+				ddmForm, null);
 
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
 			ddmFormValues.getDDMFormFieldValuesMap();
@@ -359,23 +364,24 @@ public class DataRecordValuesUtilTest extends PowerMockito {
 		ddmForm.addDDMFormField(_createDDMFormField("field1", "text", true));
 		ddmForm.addDDMFormField(_createDDMFormField("field2", "text", true));
 
-		DDMFormValues ddmFormValues = DataRecordValuesUtil.toDDMFormValues(
-			HashMapBuilder.<String, Object>put(
-				"field1",
-				HashMapBuilder.put(
-					"en_US", "Value 1"
+		DDMFormValues ddmFormValues =
+			MapToDDMFormValuesConverterUtil.toDDMFormValues(
+				HashMapBuilder.<String, Object>put(
+					"field1",
+					HashMapBuilder.put(
+						"en_US", "Value 1"
+					).put(
+						"pt_BR", "Valor 1"
+					).build()
 				).put(
-					"pt_BR", "Valor 1"
-				).build()
-			).put(
-				"field2",
-				HashMapBuilder.put(
-					"en_US", "Value 2"
-				).put(
-					"pt_BR", "Valor 2"
-				).build()
-			).build(),
-			ddmForm, LocaleUtil.BRAZIL);
+					"field2",
+					HashMapBuilder.put(
+						"en_US", "Value 2"
+					).put(
+						"pt_BR", "Valor 2"
+					).build()
+				).build(),
+				ddmForm, LocaleUtil.BRAZIL);
 
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
 			ddmFormValues.getDDMFormFieldValuesMap();
@@ -471,5 +477,9 @@ public class DataRecordValuesUtilTest extends PowerMockito {
 
 		languageUtil.setLanguage(language);
 	}
+
+	private final DefaultMapToDDMFormValuesConverterStrategy
+		_defaultMapToDDMFormValuesConverterStrategy =
+			DefaultMapToDDMFormValuesConverterStrategy.getInstance();
 
 }

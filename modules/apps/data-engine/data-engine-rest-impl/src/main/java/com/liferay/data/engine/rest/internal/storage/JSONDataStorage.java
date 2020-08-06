@@ -17,7 +17,7 @@ package com.liferay.data.engine.rest.internal.storage;
 import com.liferay.data.engine.rest.dto.v2_0.DataRecord;
 import com.liferay.data.engine.rest.dto.v2_0.DataRecordCollection;
 import com.liferay.data.engine.rest.internal.dto.v2_0.util.DataRecordCollectionUtil;
-import com.liferay.data.engine.rest.internal.dto.v2_0.util.DataRecordValuesUtil;
+import com.liferay.data.engine.rest.internal.dto.v2_0.util.MapToDDMFormValuesConverterUtil;
 import com.liferay.data.engine.storage.DataStorage;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
@@ -97,7 +97,7 @@ public class JSONDataStorage implements DataStorage {
 			PrincipalThreadLocal.getUserId(), siteId,
 			DataRecord.class.getName(), null,
 			_serializeDDMFormValues(
-				DataRecordValuesUtil.toDDMFormValues(
+				MapToDDMFormValuesConverterUtil.toDDMFormValues(
 					dataRecordValues, ddmStructure.getFullHierarchyDDMForm(),
 					_portal.getSiteDefaultLocale(siteId))),
 			new ServiceContext() {

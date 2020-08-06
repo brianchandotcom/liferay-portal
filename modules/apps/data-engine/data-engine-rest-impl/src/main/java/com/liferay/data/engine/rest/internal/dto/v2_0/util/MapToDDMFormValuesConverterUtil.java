@@ -43,7 +43,7 @@ import org.apache.commons.lang.ClassUtils;
  * @author Jeyvison Nascimento
  * @author Leonardo Barros
  */
-public class DataRecordValuesUtil {
+public class MapToDDMFormValuesConverterUtil {
 
 	public static DDMFormValues toDDMFormValues(
 		Map<String, Object> dataRecordValues, DDMForm ddmForm, Locale locale) {

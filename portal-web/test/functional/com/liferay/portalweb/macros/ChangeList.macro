@@ -184,6 +184,17 @@ definition {
 			locator1 = "ChangeList#CONFICTING_CHANGES_SUCCESS_CONTENT");
 	}
 
+	macro viewNeedsManualResolution {
+		AssertElementPresent(locator1 = "ChangeList#NEEDS_MANUAL_RESOLUTION_TABLE");
+
+		AssertElementPresent(
+			key_entryTitle = "${entryTitle}",
+			key_warningMessage = "${warningMessage}",
+			locator1 = "ChangeList#CONFICTING_CHANGES_WARNING_CONTENT");
+
+		AssertVisible(locator1 = "ChangeList#DISABLED_PUBLISH_BUTTON");
+	}
+
 	macro viewNoStagingMenuitemsNotAvailable {
 		AssertElementNotPresent(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 

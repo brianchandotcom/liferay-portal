@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONFICTING_CHANGES_WARNING_CONTENT</td>
+	<td>//div[contains(.,'${key_entryTitle}')]//following-sibling::div[contains(.,'${key_warningMessage}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISABLED_PUBLISH_BUTTON</td>
 	<td>//*[contains(@class,'btn')][normalize-space(text())='Publish']</td>
 	<td></td>

@@ -282,6 +282,13 @@ h6,
 	line-height: var(--display-line-height);
 }
 
+// Lead
+
+.lead {
+	font-size: $lead-font-size;
+	font-weight: $lead-font-weight;
+}
+
 // Text format
 
 .font-weight-light {

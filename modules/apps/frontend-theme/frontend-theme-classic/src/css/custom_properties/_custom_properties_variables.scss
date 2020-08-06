@@ -153,6 +153,11 @@ $theme-colors-cp: map-deep-merge(
 
 	--display-line-height: #{$display-line-height};
 
+	// Lead
+
+	--lead-font-size: #{$lead-font-size};
+	--lead-font-weight: #{$lead-font-weight};
+
 	// Body
 
 	--body-color: $body-color;

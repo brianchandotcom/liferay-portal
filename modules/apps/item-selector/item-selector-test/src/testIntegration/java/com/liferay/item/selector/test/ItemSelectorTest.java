@@ -18,7 +18,9 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.DownloadURLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
+import com.liferay.item.selector.criteria.audio.criterion.AudioItemSelectorCriterion;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -81,6 +83,67 @@ public class ItemSelectorTest {
 		Assert.assertTrue(
 			desiredItemSelectorReturnTypes.get(0) instanceof
 				URLItemSelectorReturnType);
+	}
+
+	@Test
+	public void testGetItemSelectorCriteriaWithTwoCriteria() {
+		List<ItemSelectorCriterion> itemSelectorCriteria =
+			_itemSelector.getItemSelectorCriteria(
+				StringBundler.concat(
+					"http://localhost:8080/group/guest/~/control_panel/manage",
+					"/-/select/file,audio/_com_liferay_wiki_web_portlet",
+					"_WikiAdminPortlet_contentEditorselectItem",
+					"?_com_liferay_item_selector_web_portlet",
+					"_ItemSelectorPortlet_0_json=",
+					URLCodec.encodeURL(
+						JSONUtil.put(
+							"desiredItemSelectorReturnTypes",
+							URLItemSelectorReturnType.class.getName()
+						).toJSONString()),
+					"&_com_liferay_item_selector_web_portlet",
+					"_ItemSelectorPortlet_1_json=",
+					URLCodec.encodeURL(
+						JSONUtil.put(
+							"desiredItemSelectorReturnTypes",
+							DownloadURLItemSelectorReturnType.class.getName()
+						).toJSONString())));
+
+		Assert.assertEquals(
+			itemSelectorCriteria.toString(), 2, itemSelectorCriteria.size());
+
+		ItemSelectorCriterion fileItemSelectorCriterion =
+			itemSelectorCriteria.get(0);
+
+		Assert.assertTrue(
+			fileItemSelectorCriterion instanceof FileItemSelectorCriterion);
+
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			fileItemSelectorCriterion.getDesiredItemSelectorReturnTypes();
+
+		Assert.assertEquals(
+			desiredItemSelectorReturnTypes.toString(), 1,
+			desiredItemSelectorReturnTypes.size());
+
+		Assert.assertTrue(
+			desiredItemSelectorReturnTypes.get(0) instanceof
+				URLItemSelectorReturnType);
+
+		ItemSelectorCriterion audioItemSelectorCriterion =
+			itemSelectorCriteria.get(1);
+
+		Assert.assertTrue(
+			audioItemSelectorCriterion instanceof AudioItemSelectorCriterion);
+
+		desiredItemSelectorReturnTypes =
+			audioItemSelectorCriterion.getDesiredItemSelectorReturnTypes();
+
+		Assert.assertEquals(
+			desiredItemSelectorReturnTypes.toString(), 1,
+			desiredItemSelectorReturnTypes.size());
+
+		Assert.assertTrue(
+			desiredItemSelectorReturnTypes.get(0) instanceof
+				DownloadURLItemSelectorReturnType);
 	}
 
 	@Inject

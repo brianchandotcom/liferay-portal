@@ -162,6 +162,12 @@ $theme-colors-cp: map-deep-merge(
 
 	--text-muted: #{$text-muted};
 
+	// Blockquotes
+
+	--blockquote-font-size: #{$font-size-base} * 1.25;
+	--blockquote-small-color: #{$gray-600};
+	--blockquote-small-font-size: #{$small-font-size};
+
 	// Body
 
 	--body-color: $body-color;

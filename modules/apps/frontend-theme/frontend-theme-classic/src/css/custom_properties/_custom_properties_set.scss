@@ -321,6 +321,17 @@ h6,
 	color: var(--text-muted) !important;
 }
 
+// Blockquotes
+
+.blockquote {
+	font-size: var(--blockquote-font-size);
+}
+
+.blockquote-footer {
+	color: var(--blockquote-small-color);
+	font-size: var(--blockquote-small-font-size);
+}
+
 // Portlet
 
 .portlet {

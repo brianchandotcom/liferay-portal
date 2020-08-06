@@ -420,6 +420,9 @@ AUI.add(
 
 		var SessionDisplay = A.Component.create({
 			ATTRS: {
+				openToast: {
+					validator: Lang.isFunction
+				},
 				pageTitle: {
 					value: DOC.title,
 				},

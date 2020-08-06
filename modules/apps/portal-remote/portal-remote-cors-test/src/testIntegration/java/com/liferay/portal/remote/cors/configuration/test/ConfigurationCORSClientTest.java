@@ -44,7 +44,7 @@ import org.osgi.service.cm.ConfigurationAdmin;
  * @author Arthur Chan
  */
 @RunWith(Arquillian.class)
-public class CORSConfigurationTest extends BaseCORSClientTestCase {
+public class ConfigurationCORSClientTest extends BaseCORSClientTestCase {
 
 	@ClassRule
 	@Rule

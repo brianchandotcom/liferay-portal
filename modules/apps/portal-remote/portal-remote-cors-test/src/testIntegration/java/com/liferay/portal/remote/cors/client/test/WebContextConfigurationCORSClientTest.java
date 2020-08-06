@@ -34,7 +34,8 @@ import org.junit.runner.RunWith;
  * @author Marta Medio
  */
 @RunWith(Arquillian.class)
-public class CORSConfigurationClientTest extends BaseCORSClientTestCase {
+public class WebContextConfigurationCORSClientTest
+	extends BaseCORSClientTestCase {
 
 	@ClassRule
 	@Rule

@@ -11,6 +11,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:info:info-api")
 	compileOnly project(":apps:portal:portal-aop-api")
+	compileOnly project(":apps:portal:portal-instance-lifecycle-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":apps:translation:translation-api")
 	compileOnly project(":core:petra:petra-io")

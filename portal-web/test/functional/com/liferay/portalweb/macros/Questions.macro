@@ -320,7 +320,7 @@ definition {
 			}
 		}
 
-		if (isSet(unlistedQuestions)) {
+		if (isSet(listedQuestions)) {
 			for (var listedQuestion : list "${listedQuestions}") {
 				AssertTextEquals(
 					key_questionTitle = "${listedQuestion}",

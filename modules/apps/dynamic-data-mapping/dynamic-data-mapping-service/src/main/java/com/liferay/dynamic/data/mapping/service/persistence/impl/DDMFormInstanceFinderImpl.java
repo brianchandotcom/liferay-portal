@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Iterator;
 import java.util.List;
@@ -124,21 +125,9 @@ public class DDMFormInstanceFinderImpl
 		long companyId, long groupId, String keywords, int start, int end,
 		OrderByComparator<DDMFormInstance> orderByComparator) {
 
-		String[] names = null;
-		String[] descriptions = null;
-		boolean andOperator = false;
-
-		if (Validator.isNotNull(keywords)) {
-			names = _customSQL.keywords(keywords);
-			descriptions = _customSQL.keywords(keywords, false);
-		}
-		else {
-			andOperator = true;
-		}
-
-		return filterFindByC_G_N_D(
-			companyId, groupId, names, descriptions, andOperator, start, end,
-			orderByComparator);
+		return filterFindByKeywords(
+			companyId, groupId, keywords, WorkflowConstants.STATUS_ANY, start,
+			end, orderByComparator);
 	}
 
 	@Override
@@ -207,20 +196,8 @@ public class DDMFormInstanceFinderImpl
 		long companyId, long groupId, String keywords,
 		boolean inlineSQLHelper) {
 
-		String[] names = null;
-		String[] descriptions = null;
-		boolean andOperator = false;
-
-		if (Validator.isNotNull(keywords)) {
-			names = _customSQL.keywords(keywords);
-			descriptions = _customSQL.keywords(keywords, false);
-		}
-		else {
-			andOperator = true;
-		}
-
-		return doCountByC_G_N_D(
-			companyId, groupId, names, descriptions, andOperator,
+		return doCountByKeywords(
+			companyId, groupId, keywords, WorkflowConstants.STATUS_ANY,
 			inlineSQLHelper);
 	}
 
@@ -249,68 +226,9 @@ public class DDMFormInstanceFinderImpl
 		long companyId, long groupId, String[] names, String[] descriptions,
 		boolean andOperator, boolean inlineSQLHelper) {
 
-		names = _customSQL.keywords(names);
-		descriptions = _customSQL.keywords(descriptions, false);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = _customSQL.get(getClass(), COUNT_BY_C_G_N_D);
-
-			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, DDMFormInstance.class.getName(),
-					"DDMFormInstance.formInstanceId", groupId);
-			}
-
-			if (groupId <= 0) {
-				sql = StringUtil.removeSubstring(
-					sql, "(DDMFormInstance.groupId = ?) AND");
-			}
-
-			sql = _customSQL.replaceKeywords(
-				sql, "LOWER(DDMFormInstance.name)", StringPool.LIKE, false,
-				names);
-			sql = _customSQL.replaceKeywords(
-				sql, "DDMFormInstance.description", StringPool.LIKE, true,
-				descriptions);
-			sql = _customSQL.replaceAndOperator(sql, andOperator);
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			if (groupId > 0) {
-				queryPos.add(groupId);
-			}
-
-			queryPos.add(names, 2);
-			queryPos.add(descriptions, 2);
-
-			Iterator<Long> iterator = sqlQuery.iterate();
-
-			if (iterator.hasNext()) {
-				Long count = iterator.next();
-
-				if (count != null) {
-					return count.intValue();
-				}
-			}
-
-			return 0;
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return doCountByC_G_N_D_S(
+			companyId, groupId, names, descriptions,
+			WorkflowConstants.STATUS_ANY, andOperator, inlineSQLHelper);
 	}
 
 	protected int doCountByC_G_N_D_S(
@@ -325,7 +243,14 @@ public class DDMFormInstanceFinderImpl
 		try {
 			session = openSession();
 
-			String sql = _customSQL.get(getClass(), COUNT_BY_C_G_N_D_S);
+			String sql = "";
+
+			if (status == WorkflowConstants.STATUS_ANY) {
+				sql = _customSQL.get(getClass(), COUNT_BY_C_G_N_D);
+			}
+			else {
+				sql = _customSQL.get(getClass(), COUNT_BY_C_G_N_D_S);
+			}
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -358,7 +283,9 @@ public class DDMFormInstanceFinderImpl
 				queryPos.add(groupId);
 			}
 
-			queryPos.add(status);
+			if (status != WorkflowConstants.STATUS_ANY) {
+				queryPos.add(status);
+			}
 
 			queryPos.add(names, 2);
 			queryPos.add(descriptions, 2);
@@ -389,60 +316,10 @@ public class DDMFormInstanceFinderImpl
 		OrderByComparator<DDMFormInstance> orderByComparator,
 		boolean inlineSQLHelper) {
 
-		names = _customSQL.keywords(names);
-		descriptions = _customSQL.keywords(descriptions, false);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = _customSQL.get(getClass(), FIND_BY_C_G_N_D);
-
-			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, DDMFormInstance.class.getName(),
-					"DDMFormInstance.formInstanceId", groupId);
-			}
-
-			if (groupId <= 0) {
-				sql = StringUtil.removeSubstring(
-					sql, "(DDMFormInstance.groupId = ?) AND");
-			}
-
-			sql = _customSQL.replaceKeywords(
-				sql, "LOWER(DDMFormInstance.name)", StringPool.LIKE, false,
-				names);
-			sql = _customSQL.replaceKeywords(
-				sql, "DDMFormInstance.description", StringPool.LIKE, true,
-				descriptions);
-			sql = _customSQL.replaceAndOperator(sql, andOperator);
-			sql = _customSQL.replaceOrderBy(sql, orderByComparator);
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addEntity("DDMFormInstance", DDMFormInstanceImpl.class);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			if (groupId > 0) {
-				queryPos.add(groupId);
-			}
-
-			queryPos.add(names, 2);
-			queryPos.add(descriptions, 2);
-
-			return (List<DDMFormInstance>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return doFindByC_G_N_D_S(
+			companyId, groupId, names, descriptions,
+			WorkflowConstants.STATUS_ANY, andOperator, start, end,
+			orderByComparator, inlineSQLHelper);
 	}
 
 	protected List<DDMFormInstance> doFindByC_G_N_D_S(
@@ -459,7 +336,14 @@ public class DDMFormInstanceFinderImpl
 		try {
 			session = openSession();
 
-			String sql = _customSQL.get(getClass(), FIND_BY_C_G_N_D_S);
+			String sql = "";
+
+			if (status == WorkflowConstants.STATUS_ANY) {
+				sql = _customSQL.get(getClass(), FIND_BY_C_G_N_D);
+			}
+			else {
+				sql = _customSQL.get(getClass(), FIND_BY_C_G_N_D_S);
+			}
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -493,7 +377,9 @@ public class DDMFormInstanceFinderImpl
 				queryPos.add(groupId);
 			}
 
-			queryPos.add(status);
+			if (status != WorkflowConstants.STATUS_ANY) {
+				queryPos.add(status);
+			}
 
 			queryPos.add(names, 2);
 			queryPos.add(descriptions, 2);

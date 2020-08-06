@@ -24,6 +24,17 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COLUMN_VALUE_IN_PRODUCTION</td>
+	<td>//td[contains(@class,'change-lists-diff-td')][1]//td[contains(.,'${key_columnName}')]//following-sibling::td[contains(.,'${key_columnValueInProduction}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COLUMN_VALUE_IN_PUBLICATION</td>
+	<td>//td[contains(@class,'change-lists-diff-td')][2]//td[contains(.,'${key_columnName}')]//following-sibling::td[contains(.,'${key_columnValueInPublication}')]</td>
+	<td></td>
+</tr>
+
+<tr>
 	<td>CONFICTING_CHANGES_SUCCESS_CONTENT</td>
 	<td>//div[contains(.,'${key_entryTitle}')]//following-sibling::div[contains(.,'${key_successMessage}')]</td>
 	<td></td>
@@ -86,6 +97,11 @@
 <tr>
 	<td>PUBLICATION_DESCRIPTION</td>
 	<td>//textarea[contains(@name,'description')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLICATION_NAME_IN_DIFF</td>
+	<td>//td[contains(@class,'change-lists-diff-td') and contains(.,'${key_publicationName}')]</td>
 	<td></td>
 </tr>
 <tr>

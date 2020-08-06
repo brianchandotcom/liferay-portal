@@ -99,6 +99,8 @@ definition {
 		AssertElementPresent(
 			key_iframeTitle = "${entryTitle}",
 			locator1 = "IFrame#IFRAME_TITLE");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
 	macro prepareToPublish {
@@ -197,6 +199,34 @@ definition {
 			key_entryTitle = "${entryTitle}",
 			key_successMessage = "${successMessage}",
 			locator1 = "ChangeList#CONFICTING_CHANGES_SUCCESS_CONTENT");
+	}
+
+	macro viewChangesDiff {
+		if (contains("${entryTitle}", "modified")) {
+			AssertTextEquals.assertPartialText(
+				key_publicationName = "Production",
+				locator1 = "ChangeList#PUBLICATION_NAME_IN_DIFF",
+				value1 = "Production");
+
+			AssertTextEquals.assertPartialText(
+				key_publicationName = "${publicationName}",
+				locator1 = "ChangeList#PUBLICATION_NAME_IN_DIFF",
+				value1 = "${publicationName}");
+
+			key_columnName = "${columnName}";
+			key_columnValueInProduction = "${columnValueInProduction}";
+			key_columnValueInPublication = "${columnValueInPublication}";
+
+			if (isSet(columnValueInProduction)) {
+				AssertTextEquals.assertPartialText(
+					locator1 = "ChangeList#COLUMN_VALUE_IN_PRODUCTION",
+					value1 = "${columnValueInProduction}");
+			}
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "ChangeList#COLUMN_VALUE_IN_PUBLICATION",
+				value1 = "${columnValueInPublication}");
+		}
 	}
 
 	macro viewNeedsManualResolution {

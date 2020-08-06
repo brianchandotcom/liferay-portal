@@ -395,6 +395,9 @@ definition {
 	@description = "This ensures that the translator can select which target language she wants to translate."
 	@priority = "5"
 	test TranslateCustomizedWC {
+		property osgi.module.configuration.file.names = "com.liferay.translation.internal.configuration.FFTranslationWorkflowConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		NavItem.gotoStructures();
@@ -525,6 +528,9 @@ definition {
 	@description = "This ensures that the translator can select which base language she wants to translate."
 	@priority = "5"
 	test TranslateWebContent {
+		property osgi.module.configuration.file.names = "com.liferay.translation.internal.configuration.FFTranslationWorkflowConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Guest",

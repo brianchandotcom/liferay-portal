@@ -19,6 +19,7 @@ import Button from '../../components/button/Button.es';
 import {useKeyDown} from '../../hooks/index.es';
 import isClickOutside from '../../utils/clickOutside.es';
 import {addItem, confirmDelete} from '../../utils/client.es';
+import {errorToast} from '../../utils/toast.es';
 import ListObjects from '../object/ListObjects.es';
 import CustomObjectPopover from './CustomObjectPopover.es';
 
@@ -54,20 +55,27 @@ export default ({history}) => {
 			name: {
 				[defaultLanguageId]: name,
 			},
-		}).then(({id}) => {
-			if (isAddFormView) {
-				Liferay.Util.navigate(
-					Liferay.Util.PortletURL.createRenderURL(basePortletURL, {
-						dataDefinitionId: id,
-						mvcRenderCommandName: '/edit_form_view',
-						newCustomObject: true,
-					})
-				);
-			}
-			else {
-				history.push(`/custom-object/${id}/form-views/`);
-			}
-		});
+		})
+			.then(({id}) => {
+				if (isAddFormView) {
+					Liferay.Util.navigate(
+						Liferay.Util.PortletURL.createRenderURL(
+							basePortletURL,
+							{
+								dataDefinitionId: id,
+								mvcRenderCommandName: '/edit_form_view',
+								newCustomObject: true,
+							}
+						)
+					);
+				}
+				else {
+					history.push(`/custom-object/${id}/form-views/`);
+				}
+			})
+			.catch((error) => {
+				errorToast(error.message);
+			});
 	};
 
 	useEffect(() => {

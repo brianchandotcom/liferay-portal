@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.test.rule;
 
+import com.liferay.portal.test.rule.IgnoreMailTestRule;
+
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -60,7 +62,8 @@ public class AggregateTestRule implements TestRule {
 
 	private static final String[] _ORDERED_RULE_CLASS_NAMES = {
 		TimeoutTestRule.class.getName(), HeapDumpTestRule.class.getName(),
-		CodeCoverageAssertor.class.getName(), NewEnvTestRule.class.getName(),
+		CodeCoverageAssertor.class.getName(),
+		IgnoreMailTestRule.class.getName(), NewEnvTestRule.class.getName(),
 		AssumeTestRule.class.getName(),
 		"com.liferay.portal.test.rule.LiferayIntegrationTestRule",
 		"com.liferay.portal.test.rule.PersistenceTestRule",

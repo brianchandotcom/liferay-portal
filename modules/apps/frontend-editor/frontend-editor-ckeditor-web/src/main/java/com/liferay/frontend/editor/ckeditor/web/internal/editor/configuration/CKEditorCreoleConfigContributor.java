@@ -72,7 +72,8 @@ public class CKEditorCreoleConfigContributor
 		).put(
 			"disableObjectResizing", Boolean.TRUE
 		).put(
-			"extraPlugins", "a11yhelpbtn,creole,itemselector,lfrpopup,wikilink"
+			"extraPlugins",
+			"a11yhelpbtn,creole,itemselector,lfrpopup,showborders,wikilink"
 		).put(
 			"filebrowserWindowFeatures",
 			"title=" + LanguageUtil.get(themeDisplay.getLocale(), "browse")

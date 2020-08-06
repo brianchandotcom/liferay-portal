@@ -28,7 +28,7 @@ definition {
 			configurationName = "Bundle PrefixHandlerFactory",
 			configurationScope = "System Scope");
 
-		Click(locator1 = "Button#ADD");
+		Button.clickAdd();
 
 		FormFields.editTextMultiline(
 			fieldName = "osgi.jaxrs.name",

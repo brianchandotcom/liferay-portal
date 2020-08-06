@@ -51,9 +51,7 @@ definition {
 
 		SelectFrameTop(value1 = "relative=top");
 
-		AssertClick(
-			locator1 = "Button#ADD",
-			value1 = "Add");
+		Button.clickAdd();
 
 		Alert.viewSuccessMessage();
 	}
@@ -89,9 +87,7 @@ definition {
 
 		SelectFrameTop(value1 = "relative=top");
 
-		AssertClick(
-			locator1 = "Button#ADD",
-			value1 = "Add");
+		Button.clickAdd();
 
 		Alert.viewSuccessMessage();
 

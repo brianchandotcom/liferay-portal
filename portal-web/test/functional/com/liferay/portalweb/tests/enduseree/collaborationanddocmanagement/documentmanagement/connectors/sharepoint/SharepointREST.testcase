@@ -32,7 +32,7 @@ definition {
 			configurationName = "Sharepoint OAuth2",
 			configurationScope = "System Scope");
 
-		Click(locator1 = "Button#ADD");
+		Button.clickAdd();
 
 		Type(
 			key_text = "name",

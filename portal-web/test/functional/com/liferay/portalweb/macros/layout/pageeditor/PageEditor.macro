@@ -894,7 +894,7 @@ definition {
 
 			Pause(locator1 = "3000");
 
-			Click(locator1 = "Button#ADD");
+			Button.clickAdd();
 		}
 
 		PageEditor.waitForAutoSave();

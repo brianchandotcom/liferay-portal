@@ -175,6 +175,15 @@ definition {
 			value1 = "${publicationName}");
 	}
 
+	macro viewAutomaticallyResolved {
+		AssertElementPresent(locator1 = "ChangeList#AUTOMATICALLY_RESOLVED_TABLE");
+
+		AssertElementPresent(
+			key_entryTitle = "${entryTitle}",
+			key_successMessage = "${successMessage}",
+			locator1 = "ChangeList#CONFICTING_CHANGES_SUCCESS_CONTENT");
+	}
+
 	macro viewNoStagingMenuitemsNotAvailable {
 		AssertElementNotPresent(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 

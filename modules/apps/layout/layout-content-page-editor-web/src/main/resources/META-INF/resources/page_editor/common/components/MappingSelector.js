@@ -20,7 +20,6 @@ import React, {useEffect, useState} from 'react';
 import {addMappedInfoItem} from '../../app/actions/index';
 import {useCollectionFields} from '../../app/components/CollectionItemContext';
 import isMapped from '../../app/components/fragment-content/isMapped';
-import {COMPATIBLE_TYPES} from '../../app/config/constants/compatibleTypes';
 import {EDITABLE_TYPES} from '../../app/config/constants/editableTypes';
 import {LAYOUT_TYPES} from '../../app/config/constants/layoutTypes';
 import {config} from '../../app/config/index';
@@ -366,7 +365,7 @@ function MappingFieldSelect({fieldSets, fieldType, onValueSelect, value}) {
 }
 
 MappingSelector.propTypes = {
-	fieldType: PropTypes.oneOf(Object.keys(COMPATIBLE_TYPES)),
+	fieldType: PropTypes.string,
 	mappedItem: PropTypes.oneOfType([
 		PropTypes.shape({
 			classNameId: PropTypes.string,

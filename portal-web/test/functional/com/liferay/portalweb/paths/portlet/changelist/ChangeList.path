@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>AUTOMATICALLY_RESOLVED_TABLE</td>
+	<td>//table[contains(@class,'change-lists-conflicts-table')]//td[contains(.,'Automatically Resolved')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHANGE_LIST_INDICATOR_BUTTON</td>
 	<td>//button[contains(@class,'dropdown-toggle change-tracking-indicator-button')]</td>
 	<td></td>
@@ -16,6 +21,11 @@
 <tr>
 	<td>CHANGE_LIST_INDICATOR_TITLE</td>
 	<td>//button[contains(@class,'change-tracking-indicator-title')] and contains(.,'${key_publicationName}')</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFICTING_CHANGES_SUCCESS_CONTENT</td>
+	<td>//div[contains(.,'${key_entryTitle}')]//following-sibling::div[contains(.,'${key_successMessage}')]</td>
 	<td></td>
 </tr>
 <tr>

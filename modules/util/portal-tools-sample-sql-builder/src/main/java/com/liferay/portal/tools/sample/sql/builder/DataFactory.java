@@ -1344,7 +1344,7 @@ public class DataFactory {
 		return counterModels;
 	}
 
-	public AssetEntryModel newCPDefinitionAssetEntryModel(
+	public AssetEntryModel newCPDefinitionModelAssetEntryModel(
 		CPDefinitionModel cpDefinitionModel,
 		GroupModel commerceCatalogGroupModel) {
 

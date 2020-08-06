@@ -220,6 +220,13 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 				"update PortletPreferences set portletId = '", newRootPortletId,
 				"' where portletId = '", oldRootPortletId, "'"));
 
+		runSQL(
+			StringBundler.concat(
+				"update PortletPreferences set preferences = replace(",
+				"preferences, '#portlet_", oldRootPortletId, "', '#portlet_",
+				newRootPortletId, "') where portletId = '", newRootPortletId,
+				"'"));
+
 		if (!newRootPortletId.contains("_INSTANCE_")) {
 			runSQL(
 				StringBundler.concat(
@@ -227,6 +234,13 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 					"portletId, '", oldRootPortletId, "_INSTANCE_', '",
 					newRootPortletId, "_INSTANCE_') where portletId like '",
 					oldRootPortletId, "_INSTANCE_%'"));
+
+			runSQL(
+				StringBundler.concat(
+					"update PortletPreferences set preferences = replace(",
+					"preferences, '#portlet_", oldRootPortletId, "_INSTANCE_',",
+					"'#portlet_", newRootPortletId, "_INSTANCE_') where ",
+					"portletId like '", newRootPortletId, "_INSTANCE_%'"));
 		}
 
 		runSQL(
@@ -235,6 +249,13 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 				"'", oldRootPortletId, "_USER_', '", newRootPortletId,
 				"_USER_') where portletId like '", oldRootPortletId,
 				"_USER_%'"));
+
+		runSQL(
+			StringBundler.concat(
+				"update PortletPreferences set preferences = replace(",
+				"preferences, '#portlet_", oldRootPortletId, "_USER_', ",
+				"'#portlet_", newRootPortletId, "_USER_') where portletId ",
+				"like '", newRootPortletId, "_USER_%'"));
 	}
 
 	protected void updateLayout(long plid, String typeSettings)

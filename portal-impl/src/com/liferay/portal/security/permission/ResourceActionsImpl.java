@@ -1025,7 +1025,7 @@ public class ResourceActionsImpl implements ResourceActions {
 					servletContextName, classLoader, extFileName, portletNames);
 			}
 
-			_read(servletContextName, document, portletNames);
+			read(servletContextName, document, portletNames);
 
 			if (source.endsWith(".xml") && !source.endsWith("-ext.xml")) {
 				String extFileName = StringUtil.replace(
@@ -1040,7 +1040,8 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 	}
 
-	private void _read(
+	@Override
+	public void read(
 			String servletContextName, Document document,
 			Set<String> portletNames)
 		throws ResourceActionsException {

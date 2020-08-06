@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayForm, {ClaySelectWithOption} from '@clayui/form';
+import ClayForm, {ClaySelect, ClaySelectWithOption} from '@clayui/form';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
@@ -112,7 +112,7 @@ function CollectionMappingSelector({
 
 	return (
 		<MappingFieldSelect
-			fields={fields}
+			fieldSets={[{fields}]}
 			fieldType={fieldType}
 			onValueSelect={(event) => {
 				if (event.target.value === UNMAPPED_OPTION.value) {
@@ -136,7 +136,7 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 
 	const {selectedMappingTypes} = config;
 
-	const [fields, setFields] = useState(null);
+	const [fieldSets, setFieldSets] = useState(null);
 	const [selectedItem, setSelectedItem] = useState(mappedItem);
 	const [selectedSourceTypeId, setSelectedSourceTypeId] = useState(
 		mappedItem.mappedField || config.layoutType === LAYOUT_TYPES.display
@@ -234,8 +234,8 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 						selectedSourceTypeId,
 				  };
 
-		loadFields(data).then((newFields) => {
-			setFields(newFields);
+		loadFields(data).then((newFieldSets) => {
+			setFieldSets(newFieldSets);
 		});
 	}, [
 		dispatch,
@@ -299,7 +299,7 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 			)}
 			<ClayForm.Group small>
 				<MappingFieldSelect
-					fields={fields}
+					fieldSets={fieldSets}
 					fieldType={fieldType}
 					onValueSelect={onFieldSelect}
 					value={selectedItem.mappedField || selectedItem.fieldId}
@@ -309,10 +309,10 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 	);
 }
 
-function MappingFieldSelect({fieldType, fields, onValueSelect, value}) {
+function MappingFieldSelect({fieldSets, fieldType, onValueSelect, value}) {
 	const mappingSelectorFieldSelectId = useId();
 
-	const hasWarnings = fields && fields.length === 0;
+	const hasWarnings = fieldSets && fieldSets.length === 0;
 
 	return (
 		<ClayForm.Group
@@ -322,24 +322,39 @@ function MappingFieldSelect({fieldType, fields, onValueSelect, value}) {
 			<label htmlFor="mappingSelectorFieldSelect">
 				{Liferay.Language.get('field')}
 			</label>
-			<ClaySelectWithOption
+			<ClaySelect
 				aria-label={Liferay.Language.get('field')}
-				disabled={!(fields && fields.length)}
+				disabled={!(fieldSets && fieldSets.length)}
 				id={mappingSelectorFieldSelectId}
 				onChange={onValueSelect}
-				options={
-					fields && fields.length
-						? [
-								UNMAPPED_OPTION,
-								...fields.map(({key, label}) => ({
-									label,
-									value: key,
-								})),
-						  ]
-						: [UNMAPPED_OPTION]
-				}
 				value={value}
-			/>
+			>
+				{fieldSets && fieldSets.length && (
+					<>
+						<ClaySelect.Option
+							label={UNMAPPED_OPTION.label}
+							value={UNMAPPED_OPTION.value}
+						/>
+						{fieldSets.map((fieldSet, index) => {
+							const Wrapper = fieldSet.label
+								? ClaySelect.OptGroup
+								: React.Fragment;
+
+							return (
+								<Wrapper key={index} label={fieldSet.label}>
+									{fieldSet.fields.map((field) => (
+										<ClaySelect.Option
+											key={field.key}
+											label={field.label}
+											value={field.key}
+										/>
+									))}
+								</Wrapper>
+							);
+						})}
+					</>
+				)}
+			</ClaySelect>
 			{hasWarnings && (
 				<ClayForm.FeedbackGroup>
 					<ClayForm.FeedbackItem>

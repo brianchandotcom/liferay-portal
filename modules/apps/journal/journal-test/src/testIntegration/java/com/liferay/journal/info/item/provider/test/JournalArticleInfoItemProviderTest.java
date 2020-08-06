@@ -16,7 +16,8 @@ package com.liferay.journal.info.item.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.info.exception.NoSuchInfoItemException;
-import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.journal.constants.JournalFolderConstants;
@@ -59,7 +60,7 @@ public class JournalArticleInfoItemProviderTest {
 	}
 
 	@Test
-	public void testGetInfoForm() throws Exception {
+	public void testGetInfoItemFromJournalInfoItemProvider() throws Exception {
 		JournalArticle article = JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
@@ -70,7 +71,7 @@ public class JournalArticleInfoItemProviderTest {
 			article, RandomTestUtil.randomString(), article.getContent(), false,
 			false, _serviceContext);
 
-		InfoItemReference infoItemReference = new InfoItemReference(
+		InfoItemIdentifier infoItemIdentifier = new ClassPKInfoItemIdentifier(
 			article.getResourcePrimKey());
 
 		InfoItemObjectProvider<JournalArticle> journalArticleInfoItemProvider =
@@ -79,24 +80,22 @@ public class JournalArticleInfoItemProviderTest {
 					InfoItemObjectProvider.class,
 					JournalArticle.class.getName());
 
-		JournalArticle publishedVersion =
-			journalArticleInfoItemProvider.getInfoItem(infoItemReference);
+		JournalArticle publishedArticle =
+			journalArticleInfoItemProvider.getInfoItem(infoItemIdentifier);
 
-		Assert.assertEquals(article.getTitle(), publishedVersion.getTitle());
+		Assert.assertEquals(article.getTitle(), publishedArticle.getTitle());
 
-		infoItemReference.setVersion(InfoItemReference.VERSION_LATEST);
+		infoItemIdentifier.setVersion(infoItemIdentifier.VERSION_LATEST);
 
-		JournalArticle draftVersion =
-			journalArticleInfoItemProvider.getInfoItem(infoItemReference);
+		JournalArticle draftArticle =
+			journalArticleInfoItemProvider.getInfoItem(infoItemIdentifier);
 
-		Assert.assertEquals(updateArticle.getTitle(), draftVersion.getTitle());
+		Assert.assertEquals(updateArticle.getTitle(), draftArticle.getTitle());
 	}
 
-	@Test
-	public void testGetInfoFormWithInvalidInfoItemReference() throws Exception {
-		JournalArticle article = JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+	@Test(expected = NoSuchInfoItemException.class)
+	public void testGetInvalidInfoItemFromJournalInfoItemProvider()
+		throws Exception {
 
 		InfoItemObjectProvider<JournalArticle> journalArticleInfoItemProvider =
 			(InfoItemObjectProvider<JournalArticle>)
@@ -104,15 +103,10 @@ public class JournalArticleInfoItemProviderTest {
 					InfoItemObjectProvider.class,
 					JournalArticle.class.getName());
 
-		InfoItemReference infoItemReference = new InfoItemReference(
-			article.getClassPK());
+		InfoItemIdentifier infoItemIdentifier = new ClassPKInfoItemIdentifier(
+			RandomTestUtil.randomLong());
 
-		try {
-			journalArticleInfoItemProvider.getInfoItem(infoItemReference);
-		}
-		catch (NoSuchInfoItemException noSuchInfoItemException) {
-			Assert.assertNotNull(noSuchInfoItemException);
-		}
+		journalArticleInfoItemProvider.getInfoItem(infoItemIdentifier);
 	}
 
 	@DeleteAfterTestRun

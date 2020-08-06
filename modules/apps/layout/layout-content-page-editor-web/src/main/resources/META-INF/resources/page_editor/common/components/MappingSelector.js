@@ -252,6 +252,7 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 					<label htmlFor="mappingSelectorSourceSelect">
 						{Liferay.Language.get('source')}
 					</label>
+
 					<ClaySelectWithOption
 						aria-label={Liferay.Language.get('source')}
 						id={mappingSelectorSourceSelectId}
@@ -288,6 +289,7 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 					/>
 				</ClayForm.Group>
 			)}
+
 			{selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.content && (
 				<ClayForm.Group small>
 					<ItemSelector
@@ -297,6 +299,7 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 					/>
 				</ClayForm.Group>
 			)}
+
 			<ClayForm.Group small>
 				<MappingFieldSelect
 					fieldSets={fieldSets}
@@ -322,6 +325,7 @@ function MappingFieldSelect({fieldSets, fieldType, onValueSelect, value}) {
 			<label htmlFor="mappingSelectorFieldSelect">
 				{Liferay.Language.get('field')}
 			</label>
+
 			<ClaySelect
 				aria-label={Liferay.Language.get('field')}
 				disabled={!(fieldSets && fieldSets.length)}
@@ -335,6 +339,7 @@ function MappingFieldSelect({fieldSets, fieldType, onValueSelect, value}) {
 							label={UNMAPPED_OPTION.label}
 							value={UNMAPPED_OPTION.value}
 						/>
+
 						{fieldSets.map((fieldSet, index) => {
 							const Wrapper = fieldSet.label
 								? ClaySelect.OptGroup
@@ -355,6 +360,7 @@ function MappingFieldSelect({fieldSets, fieldType, onValueSelect, value}) {
 					</>
 				)}
 			</ClaySelect>
+
 			{hasWarnings && (
 				<ClayForm.FeedbackGroup>
 					<ClayForm.FeedbackItem>

@@ -27,6 +27,8 @@ import ellipsize from './ellipsize.es';
 
 const _MAX_DELIMITED_NUMBER_LENGTH = 10;
 
+const _THOUSANDS_DELIMITER_REGEX = /\B(?=(\d{3})+(?!\d))/g;
+
 function getDelimiter(key, defaultValue) {
 	const delimiter = Liferay.Language.get(key);
 
@@ -45,7 +47,7 @@ export function formatNumber(number, delimit) {
 	const formattedDecimal = formattedNumberParts[1];
 
 	const formattedInteger = formattedNumberParts[0].replace(
-		/\B(?=(\d{3})+(?!\d))/g,
+		_THOUSANDS_DELIMITER_REGEX,
 		getDelimiter('thousands-delimiter', ',')
 	);
 

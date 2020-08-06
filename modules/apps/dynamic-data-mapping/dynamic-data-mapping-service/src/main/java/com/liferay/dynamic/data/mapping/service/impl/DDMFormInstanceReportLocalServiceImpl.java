@@ -28,6 +28,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -143,38 +144,18 @@ public class DDMFormInstanceReportLocalServiceImpl
 			for (DDMFormFieldValue ddmFormFieldValue :
 					ddmFormValues.getDDMFormFieldValues()) {
 
-				DDMFormFieldTypeReportProcessor
-					ddmFormFieldTypeReportProcessor =
-						_ddmFormFieldTypeReportProcessorTracker.
-							getDDMFormFieldTypeReportProcessor(
-								ddmFormFieldValue.getType());
+				_processDDMFormFieldValue(
+					ddmFormFieldValue, ddmFormInstanceRecordVersion,
+					ddmFormInstanceReportDataJSONObject,
+					ddmFormInstanceReportEvent);
 
-				if (ddmFormFieldTypeReportProcessor != null) {
-					String fieldName = ddmFormFieldValue.getName();
+				for (DDMFormFieldValue nestedDDMFormFieldValue :
+						ddmFormFieldValue.getNestedDDMFormFieldValues()) {
 
-					JSONObject fieldJSONObject =
-						ddmFormInstanceReportDataJSONObject.getJSONObject(
-							fieldName);
-
-					if (fieldJSONObject == null) {
-						fieldJSONObject = JSONUtil.put(
-							"type", ddmFormFieldValue.getType()
-						).put(
-							"values", JSONFactoryUtil.createJSONObject()
-						);
-					}
-
-					JSONObject processedFieldJSONObject =
-						ddmFormFieldTypeReportProcessor.process(
-							ddmFormFieldValue,
-							JSONFactoryUtil.createJSONObject(
-								fieldJSONObject.toJSONString()),
-							ddmFormInstanceRecordVersion.
-								getFormInstanceRecordId(),
-							ddmFormInstanceReportEvent);
-
-					ddmFormInstanceReportDataJSONObject.put(
-						fieldName, processedFieldJSONObject);
+					_processDDMFormFieldValue(
+						nestedDDMFormFieldValue, ddmFormInstanceRecordVersion,
+						ddmFormInstanceReportDataJSONObject,
+						ddmFormInstanceReportEvent);
 				}
 			}
 
@@ -202,6 +183,44 @@ public class DDMFormInstanceReportLocalServiceImpl
 				"Unable to process data for form instance record version " +
 					formInstanceRecordVersionId,
 				exception);
+		}
+	}
+
+	private void _processDDMFormFieldValue(
+			DDMFormFieldValue ddmFormFieldValue,
+			DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion,
+			JSONObject ddmFormInstanceReportDataJSONObject,
+			String ddmFormInstanceReportEvent)
+		throws Exception, JSONException {
+
+		DDMFormFieldTypeReportProcessor ddmFormFieldTypeReportProcessor =
+			_ddmFormFieldTypeReportProcessorTracker.
+				getDDMFormFieldTypeReportProcessor(ddmFormFieldValue.getType());
+
+		if (ddmFormFieldTypeReportProcessor != null) {
+			String fieldName = ddmFormFieldValue.getName();
+
+			JSONObject fieldJSONObject =
+				ddmFormInstanceReportDataJSONObject.getJSONObject(fieldName);
+
+			if (fieldJSONObject == null) {
+				fieldJSONObject = JSONUtil.put(
+					"type", ddmFormFieldValue.getType()
+				).put(
+					"values", JSONFactoryUtil.createJSONObject()
+				);
+			}
+
+			JSONObject processedFieldJSONObject =
+				ddmFormFieldTypeReportProcessor.process(
+					ddmFormFieldValue,
+					JSONFactoryUtil.createJSONObject(
+						fieldJSONObject.toJSONString()),
+					ddmFormInstanceRecordVersion.getFormInstanceRecordId(),
+					ddmFormInstanceReportEvent);
+
+			ddmFormInstanceReportDataJSONObject.put(
+				fieldName, processedFieldJSONObject);
 		}
 	}
 

@@ -98,10 +98,10 @@ public class SynonymsDisplayContextTest {
 
 		SynonymsDisplayBuilder synonymsDisplayBuilder =
 			new SynonymsDisplayBuilder(
-				_documentToSynonymSetTranslator, _httpServletRequest,
-				_indexNameBuilder, _language, _portal, _queries, _renderRequest,
-				_renderResponse, _searchEngineAdapter, _searchEngineInformation,
-				_sorts, _synonymSetIndexNameBuilder);
+				_documentToSynonymSetTranslator, _httpServletRequest, _language,
+				_portal, _queries, _renderRequest, _renderResponse,
+				_searchEngineAdapter, _searchEngineInformation, _sorts,
+				_synonymSetIndexNameBuilder);
 
 		SynonymsDisplayContext synonymsDisplayContext =
 			synonymsDisplayBuilder.build();
@@ -115,10 +115,10 @@ public class SynonymsDisplayContextTest {
 
 		SynonymsDisplayBuilder synonymsDisplayBuilder =
 			new SynonymsDisplayBuilder(
-				_documentToSynonymSetTranslator, _httpServletRequest,
-				_indexNameBuilder, _language, _portal, _queries, _renderRequest,
-				_renderResponse, _searchEngineAdapter, _searchEngineInformation,
-				_sorts, _synonymSetIndexNameBuilder);
+				_documentToSynonymSetTranslator, _httpServletRequest, _language,
+				_portal, _queries, _renderRequest, _renderResponse,
+				_searchEngineAdapter, _searchEngineInformation, _sorts,
+				_synonymSetIndexNameBuilder);
 
 		SynonymsDisplayContext synonymsDisplayContext =
 			synonymsDisplayBuilder.build();

@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.translation.service.TranslationEntryLocalService;
+import com.liferay.translation.service.TranslationEntryService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +82,7 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				actionRequest);
 
-			_translationEntryLocalService.addOrUpdateTranslationEntry(
+			_translationEntryService.addOrUpdateTranslationEntry(
 				article.getGroupId(), _getTargetLanguageId(actionRequest),
 				infoItemReference, infoItemFieldValues, serviceContext);
 		}
@@ -152,6 +152,6 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 		_journalArticleInfoItemFieldValuesUpdater;
 
 	@Reference
-	private TranslationEntryLocalService _translationEntryLocalService;
+	private TranslationEntryService _translationEntryService;
 
 }

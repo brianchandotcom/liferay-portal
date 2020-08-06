@@ -491,24 +491,56 @@ definition {
 			timerDescription = "Timer Description",
 			timerName = "Timer Name");
 
+		KaleoDesigner.editSourceXML(
+			kdSourceXML = " ",
+			line = "12");
+
+		KaleoDesigner.editSourceXML(
+			kdSourceXML = " ",
+			line = "12");
+
+		KaleoDesigner.editSourceXML(
+			kdSourceXML = " ",
+			line = "12");
+
+		KaleoDesigner.editSourceXML(
+			kdSourceXML = " ",
+			line = "12");
+
+		KaleoDesigner.editSourceXML(
+			kdSourceXML = " ",
+			line = "12");
+
+		KaleoDesigner.editSourceXML(
+			kdSourceXML = " ",
+			line = "12");
+
+		KaleoDesigner.editSourceXML(
+			kdSourceXML = " ",
+			line = "12");
+
+		KaleoDesigner.editSourceXML(
+			kdSourceXML = " ",
+			line = "12");
+
+		KaleoDesigner.editSourceXML(
+			kdSourceXML = " ",
+			line = "12");
+
+		KaleoDesigner.editSourceXML(
+			kdSourceXML = " ",
+			line = "12");
+
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<name>Timer Name</name>''',
-			line = "13");
-
-		KaleoDesigner.viewSourceXMLLine(
-			kdSourceXML = '''<description>Timer Description</description>''',
-			line = "14");
-
-		KaleoDesigner.viewSourceXMLLine(
-			kdSourceXML = '''<duration>5</duration>''',
-			line = "16");
-
-		KaleoDesigner.viewSourceXMLLine(
-			kdSourceXML = '''<scale>hour</scale>''',
 			line = "17");
 
 		KaleoDesigner.viewSourceXMLLine(
-			kdSourceXML = '''<duration>6</duration>''',
+			kdSourceXML = '''<description>Timer Description</description>''',
+			line = "18");
+
+		KaleoDesigner.viewSourceXMLLine(
+			kdSourceXML = '''<duration>5</duration>''',
 			line = "20");
 
 		KaleoDesigner.viewSourceXMLLine(
@@ -516,28 +548,36 @@ definition {
 			line = "21");
 
 		KaleoDesigner.viewSourceXMLLine(
-			kdSourceXML = '''<blocking>true</blocking>''',
-			line = "23");
+			kdSourceXML = '''<duration>6</duration>''',
+			line = "24");
 
 		KaleoDesigner.viewSourceXMLLine(
-			kdSourceXML = '''<timer-action>''',
+			kdSourceXML = '''<scale>hour</scale>''',
 			line = "25");
 
 		KaleoDesigner.viewSourceXMLLine(
-			kdSourceXML = '''<name>Blocker Name</name>''',
-			line = "26");
-
-		KaleoDesigner.viewSourceXMLLine(
-			kdSourceXML = '''<description>Blocker Description</description>''',
+			kdSourceXML = '''<blocking>true</blocking>''',
 			line = "27");
 
 		KaleoDesigner.viewSourceXMLLine(
-			kdSourceXML = '''<script><![CDATA[Test Script]]></script>''',
-			line = "28");
+			kdSourceXML = '''<timer-action>''',
+			line = "29");
+
+		KaleoDesigner.viewSourceXMLLine(
+			kdSourceXML = '''<name>Blocker Name</name>''',
+			line = "30");
+
+		KaleoDesigner.viewSourceXMLLine(
+			kdSourceXML = '''<description>Blocker Description</description>''',
+			line = "31");
+
+		KaleoDesigner.viewSourceXMLLine(
+			kdSourceXML = '''<![CDATA[Test Script]]>''',
+			line = "33");
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<script-language>groovy</script-language>''',
-			line = "29");
+			line = "35");
 	}
 
 	@priority = "5"
@@ -685,9 +725,65 @@ definition {
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
+		KaleoDesigner.editSourceXML(
+			kdSourceXML = " ",
+			line = "11");
+
+		KaleoDesigner.editSourceXML(
+			kdSourceXML = " ",
+			line = "11");
+
+		KaleoDesigner.editSourceXML(
+			kdSourceXML = " ",
+			line = "11");
+
+		KaleoDesigner.editSourceXML(
+			kdSourceXML = " ",
+			line = "11");
+
+		KaleoDesigner.editSourceXML(
+			kdSourceXML = " ",
+			line = "11");
+
+		KaleoDesigner.editSourceXML(
+			kdSourceXML = " ",
+			line = "11");
+
+		KaleoDesigner.editSourceXML(
+			kdSourceXML = " ",
+			line = "11");
+
+		KaleoDesigner.editSourceXML(
+			kdSourceXML = " ",
+			line = "11");
+
+		KaleoDesigner.editSourceXML(
+			kdSourceXML = " ",
+			line = "11");
+
+		KaleoDesigner.editSourceXML(
+			kdSourceXML = " ",
+			line = "11");
+
+		KaleoDesigner.editSourceXML(
+			kdSourceXML = " ",
+			line = "26");
+
+		KaleoDesigner.editSourceXML(
+			kdSourceXML = " ",
+			line = "26");
+
+		KaleoDesigner.editSourceXML(
+			kdSourceXML = " ",
+			line = "26");
+
+		KaleoDesigner.editSourceXML(
+			kdSourceXML = " ",
+			line = "26");
+
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<script-language>groovy</script-language>''',
-			line = "24");
+			line = "36");
 
 		PortletEntry.publish();
 	}
@@ -706,7 +802,7 @@ definition {
 
 		KaleoDesigner.editSourceXML(
 			kdSourceXML = '''<name>NAME EDIT''',
-			line = "3");
+			line = "8");
 
 		PortletEntry.publish();
 
@@ -723,7 +819,7 @@ definition {
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<name>NAME EDIT</name>''',
-			line = "3");
+			line = "8");
 	}
 
 	@priority = "3"
@@ -1266,7 +1362,6 @@ definition {
 	@description = "This is a use case for LPS-48590."
 	@priority = "4"
 	test ViewSourceXMLNotErasedWhenInvalid {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Kaleodesigner#ViewSourceXMLNotErasedWhenInvalid";
 
 		ApplicationsMenu.gotoPortlet(
@@ -1278,17 +1373,15 @@ definition {
 
 		KaleoDesigner.editSourceXML(
 			kdSourceXML = " ",
-			line = "14");
+			line = "22");
 
 		takeScreenshot();
 
 		KaleoDesigner.viewViewTab();
 
-		KaleoDesigner.viewNodeNotPresent(nodeNodeLabel = "EndNode");
-
 		KaleoDesigner.editSourceXML(
-			kdSourceXML = '''</transitions>''',
-			line = "14");
+			kdSourceXML = '''<transitions>''',
+			line = "22");
 
 		takeScreenshot();
 

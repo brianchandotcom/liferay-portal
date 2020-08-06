@@ -718,12 +718,6 @@ definition {
 		}
 
 		Pause(locator1 = "1000");
-
-		AssertClick(
-			locator1 = "KaleoDesignerEditWorkflow#DIAGRAM_TAB",
-			value1 = "Diagram");
-
-		Pause(locator1 = "1000");
 	}
 
 	macro viewSourceXMLTab {

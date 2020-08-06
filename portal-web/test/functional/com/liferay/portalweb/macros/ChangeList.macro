@@ -147,7 +147,7 @@ definition {
 			value1 = "Revert &quot;${publicationName}&quot;");
 	}
 
-	macro searchCP {
+	macro search {
 		Search.searchCP(searchTerm = "${publicationName}");
 
 		key_publicationName = "${publicationName}";

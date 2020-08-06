@@ -421,7 +421,7 @@ AUI.add(
 		var SessionDisplay = A.Component.create({
 			ATTRS: {
 				openToast: {
-					validator: Lang.isFunction
+					validator: Lang.isFunction,
 				},
 				pageTitle: {
 					value: DOC.title,
@@ -521,15 +521,11 @@ AUI.add(
 				_destroyBanner() {
 					var instance = this;
 
-					instance._banner = false;
-
-					var notificationContainer = A.one(
-						'.lfr-notification-container'
-					);
-
-					if (notificationContainer) {
-						notificationContainer.remove();
+					if (Lang.isFunction(instance._banner.destroy)) {
+						instance._banner.destroy();
 					}
+
+					instance._banner = false;
 				},
 
 				_formatNumber(value) {
@@ -569,53 +565,57 @@ AUI.add(
 					var banner = instance._banner;
 
 					if (!banner) {
-						banner = new Liferay.Notification({
-							closeable: true,
-							delay: {
-								hide: 0,
-								show: 0,
-							},
-							duration: 500,
-							message: instance._warningText,
-							on: {
-								click(event) {
-									if (
-										event.domEvent.target.test(
-											'.alert-link'
-										)
-									) {
-										event.domEvent.preventDefault();
-										instance._host.extend();
-									}
-									else if (
-										event.domEvent.target.test('.close')
-									) {
-										instance._destroyBanner();
-										instance._alertClosed = true;
-									}
-								},
-								focus(event) {
-									if (instance._alert) {
-										var notificationContainer = A.one(
-											'.lfr-notification-container'
-										);
+						var openToast = instance.get('openToast');
+						var toastId = 'sessionToast';
 
-										if (
-											!notificationContainer.contains(
-												event.domEvent.relatedTarget
-											)
-										) {
-											instance._alert.setAttribute(
-												'role',
-												'alert'
-											);
-										}
-									}
-								},
+						var toastDefaultConfig = {
+							onClick({event}) {
+								if (
+									event.target.classList.contains(
+										'alert-link'
+									)
+								) {
+									instance._host.extend();
+								}
 							},
-							title: Liferay.Language.get('warning'),
+							onClose({event}) {
+								event.preventDefault();
+
+								A.one(`#${toastId}`).toggleClass('hide', true);
+							},
+							renderData: {
+								componentId: toastId,
+							},
+							toastProps: {
+								autoClose: false,
+								id: toastId,
+								role: 'alert',
+							},
+						};
+
+						openToast({
+							message: instance._warningText,
 							type: 'warning',
-						}).render('body');
+							...toastDefaultConfig,
+						});
+
+						var toastComponent = Liferay.component(toastId);
+
+						banner = {
+							one: A.one(`#${toastId}`).one,
+							setAttrs(attrs) {
+								toastComponent.destroy();
+
+								openToast({
+									...attrs,
+									...toastDefaultConfig,
+								});
+							},
+							show() {
+								A.one(`#${toastId}`).toggleClass('hide', false);
+							},
+							...toastComponent,
+						};
 
 						instance._banner = banner;
 					}
@@ -721,7 +721,7 @@ AUI.add(
 							[
 								'<span class="countdown-timer">{0}</span>',
 								host.get('sessionLength') / 60000,
-								'<a class="alert-link" href="#">' +
+								'<a class="alert-link" href="javascript:;">' +
 									Liferay.Language.get('extend') +
 									'</a>',
 							]
@@ -759,7 +759,6 @@ AUI.add(
 			'aui-component',
 			'aui-timer',
 			'cookie',
-			'liferay-notification',
 			'plugin',
 		],
 	}

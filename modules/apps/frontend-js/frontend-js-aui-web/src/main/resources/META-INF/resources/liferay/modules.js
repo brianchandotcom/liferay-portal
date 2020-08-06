@@ -521,7 +521,6 @@
 							'aui-component',
 							'aui-timer',
 							'cookie',
-							'liferay-notice',
 							'plugin',
 						],
 					},

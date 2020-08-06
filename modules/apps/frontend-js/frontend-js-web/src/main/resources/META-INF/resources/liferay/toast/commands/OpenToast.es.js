@@ -115,11 +115,13 @@ function openToast({
 			onClose({event});
 		}
 
-		if (!container || !containerId) {
-			rootElement.parentNode.removeChild(rootElement);
-		}
+		if (!event || !event.defaultPrevented) {
+			if (!container || !containerId) {
+				rootElement.parentNode.removeChild(rootElement);
+			}
 
-		unmountComponentAtNode(rootElement);
+			unmountComponentAtNode(rootElement);
+		}
 	};
 
 	render(

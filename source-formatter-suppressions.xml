@@ -147,6 +147,7 @@
 		<!-- Temporary suppressions for frontend build setup (Chema) -->
 
 		<suppress checks="JSONPackageJSONCheck" files="modules/apps/analytics/analytics-client-js/package\.json" />
+		<suppress checks="JSONPackageJSONCheck" files="modules/apps/remote-app/remote-app-client-js/package\.json" />
 
 		<!-- Temporary suppressions for frontend React setup (LPS-99901, wincent) -->
 

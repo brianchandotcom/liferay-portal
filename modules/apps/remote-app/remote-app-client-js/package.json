@@ -1,0 +1,29 @@
+{
+	"devDependencies": {
+		"@babel/preset-typescript": "7.10.4",
+		"@types/jest": "26.0.9",
+		"ts-loader": "8.0.2",
+		"typescript": "3.9.7"
+	},
+	"jest": {
+		"setupFilesAfterEnv": [
+			"<rootDir>/test/setup.js"
+		],
+		"testMatch": [
+			"**/test/**/*.ts"
+		],
+		"testPathIgnorePatterns": [
+			"<rootDir>/test/setup.js"
+		]
+	},
+	"main": "js/index.js",
+	"name": "remote-app-client-js",
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix",
+		"test": "liferay-npm-scripts test",
+		"watch": "liferay-npm-scripts webpack --watch"
+	},
+	"version": "1.0.0"
+}

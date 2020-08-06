@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Remote App Client JS
+Bundle-SymbolicName: com.liferay.remote.app.client.js
+Bundle-Version: 1.0.0
+Liferay-JS-Resources-Top-Head: /remote-app-client-js.js
+Web-ContextPath: /remote-app-client-js

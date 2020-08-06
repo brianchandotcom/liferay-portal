@@ -214,6 +214,69 @@ definition {
 			privacy = "Public Pages");
 	}
 
+	@description = "This is use case for LPS-107776. Only can add specific type collection items in a collection page based on manual collection with single item type."
+	@priority = "4"
+	test AddSingleTypeCollectionItemsInCollectionPageBasedOnManualCollectionWithSingleItemType {
+		task ("Add a manual collection with Web Content Article item type") {
+			JSONAssetlist.addManualAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Manual Collection");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			Click(
+				key_title = "Manual Collection",
+				locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(itemType = "Web Content Article");
+		}
+
+		task ("Add a collection page based on maual collection") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPublicCollectionPage(
+				collectionName = "Manual Collection",
+				pageName = "Test Collection Page Name",
+				tabName = "Collections");
+		}
+
+		task ("Assert there is no collection items shown in Collection Display") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "Title",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#VIEW_COLLECTION_ITEMS_BUTTON",
+				value1 = "(0 Items)");
+		}
+
+		task ("Add a web content article based on Basic Web Content in collection page") {
+			ContentPages.addCollectionItemInCollectionPage(title = "New Basic Web Content");
+
+			WebContent.addCP(
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("Assert the web content article is shown in Collection Display") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "Web Content Title",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#VIEW_COLLECTION_ITEMS_BUTTON",
+				value1 = "(1 Items)");
+		}
+	}
+
 	@description = "This is for LPS-110108. Management Toolbar shows count of selected items and all visible items are selected after checking the Select All checkbox."
 	@priority = "5"
 	test CheckAndViewCountViaManagementToolbar {

@@ -63,9 +63,9 @@ definition {
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
 		WebContent.editCP(
-			webContentContentEdit = "WC WebContent Content Edit",
+			webContentContentEdit = "WC WebContent Content 1 Edit",
 			webContentTitle = "WC WebContent Title",
-			webContentTitleEdit = "WC WebContent Title Edit");
+			webContentTitleEdit = "WC WebContent Title");
 
 		ChangeList.createNewPublication(publicationName = "Publication 2 Name");
 
@@ -80,7 +80,7 @@ definition {
 		WebContent.editCP(
 			webContentContentEdit = "WC WebContent Content 2 Edit",
 			webContentTitle = "WC WebContent Title",
-			webContentTitleEdit = "WC WebContent Title 2 Edit");
+			webContentTitleEdit = "WC WebContent Title");
 
 		ChangeList.prepareToPublish(publicationName = "Publication 2 Name");
 
@@ -92,15 +92,21 @@ definition {
 			gotoManagePublications = "true",
 			publicationName = "Publication Name");
 
-		// Workaround LPS-115599
+		ChangeList.viewAutomaticallyResolved(
+			entryTitle = "Test Test added a Web Content Article",
+			successMessage= "The article version was updated to latest.");
 
-		/*AssertElementNotPresent(locator1 = "ChangeList#NEEDS_MANUAL_RESOLUTION_TABLE");
+		ChangeList.viewAutomaticallyResolved(
+			entryTitle = "Test Test modified a Asset",
+			successMessage= "The conflict was automatically resolved.");
+
+		AssertElementNotPresent(locator1 = "ChangeList#NEEDS_MANUAL_RESOLUTION_TABLE");
 
 		AssertElementNotPresent(
 			key_warningMessage = "The conflict cannot be automatically resolved.",
 			locator1 = "Message#WARNING_SPECIFIC");
 
-		ChangeList.publishPublication(publicationName = "Publication Name");*/
+		ChangeList.publishPublication(publicationName = "Publication Name");
 	}
 
 	@priority = "4"

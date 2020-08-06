@@ -37,6 +37,10 @@
 			font-size: 32px;
 			font-weight: 300;
 			padding: $baseline * 5 0 0 0;
+
+			p {
+				font-weight: 400;
+			}
 		}
 	}
 
@@ -67,6 +71,10 @@
 	.form-builder-page-header-description.form-control,
 	.lfr-ddm-form-page-description {
 		font-size: 14px;
+	}
+
+	.form-builder-page-header-title {
+		font-weight: 600;
 	}
 
 	.form-feedback-item {

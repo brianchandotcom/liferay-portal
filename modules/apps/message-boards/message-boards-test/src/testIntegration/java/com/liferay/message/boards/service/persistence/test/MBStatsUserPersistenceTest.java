@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -441,17 +442,59 @@ public class MBStatsUserPersistenceTest {
 
 		_persistence.clearCache();
 
-		MBStatsUser existingMBStatsUser = _persistence.findByPrimaryKey(
-			newMBStatsUser.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newMBStatsUser.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		MBStatsUser newMBStatsUser = addMBStatsUser();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			MBStatsUser.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"statsUserId", newMBStatsUser.getStatsUserId()));
+
+		List<MBStatsUser> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(MBStatsUser mbStatsUser) {
 		Assert.assertEquals(
-			Long.valueOf(existingMBStatsUser.getGroupId()),
+			Long.valueOf(mbStatsUser.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingMBStatsUser, "getOriginalGroupId", new Class<?>[0]));
+				mbStatsUser, "getOriginalGroupId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingMBStatsUser.getUserId()),
+			Long.valueOf(mbStatsUser.getUserId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingMBStatsUser, "getOriginalUserId", new Class<?>[0]));
+				mbStatsUser, "getOriginalUserId", new Class<?>[0]));
 	}
 
 	protected MBStatsUser addMBStatsUser() throws Exception {

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -517,20 +518,62 @@ public class DDMTemplateVersionPersistenceTest {
 
 		_persistence.clearCache();
 
-		DDMTemplateVersion existingDDMTemplateVersion =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newDDMTemplateVersion.getPrimaryKey());
+				newDDMTemplateVersion.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		DDMTemplateVersion newDDMTemplateVersion = addDDMTemplateVersion();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			DDMTemplateVersion.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"templateVersionId",
+				newDDMTemplateVersion.getTemplateVersionId()));
+
+		List<DDMTemplateVersion> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(DDMTemplateVersion ddmTemplateVersion) {
 		Assert.assertEquals(
-			Long.valueOf(existingDDMTemplateVersion.getTemplateId()),
+			Long.valueOf(ddmTemplateVersion.getTemplateId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingDDMTemplateVersion, "getOriginalTemplateId",
-				new Class<?>[0]));
+				ddmTemplateVersion, "getOriginalTemplateId", new Class<?>[0]));
 		Assert.assertTrue(
 			Objects.equals(
-				existingDDMTemplateVersion.getVersion(),
+				ddmTemplateVersion.getVersion(),
 				ReflectionTestUtil.invoke(
-					existingDDMTemplateVersion, "getOriginalVersion",
+					ddmTemplateVersion, "getOriginalVersion",
 					new Class<?>[0])));
 	}
 

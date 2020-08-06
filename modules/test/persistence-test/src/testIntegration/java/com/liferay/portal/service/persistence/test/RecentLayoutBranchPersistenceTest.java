@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchRecentLayoutBranchException;
 import com.liferay.portal.kernel.model.RecentLayoutBranch;
 import com.liferay.portal.kernel.service.RecentLayoutBranchLocalServiceUtil;
@@ -458,25 +459,66 @@ public class RecentLayoutBranchPersistenceTest {
 
 		_persistence.clearCache();
 
-		RecentLayoutBranch existingRecentLayoutBranch =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newRecentLayoutBranch.getPrimaryKey());
+				newRecentLayoutBranch.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		RecentLayoutBranch newRecentLayoutBranch = addRecentLayoutBranch();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			RecentLayoutBranch.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"recentLayoutBranchId",
+				newRecentLayoutBranch.getRecentLayoutBranchId()));
+
+		List<RecentLayoutBranch> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(RecentLayoutBranch recentLayoutBranch) {
 		Assert.assertEquals(
-			Long.valueOf(existingRecentLayoutBranch.getUserId()),
+			Long.valueOf(recentLayoutBranch.getUserId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingRecentLayoutBranch, "getOriginalUserId",
+				recentLayoutBranch, "getOriginalUserId", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(recentLayoutBranch.getLayoutSetBranchId()),
+			ReflectionTestUtil.<Long>invoke(
+				recentLayoutBranch, "getOriginalLayoutSetBranchId",
 				new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingRecentLayoutBranch.getLayoutSetBranchId()),
+			Long.valueOf(recentLayoutBranch.getPlid()),
 			ReflectionTestUtil.<Long>invoke(
-				existingRecentLayoutBranch, "getOriginalLayoutSetBranchId",
-				new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingRecentLayoutBranch.getPlid()),
-			ReflectionTestUtil.<Long>invoke(
-				existingRecentLayoutBranch, "getOriginalPlid",
-				new Class<?>[0]));
+				recentLayoutBranch, "getOriginalPlid", new Class<?>[0]));
 	}
 
 	protected RecentLayoutBranch addRecentLayoutBranch() throws Exception {

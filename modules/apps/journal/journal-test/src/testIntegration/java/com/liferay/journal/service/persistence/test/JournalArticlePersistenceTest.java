@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -943,50 +944,88 @@ public class JournalArticlePersistenceTest {
 
 		_persistence.clearCache();
 
-		JournalArticle existingJournalArticle = _persistence.findByPrimaryKey(
-			newJournalArticle.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newJournalArticle.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		JournalArticle newJournalArticle = addJournalArticle();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			JournalArticle.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("id", newJournalArticle.getId()));
+
+		List<JournalArticle> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(JournalArticle journalArticle) {
 		Assert.assertTrue(
 			Objects.equals(
-				existingJournalArticle.getUuid(),
+				journalArticle.getUuid(),
 				ReflectionTestUtil.invoke(
-					existingJournalArticle, "getOriginalUuid",
-					new Class<?>[0])));
+					journalArticle, "getOriginalUuid", new Class<?>[0])));
 		Assert.assertEquals(
-			Long.valueOf(existingJournalArticle.getGroupId()),
+			Long.valueOf(journalArticle.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingJournalArticle, "getOriginalGroupId", new Class<?>[0]));
+				journalArticle, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingJournalArticle.getGroupId()),
+			Long.valueOf(journalArticle.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingJournalArticle, "getOriginalGroupId", new Class<?>[0]));
+				journalArticle, "getOriginalGroupId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingJournalArticle.getClassNameId()),
+			Long.valueOf(journalArticle.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingJournalArticle, "getOriginalClassNameId",
-				new Class<?>[0]));
+				journalArticle, "getOriginalClassNameId", new Class<?>[0]));
 		Assert.assertTrue(
 			Objects.equals(
-				existingJournalArticle.getDDMStructureKey(),
+				journalArticle.getDDMStructureKey(),
 				ReflectionTestUtil.invoke(
-					existingJournalArticle, "getOriginalDDMStructureKey",
+					journalArticle, "getOriginalDDMStructureKey",
 					new Class<?>[0])));
 
 		Assert.assertEquals(
-			Long.valueOf(existingJournalArticle.getGroupId()),
+			Long.valueOf(journalArticle.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingJournalArticle, "getOriginalGroupId", new Class<?>[0]));
+				journalArticle, "getOriginalGroupId", new Class<?>[0]));
 		Assert.assertTrue(
 			Objects.equals(
-				existingJournalArticle.getArticleId(),
+				journalArticle.getArticleId(),
 				ReflectionTestUtil.invoke(
-					existingJournalArticle, "getOriginalArticleId",
-					new Class<?>[0])));
+					journalArticle, "getOriginalArticleId", new Class<?>[0])));
 		AssertUtils.assertEquals(
-			existingJournalArticle.getVersion(),
+			journalArticle.getVersion(),
 			ReflectionTestUtil.<Double>invoke(
-				existingJournalArticle, "getOriginalVersion", new Class<?>[0]));
+				journalArticle, "getOriginalVersion", new Class<?>[0]));
 	}
 
 	protected JournalArticle addJournalArticle() throws Exception {

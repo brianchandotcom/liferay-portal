@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -757,29 +758,69 @@ public class BlogsEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		BlogsEntry existingBlogsEntry = _persistence.findByPrimaryKey(
-			newBlogsEntry.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newBlogsEntry.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		BlogsEntry newBlogsEntry = addBlogsEntry();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			BlogsEntry.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("entryId", newBlogsEntry.getEntryId()));
+
+		List<BlogsEntry> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(BlogsEntry blogsEntry) {
 		Assert.assertTrue(
 			Objects.equals(
-				existingBlogsEntry.getUuid(),
+				blogsEntry.getUuid(),
 				ReflectionTestUtil.invoke(
-					existingBlogsEntry, "getOriginalUuid", new Class<?>[0])));
+					blogsEntry, "getOriginalUuid", new Class<?>[0])));
 		Assert.assertEquals(
-			Long.valueOf(existingBlogsEntry.getGroupId()),
+			Long.valueOf(blogsEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingBlogsEntry, "getOriginalGroupId", new Class<?>[0]));
+				blogsEntry, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingBlogsEntry.getGroupId()),
+			Long.valueOf(blogsEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingBlogsEntry, "getOriginalGroupId", new Class<?>[0]));
+				blogsEntry, "getOriginalGroupId", new Class<?>[0]));
 		Assert.assertTrue(
 			Objects.equals(
-				existingBlogsEntry.getUrlTitle(),
+				blogsEntry.getUrlTitle(),
 				ReflectionTestUtil.invoke(
-					existingBlogsEntry, "getOriginalUrlTitle",
-					new Class<?>[0])));
+					blogsEntry, "getOriginalUrlTitle", new Class<?>[0])));
 	}
 
 	protected BlogsEntry addBlogsEntry() throws Exception {

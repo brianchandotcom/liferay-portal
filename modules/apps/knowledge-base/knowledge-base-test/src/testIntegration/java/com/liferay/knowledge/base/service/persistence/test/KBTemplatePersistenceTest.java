@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -468,18 +469,60 @@ public class KBTemplatePersistenceTest {
 
 		_persistence.clearCache();
 
-		KBTemplate existingKBTemplate = _persistence.findByPrimaryKey(
-			newKBTemplate.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newKBTemplate.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		KBTemplate newKBTemplate = addKBTemplate();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			KBTemplate.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"kbTemplateId", newKBTemplate.getKbTemplateId()));
+
+		List<KBTemplate> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(KBTemplate kbTemplate) {
 		Assert.assertTrue(
 			Objects.equals(
-				existingKBTemplate.getUuid(),
+				kbTemplate.getUuid(),
 				ReflectionTestUtil.invoke(
-					existingKBTemplate, "getOriginalUuid", new Class<?>[0])));
+					kbTemplate, "getOriginalUuid", new Class<?>[0])));
 		Assert.assertEquals(
-			Long.valueOf(existingKBTemplate.getGroupId()),
+			Long.valueOf(kbTemplate.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingKBTemplate, "getOriginalGroupId", new Class<?>[0]));
+				kbTemplate, "getOriginalGroupId", new Class<?>[0]));
 	}
 
 	protected KBTemplate addKBTemplate() throws Exception {

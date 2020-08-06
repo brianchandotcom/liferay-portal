@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -463,36 +464,74 @@ public class ReadingTimeEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		ReadingTimeEntry existingReadingTimeEntry =
-			_persistence.findByPrimaryKey(newReadingTimeEntry.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newReadingTimeEntry.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		ReadingTimeEntry newReadingTimeEntry = addReadingTimeEntry();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			ReadingTimeEntry.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"readingTimeEntryId",
+				newReadingTimeEntry.getReadingTimeEntryId()));
+
+		List<ReadingTimeEntry> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(ReadingTimeEntry readingTimeEntry) {
 		Assert.assertTrue(
 			Objects.equals(
-				existingReadingTimeEntry.getUuid(),
+				readingTimeEntry.getUuid(),
 				ReflectionTestUtil.invoke(
-					existingReadingTimeEntry, "getOriginalUuid",
-					new Class<?>[0])));
+					readingTimeEntry, "getOriginalUuid", new Class<?>[0])));
 		Assert.assertEquals(
-			Long.valueOf(existingReadingTimeEntry.getGroupId()),
+			Long.valueOf(readingTimeEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingReadingTimeEntry, "getOriginalGroupId",
-				new Class<?>[0]));
+				readingTimeEntry, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingReadingTimeEntry.getGroupId()),
+			Long.valueOf(readingTimeEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingReadingTimeEntry, "getOriginalGroupId",
-				new Class<?>[0]));
+				readingTimeEntry, "getOriginalGroupId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingReadingTimeEntry.getClassNameId()),
+			Long.valueOf(readingTimeEntry.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingReadingTimeEntry, "getOriginalClassNameId",
-				new Class<?>[0]));
+				readingTimeEntry, "getOriginalClassNameId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingReadingTimeEntry.getClassPK()),
+			Long.valueOf(readingTimeEntry.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				existingReadingTimeEntry, "getOriginalClassPK",
-				new Class<?>[0]));
+				readingTimeEntry, "getOriginalClassPK", new Class<?>[0]));
 	}
 
 	protected ReadingTimeEntry addReadingTimeEntry() throws Exception {

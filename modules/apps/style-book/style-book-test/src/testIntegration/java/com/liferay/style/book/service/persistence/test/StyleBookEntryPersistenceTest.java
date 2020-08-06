@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -527,24 +528,66 @@ public class StyleBookEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		StyleBookEntry existingStyleBookEntry = _persistence.findByPrimaryKey(
-			newStyleBookEntry.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newStyleBookEntry.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		StyleBookEntry newStyleBookEntry = addStyleBookEntry();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			StyleBookEntry.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"styleBookEntryId", newStyleBookEntry.getStyleBookEntryId()));
+
+		List<StyleBookEntry> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(StyleBookEntry styleBookEntry) {
 		Assert.assertEquals(
-			Long.valueOf(existingStyleBookEntry.getGroupId()),
+			Long.valueOf(styleBookEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingStyleBookEntry, "getOriginalGroupId", new Class<?>[0]));
+				styleBookEntry, "getOriginalGroupId", new Class<?>[0]));
 		Assert.assertTrue(
 			Objects.equals(
-				existingStyleBookEntry.getStyleBookEntryKey(),
+				styleBookEntry.getStyleBookEntryKey(),
 				ReflectionTestUtil.invoke(
-					existingStyleBookEntry, "getOriginalStyleBookEntryKey",
+					styleBookEntry, "getOriginalStyleBookEntryKey",
 					new Class<?>[0])));
 
 		Assert.assertEquals(
-			Long.valueOf(existingStyleBookEntry.getHeadId()),
+			Long.valueOf(styleBookEntry.getHeadId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingStyleBookEntry, "getOriginalHeadId", new Class<?>[0]));
+				styleBookEntry, "getOriginalHeadId", new Class<?>[0]));
 	}
 
 	protected StyleBookEntry addStyleBookEntry() throws Exception {

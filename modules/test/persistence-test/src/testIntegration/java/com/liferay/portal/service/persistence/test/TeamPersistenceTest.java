@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchTeamException;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
@@ -461,28 +462,68 @@ public class TeamPersistenceTest {
 
 		_persistence.clearCache();
 
-		Team existingTeam = _persistence.findByPrimaryKey(
-			newTeam.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newTeam.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		Team newTeam = addTeam();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Team.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("teamId", newTeam.getTeamId()));
+
+		List<Team> result = _persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(Team team) {
 		Assert.assertTrue(
 			Objects.equals(
-				existingTeam.getUuid(),
+				team.getUuid(),
 				ReflectionTestUtil.invoke(
-					existingTeam, "getOriginalUuid", new Class<?>[0])));
+					team, "getOriginalUuid", new Class<?>[0])));
 		Assert.assertEquals(
-			Long.valueOf(existingTeam.getGroupId()),
+			Long.valueOf(team.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingTeam, "getOriginalGroupId", new Class<?>[0]));
+				team, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingTeam.getGroupId()),
+			Long.valueOf(team.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingTeam, "getOriginalGroupId", new Class<?>[0]));
+				team, "getOriginalGroupId", new Class<?>[0]));
 		Assert.assertTrue(
 			Objects.equals(
-				existingTeam.getName(),
+				team.getName(),
 				ReflectionTestUtil.invoke(
-					existingTeam, "getOriginalName", new Class<?>[0])));
+					team, "getOriginalName", new Class<?>[0])));
 	}
 
 	protected Team addTeam() throws Exception {

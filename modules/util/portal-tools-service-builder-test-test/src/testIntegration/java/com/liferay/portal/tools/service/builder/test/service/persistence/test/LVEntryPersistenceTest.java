@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -517,34 +518,73 @@ public class LVEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		LVEntry existingLVEntry = _persistence.findByPrimaryKey(
-			newLVEntry.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newLVEntry.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		LVEntry newLVEntry = addLVEntry();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			LVEntry.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("lvEntryId", newLVEntry.getLvEntryId()));
+
+		List<LVEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(LVEntry lvEntry) {
 		Assert.assertTrue(
 			Objects.equals(
-				existingLVEntry.getUuid(),
+				lvEntry.getUuid(),
 				ReflectionTestUtil.invoke(
-					existingLVEntry, "getOriginalUuid", new Class<?>[0])));
+					lvEntry, "getOriginalUuid", new Class<?>[0])));
 		Assert.assertEquals(
-			Long.valueOf(existingLVEntry.getGroupId()),
+			Long.valueOf(lvEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingLVEntry, "getOriginalGroupId", new Class<?>[0]));
+				lvEntry, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingLVEntry.getGroupId()),
+			Long.valueOf(lvEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingLVEntry, "getOriginalGroupId", new Class<?>[0]));
+				lvEntry, "getOriginalGroupId", new Class<?>[0]));
 		Assert.assertTrue(
 			Objects.equals(
-				existingLVEntry.getUniqueGroupKey(),
+				lvEntry.getUniqueGroupKey(),
 				ReflectionTestUtil.invoke(
-					existingLVEntry, "getOriginalUniqueGroupKey",
-					new Class<?>[0])));
+					lvEntry, "getOriginalUniqueGroupKey", new Class<?>[0])));
 
 		Assert.assertEquals(
-			Long.valueOf(existingLVEntry.getHeadId()),
+			Long.valueOf(lvEntry.getHeadId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingLVEntry, "getOriginalHeadId", new Class<?>[0]));
+				lvEntry, "getOriginalHeadId", new Class<?>[0]));
 	}
 
 	protected LVEntry addLVEntry() throws Exception {

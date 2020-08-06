@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchClassNameException;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
@@ -392,14 +393,56 @@ public class ClassNamePersistenceTest {
 
 		_persistence.clearCache();
 
-		ClassName existingClassName = _persistence.findByPrimaryKey(
-			newClassName.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newClassName.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		ClassName newClassName = addClassName();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			ClassName.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"classNameId", newClassName.getClassNameId()));
+
+		List<ClassName> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(ClassName className) {
 		Assert.assertTrue(
 			Objects.equals(
-				existingClassName.getValue(),
+				className.getValue(),
 				ReflectionTestUtil.invoke(
-					existingClassName, "getOriginalValue", new Class<?>[0])));
+					className, "getOriginalValue", new Class<?>[0])));
 	}
 
 	protected ClassName addClassName() throws Exception {

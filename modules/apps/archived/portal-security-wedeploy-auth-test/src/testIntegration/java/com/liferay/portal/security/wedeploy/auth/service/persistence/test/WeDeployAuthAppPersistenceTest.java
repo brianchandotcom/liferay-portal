@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -449,33 +450,74 @@ public class WeDeployAuthAppPersistenceTest {
 
 		_persistence.clearCache();
 
-		WeDeployAuthApp existingWeDeployAuthApp = _persistence.findByPrimaryKey(
-			newWeDeployAuthApp.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newWeDeployAuthApp.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		WeDeployAuthApp newWeDeployAuthApp = addWeDeployAuthApp();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			WeDeployAuthApp.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"weDeployAuthAppId",
+				newWeDeployAuthApp.getWeDeployAuthAppId()));
+
+		List<WeDeployAuthApp> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(WeDeployAuthApp weDeployAuthApp) {
+		Assert.assertTrue(
+			Objects.equals(
+				weDeployAuthApp.getRedirectURI(),
+				ReflectionTestUtil.invoke(
+					weDeployAuthApp, "getOriginalRedirectURI",
+					new Class<?>[0])));
+		Assert.assertTrue(
+			Objects.equals(
+				weDeployAuthApp.getClientId(),
+				ReflectionTestUtil.invoke(
+					weDeployAuthApp, "getOriginalClientId", new Class<?>[0])));
 
 		Assert.assertTrue(
 			Objects.equals(
-				existingWeDeployAuthApp.getRedirectURI(),
+				weDeployAuthApp.getClientId(),
 				ReflectionTestUtil.invoke(
-					existingWeDeployAuthApp, "getOriginalRedirectURI",
-					new Class<?>[0])));
+					weDeployAuthApp, "getOriginalClientId", new Class<?>[0])));
 		Assert.assertTrue(
 			Objects.equals(
-				existingWeDeployAuthApp.getClientId(),
+				weDeployAuthApp.getClientSecret(),
 				ReflectionTestUtil.invoke(
-					existingWeDeployAuthApp, "getOriginalClientId",
-					new Class<?>[0])));
-
-		Assert.assertTrue(
-			Objects.equals(
-				existingWeDeployAuthApp.getClientId(),
-				ReflectionTestUtil.invoke(
-					existingWeDeployAuthApp, "getOriginalClientId",
-					new Class<?>[0])));
-		Assert.assertTrue(
-			Objects.equals(
-				existingWeDeployAuthApp.getClientSecret(),
-				ReflectionTestUtil.invoke(
-					existingWeDeployAuthApp, "getOriginalClientSecret",
+					weDeployAuthApp, "getOriginalClientSecret",
 					new Class<?>[0])));
 	}
 

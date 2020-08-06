@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -508,31 +509,70 @@ public class DLFileEntryTypePersistenceTest {
 
 		_persistence.clearCache();
 
-		DLFileEntryType existingDLFileEntryType = _persistence.findByPrimaryKey(
-			newDLFileEntryType.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newDLFileEntryType.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		DLFileEntryType newDLFileEntryType = addDLFileEntryType();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			DLFileEntryType.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"fileEntryTypeId", newDLFileEntryType.getFileEntryTypeId()));
+
+		List<DLFileEntryType> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(DLFileEntryType dlFileEntryType) {
 		Assert.assertTrue(
 			Objects.equals(
-				existingDLFileEntryType.getUuid(),
+				dlFileEntryType.getUuid(),
 				ReflectionTestUtil.invoke(
-					existingDLFileEntryType, "getOriginalUuid",
-					new Class<?>[0])));
+					dlFileEntryType, "getOriginalUuid", new Class<?>[0])));
 		Assert.assertEquals(
-			Long.valueOf(existingDLFileEntryType.getGroupId()),
+			Long.valueOf(dlFileEntryType.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingDLFileEntryType, "getOriginalGroupId",
-				new Class<?>[0]));
+				dlFileEntryType, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingDLFileEntryType.getGroupId()),
+			Long.valueOf(dlFileEntryType.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingDLFileEntryType, "getOriginalGroupId",
-				new Class<?>[0]));
+				dlFileEntryType, "getOriginalGroupId", new Class<?>[0]));
 		Assert.assertTrue(
 			Objects.equals(
-				existingDLFileEntryType.getFileEntryTypeKey(),
+				dlFileEntryType.getFileEntryTypeKey(),
 				ReflectionTestUtil.invoke(
-					existingDLFileEntryType, "getOriginalFileEntryTypeKey",
+					dlFileEntryType, "getOriginalFileEntryTypeKey",
 					new Class<?>[0])));
 	}
 

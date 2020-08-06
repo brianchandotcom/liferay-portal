@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchTicketException;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.service.TicketLocalServiceUtil;
@@ -431,14 +432,54 @@ public class TicketPersistenceTest {
 
 		_persistence.clearCache();
 
-		Ticket existingTicket = _persistence.findByPrimaryKey(
-			newTicket.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newTicket.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		Ticket newTicket = addTicket();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Ticket.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("ticketId", newTicket.getTicketId()));
+
+		List<Ticket> result = _persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(Ticket ticket) {
 		Assert.assertTrue(
 			Objects.equals(
-				existingTicket.getKey(),
+				ticket.getKey(),
 				ReflectionTestUtil.invoke(
-					existingTicket, "getOriginalKey", new Class<?>[0])));
+					ticket, "getOriginalKey", new Class<?>[0])));
 	}
 
 	protected Ticket addTicket() throws Exception {

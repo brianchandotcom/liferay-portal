@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -624,47 +625,84 @@ public class AssetCategoryPersistenceTest {
 
 		_persistence.clearCache();
 
-		AssetCategory existingAssetCategory = _persistence.findByPrimaryKey(
-			newAssetCategory.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newAssetCategory.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		AssetCategory newAssetCategory = addAssetCategory();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			AssetCategory.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"categoryId", newAssetCategory.getCategoryId()));
+
+		List<AssetCategory> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(AssetCategory assetCategory) {
 		Assert.assertTrue(
 			Objects.equals(
-				existingAssetCategory.getUuid(),
+				assetCategory.getUuid(),
 				ReflectionTestUtil.invoke(
-					existingAssetCategory, "getOriginalUuid",
-					new Class<?>[0])));
+					assetCategory, "getOriginalUuid", new Class<?>[0])));
 		Assert.assertEquals(
-			Long.valueOf(existingAssetCategory.getGroupId()),
+			Long.valueOf(assetCategory.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingAssetCategory, "getOriginalGroupId", new Class<?>[0]));
+				assetCategory, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingAssetCategory.getParentCategoryId()),
+			Long.valueOf(assetCategory.getParentCategoryId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingAssetCategory, "getOriginalParentCategoryId",
-				new Class<?>[0]));
+				assetCategory, "getOriginalParentCategoryId", new Class<?>[0]));
 		Assert.assertTrue(
 			Objects.equals(
-				existingAssetCategory.getName(),
+				assetCategory.getName(),
 				ReflectionTestUtil.invoke(
-					existingAssetCategory, "getOriginalName",
-					new Class<?>[0])));
+					assetCategory, "getOriginalName", new Class<?>[0])));
 		Assert.assertEquals(
-			Long.valueOf(existingAssetCategory.getVocabularyId()),
+			Long.valueOf(assetCategory.getVocabularyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingAssetCategory, "getOriginalVocabularyId",
-				new Class<?>[0]));
+				assetCategory, "getOriginalVocabularyId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingAssetCategory.getCompanyId()),
+			Long.valueOf(assetCategory.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingAssetCategory, "getOriginalCompanyId",
-				new Class<?>[0]));
+				assetCategory, "getOriginalCompanyId", new Class<?>[0]));
 		Assert.assertTrue(
 			Objects.equals(
-				existingAssetCategory.getExternalReferenceCode(),
+				assetCategory.getExternalReferenceCode(),
 				ReflectionTestUtil.invoke(
-					existingAssetCategory, "getOriginalExternalReferenceCode",
+					assetCategory, "getOriginalExternalReferenceCode",
 					new Class<?>[0])));
 	}
 

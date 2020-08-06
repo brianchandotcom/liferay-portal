@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -542,29 +543,70 @@ public class DDLRecordSetPersistenceTest {
 
 		_persistence.clearCache();
 
-		DDLRecordSet existingDDLRecordSet = _persistence.findByPrimaryKey(
-			newDDLRecordSet.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newDDLRecordSet.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		DDLRecordSet newDDLRecordSet = addDDLRecordSet();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			DDLRecordSet.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"recordSetId", newDDLRecordSet.getRecordSetId()));
+
+		List<DDLRecordSet> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(DDLRecordSet ddlRecordSet) {
 		Assert.assertTrue(
 			Objects.equals(
-				existingDDLRecordSet.getUuid(),
+				ddlRecordSet.getUuid(),
 				ReflectionTestUtil.invoke(
-					existingDDLRecordSet, "getOriginalUuid", new Class<?>[0])));
+					ddlRecordSet, "getOriginalUuid", new Class<?>[0])));
 		Assert.assertEquals(
-			Long.valueOf(existingDDLRecordSet.getGroupId()),
+			Long.valueOf(ddlRecordSet.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingDDLRecordSet, "getOriginalGroupId", new Class<?>[0]));
+				ddlRecordSet, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingDDLRecordSet.getGroupId()),
+			Long.valueOf(ddlRecordSet.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingDDLRecordSet, "getOriginalGroupId", new Class<?>[0]));
+				ddlRecordSet, "getOriginalGroupId", new Class<?>[0]));
 		Assert.assertTrue(
 			Objects.equals(
-				existingDDLRecordSet.getRecordSetKey(),
+				ddlRecordSet.getRecordSetKey(),
 				ReflectionTestUtil.invoke(
-					existingDDLRecordSet, "getOriginalRecordSetKey",
-					new Class<?>[0])));
+					ddlRecordSet, "getOriginalRecordSetKey", new Class<?>[0])));
 	}
 
 	protected DDLRecordSet addDDLRecordSet() throws Exception {

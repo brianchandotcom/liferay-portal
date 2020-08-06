@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -522,18 +523,60 @@ public class KBCommentPersistenceTest {
 
 		_persistence.clearCache();
 
-		KBComment existingKBComment = _persistence.findByPrimaryKey(
-			newKBComment.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newKBComment.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		KBComment newKBComment = addKBComment();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			KBComment.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"kbCommentId", newKBComment.getKbCommentId()));
+
+		List<KBComment> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(KBComment kbComment) {
 		Assert.assertTrue(
 			Objects.equals(
-				existingKBComment.getUuid(),
+				kbComment.getUuid(),
 				ReflectionTestUtil.invoke(
-					existingKBComment, "getOriginalUuid", new Class<?>[0])));
+					kbComment, "getOriginalUuid", new Class<?>[0])));
 		Assert.assertEquals(
-			Long.valueOf(existingKBComment.getGroupId()),
+			Long.valueOf(kbComment.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingKBComment, "getOriginalGroupId", new Class<?>[0]));
+				kbComment, "getOriginalGroupId", new Class<?>[0]));
 	}
 
 	protected KBComment addKBComment() throws Exception {

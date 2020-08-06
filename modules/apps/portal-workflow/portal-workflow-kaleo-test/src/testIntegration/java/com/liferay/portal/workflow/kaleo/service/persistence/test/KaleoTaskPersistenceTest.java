@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -453,13 +454,55 @@ public class KaleoTaskPersistenceTest {
 
 		_persistence.clearCache();
 
-		KaleoTask existingKaleoTask = _persistence.findByPrimaryKey(
-			newKaleoTask.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newKaleoTask.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		KaleoTask newKaleoTask = addKaleoTask();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			KaleoTask.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"kaleoTaskId", newKaleoTask.getKaleoTaskId()));
+
+		List<KaleoTask> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(KaleoTask kaleoTask) {
 		Assert.assertEquals(
-			Long.valueOf(existingKaleoTask.getKaleoNodeId()),
+			Long.valueOf(kaleoTask.getKaleoNodeId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingKaleoTask, "getOriginalKaleoNodeId", new Class<?>[0]));
+				kaleoTask, "getOriginalKaleoNodeId", new Class<?>[0]));
 	}
 
 	protected KaleoTask addKaleoTask() throws Exception {

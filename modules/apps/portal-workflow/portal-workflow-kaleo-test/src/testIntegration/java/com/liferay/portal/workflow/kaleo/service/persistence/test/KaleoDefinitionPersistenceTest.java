@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -499,53 +500,89 @@ public class KaleoDefinitionPersistenceTest {
 
 		_persistence.clearCache();
 
-		KaleoDefinition existingKaleoDefinition = _persistence.findByPrimaryKey(
-			newKaleoDefinition.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newKaleoDefinition.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		KaleoDefinition newKaleoDefinition = addKaleoDefinition();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			KaleoDefinition.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"kaleoDefinitionId",
+				newKaleoDefinition.getKaleoDefinitionId()));
+
+		List<KaleoDefinition> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(KaleoDefinition kaleoDefinition) {
 		Assert.assertEquals(
-			Long.valueOf(existingKaleoDefinition.getCompanyId()),
+			Long.valueOf(kaleoDefinition.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingKaleoDefinition, "getOriginalCompanyId",
-				new Class<?>[0]));
+				kaleoDefinition, "getOriginalCompanyId", new Class<?>[0]));
 		Assert.assertTrue(
 			Objects.equals(
-				existingKaleoDefinition.getName(),
+				kaleoDefinition.getName(),
 				ReflectionTestUtil.invoke(
-					existingKaleoDefinition, "getOriginalName",
-					new Class<?>[0])));
+					kaleoDefinition, "getOriginalName", new Class<?>[0])));
 
 		Assert.assertEquals(
-			Long.valueOf(existingKaleoDefinition.getCompanyId()),
+			Long.valueOf(kaleoDefinition.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingKaleoDefinition, "getOriginalCompanyId",
-				new Class<?>[0]));
+				kaleoDefinition, "getOriginalCompanyId", new Class<?>[0]));
 		Assert.assertTrue(
 			Objects.equals(
-				existingKaleoDefinition.getName(),
+				kaleoDefinition.getName(),
 				ReflectionTestUtil.invoke(
-					existingKaleoDefinition, "getOriginalName",
-					new Class<?>[0])));
+					kaleoDefinition, "getOriginalName", new Class<?>[0])));
 		Assert.assertEquals(
-			Integer.valueOf(existingKaleoDefinition.getVersion()),
+			Integer.valueOf(kaleoDefinition.getVersion()),
 			ReflectionTestUtil.<Integer>invoke(
-				existingKaleoDefinition, "getOriginalVersion",
-				new Class<?>[0]));
+				kaleoDefinition, "getOriginalVersion", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingKaleoDefinition.getCompanyId()),
+			Long.valueOf(kaleoDefinition.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingKaleoDefinition, "getOriginalCompanyId",
-				new Class<?>[0]));
+				kaleoDefinition, "getOriginalCompanyId", new Class<?>[0]));
 		Assert.assertTrue(
 			Objects.equals(
-				existingKaleoDefinition.getName(),
+				kaleoDefinition.getName(),
 				ReflectionTestUtil.invoke(
-					existingKaleoDefinition, "getOriginalName",
-					new Class<?>[0])));
+					kaleoDefinition, "getOriginalName", new Class<?>[0])));
 		Assert.assertEquals(
-			Boolean.valueOf(existingKaleoDefinition.getActive()),
+			Boolean.valueOf(kaleoDefinition.getActive()),
 			ReflectionTestUtil.<Boolean>invoke(
-				existingKaleoDefinition, "getOriginalActive", new Class<?>[0]));
+				kaleoDefinition, "getOriginalActive", new Class<?>[0]));
 	}
 
 	protected KaleoDefinition addKaleoDefinition() throws Exception {

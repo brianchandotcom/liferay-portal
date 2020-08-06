@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchCompanyException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
@@ -434,25 +435,65 @@ public class CompanyPersistenceTest {
 
 		_persistence.clearCache();
 
-		Company existingCompany = _persistence.findByPrimaryKey(
-			newCompany.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newCompany.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		Company newCompany = addCompany();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Company.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("companyId", newCompany.getCompanyId()));
+
+		List<Company> result = _persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(Company company) {
+		Assert.assertTrue(
+			Objects.equals(
+				company.getWebId(),
+				ReflectionTestUtil.invoke(
+					company, "getOriginalWebId", new Class<?>[0])));
 
 		Assert.assertTrue(
 			Objects.equals(
-				existingCompany.getWebId(),
+				company.getMx(),
 				ReflectionTestUtil.invoke(
-					existingCompany, "getOriginalWebId", new Class<?>[0])));
-
-		Assert.assertTrue(
-			Objects.equals(
-				existingCompany.getMx(),
-				ReflectionTestUtil.invoke(
-					existingCompany, "getOriginalMx", new Class<?>[0])));
+					company, "getOriginalMx", new Class<?>[0])));
 
 		Assert.assertEquals(
-			Long.valueOf(existingCompany.getLogoId()),
+			Long.valueOf(company.getLogoId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCompany, "getOriginalLogoId", new Class<?>[0]));
+				company, "getOriginalLogoId", new Class<?>[0]));
 	}
 
 	protected Company addCompany() throws Exception {

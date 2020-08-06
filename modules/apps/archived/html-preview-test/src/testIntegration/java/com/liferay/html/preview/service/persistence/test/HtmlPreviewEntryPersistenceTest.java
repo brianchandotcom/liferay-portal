@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -441,24 +442,64 @@ public class HtmlPreviewEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		HtmlPreviewEntry existingHtmlPreviewEntry =
-			_persistence.findByPrimaryKey(newHtmlPreviewEntry.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newHtmlPreviewEntry.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		HtmlPreviewEntry newHtmlPreviewEntry = addHtmlPreviewEntry();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			HtmlPreviewEntry.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"htmlPreviewEntryId",
+				newHtmlPreviewEntry.getHtmlPreviewEntryId()));
+
+		List<HtmlPreviewEntry> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(HtmlPreviewEntry htmlPreviewEntry) {
 		Assert.assertEquals(
-			Long.valueOf(existingHtmlPreviewEntry.getGroupId()),
+			Long.valueOf(htmlPreviewEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingHtmlPreviewEntry, "getOriginalGroupId",
-				new Class<?>[0]));
+				htmlPreviewEntry, "getOriginalGroupId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingHtmlPreviewEntry.getClassNameId()),
+			Long.valueOf(htmlPreviewEntry.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingHtmlPreviewEntry, "getOriginalClassNameId",
-				new Class<?>[0]));
+				htmlPreviewEntry, "getOriginalClassNameId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingHtmlPreviewEntry.getClassPK()),
+			Long.valueOf(htmlPreviewEntry.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				existingHtmlPreviewEntry, "getOriginalClassPK",
-				new Class<?>[0]));
+				htmlPreviewEntry, "getOriginalClassPK", new Class<?>[0]));
 	}
 
 	protected HtmlPreviewEntry addHtmlPreviewEntry() throws Exception {

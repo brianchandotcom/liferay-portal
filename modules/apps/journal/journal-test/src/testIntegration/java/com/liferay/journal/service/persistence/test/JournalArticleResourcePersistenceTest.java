@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -485,32 +486,76 @@ public class JournalArticleResourcePersistenceTest {
 
 		_persistence.clearCache();
 
-		JournalArticleResource existingJournalArticleResource =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newJournalArticleResource.getPrimaryKey());
+				newJournalArticleResource.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		JournalArticleResource newJournalArticleResource =
+			addJournalArticleResource();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			JournalArticleResource.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"resourcePrimKey",
+				newJournalArticleResource.getResourcePrimKey()));
+
+		List<JournalArticleResource> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		JournalArticleResource journalArticleResource) {
 
 		Assert.assertTrue(
 			Objects.equals(
-				existingJournalArticleResource.getUuid(),
+				journalArticleResource.getUuid(),
 				ReflectionTestUtil.invoke(
-					existingJournalArticleResource, "getOriginalUuid",
+					journalArticleResource, "getOriginalUuid",
 					new Class<?>[0])));
 		Assert.assertEquals(
-			Long.valueOf(existingJournalArticleResource.getGroupId()),
+			Long.valueOf(journalArticleResource.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingJournalArticleResource, "getOriginalGroupId",
-				new Class<?>[0]));
+				journalArticleResource, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingJournalArticleResource.getGroupId()),
+			Long.valueOf(journalArticleResource.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingJournalArticleResource, "getOriginalGroupId",
-				new Class<?>[0]));
+				journalArticleResource, "getOriginalGroupId", new Class<?>[0]));
 		Assert.assertTrue(
 			Objects.equals(
-				existingJournalArticleResource.getArticleId(),
+				journalArticleResource.getArticleId(),
 				ReflectionTestUtil.invoke(
-					existingJournalArticleResource, "getOriginalArticleId",
+					journalArticleResource, "getOriginalArticleId",
 					new Class<?>[0])));
 	}
 

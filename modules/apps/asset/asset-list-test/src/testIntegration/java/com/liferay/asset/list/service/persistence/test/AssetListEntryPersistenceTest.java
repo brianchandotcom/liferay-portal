@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -617,41 +618,81 @@ public class AssetListEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		AssetListEntry existingAssetListEntry = _persistence.findByPrimaryKey(
-			newAssetListEntry.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newAssetListEntry.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		AssetListEntry newAssetListEntry = addAssetListEntry();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			AssetListEntry.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"assetListEntryId", newAssetListEntry.getAssetListEntryId()));
+
+		List<AssetListEntry> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(AssetListEntry assetListEntry) {
 		Assert.assertTrue(
 			Objects.equals(
-				existingAssetListEntry.getUuid(),
+				assetListEntry.getUuid(),
 				ReflectionTestUtil.invoke(
-					existingAssetListEntry, "getOriginalUuid",
-					new Class<?>[0])));
+					assetListEntry, "getOriginalUuid", new Class<?>[0])));
 		Assert.assertEquals(
-			Long.valueOf(existingAssetListEntry.getGroupId()),
+			Long.valueOf(assetListEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingAssetListEntry, "getOriginalGroupId", new Class<?>[0]));
+				assetListEntry, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingAssetListEntry.getGroupId()),
+			Long.valueOf(assetListEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingAssetListEntry, "getOriginalGroupId", new Class<?>[0]));
+				assetListEntry, "getOriginalGroupId", new Class<?>[0]));
 		Assert.assertTrue(
 			Objects.equals(
-				existingAssetListEntry.getAssetListEntryKey(),
+				assetListEntry.getAssetListEntryKey(),
 				ReflectionTestUtil.invoke(
-					existingAssetListEntry, "getOriginalAssetListEntryKey",
+					assetListEntry, "getOriginalAssetListEntryKey",
 					new Class<?>[0])));
 
 		Assert.assertEquals(
-			Long.valueOf(existingAssetListEntry.getGroupId()),
+			Long.valueOf(assetListEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingAssetListEntry, "getOriginalGroupId", new Class<?>[0]));
+				assetListEntry, "getOriginalGroupId", new Class<?>[0]));
 		Assert.assertTrue(
 			Objects.equals(
-				existingAssetListEntry.getTitle(),
+				assetListEntry.getTitle(),
 				ReflectionTestUtil.invoke(
-					existingAssetListEntry, "getOriginalTitle",
-					new Class<?>[0])));
+					assetListEntry, "getOriginalTitle", new Class<?>[0])));
 	}
 
 	protected AssetListEntry addAssetListEntry() throws Exception {

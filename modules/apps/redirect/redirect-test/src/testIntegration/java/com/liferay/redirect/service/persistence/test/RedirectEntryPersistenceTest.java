@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -507,30 +508,70 @@ public class RedirectEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		RedirectEntry existingRedirectEntry = _persistence.findByPrimaryKey(
-			newRedirectEntry.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newRedirectEntry.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		RedirectEntry newRedirectEntry = addRedirectEntry();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			RedirectEntry.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"redirectEntryId", newRedirectEntry.getRedirectEntryId()));
+
+		List<RedirectEntry> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(RedirectEntry redirectEntry) {
 		Assert.assertTrue(
 			Objects.equals(
-				existingRedirectEntry.getUuid(),
+				redirectEntry.getUuid(),
 				ReflectionTestUtil.invoke(
-					existingRedirectEntry, "getOriginalUuid",
-					new Class<?>[0])));
+					redirectEntry, "getOriginalUuid", new Class<?>[0])));
 		Assert.assertEquals(
-			Long.valueOf(existingRedirectEntry.getGroupId()),
+			Long.valueOf(redirectEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingRedirectEntry, "getOriginalGroupId", new Class<?>[0]));
+				redirectEntry, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingRedirectEntry.getGroupId()),
+			Long.valueOf(redirectEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingRedirectEntry, "getOriginalGroupId", new Class<?>[0]));
+				redirectEntry, "getOriginalGroupId", new Class<?>[0]));
 		Assert.assertTrue(
 			Objects.equals(
-				existingRedirectEntry.getSourceURL(),
+				redirectEntry.getSourceURL(),
 				ReflectionTestUtil.invoke(
-					existingRedirectEntry, "getOriginalSourceURL",
-					new Class<?>[0])));
+					redirectEntry, "getOriginalSourceURL", new Class<?>[0])));
 	}
 
 	protected RedirectEntry addRedirectEntry() throws Exception {

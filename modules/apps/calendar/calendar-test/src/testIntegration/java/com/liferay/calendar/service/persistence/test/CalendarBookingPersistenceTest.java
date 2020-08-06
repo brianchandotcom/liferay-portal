@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -633,43 +634,81 @@ public class CalendarBookingPersistenceTest {
 
 		_persistence.clearCache();
 
-		CalendarBooking existingCalendarBooking = _persistence.findByPrimaryKey(
-			newCalendarBooking.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newCalendarBooking.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		CalendarBooking newCalendarBooking = addCalendarBooking();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			CalendarBooking.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"calendarBookingId",
+				newCalendarBooking.getCalendarBookingId()));
+
+		List<CalendarBooking> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(CalendarBooking calendarBooking) {
 		Assert.assertTrue(
 			Objects.equals(
-				existingCalendarBooking.getUuid(),
+				calendarBooking.getUuid(),
 				ReflectionTestUtil.invoke(
-					existingCalendarBooking, "getOriginalUuid",
-					new Class<?>[0])));
+					calendarBooking, "getOriginalUuid", new Class<?>[0])));
 		Assert.assertEquals(
-			Long.valueOf(existingCalendarBooking.getGroupId()),
+			Long.valueOf(calendarBooking.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCalendarBooking, "getOriginalGroupId",
+				calendarBooking, "getOriginalGroupId", new Class<?>[0]));
+
+		Assert.assertEquals(
+			Long.valueOf(calendarBooking.getCalendarId()),
+			ReflectionTestUtil.<Long>invoke(
+				calendarBooking, "getOriginalCalendarId", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(calendarBooking.getParentCalendarBookingId()),
+			ReflectionTestUtil.<Long>invoke(
+				calendarBooking, "getOriginalParentCalendarBookingId",
 				new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingCalendarBooking.getCalendarId()),
+			Long.valueOf(calendarBooking.getCalendarId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCalendarBooking, "getOriginalCalendarId",
-				new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingCalendarBooking.getParentCalendarBookingId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingCalendarBooking, "getOriginalParentCalendarBookingId",
-				new Class<?>[0]));
-
-		Assert.assertEquals(
-			Long.valueOf(existingCalendarBooking.getCalendarId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingCalendarBooking, "getOriginalCalendarId",
-				new Class<?>[0]));
+				calendarBooking, "getOriginalCalendarId", new Class<?>[0]));
 		Assert.assertTrue(
 			Objects.equals(
-				existingCalendarBooking.getVEventUid(),
+				calendarBooking.getVEventUid(),
 				ReflectionTestUtil.invoke(
-					existingCalendarBooking, "getOriginalVEventUid",
-					new Class<?>[0])));
+					calendarBooking, "getOriginalVEventUid", new Class<?>[0])));
 	}
 
 	protected CalendarBooking addCalendarBooking() throws Exception {

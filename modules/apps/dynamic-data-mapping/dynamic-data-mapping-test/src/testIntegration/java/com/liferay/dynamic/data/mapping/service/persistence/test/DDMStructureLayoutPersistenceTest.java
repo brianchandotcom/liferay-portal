@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -550,43 +551,82 @@ public class DDMStructureLayoutPersistenceTest {
 
 		_persistence.clearCache();
 
-		DDMStructureLayout existingDDMStructureLayout =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newDDMStructureLayout.getPrimaryKey());
+				newDDMStructureLayout.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		DDMStructureLayout newDDMStructureLayout = addDDMStructureLayout();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			DDMStructureLayout.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"structureLayoutId",
+				newDDMStructureLayout.getStructureLayoutId()));
+
+		List<DDMStructureLayout> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(DDMStructureLayout ddmStructureLayout) {
 		Assert.assertTrue(
 			Objects.equals(
-				existingDDMStructureLayout.getUuid(),
+				ddmStructureLayout.getUuid(),
 				ReflectionTestUtil.invoke(
-					existingDDMStructureLayout, "getOriginalUuid",
-					new Class<?>[0])));
+					ddmStructureLayout, "getOriginalUuid", new Class<?>[0])));
 		Assert.assertEquals(
-			Long.valueOf(existingDDMStructureLayout.getGroupId()),
+			Long.valueOf(ddmStructureLayout.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingDDMStructureLayout, "getOriginalGroupId",
+				ddmStructureLayout, "getOriginalGroupId", new Class<?>[0]));
+
+		Assert.assertEquals(
+			Long.valueOf(ddmStructureLayout.getStructureVersionId()),
+			ReflectionTestUtil.<Long>invoke(
+				ddmStructureLayout, "getOriginalStructureVersionId",
 				new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingDDMStructureLayout.getStructureVersionId()),
+			Long.valueOf(ddmStructureLayout.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingDDMStructureLayout, "getOriginalStructureVersionId",
-				new Class<?>[0]));
-
+				ddmStructureLayout, "getOriginalGroupId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingDDMStructureLayout.getGroupId()),
+			Long.valueOf(ddmStructureLayout.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingDDMStructureLayout, "getOriginalGroupId",
-				new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingDDMStructureLayout.getClassNameId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingDDMStructureLayout, "getOriginalClassNameId",
-				new Class<?>[0]));
+				ddmStructureLayout, "getOriginalClassNameId", new Class<?>[0]));
 		Assert.assertTrue(
 			Objects.equals(
-				existingDDMStructureLayout.getStructureLayoutKey(),
+				ddmStructureLayout.getStructureLayoutKey(),
 				ReflectionTestUtil.invoke(
-					existingDDMStructureLayout, "getOriginalStructureLayoutKey",
+					ddmStructureLayout, "getOriginalStructureLayoutKey",
 					new Class<?>[0])));
 	}
 

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -466,27 +467,69 @@ public class DLContentPersistenceTest {
 
 		_persistence.clearCache();
 
-		DLContent existingDLContent = _persistence.findByPrimaryKey(
-			newDLContent.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newDLContent.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		DLContent newDLContent = addDLContent();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			DLContent.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"contentId", newDLContent.getContentId()));
+
+		List<DLContent> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(DLContent dlContent) {
 		Assert.assertEquals(
-			Long.valueOf(existingDLContent.getCompanyId()),
+			Long.valueOf(dlContent.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingDLContent, "getOriginalCompanyId", new Class<?>[0]));
+				dlContent, "getOriginalCompanyId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingDLContent.getRepositoryId()),
+			Long.valueOf(dlContent.getRepositoryId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingDLContent, "getOriginalRepositoryId", new Class<?>[0]));
+				dlContent, "getOriginalRepositoryId", new Class<?>[0]));
 		Assert.assertTrue(
 			Objects.equals(
-				existingDLContent.getPath(),
+				dlContent.getPath(),
 				ReflectionTestUtil.invoke(
-					existingDLContent, "getOriginalPath", new Class<?>[0])));
+					dlContent, "getOriginalPath", new Class<?>[0])));
 		Assert.assertTrue(
 			Objects.equals(
-				existingDLContent.getVersion(),
+				dlContent.getVersion(),
 				ReflectionTestUtil.invoke(
-					existingDLContent, "getOriginalVersion", new Class<?>[0])));
+					dlContent, "getOriginalVersion", new Class<?>[0])));
 	}
 
 	protected DLContent addDLContent() throws Exception {

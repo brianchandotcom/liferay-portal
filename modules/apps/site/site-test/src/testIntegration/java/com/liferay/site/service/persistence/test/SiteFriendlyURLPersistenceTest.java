@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -505,66 +506,103 @@ public class SiteFriendlyURLPersistenceTest {
 
 		_persistence.clearCache();
 
-		SiteFriendlyURL existingSiteFriendlyURL = _persistence.findByPrimaryKey(
-			newSiteFriendlyURL.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newSiteFriendlyURL.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		SiteFriendlyURL newSiteFriendlyURL = addSiteFriendlyURL();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			SiteFriendlyURL.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"siteFriendlyURLId",
+				newSiteFriendlyURL.getSiteFriendlyURLId()));
+
+		List<SiteFriendlyURL> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(SiteFriendlyURL siteFriendlyURL) {
 		Assert.assertTrue(
 			Objects.equals(
-				existingSiteFriendlyURL.getUuid(),
+				siteFriendlyURL.getUuid(),
 				ReflectionTestUtil.invoke(
-					existingSiteFriendlyURL, "getOriginalUuid",
-					new Class<?>[0])));
+					siteFriendlyURL, "getOriginalUuid", new Class<?>[0])));
 		Assert.assertEquals(
-			Long.valueOf(existingSiteFriendlyURL.getGroupId()),
+			Long.valueOf(siteFriendlyURL.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingSiteFriendlyURL, "getOriginalGroupId",
-				new Class<?>[0]));
+				siteFriendlyURL, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingSiteFriendlyURL.getCompanyId()),
+			Long.valueOf(siteFriendlyURL.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingSiteFriendlyURL, "getOriginalCompanyId",
-				new Class<?>[0]));
+				siteFriendlyURL, "getOriginalCompanyId", new Class<?>[0]));
 		Assert.assertTrue(
 			Objects.equals(
-				existingSiteFriendlyURL.getFriendlyURL(),
+				siteFriendlyURL.getFriendlyURL(),
 				ReflectionTestUtil.invoke(
-					existingSiteFriendlyURL, "getOriginalFriendlyURL",
+					siteFriendlyURL, "getOriginalFriendlyURL",
 					new Class<?>[0])));
 
 		Assert.assertEquals(
-			Long.valueOf(existingSiteFriendlyURL.getCompanyId()),
+			Long.valueOf(siteFriendlyURL.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingSiteFriendlyURL, "getOriginalCompanyId",
-				new Class<?>[0]));
+				siteFriendlyURL, "getOriginalCompanyId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingSiteFriendlyURL.getGroupId()),
+			Long.valueOf(siteFriendlyURL.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingSiteFriendlyURL, "getOriginalGroupId",
-				new Class<?>[0]));
+				siteFriendlyURL, "getOriginalGroupId", new Class<?>[0]));
 		Assert.assertTrue(
 			Objects.equals(
-				existingSiteFriendlyURL.getLanguageId(),
+				siteFriendlyURL.getLanguageId(),
 				ReflectionTestUtil.invoke(
-					existingSiteFriendlyURL, "getOriginalLanguageId",
+					siteFriendlyURL, "getOriginalLanguageId",
 					new Class<?>[0])));
 
 		Assert.assertEquals(
-			Long.valueOf(existingSiteFriendlyURL.getCompanyId()),
+			Long.valueOf(siteFriendlyURL.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingSiteFriendlyURL, "getOriginalCompanyId",
-				new Class<?>[0]));
+				siteFriendlyURL, "getOriginalCompanyId", new Class<?>[0]));
 		Assert.assertTrue(
 			Objects.equals(
-				existingSiteFriendlyURL.getFriendlyURL(),
+				siteFriendlyURL.getFriendlyURL(),
 				ReflectionTestUtil.invoke(
-					existingSiteFriendlyURL, "getOriginalFriendlyURL",
+					siteFriendlyURL, "getOriginalFriendlyURL",
 					new Class<?>[0])));
 		Assert.assertTrue(
 			Objects.equals(
-				existingSiteFriendlyURL.getLanguageId(),
+				siteFriendlyURL.getLanguageId(),
 				ReflectionTestUtil.invoke(
-					existingSiteFriendlyURL, "getOriginalLanguageId",
+					siteFriendlyURL, "getOriginalLanguageId",
 					new Class<?>[0])));
 	}
 

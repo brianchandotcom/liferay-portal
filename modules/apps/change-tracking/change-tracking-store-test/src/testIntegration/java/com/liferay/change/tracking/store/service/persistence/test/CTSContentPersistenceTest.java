@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -474,35 +475,74 @@ public class CTSContentPersistenceTest {
 
 		_persistence.clearCache();
 
-		CTSContent existingCTSContent = _persistence.findByPrimaryKey(
-			newCTSContent.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newCTSContent.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		CTSContent newCTSContent = addCTSContent();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			CTSContent.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"ctsContentId", newCTSContent.getCtsContentId()));
+
+		List<CTSContent> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(CTSContent ctsContent) {
 		Assert.assertEquals(
-			Long.valueOf(existingCTSContent.getCompanyId()),
+			Long.valueOf(ctsContent.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCTSContent, "getOriginalCompanyId", new Class<?>[0]));
+				ctsContent, "getOriginalCompanyId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingCTSContent.getRepositoryId()),
+			Long.valueOf(ctsContent.getRepositoryId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCTSContent, "getOriginalRepositoryId",
-				new Class<?>[0]));
+				ctsContent, "getOriginalRepositoryId", new Class<?>[0]));
 		Assert.assertTrue(
 			Objects.equals(
-				existingCTSContent.getPath(),
+				ctsContent.getPath(),
 				ReflectionTestUtil.invoke(
-					existingCTSContent, "getOriginalPath", new Class<?>[0])));
+					ctsContent, "getOriginalPath", new Class<?>[0])));
 		Assert.assertTrue(
 			Objects.equals(
-				existingCTSContent.getVersion(),
+				ctsContent.getVersion(),
 				ReflectionTestUtil.invoke(
-					existingCTSContent, "getOriginalVersion",
-					new Class<?>[0])));
+					ctsContent, "getOriginalVersion", new Class<?>[0])));
 		Assert.assertTrue(
 			Objects.equals(
-				existingCTSContent.getStoreType(),
+				ctsContent.getStoreType(),
 				ReflectionTestUtil.invoke(
-					existingCTSContent, "getOriginalStoreType",
-					new Class<?>[0])));
+					ctsContent, "getOriginalStoreType", new Class<?>[0])));
 	}
 
 	protected CTSContent addCTSContent() throws Exception {

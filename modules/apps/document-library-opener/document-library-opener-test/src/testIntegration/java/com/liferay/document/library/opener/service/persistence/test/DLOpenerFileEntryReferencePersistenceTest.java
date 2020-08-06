@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -505,26 +506,73 @@ public class DLOpenerFileEntryReferencePersistenceTest {
 
 		_persistence.clearCache();
 
-		DLOpenerFileEntryReference existingDLOpenerFileEntryReference =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newDLOpenerFileEntryReference.getPrimaryKey());
+				newDLOpenerFileEntryReference.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		DLOpenerFileEntryReference newDLOpenerFileEntryReference =
+			addDLOpenerFileEntryReference();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			DLOpenerFileEntryReference.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"dlOpenerFileEntryReferenceId",
+				newDLOpenerFileEntryReference.
+					getDlOpenerFileEntryReferenceId()));
+
+		List<DLOpenerFileEntryReference> result =
+			_persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		DLOpenerFileEntryReference dlOpenerFileEntryReference) {
 
 		Assert.assertEquals(
-			Long.valueOf(existingDLOpenerFileEntryReference.getFileEntryId()),
+			Long.valueOf(dlOpenerFileEntryReference.getFileEntryId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingDLOpenerFileEntryReference, "getOriginalFileEntryId",
+				dlOpenerFileEntryReference, "getOriginalFileEntryId",
 				new Class<?>[0]));
 
 		Assert.assertTrue(
 			Objects.equals(
-				existingDLOpenerFileEntryReference.getReferenceType(),
+				dlOpenerFileEntryReference.getReferenceType(),
 				ReflectionTestUtil.invoke(
-					existingDLOpenerFileEntryReference,
-					"getOriginalReferenceType", new Class<?>[0])));
+					dlOpenerFileEntryReference, "getOriginalReferenceType",
+					new Class<?>[0])));
 		Assert.assertEquals(
-			Long.valueOf(existingDLOpenerFileEntryReference.getFileEntryId()),
+			Long.valueOf(dlOpenerFileEntryReference.getFileEntryId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingDLOpenerFileEntryReference, "getOriginalFileEntryId",
+				dlOpenerFileEntryReference, "getOriginalFileEntryId",
 				new Class<?>[0]));
 	}
 

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -486,18 +487,60 @@ public class DefinitionPersistenceTest {
 
 		_persistence.clearCache();
 
-		Definition existingDefinition = _persistence.findByPrimaryKey(
-			newDefinition.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newDefinition.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		Definition newDefinition = addDefinition();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Definition.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"definitionId", newDefinition.getDefinitionId()));
+
+		List<Definition> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(Definition definition) {
 		Assert.assertTrue(
 			Objects.equals(
-				existingDefinition.getUuid(),
+				definition.getUuid(),
 				ReflectionTestUtil.invoke(
-					existingDefinition, "getOriginalUuid", new Class<?>[0])));
+					definition, "getOriginalUuid", new Class<?>[0])));
 		Assert.assertEquals(
-			Long.valueOf(existingDefinition.getGroupId()),
+			Long.valueOf(definition.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingDefinition, "getOriginalGroupId", new Class<?>[0]));
+				definition, "getOriginalGroupId", new Class<?>[0]));
 	}
 
 	protected Definition addDefinition() throws Exception {

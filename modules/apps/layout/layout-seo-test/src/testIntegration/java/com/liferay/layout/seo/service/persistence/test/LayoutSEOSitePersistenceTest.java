@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -472,24 +473,65 @@ public class LayoutSEOSitePersistenceTest {
 
 		_persistence.clearCache();
 
-		LayoutSEOSite existingLayoutSEOSite = _persistence.findByPrimaryKey(
-			newLayoutSEOSite.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newLayoutSEOSite.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		LayoutSEOSite newLayoutSEOSite = addLayoutSEOSite();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			LayoutSEOSite.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"layoutSEOSiteId", newLayoutSEOSite.getLayoutSEOSiteId()));
+
+		List<LayoutSEOSite> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(LayoutSEOSite layoutSEOSite) {
 		Assert.assertTrue(
 			Objects.equals(
-				existingLayoutSEOSite.getUuid(),
+				layoutSEOSite.getUuid(),
 				ReflectionTestUtil.invoke(
-					existingLayoutSEOSite, "getOriginalUuid",
-					new Class<?>[0])));
+					layoutSEOSite, "getOriginalUuid", new Class<?>[0])));
 		Assert.assertEquals(
-			Long.valueOf(existingLayoutSEOSite.getGroupId()),
+			Long.valueOf(layoutSEOSite.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingLayoutSEOSite, "getOriginalGroupId", new Class<?>[0]));
+				layoutSEOSite, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingLayoutSEOSite.getGroupId()),
+			Long.valueOf(layoutSEOSite.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingLayoutSEOSite, "getOriginalGroupId", new Class<?>[0]));
+				layoutSEOSite, "getOriginalGroupId", new Class<?>[0]));
 	}
 
 	protected LayoutSEOSite addLayoutSEOSite() throws Exception {

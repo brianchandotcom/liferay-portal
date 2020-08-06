@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -526,20 +527,64 @@ public class SamlSpIdpConnectionPersistenceTest {
 
 		_persistence.clearCache();
 
-		SamlSpIdpConnection existingSamlSpIdpConnection =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newSamlSpIdpConnection.getPrimaryKey());
+				newSamlSpIdpConnection.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		SamlSpIdpConnection newSamlSpIdpConnection = addSamlSpIdpConnection();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			SamlSpIdpConnection.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"samlSpIdpConnectionId",
+				newSamlSpIdpConnection.getSamlSpIdpConnectionId()));
+
+		List<SamlSpIdpConnection> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		SamlSpIdpConnection samlSpIdpConnection) {
 
 		Assert.assertEquals(
-			Long.valueOf(existingSamlSpIdpConnection.getCompanyId()),
+			Long.valueOf(samlSpIdpConnection.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingSamlSpIdpConnection, "getOriginalCompanyId",
-				new Class<?>[0]));
+				samlSpIdpConnection, "getOriginalCompanyId", new Class<?>[0]));
 		Assert.assertTrue(
 			Objects.equals(
-				existingSamlSpIdpConnection.getSamlIdpEntityId(),
+				samlSpIdpConnection.getSamlIdpEntityId(),
 				ReflectionTestUtil.invoke(
-					existingSamlSpIdpConnection, "getOriginalSamlIdpEntityId",
+					samlSpIdpConnection, "getOriginalSamlIdpEntityId",
 					new Class<?>[0])));
 	}
 

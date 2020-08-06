@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchCompanyInfoException;
 import com.liferay.portal.kernel.model.CompanyInfo;
 import com.liferay.portal.kernel.service.CompanyInfoLocalServiceUtil;
@@ -395,13 +396,55 @@ public class CompanyInfoPersistenceTest {
 
 		_persistence.clearCache();
 
-		CompanyInfo existingCompanyInfo = _persistence.findByPrimaryKey(
-			newCompanyInfo.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newCompanyInfo.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		CompanyInfo newCompanyInfo = addCompanyInfo();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			CompanyInfo.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"companyInfoId", newCompanyInfo.getCompanyInfoId()));
+
+		List<CompanyInfo> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(CompanyInfo companyInfo) {
 		Assert.assertEquals(
-			Long.valueOf(existingCompanyInfo.getCompanyId()),
+			Long.valueOf(companyInfo.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCompanyInfo, "getOriginalCompanyId", new Class<?>[0]));
+				companyInfo, "getOriginalCompanyId", new Class<?>[0]));
 	}
 
 	protected CompanyInfo addCompanyInfo() throws Exception {

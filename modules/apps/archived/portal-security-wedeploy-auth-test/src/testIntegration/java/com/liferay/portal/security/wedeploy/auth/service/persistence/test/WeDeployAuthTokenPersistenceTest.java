@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -451,36 +452,78 @@ public class WeDeployAuthTokenPersistenceTest {
 
 		_persistence.clearCache();
 
-		WeDeployAuthToken existingWeDeployAuthToken =
-			_persistence.findByPrimaryKey(newWeDeployAuthToken.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(
+				newWeDeployAuthToken.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		WeDeployAuthToken newWeDeployAuthToken = addWeDeployAuthToken();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			WeDeployAuthToken.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"weDeployAuthTokenId",
+				newWeDeployAuthToken.getWeDeployAuthTokenId()));
+
+		List<WeDeployAuthToken> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(WeDeployAuthToken weDeployAuthToken) {
+		Assert.assertTrue(
+			Objects.equals(
+				weDeployAuthToken.getToken(),
+				ReflectionTestUtil.invoke(
+					weDeployAuthToken, "getOriginalToken", new Class<?>[0])));
+		Assert.assertEquals(
+			Integer.valueOf(weDeployAuthToken.getType()),
+			ReflectionTestUtil.<Integer>invoke(
+				weDeployAuthToken, "getOriginalType", new Class<?>[0]));
 
 		Assert.assertTrue(
 			Objects.equals(
-				existingWeDeployAuthToken.getToken(),
+				weDeployAuthToken.getClientId(),
 				ReflectionTestUtil.invoke(
-					existingWeDeployAuthToken, "getOriginalToken",
-					new Class<?>[0])));
-		Assert.assertEquals(
-			Integer.valueOf(existingWeDeployAuthToken.getType()),
-			ReflectionTestUtil.<Integer>invoke(
-				existingWeDeployAuthToken, "getOriginalType", new Class<?>[0]));
-
-		Assert.assertTrue(
-			Objects.equals(
-				existingWeDeployAuthToken.getClientId(),
-				ReflectionTestUtil.invoke(
-					existingWeDeployAuthToken, "getOriginalClientId",
+					weDeployAuthToken, "getOriginalClientId",
 					new Class<?>[0])));
 		Assert.assertTrue(
 			Objects.equals(
-				existingWeDeployAuthToken.getToken(),
+				weDeployAuthToken.getToken(),
 				ReflectionTestUtil.invoke(
-					existingWeDeployAuthToken, "getOriginalToken",
-					new Class<?>[0])));
+					weDeployAuthToken, "getOriginalToken", new Class<?>[0])));
 		Assert.assertEquals(
-			Integer.valueOf(existingWeDeployAuthToken.getType()),
+			Integer.valueOf(weDeployAuthToken.getType()),
 			ReflectionTestUtil.<Integer>invoke(
-				existingWeDeployAuthToken, "getOriginalType", new Class<?>[0]));
+				weDeployAuthToken, "getOriginalType", new Class<?>[0]));
 	}
 
 	protected WeDeployAuthToken addWeDeployAuthToken() throws Exception {

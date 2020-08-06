@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -522,20 +523,65 @@ public class DDMStructureVersionPersistenceTest {
 
 		_persistence.clearCache();
 
-		DDMStructureVersion existingDDMStructureVersion =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newDDMStructureVersion.getPrimaryKey());
+				newDDMStructureVersion.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		DDMStructureVersion newDDMStructureVersion = addDDMStructureVersion();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			DDMStructureVersion.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"structureVersionId",
+				newDDMStructureVersion.getStructureVersionId()));
+
+		List<DDMStructureVersion> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		DDMStructureVersion ddmStructureVersion) {
 
 		Assert.assertEquals(
-			Long.valueOf(existingDDMStructureVersion.getStructureId()),
+			Long.valueOf(ddmStructureVersion.getStructureId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingDDMStructureVersion, "getOriginalStructureId",
+				ddmStructureVersion, "getOriginalStructureId",
 				new Class<?>[0]));
 		Assert.assertTrue(
 			Objects.equals(
-				existingDDMStructureVersion.getVersion(),
+				ddmStructureVersion.getVersion(),
 				ReflectionTestUtil.invoke(
-					existingDDMStructureVersion, "getOriginalVersion",
+					ddmStructureVersion, "getOriginalVersion",
 					new Class<?>[0])));
 	}
 

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchUserGroupException;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
@@ -506,28 +507,70 @@ public class UserGroupPersistenceTest {
 
 		_persistence.clearCache();
 
-		UserGroup existingUserGroup = _persistence.findByPrimaryKey(
-			newUserGroup.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newUserGroup.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		UserGroup newUserGroup = addUserGroup();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			UserGroup.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"userGroupId", newUserGroup.getUserGroupId()));
+
+		List<UserGroup> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(UserGroup userGroup) {
 		Assert.assertEquals(
-			Long.valueOf(existingUserGroup.getCompanyId()),
+			Long.valueOf(userGroup.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingUserGroup, "getOriginalCompanyId", new Class<?>[0]));
+				userGroup, "getOriginalCompanyId", new Class<?>[0]));
 		Assert.assertTrue(
 			Objects.equals(
-				existingUserGroup.getName(),
+				userGroup.getName(),
 				ReflectionTestUtil.invoke(
-					existingUserGroup, "getOriginalName", new Class<?>[0])));
+					userGroup, "getOriginalName", new Class<?>[0])));
 
 		Assert.assertEquals(
-			Long.valueOf(existingUserGroup.getCompanyId()),
+			Long.valueOf(userGroup.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingUserGroup, "getOriginalCompanyId", new Class<?>[0]));
+				userGroup, "getOriginalCompanyId", new Class<?>[0]));
 		Assert.assertTrue(
 			Objects.equals(
-				existingUserGroup.getExternalReferenceCode(),
+				userGroup.getExternalReferenceCode(),
 				ReflectionTestUtil.invoke(
-					existingUserGroup, "getOriginalExternalReferenceCode",
+					userGroup, "getOriginalExternalReferenceCode",
 					new Class<?>[0])));
 	}
 

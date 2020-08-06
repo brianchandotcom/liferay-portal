@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchRecentLayoutRevisionException;
 import com.liferay.portal.kernel.model.RecentLayoutRevision;
 import com.liferay.portal.kernel.service.RecentLayoutRevisionLocalServiceUtil;
@@ -476,25 +477,69 @@ public class RecentLayoutRevisionPersistenceTest {
 
 		_persistence.clearCache();
 
-		RecentLayoutRevision existingRecentLayoutRevision =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newRecentLayoutRevision.getPrimaryKey());
+				newRecentLayoutRevision.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		RecentLayoutRevision newRecentLayoutRevision =
+			addRecentLayoutRevision();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			RecentLayoutRevision.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"recentLayoutRevisionId",
+				newRecentLayoutRevision.getRecentLayoutRevisionId()));
+
+		List<RecentLayoutRevision> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		RecentLayoutRevision recentLayoutRevision) {
 
 		Assert.assertEquals(
-			Long.valueOf(existingRecentLayoutRevision.getUserId()),
+			Long.valueOf(recentLayoutRevision.getUserId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingRecentLayoutRevision, "getOriginalUserId",
+				recentLayoutRevision, "getOriginalUserId", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(recentLayoutRevision.getLayoutSetBranchId()),
+			ReflectionTestUtil.<Long>invoke(
+				recentLayoutRevision, "getOriginalLayoutSetBranchId",
 				new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingRecentLayoutRevision.getLayoutSetBranchId()),
+			Long.valueOf(recentLayoutRevision.getPlid()),
 			ReflectionTestUtil.<Long>invoke(
-				existingRecentLayoutRevision, "getOriginalLayoutSetBranchId",
-				new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingRecentLayoutRevision.getPlid()),
-			ReflectionTestUtil.<Long>invoke(
-				existingRecentLayoutRevision, "getOriginalPlid",
-				new Class<?>[0]));
+				recentLayoutRevision, "getOriginalPlid", new Class<?>[0]));
 	}
 
 	protected RecentLayoutRevision addRecentLayoutRevision() throws Exception {

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -525,33 +526,73 @@ public class FragmentCollectionPersistenceTest {
 
 		_persistence.clearCache();
 
-		FragmentCollection existingFragmentCollection =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newFragmentCollection.getPrimaryKey());
+				newFragmentCollection.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		FragmentCollection newFragmentCollection = addFragmentCollection();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			FragmentCollection.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"fragmentCollectionId",
+				newFragmentCollection.getFragmentCollectionId()));
+
+		List<FragmentCollection> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(FragmentCollection fragmentCollection) {
 		Assert.assertTrue(
 			Objects.equals(
-				existingFragmentCollection.getUuid(),
+				fragmentCollection.getUuid(),
 				ReflectionTestUtil.invoke(
-					existingFragmentCollection, "getOriginalUuid",
+					fragmentCollection, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			Long.valueOf(fragmentCollection.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				fragmentCollection, "getOriginalGroupId", new Class<?>[0]));
+
+		Assert.assertEquals(
+			Long.valueOf(fragmentCollection.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				fragmentCollection, "getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(
+			Objects.equals(
+				fragmentCollection.getFragmentCollectionKey(),
+				ReflectionTestUtil.invoke(
+					fragmentCollection, "getOriginalFragmentCollectionKey",
 					new Class<?>[0])));
-		Assert.assertEquals(
-			Long.valueOf(existingFragmentCollection.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingFragmentCollection, "getOriginalGroupId",
-				new Class<?>[0]));
-
-		Assert.assertEquals(
-			Long.valueOf(existingFragmentCollection.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingFragmentCollection, "getOriginalGroupId",
-				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingFragmentCollection.getFragmentCollectionKey(),
-				ReflectionTestUtil.invoke(
-					existingFragmentCollection,
-					"getOriginalFragmentCollectionKey", new Class<?>[0])));
 	}
 
 	protected FragmentCollection addFragmentCollection() throws Exception {

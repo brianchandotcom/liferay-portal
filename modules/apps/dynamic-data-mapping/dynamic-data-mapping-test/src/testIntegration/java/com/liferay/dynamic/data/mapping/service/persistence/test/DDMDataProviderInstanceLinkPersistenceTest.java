@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -481,21 +482,67 @@ public class DDMDataProviderInstanceLinkPersistenceTest {
 
 		_persistence.clearCache();
 
-		DDMDataProviderInstanceLink existingDDMDataProviderInstanceLink =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newDDMDataProviderInstanceLink.getPrimaryKey());
+				newDDMDataProviderInstanceLink.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		DDMDataProviderInstanceLink newDDMDataProviderInstanceLink =
+			addDDMDataProviderInstanceLink();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			DDMDataProviderInstanceLink.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"dataProviderInstanceLinkId",
+				newDDMDataProviderInstanceLink.
+					getDataProviderInstanceLinkId()));
+
+		List<DDMDataProviderInstanceLink> result =
+			_persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		DDMDataProviderInstanceLink ddmDataProviderInstanceLink) {
 
 		Assert.assertEquals(
 			Long.valueOf(
-				existingDDMDataProviderInstanceLink.
-					getDataProviderInstanceId()),
+				ddmDataProviderInstanceLink.getDataProviderInstanceId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingDDMDataProviderInstanceLink,
+				ddmDataProviderInstanceLink,
 				"getOriginalDataProviderInstanceId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingDDMDataProviderInstanceLink.getStructureId()),
+			Long.valueOf(ddmDataProviderInstanceLink.getStructureId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingDDMDataProviderInstanceLink, "getOriginalStructureId",
+				ddmDataProviderInstanceLink, "getOriginalStructureId",
 				new Class<?>[0]));
 	}
 

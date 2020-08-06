@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -558,31 +559,70 @@ public class CalendarResourcePersistenceTest {
 
 		_persistence.clearCache();
 
-		CalendarResource existingCalendarResource =
-			_persistence.findByPrimaryKey(newCalendarResource.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newCalendarResource.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		CalendarResource newCalendarResource = addCalendarResource();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			CalendarResource.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"calendarResourceId",
+				newCalendarResource.getCalendarResourceId()));
+
+		List<CalendarResource> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(CalendarResource calendarResource) {
 		Assert.assertTrue(
 			Objects.equals(
-				existingCalendarResource.getUuid(),
+				calendarResource.getUuid(),
 				ReflectionTestUtil.invoke(
-					existingCalendarResource, "getOriginalUuid",
-					new Class<?>[0])));
+					calendarResource, "getOriginalUuid", new Class<?>[0])));
 		Assert.assertEquals(
-			Long.valueOf(existingCalendarResource.getGroupId()),
+			Long.valueOf(calendarResource.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCalendarResource, "getOriginalGroupId",
-				new Class<?>[0]));
+				calendarResource, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingCalendarResource.getClassNameId()),
+			Long.valueOf(calendarResource.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCalendarResource, "getOriginalClassNameId",
-				new Class<?>[0]));
+				calendarResource, "getOriginalClassNameId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingCalendarResource.getClassPK()),
+			Long.valueOf(calendarResource.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCalendarResource, "getOriginalClassPK",
-				new Class<?>[0]));
+				calendarResource, "getOriginalClassPK", new Class<?>[0]));
 	}
 
 	protected CalendarResource addCalendarResource() throws Exception {

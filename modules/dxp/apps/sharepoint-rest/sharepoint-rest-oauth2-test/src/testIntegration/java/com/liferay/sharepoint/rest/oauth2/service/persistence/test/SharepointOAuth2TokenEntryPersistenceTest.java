@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -495,21 +496,68 @@ public class SharepointOAuth2TokenEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		SharepointOAuth2TokenEntry existingSharepointOAuth2TokenEntry =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newSharepointOAuth2TokenEntry.getPrimaryKey());
+				newSharepointOAuth2TokenEntry.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		SharepointOAuth2TokenEntry newSharepointOAuth2TokenEntry =
+			addSharepointOAuth2TokenEntry();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			SharepointOAuth2TokenEntry.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"sharepointOAuth2TokenEntryId",
+				newSharepointOAuth2TokenEntry.
+					getSharepointOAuth2TokenEntryId()));
+
+		List<SharepointOAuth2TokenEntry> result =
+			_persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
 
 		Assert.assertEquals(
-			Long.valueOf(existingSharepointOAuth2TokenEntry.getUserId()),
+			Long.valueOf(sharepointOAuth2TokenEntry.getUserId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingSharepointOAuth2TokenEntry, "getOriginalUserId",
+				sharepointOAuth2TokenEntry, "getOriginalUserId",
 				new Class<?>[0]));
 		Assert.assertTrue(
 			Objects.equals(
-				existingSharepointOAuth2TokenEntry.getConfigurationPid(),
+				sharepointOAuth2TokenEntry.getConfigurationPid(),
 				ReflectionTestUtil.invoke(
-					existingSharepointOAuth2TokenEntry,
-					"getOriginalConfigurationPid", new Class<?>[0])));
+					sharepointOAuth2TokenEntry, "getOriginalConfigurationPid",
+					new Class<?>[0])));
 	}
 
 	protected SharepointOAuth2TokenEntry addSharepointOAuth2TokenEntry()

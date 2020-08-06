@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -497,28 +498,69 @@ public class SamlSpSessionPersistenceTest {
 
 		_persistence.clearCache();
 
-		SamlSpSession existingSamlSpSession = _persistence.findByPrimaryKey(
-			newSamlSpSession.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newSamlSpSession.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		SamlSpSession newSamlSpSession = addSamlSpSession();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			SamlSpSession.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"samlSpSessionId", newSamlSpSession.getSamlSpSessionId()));
+
+		List<SamlSpSession> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(SamlSpSession samlSpSession) {
 		Assert.assertTrue(
 			Objects.equals(
-				existingSamlSpSession.getSamlSpSessionKey(),
+				samlSpSession.getSamlSpSessionKey(),
 				ReflectionTestUtil.invoke(
-					existingSamlSpSession, "getOriginalSamlSpSessionKey",
+					samlSpSession, "getOriginalSamlSpSessionKey",
 					new Class<?>[0])));
 
 		Assert.assertTrue(
 			Objects.equals(
-				existingSamlSpSession.getJSessionId(),
+				samlSpSession.getJSessionId(),
 				ReflectionTestUtil.invoke(
-					existingSamlSpSession, "getOriginalJSessionId",
-					new Class<?>[0])));
+					samlSpSession, "getOriginalJSessionId", new Class<?>[0])));
 
 		Assert.assertTrue(
 			Objects.equals(
-				existingSamlSpSession.getSessionIndex(),
+				samlSpSession.getSessionIndex(),
 				ReflectionTestUtil.invoke(
-					existingSamlSpSession, "getOriginalSessionIndex",
+					samlSpSession, "getOriginalSessionIndex",
 					new Class<?>[0])));
 	}
 

@@ -171,7 +171,7 @@ const ExportTranslationModal = ({
 						<ExportFileFormats />
 					</ClayForm.Group>
 
-					<h5>{Liferay.Language.get('origin-language')}</h5>
+					<h5>{Liferay.Language.get('original-language')}</h5>
 
 					<ClayForm.Group>
 						<SourceLocales />

@@ -23,6 +23,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -30,6 +32,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -103,6 +106,34 @@ public class AssetBrowserManagementToolbarDisplayContext
 				dropdownItem.setLabel(
 					LanguageUtil.format(
 						request, "add-x", _getAddButtonLabel(), false));
+			}
+		).build();
+	}
+
+	@Override
+	public List<LabelItem> getFilterLabelItems() {
+		String scope = ParamUtil.getString(request, "scope");
+
+		if (Validator.isNull(scope)) {
+			return null;
+		}
+
+		return LabelItemListBuilder.add(
+			labelItem -> {
+				PortletURL removeLabelURL = PortletURLUtil.clone(
+					getPortletURL(), liferayPortletResponse);
+
+				removeLabelURL.setParameter("scope", (String)null);
+
+				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+
+				labelItem.setCloseable(true);
+
+				String label = String.format(
+					"%s: %s", LanguageUtil.get(request, "scope"),
+					_getScopeLabel(scope));
+
+				labelItem.setLabel(label);
 			}
 		).build();
 	}
@@ -297,6 +328,14 @@ public class AssetBrowserManagementToolbarDisplayContext
 		}
 
 		return LanguageUtil.get(request, "current-scope");
+	}
+
+	private String _getScopeLabel(String scope) {
+		if (scope.equals("everywhere")) {
+			return LanguageUtil.get(request, "everywhere");
+		}
+
+		return _getCurrentScopeLabel();
 	}
 
 	private boolean _isEverywhereScopeFilter() {

@@ -82,33 +82,11 @@ function loadFields({
 }
 
 export default function ({fieldType, mappedItem, onMappingSelect}) {
-	const collectionFields = useCollectionFields();
+	const collectionFieldSets = useCollectionFields();
 
-	return collectionFields ? (
-		<CollectionMappingSelector
-			collectionFields={collectionFields}
-			fieldType={fieldType}
-			mappedItem={mappedItem}
-			onMappingSelect={onMappingSelect}
-		/>
-	) : (
-		<MappingSelector
-			fieldType={fieldType}
-			mappedItem={mappedItem}
-			onMappingSelect={onMappingSelect}
-		/>
-	);
-}
-
-function CollectionMappingSelector({
-	collectionFields,
-	fieldType,
-	mappedItem,
-	onMappingSelect,
-}) {
-	return (
+	return collectionFieldSets ? (
 		<MappingFieldSelect
-			fieldSets={collectionFields}
+			fieldSets={collectionFieldSets}
 			fieldType={fieldType}
 			onValueSelect={(event) => {
 				if (event.target.value === UNMAPPED_OPTION.value) {
@@ -121,6 +99,12 @@ function CollectionMappingSelector({
 				}
 			}}
 			value={mappedItem.collectionFieldId}
+		/>
+	) : (
+		<MappingSelector
+			fieldType={fieldType}
+			mappedItem={mappedItem}
+			onMappingSelect={onMappingSelect}
 		/>
 	);
 }

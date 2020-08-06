@@ -505,7 +505,7 @@ public class AssetBrowserDisplayContext {
 			filterGroupIds = new long[] {getGroupId()};
 		}
 
-		if (_isEverywhereScopeFilter()) {
+		if (isSearchEverywhere()) {
 			for (long filterGroupId : filterGroupIds) {
 				filterGroupIds = ArrayUtil.append(
 					filterGroupIds,
@@ -586,17 +586,6 @@ public class AssetBrowserDisplayContext {
 		}
 
 		return statuses;
-	}
-
-	private boolean _isEverywhereScopeFilter() {
-		if (Objects.equals(
-				ParamUtil.getString(_httpServletRequest, "scope"),
-				"everywhere")) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private boolean _isShowNonindexable() {

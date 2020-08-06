@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.search.tuning.synonyms.web.internal.index.DocumentToSynonymSetTranslator;
@@ -58,8 +57,7 @@ public class SynonymsDisplayBuilder {
 
 	public SynonymsDisplayBuilder(
 		DocumentToSynonymSetTranslator documentToSynonymSetTranslator,
-		HttpServletRequest httpServletRequest,
-		IndexNameBuilder indexNameBuilder, Language language, Portal portal,
+		HttpServletRequest httpServletRequest, Language language, Portal portal,
 		Queries queries, RenderRequest renderRequest,
 		RenderResponse renderResponse, SearchEngineAdapter searchEngineAdapter,
 		SearchEngineInformation searchEngineInformation, Sorts sorts,
@@ -67,7 +65,6 @@ public class SynonymsDisplayBuilder {
 
 		_documentToSynonymSetTranslator = documentToSynonymSetTranslator;
 		_httpServletRequest = httpServletRequest;
-		_indexNameBuilder = indexNameBuilder;
 		_language = language;
 		_portal = portal;
 		_queries = queries;
@@ -221,8 +218,7 @@ public class SynonymsDisplayBuilder {
 
 	protected SynonymSetIndexName buildSynonymSetIndexName() {
 		return _synonymSetIndexNameBuilder.getSynonymSetIndexName(
-			_indexNameBuilder.getIndexName(
-				_portal.getCompanyId(_renderRequest)));
+			_portal.getCompanyId(_renderRequest));
 	}
 
 	protected CreationMenu getCreationMenu() {
@@ -271,7 +267,6 @@ public class SynonymsDisplayBuilder {
 	private final DocumentToSynonymSetTranslator
 		_documentToSynonymSetTranslator;
 	private final HttpServletRequest _httpServletRequest;
-	private final IndexNameBuilder _indexNameBuilder;
 	private final Language _language;
 	private final Portal _portal;
 	private final Queries _queries;

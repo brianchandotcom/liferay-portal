@@ -46,16 +46,16 @@ public class SynonymSetIndexCreationPortalInstanceLifecycleListener
 			return;
 		}
 
-		String indexName = _indexNameBuilder.getIndexName(
-			company.getCompanyId());
+		long companyId = company.getCompanyId();
 
 		SynonymSetIndexName synonymSetIndexName =
-			_synonymSetIndexNameBuilder.getSynonymSetIndexName(indexName);
+			_synonymSetIndexNameBuilder.getSynonymSetIndexName(companyId);
 
 		if (!_synonymSetIndexReader.isExists(synonymSetIndexName)) {
 			_synonymSetIndexCreator.create(synonymSetIndexName);
 
-			_filterToIndexSynchronizer.copyToIndex(indexName);
+			_filterToIndexSynchronizer.copyToIndex(
+				_indexNameBuilder.getIndexName(companyId), synonymSetIndexName);
 		}
 	}
 

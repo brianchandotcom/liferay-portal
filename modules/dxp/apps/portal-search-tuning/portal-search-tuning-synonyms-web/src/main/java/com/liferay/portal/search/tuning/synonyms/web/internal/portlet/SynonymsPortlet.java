@@ -70,8 +70,8 @@ public class SynonymsPortlet extends MVCPortlet {
 		SynonymsDisplayBuilder synonymsDisplayBuilder =
 			new SynonymsDisplayBuilder(
 				_documentToSynonymSetTranslator,
-				_portal.getHttpServletRequest(renderRequest), _indexNameBuilder,
-				_language, _portal, _queries, renderRequest, renderResponse,
+				_portal.getHttpServletRequest(renderRequest), _language,
+				_portal, _queries, renderRequest, renderResponse,
 				_searchEngineAdapter, _searchEngineInformation, _sorts,
 				_synonymSetIndexNameBuilder);
 

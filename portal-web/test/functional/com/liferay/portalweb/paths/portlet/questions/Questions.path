@@ -129,16 +129,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>QUESTIONS_TOPIC_DROPDOWN_MENU</td>
-	<td>//div[contains(@class,'questions-container')]//div[contains(@class,'dropdown')]/button</td>
-	<td></td>
-</tr>
-<tr>
-	<td>QUESTIONS_TOPIC_DROPDOWN_OPTION</td>
-	<td>//div[contains(@class,'dropdown-menu')]//span[contains(.,'${key_topicName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>QUESTIONS_IMAGE_NAME</td>
 	<td>//img[contains(@src,'${key_imageFileName}')]</td>
 	<td></td>

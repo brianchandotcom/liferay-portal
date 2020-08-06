@@ -141,15 +141,25 @@ definition {
 	}
 
 	macro changeTopic {
-		Click(locator1 = "Questions#QUESTIONS_TOPIC_DROPDOWN_MENU");
+		if (isSet(gotoParentTopic)) {
+			Click(
+				key_topicName = "${gotoParentTopic}",
+				locator1 = "Questions#QUESTIONS_BREADCRUMB_PARENT_TOPIC_BUTTON");
+		}
+		else {
+			Click(
+				key_topicName = "${parentTopicName}",
+				locator1 = "Questions#QUESTIONS_BREADCRUMB_TOPIC_DROPDOWN_TOGGLE");
 
-		Click(
-			key_topicName = "${topicName}",
-			locator1 = "Questions#QUESTIONS_TOPIC_DROPDOWN_OPTION");
+			Click(
+				key_topicName = "${subTopicName}",
+				locator1 = "Questions#QUESTIONS_BREADCRUMB_TOPIC_DROPDOWN_OPTION");
 
-		AssertTextEquals(
-			locator1 = "Questions#QUESTIONS_TOPIC_DROPDOWN_MENU",
-			value1 = "${topicName}");
+			AssertTextEquals(
+				key_topicName = "${subTopicName}",
+				locator1 = "Questions#QUESTIONS_BREADCRUMB_ACTIVE_SUBTOPIC",
+				value1 = "${subTopicName}");
+		}
 	}
 
 	macro clearSearchResults {

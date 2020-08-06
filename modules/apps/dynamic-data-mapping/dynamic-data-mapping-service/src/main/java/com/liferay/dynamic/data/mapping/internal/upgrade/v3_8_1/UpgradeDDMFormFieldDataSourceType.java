@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -119,7 +120,10 @@ public class UpgradeDDMFormFieldDataSourceType extends UpgradeProcess {
 					!dataSourceTypeString.endsWith(StringPool.CLOSE_BRACKET)) {
 
 					jsonObject.put(
-						"dataSourceType", "[\"" + dataSourceType + "\"]");
+						"dataSourceType",
+						JSONUtil.put(
+							dataSourceType
+						).toString());
 				}
 			}
 

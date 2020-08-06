@@ -26,7 +26,7 @@ public class UpgradeDDMTemplate extends UpgradeProcess {
 		runSQL(
 			"update DDMTemplate set templateKey = " +
 				"CONCAT(CAST_TEXT(templateId), '_key') where templateKey IS " +
-					"NULL");
+					"NULL or templateKey = ''");
 	}
 
 }

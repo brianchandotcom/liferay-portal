@@ -37,6 +37,7 @@ import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTTransactionException;
 import com.liferay.portal.kernel.editor.constants.EditorConstants;
 import com.liferay.portal.kernel.exception.ImageResolutionException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -229,6 +230,9 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				"mvcRenderCommandName", "/blogs/edit_entry");
 
 			hideDefaultSuccessMessage(actionRequest);
+		}
+		catch (CTTransactionException ctTransactionException) {
+			throw ctTransactionException;
 		}
 		catch (DuplicateFriendlyURLEntryException | EntryContentException |
 			   EntryCoverImageCropException | EntryDescriptionException |

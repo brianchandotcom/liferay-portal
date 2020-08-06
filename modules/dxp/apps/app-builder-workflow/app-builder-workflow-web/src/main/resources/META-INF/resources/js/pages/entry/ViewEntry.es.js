@@ -128,6 +128,14 @@ export default function ViewEntry({
 									}));
 								});
 							}
+							else {
+								setDataLayoutIds([Number(dataLayoutId)]);
+
+								setState((prevState) => ({
+									...prevState,
+									...state,
+								}));
+							}
 						})
 						.catch(() => {
 							setState((prevState) => ({

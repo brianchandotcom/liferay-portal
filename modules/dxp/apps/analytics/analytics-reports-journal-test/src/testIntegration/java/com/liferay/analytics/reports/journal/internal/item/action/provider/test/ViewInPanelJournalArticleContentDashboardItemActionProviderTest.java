@@ -12,15 +12,15 @@
  *
  */
 
-package com.liferay.analytics.reports.web.internal.item.action.provider.test;
+package com.liferay.analytics.reports.journal.internal.item.action.provider.test;
 
-import com.liferay.analytics.reports.info.action.provider.AnalyticsReportsContentDashboardItemActionProvider;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
+import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
@@ -72,7 +72,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
  * @author David Arques
  */
 @RunWith(Arquillian.class)
-public class AnalyticsReportsContentDashboardItemActionProviderTest {
+public class ViewInPanelJournalArticleContentDashboardItemActionProviderTest {
 
 	@ClassRule
 	@Rule
@@ -119,10 +119,8 @@ public class AnalyticsReportsContentDashboardItemActionProviderTest {
 			TestPropsValues.getUser());
 
 		ContentDashboardItemAction contentDashboardItemAction =
-			_analyticsReportsContentDashboardItemActionProvider.
-				getContentDashboardItemAction(
-					JournalArticle.class.getName(),
-					_journalArticle.getResourcePrimKey(), httpServletRequest);
+			_contentDashboardItemActionProvider.getContentDashboardItemAction(
+				_journalArticle, httpServletRequest);
 
 		Assert.assertEquals(
 			"View Metrics", contentDashboardItemAction.getLabel(LocaleUtil.US));
@@ -169,11 +167,9 @@ public class AnalyticsReportsContentDashboardItemActionProviderTest {
 
 		try {
 			Assert.assertNull(
-				_analyticsReportsContentDashboardItemActionProvider.
+				_contentDashboardItemActionProvider.
 					getContentDashboardItemAction(
-						JournalArticle.class.getName(),
-						_journalArticle.getResourcePrimKey(),
-						_getHttpServletRequest(user)));
+						_journalArticle, _getHttpServletRequest(user)));
 		}
 		finally {
 			_userLocalService.deleteUser(user);
@@ -181,13 +177,11 @@ public class AnalyticsReportsContentDashboardItemActionProviderTest {
 	}
 
 	@Test
-	public void testIsShowContentDashboardItemAction() throws Exception {
+	public void testIsShow() throws Exception {
 		Assert.assertTrue(
-			_analyticsReportsContentDashboardItemActionProvider.
-				isShowContentDashboardItemAction(
-					JournalArticle.class.getName(),
-					_journalArticle.getResourcePrimKey(),
-					_getHttpServletRequest(TestPropsValues.getUser())));
+			_contentDashboardItemActionProvider.isShow(
+				_journalArticle,
+				_getHttpServletRequest(TestPropsValues.getUser())));
 	}
 
 	@Test
@@ -198,11 +192,8 @@ public class AnalyticsReportsContentDashboardItemActionProviderTest {
 
 		try {
 			Assert.assertFalse(
-				_analyticsReportsContentDashboardItemActionProvider.
-					isShowContentDashboardItemAction(
-						JournalArticle.class.getName(),
-						_journalArticle.getResourcePrimKey(),
-						_getHttpServletRequest(user)));
+				_contentDashboardItemActionProvider.isShow(
+					_journalArticle, _getHttpServletRequest(user)));
 		}
 		finally {
 			_userLocalService.deleteUser(user);
@@ -255,12 +246,6 @@ public class AnalyticsReportsContentDashboardItemActionProviderTest {
 		return themeDisplay;
 	}
 
-	@Inject(
-		filter = "component.name=com.liferay.analytics.reports.web.internal.item.action.provider.AnalyticsReportsContentDashboardItemActionProviderImpl"
-	)
-	private AnalyticsReportsContentDashboardItemActionProvider
-		_analyticsReportsContentDashboardItemActionProvider;
-
 	@Inject
 	private AssetDisplayPageEntryLocalService
 		_assetDisplayPageEntryLocalService;
@@ -270,6 +255,12 @@ public class AnalyticsReportsContentDashboardItemActionProviderTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject(
+		filter = "component.name=com.liferay.analytics.reports.journal.internal.item.action.provider.ViewInPanelJournalArticleContentDashboardItemActionProvider"
+	)
+	private ContentDashboardItemActionProvider
+		_contentDashboardItemActionProvider;
 
 	@DeleteAfterTestRun
 	private Group _group;

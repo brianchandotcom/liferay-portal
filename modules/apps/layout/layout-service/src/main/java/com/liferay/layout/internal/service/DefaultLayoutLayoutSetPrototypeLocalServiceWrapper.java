@@ -14,6 +14,7 @@
 
 package com.liferay.layout.internal.service;
 
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -68,6 +69,10 @@ public class DefaultLayoutLayoutSetPrototypeLocalServiceWrapper
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Home", null, null,
 				LayoutConstants.TYPE_CONTENT, false, "/home", serviceContext);
 
+			_layoutPageTemplateStructureLocalService.
+				rebuildLayoutPageTemplateStructure(
+					layoutSetPrototype.getGroupId(), defaultLayout.getPlid());
+
 			Layout draftLayout = defaultLayout.fetchDraftLayout();
 
 			UnicodeProperties unicodeProperties =
@@ -77,7 +82,11 @@ public class DefaultLayoutLayoutSetPrototypeLocalServiceWrapper
 
 			draftLayout.setTypeSettingsProperties(unicodeProperties);
 
-			_layoutLocalService.updateLayout(draftLayout);
+			draftLayout = _layoutLocalService.updateLayout(draftLayout);
+
+			_layoutPageTemplateStructureLocalService.
+				rebuildLayoutPageTemplateStructure(
+					layoutSetPrototype.getGroupId(), draftLayout.getPlid());
 		}
 
 		return layoutSetPrototype;
@@ -85,5 +94,9 @@ public class DefaultLayoutLayoutSetPrototypeLocalServiceWrapper
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
 
 }

@@ -31,7 +31,7 @@
 </tr>
 <tr>
 	<td>REVIEW_DATA_SCOPE_SELECTED</td>
-	<td>//div[label[contains(.,'${key_scope}')]]//input[contains(@checked,'checked')]</td>
+	<td>//div[label[contains(.,'${key_scope}')]]//input[@checked]</td>
 	<td></td>
 </tr>
 <tr>
@@ -47,7 +47,7 @@
 </tr>
 <tr>
 	<td>REVIEW_DATA_APPLICATIONS_SELECTED</td>
-	<td>//div[label[contains(.,'${key_applications}')]]//input[contains(@checked,'checked')]</td>
+	<td>//div[label[contains(.,'${key_applications}')]]//input[@checked]</td>
 	<td></td>
 </tr>
 <tr>

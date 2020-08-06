@@ -508,6 +508,7 @@ const createReducer = (dataLayoutBuilder) => {
 
 				return {
 					...state,
+					focusedCustomObjectField: {},
 					focusedField: {},
 				};
 			}

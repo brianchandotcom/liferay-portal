@@ -38,12 +38,16 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.util.Arrays;
 import java.util.List;
+
+import org.apache.log4j.Level;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -60,27 +64,32 @@ public class SegmentResourceTest extends BaseSegmentResourceTestCase {
 	@Before
 	@Override
 	public void setUp() throws Exception {
-		super.setUp();
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"com.liferay.petra.mail.MailEngine", Level.OFF)) {
 
-		_adminUser = UserTestUtil.addGroupAdminUser(testGroup);
+			super.setUp();
 
-		_user = UserTestUtil.addUser(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			RandomTestUtil.randomString(),
-			RandomTestUtil.randomString() + StringPool.AT + "liferay.com",
-			RandomTestUtil.randomString(), LocaleUtil.getDefault(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			ServiceContextTestUtil.getServiceContext());
+			_adminUser = UserTestUtil.addGroupAdminUser(testGroup);
 
-		UserLocalServiceUtil.updateEmailAddressVerified(
-			_user.getUserId(), true);
+			_user = UserTestUtil.addUser(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				RandomTestUtil.randomString(),
+				RandomTestUtil.randomString() + StringPool.AT + "liferay.com",
+				RandomTestUtil.randomString(), LocaleUtil.getDefault(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				null, ServiceContextTestUtil.getServiceContext());
 
-		Role role = RoleLocalServiceUtil.getRole(
-			testCompany.getCompanyId(), RoleConstants.POWER_USER);
+			UserLocalServiceUtil.updateEmailAddressVerified(
+				_user.getUserId(), true);
 
-		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
-			new long[] {_user.getUserId()}, testGroup.getGroupId(),
-			role.getRoleId());
+			Role role = RoleLocalServiceUtil.getRole(
+				testCompany.getCompanyId(), RoleConstants.POWER_USER);
+
+			UserGroupRoleLocalServiceUtil.addUserGroupRoles(
+				new long[] {_user.getUserId()}, testGroup.getGroupId(),
+				role.getRoleId());
+		}
 	}
 
 	@Test

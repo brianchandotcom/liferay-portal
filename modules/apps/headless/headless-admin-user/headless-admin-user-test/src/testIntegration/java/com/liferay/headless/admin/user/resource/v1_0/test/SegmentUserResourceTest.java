@@ -29,11 +29,15 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.log4j.Level;
 
 import org.junit.Assert;
 import org.junit.Rule;
@@ -105,15 +109,20 @@ public class SegmentUserResourceTest extends BaseSegmentUserResourceTestCase {
 			Long segmentId, SegmentUser segmentUser)
 		throws Exception {
 
-		User user = UserTestUtil.addUser(
-			PortalUtil.getDefaultCompanyId(), UserConstants.USER_ID_DEFAULT,
-			null, segmentUser.getEmailAddress(), StringPool.BLANK,
-			LocaleUtil.getDefault(), segmentUser.getName(),
-			segmentUser.getName(), null, new ServiceContext());
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"com.liferay.petra.mail.MailEngine", Level.OFF)) {
 
-		_users.add(user);
+			User user = UserTestUtil.addUser(
+				PortalUtil.getDefaultCompanyId(), UserConstants.USER_ID_DEFAULT,
+				null, segmentUser.getEmailAddress(), StringPool.BLANK,
+				LocaleUtil.getDefault(), segmentUser.getName(),
+				segmentUser.getName(), null, new ServiceContext());
 
-		return _toSegmentUser(user);
+			_users.add(user);
+
+			return _toSegmentUser(user);
+		}
 	}
 
 	@Override

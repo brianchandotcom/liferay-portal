@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -41,6 +43,8 @@ import com.liferay.portal.vulcan.pagination.Page;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+
+import org.apache.log4j.Level;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -62,10 +66,15 @@ public class PhoneResourceFactoryImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_organization = OrganizationTestUtil.addOrganization();
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"com.liferay.petra.mail.MailEngine", Level.OFF)) {
 
-		_companyAdminUser = UserTestUtil.addCompanyAdminUser(
-			_companyLocalService.getCompany(_organization.getCompanyId()));
+			_organization = OrganizationTestUtil.addOrganization();
+
+			_companyAdminUser = UserTestUtil.addCompanyAdminUser(
+				_companyLocalService.getCompany(_organization.getCompanyId()));
+		}
 	}
 
 	@Test
@@ -79,37 +88,47 @@ public class PhoneResourceFactoryImplTest {
 
 	@Test
 	public void testCheckPermissionsWithUser1() throws Exception {
-		User user = UserTestUtil.addUser();
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"com.liferay.petra.mail.MailEngine", Level.OFF)) {
 
-		try {
-			_testCheckPermissions(
-				PhoneResource.builder(
-				).checkPermissions(
-					false
-				).user(
-					user
-				).build());
-		}
-		finally {
-			_userLocalService.deleteUser(user);
+			User user = UserTestUtil.addUser();
+
+			try {
+				_testCheckPermissions(
+					PhoneResource.builder(
+					).checkPermissions(
+						false
+					).user(
+						user
+					).build());
+			}
+			finally {
+				_userLocalService.deleteUser(user);
+			}
 		}
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testCheckPermissionsWithUser2() throws Exception {
-		User user = UserTestUtil.addUser();
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"com.liferay.petra.mail.MailEngine", Level.OFF)) {
 
-		try {
-			_testCheckPermissions(
-				PhoneResource.builder(
-				).checkPermissions(
-					true
-				).user(
-					user
-				).build());
-		}
-		finally {
-			_userLocalService.deleteUser(user);
+			User user = UserTestUtil.addUser();
+
+			try {
+				_testCheckPermissions(
+					PhoneResource.builder(
+					).checkPermissions(
+						true
+					).user(
+						user
+					).build());
+			}
+			finally {
+				_userLocalService.deleteUser(user);
+			}
 		}
 	}
 

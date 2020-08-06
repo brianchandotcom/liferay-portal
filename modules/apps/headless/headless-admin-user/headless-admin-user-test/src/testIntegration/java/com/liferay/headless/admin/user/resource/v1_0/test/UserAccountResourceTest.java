@@ -44,6 +44,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.Arrays;
@@ -53,6 +55,7 @@ import java.util.List;
 import java.util.function.Function;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.log4j.Level;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -83,6 +86,17 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			_testUser.getModelClassName());
 
 		indexer.reindex(_testUser);
+	}
+
+	@Override
+	@Test
+	public void testDeleteUserAccount() throws Exception {
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"com.liferay.petra.mail.MailEngine", Level.OFF)) {
+
+			super.testDeleteUserAccount();
+		}
 	}
 
 	@Override
@@ -239,6 +253,16 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			Arrays.asList(
 				UserAccountSerDes.toDTOs(
 					userAccountsJSONObject.getString("items"))));
+	}
+
+	@Test
+	public void testPutUserAccount() throws Exception {
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"com.liferay.petra.mail.MailEngine", Level.OFF)) {
+
+			super.testPutUserAccount();
+		}
 	}
 
 	@Override
@@ -406,11 +430,16 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	private UserAccount _addUserAccount(long siteId, UserAccount userAccount)
 		throws Exception {
 
-		userAccount = userAccountResource.postUserAccount(userAccount);
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"com.liferay.petra.mail.MailEngine", Level.OFF)) {
 
-		_userLocalService.addGroupUser(siteId, userAccount.getId());
+			userAccount = userAccountResource.postUserAccount(userAccount);
 
-		return userAccount;
+			_userLocalService.addGroupUser(siteId, userAccount.getId());
+
+			return userAccount;
+		}
 	}
 
 	private void _assertUserAccountContactInformation(

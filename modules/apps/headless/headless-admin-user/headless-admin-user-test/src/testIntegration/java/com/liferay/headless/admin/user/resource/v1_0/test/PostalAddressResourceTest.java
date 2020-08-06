@@ -29,8 +29,13 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 
 import java.util.List;
+
+import org.apache.ecs.xhtml.address;
+import org.apache.log4j.Level;
 
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -45,10 +50,15 @@ public class PostalAddressResourceTest
 	@Before
 	@Override
 	public void setUp() throws Exception {
-		super.setUp();
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"com.liferay.petra.mail.MailEngine", Level.OFF)) {
 
-		_organization = OrganizationTestUtil.addOrganization();
-		_user = UserTestUtil.addGroupAdminUser(testGroup);
+			super.setUp();
+
+			_organization = OrganizationTestUtil.addOrganization();
+			_user = UserTestUtil.addGroupAdminUser(testGroup);
+		}
 	}
 
 	@Override

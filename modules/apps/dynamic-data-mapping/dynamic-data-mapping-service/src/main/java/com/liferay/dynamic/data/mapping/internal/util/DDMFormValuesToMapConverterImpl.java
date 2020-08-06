@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToMapConverter;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -32,12 +33,13 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -146,57 +148,19 @@ public class DDMFormValuesToMapConverterImpl
 			return;
 		}
 
-		String name = ddmFormField.getName();
-
 		Value value = ddmFormFieldValue.getValue();
 
 		if (value == null) {
-			values.put(name, null);
-
 			return;
 		}
 
-		if (ddmFormField.isRepeatable()) {
-			if (ddmFormField.isLocalizable()) {
-				Map<String, Object> localizedValues =
-					(Map<String, Object>)values.getOrDefault(
-						name, new HashMap<>());
-
-				LocalizedValue localizedValue = (LocalizedValue)value;
-
-				Set<Locale> availableLocales =
-					localizedValue.getAvailableLocales();
-
-				for (Locale locale : availableLocales) {
-					String languageId = LanguageUtil.getLanguageId(locale);
-
-					List<Object> list =
-						(List<Object>)localizedValues.getOrDefault(
-							languageId, new ArrayList<>());
-
-					list.add(localizedValue.getString(locale));
-
-					localizedValues.put(languageId, list);
-				}
-
-				values.put(name, localizedValues);
-			}
-			else {
-				List<Object> list = (List<Object>)values.getOrDefault(
-					name, new ArrayList<>());
-
-				list.add(value.getString(value.getDefaultLocale()));
-
-				values.put(name, list);
-			}
-		}
-		else if (ddmFormField.isLocalizable()) {
+		if (ddmFormField.isLocalizable()) {
 			values.put(
-				name,
+				"value",
 				_toLocalizedMap(ddmFormField.getType(), (LocalizedValue)value));
 		}
 		else {
-			values.put(name, value.getString(value.getDefaultLocale()));
+			values.put("value", value.getString(value.getDefaultLocale()));
 		}
 	}
 
@@ -207,41 +171,39 @@ public class DDMFormValuesToMapConverterImpl
 		DDMFormField ddmFormField = ddmFormFields.get(
 			ddmFormFieldValue.getName());
 
+		Map<String, Object> fieldInstanceValue =
+			(Map<String, Object>)values.computeIfAbsent(
+				_getFieldValueInstanceKey(ddmFormFieldValue),
+				k -> new LinkedHashMap<>());
+
+		if (!Objects.equals(ddmFormField.getType(), "fieldset")) {
+			_addValue(ddmFormField, ddmFormFieldValue, fieldInstanceValue);
+		}
+
 		if ((ddmFormField != null) &&
-			StringUtil.equals(ddmFormField.getType(), "fieldset")) {
+			ListUtil.isNotEmpty(
+				ddmFormFieldValue.getNestedDDMFormFieldValues())) {
 
-			if (ListUtil.isEmpty(
-					ddmFormFieldValue.getNestedDDMFormFieldValues())) {
-
-				return;
-			}
-
-			if (!values.containsKey(ddmFormField.getName())) {
-				values.put(ddmFormField.getName(), new HashMap<>());
-			}
-
-			Map<String, Object> fieldSetInstanceValues =
-				(Map<String, Object>)values.get(ddmFormField.getName());
-
-			if (!fieldSetInstanceValues.containsKey(
-					ddmFormFieldValue.getInstanceId())) {
-
-				fieldSetInstanceValues.put(
-					ddmFormFieldValue.getInstanceId(), new HashMap<>());
-			}
+			Map<String, Object> nestedFieldInstanceValues =
+				(Map<String, Object>)fieldInstanceValue.computeIfAbsent(
+					"nestedValues", k -> new LinkedHashMap<>());
 
 			for (DDMFormFieldValue nestedDDMFormFieldValue :
 					ddmFormFieldValue.getNestedDDMFormFieldValues()) {
 
 				_addValues(
 					ddmFormFields, nestedDDMFormFieldValue,
-					(Map<String, Object>)fieldSetInstanceValues.get(
-						ddmFormFieldValue.getInstanceId()));
+					nestedFieldInstanceValues);
 			}
 		}
-		else {
-			_addValue(ddmFormField, ddmFormFieldValue, values);
-		}
+	}
+
+	private String _getFieldValueInstanceKey(
+		DDMFormFieldValue ddmFormFieldValue) {
+
+		return StringBundler.concat(
+			ddmFormFieldValue.getName(), "_INSTANCE_",
+			ddmFormFieldValue.getInstanceId());
 	}
 
 	private Map<String, Object> _toLocalizedMap(

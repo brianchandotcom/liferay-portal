@@ -1493,7 +1493,6 @@ public class DataFactory {
 		cpInstanceModel.setGtin("GTIN" + instanceKey);
 		cpInstanceModel.setManufacturerPartNumber("MPN" + instanceKey);
 		cpInstanceModel.setPurchasable(true);
-		cpInstanceModel.setJson("[]");
 		cpInstanceModel.setWidth((index * 2) + 1);
 		cpInstanceModel.setHeight(index + 5);
 		cpInstanceModel.setDepth(index);

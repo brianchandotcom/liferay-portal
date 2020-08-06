@@ -182,7 +182,15 @@ definition {
 
 		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
 
-		FormViewBuilder.validateFieldLabel(fieldLabel = "Text");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Text Field");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Text Field");
+
+		FormViewBuilder.closeSidebar();
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Select from List");
+
+		FormViewBuilder.setFieldLabel(fieldLabel = "Options");
 
 		Click(locator1 = "FormViewBuilder#RULES_TAB");
 
@@ -195,14 +203,14 @@ definition {
 		FormRules.viewInactiveSaveButton();
 
 		FormRules.configureConditionOptions(
-			conditionField = "Text",
+			conditionField = "Text Field",
 			conditionOperator = "Is not empty",
 			conditionRowNumber = "1");
 
 		FormRules.configureActionOptions(
 			action = "Show",
 			actionRowNumber = "1",
-			actionTarget = "Text");
+			actionTarget = "Options");
 
 		FormViewBuilder.ruleSave();
 
@@ -223,24 +231,30 @@ definition {
 		FormViewBuilder.editRules();
 
 		FormRules.configureConditionOptions(
-			conditionField = "Text",
+			conditionField = "Text Field",
 			conditionOperator = "Is empty",
 			conditionRowNumber = "1");
 
 		FormRules.configureActionOptions(
 			action = "Show",
 			actionRowNumber = "1",
-			actionTarget = "Text");
+			actionTarget = "Options");
 
 		FormViewBuilder.ruleSave();
 
+		FormViewBuilder.validateRuleSummary(
+			action = "Show",
+			condition = "Is Empty",
+			firstField = "Text",
+			secondField = "Select from List");
+
 		Type(
 			locator1 = "FormViewBuilder#RULE_BUILDER_FORM_VIEW_NAME",
-			value1 = "Test");
+			value1 = "Text Field");
 
 		FormViewBuilder.saveFormView();
 
-		FormViewBuilder.assertFormView(formViewName = "Test");
+		FormViewBuilder.assertFormView(formViewName = "Text Field");
 	}
 
 	@description = "Add a Form View with a Date field"

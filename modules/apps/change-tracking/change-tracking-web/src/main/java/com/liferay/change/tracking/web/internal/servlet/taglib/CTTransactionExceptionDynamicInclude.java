@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.Writer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -51,9 +51,9 @@ public class CTTransactionExceptionDynamicInclude extends BaseDynamicInclude {
 			return;
 		}
 
-		PrintWriter printWriter = httpServletResponse.getWriter();
+		Writer writer = httpServletResponse.getWriter();
 
-		printWriter.write(
+		writer.write(
 			StringBundler.concat(
 				"<script>Liferay.Util.openToast({autoClose:10000,message:'",
 				_language.get(

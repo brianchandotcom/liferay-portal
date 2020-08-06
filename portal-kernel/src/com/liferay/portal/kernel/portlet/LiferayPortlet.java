@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.portlet;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.change.tracking.CTTransactionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -112,7 +113,14 @@ public class LiferayPortlet extends GenericPortlet {
 		catch (PortletException portletException) {
 			Throwable throwable = portletException.getCause();
 
-			if (isSessionErrorException(throwable)) {
+			if (throwable instanceof CTTransactionException) {
+				_log.error(throwable, throwable);
+
+				SessionErrors.add(
+					PortalUtil.getHttpServletRequest(actionRequest),
+					throwable.getClass(), throwable);
+			}
+			else if (isSessionErrorException(throwable)) {
 				SessionErrors.add(
 					actionRequest, throwable.getClass(), throwable);
 			}

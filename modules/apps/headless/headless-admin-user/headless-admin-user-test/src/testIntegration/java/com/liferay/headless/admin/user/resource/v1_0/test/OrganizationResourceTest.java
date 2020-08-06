@@ -24,13 +24,9 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.log4j.Level;
 
 import org.junit.After;
 import org.junit.Before;
@@ -45,14 +41,9 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 	@Before
 	@Override
 	public void setUp() throws Exception {
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"com.liferay.petra.mail.MailEngine", Level.OFF)) {
+		super.setUp();
 
-			super.setUp();
-
-			_user = UserTestUtil.addGroupAdminUser(testGroup);
-		}
+		_user = UserTestUtil.addGroupAdminUser(testGroup);
 	}
 
 	@After

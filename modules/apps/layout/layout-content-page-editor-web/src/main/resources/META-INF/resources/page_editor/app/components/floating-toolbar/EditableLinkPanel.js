@@ -21,27 +21,40 @@ import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import selectEditableValue from '../../selectors/selectEditableValue';
 import selectEditableValues from '../../selectors/selectEditableValues';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
-import {useDispatch, useSelector} from '../../store/index';
+import {useDispatch, useSelector, useSelectorCallback} from '../../store/index';
 import updateEditableValues from '../../thunks/updateEditableValues';
+import {deepEqual} from '../../utils/checkDeepEqual';
 import LinkField, {
 	TARGET_OPTIONS,
 } from '../fragment-configuration-fields/LinkField';
 
 export default function EditableLinkPanel({item}) {
 	const dispatch = useDispatch();
-	const state = useSelector((state) => state);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
-	const editableValues = selectEditableValues(
-		state,
-		item.fragmentEntryLinkId
+	const editableValues = useSelectorCallback(
+		(state) => selectEditableValues(state, item.fragmentEntryLinkId),
+		[item.fragmentEntryLinkId]
 	);
 
-	const editableValue = selectEditableValue(
-		state,
-		item.fragmentEntryLinkId,
-		item.editableId,
-		EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+	const editableValue = useSelectorCallback(
+		(state) => {
+			const editableValue =
+				selectEditableValue(
+					state,
+					item.fragmentEntryLinkId,
+					item.editableId,
+					EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+				) || {};
+
+			if (!editableValue.config) {
+				editableValue.config = {};
+			}
+
+			return editableValue;
+		},
+		[item.fragmentEntryLinkId, item.editableId],
+		deepEqual
 	);
 
 	const handleValueSelect = (_, nextConfig) => {

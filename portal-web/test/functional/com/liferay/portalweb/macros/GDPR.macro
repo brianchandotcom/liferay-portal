@@ -110,7 +110,7 @@ definition {
 
 			AssertConfirm.assertConfirmationNoError(value1 = "Are you sure you want to delete the selected items?");
 
-			if (IsElementPresent(locator1 = "NavTab#TAB_LINK", key_tab = "Auto Anonymize Data")) {
+			if (isSet(anonymizeData)) {
 				AssertElementPresent(
 					key_tab = "Auto Anonymize Data",
 					locator1 = "NavTab#ACTIVE_TAB_LINK");

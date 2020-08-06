@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.test.rule.IgnoreMailTestRule;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.Arrays;
@@ -56,6 +57,8 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -65,6 +68,11 @@ import org.junit.runner.RunWith;
 @DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
+
+	@ClassRule
+	@Rule
+	public static final IgnoreMailTestRule ignoreMailTestRule =
+		IgnoreMailTestRule.INSTANCE;
 
 	@Before
 	@Override

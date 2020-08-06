@@ -38,14 +38,12 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Javier Gamarra
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class MessageBoardThreadResourceTest
 	extends BaseMessageBoardThreadResourceTestCase {
@@ -159,6 +157,7 @@ public class MessageBoardThreadResourceTest
 			super.randomMessageBoardThread();
 
 		messageBoardThread.setMessageBoardSectionId((Long)null);
+		messageBoardThread.setSubscribed(false);
 		messageBoardThread.setThreadType("Urgent");
 
 		return messageBoardThread;

@@ -134,6 +134,26 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro configureItemTypeInManualCollection {
+		if (isSet(itemType)) {
+			Select(
+				locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT",
+				value1 = "${itemType}");
+
+			Pause(locator1 = "3000");
+		}
+
+		if (isSet(itemSubtype)) {
+			Select(
+				locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_SUBTYPE_SELECT",
+				value1 = "${itemSubtype}");
+
+			Pause(locator1 = "3000");
+		}
+
+		PortletEntry.save();
+	}
+
 	macro configureScope {
 		Click(
 			key_title = "${assetListTitle}",

@@ -383,15 +383,8 @@ public class AssetBrowserDisplayContext {
 			return _searchEverywhere;
 		}
 
-		if (Objects.equals(
-				ParamUtil.getString(_httpServletRequest, "scope"),
-				"everywhere")) {
-
-			_searchEverywhere = true;
-		}
-		else {
-			_searchEverywhere = false;
-		}
+		_searchEverywhere = Objects.equals(
+			ParamUtil.getString(_httpServletRequest, "scope"), "everywhere");
 
 		return _searchEverywhere;
 	}

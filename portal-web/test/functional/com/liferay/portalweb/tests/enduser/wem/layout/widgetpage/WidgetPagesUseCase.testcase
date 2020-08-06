@@ -670,6 +670,7 @@ definition {
 	@priority = "5"
 	test ViewSecureContentAndPageAsUser {
 		property test.name.skip.portal.instance = "WidgetPagesUseCase#ViewSecureContentAndPageAsUser";
+		property test.smtp.server.enabled = "true";
 		property testray.component.names = "Message Boards,Site Pages Administration,Training";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

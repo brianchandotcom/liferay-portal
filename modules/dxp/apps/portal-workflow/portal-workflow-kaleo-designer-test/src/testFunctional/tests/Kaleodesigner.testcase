@@ -491,45 +491,12 @@ definition {
 			timerDescription = "Timer Description",
 			timerName = "Timer Name");
 
-		KaleoDesigner.editSourceXML(
-			kdSourceXML = " ",
-			line = "12");
+		for (var iterator : list "1,2,3,4,5,6,7,8,9,10") {
 
-		KaleoDesigner.editSourceXML(
-			kdSourceXML = " ",
-			line = "12");
-
-		KaleoDesigner.editSourceXML(
-			kdSourceXML = " ",
-			line = "12");
-
-		KaleoDesigner.editSourceXML(
-			kdSourceXML = " ",
-			line = "12");
-
-		KaleoDesigner.editSourceXML(
-			kdSourceXML = " ",
-			line = "12");
-
-		KaleoDesigner.editSourceXML(
-			kdSourceXML = " ",
-			line = "12");
-
-		KaleoDesigner.editSourceXML(
-			kdSourceXML = " ",
-			line = "12");
-
-		KaleoDesigner.editSourceXML(
-			kdSourceXML = " ",
-			line = "12");
-
-		KaleoDesigner.editSourceXML(
-			kdSourceXML = " ",
-			line = "12");
-
-		KaleoDesigner.editSourceXML(
-			kdSourceXML = " ",
-			line = "12");
+			KaleoDesigner.editSourceXML(
+				kdSourceXML = " ",
+				line = "12");
+		}
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<name>Timer Name</name>''',
@@ -725,61 +692,21 @@ definition {
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
-		KaleoDesigner.editSourceXML(
-			kdSourceXML = " ",
-			line = "11");
+		for (var iterator : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14") {
 
-		KaleoDesigner.editSourceXML(
-			kdSourceXML = " ",
-			line = "11");
+			var isLessThan10 = MathUtil.isLessThanOrEqualTo("${iterator}", "10");
 
-		KaleoDesigner.editSourceXML(
-			kdSourceXML = " ",
-			line = "11");
-
-		KaleoDesigner.editSourceXML(
-			kdSourceXML = " ",
-			line = "11");
-
-		KaleoDesigner.editSourceXML(
-			kdSourceXML = " ",
-			line = "11");
-
-		KaleoDesigner.editSourceXML(
-			kdSourceXML = " ",
-			line = "11");
-
-		KaleoDesigner.editSourceXML(
-			kdSourceXML = " ",
-			line = "11");
-
-		KaleoDesigner.editSourceXML(
-			kdSourceXML = " ",
-			line = "11");
-
-		KaleoDesigner.editSourceXML(
-			kdSourceXML = " ",
-			line = "11");
-
-		KaleoDesigner.editSourceXML(
-			kdSourceXML = " ",
-			line = "11");
-
-		KaleoDesigner.editSourceXML(
-			kdSourceXML = " ",
-			line = "26");
-
-		KaleoDesigner.editSourceXML(
-			kdSourceXML = " ",
-			line = "26");
-
-		KaleoDesigner.editSourceXML(
-			kdSourceXML = " ",
-			line = "26");
-
-		KaleoDesigner.editSourceXML(
-			kdSourceXML = " ",
-			line = "26");
+			if ("${isLessThan10}" == "true") {
+				KaleoDesigner.editSourceXML(
+					kdSourceXML = " ",
+					line = "11");
+			}
+			else {
+				KaleoDesigner.editSourceXML(
+					kdSourceXML = " ",
+					line = "26");
+			}
+		}
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<script-language>groovy</script-language>''',

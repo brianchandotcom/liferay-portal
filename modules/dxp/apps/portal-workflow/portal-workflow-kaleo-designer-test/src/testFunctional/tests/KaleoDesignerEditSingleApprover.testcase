@@ -62,14 +62,14 @@ definition {
 	test ViewInvalidSourceXMLNotRemainsAfterTabSwitch {
 		KaleoDesigner.editSourceXML(
 			kdSourceXML = "INVALID",
-			line = "4");
+			line = "9");
 
 		KaleoDesigner.viewViewTab();
 
 		KaleoDesigner.viewSourceXMLLine(
 			invalid = "true",
 			kdSourceXML = "INVALID",
-			line = "4");
+			line = "9");
 	}
 
 	@description = "This is a use case for LPS-46657."

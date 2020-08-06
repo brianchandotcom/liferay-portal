@@ -51,13 +51,11 @@ public class ItemSelectorTest {
 	@Test
 	public void testGetgetItemSelectedEventName() {
 		Assert.assertEquals(
-			"_com_liferay_wiki_web_portlet_WikiAdminPortlet" +
-				"_contentEditorselectItem",
+			"eventName",
 			_itemSelector.getItemSelectedEventName(
 				StringBundler.concat(
 					"http://localhost:8080/group/guest/~/control_panel/manage",
-					"/-/select/file/_com_liferay_wiki_web_portlet",
-					"_WikiAdminPortlet_contentEditorselectItem",
+					"/-/select/file/eventName",
 					"?_com_liferay_item_selector_web_portlet",
 					"_ItemSelectorPortlet_0_json=",
 					URLCodec.encodeURL(
@@ -73,8 +71,7 @@ public class ItemSelectorTest {
 			_itemSelector.getItemSelectorCriteria(
 				StringBundler.concat(
 					"http://localhost:8080/group/guest/~/control_panel/manage",
-					"/-/select/file/_com_liferay_wiki_web_portlet",
-					"_WikiAdminPortlet_contentEditorselectItem",
+					"/-/select/file/eventName",
 					"?_com_liferay_item_selector_web_portlet",
 					"_ItemSelectorPortlet_0_json=",
 					URLCodec.encodeURL(
@@ -110,8 +107,7 @@ public class ItemSelectorTest {
 			_itemSelector.getItemSelectorCriteria(
 				StringBundler.concat(
 					"http://localhost:8080/group/guest/~/control_panel/manage",
-					"/-/select/file,audio/_com_liferay_wiki_web_portlet",
-					"_WikiAdminPortlet_contentEditorselectItem",
+					"/-/select/file,audio/eventName",
 					"?_com_liferay_item_selector_web_portlet",
 					"_ItemSelectorPortlet_0_json=",
 					URLCodec.encodeURL(

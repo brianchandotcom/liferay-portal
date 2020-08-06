@@ -14,8 +14,11 @@
 
 package com.liferay.app.builder.service.test;
 
+import com.liferay.app.builder.deploy.AppDeployer;
+import com.liferay.app.builder.deploy.AppDeployerTracker;
 import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.model.AppBuilderAppVersion;
+import com.liferay.app.builder.service.AppBuilderAppDeploymentLocalService;
 import com.liferay.app.builder.service.AppBuilderAppLocalService;
 import com.liferay.app.builder.service.AppBuilderAppVersionLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -64,6 +67,39 @@ public class AppBuilderAppLocalServiceTest {
 	}
 
 	@Test
+	public void testDeleteAppBuilderApp() throws Exception {
+		AppBuilderApp appBuilderApp =
+			_appBuilderAppLocalService.addAppBuilderApp(
+				TestPropsValues.getGroupId(), TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(), true, RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomString());
+
+		_appBuilderAppDeploymentLocalService.addAppBuilderAppDeployment(
+			appBuilderApp.getAppBuilderAppId(), null, "standalone");
+
+		AppDeployer appDeployer = _appDeployerTracker.getAppDeployer(
+			"standalone");
+
+		appDeployer.deploy(appBuilderApp.getAppBuilderAppId());
+
+		appBuilderApp = _appBuilderAppLocalService.fetchAppBuilderApp(
+			appBuilderApp.getAppBuilderAppId());
+
+		Assert.assertNotNull(appBuilderApp);
+
+		_appBuilderAppLocalService.deleteAppBuilderApp(
+			appBuilderApp.getAppBuilderAppId());
+
+		appBuilderApp = _appBuilderAppLocalService.fetchAppBuilderApp(
+			appBuilderApp.getAppBuilderAppId());
+
+		Assert.assertNull(appBuilderApp);
+	}
+
+	@Test
 	public void testUpdateAppBuilderApp() throws Exception {
 		AppBuilderApp appBuilderApp =
 			_appBuilderAppLocalService.addAppBuilderApp(
@@ -100,9 +136,16 @@ public class AppBuilderAppLocalServiceTest {
 	}
 
 	@Inject
+	private AppBuilderAppDeploymentLocalService
+		_appBuilderAppDeploymentLocalService;
+
+	@Inject
 	private AppBuilderAppLocalService _appBuilderAppLocalService;
 
 	@Inject
 	private AppBuilderAppVersionLocalService _appBuilderAppVersionLocalService;
+
+	@Inject
+	private AppDeployerTracker _appDeployerTracker;
 
 }

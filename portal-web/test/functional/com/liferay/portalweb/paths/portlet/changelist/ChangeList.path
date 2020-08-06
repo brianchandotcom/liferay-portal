@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONFICTING_CHANGES_VIEW_BUTTON</td>
+	<td>//div[contains(@class,'autofit-col-expand') and contains(.,'${key_entryTitle}')]//following-sibling::div//a[contains(.,'View')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFICTING_CHANGES_WARNING_CONTENT</td>
 	<td>//div[contains(.,'${key_entryTitle}')]//following-sibling::div[contains(.,'${key_warningMessage}')]</td>
 	<td></td>
@@ -74,6 +79,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCTION_CARD_TITLE</td>
+	<td>//span[contains(@class,'work-on-production')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLICATION_DESCRIPTION</td>
 	<td>//textarea[contains(@name,'description')]</td>
 	<td></td>
@@ -101,11 +111,6 @@
 <tr>
 	<td>SELECT_PUBLICATION_NAME</td>
 	<td>//a[contains(.,'${key_publicationName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PRODUCTION_CARD_TITLE</td>
-	<td>//span[contains(@class,'work-on-production')]</td>
 	<td></td>
 </tr>
 </tbody>

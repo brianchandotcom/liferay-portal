@@ -86,6 +86,21 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro GotoViewDiffInConflictingChanges {
+		Click(
+			key_entryTitle = "${entryTitle}",
+			locator1 = "ChangeList#CONFICTING_CHANGES_VIEW_BUTTON",
+			value1 = "View");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		SelectFrameTop(value1 = "relative=top");
+
+		AssertElementPresent(
+			key_iframeTitle = "${entryTitle}",
+			locator1 = "IFrame#IFRAME_TITLE");
+	}
+
 	macro prepareToPublish {
 		if ("${gotoManagePublications}" == "true") {
 			ApplicationsMenu.gotoPortlet(

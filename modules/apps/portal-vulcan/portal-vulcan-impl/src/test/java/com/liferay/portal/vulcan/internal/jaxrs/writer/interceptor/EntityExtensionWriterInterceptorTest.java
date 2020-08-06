@@ -14,6 +14,9 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.vulcan.internal.jaxrs.extension.ExtendedEntity;
 import com.liferay.portal.vulcan.jaxrs.context.ExtensionContext;
@@ -78,17 +81,17 @@ public class EntityExtensionWriterInterceptorTest {
 		);
 		Mockito.when(
 			_mockedProviders.getContextResolver(
-				Mockito.eq(ExtensionContext.class), Mockito.any())
+				eq(ExtensionContext.class), any())
 		).thenReturn(
 			mockedContextResolver
 		);
 		Mockito.when(
-			mockedContextResolver.getContext(Mockito.eq(Dummy.class))
+			mockedContextResolver.getContext(eq(Dummy.class))
 		).thenReturn(
 			mockedExtensionContext
 		);
 		Mockito.when(
-			mockedExtensionContext.getExtendedProperties(Mockito.eq(entity))
+			mockedExtensionContext.getExtendedProperties(eq(entity))
 		).thenReturn(
 			extendedProperties
 		);
@@ -110,7 +113,7 @@ public class EntityExtensionWriterInterceptorTest {
 		Mockito.verify(
 			_mockedWriterInterceptorContext
 		).setGenericType(
-			Mockito.eq(ExtendedEntity.class)
+			eq(ExtendedEntity.class)
 		);
 		Mockito.verify(
 			_mockedWriterInterceptorContext
@@ -126,7 +129,7 @@ public class EntityExtensionWriterInterceptorTest {
 
 		Mockito.when(
 			_mockedProviders.getContextResolver(
-				Mockito.eq(ExtensionContext.class), Mockito.any())
+				eq(ExtensionContext.class), any())
 		).thenReturn(
 			mockedContextResolver
 		);
@@ -137,12 +140,12 @@ public class EntityExtensionWriterInterceptorTest {
 		Mockito.verify(
 			_mockedWriterInterceptorContext, Mockito.never()
 		).setEntity(
-			Mockito.any()
+			any()
 		);
 		Mockito.verify(
 			_mockedWriterInterceptorContext, Mockito.never()
 		).setGenericType(
-			Mockito.any()
+			any()
 		);
 		Mockito.verify(
 			_mockedWriterInterceptorContext
@@ -159,12 +162,12 @@ public class EntityExtensionWriterInterceptorTest {
 		Mockito.verify(
 			_mockedWriterInterceptorContext, Mockito.never()
 		).setEntity(
-			Mockito.any()
+			any()
 		);
 		Mockito.verify(
 			_mockedWriterInterceptorContext, Mockito.never()
 		).setGenericType(
-			Mockito.any()
+			any()
 		);
 		Mockito.verify(
 			_mockedWriterInterceptorContext

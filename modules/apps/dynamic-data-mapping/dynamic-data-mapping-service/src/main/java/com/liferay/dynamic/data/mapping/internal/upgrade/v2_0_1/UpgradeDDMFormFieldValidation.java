@@ -115,6 +115,12 @@ public class UpgradeDDMFormFieldValidation extends UpgradeProcess {
 			JSONObject validationJSONObject = fieldJSONObject.getJSONObject(
 				"validation");
 
+			if (validationJSONObject == null) {
+				fieldJSONObject.remove("validation");
+
+				continue;
+			}
+
 			JSONObject expressionJSONObject =
 				validationJSONObject.getJSONObject("expression");
 

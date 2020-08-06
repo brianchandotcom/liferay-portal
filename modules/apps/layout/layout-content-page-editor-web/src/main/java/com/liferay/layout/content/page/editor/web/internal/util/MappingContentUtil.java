@@ -16,6 +16,8 @@ package com.liferay.layout.content.page.editor.web.internal.util;
 
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.info.field.InfoField;
+import com.liferay.info.field.InfoFieldSet;
+import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceTracker;
@@ -69,25 +71,64 @@ public class MappingContentUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray defaultFieldSetFieldsJSONArray =
+			JSONFactoryUtil.createJSONArray();
+
+		JSONArray fieldSetsJSONArray = JSONUtil.put(
+			JSONUtil.put("fields", defaultFieldSetFieldsJSONArray));
 
 		InfoForm infoForm = infoItemFormProvider.getInfoForm(
 			formVariationKey, themeDisplay.getScopeGroupId());
 
-		for (InfoField infoField : infoForm.getAllInfoFields()) {
-			InfoFieldType infoFieldType = infoField.getInfoFieldType();
+		for (InfoFieldSetEntry infoFieldSetEntry :
+				infoForm.getInfoFieldSetEntries()) {
 
-			jsonArray.put(
-				JSONUtil.put(
-					"key", infoField.getName()
-				).put(
-					"label", infoField.getLabel(themeDisplay.getLocale())
-				).put(
-					"type", infoFieldType.getName()
-				));
+			if (infoFieldSetEntry instanceof InfoField) {
+				InfoField infoField = (InfoField)infoFieldSetEntry;
+
+				InfoFieldType infoFieldType = infoField.getInfoFieldType();
+
+				defaultFieldSetFieldsJSONArray.put(
+					JSONUtil.put(
+						"key", infoField.getName()
+					).put(
+						"label", infoField.getLabel(themeDisplay.getLocale())
+					).put(
+						"type", infoFieldType.getName()
+					));
+			}
+			else if (infoFieldSetEntry instanceof InfoFieldSet) {
+				JSONArray fieldSetFieldsJSONArray =
+					JSONFactoryUtil.createJSONArray();
+				InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;
+
+				for (InfoField infoField : infoFieldSet.getAllInfoFields()) {
+					fieldSetFieldsJSONArray.put(
+						JSONUtil.put(
+							"key", infoField.getName()
+						).put(
+							"label",
+							infoField.getLabel(themeDisplay.getLocale())
+						).put(
+							"type",
+							infoField.getInfoFieldType(
+							).getName()
+						));
+				}
+
+				if (fieldSetFieldsJSONArray.length() > 0) {
+					fieldSetsJSONArray.put(
+						JSONUtil.put(
+							"fields", fieldSetFieldsJSONArray
+						).put(
+							"label",
+							infoFieldSet.getLabel(themeDisplay.getLocale())
+						));
+				}
+			}
 		}
 
-		return jsonArray;
+		return fieldSetsJSONArray;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

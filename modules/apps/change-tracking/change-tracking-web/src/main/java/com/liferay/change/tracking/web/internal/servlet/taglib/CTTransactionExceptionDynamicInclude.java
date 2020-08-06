@@ -14,7 +14,6 @@
 
 package com.liferay.change.tracking.web.internal.servlet.taglib;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTTransactionException;
 import com.liferay.portal.kernel.language.Language;
@@ -54,14 +53,16 @@ public class CTTransactionExceptionDynamicInclude extends BaseDynamicInclude {
 		Writer writer = httpServletResponse.getWriter();
 
 		writer.write(
-			StringBundler.concat(
-				"<script>Liferay.Util.openToast({autoClose:10000,message:'",
-				_language.get(
-					ResourceBundleUtil.getBundle(
-						_portal.getLocale(httpServletRequest), getClass()),
-					"this-action-can-only-be-performed-in-production-mode"),
-				"',title:'", _language.get(httpServletRequest, "error"),
-				StringPool.COLON, "',type:'danger',});</script>"));
+			"<script>Liferay.Util.openToast({autoClose:10000,message:'");
+		writer.write(
+			_language.get(
+				ResourceBundleUtil.getBundle(
+					_portal.getLocale(httpServletRequest), getClass()),
+				"this-action-can-only-be-performed-in-production-mode"));
+		writer.write("',title:'");
+		writer.write(_language.get(httpServletRequest, "error"));
+		writer.write(StringPool.COLON);
+		writer.write("',type:'danger',});</script>");
 	}
 
 	@Override

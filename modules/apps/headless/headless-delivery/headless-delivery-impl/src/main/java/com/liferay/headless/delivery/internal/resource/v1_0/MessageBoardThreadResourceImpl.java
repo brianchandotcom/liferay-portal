@@ -33,6 +33,7 @@ import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBCategoryService;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.service.MBThreadFlagLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
@@ -606,7 +607,7 @@ public class MessageBoardThreadResourceImpl
 	private MessageBoardThread _toMessageBoardThread(MBThread mbThread)
 		throws Exception {
 
-		MBMessage mbMessage = _mbMessageService.getMessage(
+		MBMessage mbMessage = _mbMessageLocalService.getMessage(
 			mbThread.getRootMessageId());
 
 		return _messageBoardThreadDTOConverter.toDTO(
@@ -717,6 +718,9 @@ public class MessageBoardThreadResourceImpl
 
 	@Reference
 	private MBCategoryService _mbCategoryService;
+
+	@Reference
+	private MBMessageLocalService _mbMessageLocalService;
 
 	@Reference
 	private MBMessageService _mbMessageService;

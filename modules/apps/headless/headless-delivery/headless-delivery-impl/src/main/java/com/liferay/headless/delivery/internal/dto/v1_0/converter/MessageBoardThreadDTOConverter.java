@@ -77,7 +77,7 @@ public class MessageBoardThreadDTOConverter
 			DTOConverterContext dtoConverterContext, MBThread mbThread)
 		throws Exception {
 
-		MBMessage mbMessage = _mbMessageService.getMessage(
+		MBMessage mbMessage = _mbMessageLocalService.getMessage(
 			mbThread.getRootMessageId());
 
 		String languageId = LocaleUtil.toLanguageId(

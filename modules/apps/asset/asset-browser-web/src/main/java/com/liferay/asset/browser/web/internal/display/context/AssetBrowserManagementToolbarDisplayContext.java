@@ -112,29 +112,19 @@ public class AssetBrowserManagementToolbarDisplayContext
 		long[] groupIds = _assetBrowserDisplayContext.getSelectedGroupIds();
 
 		if (groupIds.length <= 1) {
-			return DropdownItemListBuilder.addGroup(
-				dropdownGroupItem -> {
-					dropdownGroupItem.setDropdownItems(
-						DropdownItemListBuilder.add(
-							dropdownItem -> {
-								dropdownItem.setActive(
-									_isEverywhereScopeFilter());
-								dropdownItem.setHref(
-									getPortletURL(), "scope", "everywhere");
-								dropdownItem.setLabel(
-									LanguageUtil.get(request, "everywhere"));
-							}
-						).add(
-							dropdownItem -> {
-								dropdownItem.setActive(
-									!_isEverywhereScopeFilter());
-								dropdownItem.setHref(
-									getPortletURL(), "scope", "current");
-								dropdownItem.setLabel(_getCurrentScopeLabel());
-							}
-						).build());
-					dropdownGroupItem.setLabel(
-						LanguageUtil.get(request, "filter-by-location"));
+			return DropdownItemListBuilder.add(
+				dropdownItem -> {
+					dropdownItem.setActive(_isEverywhereScopeFilter());
+					dropdownItem.setHref(
+						getPortletURL(), "scope", "everywhere");
+					dropdownItem.setLabel(
+						LanguageUtil.get(request, "everywhere"));
+				}
+			).add(
+				dropdownItem -> {
+					dropdownItem.setActive(!_isEverywhereScopeFilter());
+					dropdownItem.setHref(getPortletURL(), "scope", "current");
+					dropdownItem.setLabel(_getCurrentScopeLabel());
 				}
 			).build();
 		}

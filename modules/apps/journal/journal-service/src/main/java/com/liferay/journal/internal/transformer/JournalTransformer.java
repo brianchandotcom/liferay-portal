@@ -265,9 +265,9 @@ public class JournalTransformer {
 					template.prepare(httpServletRequest);
 				}
 				finally {
-					if ((portletRequestModel != null) &&
-						(originalPortletRequest != null) &&
-						(originalPortletResponse != null)) {
+					if ((originalPortletRequest != null) &&
+						(originalPortletResponse != null) &&
+						(portletRequestModel != null)) {
 
 						httpServletRequest.setAttribute(
 							JavaConstants.JAVAX_PORTLET_REQUEST,

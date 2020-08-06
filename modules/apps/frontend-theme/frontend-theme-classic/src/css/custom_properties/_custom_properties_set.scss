@@ -332,6 +332,14 @@ h6,
 	font-size: var(--blockquote-small-font-size);
 }
 
+// Separator
+
+hr {
+	border-top: var(--hr-border-width) solid var(--hr-border-color);
+	margin-bottom: var(--hr-margin-y);
+	margin-top: var(--hr-margin-y);
+}
+
 // Portlet
 
 .portlet {

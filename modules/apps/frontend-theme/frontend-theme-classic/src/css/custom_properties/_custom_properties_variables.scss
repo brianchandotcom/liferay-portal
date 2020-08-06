@@ -168,6 +168,12 @@ $theme-colors-cp: map-deep-merge(
 	--blockquote-small-color: #{$gray-600};
 	--blockquote-small-font-size: #{$small-font-size};
 
+	// Separator
+
+	--hr-border-color: #{$hr-border-color};
+	--hr-border-width: #{$hr-border-width};
+	--hr-margin-y: #{$hr-margin-y};
+
 	// Body
 
 	--body-color: $body-color;

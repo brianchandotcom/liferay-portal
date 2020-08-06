@@ -512,6 +512,25 @@ definition {
 			value1 = "${fieldValue}");
 	}
 
+	macro validateRuleSummary {
+		var key_firstField = "${firstField}";
+		var key_secondField = "${secondField}";
+		var key_condition = "${condition}";
+		var key_action = "${action}";
+		AssertElementPresent(
+			firstField = "${firstField}",
+			locator1 = "FormViewBuilder#RULE_BUILDER_FIRST_FIELD");
+		AssertElementPresent(
+			locator1 = "FormViewBuilder#RULE_BUILDER_SECOND_FIELD",
+			secondField = "${secondField}");
+		AssertElementPresent(
+			condition = "${condition}",
+			locator1 = "FormViewBuilder#RULE_BUILDER_CONDITION");
+		AssertElementPresent(
+			action = "${action}",
+			locator1 = "FormViewBuilder#RULE_BUILDER_ACTION");
+	}
+
 	macro validateSearchResult {
 		var key_fieldName = "${fieldLabel}";
 

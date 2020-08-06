@@ -125,7 +125,7 @@ public class ItemSelectorImpl implements ItemSelector {
 		String itemSelectorURL) {
 
 		Map<String, String[]> parameters = _http.getParameterMap(
-			itemSelectorURL);
+			_http.getQueryString(itemSelectorURL));
 
 		Map<String, String[]> itemSelectorURLParameterMap = new HashMap<>();
 

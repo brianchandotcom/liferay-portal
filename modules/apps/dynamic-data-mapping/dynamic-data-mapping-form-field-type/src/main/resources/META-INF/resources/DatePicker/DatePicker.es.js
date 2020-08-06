@@ -78,7 +78,7 @@ const getDelimiter = (dateFormat) => {
 	return dateDelimiter;
 };
 
-const useDateFormat = () => {
+const getDateFormat = () => {
 	const dateFormat = Liferay.AUI.getDateFormat();
 	const dateDelimiter = getDelimiter(dateFormat);
 
@@ -138,7 +138,7 @@ const DatePicker = ({
 		};
 	});
 
-	const {dateMask, inputMask} = useDateFormat();
+	const {dateMask, inputMask} = getDateFormat();
 
 	useEffect(() => {
 		if (inputRef.current && inputMask && dateMask) {
@@ -152,7 +152,7 @@ const DatePicker = ({
 			});
 			maskInstance.current.update(inputRef.current.value);
 		}
-	}, [inputMask, dateMask]);
+	}, [inputMask, dateMask, inputRef]);
 
 	const handleNavigation = (date) => {
 		const currentYear = date.getFullYear();

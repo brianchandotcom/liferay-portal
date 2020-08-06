@@ -45,21 +45,23 @@ public class CTTransactionExceptionDynamicInclude extends BaseDynamicInclude {
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		if (SessionErrors.contains(
+		if (!SessionErrors.contains(
 				httpServletRequest, CTTransactionException.class)) {
 
-			PrintWriter printWriter = httpServletResponse.getWriter();
-
-			printWriter.write(
-				StringBundler.concat(
-					"<script>Liferay.Util.openToast({autoClose:10000,message:'",
-					_language.get(
-						ResourceBundleUtil.getBundle(
-							_portal.getLocale(httpServletRequest), getClass()),
-						"this-action-can-only-be-performed-in-production-mode"),
-					"',title:'", _language.get(httpServletRequest, "error"),
-					StringPool.COLON, "',type:'danger',});</script>"));
+			return;
 		}
+
+		PrintWriter printWriter = httpServletResponse.getWriter();
+
+		printWriter.write(
+			StringBundler.concat(
+				"<script>Liferay.Util.openToast({autoClose:10000,message:'",
+				_language.get(
+					ResourceBundleUtil.getBundle(
+						_portal.getLocale(httpServletRequest), getClass()),
+					"this-action-can-only-be-performed-in-production-mode"),
+				"',title:'", _language.get(httpServletRequest, "error"),
+				StringPool.COLON, "',type:'danger',});</script>"));
 	}
 
 	@Override

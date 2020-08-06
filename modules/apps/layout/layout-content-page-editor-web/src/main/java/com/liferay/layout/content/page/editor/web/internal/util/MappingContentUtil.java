@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldSetEntry;
+import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceTracker;
@@ -29,8 +30,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.ResourceRequest;
@@ -41,7 +44,7 @@ import javax.portlet.ResourceRequest;
 public class MappingContentUtil {
 
 	public static JSONArray getMappingFieldsJSONArray(
-			String formVariationKey,
+			String fieldType, String formVariationKey,
 			InfoItemServiceTracker infoItemServiceTracker, String itemClassName,
 			ResourceRequest resourceRequest)
 		throws Exception {
@@ -88,21 +91,29 @@ public class MappingContentUtil {
 
 				InfoFieldType infoFieldType = infoField.getInfoFieldType();
 
-				defaultFieldSetFieldsJSONArray.put(
-					JSONUtil.put(
-						"key", infoField.getName()
-					).put(
-						"label", infoField.getLabel(themeDisplay.getLocale())
-					).put(
-						"type", infoFieldType.getName()
-					));
+				if (_isFieldMappable(infoField, fieldType)) {
+					defaultFieldSetFieldsJSONArray.put(
+						JSONUtil.put(
+							"key", infoField.getName()
+						).put(
+							"label",
+							infoField.getLabel(themeDisplay.getLocale())
+						).put(
+							"type", infoFieldType.getName()
+						));
+				}
 			}
 			else if (infoFieldSetEntry instanceof InfoFieldSet) {
 				JSONArray fieldSetFieldsJSONArray =
 					JSONFactoryUtil.createJSONArray();
+
 				InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;
 
-				for (InfoField infoField : infoFieldSet.getAllInfoFields()) {
+				List<InfoField> infoFields = ListUtil.filter(
+					infoFieldSet.getAllInfoFields(),
+					infoField -> _isFieldMappable(infoField, fieldType));
+
+				for (InfoField infoField : infoFields) {
 					fieldSetFieldsJSONArray.put(
 						JSONUtil.put(
 							"key", infoField.getName()
@@ -129,6 +140,21 @@ public class MappingContentUtil {
 		}
 
 		return fieldSetsJSONArray;
+	}
+
+	private static boolean _isFieldMappable(
+		InfoField infoField, String fieldType) {
+
+		boolean imageInfoFieldType =
+			infoField.getInfoFieldType() instanceof ImageInfoFieldType;
+
+		if (Objects.equals(fieldType, "background-image") ||
+			Objects.equals(fieldType, "image")) {
+
+			return imageInfoFieldType;
+		}
+
+		return !imageInfoFieldType;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

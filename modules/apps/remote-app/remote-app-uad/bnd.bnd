@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Remote App UAD
+Bundle-SymbolicName: com.liferay.remote.app.uad
+Bundle-Version: 1.0.0
+-dsannotations-options: inherit

@@ -55,12 +55,12 @@ import javax.portlet.ResourceURL;
  * @author David Arques
  * @author Sarai Díaz
  */
-public class AnalyticsReportsDisplayContext {
+public class AnalyticsReportsDisplayContext<T> {
 
 	public AnalyticsReportsDisplayContext(
 		AnalyticsReportsDataProvider analyticsReportsDataProvider,
-		AnalyticsReportsInfoItem<Object> analyticsReportsInfoItem,
-		Object analyticsReportsInfoItemObject, String canonicalURL,
+		AnalyticsReportsInfoItem<T> analyticsReportsInfoItem,
+		T analyticsReportsInfoItemObject, String canonicalURL,
 		Portal portal, RenderResponse renderResponse,
 		ResourceBundle resourceBundle, ThemeDisplay themeDisplay, User user) {
 
@@ -331,8 +331,8 @@ public class AnalyticsReportsDisplayContext {
 		AnalyticsReportsDisplayContext.class);
 
 	private final AnalyticsReportsDataProvider _analyticsReportsDataProvider;
-	private final AnalyticsReportsInfoItem<Object> _analyticsReportsInfoItem;
-	private final Object _analyticsReportsInfoItemObject;
+	private final AnalyticsReportsInfoItem<T> _analyticsReportsInfoItem;
+	private final T _analyticsReportsInfoItemObject;
 	private final String _canonicalURL;
 	private Map<String, Object> _data;
 	private final Portal _portal;

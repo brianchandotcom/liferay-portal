@@ -132,17 +132,6 @@ public class ItemSelectorImpl implements ItemSelector {
 		String namespace = _portal.getPortletNamespace(
 			ItemSelectorPortletKeys.ITEM_SELECTOR);
 
-		Matcher matcher = _itemSelectorURLPattern.matcher(itemSelectorURL);
-
-		if (matcher.matches()) {
-			parameters.put(
-				namespace + PARAMETER_CRITERIA,
-				new String[] {_http.decodePath(matcher.group(1))});
-			parameters.put(
-				namespace + PARAMETER_ITEM_SELECTED_EVENT_NAME,
-				new String[] {matcher.group(2)});
-		}
-
 		for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
 			String parameterName = entry.getKey();
 
@@ -152,6 +141,17 @@ public class ItemSelectorImpl implements ItemSelector {
 
 				itemSelectorURLParameterMap.put(key, entry.getValue());
 			}
+		}
+
+		Matcher matcher = _itemSelectorURLPattern.matcher(itemSelectorURL);
+
+		if (matcher.matches()) {
+			itemSelectorURLParameterMap.put(
+				PARAMETER_CRITERIA,
+				new String[] {_http.decodePath(matcher.group(1))});
+			itemSelectorURLParameterMap.put(
+				PARAMETER_ITEM_SELECTED_EVENT_NAME,
+				new String[] {matcher.group(2)});
 		}
 
 		return getItemSelectorCriteria(itemSelectorURLParameterMap);

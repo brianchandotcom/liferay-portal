@@ -143,6 +143,7 @@ public class LayoutsAdminManagementToolbarDisplayContext
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			() ->
 				_layoutsAdminDisplayContext.isShowPublicPages() &&
+				_layoutsAdminDisplayContext.isShowAddChildPageAction() &&
 				(!_layoutsAdminDisplayContext.isPrivateLayout() ||
 				 _layoutsAdminDisplayContext.isFirstColumn() ||
 				 !_layoutsAdminDisplayContext.hasLayouts()),
@@ -157,6 +158,7 @@ public class LayoutsAdminManagementToolbarDisplayContext
 		).addPrimaryDropdownItem(
 			() ->
 				_layoutsAdminDisplayContext.isShowPublicPages() &&
+				_layoutsAdminDisplayContext.isShowAddChildPageAction() &&
 				(!_layoutsAdminDisplayContext.isPrivateLayout() ||
 				 _layoutsAdminDisplayContext.isFirstColumn() ||
 				 !_layoutsAdminDisplayContext.hasLayouts()),
@@ -168,7 +170,8 @@ public class LayoutsAdminManagementToolbarDisplayContext
 			}
 		).addPrimaryDropdownItem(
 			() ->
-				_layoutsAdminDisplayContext.isPrivateLayout() ||
+				(_layoutsAdminDisplayContext.isShowAddChildPageAction() &&
+				 _layoutsAdminDisplayContext.isPrivateLayout()) ||
 				_layoutsAdminDisplayContext.isFirstColumn() ||
 				!_layoutsAdminDisplayContext.hasLayouts(),
 			dropdownItem -> {
@@ -256,6 +259,12 @@ public class LayoutsAdminManagementToolbarDisplayContext
 	@Override
 	public Boolean isShowCreationMenu() {
 		try {
+			CreationMenu creationMenu = getCreationMenu();
+
+			if (creationMenu.isEmpty()) {
+				return false;
+			}
+
 			return _layoutsAdminDisplayContext.isShowAddRootLayoutButton();
 		}
 		catch (PortalException portalException) {

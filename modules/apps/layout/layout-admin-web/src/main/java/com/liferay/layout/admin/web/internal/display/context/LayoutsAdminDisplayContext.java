@@ -1296,6 +1296,16 @@ public class LayoutsAdminDisplayContext {
 		return false;
 	}
 
+	public boolean isShowAddChildPageAction() throws PortalException {
+		long selPlid = getSelPlid();
+
+		if (selPlid == LayoutConstants.DEFAULT_PLID) {
+			return true;
+		}
+
+		return isShowAddChildPageAction(getSelLayout());
+	}
+
 	public boolean isShowAddChildPageAction(Layout layout)
 		throws PortalException {
 

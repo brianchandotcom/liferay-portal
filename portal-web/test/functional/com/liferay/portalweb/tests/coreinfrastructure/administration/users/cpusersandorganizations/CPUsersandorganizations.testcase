@@ -1888,27 +1888,20 @@ definition {
 
 	@priority = "4"
 	test ViewLoginForDeactivatedUserViaDeactivateButton {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		var portalURL = PropsUtil.get("portal.url");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.addCP(
+		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -1917,7 +1910,7 @@ definition {
 
 		User.deactivateCP(userFirstName = "userfn");
 
-		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
+		User.logoutPG();
 
 		User.loginUserInvalidPG(
 			password = "test",

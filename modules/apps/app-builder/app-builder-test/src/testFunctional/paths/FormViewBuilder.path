@@ -389,7 +389,7 @@
 </tr>
 <tr>
 	<td>RULE_ADD_BUTTON</td>
-	<td>//button[@class='btn btn-monospaced btn-primary']</td>
+	<td>//div[contains(@class,'multi-panel-sidebar')]//button[@class='btn btn-monospaced btn-primary']</td>
 	<td></td>
 </tr>
 <tr>
@@ -423,6 +423,30 @@
 </tr>
 
 <tr>
+	<td>RULE_BUILDER_FIRST_FIELD</td>
+	<td>//div[contains(@class,'panel-body')]//span[contains(.,'${key_firstField}')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>RULE_BUILDER_SECOND_FIELD</td>
+	<td>//div[contains(@class,'panel-body')]//span[contains(.,'${key_secondField}')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>RULE_BUILDER_CONDITION</td>
+	<td>//div[contains(@class,'panel-body')]//span[contains(.,'${key_condition}')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>RULE_BUILDER_ACTION</td>
+	<td>//div[contains(@class,'panel-body')]//span[contains(.,'${key_action}')]</td>
+	<td></td>
+</tr>
+
+<tr>
 	<td>RULE_BUILDER_SAVE_BUTTON</td>
 	<td>xpath=(//div[contains(@class, 'modal-item-last')]//button[contains(@class,'btn-primary')])[3]</td>
 	<td></td>
@@ -442,13 +466,13 @@
 
 <tr>
 	<td>RULE_BUILDER_DEFAULT_EDIT</td>
-	<td>xpath=(//button[contains(@class, 'dropdown-toggle')])[4]</td>
+	<td>//div[contains(@class, 'collapse-icon-options')]//button[contains(@class, 'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 
 <tr>
 	<td>ASSERT_FORM</td>
-	<td>//td[contains(@class,'table-cell-expand-smaller') and contains(.,'${key_formViewName}')]</td>
+	<td>//td[contains(@class,'table-cell-expand') and contains(.,'${key_formViewName}')]</td>
 	<td></td>
 </tr>
 

@@ -43,6 +43,10 @@ public interface CTDisplayRenderer<T> {
 
 	public String getTypeName(Locale locale);
 
+	public default boolean isHideable(T model) {
+		return false;
+	}
+
 	public void render(DisplayContext<T> displayContext) throws Exception;
 
 }

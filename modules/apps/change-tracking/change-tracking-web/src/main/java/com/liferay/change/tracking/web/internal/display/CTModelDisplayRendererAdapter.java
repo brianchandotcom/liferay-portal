@@ -105,6 +105,11 @@ public class CTModelDisplayRendererAdapter<T extends BaseModel<T>>
 	}
 
 	@Override
+	public boolean isHideable(T model) {
+		return true;
+	}
+
+	@Override
 	public void render(DisplayContext<T> displayContext) throws Exception {
 		HttpServletResponse httpServletResponse =
 			displayContext.getHttpServletResponse();

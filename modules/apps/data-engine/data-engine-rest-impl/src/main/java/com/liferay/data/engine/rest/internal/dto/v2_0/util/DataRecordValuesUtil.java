@@ -14,8 +14,6 @@
 
 package com.liferay.data.engine.rest.internal.dto.v2_0.util;
 
-import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
-import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionField;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
@@ -24,8 +22,6 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -39,8 +35,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.lang.ClassUtils;
@@ -92,43 +86,6 @@ public class DataRecordValuesUtil {
 		}
 
 		return ddmFormValues;
-	}
-
-	public static String toJSON(
-		DataDefinition dataDefinition, Map<String, ?> dataRecordValues) {
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		Map<String, DataDefinitionField> dataDefinitionFields = Stream.of(
-			dataDefinition.getDataDefinitionFields()
-		).collect(
-			Collectors.toMap(
-				dataDefinitionField -> dataDefinitionField.getName(),
-				Function.identity())
-		);
-
-		for (Map.Entry<String, DataDefinitionField> entry :
-				dataDefinitionFields.entrySet()) {
-
-			if (!dataRecordValues.containsKey(entry.getKey())) {
-				continue;
-			}
-
-			DataDefinitionField dataDefinitionField = entry.getValue();
-
-			if (dataDefinitionField.getRepeatable()) {
-				jsonObject.put(
-					entry.getKey(),
-					JSONFactoryUtil.createJSONArray(
-						(List<Object>)dataRecordValues.get(entry.getKey())));
-			}
-			else {
-				jsonObject.put(
-					entry.getKey(), dataRecordValues.get(entry.getKey()));
-			}
-		}
-
-		return jsonObject.toString();
 	}
 
 	protected static List<DDMFormFieldValue> createDDMFormFieldValues(

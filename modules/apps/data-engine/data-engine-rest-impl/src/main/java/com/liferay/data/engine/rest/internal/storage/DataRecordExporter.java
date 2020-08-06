@@ -18,7 +18,7 @@ import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v2_0.DataRecord;
 import com.liferay.data.engine.rest.internal.content.type.DataDefinitionContentTypeTracker;
 import com.liferay.data.engine.rest.internal.dto.v2_0.util.DataDefinitionUtil;
-import com.liferay.data.engine.rest.internal.dto.v2_0.util.DataRecordValuesUtil;
+import com.liferay.data.engine.rest.internal.storage.util.DataStorageUtil;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
@@ -83,7 +83,7 @@ public class DataRecordExporter {
 		DataDefinition dataDefinition, DataRecord dataRecord) {
 
 		try {
-			return DataRecordValuesUtil.toJSON(
+			return DataStorageUtil.toJSON(
 				dataDefinition, dataRecord.getDataRecordValues());
 		}
 		catch (Exception exception) {

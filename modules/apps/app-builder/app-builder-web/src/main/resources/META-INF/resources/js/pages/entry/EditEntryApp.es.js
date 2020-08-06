@@ -17,12 +17,12 @@ import React, {useState} from 'react';
 import {AppContextProvider} from '../../AppContext.es';
 import useLazy from '../../hooks/useLazy.es';
 import TranslationManagerWrapper, {
-	getStorageLocale,
+	getStorageLanguageId,
 } from './TranslationManagerWrapper.es';
 
 export default ({appTab, ...props}) => {
 	const EditPage = useLazy(true);
-	const defaultLanguageId = getStorageLocale(props.appId);
+	const defaultLanguageId = getStorageLanguageId(props.appId);
 	const [userLanguageId, setUserLanguageId] = useState(defaultLanguageId);
 
 	props.userLanguageId = userLanguageId;

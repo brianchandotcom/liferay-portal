@@ -23,14 +23,14 @@ import {navigateToEditPage} from './utils.es';
 
 const storageKey = '@app-builder/standalone/language';
 
-export const setStorageLocale = (value, appId) => {
+export const setStorageLanguageId = (value, appId) => {
 	localStorage.setItem(`${storageKey}/${appId}`, value);
 };
 
-export const getStorageLocale = (appId) => {
+export const getStorageLanguageId = (appId) => {
 	return (
 		localStorage.getItem(`${storageKey}/${appId}`) ||
-		Liferay.ThemeDisplay.getLanguageId()
+		themeDisplay.getLanguageId()
 	);
 };
 
@@ -52,9 +52,8 @@ export default ({
 	});
 	const defaultLanguageId = dataDefinition.defaultLanguageId;
 
-	const onEditingLanguageIdChange = (locale) => {
-		setUserLanguageId(locale);
-		setStorageLocale(locale, appId);
+	const onEditingLanguageIdChange = (languageId) => {
+		setStorageLanguageId(languageId, appId);
 
 		if (reloadPage) {
 			navigateToEditPage(basePortletURL, {dataRecordId, locale});

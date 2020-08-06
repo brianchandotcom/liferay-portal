@@ -19,12 +19,12 @@ import {AppContextProvider} from '../../AppContext.es';
 import useLazy from '../../hooks/useLazy.es';
 import {PermissionsContextProvider} from './PermissionsContext.es';
 import TranslationManagerWrapper, {
-	getStorageLocale,
+	getStorageLanguageId,
 } from './TranslationManagerWrapper.es';
 
 export default function ({appTab, ...props}) {
 	const PageComponent = useLazy();
-	const defaultLanguageId = getStorageLocale(props.appId);
+	const defaultLanguageId = getStorageLanguageId(props.appId);
 	const [userLanguageId, setUserLanguageId] = useState(defaultLanguageId);
 
 	props.userLanguageId = userLanguageId;

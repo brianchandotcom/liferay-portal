@@ -56,8 +56,10 @@ export default ({
 		setStorageLanguageId(languageId, appId);
 
 		if (reloadPage) {
-			navigateToEditPage(basePortletURL, {dataRecordId, locale});
+			navigateToEditPage(basePortletURL, {dataRecordId, languageId});
 		}
+
+		setUserLanguageId(languageId);
 	};
 
 	useEffect(() => {

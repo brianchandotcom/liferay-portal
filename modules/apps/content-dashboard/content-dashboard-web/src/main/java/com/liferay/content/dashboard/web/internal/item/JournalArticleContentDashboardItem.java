@@ -269,6 +269,10 @@ public class JournalArticleContentDashboardItem
 
 	@Override
 	public String getUserPortraitURL(HttpServletRequest httpServletRequest) {
+		if (_user.getPortraitId() <= 0) {
+			return StringPool.BLANK;
+		}
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);

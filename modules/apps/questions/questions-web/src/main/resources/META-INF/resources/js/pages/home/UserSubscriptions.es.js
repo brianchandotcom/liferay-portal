@@ -34,6 +34,7 @@ import NavigationBar from '../NavigationBar.es';
 export default withRouter(({history}) => {
 	const [entity, setEntity] = useState({});
 	const [info, setInfo] = useState({});
+	const [questionToDelete, setQuestionToDelete] = useState({});
 
 	const {data: threads, refetch: refetchThreads} = useQuery(
 		getSubscriptionsQuery,
@@ -100,6 +101,7 @@ export default withRouter(({history}) => {
 			actions.push({
 				label: 'Delete',
 				onClick: () => {
+					setQuestionToDelete(question);
 					setShowDeleteModalPanel(true);
 				},
 			});
@@ -230,12 +232,13 @@ export default withRouter(({history}) => {
 								question={data.graphQLNode}
 								showSectionLabel={true}
 							/>
-							<DeleteThread
-								question={data.graphQLNode}
-								showDeleteModalPanel={showDeleteModalPanel}
-							/>
 						</div>
 					))}
+				<DeleteThread
+					deleteModalVisibility={showDeleteModalPanel}
+					question={questionToDelete}
+					setDeleteModalVisibility={setShowDeleteModalPanel}
+				/>
 			</div>
 		);
 	}

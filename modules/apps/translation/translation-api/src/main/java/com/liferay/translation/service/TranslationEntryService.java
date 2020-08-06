@@ -14,13 +14,17 @@
 
 package com.liferay.translation.service;
 
+import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.translation.model.TranslationEntry;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -47,6 +51,20 @@ public interface TranslationEntryService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.translation.service.impl.TranslationEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the translation entry remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link TranslationEntryServiceUtil} if injection and service tracking are not available.
 	 */
+
+	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never reference this class directly. Always use
+	 * <code>TranslationEntryServiceUtil</code>
+	 * to access the translation entry remote service.
+	 */
+	public TranslationEntry addOrUpdateTranslationEntry(
+			long groupId, String languageId,
+			InfoItemReference infoItemReference,
+			InfoItemFieldValues infoItemFieldValues,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.

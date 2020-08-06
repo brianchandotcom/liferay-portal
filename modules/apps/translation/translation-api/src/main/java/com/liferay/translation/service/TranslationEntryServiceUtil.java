@@ -39,6 +39,26 @@ public class TranslationEntryServiceUtil {
 	 */
 
 	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never reference this class directly. Always use
+	 * <code>TranslationEntryServiceUtil</code>
+	 * to access the translation entry remote service.
+	 */
+	public static com.liferay.translation.model.TranslationEntry
+			addOrUpdateTranslationEntry(
+				long groupId, String languageId,
+				com.liferay.info.item.InfoItemReference infoItemReference,
+				com.liferay.info.item.InfoItemFieldValues infoItemFieldValues,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addOrUpdateTranslationEntry(
+			groupId, languageId, infoItemReference, infoItemFieldValues,
+			serviceContext);
+	}
+
+	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier

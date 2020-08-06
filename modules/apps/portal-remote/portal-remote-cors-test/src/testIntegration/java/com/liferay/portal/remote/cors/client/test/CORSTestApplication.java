@@ -41,9 +41,9 @@ public class CORSTestApplication extends Application {
 	}
 
 	@GET
-	@Path("/system/only/path/whatever")
+	@Path("/duplicate/path/whatever")
 	public String getTestPath1() {
-		return "/system/only/path/whatever";
+		return "/duplicate/path/whatever";
 	}
 
 	@GET
@@ -59,9 +59,9 @@ public class CORSTestApplication extends Application {
 	}
 
 	@GET
-	@Path("/duplicate/path/whatever")
+	@Path("/system/only/path/whatever")
 	public String getTestPath4() {
-		return "/duplicate/path/whatever";
+		return "/system/only/path/whatever";
 	}
 
 }

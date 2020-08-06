@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Remote App API
+Bundle-SymbolicName: com.liferay.remote.app.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.remote.app.exception,\
+	com.liferay.remote.app.model,\
+	com.liferay.remote.app.service,\
+	com.liferay.remote.app.service.persistence

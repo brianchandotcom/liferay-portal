@@ -92,7 +92,7 @@ export default ({section}) => {
 						<AllBreadcrumb />
 					)}
 				</ol>
-				<NewTopic currentSectionId={section.id} />
+				<NewTopic currentSectionId={section && section.id} />
 			</section>
 		</>
 	);

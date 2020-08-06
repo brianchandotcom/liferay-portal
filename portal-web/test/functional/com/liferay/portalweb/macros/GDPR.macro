@@ -147,12 +147,12 @@ definition {
 
 	macro filterByApplications {
 		Click.clickNoWaitForVisible(
-			key_applications = "${applications}",
-			locator1 = "DataErasure#REVIEW_DATA_APPLICATIONS_SELECT");
+			key_selectData = "${applications}",
+			locator1 = "DataErasure#REVIEW_DATA_SELECT");
 
 		AssertElementPresent(
-			key_applications = "${applications}",
-			locator1 = "DataErasure#REVIEW_DATA_APPLICATIONS_SELECTED");
+			key_dataSelected = "${applications}",
+			locator1 = "DataErasure#REVIEW_DATA_SELECTED");
 
 		AssertTextEquals.assertPartialText(
 			key_applications = "${applications}",
@@ -167,12 +167,12 @@ definition {
 
 	macro filterByScope {
 		Click.clickNoWaitForVisible(
-			key_scope = "${scope}",
-			locator1 = "DataErasure#REVIEW_DATA_SCOPE_SELECT");
+			key_selectData = "${scope}",
+			locator1 = "DataErasure#REVIEW_DATA_SELECT");
 
 		AssertElementPresent(
-			key_scope = "${scope}",
-			locator1 = "DataErasure#REVIEW_DATA_SCOPE_SELECTED");
+			key_dataSelected = "${scope}",
+			locator1 = "DataErasure#REVIEW_DATA_SELECTED");
 	}
 
 	macro viewEntryRowInApplicationCP {

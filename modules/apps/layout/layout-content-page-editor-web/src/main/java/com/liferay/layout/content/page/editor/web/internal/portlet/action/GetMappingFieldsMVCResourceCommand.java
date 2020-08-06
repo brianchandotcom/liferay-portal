@@ -58,11 +58,12 @@ public class GetMappingFieldsMVCResourceCommand extends BaseMVCResourceCommand {
 		String classTypeId = ParamUtil.getString(
 			resourceRequest, "classTypeId");
 		long classNameId = ParamUtil.getLong(resourceRequest, "classNameId");
+		String fieldType = ParamUtil.getString(resourceRequest, "fieldType");
 
 		try {
 			JSONArray mappingFieldsJSONArray =
 				MappingContentUtil.getMappingFieldsJSONArray(
-					classTypeId, _infoItemServiceTracker,
+					fieldType, classTypeId, _infoItemServiceTracker,
 					_portal.getClassName(classNameId), resourceRequest);
 
 			JSONPortletResponseUtil.writeJSON(

@@ -55,6 +55,7 @@ public class GetCollectionMappingFieldsMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
+		String fieldType = ParamUtil.getString(resourceRequest, "fieldType");
 		String itemSubtype = ParamUtil.getString(
 			resourceRequest, "itemSubtype");
 		String itemType = ParamUtil.getString(resourceRequest, "itemType");
@@ -62,7 +63,7 @@ public class GetCollectionMappingFieldsMVCResourceCommand
 		try {
 			JSONArray mappingFieldsJSONArray =
 				MappingContentUtil.getMappingFieldsJSONArray(
-					itemSubtype, _infoItemServiceTracker, itemType,
+					fieldType, itemSubtype, _infoItemServiceTracker, itemType,
 					resourceRequest);
 
 			JSONPortletResponseUtil.writeJSON(

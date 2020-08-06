@@ -94,11 +94,11 @@ definition {
 
 		ChangeList.viewAutomaticallyResolved(
 			entryTitle = "Test Test added a Web Content Article",
-			successMessage= "The article version was updated to latest.");
+			successMessage = "The article version was updated to latest.");
 
 		ChangeList.viewAutomaticallyResolved(
 			entryTitle = "Test Test modified a Asset",
-			successMessage= "The conflict was automatically resolved.");
+			successMessage = "The conflict was automatically resolved.");
 
 		AssertElementNotPresent(locator1 = "ChangeList#NEEDS_MANUAL_RESOLUTION_TABLE");
 
@@ -110,8 +110,8 @@ definition {
 	}
 
 	@priority = "4"
-	test ConflictingChangesNeedsManualResolution {
-		property test.name.skip.portal.instance = "PublishChangeList#ConflictingChangesNeedsManualResolution";
+	test ConflictingChangesNeedManualResolution {
+		property test.name.skip.portal.instance = "PublishChangeList#ConflictingChangesNeedManualResolution";
 
 		Navigator.openURL();
 
@@ -165,13 +165,23 @@ definition {
 
 		ChangeList.prepareToPublish(publicationName = "Publication 2 Name");
 
-		AssertElementPresent(locator1 = "ChangeList#NEEDS_MANUAL_RESOLUTION_TABLE");
+		ChangeList.viewNeedsManualResolution(
+			entryTitle = "Test Test modified a Asset",
+			warningMessage = "Modification conflicts with a deletion.");
 
-		AssertElementPresent(
-			key_warningMessage = "Modification conflicts with a deletion.",
-			locator1 = "Message#WARNING_SPECIFIC");
+		ChangeList.GotoViewDiffInConflictingChanges(entryTitle = "Test Test modified a Asset");
 
-		AssertVisible(locator1 = "ChangeList#DISABLED_PUBLISH_BUTTON");
+		ChangeList.viewChangesDiff(
+			columnName = "title",
+			columnValueInPublication = "WC WebContent Title 2 Edit",
+			entryTitle = "Test Test modified a Asset",
+			publicationName = "Publication 2 Name");
+
+		ChangeList.viewChangesDiff(
+			columnName = "ctCollectionId",
+			columnValueInPublication = "2",
+			entryTitle = "Test Test modified a Asset",
+			publicationName = "Publication 2 Name");
 	}
 
 	@priority = "5"

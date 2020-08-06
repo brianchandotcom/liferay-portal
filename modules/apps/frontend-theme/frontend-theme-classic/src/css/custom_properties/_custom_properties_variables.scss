@@ -158,6 +158,10 @@ $theme-colors-cp: map-deep-merge(
 	--lead-font-size: #{$lead-font-size};
 	--lead-font-weight: #{$lead-font-weight};
 
+	// Text muted
+
+	--text-muted: #{$text-muted};
+
 	// Body
 
 	--body-color: $body-color;

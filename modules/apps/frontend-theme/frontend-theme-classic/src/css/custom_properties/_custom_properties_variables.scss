@@ -91,7 +91,13 @@ $theme-colors-cp: map-deep-merge(
 	--aspect-ratio-8-to-3: 37.5%;
 	--aspect-ratio-16-to-9: 56.25%;
 
+	// Transitions
+
+	--transition-collapse: #{$transition-collapse};
+	--transition-fade: #{$transition-fade};
+
 	// Border radius
+
 	--border-radius-circle: 50%;
 	--border-radius-lg: #{$border-radius-lg};
 	--border-radius-sm: #{$border-radius-sm};

@@ -68,7 +68,7 @@
 
 // Aspect ratio
 
-.aspect-ratio:not([class*="aspect-ratio-"]) {
+.aspect-ratio:not([class*='aspect-ratio-']) {
 	padding-bottom: var(--aspect-ratio);
 }
 
@@ -82,6 +82,16 @@
 
 .aspect-ratio-16-to-9 {
 	padding-bottom: var(--aspect-ratio-16-to-9);
+}
+
+// Transition
+
+.collapsing {
+	transition: var(--transition-collapse);
+}
+
+.fade {
+	transition: var(--transition-fade);
 }
 
 // Container max

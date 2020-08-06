@@ -139,6 +139,20 @@ $theme-colors-cp: map-deep-merge(
 	--h5-font-size: #{$h5-font-size};
 	--h6-font-size: #{$h6-font-size};
 
+	// Display
+
+	--display1-size: #{$display1-size};
+	--display2-size: #{$display2-size};
+	--display3-size: #{$display3-size};
+	--display4-size: #{$display4-size};
+
+	--display1-weight: #{$display1-weight};
+	--display2-weight: #{$display2-weight};
+	--display3-weight: #{$display3-weight};
+	--display4-weight: #{$display4-weight};
+
+	--display-line-height: #{$display-line-height};
+
 	// Body
 
 	--body-color: $body-color;

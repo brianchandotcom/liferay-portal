@@ -36,8 +36,10 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -73,9 +75,19 @@ public class DDMFormReportDisplayContext {
 
 		DDMForm ddmForm = ddmFormInstance.getDDMForm();
 
-		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(true);
 
-		ddmFormFields.forEach(
+		Set<String> keySet = ddmFormFieldsMap.keySet();
+
+		Stream<String> stream = keySet.stream();
+
+		stream.map(
+			fieldName -> ddmFormFieldsMap.get(fieldName)
+		).filter(
+			ddmFormField -> !StringUtil.equals(
+				ddmFormField.getType(), "fieldset")
+		).forEach(
 			ddmFormField -> fieldsJSONArray.put(
 				JSONUtil.put(
 					"columns", _getPropertyLabels(ddmFormField, "columns")
@@ -91,7 +103,8 @@ public class DDMFormReportDisplayContext {
 					"rows", _getPropertyLabels(ddmFormField, "rows")
 				).put(
 					"type", ddmFormField.getType()
-				)));
+				))
+		);
 
 		return fieldsJSONArray;
 	}

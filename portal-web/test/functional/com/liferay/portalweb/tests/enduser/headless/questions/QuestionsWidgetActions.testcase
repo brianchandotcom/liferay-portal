@@ -584,9 +584,18 @@ definition {
 			categoryName = "Questions Test Category",
 			userEmailAddress = "test@liferay.com");
 
+		Questions.addQuestionWithoutTagByAPI(
+			bodyField = "Content Question3",
+			categoryName = "Questions Test Category",
+			titleField = "Question 3");
+
 		Navigator.gotoPage(pageName = "Questions Page");
 
 		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		AssertElementNotPresent(
+			key_topicName = "Questions Test Category",
+			locator1 = "Questions#QUESTIONS_BREADCRUMB_TOPIC_DROPDOWN_TOGGLE");
 
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
@@ -615,25 +624,27 @@ definition {
 
 		Questions.gotoCategory(categoryName = "Questions Test Category");
 
-		AssertTextEquals(
-			locator1 = "Questions#QUESTIONS_TOPIC_DROPDOWN_MENU",
-			value1 = "All");
+		Questions.viewList(listedQuestions = "Question 1,Question 2,Question 3");
 
-		Questions.changeTopic(topicName = "Questions Subcategory1");
+		Questions.changeTopic(
+			parentTopicName = "Questions Test Category",
+			subTopicName = "Questions Subcategory1");
 
 		Questions.viewList(
 			listedQuestions = "Question 1",
-			unlistedQuestions = "Question 2");
+			unlistedQuestions = "Question 2,Question 3");
 
-		Questions.changeTopic(topicName = "Questions Subcategory2");
+		Questions.changeTopic(
+			parentTopicName = "Questions Test Category",
+			subTopicName = "Questions Subcategory2");
 
 		Questions.viewList(
 			listedQuestions = "Question 2",
-			unlistedQuestions = "Question 1");
+			unlistedQuestions = "Question 1,Question 3");
 
-		Questions.changeTopic(topicName = "All");
+		Questions.changeTopic(gotoParentTopic = "Questions Test Category");
 
-		Questions.viewList(listedQuestions = "Question 1,Question 2");
+		Questions.viewList(listedQuestions = "Question 1,Question 2,Question 3");
 	}
 
 	@description = "Validate if the pagination will appear and works when we have more than 4 questions."

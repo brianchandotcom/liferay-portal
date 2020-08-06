@@ -24,6 +24,126 @@ definition {
 		}
 	}
 
+	@description = "This is use case for LPS-107776. Can add collection items in a collection page based on dynamic collection with all types."
+	@priority = "5"
+	test AddCollectionItemsInCollectionPageBasedOnDynamicCollection {
+		task ("Add a dynamic collection with All Types") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Dynamic Collection");
+		}
+
+		task ("Add a collection page based on dynamic collection") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPublicCollectionPage(
+				collectionName = "Dynamic Collection",
+				pageName = "Test Collection Page Name",
+				tabName = "Collections");
+		}
+
+		task ("Assert there is no collection items shown in Collection Display") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "Title",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#VIEW_COLLECTION_ITEMS_BUTTON",
+				value1 = "(0 Items)");
+		}
+
+		task ("Add a web content article based on Basic Web Content in collection page") {
+			ContentPages.addCollectionItemInCollectionPage(
+				itemSubtype = "Basic Web Content",
+				title = "New Collection Page Item");
+
+			WebContent.addCP(
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("Assert the web content article is shown in Collection Display") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "Web Content Title",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#VIEW_COLLECTION_ITEMS_BUTTON",
+				value1 = "(1 Items)");
+		}
+
+		task ("Add a Blogs entry in collection page") {
+			ContentPages.addCollectionItemInCollectionPage(
+				itemSubtype = "Blogs Entry",
+				title = "New Collection Page Item");
+
+			BlogsEntry.addEntryContent(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("Assert the Blogs entry is shown in Collection Display") {
+			var n = "1";
+
+			for (var title : list "Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "${title}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#VIEW_COLLECTION_ITEMS_BUTTON",
+				value1 = "(2 Items)");
+		}
+
+		task ("Add a document based on Basic Document in collection page") {
+			ContentPages.addCollectionItemInCollectionPage(
+				itemSubtype = "Basic Document",
+				title = "New Collection Page Item");
+
+			DMDocument.editDocument(
+				dmDocumentFile = "Document_1.png",
+				dmDocumentTitle = "Document Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("Assert the document is shown in Collection Display") {
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "${title}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#VIEW_COLLECTION_ITEMS_BUTTON",
+				value1 = "(3 Items)");
+		}
+	}
+
 	@description = "This is for LPS-110108. Add a Draft page and check label."
 	@priority = "4"
 	test AddDraftPageAndViewLabel {

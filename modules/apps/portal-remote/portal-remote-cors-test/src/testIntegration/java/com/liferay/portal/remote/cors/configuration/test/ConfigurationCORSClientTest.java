@@ -17,7 +17,6 @@ package com.liferay.portal.remote.cors.configuration.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -37,8 +36,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Arthur Chan
@@ -173,12 +170,6 @@ public class ConfigurationCORSClientTest extends BaseCORSClientTestCase {
 	private static final String[] _URL_PATTERNS_SYSTEM_ONLY = {
 		"/o/cors-app/system/only/path/*"
 	};
-
-	@Inject
-	private static ConfigurationAdmin _configurationAdmin;
-
-	@Inject
-	private static ConfigurationProvider _configurationProvider;
 
 	private long _companyId;
 

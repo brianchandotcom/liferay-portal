@@ -72,10 +72,10 @@ public class RadioDDMFormFieldValueAccessor
 	protected String getOptionLabel(
 		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 
-		String optionValue = getOptionValue(ddmFormFieldValue, locale);
-
 		DDMFormFieldOptions ddmFormFieldOptions = getDDMFormFieldOptions(
 			ddmFormFieldValue);
+
+		String optionValue = getOptionValue(ddmFormFieldValue, locale);
 
 		LocalizedValue optionLabel = ddmFormFieldOptions.getOptionLabels(
 			optionValue);

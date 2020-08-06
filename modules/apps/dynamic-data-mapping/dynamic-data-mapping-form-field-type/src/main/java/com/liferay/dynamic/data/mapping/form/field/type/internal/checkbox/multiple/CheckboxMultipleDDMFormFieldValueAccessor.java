@@ -158,11 +158,11 @@ public class CheckboxMultipleDDMFormFieldValueAccessor
 			return StringPool.BLANK;
 		}
 
-		DDMFormFieldOptions ddmFormFieldOptions = getDDMFormFieldOptions(
-			ddmFormFieldValue);
-
 		StringBundler sb = new StringBundler(
 			(optionsValuesJSONArray.length() * 2) - 1);
+
+		DDMFormFieldOptions ddmFormFieldOptions = getDDMFormFieldOptions(
+			ddmFormFieldValue);
 
 		for (int i = 0; i < optionsValuesJSONArray.length(); i++) {
 			String optionValue = optionsValuesJSONArray.getString(i);

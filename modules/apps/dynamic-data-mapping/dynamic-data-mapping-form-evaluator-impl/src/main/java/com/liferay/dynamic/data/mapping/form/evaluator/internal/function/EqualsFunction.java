@@ -15,10 +15,9 @@
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.function;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.math.BigDecimal;
 
@@ -54,17 +53,7 @@ public class EqualsFunction
 
 			Arrays.sort(stringArray);
 
-			StringBundler sb = new StringBundler((stringArray.length * 2) - 1);
-
-			for (int i = 0; i < stringArray.length; i++) {
-				sb.append(stringArray[i]);
-
-				if (i < (stringArray.length - 1)) {
-					sb.append(CharPool.COMMA);
-				}
-			}
-
-			return sb.toString();
+			return StringUtil.merge(stringArray);
 		}
 
 		return object;

@@ -285,8 +285,8 @@ h6,
 // Lead
 
 .lead {
-	font-size: $lead-font-size;
-	font-weight: $lead-font-weight;
+	font-size: var(--lead-font-size);
+	font-weight: var(--lead-font-weight);
 }
 
 // Text format

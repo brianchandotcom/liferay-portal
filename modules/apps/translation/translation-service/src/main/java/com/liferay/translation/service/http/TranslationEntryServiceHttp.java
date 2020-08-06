@@ -14,13 +14,21 @@
 
 package com.liferay.translation.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.http.TunnelUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.translation.service.TranslationEntryServiceUtil;
+
 /**
  * Provides the HTTP utility for the
- * <code>com.liferay.translation.service.TranslationEntryServiceUtil</code> service
+ * <code>TranslationEntryServiceUtil</code> service
  * utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * <code>com.liferay.portal.kernel.security.auth.HttpPrincipal</code> parameter.
+ * <code>HttpPrincipal</code> parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -42,4 +50,62 @@ package com.liferay.translation.service.http;
  * @generated
  */
 public class TranslationEntryServiceHttp {
+
+	public static com.liferay.translation.model.TranslationEntry
+			addOrUpdateTranslationEntry(
+				HttpPrincipal httpPrincipal, long groupId, String languageId,
+				com.liferay.info.item.InfoItemReference infoItemReference,
+				com.liferay.info.item.InfoItemFieldValues infoItemFieldValues,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				TranslationEntryServiceUtil.class,
+				"addOrUpdateTranslationEntry",
+				_addOrUpdateTranslationEntryParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, languageId, infoItemReference,
+				infoItemFieldValues, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.translation.model.TranslationEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		TranslationEntryServiceHttp.class);
+
+	private static final Class<?>[]
+		_addOrUpdateTranslationEntryParameterTypes0 = new Class[] {
+			long.class, String.class,
+			com.liferay.info.item.InfoItemReference.class,
+			com.liferay.info.item.InfoItemFieldValues.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+
 }

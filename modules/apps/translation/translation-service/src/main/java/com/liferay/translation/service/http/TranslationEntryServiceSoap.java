@@ -14,9 +14,15 @@
 
 package com.liferay.translation.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.translation.service.TranslationEntryServiceUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.translation.service.TranslationEntryServiceUtil</code> service
+ * <code>TranslationEntryServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -56,4 +62,39 @@ package com.liferay.translation.service.http;
  */
 @Deprecated
 public class TranslationEntryServiceSoap {
+
+	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never reference this class directly. Always use
+	 * <code>TranslationEntryServiceUtil</code>
+	 * to access the translation entry remote service.
+	 */
+	public static com.liferay.translation.model.TranslationEntrySoap
+			addOrUpdateTranslationEntry(
+				long groupId, String languageId,
+				com.liferay.info.item.InfoItemReference infoItemReference,
+				com.liferay.info.item.InfoItemFieldValues infoItemFieldValues,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.translation.model.TranslationEntry returnValue =
+				TranslationEntryServiceUtil.addOrUpdateTranslationEntry(
+					groupId, languageId, infoItemReference, infoItemFieldValues,
+					serviceContext);
+
+			return com.liferay.translation.model.TranslationEntrySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		TranslationEntryServiceSoap.class);
+
 }

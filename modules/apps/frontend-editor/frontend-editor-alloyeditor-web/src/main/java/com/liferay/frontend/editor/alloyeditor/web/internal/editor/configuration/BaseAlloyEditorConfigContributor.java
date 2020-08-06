@@ -62,7 +62,7 @@ public abstract class BaseAlloyEditorConfigContributor
 			"disableNativeSpellChecker", Boolean.FALSE
 		).put(
 			"extraPlugins",
-			"ae_autolink,ae_dragresize,ae_addimages,ae_imagealignment," +
+			"addimages,ae_autolink,ae_dragresize,ae_imagealignment," +
 				"ae_placeholder,ae_selectionregion,ae_tableresize," +
 					"ae_tabletools,ae_uicore"
 		).put(

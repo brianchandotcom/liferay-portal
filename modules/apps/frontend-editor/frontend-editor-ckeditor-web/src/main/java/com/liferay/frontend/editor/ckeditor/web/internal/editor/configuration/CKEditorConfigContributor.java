@@ -78,7 +78,8 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 			"entities", Boolean.FALSE
 		);
 
-		String extraPlugins = "a11yhelpbtn,itemselector,lfrpopup,media";
+		String extraPlugins =
+			"a11yhelpbtn,addimages,itemselector,lfrpopup,media";
 
 		boolean inlineEdit = GetterUtil.getBoolean(
 			(String)inputEditorTaglibAttributes.get(

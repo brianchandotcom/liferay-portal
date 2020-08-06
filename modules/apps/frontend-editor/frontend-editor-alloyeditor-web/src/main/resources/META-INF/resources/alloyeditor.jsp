@@ -126,16 +126,6 @@ if (editorOptions != null) {
 <%
 String modules = "liferay-alloy-editor";
 
-String uploadURL = StringPool.BLANK;
-
-if (editorOptions != null) {
-	uploadURL = editorOptions.getUploadURL();
-
-	if ((data != null) && Validator.isNotNull(uploadURL)) {
-		modules += ",liferay-editor-image-uploader";
-	}
-}
-
 if (showSource) {
 	modules += ",liferay-alloy-editor-source";
 }
@@ -243,17 +233,6 @@ name = HtmlUtil.escapeJS(name);
 		);
 
 		var plugins = [];
-
-		<c:if test="<%= Validator.isNotNull(data) && Validator.isNotNull(uploadURL) %>">
-			plugins.push({
-				cfg: {
-					uploadItemReturnType:
-						'<%= editorOptions.getUploadItemReturnType() %>',
-					uploadUrl: '<%= uploadURL %>',
-				},
-				fn: A.Plugin.LiferayEditorImageUploader,
-			});
-		</c:if>
 
 		<c:if test="<%= showSource %>">
 			plugins.push(A.Plugin.LiferayAlloyEditorSource);

@@ -18,11 +18,13 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceReportException;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceReport;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalServiceUtil;
@@ -30,6 +32,7 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceReportLocalServic
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormInstanceTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
@@ -47,6 +50,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -68,6 +72,14 @@ public class DDMFormInstanceReportLocalServiceTest
 	@BeforeClass
 	public static void setUpClass() {
 		_classNameId = PortalUtil.getClassNameId(DDMFormInstance.class);
+	}
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_userId = TestPropsValues.getUserId();
 	}
 
 	@Test
@@ -180,6 +192,79 @@ public class DDMFormInstanceReportLocalServiceTest
 	}
 
 	@Test
+	public void testUpdateFormInstanceReportWhenFormInstanceHasNestedFields()
+		throws Exception {
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField textDDMFormField = DDMFormTestUtil.createTextDDMFormField(
+			"field1", false, false, false);
+
+		textDDMFormField.addNestedDDMFormField(
+			DDMFormTestUtil.createTextDDMFormField(
+				"field2", false, false, false));
+
+		ddmForm.addDDMFormField(textDDMFormField);
+
+		DDMFormInstance ddmFormInstance =
+			DDMFormInstanceTestUtil.addDDMFormInstance(ddmForm, group, _userId);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field1", new UnlocalizedValue("Text 1"));
+
+		ddmFormFieldValue.addNestedDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field2", new UnlocalizedValue("Text 2")));
+
+		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+
+		_ddmFormInstanceRecordLocalService.addFormInstanceRecord(
+			_userId, group.getGroupId(), ddmFormInstance.getFormInstanceId(),
+			ddmFormValues, getServiceContext());
+
+		DDMFormInstanceReport ddmFormInstanceReport =
+			_ddmFormInstanceReportLocalService.
+				getFormInstanceReportByFormInstanceId(
+					ddmFormInstance.getFormInstanceId());
+
+		JSONObject ddmFormInstanceReportDataJSONObject =
+			JSONFactoryUtil.createJSONObject(ddmFormInstanceReport.getData());
+
+		Assert.assertEquals(
+			1, ddmFormInstanceReportDataJSONObject.getInt("totalItems"));
+
+		JSONObject field1JSONObject =
+			ddmFormInstanceReportDataJSONObject.getJSONObject("field1");
+
+		Assert.assertEquals(
+			"Text 1",
+			field1JSONObject.getJSONArray(
+				"values"
+			).getJSONObject(
+				0
+			).getString(
+				"value"
+			));
+
+		JSONObject field2JSONObject =
+			ddmFormInstanceReportDataJSONObject.getJSONObject("field2");
+
+		Assert.assertEquals(
+			"Text 2",
+			field2JSONObject.getJSONArray(
+				"values"
+			).getJSONObject(
+				0
+			).getString(
+				"value"
+			));
+	}
+
+	@Test
 	public void testUpdateFormInstanceReportWhenUpdateFormInstanceRecord()
 		throws Exception {
 
@@ -204,8 +289,7 @@ public class DDMFormInstanceReportLocalServiceTest
 		newDDMFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
 		_ddmFormInstanceRecordLocalService.updateFormInstanceRecord(
-			TestPropsValues.getUserId(),
-			ddmFormInstanceRecord.getFormInstanceRecordId(), false,
+			_userId, ddmFormInstanceRecord.getFormInstanceRecordId(), false,
 			newDDMFormValues, getServiceContext());
 
 		DDMFormInstanceReport ddmFormInstanceReport =
@@ -261,14 +345,12 @@ public class DDMFormInstanceReportLocalServiceTest
 			ddmStructure.getNameMap(), ddmFormValues, serviceContext);
 
 		return DDMFormInstanceRecordLocalServiceUtil.addFormInstanceRecord(
-			TestPropsValues.getUserId(), group.getGroupId(),
-			_ddmFormInstance.getFormInstanceId(), ddmFormValues,
-			serviceContext);
+			_userId, group.getGroupId(), _ddmFormInstance.getFormInstanceId(),
+			ddmFormValues, serviceContext);
 	}
 
 	protected ServiceContext getServiceContext() throws PortalException {
-		return ServiceContextTestUtil.getServiceContext(
-			group, TestPropsValues.getUserId());
+		return ServiceContextTestUtil.getServiceContext(group, _userId);
 	}
 
 	private static long _classNameId;
@@ -283,5 +365,7 @@ public class DDMFormInstanceReportLocalServiceTest
 	@Inject
 	private DDMFormInstanceReportLocalService
 		_ddmFormInstanceReportLocalService;
+
+	private long _userId;
 
 }

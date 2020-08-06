@@ -111,6 +111,12 @@ const ClassicEditor = ({
 					CKEDITOR.dtd.$removeEmpty.i = 0;
 					CKEDITOR.dtd.$removeEmpty.span = 0;
 
+					CKEDITOR.getNextZIndex = function () {
+						return CKEDITOR.dialog._.currentZIndex
+							? CKEDITOR.dialog._.currentZIndex + 10
+							: Liferay.zIndex.WINDOW + 10;
+					};
+
 					CKEDITOR.on('instanceCreated', ({editor}) => {
 						editor.name = name;
 

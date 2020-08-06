@@ -104,7 +104,7 @@ const TranslationItem = ({
 			) : (
 				<span>{languageLabel}</span>
 			)}
-			<span className="dropdown-item-indicator-end">
+			<span className="dropdown-item-indicator-end page-editor__translation__label-wrapper">
 				<div
 					className={classNames(
 						'page-editor__translation__label label',

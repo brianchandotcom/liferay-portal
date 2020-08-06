@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VIEW_COLLECTION_ITEMS_BUTTON</td>
+	<td>//*[@data-qa-id='controlMenu']//button[contains(@id,'viewCollectionItems')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -1344,18 +1344,6 @@ public class DataFactory {
 		return counterModels;
 	}
 
-	public AssetEntryModel newCPDefinitionModelAssetEntryModel(
-		CPDefinitionModel cpDefinitionModel,
-		GroupModel commerceCatalogGroupModel) {
-
-		return newAssetEntryModel(
-			commerceCatalogGroupModel.getGroupId(), new Date(), new Date(),
-			getClassNameId(CPDefinition.class),
-			cpDefinitionModel.getCPDefinitionId(), SequentialUUID.generate(), 0,
-			true, true, "text/plain",
-			"Definition " + cpDefinitionModel.getCPDefinitionId());
-	}
-
 	public CPDefinitionLocalizationModel newCPDefinitionLocalizationModel(
 		CPDefinitionModel cpDefinitionModel) {
 
@@ -1441,6 +1429,18 @@ public class DataFactory {
 		}
 
 		return cpDefinitionModel;
+	}
+
+	public AssetEntryModel newCPDefinitionModelAssetEntryModel(
+		CPDefinitionModel cpDefinitionModel,
+		GroupModel commerceCatalogGroupModel) {
+
+		return newAssetEntryModel(
+			commerceCatalogGroupModel.getGroupId(), new Date(), new Date(),
+			getClassNameId(CPDefinition.class),
+			cpDefinitionModel.getCPDefinitionId(), SequentialUUID.generate(), 0,
+			true, true, "text/plain",
+			"Definition " + cpDefinitionModel.getCPDefinitionId());
 	}
 
 	public CPFriendlyURLEntryModel newCPFriendlyURLEntryModel(

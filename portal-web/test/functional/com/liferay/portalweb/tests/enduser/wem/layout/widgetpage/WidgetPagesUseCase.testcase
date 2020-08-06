@@ -869,10 +869,8 @@ definition {
 			userName = "Test Test");
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test WebContentAdministrationSitesPageTypes {
-		property osgi.app.includes = "directory-web";
 		property portal.release = "false";
 		property testray.component.names = "Site Pages Administration,Training";
 		var portalURL = PropsUtil.get("portal.url");
@@ -915,7 +913,7 @@ definition {
 		Page.viewPanelPortletListCP(
 			componentName = "Community",
 			pageName = "Panel Page",
-			portletNameList = "Bookmarks,Friends Directory,My Sites,My Sites Directory,Page Comments,Page Flags,Page Ratings,Portal Directory,Site Members Directory");
+			portletNameList = "Bookmarks,My Sites,Page Comments,Page Flags,Page Ratings");
 
 		Navigator.gotoSitePage(
 			pageName = "Embedded Page",
@@ -942,7 +940,7 @@ definition {
 		Page.viewPanelPortletListPG(
 			componentName = "Community",
 			pageName = "Panel Page",
-			portletNameList = "Bookmarks,Friends Directory,My Sites,My Sites Directory,Page Comments,Page Flags,Page Ratings,Portal Directory,Site Members Directory");
+			portletNameList = "Bookmarks,My Sites,Page Comments,Page Flags,Page Ratings");
 	}
 
 }

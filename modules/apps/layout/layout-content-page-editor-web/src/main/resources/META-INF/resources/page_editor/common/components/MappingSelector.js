@@ -346,7 +346,10 @@ function MappingFieldSelect({fieldSets, fieldType, onValueSelect, value}) {
 								: React.Fragment;
 
 							return (
-								<Wrapper key={index} label={fieldSet.label}>
+								<Wrapper
+									key={`${fieldSet.label || ''}${index}`}
+									label={fieldSet.label}
+								>
 									{fieldSet.fields.map((field) => (
 										<ClaySelect.Option
 											key={field.key}

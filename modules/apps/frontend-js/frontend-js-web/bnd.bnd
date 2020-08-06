@@ -5,8 +5,6 @@ Liferay-JS-Resources-Top-Head:\
 	/loader/config.js,\
 	/loader/loader.js,\
 	\
-	/misc/svg4everybody.js,\
-	\
 	/liferay/dom_task_runner.js,\
 	/liferay/events.js,\
 	/liferay/lazy_load.js,\

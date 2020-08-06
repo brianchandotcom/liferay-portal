@@ -3,7 +3,6 @@ import com.liferay.gradle.util.copy.StripPathSegmentsAction
 task buildClay(type: Copy)
 task buildLiferayAMDLoader(type: Copy)
 task buildLodash(type: Copy)
-task buildSvg4everybody(type: Copy)
 
 File jsDestinationDir = file("tmp/META-INF/resources")
 
@@ -36,26 +35,9 @@ buildLiferayAMDLoader {
 	into new File(jsDestinationDir, "loader")
 }
 
-buildSvg4everybody {
-	dependsOn npmInstall
-	eachFile new StripPathSegmentsAction(2)
-
-	filter {
-		String line ->
-
-		line.replace "\"function\" == typeof define", "false && \"function\" == typeof define"
-	}
-
-	from npmInstall.nodeModulesDir
-	include "svg4everybody/dist/svg4everybody.js"
-	includeEmptyDirs = false
-	into new File(jsDestinationDir, "misc")
-}
-
 classes {
 	dependsOn buildClay
 	dependsOn buildLiferayAMDLoader
-	dependsOn buildSvg4everybody
 }
 
 clean {

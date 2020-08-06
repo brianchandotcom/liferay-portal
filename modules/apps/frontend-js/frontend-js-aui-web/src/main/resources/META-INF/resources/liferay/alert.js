@@ -257,7 +257,7 @@ AUI.add(
 				TPL_ALERTS_CONTAINER: '<div class="lfr-alert-container"></div>',
 
 				TPL_CONTENT:
-					'<strong class="lead"><svg class="lexicon-icon" focusable="false"><use data-href="{pathThemeImages}/lexicon/icons.svg#{icon}" /><title>{title}</title></svg> {title}</strong>{message}',
+					'<strong class="lead"><svg class="lexicon-icon" focusable="false"><use href="{pathThemeImages}/lexicon/icons.svg#{icon}" /><title>{title}</title></svg> {title}</strong>{message}',
 
 				bindUI() {
 					var instance = this;

@@ -85,7 +85,7 @@ AUI.add(
 									cssClass: 'close',
 									discardDefaultButtonCssClasses: true,
 									labelHTML:
-										'<svg class="lexicon-icon" focusable="false"><use data-href="' +
+										'<svg class="lexicon-icon" focusable="false"><use href="' +
 										Liferay.ThemeDisplay.getPathThemeImages() +
 										'/lexicon/icons.svg#times" /><title>' +
 										Liferay.Language.get('close') +
@@ -146,7 +146,7 @@ AUI.add(
 								cssClass: 'close',
 								discardDefaultButtonCssClasses: true,
 								labelHTML:
-									'<svg class="lexicon-icon" focusable="false"><use data-href="' +
+									'<svg class="lexicon-icon" focusable="false"><use href="' +
 									Liferay.ThemeDisplay.getPathThemeImages() +
 									'/lexicon/icons.svg#times" /><title>' +
 									Liferay.Language.get('close') +

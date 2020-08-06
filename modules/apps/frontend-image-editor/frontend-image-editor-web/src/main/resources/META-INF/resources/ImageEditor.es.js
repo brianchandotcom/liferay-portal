@@ -79,10 +79,11 @@ class ImageEditor extends PortletBase {
 
 		// Polyfill svg usage for lexicon icons
 
-		svg4everybody({
-			attributeName: 'data-href',
-			polyfill: true,
-		});
+		if (window.svg4everybody) {
+			svg4everybody({
+				polyfill: true,
+			});
+		}
 
 		// Load the first entry imageData and render it on the app.
 

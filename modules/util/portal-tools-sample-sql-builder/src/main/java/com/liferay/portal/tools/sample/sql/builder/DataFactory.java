@@ -1110,10 +1110,12 @@ public class DataFactory {
 			new CommerceCatalogModelImpl();
 
 		commerceCatalogModel.setCommerceCatalogId(_counter.get());
+
 		commerceCatalogModel.setCompanyId(_companyId);
 		commerceCatalogModel.setUserName(_SAMPLE_USER_NAME);
 		commerceCatalogModel.setCreateDate(new Date());
 		commerceCatalogModel.setModifiedDate(new Date());
+
 		commerceCatalogModel.setName("Master");
 		commerceCatalogModel.setCommerceCurrencyCode(
 			commerceCurrencyModel.getCode());
@@ -1148,11 +1150,13 @@ public class DataFactory {
 			new CommerceChannelModelImpl();
 
 		commerceChannelModel.setCommerceChannelId(_counter.get());
+
 		commerceChannelModel.setCompanyId(_companyId);
 		commerceChannelModel.setUserId(_sampleUserId);
 		commerceChannelModel.setUserName(_SAMPLE_USER_NAME);
 		commerceChannelModel.setCreateDate(new Date());
 		commerceChannelModel.setModifiedDate(new Date());
+
 		commerceChannelModel.setSiteGroupId(1);
 		commerceChannelModel.setName(_SAMPLE_USER_NAME + " Channel");
 		commerceChannelModel.setType("site");
@@ -1382,13 +1386,17 @@ public class DataFactory {
 		long cpDefinitionId = _counter.get();
 
 		cpDefinitionModel.setUuid(SequentialUUID.generate());
+
 		cpDefinitionModel.setCPDefinitionId(cpDefinitionId);
+
 		cpDefinitionModel.setGroupId(commerceCatalogGroupModel.getGroupId());
+
 		cpDefinitionModel.setCompanyId(_companyId);
 		cpDefinitionModel.setUserId(_sampleUserId);
 		cpDefinitionModel.setUserName(_SAMPLE_USER_NAME);
 		cpDefinitionModel.setCreateDate(new Date());
 		cpDefinitionModel.setModifiedDate(new Date());
+
 		cpDefinitionModel.setCProductId(cProductModel.getCProductId());
 		cpDefinitionModel.setCPTaxCategoryId(
 			cpTaxCategoryModel.getCPTaxCategoryId());
@@ -1460,23 +1468,25 @@ public class DataFactory {
 
 		long cpDefinitionId = cpDefinitionModel.getCPDefinitionId();
 
+		String instanceKey = cpDefinitionId + StringPool.POUND + index;
+
 		cpInstanceModel.setUuid(SequentialUUID.generate());
+
 		cpInstanceModel.setCPInstanceId(_counter.get());
+
 		cpInstanceModel.setGroupId(commerceCatalogGroupModel.getGroupId());
+
 		cpInstanceModel.setCompanyId(_companyId);
 		cpInstanceModel.setUserId(_sampleUserId);
 		cpInstanceModel.setUserName(_SAMPLE_USER_NAME);
 		cpInstanceModel.setCreateDate(new Date());
 		cpInstanceModel.setModifiedDate(new Date());
+
 		cpInstanceModel.setCPDefinitionId(cpDefinitionId);
 		cpInstanceModel.setCPInstanceUuid(SequentialUUID.generate());
-
-		String instanceKey = cpDefinitionId + StringPool.POUND + index;
-
 		cpInstanceModel.setSku("SKU" + instanceKey);
 		cpInstanceModel.setGtin("GTIN" + instanceKey);
 		cpInstanceModel.setManufacturerPartNumber("MPN" + instanceKey);
-
 		cpInstanceModel.setPurchasable(true);
 		cpInstanceModel.setJson("[]");
 		cpInstanceModel.setWidth((index * 2) + 1);
@@ -1510,13 +1520,17 @@ public class DataFactory {
 		CProductModel cProductModel = new CProductModelImpl();
 
 		cProductModel.setUuid(SequentialUUID.generate());
+
 		cProductModel.setCProductId(_counter.get());
+
 		cProductModel.setGroupId(commerceCatalogGroupModel.getGroupId());
+
 		cProductModel.setCompanyId(_companyId);
 		cProductModel.setUserId(_sampleUserId);
 		cProductModel.setUserName(_SAMPLE_USER_NAME);
 		cProductModel.setCreateDate(new Date());
 		cProductModel.setModifiedDate(new Date());
+
 		cProductModel.setLatestVersion(
 			BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_DEFINITION_COUNT);
 
@@ -1527,11 +1541,13 @@ public class DataFactory {
 		CPTaxCategoryModel cpTaxCategoryModel = new CPTaxCategoryModelImpl();
 
 		cpTaxCategoryModel.setCPTaxCategoryId(_counter.get());
+
 		cpTaxCategoryModel.setCompanyId(_companyId);
 		cpTaxCategoryModel.setUserId(_sampleUserId);
 		cpTaxCategoryModel.setUserName(_SAMPLE_USER_NAME);
 		cpTaxCategoryModel.setCreateDate(new Date());
 		cpTaxCategoryModel.setModifiedDate(new Date());
+
 		cpTaxCategoryModel.setName(
 			StringBundler.concat(
 				"<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ",

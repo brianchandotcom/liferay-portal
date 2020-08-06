@@ -9483,6 +9483,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 				<prepare-edge-driver />
 
 				<echo append="true" file="${test.ext.properties.file}">
+					selenium.edge.driver.executable=${selenium.edge.driver.executable}
 					selenium.executable.dir.name=${selenium.executable.dir.name}
 				</echo>
 			</then>

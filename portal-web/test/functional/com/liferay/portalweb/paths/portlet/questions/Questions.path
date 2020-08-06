@@ -74,6 +74,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>QUESTIONS_BREADCRUMB_ACTIVE_SUBTOPIC</td>
+	<td>//ol[contains(@class,'breadcrumb')]//li[contains(.,'${key_topicName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>QUESTIONS_BREADCRUMB_PARENT_TOPIC_BUTTON</td>
+	<td>//button[contains(@class,'dropdown') and contains(.,'${key_topicName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>QUESTIONS_BREADCRUMB_TOPIC_DROPDOWN_OPTION</td>
+	<td>//div[contains(@class,'dropdown-menu')]//span[contains(.,'${key_topicName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>QUESTIONS_BREADCRUMB_TOPIC_DROPDOWN_TOGGLE</td>
+	<td>//button[contains(@class,'dropdown-toggle') and contains(.,'${key_topicName}')]//*[name()='svg'][contains(@class,'caret-bottom')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>QUESTIONS_CATEGORY_TITLE</td>
 	<td>//div[contains(@class,'questions-breadcrumb')]//li[contains(.,'${key_categoryTitle}')]</td>
 	<td></td>

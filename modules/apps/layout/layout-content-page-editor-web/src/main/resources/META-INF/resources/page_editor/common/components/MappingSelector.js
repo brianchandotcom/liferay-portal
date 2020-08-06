@@ -106,13 +106,9 @@ function CollectionMappingSelector({
 	mappedItem,
 	onMappingSelect,
 }) {
-	const fields = collectionFields.filter(
-		(field) => COMPATIBLE_TYPES[fieldType].indexOf(field.type) !== -1
-	);
-
 	return (
 		<MappingFieldSelect
-			fieldSets={[{fields}]}
+			fieldSets={collectionFields}
 			fieldType={fieldType}
 			onValueSelect={(event) => {
 				if (event.target.value === UNMAPPED_OPTION.value) {

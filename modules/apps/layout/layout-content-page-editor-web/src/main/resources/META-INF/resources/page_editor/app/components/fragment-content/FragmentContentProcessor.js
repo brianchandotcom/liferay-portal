@@ -15,7 +15,7 @@
 import PropTypes from 'prop-types';
 import {useEffect} from 'react';
 
-import {config} from '../../config/index';
+import selectLanguageId from '../../selectors/selectLanguageId';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector, useSelectorCallback} from '../../store/index';
 import updateEditableValues from '../../thunks/updateEditableValues';
@@ -23,7 +23,6 @@ import {useToControlsId} from '../CollectionItemContext';
 import {
 	useEditableProcessorClickPosition,
 	useEditableProcessorUniqueId,
-	useIsProcessorEnabled,
 	useSetEditableProcessorUniqueId,
 } from './EditableProcessorContext';
 
@@ -34,27 +33,22 @@ export default function FragmentContentProcessor({
 	const dispatch = useDispatch();
 	const editableProcessorClickPosition = useEditableProcessorClickPosition();
 	const editableProcessorUniqueId = useEditableProcessorUniqueId();
-	const toControlsId = useToControlsId();
-	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
-	const isProcessorEnabled = useIsProcessorEnabled();
-	const languageId = useSelector(
-		(state) => state.languageId || config.defaultLanguageId
-	);
+	const languageId = useSelector(selectLanguageId);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
+	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
+	const toControlsId = useToControlsId();
 
 	const editable = useSelectorCallback(
 		(state) =>
 			Object.values(state.editables?.[toControlsId(itemId)] || {}).find(
 				(editable) =>
-					editableProcessorUniqueId &&
-					isProcessorEnabled(editable.itemId)
-			) || {
-				editableId: null,
-				editableValueNamespace: null,
-				element: null,
-				processor: null,
-			},
-		[editableProcessorUniqueId, isProcessorEnabled, itemId, toControlsId]
+					editableProcessorUniqueId === toControlsId(editable.itemId)
+			),
+		[editableProcessorUniqueId, itemId, toControlsId]
+	);
+
+	const editableCollectionItemId = toControlsId(
+		editable ? editable.itemId : ''
 	);
 
 	const editableValues = useSelectorCallback(
@@ -66,9 +60,9 @@ export default function FragmentContentProcessor({
 
 	useEffect(() => {
 		if (
-			!editable.element ||
+			!editable ||
 			!editableValues ||
-			!editableProcessorUniqueId
+			editableCollectionItemId !== editableProcessorUniqueId
 		) {
 			return;
 		}
@@ -81,27 +75,15 @@ export default function FragmentContentProcessor({
 		editable.processor.createEditor(
 			editable.element,
 			(value) => {
+				const defaultValue = editableValue.defaultValue.trim();
 				const previousValue = editableValue[languageId];
 
 				if (
-					!previousValue &&
-					value === editableValue.defaultValue.trim()
+					previousValue === value ||
+					(!previousValue && value === defaultValue)
 				) {
 					return;
 				}
-
-				if (previousValue === value) {
-					return;
-				}
-
-				let nextEditableValue = {
-					...editableValue,
-				};
-
-				nextEditableValue = {
-					...nextEditableValue,
-					[languageId]: value,
-				};
 
 				dispatch(
 					updateEditableValues({
@@ -111,7 +93,10 @@ export default function FragmentContentProcessor({
 								...editableValues[
 									editable.editableValueNamespace
 								],
-								[editable.editableId]: nextEditableValue,
+								[editable.editableId]: {
+									...editableValue,
+									[languageId]: value,
+								},
 							},
 						},
 						fragmentEntryLinkId,
@@ -120,25 +105,23 @@ export default function FragmentContentProcessor({
 				);
 			},
 			() => {
-				setEditableProcessorUniqueId(null);
+				if (editableCollectionItemId === editableProcessorUniqueId) {
+					setEditableProcessorUniqueId(null);
+				}
 			},
 			editableProcessorClickPosition
 		);
 
 		return () => {
-			if (!editableProcessorUniqueId) {
-				editable.processor.destroyEditor(
-					editable.element,
-					editableValue.config
-				);
-			}
+			editable.processor.destroyEditor(
+				editable.element,
+				editableValue.config
+			);
 		};
 	}, [
 		dispatch,
-		editable.editableId,
-		editable.editableValueNamespace,
-		editable.element,
-		editable.processor,
+		editable,
+		editableCollectionItemId,
 		editableProcessorClickPosition,
 		editableProcessorUniqueId,
 		editableValues,

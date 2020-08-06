@@ -14,7 +14,7 @@
 
 import React, {useCallback, useContext, useRef, useState} from 'react';
 
-import {useFromControlsId, useToControlsId} from '../CollectionItemContext';
+import {useToControlsId} from '../CollectionItemContext';
 
 const INITIAL_STATE = {editableClickPosition: null, editableUniqueId: null};
 
@@ -46,10 +46,7 @@ export function useEditableProcessorClickPosition() {
 }
 
 export function useEditableProcessorUniqueId() {
-	const state = useContext(EditableProcessorStateContext);
-	const fromControlsId = useFromControlsId();
-
-	return fromControlsId(state.editableUniqueId);
+	return useContext(EditableProcessorStateContext).editableUniqueId;
 }
 
 export function useIsProcessorEnabled() {

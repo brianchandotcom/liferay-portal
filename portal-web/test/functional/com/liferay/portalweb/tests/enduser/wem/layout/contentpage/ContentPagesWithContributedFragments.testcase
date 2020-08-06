@@ -1858,6 +1858,33 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-116989. Can resize the item configuration panel."
+	@priority = "4"
+	test ResizeConfigurationPanelAndCheckRestore {
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Button");
+
+		PageEditor.resizeConfigurationPanel(
+			fragmentName = "Button",
+			position = "0,-100",
+			style = "364px");
+
+		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+		PageEditor.gotoTab(tabName = "Page Structure");
+
+		AssertElementPresent(locator1 = "PageEditor#CONFIGURATION_PANEL_HANDLE");
+
+		AssertElementNotPresent(
+			key_style = "364px",
+			locator1 = "PageEditor#CONFIGURATION_PANEL_RESIZER");
+	}
+
 	@description = "This is a test for LPS-101248. Can select any custom web content template as a "Template" for web content selected in content fragment."
 	@priority = "5"
 	test SelectCustomWebContentTemplateViaContentDisplay {

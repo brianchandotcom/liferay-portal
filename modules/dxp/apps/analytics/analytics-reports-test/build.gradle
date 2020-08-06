@@ -14,6 +14,5 @@ dependencies {testIntegrationCompile group: "com.liferay.portal", name: "com.lif
 	testIntegrationCompile project(":apps:info:info-api")
 	testIntegrationCompile project(":apps:asset:asset-display-page-api")
 	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
-	testIntegrationCompile project(":apps:content-dashboard:content-dashboard-api")
 	testIntegrationCompile project(":dxp:apps:analytics:analytics-reports-api")
 }

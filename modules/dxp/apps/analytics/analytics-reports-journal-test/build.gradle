@@ -1,6 +1,8 @@
 dependencies {
 	testIntegrationCompile project(":apps:asset:asset-display-page-api")
+	testIntegrationCompile project(":apps:content-dashboard:content-dashboard-api")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	testIntegrationCompile project(":apps:info:info-api")
 	testIntegrationCompile project(":apps:journal:journal-api")
 	testIntegrationCompile project(":apps:journal:journal-test-util")
 	testIntegrationCompile project(":apps:layout:layout-page-template-api")

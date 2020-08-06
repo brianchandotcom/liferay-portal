@@ -49,6 +49,25 @@ public class ItemSelectorTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
+	public void testGetgetItemSelectedEventName() {
+		Assert.assertEquals(
+			"_com_liferay_wiki_web_portlet_WikiAdminPortlet" +
+				"_contentEditorselectItem",
+			_itemSelector.getItemSelectedEventName(
+				StringBundler.concat(
+					"http://localhost:8080/group/guest/~/control_panel/manage",
+					"/-/select/file/_com_liferay_wiki_web_portlet",
+					"_WikiAdminPortlet_contentEditorselectItem",
+					"?_com_liferay_item_selector_web_portlet",
+					"_ItemSelectorPortlet_0_json=",
+					URLCodec.encodeURL(
+						JSONUtil.put(
+							"desiredItemSelectorReturnTypes",
+							URLItemSelectorReturnType.class.getName()
+						).toJSONString()))));
+	}
+
+	@Test
 	public void testGetItemSelectorCriteria() {
 		List<ItemSelectorCriterion> itemSelectorCriteria =
 			_itemSelector.getItemSelectorCriteria(

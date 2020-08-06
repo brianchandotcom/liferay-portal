@@ -1,0 +1,89 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.item.selector.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
+import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.URLCodec;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.util.List;
+
+import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+/**
+ * @author Alejandro Tardín
+ */
+@RunWith(Arquillian.class)
+public class ItemSelectorTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testGetItemSelectorCriteria() {
+		List<ItemSelectorCriterion> itemSelectorCriteria =
+			_itemSelector.getItemSelectorCriteria(
+				StringBundler.concat(
+					"http://localhost:8080/group/guest/~/control_panel/manage",
+					"/-/select/file/_com_liferay_wiki_web_portlet",
+					"_WikiAdminPortlet_contentEditorselectItem",
+					"?_com_liferay_item_selector_web_portlet",
+					"_ItemSelectorPortlet_0_json=",
+					URLCodec.encodeURL(
+						JSONUtil.put(
+							"desiredItemSelectorReturnTypes",
+							URLItemSelectorReturnType.class.getName()
+						).toJSONString())));
+
+		Assert.assertEquals(
+			itemSelectorCriteria.toString(), 1, itemSelectorCriteria.size());
+
+		ItemSelectorCriterion itemSelectorCriterion = itemSelectorCriteria.get(
+			0);
+
+		Assert.assertTrue(
+			itemSelectorCriterion instanceof FileItemSelectorCriterion);
+
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			itemSelectorCriterion.getDesiredItemSelectorReturnTypes();
+
+		Assert.assertEquals(
+			desiredItemSelectorReturnTypes.toString(), 1,
+			desiredItemSelectorReturnTypes.size());
+
+		Assert.assertTrue(
+			desiredItemSelectorReturnTypes.get(0) instanceof
+				URLItemSelectorReturnType);
+	}
+
+	@Inject
+	private ItemSelector _itemSelector;
+
+}

@@ -53,19 +53,18 @@ public class EditSynonymSetsMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String companyIndexName = _indexNameBuilder.getIndexName(
-			portal.getCompanyId(actionRequest));
+		long companyId = portal.getCompanyId(actionRequest);
 
 		SynonymSetIndexName synonymSetIndexName =
-			_synonymSetIndexNameBuilder.getSynonymSetIndexName(
-				companyIndexName);
+			_synonymSetIndexNameBuilder.getSynonymSetIndexName(companyId);
 
 		updateSynonymSetIndex(
 			synonymSetIndexName,
 			ParamUtil.getString(actionRequest, "synonymSet"),
 			getSynonymSetOptional(synonymSetIndexName, actionRequest));
 
-		_indexToFilterSynchronizer.copyToFilter(companyIndexName);
+		_indexToFilterSynchronizer.copyToFilter(
+			synonymSetIndexName, _indexNameBuilder.getIndexName(companyId));
 
 		sendRedirect(actionRequest, actionResponse);
 	}

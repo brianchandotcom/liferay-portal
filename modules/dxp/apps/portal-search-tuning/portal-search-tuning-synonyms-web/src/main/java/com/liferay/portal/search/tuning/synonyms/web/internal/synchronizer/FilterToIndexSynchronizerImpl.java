@@ -36,10 +36,8 @@ public class FilterToIndexSynchronizerImpl
 	implements FilterToIndexSynchronizer {
 
 	@Override
-	public void copyToIndex(String companyIndexName) {
-		SynonymSetIndexName synonymSetIndexName =
-			_synonymSetIndexNameBuilder.getSynonymSetIndexName(
-				companyIndexName);
+	public void copyToIndex(
+		String companyIndexName, SynonymSetIndexName synonymSetIndexName) {
 
 		for (String synonyms : getSynonymsFromFilters(companyIndexName)) {
 			addSynonymSetToIndex(synonymSetIndexName, synonyms);

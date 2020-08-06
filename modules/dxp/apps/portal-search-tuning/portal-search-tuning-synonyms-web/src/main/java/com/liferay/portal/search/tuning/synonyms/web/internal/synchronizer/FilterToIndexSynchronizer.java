@@ -14,11 +14,14 @@
 
 package com.liferay.portal.search.tuning.synonyms.web.internal.synchronizer;
 
+import com.liferay.portal.search.tuning.synonyms.web.internal.index.name.SynonymSetIndexName;
+
 /**
  * @author Adam Brandizzi
  */
 public interface FilterToIndexSynchronizer {
 
-	public void copyToIndex(String companyIndexName);
+	public void copyToIndex(
+		String companyIndexName, SynonymSetIndexName synonymSetIndexName);
 
 }

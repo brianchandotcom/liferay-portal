@@ -35,12 +35,11 @@ public class IndexToFilterSynchronizerImpl
 	implements IndexToFilterSynchronizer {
 
 	@Override
-	public void copyToFilter(String companyIndexName) {
+	public void copyToFilter(
+		SynonymSetIndexName synonymSetIndexName, String companyIndexName) {
+
 		updateFilters(
-			companyIndexName,
-			getSynonymFromIndex(
-				_synonymSetIndexNameBuilder.getSynonymSetIndexName(
-					companyIndexName)));
+			companyIndexName, getSynonymFromIndex(synonymSetIndexName));
 	}
 
 	protected String[] getSynonymFromIndex(

@@ -56,18 +56,17 @@ public class DeleteSynonymSetsMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String companyIndexName = _indexNameBuilder.getIndexName(
-			_portal.getCompanyId(actionRequest));
+		long companyId = _portal.getCompanyId(actionRequest);
 
 		SynonymSetIndexName synonymSetIndexName =
-			_synonymSetIndexNameBuilder.getSynonymSetIndexName(
-				companyIndexName);
+			_synonymSetIndexNameBuilder.getSynonymSetIndexName(companyId);
 
 		removeSynonymSets(
 			synonymSetIndexName,
 			getDeletedSynonymSets(actionRequest, synonymSetIndexName));
 
-		_indexToFilterSynchronizer.copyToFilter(companyIndexName);
+		_indexToFilterSynchronizer.copyToFilter(
+			synonymSetIndexName, _indexNameBuilder.getIndexName(companyId));
 
 		sendRedirect(actionRequest, actionResponse);
 	}

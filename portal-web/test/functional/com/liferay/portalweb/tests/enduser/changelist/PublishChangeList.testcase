@@ -1,7 +1,7 @@
 @component-name = "portal-change-list"
 definition {
 
-	property portal.release = "true";
+	property portal.release = "false";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Change List";
 

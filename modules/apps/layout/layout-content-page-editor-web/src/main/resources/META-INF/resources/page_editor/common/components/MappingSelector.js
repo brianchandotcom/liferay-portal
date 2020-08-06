@@ -51,6 +51,7 @@ function loadFields({
 		promise = InfoItemService.getAvailableStructureMappingFields({
 			classNameId: selectedMappingTypes.type.id,
 			classTypeId: selectedMappingTypes.subtype.id,
+			fieldType,
 			onNetworkStatus: dispatch,
 		});
 	}

@@ -128,9 +128,6 @@ public class AppBuilderAppLocalServiceImpl
 	public AppBuilderApp deleteAppBuilderApp(long appBuilderAppId)
 		throws PortalException {
 
-		AppBuilderApp appBuilderApp = appBuilderAppPersistence.remove(
-			appBuilderAppId);
-
 		List<AppBuilderAppDeployment> appBuilderAppDeployments =
 			_appBuilderAppDeploymentLocalService.getAppBuilderAppDeployments(
 				appBuilderAppId);
@@ -145,7 +142,7 @@ public class AppBuilderAppLocalServiceImpl
 		_appBuilderAppVersionLocalService.deleteAppBuilderAppVersions(
 			appBuilderAppId);
 
-		return appBuilderApp;
+		return appBuilderAppPersistence.remove(appBuilderAppId);
 	}
 
 	@Override

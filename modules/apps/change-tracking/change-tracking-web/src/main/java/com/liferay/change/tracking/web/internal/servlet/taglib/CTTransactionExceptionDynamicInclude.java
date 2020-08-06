@@ -14,7 +14,6 @@
 
 package com.liferay.change.tracking.web.internal.servlet.taglib;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTTransactionException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -61,8 +60,7 @@ public class CTTransactionExceptionDynamicInclude extends BaseDynamicInclude {
 				"this-action-can-only-be-performed-in-production-mode"));
 		writer.write("',title:'");
 		writer.write(_language.get(httpServletRequest, "error"));
-		writer.write(StringPool.COLON);
-		writer.write("',type:'danger',});</script>");
+		writer.write(":',type:'danger',});</script>");
 	}
 
 	@Override

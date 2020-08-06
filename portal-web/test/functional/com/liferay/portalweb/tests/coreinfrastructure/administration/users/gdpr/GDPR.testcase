@@ -372,8 +372,6 @@ definition {
 
 		GDPR.deleteEntryCP();
 
-		GDPR.viewNoEntryInApplicationCP(applications = "All Applications");
-
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
 		LexiconEntry.viewNoEntry(rowEntry = "Blogs Entry Title");

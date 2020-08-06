@@ -104,7 +104,7 @@ const Validation = ({
 	useEffect(() => {
 		if (prevEditingLanguageId !== editingLanguageId) {
 			setState((prevState) => {
-				const {errorMessage, parameter} = value;
+				const {errorMessage = {}, parameter = {}} = value;
 
 				return {
 					...prevState,

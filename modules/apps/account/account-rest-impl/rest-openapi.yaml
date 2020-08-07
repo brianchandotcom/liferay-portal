@@ -18,9 +18,11 @@ components:
                         type: string
                     type: array
                 id:
-                    format: int64
-                    readOnly: true
-                    type: integer
+                    # @review
+                    description:
+                        The key of the account. This can either be the
+                        internal primary key or the external reference code.
+                    type: string
                 name:
                     type: string
                 organizationIds:
@@ -29,8 +31,7 @@ components:
                         type: integer
                     type: array
                 parentAccountId:
-                    format: int64
-                    type: integer
+                    type: string
                 status:
                     type: integer
             type: object
@@ -42,10 +43,10 @@ components:
                 accountId:
                     # @review
                     description:
-                        The primary key of the account that owns this role.
-                    format: int64
-                    readOnly: true
-                    type: integer
+                        The key of the account that owns this role. This can
+                        either be the internal primary key or the external
+                        reference code.
+                    type: string
                 description:
                     type: string
                 displayName:
@@ -74,9 +75,11 @@ components:
                 firstName:
                     type: string
                 id:
-                    format: int64
-                    readOnly: true
-                    type: integer
+                    # @review
+                    description:
+                        The key of the account user. This can either be the
+                        internal primary key or the external reference code.
+                    type: string
                 lastName:
                     type: string
                 middleName:
@@ -175,11 +178,14 @@ paths:
             operationId: deleteAccount
             parameters:
                 - in: path
+                  # @review
+                  description:
+                      The key of the account. This can either be the internal
+                      primary key or the external reference code of the account.
                   name: accountId
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 204:
                     content:
@@ -194,11 +200,14 @@ paths:
             operationId: getAccount
             parameters:
                 - in: path
+                  # @review
+                  description:
+                      The key of the account. This can either be the internal
+                      primary key or the external reference code of the account.
                   name: accountId
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 200:
                     content:
@@ -219,11 +228,14 @@ paths:
             operationId: patchAccount
             parameters:
                 - in: path
+                  # @review
+                  description:
+                      The key of the account. This can either be the internal
+                      primary key or the external reference code of the account.
                   name: accountId
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -252,11 +264,14 @@ paths:
             operationId: putAccount
             parameters:
                 - in: path
+                  # @review
+                  description:
+                      The key of the account. This can either be the internal
+                      primary key or the external reference code of the account.
                   name: accountId
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -286,11 +301,14 @@ paths:
             operationId: getAccountRolesPage
             parameters:
                 - in: path
+                  # @review
+                  description:
+                      The key of the account. This can either be the internal
+                      primary key or the external reference code of the account.
                   name: accountId
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
                   name: keywords
                   schema:
@@ -331,11 +349,14 @@ paths:
             operationId: postAccountRole
             parameters:
                 - in: path
+                  # @review
+                  description:
+                      The key of the account. This can either be the internal
+                      primary key or the external reference code of the account.
                   name: accountId
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -365,11 +386,14 @@ paths:
             operationId: deleteAccountRoleUserAssociation
             parameters:
                 - in: path
+                  # @review
+                  description:
+                      The key of the account. This can either be the internal
+                      primary key or the external reference code of the account.
                   name: accountId
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: path
                   name: accountRoleId
                   required: true
@@ -377,11 +401,14 @@ paths:
                       format: int64
                       type: integer
                 - in: path
+                  # @review
+                  description:
+                      The key of the account user. This can either be the
+                      internal primary key or the external reference code.
                   name: accountUserId
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 204:
                     content:
@@ -397,11 +424,14 @@ paths:
             operationId: postAccountRoleUserAssociation
             parameters:
                 - in: path
+                  # @review
+                  description:
+                      The key of the account. This can either be the internal
+                      primary key or the external reference code of the account.
                   name: accountId
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: path
                   name: accountRoleId
                   required: true
@@ -409,11 +439,14 @@ paths:
                       format: int64
                       type: integer
                 - in: path
+                  # @review
+                  description:
+                      The key of the account user. This can either be the
+                      internal primary key or the external reference code.
                   name: accountUserId
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 204:
                     content:
@@ -430,11 +463,14 @@ paths:
             operationId: getAccountUsersPage
             parameters:
                 - in: path
+                  # @review
+                  description:
+                      The key of the account. This can either be the internal
+                      primary key or the external reference code of the account.
                   name: accountId
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
                   name: filter
                   schema:
@@ -478,11 +514,14 @@ paths:
             operationId: postAccountUser
             parameters:
                 - in: path
+                  # @review
+                  description:
+                      The key of the account. This can either be the internal
+                      primary key or the external reference code of the account.
                   name: accountId
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             requestBody:
                 content:
                     application/json:

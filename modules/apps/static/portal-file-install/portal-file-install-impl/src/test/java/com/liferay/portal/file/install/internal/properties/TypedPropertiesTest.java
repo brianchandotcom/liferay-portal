@@ -21,8 +21,6 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 
-import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -40,41 +38,29 @@ public class TypedPropertiesTest {
 		typedProperties.put("testKey1", 1);
 		typedProperties.put("testKey2", 2);
 
-		Assert.assertEquals(2, typedProperties.size());
+		Assert.assertEquals(1, typedProperties.get("testKey1"));
+		Assert.assertEquals(2, typedProperties.get("testKey2"));
 
 		typedProperties.clear();
 
-		Assert.assertTrue(typedProperties.isEmpty());
+		Assert.assertEquals(null, typedProperties.get("testKey1"));
+		Assert.assertEquals(null, typedProperties.get("testKey2"));
 	}
 
 	@Test
-	public void testIterator() {
+	public void testKeySet() {
 		TypedProperties typedProperties = new TypedProperties();
 
-		typedProperties.put("testKey", 1);
+		typedProperties.put("testKey1", 1);
+		typedProperties.put("testKey2", 2);
 
-		Set<Map.Entry<String, Object>> set = typedProperties.entrySet();
+		Set<String> keys = typedProperties.keySet();
 
-		Assert.assertEquals(set.toString(), 1, set.size());
+		Assert.assertEquals(keys.toString(), 2, keys.size());
 
-		Iterator<Map.Entry<String, Object>> iterator = set.iterator();
-
-		while (iterator.hasNext()) {
-			Map.Entry<String, Object> entry = iterator.next();
-
-			Assert.assertEquals("testKey", entry.getKey());
-			Assert.assertEquals(1, entry.getValue());
-
-			entry.setValue(2);
-
-			Assert.assertEquals(2, typedProperties.get("testKey"));
-
-			Assert.assertEquals(2, entry.getValue());
-
-			iterator.remove();
+		for (String key : keys) {
+			Assert.assertNotEquals(null, typedProperties.get(key));
 		}
-
-		Assert.assertTrue(typedProperties.isEmpty());
 	}
 
 	@Test

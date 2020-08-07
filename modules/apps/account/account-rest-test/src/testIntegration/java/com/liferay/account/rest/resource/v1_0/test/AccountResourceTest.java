@@ -19,11 +19,11 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.rest.client.dto.v1_0.Account;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -31,26 +31,101 @@ import com.liferay.portal.test.rule.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Drew Brokke
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class AccountResourceTest extends BaseAccountResourceTestCase {
 
-	@After
+	@Before
 	@Override
-	public void tearDown() throws Exception {
-		super.tearDown();
+	public void setUp() throws Exception {
+		super.setUp();
 
-		_deleteAccountEntries(_accountEntries);
+		_externalReferenceCode = RandomTestUtil.randomString();
+	}
+
+	@Test
+	public void testDeleteAccountByExternalReferenceCode() throws Exception {
+		Account account = _addAccountByExternalReferenceCode();
+
+		long accountEntryId = GetterUtil.getLong(account.getId());
+
+		Assert.assertNotNull(
+			_accountEntryLocalService.fetchAccountEntry(accountEntryId));
+
+		accountResource.deleteAccount(_externalReferenceCode);
+
+		Assert.assertNull(
+			_accountEntryLocalService.fetchAccountEntry(accountEntryId));
+	}
+
+	@Test
+	public void testGetAccountByExternalReferenceCode() throws Exception {
+		Account account = _addAccountByExternalReferenceCode();
+
+		Assert.assertEquals(
+			account, accountResource.getAccount(_externalReferenceCode));
+	}
+
+	@Test
+	public void testPatchAccountByExternalReferenceCode() throws Exception {
+		_addAccountByExternalReferenceCode();
+
+		String expectedDescription = RandomTestUtil.randomString();
+
+		Account account = accountResource.patchAccount(
+			_externalReferenceCode,
+			new Account() {
+				{
+					setDescription(expectedDescription);
+				}
+			});
+
+		Assert.assertEquals(expectedDescription, account.getDescription());
+	}
+
+	@Test
+	public void testPostAccountByExternalReferenceCode() throws Exception {
+		Account account = _addAccountByExternalReferenceCode();
+
+		long accountEntryId = GetterUtil.getLong(account.getId());
+
+		Assert.assertEquals(
+			_accountEntryLocalService.fetchAccountEntry(accountEntryId),
+			_accountEntryLocalService.fetchAccountEntryByReferenceCode(
+				TestPropsValues.getCompanyId(), _externalReferenceCode));
+	}
+
+	@Test
+	public void testPutAccountByExternalReferenceCode() throws Exception {
+		Account account = _addAccountByExternalReferenceCode();
+
+		Account putAccount = accountResource.patchAccount(
+			_externalReferenceCode, randomAccount());
+
+		Assert.assertEquals(account.getId(), putAccount.getId());
+		Assert.assertNotEquals(account.getName(), putAccount.getName());
 	}
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"name"};
+	}
+
+	@Override
+	protected Account randomAccount() throws Exception {
+		Account account = super.randomAccount();
+
+		account.setId((String)null);
+
+		return account;
 	}
 
 	@Override
@@ -100,9 +175,17 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		return _toAccount(_addAccountEntry(account));
 	}
 
+	private Account _addAccountByExternalReferenceCode() throws Exception {
+		Account randomAccount = randomAccount();
+
+		randomAccount.setId(_externalReferenceCode);
+
+		return accountResource.postAccount(randomAccount);
+	}
+
 	private AccountEntry _addAccountEntry() throws Exception {
 		return _addAccountEntry(
-			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			String.valueOf(AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null);
 	}
 
@@ -113,13 +196,13 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 	}
 
 	private AccountEntry _addAccountEntry(
-			long parentAccountEntryId, String name, String description,
+			String parentAccountId, String name, String description,
 			String[] domains)
 		throws Exception {
 
 		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
-			TestPropsValues.getUserId(), parentAccountEntryId, name,
-			description, domains, null, null,
+			TestPropsValues.getUserId(), GetterUtil.getLong(parentAccountId),
+			name, description, domains, null, null,
 			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
 			WorkflowConstants.STATUS_APPROVED,
 			ServiceContextTestUtil.getServiceContext());
@@ -129,38 +212,25 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		return accountEntry;
 	}
 
-	private void _deleteAccountEntries(List<AccountEntry> accountEntries) {
-		for (AccountEntry accountEntry : accountEntries) {
-			try {
-				_accountEntryLocalService.deleteAccountEntry(accountEntry);
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
-				}
-			}
-		}
-	}
-
 	private Account _toAccount(AccountEntry accountEntry) throws Exception {
 		return new Account() {
 			{
 				description = accountEntry.getDescription();
 				domains = StringUtil.split(accountEntry.getDomains());
-				id = accountEntry.getAccountEntryId();
+				id = String.valueOf(accountEntry.getAccountEntryId());
 				name = accountEntry.getName();
-				parentAccountId = accountEntry.getParentAccountEntryId();
+				parentAccountId = String.valueOf(
+					accountEntry.getParentAccountEntryId());
 				status = accountEntry.getStatus();
 			}
 		};
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		AccountResourceTest.class);
-
 	private final List<AccountEntry> _accountEntries = new ArrayList<>();
 
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
+
+	private String _externalReferenceCode;
 
 }

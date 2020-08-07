@@ -16,6 +16,11 @@
 </tr>
 <!--SIDEBAR-->
 <tr>
+	<td>DRAFT_SAVED_MESSAGE</td>
+	<td>//div[contains(@class,'editor__toolbar')]//span[contains(@class,'editor__status')][normalize-space(text())='Draft Saved']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FORM_CONTROL_SELECT_BUTTON</td>
 	<td>//button[contains(@class,'form-control-select')]</td>
 	<td></td>

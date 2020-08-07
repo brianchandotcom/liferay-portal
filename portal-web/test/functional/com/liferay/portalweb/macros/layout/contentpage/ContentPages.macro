@@ -181,7 +181,9 @@ definition {
 	}
 
 	macro addSelection {
-		LexiconEntry.gotoAddMenuItem(menuItem = "${menuItem}");
+		Click(locator1 = "Button#NEW");
+
+		MenuItem.click(menuItem = "${menuItem}");
 
 		PortletEntry.inputText(
 			fieldLabel = "Title",

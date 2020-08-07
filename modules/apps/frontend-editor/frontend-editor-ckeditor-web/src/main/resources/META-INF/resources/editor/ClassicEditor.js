@@ -120,6 +120,24 @@ const ClassicEditor = ({
 					CKEDITOR.on('instanceCreated', ({editor}) => {
 						editor.name = name;
 
+						editor.on('drop', (event) => {
+							var data = event.data.dataTransfer.getData(
+								'text/html'
+							);
+
+							if (data) {
+								var fragment = CKEDITOR.htmlParser.fragment.fromHtml(
+									data
+								);
+
+								var name = fragment.children[0].name;
+
+								if (name) {
+									return editor.pasteFilter.check(name);
+								}
+							}
+						});
+
 						editor.on('instanceReady', () => {
 							editor.setData(contents);
 						});

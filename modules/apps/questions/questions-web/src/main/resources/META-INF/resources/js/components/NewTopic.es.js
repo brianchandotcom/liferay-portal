@@ -21,7 +21,11 @@ import React, {useRef, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {createTopicQuery} from '../utils/client.es';
-import {historyPushWithSlug, stringToSlug} from '../utils/utils.es';
+import {
+	deleteCacheVariables,
+	historyPushWithSlug,
+	stringToSlug,
+} from '../utils/utils.es';
 
 export default withRouter(({currentSectionId, history}) => {
 	const historyPushParser = historyPushWithSlug(history.push);
@@ -37,6 +41,10 @@ export default withRouter(({currentSectionId, history}) => {
 					data.createMessageBoardSectionMessageBoardSection.title
 				)}`
 			);
+		},
+		update(proxy) {
+			deleteCacheVariables(proxy, 'MessageBoardSection');
+			proxy.gc();
 		},
 	});
 

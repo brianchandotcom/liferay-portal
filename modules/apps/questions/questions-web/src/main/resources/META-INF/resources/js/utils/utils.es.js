@@ -54,6 +54,12 @@ export function dateToBriefInternationalHuman(
 	return intl.format(date);
 }
 
+export function deleteCacheVariables(cache, parameter) {
+	Object.keys(cache.data.data).forEach(
+		(key) => key.match(`^${parameter}`) && cache.data.delete(key)
+	);
+}
+
 export function timeDifference(previous, current = new Date()) {
 	const msPerMinute = 60 * 1000;
 	const msPerHour = msPerMinute * 60;

@@ -79,6 +79,9 @@ components:
                         type: object
                     readOnly: true
                     type: object
+                assetLibraryKey:
+                    readOnly: true
+                    type: string
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
@@ -232,6 +235,9 @@ components:
                         type: object
                     readOnly: true
                     type: object
+                assetLibraryKey:
+                    readOnly: true
+                    type: string
                 assetTypes:
                     description:
                         A list of asset types that can be associated with this vocabulary.

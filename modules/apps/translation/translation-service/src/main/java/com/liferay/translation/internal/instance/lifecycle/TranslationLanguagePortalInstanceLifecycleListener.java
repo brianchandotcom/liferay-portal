@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.translation.service.internal.instance.lifecycle;
+package com.liferay.translation.internal.instance.lifecycle;
 
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;

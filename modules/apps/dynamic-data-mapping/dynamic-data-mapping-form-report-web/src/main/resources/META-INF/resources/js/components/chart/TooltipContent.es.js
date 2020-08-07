@@ -14,10 +14,11 @@
 
 import React from 'react';
 
-import {roundPercentage} from '../../utils/data.es';
+import {getColumnLabel, roundPercentage} from '../../utils/data.es';
 
 export default ({
 	active,
+	field,
 	label,
 	payload,
 	roundBullet = true,
@@ -53,7 +54,9 @@ export default ({
 							},
 							index
 						) => {
-							dataKey = !showHeader ? payload.label : dataKey;
+							dataKey = !showHeader
+								? payload.label
+								: getColumnLabel(dataKey, field);
 
 							return (
 								<li key={`tooltip-${index}`}>

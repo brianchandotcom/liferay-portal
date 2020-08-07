@@ -428,6 +428,90 @@
 					],
 					"label": "box-shadows",
 					"name": "boxShadows"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "100%",
+							"label": "aspect-ratio",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "aspect-ratio"
+								}
+							],
+							"name": "aspectRatio",
+							"type": "String"
+						},
+						{
+							"defaultValue": "75%",
+							"label": "aspect-ratio-4-to-3",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "aspect-ratio-4-to-3"
+								}
+							],
+							"name": "aspectRatio4To3",
+							"type": "String"
+						},
+						{
+							"defaultValue": "37.5%",
+							"label": "aspect-ratio-8-to-3",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "aspect-ratio-8-to-3"
+								}
+							],
+							"name": "aspectRatio8To3",
+							"type": "String"
+						},
+						{
+							"defaultValue": "56.25%",
+							"label": "aspect-ratio-16-to-9",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "aspect-ratio-16-to-9"
+								}
+							],
+							"name": "aspectRatio16To9",
+							"type": "String"
+						}
+					],
+					"label": "aspect-ratios",
+					"name": "aspectRatios"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "height .35s ease",
+							"label": "transition-collapse",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "transition-collapse"
+								}
+							],
+							"name": "transitionCollapse",
+							"type": "String"
+						},
+						{
+							"defaultValue": "opacity .15s linear",
+							"label": "transition-fade",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "transition-fade"
+								}
+							],
+							"name": "transitionFade",
+							"type": "String"
+						}
+					],
+					"label": "transitions",
+					"name": "transitions"
 				}
 			],
 			"label": "global",
@@ -722,6 +806,237 @@
 					],
 					"label": "headings",
 					"name": "headings"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "6rem",
+							"label": "display-1-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "display1-size"
+								}
+							],
+							"name": "display1Size",
+							"type": "String"
+						},
+						{
+							"defaultValue": "5.5rem",
+							"label": "display-2-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "display2-size"
+								}
+							],
+							"name": "display2Size",
+							"type": "String"
+						},
+						{
+							"defaultValue": "4.5rem",
+							"label": "display-3-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "display3-size"
+								}
+							],
+							"name": "display3Size",
+							"type": "String"
+						},
+						{
+							"defaultValue": "3.5rem",
+							"label": "display-4-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "display4-size"
+								}
+							],
+							"name": "display4Size",
+							"type": "String"
+						},
+						{
+							"defaultValue": "300",
+							"label": "display-1-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "display1-weight"
+								}
+							],
+							"name": "display1Weight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "300",
+							"label": "display-2-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "display2-weight"
+								}
+							],
+							"name": "display2Weight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "300",
+							"label": "display-3-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "display3-weight"
+								}
+							],
+							"name": "display3Weight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "300",
+							"label": "display-4-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "display4-weight"
+								}
+							],
+							"name": "display4Weight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "1.2",
+							"label": "display-line-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "display-line-height"
+								}
+							],
+							"name": "displayLineHeight",
+							"type": "String"
+						}
+					],
+					"label": "displays",
+					"name": "displays"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "1.25rem",
+							"label": "lead-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "lead-font-size"
+								}
+							],
+							"name": "leadFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "300",
+							"label": "lead-font-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "lead-font-weight"
+								}
+							],
+							"name": "leadFontWeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#6C757D",
+							"editorType": "ColorPicker",
+							"label": "text-muted",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "text-muted"
+								}
+							],
+							"name": "textMuted",
+							"type": "String"
+						},
+						{
+							"defaultValue": "1.25rem",
+							"label": "blockquote-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "blockquote-font-size"
+								}
+							],
+							"name": "blockquoteFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#6C757D",
+							"editorType": "ColorPicker",
+							"label": "blockquote-font-small-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "blockquote-font-small-color"
+								}
+							],
+							"name": "blockquoteSmallFontColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "80%",
+							"label": "blockquote-font-small-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "blockquote-font-small-size"
+								}
+							],
+							"name": "blockquoteSmallFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "rgba(0, 0, 0, .1)",
+							"editorType": "ColorPicker",
+							"label": "separator-border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "hr-border-color"
+								}
+							],
+							"name": "separatorBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "1px",
+							"label": "separator-border-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "hr-border-width"
+								}
+							],
+							"name": "separatorBorderWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "1rem",
+							"label": "separator-border-margin-y",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "hr-border-margin-y"
+								}
+							],
+							"name": "separatorBorderMarginY",
+							"type": "String"
+						}
+					],
+					"label": "other",
+					"name": "other"
 				}
 			],
 			"label": "typography",

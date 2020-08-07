@@ -21,10 +21,13 @@ import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Locale;
@@ -96,12 +99,39 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 		Group group = _groupLocalService.getGroup(groupId);
 
 		if (locale != null) {
-			return _portal.getGroupFriendlyURL(
-				group.getPublicLayoutSet(), themeDisplay, locale);
+			try {
+				ThemeDisplay clonedThemeDisplay =
+					(ThemeDisplay)themeDisplay.clone();
+
+				clonedThemeDisplay.setI18nPath(_getI18nPath(locale));
+
+				String languageId = LocaleUtil.toLanguageId(locale);
+
+				clonedThemeDisplay.setI18nLanguageId(languageId);
+				clonedThemeDisplay.setLanguageId(languageId);
+
+				clonedThemeDisplay.setLocale(locale);
+
+				return _portal.getGroupFriendlyURL(
+					group.getPublicLayoutSet(), clonedThemeDisplay);
+			}
+			catch (CloneNotSupportedException cloneNotSupportedException) {
+				throw new PortalException(cloneNotSupportedException);
+			}
 		}
 
 		return _portal.getGroupFriendlyURL(
 			group.getPublicLayoutSet(), themeDisplay);
+	}
+
+	private String _getI18nPath(Locale locale) {
+		Locale defaultLocale = _language.getLocale(locale.getLanguage());
+
+		if (LocaleUtil.equals(defaultLocale, locale)) {
+			return StringPool.SLASH + defaultLocale.getLanguage();
+		}
+
+		return StringPool.SLASH + locale.toLanguageTag();
 	}
 
 	@Reference
@@ -112,6 +142,9 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 
 	@Reference
 	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

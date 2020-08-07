@@ -9,13 +9,13 @@ exports[`SidebarPanelInfoView renders 1`] = `
       class="sidebar-header"
     >
       <div
-        class="sidebar-section autofit-row"
+        class="sidebar-section autofit-row autofit-row-center"
       >
         <div
           class="autofit-col autofit-col-expand"
         >
           <div
-            class="component-title text-truncate-inline"
+            class="font-weight-bold text-truncate-inline"
           >
             <span
               class="text-truncate"
@@ -23,15 +23,12 @@ exports[`SidebarPanelInfoView renders 1`] = `
               content-info
             </span>
           </div>
-          <p
-            class="component-subtitle"
-          />
         </div>
         <div
           class="autofit-col"
         >
           <button
-            class="btn btn-monospaced btn-sm btn-unstyled"
+            class="component-action btn btn-monospaced btn-unstyled"
             type="button"
           >
             <svg
@@ -50,19 +47,21 @@ exports[`SidebarPanelInfoView renders 1`] = `
       class="sidebar-body"
     >
       <div
-        class="c-mb-4 sidebar-dl sidebar-section"
+        class="c-mb-4"
       >
         <div
           class="component-title text-truncate-inline"
         >
           <span
             class="text-truncate"
+            data-tooltip-align="top"
+            title="Basic Web Content Title"
           >
             Basic Web Content Title
           </span>
         </div>
         <p
-          class="component-subtitle"
+          class="component-subtitle font-weight-normal"
         >
           Basic Web Content
         </p>
@@ -107,458 +106,419 @@ exports[`SidebarPanelInfoView renders 1`] = `
           </span>
         </div>
       </div>
-      <ul
-        class="nav nav-underline"
-        role="tablist"
-      >
-        <li
-          class="nav-item"
-        >
-          <button
-            aria-controls="tabpanel-0"
-            aria-disabled="false"
-            aria-selected="true"
-            class="nav-link active btn btn-unstyled"
-            role="tab"
-            type="button"
-          >
-            details
-          </button>
-        </li>
-      </ul>
       <div
-        class="tab-content"
+        class="c-mb-4 sidebar-dl sidebar-section"
       >
+        <span
+          class="sticker sticker-user-icon user-icon-color-6 sticker-circle"
+        >
+          <span
+            class="sticker-overlay"
+          >
+            <svg
+              class="lexicon-icon lexicon-icon-user"
+              role="presentation"
+            >
+              <use
+                xlink:href="#user"
+              />
+            </svg>
+          </span>
+        </span>
+        <span
+          class="c-ml-2 h5"
+        >
+          Kate Williams
+        </span>
+      </div>
+      <div
+        class="c-mb-4 sidebar-dl sidebar-section"
+      >
+        <h5>
+          languages-translated-into
+        </h5>
         <div
-          aria-labelledby="tab-1"
-          class="tab-pane active fade show c-mt-3"
-          role="tabpanel"
+          class="autofit-row autofit-row-center"
         >
           <div
-            class="c-mb-4 sidebar-dl sidebar-section"
+            class="inline-item-before autofit-col"
           >
-            <span
-              class="sticker sticker-user-icon user-icon-color-6 sticker-circle"
+            <svg
+              class="lexicon-icon lexicon-icon-en-us c-mt-1"
+              role="presentation"
             >
-              <span
-                class="sticker-overlay"
-              >
-                <svg
-                  class="lexicon-icon lexicon-icon-user"
-                  role="presentation"
-                >
-                  <use
-                    xlink:href="#user"
-                  />
-                </svg>
-              </span>
-            </span>
-            <span
-              class="c-ml-2 h5"
-            >
-              Kate Williams
-            </span>
+              <use
+                xlink:href="#en-us"
+              />
+            </svg>
           </div>
           <div
-            class="c-mb-4 sidebar-dl sidebar-section"
+            class="autofit-col autofit-col-expand"
           >
-            <p
-              class="c-mb-3 h5"
-            >
-              languages-translated-into
-            </p>
             <div
-              class="c-mb-1 autofit-row autofit-row-center"
+              class="autofit-row autofit-row-center"
             >
               <div
-                class="inline-item-before autofit-col"
+                class="inline-item-before small autofit-col"
               >
-                <svg
-                  class="lexicon-icon lexicon-icon-en-us"
-                  role="presentation"
-                >
-                  <use
-                    xlink:href="#en-us"
-                  />
-                </svg>
-              </div>
-              <div
-                class="autofit-col autofit-col-expand"
-              >
-                <div
-                  class="autofit-row autofit-row-center"
-                >
-                  <div
-                    class="inline-item-before small autofit-col"
-                  >
-                    en-US
-                  </div>
-                  <div
-                    class="autofit-col"
-                  >
-                    <span
-                      class="label d-inline label-info"
-                    >
-                      <span
-                        class="label-item label-item-expand"
-                      >
-                        default
-                      </span>
-                    </span>
-                  </div>
-                </div>
+                en-US
               </div>
               <div
                 class="autofit-col"
               >
-                <a
-                  class="link-monospaced link-outline link-outline-borderless link-outline-secondary"
-                  href="http://localhost:8080/en-US/web/guest/-/basic-web-content-title"
+                <span
+                  class="label d-inline label-info"
                 >
-                  <svg
-                    class="lexicon-icon lexicon-icon-view"
-                    role="presentation"
+                  <span
+                    class="label-item label-item-expand"
                   >
-                    <use
-                      xlink:href="#view"
-                    />
-                  </svg>
-                </a>
-              </div>
-            </div>
-            <div
-              class="c-mb-1 autofit-row autofit-row-center"
-            >
-              <div
-                class="inline-item-before autofit-col"
-              >
-                <svg
-                  class="lexicon-icon lexicon-icon-es-es"
-                  role="presentation"
-                >
-                  <use
-                    xlink:href="#es-es"
-                  />
-                </svg>
-              </div>
-              <div
-                class="autofit-col autofit-col-expand"
-              >
-                <div
-                  class="autofit-row autofit-row-center"
-                >
-                  <div
-                    class="inline-item-before small autofit-col"
-                  >
-                    es-ES
-                  </div>
-                  <div
-                    class="autofit-col"
-                  />
-                </div>
-              </div>
-              <div
-                class="autofit-col"
-              >
-                <a
-                  class="link-monospaced link-outline link-outline-borderless link-outline-secondary"
-                  href="http://localhost:8080/es-ES/web/guest/-/basic-web-content-title"
-                >
-                  <svg
-                    class="lexicon-icon lexicon-icon-view"
-                    role="presentation"
-                  >
-                    <use
-                      xlink:href="#view"
-                    />
-                  </svg>
-                </a>
-              </div>
-            </div>
-            <div
-              class="c-mb-1 autofit-row autofit-row-center"
-            >
-              <div
-                class="inline-item-before autofit-col"
-              >
-                <svg
-                  class="lexicon-icon lexicon-icon-fr-fr"
-                  role="presentation"
-                >
-                  <use
-                    xlink:href="#fr-fr"
-                  />
-                </svg>
-              </div>
-              <div
-                class="autofit-col autofit-col-expand"
-              >
-                <div
-                  class="autofit-row autofit-row-center"
-                >
-                  <div
-                    class="inline-item-before small autofit-col"
-                  >
-                    fr-FR
-                  </div>
-                  <div
-                    class="autofit-col"
-                  />
-                </div>
-              </div>
-              <div
-                class="autofit-col"
-              >
-                <a
-                  class="link-monospaced link-outline link-outline-borderless link-outline-secondary"
-                  href="http://localhost:8080/fr-FR/web/guest/-/basic-web-content-title"
-                >
-                  <svg
-                    class="lexicon-icon lexicon-icon-view"
-                    role="presentation"
-                  >
-                    <use
-                      xlink:href="#view"
-                    />
-                  </svg>
-                </a>
-              </div>
-            </div>
-            <div
-              class="c-mb-1 autofit-row autofit-row-center"
-            >
-              <div
-                class="inline-item-before autofit-col"
-              >
-                <svg
-                  class="lexicon-icon lexicon-icon-pt-br"
-                  role="presentation"
-                >
-                  <use
-                    xlink:href="#pt-br"
-                  />
-                </svg>
-              </div>
-              <div
-                class="autofit-col autofit-col-expand"
-              >
-                <div
-                  class="autofit-row autofit-row-center"
-                >
-                  <div
-                    class="inline-item-before small autofit-col"
-                  >
-                    pt-BR
-                  </div>
-                  <div
-                    class="autofit-col"
-                  />
-                </div>
-              </div>
-              <div
-                class="autofit-col"
-              >
-                <a
-                  class="link-monospaced link-outline link-outline-borderless link-outline-secondary"
-                  href="http://localhost:8080/pt-BR/web/guest/-/basic-web-content-title"
-                >
-                  <svg
-                    class="lexicon-icon lexicon-icon-view"
-                    role="presentation"
-                  >
-                    <use
-                      xlink:href="#view"
-                    />
-                  </svg>
-                </a>
+                    default
+                  </span>
+                </span>
               </div>
             </div>
           </div>
           <div
-            class="c-mb-4 sidebar-dl sidebar-section"
+            class="autofit-col"
           >
-            <p
-              class="h5"
+            <a
+              class="link-monospaced link-outline link-outline-borderless link-outline-secondary"
+              data-tooltip-align="top"
+              href="http://localhost:8080/en-US/web/guest/-/basic-web-content-title"
+              title="view"
             >
-              tags
-            </p>
-            <p>
-              <span
-                class="label label-secondary"
+              <svg
+                class="lexicon-icon lexicon-icon-view"
+                role="presentation"
               >
-                <span
-                  class="label-item label-item-expand"
-                >
-                  tag1
-                </span>
-              </span>
-              <span
-                class="label label-secondary"
-              >
-                <span
-                  class="label-item label-item-expand"
-                >
-                  tag2
-                </span>
-              </span>
-            </p>
-          </div>
-          <div
-            class="c-mb-4 sidebar-dl sidebar-section"
-          >
-            <p
-              class="h5"
-            >
-              categories
-            </p>
-            <p>
-              <span
-                class="label label-secondary"
-              >
-                <span
-                  class="label-item label-item-expand"
-                >
-                  Crime
-                </span>
-              </span>
-              <span
-                class="label label-secondary"
-              >
-                <span
-                  class="label-item label-item-expand"
-                >
-                  Romantic
-                </span>
-              </span>
-              <span
-                class="label label-secondary"
-              >
-                <span
-                  class="label-item label-item-expand"
-                >
-                  Classics
-                </span>
-              </span>
-              <span
-                class="label label-secondary"
-              >
-                <span
-                  class="label-item label-item-expand"
-                >
-                  Fantasy
-                </span>
-              </span>
-              <span
-                class="label label-secondary"
-              >
-                <span
-                  class="label-item label-item-expand"
-                >
-                  Science Fiction
-                </span>
-              </span>
-              <span
-                class="label label-secondary"
-              >
-                <span
-                  class="label-item label-item-expand"
-                >
-                  Advanced
-                </span>
-              </span>
-              <span
-                class="label label-secondary"
-              >
-                <span
-                  class="label-item label-item-expand"
-                >
-                  Education
-                </span>
-              </span>
-              <span
-                class="label label-secondary"
-              >
-                <span
-                  class="label-item label-item-expand"
-                >
-                  Decision
-                </span>
-              </span>
-            </p>
-          </div>
-          <div
-            class="c-mb-4 sidebar-dl sidebar-section"
-          >
-            <p
-              class="h5"
-            >
-              display-date
-            </p>
-            <p>
-              Jul 27, 2020, 10:53 AM
-            </p>
-          </div>
-          <div
-            class="c-mb-4 sidebar-dl sidebar-section"
-          >
-            <p
-              class="h5"
-            >
-              creation-date
-            </p>
-            <p>
-              Jul 27, 2020, 10:50 AM
-            </p>
-          </div>
-          <div
-            class="c-mb-4 sidebar-dl sidebar-section"
-          >
-            <p
-              class="h5"
-            >
-              modified-date
-            </p>
-            <p>
-              Jul 27, 2020, 10:56 AM
-            </p>
-          </div>
-          <div
-            class="c-mb-4 sidebar-dl sidebar-section"
-          >
-            <p
-              class="h5"
-            >
-              expiration-date
-            </p>
-            <p>
-              Jul 28, 2020, 10:00 AM
-            </p>
-          </div>
-          <div
-            class="c-mb-4 sidebar-dl sidebar-section"
-          >
-            <p
-              class="h5"
-            >
-              review-date
-            </p>
-            <p>
-              Jul 27, 2020, 2:14 PM
-            </p>
-          </div>
-          <div
-            class="c-mb-4 sidebar-dl sidebar-section"
-          >
-            <p
-              class="h5"
-            >
-              id
-            </p>
-            <p>
-              38070
-            </p>
+                <use
+                  xlink:href="#view"
+                />
+              </svg>
+            </a>
           </div>
         </div>
+        <div
+          class="autofit-row autofit-row-center"
+        >
+          <div
+            class="inline-item-before autofit-col"
+          >
+            <svg
+              class="lexicon-icon lexicon-icon-es-es c-mt-1"
+              role="presentation"
+            >
+              <use
+                xlink:href="#es-es"
+              />
+            </svg>
+          </div>
+          <div
+            class="autofit-col autofit-col-expand"
+          >
+            <div
+              class="autofit-row autofit-row-center"
+            >
+              <div
+                class="inline-item-before small autofit-col"
+              >
+                es-ES
+              </div>
+              <div
+                class="autofit-col"
+              />
+            </div>
+          </div>
+          <div
+            class="autofit-col"
+          >
+            <a
+              class="link-monospaced link-outline link-outline-borderless link-outline-secondary"
+              data-tooltip-align="top"
+              href="http://localhost:8080/es-ES/web/guest/-/basic-web-content-title"
+              title="view"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-view"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#view"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div
+          class="autofit-row autofit-row-center"
+        >
+          <div
+            class="inline-item-before autofit-col"
+          >
+            <svg
+              class="lexicon-icon lexicon-icon-fr-fr c-mt-1"
+              role="presentation"
+            >
+              <use
+                xlink:href="#fr-fr"
+              />
+            </svg>
+          </div>
+          <div
+            class="autofit-col autofit-col-expand"
+          >
+            <div
+              class="autofit-row autofit-row-center"
+            >
+              <div
+                class="inline-item-before small autofit-col"
+              >
+                fr-FR
+              </div>
+              <div
+                class="autofit-col"
+              />
+            </div>
+          </div>
+          <div
+            class="autofit-col"
+          >
+            <a
+              class="link-monospaced link-outline link-outline-borderless link-outline-secondary"
+              data-tooltip-align="top"
+              href="http://localhost:8080/fr-FR/web/guest/-/basic-web-content-title"
+              title="view"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-view"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#view"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div
+          class="autofit-row autofit-row-center"
+        >
+          <div
+            class="inline-item-before autofit-col"
+          >
+            <svg
+              class="lexicon-icon lexicon-icon-pt-br c-mt-1"
+              role="presentation"
+            >
+              <use
+                xlink:href="#pt-br"
+              />
+            </svg>
+          </div>
+          <div
+            class="autofit-col autofit-col-expand"
+          >
+            <div
+              class="autofit-row autofit-row-center"
+            >
+              <div
+                class="inline-item-before small autofit-col"
+              >
+                pt-BR
+              </div>
+              <div
+                class="autofit-col"
+              />
+            </div>
+          </div>
+          <div
+            class="autofit-col"
+          >
+            <a
+              class="link-monospaced link-outline link-outline-borderless link-outline-secondary"
+              data-tooltip-align="top"
+              href="http://localhost:8080/pt-BR/web/guest/-/basic-web-content-title"
+              title="view"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-view"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#view"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div
+        class="c-mb-4 sidebar-dl sidebar-section"
+      >
+        <h5>
+          tags
+        </h5>
+        <p>
+          <span
+            class="label label-secondary"
+          >
+            <span
+              class="label-item label-item-expand"
+            >
+              tag1
+            </span>
+          </span>
+          <span
+            class="label label-secondary"
+          >
+            <span
+              class="label-item label-item-expand"
+            >
+              tag2
+            </span>
+          </span>
+        </p>
+      </div>
+      <div
+        class="c-mb-4 sidebar-dl sidebar-section"
+      >
+        <h5>
+          categories
+        </h5>
+        <p>
+          <span
+            class="label label-secondary"
+          >
+            <span
+              class="label-item label-item-expand"
+            >
+              Crime
+            </span>
+          </span>
+          <span
+            class="label label-secondary"
+          >
+            <span
+              class="label-item label-item-expand"
+            >
+              Romantic
+            </span>
+          </span>
+          <span
+            class="label label-secondary"
+          >
+            <span
+              class="label-item label-item-expand"
+            >
+              Classics
+            </span>
+          </span>
+          <span
+            class="label label-secondary"
+          >
+            <span
+              class="label-item label-item-expand"
+            >
+              Fantasy
+            </span>
+          </span>
+          <span
+            class="label label-secondary"
+          >
+            <span
+              class="label-item label-item-expand"
+            >
+              Science Fiction
+            </span>
+          </span>
+          <span
+            class="label label-secondary"
+          >
+            <span
+              class="label-item label-item-expand"
+            >
+              Advanced
+            </span>
+          </span>
+          <span
+            class="label label-secondary"
+          >
+            <span
+              class="label-item label-item-expand"
+            >
+              Education
+            </span>
+          </span>
+          <span
+            class="label label-secondary"
+          >
+            <span
+              class="label-item label-item-expand"
+            >
+              Decision
+            </span>
+          </span>
+        </p>
+      </div>
+      <div
+        class="c-mb-4 sidebar-dl sidebar-section"
+      >
+        <h5>
+          display-date
+        </h5>
+        <p>
+          Jul 27, 2020, 10:53 AM
+        </p>
+      </div>
+      <div
+        class="c-mb-4 sidebar-dl sidebar-section"
+      >
+        <h5>
+          creation-date
+        </h5>
+        <p>
+          Jul 27, 2020, 10:50 AM
+        </p>
+      </div>
+      <div
+        class="c-mb-4 sidebar-dl sidebar-section"
+      >
+        <h5>
+          modified-date
+        </h5>
+        <p>
+          Jul 27, 2020, 10:56 AM
+        </p>
+      </div>
+      <div
+        class="c-mb-4 sidebar-dl sidebar-section"
+      >
+        <h5>
+          expiration-date
+        </h5>
+        <p>
+          Jul 28, 2020, 10:00 AM
+        </p>
+      </div>
+      <div
+        class="c-mb-4 sidebar-dl sidebar-section"
+      >
+        <h5>
+          review-date
+        </h5>
+        <p>
+          Jul 27, 2020, 2:14 PM
+        </p>
+      </div>
+      <div
+        class="c-mb-4 sidebar-dl sidebar-section"
+      >
+        <h5>
+          id
+        </h5>
+        <p>
+          38070
+        </p>
       </div>
     </div>
   </div>

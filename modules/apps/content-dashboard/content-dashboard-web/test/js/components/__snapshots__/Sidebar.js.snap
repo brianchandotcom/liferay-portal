@@ -17,13 +17,13 @@ exports[`Sidebar renders a sidebar with a header with title and subtitle 1`] = `
       class="sidebar-header"
     >
       <div
-        class="sidebar-section autofit-row"
+        class="sidebar-section autofit-row autofit-row-center"
       >
         <div
           class="autofit-col autofit-col-expand"
         >
           <div
-            class="component-title text-truncate-inline"
+            class="font-weight-bold text-truncate-inline"
           >
             <span
               class="text-truncate"
@@ -31,17 +31,12 @@ exports[`Sidebar renders a sidebar with a header with title and subtitle 1`] = `
               Title
             </span>
           </div>
-          <p
-            class="component-subtitle"
-          >
-            Subtitle
-          </p>
         </div>
         <div
           class="autofit-col"
         >
           <button
-            class="btn btn-monospaced btn-sm btn-unstyled"
+            class="component-action btn btn-monospaced btn-unstyled"
             type="button"
           >
             <svg

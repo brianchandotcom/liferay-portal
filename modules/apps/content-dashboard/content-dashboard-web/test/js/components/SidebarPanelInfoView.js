@@ -162,8 +162,6 @@ describe('SidebarPanelInfoView', () => {
 		expect(getByText('version 1.7')).toBeInTheDocument();
 		expect(getByText('Draft')).toBeInTheDocument();
 
-		expect(getByText('details')).toBeInTheDocument();
-
 		expect(getByText('Kate Williams')).toBeInTheDocument();
 
 		expect(getByText('languages-translated-into')).toBeInTheDocument();

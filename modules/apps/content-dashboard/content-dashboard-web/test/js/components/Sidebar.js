@@ -20,12 +20,12 @@ import Sidebar from '../../../src/main/resources/META-INF/resources/js/component
 
 import '@testing-library/jest-dom/extend-expect';
 
-const ControlledSidebar = ({open, subtitle = '', title = ''}) => {
+const ControlledSidebar = ({open, title = ''}) => {
 	const [isOpen, setIsOpen] = useState(open);
 
 	return (
 		<Sidebar onClose={() => setIsOpen(false)} open={isOpen}>
-			<Sidebar.Header subtitle={subtitle} title={title} />
+			<Sidebar.Header title={title} />
 		</Sidebar>
 	);
 };
@@ -65,13 +65,13 @@ describe('Sidebar', () => {
 	it('renders a sidebar with a header with title and subtitle', () => {
 		const {container, getByText} = render(
 			<Sidebar>
-				<Sidebar.Header subtitle="Subtitle" title="Title" />
+				<Sidebar.Header title="Title" />
 			</Sidebar>
 		);
 
 		expect(container).toMatchSnapshot();
+
 		expect(getByText('Title')).toBeInTheDocument();
-		expect(getByText('Subtitle')).toBeInTheDocument();
 	});
 
 	it('renders a sidebar with body with custom content', () => {

@@ -214,6 +214,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		StructuredContentFolder structuredContentFolder =
 			randomStructuredContentFolder();
 
+		structuredContentFolder.setAssetLibraryKey(regex);
 		structuredContentFolder.setDescription(regex);
 		structuredContentFolder.setName(regex);
 
@@ -224,6 +225,8 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 
 		structuredContentFolder = StructuredContentFolderSerDes.toDTO(json);
 
+		Assert.assertEquals(
+			regex, structuredContentFolder.getAssetLibraryKey());
 		Assert.assertEquals(regex, structuredContentFolder.getDescription());
 		Assert.assertEquals(regex, structuredContentFolder.getName());
 	}
@@ -1923,6 +1926,14 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("assetLibraryKey", additionalAssertFieldName)) {
+				if (structuredContentFolder.getAssetLibraryKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("creator", additionalAssertFieldName)) {
 				if (structuredContentFolder.getCreator() == null) {
 					valid = false;
@@ -2116,6 +2127,17 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				if (!equals(
 						(Map)structuredContentFolder1.getActions(),
 						(Map)structuredContentFolder2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("assetLibraryKey", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						structuredContentFolder1.getAssetLibraryKey(),
+						structuredContentFolder2.getAssetLibraryKey())) {
 
 					return false;
 				}
@@ -2359,6 +2381,15 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("assetLibraryKey")) {
+			sb.append("'");
+			sb.append(
+				String.valueOf(structuredContentFolder.getAssetLibraryKey()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("creator")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2536,6 +2567,8 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 
 		return new StructuredContentFolder() {
 			{
+				assetLibraryKey = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(

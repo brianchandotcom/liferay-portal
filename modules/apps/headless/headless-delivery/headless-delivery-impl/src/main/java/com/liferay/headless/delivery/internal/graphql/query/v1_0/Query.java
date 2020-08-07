@@ -735,7 +735,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {contentStructure(contentStructureId: ___){availableLanguages, contentStructureFields, creator, dateCreated, dateModified, description, description_i18n, id, name, name_i18n, siteId}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {contentStructure(contentStructureId: ___){assetLibraryKey, availableLanguages, contentStructureFields, creator, dateCreated, dateModified, description, description_i18n, id, name, name_i18n, siteId}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves the content structure.")
 	public ContentStructure contentStructure(
@@ -845,7 +845,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {contentTemplate(contentTemplateId: ___, siteKey: ___){actions, availableLanguages, contentStructureId, creator, dateCreated, dateModified, description, description_i18n, id, name, name_i18n, programmingLanguage, siteId, templateScript}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {contentTemplate(contentTemplateId: ___, siteKey: ___){actions, assetLibraryKey, availableLanguages, contentStructureId, creator, dateCreated, dateModified, description, description_i18n, id, name, name_i18n, programmingLanguage, siteId, templateScript}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public ContentTemplate contentTemplate(
@@ -924,7 +924,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {document(documentId: ___){actions, adaptedImages, aggregateRating, contentUrl, contentValue, creator, customFields, dateCreated, dateModified, description, documentFolderId, documentType, encodingFormat, fileExtension, id, keywords, numberOfComments, relatedContents, sizeInBytes, taxonomyCategoryBriefs, taxonomyCategoryIds, title, viewableBy}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {document(documentId: ___){actions, adaptedImages, aggregateRating, assetLibraryKey, contentUrl, contentValue, creator, customFields, dateCreated, dateModified, description, documentFolderId, documentType, encodingFormat, fileExtension, id, keywords, numberOfComments, relatedContents, sizeInBytes, taxonomyCategoryBriefs, taxonomyCategoryIds, title, viewableBy}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves the document.")
 	public Document document(@GraphQLName("documentId") Long documentId)
@@ -1017,7 +1017,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {documentFolder(documentFolderId: ___){actions, creator, customFields, dateCreated, dateModified, description, id, name, numberOfDocumentFolders, numberOfDocuments, parentDocumentFolderId, siteId, subscribed, viewableBy}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {documentFolder(documentFolderId: ___){actions, assetLibraryKey, creator, customFields, dateCreated, dateModified, description, id, name, numberOfDocumentFolders, numberOfDocuments, parentDocumentFolderId, siteId, subscribed, viewableBy}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves the document folder.")
 	public DocumentFolder documentFolder(
@@ -1934,7 +1934,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {structuredContentByKey(key: ___, siteKey: ___){actions, aggregateRating, availableLanguages, contentFields, contentStructureId, creator, customFields, dateCreated, dateModified, datePublished, description, description_i18n, friendlyUrlPath, friendlyUrlPath_i18n, id, key, keywords, numberOfComments, relatedContents, renderedContents, siteId, subscribed, taxonomyCategoryBriefs, taxonomyCategoryIds, title, title_i18n, uuid, viewableBy}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {structuredContentByKey(key: ___, siteKey: ___){actions, aggregateRating, assetLibraryKey, availableLanguages, contentFields, contentStructureId, creator, customFields, dateCreated, dateModified, datePublished, description, description_i18n, friendlyUrlPath, friendlyUrlPath_i18n, id, key, keywords, numberOfComments, relatedContents, renderedContents, siteId, subscribed, taxonomyCategoryBriefs, taxonomyCategoryIds, title, title_i18n, uuid, viewableBy}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Retrieves a structured content by its key (`articleKey`)."
@@ -1955,7 +1955,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {structuredContentByUuid(siteKey: ___, uuid: ___){actions, aggregateRating, availableLanguages, contentFields, contentStructureId, creator, customFields, dateCreated, dateModified, datePublished, description, description_i18n, friendlyUrlPath, friendlyUrlPath_i18n, id, key, keywords, numberOfComments, relatedContents, renderedContents, siteId, subscribed, taxonomyCategoryBriefs, taxonomyCategoryIds, title, title_i18n, uuid, viewableBy}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {structuredContentByUuid(siteKey: ___, uuid: ___){actions, aggregateRating, assetLibraryKey, availableLanguages, contentFields, contentStructureId, creator, customFields, dateCreated, dateModified, datePublished, description, description_i18n, friendlyUrlPath, friendlyUrlPath_i18n, id, key, keywords, numberOfComments, relatedContents, renderedContents, siteId, subscribed, taxonomyCategoryBriefs, taxonomyCategoryIds, title, title_i18n, uuid, viewableBy}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves a structured content by its UUID.")
 	public StructuredContent structuredContentByUuid(
@@ -2029,7 +2029,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {structuredContent(structuredContentId: ___){actions, aggregateRating, availableLanguages, contentFields, contentStructureId, creator, customFields, dateCreated, dateModified, datePublished, description, description_i18n, friendlyUrlPath, friendlyUrlPath_i18n, id, key, keywords, numberOfComments, relatedContents, renderedContents, siteId, subscribed, taxonomyCategoryBriefs, taxonomyCategoryIds, title, title_i18n, uuid, viewableBy}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {structuredContent(structuredContentId: ___){actions, aggregateRating, assetLibraryKey, availableLanguages, contentFields, contentStructureId, creator, customFields, dateCreated, dateModified, datePublished, description, description_i18n, friendlyUrlPath, friendlyUrlPath_i18n, id, key, keywords, numberOfComments, relatedContents, renderedContents, siteId, subscribed, taxonomyCategoryBriefs, taxonomyCategoryIds, title, title_i18n, uuid, viewableBy}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves the structured content via its ID.")
 	public StructuredContent structuredContent(
@@ -2209,7 +2209,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {structuredContentFolder(structuredContentFolderId: ___){actions, creator, customFields, dateCreated, dateModified, description, id, name, numberOfStructuredContentFolders, numberOfStructuredContents, parentStructuredContentFolderId, siteId, subscribed, viewableBy}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {structuredContentFolder(structuredContentFolderId: ___){actions, assetLibraryKey, creator, customFields, dateCreated, dateModified, description, id, name, numberOfStructuredContentFolders, numberOfStructuredContents, parentStructuredContentFolderId, siteId, subscribed, viewableBy}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves the structured content folder.")
 	public StructuredContentFolder structuredContentFolder(

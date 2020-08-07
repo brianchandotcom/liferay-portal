@@ -63,6 +63,20 @@ public class ContentStructureSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (contentStructure.getAssetLibraryKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"assetLibraryKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(contentStructure.getAssetLibraryKey()));
+
+			sb.append("\"");
+		}
+
 		if (contentStructure.getAvailableLanguages() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -247,6 +261,15 @@ public class ContentStructureSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (contentStructure.getAssetLibraryKey() == null) {
+			map.put("assetLibraryKey", null);
+		}
+		else {
+			map.put(
+				"assetLibraryKey",
+				String.valueOf(contentStructure.getAssetLibraryKey()));
+		}
+
 		if (contentStructure.getAvailableLanguages() == null) {
 			map.put("availableLanguages", null);
 		}
@@ -360,7 +383,15 @@ public class ContentStructureSerDes {
 			ContentStructure contentStructure, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "availableLanguages")) {
+			if (Objects.equals(jsonParserFieldName, "assetLibraryKey")) {
+				if (jsonParserFieldValue != null) {
+					contentStructure.setAssetLibraryKey(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "availableLanguages")) {
+
 				if (jsonParserFieldValue != null) {
 					contentStructure.setAvailableLanguages(
 						toStrings((Object[])jsonParserFieldValue));

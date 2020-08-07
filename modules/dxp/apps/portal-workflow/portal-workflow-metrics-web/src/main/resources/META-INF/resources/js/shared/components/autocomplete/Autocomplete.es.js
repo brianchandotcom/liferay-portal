@@ -68,19 +68,17 @@ const Autocomplete = ({
 		({keyCode}) => {
 			const item = dropDownItems[activeItem];
 
-			if (keyCode === keyEnter && item) {
-				handleSelect(item);
-			}
-
 			if (keyCode === keyArrowDown && activeItem > 0) {
 				setActiveItem(activeItem - 1);
 			}
-
-			if (
+			else if (
 				keyCode === keyArrowUp &&
 				activeItem < dropDownItems.length - 1
 			) {
 				setActiveItem(activeItem + 1);
+			}
+			else if (keyCode === keyEnter && item) {
+				handleSelect(item);
 			}
 		},
 		[activeItem, dropDownItems, handleSelect]

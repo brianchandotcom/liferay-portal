@@ -86,19 +86,16 @@ export default function Autocomplete({
 			}
 		};
 
-		if (key === 'ArrowUp' && activeItem > 0) {
-			updateIndex(activeItem - 1);
-		}
-
 		if (key === 'ArrowDown' && activeItem < filteredItems.length - 1) {
 			updateIndex(activeItem + 1);
 		}
-
-		if (key === 'Enter' && item) {
+		else if (key === 'ArrowUp' && activeItem > 0) {
+			updateIndex(activeItem - 1);
+		}
+		else if (key === 'Enter' && item) {
 			handleSelect(item);
 		}
-
-		if (key === 'Tab') {
+		else if (key === 'Tab') {
 			onBlur();
 		}
 	};

@@ -21,10 +21,10 @@ import AutocompleteDropDown from './AutocompleteDropDown.es';
 function AutocompleteMultiSelect({
 	emptyMessage,
 	emptyResultMessage,
-	items,
 	id = '',
-	placeholder = Liferay.Language.get('select-or-type-an-option'),
+	items,
 	onChange,
+	placeholder = Liferay.Language.get('select-or-type-an-option'),
 	selectedItems = [],
 }) {
 	const [activeItem, setActiveItem] = useState(-1);
@@ -41,15 +41,15 @@ function AutocompleteMultiSelect({
 	} align-items-start form-control form-control-tag-group multi-select-wrapper`;
 
 	const onBlur = () => {
+		setActiveItem(-1);
 		setDropDownVisible(false);
 		setHighlighted(false);
-		setActiveItem(-1);
 		setSearch('');
 	};
 
 	const onFocus = ({target}) => {
-		setHighlighted(true);
 		setDropDownVisible(true);
+		setHighlighted(true);
 		setSearch('');
 		target.value = '';
 	};
@@ -69,19 +69,16 @@ function AutocompleteMultiSelect({
 			}
 		};
 
-		if (key === 'ArrowUp' && activeItem > 0) {
-			updateIndex(activeItem - 1);
-		}
-
 		if (key === 'ArrowDown' && activeItem < filteredItems.length - 1) {
 			updateIndex(activeItem + 1);
 		}
-
-		if (key === 'Enter' && item) {
+		else if (key === 'ArrowUp' && activeItem > 0) {
+			updateIndex(activeItem - 1);
+		}
+		else if (key === 'Enter' && item) {
 			onSelect(item);
 		}
-
-		if (key === 'Tab') {
+		else if (key === 'Tab') {
 			onBlur();
 		}
 	};
@@ -116,7 +113,7 @@ function AutocompleteMultiSelect({
 					wrapperRef.current
 				)
 			) {
-				onBlur(event);
+				onBlur();
 			}
 		};
 

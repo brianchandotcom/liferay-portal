@@ -14,12 +14,26 @@
 
 package com.liferay.portal.file.install.internal.properties;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.LocaleUtil;
+
+import java.io.BufferedReader;
+import java.io.FilterWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Matthew Tambara
@@ -27,17 +41,39 @@ import java.util.Set;
 public class TypedProperties {
 
 	public void clear() {
+		for (Layout layout : _layoutMap.values()) {
+			layout.clearValue();
+		}
+
 		_storage.clear();
 	}
 
 	public Object get(String key) {
 		String value = _storage.get(key);
 
-		if ((value != null) && _storage.isTyped()) {
+		if ((value != null) && _typed) {
 			return _convertFromString(value);
 		}
 
 		return value;
+	}
+
+	public List<String> getComments(String key) {
+		Layout layout = _layoutMap.get(key);
+
+		if (layout != null) {
+			List<String> comments = layout.getComments();
+
+			if (comments != null) {
+				return new ArrayList<>(comments);
+			}
+		}
+
+		return new ArrayList<>();
+	}
+
+	public boolean isTyped() {
+		return _typed;
 	}
 
 	public Set<String> keySet() {
@@ -45,17 +81,128 @@ public class TypedProperties {
 	}
 
 	public void load(Reader reader) throws IOException {
-		_storage.loadLayout(reader);
+		PropertiesReader propertiesReader = new PropertiesReader(reader);
+
+		boolean hasProperty = false;
+
+		while (propertiesReader.nextProperty()) {
+			hasProperty = true;
+
+			_storage.put(
+				propertiesReader.getPropertyName(),
+				propertiesReader.getPropertyValue());
+
+			int index = _checkHeaderComment(propertiesReader.getComments());
+
+			List<String> comments = propertiesReader.getComments();
+
+			int size = comments.size();
+
+			if (index < comments.size()) {
+				comments = comments.subList(index, size);
+			}
+			else {
+				comments = null;
+			}
+
+			_layoutMap.put(
+				propertiesReader.getPropertyName(),
+				new Layout(
+					comments, new ArrayList<>(propertiesReader.getValues())));
+		}
+
+		Boolean typed = propertiesReader.isTyped();
+
+		if ((typed == null) || !typed) {
+			_typed = false;
+
+			for (Map.Entry<String, String> entry : _storage.entrySet()) {
+				entry.setValue(_unescapeJava(entry.getValue()));
+			}
+		}
+		else {
+			_typed = true;
+		}
+
+		if (hasProperty) {
+			_footers = new ArrayList<>(propertiesReader.getComments());
+		}
+		else {
+			_headers = new ArrayList<>(propertiesReader.getComments());
+		}
+	}
+
+	public String put(String key, List<String> comments, List<String> values) {
+		comments = new ArrayList<>(comments);
+
+		values = new ArrayList<>(values);
+
+		StringBundler sb = new StringBundler();
+
+		if (values.isEmpty()) {
+			values.add(key + StringPool.EQUAL);
+
+			sb.append(key);
+			sb.append(StringPool.EQUAL);
+		}
+		else {
+			String value = values.get(0);
+
+			String realValue = value;
+
+			if (!_typed) {
+				realValue = _escapeJava(value);
+			}
+
+			value = value.trim();
+
+			if (!value.startsWith(key)) {
+				values.set(0, key + " = " + realValue);
+
+				sb.append(key);
+				sb.append(" = ");
+				sb.append(realValue);
+			}
+			else {
+				values.set(0, realValue);
+				sb.append(realValue);
+			}
+		}
+
+		for (int i = 1; i < values.size(); i++) {
+			String value = values.get(i);
+
+			if (_typed) {
+				values.set(i, value);
+			}
+			else {
+				values.set(i, _escapeJava(value));
+			}
+
+			while ((value.length() > 0) &&
+				   Character.isWhitespace(value.charAt(0))) {
+
+				value = value.substring(1);
+			}
+
+			sb.append(value);
+		}
+
+		String[] property = PropertiesReader._parseProperty(sb.toString());
+
+		_layoutMap.put(key, new Layout(comments, values));
+
+		return _storage.put(key, property[1]);
 	}
 
 	public Object put(String key, Object value) {
-		if ((value instanceof String) && !_storage.isTyped()) {
-			return _storage.put(key, (String)value);
+		if ((value instanceof String) && !_typed) {
+			return _put(key, (String)value);
 		}
 
 		_ensureTyped();
 
-		String old = _storage.put(key, _convertToString(value));
+		String old = _put(key, _convertToString(value));
 
 		if (old == null) {
 			return null;
@@ -64,12 +211,388 @@ public class TypedProperties {
 		return _convertFromString(old);
 	}
 
-	public Object remove(Object key) {
+	public String remove(Object key) {
+		Layout layout = _layoutMap.get(key);
+
+		if (layout != null) {
+			layout.clearValue();
+		}
+
 		return _storage.remove(key);
 	}
 
 	public void save(Writer writer) throws IOException {
-		_storage.save(writer);
+		saveLayout(writer, _typed);
+	}
+
+	public void setHeader(List<String> headers) {
+		_headers = headers;
+	}
+
+	public void setTyped(boolean typed) {
+		_typed = typed;
+	}
+
+	public int size() {
+		return _storage.size();
+	}
+
+	public static class PropertiesReader extends BufferedReader {
+
+		public PropertiesReader(Reader reader) {
+			super(reader);
+		}
+
+		public List<String> getComments() {
+			return _comments;
+		}
+
+		public String getPropertyName() {
+			return _propertyName;
+		}
+
+		public String getPropertyValue() {
+			return _propertyValue;
+		}
+
+		public List<String> getValues() {
+			return _values;
+		}
+
+		public Boolean isTyped() {
+			return _typed;
+		}
+
+		public boolean nextProperty() throws IOException {
+			String line = readProperty();
+
+			if (line == null) {
+				return false; // EOF
+			}
+
+			// parse the line
+
+			String[] property = _parseProperty(line);
+
+			boolean typed = false;
+
+			if (property[1].length() >= 2) {
+				Matcher matcher = _pattern.matcher(property[1]);
+
+				typed = matcher.matches();
+			}
+
+			if (_typed == null) {
+				_typed = typed;
+			}
+			else {
+				_typed = _typed & typed;
+			}
+
+			_propertyName = _unescapeJava(property[0]);
+
+			_propertyValue = InterpolationUtil.substVars(property[1]);
+
+			return true;
+		}
+
+		public String readProperty() throws IOException {
+			_comments.clear();
+			_values.clear();
+
+			StringBundler sb = new StringBundler();
+
+			while (true) {
+				String line = readLine();
+
+				if (line == null) {
+
+					// EOF
+
+					return null;
+				}
+
+				if (_isCommentLine(line)) {
+					_comments.add(line);
+
+					continue;
+				}
+
+				boolean combine = _checkCombineLines(line);
+
+				if (combine) {
+					line = line.substring(0, line.length() - 1);
+				}
+
+				_values.add(line);
+
+				while ((line.length() > 0) &&
+					   _contains(_WHITE_SPACE, line.charAt(0))) {
+
+					line = line.substring(1);
+				}
+
+				sb.append(line);
+
+				if (!combine) {
+					break;
+				}
+			}
+
+			return sb.toString();
+		}
+
+		private static boolean _checkCombineLines(String line) {
+			int bsCount = 0;
+
+			for (int i = line.length() - 1;
+				 (i >= 0) && (line.charAt(i) == '\\'); i--) {
+
+				bsCount++;
+			}
+
+			if ((bsCount % 2) != 0) {
+				return true;
+			}
+
+			return false;
+		}
+
+		private static String[] _parseProperty(String line) {
+
+			// sorry for this spaghetti code, please replace it as soon as
+			// possible with a regexp when the Java 1.3 requirement is dropped
+
+			String[] result = new String[2];
+
+			StringBundler keySB = new StringBundler();
+			StringBundler valueSB = new StringBundler();
+
+			// state of the automaton:
+			// 0: key parsing
+			// 1: antislash found while parsing the key
+			// 2: separator crossing
+			// 3: white spaces
+			// 4: value parsing
+
+			int state = 0;
+
+			for (int pos = 0; pos < line.length(); pos++) {
+				char c = line.charAt(pos);
+
+				if (state == 0) {
+					if (c == '\\') {
+						state = 1;
+					}
+					else if (_contains(_WHITE_SPACE, c)) {
+
+						// switch to the separator crossing state
+
+						state = 2;
+					}
+					else if (_contains(_SEPARATORS, c)) {
+
+						// switch to the value parsing state
+
+						state = 3;
+					}
+					else {
+						keySB.append(c);
+					}
+				}
+				else if (state == 1) {
+					if (_contains(_SEPARATORS, c) ||
+						_contains(_WHITE_SPACE, c)) {
+
+						// this is an escaped separator or white space
+
+						keySB.append(c);
+					}
+					else {
+
+						// another escaped character, the '\' is preserved
+
+						keySB.append('\\');
+						keySB.append(c);
+					}
+
+					// return to the key parsing state
+
+					state = 0;
+				}
+				else if (state == 2) {
+					if (_contains(_WHITE_SPACE, c)) {
+
+						// do nothing, eat all white spaces
+
+						state = 2;
+					}
+					else if (_contains(_SEPARATORS, c)) {
+
+						// switch to the value parsing state
+
+						state = 3;
+					}
+					else {
+
+						// any other character indicates we encoutered the
+						// beginning of the value
+
+						valueSB.append(c);
+
+						// switch to the value parsing state
+
+						state = 4;
+					}
+				}
+				else if (state == 3) {
+					if (_contains(_WHITE_SPACE, c)) {
+
+						// do nothing, eat all white spaces
+
+						state = 3;
+					}
+					else {
+
+						// any other character indicates we encoutered the
+						// beginning of the value
+
+						valueSB.append(c);
+
+						// switch to the value parsing state
+
+						state = 4;
+					}
+				}
+				else if (state == 4) {
+					valueSB.append(c);
+				}
+			}
+
+			result[0] = keySB.toString();
+			result[1] = valueSB.toString();
+
+			return result;
+		}
+
+		private final List<String> _comments = new ArrayList<>();
+		private Pattern _pattern = Pattern.compile(
+			"\\s*[TILFDXSCBilfdxscb]?(\\[[\\S\\s]*\\]|\\{[\\S\\s]*\\}|" +
+				"\"[\\S\\s]*\")\\s*");
+		private String _propertyName;
+		private String _propertyValue;
+		private Boolean _typed;
+		private final List<String> _values = new ArrayList<>();
+
+	}
+
+	public static class PropertiesWriter extends FilterWriter {
+
+		public PropertiesWriter(Writer writer, boolean typed) {
+			super(writer);
+
+			_typed = typed;
+		}
+
+		public void writeln(String string) throws IOException {
+			if (string != null) {
+				write(string);
+			}
+
+			write(_LINE_SEPARATOR);
+		}
+
+		public void writeProperty(String key, String value) throws IOException {
+			write(key);
+			write(" = ");
+
+			if (_typed) {
+				write(value);
+			}
+			else {
+				write(_escapeJava(value));
+			}
+
+			writeln(null);
+		}
+
+		private boolean _typed;
+
+	}
+
+	protected void saveLayout(Writer writer, boolean typed) throws IOException {
+		try (PropertiesWriter propertiesWriter = new PropertiesWriter(
+				writer, typed)) {
+
+			if (_headers != null) {
+				for (String s : _headers) {
+					propertiesWriter.writeln(s);
+				}
+			}
+
+			for (Map.Entry<String, String> entry : _storage.entrySet()) {
+				String key = entry.getKey();
+
+				String value = entry.getValue();
+
+				Layout layout = _layoutMap.get(key);
+
+				if (layout == null) {
+					propertiesWriter.writeProperty(key, value);
+
+					continue;
+				}
+
+				List<String> comments = layout.getComments();
+
+				if (comments != null) {
+					for (String string : comments) {
+						propertiesWriter.writeln(string);
+					}
+				}
+
+				List<String> values = layout.getValues();
+
+				if (values == null) {
+					propertiesWriter.writeProperty(key, value);
+
+					continue;
+				}
+
+				int size = values.size();
+
+				for (int i = 0; i < size; i++) {
+					String string = values.get(i);
+
+					if (i < (size - 1)) {
+						propertiesWriter.writeln(string + "\\");
+					}
+					else {
+						propertiesWriter.writeln(string);
+					}
+				}
+			}
+
+			if (_footers != null) {
+				for (String string : _footers) {
+					propertiesWriter.writeln(string);
+				}
+			}
+		}
+	}
+
+	private static boolean _contains(char[] array, char valueToFind) {
+		if (array == null) {
+			return false;
+		}
+
+		for (char c : array) {
+			if (valueToFind == c) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static Object _convertFromString(String value) {
@@ -90,20 +613,361 @@ public class TypedProperties {
 		}
 	}
 
+	private static String _escapeJava(String string) {
+		if (string == null) {
+			return null;
+		}
+
+		int length = string.length();
+
+		StringBundler sb = new StringBundler(length * 2);
+
+		for (int i = 0; i < length; i++) {
+			char c = string.charAt(i);
+
+			// handle unicode
+
+			if (c > 0xfff) {
+				sb.append("\\u");
+				sb.append(_hex(c));
+			}
+			else if (c > 0xff) {
+				sb.append("\\u0");
+				sb.append(_hex(c));
+			}
+			else if (c > 0x7f) {
+				sb.append("\\u00");
+				sb.append(_hex(c));
+			}
+			else if (c < 32) {
+				if (c == 'b') {
+					sb.append('\\');
+					sb.append('b');
+				}
+				else if (c == 'n') {
+					sb.append('\\');
+					sb.append('n');
+				}
+				else if (c == 't') {
+					sb.append('\\');
+					sb.append('t');
+				}
+				else if (c == 'f') {
+					sb.append('\\');
+					sb.append('f');
+				}
+				else if (c == 'r') {
+					sb.append('\\');
+					sb.append('r');
+				}
+				else {
+					if (c > 0xf) {
+						sb.append("\\u00");
+						sb.append(_hex(c));
+					}
+					else {
+						sb.append("\\u000");
+						sb.append(_hex(c));
+					}
+				}
+			}
+			else {
+				if (c == CharPool.QUOTE) {
+					sb.append('\\');
+					sb.append(CharPool.QUOTE);
+				}
+				else if (c == '\\') {
+					sb.append('\\');
+					sb.append('\\');
+				}
+				else {
+					sb.append(c);
+				}
+			}
+		}
+
+		return sb.toString();
+	}
+
+	private static String _hex(char ch) {
+		String hexString = Integer.toHexString(ch);
+
+		return hexString.toUpperCase(LocaleUtil.ENGLISH);
+	}
+
+	private static boolean _isCommentLine(String line) {
+		String string = line.trim();
+
+		// blank lines are also treated as comment lines
+
+		if ((string.length() < 1) ||
+			(_COMMENT_CHARS.indexOf(string.charAt(0)) >= 0)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private static String _unescapeJava(String string) {
+		if (string == null) {
+			return null;
+		}
+
+		int size = string.length();
+
+		StringBundler sb = new StringBundler(size);
+
+		StringBuffer unicode = new StringBuffer(_UNICODE_LEN);
+
+		boolean hadSlash = false;
+
+		boolean inUnicode = false;
+
+		for (int i = 0; i < size; i++) {
+			char c = string.charAt(i);
+
+			if (inUnicode) {
+
+				// if in unicode, then we're reading unicode
+				// values in somehow
+
+				unicode.append(c);
+
+				if (unicode.length() == _UNICODE_LEN) {
+
+					// unicode now contains the four hex digits
+					// which represents our unicode character
+
+					try {
+						int value = Integer.parseInt(
+							unicode.toString(), _HEX_RADIX);
+
+						sb.append((char)value);
+
+						unicode.setLength(0);
+
+						inUnicode = false;
+
+						hadSlash = false;
+					}
+					catch (NumberFormatException numberFormatException) {
+						throw new IllegalArgumentException(
+							"Unable to parse unicode value: " + unicode,
+							numberFormatException);
+					}
+				}
+
+				continue;
+			}
+
+			if (hadSlash) {
+
+				// handle an escaped value
+
+				hadSlash = false;
+
+				if (c == '\\') {
+					sb.append("\\");
+				}
+				else if (c == CharPool.APOSTROPHE) {
+					sb.append(CharPool.APOSTROPHE);
+				}
+				else if (c == CharPool.QUOTE) {
+					sb.append(CharPool.QUOTE);
+				}
+				else if (c == 'r') {
+					sb.append('\r');
+				}
+				else if (c == 'f') {
+					sb.append('\f');
+				}
+				else if (c == 't') {
+					sb.append('\t');
+				}
+				else if (c == 'n') {
+					sb.append('\n');
+				}
+				else if (c == 'b') {
+					sb.append('\b');
+				}
+				else if (c == 'u') {
+					inUnicode = true;
+				}
+				else {
+					sb.append(c);
+				}
+
+				continue;
+			}
+			else if (c == '\\') {
+				hadSlash = true;
+
+				continue;
+			}
+
+			sb.append(c);
+		}
+
+		if (hadSlash) {
+
+			// then we're in the weird case of a \ at the end of the
+			// string, let's output it anyway.
+
+			sb.append('\\');
+		}
+
+		return sb.toString();
+	}
+
+	private int _checkHeaderComment(List<String> comments) {
+		if ((_headers == null) && _layoutMap.isEmpty()) {
+
+			// This is the first comment. Search for blank lines.
+
+			int index = comments.size() - 1;
+
+			while (index >= 0) {
+				String commentLine = comments.get(index);
+
+				if (commentLine.length() <= 0) {
+					break;
+				}
+
+				index--;
+			}
+
+			setHeader(new ArrayList<>(comments.subList(0, index + 1)));
+
+			return index + 1;
+		}
+
+		return 0;
+	}
+
 	private void _ensureTyped() {
-		if (!_storage.isTyped()) {
-			_storage.setTyped(true);
+		if (!_typed) {
+			_typed = true;
 
-			for (String key : _storage.keySet()) {
-				String string = _convertToString(_storage.get(key));
+			for (String key : keySet()) {
+				String string = _convertToString(get(key));
 
-				_storage.put(
-					key, _storage.getComments(key),
-					Arrays.asList(string.split("\n")));
+				put(key, getComments(key), Arrays.asList(string.split("\n")));
 			}
 		}
 	}
 
-	private final Properties _storage = new Properties();
+	private String _put(String key, String value) {
+		String old = _storage.put(key, value);
+
+		if ((old == null) || !old.equals(value)) {
+			Layout layout = _layoutMap.get(key);
+
+			if (layout != null) {
+				layout.clearValue();
+			}
+		}
+
+		return old;
+	}
+
+	private static final String _COMMENT_CHARS = "#!";
+
+	private static final int _HEX_RADIX = 16;
+
+	private static final String _LINE_SEPARATOR = System.getProperty(
+		"line.separator");
+
+	private static final char[] _SEPARATORS = {CharPool.EQUAL, CharPool.COLON};
+
+	private static final int _UNICODE_LEN = 4;
+
+	private static final char[] _WHITE_SPACE = {CharPool.SPACE, '\t', '\f'};
+
+	private List<String> _footers;
+	private List<String> _headers;
+	private final Map<String, Layout> _layoutMap = new LinkedHashMap<>();
+	private final Map<String, String> _storage = new LinkedHashMap<>();
+	private boolean _typed;
+
+	private static class Layout {
+
+		public Layout(List<String> comments, List<String> values) {
+			_comments = comments;
+			_values = values;
+		}
+
+		public void clearValue() {
+			_values = null;
+		}
+
+		public List<String> getComments() {
+			return _comments;
+		}
+
+		public List<String> getValues() {
+			return _values;
+		}
+
+		private final List<String> _comments;
+		private List<String> _values;
+
+	}
+
+	private class KeyIterator implements Iterator<Map.Entry<String, String>> {
+
+		public KeyIterator() {
+			Set<Map.Entry<String, String>> entries = _storage.entrySet();
+
+			_iterator = entries.iterator();
+		}
+
+		@Override
+		public boolean hasNext() {
+			return _iterator.hasNext();
+		}
+
+		@Override
+		public Map.Entry<String, String> next() {
+			final Map.Entry<String, String> entry = _iterator.next();
+
+			return new Map.Entry<String, String>() {
+
+				@Override
+				public String getKey() {
+					return entry.getKey();
+				}
+
+				@Override
+				public String getValue() {
+					return entry.getValue();
+				}
+
+				@Override
+				public String setValue(String value) {
+					String old = entry.setValue(value);
+
+					if ((old == null) || !old.equals(value)) {
+						Layout layout = _layoutMap.get(entry.getKey());
+
+						if (layout != null) {
+							layout.clearValue();
+						}
+					}
+
+					return old;
+				}
+
+			};
+		}
+
+		@Override
+		public void remove() {
+			_iterator.remove();
+		}
+
+		private final Iterator<Map.Entry<String, String>> _iterator;
+
+	}
 
 }

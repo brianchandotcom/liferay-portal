@@ -18,6 +18,7 @@ import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.translation.constants.TranslationActionKeys;
@@ -69,10 +70,14 @@ public class TranslationEntryServiceImpl
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		permissionChecker.hasPermission(
-			groupId, TranslationConstants.RESOURCE_NAME + "." + languageId,
-			TranslationConstants.RESOURCE_NAME + "." + languageId,
-			TranslationActionKeys.TRANSLATE);
+		String name = TranslationConstants.RESOURCE_NAME + "." + languageId;
+
+		if (!permissionChecker.hasPermission(
+				groupId, name, name, TranslationActionKeys.TRANSLATE)) {
+
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, name, name, TranslationActionKeys.TRANSLATE);
+		}
 
 		return translationEntryLocalService.addOrUpdateTranslationEntry(
 			groupId, languageId, infoItemReference, infoItemFieldValues,

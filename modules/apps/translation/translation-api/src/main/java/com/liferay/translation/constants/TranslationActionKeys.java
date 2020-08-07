@@ -19,6 +19,6 @@ package com.liferay.translation.constants;
  */
 public class TranslationActionKeys {
 
-	public static final String TRANSLATE = "TRANSLATE_";
+	public static final String TRANSLATE = "TRANSLATE";
 
 }

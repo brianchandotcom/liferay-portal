@@ -17,7 +17,7 @@ package com.liferay.portal.search.elasticsearch6.internal.query;
 import com.liferay.portal.search.query.Operator;
 import com.liferay.portal.search.query.StringQuery;
 
-import java.util.Map.Entry;
+import java.util.Map;
 
 import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -86,19 +86,20 @@ public class StringQueryTranslatorImpl implements StringQueryTranslator {
 		if (stringQuery.getEscape() != null) {
 			queryStringQueryBuilder.escape(stringQuery.getEscape());
 		}
-		
-		if (!stringQuery.getFields().isEmpty()) {
 
-			for (Entry<String, Float> entry : stringQuery.getFieldsBoosts().entrySet()) {
-				if (entry.getValue() == null) {
-					queryStringQueryBuilder.field(
-							entry.getKey());
-				} else {
-					queryStringQueryBuilder.field(
-							entry.getKey(), entry.getValue());
-				}
+		Map<String, Float> fields = stringQuery.getFields();
+
+		for (Map.Entry<String, Float> entry : fields.entrySet()) {
+			Float boost = entry.getValue();
+			String field = entry.getKey();
+
+			if (boost == null) {
+				queryStringQueryBuilder.field(field);
 			}
-		}		
+			else {
+				queryStringQueryBuilder.field(field, boost);
+			}
+		}
 
 		if (stringQuery.getFuzziness() != null) {
 			queryStringQueryBuilder.fuzziness(
@@ -116,10 +117,9 @@ public class StringQueryTranslatorImpl implements StringQueryTranslator {
 		}
 
 		if (stringQuery.getFuzzyRewrite() != null) {
-			queryStringQueryBuilder.fuzzyRewrite(
-					stringQuery.getFuzzyRewrite());
+			queryStringQueryBuilder.fuzzyRewrite(stringQuery.getFuzzyRewrite());
 		}
-		
+
 		if (stringQuery.getFuzzyTranspositions() != null) {
 			queryStringQueryBuilder.fuzzyTranspositions(
 				stringQuery.getFuzzyTranspositions());
@@ -138,7 +138,7 @@ public class StringQueryTranslatorImpl implements StringQueryTranslator {
 			queryStringQueryBuilder.minimumShouldMatch(
 				stringQuery.getMinimumShouldMatch());
 		}
-		
+
 		if (stringQuery.getPhraseSlop() != null) {
 			queryStringQueryBuilder.phraseSlop(stringQuery.getPhraseSlop());
 		}
@@ -160,7 +160,7 @@ public class StringQueryTranslatorImpl implements StringQueryTranslator {
 		if (stringQuery.getTieBreaker() != null) {
 			queryStringQueryBuilder.tieBreaker(stringQuery.getTieBreaker());
 		}
-		
+
 		if (stringQuery.getTimeZone() != null) {
 			queryStringQueryBuilder.timeZone(stringQuery.getTimeZone());
 		}

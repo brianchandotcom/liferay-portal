@@ -98,8 +98,6 @@ public class DocumentFolderResourceImpl
 
 		Folder folder = _dlAppService.getFolder(parentDocumentFolderId);
 
-		DocumentFolder parentDocumentFolder = _toDocumentFolder(folder);
-
 		return _getDocumentFoldersPage(
 			HashMapBuilder.put(
 				"create",
@@ -114,8 +112,8 @@ public class DocumentFolderResourceImpl
 					"getDocumentFolderDocumentFoldersPage", folder.getUserId(),
 					"com.liferay.document.library", folder.getGroupId())
 			).build(),
-			parentDocumentFolder.getId(), parentDocumentFolder.getSiteId(),
-			flatten, search, aggregation, filter, pagination, sorts);
+			folder.getFolderId(), folder.getGroupId(), flatten, search,
+			aggregation, filter, pagination, sorts);
 	}
 
 	@Override
@@ -190,12 +188,10 @@ public class DocumentFolderResourceImpl
 			Long parentDocumentFolderId, DocumentFolder documentFolder)
 		throws Exception {
 
-		DocumentFolder parentDocumentFolder = _toDocumentFolder(
-			_dlAppService.getFolder(parentDocumentFolderId));
+		Folder folder = _dlAppService.getFolder(parentDocumentFolderId);
 
 		return _addFolder(
-			parentDocumentFolder.getSiteId(), parentDocumentFolder.getId(),
-			documentFolder);
+			folder.getGroupId(), folder.getFolderId(), documentFolder);
 	}
 
 	@Override

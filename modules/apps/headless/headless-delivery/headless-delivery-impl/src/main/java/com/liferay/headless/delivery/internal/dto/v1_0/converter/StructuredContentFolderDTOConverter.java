@@ -21,6 +21,9 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.service.JournalFolderService;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -55,9 +58,14 @@ public class StructuredContentFolderDTOConverter
 		JournalFolder journalFolder = _journalFolderService.getFolder(
 			(Long)dtoConverterContext.getId());
 
+		Group group = _groupLocalService.fetchGroup(journalFolder.getGroupId());
+
 		return new StructuredContentFolder() {
 			{
 				actions = dtoConverterContext.getActions();
+				assetLibraryKey =
+					(group.getType() == GroupConstants.TYPE_DEPOT) ?
+						group.getGroupKey() : null;
 				creator = CreatorUtil.toCreator(
 					_portal, dtoConverterContext.getUriInfoOptional(),
 					_userLocalService.fetchUser(journalFolder.getUserId()));
@@ -79,7 +87,8 @@ public class StructuredContentFolderDTOConverter
 					_journalArticleService.getArticlesCount(
 						journalFolder.getGroupId(), journalFolder.getFolderId(),
 						WorkflowConstants.STATUS_APPROVED);
-				siteId = journalFolder.getGroupId();
+				siteId = (group.getType() == GroupConstants.TYPE_DEPOT) ? null :
+					journalFolder.getGroupId();
 				subscribed = _subscriptionLocalService.isSubscribed(
 					journalFolder.getCompanyId(),
 					dtoConverterContext.getUserId(),
@@ -96,6 +105,9 @@ public class StructuredContentFolderDTOConverter
 			}
 		};
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private JournalArticleService _journalArticleService;

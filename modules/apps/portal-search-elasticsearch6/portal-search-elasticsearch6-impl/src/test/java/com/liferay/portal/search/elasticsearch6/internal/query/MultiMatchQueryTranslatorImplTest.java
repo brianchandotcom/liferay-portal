@@ -32,12 +32,12 @@ public class MultiMatchQueryTranslatorImplTest {
 		MultiMatchQueryTranslatorImpl multiMatchQueryTranslatorImpl =
 			new MultiMatchQueryTranslatorImpl();
 
-		Map<String, Float> fields = new HashMap<>();
+		Map<String, Float> fieldsBoosts = new HashMap<>();
 
-		fields.put("test", null);
+		fieldsBoosts.put("test", null);
 
 		MultiMatchQuery multiMatchQuery = new MultiMatchQueryImpl(
-			"test", fields);
+			"test", fieldsBoosts);
 
 		multiMatchQueryTranslatorImpl.translate(multiMatchQuery);
 	}

@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -621,12 +620,11 @@ public class AssetListEntrySegmentsEntryRelPersistenceTest {
 	private void _assertOriginalValues(
 		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel) {
 
-		Assert.assertTrue(
-			Objects.equals(
-				assetListEntrySegmentsEntryRel.getUuid(),
-				ReflectionTestUtil.invoke(
-					assetListEntrySegmentsEntryRel, "getOriginalUuid",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			assetListEntrySegmentsEntryRel.getUuid(),
+			ReflectionTestUtil.invoke(
+				assetListEntrySegmentsEntryRel, "getOriginalUuid",
+				new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(assetListEntrySegmentsEntryRel.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(

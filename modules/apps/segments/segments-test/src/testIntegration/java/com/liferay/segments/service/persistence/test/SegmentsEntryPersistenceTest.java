@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -644,11 +643,10 @@ public class SegmentsEntryPersistenceTest {
 	}
 
 	private void _assertOriginalValues(SegmentsEntry segmentsEntry) {
-		Assert.assertTrue(
-			Objects.equals(
-				segmentsEntry.getUuid(),
-				ReflectionTestUtil.invoke(
-					segmentsEntry, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			segmentsEntry.getUuid(),
+			ReflectionTestUtil.invoke(
+				segmentsEntry, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(segmentsEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -658,12 +656,10 @@ public class SegmentsEntryPersistenceTest {
 			Long.valueOf(segmentsEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				segmentsEntry, "getOriginalGroupId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				segmentsEntry.getSegmentsEntryKey(),
-				ReflectionTestUtil.invoke(
-					segmentsEntry, "getOriginalSegmentsEntryKey",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			segmentsEntry.getSegmentsEntryKey(),
+			ReflectionTestUtil.invoke(
+				segmentsEntry, "getOriginalSegmentsEntryKey", new Class<?>[0]));
 	}
 
 	protected SegmentsEntry addSegmentsEntry() throws Exception {

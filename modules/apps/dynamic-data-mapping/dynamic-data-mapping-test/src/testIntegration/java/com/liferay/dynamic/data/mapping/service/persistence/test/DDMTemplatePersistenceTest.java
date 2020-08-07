@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -715,11 +714,10 @@ public class DDMTemplatePersistenceTest {
 	}
 
 	private void _assertOriginalValues(DDMTemplate ddmTemplate) {
-		Assert.assertTrue(
-			Objects.equals(
-				ddmTemplate.getUuid(),
-				ReflectionTestUtil.invoke(
-					ddmTemplate, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			ddmTemplate.getUuid(),
+			ReflectionTestUtil.invoke(
+				ddmTemplate, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(ddmTemplate.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -738,11 +736,10 @@ public class DDMTemplatePersistenceTest {
 			Long.valueOf(ddmTemplate.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
 				ddmTemplate, "getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				ddmTemplate.getTemplateKey(),
-				ReflectionTestUtil.invoke(
-					ddmTemplate, "getOriginalTemplateKey", new Class<?>[0])));
+		Assert.assertEquals(
+			ddmTemplate.getTemplateKey(),
+			ReflectionTestUtil.invoke(
+				ddmTemplate, "getOriginalTemplateKey", new Class<?>[0]));
 	}
 
 	protected DDMTemplate addDDMTemplate() throws Exception {

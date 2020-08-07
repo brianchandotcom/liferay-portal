@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -577,11 +576,10 @@ public class AssetListEntryUsagePersistenceTest {
 	private void _assertOriginalValues(
 		AssetListEntryUsage assetListEntryUsage) {
 
-		Assert.assertTrue(
-			Objects.equals(
-				assetListEntryUsage.getUuid(),
-				ReflectionTestUtil.invoke(
-					assetListEntryUsage, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			assetListEntryUsage.getUuid(),
+			ReflectionTestUtil.invoke(
+				assetListEntryUsage, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(assetListEntryUsage.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -596,12 +594,10 @@ public class AssetListEntryUsagePersistenceTest {
 			Long.valueOf(assetListEntryUsage.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
 				assetListEntryUsage, "getOriginalClassPK", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				assetListEntryUsage.getPortletId(),
-				ReflectionTestUtil.invoke(
-					assetListEntryUsage, "getOriginalPortletId",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			assetListEntryUsage.getPortletId(),
+			ReflectionTestUtil.invoke(
+				assetListEntryUsage, "getOriginalPortletId", new Class<?>[0]));
 	}
 
 	protected AssetListEntryUsage addAssetListEntryUsage() throws Exception {

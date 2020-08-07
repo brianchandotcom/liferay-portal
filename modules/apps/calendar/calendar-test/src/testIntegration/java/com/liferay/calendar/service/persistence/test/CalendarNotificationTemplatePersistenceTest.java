@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -622,12 +621,11 @@ public class CalendarNotificationTemplatePersistenceTest {
 	private void _assertOriginalValues(
 		CalendarNotificationTemplate calendarNotificationTemplate) {
 
-		Assert.assertTrue(
-			Objects.equals(
-				calendarNotificationTemplate.getUuid(),
-				ReflectionTestUtil.invoke(
-					calendarNotificationTemplate, "getOriginalUuid",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			calendarNotificationTemplate.getUuid(),
+			ReflectionTestUtil.invoke(
+				calendarNotificationTemplate, "getOriginalUuid",
+				new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(calendarNotificationTemplate.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -639,18 +637,16 @@ public class CalendarNotificationTemplatePersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				calendarNotificationTemplate, "getOriginalCalendarId",
 				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				calendarNotificationTemplate.getNotificationType(),
-				ReflectionTestUtil.invoke(
-					calendarNotificationTemplate, "getOriginalNotificationType",
-					new Class<?>[0])));
-		Assert.assertTrue(
-			Objects.equals(
-				calendarNotificationTemplate.getNotificationTemplateType(),
-				ReflectionTestUtil.invoke(
-					calendarNotificationTemplate,
-					"getOriginalNotificationTemplateType", new Class<?>[0])));
+		Assert.assertEquals(
+			calendarNotificationTemplate.getNotificationType(),
+			ReflectionTestUtil.invoke(
+				calendarNotificationTemplate, "getOriginalNotificationType",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			calendarNotificationTemplate.getNotificationTemplateType(),
+			ReflectionTestUtil.invoke(
+				calendarNotificationTemplate,
+				"getOriginalNotificationTemplateType", new Class<?>[0]));
 	}
 
 	protected CalendarNotificationTemplate addCalendarNotificationTemplate()

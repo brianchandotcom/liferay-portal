@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -524,11 +523,10 @@ public class MDRActionPersistenceTest {
 	}
 
 	private void _assertOriginalValues(MDRAction mdrAction) {
-		Assert.assertTrue(
-			Objects.equals(
-				mdrAction.getUuid(),
-				ReflectionTestUtil.invoke(
-					mdrAction, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			mdrAction.getUuid(),
+			ReflectionTestUtil.invoke(
+				mdrAction, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(mdrAction.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(

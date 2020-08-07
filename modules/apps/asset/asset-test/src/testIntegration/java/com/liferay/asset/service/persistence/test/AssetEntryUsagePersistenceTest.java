@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -570,11 +569,10 @@ public class AssetEntryUsagePersistenceTest {
 	}
 
 	private void _assertOriginalValues(AssetEntryUsage assetEntryUsage) {
-		Assert.assertTrue(
-			Objects.equals(
-				assetEntryUsage.getUuid(),
-				ReflectionTestUtil.invoke(
-					assetEntryUsage, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			assetEntryUsage.getUuid(),
+			ReflectionTestUtil.invoke(
+				assetEntryUsage, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(assetEntryUsage.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -588,12 +586,10 @@ public class AssetEntryUsagePersistenceTest {
 			Long.valueOf(assetEntryUsage.getContainerType()),
 			ReflectionTestUtil.<Long>invoke(
 				assetEntryUsage, "getOriginalContainerType", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				assetEntryUsage.getContainerKey(),
-				ReflectionTestUtil.invoke(
-					assetEntryUsage, "getOriginalContainerKey",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			assetEntryUsage.getContainerKey(),
+			ReflectionTestUtil.invoke(
+				assetEntryUsage, "getOriginalContainerKey", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(assetEntryUsage.getPlid()),
 			ReflectionTestUtil.<Long>invoke(

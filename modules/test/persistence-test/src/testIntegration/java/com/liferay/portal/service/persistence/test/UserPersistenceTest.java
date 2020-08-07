@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -796,21 +795,19 @@ public class UserPersistenceTest {
 			Long.valueOf(user.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
 				user, "getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				user.getScreenName(),
-				ReflectionTestUtil.invoke(
-					user, "getOriginalScreenName", new Class<?>[0])));
+		Assert.assertEquals(
+			user.getScreenName(),
+			ReflectionTestUtil.invoke(
+				user, "getOriginalScreenName", new Class<?>[0]));
 
 		Assert.assertEquals(
 			Long.valueOf(user.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
 				user, "getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				user.getEmailAddress(),
-				ReflectionTestUtil.invoke(
-					user, "getOriginalEmailAddress", new Class<?>[0])));
+		Assert.assertEquals(
+			user.getEmailAddress(),
+			ReflectionTestUtil.invoke(
+				user, "getOriginalEmailAddress", new Class<?>[0]));
 
 		Assert.assertEquals(
 			Long.valueOf(user.getCompanyId()),
@@ -825,32 +822,28 @@ public class UserPersistenceTest {
 			Long.valueOf(user.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
 				user, "getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				user.getGoogleUserId(),
-				ReflectionTestUtil.invoke(
-					user, "getOriginalGoogleUserId", new Class<?>[0])));
+		Assert.assertEquals(
+			user.getGoogleUserId(),
+			ReflectionTestUtil.invoke(
+				user, "getOriginalGoogleUserId", new Class<?>[0]));
 
 		Assert.assertEquals(
 			Long.valueOf(user.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
 				user, "getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				user.getOpenId(),
-				ReflectionTestUtil.invoke(
-					user, "getOriginalOpenId", new Class<?>[0])));
+		Assert.assertEquals(
+			user.getOpenId(),
+			ReflectionTestUtil.invoke(
+				user, "getOriginalOpenId", new Class<?>[0]));
 
 		Assert.assertEquals(
 			Long.valueOf(user.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
 				user, "getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				user.getExternalReferenceCode(),
-				ReflectionTestUtil.invoke(
-					user, "getOriginalExternalReferenceCode",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			user.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				user, "getOriginalExternalReferenceCode", new Class<?>[0]));
 	}
 
 	protected User addUser() throws Exception {

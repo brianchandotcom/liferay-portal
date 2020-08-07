@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -559,11 +558,10 @@ public class TranslationEntryPersistenceTest {
 	}
 
 	private void _assertOriginalValues(TranslationEntry translationEntry) {
-		Assert.assertTrue(
-			Objects.equals(
-				translationEntry.getUuid(),
-				ReflectionTestUtil.invoke(
-					translationEntry, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			translationEntry.getUuid(),
+			ReflectionTestUtil.invoke(
+				translationEntry, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(translationEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -577,12 +575,10 @@ public class TranslationEntryPersistenceTest {
 			Long.valueOf(translationEntry.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
 				translationEntry, "getOriginalClassPK", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				translationEntry.getLanguageId(),
-				ReflectionTestUtil.invoke(
-					translationEntry, "getOriginalLanguageId",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			translationEntry.getLanguageId(),
+			ReflectionTestUtil.invoke(
+				translationEntry, "getOriginalLanguageId", new Class<?>[0]));
 	}
 
 	protected TranslationEntry addTranslationEntry() throws Exception {

@@ -45,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -536,12 +535,10 @@ public class JournalArticleResourcePersistenceTest {
 	private void _assertOriginalValues(
 		JournalArticleResource journalArticleResource) {
 
-		Assert.assertTrue(
-			Objects.equals(
-				journalArticleResource.getUuid(),
-				ReflectionTestUtil.invoke(
-					journalArticleResource, "getOriginalUuid",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			journalArticleResource.getUuid(),
+			ReflectionTestUtil.invoke(
+				journalArticleResource, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(journalArticleResource.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -551,12 +548,11 @@ public class JournalArticleResourcePersistenceTest {
 			Long.valueOf(journalArticleResource.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				journalArticleResource, "getOriginalGroupId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				journalArticleResource.getArticleId(),
-				ReflectionTestUtil.invoke(
-					journalArticleResource, "getOriginalArticleId",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			journalArticleResource.getArticleId(),
+			ReflectionTestUtil.invoke(
+				journalArticleResource, "getOriginalArticleId",
+				new Class<?>[0]));
 	}
 
 	protected JournalArticleResource addJournalArticleResource()

@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -577,12 +576,10 @@ public class DDMStructureVersionPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				ddmStructureVersion, "getOriginalStructureId",
 				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				ddmStructureVersion.getVersion(),
-				ReflectionTestUtil.invoke(
-					ddmStructureVersion, "getOriginalVersion",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			ddmStructureVersion.getVersion(),
+			ReflectionTestUtil.invoke(
+				ddmStructureVersion, "getOriginalVersion", new Class<?>[0]));
 	}
 
 	protected DDMStructureVersion addDDMStructureVersion() throws Exception {

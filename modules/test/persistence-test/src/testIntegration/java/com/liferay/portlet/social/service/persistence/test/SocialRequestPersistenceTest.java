@@ -45,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -592,11 +591,10 @@ public class SocialRequestPersistenceTest {
 	}
 
 	private void _assertOriginalValues(SocialRequest socialRequest) {
-		Assert.assertTrue(
-			Objects.equals(
-				socialRequest.getUuid(),
-				ReflectionTestUtil.invoke(
-					socialRequest, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			socialRequest.getUuid(),
+			ReflectionTestUtil.invoke(
+				socialRequest, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(socialRequest.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(

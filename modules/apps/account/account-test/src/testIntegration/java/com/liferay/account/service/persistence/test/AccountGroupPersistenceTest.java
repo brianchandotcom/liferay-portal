@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -492,12 +491,11 @@ public class AccountGroupPersistenceTest {
 			Long.valueOf(accountGroup.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
 				accountGroup, "getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				accountGroup.getExternalReferenceCode(),
-				ReflectionTestUtil.invoke(
-					accountGroup, "getOriginalExternalReferenceCode",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			accountGroup.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				accountGroup, "getOriginalExternalReferenceCode",
+				new Class<?>[0]));
 	}
 
 	protected AccountGroup addAccountGroup() throws Exception {

@@ -45,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -521,12 +520,10 @@ public class AnnouncementsDeliveryPersistenceTest {
 			Long.valueOf(announcementsDelivery.getUserId()),
 			ReflectionTestUtil.<Long>invoke(
 				announcementsDelivery, "getOriginalUserId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				announcementsDelivery.getType(),
-				ReflectionTestUtil.invoke(
-					announcementsDelivery, "getOriginalType",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			announcementsDelivery.getType(),
+			ReflectionTestUtil.invoke(
+				announcementsDelivery, "getOriginalType", new Class<?>[0]));
 	}
 
 	protected AnnouncementsDelivery addAnnouncementsDelivery()

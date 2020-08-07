@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -536,11 +535,10 @@ public class RepositoryPersistenceTest {
 	}
 
 	private void _assertOriginalValues(Repository repository) {
-		Assert.assertTrue(
-			Objects.equals(
-				repository.getUuid(),
-				ReflectionTestUtil.invoke(
-					repository, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			repository.getUuid(),
+			ReflectionTestUtil.invoke(
+				repository, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(repository.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -550,16 +548,14 @@ public class RepositoryPersistenceTest {
 			Long.valueOf(repository.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				repository, "getOriginalGroupId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				repository.getName(),
-				ReflectionTestUtil.invoke(
-					repository, "getOriginalName", new Class<?>[0])));
-		Assert.assertTrue(
-			Objects.equals(
-				repository.getPortletId(),
-				ReflectionTestUtil.invoke(
-					repository, "getOriginalPortletId", new Class<?>[0])));
+		Assert.assertEquals(
+			repository.getName(),
+			ReflectionTestUtil.invoke(
+				repository, "getOriginalName", new Class<?>[0]));
+		Assert.assertEquals(
+			repository.getPortletId(),
+			ReflectionTestUtil.invoke(
+				repository, "getOriginalPortletId", new Class<?>[0]));
 	}
 
 	protected Repository addRepository() throws Exception {

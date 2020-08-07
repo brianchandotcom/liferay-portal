@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -680,11 +679,10 @@ public class CalendarBookingPersistenceTest {
 	}
 
 	private void _assertOriginalValues(CalendarBooking calendarBooking) {
-		Assert.assertTrue(
-			Objects.equals(
-				calendarBooking.getUuid(),
-				ReflectionTestUtil.invoke(
-					calendarBooking, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			calendarBooking.getUuid(),
+			ReflectionTestUtil.invoke(
+				calendarBooking, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(calendarBooking.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -704,11 +702,10 @@ public class CalendarBookingPersistenceTest {
 			Long.valueOf(calendarBooking.getCalendarId()),
 			ReflectionTestUtil.<Long>invoke(
 				calendarBooking, "getOriginalCalendarId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				calendarBooking.getVEventUid(),
-				ReflectionTestUtil.invoke(
-					calendarBooking, "getOriginalVEventUid", new Class<?>[0])));
+		Assert.assertEquals(
+			calendarBooking.getVEventUid(),
+			ReflectionTestUtil.invoke(
+				calendarBooking, "getOriginalVEventUid", new Class<?>[0]));
 	}
 
 	protected CalendarBooking addCalendarBooking() throws Exception {

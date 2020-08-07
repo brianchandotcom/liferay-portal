@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -475,11 +474,10 @@ public class TicketPersistenceTest {
 	}
 
 	private void _assertOriginalValues(Ticket ticket) {
-		Assert.assertTrue(
-			Objects.equals(
-				ticket.getKey(),
-				ReflectionTestUtil.invoke(
-					ticket, "getOriginalKey", new Class<?>[0])));
+		Assert.assertEquals(
+			ticket.getKey(),
+			ReflectionTestUtil.invoke(
+				ticket, "getOriginalKey", new Class<?>[0]));
 	}
 
 	protected Ticket addTicket() throws Exception {

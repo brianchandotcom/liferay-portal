@@ -45,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -530,12 +529,11 @@ public class DepotAppCustomizationPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				depotAppCustomization, "getOriginalDepotEntryId",
 				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				depotAppCustomization.getPortletId(),
-				ReflectionTestUtil.invoke(
-					depotAppCustomization, "getOriginalPortletId",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			depotAppCustomization.getPortletId(),
+			ReflectionTestUtil.invoke(
+				depotAppCustomization, "getOriginalPortletId",
+				new Class<?>[0]));
 	}
 
 	protected DepotAppCustomization addDepotAppCustomization()

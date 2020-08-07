@@ -45,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -464,16 +463,14 @@ public class ResourceActionPersistenceTest {
 	}
 
 	private void _assertOriginalValues(ResourceAction resourceAction) {
-		Assert.assertTrue(
-			Objects.equals(
-				resourceAction.getName(),
-				ReflectionTestUtil.invoke(
-					resourceAction, "getOriginalName", new Class<?>[0])));
-		Assert.assertTrue(
-			Objects.equals(
-				resourceAction.getActionId(),
-				ReflectionTestUtil.invoke(
-					resourceAction, "getOriginalActionId", new Class<?>[0])));
+		Assert.assertEquals(
+			resourceAction.getName(),
+			ReflectionTestUtil.invoke(
+				resourceAction, "getOriginalName", new Class<?>[0]));
+		Assert.assertEquals(
+			resourceAction.getActionId(),
+			ReflectionTestUtil.invoke(
+				resourceAction, "getOriginalActionId", new Class<?>[0]));
 	}
 
 	protected ResourceAction addResourceAction() throws Exception {

@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -661,11 +660,10 @@ public class DDMStructurePersistenceTest {
 	}
 
 	private void _assertOriginalValues(DDMStructure ddmStructure) {
-		Assert.assertTrue(
-			Objects.equals(
-				ddmStructure.getUuid(),
-				ReflectionTestUtil.invoke(
-					ddmStructure, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			ddmStructure.getUuid(),
+			ReflectionTestUtil.invoke(
+				ddmStructure, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(ddmStructure.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -679,11 +677,10 @@ public class DDMStructurePersistenceTest {
 			Long.valueOf(ddmStructure.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
 				ddmStructure, "getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				ddmStructure.getStructureKey(),
-				ReflectionTestUtil.invoke(
-					ddmStructure, "getOriginalStructureKey", new Class<?>[0])));
+		Assert.assertEquals(
+			ddmStructure.getStructureKey(),
+			ReflectionTestUtil.invoke(
+				ddmStructure, "getOriginalStructureKey", new Class<?>[0]));
 	}
 
 	protected DDMStructure addDDMStructure() throws Exception {

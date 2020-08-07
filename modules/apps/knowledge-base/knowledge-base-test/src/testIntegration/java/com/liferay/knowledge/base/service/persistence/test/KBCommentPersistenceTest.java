@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -568,11 +567,10 @@ public class KBCommentPersistenceTest {
 	}
 
 	private void _assertOriginalValues(KBComment kbComment) {
-		Assert.assertTrue(
-			Objects.equals(
-				kbComment.getUuid(),
-				ReflectionTestUtil.invoke(
-					kbComment, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			kbComment.getUuid(),
+			ReflectionTestUtil.invoke(
+				kbComment, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(kbComment.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(

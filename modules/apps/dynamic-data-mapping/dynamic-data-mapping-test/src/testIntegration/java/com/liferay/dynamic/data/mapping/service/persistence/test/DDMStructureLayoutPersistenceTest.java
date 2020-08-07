@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -598,11 +597,10 @@ public class DDMStructureLayoutPersistenceTest {
 	}
 
 	private void _assertOriginalValues(DDMStructureLayout ddmStructureLayout) {
-		Assert.assertTrue(
-			Objects.equals(
-				ddmStructureLayout.getUuid(),
-				ReflectionTestUtil.invoke(
-					ddmStructureLayout, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			ddmStructureLayout.getUuid(),
+			ReflectionTestUtil.invoke(
+				ddmStructureLayout, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(ddmStructureLayout.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -622,12 +620,11 @@ public class DDMStructureLayoutPersistenceTest {
 			Long.valueOf(ddmStructureLayout.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
 				ddmStructureLayout, "getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				ddmStructureLayout.getStructureLayoutKey(),
-				ReflectionTestUtil.invoke(
-					ddmStructureLayout, "getOriginalStructureLayoutKey",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			ddmStructureLayout.getStructureLayoutKey(),
+			ReflectionTestUtil.invoke(
+				ddmStructureLayout, "getOriginalStructureLayoutKey",
+				new Class<?>[0]));
 	}
 
 	protected DDMStructureLayout addDDMStructureLayout() throws Exception {

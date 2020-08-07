@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -790,11 +789,10 @@ public class FragmentEntryPersistenceTest {
 	}
 
 	private void _assertOriginalValues(FragmentEntry fragmentEntry) {
-		Assert.assertTrue(
-			Objects.equals(
-				fragmentEntry.getUuid(),
-				ReflectionTestUtil.invoke(
-					fragmentEntry, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			fragmentEntry.getUuid(),
+			ReflectionTestUtil.invoke(
+				fragmentEntry, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(fragmentEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -804,12 +802,10 @@ public class FragmentEntryPersistenceTest {
 			Long.valueOf(fragmentEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				fragmentEntry, "getOriginalGroupId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				fragmentEntry.getFragmentEntryKey(),
-				ReflectionTestUtil.invoke(
-					fragmentEntry, "getOriginalFragmentEntryKey",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			fragmentEntry.getFragmentEntryKey(),
+			ReflectionTestUtil.invoke(
+				fragmentEntry, "getOriginalFragmentEntryKey", new Class<?>[0]));
 
 		Assert.assertEquals(
 			Long.valueOf(fragmentEntry.getHeadId()),

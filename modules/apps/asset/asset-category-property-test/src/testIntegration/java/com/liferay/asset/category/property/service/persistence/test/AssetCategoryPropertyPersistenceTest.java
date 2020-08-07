@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -556,11 +555,10 @@ public class AssetCategoryPropertyPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				assetCategoryProperty, "getOriginalCategoryId",
 				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				assetCategoryProperty.getKey(),
-				ReflectionTestUtil.invoke(
-					assetCategoryProperty, "getOriginalKey", new Class<?>[0])));
+		Assert.assertEquals(
+			assetCategoryProperty.getKey(),
+			ReflectionTestUtil.invoke(
+				assetCategoryProperty, "getOriginalKey", new Class<?>[0]));
 	}
 
 	protected AssetCategoryProperty addAssetCategoryProperty()

@@ -45,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -736,11 +735,10 @@ public class GroupPersistenceTest {
 	}
 
 	private void _assertOriginalValues(Group group) {
-		Assert.assertTrue(
-			Objects.equals(
-				group.getUuid(),
-				ReflectionTestUtil.invoke(
-					group, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			group.getUuid(),
+			ReflectionTestUtil.invoke(
+				group, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(group.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -755,21 +753,19 @@ public class GroupPersistenceTest {
 			Long.valueOf(group.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
 				group, "getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				group.getGroupKey(),
-				ReflectionTestUtil.invoke(
-					group, "getOriginalGroupKey", new Class<?>[0])));
+		Assert.assertEquals(
+			group.getGroupKey(),
+			ReflectionTestUtil.invoke(
+				group, "getOriginalGroupKey", new Class<?>[0]));
 
 		Assert.assertEquals(
 			Long.valueOf(group.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
 				group, "getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				group.getFriendlyURL(),
-				ReflectionTestUtil.invoke(
-					group, "getOriginalFriendlyURL", new Class<?>[0])));
+		Assert.assertEquals(
+			group.getFriendlyURL(),
+			ReflectionTestUtil.invoke(
+				group, "getOriginalFriendlyURL", new Class<?>[0]));
 
 		Assert.assertEquals(
 			Long.valueOf(group.getCompanyId()),
@@ -792,11 +788,10 @@ public class GroupPersistenceTest {
 			Long.valueOf(group.getLiveGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				group, "getOriginalLiveGroupId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				group.getGroupKey(),
-				ReflectionTestUtil.invoke(
-					group, "getOriginalGroupKey", new Class<?>[0])));
+		Assert.assertEquals(
+			group.getGroupKey(),
+			ReflectionTestUtil.invoke(
+				group, "getOriginalGroupKey", new Class<?>[0]));
 
 		Assert.assertEquals(
 			Long.valueOf(group.getCompanyId()),
@@ -810,11 +805,10 @@ public class GroupPersistenceTest {
 			Long.valueOf(group.getLiveGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				group, "getOriginalLiveGroupId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				group.getGroupKey(),
-				ReflectionTestUtil.invoke(
-					group, "getOriginalGroupKey", new Class<?>[0])));
+		Assert.assertEquals(
+			group.getGroupKey(),
+			ReflectionTestUtil.invoke(
+				group, "getOriginalGroupKey", new Class<?>[0]));
 	}
 
 	protected Group addGroup() throws Exception {

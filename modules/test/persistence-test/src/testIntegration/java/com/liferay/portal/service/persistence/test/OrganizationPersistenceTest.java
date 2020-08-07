@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -616,22 +615,20 @@ public class OrganizationPersistenceTest {
 			Long.valueOf(organization.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
 				organization, "getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				organization.getName(),
-				ReflectionTestUtil.invoke(
-					organization, "getOriginalName", new Class<?>[0])));
+		Assert.assertEquals(
+			organization.getName(),
+			ReflectionTestUtil.invoke(
+				organization, "getOriginalName", new Class<?>[0]));
 
 		Assert.assertEquals(
 			Long.valueOf(organization.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
 				organization, "getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				organization.getExternalReferenceCode(),
-				ReflectionTestUtil.invoke(
-					organization, "getOriginalExternalReferenceCode",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			organization.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				organization, "getOriginalExternalReferenceCode",
+				new Class<?>[0]));
 	}
 
 	protected Organization addOrganization() throws Exception {

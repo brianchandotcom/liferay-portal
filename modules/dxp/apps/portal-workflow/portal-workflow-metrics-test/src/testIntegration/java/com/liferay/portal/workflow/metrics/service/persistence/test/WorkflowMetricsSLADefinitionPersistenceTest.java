@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -714,12 +713,11 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 	private void _assertOriginalValues(
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
 
-		Assert.assertTrue(
-			Objects.equals(
-				workflowMetricsSLADefinition.getUuid(),
-				ReflectionTestUtil.invoke(
-					workflowMetricsSLADefinition, "getOriginalUuid",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			workflowMetricsSLADefinition.getUuid(),
+			ReflectionTestUtil.invoke(
+				workflowMetricsSLADefinition, "getOriginalUuid",
+				new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(workflowMetricsSLADefinition.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(

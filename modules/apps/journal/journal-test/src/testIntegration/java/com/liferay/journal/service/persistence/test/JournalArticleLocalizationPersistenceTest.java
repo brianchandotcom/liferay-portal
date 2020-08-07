@@ -42,7 +42,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -524,12 +523,11 @@ public class JournalArticleLocalizationPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				journalArticleLocalization, "getOriginalArticlePK",
 				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				journalArticleLocalization.getLanguageId(),
-				ReflectionTestUtil.invoke(
-					journalArticleLocalization, "getOriginalLanguageId",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			journalArticleLocalization.getLanguageId(),
+			ReflectionTestUtil.invoke(
+				journalArticleLocalization, "getOriginalLanguageId",
+				new Class<?>[0]));
 
 		Assert.assertEquals(
 			Long.valueOf(journalArticleLocalization.getCompanyId()),
@@ -541,12 +539,11 @@ public class JournalArticleLocalizationPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				journalArticleLocalization, "getOriginalArticlePK",
 				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				journalArticleLocalization.getLanguageId(),
-				ReflectionTestUtil.invoke(
-					journalArticleLocalization, "getOriginalLanguageId",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			journalArticleLocalization.getLanguageId(),
+			ReflectionTestUtil.invoke(
+				journalArticleLocalization, "getOriginalLanguageId",
+				new Class<?>[0]));
 
 		Assert.assertEquals(
 			Long.valueOf(journalArticleLocalization.getCompanyId()),
@@ -558,18 +555,16 @@ public class JournalArticleLocalizationPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				journalArticleLocalization, "getOriginalArticlePK",
 				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				journalArticleLocalization.getTitle(),
-				ReflectionTestUtil.invoke(
-					journalArticleLocalization, "getOriginalTitle",
-					new Class<?>[0])));
-		Assert.assertTrue(
-			Objects.equals(
-				journalArticleLocalization.getLanguageId(),
-				ReflectionTestUtil.invoke(
-					journalArticleLocalization, "getOriginalLanguageId",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			journalArticleLocalization.getTitle(),
+			ReflectionTestUtil.invoke(
+				journalArticleLocalization, "getOriginalTitle",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			journalArticleLocalization.getLanguageId(),
+			ReflectionTestUtil.invoke(
+				journalArticleLocalization, "getOriginalLanguageId",
+				new Class<?>[0]));
 	}
 
 	protected JournalArticleLocalization addJournalArticleLocalization()

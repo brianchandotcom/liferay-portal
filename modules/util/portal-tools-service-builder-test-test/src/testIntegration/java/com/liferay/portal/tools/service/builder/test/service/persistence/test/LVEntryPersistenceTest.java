@@ -45,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -561,11 +560,10 @@ public class LVEntryPersistenceTest {
 	}
 
 	private void _assertOriginalValues(LVEntry lvEntry) {
-		Assert.assertTrue(
-			Objects.equals(
-				lvEntry.getUuid(),
-				ReflectionTestUtil.invoke(
-					lvEntry, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			lvEntry.getUuid(),
+			ReflectionTestUtil.invoke(
+				lvEntry, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(lvEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -575,11 +573,10 @@ public class LVEntryPersistenceTest {
 			Long.valueOf(lvEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				lvEntry, "getOriginalGroupId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				lvEntry.getUniqueGroupKey(),
-				ReflectionTestUtil.invoke(
-					lvEntry, "getOriginalUniqueGroupKey", new Class<?>[0])));
+		Assert.assertEquals(
+			lvEntry.getUniqueGroupKey(),
+			ReflectionTestUtil.invoke(
+				lvEntry, "getOriginalUniqueGroupKey", new Class<?>[0]));
 
 		Assert.assertEquals(
 			Long.valueOf(lvEntry.getHeadId()),

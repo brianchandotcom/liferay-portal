@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -562,11 +561,10 @@ public class DDLRecordVersionPersistenceTest {
 			Long.valueOf(ddlRecordVersion.getRecordId()),
 			ReflectionTestUtil.<Long>invoke(
 				ddlRecordVersion, "getOriginalRecordId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				ddlRecordVersion.getVersion(),
-				ReflectionTestUtil.invoke(
-					ddlRecordVersion, "getOriginalVersion", new Class<?>[0])));
+		Assert.assertEquals(
+			ddlRecordVersion.getVersion(),
+			ReflectionTestUtil.invoke(
+				ddlRecordVersion, "getOriginalVersion", new Class<?>[0]));
 	}
 
 	protected DDLRecordVersion addDDLRecordVersion() throws Exception {

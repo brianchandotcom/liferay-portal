@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -468,12 +467,10 @@ public class ReleasePersistenceTest {
 	}
 
 	private void _assertOriginalValues(Release release) {
-		Assert.assertTrue(
-			Objects.equals(
-				release.getServletContextName(),
-				ReflectionTestUtil.invoke(
-					release, "getOriginalServletContextName",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			release.getServletContextName(),
+			ReflectionTestUtil.invoke(
+				release, "getOriginalServletContextName", new Class<?>[0]));
 	}
 
 	protected Release addRelease() throws Exception {

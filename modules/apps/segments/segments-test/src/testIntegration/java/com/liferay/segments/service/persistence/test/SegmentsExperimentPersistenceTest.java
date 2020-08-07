@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -634,11 +633,10 @@ public class SegmentsExperimentPersistenceTest {
 	}
 
 	private void _assertOriginalValues(SegmentsExperiment segmentsExperiment) {
-		Assert.assertTrue(
-			Objects.equals(
-				segmentsExperiment.getUuid(),
-				ReflectionTestUtil.invoke(
-					segmentsExperiment, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			segmentsExperiment.getUuid(),
+			ReflectionTestUtil.invoke(
+				segmentsExperiment, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(segmentsExperiment.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -648,12 +646,11 @@ public class SegmentsExperimentPersistenceTest {
 			Long.valueOf(segmentsExperiment.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				segmentsExperiment, "getOriginalGroupId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				segmentsExperiment.getSegmentsExperimentKey(),
-				ReflectionTestUtil.invoke(
-					segmentsExperiment, "getOriginalSegmentsExperimentKey",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			segmentsExperiment.getSegmentsExperimentKey(),
+			ReflectionTestUtil.invoke(
+				segmentsExperiment, "getOriginalSegmentsExperimentKey",
+				new Class<?>[0]));
 	}
 
 	protected SegmentsExperiment addSegmentsExperiment() throws Exception {

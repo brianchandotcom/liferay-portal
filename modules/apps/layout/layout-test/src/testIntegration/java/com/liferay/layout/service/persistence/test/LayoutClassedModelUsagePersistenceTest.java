@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -622,12 +621,10 @@ public class LayoutClassedModelUsagePersistenceTest {
 	private void _assertOriginalValues(
 		LayoutClassedModelUsage layoutClassedModelUsage) {
 
-		Assert.assertTrue(
-			Objects.equals(
-				layoutClassedModelUsage.getUuid(),
-				ReflectionTestUtil.invoke(
-					layoutClassedModelUsage, "getOriginalUuid",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			layoutClassedModelUsage.getUuid(),
+			ReflectionTestUtil.invoke(
+				layoutClassedModelUsage, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(layoutClassedModelUsage.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -644,12 +641,11 @@ public class LayoutClassedModelUsagePersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				layoutClassedModelUsage, "getOriginalClassPK",
 				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				layoutClassedModelUsage.getContainerKey(),
-				ReflectionTestUtil.invoke(
-					layoutClassedModelUsage, "getOriginalContainerKey",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			layoutClassedModelUsage.getContainerKey(),
+			ReflectionTestUtil.invoke(
+				layoutClassedModelUsage, "getOriginalContainerKey",
+				new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(layoutClassedModelUsage.getContainerType()),
 			ReflectionTestUtil.<Long>invoke(

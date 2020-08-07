@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -499,27 +498,23 @@ public class WeDeployAuthTokenPersistenceTest {
 	}
 
 	private void _assertOriginalValues(WeDeployAuthToken weDeployAuthToken) {
-		Assert.assertTrue(
-			Objects.equals(
-				weDeployAuthToken.getToken(),
-				ReflectionTestUtil.invoke(
-					weDeployAuthToken, "getOriginalToken", new Class<?>[0])));
+		Assert.assertEquals(
+			weDeployAuthToken.getToken(),
+			ReflectionTestUtil.invoke(
+				weDeployAuthToken, "getOriginalToken", new Class<?>[0]));
 		Assert.assertEquals(
 			Integer.valueOf(weDeployAuthToken.getType()),
 			ReflectionTestUtil.<Integer>invoke(
 				weDeployAuthToken, "getOriginalType", new Class<?>[0]));
 
-		Assert.assertTrue(
-			Objects.equals(
-				weDeployAuthToken.getClientId(),
-				ReflectionTestUtil.invoke(
-					weDeployAuthToken, "getOriginalClientId",
-					new Class<?>[0])));
-		Assert.assertTrue(
-			Objects.equals(
-				weDeployAuthToken.getToken(),
-				ReflectionTestUtil.invoke(
-					weDeployAuthToken, "getOriginalToken", new Class<?>[0])));
+		Assert.assertEquals(
+			weDeployAuthToken.getClientId(),
+			ReflectionTestUtil.invoke(
+				weDeployAuthToken, "getOriginalClientId", new Class<?>[0]));
+		Assert.assertEquals(
+			weDeployAuthToken.getToken(),
+			ReflectionTestUtil.invoke(
+				weDeployAuthToken, "getOriginalToken", new Class<?>[0]));
 		Assert.assertEquals(
 			Integer.valueOf(weDeployAuthToken.getType()),
 			ReflectionTestUtil.<Integer>invoke(

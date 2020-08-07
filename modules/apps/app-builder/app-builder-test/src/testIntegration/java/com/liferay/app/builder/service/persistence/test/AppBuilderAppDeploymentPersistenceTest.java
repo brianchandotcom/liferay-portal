@@ -45,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -510,12 +509,10 @@ public class AppBuilderAppDeploymentPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				appBuilderAppDeployment, "getOriginalAppBuilderAppId",
 				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				appBuilderAppDeployment.getType(),
-				ReflectionTestUtil.invoke(
-					appBuilderAppDeployment, "getOriginalType",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			appBuilderAppDeployment.getType(),
+			ReflectionTestUtil.invoke(
+				appBuilderAppDeployment, "getOriginalType", new Class<?>[0]));
 	}
 
 	protected AppBuilderAppDeployment addAppBuilderAppDeployment()

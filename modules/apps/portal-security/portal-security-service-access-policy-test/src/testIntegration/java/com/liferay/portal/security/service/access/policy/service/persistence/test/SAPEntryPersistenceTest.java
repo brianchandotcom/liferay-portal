@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -516,11 +515,10 @@ public class SAPEntryPersistenceTest {
 			Long.valueOf(sapEntry.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
 				sapEntry, "getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				sapEntry.getName(),
-				ReflectionTestUtil.invoke(
-					sapEntry, "getOriginalName", new Class<?>[0])));
+		Assert.assertEquals(
+			sapEntry.getName(),
+			ReflectionTestUtil.invoke(
+				sapEntry, "getOriginalName", new Class<?>[0]));
 	}
 
 	protected SAPEntry addSAPEntry() throws Exception {

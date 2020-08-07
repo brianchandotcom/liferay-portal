@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -662,11 +661,10 @@ public class BookmarksEntryPersistenceTest {
 	}
 
 	private void _assertOriginalValues(BookmarksEntry bookmarksEntry) {
-		Assert.assertTrue(
-			Objects.equals(
-				bookmarksEntry.getUuid(),
-				ReflectionTestUtil.invoke(
-					bookmarksEntry, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			bookmarksEntry.getUuid(),
+			ReflectionTestUtil.invoke(
+				bookmarksEntry, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(bookmarksEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(

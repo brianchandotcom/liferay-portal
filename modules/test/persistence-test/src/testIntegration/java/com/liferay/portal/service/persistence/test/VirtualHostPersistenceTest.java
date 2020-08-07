@@ -45,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -482,11 +481,10 @@ public class VirtualHostPersistenceTest {
 	}
 
 	private void _assertOriginalValues(VirtualHost virtualHost) {
-		Assert.assertTrue(
-			Objects.equals(
-				virtualHost.getHostname(),
-				ReflectionTestUtil.invoke(
-					virtualHost, "getOriginalHostname", new Class<?>[0])));
+		Assert.assertEquals(
+			virtualHost.getHostname(),
+			ReflectionTestUtil.invoke(
+				virtualHost, "getOriginalHostname", new Class<?>[0]));
 
 		Assert.assertEquals(
 			Long.valueOf(virtualHost.getCompanyId()),

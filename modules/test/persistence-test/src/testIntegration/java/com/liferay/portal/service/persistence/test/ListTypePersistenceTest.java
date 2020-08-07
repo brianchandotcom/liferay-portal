@@ -45,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -446,16 +445,14 @@ public class ListTypePersistenceTest {
 	}
 
 	private void _assertOriginalValues(ListType listType) {
-		Assert.assertTrue(
-			Objects.equals(
-				listType.getName(),
-				ReflectionTestUtil.invoke(
-					listType, "getOriginalName", new Class<?>[0])));
-		Assert.assertTrue(
-			Objects.equals(
-				listType.getType(),
-				ReflectionTestUtil.invoke(
-					listType, "getOriginalType", new Class<?>[0])));
+		Assert.assertEquals(
+			listType.getName(),
+			ReflectionTestUtil.invoke(
+				listType, "getOriginalName", new Class<?>[0]));
+		Assert.assertEquals(
+			listType.getType(),
+			ReflectionTestUtil.invoke(
+				listType, "getOriginalType", new Class<?>[0]));
 	}
 
 	protected ListType addListType() throws Exception {

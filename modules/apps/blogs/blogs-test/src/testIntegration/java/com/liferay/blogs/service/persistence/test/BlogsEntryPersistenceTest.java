@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -802,11 +801,10 @@ public class BlogsEntryPersistenceTest {
 	}
 
 	private void _assertOriginalValues(BlogsEntry blogsEntry) {
-		Assert.assertTrue(
-			Objects.equals(
-				blogsEntry.getUuid(),
-				ReflectionTestUtil.invoke(
-					blogsEntry, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			blogsEntry.getUuid(),
+			ReflectionTestUtil.invoke(
+				blogsEntry, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(blogsEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -816,11 +814,10 @@ public class BlogsEntryPersistenceTest {
 			Long.valueOf(blogsEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				blogsEntry, "getOriginalGroupId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				blogsEntry.getUrlTitle(),
-				ReflectionTestUtil.invoke(
-					blogsEntry, "getOriginalUrlTitle", new Class<?>[0])));
+		Assert.assertEquals(
+			blogsEntry.getUrlTitle(),
+			ReflectionTestUtil.invoke(
+				blogsEntry, "getOriginalUrlTitle", new Class<?>[0]));
 	}
 
 	protected BlogsEntry addBlogsEntry() throws Exception {

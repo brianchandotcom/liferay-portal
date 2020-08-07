@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -537,11 +536,10 @@ public class RepositoryEntryPersistenceTest {
 	}
 
 	private void _assertOriginalValues(RepositoryEntry repositoryEntry) {
-		Assert.assertTrue(
-			Objects.equals(
-				repositoryEntry.getUuid(),
-				ReflectionTestUtil.invoke(
-					repositoryEntry, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			repositoryEntry.getUuid(),
+			ReflectionTestUtil.invoke(
+				repositoryEntry, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(repositoryEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -551,11 +549,10 @@ public class RepositoryEntryPersistenceTest {
 			Long.valueOf(repositoryEntry.getRepositoryId()),
 			ReflectionTestUtil.<Long>invoke(
 				repositoryEntry, "getOriginalRepositoryId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				repositoryEntry.getMappedId(),
-				ReflectionTestUtil.invoke(
-					repositoryEntry, "getOriginalMappedId", new Class<?>[0])));
+		Assert.assertEquals(
+			repositoryEntry.getMappedId(),
+			ReflectionTestUtil.invoke(
+				repositoryEntry, "getOriginalMappedId", new Class<?>[0]));
 	}
 
 	protected RepositoryEntry addRepositoryEntry() throws Exception {

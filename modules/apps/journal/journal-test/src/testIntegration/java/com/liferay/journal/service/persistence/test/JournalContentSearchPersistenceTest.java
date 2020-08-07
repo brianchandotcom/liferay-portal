@@ -45,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -603,18 +602,14 @@ public class JournalContentSearchPersistenceTest {
 			Long.valueOf(journalContentSearch.getLayoutId()),
 			ReflectionTestUtil.<Long>invoke(
 				journalContentSearch, "getOriginalLayoutId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				journalContentSearch.getPortletId(),
-				ReflectionTestUtil.invoke(
-					journalContentSearch, "getOriginalPortletId",
-					new Class<?>[0])));
-		Assert.assertTrue(
-			Objects.equals(
-				journalContentSearch.getArticleId(),
-				ReflectionTestUtil.invoke(
-					journalContentSearch, "getOriginalArticleId",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			journalContentSearch.getPortletId(),
+			ReflectionTestUtil.invoke(
+				journalContentSearch, "getOriginalPortletId", new Class<?>[0]));
+		Assert.assertEquals(
+			journalContentSearch.getArticleId(),
+			ReflectionTestUtil.invoke(
+				journalContentSearch, "getOriginalArticleId", new Class<?>[0]));
 	}
 
 	protected JournalContentSearch addJournalContentSearch() throws Exception {

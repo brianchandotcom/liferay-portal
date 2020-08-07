@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -575,11 +574,10 @@ public class LayoutSEOEntryPersistenceTest {
 	}
 
 	private void _assertOriginalValues(LayoutSEOEntry layoutSEOEntry) {
-		Assert.assertTrue(
-			Objects.equals(
-				layoutSEOEntry.getUuid(),
-				ReflectionTestUtil.invoke(
-					layoutSEOEntry, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			layoutSEOEntry.getUuid(),
+			ReflectionTestUtil.invoke(
+				layoutSEOEntry, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(layoutSEOEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(

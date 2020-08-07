@@ -47,7 +47,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -831,11 +830,10 @@ public class MBMessagePersistenceTest {
 	}
 
 	private void _assertOriginalValues(MBMessage mbMessage) {
-		Assert.assertTrue(
-			Objects.equals(
-				mbMessage.getUuid(),
-				ReflectionTestUtil.invoke(
-					mbMessage, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			mbMessage.getUuid(),
+			ReflectionTestUtil.invoke(
+				mbMessage, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(mbMessage.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -845,11 +843,10 @@ public class MBMessagePersistenceTest {
 			Long.valueOf(mbMessage.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				mbMessage, "getOriginalGroupId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				mbMessage.getUrlSubject(),
-				ReflectionTestUtil.invoke(
-					mbMessage, "getOriginalUrlSubject", new Class<?>[0])));
+		Assert.assertEquals(
+			mbMessage.getUrlSubject(),
+			ReflectionTestUtil.invoke(
+				mbMessage, "getOriginalUrlSubject", new Class<?>[0]));
 	}
 
 	protected MBMessage addMBMessage() throws Exception {

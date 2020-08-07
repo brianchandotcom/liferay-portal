@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -501,16 +500,14 @@ public class PortletItemPersistenceTest {
 			Long.valueOf(portletItem.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				portletItem, "getOriginalGroupId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				portletItem.getName(),
-				ReflectionTestUtil.invoke(
-					portletItem, "getOriginalName", new Class<?>[0])));
-		Assert.assertTrue(
-			Objects.equals(
-				portletItem.getPortletId(),
-				ReflectionTestUtil.invoke(
-					portletItem, "getOriginalPortletId", new Class<?>[0])));
+		Assert.assertEquals(
+			portletItem.getName(),
+			ReflectionTestUtil.invoke(
+				portletItem, "getOriginalName", new Class<?>[0]));
+		Assert.assertEquals(
+			portletItem.getPortletId(),
+			ReflectionTestUtil.invoke(
+				portletItem, "getOriginalPortletId", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(portletItem.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(

@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -559,11 +558,10 @@ public class WikiNodePersistenceTest {
 	}
 
 	private void _assertOriginalValues(WikiNode wikiNode) {
-		Assert.assertTrue(
-			Objects.equals(
-				wikiNode.getUuid(),
-				ReflectionTestUtil.invoke(
-					wikiNode, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			wikiNode.getUuid(),
+			ReflectionTestUtil.invoke(
+				wikiNode, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(wikiNode.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -573,11 +571,10 @@ public class WikiNodePersistenceTest {
 			Long.valueOf(wikiNode.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				wikiNode, "getOriginalGroupId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				wikiNode.getName(),
-				ReflectionTestUtil.invoke(
-					wikiNode, "getOriginalName", new Class<?>[0])));
+		Assert.assertEquals(
+			wikiNode.getName(),
+			ReflectionTestUtil.invoke(
+				wikiNode, "getOriginalName", new Class<?>[0]));
 	}
 
 	protected WikiNode addWikiNode() throws Exception {

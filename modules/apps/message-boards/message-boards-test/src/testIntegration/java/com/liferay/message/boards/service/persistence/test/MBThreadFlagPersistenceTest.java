@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -529,11 +528,10 @@ public class MBThreadFlagPersistenceTest {
 	}
 
 	private void _assertOriginalValues(MBThreadFlag mbThreadFlag) {
-		Assert.assertTrue(
-			Objects.equals(
-				mbThreadFlag.getUuid(),
-				ReflectionTestUtil.invoke(
-					mbThreadFlag, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			mbThreadFlag.getUuid(),
+			ReflectionTestUtil.invoke(
+				mbThreadFlag, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(mbThreadFlag.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(

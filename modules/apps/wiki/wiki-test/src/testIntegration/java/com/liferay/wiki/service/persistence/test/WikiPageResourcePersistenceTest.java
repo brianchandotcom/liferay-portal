@@ -45,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -494,11 +493,10 @@ public class WikiPageResourcePersistenceTest {
 	}
 
 	private void _assertOriginalValues(WikiPageResource wikiPageResource) {
-		Assert.assertTrue(
-			Objects.equals(
-				wikiPageResource.getUuid(),
-				ReflectionTestUtil.invoke(
-					wikiPageResource, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			wikiPageResource.getUuid(),
+			ReflectionTestUtil.invoke(
+				wikiPageResource, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(wikiPageResource.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -508,11 +506,10 @@ public class WikiPageResourcePersistenceTest {
 			Long.valueOf(wikiPageResource.getNodeId()),
 			ReflectionTestUtil.<Long>invoke(
 				wikiPageResource, "getOriginalNodeId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				wikiPageResource.getTitle(),
-				ReflectionTestUtil.invoke(
-					wikiPageResource, "getOriginalTitle", new Class<?>[0])));
+		Assert.assertEquals(
+			wikiPageResource.getTitle(),
+			ReflectionTestUtil.invoke(
+				wikiPageResource, "getOriginalTitle", new Class<?>[0]));
 	}
 
 	protected WikiPageResource addWikiPageResource() throws Exception {

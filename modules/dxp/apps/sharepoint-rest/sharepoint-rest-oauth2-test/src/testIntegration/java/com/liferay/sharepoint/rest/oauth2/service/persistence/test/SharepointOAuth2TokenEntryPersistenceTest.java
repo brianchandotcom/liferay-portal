@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -552,12 +551,11 @@ public class SharepointOAuth2TokenEntryPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				sharepointOAuth2TokenEntry, "getOriginalUserId",
 				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				sharepointOAuth2TokenEntry.getConfigurationPid(),
-				ReflectionTestUtil.invoke(
-					sharepointOAuth2TokenEntry, "getOriginalConfigurationPid",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			sharepointOAuth2TokenEntry.getConfigurationPid(),
+			ReflectionTestUtil.invoke(
+				sharepointOAuth2TokenEntry, "getOriginalConfigurationPid",
+				new Class<?>[0]));
 	}
 
 	protected SharepointOAuth2TokenEntry addSharepointOAuth2TokenEntry()

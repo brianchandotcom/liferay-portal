@@ -50,7 +50,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -528,21 +527,18 @@ public class CTSContentPersistenceTest {
 			Long.valueOf(ctsContent.getRepositoryId()),
 			ReflectionTestUtil.<Long>invoke(
 				ctsContent, "getOriginalRepositoryId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				ctsContent.getPath(),
-				ReflectionTestUtil.invoke(
-					ctsContent, "getOriginalPath", new Class<?>[0])));
-		Assert.assertTrue(
-			Objects.equals(
-				ctsContent.getVersion(),
-				ReflectionTestUtil.invoke(
-					ctsContent, "getOriginalVersion", new Class<?>[0])));
-		Assert.assertTrue(
-			Objects.equals(
-				ctsContent.getStoreType(),
-				ReflectionTestUtil.invoke(
-					ctsContent, "getOriginalStoreType", new Class<?>[0])));
+		Assert.assertEquals(
+			ctsContent.getPath(),
+			ReflectionTestUtil.invoke(
+				ctsContent, "getOriginalPath", new Class<?>[0]));
+		Assert.assertEquals(
+			ctsContent.getVersion(),
+			ReflectionTestUtil.invoke(
+				ctsContent, "getOriginalVersion", new Class<?>[0]));
+		Assert.assertEquals(
+			ctsContent.getStoreType(),
+			ReflectionTestUtil.invoke(
+				ctsContent, "getOriginalStoreType", new Class<?>[0]));
 	}
 
 	protected CTSContent addCTSContent() throws Exception {

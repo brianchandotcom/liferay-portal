@@ -45,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -438,11 +437,10 @@ public class ClassNamePersistenceTest {
 	}
 
 	private void _assertOriginalValues(ClassName className) {
-		Assert.assertTrue(
-			Objects.equals(
-				className.getValue(),
-				ReflectionTestUtil.invoke(
-					className, "getOriginalValue", new Class<?>[0])));
+		Assert.assertEquals(
+			className.getValue(),
+			ReflectionTestUtil.invoke(
+				className, "getOriginalValue", new Class<?>[0]));
 	}
 
 	protected ClassName addClassName() throws Exception {

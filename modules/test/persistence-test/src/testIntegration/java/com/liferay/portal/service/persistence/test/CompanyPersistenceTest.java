@@ -45,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -478,17 +477,15 @@ public class CompanyPersistenceTest {
 	}
 
 	private void _assertOriginalValues(Company company) {
-		Assert.assertTrue(
-			Objects.equals(
-				company.getWebId(),
-				ReflectionTestUtil.invoke(
-					company, "getOriginalWebId", new Class<?>[0])));
+		Assert.assertEquals(
+			company.getWebId(),
+			ReflectionTestUtil.invoke(
+				company, "getOriginalWebId", new Class<?>[0]));
 
-		Assert.assertTrue(
-			Objects.equals(
-				company.getMx(),
-				ReflectionTestUtil.invoke(
-					company, "getOriginalMx", new Class<?>[0])));
+		Assert.assertEquals(
+			company.getMx(),
+			ReflectionTestUtil.invoke(
+				company, "getOriginalMx", new Class<?>[0]));
 
 		Assert.assertEquals(
 			Long.valueOf(company.getLogoId()),

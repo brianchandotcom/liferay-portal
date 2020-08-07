@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -495,16 +494,13 @@ public class LockPersistenceTest {
 	}
 
 	private void _assertOriginalValues(Lock lock) {
-		Assert.assertTrue(
-			Objects.equals(
-				lock.getClassName(),
-				ReflectionTestUtil.invoke(
-					lock, "getOriginalClassName", new Class<?>[0])));
-		Assert.assertTrue(
-			Objects.equals(
-				lock.getKey(),
-				ReflectionTestUtil.invoke(
-					lock, "getOriginalKey", new Class<?>[0])));
+		Assert.assertEquals(
+			lock.getClassName(),
+			ReflectionTestUtil.invoke(
+				lock, "getOriginalClassName", new Class<?>[0]));
+		Assert.assertEquals(
+			lock.getKey(),
+			ReflectionTestUtil.invoke(lock, "getOriginalKey", new Class<?>[0]));
 	}
 
 	protected Lock addLock() throws Exception {

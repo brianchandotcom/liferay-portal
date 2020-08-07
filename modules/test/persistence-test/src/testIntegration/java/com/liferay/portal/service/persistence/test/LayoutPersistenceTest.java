@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -807,11 +806,10 @@ public class LayoutPersistenceTest {
 	}
 
 	private void _assertOriginalValues(Layout layout) {
-		Assert.assertTrue(
-			Objects.equals(
-				layout.getUuid(),
-				ReflectionTestUtil.invoke(
-					layout, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			layout.getUuid(),
+			ReflectionTestUtil.invoke(
+				layout, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(layout.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -865,11 +863,10 @@ public class LayoutPersistenceTest {
 			Boolean.valueOf(layout.getPrivateLayout()),
 			ReflectionTestUtil.<Boolean>invoke(
 				layout, "getOriginalPrivateLayout", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				layout.getFriendlyURL(),
-				ReflectionTestUtil.invoke(
-					layout, "getOriginalFriendlyURL", new Class<?>[0])));
+		Assert.assertEquals(
+			layout.getFriendlyURL(),
+			ReflectionTestUtil.invoke(
+				layout, "getOriginalFriendlyURL", new Class<?>[0]));
 
 		Assert.assertEquals(
 			Long.valueOf(layout.getGroupId()),
@@ -879,12 +876,11 @@ public class LayoutPersistenceTest {
 			Boolean.valueOf(layout.getPrivateLayout()),
 			ReflectionTestUtil.<Boolean>invoke(
 				layout, "getOriginalPrivateLayout", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				layout.getSourcePrototypeLayoutUuid(),
-				ReflectionTestUtil.invoke(
-					layout, "getOriginalSourcePrototypeLayoutUuid",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			layout.getSourcePrototypeLayoutUuid(),
+			ReflectionTestUtil.invoke(
+				layout, "getOriginalSourcePrototypeLayoutUuid",
+				new Class<?>[0]));
 	}
 
 	protected Layout addLayout() throws Exception {

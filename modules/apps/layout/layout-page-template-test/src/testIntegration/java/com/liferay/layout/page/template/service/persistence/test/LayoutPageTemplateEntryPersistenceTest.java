@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -853,12 +852,10 @@ public class LayoutPageTemplateEntryPersistenceTest {
 	private void _assertOriginalValues(
 		LayoutPageTemplateEntry layoutPageTemplateEntry) {
 
-		Assert.assertTrue(
-			Objects.equals(
-				layoutPageTemplateEntry.getUuid(),
-				ReflectionTestUtil.invoke(
-					layoutPageTemplateEntry, "getOriginalUuid",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			layoutPageTemplateEntry.getUuid(),
+			ReflectionTestUtil.invoke(
+				layoutPageTemplateEntry, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(layoutPageTemplateEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -875,24 +872,21 @@ public class LayoutPageTemplateEntryPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				layoutPageTemplateEntry, "getOriginalGroupId",
 				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryKey(),
-				ReflectionTestUtil.invoke(
-					layoutPageTemplateEntry,
-					"getOriginalLayoutPageTemplateEntryKey", new Class<?>[0])));
+		Assert.assertEquals(
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryKey(),
+			ReflectionTestUtil.invoke(
+				layoutPageTemplateEntry,
+				"getOriginalLayoutPageTemplateEntryKey", new Class<?>[0]));
 
 		Assert.assertEquals(
 			Long.valueOf(layoutPageTemplateEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				layoutPageTemplateEntry, "getOriginalGroupId",
 				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				layoutPageTemplateEntry.getName(),
-				ReflectionTestUtil.invoke(
-					layoutPageTemplateEntry, "getOriginalName",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			layoutPageTemplateEntry.getName(),
+			ReflectionTestUtil.invoke(
+				layoutPageTemplateEntry, "getOriginalName", new Class<?>[0]));
 		Assert.assertEquals(
 			Integer.valueOf(layoutPageTemplateEntry.getType()),
 			ReflectionTestUtil.<Integer>invoke(

@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -532,11 +531,10 @@ public class MBDiscussionPersistenceTest {
 	}
 
 	private void _assertOriginalValues(MBDiscussion mbDiscussion) {
-		Assert.assertTrue(
-			Objects.equals(
-				mbDiscussion.getUuid(),
-				ReflectionTestUtil.invoke(
-					mbDiscussion, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			mbDiscussion.getUuid(),
+			ReflectionTestUtil.invoke(
+				mbDiscussion, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(mbDiscussion.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(

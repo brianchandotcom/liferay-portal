@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -663,11 +662,10 @@ public class AssetListEntryPersistenceTest {
 	}
 
 	private void _assertOriginalValues(AssetListEntry assetListEntry) {
-		Assert.assertTrue(
-			Objects.equals(
-				assetListEntry.getUuid(),
-				ReflectionTestUtil.invoke(
-					assetListEntry, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			assetListEntry.getUuid(),
+			ReflectionTestUtil.invoke(
+				assetListEntry, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(assetListEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -677,22 +675,20 @@ public class AssetListEntryPersistenceTest {
 			Long.valueOf(assetListEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				assetListEntry, "getOriginalGroupId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				assetListEntry.getAssetListEntryKey(),
-				ReflectionTestUtil.invoke(
-					assetListEntry, "getOriginalAssetListEntryKey",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			assetListEntry.getAssetListEntryKey(),
+			ReflectionTestUtil.invoke(
+				assetListEntry, "getOriginalAssetListEntryKey",
+				new Class<?>[0]));
 
 		Assert.assertEquals(
 			Long.valueOf(assetListEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				assetListEntry, "getOriginalGroupId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				assetListEntry.getTitle(),
-				ReflectionTestUtil.invoke(
-					assetListEntry, "getOriginalTitle", new Class<?>[0])));
+		Assert.assertEquals(
+			assetListEntry.getTitle(),
+			ReflectionTestUtil.invoke(
+				assetListEntry, "getOriginalTitle", new Class<?>[0]));
 	}
 
 	protected AssetListEntry addAssetListEntry() throws Exception {

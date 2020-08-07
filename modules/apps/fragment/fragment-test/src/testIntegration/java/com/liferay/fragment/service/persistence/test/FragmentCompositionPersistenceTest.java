@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -644,11 +643,10 @@ public class FragmentCompositionPersistenceTest {
 	private void _assertOriginalValues(
 		FragmentComposition fragmentComposition) {
 
-		Assert.assertTrue(
-			Objects.equals(
-				fragmentComposition.getUuid(),
-				ReflectionTestUtil.invoke(
-					fragmentComposition, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			fragmentComposition.getUuid(),
+			ReflectionTestUtil.invoke(
+				fragmentComposition, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(fragmentComposition.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -658,12 +656,11 @@ public class FragmentCompositionPersistenceTest {
 			Long.valueOf(fragmentComposition.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				fragmentComposition, "getOriginalGroupId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				fragmentComposition.getFragmentCompositionKey(),
-				ReflectionTestUtil.invoke(
-					fragmentComposition, "getOriginalFragmentCompositionKey",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			fragmentComposition.getFragmentCompositionKey(),
+			ReflectionTestUtil.invoke(
+				fragmentComposition, "getOriginalFragmentCompositionKey",
+				new Class<?>[0]));
 	}
 
 	protected FragmentComposition addFragmentComposition() throws Exception {

@@ -45,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -514,11 +513,10 @@ public class LayoutBranchPersistenceTest {
 			Long.valueOf(layoutBranch.getPlid()),
 			ReflectionTestUtil.<Long>invoke(
 				layoutBranch, "getOriginalPlid", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				layoutBranch.getName(),
-				ReflectionTestUtil.invoke(
-					layoutBranch, "getOriginalName", new Class<?>[0])));
+		Assert.assertEquals(
+			layoutBranch.getName(),
+			ReflectionTestUtil.invoke(
+				layoutBranch, "getOriginalName", new Class<?>[0]));
 	}
 
 	protected LayoutBranch addLayoutBranch() throws Exception {

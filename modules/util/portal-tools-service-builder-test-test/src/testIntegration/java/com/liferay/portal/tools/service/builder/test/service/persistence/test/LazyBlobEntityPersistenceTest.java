@@ -50,7 +50,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -489,11 +488,10 @@ public class LazyBlobEntityPersistenceTest {
 	}
 
 	private void _assertOriginalValues(LazyBlobEntity lazyBlobEntity) {
-		Assert.assertTrue(
-			Objects.equals(
-				lazyBlobEntity.getUuid(),
-				ReflectionTestUtil.invoke(
-					lazyBlobEntity, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			lazyBlobEntity.getUuid(),
+			ReflectionTestUtil.invoke(
+				lazyBlobEntity, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(lazyBlobEntity.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(

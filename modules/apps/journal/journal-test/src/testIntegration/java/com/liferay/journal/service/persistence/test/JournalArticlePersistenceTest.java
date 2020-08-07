@@ -47,7 +47,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -988,11 +987,10 @@ public class JournalArticlePersistenceTest {
 	}
 
 	private void _assertOriginalValues(JournalArticle journalArticle) {
-		Assert.assertTrue(
-			Objects.equals(
-				journalArticle.getUuid(),
-				ReflectionTestUtil.invoke(
-					journalArticle, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			journalArticle.getUuid(),
+			ReflectionTestUtil.invoke(
+				journalArticle, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(journalArticle.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -1006,22 +1004,19 @@ public class JournalArticlePersistenceTest {
 			Long.valueOf(journalArticle.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
 				journalArticle, "getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				journalArticle.getDDMStructureKey(),
-				ReflectionTestUtil.invoke(
-					journalArticle, "getOriginalDDMStructureKey",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			journalArticle.getDDMStructureKey(),
+			ReflectionTestUtil.invoke(
+				journalArticle, "getOriginalDDMStructureKey", new Class<?>[0]));
 
 		Assert.assertEquals(
 			Long.valueOf(journalArticle.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				journalArticle, "getOriginalGroupId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				journalArticle.getArticleId(),
-				ReflectionTestUtil.invoke(
-					journalArticle, "getOriginalArticleId", new Class<?>[0])));
+		Assert.assertEquals(
+			journalArticle.getArticleId(),
+			ReflectionTestUtil.invoke(
+				journalArticle, "getOriginalArticleId", new Class<?>[0]));
 		AssertUtils.assertEquals(
 			journalArticle.getVersion(),
 			ReflectionTestUtil.<Double>invoke(

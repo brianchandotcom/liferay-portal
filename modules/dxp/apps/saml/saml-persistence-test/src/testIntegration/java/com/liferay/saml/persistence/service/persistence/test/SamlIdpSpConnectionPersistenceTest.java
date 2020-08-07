@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -573,12 +572,11 @@ public class SamlIdpSpConnectionPersistenceTest {
 			Long.valueOf(samlIdpSpConnection.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
 				samlIdpSpConnection, "getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				samlIdpSpConnection.getSamlSpEntityId(),
-				ReflectionTestUtil.invoke(
-					samlIdpSpConnection, "getOriginalSamlSpEntityId",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			samlIdpSpConnection.getSamlSpEntityId(),
+			ReflectionTestUtil.invoke(
+				samlIdpSpConnection, "getOriginalSamlSpEntityId",
+				new Class<?>[0]));
 	}
 
 	protected SamlIdpSpConnection addSamlIdpSpConnection() throws Exception {

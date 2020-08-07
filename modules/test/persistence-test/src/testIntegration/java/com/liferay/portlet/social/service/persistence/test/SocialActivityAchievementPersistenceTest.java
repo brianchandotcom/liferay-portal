@@ -45,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -579,12 +578,10 @@ public class SocialActivityAchievementPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				socialActivityAchievement, "getOriginalUserId",
 				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				socialActivityAchievement.getName(),
-				ReflectionTestUtil.invoke(
-					socialActivityAchievement, "getOriginalName",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			socialActivityAchievement.getName(),
+			ReflectionTestUtil.invoke(
+				socialActivityAchievement, "getOriginalName", new Class<?>[0]));
 	}
 
 	protected SocialActivityAchievement addSocialActivityAchievement()

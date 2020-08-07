@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -628,11 +627,10 @@ public class JournalFolderPersistenceTest {
 	}
 
 	private void _assertOriginalValues(JournalFolder journalFolder) {
-		Assert.assertTrue(
-			Objects.equals(
-				journalFolder.getUuid(),
-				ReflectionTestUtil.invoke(
-					journalFolder, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			journalFolder.getUuid(),
+			ReflectionTestUtil.invoke(
+				journalFolder, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(journalFolder.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -642,11 +640,10 @@ public class JournalFolderPersistenceTest {
 			Long.valueOf(journalFolder.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				journalFolder, "getOriginalGroupId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				journalFolder.getName(),
-				ReflectionTestUtil.invoke(
-					journalFolder, "getOriginalName", new Class<?>[0])));
+		Assert.assertEquals(
+			journalFolder.getName(),
+			ReflectionTestUtil.invoke(
+				journalFolder, "getOriginalName", new Class<?>[0]));
 
 		Assert.assertEquals(
 			Long.valueOf(journalFolder.getGroupId()),
@@ -656,11 +653,10 @@ public class JournalFolderPersistenceTest {
 			Long.valueOf(journalFolder.getParentFolderId()),
 			ReflectionTestUtil.<Long>invoke(
 				journalFolder, "getOriginalParentFolderId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				journalFolder.getName(),
-				ReflectionTestUtil.invoke(
-					journalFolder, "getOriginalName", new Class<?>[0])));
+		Assert.assertEquals(
+			journalFolder.getName(),
+			ReflectionTestUtil.invoke(
+				journalFolder, "getOriginalName", new Class<?>[0]));
 	}
 
 	protected JournalFolder addJournalFolder() throws Exception {

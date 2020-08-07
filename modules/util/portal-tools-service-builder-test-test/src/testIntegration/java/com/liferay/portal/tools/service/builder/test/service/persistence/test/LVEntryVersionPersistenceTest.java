@@ -42,7 +42,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -551,11 +550,10 @@ public class LVEntryVersionPersistenceTest {
 			ReflectionTestUtil.<Integer>invoke(
 				lvEntryVersion, "getOriginalVersion", new Class<?>[0]));
 
-		Assert.assertTrue(
-			Objects.equals(
-				lvEntryVersion.getUuid(),
-				ReflectionTestUtil.invoke(
-					lvEntryVersion, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			lvEntryVersion.getUuid(),
+			ReflectionTestUtil.invoke(
+				lvEntryVersion, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(lvEntryVersion.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -569,12 +567,10 @@ public class LVEntryVersionPersistenceTest {
 			Long.valueOf(lvEntryVersion.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				lvEntryVersion, "getOriginalGroupId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				lvEntryVersion.getUniqueGroupKey(),
-				ReflectionTestUtil.invoke(
-					lvEntryVersion, "getOriginalUniqueGroupKey",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			lvEntryVersion.getUniqueGroupKey(),
+			ReflectionTestUtil.invoke(
+				lvEntryVersion, "getOriginalUniqueGroupKey", new Class<?>[0]));
 		Assert.assertEquals(
 			Integer.valueOf(lvEntryVersion.getVersion()),
 			ReflectionTestUtil.<Integer>invoke(

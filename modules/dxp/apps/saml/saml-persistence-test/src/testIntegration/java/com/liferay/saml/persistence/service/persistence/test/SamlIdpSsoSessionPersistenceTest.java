@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -486,12 +485,11 @@ public class SamlIdpSsoSessionPersistenceTest {
 	}
 
 	private void _assertOriginalValues(SamlIdpSsoSession samlIdpSsoSession) {
-		Assert.assertTrue(
-			Objects.equals(
-				samlIdpSsoSession.getSamlIdpSsoSessionKey(),
-				ReflectionTestUtil.invoke(
-					samlIdpSsoSession, "getOriginalSamlIdpSsoSessionKey",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			samlIdpSsoSession.getSamlIdpSsoSessionKey(),
+			ReflectionTestUtil.invoke(
+				samlIdpSsoSession, "getOriginalSamlIdpSsoSessionKey",
+				new Class<?>[0]));
 	}
 
 	protected SamlIdpSsoSession addSamlIdpSsoSession() throws Exception {

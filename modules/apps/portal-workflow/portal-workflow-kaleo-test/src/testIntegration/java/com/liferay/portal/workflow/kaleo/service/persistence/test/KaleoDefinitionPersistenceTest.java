@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -550,21 +549,19 @@ public class KaleoDefinitionPersistenceTest {
 			Long.valueOf(kaleoDefinition.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
 				kaleoDefinition, "getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				kaleoDefinition.getName(),
-				ReflectionTestUtil.invoke(
-					kaleoDefinition, "getOriginalName", new Class<?>[0])));
+		Assert.assertEquals(
+			kaleoDefinition.getName(),
+			ReflectionTestUtil.invoke(
+				kaleoDefinition, "getOriginalName", new Class<?>[0]));
 
 		Assert.assertEquals(
 			Long.valueOf(kaleoDefinition.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
 				kaleoDefinition, "getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				kaleoDefinition.getName(),
-				ReflectionTestUtil.invoke(
-					kaleoDefinition, "getOriginalName", new Class<?>[0])));
+		Assert.assertEquals(
+			kaleoDefinition.getName(),
+			ReflectionTestUtil.invoke(
+				kaleoDefinition, "getOriginalName", new Class<?>[0]));
 		Assert.assertEquals(
 			Integer.valueOf(kaleoDefinition.getVersion()),
 			ReflectionTestUtil.<Integer>invoke(
@@ -574,11 +571,10 @@ public class KaleoDefinitionPersistenceTest {
 			Long.valueOf(kaleoDefinition.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
 				kaleoDefinition, "getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				kaleoDefinition.getName(),
-				ReflectionTestUtil.invoke(
-					kaleoDefinition, "getOriginalName", new Class<?>[0])));
+		Assert.assertEquals(
+			kaleoDefinition.getName(),
+			ReflectionTestUtil.invoke(
+				kaleoDefinition, "getOriginalName", new Class<?>[0]));
 		Assert.assertEquals(
 			Boolean.valueOf(kaleoDefinition.getActive()),
 			ReflectionTestUtil.<Boolean>invoke(

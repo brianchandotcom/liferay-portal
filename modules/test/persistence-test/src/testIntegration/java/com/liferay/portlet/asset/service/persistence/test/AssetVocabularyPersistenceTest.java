@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -590,11 +589,10 @@ public class AssetVocabularyPersistenceTest {
 	}
 
 	private void _assertOriginalValues(AssetVocabulary assetVocabulary) {
-		Assert.assertTrue(
-			Objects.equals(
-				assetVocabulary.getUuid(),
-				ReflectionTestUtil.invoke(
-					assetVocabulary, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			assetVocabulary.getUuid(),
+			ReflectionTestUtil.invoke(
+				assetVocabulary, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(assetVocabulary.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -604,22 +602,20 @@ public class AssetVocabularyPersistenceTest {
 			Long.valueOf(assetVocabulary.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				assetVocabulary, "getOriginalGroupId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				assetVocabulary.getName(),
-				ReflectionTestUtil.invoke(
-					assetVocabulary, "getOriginalName", new Class<?>[0])));
+		Assert.assertEquals(
+			assetVocabulary.getName(),
+			ReflectionTestUtil.invoke(
+				assetVocabulary, "getOriginalName", new Class<?>[0]));
 
 		Assert.assertEquals(
 			Long.valueOf(assetVocabulary.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
 				assetVocabulary, "getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				assetVocabulary.getExternalReferenceCode(),
-				ReflectionTestUtil.invoke(
-					assetVocabulary, "getOriginalExternalReferenceCode",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			assetVocabulary.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				assetVocabulary, "getOriginalExternalReferenceCode",
+				new Class<?>[0]));
 	}
 
 	protected AssetVocabulary addAssetVocabulary() throws Exception {

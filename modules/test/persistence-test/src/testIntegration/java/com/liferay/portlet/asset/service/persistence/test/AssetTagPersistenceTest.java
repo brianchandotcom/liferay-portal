@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -546,11 +545,10 @@ public class AssetTagPersistenceTest {
 	}
 
 	private void _assertOriginalValues(AssetTag assetTag) {
-		Assert.assertTrue(
-			Objects.equals(
-				assetTag.getUuid(),
-				ReflectionTestUtil.invoke(
-					assetTag, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			assetTag.getUuid(),
+			ReflectionTestUtil.invoke(
+				assetTag, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(assetTag.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -560,11 +558,10 @@ public class AssetTagPersistenceTest {
 			Long.valueOf(assetTag.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				assetTag, "getOriginalGroupId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				assetTag.getName(),
-				ReflectionTestUtil.invoke(
-					assetTag, "getOriginalName", new Class<?>[0])));
+		Assert.assertEquals(
+			assetTag.getName(),
+			ReflectionTestUtil.invoke(
+				assetTag, "getOriginalName", new Class<?>[0]));
 	}
 
 	protected AssetTag addAssetTag() throws Exception {

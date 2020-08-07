@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -586,11 +585,10 @@ public class AppBuilderAppVersionPersistenceTest {
 	private void _assertOriginalValues(
 		AppBuilderAppVersion appBuilderAppVersion) {
 
-		Assert.assertTrue(
-			Objects.equals(
-				appBuilderAppVersion.getUuid(),
-				ReflectionTestUtil.invoke(
-					appBuilderAppVersion, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			appBuilderAppVersion.getUuid(),
+			ReflectionTestUtil.invoke(
+				appBuilderAppVersion, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(appBuilderAppVersion.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -601,12 +599,10 @@ public class AppBuilderAppVersionPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				appBuilderAppVersion, "getOriginalAppBuilderAppId",
 				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				appBuilderAppVersion.getVersion(),
-				ReflectionTestUtil.invoke(
-					appBuilderAppVersion, "getOriginalVersion",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			appBuilderAppVersion.getVersion(),
+			ReflectionTestUtil.invoke(
+				appBuilderAppVersion, "getOriginalVersion", new Class<?>[0]));
 	}
 
 	protected AppBuilderAppVersion addAppBuilderAppVersion() throws Exception {

@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -522,12 +521,10 @@ public class PushNotificationsDevicePersistenceTest {
 	private void _assertOriginalValues(
 		PushNotificationsDevice pushNotificationsDevice) {
 
-		Assert.assertTrue(
-			Objects.equals(
-				pushNotificationsDevice.getToken(),
-				ReflectionTestUtil.invoke(
-					pushNotificationsDevice, "getOriginalToken",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			pushNotificationsDevice.getToken(),
+			ReflectionTestUtil.invoke(
+				pushNotificationsDevice, "getOriginalToken", new Class<?>[0]));
 	}
 
 	protected PushNotificationsDevice addPushNotificationsDevice()

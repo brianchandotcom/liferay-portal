@@ -42,7 +42,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -436,11 +435,10 @@ public class RegionPersistenceTest {
 			Long.valueOf(region.getCountryId()),
 			ReflectionTestUtil.<Long>invoke(
 				region, "getOriginalCountryId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				region.getRegionCode(),
-				ReflectionTestUtil.invoke(
-					region, "getOriginalRegionCode", new Class<?>[0])));
+		Assert.assertEquals(
+			region.getRegionCode(),
+			ReflectionTestUtil.invoke(
+				region, "getOriginalRegionCode", new Class<?>[0]));
 	}
 
 	protected Region addRegion() throws Exception {

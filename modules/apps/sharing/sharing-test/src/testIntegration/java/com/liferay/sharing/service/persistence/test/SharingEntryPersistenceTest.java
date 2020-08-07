@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -577,11 +576,10 @@ public class SharingEntryPersistenceTest {
 	}
 
 	private void _assertOriginalValues(SharingEntry sharingEntry) {
-		Assert.assertTrue(
-			Objects.equals(
-				sharingEntry.getUuid(),
-				ReflectionTestUtil.invoke(
-					sharingEntry, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			sharingEntry.getUuid(),
+			ReflectionTestUtil.invoke(
+				sharingEntry, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(sharingEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(

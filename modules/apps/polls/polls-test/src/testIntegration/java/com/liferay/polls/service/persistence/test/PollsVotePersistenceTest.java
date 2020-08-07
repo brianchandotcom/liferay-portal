@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -520,11 +519,10 @@ public class PollsVotePersistenceTest {
 	}
 
 	private void _assertOriginalValues(PollsVote pollsVote) {
-		Assert.assertTrue(
-			Objects.equals(
-				pollsVote.getUuid(),
-				ReflectionTestUtil.invoke(
-					pollsVote, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			pollsVote.getUuid(),
+			ReflectionTestUtil.invoke(
+				pollsVote, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(pollsVote.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(

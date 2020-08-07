@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -599,11 +598,10 @@ public class DLFileShortcutPersistenceTest {
 	}
 
 	private void _assertOriginalValues(DLFileShortcut dlFileShortcut) {
-		Assert.assertTrue(
-			Objects.equals(
-				dlFileShortcut.getUuid(),
-				ReflectionTestUtil.invoke(
-					dlFileShortcut, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			dlFileShortcut.getUuid(),
+			ReflectionTestUtil.invoke(
+				dlFileShortcut, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(dlFileShortcut.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(

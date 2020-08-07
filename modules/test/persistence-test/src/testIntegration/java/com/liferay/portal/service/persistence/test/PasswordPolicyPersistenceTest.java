@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -657,11 +656,10 @@ public class PasswordPolicyPersistenceTest {
 			Long.valueOf(passwordPolicy.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
 				passwordPolicy, "getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				passwordPolicy.getName(),
-				ReflectionTestUtil.invoke(
-					passwordPolicy, "getOriginalName", new Class<?>[0])));
+		Assert.assertEquals(
+			passwordPolicy.getName(),
+			ReflectionTestUtil.invoke(
+				passwordPolicy, "getOriginalName", new Class<?>[0]));
 	}
 
 	protected PasswordPolicy addPasswordPolicy() throws Exception {

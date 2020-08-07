@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -470,18 +469,15 @@ public class SamlSpMessagePersistenceTest {
 	}
 
 	private void _assertOriginalValues(SamlSpMessage samlSpMessage) {
-		Assert.assertTrue(
-			Objects.equals(
-				samlSpMessage.getSamlIdpEntityId(),
-				ReflectionTestUtil.invoke(
-					samlSpMessage, "getOriginalSamlIdpEntityId",
-					new Class<?>[0])));
-		Assert.assertTrue(
-			Objects.equals(
-				samlSpMessage.getSamlIdpResponseKey(),
-				ReflectionTestUtil.invoke(
-					samlSpMessage, "getOriginalSamlIdpResponseKey",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			samlSpMessage.getSamlIdpEntityId(),
+			ReflectionTestUtil.invoke(
+				samlSpMessage, "getOriginalSamlIdpEntityId", new Class<?>[0]));
+		Assert.assertEquals(
+			samlSpMessage.getSamlIdpResponseKey(),
+			ReflectionTestUtil.invoke(
+				samlSpMessage, "getOriginalSamlIdpResponseKey",
+				new Class<?>[0]));
 	}
 
 	protected SamlSpMessage addSamlSpMessage() throws Exception {

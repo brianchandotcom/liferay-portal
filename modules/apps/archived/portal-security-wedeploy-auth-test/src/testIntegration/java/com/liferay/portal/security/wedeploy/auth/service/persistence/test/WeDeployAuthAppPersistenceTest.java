@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -496,29 +495,23 @@ public class WeDeployAuthAppPersistenceTest {
 	}
 
 	private void _assertOriginalValues(WeDeployAuthApp weDeployAuthApp) {
-		Assert.assertTrue(
-			Objects.equals(
-				weDeployAuthApp.getRedirectURI(),
-				ReflectionTestUtil.invoke(
-					weDeployAuthApp, "getOriginalRedirectURI",
-					new Class<?>[0])));
-		Assert.assertTrue(
-			Objects.equals(
-				weDeployAuthApp.getClientId(),
-				ReflectionTestUtil.invoke(
-					weDeployAuthApp, "getOriginalClientId", new Class<?>[0])));
+		Assert.assertEquals(
+			weDeployAuthApp.getRedirectURI(),
+			ReflectionTestUtil.invoke(
+				weDeployAuthApp, "getOriginalRedirectURI", new Class<?>[0]));
+		Assert.assertEquals(
+			weDeployAuthApp.getClientId(),
+			ReflectionTestUtil.invoke(
+				weDeployAuthApp, "getOriginalClientId", new Class<?>[0]));
 
-		Assert.assertTrue(
-			Objects.equals(
-				weDeployAuthApp.getClientId(),
-				ReflectionTestUtil.invoke(
-					weDeployAuthApp, "getOriginalClientId", new Class<?>[0])));
-		Assert.assertTrue(
-			Objects.equals(
-				weDeployAuthApp.getClientSecret(),
-				ReflectionTestUtil.invoke(
-					weDeployAuthApp, "getOriginalClientSecret",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			weDeployAuthApp.getClientId(),
+			ReflectionTestUtil.invoke(
+				weDeployAuthApp, "getOriginalClientId", new Class<?>[0]));
+		Assert.assertEquals(
+			weDeployAuthApp.getClientSecret(),
+			ReflectionTestUtil.invoke(
+				weDeployAuthApp, "getOriginalClientSecret", new Class<?>[0]));
 	}
 
 	protected WeDeployAuthApp addWeDeployAuthApp() throws Exception {

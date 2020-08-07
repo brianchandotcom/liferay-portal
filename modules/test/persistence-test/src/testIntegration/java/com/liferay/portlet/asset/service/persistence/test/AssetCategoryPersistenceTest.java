@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -670,11 +669,10 @@ public class AssetCategoryPersistenceTest {
 	}
 
 	private void _assertOriginalValues(AssetCategory assetCategory) {
-		Assert.assertTrue(
-			Objects.equals(
-				assetCategory.getUuid(),
-				ReflectionTestUtil.invoke(
-					assetCategory, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			assetCategory.getUuid(),
+			ReflectionTestUtil.invoke(
+				assetCategory, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(assetCategory.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -684,11 +682,10 @@ public class AssetCategoryPersistenceTest {
 			Long.valueOf(assetCategory.getParentCategoryId()),
 			ReflectionTestUtil.<Long>invoke(
 				assetCategory, "getOriginalParentCategoryId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				assetCategory.getName(),
-				ReflectionTestUtil.invoke(
-					assetCategory, "getOriginalName", new Class<?>[0])));
+		Assert.assertEquals(
+			assetCategory.getName(),
+			ReflectionTestUtil.invoke(
+				assetCategory, "getOriginalName", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(assetCategory.getVocabularyId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -698,12 +695,11 @@ public class AssetCategoryPersistenceTest {
 			Long.valueOf(assetCategory.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
 				assetCategory, "getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				assetCategory.getExternalReferenceCode(),
-				ReflectionTestUtil.invoke(
-					assetCategory, "getOriginalExternalReferenceCode",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			assetCategory.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				assetCategory, "getOriginalExternalReferenceCode",
+				new Class<?>[0]));
 	}
 
 	protected AssetCategory addAssetCategory() throws Exception {

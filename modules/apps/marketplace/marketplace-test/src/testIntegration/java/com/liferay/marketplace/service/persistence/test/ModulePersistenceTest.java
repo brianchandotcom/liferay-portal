@@ -45,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -500,26 +499,23 @@ public class ModulePersistenceTest {
 			Long.valueOf(module.getAppId()),
 			ReflectionTestUtil.<Long>invoke(
 				module, "getOriginalAppId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				module.getContextName(),
-				ReflectionTestUtil.invoke(
-					module, "getOriginalContextName", new Class<?>[0])));
+		Assert.assertEquals(
+			module.getContextName(),
+			ReflectionTestUtil.invoke(
+				module, "getOriginalContextName", new Class<?>[0]));
 
 		Assert.assertEquals(
 			Long.valueOf(module.getAppId()),
 			ReflectionTestUtil.<Long>invoke(
 				module, "getOriginalAppId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				module.getBundleSymbolicName(),
-				ReflectionTestUtil.invoke(
-					module, "getOriginalBundleSymbolicName", new Class<?>[0])));
-		Assert.assertTrue(
-			Objects.equals(
-				module.getBundleVersion(),
-				ReflectionTestUtil.invoke(
-					module, "getOriginalBundleVersion", new Class<?>[0])));
+		Assert.assertEquals(
+			module.getBundleSymbolicName(),
+			ReflectionTestUtil.invoke(
+				module, "getOriginalBundleSymbolicName", new Class<?>[0]));
+		Assert.assertEquals(
+			module.getBundleVersion(),
+			ReflectionTestUtil.invoke(
+				module, "getOriginalBundleVersion", new Class<?>[0]));
 	}
 
 	protected Module addModule() throws Exception {

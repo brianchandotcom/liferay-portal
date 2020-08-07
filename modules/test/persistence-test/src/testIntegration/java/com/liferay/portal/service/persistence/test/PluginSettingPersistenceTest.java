@@ -45,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -475,16 +474,14 @@ public class PluginSettingPersistenceTest {
 			Long.valueOf(pluginSetting.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
 				pluginSetting, "getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				pluginSetting.getPluginId(),
-				ReflectionTestUtil.invoke(
-					pluginSetting, "getOriginalPluginId", new Class<?>[0])));
-		Assert.assertTrue(
-			Objects.equals(
-				pluginSetting.getPluginType(),
-				ReflectionTestUtil.invoke(
-					pluginSetting, "getOriginalPluginType", new Class<?>[0])));
+		Assert.assertEquals(
+			pluginSetting.getPluginId(),
+			ReflectionTestUtil.invoke(
+				pluginSetting, "getOriginalPluginId", new Class<?>[0]));
+		Assert.assertEquals(
+			pluginSetting.getPluginType(),
+			ReflectionTestUtil.invoke(
+				pluginSetting, "getOriginalPluginType", new Class<?>[0]));
 	}
 
 	protected PluginSetting addPluginSetting() throws Exception {

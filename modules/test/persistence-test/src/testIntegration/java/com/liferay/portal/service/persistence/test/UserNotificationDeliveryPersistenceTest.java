@@ -45,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -535,12 +534,11 @@ public class UserNotificationDeliveryPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				userNotificationDelivery, "getOriginalUserId",
 				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				userNotificationDelivery.getPortletId(),
-				ReflectionTestUtil.invoke(
-					userNotificationDelivery, "getOriginalPortletId",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			userNotificationDelivery.getPortletId(),
+			ReflectionTestUtil.invoke(
+				userNotificationDelivery, "getOriginalPortletId",
+				new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(userNotificationDelivery.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(

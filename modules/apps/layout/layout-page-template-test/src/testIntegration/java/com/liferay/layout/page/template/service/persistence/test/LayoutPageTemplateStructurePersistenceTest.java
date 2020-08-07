@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -587,12 +586,11 @@ public class LayoutPageTemplateStructurePersistenceTest {
 	private void _assertOriginalValues(
 		LayoutPageTemplateStructure layoutPageTemplateStructure) {
 
-		Assert.assertTrue(
-			Objects.equals(
-				layoutPageTemplateStructure.getUuid(),
-				ReflectionTestUtil.invoke(
-					layoutPageTemplateStructure, "getOriginalUuid",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			layoutPageTemplateStructure.getUuid(),
+			ReflectionTestUtil.invoke(
+				layoutPageTemplateStructure, "getOriginalUuid",
+				new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(layoutPageTemplateStructure.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(

@@ -42,7 +42,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -549,12 +548,11 @@ public class FriendlyURLEntryLocalizationPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				friendlyURLEntryLocalization, "getOriginalFriendlyURLEntryId",
 				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				friendlyURLEntryLocalization.getLanguageId(),
-				ReflectionTestUtil.invoke(
-					friendlyURLEntryLocalization, "getOriginalLanguageId",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			friendlyURLEntryLocalization.getLanguageId(),
+			ReflectionTestUtil.invoke(
+				friendlyURLEntryLocalization, "getOriginalLanguageId",
+				new Class<?>[0]));
 
 		Assert.assertEquals(
 			Long.valueOf(friendlyURLEntryLocalization.getGroupId()),
@@ -566,12 +564,11 @@ public class FriendlyURLEntryLocalizationPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				friendlyURLEntryLocalization, "getOriginalClassNameId",
 				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				friendlyURLEntryLocalization.getUrlTitle(),
-				ReflectionTestUtil.invoke(
-					friendlyURLEntryLocalization, "getOriginalUrlTitle",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			friendlyURLEntryLocalization.getUrlTitle(),
+			ReflectionTestUtil.invoke(
+				friendlyURLEntryLocalization, "getOriginalUrlTitle",
+				new Class<?>[0]));
 	}
 
 	protected FriendlyURLEntryLocalization addFriendlyURLEntryLocalization()

@@ -45,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -595,12 +594,10 @@ public class SocialActivityCounterPersistenceTest {
 			Long.valueOf(socialActivityCounter.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
 				socialActivityCounter, "getOriginalClassPK", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				socialActivityCounter.getName(),
-				ReflectionTestUtil.invoke(
-					socialActivityCounter, "getOriginalName",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			socialActivityCounter.getName(),
+			ReflectionTestUtil.invoke(
+				socialActivityCounter, "getOriginalName", new Class<?>[0]));
 		Assert.assertEquals(
 			Integer.valueOf(socialActivityCounter.getOwnerType()),
 			ReflectionTestUtil.<Integer>invoke(
@@ -625,12 +622,10 @@ public class SocialActivityCounterPersistenceTest {
 			Long.valueOf(socialActivityCounter.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
 				socialActivityCounter, "getOriginalClassPK", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				socialActivityCounter.getName(),
-				ReflectionTestUtil.invoke(
-					socialActivityCounter, "getOriginalName",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			socialActivityCounter.getName(),
+			ReflectionTestUtil.invoke(
+				socialActivityCounter, "getOriginalName", new Class<?>[0]));
 		Assert.assertEquals(
 			Integer.valueOf(socialActivityCounter.getOwnerType()),
 			ReflectionTestUtil.<Integer>invoke(

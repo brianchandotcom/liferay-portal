@@ -46,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -630,12 +629,11 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 	private void _assertOriginalValues(
 		LayoutPageTemplateCollection layoutPageTemplateCollection) {
 
-		Assert.assertTrue(
-			Objects.equals(
-				layoutPageTemplateCollection.getUuid(),
-				ReflectionTestUtil.invoke(
-					layoutPageTemplateCollection, "getOriginalUuid",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			layoutPageTemplateCollection.getUuid(),
+			ReflectionTestUtil.invoke(
+				layoutPageTemplateCollection, "getOriginalUuid",
+				new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(layoutPageTemplateCollection.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -647,26 +645,22 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				layoutPageTemplateCollection, "getOriginalGroupId",
 				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionKey(),
-				ReflectionTestUtil.invoke(
-					layoutPageTemplateCollection,
-					"getOriginalLayoutPageTemplateCollectionKey",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionKey(),
+			ReflectionTestUtil.invoke(
+				layoutPageTemplateCollection,
+				"getOriginalLayoutPageTemplateCollectionKey", new Class<?>[0]));
 
 		Assert.assertEquals(
 			Long.valueOf(layoutPageTemplateCollection.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				layoutPageTemplateCollection, "getOriginalGroupId",
 				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				layoutPageTemplateCollection.getName(),
-				ReflectionTestUtil.invoke(
-					layoutPageTemplateCollection, "getOriginalName",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			layoutPageTemplateCollection.getName(),
+			ReflectionTestUtil.invoke(
+				layoutPageTemplateCollection, "getOriginalName",
+				new Class<?>[0]));
 	}
 
 	protected LayoutPageTemplateCollection addLayoutPageTemplateCollection()

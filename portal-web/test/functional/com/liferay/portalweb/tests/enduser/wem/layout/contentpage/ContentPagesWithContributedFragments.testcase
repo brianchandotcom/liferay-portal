@@ -1872,7 +1872,7 @@ definition {
 		PageEditor.resizeConfigurationPanel(
 			fragmentName = "Button",
 			position = "0,-100",
-			style = "364px");
+			style = "415.638px");
 
 		PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
@@ -1881,7 +1881,7 @@ definition {
 		AssertElementPresent(locator1 = "PageEditor#CONFIGURATION_PANEL_HANDLE");
 
 		AssertElementNotPresent(
-			key_style = "364px",
+			key_style = "415.638px",
 			locator1 = "PageEditor#CONFIGURATION_PANEL_RESIZER");
 	}
 

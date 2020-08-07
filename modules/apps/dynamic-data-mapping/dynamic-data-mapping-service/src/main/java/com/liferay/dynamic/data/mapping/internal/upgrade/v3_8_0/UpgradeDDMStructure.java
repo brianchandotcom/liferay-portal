@@ -54,6 +54,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 
@@ -223,6 +224,10 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 		DDMFormLayout ddmFormLayout =
 			ddmFormLayoutDeserializerDeserializeResponse.getDDMFormLayout();
+
+		if (Objects.equals(ddmFormLayout.getPaginationMode(), "pagination")) {
+			ddmFormLayout.setPaginationMode(DDMFormLayout.WIZARD_MODE);
+		}
 
 		for (DDMFormLayoutPage ddmFormLayoutPage :
 				ddmFormLayout.getDDMFormLayoutPages()) {

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.ResourceActionsException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.xml.Document;
 
 import java.util.List;
 import java.util.Locale;
@@ -26,7 +27,6 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.liferay.portal.kernel.xml.Document;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -177,6 +177,11 @@ public interface ResourceActions {
 			String... sources)
 		throws ResourceActionsException;
 
+	public void read(
+			String servletContextName, Document document,
+			Set<String> portletNames)
+		throws ResourceActionsException;
+
 	public void readAndCheck(
 			String servletContextName, ClassLoader classLoader,
 			String... sources)
@@ -188,8 +193,4 @@ public interface ResourceActions {
 	@Deprecated
 	public void removePortletResource(String portletName);
 
-	public void read(
-		String servletContextName, Document document,
-		Set<String> portletNames)
-		throws ResourceActionsException;
 }

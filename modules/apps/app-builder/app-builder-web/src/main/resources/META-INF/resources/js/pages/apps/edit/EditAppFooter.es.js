@@ -12,9 +12,7 @@
  * details.
  */
 
-import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import ClayLink from '@clayui/link';
 import React, {useContext, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
@@ -58,26 +56,20 @@ export default withRouter(
 				(deployment) => deployment.type === 'standalone'
 			);
 
-			if (!isStandalone) {
-				return <></>;
-			}
-
-			const url = getStandaloneURL(appId);
-
-			return (
-				<ClayLink href={url} target="_blank">
-					{`${Liferay.Language.get('open-standalone-app')}.`}{' '}
-					<ClayIcon symbol="shortcut" />
-				</ClayLink>
-			);
+			return isStandalone
+				? ''
+				: `<a href="${getStandaloneURL(
+						appId
+				  )}" target="_blank">${Liferay.Language.get(
+						'open-standalone-app'
+				  )}. ${Liferay.Util.getLexiconIconTpl('shortcut')}</a>`;
 		};
 
 		const onSuccess = (appId) => {
 			successToast(
-				<>
-					{Liferay.Language.get('the-app-was-deployed-successfully')}{' '}
-					{getStandaloneLink(appId)}
-				</>
+				`${Liferay.Language.get(
+					'the-app-was-deployed-successfully'
+				)} ${getStandaloneLink(appId)}`
 			);
 
 			setDeploying(false);

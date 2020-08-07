@@ -87,9 +87,9 @@ public class StringQueryTranslatorImpl implements StringQueryTranslator {
 			queryStringQueryBuilder.escape(stringQuery.getEscape());
 		}
 
-		Map<String, Float> fields = stringQuery.getFields();
+		Map<String, Float> fieldsBoosts = stringQuery.getFieldsBoosts();
 
-		for (Map.Entry<String, Float> entry : fields.entrySet()) {
+		for (Map.Entry<String, Float> entry : fieldsBoosts.entrySet()) {
 			Float boost = entry.getValue();
 			String field = entry.getKey();
 

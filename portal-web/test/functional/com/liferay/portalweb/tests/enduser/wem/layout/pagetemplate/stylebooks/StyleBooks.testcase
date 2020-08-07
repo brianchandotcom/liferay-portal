@@ -28,6 +28,99 @@ definition {
 		}
 	}
 
+	@description = "This is for LPS-116078. Can navigate to preview page via page preview info bar but not interact with preview page in style book editor."
+	@priority = "4"
+	test CanNavigateToPreviewPageViaPagePreviewInfoBarButNotAllowInteractWithPreviewPage {
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
+		task ("Add a Banner Center to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				fragmentName = "Banner Center");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
+		}
+
+		task ("Add a Blogs portlet to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name",
+				widgetName = "Blogs");
+		}
+
+		task ("Add a style book") {
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+
+			StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name");
+		}
+
+		task ("Assert the content page is shown in preview iframe") {
+			SelectFrame.selectFrameNoLoading(locator1 = "StyleBookEditor#PAGE_PREVIEW_IFRAME");
+
+			AssertVisible(
+				key_pageName = "Test Content Page Name",
+				locator1 = "Home#PAGE");
+
+			AssertVisible(
+				key_content = "Banner Title Example",
+				key_element = "h1",
+				key_id = "title",
+				key_type = "rich-text",
+				locator1 = "StyleBookEditor#CONTRIBUTED_FRAGMENT_INLINE_CONTENT");
+		}
+
+		task ("Assert not allow interact with preview page") {
+			AssertElementPresent(locator1 = "StyleBookEditor#CURSOR_NOT_ALLOWED");
+
+			SelectFrameTop();
+		}
+
+		task ("Navigate to widget page via page preview info bar") {
+			AssertTextEquals(
+				locator1 = "StyleBookEditor#PAGE_PREVIEW_INFO_BAR_TOGGLE",
+				value1 = "Test Content Page Name");
+
+			StyleBooks.goToPageViaPagePreviewInfoBar(pageName = "Test Widget Page Name");
+
+			Click(locator1 = "StyleBookEditor#PAGE_PREVIEW_INFO_BAR_TOGGLE");
+
+			AssertTextEquals(
+				locator1 = "StyleBookEditor#PAGE_PREVIEW_INFO_BAR_TOGGLE",
+				value1 = "Test Widget Page Name");
+		}
+
+		task ("Assert the widget page is shown in preview iframe") {
+			SelectFrame.selectFrameNoLoading(locator1 = "StyleBookEditor#PAGE_PREVIEW_IFRAME");
+
+			AssertVisible(
+				key_pageName = "Test Widget Page Name",
+				locator1 = "Home#PAGE");
+
+			Portlet.viewTitle(portletName = "Blogs");
+		}
+
+		task ("Assert not allow interact with preview page") {
+			AssertElementPresent(locator1 = "StyleBookEditor#CURSOR_NOT_ALLOWED");
+
+			SelectFrameTop();
+		}
+	}
+
 	@description = "This is for LPS-116078. Can preview the effect on page when edit the style book."
 	@priority = "5"
 	test PreviewTheEffectOnPageInStyleBookEditor {

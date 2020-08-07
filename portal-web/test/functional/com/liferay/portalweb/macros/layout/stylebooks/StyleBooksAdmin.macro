@@ -1,0 +1,15 @@
+definition {
+
+	macro addStyleBooks {
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputName(name = "${styleBookName}");
+
+		Button.clickSave();
+	}
+
+	macro viewStyleBooksPresent {
+		LexiconCard.viewCardPresent(card = "${styleBookName}");
+	}
+
+}

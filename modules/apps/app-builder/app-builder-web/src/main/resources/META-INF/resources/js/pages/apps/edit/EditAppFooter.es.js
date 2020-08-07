@@ -57,12 +57,12 @@ export default withRouter(
 			);
 
 			return isStandalone
-				? ''
-				: `<a href="${getStandaloneURL(
+				? `<a href="${getStandaloneURL(
 						appId
 				  )}" target="_blank">${Liferay.Language.get(
 						'open-standalone-app'
-				  )}. ${Liferay.Util.getLexiconIconTpl('shortcut')}</a>`;
+				  )}. ${Liferay.Util.getLexiconIconTpl('shortcut')}</a>`
+				: '';
 		};
 
 		const onSuccess = (appId) => {

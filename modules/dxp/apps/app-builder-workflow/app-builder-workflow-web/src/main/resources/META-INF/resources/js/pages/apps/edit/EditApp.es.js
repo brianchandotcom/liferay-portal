@@ -217,12 +217,12 @@ export default ({
 		);
 
 		return isStandalone
-			? ''
-			: `<a href="${getStandaloneURL(
+			? `<a href="${getStandaloneURL(
 					id
 			  )}" target="_blank">${Liferay.Language.get(
 					'open-standalone-app'
-			  )}. ${Liferay.Util.getLexiconIconTpl('shortcut')}</a>`;
+			  )}. ${Liferay.Util.getLexiconIconTpl('shortcut')}</a>`
+			: '';
 	};
 
 	const onCancel = () => {

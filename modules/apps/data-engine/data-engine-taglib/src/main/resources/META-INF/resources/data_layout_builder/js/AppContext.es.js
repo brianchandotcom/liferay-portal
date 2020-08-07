@@ -12,6 +12,7 @@
  * details.
  */
 
+import {FieldSupport} from 'dynamic-data-mapping-form-builder';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import {createContext} from 'react';
 
@@ -93,6 +94,7 @@ const addCustomObjectField = ({
 		label: {
 			[themeDisplay.getLanguageId()]: fieldType.label,
 		},
+		name: FieldSupport.getDefaultFieldName(),
 	};
 };
 

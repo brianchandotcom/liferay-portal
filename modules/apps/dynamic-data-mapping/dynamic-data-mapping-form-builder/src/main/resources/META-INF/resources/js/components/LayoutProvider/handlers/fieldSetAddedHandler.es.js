@@ -75,7 +75,12 @@ const handleFieldSetAdded = (props, state, event) => {
 
 	return addField(props, {
 		indexes,
-		newField: updateField(props, fieldSetField, 'label', fieldSet.title),
+		newField: updateField(
+			props,
+			fieldSetField,
+			'label',
+			fieldSet.localizedTitle[defaultLanguageId]
+		),
 		pages,
 		parentFieldName,
 	});

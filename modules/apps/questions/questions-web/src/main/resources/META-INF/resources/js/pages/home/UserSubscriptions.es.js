@@ -20,7 +20,7 @@ import React, {useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import Alert from '../../components/Alert.es';
-import DeleteThread from '../../components/DeleteThread.es';
+import DeleteQuestion from '../../components/DeleteQuestion.es';
 import Link from '../../components/Link.es';
 import QuestionRow from '../../components/QuestionRow.es';
 import {
@@ -234,7 +234,7 @@ export default withRouter(({history}) => {
 							/>
 						</div>
 					))}
-				<DeleteThread
+				<DeleteQuestion
 					deleteModalVisibility={showDeleteModalPanel}
 					question={questionToDelete}
 					setDeleteModalVisibility={setShowDeleteModalPanel}

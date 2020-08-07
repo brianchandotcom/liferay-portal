@@ -20,6 +20,7 @@ import com.liferay.commerce.product.model.CPDisplayLayoutSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -75,18 +75,19 @@ public class CPDisplayLayoutModelImpl
 	public static final String TABLE_NAME = "CPDisplayLayout";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"CPDisplayLayoutId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"layoutUuid", Types.VARCHAR}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"CPDisplayLayoutId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"layoutUuid", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPDisplayLayoutId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -101,7 +102,7 @@ public class CPDisplayLayoutModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPDisplayLayout (uuid_ VARCHAR(75) null,CPDisplayLayoutId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,layoutUuid VARCHAR(75) null)";
+		"create table CPDisplayLayout (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,CPDisplayLayoutId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,layoutUuid VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CPDisplayLayout";
 
@@ -117,20 +118,23 @@ public class CPDisplayLayoutModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.product.model.CPDisplayLayout"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.product.model.CPDisplayLayout"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.product.model.CPDisplayLayout"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
 
@@ -159,6 +163,7 @@ public class CPDisplayLayoutModelImpl
 
 		CPDisplayLayout model = new CPDisplayLayoutImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCPDisplayLayoutId(soapModel.getCPDisplayLayoutId());
 		model.setGroupId(soapModel.getGroupId());
@@ -253,9 +258,6 @@ public class CPDisplayLayoutModelImpl
 				attributeGetterFunction.apply((CPDisplayLayout)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -330,255 +332,79 @@ public class CPDisplayLayoutModelImpl
 			new LinkedHashMap<String, BiConsumer<CPDisplayLayout, ?>>();
 
 		attributeGetterFunctions.put(
-			"uuid",
-			new Function<CPDisplayLayout, Object>() {
-
-				@Override
-				public Object apply(CPDisplayLayout cpDisplayLayout) {
-					return cpDisplayLayout.getUuid();
-				}
-
-			});
+			"mvccVersion", CPDisplayLayout::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CPDisplayLayout, Long>)CPDisplayLayout::setMvccVersion);
+		attributeGetterFunctions.put("uuid", CPDisplayLayout::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
-			new BiConsumer<CPDisplayLayout, Object>() {
-
-				@Override
-				public void accept(
-					CPDisplayLayout cpDisplayLayout, Object uuidObject) {
-
-					cpDisplayLayout.setUuid((String)uuidObject);
-				}
-
-			});
+			(BiConsumer<CPDisplayLayout, String>)CPDisplayLayout::setUuid);
 		attributeGetterFunctions.put(
-			"CPDisplayLayoutId",
-			new Function<CPDisplayLayout, Object>() {
-
-				@Override
-				public Object apply(CPDisplayLayout cpDisplayLayout) {
-					return cpDisplayLayout.getCPDisplayLayoutId();
-				}
-
-			});
+			"CPDisplayLayoutId", CPDisplayLayout::getCPDisplayLayoutId);
 		attributeSetterBiConsumers.put(
 			"CPDisplayLayoutId",
-			new BiConsumer<CPDisplayLayout, Object>() {
-
-				@Override
-				public void accept(
-					CPDisplayLayout cpDisplayLayout,
-					Object CPDisplayLayoutIdObject) {
-
-					cpDisplayLayout.setCPDisplayLayoutId(
-						(Long)CPDisplayLayoutIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"groupId",
-			new Function<CPDisplayLayout, Object>() {
-
-				@Override
-				public Object apply(CPDisplayLayout cpDisplayLayout) {
-					return cpDisplayLayout.getGroupId();
-				}
-
-			});
+			(BiConsumer<CPDisplayLayout, Long>)
+				CPDisplayLayout::setCPDisplayLayoutId);
+		attributeGetterFunctions.put("groupId", CPDisplayLayout::getGroupId);
 		attributeSetterBiConsumers.put(
 			"groupId",
-			new BiConsumer<CPDisplayLayout, Object>() {
-
-				@Override
-				public void accept(
-					CPDisplayLayout cpDisplayLayout, Object groupIdObject) {
-
-					cpDisplayLayout.setGroupId((Long)groupIdObject);
-				}
-
-			});
+			(BiConsumer<CPDisplayLayout, Long>)CPDisplayLayout::setGroupId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CPDisplayLayout, Object>() {
-
-				@Override
-				public Object apply(CPDisplayLayout cpDisplayLayout) {
-					return cpDisplayLayout.getCompanyId();
-				}
-
-			});
+			"companyId", CPDisplayLayout::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CPDisplayLayout, Object>() {
-
-				@Override
-				public void accept(
-					CPDisplayLayout cpDisplayLayout, Object companyIdObject) {
-
-					cpDisplayLayout.setCompanyId((Long)companyIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userId",
-			new Function<CPDisplayLayout, Object>() {
-
-				@Override
-				public Object apply(CPDisplayLayout cpDisplayLayout) {
-					return cpDisplayLayout.getUserId();
-				}
-
-			});
+			(BiConsumer<CPDisplayLayout, Long>)CPDisplayLayout::setCompanyId);
+		attributeGetterFunctions.put("userId", CPDisplayLayout::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CPDisplayLayout, Object>() {
-
-				@Override
-				public void accept(
-					CPDisplayLayout cpDisplayLayout, Object userIdObject) {
-
-					cpDisplayLayout.setUserId((Long)userIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userName",
-			new Function<CPDisplayLayout, Object>() {
-
-				@Override
-				public Object apply(CPDisplayLayout cpDisplayLayout) {
-					return cpDisplayLayout.getUserName();
-				}
-
-			});
+			(BiConsumer<CPDisplayLayout, Long>)CPDisplayLayout::setUserId);
+		attributeGetterFunctions.put("userName", CPDisplayLayout::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CPDisplayLayout, Object>() {
-
-				@Override
-				public void accept(
-					CPDisplayLayout cpDisplayLayout, Object userNameObject) {
-
-					cpDisplayLayout.setUserName((String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CPDisplayLayout, String>)CPDisplayLayout::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CPDisplayLayout, Object>() {
-
-				@Override
-				public Object apply(CPDisplayLayout cpDisplayLayout) {
-					return cpDisplayLayout.getCreateDate();
-				}
-
-			});
+			"createDate", CPDisplayLayout::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CPDisplayLayout, Object>() {
-
-				@Override
-				public void accept(
-					CPDisplayLayout cpDisplayLayout, Object createDateObject) {
-
-					cpDisplayLayout.setCreateDate((Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CPDisplayLayout, Date>)CPDisplayLayout::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CPDisplayLayout, Object>() {
-
-				@Override
-				public Object apply(CPDisplayLayout cpDisplayLayout) {
-					return cpDisplayLayout.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CPDisplayLayout::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CPDisplayLayout, Object>() {
-
-				@Override
-				public void accept(
-					CPDisplayLayout cpDisplayLayout,
-					Object modifiedDateObject) {
-
-					cpDisplayLayout.setModifiedDate((Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CPDisplayLayout, Date>)
+				CPDisplayLayout::setModifiedDate);
 		attributeGetterFunctions.put(
-			"classNameId",
-			new Function<CPDisplayLayout, Object>() {
-
-				@Override
-				public Object apply(CPDisplayLayout cpDisplayLayout) {
-					return cpDisplayLayout.getClassNameId();
-				}
-
-			});
+			"classNameId", CPDisplayLayout::getClassNameId);
 		attributeSetterBiConsumers.put(
 			"classNameId",
-			new BiConsumer<CPDisplayLayout, Object>() {
-
-				@Override
-				public void accept(
-					CPDisplayLayout cpDisplayLayout, Object classNameIdObject) {
-
-					cpDisplayLayout.setClassNameId((Long)classNameIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"classPK",
-			new Function<CPDisplayLayout, Object>() {
-
-				@Override
-				public Object apply(CPDisplayLayout cpDisplayLayout) {
-					return cpDisplayLayout.getClassPK();
-				}
-
-			});
+			(BiConsumer<CPDisplayLayout, Long>)CPDisplayLayout::setClassNameId);
+		attributeGetterFunctions.put("classPK", CPDisplayLayout::getClassPK);
 		attributeSetterBiConsumers.put(
 			"classPK",
-			new BiConsumer<CPDisplayLayout, Object>() {
-
-				@Override
-				public void accept(
-					CPDisplayLayout cpDisplayLayout, Object classPKObject) {
-
-					cpDisplayLayout.setClassPK((Long)classPKObject);
-				}
-
-			});
+			(BiConsumer<CPDisplayLayout, Long>)CPDisplayLayout::setClassPK);
 		attributeGetterFunctions.put(
-			"layoutUuid",
-			new Function<CPDisplayLayout, Object>() {
-
-				@Override
-				public Object apply(CPDisplayLayout cpDisplayLayout) {
-					return cpDisplayLayout.getLayoutUuid();
-				}
-
-			});
+			"layoutUuid", CPDisplayLayout::getLayoutUuid);
 		attributeSetterBiConsumers.put(
 			"layoutUuid",
-			new BiConsumer<CPDisplayLayout, Object>() {
-
-				@Override
-				public void accept(
-					CPDisplayLayout cpDisplayLayout, Object layoutUuidObject) {
-
-					cpDisplayLayout.setLayoutUuid((String)layoutUuidObject);
-				}
-
-			});
+			(BiConsumer<CPDisplayLayout, String>)
+				CPDisplayLayout::setLayoutUuid);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -870,6 +696,7 @@ public class CPDisplayLayoutModelImpl
 	public Object clone() {
 		CPDisplayLayoutImpl cpDisplayLayoutImpl = new CPDisplayLayoutImpl();
 
+		cpDisplayLayoutImpl.setMvccVersion(getMvccVersion());
 		cpDisplayLayoutImpl.setUuid(getUuid());
 		cpDisplayLayoutImpl.setCPDisplayLayoutId(getCPDisplayLayoutId());
 		cpDisplayLayoutImpl.setGroupId(getGroupId());
@@ -929,11 +756,19 @@ public class CPDisplayLayoutModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -969,6 +804,8 @@ public class CPDisplayLayoutModelImpl
 	public CacheModel<CPDisplayLayout> toCacheModel() {
 		CPDisplayLayoutCacheModel cpDisplayLayoutCacheModel =
 			new CPDisplayLayoutCacheModel();
+
+		cpDisplayLayoutCacheModel.mvccVersion = getMvccVersion();
 
 		cpDisplayLayoutCacheModel.uuid = getUuid();
 
@@ -1097,6 +934,7 @@ public class CPDisplayLayoutModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _CPDisplayLayoutId;

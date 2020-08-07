@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.inventory.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,23 +31,14 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceInventoryBookedQuantityWrapper
+	extends BaseModelWrapper<CommerceInventoryBookedQuantity>
 	implements CommerceInventoryBookedQuantity,
 			   ModelWrapper<CommerceInventoryBookedQuantity> {
 
 	public CommerceInventoryBookedQuantityWrapper(
 		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity) {
 
-		_commerceInventoryBookedQuantity = commerceInventoryBookedQuantity;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceInventoryBookedQuantity.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceInventoryBookedQuantity.class.getName();
+		super(commerceInventoryBookedQuantity);
 	}
 
 	@Override
@@ -146,21 +133,6 @@ public class CommerceInventoryBookedQuantityWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CommerceInventoryBookedQuantityWrapper(
-			(CommerceInventoryBookedQuantity)
-				_commerceInventoryBookedQuantity.clone());
-	}
-
-	@Override
-	public int compareTo(
-		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity) {
-
-		return _commerceInventoryBookedQuantity.compareTo(
-			commerceInventoryBookedQuantity);
-	}
-
 	/**
 	 * Returns the booked note of this commerce inventory booked quantity.
 	 *
@@ -168,7 +140,7 @@ public class CommerceInventoryBookedQuantityWrapper
 	 */
 	@Override
 	public String getBookedNote() {
-		return _commerceInventoryBookedQuantity.getBookedNote();
+		return model.getBookedNote();
 	}
 
 	/**
@@ -178,8 +150,7 @@ public class CommerceInventoryBookedQuantityWrapper
 	 */
 	@Override
 	public long getCommerceInventoryBookedQuantityId() {
-		return _commerceInventoryBookedQuantity.
-			getCommerceInventoryBookedQuantityId();
+		return model.getCommerceInventoryBookedQuantityId();
 	}
 
 	/**
@@ -189,7 +160,7 @@ public class CommerceInventoryBookedQuantityWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceInventoryBookedQuantity.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -199,12 +170,7 @@ public class CommerceInventoryBookedQuantityWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceInventoryBookedQuantity.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceInventoryBookedQuantity.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -214,7 +180,7 @@ public class CommerceInventoryBookedQuantityWrapper
 	 */
 	@Override
 	public Date getExpirationDate() {
-		return _commerceInventoryBookedQuantity.getExpirationDate();
+		return model.getExpirationDate();
 	}
 
 	/**
@@ -224,7 +190,7 @@ public class CommerceInventoryBookedQuantityWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceInventoryBookedQuantity.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -234,7 +200,7 @@ public class CommerceInventoryBookedQuantityWrapper
 	 */
 	@Override
 	public long getMvccVersion() {
-		return _commerceInventoryBookedQuantity.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -244,12 +210,7 @@ public class CommerceInventoryBookedQuantityWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceInventoryBookedQuantity.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceInventoryBookedQuantity.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -259,7 +220,7 @@ public class CommerceInventoryBookedQuantityWrapper
 	 */
 	@Override
 	public int getQuantity() {
-		return _commerceInventoryBookedQuantity.getQuantity();
+		return model.getQuantity();
 	}
 
 	/**
@@ -269,7 +230,7 @@ public class CommerceInventoryBookedQuantityWrapper
 	 */
 	@Override
 	public String getSku() {
-		return _commerceInventoryBookedQuantity.getSku();
+		return model.getSku();
 	}
 
 	/**
@@ -279,7 +240,7 @@ public class CommerceInventoryBookedQuantityWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceInventoryBookedQuantity.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -289,7 +250,7 @@ public class CommerceInventoryBookedQuantityWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceInventoryBookedQuantity.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -299,32 +260,12 @@ public class CommerceInventoryBookedQuantityWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceInventoryBookedQuantity.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceInventoryBookedQuantity.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceInventoryBookedQuantity.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceInventoryBookedQuantity.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceInventoryBookedQuantity.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_commerceInventoryBookedQuantity.persist();
+		model.persist();
 	}
 
 	/**
@@ -334,12 +275,7 @@ public class CommerceInventoryBookedQuantityWrapper
 	 */
 	@Override
 	public void setBookedNote(String bookedNote) {
-		_commerceInventoryBookedQuantity.setBookedNote(bookedNote);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceInventoryBookedQuantity.setCachedModel(cachedModel);
+		model.setBookedNote(bookedNote);
 	}
 
 	/**
@@ -351,7 +287,7 @@ public class CommerceInventoryBookedQuantityWrapper
 	public void setCommerceInventoryBookedQuantityId(
 		long commerceInventoryBookedQuantityId) {
 
-		_commerceInventoryBookedQuantity.setCommerceInventoryBookedQuantityId(
+		model.setCommerceInventoryBookedQuantityId(
 			commerceInventoryBookedQuantityId);
 	}
 
@@ -362,7 +298,7 @@ public class CommerceInventoryBookedQuantityWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceInventoryBookedQuantity.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -372,26 +308,7 @@ public class CommerceInventoryBookedQuantityWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceInventoryBookedQuantity.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceInventoryBookedQuantity.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceInventoryBookedQuantity.setExpandoBridgeAttributes(
-			expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceInventoryBookedQuantity.setExpandoBridgeAttributes(
-			serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -401,7 +318,7 @@ public class CommerceInventoryBookedQuantityWrapper
 	 */
 	@Override
 	public void setExpirationDate(Date expirationDate) {
-		_commerceInventoryBookedQuantity.setExpirationDate(expirationDate);
+		model.setExpirationDate(expirationDate);
 	}
 
 	/**
@@ -411,7 +328,7 @@ public class CommerceInventoryBookedQuantityWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceInventoryBookedQuantity.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -421,12 +338,7 @@ public class CommerceInventoryBookedQuantityWrapper
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_commerceInventoryBookedQuantity.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_commerceInventoryBookedQuantity.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -436,12 +348,7 @@ public class CommerceInventoryBookedQuantityWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceInventoryBookedQuantity.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceInventoryBookedQuantity.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -451,7 +358,7 @@ public class CommerceInventoryBookedQuantityWrapper
 	 */
 	@Override
 	public void setQuantity(int quantity) {
-		_commerceInventoryBookedQuantity.setQuantity(quantity);
+		model.setQuantity(quantity);
 	}
 
 	/**
@@ -461,7 +368,7 @@ public class CommerceInventoryBookedQuantityWrapper
 	 */
 	@Override
 	public void setSku(String sku) {
-		_commerceInventoryBookedQuantity.setSku(sku);
+		model.setSku(sku);
 	}
 
 	/**
@@ -471,7 +378,7 @@ public class CommerceInventoryBookedQuantityWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceInventoryBookedQuantity.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -481,7 +388,7 @@ public class CommerceInventoryBookedQuantityWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceInventoryBookedQuantity.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -491,84 +398,15 @@ public class CommerceInventoryBookedQuantityWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceInventoryBookedQuantity.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel
-		<CommerceInventoryBookedQuantity> toCacheModel() {
+	protected CommerceInventoryBookedQuantityWrapper wrap(
+		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity) {
 
-		return _commerceInventoryBookedQuantity.toCacheModel();
-	}
-
-	@Override
-	public CommerceInventoryBookedQuantity toEscapedModel() {
 		return new CommerceInventoryBookedQuantityWrapper(
-			_commerceInventoryBookedQuantity.toEscapedModel());
+			commerceInventoryBookedQuantity);
 	}
-
-	@Override
-	public String toString() {
-		return _commerceInventoryBookedQuantity.toString();
-	}
-
-	@Override
-	public CommerceInventoryBookedQuantity toUnescapedModel() {
-		return new CommerceInventoryBookedQuantityWrapper(
-			_commerceInventoryBookedQuantity.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceInventoryBookedQuantity.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceInventoryBookedQuantityWrapper)) {
-			return false;
-		}
-
-		CommerceInventoryBookedQuantityWrapper
-			commerceInventoryBookedQuantityWrapper =
-				(CommerceInventoryBookedQuantityWrapper)object;
-
-		if (Objects.equals(
-				_commerceInventoryBookedQuantity,
-				commerceInventoryBookedQuantityWrapper.
-					_commerceInventoryBookedQuantity)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceInventoryBookedQuantity getWrappedModel() {
-		return _commerceInventoryBookedQuantity;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceInventoryBookedQuantity.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceInventoryBookedQuantity.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceInventoryBookedQuantity.resetOriginalValues();
-	}
-
-	private final CommerceInventoryBookedQuantity
-		_commerceInventoryBookedQuantity;
 
 }

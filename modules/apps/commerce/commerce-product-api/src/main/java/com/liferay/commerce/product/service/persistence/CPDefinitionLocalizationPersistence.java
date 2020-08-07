@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.product.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionLocalizationException;
 import com.liferay.commerce.product.model.CPDefinitionLocalization;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the cp definition localization service.
@@ -45,9 +40,6 @@ public interface CPDefinitionLocalizationPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionLocalizationUtil} to access the cp definition localization persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CPDefinitionLocalization> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the cp definition localizations where CPDefinitionId = &#63;.

@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.account.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,28 +31,20 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceAccountUserRelWrapper
+	extends BaseModelWrapper<CommerceAccountUserRel>
 	implements CommerceAccountUserRel, ModelWrapper<CommerceAccountUserRel> {
 
 	public CommerceAccountUserRelWrapper(
 		CommerceAccountUserRel commerceAccountUserRel) {
 
-		_commerceAccountUserRel = commerceAccountUserRel;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceAccountUserRel.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceAccountUserRel.class.getName();
+		super(commerceAccountUserRel);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("commerceAccountId", getCommerceAccountId());
 		attributes.put("commerceAccountUserId", getCommerceAccountUserId());
 		attributes.put("companyId", getCompanyId());
@@ -70,6 +58,12 @@ public class CommerceAccountUserRelWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long commerceAccountId = (Long)attributes.get("commerceAccountId");
 
 		if (commerceAccountId != null) {
@@ -114,17 +108,6 @@ public class CommerceAccountUserRelWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CommerceAccountUserRelWrapper(
-			(CommerceAccountUserRel)_commerceAccountUserRel.clone());
-	}
-
-	@Override
-	public int compareTo(CommerceAccountUserRel commerceAccountUserRel) {
-		return _commerceAccountUserRel.compareTo(commerceAccountUserRel);
-	}
-
 	/**
 	 * Returns the commerce account ID of this commerce account user rel.
 	 *
@@ -132,7 +115,7 @@ public class CommerceAccountUserRelWrapper
 	 */
 	@Override
 	public long getCommerceAccountId() {
-		return _commerceAccountUserRel.getCommerceAccountId();
+		return model.getCommerceAccountId();
 	}
 
 	/**
@@ -142,7 +125,7 @@ public class CommerceAccountUserRelWrapper
 	 */
 	@Override
 	public long getCommerceAccountUserId() {
-		return _commerceAccountUserRel.getCommerceAccountUserId();
+		return model.getCommerceAccountUserId();
 	}
 
 	/**
@@ -152,7 +135,7 @@ public class CommerceAccountUserRelWrapper
 	 */
 	@Override
 	public String getCommerceAccountUserUuid() {
-		return _commerceAccountUserRel.getCommerceAccountUserUuid();
+		return model.getCommerceAccountUserUuid();
 	}
 
 	/**
@@ -162,7 +145,7 @@ public class CommerceAccountUserRelWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceAccountUserRel.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -172,12 +155,7 @@ public class CommerceAccountUserRelWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceAccountUserRel.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceAccountUserRel.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -187,7 +165,17 @@ public class CommerceAccountUserRelWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceAccountUserRel.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce account user rel.
+	 *
+	 * @return the mvcc version of this commerce account user rel
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -200,19 +188,14 @@ public class CommerceAccountUserRelWrapper
 		com.liferay.commerce.account.service.persistence.
 			CommerceAccountUserRelPK getPrimaryKey() {
 
-		return _commerceAccountUserRel.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceAccountUserRel.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.model.User getUser()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceAccountUserRel.getUser();
+		return model.getUser();
 	}
 
 	@Override
@@ -220,7 +203,7 @@ public class CommerceAccountUserRelWrapper
 			getUserGroupRoles()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceAccountUserRel.getUserGroupRoles();
+		return model.getUserGroupRoles();
 	}
 
 	/**
@@ -230,7 +213,7 @@ public class CommerceAccountUserRelWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceAccountUserRel.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -240,7 +223,7 @@ public class CommerceAccountUserRelWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceAccountUserRel.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -250,37 +233,12 @@ public class CommerceAccountUserRelWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceAccountUserRel.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceAccountUserRel.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceAccountUserRel.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceAccountUserRel.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceAccountUserRel.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_commerceAccountUserRel.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceAccountUserRel.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -290,7 +248,7 @@ public class CommerceAccountUserRelWrapper
 	 */
 	@Override
 	public void setCommerceAccountId(long commerceAccountId) {
-		_commerceAccountUserRel.setCommerceAccountId(commerceAccountId);
+		model.setCommerceAccountId(commerceAccountId);
 	}
 
 	/**
@@ -300,7 +258,7 @@ public class CommerceAccountUserRelWrapper
 	 */
 	@Override
 	public void setCommerceAccountUserId(long commerceAccountUserId) {
-		_commerceAccountUserRel.setCommerceAccountUserId(commerceAccountUserId);
+		model.setCommerceAccountUserId(commerceAccountUserId);
 	}
 
 	/**
@@ -310,8 +268,7 @@ public class CommerceAccountUserRelWrapper
 	 */
 	@Override
 	public void setCommerceAccountUserUuid(String commerceAccountUserUuid) {
-		_commerceAccountUserRel.setCommerceAccountUserUuid(
-			commerceAccountUserUuid);
+		model.setCommerceAccountUserUuid(commerceAccountUserUuid);
 	}
 
 	/**
@@ -321,7 +278,7 @@ public class CommerceAccountUserRelWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceAccountUserRel.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -331,24 +288,7 @@ public class CommerceAccountUserRelWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceAccountUserRel.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceAccountUserRel.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceAccountUserRel.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceAccountUserRel.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -358,12 +298,17 @@ public class CommerceAccountUserRelWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceAccountUserRel.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this commerce account user rel.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce account user rel
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_commerceAccountUserRel.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -376,12 +321,7 @@ public class CommerceAccountUserRelWrapper
 		com.liferay.commerce.account.service.persistence.
 			CommerceAccountUserRelPK primaryKey) {
 
-		_commerceAccountUserRel.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceAccountUserRel.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -391,7 +331,7 @@ public class CommerceAccountUserRelWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceAccountUserRel.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -401,7 +341,7 @@ public class CommerceAccountUserRelWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceAccountUserRel.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -411,81 +351,14 @@ public class CommerceAccountUserRelWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceAccountUserRel.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceAccountUserRel>
-		toCacheModel() {
+	protected CommerceAccountUserRelWrapper wrap(
+		CommerceAccountUserRel commerceAccountUserRel) {
 
-		return _commerceAccountUserRel.toCacheModel();
+		return new CommerceAccountUserRelWrapper(commerceAccountUserRel);
 	}
-
-	@Override
-	public CommerceAccountUserRel toEscapedModel() {
-		return new CommerceAccountUserRelWrapper(
-			_commerceAccountUserRel.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commerceAccountUserRel.toString();
-	}
-
-	@Override
-	public CommerceAccountUserRel toUnescapedModel() {
-		return new CommerceAccountUserRelWrapper(
-			_commerceAccountUserRel.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceAccountUserRel.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceAccountUserRelWrapper)) {
-			return false;
-		}
-
-		CommerceAccountUserRelWrapper commerceAccountUserRelWrapper =
-			(CommerceAccountUserRelWrapper)object;
-
-		if (Objects.equals(
-				_commerceAccountUserRel,
-				commerceAccountUserRelWrapper._commerceAccountUserRel)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceAccountUserRel getWrappedModel() {
-		return _commerceAccountUserRel;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceAccountUserRel.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceAccountUserRel.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceAccountUserRel.resetOriginalValues();
-	}
-
-	private final CommerceAccountUserRel _commerceAccountUserRel;
 
 }

@@ -61,11 +61,11 @@ public class CPDefinitionServiceUtil {
 				boolean subscriptionEnabled, int subscriptionLength,
 				String subscriptionType,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					subscriptionTypeSettingsProperties,
+					subscriptionTypeSettingsUnicodeProperties,
 				long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
 				int deliverySubscriptionLength, String deliverySubscriptionType,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					deliverySubscriptionTypeSettingsProperties,
+					deliverySubscriptionTypeSettingsUnicodeProperties,
 				long deliveryMaxSubscriptionCycles,
 				String externalReferenceCode,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -82,10 +82,10 @@ public class CPDefinitionServiceUtil {
 			expirationDateDay, expirationDateYear, expirationDateHour,
 			expirationDateMinute, neverExpire, defaultSku, subscriptionEnabled,
 			subscriptionLength, subscriptionType,
-			subscriptionTypeSettingsProperties, maxSubscriptionCycles,
+			subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles,
 			deliverySubscriptionEnabled, deliverySubscriptionLength,
 			deliverySubscriptionType,
-			deliverySubscriptionTypeSettingsProperties,
+			deliverySubscriptionTypeSettingsUnicodeProperties,
 			deliveryMaxSubscriptionCycles, externalReferenceCode,
 			serviceContext);
 	}
@@ -114,7 +114,7 @@ public class CPDefinitionServiceUtil {
 				boolean subscriptionEnabled, int subscriptionLength,
 				String subscriptionType,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					subscriptionTypeSettingsProperties,
+					subscriptionTypeSettingsUnicodeProperties,
 				long maxSubscriptionCycles, String externalReferenceCode,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -130,7 +130,7 @@ public class CPDefinitionServiceUtil {
 			expirationDateDay, expirationDateYear, expirationDateHour,
 			expirationDateMinute, neverExpire, defaultSku, subscriptionEnabled,
 			subscriptionLength, subscriptionType,
-			subscriptionTypeSettingsProperties, maxSubscriptionCycles,
+			subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles,
 			externalReferenceCode, serviceContext);
 	}
 
@@ -339,20 +339,20 @@ public class CPDefinitionServiceUtil {
 				long cpDefinitionId, boolean subscriptionEnabled,
 				int subscriptionLength, String subscriptionType,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					subscriptionTypeSettingsProperties,
+					subscriptionTypeSettingsUnicodeProperties,
 				long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
 				int deliverySubscriptionLength, String deliverySubscriptionType,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					deliverySubscriptionTypeSettingsProperties,
+					deliverySubscriptionTypeSettingsUnicodeProperties,
 				long deliveryMaxSubscriptionCycles)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateSubscriptionInfo(
 			cpDefinitionId, subscriptionEnabled, subscriptionLength,
-			subscriptionType, subscriptionTypeSettingsProperties,
+			subscriptionType, subscriptionTypeSettingsUnicodeProperties,
 			maxSubscriptionCycles, deliverySubscriptionEnabled,
 			deliverySubscriptionLength, deliverySubscriptionType,
-			deliverySubscriptionTypeSettingsProperties,
+			deliverySubscriptionTypeSettingsUnicodeProperties,
 			deliveryMaxSubscriptionCycles);
 	}
 
@@ -365,14 +365,14 @@ public class CPDefinitionServiceUtil {
 				long cpDefinitionId, boolean subscriptionEnabled,
 				int subscriptionLength, String subscriptionType,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					subscriptionTypeSettingsProperties,
+					subscriptionTypeSettingsUnicodeProperties,
 				long maxSubscriptionCycles,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateSubscriptionInfo(
 			cpDefinitionId, subscriptionEnabled, subscriptionLength,
-			subscriptionType, subscriptionTypeSettingsProperties,
+			subscriptionType, subscriptionTypeSettingsUnicodeProperties,
 			maxSubscriptionCycles, serviceContext);
 	}
 
@@ -410,11 +410,11 @@ public class CPDefinitionServiceUtil {
 				boolean subscriptionEnabled, int subscriptionLength,
 				String subscriptionType,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					subscriptionTypeSettingsProperties,
+					subscriptionTypeSettingsUnicodeProperties,
 				long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
 				int deliverySubscriptionLength, String deliverySubscriptionType,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					deliverySubscriptionTypeSettingsProperties,
+					deliverySubscriptionTypeSettingsUnicodeProperties,
 				long deliveryMaxSubscriptionCycles,
 				String externalReferenceCode,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -431,10 +431,10 @@ public class CPDefinitionServiceUtil {
 			expirationDateDay, expirationDateYear, expirationDateHour,
 			expirationDateMinute, neverExpire, defaultSku, subscriptionEnabled,
 			subscriptionLength, subscriptionType,
-			subscriptionTypeSettingsProperties, maxSubscriptionCycles,
+			subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles,
 			deliverySubscriptionEnabled, deliverySubscriptionLength,
 			deliverySubscriptionType,
-			deliverySubscriptionTypeSettingsProperties,
+			deliverySubscriptionTypeSettingsUnicodeProperties,
 			deliveryMaxSubscriptionCycles, externalReferenceCode,
 			serviceContext);
 	}
@@ -463,7 +463,7 @@ public class CPDefinitionServiceUtil {
 				boolean subscriptionEnabled, int subscriptionLength,
 				String subscriptionType,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					subscriptionTypeSettingsProperties,
+					subscriptionTypeSettingsUnicodeProperties,
 				long maxSubscriptionCycles, String externalReferenceCode,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -479,7 +479,7 @@ public class CPDefinitionServiceUtil {
 			expirationDateDay, expirationDateYear, expirationDateHour,
 			expirationDateMinute, neverExpire, defaultSku, subscriptionEnabled,
 			subscriptionLength, subscriptionType,
-			subscriptionTypeSettingsProperties, maxSubscriptionCycles,
+			subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles,
 			externalReferenceCode, serviceContext);
 	}
 

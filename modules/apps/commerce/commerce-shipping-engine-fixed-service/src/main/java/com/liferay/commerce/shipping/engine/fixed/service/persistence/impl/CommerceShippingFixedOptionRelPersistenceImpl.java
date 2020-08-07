@@ -16,9 +16,11 @@ package com.liferay.commerce.shipping.engine.fixed.service.persistence.impl;
 
 import com.liferay.commerce.shipping.engine.fixed.exception.NoSuchShippingFixedOptionRelException;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel;
+import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRelTable;
 import com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionRelImpl;
 import com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionRelModelImpl;
 import com.liferay.commerce.shipping.engine.fixed.service.persistence.CommerceShippingFixedOptionRelPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -35,19 +37,14 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -255,10 +252,6 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -610,8 +603,6 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -804,10 +795,6 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1171,8 +1158,6 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1193,21 +1178,14 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 		dbColumnNames.put(
 			"commerceShippingFixedOptionRelId", "CShippingFixedOptionRelId");
 
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-				"_dbColumnNames");
-
-			field.setAccessible(true);
-
-			field.set(this, dbColumnNames);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
+		setDBColumnNames(dbColumnNames);
 
 		setModelClass(CommerceShippingFixedOptionRel.class);
+
+		setModelImplClass(CommerceShippingFixedOptionRelImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CommerceShippingFixedOptionRelTable.INSTANCE);
 	}
 
 	/**
@@ -1220,7 +1198,6 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel) {
 
 		entityCache.putResult(
-			CommerceShippingFixedOptionRelModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceShippingFixedOptionRelImpl.class,
 			commerceShippingFixedOptionRel.getPrimaryKey(),
 			commerceShippingFixedOptionRel);
@@ -1241,8 +1218,6 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 				commerceShippingFixedOptionRels) {
 
 			if (entityCache.getResult(
-					CommerceShippingFixedOptionRelModelImpl.
-						ENTITY_CACHE_ENABLED,
 					CommerceShippingFixedOptionRelImpl.class,
 					commerceShippingFixedOptionRel.getPrimaryKey()) == null) {
 
@@ -1282,7 +1257,6 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel) {
 
 		entityCache.removeResult(
-			CommerceShippingFixedOptionRelModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceShippingFixedOptionRelImpl.class,
 			commerceShippingFixedOptionRel.getPrimaryKey());
 
@@ -1301,12 +1275,12 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 				commerceShippingFixedOptionRels) {
 
 			entityCache.removeResult(
-				CommerceShippingFixedOptionRelModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceShippingFixedOptionRelImpl.class,
 				commerceShippingFixedOptionRel.getPrimaryKey());
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1314,7 +1288,6 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(
-				CommerceShippingFixedOptionRelModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceShippingFixedOptionRelImpl.class, primaryKey);
 		}
 	}
@@ -1515,10 +1488,7 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CommerceShippingFixedOptionRelModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				commerceShippingFixedOptionRelModelImpl.
 					getCommerceShippingMethodId()
@@ -1602,7 +1572,6 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 		}
 
 		entityCache.putResult(
-			CommerceShippingFixedOptionRelModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceShippingFixedOptionRelImpl.class,
 			commerceShippingFixedOptionRel.getPrimaryKey(),
 			commerceShippingFixedOptionRel, false);
@@ -1657,64 +1626,6 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 	/**
 	 * Returns the commerce shipping fixed option rel with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the commerce shipping fixed option rel
-	 * @return the commerce shipping fixed option rel, or <code>null</code> if a commerce shipping fixed option rel with the primary key could not be found
-	 */
-	@Override
-	public CommerceShippingFixedOptionRel fetchByPrimaryKey(
-		Serializable primaryKey) {
-
-		Serializable serializable = entityCache.getResult(
-			CommerceShippingFixedOptionRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceShippingFixedOptionRelImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =
-			(CommerceShippingFixedOptionRel)serializable;
-
-		if (commerceShippingFixedOptionRel == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				commerceShippingFixedOptionRel =
-					(CommerceShippingFixedOptionRel)session.get(
-						CommerceShippingFixedOptionRelImpl.class, primaryKey);
-
-				if (commerceShippingFixedOptionRel != null) {
-					cacheResult(commerceShippingFixedOptionRel);
-				}
-				else {
-					entityCache.putResult(
-						CommerceShippingFixedOptionRelModelImpl.
-							ENTITY_CACHE_ENABLED,
-						CommerceShippingFixedOptionRelImpl.class, primaryKey,
-						nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CommerceShippingFixedOptionRelModelImpl.
-						ENTITY_CACHE_ENABLED,
-					CommerceShippingFixedOptionRelImpl.class, primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return commerceShippingFixedOptionRel;
-	}
-
-	/**
-	 * Returns the commerce shipping fixed option rel with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param commerceShippingFixedOptionRelId the primary key of the commerce shipping fixed option rel
 	 * @return the commerce shipping fixed option rel, or <code>null</code> if a commerce shipping fixed option rel with the primary key could not be found
 	 */
@@ -1724,114 +1635,6 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 
 		return fetchByPrimaryKey(
 			(Serializable)commerceShippingFixedOptionRelId);
-	}
-
-	@Override
-	public Map<Serializable, CommerceShippingFixedOptionRel> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CommerceShippingFixedOptionRel> map =
-			new HashMap<Serializable, CommerceShippingFixedOptionRel>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =
-				fetchByPrimaryKey(primaryKey);
-
-			if (commerceShippingFixedOptionRel != null) {
-				map.put(primaryKey, commerceShippingFixedOptionRel);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CommerceShippingFixedOptionRelModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceShippingFixedOptionRelImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(
-						primaryKey,
-						(CommerceShippingFixedOptionRel)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(_SQL_SELECT_COMMERCESHIPPINGFIXEDOPTIONREL_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CommerceShippingFixedOptionRel commerceShippingFixedOptionRel :
-					(List<CommerceShippingFixedOptionRel>)query.list()) {
-
-				map.put(
-					commerceShippingFixedOptionRel.getPrimaryKeyObj(),
-					commerceShippingFixedOptionRel);
-
-				cacheResult(commerceShippingFixedOptionRel);
-
-				uncachedPrimaryKeys.remove(
-					commerceShippingFixedOptionRel.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CommerceShippingFixedOptionRelModelImpl.
-						ENTITY_CACHE_ENABLED,
-					CommerceShippingFixedOptionRelImpl.class, primaryKey,
-					nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -1961,10 +1764,6 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2013,9 +1812,6 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2032,6 +1828,21 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 	}
 
 	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "CShippingFixedOptionRelId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_COMMERCESHIPPINGFIXEDOPTIONREL;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CommerceShippingFixedOptionRelModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2041,28 +1852,20 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceShippingFixedOptionRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceShippingFixedOptionRelModelImpl.FINDER_CACHE_ENABLED,
 			CommerceShippingFixedOptionRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceShippingFixedOptionRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceShippingFixedOptionRelModelImpl.FINDER_CACHE_ENABLED,
 			CommerceShippingFixedOptionRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CommerceShippingFixedOptionRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceShippingFixedOptionRelModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByCommerceShippingMethodId =
 			new FinderPath(
-				CommerceShippingFixedOptionRelModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceShippingFixedOptionRelModelImpl.FINDER_CACHE_ENABLED,
 				CommerceShippingFixedOptionRelImpl.class,
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 				"findByCommerceShippingMethodId",
@@ -2073,8 +1876,6 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 
 		_finderPathWithoutPaginationFindByCommerceShippingMethodId =
 			new FinderPath(
-				CommerceShippingFixedOptionRelModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceShippingFixedOptionRelModelImpl.FINDER_CACHE_ENABLED,
 				CommerceShippingFixedOptionRelImpl.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCommerceShippingMethodId",
@@ -2085,16 +1886,12 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 					COMMERCECOUNTRYID_COLUMN_BITMASK);
 
 		_finderPathCountByCommerceShippingMethodId = new FinderPath(
-			CommerceShippingFixedOptionRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceShippingFixedOptionRelModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCommerceShippingMethodId",
 			new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByCommerceShippingFixedOptionId =
 			new FinderPath(
-				CommerceShippingFixedOptionRelModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceShippingFixedOptionRelModelImpl.FINDER_CACHE_ENABLED,
 				CommerceShippingFixedOptionRelImpl.class,
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 				"findByCommerceShippingFixedOptionId",
@@ -2105,8 +1902,6 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 
 		_finderPathWithoutPaginationFindByCommerceShippingFixedOptionId =
 			new FinderPath(
-				CommerceShippingFixedOptionRelModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceShippingFixedOptionRelModelImpl.FINDER_CACHE_ENABLED,
 				CommerceShippingFixedOptionRelImpl.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCommerceShippingFixedOptionId",
@@ -2117,8 +1912,6 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 					COMMERCECOUNTRYID_COLUMN_BITMASK);
 
 		_finderPathCountByCommerceShippingFixedOptionId = new FinderPath(
-			CommerceShippingFixedOptionRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceShippingFixedOptionRelModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCommerceShippingFixedOptionId",
 			new String[] {Long.class.getName()});
@@ -2140,10 +1933,6 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 
 	private static final String _SQL_SELECT_COMMERCESHIPPINGFIXEDOPTIONREL =
 		"SELECT commerceShippingFixedOptionRel FROM CommerceShippingFixedOptionRel commerceShippingFixedOptionRel";
-
-	private static final String
-		_SQL_SELECT_COMMERCESHIPPINGFIXEDOPTIONREL_WHERE_PKS_IN =
-			"SELECT commerceShippingFixedOptionRel FROM CommerceShippingFixedOptionRel commerceShippingFixedOptionRel WHERE CShippingFixedOptionRelId IN (";
 
 	private static final String
 		_SQL_SELECT_COMMERCESHIPPINGFIXEDOPTIONREL_WHERE =

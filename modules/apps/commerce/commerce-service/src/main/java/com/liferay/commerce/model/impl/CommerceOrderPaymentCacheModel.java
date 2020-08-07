@@ -15,9 +15,10 @@
 package com.liferay.commerce.model.impl;
 
 import com.liferay.commerce.model.CommerceOrderPayment;
+import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class CommerceOrderPaymentCacheModel
-	implements CacheModel<CommerceOrderPayment>, Externalizable {
+	implements CacheModel<CommerceOrderPayment>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -48,8 +49,9 @@ public class CommerceOrderPaymentCacheModel
 		CommerceOrderPaymentCacheModel commerceOrderPaymentCacheModel =
 			(CommerceOrderPaymentCacheModel)object;
 
-		if (commerceOrderPaymentId ==
-				commerceOrderPaymentCacheModel.commerceOrderPaymentId) {
+		if ((commerceOrderPaymentId ==
+				commerceOrderPaymentCacheModel.commerceOrderPaymentId) &&
+			(mvccVersion == commerceOrderPaymentCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -59,14 +61,28 @@ public class CommerceOrderPaymentCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, commerceOrderPaymentId);
+		int hashCode = HashUtil.hash(0, commerceOrderPaymentId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
-		sb.append("{commerceOrderPaymentId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", commerceOrderPaymentId=");
 		sb.append(commerceOrderPaymentId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -98,6 +114,7 @@ public class CommerceOrderPaymentCacheModel
 		CommerceOrderPaymentImpl commerceOrderPaymentImpl =
 			new CommerceOrderPaymentImpl();
 
+		commerceOrderPaymentImpl.setMvccVersion(mvccVersion);
 		commerceOrderPaymentImpl.setCommerceOrderPaymentId(
 			commerceOrderPaymentId);
 		commerceOrderPaymentImpl.setGroupId(groupId);
@@ -153,6 +170,8 @@ public class CommerceOrderPaymentCacheModel
 	public void readExternal(ObjectInput objectInput)
 		throws ClassNotFoundException, IOException {
 
+		mvccVersion = objectInput.readLong();
+
 		commerceOrderPaymentId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -173,6 +192,8 @@ public class CommerceOrderPaymentCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(commerceOrderPaymentId);
 
 		objectOutput.writeLong(groupId);
@@ -210,6 +231,7 @@ public class CommerceOrderPaymentCacheModel
 		objectOutput.writeInt(status);
 	}
 
+	public long mvccVersion;
 	public long commerceOrderPaymentId;
 	public long groupId;
 	public long companyId;

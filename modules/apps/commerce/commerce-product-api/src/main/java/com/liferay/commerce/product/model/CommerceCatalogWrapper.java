@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.product.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,26 +31,18 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceCatalogWrapper
+	extends BaseModelWrapper<CommerceCatalog>
 	implements CommerceCatalog, ModelWrapper<CommerceCatalog> {
 
 	public CommerceCatalogWrapper(CommerceCatalog commerceCatalog) {
-		_commerceCatalog = commerceCatalog;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceCatalog.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceCatalog.class.getName();
+		super(commerceCatalog);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("commerceCatalogId", getCommerceCatalogId());
 		attributes.put("companyId", getCompanyId());
@@ -73,6 +61,12 @@ public class CommerceCatalogWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String externalReferenceCode = (String)attributes.get(
 			"externalReferenceCode");
 
@@ -143,17 +137,6 @@ public class CommerceCatalogWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CommerceCatalogWrapper(
-			(CommerceCatalog)_commerceCatalog.clone());
-	}
-
-	@Override
-	public int compareTo(CommerceCatalog commerceCatalog) {
-		return _commerceCatalog.compareTo(commerceCatalog);
-	}
-
 	/**
 	 * Returns the catalog default language ID of this commerce catalog.
 	 *
@@ -161,7 +144,7 @@ public class CommerceCatalogWrapper
 	 */
 	@Override
 	public String getCatalogDefaultLanguageId() {
-		return _commerceCatalog.getCatalogDefaultLanguageId();
+		return model.getCatalogDefaultLanguageId();
 	}
 
 	/**
@@ -171,7 +154,7 @@ public class CommerceCatalogWrapper
 	 */
 	@Override
 	public long getCommerceCatalogId() {
-		return _commerceCatalog.getCommerceCatalogId();
+		return model.getCommerceCatalogId();
 	}
 
 	/**
@@ -181,7 +164,7 @@ public class CommerceCatalogWrapper
 	 */
 	@Override
 	public String getCommerceCurrencyCode() {
-		return _commerceCatalog.getCommerceCurrencyCode();
+		return model.getCommerceCurrencyCode();
 	}
 
 	/**
@@ -191,7 +174,7 @@ public class CommerceCatalogWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceCatalog.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -201,12 +184,7 @@ public class CommerceCatalogWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceCatalog.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceCatalog.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -216,17 +194,17 @@ public class CommerceCatalogWrapper
 	 */
 	@Override
 	public String getExternalReferenceCode() {
-		return _commerceCatalog.getExternalReferenceCode();
+		return model.getExternalReferenceCode();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.model.Group getGroup() {
-		return _commerceCatalog.getGroup();
+		return model.getGroup();
 	}
 
 	@Override
 	public long getGroupId() {
-		return _commerceCatalog.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -236,7 +214,17 @@ public class CommerceCatalogWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceCatalog.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce catalog.
+	 *
+	 * @return the mvcc version of this commerce catalog
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -246,7 +234,7 @@ public class CommerceCatalogWrapper
 	 */
 	@Override
 	public String getName() {
-		return _commerceCatalog.getName();
+		return model.getName();
 	}
 
 	/**
@@ -256,12 +244,7 @@ public class CommerceCatalogWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceCatalog.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceCatalog.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -271,7 +254,7 @@ public class CommerceCatalogWrapper
 	 */
 	@Override
 	public boolean getSystem() {
-		return _commerceCatalog.getSystem();
+		return model.getSystem();
 	}
 
 	/**
@@ -281,7 +264,7 @@ public class CommerceCatalogWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceCatalog.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -291,7 +274,7 @@ public class CommerceCatalogWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceCatalog.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -301,27 +284,7 @@ public class CommerceCatalogWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceCatalog.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceCatalog.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceCatalog.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceCatalog.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceCatalog.isNew();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -331,17 +294,12 @@ public class CommerceCatalogWrapper
 	 */
 	@Override
 	public boolean isSystem() {
-		return _commerceCatalog.isSystem();
+		return model.isSystem();
 	}
 
 	@Override
 	public void persist() {
-		_commerceCatalog.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceCatalog.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -351,7 +309,7 @@ public class CommerceCatalogWrapper
 	 */
 	@Override
 	public void setCatalogDefaultLanguageId(String catalogDefaultLanguageId) {
-		_commerceCatalog.setCatalogDefaultLanguageId(catalogDefaultLanguageId);
+		model.setCatalogDefaultLanguageId(catalogDefaultLanguageId);
 	}
 
 	/**
@@ -361,7 +319,7 @@ public class CommerceCatalogWrapper
 	 */
 	@Override
 	public void setCommerceCatalogId(long commerceCatalogId) {
-		_commerceCatalog.setCommerceCatalogId(commerceCatalogId);
+		model.setCommerceCatalogId(commerceCatalogId);
 	}
 
 	/**
@@ -371,7 +329,7 @@ public class CommerceCatalogWrapper
 	 */
 	@Override
 	public void setCommerceCurrencyCode(String commerceCurrencyCode) {
-		_commerceCatalog.setCommerceCurrencyCode(commerceCurrencyCode);
+		model.setCommerceCurrencyCode(commerceCurrencyCode);
 	}
 
 	/**
@@ -381,7 +339,7 @@ public class CommerceCatalogWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceCatalog.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -391,24 +349,7 @@ public class CommerceCatalogWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceCatalog.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceCatalog.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceCatalog.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceCatalog.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -418,7 +359,7 @@ public class CommerceCatalogWrapper
 	 */
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
-		_commerceCatalog.setExternalReferenceCode(externalReferenceCode);
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**
@@ -428,7 +369,17 @@ public class CommerceCatalogWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceCatalog.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this commerce catalog.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce catalog
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -438,12 +389,7 @@ public class CommerceCatalogWrapper
 	 */
 	@Override
 	public void setName(String name) {
-		_commerceCatalog.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_commerceCatalog.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -453,12 +399,7 @@ public class CommerceCatalogWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceCatalog.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceCatalog.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -468,7 +409,7 @@ public class CommerceCatalogWrapper
 	 */
 	@Override
 	public void setSystem(boolean system) {
-		_commerceCatalog.setSystem(system);
+		model.setSystem(system);
 	}
 
 	/**
@@ -478,7 +419,7 @@ public class CommerceCatalogWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceCatalog.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -488,7 +429,7 @@ public class CommerceCatalogWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceCatalog.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -498,78 +439,12 @@ public class CommerceCatalogWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceCatalog.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceCatalog>
-		toCacheModel() {
-
-		return _commerceCatalog.toCacheModel();
+	protected CommerceCatalogWrapper wrap(CommerceCatalog commerceCatalog) {
+		return new CommerceCatalogWrapper(commerceCatalog);
 	}
-
-	@Override
-	public CommerceCatalog toEscapedModel() {
-		return new CommerceCatalogWrapper(_commerceCatalog.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commerceCatalog.toString();
-	}
-
-	@Override
-	public CommerceCatalog toUnescapedModel() {
-		return new CommerceCatalogWrapper(_commerceCatalog.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceCatalog.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceCatalogWrapper)) {
-			return false;
-		}
-
-		CommerceCatalogWrapper commerceCatalogWrapper =
-			(CommerceCatalogWrapper)object;
-
-		if (Objects.equals(
-				_commerceCatalog, commerceCatalogWrapper._commerceCatalog)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceCatalog getWrappedModel() {
-		return _commerceCatalog;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceCatalog.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceCatalog.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceCatalog.resetOriginalValues();
-	}
-
-	private final CommerceCatalog _commerceCatalog;
 
 }

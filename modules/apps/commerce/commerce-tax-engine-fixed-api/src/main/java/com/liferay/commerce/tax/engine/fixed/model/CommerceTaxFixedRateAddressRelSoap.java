@@ -34,6 +34,7 @@ public class CommerceTaxFixedRateAddressRelSoap implements Serializable {
 		CommerceTaxFixedRateAddressRelSoap soapModel =
 			new CommerceTaxFixedRateAddressRelSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCommerceTaxFixedRateAddressRelId(
 			model.getCommerceTaxFixedRateAddressRelId());
 		soapModel.setGroupId(model.getGroupId());
@@ -108,6 +109,14 @@ public class CommerceTaxFixedRateAddressRelSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceTaxFixedRateAddressRelId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getCommerceTaxFixedRateAddressRelId() {
@@ -216,6 +225,7 @@ public class CommerceTaxFixedRateAddressRelSoap implements Serializable {
 		_rate = rate;
 	}
 
+	private long _mvccVersion;
 	private long _commerceTaxFixedRateAddressRelId;
 	private long _groupId;
 	private long _companyId;

@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.service;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.model.CPDAvailabilityEstimate;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -27,6 +25,8 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the remote service interface for CPDAvailabilityEstimate. Methods of this

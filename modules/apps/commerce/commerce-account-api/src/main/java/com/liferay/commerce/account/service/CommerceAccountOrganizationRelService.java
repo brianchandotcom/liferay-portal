@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.account.service;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.account.model.CommerceAccountOrganizationRel;
 import com.liferay.commerce.account.service.persistence.CommerceAccountOrganizationRelPK;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,6 +28,8 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the remote service interface for CommerceAccountOrganizationRel. Methods of this

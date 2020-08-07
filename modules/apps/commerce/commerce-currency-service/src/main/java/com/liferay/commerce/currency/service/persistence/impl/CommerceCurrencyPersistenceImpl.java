@@ -16,9 +16,11 @@ package com.liferay.commerce.currency.service.persistence.impl;
 
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.model.CommerceCurrencyTable;
 import com.liferay.commerce.currency.model.impl.CommerceCurrencyImpl;
 import com.liferay.commerce.currency.model.impl.CommerceCurrencyModelImpl;
 import com.liferay.commerce.currency.service.persistence.CommerceCurrencyPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -35,21 +37,16 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -251,10 +248,6 @@ public class CommerceCurrencyPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -608,8 +601,6 @@ public class CommerceCurrencyPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -807,10 +798,6 @@ public class CommerceCurrencyPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1194,8 +1181,6 @@ public class CommerceCurrencyPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1372,10 +1357,6 @@ public class CommerceCurrencyPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1707,8 +1688,6 @@ public class CommerceCurrencyPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1863,10 +1842,6 @@ public class CommerceCurrencyPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(_finderPathFetchByC_C, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1955,8 +1930,6 @@ public class CommerceCurrencyPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2144,10 +2117,6 @@ public class CommerceCurrencyPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2505,8 +2474,6 @@ public class CommerceCurrencyPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2691,10 +2658,6 @@ public class CommerceCurrencyPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3052,8 +3015,6 @@ public class CommerceCurrencyPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3250,10 +3211,6 @@ public class CommerceCurrencyPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3634,8 +3591,6 @@ public class CommerceCurrencyPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3663,21 +3618,14 @@ public class CommerceCurrencyPersistenceImpl
 		dbColumnNames.put("primary", "primary_");
 		dbColumnNames.put("active", "active_");
 
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-				"_dbColumnNames");
-
-			field.setAccessible(true);
-
-			field.set(this, dbColumnNames);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
+		setDBColumnNames(dbColumnNames);
 
 		setModelClass(CommerceCurrency.class);
+
+		setModelImplClass(CommerceCurrencyImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CommerceCurrencyTable.INSTANCE);
 	}
 
 	/**
@@ -3688,7 +3636,6 @@ public class CommerceCurrencyPersistenceImpl
 	@Override
 	public void cacheResult(CommerceCurrency commerceCurrency) {
 		entityCache.putResult(
-			CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceCurrencyImpl.class, commerceCurrency.getPrimaryKey(),
 			commerceCurrency);
 
@@ -3711,7 +3658,6 @@ public class CommerceCurrencyPersistenceImpl
 	public void cacheResult(List<CommerceCurrency> commerceCurrencies) {
 		for (CommerceCurrency commerceCurrency : commerceCurrencies) {
 			if (entityCache.getResult(
-					CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
 					CommerceCurrencyImpl.class,
 					commerceCurrency.getPrimaryKey()) == null) {
 
@@ -3749,7 +3695,6 @@ public class CommerceCurrencyPersistenceImpl
 	@Override
 	public void clearCache(CommerceCurrency commerceCurrency) {
 		entityCache.removeResult(
-			CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceCurrencyImpl.class, commerceCurrency.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -3766,7 +3711,6 @@ public class CommerceCurrencyPersistenceImpl
 
 		for (CommerceCurrency commerceCurrency : commerceCurrencies) {
 			entityCache.removeResult(
-				CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceCurrencyImpl.class, commerceCurrency.getPrimaryKey());
 
 			clearUniqueFindersCache(
@@ -3774,15 +3718,14 @@ public class CommerceCurrencyPersistenceImpl
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceCurrencyImpl.class, primaryKey);
+			entityCache.removeResult(CommerceCurrencyImpl.class, primaryKey);
 		}
 	}
 
@@ -4014,10 +3957,7 @@ public class CommerceCurrencyPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CommerceCurrencyModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {commerceCurrencyModelImpl.getUuid()};
 
 			finderCache.removeResult(_finderPathCountByUuid, args);
@@ -4206,7 +4146,6 @@ public class CommerceCurrencyPersistenceImpl
 		}
 
 		entityCache.putResult(
-			CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceCurrencyImpl.class, commerceCurrency.getPrimaryKey(),
 			commerceCurrency, false);
 
@@ -4260,163 +4199,12 @@ public class CommerceCurrencyPersistenceImpl
 	/**
 	 * Returns the commerce currency with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the commerce currency
-	 * @return the commerce currency, or <code>null</code> if a commerce currency with the primary key could not be found
-	 */
-	@Override
-	public CommerceCurrency fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(
-			CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCurrencyImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CommerceCurrency commerceCurrency = (CommerceCurrency)serializable;
-
-		if (commerceCurrency == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				commerceCurrency = (CommerceCurrency)session.get(
-					CommerceCurrencyImpl.class, primaryKey);
-
-				if (commerceCurrency != null) {
-					cacheResult(commerceCurrency);
-				}
-				else {
-					entityCache.putResult(
-						CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
-						CommerceCurrencyImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceCurrencyImpl.class, primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return commerceCurrency;
-	}
-
-	/**
-	 * Returns the commerce currency with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param commerceCurrencyId the primary key of the commerce currency
 	 * @return the commerce currency, or <code>null</code> if a commerce currency with the primary key could not be found
 	 */
 	@Override
 	public CommerceCurrency fetchByPrimaryKey(long commerceCurrencyId) {
 		return fetchByPrimaryKey((Serializable)commerceCurrencyId);
-	}
-
-	@Override
-	public Map<Serializable, CommerceCurrency> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CommerceCurrency> map =
-			new HashMap<Serializable, CommerceCurrency>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CommerceCurrency commerceCurrency = fetchByPrimaryKey(primaryKey);
-
-			if (commerceCurrency != null) {
-				map.put(primaryKey, commerceCurrency);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceCurrencyImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (CommerceCurrency)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(_SQL_SELECT_COMMERCECURRENCY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CommerceCurrency commerceCurrency :
-					(List<CommerceCurrency>)query.list()) {
-
-				map.put(commerceCurrency.getPrimaryKeyObj(), commerceCurrency);
-
-				cacheResult(commerceCurrency);
-
-				uncachedPrimaryKeys.remove(commerceCurrency.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceCurrencyImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -4545,10 +4333,6 @@ public class CommerceCurrencyPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -4594,9 +4378,6 @@ public class CommerceCurrencyPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -4613,6 +4394,21 @@ public class CommerceCurrencyPersistenceImpl
 	}
 
 	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "commerceCurrencyId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_COMMERCECURRENCY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CommerceCurrencyModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -4622,27 +4418,19 @@ public class CommerceCurrencyPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCurrencyModelImpl.FINDER_CACHE_ENABLED,
 			CommerceCurrencyImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCurrencyModelImpl.FINDER_CACHE_ENABLED,
 			CommerceCurrencyImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCurrencyModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByUuid = new FinderPath(
-			CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCurrencyModelImpl.FINDER_CACHE_ENABLED,
 			CommerceCurrencyImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByUuid",
 			new String[] {
@@ -4651,8 +4439,6 @@ public class CommerceCurrencyPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCurrencyModelImpl.FINDER_CACHE_ENABLED,
 			CommerceCurrencyImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
@@ -4660,14 +4446,10 @@ public class CommerceCurrencyPersistenceImpl
 			CommerceCurrencyModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
-			CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCurrencyModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUuid", new String[] {String.class.getName()});
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCurrencyModelImpl.FINDER_CACHE_ENABLED,
 			CommerceCurrencyImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByUuid_C",
 			new String[] {
@@ -4677,8 +4459,6 @@ public class CommerceCurrencyPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCurrencyModelImpl.FINDER_CACHE_ENABLED,
 			CommerceCurrencyImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
@@ -4687,14 +4467,11 @@ public class CommerceCurrencyPersistenceImpl
 			CommerceCurrencyModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
-			CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCurrencyModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCurrencyModelImpl.FINDER_CACHE_ENABLED,
 			CommerceCurrencyImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByCompanyId",
 			new String[] {
@@ -4703,8 +4480,6 @@ public class CommerceCurrencyPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCurrencyModelImpl.FINDER_CACHE_ENABLED,
 			CommerceCurrencyImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()},
@@ -4712,28 +4487,20 @@ public class CommerceCurrencyPersistenceImpl
 			CommerceCurrencyModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByCompanyId = new FinderPath(
-			CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCurrencyModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCompanyId", new String[] {Long.class.getName()});
 
 		_finderPathFetchByC_C = new FinderPath(
-			CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCurrencyModelImpl.FINDER_CACHE_ENABLED,
 			CommerceCurrencyImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), String.class.getName()},
 			CommerceCurrencyModelImpl.COMPANYID_COLUMN_BITMASK |
 			CommerceCurrencyModelImpl.CODE_COLUMN_BITMASK);
 
 		_finderPathCountByC_C = new FinderPath(
-			CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCurrencyModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
 			new String[] {Long.class.getName(), String.class.getName()});
 
 		_finderPathWithPaginationFindByC_P = new FinderPath(
-			CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCurrencyModelImpl.FINDER_CACHE_ENABLED,
 			CommerceCurrencyImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByC_P",
 			new String[] {
@@ -4743,8 +4510,6 @@ public class CommerceCurrencyPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByC_P = new FinderPath(
-			CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCurrencyModelImpl.FINDER_CACHE_ENABLED,
 			CommerceCurrencyImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_P",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
@@ -4753,14 +4518,10 @@ public class CommerceCurrencyPersistenceImpl
 			CommerceCurrencyModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByC_P = new FinderPath(
-			CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCurrencyModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P",
 			new String[] {Long.class.getName(), Boolean.class.getName()});
 
 		_finderPathWithPaginationFindByC_A = new FinderPath(
-			CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCurrencyModelImpl.FINDER_CACHE_ENABLED,
 			CommerceCurrencyImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByC_A",
 			new String[] {
@@ -4770,8 +4531,6 @@ public class CommerceCurrencyPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByC_A = new FinderPath(
-			CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCurrencyModelImpl.FINDER_CACHE_ENABLED,
 			CommerceCurrencyImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
@@ -4780,14 +4539,10 @@ public class CommerceCurrencyPersistenceImpl
 			CommerceCurrencyModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByC_A = new FinderPath(
-			CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCurrencyModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
 			new String[] {Long.class.getName(), Boolean.class.getName()});
 
 		_finderPathWithPaginationFindByC_P_A = new FinderPath(
-			CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCurrencyModelImpl.FINDER_CACHE_ENABLED,
 			CommerceCurrencyImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByC_P_A",
 			new String[] {
@@ -4797,8 +4552,6 @@ public class CommerceCurrencyPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByC_P_A = new FinderPath(
-			CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCurrencyModelImpl.FINDER_CACHE_ENABLED,
 			CommerceCurrencyImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_P_A",
 			new String[] {
@@ -4811,9 +4564,8 @@ public class CommerceCurrencyPersistenceImpl
 			CommerceCurrencyModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByC_P_A = new FinderPath(
-			CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCurrencyModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P_A",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByC_P_A",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Boolean.class.getName()
@@ -4835,9 +4587,6 @@ public class CommerceCurrencyPersistenceImpl
 
 	private static final String _SQL_SELECT_COMMERCECURRENCY =
 		"SELECT commerceCurrency FROM CommerceCurrency commerceCurrency";
-
-	private static final String _SQL_SELECT_COMMERCECURRENCY_WHERE_PKS_IN =
-		"SELECT commerceCurrency FROM CommerceCurrency commerceCurrency WHERE commerceCurrencyId IN (";
 
 	private static final String _SQL_SELECT_COMMERCECURRENCY_WHERE =
 		"SELECT commerceCurrency FROM CommerceCurrency commerceCurrency WHERE ";

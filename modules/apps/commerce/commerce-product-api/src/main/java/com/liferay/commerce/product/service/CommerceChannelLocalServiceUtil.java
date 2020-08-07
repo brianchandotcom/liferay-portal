@@ -60,13 +60,13 @@ public class CommerceChannelLocalServiceUtil {
 			addCommerceChannel(
 				long siteGroupId, String name, String type,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					typeSettingsProperties,
+					typeSettingsUnicodeProperties,
 				String commerceCurrencyCode, String externalReferenceCode,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addCommerceChannel(
-			siteGroupId, name, type, typeSettingsProperties,
+			siteGroupId, name, type, typeSettingsUnicodeProperties,
 			commerceCurrencyCode, externalReferenceCode, serviceContext);
 	}
 
@@ -80,6 +80,16 @@ public class CommerceChannelLocalServiceUtil {
 		createCommerceChannel(long commerceChannelId) {
 
 		return getService().createCommerceChannel(commerceChannelId);
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	public static com.liferay.portal.kernel.model.PersistedModel
+			createPersistedModel(java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().createPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -135,6 +145,12 @@ public class CommerceChannelLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static <T> T dslQuery(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return getService().dslQuery(dslQuery);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
@@ -413,13 +429,13 @@ public class CommerceChannelLocalServiceUtil {
 				long commerceChannelId, long siteGroupId, String name,
 				String type,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					typeSettingsProperties,
+					typeSettingsUnicodeProperties,
 				String commerceCurrencyCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateCommerceChannel(
-			commerceChannelId, siteGroupId, name, type, typeSettingsProperties,
-			commerceCurrencyCode);
+			commerceChannelId, siteGroupId, name, type,
+			typeSettingsUnicodeProperties, commerceCurrencyCode);
 	}
 
 	public static com.liferay.commerce.product.model.CommerceChannel
@@ -427,14 +443,15 @@ public class CommerceChannelLocalServiceUtil {
 				long commerceChannelId, long siteGroupId, String name,
 				String type,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					typeSettingsProperties,
+					typeSettingsUnicodeProperties,
 				String commerceCurrencyCode, String priceDisplayType,
 				boolean discountsTargetNetPrice)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateCommerceChannel(
-			commerceChannelId, siteGroupId, name, type, typeSettingsProperties,
-			commerceCurrencyCode, priceDisplayType, discountsTargetNetPrice);
+			commerceChannelId, siteGroupId, name, type,
+			typeSettingsUnicodeProperties, commerceCurrencyCode,
+			priceDisplayType, discountsTargetNetPrice);
 	}
 
 	public static com.liferay.commerce.product.model.CommerceChannel

@@ -14,15 +14,11 @@
 
 package com.liferay.commerce.product.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -34,23 +30,14 @@ import java.util.Objects;
  * @generated
  */
 public class CPDefinitionLocalizationWrapper
+	extends BaseModelWrapper<CPDefinitionLocalization>
 	implements CPDefinitionLocalization,
 			   ModelWrapper<CPDefinitionLocalization> {
 
 	public CPDefinitionLocalizationWrapper(
 		CPDefinitionLocalization cpDefinitionLocalization) {
 
-		_cpDefinitionLocalization = cpDefinitionLocalization;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CPDefinitionLocalization.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CPDefinitionLocalization.class.getName();
+		super(cpDefinitionLocalization);
 	}
 
 	@Override
@@ -143,17 +130,6 @@ public class CPDefinitionLocalizationWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CPDefinitionLocalizationWrapper(
-			(CPDefinitionLocalization)_cpDefinitionLocalization.clone());
-	}
-
-	@Override
-	public int compareTo(CPDefinitionLocalization cpDefinitionLocalization) {
-		return _cpDefinitionLocalization.compareTo(cpDefinitionLocalization);
-	}
-
 	/**
 	 * Returns the company ID of this cp definition localization.
 	 *
@@ -161,7 +137,7 @@ public class CPDefinitionLocalizationWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _cpDefinitionLocalization.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -171,7 +147,7 @@ public class CPDefinitionLocalizationWrapper
 	 */
 	@Override
 	public long getCPDefinitionId() {
-		return _cpDefinitionLocalization.getCPDefinitionId();
+		return model.getCPDefinitionId();
 	}
 
 	/**
@@ -181,7 +157,7 @@ public class CPDefinitionLocalizationWrapper
 	 */
 	@Override
 	public long getCpDefinitionLocalizationId() {
-		return _cpDefinitionLocalization.getCpDefinitionLocalizationId();
+		return model.getCpDefinitionLocalizationId();
 	}
 
 	/**
@@ -191,12 +167,7 @@ public class CPDefinitionLocalizationWrapper
 	 */
 	@Override
 	public String getDescription() {
-		return _cpDefinitionLocalization.getDescription();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _cpDefinitionLocalization.getExpandoBridge();
+		return model.getDescription();
 	}
 
 	/**
@@ -206,7 +177,7 @@ public class CPDefinitionLocalizationWrapper
 	 */
 	@Override
 	public String getLanguageId() {
-		return _cpDefinitionLocalization.getLanguageId();
+		return model.getLanguageId();
 	}
 
 	/**
@@ -216,7 +187,7 @@ public class CPDefinitionLocalizationWrapper
 	 */
 	@Override
 	public String getMetaDescription() {
-		return _cpDefinitionLocalization.getMetaDescription();
+		return model.getMetaDescription();
 	}
 
 	/**
@@ -226,7 +197,7 @@ public class CPDefinitionLocalizationWrapper
 	 */
 	@Override
 	public String getMetaKeywords() {
-		return _cpDefinitionLocalization.getMetaKeywords();
+		return model.getMetaKeywords();
 	}
 
 	/**
@@ -236,7 +207,7 @@ public class CPDefinitionLocalizationWrapper
 	 */
 	@Override
 	public String getMetaTitle() {
-		return _cpDefinitionLocalization.getMetaTitle();
+		return model.getMetaTitle();
 	}
 
 	/**
@@ -246,7 +217,7 @@ public class CPDefinitionLocalizationWrapper
 	 */
 	@Override
 	public long getMvccVersion() {
-		return _cpDefinitionLocalization.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -256,7 +227,7 @@ public class CPDefinitionLocalizationWrapper
 	 */
 	@Override
 	public String getName() {
-		return _cpDefinitionLocalization.getName();
+		return model.getName();
 	}
 
 	/**
@@ -266,12 +237,7 @@ public class CPDefinitionLocalizationWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _cpDefinitionLocalization.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _cpDefinitionLocalization.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -281,32 +247,7 @@ public class CPDefinitionLocalizationWrapper
 	 */
 	@Override
 	public String getShortDescription() {
-		return _cpDefinitionLocalization.getShortDescription();
-	}
-
-	@Override
-	public int hashCode() {
-		return _cpDefinitionLocalization.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _cpDefinitionLocalization.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _cpDefinitionLocalization.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _cpDefinitionLocalization.isNew();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_cpDefinitionLocalization.setCachedModel(cachedModel);
+		return model.getShortDescription();
 	}
 
 	/**
@@ -316,7 +257,7 @@ public class CPDefinitionLocalizationWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_cpDefinitionLocalization.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -326,7 +267,7 @@ public class CPDefinitionLocalizationWrapper
 	 */
 	@Override
 	public void setCPDefinitionId(long CPDefinitionId) {
-		_cpDefinitionLocalization.setCPDefinitionId(CPDefinitionId);
+		model.setCPDefinitionId(CPDefinitionId);
 	}
 
 	/**
@@ -336,8 +277,7 @@ public class CPDefinitionLocalizationWrapper
 	 */
 	@Override
 	public void setCpDefinitionLocalizationId(long cpDefinitionLocalizationId) {
-		_cpDefinitionLocalization.setCpDefinitionLocalizationId(
-			cpDefinitionLocalizationId);
+		model.setCpDefinitionLocalizationId(cpDefinitionLocalizationId);
 	}
 
 	/**
@@ -347,24 +287,7 @@ public class CPDefinitionLocalizationWrapper
 	 */
 	@Override
 	public void setDescription(String description) {
-		_cpDefinitionLocalization.setDescription(description);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_cpDefinitionLocalization.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_cpDefinitionLocalization.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_cpDefinitionLocalization.setExpandoBridgeAttributes(serviceContext);
+		model.setDescription(description);
 	}
 
 	/**
@@ -374,7 +297,7 @@ public class CPDefinitionLocalizationWrapper
 	 */
 	@Override
 	public void setLanguageId(String languageId) {
-		_cpDefinitionLocalization.setLanguageId(languageId);
+		model.setLanguageId(languageId);
 	}
 
 	/**
@@ -384,7 +307,7 @@ public class CPDefinitionLocalizationWrapper
 	 */
 	@Override
 	public void setMetaDescription(String metaDescription) {
-		_cpDefinitionLocalization.setMetaDescription(metaDescription);
+		model.setMetaDescription(metaDescription);
 	}
 
 	/**
@@ -394,7 +317,7 @@ public class CPDefinitionLocalizationWrapper
 	 */
 	@Override
 	public void setMetaKeywords(String metaKeywords) {
-		_cpDefinitionLocalization.setMetaKeywords(metaKeywords);
+		model.setMetaKeywords(metaKeywords);
 	}
 
 	/**
@@ -404,7 +327,7 @@ public class CPDefinitionLocalizationWrapper
 	 */
 	@Override
 	public void setMetaTitle(String metaTitle) {
-		_cpDefinitionLocalization.setMetaTitle(metaTitle);
+		model.setMetaTitle(metaTitle);
 	}
 
 	/**
@@ -414,7 +337,7 @@ public class CPDefinitionLocalizationWrapper
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_cpDefinitionLocalization.setMvccVersion(mvccVersion);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -424,12 +347,7 @@ public class CPDefinitionLocalizationWrapper
 	 */
 	@Override
 	public void setName(String name) {
-		_cpDefinitionLocalization.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_cpDefinitionLocalization.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -439,12 +357,7 @@ public class CPDefinitionLocalizationWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_cpDefinitionLocalization.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_cpDefinitionLocalization.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -454,81 +367,14 @@ public class CPDefinitionLocalizationWrapper
 	 */
 	@Override
 	public void setShortDescription(String shortDescription) {
-		_cpDefinitionLocalization.setShortDescription(shortDescription);
+		model.setShortDescription(shortDescription);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CPDefinitionLocalization>
-		toCacheModel() {
+	protected CPDefinitionLocalizationWrapper wrap(
+		CPDefinitionLocalization cpDefinitionLocalization) {
 
-		return _cpDefinitionLocalization.toCacheModel();
+		return new CPDefinitionLocalizationWrapper(cpDefinitionLocalization);
 	}
-
-	@Override
-	public CPDefinitionLocalization toEscapedModel() {
-		return new CPDefinitionLocalizationWrapper(
-			_cpDefinitionLocalization.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _cpDefinitionLocalization.toString();
-	}
-
-	@Override
-	public CPDefinitionLocalization toUnescapedModel() {
-		return new CPDefinitionLocalizationWrapper(
-			_cpDefinitionLocalization.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _cpDefinitionLocalization.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CPDefinitionLocalizationWrapper)) {
-			return false;
-		}
-
-		CPDefinitionLocalizationWrapper cpDefinitionLocalizationWrapper =
-			(CPDefinitionLocalizationWrapper)object;
-
-		if (Objects.equals(
-				_cpDefinitionLocalization,
-				cpDefinitionLocalizationWrapper._cpDefinitionLocalization)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CPDefinitionLocalization getWrappedModel() {
-		return _cpDefinitionLocalization;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _cpDefinitionLocalization.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _cpDefinitionLocalization.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_cpDefinitionLocalization.resetOriginalValues();
-	}
-
-	private final CPDefinitionLocalization _cpDefinitionLocalization;
 
 }

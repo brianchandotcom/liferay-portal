@@ -18,6 +18,7 @@ import com.liferay.commerce.product.model.CPDefinitionLocalization;
 import com.liferay.commerce.product.model.CPDefinitionLocalizationModel;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -108,20 +108,23 @@ public class CPDefinitionLocalizationModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.product.model.CPDefinitionLocalization"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.product.model.CPDefinitionLocalization"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.product.model.CPDefinitionLocalization"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long CPDEFINITIONID_COLUMN_BITMASK = 1L;
 
@@ -184,9 +187,6 @@ public class CPDefinitionLocalizationModelImpl
 				attributeName,
 				attributeGetterFunction.apply((CPDefinitionLocalization)this));
 		}
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
@@ -267,291 +267,71 @@ public class CPDefinitionLocalizationModelImpl
 					<String, BiConsumer<CPDefinitionLocalization, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion",
-			new Function<CPDefinitionLocalization, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionLocalization cpDefinitionLocalization) {
-
-					return cpDefinitionLocalization.getMvccVersion();
-				}
-
-			});
+			"mvccVersion", CPDefinitionLocalization::getMvccVersion);
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
-			new BiConsumer<CPDefinitionLocalization, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionLocalization cpDefinitionLocalization,
-					Object mvccVersionObject) {
-
-					cpDefinitionLocalization.setMvccVersion(
-						(Long)mvccVersionObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionLocalization, Long>)
+				CPDefinitionLocalization::setMvccVersion);
 		attributeGetterFunctions.put(
 			"cpDefinitionLocalizationId",
-			new Function<CPDefinitionLocalization, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionLocalization cpDefinitionLocalization) {
-
-					return cpDefinitionLocalization.
-						getCpDefinitionLocalizationId();
-				}
-
-			});
+			CPDefinitionLocalization::getCpDefinitionLocalizationId);
 		attributeSetterBiConsumers.put(
 			"cpDefinitionLocalizationId",
-			new BiConsumer<CPDefinitionLocalization, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionLocalization cpDefinitionLocalization,
-					Object cpDefinitionLocalizationIdObject) {
-
-					cpDefinitionLocalization.setCpDefinitionLocalizationId(
-						(Long)cpDefinitionLocalizationIdObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionLocalization, Long>)
+				CPDefinitionLocalization::setCpDefinitionLocalizationId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CPDefinitionLocalization, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionLocalization cpDefinitionLocalization) {
-
-					return cpDefinitionLocalization.getCompanyId();
-				}
-
-			});
+			"companyId", CPDefinitionLocalization::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CPDefinitionLocalization, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionLocalization cpDefinitionLocalization,
-					Object companyIdObject) {
-
-					cpDefinitionLocalization.setCompanyId(
-						(Long)companyIdObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionLocalization, Long>)
+				CPDefinitionLocalization::setCompanyId);
 		attributeGetterFunctions.put(
-			"CPDefinitionId",
-			new Function<CPDefinitionLocalization, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionLocalization cpDefinitionLocalization) {
-
-					return cpDefinitionLocalization.getCPDefinitionId();
-				}
-
-			});
+			"CPDefinitionId", CPDefinitionLocalization::getCPDefinitionId);
 		attributeSetterBiConsumers.put(
 			"CPDefinitionId",
-			new BiConsumer<CPDefinitionLocalization, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionLocalization cpDefinitionLocalization,
-					Object CPDefinitionIdObject) {
-
-					cpDefinitionLocalization.setCPDefinitionId(
-						(Long)CPDefinitionIdObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionLocalization, Long>)
+				CPDefinitionLocalization::setCPDefinitionId);
 		attributeGetterFunctions.put(
-			"languageId",
-			new Function<CPDefinitionLocalization, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionLocalization cpDefinitionLocalization) {
-
-					return cpDefinitionLocalization.getLanguageId();
-				}
-
-			});
+			"languageId", CPDefinitionLocalization::getLanguageId);
 		attributeSetterBiConsumers.put(
 			"languageId",
-			new BiConsumer<CPDefinitionLocalization, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionLocalization cpDefinitionLocalization,
-					Object languageIdObject) {
-
-					cpDefinitionLocalization.setLanguageId(
-						(String)languageIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"name",
-			new Function<CPDefinitionLocalization, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionLocalization cpDefinitionLocalization) {
-
-					return cpDefinitionLocalization.getName();
-				}
-
-			});
+			(BiConsumer<CPDefinitionLocalization, String>)
+				CPDefinitionLocalization::setLanguageId);
+		attributeGetterFunctions.put("name", CPDefinitionLocalization::getName);
 		attributeSetterBiConsumers.put(
 			"name",
-			new BiConsumer<CPDefinitionLocalization, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionLocalization cpDefinitionLocalization,
-					Object nameObject) {
-
-					cpDefinitionLocalization.setName((String)nameObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionLocalization, String>)
+				CPDefinitionLocalization::setName);
 		attributeGetterFunctions.put(
-			"shortDescription",
-			new Function<CPDefinitionLocalization, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionLocalization cpDefinitionLocalization) {
-
-					return cpDefinitionLocalization.getShortDescription();
-				}
-
-			});
+			"shortDescription", CPDefinitionLocalization::getShortDescription);
 		attributeSetterBiConsumers.put(
 			"shortDescription",
-			new BiConsumer<CPDefinitionLocalization, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionLocalization cpDefinitionLocalization,
-					Object shortDescriptionObject) {
-
-					cpDefinitionLocalization.setShortDescription(
-						(String)shortDescriptionObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionLocalization, String>)
+				CPDefinitionLocalization::setShortDescription);
 		attributeGetterFunctions.put(
-			"description",
-			new Function<CPDefinitionLocalization, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionLocalization cpDefinitionLocalization) {
-
-					return cpDefinitionLocalization.getDescription();
-				}
-
-			});
+			"description", CPDefinitionLocalization::getDescription);
 		attributeSetterBiConsumers.put(
 			"description",
-			new BiConsumer<CPDefinitionLocalization, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionLocalization cpDefinitionLocalization,
-					Object descriptionObject) {
-
-					cpDefinitionLocalization.setDescription(
-						(String)descriptionObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionLocalization, String>)
+				CPDefinitionLocalization::setDescription);
 		attributeGetterFunctions.put(
-			"metaTitle",
-			new Function<CPDefinitionLocalization, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionLocalization cpDefinitionLocalization) {
-
-					return cpDefinitionLocalization.getMetaTitle();
-				}
-
-			});
+			"metaTitle", CPDefinitionLocalization::getMetaTitle);
 		attributeSetterBiConsumers.put(
 			"metaTitle",
-			new BiConsumer<CPDefinitionLocalization, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionLocalization cpDefinitionLocalization,
-					Object metaTitleObject) {
-
-					cpDefinitionLocalization.setMetaTitle(
-						(String)metaTitleObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionLocalization, String>)
+				CPDefinitionLocalization::setMetaTitle);
 		attributeGetterFunctions.put(
-			"metaDescription",
-			new Function<CPDefinitionLocalization, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionLocalization cpDefinitionLocalization) {
-
-					return cpDefinitionLocalization.getMetaDescription();
-				}
-
-			});
+			"metaDescription", CPDefinitionLocalization::getMetaDescription);
 		attributeSetterBiConsumers.put(
 			"metaDescription",
-			new BiConsumer<CPDefinitionLocalization, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionLocalization cpDefinitionLocalization,
-					Object metaDescriptionObject) {
-
-					cpDefinitionLocalization.setMetaDescription(
-						(String)metaDescriptionObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionLocalization, String>)
+				CPDefinitionLocalization::setMetaDescription);
 		attributeGetterFunctions.put(
-			"metaKeywords",
-			new Function<CPDefinitionLocalization, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionLocalization cpDefinitionLocalization) {
-
-					return cpDefinitionLocalization.getMetaKeywords();
-				}
-
-			});
+			"metaKeywords", CPDefinitionLocalization::getMetaKeywords);
 		attributeSetterBiConsumers.put(
 			"metaKeywords",
-			new BiConsumer<CPDefinitionLocalization, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionLocalization cpDefinitionLocalization,
-					Object metaKeywordsObject) {
-
-					cpDefinitionLocalization.setMetaKeywords(
-						(String)metaKeywordsObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionLocalization, String>)
+				CPDefinitionLocalization::setMetaKeywords);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -825,11 +605,19 @@ public class CPDefinitionLocalizationModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;

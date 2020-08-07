@@ -111,6 +111,18 @@ public class CommerceShippingMethodLocalServiceWrapper
 			commerceShippingMethodId);
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShippingMethodLocalService.createPersistedModel(
+			primaryKeyObj);
+	}
+
 	@Override
 	public void deleteCommerceAddressRestriction(
 			long commerceAddressRestrictionId)
@@ -180,6 +192,11 @@ public class CommerceShippingMethodLocalServiceWrapper
 
 		return _commerceShippingMethodLocalService.deletePersistedModel(
 			persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _commerceShippingMethodLocalService.dslQuery(dslQuery);
 	}
 
 	@Override

@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.application.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.application.exception.NoSuchApplicationModelException;
 import com.liferay.commerce.application.model.CommerceApplicationModel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce application model service.
@@ -45,9 +40,6 @@ public interface CommerceApplicationModelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceApplicationModelUtil} to access the commerce application model persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceApplicationModel> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce application models where companyId = &#63;.

@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.account.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,26 +31,18 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceAccountWrapper
+	extends BaseModelWrapper<CommerceAccount>
 	implements CommerceAccount, ModelWrapper<CommerceAccount> {
 
 	public CommerceAccountWrapper(CommerceAccount commerceAccount) {
-		_commerceAccount = commerceAccount;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceAccount.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceAccount.class.getName();
+		super(commerceAccount);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("commerceAccountId", getCommerceAccountId());
 		attributes.put("companyId", getCompanyId());
@@ -85,6 +73,12 @@ public class CommerceAccountWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String externalReferenceCode = (String)attributes.get(
 			"externalReferenceCode");
 
@@ -228,17 +222,6 @@ public class CommerceAccountWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CommerceAccountWrapper(
-			(CommerceAccount)_commerceAccount.clone());
-	}
-
-	@Override
-	public int compareTo(CommerceAccount commerceAccount) {
-		return _commerceAccount.compareTo(commerceAccount);
-	}
-
 	/**
 	 * Returns the active of this commerce account.
 	 *
@@ -246,21 +229,21 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public boolean getActive() {
-		return _commerceAccount.getActive();
+		return model.getActive();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.model.Group getCommerceAccountGroup()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceAccount.getCommerceAccountGroup();
+		return model.getCommerceAccountGroup();
 	}
 
 	@Override
 	public long getCommerceAccountGroupId()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceAccount.getCommerceAccountGroupId();
+		return model.getCommerceAccountGroupId();
 	}
 
 	/**
@@ -270,19 +253,19 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public long getCommerceAccountId() {
-		return _commerceAccount.getCommerceAccountId();
+		return model.getCommerceAccountId();
 	}
 
 	@Override
 	public java.util.List<CommerceAccountOrganizationRel>
 		getCommerceAccountOrganizationRels() {
 
-		return _commerceAccount.getCommerceAccountOrganizationRels();
+		return model.getCommerceAccountOrganizationRels();
 	}
 
 	@Override
 	public java.util.List<CommerceAccountUserRel> getCommerceAccountUserRels() {
-		return _commerceAccount.getCommerceAccountUserRels();
+		return model.getCommerceAccountUserRels();
 	}
 
 	/**
@@ -292,7 +275,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceAccount.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -302,7 +285,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceAccount.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -312,7 +295,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public long getDefaultBillingAddressId() {
-		return _commerceAccount.getDefaultBillingAddressId();
+		return model.getDefaultBillingAddressId();
 	}
 
 	/**
@@ -322,7 +305,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public long getDefaultShippingAddressId() {
-		return _commerceAccount.getDefaultShippingAddressId();
+		return model.getDefaultShippingAddressId();
 	}
 
 	/**
@@ -332,7 +315,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public Date getDisplayDate() {
-		return _commerceAccount.getDisplayDate();
+		return model.getDisplayDate();
 	}
 
 	/**
@@ -342,12 +325,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public String getEmail() {
-		return _commerceAccount.getEmail();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceAccount.getExpandoBridge();
+		return model.getEmail();
 	}
 
 	/**
@@ -357,7 +335,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public Date getExpirationDate() {
-		return _commerceAccount.getExpirationDate();
+		return model.getExpirationDate();
 	}
 
 	/**
@@ -367,7 +345,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public String getExternalReferenceCode() {
-		return _commerceAccount.getExternalReferenceCode();
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -377,7 +355,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public Date getLastPublishDate() {
-		return _commerceAccount.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -387,7 +365,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public long getLogoId() {
-		return _commerceAccount.getLogoId();
+		return model.getLogoId();
 	}
 
 	/**
@@ -397,7 +375,17 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceAccount.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce account.
+	 *
+	 * @return the mvcc version of this commerce account
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -407,14 +395,14 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public String getName() {
-		return _commerceAccount.getName();
+		return model.getName();
 	}
 
 	@Override
 	public CommerceAccount getParentCommerceAccount()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceAccount.getParentCommerceAccount();
+		return model.getParentCommerceAccount();
 	}
 
 	/**
@@ -424,7 +412,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public long getParentCommerceAccountId() {
-		return _commerceAccount.getParentCommerceAccountId();
+		return model.getParentCommerceAccountId();
 	}
 
 	/**
@@ -434,12 +422,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceAccount.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceAccount.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -449,7 +432,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public int getStatus() {
-		return _commerceAccount.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -459,7 +442,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public long getStatusByUserId() {
-		return _commerceAccount.getStatusByUserId();
+		return model.getStatusByUserId();
 	}
 
 	/**
@@ -469,7 +452,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public String getStatusByUserName() {
-		return _commerceAccount.getStatusByUserName();
+		return model.getStatusByUserName();
 	}
 
 	/**
@@ -479,7 +462,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public String getStatusByUserUuid() {
-		return _commerceAccount.getStatusByUserUuid();
+		return model.getStatusByUserUuid();
 	}
 
 	/**
@@ -489,7 +472,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public Date getStatusDate() {
-		return _commerceAccount.getStatusDate();
+		return model.getStatusDate();
 	}
 
 	/**
@@ -499,7 +482,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public String getTaxId() {
-		return _commerceAccount.getTaxId();
+		return model.getTaxId();
 	}
 
 	/**
@@ -509,7 +492,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public int getType() {
-		return _commerceAccount.getType();
+		return model.getType();
 	}
 
 	/**
@@ -519,7 +502,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceAccount.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -529,7 +512,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceAccount.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -539,12 +522,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceAccount.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceAccount.hashCode();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -554,7 +532,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public boolean isActive() {
-		return _commerceAccount.isActive();
+		return model.isActive();
 	}
 
 	/**
@@ -564,17 +542,12 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public boolean isApproved() {
-		return _commerceAccount.isApproved();
+		return model.isApproved();
 	}
 
 	@Override
 	public boolean isBusinessAccount() {
-		return _commerceAccount.isBusinessAccount();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceAccount.isCachedModel();
+		return model.isBusinessAccount();
 	}
 
 	/**
@@ -584,7 +557,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public boolean isDenied() {
-		return _commerceAccount.isDenied();
+		return model.isDenied();
 	}
 
 	/**
@@ -594,12 +567,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public boolean isDraft() {
-		return _commerceAccount.isDraft();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceAccount.isEscapedModel();
+		return model.isDraft();
 	}
 
 	/**
@@ -609,7 +577,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public boolean isExpired() {
-		return _commerceAccount.isExpired();
+		return model.isExpired();
 	}
 
 	/**
@@ -619,7 +587,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public boolean isInactive() {
-		return _commerceAccount.isInactive();
+		return model.isInactive();
 	}
 
 	/**
@@ -629,12 +597,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public boolean isIncomplete() {
-		return _commerceAccount.isIncomplete();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceAccount.isNew();
+		return model.isIncomplete();
 	}
 
 	/**
@@ -644,17 +607,17 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public boolean isPending() {
-		return _commerceAccount.isPending();
+		return model.isPending();
 	}
 
 	@Override
 	public boolean isPersonalAccount() {
-		return _commerceAccount.isPersonalAccount();
+		return model.isPersonalAccount();
 	}
 
 	@Override
 	public boolean isRoot() {
-		return _commerceAccount.isRoot();
+		return model.isRoot();
 	}
 
 	/**
@@ -664,12 +627,12 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public boolean isScheduled() {
-		return _commerceAccount.isScheduled();
+		return model.isScheduled();
 	}
 
 	@Override
 	public void persist() {
-		_commerceAccount.persist();
+		model.persist();
 	}
 
 	/**
@@ -679,12 +642,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public void setActive(boolean active) {
-		_commerceAccount.setActive(active);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceAccount.setCachedModel(cachedModel);
+		model.setActive(active);
 	}
 
 	/**
@@ -694,7 +652,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public void setCommerceAccountId(long commerceAccountId) {
-		_commerceAccount.setCommerceAccountId(commerceAccountId);
+		model.setCommerceAccountId(commerceAccountId);
 	}
 
 	/**
@@ -704,7 +662,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceAccount.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -714,7 +672,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceAccount.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -724,7 +682,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public void setDefaultBillingAddressId(long defaultBillingAddressId) {
-		_commerceAccount.setDefaultBillingAddressId(defaultBillingAddressId);
+		model.setDefaultBillingAddressId(defaultBillingAddressId);
 	}
 
 	/**
@@ -734,7 +692,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public void setDefaultShippingAddressId(long defaultShippingAddressId) {
-		_commerceAccount.setDefaultShippingAddressId(defaultShippingAddressId);
+		model.setDefaultShippingAddressId(defaultShippingAddressId);
 	}
 
 	/**
@@ -744,7 +702,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public void setDisplayDate(Date displayDate) {
-		_commerceAccount.setDisplayDate(displayDate);
+		model.setDisplayDate(displayDate);
 	}
 
 	/**
@@ -754,24 +712,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public void setEmail(String email) {
-		_commerceAccount.setEmail(email);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceAccount.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceAccount.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceAccount.setExpandoBridgeAttributes(serviceContext);
+		model.setEmail(email);
 	}
 
 	/**
@@ -781,7 +722,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public void setExpirationDate(Date expirationDate) {
-		_commerceAccount.setExpirationDate(expirationDate);
+		model.setExpirationDate(expirationDate);
 	}
 
 	/**
@@ -791,7 +732,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
-		_commerceAccount.setExternalReferenceCode(externalReferenceCode);
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**
@@ -801,7 +742,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_commerceAccount.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -811,7 +752,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public void setLogoId(long logoId) {
-		_commerceAccount.setLogoId(logoId);
+		model.setLogoId(logoId);
 	}
 
 	/**
@@ -821,7 +762,17 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceAccount.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this commerce account.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce account
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -831,12 +782,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public void setName(String name) {
-		_commerceAccount.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_commerceAccount.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -846,7 +792,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public void setParentCommerceAccountId(long parentCommerceAccountId) {
-		_commerceAccount.setParentCommerceAccountId(parentCommerceAccountId);
+		model.setParentCommerceAccountId(parentCommerceAccountId);
 	}
 
 	/**
@@ -856,12 +802,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceAccount.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceAccount.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -871,7 +812,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public void setStatus(int status) {
-		_commerceAccount.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -881,7 +822,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
-		_commerceAccount.setStatusByUserId(statusByUserId);
+		model.setStatusByUserId(statusByUserId);
 	}
 
 	/**
@@ -891,7 +832,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
-		_commerceAccount.setStatusByUserName(statusByUserName);
+		model.setStatusByUserName(statusByUserName);
 	}
 
 	/**
@@ -901,7 +842,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public void setStatusByUserUuid(String statusByUserUuid) {
-		_commerceAccount.setStatusByUserUuid(statusByUserUuid);
+		model.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
@@ -911,7 +852,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public void setStatusDate(Date statusDate) {
-		_commerceAccount.setStatusDate(statusDate);
+		model.setStatusDate(statusDate);
 	}
 
 	/**
@@ -921,7 +862,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public void setTaxId(String taxId) {
-		_commerceAccount.setTaxId(taxId);
+		model.setTaxId(taxId);
 	}
 
 	/**
@@ -931,7 +872,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public void setType(int type) {
-		_commerceAccount.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -941,7 +882,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceAccount.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -951,7 +892,7 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceAccount.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -961,78 +902,12 @@ public class CommerceAccountWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceAccount.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceAccount>
-		toCacheModel() {
-
-		return _commerceAccount.toCacheModel();
+	protected CommerceAccountWrapper wrap(CommerceAccount commerceAccount) {
+		return new CommerceAccountWrapper(commerceAccount);
 	}
-
-	@Override
-	public CommerceAccount toEscapedModel() {
-		return new CommerceAccountWrapper(_commerceAccount.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commerceAccount.toString();
-	}
-
-	@Override
-	public CommerceAccount toUnescapedModel() {
-		return new CommerceAccountWrapper(_commerceAccount.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceAccount.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceAccountWrapper)) {
-			return false;
-		}
-
-		CommerceAccountWrapper commerceAccountWrapper =
-			(CommerceAccountWrapper)object;
-
-		if (Objects.equals(
-				_commerceAccount, commerceAccountWrapper._commerceAccount)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceAccount getWrappedModel() {
-		return _commerceAccount;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceAccount.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceAccount.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceAccount.resetOriginalValues();
-	}
-
-	private final CommerceAccount _commerceAccount;
 
 }

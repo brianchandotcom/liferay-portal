@@ -16,9 +16,11 @@ package com.liferay.commerce.product.type.virtual.service.persistence.impl;
 
 import com.liferay.commerce.product.type.virtual.exception.NoSuchCPDefinitionVirtualSettingException;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
+import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSettingTable;
 import com.liferay.commerce.product.type.virtual.model.impl.CPDefinitionVirtualSettingImpl;
 import com.liferay.commerce.product.type.virtual.model.impl.CPDefinitionVirtualSettingModelImpl;
 import com.liferay.commerce.product.type.virtual.service.persistence.CPDefinitionVirtualSettingPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -35,21 +37,16 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -255,10 +252,6 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -621,8 +614,6 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -783,11 +774,6 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByUUID_G, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -877,8 +863,6 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1084,10 +1068,6 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1473,8 +1453,6 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1627,10 +1605,6 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(_finderPathFetchByC_C, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1708,8 +1682,6 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1734,21 +1706,14 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 			"termsOfUseJournalArticleResourcePrimKey",
 			"termsOfUseArticleResourcePK");
 
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-				"_dbColumnNames");
-
-			field.setAccessible(true);
-
-			field.set(this, dbColumnNames);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
+		setDBColumnNames(dbColumnNames);
 
 		setModelClass(CPDefinitionVirtualSetting.class);
+
+		setModelImplClass(CPDefinitionVirtualSettingImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CPDefinitionVirtualSettingTable.INSTANCE);
 	}
 
 	/**
@@ -1761,7 +1726,6 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
 
 		entityCache.putResult(
-			CPDefinitionVirtualSettingModelImpl.ENTITY_CACHE_ENABLED,
 			CPDefinitionVirtualSettingImpl.class,
 			cpDefinitionVirtualSetting.getPrimaryKey(),
 			cpDefinitionVirtualSetting);
@@ -1798,7 +1762,6 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 				cpDefinitionVirtualSettings) {
 
 			if (entityCache.getResult(
-					CPDefinitionVirtualSettingModelImpl.ENTITY_CACHE_ENABLED,
 					CPDefinitionVirtualSettingImpl.class,
 					cpDefinitionVirtualSetting.getPrimaryKey()) == null) {
 
@@ -1838,7 +1801,6 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
 
 		entityCache.removeResult(
-			CPDefinitionVirtualSettingModelImpl.ENTITY_CACHE_ENABLED,
 			CPDefinitionVirtualSettingImpl.class,
 			cpDefinitionVirtualSetting.getPrimaryKey());
 
@@ -1861,7 +1823,6 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 				cpDefinitionVirtualSettings) {
 
 			entityCache.removeResult(
-				CPDefinitionVirtualSettingModelImpl.ENTITY_CACHE_ENABLED,
 				CPDefinitionVirtualSettingImpl.class,
 				cpDefinitionVirtualSetting.getPrimaryKey());
 
@@ -1871,6 +1832,7 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1878,7 +1840,6 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(
-				CPDefinitionVirtualSettingModelImpl.ENTITY_CACHE_ENABLED,
 				CPDefinitionVirtualSettingImpl.class, primaryKey);
 		}
 	}
@@ -2162,10 +2123,7 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CPDefinitionVirtualSettingModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				cpDefinitionVirtualSettingModelImpl.getUuid()
 			};
@@ -2234,7 +2192,6 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 		}
 
 		entityCache.putResult(
-			CPDefinitionVirtualSettingModelImpl.ENTITY_CACHE_ENABLED,
 			CPDefinitionVirtualSettingImpl.class,
 			cpDefinitionVirtualSetting.getPrimaryKey(),
 			cpDefinitionVirtualSetting, false);
@@ -2291,63 +2248,6 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 	/**
 	 * Returns the cp definition virtual setting with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the cp definition virtual setting
-	 * @return the cp definition virtual setting, or <code>null</code> if a cp definition virtual setting with the primary key could not be found
-	 */
-	@Override
-	public CPDefinitionVirtualSetting fetchByPrimaryKey(
-		Serializable primaryKey) {
-
-		Serializable serializable = entityCache.getResult(
-			CPDefinitionVirtualSettingModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionVirtualSettingImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
-			(CPDefinitionVirtualSetting)serializable;
-
-		if (cpDefinitionVirtualSetting == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				cpDefinitionVirtualSetting =
-					(CPDefinitionVirtualSetting)session.get(
-						CPDefinitionVirtualSettingImpl.class, primaryKey);
-
-				if (cpDefinitionVirtualSetting != null) {
-					cacheResult(cpDefinitionVirtualSetting);
-				}
-				else {
-					entityCache.putResult(
-						CPDefinitionVirtualSettingModelImpl.
-							ENTITY_CACHE_ENABLED,
-						CPDefinitionVirtualSettingImpl.class, primaryKey,
-						nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CPDefinitionVirtualSettingModelImpl.ENTITY_CACHE_ENABLED,
-					CPDefinitionVirtualSettingImpl.class, primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return cpDefinitionVirtualSetting;
-	}
-
-	/**
-	 * Returns the cp definition virtual setting with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param CPDefinitionVirtualSettingId the primary key of the cp definition virtual setting
 	 * @return the cp definition virtual setting, or <code>null</code> if a cp definition virtual setting with the primary key could not be found
 	 */
@@ -2356,112 +2256,6 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 		long CPDefinitionVirtualSettingId) {
 
 		return fetchByPrimaryKey((Serializable)CPDefinitionVirtualSettingId);
-	}
-
-	@Override
-	public Map<Serializable, CPDefinitionVirtualSetting> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CPDefinitionVirtualSetting> map =
-			new HashMap<Serializable, CPDefinitionVirtualSetting>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
-				fetchByPrimaryKey(primaryKey);
-
-			if (cpDefinitionVirtualSetting != null) {
-				map.put(primaryKey, cpDefinitionVirtualSetting);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CPDefinitionVirtualSettingModelImpl.ENTITY_CACHE_ENABLED,
-				CPDefinitionVirtualSettingImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(
-						primaryKey, (CPDefinitionVirtualSetting)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(_SQL_SELECT_CPDEFINITIONVIRTUALSETTING_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CPDefinitionVirtualSetting cpDefinitionVirtualSetting :
-					(List<CPDefinitionVirtualSetting>)query.list()) {
-
-				map.put(
-					cpDefinitionVirtualSetting.getPrimaryKeyObj(),
-					cpDefinitionVirtualSetting);
-
-				cacheResult(cpDefinitionVirtualSetting);
-
-				uncachedPrimaryKeys.remove(
-					cpDefinitionVirtualSetting.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CPDefinitionVirtualSettingModelImpl.ENTITY_CACHE_ENABLED,
-					CPDefinitionVirtualSettingImpl.class, primaryKey,
-					nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -2591,10 +2385,6 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2643,9 +2433,6 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2662,6 +2449,21 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 	}
 
 	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "CPDefinitionVirtualSettingId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_CPDEFINITIONVIRTUALSETTING;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CPDefinitionVirtualSettingModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2671,27 +2473,19 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CPDefinitionVirtualSettingModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionVirtualSettingModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionVirtualSettingImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CPDefinitionVirtualSettingModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionVirtualSettingModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionVirtualSettingImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CPDefinitionVirtualSettingModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionVirtualSettingModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByUuid = new FinderPath(
-			CPDefinitionVirtualSettingModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionVirtualSettingModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionVirtualSettingImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2700,22 +2494,16 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			CPDefinitionVirtualSettingModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionVirtualSettingModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionVirtualSettingImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
 			CPDefinitionVirtualSettingModelImpl.UUID_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
-			CPDefinitionVirtualSettingModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionVirtualSettingModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByUuid", new String[] {String.class.getName()});
 
 		_finderPathFetchByUUID_G = new FinderPath(
-			CPDefinitionVirtualSettingModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionVirtualSettingModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionVirtualSettingImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
@@ -2723,15 +2511,11 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 			CPDefinitionVirtualSettingModelImpl.GROUPID_COLUMN_BITMASK);
 
 		_finderPathCountByUUID_G = new FinderPath(
-			CPDefinitionVirtualSettingModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionVirtualSettingModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			CPDefinitionVirtualSettingModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionVirtualSettingModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionVirtualSettingImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
@@ -2741,8 +2525,6 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			CPDefinitionVirtualSettingModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionVirtualSettingModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionVirtualSettingImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
@@ -2750,15 +2532,11 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 			CPDefinitionVirtualSettingModelImpl.COMPANYID_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
-			CPDefinitionVirtualSettingModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionVirtualSettingModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathFetchByC_C = new FinderPath(
-			CPDefinitionVirtualSettingModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionVirtualSettingModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionVirtualSettingImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
@@ -2766,8 +2544,6 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 			CPDefinitionVirtualSettingModelImpl.CLASSPK_COLUMN_BITMASK);
 
 		_finderPathCountByC_C = new FinderPath(
-			CPDefinitionVirtualSettingModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionVirtualSettingModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()});
 	}
@@ -2787,10 +2563,6 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 
 	private static final String _SQL_SELECT_CPDEFINITIONVIRTUALSETTING =
 		"SELECT cpDefinitionVirtualSetting FROM CPDefinitionVirtualSetting cpDefinitionVirtualSetting";
-
-	private static final String
-		_SQL_SELECT_CPDEFINITIONVIRTUALSETTING_WHERE_PKS_IN =
-			"SELECT cpDefinitionVirtualSetting FROM CPDefinitionVirtualSetting cpDefinitionVirtualSetting WHERE CPDefinitionVirtualSettingId IN (";
 
 	private static final String _SQL_SELECT_CPDEFINITIONVIRTUALSETTING_WHERE =
 		"SELECT cpDefinitionVirtualSetting FROM CPDefinitionVirtualSetting cpDefinitionVirtualSetting WHERE ";

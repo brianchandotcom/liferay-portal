@@ -90,6 +90,18 @@ public class CommerceInventoryReplenishmentItemLocalServiceWrapper
 	}
 
 	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceInventoryReplenishmentItemLocalService.
+			createPersistedModel(primaryKeyObj);
+	}
+
+	/**
 	 * Deletes the commerce inventory replenishment item from the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -145,6 +157,12 @@ public class CommerceInventoryReplenishmentItemLocalServiceWrapper
 
 		return _commerceInventoryReplenishmentItemLocalService.
 			deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _commerceInventoryReplenishmentItemLocalService.dslQuery(
+			dslQuery);
 	}
 
 	@Override

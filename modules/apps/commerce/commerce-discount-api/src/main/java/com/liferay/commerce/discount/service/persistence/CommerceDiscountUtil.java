@@ -1995,10 +1995,6 @@ public class CommerceDiscountUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CommerceDiscountPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

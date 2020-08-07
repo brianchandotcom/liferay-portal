@@ -16,9 +16,11 @@ package com.liferay.commerce.service.persistence.impl;
 
 import com.liferay.commerce.exception.NoSuchCountryException;
 import com.liferay.commerce.model.CommerceCountry;
+import com.liferay.commerce.model.CommerceCountryTable;
 import com.liferay.commerce.model.impl.CommerceCountryImpl;
 import com.liferay.commerce.model.impl.CommerceCountryModelImpl;
 import com.liferay.commerce.service.persistence.CommerceCountryPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -35,21 +37,16 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -251,10 +248,6 @@ public class CommerceCountryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -607,8 +600,6 @@ public class CommerceCountryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -806,10 +797,6 @@ public class CommerceCountryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1192,8 +1179,6 @@ public class CommerceCountryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1370,10 +1355,6 @@ public class CommerceCountryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1704,8 +1685,6 @@ public class CommerceCountryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1865,11 +1844,6 @@ public class CommerceCountryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByC_Tw, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1960,8 +1934,6 @@ public class CommerceCountryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2109,10 +2081,6 @@ public class CommerceCountryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(_finderPathFetchByC_N, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2188,8 +2156,6 @@ public class CommerceCountryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2374,10 +2340,6 @@ public class CommerceCountryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2734,8 +2696,6 @@ public class CommerceCountryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2935,10 +2895,6 @@ public class CommerceCountryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3323,8 +3279,6 @@ public class CommerceCountryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3529,10 +3483,6 @@ public class CommerceCountryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3917,8 +3867,6 @@ public class CommerceCountryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3944,21 +3892,14 @@ public class CommerceCountryPersistenceImpl
 		dbColumnNames.put("uuid", "uuid_");
 		dbColumnNames.put("active", "active_");
 
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-				"_dbColumnNames");
-
-			field.setAccessible(true);
-
-			field.set(this, dbColumnNames);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
+		setDBColumnNames(dbColumnNames);
 
 		setModelClass(CommerceCountry.class);
+
+		setModelImplClass(CommerceCountryImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CommerceCountryTable.INSTANCE);
 	}
 
 	/**
@@ -3969,7 +3910,6 @@ public class CommerceCountryPersistenceImpl
 	@Override
 	public void cacheResult(CommerceCountry commerceCountry) {
 		entityCache.putResult(
-			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceCountryImpl.class, commerceCountry.getPrimaryKey(),
 			commerceCountry);
 
@@ -4001,7 +3941,6 @@ public class CommerceCountryPersistenceImpl
 	public void cacheResult(List<CommerceCountry> commerceCountries) {
 		for (CommerceCountry commerceCountry : commerceCountries) {
 			if (entityCache.getResult(
-					CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
 					CommerceCountryImpl.class,
 					commerceCountry.getPrimaryKey()) == null) {
 
@@ -4039,7 +3978,6 @@ public class CommerceCountryPersistenceImpl
 	@Override
 	public void clearCache(CommerceCountry commerceCountry) {
 		entityCache.removeResult(
-			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceCountryImpl.class, commerceCountry.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -4056,7 +3994,6 @@ public class CommerceCountryPersistenceImpl
 
 		for (CommerceCountry commerceCountry : commerceCountries) {
 			entityCache.removeResult(
-				CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceCountryImpl.class, commerceCountry.getPrimaryKey());
 
 			clearUniqueFindersCache(
@@ -4064,15 +4001,14 @@ public class CommerceCountryPersistenceImpl
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceCountryImpl.class, primaryKey);
+			entityCache.removeResult(CommerceCountryImpl.class, primaryKey);
 		}
 	}
 
@@ -4336,10 +4272,7 @@ public class CommerceCountryPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CommerceCountryModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {commerceCountryModelImpl.getUuid()};
 
 			finderCache.removeResult(_finderPathCountByUuid, args);
@@ -4531,7 +4464,6 @@ public class CommerceCountryPersistenceImpl
 		}
 
 		entityCache.putResult(
-			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceCountryImpl.class, commerceCountry.getPrimaryKey(),
 			commerceCountry, false);
 
@@ -4585,163 +4517,12 @@ public class CommerceCountryPersistenceImpl
 	/**
 	 * Returns the commerce country with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the commerce country
-	 * @return the commerce country, or <code>null</code> if a commerce country with the primary key could not be found
-	 */
-	@Override
-	public CommerceCountry fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(
-			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCountryImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CommerceCountry commerceCountry = (CommerceCountry)serializable;
-
-		if (commerceCountry == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				commerceCountry = (CommerceCountry)session.get(
-					CommerceCountryImpl.class, primaryKey);
-
-				if (commerceCountry != null) {
-					cacheResult(commerceCountry);
-				}
-				else {
-					entityCache.putResult(
-						CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-						CommerceCountryImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceCountryImpl.class, primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return commerceCountry;
-	}
-
-	/**
-	 * Returns the commerce country with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param commerceCountryId the primary key of the commerce country
 	 * @return the commerce country, or <code>null</code> if a commerce country with the primary key could not be found
 	 */
 	@Override
 	public CommerceCountry fetchByPrimaryKey(long commerceCountryId) {
 		return fetchByPrimaryKey((Serializable)commerceCountryId);
-	}
-
-	@Override
-	public Map<Serializable, CommerceCountry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CommerceCountry> map =
-			new HashMap<Serializable, CommerceCountry>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CommerceCountry commerceCountry = fetchByPrimaryKey(primaryKey);
-
-			if (commerceCountry != null) {
-				map.put(primaryKey, commerceCountry);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceCountryImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (CommerceCountry)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(_SQL_SELECT_COMMERCECOUNTRY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CommerceCountry commerceCountry :
-					(List<CommerceCountry>)query.list()) {
-
-				map.put(commerceCountry.getPrimaryKeyObj(), commerceCountry);
-
-				cacheResult(commerceCountry);
-
-				uncachedPrimaryKeys.remove(commerceCountry.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceCountryImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -4870,10 +4651,6 @@ public class CommerceCountryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -4919,9 +4696,6 @@ public class CommerceCountryPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -4938,6 +4712,21 @@ public class CommerceCountryPersistenceImpl
 	}
 
 	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "commerceCountryId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_COMMERCECOUNTRY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CommerceCountryModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -4947,27 +4736,19 @@ public class CommerceCountryPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCountryModelImpl.FINDER_CACHE_ENABLED,
 			CommerceCountryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCountryModelImpl.FINDER_CACHE_ENABLED,
 			CommerceCountryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCountryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByUuid = new FinderPath(
-			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCountryModelImpl.FINDER_CACHE_ENABLED,
 			CommerceCountryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByUuid",
 			new String[] {
@@ -4976,8 +4757,6 @@ public class CommerceCountryPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCountryModelImpl.FINDER_CACHE_ENABLED,
 			CommerceCountryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
@@ -4985,14 +4764,10 @@ public class CommerceCountryPersistenceImpl
 			CommerceCountryModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
-			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCountryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUuid", new String[] {String.class.getName()});
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCountryModelImpl.FINDER_CACHE_ENABLED,
 			CommerceCountryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByUuid_C",
 			new String[] {
@@ -5002,8 +4777,6 @@ public class CommerceCountryPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCountryModelImpl.FINDER_CACHE_ENABLED,
 			CommerceCountryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
@@ -5012,14 +4785,11 @@ public class CommerceCountryPersistenceImpl
 			CommerceCountryModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
-			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCountryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCountryModelImpl.FINDER_CACHE_ENABLED,
 			CommerceCountryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByCompanyId",
 			new String[] {
@@ -5028,8 +4798,6 @@ public class CommerceCountryPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCountryModelImpl.FINDER_CACHE_ENABLED,
 			CommerceCountryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()},
@@ -5037,42 +4805,31 @@ public class CommerceCountryPersistenceImpl
 			CommerceCountryModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByCompanyId = new FinderPath(
-			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCountryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCompanyId", new String[] {Long.class.getName()});
 
 		_finderPathFetchByC_Tw = new FinderPath(
-			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCountryModelImpl.FINDER_CACHE_ENABLED,
 			CommerceCountryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_Tw",
 			new String[] {Long.class.getName(), String.class.getName()},
 			CommerceCountryModelImpl.COMPANYID_COLUMN_BITMASK |
 			CommerceCountryModelImpl.TWOLETTERSISOCODE_COLUMN_BITMASK);
 
 		_finderPathCountByC_Tw = new FinderPath(
-			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCountryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_Tw",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByC_Tw",
 			new String[] {Long.class.getName(), String.class.getName()});
 
 		_finderPathFetchByC_N = new FinderPath(
-			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCountryModelImpl.FINDER_CACHE_ENABLED,
 			CommerceCountryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			CommerceCountryModelImpl.COMPANYID_COLUMN_BITMASK |
 			CommerceCountryModelImpl.NUMERICISOCODE_COLUMN_BITMASK);
 
 		_finderPathCountByC_N = new FinderPath(
-			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCountryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N",
 			new String[] {Long.class.getName(), Integer.class.getName()});
 
 		_finderPathWithPaginationFindByC_A = new FinderPath(
-			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCountryModelImpl.FINDER_CACHE_ENABLED,
 			CommerceCountryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByC_A",
 			new String[] {
@@ -5082,8 +4839,6 @@ public class CommerceCountryPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByC_A = new FinderPath(
-			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCountryModelImpl.FINDER_CACHE_ENABLED,
 			CommerceCountryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
@@ -5092,14 +4847,10 @@ public class CommerceCountryPersistenceImpl
 			CommerceCountryModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByC_A = new FinderPath(
-			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCountryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
 			new String[] {Long.class.getName(), Boolean.class.getName()});
 
 		_finderPathWithPaginationFindByC_B_A = new FinderPath(
-			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCountryModelImpl.FINDER_CACHE_ENABLED,
 			CommerceCountryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByC_B_A",
 			new String[] {
@@ -5109,8 +4860,6 @@ public class CommerceCountryPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByC_B_A = new FinderPath(
-			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCountryModelImpl.FINDER_CACHE_ENABLED,
 			CommerceCountryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_B_A",
 			new String[] {
@@ -5123,17 +4872,14 @@ public class CommerceCountryPersistenceImpl
 			CommerceCountryModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByC_B_A = new FinderPath(
-			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCountryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_B_A",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByC_B_A",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Boolean.class.getName()
 			});
 
 		_finderPathWithPaginationFindByC_S_A = new FinderPath(
-			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCountryModelImpl.FINDER_CACHE_ENABLED,
 			CommerceCountryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByC_S_A",
 			new String[] {
@@ -5143,8 +4889,6 @@ public class CommerceCountryPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByC_S_A = new FinderPath(
-			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCountryModelImpl.FINDER_CACHE_ENABLED,
 			CommerceCountryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S_A",
 			new String[] {
@@ -5157,9 +4901,8 @@ public class CommerceCountryPersistenceImpl
 			CommerceCountryModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByC_S_A = new FinderPath(
-			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCountryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S_A",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByC_S_A",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Boolean.class.getName()
@@ -5181,9 +4924,6 @@ public class CommerceCountryPersistenceImpl
 
 	private static final String _SQL_SELECT_COMMERCECOUNTRY =
 		"SELECT commerceCountry FROM CommerceCountry commerceCountry";
-
-	private static final String _SQL_SELECT_COMMERCECOUNTRY_WHERE_PKS_IN =
-		"SELECT commerceCountry FROM CommerceCountry commerceCountry WHERE commerceCountryId IN (";
 
 	private static final String _SQL_SELECT_COMMERCECOUNTRY_WHERE =
 		"SELECT commerceCountry FROM CommerceCountry commerceCountry WHERE ";

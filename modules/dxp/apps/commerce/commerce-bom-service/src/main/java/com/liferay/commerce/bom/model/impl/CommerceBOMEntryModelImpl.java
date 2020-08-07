@@ -19,6 +19,7 @@ import com.liferay.commerce.bom.model.CommerceBOMEntryModel;
 import com.liferay.commerce.bom.model.CommerceBOMEntrySoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -72,19 +72,20 @@ public class CommerceBOMEntryModelImpl
 	public static final String TABLE_NAME = "CommerceBOMEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"commerceBOMEntryId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"number_", Types.INTEGER}, {"CPInstanceUuid", Types.VARCHAR},
-		{"CProductId", Types.BIGINT}, {"commerceBOMDefinitionId", Types.BIGINT},
-		{"positionX", Types.DOUBLE}, {"positionY", Types.DOUBLE},
-		{"radius", Types.DOUBLE}
+		{"mvccVersion", Types.BIGINT}, {"commerceBOMEntryId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"number_", Types.INTEGER},
+		{"CPInstanceUuid", Types.VARCHAR}, {"CProductId", Types.BIGINT},
+		{"commerceBOMDefinitionId", Types.BIGINT}, {"positionX", Types.DOUBLE},
+		{"positionY", Types.DOUBLE}, {"radius", Types.DOUBLE}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceBOMEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -101,7 +102,7 @@ public class CommerceBOMEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceBOMEntry (commerceBOMEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,number_ INTEGER,CPInstanceUuid VARCHAR(75) null,CProductId LONG,commerceBOMDefinitionId LONG,positionX DOUBLE,positionY DOUBLE,radius DOUBLE)";
+		"create table CommerceBOMEntry (mvccVersion LONG default 0 not null,commerceBOMEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,number_ INTEGER,CPInstanceUuid VARCHAR(75) null,CProductId LONG,commerceBOMDefinitionId LONG,positionX DOUBLE,positionY DOUBLE,radius DOUBLE)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceBOMEntry";
 
@@ -117,20 +118,23 @@ public class CommerceBOMEntryModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.bom.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.bom.model.CommerceBOMEntry"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.bom.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.bom.model.CommerceBOMEntry"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.bom.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.bom.model.CommerceBOMEntry"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long COMMERCEBOMDEFINITIONID_COLUMN_BITMASK = 1L;
 
@@ -149,6 +153,7 @@ public class CommerceBOMEntryModelImpl
 
 		CommerceBOMEntry model = new CommerceBOMEntryImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceBOMEntryId(soapModel.getCommerceBOMEntryId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
@@ -246,9 +251,6 @@ public class CommerceBOMEntryModelImpl
 				attributeGetterFunction.apply((CommerceBOMEntry)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -324,305 +326,98 @@ public class CommerceBOMEntryModelImpl
 				new LinkedHashMap<String, BiConsumer<CommerceBOMEntry, ?>>();
 
 		attributeGetterFunctions.put(
-			"commerceBOMEntryId",
-			new Function<CommerceBOMEntry, Object>() {
-
-				@Override
-				public Object apply(CommerceBOMEntry commerceBOMEntry) {
-					return commerceBOMEntry.getCommerceBOMEntryId();
-				}
-
-			});
+			"mvccVersion", CommerceBOMEntry::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceBOMEntry, Long>)
+				CommerceBOMEntry::setMvccVersion);
+		attributeGetterFunctions.put(
+			"commerceBOMEntryId", CommerceBOMEntry::getCommerceBOMEntryId);
 		attributeSetterBiConsumers.put(
 			"commerceBOMEntryId",
-			new BiConsumer<CommerceBOMEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceBOMEntry commerceBOMEntry,
-					Object commerceBOMEntryIdObject) {
-
-					commerceBOMEntry.setCommerceBOMEntryId(
-						(Long)commerceBOMEntryIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceBOMEntry, Long>)
+				CommerceBOMEntry::setCommerceBOMEntryId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommerceBOMEntry, Object>() {
-
-				@Override
-				public Object apply(CommerceBOMEntry commerceBOMEntry) {
-					return commerceBOMEntry.getCompanyId();
-				}
-
-			});
+			"companyId", CommerceBOMEntry::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommerceBOMEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceBOMEntry commerceBOMEntry, Object companyIdObject) {
-
-					commerceBOMEntry.setCompanyId((Long)companyIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommerceBOMEntry, Object>() {
-
-				@Override
-				public Object apply(CommerceBOMEntry commerceBOMEntry) {
-					return commerceBOMEntry.getUserId();
-				}
-
-			});
+			(BiConsumer<CommerceBOMEntry, Long>)CommerceBOMEntry::setCompanyId);
+		attributeGetterFunctions.put("userId", CommerceBOMEntry::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommerceBOMEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceBOMEntry commerceBOMEntry, Object userIdObject) {
-
-					commerceBOMEntry.setUserId((Long)userIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommerceBOMEntry, Object>() {
-
-				@Override
-				public Object apply(CommerceBOMEntry commerceBOMEntry) {
-					return commerceBOMEntry.getUserName();
-				}
-
-			});
+			(BiConsumer<CommerceBOMEntry, Long>)CommerceBOMEntry::setUserId);
+		attributeGetterFunctions.put("userName", CommerceBOMEntry::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommerceBOMEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceBOMEntry commerceBOMEntry, Object userNameObject) {
-
-					commerceBOMEntry.setUserName((String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceBOMEntry, String>)
+				CommerceBOMEntry::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommerceBOMEntry, Object>() {
-
-				@Override
-				public Object apply(CommerceBOMEntry commerceBOMEntry) {
-					return commerceBOMEntry.getCreateDate();
-				}
-
-			});
+			"createDate", CommerceBOMEntry::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommerceBOMEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceBOMEntry commerceBOMEntry,
-					Object createDateObject) {
-
-					commerceBOMEntry.setCreateDate((Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceBOMEntry, Date>)
+				CommerceBOMEntry::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CommerceBOMEntry, Object>() {
-
-				@Override
-				public Object apply(CommerceBOMEntry commerceBOMEntry) {
-					return commerceBOMEntry.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CommerceBOMEntry::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommerceBOMEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceBOMEntry commerceBOMEntry,
-					Object modifiedDateObject) {
-
-					commerceBOMEntry.setModifiedDate((Date)modifiedDateObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"number",
-			new Function<CommerceBOMEntry, Object>() {
-
-				@Override
-				public Object apply(CommerceBOMEntry commerceBOMEntry) {
-					return commerceBOMEntry.getNumber();
-				}
-
-			});
+			(BiConsumer<CommerceBOMEntry, Date>)
+				CommerceBOMEntry::setModifiedDate);
+		attributeGetterFunctions.put("number", CommerceBOMEntry::getNumber);
 		attributeSetterBiConsumers.put(
 			"number",
-			new BiConsumer<CommerceBOMEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceBOMEntry commerceBOMEntry, Object numberObject) {
-
-					commerceBOMEntry.setNumber((Integer)numberObject);
-				}
-
-			});
+			(BiConsumer<CommerceBOMEntry, Integer>)CommerceBOMEntry::setNumber);
 		attributeGetterFunctions.put(
-			"CPInstanceUuid",
-			new Function<CommerceBOMEntry, Object>() {
-
-				@Override
-				public Object apply(CommerceBOMEntry commerceBOMEntry) {
-					return commerceBOMEntry.getCPInstanceUuid();
-				}
-
-			});
+			"CPInstanceUuid", CommerceBOMEntry::getCPInstanceUuid);
 		attributeSetterBiConsumers.put(
 			"CPInstanceUuid",
-			new BiConsumer<CommerceBOMEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceBOMEntry commerceBOMEntry,
-					Object CPInstanceUuidObject) {
-
-					commerceBOMEntry.setCPInstanceUuid(
-						(String)CPInstanceUuidObject);
-				}
-
-			});
+			(BiConsumer<CommerceBOMEntry, String>)
+				CommerceBOMEntry::setCPInstanceUuid);
 		attributeGetterFunctions.put(
-			"CProductId",
-			new Function<CommerceBOMEntry, Object>() {
-
-				@Override
-				public Object apply(CommerceBOMEntry commerceBOMEntry) {
-					return commerceBOMEntry.getCProductId();
-				}
-
-			});
+			"CProductId", CommerceBOMEntry::getCProductId);
 		attributeSetterBiConsumers.put(
 			"CProductId",
-			new BiConsumer<CommerceBOMEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceBOMEntry commerceBOMEntry,
-					Object CProductIdObject) {
-
-					commerceBOMEntry.setCProductId((Long)CProductIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceBOMEntry, Long>)
+				CommerceBOMEntry::setCProductId);
 		attributeGetterFunctions.put(
 			"commerceBOMDefinitionId",
-			new Function<CommerceBOMEntry, Object>() {
-
-				@Override
-				public Object apply(CommerceBOMEntry commerceBOMEntry) {
-					return commerceBOMEntry.getCommerceBOMDefinitionId();
-				}
-
-			});
+			CommerceBOMEntry::getCommerceBOMDefinitionId);
 		attributeSetterBiConsumers.put(
 			"commerceBOMDefinitionId",
-			new BiConsumer<CommerceBOMEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceBOMEntry commerceBOMEntry,
-					Object commerceBOMDefinitionIdObject) {
-
-					commerceBOMEntry.setCommerceBOMDefinitionId(
-						(Long)commerceBOMDefinitionIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceBOMEntry, Long>)
+				CommerceBOMEntry::setCommerceBOMDefinitionId);
 		attributeGetterFunctions.put(
-			"positionX",
-			new Function<CommerceBOMEntry, Object>() {
-
-				@Override
-				public Object apply(CommerceBOMEntry commerceBOMEntry) {
-					return commerceBOMEntry.getPositionX();
-				}
-
-			});
+			"positionX", CommerceBOMEntry::getPositionX);
 		attributeSetterBiConsumers.put(
 			"positionX",
-			new BiConsumer<CommerceBOMEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceBOMEntry commerceBOMEntry, Object positionXObject) {
-
-					commerceBOMEntry.setPositionX((Double)positionXObject);
-				}
-
-			});
+			(BiConsumer<CommerceBOMEntry, Double>)
+				CommerceBOMEntry::setPositionX);
 		attributeGetterFunctions.put(
-			"positionY",
-			new Function<CommerceBOMEntry, Object>() {
-
-				@Override
-				public Object apply(CommerceBOMEntry commerceBOMEntry) {
-					return commerceBOMEntry.getPositionY();
-				}
-
-			});
+			"positionY", CommerceBOMEntry::getPositionY);
 		attributeSetterBiConsumers.put(
 			"positionY",
-			new BiConsumer<CommerceBOMEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceBOMEntry commerceBOMEntry, Object positionYObject) {
-
-					commerceBOMEntry.setPositionY((Double)positionYObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"radius",
-			new Function<CommerceBOMEntry, Object>() {
-
-				@Override
-				public Object apply(CommerceBOMEntry commerceBOMEntry) {
-					return commerceBOMEntry.getRadius();
-				}
-
-			});
+			(BiConsumer<CommerceBOMEntry, Double>)
+				CommerceBOMEntry::setPositionY);
+		attributeGetterFunctions.put("radius", CommerceBOMEntry::getRadius);
 		attributeSetterBiConsumers.put(
 			"radius",
-			new BiConsumer<CommerceBOMEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceBOMEntry commerceBOMEntry, Object radiusObject) {
-
-					commerceBOMEntry.setRadius((Double)radiusObject);
-				}
-
-			});
+			(BiConsumer<CommerceBOMEntry, Double>)CommerceBOMEntry::setRadius);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -848,6 +643,7 @@ public class CommerceBOMEntryModelImpl
 	public Object clone() {
 		CommerceBOMEntryImpl commerceBOMEntryImpl = new CommerceBOMEntryImpl();
 
+		commerceBOMEntryImpl.setMvccVersion(getMvccVersion());
 		commerceBOMEntryImpl.setCommerceBOMEntryId(getCommerceBOMEntryId());
 		commerceBOMEntryImpl.setCompanyId(getCompanyId());
 		commerceBOMEntryImpl.setUserId(getUserId());
@@ -916,11 +712,19 @@ public class CommerceBOMEntryModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -941,6 +745,8 @@ public class CommerceBOMEntryModelImpl
 	public CacheModel<CommerceBOMEntry> toCacheModel() {
 		CommerceBOMEntryCacheModel commerceBOMEntryCacheModel =
 			new CommerceBOMEntryCacheModel();
+
+		commerceBOMEntryCacheModel.mvccVersion = getMvccVersion();
 
 		commerceBOMEntryCacheModel.commerceBOMEntryId = getCommerceBOMEntryId();
 
@@ -1068,6 +874,7 @@ public class CommerceBOMEntryModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _commerceBOMEntryId;
 	private long _companyId;
 	private long _userId;

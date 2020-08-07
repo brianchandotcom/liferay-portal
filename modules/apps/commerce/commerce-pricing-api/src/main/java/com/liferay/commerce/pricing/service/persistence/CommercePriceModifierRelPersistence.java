@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.pricing.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.pricing.exception.NoSuchPriceModifierRelException;
 import com.liferay.commerce.pricing.model.CommercePriceModifierRel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce price modifier rel service.
@@ -45,9 +40,6 @@ public interface CommercePriceModifierRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommercePriceModifierRelUtil} to access the commerce price modifier rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommercePriceModifierRel> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce price modifier rels where commercePriceModifierId = &#63;.

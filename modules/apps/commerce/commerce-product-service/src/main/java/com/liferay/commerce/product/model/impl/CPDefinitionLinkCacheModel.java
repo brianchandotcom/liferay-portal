@@ -15,9 +15,10 @@
 package com.liferay.commerce.product.model.impl;
 
 import com.liferay.commerce.product.model.CPDefinitionLink;
+import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class CPDefinitionLinkCacheModel
-	implements CacheModel<CPDefinitionLink>, Externalizable {
+	implements CacheModel<CPDefinitionLink>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -48,8 +49,9 @@ public class CPDefinitionLinkCacheModel
 		CPDefinitionLinkCacheModel cpDefinitionLinkCacheModel =
 			(CPDefinitionLinkCacheModel)object;
 
-		if (CPDefinitionLinkId ==
-				cpDefinitionLinkCacheModel.CPDefinitionLinkId) {
+		if ((CPDefinitionLinkId ==
+				cpDefinitionLinkCacheModel.CPDefinitionLinkId) &&
+			(mvccVersion == cpDefinitionLinkCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -59,14 +61,28 @@ public class CPDefinitionLinkCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, CPDefinitionLinkId);
+		int hashCode = HashUtil.hash(0, CPDefinitionLinkId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", CPDefinitionLinkId=");
 		sb.append(CPDefinitionLinkId);
@@ -98,6 +114,8 @@ public class CPDefinitionLinkCacheModel
 	@Override
 	public CPDefinitionLink toEntityModel() {
 		CPDefinitionLinkImpl cpDefinitionLinkImpl = new CPDefinitionLinkImpl();
+
+		cpDefinitionLinkImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			cpDefinitionLinkImpl.setUuid("");
@@ -150,6 +168,7 @@ public class CPDefinitionLinkCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		CPDefinitionLinkId = objectInput.readLong();
@@ -173,6 +192,8 @@ public class CPDefinitionLinkCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -212,6 +233,7 @@ public class CPDefinitionLinkCacheModel
 		}
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long CPDefinitionLinkId;
 	public long groupId;

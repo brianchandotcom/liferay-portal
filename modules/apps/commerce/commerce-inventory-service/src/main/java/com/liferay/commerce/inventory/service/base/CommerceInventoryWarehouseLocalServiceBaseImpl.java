@@ -24,6 +24,7 @@ import com.liferay.commerce.inventory.service.persistence.CommerceInventoryWareh
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryWarehouseItemPersistence;
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryWarehousePersistence;
 import com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -154,6 +155,11 @@ public abstract class CommerceInventoryWarehouseLocalServiceBaseImpl
 
 		return commerceInventoryWarehousePersistence.remove(
 			commerceInventoryWarehouse);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return commerceInventoryWarehousePersistence.dslQuery(dslQuery);
 	}
 
 	@Override
@@ -330,6 +336,16 @@ public abstract class CommerceInventoryWarehouseLocalServiceBaseImpl
 
 		actionableDynamicQuery.setPrimaryKeyPropertyName(
 			"commerceInventoryWarehouseId");
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
+
+		return commerceInventoryWarehousePersistence.create(
+			((Long)primaryKeyObj).longValue());
 	}
 
 	/**

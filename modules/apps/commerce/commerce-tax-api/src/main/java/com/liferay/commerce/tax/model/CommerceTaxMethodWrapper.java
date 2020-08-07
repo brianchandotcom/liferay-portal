@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.tax.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,26 +31,18 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceTaxMethodWrapper
+	extends BaseModelWrapper<CommerceTaxMethod>
 	implements CommerceTaxMethod, ModelWrapper<CommerceTaxMethod> {
 
 	public CommerceTaxMethodWrapper(CommerceTaxMethod commerceTaxMethod) {
-		_commerceTaxMethod = commerceTaxMethod;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceTaxMethod.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceTaxMethod.class.getName();
+		super(commerceTaxMethod);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("commerceTaxMethodId", getCommerceTaxMethodId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -73,6 +61,12 @@ public class CommerceTaxMethodWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long commerceTaxMethodId = (Long)attributes.get("commerceTaxMethodId");
 
 		if (commerceTaxMethodId != null) {
@@ -146,17 +140,6 @@ public class CommerceTaxMethodWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CommerceTaxMethodWrapper(
-			(CommerceTaxMethod)_commerceTaxMethod.clone());
-	}
-
-	@Override
-	public int compareTo(CommerceTaxMethod commerceTaxMethod) {
-		return _commerceTaxMethod.compareTo(commerceTaxMethod);
-	}
-
 	/**
 	 * Returns the active of this commerce tax method.
 	 *
@@ -164,12 +147,12 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public boolean getActive() {
-		return _commerceTaxMethod.getActive();
+		return model.getActive();
 	}
 
 	@Override
 	public String[] getAvailableLanguageIds() {
-		return _commerceTaxMethod.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -179,7 +162,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public long getCommerceTaxMethodId() {
-		return _commerceTaxMethod.getCommerceTaxMethodId();
+		return model.getCommerceTaxMethodId();
 	}
 
 	/**
@@ -189,7 +172,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceTaxMethod.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -199,12 +182,12 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceTaxMethod.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _commerceTaxMethod.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -214,7 +197,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public String getDescription() {
-		return _commerceTaxMethod.getDescription();
+		return model.getDescription();
 	}
 
 	/**
@@ -225,7 +208,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public String getDescription(java.util.Locale locale) {
-		return _commerceTaxMethod.getDescription(locale);
+		return model.getDescription(locale);
 	}
 
 	/**
@@ -237,7 +220,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public String getDescription(java.util.Locale locale, boolean useDefault) {
-		return _commerceTaxMethod.getDescription(locale, useDefault);
+		return model.getDescription(locale, useDefault);
 	}
 
 	/**
@@ -248,7 +231,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public String getDescription(String languageId) {
-		return _commerceTaxMethod.getDescription(languageId);
+		return model.getDescription(languageId);
 	}
 
 	/**
@@ -260,17 +243,17 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return _commerceTaxMethod.getDescription(languageId, useDefault);
+		return model.getDescription(languageId, useDefault);
 	}
 
 	@Override
 	public String getDescriptionCurrentLanguageId() {
-		return _commerceTaxMethod.getDescriptionCurrentLanguageId();
+		return model.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
 	public String getDescriptionCurrentValue() {
-		return _commerceTaxMethod.getDescriptionCurrentValue();
+		return model.getDescriptionCurrentValue();
 	}
 
 	/**
@@ -280,7 +263,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public Map<java.util.Locale, String> getDescriptionMap() {
-		return _commerceTaxMethod.getDescriptionMap();
+		return model.getDescriptionMap();
 	}
 
 	/**
@@ -290,12 +273,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public String getEngineKey() {
-		return _commerceTaxMethod.getEngineKey();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceTaxMethod.getExpandoBridge();
+		return model.getEngineKey();
 	}
 
 	/**
@@ -305,7 +283,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _commerceTaxMethod.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -315,7 +293,17 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceTaxMethod.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce tax method.
+	 *
+	 * @return the mvcc version of this commerce tax method
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -325,7 +313,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public String getName() {
-		return _commerceTaxMethod.getName();
+		return model.getName();
 	}
 
 	/**
@@ -336,7 +324,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public String getName(java.util.Locale locale) {
-		return _commerceTaxMethod.getName(locale);
+		return model.getName(locale);
 	}
 
 	/**
@@ -348,7 +336,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public String getName(java.util.Locale locale, boolean useDefault) {
-		return _commerceTaxMethod.getName(locale, useDefault);
+		return model.getName(locale, useDefault);
 	}
 
 	/**
@@ -359,7 +347,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public String getName(String languageId) {
-		return _commerceTaxMethod.getName(languageId);
+		return model.getName(languageId);
 	}
 
 	/**
@@ -371,17 +359,17 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public String getName(String languageId, boolean useDefault) {
-		return _commerceTaxMethod.getName(languageId, useDefault);
+		return model.getName(languageId, useDefault);
 	}
 
 	@Override
 	public String getNameCurrentLanguageId() {
-		return _commerceTaxMethod.getNameCurrentLanguageId();
+		return model.getNameCurrentLanguageId();
 	}
 
 	@Override
 	public String getNameCurrentValue() {
-		return _commerceTaxMethod.getNameCurrentValue();
+		return model.getNameCurrentValue();
 	}
 
 	/**
@@ -391,7 +379,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public Map<java.util.Locale, String> getNameMap() {
-		return _commerceTaxMethod.getNameMap();
+		return model.getNameMap();
 	}
 
 	/**
@@ -401,7 +389,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public boolean getPercentage() {
-		return _commerceTaxMethod.getPercentage();
+		return model.getPercentage();
 	}
 
 	/**
@@ -411,12 +399,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceTaxMethod.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceTaxMethod.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -426,7 +409,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceTaxMethod.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -436,7 +419,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceTaxMethod.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -446,12 +429,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceTaxMethod.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceTaxMethod.hashCode();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -461,22 +439,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public boolean isActive() {
-		return _commerceTaxMethod.isActive();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceTaxMethod.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceTaxMethod.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceTaxMethod.isNew();
+		return model.isActive();
 	}
 
 	/**
@@ -486,19 +449,19 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public boolean isPercentage() {
-		return _commerceTaxMethod.isPercentage();
+		return model.isPercentage();
 	}
 
 	@Override
 	public void persist() {
-		_commerceTaxMethod.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
-		_commerceTaxMethod.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
@@ -506,7 +469,7 @@ public class CommerceTaxMethodWrapper
 			java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
-		_commerceTaxMethod.prepareLocalizedFieldsForImport(defaultImportLocale);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -516,12 +479,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public void setActive(boolean active) {
-		_commerceTaxMethod.setActive(active);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceTaxMethod.setCachedModel(cachedModel);
+		model.setActive(active);
 	}
 
 	/**
@@ -531,7 +489,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public void setCommerceTaxMethodId(long commerceTaxMethodId) {
-		_commerceTaxMethod.setCommerceTaxMethodId(commerceTaxMethodId);
+		model.setCommerceTaxMethodId(commerceTaxMethodId);
 	}
 
 	/**
@@ -541,7 +499,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceTaxMethod.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -551,7 +509,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceTaxMethod.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -561,7 +519,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public void setDescription(String description) {
-		_commerceTaxMethod.setDescription(description);
+		model.setDescription(description);
 	}
 
 	/**
@@ -572,7 +530,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public void setDescription(String description, java.util.Locale locale) {
-		_commerceTaxMethod.setDescription(description, locale);
+		model.setDescription(description, locale);
 	}
 
 	/**
@@ -587,12 +545,12 @@ public class CommerceTaxMethodWrapper
 		String description, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 
-		_commerceTaxMethod.setDescription(description, locale, defaultLocale);
+		model.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
 	public void setDescriptionCurrentLanguageId(String languageId) {
-		_commerceTaxMethod.setDescriptionCurrentLanguageId(languageId);
+		model.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -604,7 +562,7 @@ public class CommerceTaxMethodWrapper
 	public void setDescriptionMap(
 		Map<java.util.Locale, String> descriptionMap) {
 
-		_commerceTaxMethod.setDescriptionMap(descriptionMap);
+		model.setDescriptionMap(descriptionMap);
 	}
 
 	/**
@@ -618,7 +576,7 @@ public class CommerceTaxMethodWrapper
 		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
 
-		_commerceTaxMethod.setDescriptionMap(descriptionMap, defaultLocale);
+		model.setDescriptionMap(descriptionMap, defaultLocale);
 	}
 
 	/**
@@ -628,24 +586,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public void setEngineKey(String engineKey) {
-		_commerceTaxMethod.setEngineKey(engineKey);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceTaxMethod.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceTaxMethod.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceTaxMethod.setExpandoBridgeAttributes(serviceContext);
+		model.setEngineKey(engineKey);
 	}
 
 	/**
@@ -655,7 +596,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_commerceTaxMethod.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -665,7 +606,17 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceTaxMethod.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this commerce tax method.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce tax method
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -675,7 +626,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public void setName(String name) {
-		_commerceTaxMethod.setName(name);
+		model.setName(name);
 	}
 
 	/**
@@ -686,7 +637,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public void setName(String name, java.util.Locale locale) {
-		_commerceTaxMethod.setName(name, locale);
+		model.setName(name, locale);
 	}
 
 	/**
@@ -700,12 +651,12 @@ public class CommerceTaxMethodWrapper
 	public void setName(
 		String name, java.util.Locale locale, java.util.Locale defaultLocale) {
 
-		_commerceTaxMethod.setName(name, locale, defaultLocale);
+		model.setName(name, locale, defaultLocale);
 	}
 
 	@Override
 	public void setNameCurrentLanguageId(String languageId) {
-		_commerceTaxMethod.setNameCurrentLanguageId(languageId);
+		model.setNameCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -715,7 +666,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap) {
-		_commerceTaxMethod.setNameMap(nameMap);
+		model.setNameMap(nameMap);
 	}
 
 	/**
@@ -728,12 +679,7 @@ public class CommerceTaxMethodWrapper
 	public void setNameMap(
 		Map<java.util.Locale, String> nameMap, java.util.Locale defaultLocale) {
 
-		_commerceTaxMethod.setNameMap(nameMap, defaultLocale);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_commerceTaxMethod.setNew(n);
+		model.setNameMap(nameMap, defaultLocale);
 	}
 
 	/**
@@ -743,7 +689,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public void setPercentage(boolean percentage) {
-		_commerceTaxMethod.setPercentage(percentage);
+		model.setPercentage(percentage);
 	}
 
 	/**
@@ -753,12 +699,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceTaxMethod.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceTaxMethod.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -768,7 +709,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceTaxMethod.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -778,7 +719,7 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceTaxMethod.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -788,81 +729,14 @@ public class CommerceTaxMethodWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceTaxMethod.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceTaxMethod>
-		toCacheModel() {
+	protected CommerceTaxMethodWrapper wrap(
+		CommerceTaxMethod commerceTaxMethod) {
 
-		return _commerceTaxMethod.toCacheModel();
+		return new CommerceTaxMethodWrapper(commerceTaxMethod);
 	}
-
-	@Override
-	public CommerceTaxMethod toEscapedModel() {
-		return new CommerceTaxMethodWrapper(
-			_commerceTaxMethod.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commerceTaxMethod.toString();
-	}
-
-	@Override
-	public CommerceTaxMethod toUnescapedModel() {
-		return new CommerceTaxMethodWrapper(
-			_commerceTaxMethod.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceTaxMethod.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceTaxMethodWrapper)) {
-			return false;
-		}
-
-		CommerceTaxMethodWrapper commerceTaxMethodWrapper =
-			(CommerceTaxMethodWrapper)object;
-
-		if (Objects.equals(
-				_commerceTaxMethod,
-				commerceTaxMethodWrapper._commerceTaxMethod)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceTaxMethod getWrappedModel() {
-		return _commerceTaxMethod;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceTaxMethod.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceTaxMethod.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceTaxMethod.resetOriginalValues();
-	}
-
-	private final CommerceTaxMethod _commerceTaxMethod;
 
 }

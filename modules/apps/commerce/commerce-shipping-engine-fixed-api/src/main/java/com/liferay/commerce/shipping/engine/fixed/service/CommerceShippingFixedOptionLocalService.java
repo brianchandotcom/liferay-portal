@@ -14,9 +14,8 @@
 
 package com.liferay.commerce.shipping.engine.fixed.service;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -41,6 +40,8 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for CommerceShippingFixedOption. Methods of this
@@ -107,6 +108,12 @@ public interface CommerceShippingFixedOptionLocalService
 		long commerceShippingFixedOptionId);
 
 	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
 	 * Deletes the commerce shipping fixed option from the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -145,6 +152,9 @@ public interface CommerceShippingFixedOptionLocalService
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();

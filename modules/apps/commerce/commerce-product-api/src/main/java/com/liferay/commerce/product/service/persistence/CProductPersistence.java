@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.product.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.product.exception.NoSuchCProductException;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the c product service.
@@ -44,9 +39,6 @@ public interface CProductPersistence extends BasePersistence<CProduct> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CProductUtil} to access the c product persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CProduct> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the c products where uuid = &#63;.
@@ -705,8 +697,5 @@ public interface CProductPersistence extends BasePersistence<CProduct> {
 	 * @return the number of c products
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

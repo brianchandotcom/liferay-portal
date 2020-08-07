@@ -18,6 +18,7 @@ import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProces
 import com.liferay.commerce.data.integration.service.CommerceDataIntegrationProcessLogLocalService;
 import com.liferay.commerce.data.integration.service.persistence.CommerceDataIntegrationProcessLogPersistence;
 import com.liferay.commerce.data.integration.service.persistence.CommerceDataIntegrationProcessPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -153,6 +154,11 @@ public abstract class CommerceDataIntegrationProcessLogLocalServiceBaseImpl
 
 		return commerceDataIntegrationProcessLogPersistence.remove(
 			commerceDataIntegrationProcessLog);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return commerceDataIntegrationProcessLogPersistence.dslQuery(dslQuery);
 	}
 
 	@Override
@@ -317,6 +323,16 @@ public abstract class CommerceDataIntegrationProcessLogLocalServiceBaseImpl
 
 		actionableDynamicQuery.setPrimaryKeyPropertyName(
 			"commerceDataIntegrationProcessLogId");
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
+
+		return commerceDataIntegrationProcessLogPersistence.create(
+			((Long)primaryKeyObj).longValue());
 	}
 
 	/**

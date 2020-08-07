@@ -19,6 +19,7 @@ import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItemMo
 import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItemSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -116,20 +116,23 @@ public class CommerceInventoryReplenishmentItemModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.inventory.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.inventory.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.inventory.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long AVAILABILITYDATE_COLUMN_BITMASK = 1L;
 
@@ -257,9 +260,6 @@ public class CommerceInventoryReplenishmentItemModelImpl
 					(CommerceInventoryReplenishmentItem)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -343,318 +343,79 @@ public class CommerceInventoryReplenishmentItemModelImpl
 					 BiConsumer<CommerceInventoryReplenishmentItem, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion",
-			new Function<CommerceInventoryReplenishmentItem, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem) {
-
-					return commerceInventoryReplenishmentItem.getMvccVersion();
-				}
-
-			});
+			"mvccVersion", CommerceInventoryReplenishmentItem::getMvccVersion);
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
-			new BiConsumer<CommerceInventoryReplenishmentItem, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem,
-					Object mvccVersionObject) {
-
-					commerceInventoryReplenishmentItem.setMvccVersion(
-						(Long)mvccVersionObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryReplenishmentItem, Long>)
+				CommerceInventoryReplenishmentItem::setMvccVersion);
 		attributeGetterFunctions.put(
 			"commerceInventoryReplenishmentItemId",
-			new Function<CommerceInventoryReplenishmentItem, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem) {
-
-					return commerceInventoryReplenishmentItem.
-						getCommerceInventoryReplenishmentItemId();
-				}
-
-			});
+			CommerceInventoryReplenishmentItem::
+				getCommerceInventoryReplenishmentItemId);
 		attributeSetterBiConsumers.put(
 			"commerceInventoryReplenishmentItemId",
-			new BiConsumer<CommerceInventoryReplenishmentItem, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem,
-					Object commerceInventoryReplenishmentItemIdObject) {
-
-					commerceInventoryReplenishmentItem.
-						setCommerceInventoryReplenishmentItemId(
-							(Long)commerceInventoryReplenishmentItemIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryReplenishmentItem, Long>)
+				CommerceInventoryReplenishmentItem::
+					setCommerceInventoryReplenishmentItemId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommerceInventoryReplenishmentItem, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem) {
-
-					return commerceInventoryReplenishmentItem.getCompanyId();
-				}
-
-			});
+			"companyId", CommerceInventoryReplenishmentItem::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommerceInventoryReplenishmentItem, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem,
-					Object companyIdObject) {
-
-					commerceInventoryReplenishmentItem.setCompanyId(
-						(Long)companyIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryReplenishmentItem, Long>)
+				CommerceInventoryReplenishmentItem::setCompanyId);
 		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommerceInventoryReplenishmentItem, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem) {
-
-					return commerceInventoryReplenishmentItem.getUserId();
-				}
-
-			});
+			"userId", CommerceInventoryReplenishmentItem::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommerceInventoryReplenishmentItem, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem,
-					Object userIdObject) {
-
-					commerceInventoryReplenishmentItem.setUserId(
-						(Long)userIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryReplenishmentItem, Long>)
+				CommerceInventoryReplenishmentItem::setUserId);
 		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommerceInventoryReplenishmentItem, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem) {
-
-					return commerceInventoryReplenishmentItem.getUserName();
-				}
-
-			});
+			"userName", CommerceInventoryReplenishmentItem::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommerceInventoryReplenishmentItem, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem,
-					Object userNameObject) {
-
-					commerceInventoryReplenishmentItem.setUserName(
-						(String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryReplenishmentItem, String>)
+				CommerceInventoryReplenishmentItem::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommerceInventoryReplenishmentItem, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem) {
-
-					return commerceInventoryReplenishmentItem.getCreateDate();
-				}
-
-			});
+			"createDate", CommerceInventoryReplenishmentItem::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommerceInventoryReplenishmentItem, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem,
-					Object createDateObject) {
-
-					commerceInventoryReplenishmentItem.setCreateDate(
-						(Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryReplenishmentItem, Date>)
+				CommerceInventoryReplenishmentItem::setCreateDate);
 		attributeGetterFunctions.put(
 			"modifiedDate",
-			new Function<CommerceInventoryReplenishmentItem, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem) {
-
-					return commerceInventoryReplenishmentItem.getModifiedDate();
-				}
-
-			});
+			CommerceInventoryReplenishmentItem::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommerceInventoryReplenishmentItem, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem,
-					Object modifiedDateObject) {
-
-					commerceInventoryReplenishmentItem.setModifiedDate(
-						(Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryReplenishmentItem, Date>)
+				CommerceInventoryReplenishmentItem::setModifiedDate);
 		attributeGetterFunctions.put(
 			"commerceInventoryWarehouseId",
-			new Function<CommerceInventoryReplenishmentItem, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem) {
-
-					return commerceInventoryReplenishmentItem.
-						getCommerceInventoryWarehouseId();
-				}
-
-			});
+			CommerceInventoryReplenishmentItem::
+				getCommerceInventoryWarehouseId);
 		attributeSetterBiConsumers.put(
 			"commerceInventoryWarehouseId",
-			new BiConsumer<CommerceInventoryReplenishmentItem, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem,
-					Object commerceInventoryWarehouseIdObject) {
-
-					commerceInventoryReplenishmentItem.
-						setCommerceInventoryWarehouseId(
-							(Long)commerceInventoryWarehouseIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryReplenishmentItem, Long>)
+				CommerceInventoryReplenishmentItem::
+					setCommerceInventoryWarehouseId);
 		attributeGetterFunctions.put(
-			"sku",
-			new Function<CommerceInventoryReplenishmentItem, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem) {
-
-					return commerceInventoryReplenishmentItem.getSku();
-				}
-
-			});
+			"sku", CommerceInventoryReplenishmentItem::getSku);
 		attributeSetterBiConsumers.put(
 			"sku",
-			new BiConsumer<CommerceInventoryReplenishmentItem, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem,
-					Object skuObject) {
-
-					commerceInventoryReplenishmentItem.setSku(
-						(String)skuObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryReplenishmentItem, String>)
+				CommerceInventoryReplenishmentItem::setSku);
 		attributeGetterFunctions.put(
 			"availabilityDate",
-			new Function<CommerceInventoryReplenishmentItem, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem) {
-
-					return commerceInventoryReplenishmentItem.
-						getAvailabilityDate();
-				}
-
-			});
+			CommerceInventoryReplenishmentItem::getAvailabilityDate);
 		attributeSetterBiConsumers.put(
 			"availabilityDate",
-			new BiConsumer<CommerceInventoryReplenishmentItem, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem,
-					Object availabilityDateObject) {
-
-					commerceInventoryReplenishmentItem.setAvailabilityDate(
-						(Date)availabilityDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryReplenishmentItem, Date>)
+				CommerceInventoryReplenishmentItem::setAvailabilityDate);
 		attributeGetterFunctions.put(
-			"quantity",
-			new Function<CommerceInventoryReplenishmentItem, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem) {
-
-					return commerceInventoryReplenishmentItem.getQuantity();
-				}
-
-			});
+			"quantity", CommerceInventoryReplenishmentItem::getQuantity);
 		attributeSetterBiConsumers.put(
 			"quantity",
-			new BiConsumer<CommerceInventoryReplenishmentItem, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem,
-					Object quantityObject) {
-
-					commerceInventoryReplenishmentItem.setQuantity(
-						(Integer)quantityObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryReplenishmentItem, Integer>)
+				CommerceInventoryReplenishmentItem::setQuantity);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -971,11 +732,19 @@ public class CommerceInventoryReplenishmentItemModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;

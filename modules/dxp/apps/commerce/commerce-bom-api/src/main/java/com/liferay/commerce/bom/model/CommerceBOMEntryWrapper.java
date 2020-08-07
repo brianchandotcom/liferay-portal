@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.bom.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,26 +31,18 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceBOMEntryWrapper
+	extends BaseModelWrapper<CommerceBOMEntry>
 	implements CommerceBOMEntry, ModelWrapper<CommerceBOMEntry> {
 
 	public CommerceBOMEntryWrapper(CommerceBOMEntry commerceBOMEntry) {
-		_commerceBOMEntry = commerceBOMEntry;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceBOMEntry.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceBOMEntry.class.getName();
+		super(commerceBOMEntry);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("commerceBOMEntryId", getCommerceBOMEntryId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -74,6 +62,12 @@ public class CommerceBOMEntryWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long commerceBOMEntryId = (Long)attributes.get("commerceBOMEntryId");
 
 		if (commerceBOMEntryId != null) {
@@ -154,17 +148,6 @@ public class CommerceBOMEntryWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CommerceBOMEntryWrapper(
-			(CommerceBOMEntry)_commerceBOMEntry.clone());
-	}
-
-	@Override
-	public int compareTo(CommerceBOMEntry commerceBOMEntry) {
-		return _commerceBOMEntry.compareTo(commerceBOMEntry);
-	}
-
 	/**
 	 * Returns the commerce bom definition ID of this commerce bom entry.
 	 *
@@ -172,7 +155,7 @@ public class CommerceBOMEntryWrapper
 	 */
 	@Override
 	public long getCommerceBOMDefinitionId() {
-		return _commerceBOMEntry.getCommerceBOMDefinitionId();
+		return model.getCommerceBOMDefinitionId();
 	}
 
 	/**
@@ -182,7 +165,7 @@ public class CommerceBOMEntryWrapper
 	 */
 	@Override
 	public long getCommerceBOMEntryId() {
-		return _commerceBOMEntry.getCommerceBOMEntryId();
+		return model.getCommerceBOMEntryId();
 	}
 
 	/**
@@ -192,7 +175,7 @@ public class CommerceBOMEntryWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceBOMEntry.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -202,7 +185,7 @@ public class CommerceBOMEntryWrapper
 	 */
 	@Override
 	public String getCPInstanceUuid() {
-		return _commerceBOMEntry.getCPInstanceUuid();
+		return model.getCPInstanceUuid();
 	}
 
 	/**
@@ -212,7 +195,7 @@ public class CommerceBOMEntryWrapper
 	 */
 	@Override
 	public long getCProductId() {
-		return _commerceBOMEntry.getCProductId();
+		return model.getCProductId();
 	}
 
 	/**
@@ -222,12 +205,7 @@ public class CommerceBOMEntryWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceBOMEntry.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceBOMEntry.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -237,7 +215,17 @@ public class CommerceBOMEntryWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceBOMEntry.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce bom entry.
+	 *
+	 * @return the mvcc version of this commerce bom entry
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -247,7 +235,7 @@ public class CommerceBOMEntryWrapper
 	 */
 	@Override
 	public int getNumber() {
-		return _commerceBOMEntry.getNumber();
+		return model.getNumber();
 	}
 
 	/**
@@ -257,7 +245,7 @@ public class CommerceBOMEntryWrapper
 	 */
 	@Override
 	public double getPositionX() {
-		return _commerceBOMEntry.getPositionX();
+		return model.getPositionX();
 	}
 
 	/**
@@ -267,7 +255,7 @@ public class CommerceBOMEntryWrapper
 	 */
 	@Override
 	public double getPositionY() {
-		return _commerceBOMEntry.getPositionY();
+		return model.getPositionY();
 	}
 
 	/**
@@ -277,12 +265,7 @@ public class CommerceBOMEntryWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceBOMEntry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceBOMEntry.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -292,7 +275,7 @@ public class CommerceBOMEntryWrapper
 	 */
 	@Override
 	public double getRadius() {
-		return _commerceBOMEntry.getRadius();
+		return model.getRadius();
 	}
 
 	/**
@@ -302,7 +285,7 @@ public class CommerceBOMEntryWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceBOMEntry.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -312,7 +295,7 @@ public class CommerceBOMEntryWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceBOMEntry.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -322,37 +305,12 @@ public class CommerceBOMEntryWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceBOMEntry.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceBOMEntry.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceBOMEntry.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceBOMEntry.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceBOMEntry.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_commerceBOMEntry.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceBOMEntry.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -362,7 +320,7 @@ public class CommerceBOMEntryWrapper
 	 */
 	@Override
 	public void setCommerceBOMDefinitionId(long commerceBOMDefinitionId) {
-		_commerceBOMEntry.setCommerceBOMDefinitionId(commerceBOMDefinitionId);
+		model.setCommerceBOMDefinitionId(commerceBOMDefinitionId);
 	}
 
 	/**
@@ -372,7 +330,7 @@ public class CommerceBOMEntryWrapper
 	 */
 	@Override
 	public void setCommerceBOMEntryId(long commerceBOMEntryId) {
-		_commerceBOMEntry.setCommerceBOMEntryId(commerceBOMEntryId);
+		model.setCommerceBOMEntryId(commerceBOMEntryId);
 	}
 
 	/**
@@ -382,7 +340,7 @@ public class CommerceBOMEntryWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceBOMEntry.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -392,7 +350,7 @@ public class CommerceBOMEntryWrapper
 	 */
 	@Override
 	public void setCPInstanceUuid(String CPInstanceUuid) {
-		_commerceBOMEntry.setCPInstanceUuid(CPInstanceUuid);
+		model.setCPInstanceUuid(CPInstanceUuid);
 	}
 
 	/**
@@ -402,7 +360,7 @@ public class CommerceBOMEntryWrapper
 	 */
 	@Override
 	public void setCProductId(long CProductId) {
-		_commerceBOMEntry.setCProductId(CProductId);
+		model.setCProductId(CProductId);
 	}
 
 	/**
@@ -412,24 +370,7 @@ public class CommerceBOMEntryWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceBOMEntry.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceBOMEntry.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceBOMEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceBOMEntry.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -439,12 +380,17 @@ public class CommerceBOMEntryWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceBOMEntry.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this commerce bom entry.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce bom entry
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_commerceBOMEntry.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -454,7 +400,7 @@ public class CommerceBOMEntryWrapper
 	 */
 	@Override
 	public void setNumber(int number) {
-		_commerceBOMEntry.setNumber(number);
+		model.setNumber(number);
 	}
 
 	/**
@@ -464,7 +410,7 @@ public class CommerceBOMEntryWrapper
 	 */
 	@Override
 	public void setPositionX(double positionX) {
-		_commerceBOMEntry.setPositionX(positionX);
+		model.setPositionX(positionX);
 	}
 
 	/**
@@ -474,7 +420,7 @@ public class CommerceBOMEntryWrapper
 	 */
 	@Override
 	public void setPositionY(double positionY) {
-		_commerceBOMEntry.setPositionY(positionY);
+		model.setPositionY(positionY);
 	}
 
 	/**
@@ -484,12 +430,7 @@ public class CommerceBOMEntryWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceBOMEntry.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceBOMEntry.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -499,7 +440,7 @@ public class CommerceBOMEntryWrapper
 	 */
 	@Override
 	public void setRadius(double radius) {
-		_commerceBOMEntry.setRadius(radius);
+		model.setRadius(radius);
 	}
 
 	/**
@@ -509,7 +450,7 @@ public class CommerceBOMEntryWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceBOMEntry.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -519,7 +460,7 @@ public class CommerceBOMEntryWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceBOMEntry.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -529,79 +470,12 @@ public class CommerceBOMEntryWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceBOMEntry.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceBOMEntry>
-		toCacheModel() {
-
-		return _commerceBOMEntry.toCacheModel();
+	protected CommerceBOMEntryWrapper wrap(CommerceBOMEntry commerceBOMEntry) {
+		return new CommerceBOMEntryWrapper(commerceBOMEntry);
 	}
-
-	@Override
-	public CommerceBOMEntry toEscapedModel() {
-		return new CommerceBOMEntryWrapper(_commerceBOMEntry.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commerceBOMEntry.toString();
-	}
-
-	@Override
-	public CommerceBOMEntry toUnescapedModel() {
-		return new CommerceBOMEntryWrapper(
-			_commerceBOMEntry.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceBOMEntry.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceBOMEntryWrapper)) {
-			return false;
-		}
-
-		CommerceBOMEntryWrapper commerceBOMEntryWrapper =
-			(CommerceBOMEntryWrapper)object;
-
-		if (Objects.equals(
-				_commerceBOMEntry, commerceBOMEntryWrapper._commerceBOMEntry)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceBOMEntry getWrappedModel() {
-		return _commerceBOMEntry;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceBOMEntry.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceBOMEntry.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceBOMEntry.resetOriginalValues();
-	}
-
-	private final CommerceBOMEntry _commerceBOMEntry;
 
 }

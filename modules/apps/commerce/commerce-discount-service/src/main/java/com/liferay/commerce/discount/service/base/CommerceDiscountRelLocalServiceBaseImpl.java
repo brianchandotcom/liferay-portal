@@ -27,6 +27,7 @@ import com.liferay.commerce.discount.service.persistence.CommerceDiscountRelPers
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountRuleFinder;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountRulePersistence;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountUsageEntryPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -153,6 +154,11 @@ public abstract class CommerceDiscountRelLocalServiceBaseImpl
 		throws PortalException {
 
 		return commerceDiscountRelPersistence.remove(commerceDiscountRel);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return commerceDiscountRelPersistence.dslQuery(dslQuery);
 	}
 
 	@Override
@@ -313,6 +319,16 @@ public abstract class CommerceDiscountRelLocalServiceBaseImpl
 
 		actionableDynamicQuery.setPrimaryKeyPropertyName(
 			"commerceDiscountRelId");
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
+
+		return commerceDiscountRelPersistence.create(
+			((Long)primaryKeyObj).longValue());
 	}
 
 	/**

@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.account.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.account.exception.NoSuchAccountException;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce account service.
@@ -45,9 +40,6 @@ public interface CommerceAccountPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceAccountUtil} to access the commerce account persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceAccount> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce accounts where companyId = &#63;.
@@ -653,8 +645,5 @@ public interface CommerceAccountPersistence
 	 * @return the number of commerce accounts
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

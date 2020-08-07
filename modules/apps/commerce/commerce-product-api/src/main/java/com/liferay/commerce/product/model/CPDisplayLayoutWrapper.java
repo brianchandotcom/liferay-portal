@@ -14,17 +14,13 @@
 
 package com.liferay.commerce.product.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,26 +32,18 @@ import java.util.Objects;
  * @generated
  */
 public class CPDisplayLayoutWrapper
+	extends BaseModelWrapper<CPDisplayLayout>
 	implements CPDisplayLayout, ModelWrapper<CPDisplayLayout> {
 
 	public CPDisplayLayoutWrapper(CPDisplayLayout cpDisplayLayout) {
-		_cpDisplayLayout = cpDisplayLayout;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CPDisplayLayout.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CPDisplayLayout.class.getName();
+		super(cpDisplayLayout);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("CPDisplayLayoutId", getCPDisplayLayoutId());
 		attributes.put("groupId", getGroupId());
@@ -73,6 +61,12 @@ public class CPDisplayLayoutWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -141,29 +135,18 @@ public class CPDisplayLayoutWrapper
 	}
 
 	@Override
-	public Object clone() {
-		return new CPDisplayLayoutWrapper(
-			(CPDisplayLayout)_cpDisplayLayout.clone());
-	}
-
-	@Override
-	public int compareTo(CPDisplayLayout cpDisplayLayout) {
-		return _cpDisplayLayout.compareTo(cpDisplayLayout);
-	}
-
-	@Override
 	public com.liferay.asset.kernel.model.AssetCategory fetchAssetCategory() {
-		return _cpDisplayLayout.fetchAssetCategory();
+		return model.fetchAssetCategory();
 	}
 
 	@Override
 	public CPDefinition fetchCPDefinition() {
-		return _cpDisplayLayout.fetchCPDefinition();
+		return model.fetchCPDefinition();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.model.Layout fetchLayout() {
-		return _cpDisplayLayout.fetchLayout();
+		return model.fetchLayout();
 	}
 
 	/**
@@ -173,7 +156,7 @@ public class CPDisplayLayoutWrapper
 	 */
 	@Override
 	public String getClassName() {
-		return _cpDisplayLayout.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -183,7 +166,7 @@ public class CPDisplayLayoutWrapper
 	 */
 	@Override
 	public long getClassNameId() {
-		return _cpDisplayLayout.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -193,7 +176,7 @@ public class CPDisplayLayoutWrapper
 	 */
 	@Override
 	public long getClassPK() {
-		return _cpDisplayLayout.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -203,7 +186,7 @@ public class CPDisplayLayoutWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _cpDisplayLayout.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -213,7 +196,7 @@ public class CPDisplayLayoutWrapper
 	 */
 	@Override
 	public long getCPDisplayLayoutId() {
-		return _cpDisplayLayout.getCPDisplayLayoutId();
+		return model.getCPDisplayLayoutId();
 	}
 
 	/**
@@ -223,12 +206,7 @@ public class CPDisplayLayoutWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _cpDisplayLayout.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _cpDisplayLayout.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -238,7 +216,7 @@ public class CPDisplayLayoutWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _cpDisplayLayout.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -248,7 +226,7 @@ public class CPDisplayLayoutWrapper
 	 */
 	@Override
 	public String getLayoutUuid() {
-		return _cpDisplayLayout.getLayoutUuid();
+		return model.getLayoutUuid();
 	}
 
 	/**
@@ -258,7 +236,17 @@ public class CPDisplayLayoutWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _cpDisplayLayout.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this cp display layout.
+	 *
+	 * @return the mvcc version of this cp display layout
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -268,12 +256,7 @@ public class CPDisplayLayoutWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _cpDisplayLayout.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _cpDisplayLayout.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -283,7 +266,7 @@ public class CPDisplayLayoutWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _cpDisplayLayout.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -293,7 +276,7 @@ public class CPDisplayLayoutWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _cpDisplayLayout.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -303,7 +286,7 @@ public class CPDisplayLayoutWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _cpDisplayLayout.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -313,42 +296,17 @@ public class CPDisplayLayoutWrapper
 	 */
 	@Override
 	public String getUuid() {
-		return _cpDisplayLayout.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _cpDisplayLayout.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _cpDisplayLayout.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _cpDisplayLayout.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _cpDisplayLayout.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_cpDisplayLayout.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_cpDisplayLayout.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_cpDisplayLayout.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -358,7 +316,7 @@ public class CPDisplayLayoutWrapper
 	 */
 	@Override
 	public void setClassNameId(long classNameId) {
-		_cpDisplayLayout.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -368,7 +326,7 @@ public class CPDisplayLayoutWrapper
 	 */
 	@Override
 	public void setClassPK(long classPK) {
-		_cpDisplayLayout.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -378,7 +336,7 @@ public class CPDisplayLayoutWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_cpDisplayLayout.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -388,7 +346,7 @@ public class CPDisplayLayoutWrapper
 	 */
 	@Override
 	public void setCPDisplayLayoutId(long CPDisplayLayoutId) {
-		_cpDisplayLayout.setCPDisplayLayoutId(CPDisplayLayoutId);
+		model.setCPDisplayLayoutId(CPDisplayLayoutId);
 	}
 
 	/**
@@ -398,24 +356,7 @@ public class CPDisplayLayoutWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_cpDisplayLayout.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_cpDisplayLayout.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_cpDisplayLayout.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_cpDisplayLayout.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -425,7 +366,7 @@ public class CPDisplayLayoutWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_cpDisplayLayout.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -435,7 +376,7 @@ public class CPDisplayLayoutWrapper
 	 */
 	@Override
 	public void setLayoutUuid(String layoutUuid) {
-		_cpDisplayLayout.setLayoutUuid(layoutUuid);
+		model.setLayoutUuid(layoutUuid);
 	}
 
 	/**
@@ -445,12 +386,17 @@ public class CPDisplayLayoutWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_cpDisplayLayout.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this cp display layout.
+	 *
+	 * @param mvccVersion the mvcc version of this cp display layout
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_cpDisplayLayout.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -460,12 +406,7 @@ public class CPDisplayLayoutWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_cpDisplayLayout.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_cpDisplayLayout.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -475,7 +416,7 @@ public class CPDisplayLayoutWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_cpDisplayLayout.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -485,7 +426,7 @@ public class CPDisplayLayoutWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_cpDisplayLayout.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -495,7 +436,7 @@ public class CPDisplayLayoutWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_cpDisplayLayout.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -505,83 +446,17 @@ public class CPDisplayLayoutWrapper
 	 */
 	@Override
 	public void setUuid(String uuid) {
-		_cpDisplayLayout.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CPDisplayLayout>
-		toCacheModel() {
-
-		return _cpDisplayLayout.toCacheModel();
-	}
-
-	@Override
-	public CPDisplayLayout toEscapedModel() {
-		return new CPDisplayLayoutWrapper(_cpDisplayLayout.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _cpDisplayLayout.toString();
-	}
-
-	@Override
-	public CPDisplayLayout toUnescapedModel() {
-		return new CPDisplayLayoutWrapper(_cpDisplayLayout.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _cpDisplayLayout.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CPDisplayLayoutWrapper)) {
-			return false;
-		}
-
-		CPDisplayLayoutWrapper cpDisplayLayoutWrapper =
-			(CPDisplayLayoutWrapper)object;
-
-		if (Objects.equals(
-				_cpDisplayLayout, cpDisplayLayoutWrapper._cpDisplayLayout)) {
-
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _cpDisplayLayout.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public CPDisplayLayout getWrappedModel() {
-		return _cpDisplayLayout;
+	protected CPDisplayLayoutWrapper wrap(CPDisplayLayout cpDisplayLayout) {
+		return new CPDisplayLayoutWrapper(cpDisplayLayout);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _cpDisplayLayout.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _cpDisplayLayout.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_cpDisplayLayout.resetOriginalValues();
-	}
-
-	private final CPDisplayLayout _cpDisplayLayout;
 
 }

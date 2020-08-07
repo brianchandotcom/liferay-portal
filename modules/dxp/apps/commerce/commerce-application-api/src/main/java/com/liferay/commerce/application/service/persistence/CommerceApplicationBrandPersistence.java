@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.application.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.application.exception.NoSuchApplicationBrandException;
 import com.liferay.commerce.application.model.CommerceApplicationBrand;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce application brand service.
@@ -45,9 +40,6 @@ public interface CommerceApplicationBrandPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceApplicationBrandUtil} to access the commerce application brand persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceApplicationBrand> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce application brands where companyId = &#63;.

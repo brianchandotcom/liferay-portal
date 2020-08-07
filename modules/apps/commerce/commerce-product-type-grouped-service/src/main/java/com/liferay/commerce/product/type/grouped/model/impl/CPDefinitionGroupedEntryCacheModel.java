@@ -15,9 +15,10 @@
 package com.liferay.commerce.product.type.grouped.model.impl;
 
 import com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry;
+import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class CPDefinitionGroupedEntryCacheModel
-	implements CacheModel<CPDefinitionGroupedEntry>, Externalizable {
+	implements CacheModel<CPDefinitionGroupedEntry>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -48,8 +49,10 @@ public class CPDefinitionGroupedEntryCacheModel
 		CPDefinitionGroupedEntryCacheModel cpDefinitionGroupedEntryCacheModel =
 			(CPDefinitionGroupedEntryCacheModel)object;
 
-		if (CPDefinitionGroupedEntryId ==
-				cpDefinitionGroupedEntryCacheModel.CPDefinitionGroupedEntryId) {
+		if ((CPDefinitionGroupedEntryId ==
+				cpDefinitionGroupedEntryCacheModel.
+					CPDefinitionGroupedEntryId) &&
+			(mvccVersion == cpDefinitionGroupedEntryCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -59,14 +62,28 @@ public class CPDefinitionGroupedEntryCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, CPDefinitionGroupedEntryId);
+		int hashCode = HashUtil.hash(0, CPDefinitionGroupedEntryId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", CPDefinitionGroupedEntryId=");
 		sb.append(CPDefinitionGroupedEntryId);
@@ -99,6 +116,8 @@ public class CPDefinitionGroupedEntryCacheModel
 	public CPDefinitionGroupedEntry toEntityModel() {
 		CPDefinitionGroupedEntryImpl cpDefinitionGroupedEntryImpl =
 			new CPDefinitionGroupedEntryImpl();
+
+		cpDefinitionGroupedEntryImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			cpDefinitionGroupedEntryImpl.setUuid("");
@@ -147,6 +166,7 @@ public class CPDefinitionGroupedEntryCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		CPDefinitionGroupedEntryId = objectInput.readLong();
@@ -171,6 +191,8 @@ public class CPDefinitionGroupedEntryCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -205,6 +227,7 @@ public class CPDefinitionGroupedEntryCacheModel
 		objectOutput.writeInt(quantity);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long CPDefinitionGroupedEntryId;
 	public long groupId;

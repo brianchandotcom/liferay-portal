@@ -73,6 +73,17 @@ public class CProductLocalServiceWrapper
 	}
 
 	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cProductLocalService.createPersistedModel(primaryKeyObj);
+	}
+
+	/**
 	 * Deletes the c product from the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -119,6 +130,11 @@ public class CProductLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cProductLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _cProductLocalService.dslQuery(dslQuery);
 	}
 
 	@Override

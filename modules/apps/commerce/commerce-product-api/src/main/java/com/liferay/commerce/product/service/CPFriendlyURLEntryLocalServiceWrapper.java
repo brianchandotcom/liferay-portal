@@ -89,6 +89,18 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 			CPFriendlyURLEntryId);
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpFriendlyURLEntryLocalService.createPersistedModel(
+			primaryKeyObj);
+	}
+
 	@Override
 	public void deleteCPFriendlyURLEntries(
 		long groupId, Class<?> clazz, long classPK) {
@@ -147,6 +159,11 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 
 		return _cpFriendlyURLEntryLocalService.deletePersistedModel(
 			persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _cpFriendlyURLEntryLocalService.dslQuery(dslQuery);
 	}
 
 	@Override

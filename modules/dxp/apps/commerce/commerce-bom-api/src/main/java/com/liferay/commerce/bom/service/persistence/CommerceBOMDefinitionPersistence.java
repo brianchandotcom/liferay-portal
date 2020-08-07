@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.bom.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.bom.exception.NoSuchBOMDefinitionException;
 import com.liferay.commerce.bom.model.CommerceBOMDefinition;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce bom definition service.
@@ -45,9 +40,6 @@ public interface CommerceBOMDefinitionPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceBOMDefinitionUtil} to access the commerce bom definition persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceBOMDefinition> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce bom definitions where commerceBOMFolderId = &#63;.

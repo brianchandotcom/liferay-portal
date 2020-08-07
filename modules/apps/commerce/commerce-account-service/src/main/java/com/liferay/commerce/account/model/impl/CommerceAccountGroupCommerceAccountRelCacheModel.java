@@ -15,9 +15,10 @@
 package com.liferay.commerce.account.model.impl;
 
 import com.liferay.commerce.account.model.CommerceAccountGroupCommerceAccountRel;
+import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,7 +35,7 @@ import java.util.Date;
  */
 public class CommerceAccountGroupCommerceAccountRelCacheModel
 	implements CacheModel<CommerceAccountGroupCommerceAccountRel>,
-			   Externalizable {
+			   Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -52,9 +53,11 @@ public class CommerceAccountGroupCommerceAccountRelCacheModel
 			commerceAccountGroupCommerceAccountRelCacheModel =
 				(CommerceAccountGroupCommerceAccountRelCacheModel)object;
 
-		if (commerceAccountGroupCommerceAccountRelId ==
+		if ((commerceAccountGroupCommerceAccountRelId ==
 				commerceAccountGroupCommerceAccountRelCacheModel.
-					commerceAccountGroupCommerceAccountRelId) {
+					commerceAccountGroupCommerceAccountRelId) &&
+			(mvccVersion ==
+				commerceAccountGroupCommerceAccountRelCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -64,14 +67,29 @@ public class CommerceAccountGroupCommerceAccountRelCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, commerceAccountGroupCommerceAccountRelId);
+		int hashCode = HashUtil.hash(
+			0, commerceAccountGroupCommerceAccountRelId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
-		sb.append("{externalReferenceCode=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", externalReferenceCode=");
 		sb.append(externalReferenceCode);
 		sb.append(", commerceAccountGroupCommerceAccountRelId=");
 		sb.append(commerceAccountGroupCommerceAccountRelId);
@@ -99,6 +117,8 @@ public class CommerceAccountGroupCommerceAccountRelCacheModel
 		CommerceAccountGroupCommerceAccountRelImpl
 			commerceAccountGroupCommerceAccountRelImpl =
 				new CommerceAccountGroupCommerceAccountRelImpl();
+
+		commerceAccountGroupCommerceAccountRelImpl.setMvccVersion(mvccVersion);
 
 		if (externalReferenceCode == null) {
 			commerceAccountGroupCommerceAccountRelImpl.setExternalReferenceCode(
@@ -150,6 +170,7 @@ public class CommerceAccountGroupCommerceAccountRelCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		externalReferenceCode = objectInput.readUTF();
 
 		commerceAccountGroupCommerceAccountRelId = objectInput.readLong();
@@ -168,6 +189,8 @@ public class CommerceAccountGroupCommerceAccountRelCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (externalReferenceCode == null) {
 			objectOutput.writeUTF("");
 		}
@@ -196,6 +219,7 @@ public class CommerceAccountGroupCommerceAccountRelCacheModel
 		objectOutput.writeLong(commerceAccountId);
 	}
 
+	public long mvccVersion;
 	public String externalReferenceCode;
 	public long commerceAccountGroupCommerceAccountRelId;
 	public long companyId;

@@ -16,9 +16,11 @@ package com.liferay.commerce.service.persistence.impl;
 
 import com.liferay.commerce.exception.NoSuchOrderPaymentException;
 import com.liferay.commerce.model.CommerceOrderPayment;
+import com.liferay.commerce.model.CommerceOrderPaymentTable;
 import com.liferay.commerce.model.impl.CommerceOrderPaymentImpl;
 import com.liferay.commerce.model.impl.CommerceOrderPaymentModelImpl;
 import com.liferay.commerce.service.persistence.CommerceOrderPaymentPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -34,18 +36,13 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -243,10 +240,6 @@ public class CommerceOrderPaymentPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -584,8 +577,6 @@ public class CommerceOrderPaymentPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -602,6 +593,11 @@ public class CommerceOrderPaymentPersistenceImpl
 
 	public CommerceOrderPaymentPersistenceImpl() {
 		setModelClass(CommerceOrderPayment.class);
+
+		setModelImplClass(CommerceOrderPaymentImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CommerceOrderPaymentTable.INSTANCE);
 	}
 
 	/**
@@ -612,7 +608,6 @@ public class CommerceOrderPaymentPersistenceImpl
 	@Override
 	public void cacheResult(CommerceOrderPayment commerceOrderPayment) {
 		entityCache.putResult(
-			CommerceOrderPaymentModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceOrderPaymentImpl.class,
 			commerceOrderPayment.getPrimaryKey(), commerceOrderPayment);
 
@@ -630,7 +625,6 @@ public class CommerceOrderPaymentPersistenceImpl
 				commerceOrderPayments) {
 
 			if (entityCache.getResult(
-					CommerceOrderPaymentModelImpl.ENTITY_CACHE_ENABLED,
 					CommerceOrderPaymentImpl.class,
 					commerceOrderPayment.getPrimaryKey()) == null) {
 
@@ -668,7 +662,6 @@ public class CommerceOrderPaymentPersistenceImpl
 	@Override
 	public void clearCache(CommerceOrderPayment commerceOrderPayment) {
 		entityCache.removeResult(
-			CommerceOrderPaymentModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceOrderPaymentImpl.class,
 			commerceOrderPayment.getPrimaryKey());
 
@@ -685,12 +678,12 @@ public class CommerceOrderPaymentPersistenceImpl
 				commerceOrderPayments) {
 
 			entityCache.removeResult(
-				CommerceOrderPaymentModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceOrderPaymentImpl.class,
 				commerceOrderPayment.getPrimaryKey());
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -698,7 +691,6 @@ public class CommerceOrderPaymentPersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(
-				CommerceOrderPaymentModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceOrderPaymentImpl.class, primaryKey);
 		}
 	}
@@ -886,10 +878,7 @@ public class CommerceOrderPaymentPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CommerceOrderPaymentModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				commerceOrderPaymentModelImpl.getCommerceOrderId()
 			};
@@ -928,7 +917,6 @@ public class CommerceOrderPaymentPersistenceImpl
 		}
 
 		entityCache.putResult(
-			CommerceOrderPaymentModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceOrderPaymentImpl.class,
 			commerceOrderPayment.getPrimaryKey(), commerceOrderPayment, false);
 
@@ -980,168 +968,12 @@ public class CommerceOrderPaymentPersistenceImpl
 	/**
 	 * Returns the commerce order payment with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the commerce order payment
-	 * @return the commerce order payment, or <code>null</code> if a commerce order payment with the primary key could not be found
-	 */
-	@Override
-	public CommerceOrderPayment fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(
-			CommerceOrderPaymentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceOrderPaymentImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CommerceOrderPayment commerceOrderPayment =
-			(CommerceOrderPayment)serializable;
-
-		if (commerceOrderPayment == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				commerceOrderPayment = (CommerceOrderPayment)session.get(
-					CommerceOrderPaymentImpl.class, primaryKey);
-
-				if (commerceOrderPayment != null) {
-					cacheResult(commerceOrderPayment);
-				}
-				else {
-					entityCache.putResult(
-						CommerceOrderPaymentModelImpl.ENTITY_CACHE_ENABLED,
-						CommerceOrderPaymentImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CommerceOrderPaymentModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceOrderPaymentImpl.class, primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return commerceOrderPayment;
-	}
-
-	/**
-	 * Returns the commerce order payment with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param commerceOrderPaymentId the primary key of the commerce order payment
 	 * @return the commerce order payment, or <code>null</code> if a commerce order payment with the primary key could not be found
 	 */
 	@Override
 	public CommerceOrderPayment fetchByPrimaryKey(long commerceOrderPaymentId) {
 		return fetchByPrimaryKey((Serializable)commerceOrderPaymentId);
-	}
-
-	@Override
-	public Map<Serializable, CommerceOrderPayment> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CommerceOrderPayment> map =
-			new HashMap<Serializable, CommerceOrderPayment>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CommerceOrderPayment commerceOrderPayment = fetchByPrimaryKey(
-				primaryKey);
-
-			if (commerceOrderPayment != null) {
-				map.put(primaryKey, commerceOrderPayment);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CommerceOrderPaymentModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceOrderPaymentImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (CommerceOrderPayment)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(_SQL_SELECT_COMMERCEORDERPAYMENT_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CommerceOrderPayment commerceOrderPayment :
-					(List<CommerceOrderPayment>)query.list()) {
-
-				map.put(
-					commerceOrderPayment.getPrimaryKeyObj(),
-					commerceOrderPayment);
-
-				cacheResult(commerceOrderPayment);
-
-				uncachedPrimaryKeys.remove(
-					commerceOrderPayment.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CommerceOrderPaymentModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceOrderPaymentImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -1270,10 +1102,6 @@ public class CommerceOrderPaymentPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1320,9 +1148,6 @@ public class CommerceOrderPaymentPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1331,6 +1156,21 @@ public class CommerceOrderPaymentPersistenceImpl
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "commerceOrderPaymentId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_COMMERCEORDERPAYMENT;
 	}
 
 	@Override
@@ -1343,27 +1183,19 @@ public class CommerceOrderPaymentPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceOrderPaymentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceOrderPaymentModelImpl.FINDER_CACHE_ENABLED,
 			CommerceOrderPaymentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceOrderPaymentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceOrderPaymentModelImpl.FINDER_CACHE_ENABLED,
 			CommerceOrderPaymentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CommerceOrderPaymentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceOrderPaymentModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByCommerceOrderId = new FinderPath(
-			CommerceOrderPaymentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceOrderPaymentModelImpl.FINDER_CACHE_ENABLED,
 			CommerceOrderPaymentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceOrderId",
 			new String[] {
@@ -1372,8 +1204,6 @@ public class CommerceOrderPaymentPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByCommerceOrderId = new FinderPath(
-			CommerceOrderPaymentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceOrderPaymentModelImpl.FINDER_CACHE_ENABLED,
 			CommerceOrderPaymentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCommerceOrderId",
 			new String[] {Long.class.getName()},
@@ -1381,10 +1211,8 @@ public class CommerceOrderPaymentPersistenceImpl
 			CommerceOrderPaymentModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByCommerceOrderId = new FinderPath(
-			CommerceOrderPaymentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceOrderPaymentModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCommerceOrderId",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCommerceOrderId", new String[] {Long.class.getName()});
 	}
 
 	public void destroy() {
@@ -1402,9 +1230,6 @@ public class CommerceOrderPaymentPersistenceImpl
 
 	private static final String _SQL_SELECT_COMMERCEORDERPAYMENT =
 		"SELECT commerceOrderPayment FROM CommerceOrderPayment commerceOrderPayment";
-
-	private static final String _SQL_SELECT_COMMERCEORDERPAYMENT_WHERE_PKS_IN =
-		"SELECT commerceOrderPayment FROM CommerceOrderPayment commerceOrderPayment WHERE commerceOrderPaymentId IN (";
 
 	private static final String _SQL_SELECT_COMMERCEORDERPAYMENT_WHERE =
 		"SELECT commerceOrderPayment FROM CommerceOrderPayment commerceOrderPayment WHERE ";

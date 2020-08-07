@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.service;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.model.CommerceAddressRestriction;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,6 +33,8 @@ import java.io.File;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the remote service interface for CommerceShippingMethod. Methods of this

@@ -1,4 +1,5 @@
 create table CAModelCProductRel (
+	mvccVersion LONG default 0 not null,
 	CAModelCProductRelId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
@@ -10,6 +11,7 @@ create table CAModelCProductRel (
 );
 
 create table CommerceApplicationBrand (
+	mvccVersion LONG default 0 not null,
 	commerceApplicationBrandId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
@@ -21,6 +23,7 @@ create table CommerceApplicationBrand (
 );
 
 create table CommerceApplicationModel (
+	mvccVersion LONG default 0 not null,
 	commerceApplicationModelId LONG not null primary key,
 	companyId LONG,
 	userId LONG,

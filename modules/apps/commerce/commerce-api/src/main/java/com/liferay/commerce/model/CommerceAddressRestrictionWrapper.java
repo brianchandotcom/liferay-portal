@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,29 +31,21 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceAddressRestrictionWrapper
+	extends BaseModelWrapper<CommerceAddressRestriction>
 	implements CommerceAddressRestriction,
 			   ModelWrapper<CommerceAddressRestriction> {
 
 	public CommerceAddressRestrictionWrapper(
 		CommerceAddressRestriction commerceAddressRestriction) {
 
-		_commerceAddressRestriction = commerceAddressRestriction;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceAddressRestriction.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceAddressRestriction.class.getName();
+		super(commerceAddressRestriction);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put(
 			"commerceAddressRestrictionId", getCommerceAddressRestrictionId());
 		attributes.put("groupId", getGroupId());
@@ -75,6 +63,12 @@ public class CommerceAddressRestrictionWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long commerceAddressRestrictionId = (Long)attributes.get(
 			"commerceAddressRestrictionId");
 
@@ -137,20 +131,6 @@ public class CommerceAddressRestrictionWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CommerceAddressRestrictionWrapper(
-			(CommerceAddressRestriction)_commerceAddressRestriction.clone());
-	}
-
-	@Override
-	public int compareTo(
-		CommerceAddressRestriction commerceAddressRestriction) {
-
-		return _commerceAddressRestriction.compareTo(
-			commerceAddressRestriction);
-	}
-
 	/**
 	 * Returns the fully qualified class name of this commerce address restriction.
 	 *
@@ -158,7 +138,7 @@ public class CommerceAddressRestrictionWrapper
 	 */
 	@Override
 	public String getClassName() {
-		return _commerceAddressRestriction.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -168,7 +148,7 @@ public class CommerceAddressRestrictionWrapper
 	 */
 	@Override
 	public long getClassNameId() {
-		return _commerceAddressRestriction.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -178,7 +158,7 @@ public class CommerceAddressRestrictionWrapper
 	 */
 	@Override
 	public long getClassPK() {
-		return _commerceAddressRestriction.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -188,14 +168,14 @@ public class CommerceAddressRestrictionWrapper
 	 */
 	@Override
 	public long getCommerceAddressRestrictionId() {
-		return _commerceAddressRestriction.getCommerceAddressRestrictionId();
+		return model.getCommerceAddressRestrictionId();
 	}
 
 	@Override
 	public CommerceCountry getCommerceCountry()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceAddressRestriction.getCommerceCountry();
+		return model.getCommerceCountry();
 	}
 
 	/**
@@ -205,7 +185,7 @@ public class CommerceAddressRestrictionWrapper
 	 */
 	@Override
 	public long getCommerceCountryId() {
-		return _commerceAddressRestriction.getCommerceCountryId();
+		return model.getCommerceCountryId();
 	}
 
 	/**
@@ -215,7 +195,7 @@ public class CommerceAddressRestrictionWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceAddressRestriction.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -225,12 +205,7 @@ public class CommerceAddressRestrictionWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceAddressRestriction.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceAddressRestriction.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -240,7 +215,7 @@ public class CommerceAddressRestrictionWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _commerceAddressRestriction.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -250,7 +225,17 @@ public class CommerceAddressRestrictionWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceAddressRestriction.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce address restriction.
+	 *
+	 * @return the mvcc version of this commerce address restriction
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -260,12 +245,7 @@ public class CommerceAddressRestrictionWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceAddressRestriction.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceAddressRestriction.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -275,7 +255,7 @@ public class CommerceAddressRestrictionWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceAddressRestriction.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -285,7 +265,7 @@ public class CommerceAddressRestrictionWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceAddressRestriction.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -295,42 +275,17 @@ public class CommerceAddressRestrictionWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceAddressRestriction.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceAddressRestriction.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceAddressRestriction.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceAddressRestriction.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceAddressRestriction.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_commerceAddressRestriction.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceAddressRestriction.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_commerceAddressRestriction.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -340,7 +295,7 @@ public class CommerceAddressRestrictionWrapper
 	 */
 	@Override
 	public void setClassNameId(long classNameId) {
-		_commerceAddressRestriction.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -350,7 +305,7 @@ public class CommerceAddressRestrictionWrapper
 	 */
 	@Override
 	public void setClassPK(long classPK) {
-		_commerceAddressRestriction.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -362,8 +317,7 @@ public class CommerceAddressRestrictionWrapper
 	public void setCommerceAddressRestrictionId(
 		long commerceAddressRestrictionId) {
 
-		_commerceAddressRestriction.setCommerceAddressRestrictionId(
-			commerceAddressRestrictionId);
+		model.setCommerceAddressRestrictionId(commerceAddressRestrictionId);
 	}
 
 	/**
@@ -373,7 +327,7 @@ public class CommerceAddressRestrictionWrapper
 	 */
 	@Override
 	public void setCommerceCountryId(long commerceCountryId) {
-		_commerceAddressRestriction.setCommerceCountryId(commerceCountryId);
+		model.setCommerceCountryId(commerceCountryId);
 	}
 
 	/**
@@ -383,7 +337,7 @@ public class CommerceAddressRestrictionWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceAddressRestriction.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -393,24 +347,7 @@ public class CommerceAddressRestrictionWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceAddressRestriction.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceAddressRestriction.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceAddressRestriction.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceAddressRestriction.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -420,7 +357,7 @@ public class CommerceAddressRestrictionWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_commerceAddressRestriction.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -430,12 +367,17 @@ public class CommerceAddressRestrictionWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceAddressRestriction.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this commerce address restriction.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce address restriction
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_commerceAddressRestriction.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -445,12 +387,7 @@ public class CommerceAddressRestrictionWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceAddressRestriction.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceAddressRestriction.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -460,7 +397,7 @@ public class CommerceAddressRestrictionWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceAddressRestriction.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -470,7 +407,7 @@ public class CommerceAddressRestrictionWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceAddressRestriction.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -480,82 +417,15 @@ public class CommerceAddressRestrictionWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceAddressRestriction.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel
-		<CommerceAddressRestriction> toCacheModel() {
+	protected CommerceAddressRestrictionWrapper wrap(
+		CommerceAddressRestriction commerceAddressRestriction) {
 
-		return _commerceAddressRestriction.toCacheModel();
-	}
-
-	@Override
-	public CommerceAddressRestriction toEscapedModel() {
 		return new CommerceAddressRestrictionWrapper(
-			_commerceAddressRestriction.toEscapedModel());
+			commerceAddressRestriction);
 	}
-
-	@Override
-	public String toString() {
-		return _commerceAddressRestriction.toString();
-	}
-
-	@Override
-	public CommerceAddressRestriction toUnescapedModel() {
-		return new CommerceAddressRestrictionWrapper(
-			_commerceAddressRestriction.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceAddressRestriction.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceAddressRestrictionWrapper)) {
-			return false;
-		}
-
-		CommerceAddressRestrictionWrapper commerceAddressRestrictionWrapper =
-			(CommerceAddressRestrictionWrapper)object;
-
-		if (Objects.equals(
-				_commerceAddressRestriction,
-				commerceAddressRestrictionWrapper.
-					_commerceAddressRestriction)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceAddressRestriction getWrappedModel() {
-		return _commerceAddressRestriction;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceAddressRestriction.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceAddressRestriction.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceAddressRestriction.resetOriginalValues();
-	}
-
-	private final CommerceAddressRestriction _commerceAddressRestriction;
 
 }

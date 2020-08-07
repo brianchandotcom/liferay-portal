@@ -19,6 +19,7 @@ import com.liferay.commerce.notification.model.CommerceNotificationTemplateComme
 import com.liferay.commerce.notification.model.CommerceNotificationTemplateCommerceAccountGroupRelSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -74,6 +74,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 	public static final String TABLE_NAME = "CNTemplateCAccountGroupRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
+		{"mvccVersion", Types.BIGINT},
 		{"CNTemplateCAccountGroupRelId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
@@ -86,6 +87,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CNTemplateCAccountGroupRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -98,7 +100,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CNTemplateCAccountGroupRel (CNTemplateCAccountGroupRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceNotificationTemplateId LONG,commerceAccountGroupId LONG)";
+		"create table CNTemplateCAccountGroupRel (mvccVersion LONG default 0 not null,CNTemplateCAccountGroupRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceNotificationTemplateId LONG,commerceAccountGroupId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CNTemplateCAccountGroupRel";
@@ -115,20 +117,23 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.notification.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.notification.model.CommerceNotificationTemplateCommerceAccountGroupRel"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.notification.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.notification.model.CommerceNotificationTemplateCommerceAccountGroupRel"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.notification.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.notification.model.CommerceNotificationTemplateCommerceAccountGroupRel"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long COMMERCEACCOUNTGROUPID_COLUMN_BITMASK = 1L;
 
@@ -152,6 +157,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 		CommerceNotificationTemplateCommerceAccountGroupRel model =
 			new CommerceNotificationTemplateCommerceAccountGroupRelImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceNotificationTemplateCommerceAccountGroupRelId(
 			soapModel.
 				getCommerceNotificationTemplateCommerceAccountGroupRelId());
@@ -260,9 +266,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 				attributeGetterFunction.apply(
 					(CommerceNotificationTemplateCommerceAccountGroupRel)this));
 		}
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
@@ -374,312 +377,116 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 							  ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion",
+			CommerceNotificationTemplateCommerceAccountGroupRel::
+				getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer
+				<CommerceNotificationTemplateCommerceAccountGroupRel, Long>)
+					CommerceNotificationTemplateCommerceAccountGroupRel::
+						setMvccVersion);
+		attributeGetterFunctions.put(
 			"commerceNotificationTemplateCommerceAccountGroupRelId",
-			new Function
-				<CommerceNotificationTemplateCommerceAccountGroupRel,
-				 Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationTemplateCommerceAccountGroupRel
-						commerceNotificationTemplateCommerceAccountGroupRel) {
-
-					return commerceNotificationTemplateCommerceAccountGroupRel.
-						getCommerceNotificationTemplateCommerceAccountGroupRelId();
-				}
-
-			});
+			CommerceNotificationTemplateCommerceAccountGroupRel::
+				getCommerceNotificationTemplateCommerceAccountGroupRelId);
 		attributeSetterBiConsumers.put(
 			"commerceNotificationTemplateCommerceAccountGroupRelId",
-			new BiConsumer
-				<CommerceNotificationTemplateCommerceAccountGroupRel,
-				 Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationTemplateCommerceAccountGroupRel
-						commerceNotificationTemplateCommerceAccountGroupRel,
-					Object
-						commerceNotificationTemplateCommerceAccountGroupRelIdObject) {
-
-					commerceNotificationTemplateCommerceAccountGroupRel.
-						setCommerceNotificationTemplateCommerceAccountGroupRelId(
-							(Long)
-								commerceNotificationTemplateCommerceAccountGroupRelIdObject);
-				}
-
-			});
+			(BiConsumer
+				<CommerceNotificationTemplateCommerceAccountGroupRel, Long>)
+					CommerceNotificationTemplateCommerceAccountGroupRel::
+						setCommerceNotificationTemplateCommerceAccountGroupRelId);
 		attributeGetterFunctions.put(
 			"groupId",
-			new Function
-				<CommerceNotificationTemplateCommerceAccountGroupRel,
-				 Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationTemplateCommerceAccountGroupRel
-						commerceNotificationTemplateCommerceAccountGroupRel) {
-
-					return commerceNotificationTemplateCommerceAccountGroupRel.
-						getGroupId();
-				}
-
-			});
+			CommerceNotificationTemplateCommerceAccountGroupRel::getGroupId);
 		attributeSetterBiConsumers.put(
 			"groupId",
-			new BiConsumer
-				<CommerceNotificationTemplateCommerceAccountGroupRel,
-				 Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationTemplateCommerceAccountGroupRel
-						commerceNotificationTemplateCommerceAccountGroupRel,
-					Object groupIdObject) {
-
-					commerceNotificationTemplateCommerceAccountGroupRel.
-						setGroupId((Long)groupIdObject);
-				}
-
-			});
+			(BiConsumer
+				<CommerceNotificationTemplateCommerceAccountGroupRel, Long>)
+					CommerceNotificationTemplateCommerceAccountGroupRel::
+						setGroupId);
 		attributeGetterFunctions.put(
 			"companyId",
-			new Function
-				<CommerceNotificationTemplateCommerceAccountGroupRel,
-				 Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationTemplateCommerceAccountGroupRel
-						commerceNotificationTemplateCommerceAccountGroupRel) {
-
-					return commerceNotificationTemplateCommerceAccountGroupRel.
-						getCompanyId();
-				}
-
-			});
+			CommerceNotificationTemplateCommerceAccountGroupRel::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer
-				<CommerceNotificationTemplateCommerceAccountGroupRel,
-				 Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationTemplateCommerceAccountGroupRel
-						commerceNotificationTemplateCommerceAccountGroupRel,
-					Object companyIdObject) {
-
-					commerceNotificationTemplateCommerceAccountGroupRel.
-						setCompanyId((Long)companyIdObject);
-				}
-
-			});
+			(BiConsumer
+				<CommerceNotificationTemplateCommerceAccountGroupRel, Long>)
+					CommerceNotificationTemplateCommerceAccountGroupRel::
+						setCompanyId);
 		attributeGetterFunctions.put(
 			"userId",
-			new Function
-				<CommerceNotificationTemplateCommerceAccountGroupRel,
-				 Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationTemplateCommerceAccountGroupRel
-						commerceNotificationTemplateCommerceAccountGroupRel) {
-
-					return commerceNotificationTemplateCommerceAccountGroupRel.
-						getUserId();
-				}
-
-			});
+			CommerceNotificationTemplateCommerceAccountGroupRel::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer
-				<CommerceNotificationTemplateCommerceAccountGroupRel,
-				 Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationTemplateCommerceAccountGroupRel
-						commerceNotificationTemplateCommerceAccountGroupRel,
-					Object userIdObject) {
-
-					commerceNotificationTemplateCommerceAccountGroupRel.
-						setUserId((Long)userIdObject);
-				}
-
-			});
+			(BiConsumer
+				<CommerceNotificationTemplateCommerceAccountGroupRel, Long>)
+					CommerceNotificationTemplateCommerceAccountGroupRel::
+						setUserId);
 		attributeGetterFunctions.put(
 			"userName",
-			new Function
-				<CommerceNotificationTemplateCommerceAccountGroupRel,
-				 Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationTemplateCommerceAccountGroupRel
-						commerceNotificationTemplateCommerceAccountGroupRel) {
-
-					return commerceNotificationTemplateCommerceAccountGroupRel.
-						getUserName();
-				}
-
-			});
+			CommerceNotificationTemplateCommerceAccountGroupRel::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer
-				<CommerceNotificationTemplateCommerceAccountGroupRel,
-				 Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationTemplateCommerceAccountGroupRel
-						commerceNotificationTemplateCommerceAccountGroupRel,
-					Object userNameObject) {
-
-					commerceNotificationTemplateCommerceAccountGroupRel.
-						setUserName((String)userNameObject);
-				}
-
-			});
+			(BiConsumer
+				<CommerceNotificationTemplateCommerceAccountGroupRel, String>)
+					CommerceNotificationTemplateCommerceAccountGroupRel::
+						setUserName);
 		attributeGetterFunctions.put(
 			"createDate",
-			new Function
-				<CommerceNotificationTemplateCommerceAccountGroupRel,
-				 Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationTemplateCommerceAccountGroupRel
-						commerceNotificationTemplateCommerceAccountGroupRel) {
-
-					return commerceNotificationTemplateCommerceAccountGroupRel.
-						getCreateDate();
-				}
-
-			});
+			CommerceNotificationTemplateCommerceAccountGroupRel::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer
-				<CommerceNotificationTemplateCommerceAccountGroupRel,
-				 Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationTemplateCommerceAccountGroupRel
-						commerceNotificationTemplateCommerceAccountGroupRel,
-					Object createDateObject) {
-
-					commerceNotificationTemplateCommerceAccountGroupRel.
-						setCreateDate((Date)createDateObject);
-				}
-
-			});
+			(BiConsumer
+				<CommerceNotificationTemplateCommerceAccountGroupRel, Date>)
+					CommerceNotificationTemplateCommerceAccountGroupRel::
+						setCreateDate);
 		attributeGetterFunctions.put(
 			"modifiedDate",
-			new Function
-				<CommerceNotificationTemplateCommerceAccountGroupRel,
-				 Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationTemplateCommerceAccountGroupRel
-						commerceNotificationTemplateCommerceAccountGroupRel) {
-
-					return commerceNotificationTemplateCommerceAccountGroupRel.
-						getModifiedDate();
-				}
-
-			});
+			CommerceNotificationTemplateCommerceAccountGroupRel::
+				getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer
-				<CommerceNotificationTemplateCommerceAccountGroupRel,
-				 Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationTemplateCommerceAccountGroupRel
-						commerceNotificationTemplateCommerceAccountGroupRel,
-					Object modifiedDateObject) {
-
-					commerceNotificationTemplateCommerceAccountGroupRel.
-						setModifiedDate((Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer
+				<CommerceNotificationTemplateCommerceAccountGroupRel, Date>)
+					CommerceNotificationTemplateCommerceAccountGroupRel::
+						setModifiedDate);
 		attributeGetterFunctions.put(
 			"commerceNotificationTemplateId",
-			new Function
-				<CommerceNotificationTemplateCommerceAccountGroupRel,
-				 Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationTemplateCommerceAccountGroupRel
-						commerceNotificationTemplateCommerceAccountGroupRel) {
-
-					return commerceNotificationTemplateCommerceAccountGroupRel.
-						getCommerceNotificationTemplateId();
-				}
-
-			});
+			CommerceNotificationTemplateCommerceAccountGroupRel::
+				getCommerceNotificationTemplateId);
 		attributeSetterBiConsumers.put(
 			"commerceNotificationTemplateId",
-			new BiConsumer
-				<CommerceNotificationTemplateCommerceAccountGroupRel,
-				 Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationTemplateCommerceAccountGroupRel
-						commerceNotificationTemplateCommerceAccountGroupRel,
-					Object commerceNotificationTemplateIdObject) {
-
-					commerceNotificationTemplateCommerceAccountGroupRel.
-						setCommerceNotificationTemplateId(
-							(Long)commerceNotificationTemplateIdObject);
-				}
-
-			});
+			(BiConsumer
+				<CommerceNotificationTemplateCommerceAccountGroupRel, Long>)
+					CommerceNotificationTemplateCommerceAccountGroupRel::
+						setCommerceNotificationTemplateId);
 		attributeGetterFunctions.put(
 			"commerceAccountGroupId",
-			new Function
-				<CommerceNotificationTemplateCommerceAccountGroupRel,
-				 Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationTemplateCommerceAccountGroupRel
-						commerceNotificationTemplateCommerceAccountGroupRel) {
-
-					return commerceNotificationTemplateCommerceAccountGroupRel.
-						getCommerceAccountGroupId();
-				}
-
-			});
+			CommerceNotificationTemplateCommerceAccountGroupRel::
+				getCommerceAccountGroupId);
 		attributeSetterBiConsumers.put(
 			"commerceAccountGroupId",
-			new BiConsumer
-				<CommerceNotificationTemplateCommerceAccountGroupRel,
-				 Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationTemplateCommerceAccountGroupRel
-						commerceNotificationTemplateCommerceAccountGroupRel,
-					Object commerceAccountGroupIdObject) {
-
-					commerceNotificationTemplateCommerceAccountGroupRel.
-						setCommerceAccountGroupId(
-							(Long)commerceAccountGroupIdObject);
-				}
-
-			});
+			(BiConsumer
+				<CommerceNotificationTemplateCommerceAccountGroupRel, Long>)
+					CommerceNotificationTemplateCommerceAccountGroupRel::
+						setCommerceAccountGroupId);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -882,6 +689,8 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 			commerceNotificationTemplateCommerceAccountGroupRelImpl =
 				new CommerceNotificationTemplateCommerceAccountGroupRelImpl();
 
+		commerceNotificationTemplateCommerceAccountGroupRelImpl.setMvccVersion(
+			getMvccVersion());
 		commerceNotificationTemplateCommerceAccountGroupRelImpl.
 			setCommerceNotificationTemplateCommerceAccountGroupRelId(
 				getCommerceNotificationTemplateCommerceAccountGroupRelId());
@@ -962,11 +771,19 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -994,6 +811,9 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 		CommerceNotificationTemplateCommerceAccountGroupRelCacheModel
 			commerceNotificationTemplateCommerceAccountGroupRelCacheModel =
 				new CommerceNotificationTemplateCommerceAccountGroupRelCacheModel();
+
+		commerceNotificationTemplateCommerceAccountGroupRelCacheModel.
+			mvccVersion = getMvccVersion();
 
 		commerceNotificationTemplateCommerceAccountGroupRelCacheModel.
 			commerceNotificationTemplateCommerceAccountGroupRelId =
@@ -1143,6 +963,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _commerceNotificationTemplateCommerceAccountGroupRelId;
 	private long _groupId;
 	private long _companyId;

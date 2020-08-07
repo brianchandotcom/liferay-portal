@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.account.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,6 +31,7 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceAccountGroupCommerceAccountRelWrapper
+	extends BaseModelWrapper<CommerceAccountGroupCommerceAccountRel>
 	implements CommerceAccountGroupCommerceAccountRel,
 			   ModelWrapper<CommerceAccountGroupCommerceAccountRel> {
 
@@ -42,24 +39,14 @@ public class CommerceAccountGroupCommerceAccountRelWrapper
 		CommerceAccountGroupCommerceAccountRel
 			commerceAccountGroupCommerceAccountRel) {
 
-		_commerceAccountGroupCommerceAccountRel =
-			commerceAccountGroupCommerceAccountRel;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceAccountGroupCommerceAccountRel.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceAccountGroupCommerceAccountRel.class.getName();
+		super(commerceAccountGroupCommerceAccountRel);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put(
 			"commerceAccountGroupCommerceAccountRelId",
@@ -77,6 +64,12 @@ public class CommerceAccountGroupCommerceAccountRelWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String externalReferenceCode = (String)attributes.get(
 			"externalReferenceCode");
 
@@ -137,26 +130,10 @@ public class CommerceAccountGroupCommerceAccountRelWrapper
 	}
 
 	@Override
-	public Object clone() {
-		return new CommerceAccountGroupCommerceAccountRelWrapper(
-			(CommerceAccountGroupCommerceAccountRel)
-				_commerceAccountGroupCommerceAccountRel.clone());
-	}
-
-	@Override
-	public int compareTo(
-		CommerceAccountGroupCommerceAccountRel
-			commerceAccountGroupCommerceAccountRel) {
-
-		return _commerceAccountGroupCommerceAccountRel.compareTo(
-			commerceAccountGroupCommerceAccountRel);
-	}
-
-	@Override
 	public CommerceAccount getCommerceAccount()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceAccountGroupCommerceAccountRel.getCommerceAccount();
+		return model.getCommerceAccount();
 	}
 
 	/**
@@ -166,8 +143,7 @@ public class CommerceAccountGroupCommerceAccountRelWrapper
 	 */
 	@Override
 	public long getCommerceAccountGroupCommerceAccountRelId() {
-		return _commerceAccountGroupCommerceAccountRel.
-			getCommerceAccountGroupCommerceAccountRelId();
+		return model.getCommerceAccountGroupCommerceAccountRelId();
 	}
 
 	/**
@@ -177,8 +153,7 @@ public class CommerceAccountGroupCommerceAccountRelWrapper
 	 */
 	@Override
 	public long getCommerceAccountGroupId() {
-		return _commerceAccountGroupCommerceAccountRel.
-			getCommerceAccountGroupId();
+		return model.getCommerceAccountGroupId();
 	}
 
 	/**
@@ -188,7 +163,7 @@ public class CommerceAccountGroupCommerceAccountRelWrapper
 	 */
 	@Override
 	public long getCommerceAccountId() {
-		return _commerceAccountGroupCommerceAccountRel.getCommerceAccountId();
+		return model.getCommerceAccountId();
 	}
 
 	/**
@@ -198,7 +173,7 @@ public class CommerceAccountGroupCommerceAccountRelWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceAccountGroupCommerceAccountRel.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -208,12 +183,7 @@ public class CommerceAccountGroupCommerceAccountRelWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceAccountGroupCommerceAccountRel.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceAccountGroupCommerceAccountRel.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -223,8 +193,7 @@ public class CommerceAccountGroupCommerceAccountRelWrapper
 	 */
 	@Override
 	public String getExternalReferenceCode() {
-		return _commerceAccountGroupCommerceAccountRel.
-			getExternalReferenceCode();
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -234,7 +203,17 @@ public class CommerceAccountGroupCommerceAccountRelWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceAccountGroupCommerceAccountRel.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce account group commerce account rel.
+	 *
+	 * @return the mvcc version of this commerce account group commerce account rel
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -244,12 +223,7 @@ public class CommerceAccountGroupCommerceAccountRelWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceAccountGroupCommerceAccountRel.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceAccountGroupCommerceAccountRel.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -259,7 +233,7 @@ public class CommerceAccountGroupCommerceAccountRelWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceAccountGroupCommerceAccountRel.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -269,7 +243,7 @@ public class CommerceAccountGroupCommerceAccountRelWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceAccountGroupCommerceAccountRel.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -279,37 +253,12 @@ public class CommerceAccountGroupCommerceAccountRelWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceAccountGroupCommerceAccountRel.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceAccountGroupCommerceAccountRel.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceAccountGroupCommerceAccountRel.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceAccountGroupCommerceAccountRel.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceAccountGroupCommerceAccountRel.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_commerceAccountGroupCommerceAccountRel.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceAccountGroupCommerceAccountRel.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -321,9 +270,8 @@ public class CommerceAccountGroupCommerceAccountRelWrapper
 	public void setCommerceAccountGroupCommerceAccountRelId(
 		long commerceAccountGroupCommerceAccountRelId) {
 
-		_commerceAccountGroupCommerceAccountRel.
-			setCommerceAccountGroupCommerceAccountRelId(
-				commerceAccountGroupCommerceAccountRelId);
+		model.setCommerceAccountGroupCommerceAccountRelId(
+			commerceAccountGroupCommerceAccountRelId);
 	}
 
 	/**
@@ -333,8 +281,7 @@ public class CommerceAccountGroupCommerceAccountRelWrapper
 	 */
 	@Override
 	public void setCommerceAccountGroupId(long commerceAccountGroupId) {
-		_commerceAccountGroupCommerceAccountRel.setCommerceAccountGroupId(
-			commerceAccountGroupId);
+		model.setCommerceAccountGroupId(commerceAccountGroupId);
 	}
 
 	/**
@@ -344,8 +291,7 @@ public class CommerceAccountGroupCommerceAccountRelWrapper
 	 */
 	@Override
 	public void setCommerceAccountId(long commerceAccountId) {
-		_commerceAccountGroupCommerceAccountRel.setCommerceAccountId(
-			commerceAccountId);
+		model.setCommerceAccountId(commerceAccountId);
 	}
 
 	/**
@@ -355,7 +301,7 @@ public class CommerceAccountGroupCommerceAccountRelWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceAccountGroupCommerceAccountRel.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -365,27 +311,7 @@ public class CommerceAccountGroupCommerceAccountRelWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceAccountGroupCommerceAccountRel.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceAccountGroupCommerceAccountRel.setExpandoBridgeAttributes(
-			baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceAccountGroupCommerceAccountRel.setExpandoBridgeAttributes(
-			expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceAccountGroupCommerceAccountRel.setExpandoBridgeAttributes(
-			serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -395,8 +321,7 @@ public class CommerceAccountGroupCommerceAccountRelWrapper
 	 */
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
-		_commerceAccountGroupCommerceAccountRel.setExternalReferenceCode(
-			externalReferenceCode);
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**
@@ -406,12 +331,17 @@ public class CommerceAccountGroupCommerceAccountRelWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceAccountGroupCommerceAccountRel.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this commerce account group commerce account rel.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce account group commerce account rel
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_commerceAccountGroupCommerceAccountRel.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -421,12 +351,7 @@ public class CommerceAccountGroupCommerceAccountRelWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceAccountGroupCommerceAccountRel.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceAccountGroupCommerceAccountRel.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -436,7 +361,7 @@ public class CommerceAccountGroupCommerceAccountRelWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceAccountGroupCommerceAccountRel.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -446,7 +371,7 @@ public class CommerceAccountGroupCommerceAccountRelWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceAccountGroupCommerceAccountRel.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -456,86 +381,16 @@ public class CommerceAccountGroupCommerceAccountRelWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceAccountGroupCommerceAccountRel.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel
-		<CommerceAccountGroupCommerceAccountRel> toCacheModel() {
+	protected CommerceAccountGroupCommerceAccountRelWrapper wrap(
+		CommerceAccountGroupCommerceAccountRel
+			commerceAccountGroupCommerceAccountRel) {
 
-		return _commerceAccountGroupCommerceAccountRel.toCacheModel();
-	}
-
-	@Override
-	public CommerceAccountGroupCommerceAccountRel toEscapedModel() {
 		return new CommerceAccountGroupCommerceAccountRelWrapper(
-			_commerceAccountGroupCommerceAccountRel.toEscapedModel());
+			commerceAccountGroupCommerceAccountRel);
 	}
-
-	@Override
-	public String toString() {
-		return _commerceAccountGroupCommerceAccountRel.toString();
-	}
-
-	@Override
-	public CommerceAccountGroupCommerceAccountRel toUnescapedModel() {
-		return new CommerceAccountGroupCommerceAccountRelWrapper(
-			_commerceAccountGroupCommerceAccountRel.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceAccountGroupCommerceAccountRel.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof
-				CommerceAccountGroupCommerceAccountRelWrapper)) {
-
-			return false;
-		}
-
-		CommerceAccountGroupCommerceAccountRelWrapper
-			commerceAccountGroupCommerceAccountRelWrapper =
-				(CommerceAccountGroupCommerceAccountRelWrapper)object;
-
-		if (Objects.equals(
-				_commerceAccountGroupCommerceAccountRel,
-				commerceAccountGroupCommerceAccountRelWrapper.
-					_commerceAccountGroupCommerceAccountRel)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceAccountGroupCommerceAccountRel getWrappedModel() {
-		return _commerceAccountGroupCommerceAccountRel;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceAccountGroupCommerceAccountRel.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceAccountGroupCommerceAccountRel.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceAccountGroupCommerceAccountRel.resetOriginalValues();
-	}
-
-	private final CommerceAccountGroupCommerceAccountRel
-		_commerceAccountGroupCommerceAccountRel;
 
 }

@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.price.list.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.price.list.exception.NoSuchPriceListCommerceAccountGroupRelException;
 import com.liferay.commerce.price.list.model.CommercePriceListCommerceAccountGroupRel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce price list commerce account group rel service.
@@ -45,9 +40,6 @@ public interface CommercePriceListCommerceAccountGroupRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommercePriceListCommerceAccountGroupRelUtil} to access the commerce price list commerce account group rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommercePriceListCommerceAccountGroupRel>
-		fetchByPrimaryKeys(Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce price list commerce account group rels where uuid = &#63;.
@@ -691,8 +683,5 @@ public interface CommercePriceListCommerceAccountGroupRelPersistence
 	 * @return the number of commerce price list commerce account group rels
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

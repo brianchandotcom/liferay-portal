@@ -79,6 +79,18 @@ public class CommerceDiscountRelLocalServiceWrapper
 	}
 
 	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceDiscountRelLocalService.createPersistedModel(
+			primaryKeyObj);
+	}
+
+	/**
 	 * Deletes the commerce discount rel from the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -146,6 +158,11 @@ public class CommerceDiscountRelLocalServiceWrapper
 
 		return _commerceDiscountRelLocalService.deletePersistedModel(
 			persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _commerceDiscountRelLocalService.dslQuery(dslQuery);
 	}
 
 	@Override

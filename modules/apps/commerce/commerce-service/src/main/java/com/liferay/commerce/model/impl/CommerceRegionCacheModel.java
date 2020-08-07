@@ -15,9 +15,10 @@
 package com.liferay.commerce.model.impl;
 
 import com.liferay.commerce.model.CommerceRegion;
+import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class CommerceRegionCacheModel
-	implements CacheModel<CommerceRegion>, Externalizable {
+	implements CacheModel<CommerceRegion>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -48,7 +49,9 @@ public class CommerceRegionCacheModel
 		CommerceRegionCacheModel commerceRegionCacheModel =
 			(CommerceRegionCacheModel)object;
 
-		if (commerceRegionId == commerceRegionCacheModel.commerceRegionId) {
+		if ((commerceRegionId == commerceRegionCacheModel.commerceRegionId) &&
+			(mvccVersion == commerceRegionCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -57,14 +60,28 @@ public class CommerceRegionCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, commerceRegionId);
+		int hashCode = HashUtil.hash(0, commerceRegionId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", commerceRegionId=");
 		sb.append(commerceRegionId);
@@ -98,6 +115,8 @@ public class CommerceRegionCacheModel
 	@Override
 	public CommerceRegion toEntityModel() {
 		CommerceRegionImpl commerceRegionImpl = new CommerceRegionImpl();
+
+		commerceRegionImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			commerceRegionImpl.setUuid("");
@@ -164,6 +183,7 @@ public class CommerceRegionCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		commerceRegionId = objectInput.readLong();
@@ -187,6 +207,8 @@ public class CommerceRegionCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -232,6 +254,7 @@ public class CommerceRegionCacheModel
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long commerceRegionId;
 	public long companyId;

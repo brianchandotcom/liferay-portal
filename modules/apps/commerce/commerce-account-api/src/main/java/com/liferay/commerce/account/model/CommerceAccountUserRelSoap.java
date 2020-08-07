@@ -35,6 +35,7 @@ public class CommerceAccountUserRelSoap implements Serializable {
 
 		CommerceAccountUserRelSoap soapModel = new CommerceAccountUserRelSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCommerceAccountId(model.getCommerceAccountId());
 		soapModel.setCommerceAccountUserId(model.getCommerceAccountUserId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -106,6 +107,14 @@ public class CommerceAccountUserRelSoap implements Serializable {
 		setCommerceAccountUserId(pk.commerceAccountUserId);
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public long getCommerceAccountId() {
 		return _commerceAccountId;
 	}
@@ -162,6 +171,7 @@ public class CommerceAccountUserRelSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	private long _mvccVersion;
 	private long _commerceAccountId;
 	private long _commerceAccountUserId;
 	private long _companyId;

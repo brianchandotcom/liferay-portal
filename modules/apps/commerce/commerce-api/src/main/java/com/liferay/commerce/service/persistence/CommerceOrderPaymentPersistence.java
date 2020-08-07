@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.exception.NoSuchOrderPaymentException;
 import com.liferay.commerce.model.CommerceOrderPayment;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce order payment service.
@@ -45,9 +40,6 @@ public interface CommerceOrderPaymentPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceOrderPaymentUtil} to access the commerce order payment persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceOrderPayment> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce order payments where commerceOrderId = &#63;.

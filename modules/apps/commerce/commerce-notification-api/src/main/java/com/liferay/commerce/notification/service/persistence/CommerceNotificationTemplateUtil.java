@@ -1558,10 +1558,6 @@ public class CommerceNotificationTemplateUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CommerceNotificationTemplatePersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

@@ -1434,10 +1434,6 @@ public class CommerceCurrencyUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CommerceCurrencyPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

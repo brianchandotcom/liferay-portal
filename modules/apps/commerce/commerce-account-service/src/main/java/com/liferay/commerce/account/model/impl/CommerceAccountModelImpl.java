@@ -19,6 +19,7 @@ import com.liferay.commerce.account.model.CommerceAccountModel;
 import com.liferay.commerce.account.model.CommerceAccountSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
@@ -73,7 +73,7 @@ public class CommerceAccountModelImpl
 	public static final String TABLE_NAME = "CommerceAccount";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"externalReferenceCode", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"externalReferenceCode", Types.VARCHAR},
 		{"commerceAccountId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
@@ -93,6 +93,7 @@ public class CommerceAccountModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceAccountId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -119,7 +120,7 @@ public class CommerceAccountModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceAccount (externalReferenceCode VARCHAR(75) null,commerceAccountId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCommerceAccountId LONG,name VARCHAR(255) null,logoId LONG,email VARCHAR(75) null,taxId VARCHAR(75) null,type_ INTEGER,active_ BOOLEAN,displayDate DATE null,defaultBillingAddressId LONG,defaultShippingAddressId LONG,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table CommerceAccount (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,commerceAccountId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCommerceAccountId LONG,name VARCHAR(255) null,logoId LONG,email VARCHAR(75) null,taxId VARCHAR(75) null,type_ INTEGER,active_ BOOLEAN,displayDate DATE null,defaultBillingAddressId LONG,defaultShippingAddressId LONG,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceAccount";
 
@@ -135,20 +136,23 @@ public class CommerceAccountModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.account.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.account.model.CommerceAccount"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.account.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.account.model.CommerceAccount"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.account.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.account.model.CommerceAccount"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
@@ -173,6 +177,7 @@ public class CommerceAccountModelImpl
 
 		CommerceAccount model = new CommerceAccountImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setCommerceAccountId(soapModel.getCommerceAccountId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -282,9 +287,6 @@ public class CommerceAccountModelImpl
 				attributeGetterFunction.apply((CommerceAccount)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -359,535 +361,145 @@ public class CommerceAccountModelImpl
 			new LinkedHashMap<String, BiConsumer<CommerceAccount, ?>>();
 
 		attributeGetterFunctions.put(
-			"externalReferenceCode",
-			new Function<CommerceAccount, Object>() {
-
-				@Override
-				public Object apply(CommerceAccount commerceAccount) {
-					return commerceAccount.getExternalReferenceCode();
-				}
-
-			});
+			"mvccVersion", CommerceAccount::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceAccount, Long>)CommerceAccount::setMvccVersion);
+		attributeGetterFunctions.put(
+			"externalReferenceCode", CommerceAccount::getExternalReferenceCode);
 		attributeSetterBiConsumers.put(
 			"externalReferenceCode",
-			new BiConsumer<CommerceAccount, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccount commerceAccount,
-					Object externalReferenceCodeObject) {
-
-					commerceAccount.setExternalReferenceCode(
-						(String)externalReferenceCodeObject);
-				}
-
-			});
+			(BiConsumer<CommerceAccount, String>)
+				CommerceAccount::setExternalReferenceCode);
 		attributeGetterFunctions.put(
-			"commerceAccountId",
-			new Function<CommerceAccount, Object>() {
-
-				@Override
-				public Object apply(CommerceAccount commerceAccount) {
-					return commerceAccount.getCommerceAccountId();
-				}
-
-			});
+			"commerceAccountId", CommerceAccount::getCommerceAccountId);
 		attributeSetterBiConsumers.put(
 			"commerceAccountId",
-			new BiConsumer<CommerceAccount, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccount commerceAccount,
-					Object commerceAccountIdObject) {
-
-					commerceAccount.setCommerceAccountId(
-						(Long)commerceAccountIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceAccount, Long>)
+				CommerceAccount::setCommerceAccountId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommerceAccount, Object>() {
-
-				@Override
-				public Object apply(CommerceAccount commerceAccount) {
-					return commerceAccount.getCompanyId();
-				}
-
-			});
+			"companyId", CommerceAccount::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommerceAccount, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccount commerceAccount, Object companyIdObject) {
-
-					commerceAccount.setCompanyId((Long)companyIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommerceAccount, Object>() {
-
-				@Override
-				public Object apply(CommerceAccount commerceAccount) {
-					return commerceAccount.getUserId();
-				}
-
-			});
+			(BiConsumer<CommerceAccount, Long>)CommerceAccount::setCompanyId);
+		attributeGetterFunctions.put("userId", CommerceAccount::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommerceAccount, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccount commerceAccount, Object userIdObject) {
-
-					commerceAccount.setUserId((Long)userIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommerceAccount, Object>() {
-
-				@Override
-				public Object apply(CommerceAccount commerceAccount) {
-					return commerceAccount.getUserName();
-				}
-
-			});
+			(BiConsumer<CommerceAccount, Long>)CommerceAccount::setUserId);
+		attributeGetterFunctions.put("userName", CommerceAccount::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommerceAccount, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccount commerceAccount, Object userNameObject) {
-
-					commerceAccount.setUserName((String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceAccount, String>)CommerceAccount::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommerceAccount, Object>() {
-
-				@Override
-				public Object apply(CommerceAccount commerceAccount) {
-					return commerceAccount.getCreateDate();
-				}
-
-			});
+			"createDate", CommerceAccount::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommerceAccount, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccount commerceAccount, Object createDateObject) {
-
-					commerceAccount.setCreateDate((Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceAccount, Date>)CommerceAccount::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CommerceAccount, Object>() {
-
-				@Override
-				public Object apply(CommerceAccount commerceAccount) {
-					return commerceAccount.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CommerceAccount::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommerceAccount, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccount commerceAccount,
-					Object modifiedDateObject) {
-
-					commerceAccount.setModifiedDate((Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceAccount, Date>)
+				CommerceAccount::setModifiedDate);
 		attributeGetterFunctions.put(
 			"parentCommerceAccountId",
-			new Function<CommerceAccount, Object>() {
-
-				@Override
-				public Object apply(CommerceAccount commerceAccount) {
-					return commerceAccount.getParentCommerceAccountId();
-				}
-
-			});
+			CommerceAccount::getParentCommerceAccountId);
 		attributeSetterBiConsumers.put(
 			"parentCommerceAccountId",
-			new BiConsumer<CommerceAccount, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccount commerceAccount,
-					Object parentCommerceAccountIdObject) {
-
-					commerceAccount.setParentCommerceAccountId(
-						(Long)parentCommerceAccountIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"name",
-			new Function<CommerceAccount, Object>() {
-
-				@Override
-				public Object apply(CommerceAccount commerceAccount) {
-					return commerceAccount.getName();
-				}
-
-			});
+			(BiConsumer<CommerceAccount, Long>)
+				CommerceAccount::setParentCommerceAccountId);
+		attributeGetterFunctions.put("name", CommerceAccount::getName);
 		attributeSetterBiConsumers.put(
 			"name",
-			new BiConsumer<CommerceAccount, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccount commerceAccount, Object nameObject) {
-
-					commerceAccount.setName((String)nameObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"logoId",
-			new Function<CommerceAccount, Object>() {
-
-				@Override
-				public Object apply(CommerceAccount commerceAccount) {
-					return commerceAccount.getLogoId();
-				}
-
-			});
+			(BiConsumer<CommerceAccount, String>)CommerceAccount::setName);
+		attributeGetterFunctions.put("logoId", CommerceAccount::getLogoId);
 		attributeSetterBiConsumers.put(
 			"logoId",
-			new BiConsumer<CommerceAccount, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccount commerceAccount, Object logoIdObject) {
-
-					commerceAccount.setLogoId((Long)logoIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"email",
-			new Function<CommerceAccount, Object>() {
-
-				@Override
-				public Object apply(CommerceAccount commerceAccount) {
-					return commerceAccount.getEmail();
-				}
-
-			});
+			(BiConsumer<CommerceAccount, Long>)CommerceAccount::setLogoId);
+		attributeGetterFunctions.put("email", CommerceAccount::getEmail);
 		attributeSetterBiConsumers.put(
 			"email",
-			new BiConsumer<CommerceAccount, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccount commerceAccount, Object emailObject) {
-
-					commerceAccount.setEmail((String)emailObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"taxId",
-			new Function<CommerceAccount, Object>() {
-
-				@Override
-				public Object apply(CommerceAccount commerceAccount) {
-					return commerceAccount.getTaxId();
-				}
-
-			});
+			(BiConsumer<CommerceAccount, String>)CommerceAccount::setEmail);
+		attributeGetterFunctions.put("taxId", CommerceAccount::getTaxId);
 		attributeSetterBiConsumers.put(
 			"taxId",
-			new BiConsumer<CommerceAccount, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccount commerceAccount, Object taxIdObject) {
-
-					commerceAccount.setTaxId((String)taxIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"type",
-			new Function<CommerceAccount, Object>() {
-
-				@Override
-				public Object apply(CommerceAccount commerceAccount) {
-					return commerceAccount.getType();
-				}
-
-			});
+			(BiConsumer<CommerceAccount, String>)CommerceAccount::setTaxId);
+		attributeGetterFunctions.put("type", CommerceAccount::getType);
 		attributeSetterBiConsumers.put(
 			"type",
-			new BiConsumer<CommerceAccount, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccount commerceAccount, Object typeObject) {
-
-					commerceAccount.setType((Integer)typeObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"active",
-			new Function<CommerceAccount, Object>() {
-
-				@Override
-				public Object apply(CommerceAccount commerceAccount) {
-					return commerceAccount.getActive();
-				}
-
-			});
+			(BiConsumer<CommerceAccount, Integer>)CommerceAccount::setType);
+		attributeGetterFunctions.put("active", CommerceAccount::getActive);
 		attributeSetterBiConsumers.put(
 			"active",
-			new BiConsumer<CommerceAccount, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccount commerceAccount, Object activeObject) {
-
-					commerceAccount.setActive((Boolean)activeObject);
-				}
-
-			});
+			(BiConsumer<CommerceAccount, Boolean>)CommerceAccount::setActive);
 		attributeGetterFunctions.put(
-			"displayDate",
-			new Function<CommerceAccount, Object>() {
-
-				@Override
-				public Object apply(CommerceAccount commerceAccount) {
-					return commerceAccount.getDisplayDate();
-				}
-
-			});
+			"displayDate", CommerceAccount::getDisplayDate);
 		attributeSetterBiConsumers.put(
 			"displayDate",
-			new BiConsumer<CommerceAccount, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccount commerceAccount, Object displayDateObject) {
-
-					commerceAccount.setDisplayDate((Date)displayDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceAccount, Date>)CommerceAccount::setDisplayDate);
 		attributeGetterFunctions.put(
 			"defaultBillingAddressId",
-			new Function<CommerceAccount, Object>() {
-
-				@Override
-				public Object apply(CommerceAccount commerceAccount) {
-					return commerceAccount.getDefaultBillingAddressId();
-				}
-
-			});
+			CommerceAccount::getDefaultBillingAddressId);
 		attributeSetterBiConsumers.put(
 			"defaultBillingAddressId",
-			new BiConsumer<CommerceAccount, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccount commerceAccount,
-					Object defaultBillingAddressIdObject) {
-
-					commerceAccount.setDefaultBillingAddressId(
-						(Long)defaultBillingAddressIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceAccount, Long>)
+				CommerceAccount::setDefaultBillingAddressId);
 		attributeGetterFunctions.put(
 			"defaultShippingAddressId",
-			new Function<CommerceAccount, Object>() {
-
-				@Override
-				public Object apply(CommerceAccount commerceAccount) {
-					return commerceAccount.getDefaultShippingAddressId();
-				}
-
-			});
+			CommerceAccount::getDefaultShippingAddressId);
 		attributeSetterBiConsumers.put(
 			"defaultShippingAddressId",
-			new BiConsumer<CommerceAccount, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccount commerceAccount,
-					Object defaultShippingAddressIdObject) {
-
-					commerceAccount.setDefaultShippingAddressId(
-						(Long)defaultShippingAddressIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceAccount, Long>)
+				CommerceAccount::setDefaultShippingAddressId);
 		attributeGetterFunctions.put(
-			"expirationDate",
-			new Function<CommerceAccount, Object>() {
-
-				@Override
-				public Object apply(CommerceAccount commerceAccount) {
-					return commerceAccount.getExpirationDate();
-				}
-
-			});
+			"expirationDate", CommerceAccount::getExpirationDate);
 		attributeSetterBiConsumers.put(
 			"expirationDate",
-			new BiConsumer<CommerceAccount, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccount commerceAccount,
-					Object expirationDateObject) {
-
-					commerceAccount.setExpirationDate(
-						(Date)expirationDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceAccount, Date>)
+				CommerceAccount::setExpirationDate);
 		attributeGetterFunctions.put(
-			"lastPublishDate",
-			new Function<CommerceAccount, Object>() {
-
-				@Override
-				public Object apply(CommerceAccount commerceAccount) {
-					return commerceAccount.getLastPublishDate();
-				}
-
-			});
+			"lastPublishDate", CommerceAccount::getLastPublishDate);
 		attributeSetterBiConsumers.put(
 			"lastPublishDate",
-			new BiConsumer<CommerceAccount, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccount commerceAccount,
-					Object lastPublishDateObject) {
-
-					commerceAccount.setLastPublishDate(
-						(Date)lastPublishDateObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"status",
-			new Function<CommerceAccount, Object>() {
-
-				@Override
-				public Object apply(CommerceAccount commerceAccount) {
-					return commerceAccount.getStatus();
-				}
-
-			});
+			(BiConsumer<CommerceAccount, Date>)
+				CommerceAccount::setLastPublishDate);
+		attributeGetterFunctions.put("status", CommerceAccount::getStatus);
 		attributeSetterBiConsumers.put(
 			"status",
-			new BiConsumer<CommerceAccount, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccount commerceAccount, Object statusObject) {
-
-					commerceAccount.setStatus((Integer)statusObject);
-				}
-
-			});
+			(BiConsumer<CommerceAccount, Integer>)CommerceAccount::setStatus);
 		attributeGetterFunctions.put(
-			"statusByUserId",
-			new Function<CommerceAccount, Object>() {
-
-				@Override
-				public Object apply(CommerceAccount commerceAccount) {
-					return commerceAccount.getStatusByUserId();
-				}
-
-			});
+			"statusByUserId", CommerceAccount::getStatusByUserId);
 		attributeSetterBiConsumers.put(
 			"statusByUserId",
-			new BiConsumer<CommerceAccount, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccount commerceAccount,
-					Object statusByUserIdObject) {
-
-					commerceAccount.setStatusByUserId(
-						(Long)statusByUserIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceAccount, Long>)
+				CommerceAccount::setStatusByUserId);
 		attributeGetterFunctions.put(
-			"statusByUserName",
-			new Function<CommerceAccount, Object>() {
-
-				@Override
-				public Object apply(CommerceAccount commerceAccount) {
-					return commerceAccount.getStatusByUserName();
-				}
-
-			});
+			"statusByUserName", CommerceAccount::getStatusByUserName);
 		attributeSetterBiConsumers.put(
 			"statusByUserName",
-			new BiConsumer<CommerceAccount, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccount commerceAccount,
-					Object statusByUserNameObject) {
-
-					commerceAccount.setStatusByUserName(
-						(String)statusByUserNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceAccount, String>)
+				CommerceAccount::setStatusByUserName);
 		attributeGetterFunctions.put(
-			"statusDate",
-			new Function<CommerceAccount, Object>() {
-
-				@Override
-				public Object apply(CommerceAccount commerceAccount) {
-					return commerceAccount.getStatusDate();
-				}
-
-			});
+			"statusDate", CommerceAccount::getStatusDate);
 		attributeSetterBiConsumers.put(
 			"statusDate",
-			new BiConsumer<CommerceAccount, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccount commerceAccount, Object statusDateObject) {
-
-					commerceAccount.setStatusDate((Date)statusDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceAccount, Date>)CommerceAccount::setStatusDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1379,6 +991,7 @@ public class CommerceAccountModelImpl
 	public Object clone() {
 		CommerceAccountImpl commerceAccountImpl = new CommerceAccountImpl();
 
+		commerceAccountImpl.setMvccVersion(getMvccVersion());
 		commerceAccountImpl.setExternalReferenceCode(
 			getExternalReferenceCode());
 		commerceAccountImpl.setCommerceAccountId(getCommerceAccountId());
@@ -1452,11 +1065,19 @@ public class CommerceAccountModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -1487,6 +1108,8 @@ public class CommerceAccountModelImpl
 	public CacheModel<CommerceAccount> toCacheModel() {
 		CommerceAccountCacheModel commerceAccountCacheModel =
 			new CommerceAccountCacheModel();
+
+		commerceAccountCacheModel.mvccVersion = getMvccVersion();
 
 		commerceAccountCacheModel.externalReferenceCode =
 			getExternalReferenceCode();
@@ -1693,6 +1316,7 @@ public class CommerceAccountModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _externalReferenceCode;
 	private String _originalExternalReferenceCode;
 	private long _commerceAccountId;

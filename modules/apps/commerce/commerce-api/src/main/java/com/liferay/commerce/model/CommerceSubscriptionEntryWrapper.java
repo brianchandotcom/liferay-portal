@@ -14,17 +14,13 @@
 
 package com.liferay.commerce.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,29 +32,21 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceSubscriptionEntryWrapper
+	extends BaseModelWrapper<CommerceSubscriptionEntry>
 	implements CommerceSubscriptionEntry,
 			   ModelWrapper<CommerceSubscriptionEntry> {
 
 	public CommerceSubscriptionEntryWrapper(
 		CommerceSubscriptionEntry commerceSubscriptionEntry) {
 
-		_commerceSubscriptionEntry = commerceSubscriptionEntry;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceSubscriptionEntry.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceSubscriptionEntry.class.getName();
+		super(commerceSubscriptionEntry);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put(
 			"commerceSubscriptionEntryId", getCommerceSubscriptionEntryId());
@@ -105,6 +93,12 @@ public class CommerceSubscriptionEntryWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -295,31 +289,20 @@ public class CommerceSubscriptionEntryWrapper
 	}
 
 	@Override
-	public Object clone() {
-		return new CommerceSubscriptionEntryWrapper(
-			(CommerceSubscriptionEntry)_commerceSubscriptionEntry.clone());
-	}
-
-	@Override
-	public int compareTo(CommerceSubscriptionEntry commerceSubscriptionEntry) {
-		return _commerceSubscriptionEntry.compareTo(commerceSubscriptionEntry);
-	}
-
-	@Override
 	public CommerceOrderItem fetchCommerceOrderItem() {
-		return _commerceSubscriptionEntry.fetchCommerceOrderItem();
+		return model.fetchCommerceOrderItem();
 	}
 
 	@Override
 	public com.liferay.commerce.product.model.CPDefinition fetchCPDefinition()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceSubscriptionEntry.fetchCPDefinition();
+		return model.fetchCPDefinition();
 	}
 
 	@Override
 	public com.liferay.commerce.product.model.CPInstance fetchCPInstance() {
-		return _commerceSubscriptionEntry.fetchCPInstance();
+		return model.fetchCPInstance();
 	}
 
 	/**
@@ -329,7 +312,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public long getCommerceOrderItemId() {
-		return _commerceSubscriptionEntry.getCommerceOrderItemId();
+		return model.getCommerceOrderItemId();
 	}
 
 	/**
@@ -339,7 +322,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public long getCommerceSubscriptionEntryId() {
-		return _commerceSubscriptionEntry.getCommerceSubscriptionEntryId();
+		return model.getCommerceSubscriptionEntryId();
 	}
 
 	/**
@@ -349,19 +332,19 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceSubscriptionEntry.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	@Override
 	public long getCPDefinitionId()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceSubscriptionEntry.getCPDefinitionId();
+		return model.getCPDefinitionId();
 	}
 
 	@Override
 	public long getCPInstanceId() {
-		return _commerceSubscriptionEntry.getCPInstanceId();
+		return model.getCPInstanceId();
 	}
 
 	/**
@@ -371,7 +354,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public String getCPInstanceUuid() {
-		return _commerceSubscriptionEntry.getCPInstanceUuid();
+		return model.getCPInstanceUuid();
 	}
 
 	/**
@@ -381,7 +364,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public long getCProductId() {
-		return _commerceSubscriptionEntry.getCProductId();
+		return model.getCProductId();
 	}
 
 	/**
@@ -391,7 +374,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceSubscriptionEntry.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -401,7 +384,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public long getCurrentCycle() {
-		return _commerceSubscriptionEntry.getCurrentCycle();
+		return model.getCurrentCycle();
 	}
 
 	/**
@@ -411,7 +394,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public long getDeliveryCurrentCycle() {
-		return _commerceSubscriptionEntry.getDeliveryCurrentCycle();
+		return model.getDeliveryCurrentCycle();
 	}
 
 	/**
@@ -421,7 +404,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public Date getDeliveryLastIterationDate() {
-		return _commerceSubscriptionEntry.getDeliveryLastIterationDate();
+		return model.getDeliveryLastIterationDate();
 	}
 
 	/**
@@ -431,7 +414,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public long getDeliveryMaxSubscriptionCycles() {
-		return _commerceSubscriptionEntry.getDeliveryMaxSubscriptionCycles();
+		return model.getDeliveryMaxSubscriptionCycles();
 	}
 
 	/**
@@ -441,7 +424,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public Date getDeliveryNextIterationDate() {
-		return _commerceSubscriptionEntry.getDeliveryNextIterationDate();
+		return model.getDeliveryNextIterationDate();
 	}
 
 	/**
@@ -451,7 +434,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public Date getDeliveryStartDate() {
-		return _commerceSubscriptionEntry.getDeliveryStartDate();
+		return model.getDeliveryStartDate();
 	}
 
 	/**
@@ -461,7 +444,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public int getDeliverySubscriptionLength() {
-		return _commerceSubscriptionEntry.getDeliverySubscriptionLength();
+		return model.getDeliverySubscriptionLength();
 	}
 
 	/**
@@ -471,7 +454,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public int getDeliverySubscriptionStatus() {
-		return _commerceSubscriptionEntry.getDeliverySubscriptionStatus();
+		return model.getDeliverySubscriptionStatus();
 	}
 
 	/**
@@ -481,7 +464,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public String getDeliverySubscriptionType() {
-		return _commerceSubscriptionEntry.getDeliverySubscriptionType();
+		return model.getDeliverySubscriptionType();
 	}
 
 	/**
@@ -491,20 +474,14 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public String getDeliverySubscriptionTypeSettings() {
-		return _commerceSubscriptionEntry.getDeliverySubscriptionTypeSettings();
+		return model.getDeliverySubscriptionTypeSettings();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties
 		getDeliverySubscriptionTypeSettingsProperties() {
 
-		return _commerceSubscriptionEntry.
-			getDeliverySubscriptionTypeSettingsProperties();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceSubscriptionEntry.getExpandoBridge();
+		return model.getDeliverySubscriptionTypeSettingsProperties();
 	}
 
 	/**
@@ -514,7 +491,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _commerceSubscriptionEntry.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -524,7 +501,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public Date getLastIterationDate() {
-		return _commerceSubscriptionEntry.getLastIterationDate();
+		return model.getLastIterationDate();
 	}
 
 	/**
@@ -534,7 +511,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public long getMaxSubscriptionCycles() {
-		return _commerceSubscriptionEntry.getMaxSubscriptionCycles();
+		return model.getMaxSubscriptionCycles();
 	}
 
 	/**
@@ -544,7 +521,17 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceSubscriptionEntry.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce subscription entry.
+	 *
+	 * @return the mvcc version of this commerce subscription entry
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -554,7 +541,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public Date getNextIterationDate() {
-		return _commerceSubscriptionEntry.getNextIterationDate();
+		return model.getNextIterationDate();
 	}
 
 	/**
@@ -564,12 +551,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceSubscriptionEntry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceSubscriptionEntry.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -579,7 +561,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public Date getStartDate() {
-		return _commerceSubscriptionEntry.getStartDate();
+		return model.getStartDate();
 	}
 
 	/**
@@ -589,7 +571,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public int getSubscriptionLength() {
-		return _commerceSubscriptionEntry.getSubscriptionLength();
+		return model.getSubscriptionLength();
 	}
 
 	/**
@@ -599,7 +581,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public int getSubscriptionStatus() {
-		return _commerceSubscriptionEntry.getSubscriptionStatus();
+		return model.getSubscriptionStatus();
 	}
 
 	/**
@@ -609,7 +591,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public String getSubscriptionType() {
-		return _commerceSubscriptionEntry.getSubscriptionType();
+		return model.getSubscriptionType();
 	}
 
 	/**
@@ -619,15 +601,14 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public String getSubscriptionTypeSettings() {
-		return _commerceSubscriptionEntry.getSubscriptionTypeSettings();
+		return model.getSubscriptionTypeSettings();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties
 		getSubscriptionTypeSettingsProperties() {
 
-		return _commerceSubscriptionEntry.
-			getSubscriptionTypeSettingsProperties();
+		return model.getSubscriptionTypeSettingsProperties();
 	}
 
 	/**
@@ -637,7 +618,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceSubscriptionEntry.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -647,7 +628,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceSubscriptionEntry.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -657,7 +638,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceSubscriptionEntry.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -667,37 +648,12 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public String getUuid() {
-		return _commerceSubscriptionEntry.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceSubscriptionEntry.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceSubscriptionEntry.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceSubscriptionEntry.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceSubscriptionEntry.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_commerceSubscriptionEntry.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceSubscriptionEntry.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -707,7 +663,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public void setCommerceOrderItemId(long commerceOrderItemId) {
-		_commerceSubscriptionEntry.setCommerceOrderItemId(commerceOrderItemId);
+		model.setCommerceOrderItemId(commerceOrderItemId);
 	}
 
 	/**
@@ -719,8 +675,7 @@ public class CommerceSubscriptionEntryWrapper
 	public void setCommerceSubscriptionEntryId(
 		long commerceSubscriptionEntryId) {
 
-		_commerceSubscriptionEntry.setCommerceSubscriptionEntryId(
-			commerceSubscriptionEntryId);
+		model.setCommerceSubscriptionEntryId(commerceSubscriptionEntryId);
 	}
 
 	/**
@@ -730,7 +685,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceSubscriptionEntry.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -740,7 +695,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public void setCPInstanceUuid(String CPInstanceUuid) {
-		_commerceSubscriptionEntry.setCPInstanceUuid(CPInstanceUuid);
+		model.setCPInstanceUuid(CPInstanceUuid);
 	}
 
 	/**
@@ -750,7 +705,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public void setCProductId(long CProductId) {
-		_commerceSubscriptionEntry.setCProductId(CProductId);
+		model.setCProductId(CProductId);
 	}
 
 	/**
@@ -760,7 +715,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceSubscriptionEntry.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -770,7 +725,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public void setCurrentCycle(long currentCycle) {
-		_commerceSubscriptionEntry.setCurrentCycle(currentCycle);
+		model.setCurrentCycle(currentCycle);
 	}
 
 	/**
@@ -780,8 +735,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public void setDeliveryCurrentCycle(long deliveryCurrentCycle) {
-		_commerceSubscriptionEntry.setDeliveryCurrentCycle(
-			deliveryCurrentCycle);
+		model.setDeliveryCurrentCycle(deliveryCurrentCycle);
 	}
 
 	/**
@@ -791,8 +745,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public void setDeliveryLastIterationDate(Date deliveryLastIterationDate) {
-		_commerceSubscriptionEntry.setDeliveryLastIterationDate(
-			deliveryLastIterationDate);
+		model.setDeliveryLastIterationDate(deliveryLastIterationDate);
 	}
 
 	/**
@@ -804,8 +757,7 @@ public class CommerceSubscriptionEntryWrapper
 	public void setDeliveryMaxSubscriptionCycles(
 		long deliveryMaxSubscriptionCycles) {
 
-		_commerceSubscriptionEntry.setDeliveryMaxSubscriptionCycles(
-			deliveryMaxSubscriptionCycles);
+		model.setDeliveryMaxSubscriptionCycles(deliveryMaxSubscriptionCycles);
 	}
 
 	/**
@@ -815,8 +767,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public void setDeliveryNextIterationDate(Date deliveryNextIterationDate) {
-		_commerceSubscriptionEntry.setDeliveryNextIterationDate(
-			deliveryNextIterationDate);
+		model.setDeliveryNextIterationDate(deliveryNextIterationDate);
 	}
 
 	/**
@@ -826,7 +777,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public void setDeliveryStartDate(Date deliveryStartDate) {
-		_commerceSubscriptionEntry.setDeliveryStartDate(deliveryStartDate);
+		model.setDeliveryStartDate(deliveryStartDate);
 	}
 
 	/**
@@ -836,8 +787,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public void setDeliverySubscriptionLength(int deliverySubscriptionLength) {
-		_commerceSubscriptionEntry.setDeliverySubscriptionLength(
-			deliverySubscriptionLength);
+		model.setDeliverySubscriptionLength(deliverySubscriptionLength);
 	}
 
 	/**
@@ -847,8 +797,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public void setDeliverySubscriptionStatus(int deliverySubscriptionStatus) {
-		_commerceSubscriptionEntry.setDeliverySubscriptionStatus(
-			deliverySubscriptionStatus);
+		model.setDeliverySubscriptionStatus(deliverySubscriptionStatus);
 	}
 
 	/**
@@ -858,8 +807,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public void setDeliverySubscriptionType(String deliverySubscriptionType) {
-		_commerceSubscriptionEntry.setDeliverySubscriptionType(
-			deliverySubscriptionType);
+		model.setDeliverySubscriptionType(deliverySubscriptionType);
 	}
 
 	/**
@@ -871,35 +819,17 @@ public class CommerceSubscriptionEntryWrapper
 	public void setDeliverySubscriptionTypeSettings(
 		String deliverySubscriptionTypeSettings) {
 
-		_commerceSubscriptionEntry.setDeliverySubscriptionTypeSettings(
+		model.setDeliverySubscriptionTypeSettings(
 			deliverySubscriptionTypeSettings);
 	}
 
 	@Override
 	public void setDeliverySubscriptionTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties
-			deliverySubscriptionTypeSettingsProperties) {
+			deliverySubscriptionTypeSettingsUnicodeProperties) {
 
-		_commerceSubscriptionEntry.
-			setDeliverySubscriptionTypeSettingsProperties(
-				deliverySubscriptionTypeSettingsProperties);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceSubscriptionEntry.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceSubscriptionEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceSubscriptionEntry.setExpandoBridgeAttributes(serviceContext);
+		model.setDeliverySubscriptionTypeSettingsProperties(
+			deliverySubscriptionTypeSettingsUnicodeProperties);
 	}
 
 	/**
@@ -909,7 +839,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_commerceSubscriptionEntry.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -919,7 +849,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public void setLastIterationDate(Date lastIterationDate) {
-		_commerceSubscriptionEntry.setLastIterationDate(lastIterationDate);
+		model.setLastIterationDate(lastIterationDate);
 	}
 
 	/**
@@ -929,8 +859,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public void setMaxSubscriptionCycles(long maxSubscriptionCycles) {
-		_commerceSubscriptionEntry.setMaxSubscriptionCycles(
-			maxSubscriptionCycles);
+		model.setMaxSubscriptionCycles(maxSubscriptionCycles);
 	}
 
 	/**
@@ -940,12 +869,17 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceSubscriptionEntry.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this commerce subscription entry.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce subscription entry
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_commerceSubscriptionEntry.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -955,7 +889,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public void setNextIterationDate(Date nextIterationDate) {
-		_commerceSubscriptionEntry.setNextIterationDate(nextIterationDate);
+		model.setNextIterationDate(nextIterationDate);
 	}
 
 	/**
@@ -965,12 +899,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceSubscriptionEntry.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceSubscriptionEntry.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -980,7 +909,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public void setStartDate(Date startDate) {
-		_commerceSubscriptionEntry.setStartDate(startDate);
+		model.setStartDate(startDate);
 	}
 
 	/**
@@ -990,7 +919,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public void setSubscriptionLength(int subscriptionLength) {
-		_commerceSubscriptionEntry.setSubscriptionLength(subscriptionLength);
+		model.setSubscriptionLength(subscriptionLength);
 	}
 
 	/**
@@ -1000,7 +929,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public void setSubscriptionStatus(int subscriptionStatus) {
-		_commerceSubscriptionEntry.setSubscriptionStatus(subscriptionStatus);
+		model.setSubscriptionStatus(subscriptionStatus);
 	}
 
 	/**
@@ -1010,7 +939,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public void setSubscriptionType(String subscriptionType) {
-		_commerceSubscriptionEntry.setSubscriptionType(subscriptionType);
+		model.setSubscriptionType(subscriptionType);
 	}
 
 	/**
@@ -1020,17 +949,16 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public void setSubscriptionTypeSettings(String subscriptionTypeSettings) {
-		_commerceSubscriptionEntry.setSubscriptionTypeSettings(
-			subscriptionTypeSettings);
+		model.setSubscriptionTypeSettings(subscriptionTypeSettings);
 	}
 
 	@Override
 	public void setSubscriptionTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties
-			subscriptionTypeSettingsProperties) {
+			subscriptionTypeSettingsUnicodeProperties) {
 
-		_commerceSubscriptionEntry.setSubscriptionTypeSettingsProperties(
-			subscriptionTypeSettingsProperties);
+		model.setSubscriptionTypeSettingsProperties(
+			subscriptionTypeSettingsUnicodeProperties);
 	}
 
 	/**
@@ -1040,7 +968,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceSubscriptionEntry.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -1050,7 +978,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceSubscriptionEntry.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -1060,7 +988,7 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceSubscriptionEntry.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -1070,86 +998,19 @@ public class CommerceSubscriptionEntryWrapper
 	 */
 	@Override
 	public void setUuid(String uuid) {
-		_commerceSubscriptionEntry.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceSubscriptionEntry>
-		toCacheModel() {
-
-		return _commerceSubscriptionEntry.toCacheModel();
-	}
-
-	@Override
-	public CommerceSubscriptionEntry toEscapedModel() {
-		return new CommerceSubscriptionEntryWrapper(
-			_commerceSubscriptionEntry.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commerceSubscriptionEntry.toString();
-	}
-
-	@Override
-	public CommerceSubscriptionEntry toUnescapedModel() {
-		return new CommerceSubscriptionEntryWrapper(
-			_commerceSubscriptionEntry.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceSubscriptionEntry.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceSubscriptionEntryWrapper)) {
-			return false;
-		}
-
-		CommerceSubscriptionEntryWrapper commerceSubscriptionEntryWrapper =
-			(CommerceSubscriptionEntryWrapper)object;
-
-		if (Objects.equals(
-				_commerceSubscriptionEntry,
-				commerceSubscriptionEntryWrapper._commerceSubscriptionEntry)) {
-
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _commerceSubscriptionEntry.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public CommerceSubscriptionEntry getWrappedModel() {
-		return _commerceSubscriptionEntry;
-	}
+	protected CommerceSubscriptionEntryWrapper wrap(
+		CommerceSubscriptionEntry commerceSubscriptionEntry) {
 
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceSubscriptionEntry.isEntityCacheEnabled();
+		return new CommerceSubscriptionEntryWrapper(commerceSubscriptionEntry);
 	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceSubscriptionEntry.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceSubscriptionEntry.resetOriginalValues();
-	}
-
-	private final CommerceSubscriptionEntry _commerceSubscriptionEntry;
 
 }

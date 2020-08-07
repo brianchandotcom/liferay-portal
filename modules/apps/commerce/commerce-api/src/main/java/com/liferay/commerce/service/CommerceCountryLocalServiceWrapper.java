@@ -80,6 +80,17 @@ public class CommerceCountryLocalServiceWrapper
 			commerceCountryId);
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceCountryLocalService.createPersistedModel(primaryKeyObj);
+	}
+
 	@Override
 	public void deleteCommerceCountries(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -137,6 +148,11 @@ public class CommerceCountryLocalServiceWrapper
 
 		return _commerceCountryLocalService.deletePersistedModel(
 			persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _commerceCountryLocalService.dslQuery(dslQuery);
 	}
 
 	@Override

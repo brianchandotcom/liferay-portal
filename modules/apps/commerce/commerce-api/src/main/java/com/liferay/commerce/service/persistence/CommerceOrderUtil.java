@@ -2817,10 +2817,6 @@ public class CommerceOrderUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CommerceOrderPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

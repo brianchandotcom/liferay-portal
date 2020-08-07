@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.product.service;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -37,6 +35,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the remote service interface for CPDefinition. Methods of this
@@ -87,10 +87,10 @@ public interface CPDefinitionService extends BaseService {
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, String defaultSku, boolean subscriptionEnabled,
 			int subscriptionLength, String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
 			int deliverySubscriptionLength, String deliverySubscriptionType,
-			UnicodeProperties deliverySubscriptionTypeSettingsProperties,
+			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
 			long deliveryMaxSubscriptionCycles, String externalReferenceCode,
 			ServiceContext serviceContext)
 		throws PortalException;
@@ -114,7 +114,7 @@ public interface CPDefinitionService extends BaseService {
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, String defaultSku, boolean subscriptionEnabled,
 			int subscriptionLength, String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, String externalReferenceCode,
 			ServiceContext serviceContext)
 		throws PortalException;
@@ -229,10 +229,10 @@ public interface CPDefinitionService extends BaseService {
 	public CPDefinition updateSubscriptionInfo(
 			long cpDefinitionId, boolean subscriptionEnabled,
 			int subscriptionLength, String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
 			int deliverySubscriptionLength, String deliverySubscriptionType,
-			UnicodeProperties deliverySubscriptionTypeSettingsProperties,
+			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
 			long deliveryMaxSubscriptionCycles)
 		throws PortalException;
 
@@ -243,7 +243,7 @@ public interface CPDefinitionService extends BaseService {
 	public CPDefinition updateSubscriptionInfo(
 			long cpDefinitionId, boolean subscriptionEnabled,
 			int subscriptionLength, String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -271,10 +271,10 @@ public interface CPDefinitionService extends BaseService {
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, String defaultSku, boolean subscriptionEnabled,
 			int subscriptionLength, String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
 			int deliverySubscriptionLength, String deliverySubscriptionType,
-			UnicodeProperties deliverySubscriptionTypeSettingsProperties,
+			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
 			long deliveryMaxSubscriptionCycles, String externalReferenceCode,
 			ServiceContext serviceContext)
 		throws PortalException;
@@ -298,7 +298,7 @@ public interface CPDefinitionService extends BaseService {
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, String defaultSku, boolean subscriptionEnabled,
 			int subscriptionLength, String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, String externalReferenceCode,
 			ServiceContext serviceContext)
 		throws PortalException;

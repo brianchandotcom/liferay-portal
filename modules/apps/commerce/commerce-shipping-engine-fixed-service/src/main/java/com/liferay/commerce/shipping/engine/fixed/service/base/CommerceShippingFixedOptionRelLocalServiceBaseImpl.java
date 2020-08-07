@@ -19,6 +19,7 @@ import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedO
 import com.liferay.commerce.shipping.engine.fixed.service.persistence.CommerceShippingFixedOptionPersistence;
 import com.liferay.commerce.shipping.engine.fixed.service.persistence.CommerceShippingFixedOptionRelFinder;
 import com.liferay.commerce.shipping.engine.fixed.service.persistence.CommerceShippingFixedOptionRelPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -148,6 +149,11 @@ public abstract class CommerceShippingFixedOptionRelLocalServiceBaseImpl
 
 		return commerceShippingFixedOptionRelPersistence.remove(
 			commerceShippingFixedOptionRel);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return commerceShippingFixedOptionRelPersistence.dslQuery(dslQuery);
 	}
 
 	@Override
@@ -310,6 +316,16 @@ public abstract class CommerceShippingFixedOptionRelLocalServiceBaseImpl
 
 		actionableDynamicQuery.setPrimaryKeyPropertyName(
 			"commerceShippingFixedOptionRelId");
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
+
+		return commerceShippingFixedOptionRelPersistence.create(
+			((Long)primaryKeyObj).longValue());
 	}
 
 	/**

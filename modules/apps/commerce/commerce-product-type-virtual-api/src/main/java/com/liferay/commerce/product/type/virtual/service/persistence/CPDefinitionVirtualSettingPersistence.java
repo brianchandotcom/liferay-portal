@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.product.type.virtual.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.product.type.virtual.exception.NoSuchCPDefinitionVirtualSettingException;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the cp definition virtual setting service.
@@ -45,9 +40,6 @@ public interface CPDefinitionVirtualSettingPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionVirtualSettingUtil} to access the cp definition virtual setting persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CPDefinitionVirtualSetting> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the cp definition virtual settings where uuid = &#63;.
@@ -574,8 +566,5 @@ public interface CPDefinitionVirtualSettingPersistence
 	 * @return the number of cp definition virtual settings
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

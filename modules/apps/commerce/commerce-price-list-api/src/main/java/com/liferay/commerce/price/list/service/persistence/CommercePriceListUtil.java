@@ -2926,10 +2926,6 @@ public class CommercePriceListUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CommercePriceListPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

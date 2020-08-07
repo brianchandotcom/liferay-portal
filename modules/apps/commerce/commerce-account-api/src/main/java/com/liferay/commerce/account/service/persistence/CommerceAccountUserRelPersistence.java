@@ -14,16 +14,13 @@
 
 package com.liferay.commerce.account.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.account.exception.NoSuchAccountUserRelException;
 import com.liferay.commerce.account.model.CommerceAccountUserRel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
 import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce account user rel service.
@@ -45,9 +42,6 @@ public interface CommerceAccountUserRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceAccountUserRelUtil} to access the commerce account user rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceAccountUserRel> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce account user rels where commerceAccountId = &#63;.

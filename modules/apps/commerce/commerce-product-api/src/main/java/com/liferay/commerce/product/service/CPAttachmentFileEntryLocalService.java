@@ -14,10 +14,9 @@
 
 package com.liferay.commerce.product.service;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -44,6 +43,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for CPAttachmentFileEntry. Methods of this
@@ -126,6 +127,12 @@ public interface CPAttachmentFileEntryLocalService
 	public CPAttachmentFileEntry createCPAttachmentFileEntry(
 		long CPAttachmentFileEntryId);
 
+	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
 	public void deleteCPAttachmentFileEntries(String className, long classPK)
 		throws PortalException;
 
@@ -168,6 +175,9 @@ public interface CPAttachmentFileEntryLocalService
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();

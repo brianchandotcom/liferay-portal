@@ -14,17 +14,13 @@
 
 package com.liferay.commerce.product.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,26 +32,18 @@ import java.util.Objects;
  * @generated
  */
 public class CPOptionCategoryWrapper
+	extends BaseModelWrapper<CPOptionCategory>
 	implements CPOptionCategory, ModelWrapper<CPOptionCategory> {
 
 	public CPOptionCategoryWrapper(CPOptionCategory cpOptionCategory) {
-		_cpOptionCategory = cpOptionCategory;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CPOptionCategory.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CPOptionCategory.class.getName();
+		super(cpOptionCategory);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("CPOptionCategoryId", getCPOptionCategoryId());
 		attributes.put("companyId", getCompanyId());
@@ -74,6 +62,12 @@ public class CPOptionCategoryWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -148,19 +142,8 @@ public class CPOptionCategoryWrapper
 	}
 
 	@Override
-	public Object clone() {
-		return new CPOptionCategoryWrapper(
-			(CPOptionCategory)_cpOptionCategory.clone());
-	}
-
-	@Override
-	public int compareTo(CPOptionCategory cpOptionCategory) {
-		return _cpOptionCategory.compareTo(cpOptionCategory);
-	}
-
-	@Override
 	public String[] getAvailableLanguageIds() {
-		return _cpOptionCategory.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -170,7 +153,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _cpOptionCategory.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -180,7 +163,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public long getCPOptionCategoryId() {
-		return _cpOptionCategory.getCPOptionCategoryId();
+		return model.getCPOptionCategoryId();
 	}
 
 	/**
@@ -190,12 +173,12 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _cpOptionCategory.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _cpOptionCategory.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -205,7 +188,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public String getDescription() {
-		return _cpOptionCategory.getDescription();
+		return model.getDescription();
 	}
 
 	/**
@@ -216,7 +199,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public String getDescription(java.util.Locale locale) {
-		return _cpOptionCategory.getDescription(locale);
+		return model.getDescription(locale);
 	}
 
 	/**
@@ -228,7 +211,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public String getDescription(java.util.Locale locale, boolean useDefault) {
-		return _cpOptionCategory.getDescription(locale, useDefault);
+		return model.getDescription(locale, useDefault);
 	}
 
 	/**
@@ -239,7 +222,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public String getDescription(String languageId) {
-		return _cpOptionCategory.getDescription(languageId);
+		return model.getDescription(languageId);
 	}
 
 	/**
@@ -251,17 +234,17 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return _cpOptionCategory.getDescription(languageId, useDefault);
+		return model.getDescription(languageId, useDefault);
 	}
 
 	@Override
 	public String getDescriptionCurrentLanguageId() {
-		return _cpOptionCategory.getDescriptionCurrentLanguageId();
+		return model.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
 	public String getDescriptionCurrentValue() {
-		return _cpOptionCategory.getDescriptionCurrentValue();
+		return model.getDescriptionCurrentValue();
 	}
 
 	/**
@@ -271,12 +254,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public Map<java.util.Locale, String> getDescriptionMap() {
-		return _cpOptionCategory.getDescriptionMap();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _cpOptionCategory.getExpandoBridge();
+		return model.getDescriptionMap();
 	}
 
 	/**
@@ -286,7 +264,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public String getKey() {
-		return _cpOptionCategory.getKey();
+		return model.getKey();
 	}
 
 	/**
@@ -296,7 +274,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public Date getLastPublishDate() {
-		return _cpOptionCategory.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -306,7 +284,17 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _cpOptionCategory.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this cp option category.
+	 *
+	 * @return the mvcc version of this cp option category
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -316,12 +304,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _cpOptionCategory.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _cpOptionCategory.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -331,7 +314,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public double getPriority() {
-		return _cpOptionCategory.getPriority();
+		return model.getPriority();
 	}
 
 	/**
@@ -341,7 +324,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public String getTitle() {
-		return _cpOptionCategory.getTitle();
+		return model.getTitle();
 	}
 
 	/**
@@ -352,7 +335,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public String getTitle(java.util.Locale locale) {
-		return _cpOptionCategory.getTitle(locale);
+		return model.getTitle(locale);
 	}
 
 	/**
@@ -364,7 +347,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public String getTitle(java.util.Locale locale, boolean useDefault) {
-		return _cpOptionCategory.getTitle(locale, useDefault);
+		return model.getTitle(locale, useDefault);
 	}
 
 	/**
@@ -375,7 +358,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public String getTitle(String languageId) {
-		return _cpOptionCategory.getTitle(languageId);
+		return model.getTitle(languageId);
 	}
 
 	/**
@@ -387,17 +370,17 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public String getTitle(String languageId, boolean useDefault) {
-		return _cpOptionCategory.getTitle(languageId, useDefault);
+		return model.getTitle(languageId, useDefault);
 	}
 
 	@Override
 	public String getTitleCurrentLanguageId() {
-		return _cpOptionCategory.getTitleCurrentLanguageId();
+		return model.getTitleCurrentLanguageId();
 	}
 
 	@Override
 	public String getTitleCurrentValue() {
-		return _cpOptionCategory.getTitleCurrentValue();
+		return model.getTitleCurrentValue();
 	}
 
 	/**
@@ -407,7 +390,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public Map<java.util.Locale, String> getTitleMap() {
-		return _cpOptionCategory.getTitleMap();
+		return model.getTitleMap();
 	}
 
 	/**
@@ -417,7 +400,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _cpOptionCategory.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -427,7 +410,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _cpOptionCategory.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -437,7 +420,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _cpOptionCategory.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -447,39 +430,19 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public String getUuid() {
-		return _cpOptionCategory.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _cpOptionCategory.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _cpOptionCategory.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _cpOptionCategory.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _cpOptionCategory.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_cpOptionCategory.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
-		_cpOptionCategory.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
@@ -487,12 +450,7 @@ public class CPOptionCategoryWrapper
 			java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
-		_cpOptionCategory.prepareLocalizedFieldsForImport(defaultImportLocale);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_cpOptionCategory.setCachedModel(cachedModel);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -502,7 +460,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_cpOptionCategory.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -512,7 +470,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public void setCPOptionCategoryId(long CPOptionCategoryId) {
-		_cpOptionCategory.setCPOptionCategoryId(CPOptionCategoryId);
+		model.setCPOptionCategoryId(CPOptionCategoryId);
 	}
 
 	/**
@@ -522,7 +480,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_cpOptionCategory.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -532,7 +490,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public void setDescription(String description) {
-		_cpOptionCategory.setDescription(description);
+		model.setDescription(description);
 	}
 
 	/**
@@ -543,7 +501,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public void setDescription(String description, java.util.Locale locale) {
-		_cpOptionCategory.setDescription(description, locale);
+		model.setDescription(description, locale);
 	}
 
 	/**
@@ -558,12 +516,12 @@ public class CPOptionCategoryWrapper
 		String description, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 
-		_cpOptionCategory.setDescription(description, locale, defaultLocale);
+		model.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
 	public void setDescriptionCurrentLanguageId(String languageId) {
-		_cpOptionCategory.setDescriptionCurrentLanguageId(languageId);
+		model.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -575,7 +533,7 @@ public class CPOptionCategoryWrapper
 	public void setDescriptionMap(
 		Map<java.util.Locale, String> descriptionMap) {
 
-		_cpOptionCategory.setDescriptionMap(descriptionMap);
+		model.setDescriptionMap(descriptionMap);
 	}
 
 	/**
@@ -589,24 +547,7 @@ public class CPOptionCategoryWrapper
 		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
 
-		_cpOptionCategory.setDescriptionMap(descriptionMap, defaultLocale);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_cpOptionCategory.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_cpOptionCategory.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_cpOptionCategory.setExpandoBridgeAttributes(serviceContext);
+		model.setDescriptionMap(descriptionMap, defaultLocale);
 	}
 
 	/**
@@ -616,7 +557,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public void setKey(String key) {
-		_cpOptionCategory.setKey(key);
+		model.setKey(key);
 	}
 
 	/**
@@ -626,7 +567,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_cpOptionCategory.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -636,12 +577,17 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_cpOptionCategory.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this cp option category.
+	 *
+	 * @param mvccVersion the mvcc version of this cp option category
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_cpOptionCategory.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -651,12 +597,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_cpOptionCategory.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_cpOptionCategory.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -666,7 +607,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public void setPriority(double priority) {
-		_cpOptionCategory.setPriority(priority);
+		model.setPriority(priority);
 	}
 
 	/**
@@ -676,7 +617,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public void setTitle(String title) {
-		_cpOptionCategory.setTitle(title);
+		model.setTitle(title);
 	}
 
 	/**
@@ -687,7 +628,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public void setTitle(String title, java.util.Locale locale) {
-		_cpOptionCategory.setTitle(title, locale);
+		model.setTitle(title, locale);
 	}
 
 	/**
@@ -701,12 +642,12 @@ public class CPOptionCategoryWrapper
 	public void setTitle(
 		String title, java.util.Locale locale, java.util.Locale defaultLocale) {
 
-		_cpOptionCategory.setTitle(title, locale, defaultLocale);
+		model.setTitle(title, locale, defaultLocale);
 	}
 
 	@Override
 	public void setTitleCurrentLanguageId(String languageId) {
-		_cpOptionCategory.setTitleCurrentLanguageId(languageId);
+		model.setTitleCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -716,7 +657,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public void setTitleMap(Map<java.util.Locale, String> titleMap) {
-		_cpOptionCategory.setTitleMap(titleMap);
+		model.setTitleMap(titleMap);
 	}
 
 	/**
@@ -730,7 +671,7 @@ public class CPOptionCategoryWrapper
 		Map<java.util.Locale, String> titleMap,
 		java.util.Locale defaultLocale) {
 
-		_cpOptionCategory.setTitleMap(titleMap, defaultLocale);
+		model.setTitleMap(titleMap, defaultLocale);
 	}
 
 	/**
@@ -740,7 +681,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_cpOptionCategory.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -750,7 +691,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_cpOptionCategory.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -760,7 +701,7 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_cpOptionCategory.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -770,84 +711,17 @@ public class CPOptionCategoryWrapper
 	 */
 	@Override
 	public void setUuid(String uuid) {
-		_cpOptionCategory.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CPOptionCategory>
-		toCacheModel() {
-
-		return _cpOptionCategory.toCacheModel();
-	}
-
-	@Override
-	public CPOptionCategory toEscapedModel() {
-		return new CPOptionCategoryWrapper(_cpOptionCategory.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _cpOptionCategory.toString();
-	}
-
-	@Override
-	public CPOptionCategory toUnescapedModel() {
-		return new CPOptionCategoryWrapper(
-			_cpOptionCategory.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _cpOptionCategory.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CPOptionCategoryWrapper)) {
-			return false;
-		}
-
-		CPOptionCategoryWrapper cpOptionCategoryWrapper =
-			(CPOptionCategoryWrapper)object;
-
-		if (Objects.equals(
-				_cpOptionCategory, cpOptionCategoryWrapper._cpOptionCategory)) {
-
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _cpOptionCategory.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public CPOptionCategory getWrappedModel() {
-		return _cpOptionCategory;
+	protected CPOptionCategoryWrapper wrap(CPOptionCategory cpOptionCategory) {
+		return new CPOptionCategoryWrapper(cpOptionCategory);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _cpOptionCategory.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _cpOptionCategory.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_cpOptionCategory.resetOriginalValues();
-	}
-
-	private final CPOptionCategory _cpOptionCategory;
 
 }

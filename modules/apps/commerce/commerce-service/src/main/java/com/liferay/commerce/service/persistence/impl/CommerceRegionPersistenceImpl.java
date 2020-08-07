@@ -16,9 +16,11 @@ package com.liferay.commerce.service.persistence.impl;
 
 import com.liferay.commerce.exception.NoSuchRegionException;
 import com.liferay.commerce.model.CommerceRegion;
+import com.liferay.commerce.model.CommerceRegionTable;
 import com.liferay.commerce.model.impl.CommerceRegionImpl;
 import com.liferay.commerce.model.impl.CommerceRegionModelImpl;
 import com.liferay.commerce.service.persistence.CommerceRegionPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -35,21 +37,16 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -251,10 +248,6 @@ public class CommerceRegionPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -606,8 +599,6 @@ public class CommerceRegionPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -805,10 +796,6 @@ public class CommerceRegionPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1191,8 +1178,6 @@ public class CommerceRegionPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1375,10 +1360,6 @@ public class CommerceRegionPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1713,8 +1694,6 @@ public class CommerceRegionPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1870,10 +1849,6 @@ public class CommerceRegionPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(_finderPathFetchByC_C, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1962,8 +1937,6 @@ public class CommerceRegionPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2155,10 +2128,6 @@ public class CommerceRegionPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2515,8 +2484,6 @@ public class CommerceRegionPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2540,21 +2507,14 @@ public class CommerceRegionPersistenceImpl
 		dbColumnNames.put("code", "code_");
 		dbColumnNames.put("active", "active_");
 
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-				"_dbColumnNames");
-
-			field.setAccessible(true);
-
-			field.set(this, dbColumnNames);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
+		setDBColumnNames(dbColumnNames);
 
 		setModelClass(CommerceRegion.class);
+
+		setModelImplClass(CommerceRegionImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CommerceRegionTable.INSTANCE);
 	}
 
 	/**
@@ -2565,7 +2525,6 @@ public class CommerceRegionPersistenceImpl
 	@Override
 	public void cacheResult(CommerceRegion commerceRegion) {
 		entityCache.putResult(
-			CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceRegionImpl.class, commerceRegion.getPrimaryKey(),
 			commerceRegion);
 
@@ -2588,7 +2547,6 @@ public class CommerceRegionPersistenceImpl
 	public void cacheResult(List<CommerceRegion> commerceRegions) {
 		for (CommerceRegion commerceRegion : commerceRegions) {
 			if (entityCache.getResult(
-					CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
 					CommerceRegionImpl.class, commerceRegion.getPrimaryKey()) ==
 						null) {
 
@@ -2626,7 +2584,6 @@ public class CommerceRegionPersistenceImpl
 	@Override
 	public void clearCache(CommerceRegion commerceRegion) {
 		entityCache.removeResult(
-			CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceRegionImpl.class, commerceRegion.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -2642,7 +2599,6 @@ public class CommerceRegionPersistenceImpl
 
 		for (CommerceRegion commerceRegion : commerceRegions) {
 			entityCache.removeResult(
-				CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceRegionImpl.class, commerceRegion.getPrimaryKey());
 
 			clearUniqueFindersCache(
@@ -2650,15 +2606,14 @@ public class CommerceRegionPersistenceImpl
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceRegionImpl.class, primaryKey);
+			entityCache.removeResult(CommerceRegionImpl.class, primaryKey);
 		}
 	}
 
@@ -2887,10 +2842,7 @@ public class CommerceRegionPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CommerceRegionModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {commerceRegionModelImpl.getUuid()};
 
 			finderCache.removeResult(_finderPathCountByUuid, args);
@@ -3018,7 +2970,6 @@ public class CommerceRegionPersistenceImpl
 		}
 
 		entityCache.putResult(
-			CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceRegionImpl.class, commerceRegion.getPrimaryKey(),
 			commerceRegion, false);
 
@@ -3072,163 +3023,12 @@ public class CommerceRegionPersistenceImpl
 	/**
 	 * Returns the commerce region with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the commerce region
-	 * @return the commerce region, or <code>null</code> if a commerce region with the primary key could not be found
-	 */
-	@Override
-	public CommerceRegion fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(
-			CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceRegionImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CommerceRegion commerceRegion = (CommerceRegion)serializable;
-
-		if (commerceRegion == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				commerceRegion = (CommerceRegion)session.get(
-					CommerceRegionImpl.class, primaryKey);
-
-				if (commerceRegion != null) {
-					cacheResult(commerceRegion);
-				}
-				else {
-					entityCache.putResult(
-						CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
-						CommerceRegionImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceRegionImpl.class, primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return commerceRegion;
-	}
-
-	/**
-	 * Returns the commerce region with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param commerceRegionId the primary key of the commerce region
 	 * @return the commerce region, or <code>null</code> if a commerce region with the primary key could not be found
 	 */
 	@Override
 	public CommerceRegion fetchByPrimaryKey(long commerceRegionId) {
 		return fetchByPrimaryKey((Serializable)commerceRegionId);
-	}
-
-	@Override
-	public Map<Serializable, CommerceRegion> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CommerceRegion> map =
-			new HashMap<Serializable, CommerceRegion>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CommerceRegion commerceRegion = fetchByPrimaryKey(primaryKey);
-
-			if (commerceRegion != null) {
-				map.put(primaryKey, commerceRegion);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceRegionImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (CommerceRegion)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(_SQL_SELECT_COMMERCEREGION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CommerceRegion commerceRegion :
-					(List<CommerceRegion>)query.list()) {
-
-				map.put(commerceRegion.getPrimaryKeyObj(), commerceRegion);
-
-				cacheResult(commerceRegion);
-
-				uncachedPrimaryKeys.remove(commerceRegion.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceRegionImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -3356,10 +3156,6 @@ public class CommerceRegionPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3405,9 +3201,6 @@ public class CommerceRegionPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3424,6 +3217,21 @@ public class CommerceRegionPersistenceImpl
 	}
 
 	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "commerceRegionId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_COMMERCEREGION;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CommerceRegionModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3433,26 +3241,18 @@ public class CommerceRegionPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceRegionModelImpl.FINDER_CACHE_ENABLED,
 			CommerceRegionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceRegionModelImpl.FINDER_CACHE_ENABLED,
 			CommerceRegionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findAll", new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceRegionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByUuid = new FinderPath(
-			CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceRegionModelImpl.FINDER_CACHE_ENABLED,
 			CommerceRegionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByUuid",
 			new String[] {
@@ -3461,22 +3261,16 @@ public class CommerceRegionPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceRegionModelImpl.FINDER_CACHE_ENABLED,
 			CommerceRegionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid", new String[] {String.class.getName()},
 			CommerceRegionModelImpl.UUID_COLUMN_BITMASK |
 			CommerceRegionModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
-			CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceRegionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUuid", new String[] {String.class.getName()});
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceRegionModelImpl.FINDER_CACHE_ENABLED,
 			CommerceRegionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByUuid_C",
 			new String[] {
@@ -3486,8 +3280,6 @@ public class CommerceRegionPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceRegionModelImpl.FINDER_CACHE_ENABLED,
 			CommerceRegionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
@@ -3496,14 +3288,11 @@ public class CommerceRegionPersistenceImpl
 			CommerceRegionModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
-			CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceRegionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByCommerceCountryId = new FinderPath(
-			CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceRegionModelImpl.FINDER_CACHE_ENABLED,
 			CommerceRegionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByCommerceCountryId",
 			new String[] {
@@ -3512,36 +3301,26 @@ public class CommerceRegionPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByCommerceCountryId = new FinderPath(
-			CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceRegionModelImpl.FINDER_CACHE_ENABLED,
 			CommerceRegionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCommerceCountryId", new String[] {Long.class.getName()},
 			CommerceRegionModelImpl.COMMERCECOUNTRYID_COLUMN_BITMASK |
 			CommerceRegionModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByCommerceCountryId = new FinderPath(
-			CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceRegionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCommerceCountryId", new String[] {Long.class.getName()});
 
 		_finderPathFetchByC_C = new FinderPath(
-			CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceRegionModelImpl.FINDER_CACHE_ENABLED,
 			CommerceRegionImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), String.class.getName()},
 			CommerceRegionModelImpl.COMMERCECOUNTRYID_COLUMN_BITMASK |
 			CommerceRegionModelImpl.CODE_COLUMN_BITMASK);
 
 		_finderPathCountByC_C = new FinderPath(
-			CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceRegionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
 			new String[] {Long.class.getName(), String.class.getName()});
 
 		_finderPathWithPaginationFindByC_A = new FinderPath(
-			CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceRegionModelImpl.FINDER_CACHE_ENABLED,
 			CommerceRegionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByC_A",
 			new String[] {
@@ -3551,8 +3330,6 @@ public class CommerceRegionPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByC_A = new FinderPath(
-			CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceRegionModelImpl.FINDER_CACHE_ENABLED,
 			CommerceRegionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByC_A",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
@@ -3561,9 +3338,7 @@ public class CommerceRegionPersistenceImpl
 			CommerceRegionModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByC_A = new FinderPath(
-			CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceRegionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
 			new String[] {Long.class.getName(), Boolean.class.getName()});
 	}
 
@@ -3582,9 +3357,6 @@ public class CommerceRegionPersistenceImpl
 
 	private static final String _SQL_SELECT_COMMERCEREGION =
 		"SELECT commerceRegion FROM CommerceRegion commerceRegion";
-
-	private static final String _SQL_SELECT_COMMERCEREGION_WHERE_PKS_IN =
-		"SELECT commerceRegion FROM CommerceRegion commerceRegion WHERE commerceRegionId IN (";
 
 	private static final String _SQL_SELECT_COMMERCEREGION_WHERE =
 		"SELECT commerceRegion FROM CommerceRegion commerceRegion WHERE ";

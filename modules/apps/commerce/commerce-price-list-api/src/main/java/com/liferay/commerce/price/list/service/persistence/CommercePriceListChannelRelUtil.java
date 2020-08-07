@@ -914,10 +914,6 @@ public class CommercePriceListChannelRelUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CommercePriceListChannelRelPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

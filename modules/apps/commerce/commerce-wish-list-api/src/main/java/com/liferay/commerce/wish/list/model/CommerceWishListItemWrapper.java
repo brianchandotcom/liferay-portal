@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.wish.list.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,28 +31,20 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceWishListItemWrapper
+	extends BaseModelWrapper<CommerceWishListItem>
 	implements CommerceWishListItem, ModelWrapper<CommerceWishListItem> {
 
 	public CommerceWishListItemWrapper(
 		CommerceWishListItem commerceWishListItem) {
 
-		_commerceWishListItem = commerceWishListItem;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceWishListItem.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceWishListItem.class.getName();
+		super(commerceWishListItem);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("commerceWishListItemId", getCommerceWishListItemId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -74,6 +62,12 @@ public class CommerceWishListItemWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long commerceWishListItemId = (Long)attributes.get(
 			"commerceWishListItemId");
 
@@ -143,28 +137,17 @@ public class CommerceWishListItemWrapper
 	}
 
 	@Override
-	public Object clone() {
-		return new CommerceWishListItemWrapper(
-			(CommerceWishListItem)_commerceWishListItem.clone());
-	}
-
-	@Override
-	public int compareTo(CommerceWishListItem commerceWishListItem) {
-		return _commerceWishListItem.compareTo(commerceWishListItem);
-	}
-
-	@Override
 	public com.liferay.commerce.product.model.CPInstance fetchCPInstance()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceWishListItem.fetchCPInstance();
+		return model.fetchCPInstance();
 	}
 
 	@Override
 	public CommerceWishList getCommerceWishList()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceWishListItem.getCommerceWishList();
+		return model.getCommerceWishList();
 	}
 
 	/**
@@ -174,7 +157,7 @@ public class CommerceWishListItemWrapper
 	 */
 	@Override
 	public long getCommerceWishListId() {
-		return _commerceWishListItem.getCommerceWishListId();
+		return model.getCommerceWishListId();
 	}
 
 	/**
@@ -184,7 +167,7 @@ public class CommerceWishListItemWrapper
 	 */
 	@Override
 	public long getCommerceWishListItemId() {
-		return _commerceWishListItem.getCommerceWishListItemId();
+		return model.getCommerceWishListItemId();
 	}
 
 	/**
@@ -194,14 +177,14 @@ public class CommerceWishListItemWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceWishListItem.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	@Override
 	public com.liferay.commerce.product.model.CPDefinition getCPDefinition()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceWishListItem.getCPDefinition();
+		return model.getCPDefinition();
 	}
 
 	/**
@@ -211,14 +194,14 @@ public class CommerceWishListItemWrapper
 	 */
 	@Override
 	public String getCPInstanceUuid() {
-		return _commerceWishListItem.getCPInstanceUuid();
+		return model.getCPInstanceUuid();
 	}
 
 	@Override
 	public com.liferay.commerce.product.model.CProduct getCProduct()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceWishListItem.getCProduct();
+		return model.getCProduct();
 	}
 
 	/**
@@ -228,7 +211,7 @@ public class CommerceWishListItemWrapper
 	 */
 	@Override
 	public long getCProductId() {
-		return _commerceWishListItem.getCProductId();
+		return model.getCProductId();
 	}
 
 	/**
@@ -238,12 +221,7 @@ public class CommerceWishListItemWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceWishListItem.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceWishListItem.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -253,7 +231,7 @@ public class CommerceWishListItemWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _commerceWishListItem.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -263,7 +241,7 @@ public class CommerceWishListItemWrapper
 	 */
 	@Override
 	public String getJson() {
-		return _commerceWishListItem.getJson();
+		return model.getJson();
 	}
 
 	/**
@@ -273,7 +251,17 @@ public class CommerceWishListItemWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceWishListItem.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce wish list item.
+	 *
+	 * @return the mvcc version of this commerce wish list item
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -283,12 +271,7 @@ public class CommerceWishListItemWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceWishListItem.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceWishListItem.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -298,7 +281,7 @@ public class CommerceWishListItemWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceWishListItem.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -308,7 +291,7 @@ public class CommerceWishListItemWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceWishListItem.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -318,44 +301,19 @@ public class CommerceWishListItemWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceWishListItem.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceWishListItem.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceWishListItem.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceWishListItem.isEscapedModel();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public boolean isIgnoreSKUCombinations()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceWishListItem.isIgnoreSKUCombinations();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceWishListItem.isNew();
+		return model.isIgnoreSKUCombinations();
 	}
 
 	@Override
 	public void persist() {
-		_commerceWishListItem.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceWishListItem.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -365,7 +323,7 @@ public class CommerceWishListItemWrapper
 	 */
 	@Override
 	public void setCommerceWishListId(long commerceWishListId) {
-		_commerceWishListItem.setCommerceWishListId(commerceWishListId);
+		model.setCommerceWishListId(commerceWishListId);
 	}
 
 	/**
@@ -375,7 +333,7 @@ public class CommerceWishListItemWrapper
 	 */
 	@Override
 	public void setCommerceWishListItemId(long commerceWishListItemId) {
-		_commerceWishListItem.setCommerceWishListItemId(commerceWishListItemId);
+		model.setCommerceWishListItemId(commerceWishListItemId);
 	}
 
 	/**
@@ -385,7 +343,7 @@ public class CommerceWishListItemWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceWishListItem.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -395,7 +353,7 @@ public class CommerceWishListItemWrapper
 	 */
 	@Override
 	public void setCPInstanceUuid(String CPInstanceUuid) {
-		_commerceWishListItem.setCPInstanceUuid(CPInstanceUuid);
+		model.setCPInstanceUuid(CPInstanceUuid);
 	}
 
 	/**
@@ -405,7 +363,7 @@ public class CommerceWishListItemWrapper
 	 */
 	@Override
 	public void setCProductId(long CProductId) {
-		_commerceWishListItem.setCProductId(CProductId);
+		model.setCProductId(CProductId);
 	}
 
 	/**
@@ -415,24 +373,7 @@ public class CommerceWishListItemWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceWishListItem.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceWishListItem.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceWishListItem.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceWishListItem.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -442,7 +383,7 @@ public class CommerceWishListItemWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_commerceWishListItem.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -452,7 +393,7 @@ public class CommerceWishListItemWrapper
 	 */
 	@Override
 	public void setJson(String json) {
-		_commerceWishListItem.setJson(json);
+		model.setJson(json);
 	}
 
 	/**
@@ -462,12 +403,17 @@ public class CommerceWishListItemWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceWishListItem.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this commerce wish list item.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce wish list item
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_commerceWishListItem.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -477,12 +423,7 @@ public class CommerceWishListItemWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceWishListItem.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceWishListItem.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -492,7 +433,7 @@ public class CommerceWishListItemWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceWishListItem.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -502,7 +443,7 @@ public class CommerceWishListItemWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceWishListItem.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -512,81 +453,14 @@ public class CommerceWishListItemWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceWishListItem.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceWishListItem>
-		toCacheModel() {
+	protected CommerceWishListItemWrapper wrap(
+		CommerceWishListItem commerceWishListItem) {
 
-		return _commerceWishListItem.toCacheModel();
+		return new CommerceWishListItemWrapper(commerceWishListItem);
 	}
-
-	@Override
-	public CommerceWishListItem toEscapedModel() {
-		return new CommerceWishListItemWrapper(
-			_commerceWishListItem.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commerceWishListItem.toString();
-	}
-
-	@Override
-	public CommerceWishListItem toUnescapedModel() {
-		return new CommerceWishListItemWrapper(
-			_commerceWishListItem.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceWishListItem.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceWishListItemWrapper)) {
-			return false;
-		}
-
-		CommerceWishListItemWrapper commerceWishListItemWrapper =
-			(CommerceWishListItemWrapper)object;
-
-		if (Objects.equals(
-				_commerceWishListItem,
-				commerceWishListItemWrapper._commerceWishListItem)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceWishListItem getWrappedModel() {
-		return _commerceWishListItem;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceWishListItem.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceWishListItem.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceWishListItem.resetOriginalValues();
-	}
-
-	private final CommerceWishListItem _commerceWishListItem;
 
 }

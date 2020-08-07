@@ -15,9 +15,10 @@
 package com.liferay.commerce.bom.model.impl;
 
 import com.liferay.commerce.bom.model.CommerceBOMDefinition;
+import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class CommerceBOMDefinitionCacheModel
-	implements CacheModel<CommerceBOMDefinition>, Externalizable {
+	implements CacheModel<CommerceBOMDefinition>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -48,8 +49,9 @@ public class CommerceBOMDefinitionCacheModel
 		CommerceBOMDefinitionCacheModel commerceBOMDefinitionCacheModel =
 			(CommerceBOMDefinitionCacheModel)object;
 
-		if (commerceBOMDefinitionId ==
-				commerceBOMDefinitionCacheModel.commerceBOMDefinitionId) {
+		if ((commerceBOMDefinitionId ==
+				commerceBOMDefinitionCacheModel.commerceBOMDefinitionId) &&
+			(mvccVersion == commerceBOMDefinitionCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -59,14 +61,28 @@ public class CommerceBOMDefinitionCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, commerceBOMDefinitionId);
+		int hashCode = HashUtil.hash(0, commerceBOMDefinitionId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
-		sb.append("{commerceBOMDefinitionId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", commerceBOMDefinitionId=");
 		sb.append(commerceBOMDefinitionId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -96,6 +112,7 @@ public class CommerceBOMDefinitionCacheModel
 		CommerceBOMDefinitionImpl commerceBOMDefinitionImpl =
 			new CommerceBOMDefinitionImpl();
 
+		commerceBOMDefinitionImpl.setMvccVersion(mvccVersion);
 		commerceBOMDefinitionImpl.setCommerceBOMDefinitionId(
 			commerceBOMDefinitionId);
 		commerceBOMDefinitionImpl.setCompanyId(companyId);
@@ -147,6 +164,8 @@ public class CommerceBOMDefinitionCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		commerceBOMDefinitionId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -165,6 +184,8 @@ public class CommerceBOMDefinitionCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(commerceBOMDefinitionId);
 
 		objectOutput.writeLong(companyId);
@@ -200,6 +221,7 @@ public class CommerceBOMDefinitionCacheModel
 		}
 	}
 
+	public long mvccVersion;
 	public long commerceBOMDefinitionId;
 	public long companyId;
 	public long userId;

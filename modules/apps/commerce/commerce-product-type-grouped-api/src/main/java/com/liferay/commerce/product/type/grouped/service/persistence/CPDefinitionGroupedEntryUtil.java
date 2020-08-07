@@ -970,10 +970,6 @@ public class CPDefinitionGroupedEntryUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CPDefinitionGroupedEntryPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

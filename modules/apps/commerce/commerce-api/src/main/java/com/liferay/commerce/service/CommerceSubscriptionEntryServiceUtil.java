@@ -148,14 +148,14 @@ public class CommerceSubscriptionEntryServiceUtil {
 				long commerceSubscriptionEntryId, int subscriptionLength,
 				String subscriptionType,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					subscriptionTypeSettingsProperties,
+					subscriptionTypeSettingsUnicodeProperties,
 				long maxSubscriptionCycles, int subscriptionStatus,
 				int nextIterationDateMonth, int nextIterationDateDay,
 				int nextIterationDateYear, int nextIterationDateHour,
 				int nextIterationDateMinute, int deliverySubscriptionLength,
 				String deliverySubscriptionType,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					deliverySubscriptionTypeSettingsProperties,
+					deliverySubscriptionTypeSettingsUnicodeProperties,
 				long deliveryMaxSubscriptionCycles,
 				int deliverySubscriptionStatus,
 				int deliveryNextIterationDateMonth,
@@ -167,12 +167,12 @@ public class CommerceSubscriptionEntryServiceUtil {
 
 		return getService().updateCommerceSubscriptionEntry(
 			commerceSubscriptionEntryId, subscriptionLength, subscriptionType,
-			subscriptionTypeSettingsProperties, maxSubscriptionCycles,
+			subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles,
 			subscriptionStatus, nextIterationDateMonth, nextIterationDateDay,
 			nextIterationDateYear, nextIterationDateHour,
 			nextIterationDateMinute, deliverySubscriptionLength,
 			deliverySubscriptionType,
-			deliverySubscriptionTypeSettingsProperties,
+			deliverySubscriptionTypeSettingsUnicodeProperties,
 			deliveryMaxSubscriptionCycles, deliverySubscriptionStatus,
 			deliveryNextIterationDateMonth, deliveryNextIterationDateDay,
 			deliveryNextIterationDateYear, deliveryNextIterationDateHour,

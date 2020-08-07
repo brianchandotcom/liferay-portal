@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.price.list.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.price.list.exception.NoSuchPriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce price entry service.
@@ -45,9 +40,6 @@ public interface CommercePriceEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommercePriceEntryUtil} to access the commerce price entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommercePriceEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce price entries where uuid = &#63;.
@@ -1065,8 +1057,5 @@ public interface CommercePriceEntryPersistence
 	 * @return the number of commerce price entries
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

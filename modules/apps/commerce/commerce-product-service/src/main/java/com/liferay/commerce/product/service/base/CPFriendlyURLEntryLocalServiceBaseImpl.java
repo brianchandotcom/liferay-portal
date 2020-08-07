@@ -48,6 +48,7 @@ import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -178,6 +179,11 @@ public abstract class CPFriendlyURLEntryLocalServiceBaseImpl
 		CPFriendlyURLEntry cpFriendlyURLEntry) {
 
 		return cpFriendlyURLEntryPersistence.remove(cpFriendlyURLEntry);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return cpFriendlyURLEntryPersistence.dslQuery(dslQuery);
 	}
 
 	@Override
@@ -441,6 +447,16 @@ public abstract class CPFriendlyURLEntryLocalServiceBaseImpl
 				StagedModelType.REFERRER_CLASS_NAME_ID_ALL));
 
 		return exportActionableDynamicQuery;
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
+
+		return cpFriendlyURLEntryPersistence.create(
+			((Long)primaryKeyObj).longValue());
 	}
 
 	/**

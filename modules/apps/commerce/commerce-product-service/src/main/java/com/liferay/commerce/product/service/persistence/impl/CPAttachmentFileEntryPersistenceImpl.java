@@ -16,9 +16,11 @@ package com.liferay.commerce.product.service.persistence.impl;
 
 import com.liferay.commerce.product.exception.NoSuchCPAttachmentFileEntryException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.model.CPAttachmentFileEntryTable;
 import com.liferay.commerce.product.model.impl.CPAttachmentFileEntryImpl;
 import com.liferay.commerce.product.model.impl.CPAttachmentFileEntryModelImpl;
 import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -35,7 +37,6 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -43,7 +44,6 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
@@ -51,8 +51,6 @@ import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -256,10 +254,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -618,8 +612,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -779,11 +771,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByUUID_G, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -873,8 +860,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1077,10 +1062,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1465,8 +1446,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1657,10 +1636,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2019,8 +1994,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2208,10 +2181,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2592,8 +2561,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2758,11 +2725,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByC_C_F, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2846,8 +2808,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3062,10 +3022,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3496,8 +3452,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3717,10 +3671,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -4127,8 +4077,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -4333,10 +4281,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -4743,8 +4687,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -4932,11 +4874,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByC_ERC, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -5027,8 +4964,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -5054,21 +4989,14 @@ public class CPAttachmentFileEntryPersistenceImpl
 		dbColumnNames.put("uuid", "uuid_");
 		dbColumnNames.put("type", "type_");
 
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-				"_dbColumnNames");
-
-			field.setAccessible(true);
-
-			field.set(this, dbColumnNames);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
+		setDBColumnNames(dbColumnNames);
 
 		setModelClass(CPAttachmentFileEntry.class);
+
+		setModelImplClass(CPAttachmentFileEntryImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CPAttachmentFileEntryTable.INSTANCE);
 	}
 
 	/**
@@ -5079,7 +5007,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 	@Override
 	public void cacheResult(CPAttachmentFileEntry cpAttachmentFileEntry) {
 		entityCache.putResult(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CPAttachmentFileEntryImpl.class,
 			cpAttachmentFileEntry.getPrimaryKey(), cpAttachmentFileEntry);
 
@@ -5124,7 +5051,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 				cpAttachmentFileEntries) {
 
 			if (entityCache.getResult(
-					CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 					CPAttachmentFileEntryImpl.class,
 					cpAttachmentFileEntry.getPrimaryKey()) == null) {
 
@@ -5162,7 +5088,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 	@Override
 	public void clearCache(CPAttachmentFileEntry cpAttachmentFileEntry) {
 		entityCache.removeResult(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CPAttachmentFileEntryImpl.class,
 			cpAttachmentFileEntry.getPrimaryKey());
 
@@ -5184,7 +5109,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 				cpAttachmentFileEntries) {
 
 			entityCache.removeResult(
-				CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 				CPAttachmentFileEntryImpl.class,
 				cpAttachmentFileEntry.getPrimaryKey());
 
@@ -5193,6 +5117,7 @@ public class CPAttachmentFileEntryPersistenceImpl
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -5200,7 +5125,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(
-				CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 				CPAttachmentFileEntryImpl.class, primaryKey);
 		}
 	}
@@ -5512,10 +5436,7 @@ public class CPAttachmentFileEntryPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CPAttachmentFileEntryModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				cpAttachmentFileEntryModelImpl.getUuid()
 			};
@@ -5652,7 +5573,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 		}
 
 		entityCache.putResult(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CPAttachmentFileEntryImpl.class,
 			cpAttachmentFileEntry.getPrimaryKey(), cpAttachmentFileEntry,
 			false);
@@ -5708,58 +5628,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 	/**
 	 * Returns the cp attachment file entry with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the cp attachment file entry
-	 * @return the cp attachment file entry, or <code>null</code> if a cp attachment file entry with the primary key could not be found
-	 */
-	@Override
-	public CPAttachmentFileEntry fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPAttachmentFileEntryImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CPAttachmentFileEntry cpAttachmentFileEntry =
-			(CPAttachmentFileEntry)serializable;
-
-		if (cpAttachmentFileEntry == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				cpAttachmentFileEntry = (CPAttachmentFileEntry)session.get(
-					CPAttachmentFileEntryImpl.class, primaryKey);
-
-				if (cpAttachmentFileEntry != null) {
-					cacheResult(cpAttachmentFileEntry);
-				}
-				else {
-					entityCache.putResult(
-						CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-						CPAttachmentFileEntryImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-					CPAttachmentFileEntryImpl.class, primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return cpAttachmentFileEntry;
-	}
-
-	/**
-	 * Returns the cp attachment file entry with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param CPAttachmentFileEntryId the primary key of the cp attachment file entry
 	 * @return the cp attachment file entry, or <code>null</code> if a cp attachment file entry with the primary key could not be found
 	 */
@@ -5768,110 +5636,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 		long CPAttachmentFileEntryId) {
 
 		return fetchByPrimaryKey((Serializable)CPAttachmentFileEntryId);
-	}
-
-	@Override
-	public Map<Serializable, CPAttachmentFileEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CPAttachmentFileEntry> map =
-			new HashMap<Serializable, CPAttachmentFileEntry>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CPAttachmentFileEntry cpAttachmentFileEntry = fetchByPrimaryKey(
-				primaryKey);
-
-			if (cpAttachmentFileEntry != null) {
-				map.put(primaryKey, cpAttachmentFileEntry);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-				CPAttachmentFileEntryImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (CPAttachmentFileEntry)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(_SQL_SELECT_CPATTACHMENTFILEENTRY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CPAttachmentFileEntry cpAttachmentFileEntry :
-					(List<CPAttachmentFileEntry>)query.list()) {
-
-				map.put(
-					cpAttachmentFileEntry.getPrimaryKeyObj(),
-					cpAttachmentFileEntry);
-
-				cacheResult(cpAttachmentFileEntry);
-
-				uncachedPrimaryKeys.remove(
-					cpAttachmentFileEntry.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-					CPAttachmentFileEntryImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -6000,10 +5764,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -6050,9 +5810,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -6069,6 +5826,21 @@ public class CPAttachmentFileEntryPersistenceImpl
 	}
 
 	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "CPAttachmentFileEntryId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_CPATTACHMENTFILEENTRY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CPAttachmentFileEntryModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -6078,27 +5850,19 @@ public class CPAttachmentFileEntryPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPAttachmentFileEntryModelImpl.FINDER_CACHE_ENABLED,
 			CPAttachmentFileEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPAttachmentFileEntryModelImpl.FINDER_CACHE_ENABLED,
 			CPAttachmentFileEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPAttachmentFileEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByUuid = new FinderPath(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPAttachmentFileEntryModelImpl.FINDER_CACHE_ENABLED,
 			CPAttachmentFileEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -6107,8 +5871,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPAttachmentFileEntryModelImpl.FINDER_CACHE_ENABLED,
 			CPAttachmentFileEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
@@ -6116,14 +5878,10 @@ public class CPAttachmentFileEntryPersistenceImpl
 			CPAttachmentFileEntryModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPAttachmentFileEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUuid", new String[] {String.class.getName()});
 
 		_finderPathFetchByUUID_G = new FinderPath(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPAttachmentFileEntryModelImpl.FINDER_CACHE_ENABLED,
 			CPAttachmentFileEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
@@ -6131,14 +5889,11 @@ public class CPAttachmentFileEntryPersistenceImpl
 			CPAttachmentFileEntryModelImpl.GROUPID_COLUMN_BITMASK);
 
 		_finderPathCountByUUID_G = new FinderPath(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPAttachmentFileEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPAttachmentFileEntryModelImpl.FINDER_CACHE_ENABLED,
 			CPAttachmentFileEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
@@ -6148,8 +5903,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPAttachmentFileEntryModelImpl.FINDER_CACHE_ENABLED,
 			CPAttachmentFileEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
@@ -6158,14 +5911,11 @@ public class CPAttachmentFileEntryPersistenceImpl
 			CPAttachmentFileEntryModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPAttachmentFileEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByC_C = new FinderPath(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPAttachmentFileEntryModelImpl.FINDER_CACHE_ENABLED,
 			CPAttachmentFileEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
 			new String[] {
@@ -6175,8 +5925,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByC_C = new FinderPath(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPAttachmentFileEntryModelImpl.FINDER_CACHE_ENABLED,
 			CPAttachmentFileEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
@@ -6185,14 +5933,10 @@ public class CPAttachmentFileEntryPersistenceImpl
 			CPAttachmentFileEntryModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByC_C = new FinderPath(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPAttachmentFileEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByLtD_S = new FinderPath(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPAttachmentFileEntryModelImpl.FINDER_CACHE_ENABLED,
 			CPAttachmentFileEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtD_S",
 			new String[] {
@@ -6202,14 +5946,10 @@ public class CPAttachmentFileEntryPersistenceImpl
 			});
 
 		_finderPathWithPaginationCountByLtD_S = new FinderPath(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPAttachmentFileEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtD_S",
+			Long.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtD_S",
 			new String[] {Date.class.getName(), Integer.class.getName()});
 
 		_finderPathFetchByC_C_F = new FinderPath(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPAttachmentFileEntryModelImpl.FINDER_CACHE_ENABLED,
 			CPAttachmentFileEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByC_C_F",
 			new String[] {
@@ -6220,16 +5960,13 @@ public class CPAttachmentFileEntryPersistenceImpl
 			CPAttachmentFileEntryModelImpl.FILEENTRYID_COLUMN_BITMASK);
 
 		_finderPathCountByC_C_F = new FinderPath(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPAttachmentFileEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_F",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByC_C_F",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			});
 
 		_finderPathWithPaginationFindByC_C_LtD_S = new FinderPath(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPAttachmentFileEntryModelImpl.FINDER_CACHE_ENABLED,
 			CPAttachmentFileEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_LtD_S",
 			new String[] {
@@ -6240,17 +5977,14 @@ public class CPAttachmentFileEntryPersistenceImpl
 			});
 
 		_finderPathWithPaginationCountByC_C_LtD_S = new FinderPath(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPAttachmentFileEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C_LtD_S",
+			Long.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"countByC_C_LtD_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Date.class.getName(), Integer.class.getName()
 			});
 
 		_finderPathWithPaginationFindByC_C_T_ST = new FinderPath(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPAttachmentFileEntryModelImpl.FINDER_CACHE_ENABLED,
 			CPAttachmentFileEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_T_ST",
 			new String[] {
@@ -6261,8 +5995,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByC_C_T_ST = new FinderPath(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPAttachmentFileEntryModelImpl.FINDER_CACHE_ENABLED,
 			CPAttachmentFileEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_T_ST",
 			new String[] {
@@ -6276,17 +6008,14 @@ public class CPAttachmentFileEntryPersistenceImpl
 			CPAttachmentFileEntryModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByC_C_T_ST = new FinderPath(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPAttachmentFileEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_T_ST",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByC_C_T_ST",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName()
 			});
 
 		_finderPathWithPaginationFindByC_C_T_NotST = new FinderPath(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPAttachmentFileEntryModelImpl.FINDER_CACHE_ENABLED,
 			CPAttachmentFileEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_T_NotST",
 			new String[] {
@@ -6297,17 +6026,14 @@ public class CPAttachmentFileEntryPersistenceImpl
 			});
 
 		_finderPathWithPaginationCountByC_C_T_NotST = new FinderPath(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPAttachmentFileEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C_T_NotST",
+			Long.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"countByC_C_T_NotST",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName()
 			});
 
 		_finderPathFetchByC_ERC = new FinderPath(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPAttachmentFileEntryModelImpl.FINDER_CACHE_ENABLED,
 			CPAttachmentFileEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByC_ERC",
 			new String[] {Long.class.getName(), String.class.getName()},
@@ -6316,9 +6042,8 @@ public class CPAttachmentFileEntryPersistenceImpl
 				EXTERNALREFERENCECODE_COLUMN_BITMASK);
 
 		_finderPathCountByC_ERC = new FinderPath(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPAttachmentFileEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ERC",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByC_ERC",
 			new String[] {Long.class.getName(), String.class.getName()});
 	}
 
@@ -6345,9 +6070,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 
 	private static final String _SQL_SELECT_CPATTACHMENTFILEENTRY =
 		"SELECT cpAttachmentFileEntry FROM CPAttachmentFileEntry cpAttachmentFileEntry";
-
-	private static final String _SQL_SELECT_CPATTACHMENTFILEENTRY_WHERE_PKS_IN =
-		"SELECT cpAttachmentFileEntry FROM CPAttachmentFileEntry cpAttachmentFileEntry WHERE CPAttachmentFileEntryId IN (";
 
 	private static final String _SQL_SELECT_CPATTACHMENTFILEENTRY_WHERE =
 		"SELECT cpAttachmentFileEntry FROM CPAttachmentFileEntry cpAttachmentFileEntry WHERE ";

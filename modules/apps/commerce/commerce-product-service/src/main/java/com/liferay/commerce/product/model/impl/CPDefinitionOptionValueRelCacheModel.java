@@ -15,9 +15,10 @@
 package com.liferay.commerce.product.model.impl;
 
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
+import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -35,7 +36,8 @@ import java.util.Date;
  * @generated
  */
 public class CPDefinitionOptionValueRelCacheModel
-	implements CacheModel<CPDefinitionOptionValueRel>, Externalizable {
+	implements CacheModel<CPDefinitionOptionValueRel>, Externalizable,
+			   MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -51,9 +53,10 @@ public class CPDefinitionOptionValueRelCacheModel
 			cpDefinitionOptionValueRelCacheModel =
 				(CPDefinitionOptionValueRelCacheModel)object;
 
-		if (CPDefinitionOptionValueRelId ==
+		if ((CPDefinitionOptionValueRelId ==
 				cpDefinitionOptionValueRelCacheModel.
-					CPDefinitionOptionValueRelId) {
+					CPDefinitionOptionValueRelId) &&
+			(mvccVersion == cpDefinitionOptionValueRelCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -63,14 +66,28 @@ public class CPDefinitionOptionValueRelCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, CPDefinitionOptionValueRelId);
+		int hashCode = HashUtil.hash(0, CPDefinitionOptionValueRelId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", CPDefinitionOptionValueRelId=");
 		sb.append(CPDefinitionOptionValueRelId);
@@ -113,6 +130,8 @@ public class CPDefinitionOptionValueRelCacheModel
 	public CPDefinitionOptionValueRel toEntityModel() {
 		CPDefinitionOptionValueRelImpl cpDefinitionOptionValueRelImpl =
 			new CPDefinitionOptionValueRelImpl();
+
+		cpDefinitionOptionValueRelImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			cpDefinitionOptionValueRelImpl.setUuid("");
@@ -190,6 +209,7 @@ public class CPDefinitionOptionValueRelCacheModel
 	public void readExternal(ObjectInput objectInput)
 		throws ClassNotFoundException, IOException {
 
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		CPDefinitionOptionValueRelId = objectInput.readLong();
@@ -220,6 +240,8 @@ public class CPDefinitionOptionValueRelCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -278,6 +300,7 @@ public class CPDefinitionOptionValueRelCacheModel
 		objectOutput.writeObject(price);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long CPDefinitionOptionValueRelId;
 	public long groupId;

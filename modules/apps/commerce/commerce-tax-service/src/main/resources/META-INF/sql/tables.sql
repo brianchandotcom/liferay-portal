@@ -1,4 +1,5 @@
 create table CommerceTaxMethod (
+	mvccVersion LONG default 0 not null,
 	commerceTaxMethodId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,

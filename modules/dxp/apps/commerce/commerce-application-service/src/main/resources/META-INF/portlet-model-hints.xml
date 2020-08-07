@@ -2,6 +2,7 @@
 
 <model-hints>
 	<model name="com.liferay.commerce.application.model.CommerceApplicationBrand">
+		<field name="mvccVersion" type="long" />
 		<field name="commerceApplicationBrandId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -12,6 +13,7 @@
 		<field name="logoId" type="long" />
 	</model>
 	<model name="com.liferay.commerce.application.model.CommerceApplicationModel">
+		<field name="mvccVersion" type="long" />
 		<field name="commerceApplicationModelId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -23,6 +25,7 @@
 		<field name="year" type="String" />
 	</model>
 	<model name="com.liferay.commerce.application.model.CommerceApplicationModelCProductRel">
+		<field name="mvccVersion" type="long" />
 		<field name="commerceApplicationModelCProductRelId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

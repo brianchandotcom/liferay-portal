@@ -1959,10 +1959,6 @@ public class CommerceAddressUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CommerceAddressPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

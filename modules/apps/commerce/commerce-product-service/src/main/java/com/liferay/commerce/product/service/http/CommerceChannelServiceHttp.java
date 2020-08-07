@@ -56,7 +56,7 @@ public class CommerceChannelServiceHttp {
 				HttpPrincipal httpPrincipal, long siteGroupId, String name,
 				String type,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					typeSettingsProperties,
+					typeSettingsUnicodeProperties,
 				String commerceCurrencyCode, String externalReferenceCode,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -67,8 +67,9 @@ public class CommerceChannelServiceHttp {
 				_addCommerceChannelParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, siteGroupId, name, type, typeSettingsProperties,
-				commerceCurrencyCode, externalReferenceCode, serviceContext);
+				methodKey, siteGroupId, name, type,
+				typeSettingsUnicodeProperties, commerceCurrencyCode,
+				externalReferenceCode, serviceContext);
 
 			Object returnObj = null;
 
@@ -529,7 +530,7 @@ public class CommerceChannelServiceHttp {
 				HttpPrincipal httpPrincipal, long commerceChannelId,
 				long siteGroupId, String name, String type,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					typeSettingsProperties,
+					typeSettingsUnicodeProperties,
 				String commerceCurrencyCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -540,7 +541,7 @@ public class CommerceChannelServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceChannelId, siteGroupId, name, type,
-				typeSettingsProperties, commerceCurrencyCode);
+				typeSettingsUnicodeProperties, commerceCurrencyCode);
 
 			Object returnObj = null;
 
@@ -576,7 +577,7 @@ public class CommerceChannelServiceHttp {
 				HttpPrincipal httpPrincipal, long commerceChannelId,
 				long siteGroupId, String name, String type,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					typeSettingsProperties,
+					typeSettingsUnicodeProperties,
 				String commerceCurrencyCode, String priceDisplayType,
 				boolean discountsTargetNetPrice)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -588,8 +589,8 @@ public class CommerceChannelServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceChannelId, siteGroupId, name, type,
-				typeSettingsProperties, commerceCurrencyCode, priceDisplayType,
-				discountsTargetNetPrice);
+				typeSettingsUnicodeProperties, commerceCurrencyCode,
+				priceDisplayType, discountsTargetNetPrice);
 
 			Object returnObj = null;
 

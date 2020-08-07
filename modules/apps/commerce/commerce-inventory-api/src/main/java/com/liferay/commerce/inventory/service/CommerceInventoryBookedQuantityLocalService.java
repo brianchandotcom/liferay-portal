@@ -14,10 +14,9 @@
 
 package com.liferay.commerce.inventory.service;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.inventory.exception.NoSuchInventoryBookedQuantityException;
 import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -39,6 +38,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for CommerceInventoryBookedQuantity. Methods of this
@@ -100,6 +101,12 @@ public interface CommerceInventoryBookedQuantityLocalService
 			long commerceInventoryBookedQuantityId);
 
 	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
 	 * Deletes the commerce inventory booked quantity from the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -137,6 +144,9 @@ public interface CommerceInventoryBookedQuantityLocalService
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();

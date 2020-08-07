@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.service;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.model.CommerceSubscriptionEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -32,6 +30,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the remote service interface for CommerceSubscriptionEntry. Methods of this
@@ -131,13 +131,13 @@ public interface CommerceSubscriptionEntryService extends BaseService {
 	public CommerceSubscriptionEntry updateCommerceSubscriptionEntry(
 			long commerceSubscriptionEntryId, int subscriptionLength,
 			String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, int subscriptionStatus,
 			int nextIterationDateMonth, int nextIterationDateDay,
 			int nextIterationDateYear, int nextIterationDateHour,
 			int nextIterationDateMinute, int deliverySubscriptionLength,
 			String deliverySubscriptionType,
-			UnicodeProperties deliverySubscriptionTypeSettingsProperties,
+			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
 			long deliveryMaxSubscriptionCycles, int deliverySubscriptionStatus,
 			int deliveryNextIterationDateMonth,
 			int deliveryNextIterationDateDay, int deliveryNextIterationDateYear,

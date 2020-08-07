@@ -1914,10 +1914,6 @@ public class CPAttachmentFileEntryUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CPAttachmentFileEntryPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

@@ -15,9 +15,10 @@
 package com.liferay.commerce.model.impl;
 
 import com.liferay.commerce.model.CommerceAddressRestriction;
+import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,8 @@ import java.util.Date;
  * @generated
  */
 public class CommerceAddressRestrictionCacheModel
-	implements CacheModel<CommerceAddressRestriction>, Externalizable {
+	implements CacheModel<CommerceAddressRestriction>, Externalizable,
+			   MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -49,9 +51,10 @@ public class CommerceAddressRestrictionCacheModel
 			commerceAddressRestrictionCacheModel =
 				(CommerceAddressRestrictionCacheModel)object;
 
-		if (commerceAddressRestrictionId ==
+		if ((commerceAddressRestrictionId ==
 				commerceAddressRestrictionCacheModel.
-					commerceAddressRestrictionId) {
+					commerceAddressRestrictionId) &&
+			(mvccVersion == commerceAddressRestrictionCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -61,14 +64,28 @@ public class CommerceAddressRestrictionCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, commerceAddressRestrictionId);
+		int hashCode = HashUtil.hash(0, commerceAddressRestrictionId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
-		sb.append("{commerceAddressRestrictionId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", commerceAddressRestrictionId=");
 		sb.append(commerceAddressRestrictionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -98,6 +115,7 @@ public class CommerceAddressRestrictionCacheModel
 		CommerceAddressRestrictionImpl commerceAddressRestrictionImpl =
 			new CommerceAddressRestrictionImpl();
 
+		commerceAddressRestrictionImpl.setMvccVersion(mvccVersion);
 		commerceAddressRestrictionImpl.setCommerceAddressRestrictionId(
 			commerceAddressRestrictionId);
 		commerceAddressRestrictionImpl.setGroupId(groupId);
@@ -137,6 +155,8 @@ public class CommerceAddressRestrictionCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		commerceAddressRestrictionId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -157,6 +177,8 @@ public class CommerceAddressRestrictionCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(commerceAddressRestrictionId);
 
 		objectOutput.writeLong(groupId);
@@ -182,6 +204,7 @@ public class CommerceAddressRestrictionCacheModel
 		objectOutput.writeLong(commerceCountryId);
 	}
 
+	public long mvccVersion;
 	public long commerceAddressRestrictionId;
 	public long groupId;
 	public long companyId;

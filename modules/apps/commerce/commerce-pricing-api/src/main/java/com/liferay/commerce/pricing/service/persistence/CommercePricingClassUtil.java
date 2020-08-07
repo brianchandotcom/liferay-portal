@@ -1135,10 +1135,6 @@ public class CommercePricingClassUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CommercePricingClassPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

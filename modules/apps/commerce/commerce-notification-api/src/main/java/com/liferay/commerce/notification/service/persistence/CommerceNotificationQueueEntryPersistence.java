@@ -14,17 +14,13 @@
 
 package com.liferay.commerce.notification.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.notification.exception.NoSuchNotificationQueueEntryException;
 import com.liferay.commerce.notification.model.CommerceNotificationQueueEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
 import java.util.Date;
-import java.util.Map;
-import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce notification queue entry service.
@@ -46,9 +42,6 @@ public interface CommerceNotificationQueueEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceNotificationQueueEntryUtil} to access the commerce notification queue entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceNotificationQueueEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce notification queue entries where groupId = &#63;.
@@ -949,8 +942,5 @@ public interface CommerceNotificationQueueEntryPersistence
 	 * @return the number of commerce notification queue entries
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

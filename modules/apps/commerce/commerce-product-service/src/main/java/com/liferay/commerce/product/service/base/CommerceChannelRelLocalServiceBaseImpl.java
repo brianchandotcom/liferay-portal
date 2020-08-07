@@ -43,6 +43,7 @@ import com.liferay.commerce.product.service.persistence.CommerceCatalogPersisten
 import com.liferay.commerce.product.service.persistence.CommerceChannelPersistence;
 import com.liferay.commerce.product.service.persistence.CommerceChannelRelFinder;
 import com.liferay.commerce.product.service.persistence.CommerceChannelRelPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -167,6 +168,11 @@ public abstract class CommerceChannelRelLocalServiceBaseImpl
 		CommerceChannelRel commerceChannelRel) {
 
 		return commerceChannelRelPersistence.remove(commerceChannelRel);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return commerceChannelRelPersistence.dslQuery(dslQuery);
 	}
 
 	@Override
@@ -324,6 +330,16 @@ public abstract class CommerceChannelRelLocalServiceBaseImpl
 
 		actionableDynamicQuery.setPrimaryKeyPropertyName(
 			"commerceChannelRelId");
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
+
+		return commerceChannelRelPersistence.create(
+			((Long)primaryKeyObj).longValue());
 	}
 
 	/**

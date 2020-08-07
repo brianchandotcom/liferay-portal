@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.currency.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Andrea Di Giorgi

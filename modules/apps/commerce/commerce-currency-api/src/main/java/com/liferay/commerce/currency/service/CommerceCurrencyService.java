@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.currency.service;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -34,6 +32,8 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the remote service interface for CommerceCurrency. Methods of this

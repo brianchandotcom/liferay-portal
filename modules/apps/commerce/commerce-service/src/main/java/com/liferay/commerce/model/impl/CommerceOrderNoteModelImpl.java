@@ -19,6 +19,7 @@ import com.liferay.commerce.model.CommerceOrderNoteModel;
 import com.liferay.commerce.model.CommerceOrderNoteSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -73,7 +73,7 @@ public class CommerceOrderNoteModelImpl
 	public static final String TABLE_NAME = "CommerceOrderNote";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"externalReferenceCode", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"externalReferenceCode", Types.VARCHAR},
 		{"commerceOrderNoteId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -85,6 +85,7 @@ public class CommerceOrderNoteModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceOrderNoteId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -99,7 +100,7 @@ public class CommerceOrderNoteModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceOrderNote (externalReferenceCode VARCHAR(75) null,commerceOrderNoteId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderId LONG,content STRING null,restricted BOOLEAN)";
+		"create table CommerceOrderNote (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,commerceOrderNoteId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderId LONG,content STRING null,restricted BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrderNote";
 
@@ -115,20 +116,23 @@ public class CommerceOrderNoteModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.model.CommerceOrderNote"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.model.CommerceOrderNote"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.model.CommerceOrderNote"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long COMMERCEORDERID_COLUMN_BITMASK = 1L;
 
@@ -153,6 +157,7 @@ public class CommerceOrderNoteModelImpl
 
 		CommerceOrderNote model = new CommerceOrderNoteImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setCommerceOrderNoteId(soapModel.getCommerceOrderNoteId());
 		model.setGroupId(soapModel.getGroupId());
@@ -247,9 +252,6 @@ public class CommerceOrderNoteModelImpl
 				attributeGetterFunction.apply((CommerceOrderNote)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -326,263 +328,89 @@ public class CommerceOrderNoteModelImpl
 				new LinkedHashMap<String, BiConsumer<CommerceOrderNote, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", CommerceOrderNote::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceOrderNote, Long>)
+				CommerceOrderNote::setMvccVersion);
+		attributeGetterFunctions.put(
 			"externalReferenceCode",
-			new Function<CommerceOrderNote, Object>() {
-
-				@Override
-				public Object apply(CommerceOrderNote commerceOrderNote) {
-					return commerceOrderNote.getExternalReferenceCode();
-				}
-
-			});
+			CommerceOrderNote::getExternalReferenceCode);
 		attributeSetterBiConsumers.put(
 			"externalReferenceCode",
-			new BiConsumer<CommerceOrderNote, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrderNote commerceOrderNote,
-					Object externalReferenceCodeObject) {
-
-					commerceOrderNote.setExternalReferenceCode(
-						(String)externalReferenceCodeObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrderNote, String>)
+				CommerceOrderNote::setExternalReferenceCode);
 		attributeGetterFunctions.put(
-			"commerceOrderNoteId",
-			new Function<CommerceOrderNote, Object>() {
-
-				@Override
-				public Object apply(CommerceOrderNote commerceOrderNote) {
-					return commerceOrderNote.getCommerceOrderNoteId();
-				}
-
-			});
+			"commerceOrderNoteId", CommerceOrderNote::getCommerceOrderNoteId);
 		attributeSetterBiConsumers.put(
 			"commerceOrderNoteId",
-			new BiConsumer<CommerceOrderNote, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrderNote commerceOrderNote,
-					Object commerceOrderNoteIdObject) {
-
-					commerceOrderNote.setCommerceOrderNoteId(
-						(Long)commerceOrderNoteIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"groupId",
-			new Function<CommerceOrderNote, Object>() {
-
-				@Override
-				public Object apply(CommerceOrderNote commerceOrderNote) {
-					return commerceOrderNote.getGroupId();
-				}
-
-			});
+			(BiConsumer<CommerceOrderNote, Long>)
+				CommerceOrderNote::setCommerceOrderNoteId);
+		attributeGetterFunctions.put("groupId", CommerceOrderNote::getGroupId);
 		attributeSetterBiConsumers.put(
 			"groupId",
-			new BiConsumer<CommerceOrderNote, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrderNote commerceOrderNote, Object groupIdObject) {
-
-					commerceOrderNote.setGroupId((Long)groupIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrderNote, Long>)CommerceOrderNote::setGroupId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommerceOrderNote, Object>() {
-
-				@Override
-				public Object apply(CommerceOrderNote commerceOrderNote) {
-					return commerceOrderNote.getCompanyId();
-				}
-
-			});
+			"companyId", CommerceOrderNote::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommerceOrderNote, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrderNote commerceOrderNote,
-					Object companyIdObject) {
-
-					commerceOrderNote.setCompanyId((Long)companyIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommerceOrderNote, Object>() {
-
-				@Override
-				public Object apply(CommerceOrderNote commerceOrderNote) {
-					return commerceOrderNote.getUserId();
-				}
-
-			});
+			(BiConsumer<CommerceOrderNote, Long>)
+				CommerceOrderNote::setCompanyId);
+		attributeGetterFunctions.put("userId", CommerceOrderNote::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommerceOrderNote, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrderNote commerceOrderNote, Object userIdObject) {
-
-					commerceOrderNote.setUserId((Long)userIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrderNote, Long>)CommerceOrderNote::setUserId);
 		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommerceOrderNote, Object>() {
-
-				@Override
-				public Object apply(CommerceOrderNote commerceOrderNote) {
-					return commerceOrderNote.getUserName();
-				}
-
-			});
+			"userName", CommerceOrderNote::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommerceOrderNote, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrderNote commerceOrderNote,
-					Object userNameObject) {
-
-					commerceOrderNote.setUserName((String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrderNote, String>)
+				CommerceOrderNote::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommerceOrderNote, Object>() {
-
-				@Override
-				public Object apply(CommerceOrderNote commerceOrderNote) {
-					return commerceOrderNote.getCreateDate();
-				}
-
-			});
+			"createDate", CommerceOrderNote::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommerceOrderNote, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrderNote commerceOrderNote,
-					Object createDateObject) {
-
-					commerceOrderNote.setCreateDate((Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrderNote, Date>)
+				CommerceOrderNote::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CommerceOrderNote, Object>() {
-
-				@Override
-				public Object apply(CommerceOrderNote commerceOrderNote) {
-					return commerceOrderNote.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CommerceOrderNote::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommerceOrderNote, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrderNote commerceOrderNote,
-					Object modifiedDateObject) {
-
-					commerceOrderNote.setModifiedDate((Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrderNote, Date>)
+				CommerceOrderNote::setModifiedDate);
 		attributeGetterFunctions.put(
-			"commerceOrderId",
-			new Function<CommerceOrderNote, Object>() {
-
-				@Override
-				public Object apply(CommerceOrderNote commerceOrderNote) {
-					return commerceOrderNote.getCommerceOrderId();
-				}
-
-			});
+			"commerceOrderId", CommerceOrderNote::getCommerceOrderId);
 		attributeSetterBiConsumers.put(
 			"commerceOrderId",
-			new BiConsumer<CommerceOrderNote, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrderNote commerceOrderNote,
-					Object commerceOrderIdObject) {
-
-					commerceOrderNote.setCommerceOrderId(
-						(Long)commerceOrderIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"content",
-			new Function<CommerceOrderNote, Object>() {
-
-				@Override
-				public Object apply(CommerceOrderNote commerceOrderNote) {
-					return commerceOrderNote.getContent();
-				}
-
-			});
+			(BiConsumer<CommerceOrderNote, Long>)
+				CommerceOrderNote::setCommerceOrderId);
+		attributeGetterFunctions.put("content", CommerceOrderNote::getContent);
 		attributeSetterBiConsumers.put(
 			"content",
-			new BiConsumer<CommerceOrderNote, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrderNote commerceOrderNote, Object contentObject) {
-
-					commerceOrderNote.setContent((String)contentObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrderNote, String>)
+				CommerceOrderNote::setContent);
 		attributeGetterFunctions.put(
-			"restricted",
-			new Function<CommerceOrderNote, Object>() {
-
-				@Override
-				public Object apply(CommerceOrderNote commerceOrderNote) {
-					return commerceOrderNote.getRestricted();
-				}
-
-			});
+			"restricted", CommerceOrderNote::getRestricted);
 		attributeSetterBiConsumers.put(
 			"restricted",
-			new BiConsumer<CommerceOrderNote, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrderNote commerceOrderNote,
-					Object restrictedObject) {
-
-					commerceOrderNote.setRestricted((Boolean)restrictedObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrderNote, Boolean>)
+				CommerceOrderNote::setRestricted);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -832,6 +660,7 @@ public class CommerceOrderNoteModelImpl
 		CommerceOrderNoteImpl commerceOrderNoteImpl =
 			new CommerceOrderNoteImpl();
 
+		commerceOrderNoteImpl.setMvccVersion(getMvccVersion());
 		commerceOrderNoteImpl.setExternalReferenceCode(
 			getExternalReferenceCode());
 		commerceOrderNoteImpl.setCommerceOrderNoteId(getCommerceOrderNoteId());
@@ -893,11 +722,19 @@ public class CommerceOrderNoteModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -927,6 +764,8 @@ public class CommerceOrderNoteModelImpl
 	public CacheModel<CommerceOrderNote> toCacheModel() {
 		CommerceOrderNoteCacheModel commerceOrderNoteCacheModel =
 			new CommerceOrderNoteCacheModel();
+
+		commerceOrderNoteCacheModel.mvccVersion = getMvccVersion();
 
 		commerceOrderNoteCacheModel.externalReferenceCode =
 			getExternalReferenceCode();
@@ -1060,6 +899,7 @@ public class CommerceOrderNoteModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _externalReferenceCode;
 	private String _originalExternalReferenceCode;
 	private long _commerceOrderNoteId;

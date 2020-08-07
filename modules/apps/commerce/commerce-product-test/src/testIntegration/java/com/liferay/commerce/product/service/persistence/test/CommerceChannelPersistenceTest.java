@@ -123,6 +123,8 @@ public class CommerceChannelPersistenceTest {
 
 		CommerceChannel newCommerceChannel = _persistence.create(pk);
 
+		newCommerceChannel.setMvccVersion(RandomTestUtil.nextLong());
+
 		newCommerceChannel.setExternalReferenceCode(
 			RandomTestUtil.randomString());
 
@@ -157,6 +159,9 @@ public class CommerceChannelPersistenceTest {
 		CommerceChannel existingCommerceChannel = _persistence.findByPrimaryKey(
 			newCommerceChannel.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCommerceChannel.getMvccVersion(),
+			newCommerceChannel.getMvccVersion());
 		Assert.assertEquals(
 			existingCommerceChannel.getExternalReferenceCode(),
 			newCommerceChannel.getExternalReferenceCode());
@@ -247,8 +252,8 @@ public class CommerceChannelPersistenceTest {
 
 	protected OrderByComparator<CommerceChannel> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CommerceChannel", "externalReferenceCode", true,
-			"commerceChannelId", true, "companyId", true, "userId", true,
+			"CommerceChannel", "mvccVersion", true, "externalReferenceCode",
+			true, "commerceChannelId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"siteGroupId", true, "name", true, "type", true, "typeSettings",
 			true, "commerceCurrencyCode", true, "priceDisplayType", true,
@@ -501,6 +506,8 @@ public class CommerceChannelPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		CommerceChannel commerceChannel = _persistence.create(pk);
+
+		commerceChannel.setMvccVersion(RandomTestUtil.nextLong());
 
 		commerceChannel.setExternalReferenceCode(RandomTestUtil.randomString());
 

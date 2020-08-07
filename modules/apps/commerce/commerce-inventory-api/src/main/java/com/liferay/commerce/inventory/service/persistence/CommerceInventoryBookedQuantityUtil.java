@@ -849,10 +849,6 @@ public class CommerceInventoryBookedQuantityUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CommerceInventoryBookedQuantityPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

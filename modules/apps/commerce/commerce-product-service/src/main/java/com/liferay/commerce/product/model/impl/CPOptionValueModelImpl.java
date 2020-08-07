@@ -20,6 +20,7 @@ import com.liferay.commerce.product.model.CPOptionValueSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,7 +36,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -81,7 +81,8 @@ public class CPOptionValueModelImpl
 	public static final String TABLE_NAME = "CPOptionValue";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR},
 		{"CPOptionValueId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
@@ -94,6 +95,7 @@ public class CPOptionValueModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPOptionValueId", Types.BIGINT);
@@ -110,7 +112,7 @@ public class CPOptionValueModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPOptionValue (uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CPOptionValueId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPOptionId LONG,name STRING null,priority DOUBLE,key_ VARCHAR(75) null,lastPublishDate DATE null)";
+		"create table CPOptionValue (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CPOptionValueId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPOptionId LONG,name STRING null,priority DOUBLE,key_ VARCHAR(75) null,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CPOptionValue";
 
@@ -126,20 +128,23 @@ public class CPOptionValueModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.product.model.CPOptionValue"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.product.model.CPOptionValue"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.product.model.CPOptionValue"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long CPOPTIONID_COLUMN_BITMASK = 1L;
 
@@ -168,6 +173,7 @@ public class CPOptionValueModelImpl
 
 		CPOptionValue model = new CPOptionValueImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setCPOptionValueId(soapModel.getCPOptionValueId());
@@ -262,9 +268,6 @@ public class CPOptionValueModelImpl
 				attributeGetterFunction.apply((CPOptionValue)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -338,300 +341,82 @@ public class CPOptionValueModelImpl
 			new LinkedHashMap<String, BiConsumer<CPOptionValue, ?>>();
 
 		attributeGetterFunctions.put(
-			"uuid",
-			new Function<CPOptionValue, Object>() {
-
-				@Override
-				public Object apply(CPOptionValue cpOptionValue) {
-					return cpOptionValue.getUuid();
-				}
-
-			});
+			"mvccVersion", CPOptionValue::getMvccVersion);
 		attributeSetterBiConsumers.put(
-			"uuid",
-			new BiConsumer<CPOptionValue, Object>() {
-
-				@Override
-				public void accept(
-					CPOptionValue cpOptionValue, Object uuidObject) {
-
-					cpOptionValue.setUuid((String)uuidObject);
-				}
-
-			});
+			"mvccVersion",
+			(BiConsumer<CPOptionValue, Long>)CPOptionValue::setMvccVersion);
+		attributeGetterFunctions.put("uuid", CPOptionValue::getUuid);
+		attributeSetterBiConsumers.put(
+			"uuid", (BiConsumer<CPOptionValue, String>)CPOptionValue::setUuid);
 		attributeGetterFunctions.put(
-			"externalReferenceCode",
-			new Function<CPOptionValue, Object>() {
-
-				@Override
-				public Object apply(CPOptionValue cpOptionValue) {
-					return cpOptionValue.getExternalReferenceCode();
-				}
-
-			});
+			"externalReferenceCode", CPOptionValue::getExternalReferenceCode);
 		attributeSetterBiConsumers.put(
 			"externalReferenceCode",
-			new BiConsumer<CPOptionValue, Object>() {
-
-				@Override
-				public void accept(
-					CPOptionValue cpOptionValue,
-					Object externalReferenceCodeObject) {
-
-					cpOptionValue.setExternalReferenceCode(
-						(String)externalReferenceCodeObject);
-				}
-
-			});
+			(BiConsumer<CPOptionValue, String>)
+				CPOptionValue::setExternalReferenceCode);
 		attributeGetterFunctions.put(
-			"CPOptionValueId",
-			new Function<CPOptionValue, Object>() {
-
-				@Override
-				public Object apply(CPOptionValue cpOptionValue) {
-					return cpOptionValue.getCPOptionValueId();
-				}
-
-			});
+			"CPOptionValueId", CPOptionValue::getCPOptionValueId);
 		attributeSetterBiConsumers.put(
 			"CPOptionValueId",
-			new BiConsumer<CPOptionValue, Object>() {
-
-				@Override
-				public void accept(
-					CPOptionValue cpOptionValue, Object CPOptionValueIdObject) {
-
-					cpOptionValue.setCPOptionValueId(
-						(Long)CPOptionValueIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CPOptionValue, Object>() {
-
-				@Override
-				public Object apply(CPOptionValue cpOptionValue) {
-					return cpOptionValue.getCompanyId();
-				}
-
-			});
+			(BiConsumer<CPOptionValue, Long>)CPOptionValue::setCPOptionValueId);
+		attributeGetterFunctions.put("companyId", CPOptionValue::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CPOptionValue, Object>() {
-
-				@Override
-				public void accept(
-					CPOptionValue cpOptionValue, Object companyIdObject) {
-
-					cpOptionValue.setCompanyId((Long)companyIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userId",
-			new Function<CPOptionValue, Object>() {
-
-				@Override
-				public Object apply(CPOptionValue cpOptionValue) {
-					return cpOptionValue.getUserId();
-				}
-
-			});
+			(BiConsumer<CPOptionValue, Long>)CPOptionValue::setCompanyId);
+		attributeGetterFunctions.put("userId", CPOptionValue::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CPOptionValue, Object>() {
-
-				@Override
-				public void accept(
-					CPOptionValue cpOptionValue, Object userIdObject) {
-
-					cpOptionValue.setUserId((Long)userIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userName",
-			new Function<CPOptionValue, Object>() {
-
-				@Override
-				public Object apply(CPOptionValue cpOptionValue) {
-					return cpOptionValue.getUserName();
-				}
-
-			});
+			(BiConsumer<CPOptionValue, Long>)CPOptionValue::setUserId);
+		attributeGetterFunctions.put("userName", CPOptionValue::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CPOptionValue, Object>() {
-
-				@Override
-				public void accept(
-					CPOptionValue cpOptionValue, Object userNameObject) {
-
-					cpOptionValue.setUserName((String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CPOptionValue, String>)CPOptionValue::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CPOptionValue, Object>() {
-
-				@Override
-				public Object apply(CPOptionValue cpOptionValue) {
-					return cpOptionValue.getCreateDate();
-				}
-
-			});
+			"createDate", CPOptionValue::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CPOptionValue, Object>() {
-
-				@Override
-				public void accept(
-					CPOptionValue cpOptionValue, Object createDateObject) {
-
-					cpOptionValue.setCreateDate((Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CPOptionValue, Date>)CPOptionValue::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CPOptionValue, Object>() {
-
-				@Override
-				public Object apply(CPOptionValue cpOptionValue) {
-					return cpOptionValue.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CPOptionValue::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CPOptionValue, Object>() {
-
-				@Override
-				public void accept(
-					CPOptionValue cpOptionValue, Object modifiedDateObject) {
-
-					cpOptionValue.setModifiedDate((Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CPOptionValue, Date>)CPOptionValue::setModifiedDate);
 		attributeGetterFunctions.put(
-			"CPOptionId",
-			new Function<CPOptionValue, Object>() {
-
-				@Override
-				public Object apply(CPOptionValue cpOptionValue) {
-					return cpOptionValue.getCPOptionId();
-				}
-
-			});
+			"CPOptionId", CPOptionValue::getCPOptionId);
 		attributeSetterBiConsumers.put(
 			"CPOptionId",
-			new BiConsumer<CPOptionValue, Object>() {
-
-				@Override
-				public void accept(
-					CPOptionValue cpOptionValue, Object CPOptionIdObject) {
-
-					cpOptionValue.setCPOptionId((Long)CPOptionIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"name",
-			new Function<CPOptionValue, Object>() {
-
-				@Override
-				public Object apply(CPOptionValue cpOptionValue) {
-					return cpOptionValue.getName();
-				}
-
-			});
+			(BiConsumer<CPOptionValue, Long>)CPOptionValue::setCPOptionId);
+		attributeGetterFunctions.put("name", CPOptionValue::getName);
 		attributeSetterBiConsumers.put(
-			"name",
-			new BiConsumer<CPOptionValue, Object>() {
-
-				@Override
-				public void accept(
-					CPOptionValue cpOptionValue, Object nameObject) {
-
-					cpOptionValue.setName((String)nameObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"priority",
-			new Function<CPOptionValue, Object>() {
-
-				@Override
-				public Object apply(CPOptionValue cpOptionValue) {
-					return cpOptionValue.getPriority();
-				}
-
-			});
+			"name", (BiConsumer<CPOptionValue, String>)CPOptionValue::setName);
+		attributeGetterFunctions.put("priority", CPOptionValue::getPriority);
 		attributeSetterBiConsumers.put(
 			"priority",
-			new BiConsumer<CPOptionValue, Object>() {
-
-				@Override
-				public void accept(
-					CPOptionValue cpOptionValue, Object priorityObject) {
-
-					cpOptionValue.setPriority((Double)priorityObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"key",
-			new Function<CPOptionValue, Object>() {
-
-				@Override
-				public Object apply(CPOptionValue cpOptionValue) {
-					return cpOptionValue.getKey();
-				}
-
-			});
+			(BiConsumer<CPOptionValue, Double>)CPOptionValue::setPriority);
+		attributeGetterFunctions.put("key", CPOptionValue::getKey);
 		attributeSetterBiConsumers.put(
-			"key",
-			new BiConsumer<CPOptionValue, Object>() {
-
-				@Override
-				public void accept(
-					CPOptionValue cpOptionValue, Object keyObject) {
-
-					cpOptionValue.setKey((String)keyObject);
-				}
-
-			});
+			"key", (BiConsumer<CPOptionValue, String>)CPOptionValue::setKey);
 		attributeGetterFunctions.put(
-			"lastPublishDate",
-			new Function<CPOptionValue, Object>() {
-
-				@Override
-				public Object apply(CPOptionValue cpOptionValue) {
-					return cpOptionValue.getLastPublishDate();
-				}
-
-			});
+			"lastPublishDate", CPOptionValue::getLastPublishDate);
 		attributeSetterBiConsumers.put(
 			"lastPublishDate",
-			new BiConsumer<CPOptionValue, Object>() {
-
-				@Override
-				public void accept(
-					CPOptionValue cpOptionValue, Object lastPublishDateObject) {
-
-					cpOptionValue.setLastPublishDate(
-						(Date)lastPublishDateObject);
-				}
-
-			});
+			(BiConsumer<CPOptionValue, Date>)CPOptionValue::setLastPublishDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1073,6 +858,7 @@ public class CPOptionValueModelImpl
 	public Object clone() {
 		CPOptionValueImpl cpOptionValueImpl = new CPOptionValueImpl();
 
+		cpOptionValueImpl.setMvccVersion(getMvccVersion());
 		cpOptionValueImpl.setUuid(getUuid());
 		cpOptionValueImpl.setExternalReferenceCode(getExternalReferenceCode());
 		cpOptionValueImpl.setCPOptionValueId(getCPOptionValueId());
@@ -1146,11 +932,19 @@ public class CPOptionValueModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -1180,6 +974,8 @@ public class CPOptionValueModelImpl
 	public CacheModel<CPOptionValue> toCacheModel() {
 		CPOptionValueCacheModel cpOptionValueCacheModel =
 			new CPOptionValueCacheModel();
+
+		cpOptionValueCacheModel.mvccVersion = getMvccVersion();
 
 		cpOptionValueCacheModel.uuid = getUuid();
 
@@ -1335,6 +1131,7 @@ public class CPOptionValueModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private String _externalReferenceCode;

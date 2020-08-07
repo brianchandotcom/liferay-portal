@@ -14,17 +14,13 @@
 
 package com.liferay.commerce.product.type.grouped.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,29 +32,21 @@ import java.util.Objects;
  * @generated
  */
 public class CPDefinitionGroupedEntryWrapper
+	extends BaseModelWrapper<CPDefinitionGroupedEntry>
 	implements CPDefinitionGroupedEntry,
 			   ModelWrapper<CPDefinitionGroupedEntry> {
 
 	public CPDefinitionGroupedEntryWrapper(
 		CPDefinitionGroupedEntry cpDefinitionGroupedEntry) {
 
-		_cpDefinitionGroupedEntry = cpDefinitionGroupedEntry;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CPDefinitionGroupedEntry.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CPDefinitionGroupedEntry.class.getName();
+		super(cpDefinitionGroupedEntry);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put(
 			"CPDefinitionGroupedEntryId", getCPDefinitionGroupedEntryId());
@@ -78,6 +66,12 @@ public class CPDefinitionGroupedEntryWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -152,17 +146,6 @@ public class CPDefinitionGroupedEntryWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CPDefinitionGroupedEntryWrapper(
-			(CPDefinitionGroupedEntry)_cpDefinitionGroupedEntry.clone());
-	}
-
-	@Override
-	public int compareTo(CPDefinitionGroupedEntry cpDefinitionGroupedEntry) {
-		return _cpDefinitionGroupedEntry.compareTo(cpDefinitionGroupedEntry);
-	}
-
 	/**
 	 * Returns the company ID of this cp definition grouped entry.
 	 *
@@ -170,14 +153,14 @@ public class CPDefinitionGroupedEntryWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _cpDefinitionGroupedEntry.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	@Override
 	public com.liferay.commerce.product.model.CPDefinition getCPDefinition()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _cpDefinitionGroupedEntry.getCPDefinition();
+		return model.getCPDefinition();
 	}
 
 	/**
@@ -187,7 +170,7 @@ public class CPDefinitionGroupedEntryWrapper
 	 */
 	@Override
 	public long getCPDefinitionGroupedEntryId() {
-		return _cpDefinitionGroupedEntry.getCPDefinitionGroupedEntryId();
+		return model.getCPDefinitionGroupedEntryId();
 	}
 
 	/**
@@ -197,7 +180,7 @@ public class CPDefinitionGroupedEntryWrapper
 	 */
 	@Override
 	public long getCPDefinitionId() {
-		return _cpDefinitionGroupedEntry.getCPDefinitionId();
+		return model.getCPDefinitionId();
 	}
 
 	/**
@@ -207,7 +190,7 @@ public class CPDefinitionGroupedEntryWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _cpDefinitionGroupedEntry.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
@@ -215,21 +198,21 @@ public class CPDefinitionGroupedEntryWrapper
 			getEntryCPDefinition()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _cpDefinitionGroupedEntry.getEntryCPDefinition();
+		return model.getEntryCPDefinition();
 	}
 
 	@Override
 	public long getEntryCPDefinitionId()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _cpDefinitionGroupedEntry.getEntryCPDefinitionId();
+		return model.getEntryCPDefinitionId();
 	}
 
 	@Override
 	public com.liferay.commerce.product.model.CProduct getEntryCProduct()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _cpDefinitionGroupedEntry.getEntryCProduct();
+		return model.getEntryCProduct();
 	}
 
 	/**
@@ -239,12 +222,7 @@ public class CPDefinitionGroupedEntryWrapper
 	 */
 	@Override
 	public long getEntryCProductId() {
-		return _cpDefinitionGroupedEntry.getEntryCProductId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _cpDefinitionGroupedEntry.getExpandoBridge();
+		return model.getEntryCProductId();
 	}
 
 	/**
@@ -254,7 +232,7 @@ public class CPDefinitionGroupedEntryWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _cpDefinitionGroupedEntry.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -264,7 +242,17 @@ public class CPDefinitionGroupedEntryWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _cpDefinitionGroupedEntry.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this cp definition grouped entry.
+	 *
+	 * @return the mvcc version of this cp definition grouped entry
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -274,12 +262,7 @@ public class CPDefinitionGroupedEntryWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _cpDefinitionGroupedEntry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _cpDefinitionGroupedEntry.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -289,7 +272,7 @@ public class CPDefinitionGroupedEntryWrapper
 	 */
 	@Override
 	public double getPriority() {
-		return _cpDefinitionGroupedEntry.getPriority();
+		return model.getPriority();
 	}
 
 	/**
@@ -299,7 +282,7 @@ public class CPDefinitionGroupedEntryWrapper
 	 */
 	@Override
 	public int getQuantity() {
-		return _cpDefinitionGroupedEntry.getQuantity();
+		return model.getQuantity();
 	}
 
 	/**
@@ -309,7 +292,7 @@ public class CPDefinitionGroupedEntryWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _cpDefinitionGroupedEntry.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -319,7 +302,7 @@ public class CPDefinitionGroupedEntryWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _cpDefinitionGroupedEntry.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -329,7 +312,7 @@ public class CPDefinitionGroupedEntryWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _cpDefinitionGroupedEntry.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -339,37 +322,12 @@ public class CPDefinitionGroupedEntryWrapper
 	 */
 	@Override
 	public String getUuid() {
-		return _cpDefinitionGroupedEntry.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _cpDefinitionGroupedEntry.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _cpDefinitionGroupedEntry.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _cpDefinitionGroupedEntry.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _cpDefinitionGroupedEntry.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_cpDefinitionGroupedEntry.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_cpDefinitionGroupedEntry.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -379,7 +337,7 @@ public class CPDefinitionGroupedEntryWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_cpDefinitionGroupedEntry.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -389,8 +347,7 @@ public class CPDefinitionGroupedEntryWrapper
 	 */
 	@Override
 	public void setCPDefinitionGroupedEntryId(long CPDefinitionGroupedEntryId) {
-		_cpDefinitionGroupedEntry.setCPDefinitionGroupedEntryId(
-			CPDefinitionGroupedEntryId);
+		model.setCPDefinitionGroupedEntryId(CPDefinitionGroupedEntryId);
 	}
 
 	/**
@@ -400,7 +357,7 @@ public class CPDefinitionGroupedEntryWrapper
 	 */
 	@Override
 	public void setCPDefinitionId(long CPDefinitionId) {
-		_cpDefinitionGroupedEntry.setCPDefinitionId(CPDefinitionId);
+		model.setCPDefinitionId(CPDefinitionId);
 	}
 
 	/**
@@ -410,7 +367,7 @@ public class CPDefinitionGroupedEntryWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_cpDefinitionGroupedEntry.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -420,24 +377,7 @@ public class CPDefinitionGroupedEntryWrapper
 	 */
 	@Override
 	public void setEntryCProductId(long entryCProductId) {
-		_cpDefinitionGroupedEntry.setEntryCProductId(entryCProductId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_cpDefinitionGroupedEntry.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_cpDefinitionGroupedEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_cpDefinitionGroupedEntry.setExpandoBridgeAttributes(serviceContext);
+		model.setEntryCProductId(entryCProductId);
 	}
 
 	/**
@@ -447,7 +387,7 @@ public class CPDefinitionGroupedEntryWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_cpDefinitionGroupedEntry.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -457,12 +397,17 @@ public class CPDefinitionGroupedEntryWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_cpDefinitionGroupedEntry.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this cp definition grouped entry.
+	 *
+	 * @param mvccVersion the mvcc version of this cp definition grouped entry
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_cpDefinitionGroupedEntry.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -472,12 +417,7 @@ public class CPDefinitionGroupedEntryWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_cpDefinitionGroupedEntry.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_cpDefinitionGroupedEntry.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -487,7 +427,7 @@ public class CPDefinitionGroupedEntryWrapper
 	 */
 	@Override
 	public void setPriority(double priority) {
-		_cpDefinitionGroupedEntry.setPriority(priority);
+		model.setPriority(priority);
 	}
 
 	/**
@@ -497,7 +437,7 @@ public class CPDefinitionGroupedEntryWrapper
 	 */
 	@Override
 	public void setQuantity(int quantity) {
-		_cpDefinitionGroupedEntry.setQuantity(quantity);
+		model.setQuantity(quantity);
 	}
 
 	/**
@@ -507,7 +447,7 @@ public class CPDefinitionGroupedEntryWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_cpDefinitionGroupedEntry.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -517,7 +457,7 @@ public class CPDefinitionGroupedEntryWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_cpDefinitionGroupedEntry.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -527,7 +467,7 @@ public class CPDefinitionGroupedEntryWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_cpDefinitionGroupedEntry.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -537,86 +477,19 @@ public class CPDefinitionGroupedEntryWrapper
 	 */
 	@Override
 	public void setUuid(String uuid) {
-		_cpDefinitionGroupedEntry.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CPDefinitionGroupedEntry>
-		toCacheModel() {
-
-		return _cpDefinitionGroupedEntry.toCacheModel();
-	}
-
-	@Override
-	public CPDefinitionGroupedEntry toEscapedModel() {
-		return new CPDefinitionGroupedEntryWrapper(
-			_cpDefinitionGroupedEntry.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _cpDefinitionGroupedEntry.toString();
-	}
-
-	@Override
-	public CPDefinitionGroupedEntry toUnescapedModel() {
-		return new CPDefinitionGroupedEntryWrapper(
-			_cpDefinitionGroupedEntry.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _cpDefinitionGroupedEntry.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CPDefinitionGroupedEntryWrapper)) {
-			return false;
-		}
-
-		CPDefinitionGroupedEntryWrapper cpDefinitionGroupedEntryWrapper =
-			(CPDefinitionGroupedEntryWrapper)object;
-
-		if (Objects.equals(
-				_cpDefinitionGroupedEntry,
-				cpDefinitionGroupedEntryWrapper._cpDefinitionGroupedEntry)) {
-
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _cpDefinitionGroupedEntry.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public CPDefinitionGroupedEntry getWrappedModel() {
-		return _cpDefinitionGroupedEntry;
-	}
+	protected CPDefinitionGroupedEntryWrapper wrap(
+		CPDefinitionGroupedEntry cpDefinitionGroupedEntry) {
 
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _cpDefinitionGroupedEntry.isEntityCacheEnabled();
+		return new CPDefinitionGroupedEntryWrapper(cpDefinitionGroupedEntry);
 	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _cpDefinitionGroupedEntry.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_cpDefinitionGroupedEntry.resetOriginalValues();
-	}
-
-	private final CPDefinitionGroupedEntry _cpDefinitionGroupedEntry;
 
 }

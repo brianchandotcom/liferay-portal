@@ -702,10 +702,6 @@ public class CommerceDataIntegrationProcessLogUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CommerceDataIntegrationProcessLogPersistence
 		getPersistence() {
 

@@ -31,6 +31,7 @@ public class CommerceCountrySoap implements Serializable {
 	public static CommerceCountrySoap toSoapModel(CommerceCountry model) {
 		CommerceCountrySoap soapModel = new CommerceCountrySoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setCommerceCountryId(model.getCommerceCountryId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -106,6 +107,14 @@ public class CommerceCountrySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceCountryId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -272,6 +281,7 @@ public class CommerceCountrySoap implements Serializable {
 		_channelFilterEnabled = channelFilterEnabled;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _commerceCountryId;
 	private long _companyId;

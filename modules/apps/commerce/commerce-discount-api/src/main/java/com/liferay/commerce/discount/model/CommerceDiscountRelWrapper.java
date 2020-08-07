@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.discount.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,26 +31,18 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceDiscountRelWrapper
+	extends BaseModelWrapper<CommerceDiscountRel>
 	implements CommerceDiscountRel, ModelWrapper<CommerceDiscountRel> {
 
 	public CommerceDiscountRelWrapper(CommerceDiscountRel commerceDiscountRel) {
-		_commerceDiscountRel = commerceDiscountRel;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceDiscountRel.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceDiscountRel.class.getName();
+		super(commerceDiscountRel);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("commerceDiscountRelId", getCommerceDiscountRelId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -70,6 +58,12 @@ public class CommerceDiscountRelWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long commerceDiscountRelId = (Long)attributes.get(
 			"commerceDiscountRelId");
 
@@ -126,17 +120,6 @@ public class CommerceDiscountRelWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CommerceDiscountRelWrapper(
-			(CommerceDiscountRel)_commerceDiscountRel.clone());
-	}
-
-	@Override
-	public int compareTo(CommerceDiscountRel commerceDiscountRel) {
-		return _commerceDiscountRel.compareTo(commerceDiscountRel);
-	}
-
 	/**
 	 * Returns the fully qualified class name of this commerce discount rel.
 	 *
@@ -144,7 +127,7 @@ public class CommerceDiscountRelWrapper
 	 */
 	@Override
 	public String getClassName() {
-		return _commerceDiscountRel.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -154,7 +137,7 @@ public class CommerceDiscountRelWrapper
 	 */
 	@Override
 	public long getClassNameId() {
-		return _commerceDiscountRel.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -164,14 +147,14 @@ public class CommerceDiscountRelWrapper
 	 */
 	@Override
 	public long getClassPK() {
-		return _commerceDiscountRel.getClassPK();
+		return model.getClassPK();
 	}
 
 	@Override
 	public CommerceDiscount getCommerceDiscount()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceDiscountRel.getCommerceDiscount();
+		return model.getCommerceDiscount();
 	}
 
 	/**
@@ -181,7 +164,7 @@ public class CommerceDiscountRelWrapper
 	 */
 	@Override
 	public long getCommerceDiscountId() {
-		return _commerceDiscountRel.getCommerceDiscountId();
+		return model.getCommerceDiscountId();
 	}
 
 	/**
@@ -191,7 +174,7 @@ public class CommerceDiscountRelWrapper
 	 */
 	@Override
 	public long getCommerceDiscountRelId() {
-		return _commerceDiscountRel.getCommerceDiscountRelId();
+		return model.getCommerceDiscountRelId();
 	}
 
 	/**
@@ -201,7 +184,7 @@ public class CommerceDiscountRelWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceDiscountRel.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -211,12 +194,7 @@ public class CommerceDiscountRelWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceDiscountRel.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceDiscountRel.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -226,7 +204,17 @@ public class CommerceDiscountRelWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceDiscountRel.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce discount rel.
+	 *
+	 * @return the mvcc version of this commerce discount rel
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -236,12 +224,7 @@ public class CommerceDiscountRelWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceDiscountRel.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceDiscountRel.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -251,7 +234,7 @@ public class CommerceDiscountRelWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceDiscountRel.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -261,7 +244,7 @@ public class CommerceDiscountRelWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceDiscountRel.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -271,42 +254,17 @@ public class CommerceDiscountRelWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceDiscountRel.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceDiscountRel.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceDiscountRel.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceDiscountRel.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceDiscountRel.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_commerceDiscountRel.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceDiscountRel.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_commerceDiscountRel.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -316,7 +274,7 @@ public class CommerceDiscountRelWrapper
 	 */
 	@Override
 	public void setClassNameId(long classNameId) {
-		_commerceDiscountRel.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -326,7 +284,7 @@ public class CommerceDiscountRelWrapper
 	 */
 	@Override
 	public void setClassPK(long classPK) {
-		_commerceDiscountRel.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -336,7 +294,7 @@ public class CommerceDiscountRelWrapper
 	 */
 	@Override
 	public void setCommerceDiscountId(long commerceDiscountId) {
-		_commerceDiscountRel.setCommerceDiscountId(commerceDiscountId);
+		model.setCommerceDiscountId(commerceDiscountId);
 	}
 
 	/**
@@ -346,7 +304,7 @@ public class CommerceDiscountRelWrapper
 	 */
 	@Override
 	public void setCommerceDiscountRelId(long commerceDiscountRelId) {
-		_commerceDiscountRel.setCommerceDiscountRelId(commerceDiscountRelId);
+		model.setCommerceDiscountRelId(commerceDiscountRelId);
 	}
 
 	/**
@@ -356,7 +314,7 @@ public class CommerceDiscountRelWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceDiscountRel.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -366,24 +324,7 @@ public class CommerceDiscountRelWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceDiscountRel.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceDiscountRel.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceDiscountRel.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceDiscountRel.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -393,12 +334,17 @@ public class CommerceDiscountRelWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceDiscountRel.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this commerce discount rel.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce discount rel
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_commerceDiscountRel.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -408,12 +354,7 @@ public class CommerceDiscountRelWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceDiscountRel.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceDiscountRel.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -423,7 +364,7 @@ public class CommerceDiscountRelWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceDiscountRel.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -433,7 +374,7 @@ public class CommerceDiscountRelWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceDiscountRel.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -443,81 +384,14 @@ public class CommerceDiscountRelWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceDiscountRel.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceDiscountRel>
-		toCacheModel() {
+	protected CommerceDiscountRelWrapper wrap(
+		CommerceDiscountRel commerceDiscountRel) {
 
-		return _commerceDiscountRel.toCacheModel();
+		return new CommerceDiscountRelWrapper(commerceDiscountRel);
 	}
-
-	@Override
-	public CommerceDiscountRel toEscapedModel() {
-		return new CommerceDiscountRelWrapper(
-			_commerceDiscountRel.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commerceDiscountRel.toString();
-	}
-
-	@Override
-	public CommerceDiscountRel toUnescapedModel() {
-		return new CommerceDiscountRelWrapper(
-			_commerceDiscountRel.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceDiscountRel.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceDiscountRelWrapper)) {
-			return false;
-		}
-
-		CommerceDiscountRelWrapper commerceDiscountRelWrapper =
-			(CommerceDiscountRelWrapper)object;
-
-		if (Objects.equals(
-				_commerceDiscountRel,
-				commerceDiscountRelWrapper._commerceDiscountRel)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceDiscountRel getWrappedModel() {
-		return _commerceDiscountRel;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceDiscountRel.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceDiscountRel.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceDiscountRel.resetOriginalValues();
-	}
-
-	private final CommerceDiscountRel _commerceDiscountRel;
 
 }

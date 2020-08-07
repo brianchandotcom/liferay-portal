@@ -14,10 +14,9 @@
 
 package com.liferay.commerce.product.type.grouped.service;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -39,6 +38,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for CPDefinitionGroupedEntry. Methods of this
@@ -120,6 +121,12 @@ public interface CPDefinitionGroupedEntryLocalService
 	public CPDefinitionGroupedEntry createCPDefinitionGroupedEntry(
 		long CPDefinitionGroupedEntryId);
 
+	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
 	public void deleteCPDefinitionGroupedEntries(long cpDefinitionId);
 
 	/**
@@ -158,6 +165,9 @@ public interface CPDefinitionGroupedEntryLocalService
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();

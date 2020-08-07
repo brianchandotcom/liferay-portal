@@ -14,17 +14,13 @@
 
 package com.liferay.commerce.product.type.virtual.order.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,29 +32,21 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceVirtualOrderItemWrapper
+	extends BaseModelWrapper<CommerceVirtualOrderItem>
 	implements CommerceVirtualOrderItem,
 			   ModelWrapper<CommerceVirtualOrderItem> {
 
 	public CommerceVirtualOrderItemWrapper(
 		CommerceVirtualOrderItem commerceVirtualOrderItem) {
 
-		_commerceVirtualOrderItem = commerceVirtualOrderItem;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceVirtualOrderItem.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceVirtualOrderItem.class.getName();
+		super(commerceVirtualOrderItem);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put(
 			"commerceVirtualOrderItemId", getCommerceVirtualOrderItemId());
@@ -84,6 +72,12 @@ public class CommerceVirtualOrderItemWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -194,17 +188,6 @@ public class CommerceVirtualOrderItemWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CommerceVirtualOrderItemWrapper(
-			(CommerceVirtualOrderItem)_commerceVirtualOrderItem.clone());
-	}
-
-	@Override
-	public int compareTo(CommerceVirtualOrderItem commerceVirtualOrderItem) {
-		return _commerceVirtualOrderItem.compareTo(commerceVirtualOrderItem);
-	}
-
 	/**
 	 * Returns the activation status of this commerce virtual order item.
 	 *
@@ -212,7 +195,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public int getActivationStatus() {
-		return _commerceVirtualOrderItem.getActivationStatus();
+		return model.getActivationStatus();
 	}
 
 	/**
@@ -222,14 +205,14 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public boolean getActive() {
-		return _commerceVirtualOrderItem.getActive();
+		return model.getActive();
 	}
 
 	@Override
 	public com.liferay.commerce.model.CommerceOrderItem getCommerceOrderItem()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceVirtualOrderItem.getCommerceOrderItem();
+		return model.getCommerceOrderItem();
 	}
 
 	/**
@@ -239,7 +222,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public long getCommerceOrderItemId() {
-		return _commerceVirtualOrderItem.getCommerceOrderItemId();
+		return model.getCommerceOrderItemId();
 	}
 
 	/**
@@ -249,7 +232,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public long getCommerceVirtualOrderItemId() {
-		return _commerceVirtualOrderItem.getCommerceVirtualOrderItemId();
+		return model.getCommerceVirtualOrderItemId();
 	}
 
 	/**
@@ -259,7 +242,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceVirtualOrderItem.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -269,7 +252,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceVirtualOrderItem.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -279,7 +262,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public long getDuration() {
-		return _commerceVirtualOrderItem.getDuration();
+		return model.getDuration();
 	}
 
 	/**
@@ -289,19 +272,14 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public Date getEndDate() {
-		return _commerceVirtualOrderItem.getEndDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceVirtualOrderItem.getExpandoBridge();
+		return model.getEndDate();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry getFileEntry()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceVirtualOrderItem.getFileEntry();
+		return model.getFileEntry();
 	}
 
 	/**
@@ -311,7 +289,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public long getFileEntryId() {
-		return _commerceVirtualOrderItem.getFileEntryId();
+		return model.getFileEntryId();
 	}
 
 	/**
@@ -321,7 +299,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _commerceVirtualOrderItem.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -331,7 +309,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public int getMaxUsages() {
-		return _commerceVirtualOrderItem.getMaxUsages();
+		return model.getMaxUsages();
 	}
 
 	/**
@@ -341,7 +319,17 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceVirtualOrderItem.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce virtual order item.
+	 *
+	 * @return the mvcc version of this commerce virtual order item
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -351,12 +339,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceVirtualOrderItem.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceVirtualOrderItem.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -366,7 +349,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public Date getStartDate() {
-		return _commerceVirtualOrderItem.getStartDate();
+		return model.getStartDate();
 	}
 
 	/**
@@ -376,7 +359,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public String getUrl() {
-		return _commerceVirtualOrderItem.getUrl();
+		return model.getUrl();
 	}
 
 	/**
@@ -386,7 +369,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public int getUsages() {
-		return _commerceVirtualOrderItem.getUsages();
+		return model.getUsages();
 	}
 
 	/**
@@ -396,7 +379,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceVirtualOrderItem.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -406,7 +389,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceVirtualOrderItem.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -416,7 +399,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceVirtualOrderItem.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -426,12 +409,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public String getUuid() {
-		return _commerceVirtualOrderItem.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceVirtualOrderItem.hashCode();
+		return model.getUuid();
 	}
 
 	/**
@@ -441,27 +419,12 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public boolean isActive() {
-		return _commerceVirtualOrderItem.isActive();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceVirtualOrderItem.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceVirtualOrderItem.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceVirtualOrderItem.isNew();
+		return model.isActive();
 	}
 
 	@Override
 	public void persist() {
-		_commerceVirtualOrderItem.persist();
+		model.persist();
 	}
 
 	/**
@@ -471,7 +434,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public void setActivationStatus(int activationStatus) {
-		_commerceVirtualOrderItem.setActivationStatus(activationStatus);
+		model.setActivationStatus(activationStatus);
 	}
 
 	/**
@@ -481,12 +444,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public void setActive(boolean active) {
-		_commerceVirtualOrderItem.setActive(active);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceVirtualOrderItem.setCachedModel(cachedModel);
+		model.setActive(active);
 	}
 
 	/**
@@ -496,7 +454,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public void setCommerceOrderItemId(long commerceOrderItemId) {
-		_commerceVirtualOrderItem.setCommerceOrderItemId(commerceOrderItemId);
+		model.setCommerceOrderItemId(commerceOrderItemId);
 	}
 
 	/**
@@ -506,8 +464,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public void setCommerceVirtualOrderItemId(long commerceVirtualOrderItemId) {
-		_commerceVirtualOrderItem.setCommerceVirtualOrderItemId(
-			commerceVirtualOrderItemId);
+		model.setCommerceVirtualOrderItemId(commerceVirtualOrderItemId);
 	}
 
 	/**
@@ -517,7 +474,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceVirtualOrderItem.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -527,7 +484,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceVirtualOrderItem.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -537,7 +494,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public void setDuration(long duration) {
-		_commerceVirtualOrderItem.setDuration(duration);
+		model.setDuration(duration);
 	}
 
 	/**
@@ -547,24 +504,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public void setEndDate(Date endDate) {
-		_commerceVirtualOrderItem.setEndDate(endDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceVirtualOrderItem.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceVirtualOrderItem.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceVirtualOrderItem.setExpandoBridgeAttributes(serviceContext);
+		model.setEndDate(endDate);
 	}
 
 	/**
@@ -574,7 +514,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public void setFileEntryId(long fileEntryId) {
-		_commerceVirtualOrderItem.setFileEntryId(fileEntryId);
+		model.setFileEntryId(fileEntryId);
 	}
 
 	/**
@@ -584,7 +524,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_commerceVirtualOrderItem.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -594,7 +534,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public void setMaxUsages(int maxUsages) {
-		_commerceVirtualOrderItem.setMaxUsages(maxUsages);
+		model.setMaxUsages(maxUsages);
 	}
 
 	/**
@@ -604,12 +544,17 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceVirtualOrderItem.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this commerce virtual order item.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce virtual order item
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_commerceVirtualOrderItem.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -619,12 +564,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceVirtualOrderItem.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceVirtualOrderItem.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -634,7 +574,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public void setStartDate(Date startDate) {
-		_commerceVirtualOrderItem.setStartDate(startDate);
+		model.setStartDate(startDate);
 	}
 
 	/**
@@ -644,7 +584,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public void setUrl(String url) {
-		_commerceVirtualOrderItem.setUrl(url);
+		model.setUrl(url);
 	}
 
 	/**
@@ -654,7 +594,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public void setUsages(int usages) {
-		_commerceVirtualOrderItem.setUsages(usages);
+		model.setUsages(usages);
 	}
 
 	/**
@@ -664,7 +604,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceVirtualOrderItem.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -674,7 +614,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceVirtualOrderItem.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -684,7 +624,7 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceVirtualOrderItem.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -694,86 +634,19 @@ public class CommerceVirtualOrderItemWrapper
 	 */
 	@Override
 	public void setUuid(String uuid) {
-		_commerceVirtualOrderItem.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceVirtualOrderItem>
-		toCacheModel() {
-
-		return _commerceVirtualOrderItem.toCacheModel();
-	}
-
-	@Override
-	public CommerceVirtualOrderItem toEscapedModel() {
-		return new CommerceVirtualOrderItemWrapper(
-			_commerceVirtualOrderItem.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commerceVirtualOrderItem.toString();
-	}
-
-	@Override
-	public CommerceVirtualOrderItem toUnescapedModel() {
-		return new CommerceVirtualOrderItemWrapper(
-			_commerceVirtualOrderItem.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceVirtualOrderItem.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceVirtualOrderItemWrapper)) {
-			return false;
-		}
-
-		CommerceVirtualOrderItemWrapper commerceVirtualOrderItemWrapper =
-			(CommerceVirtualOrderItemWrapper)object;
-
-		if (Objects.equals(
-				_commerceVirtualOrderItem,
-				commerceVirtualOrderItemWrapper._commerceVirtualOrderItem)) {
-
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _commerceVirtualOrderItem.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public CommerceVirtualOrderItem getWrappedModel() {
-		return _commerceVirtualOrderItem;
-	}
+	protected CommerceVirtualOrderItemWrapper wrap(
+		CommerceVirtualOrderItem commerceVirtualOrderItem) {
 
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceVirtualOrderItem.isEntityCacheEnabled();
+		return new CommerceVirtualOrderItemWrapper(commerceVirtualOrderItem);
 	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceVirtualOrderItem.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceVirtualOrderItem.resetOriginalValues();
-	}
-
-	private final CommerceVirtualOrderItem _commerceVirtualOrderItem;
 
 }

@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.discount.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.discount.exception.NoSuchDiscountRuleException;
 import com.liferay.commerce.discount.model.CommerceDiscountRule;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce discount rule service.
@@ -45,9 +40,6 @@ public interface CommerceDiscountRulePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceDiscountRuleUtil} to access the commerce discount rule persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceDiscountRule> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce discount rules where commerceDiscountId = &#63;.
@@ -314,8 +306,5 @@ public interface CommerceDiscountRulePersistence
 	 * @return the number of commerce discount rules
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

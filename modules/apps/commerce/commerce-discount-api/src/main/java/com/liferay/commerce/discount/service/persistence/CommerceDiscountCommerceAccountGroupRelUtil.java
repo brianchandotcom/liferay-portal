@@ -784,10 +784,6 @@ public class CommerceDiscountCommerceAccountGroupRelUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CommerceDiscountCommerceAccountGroupRelPersistence
 		getPersistence() {
 

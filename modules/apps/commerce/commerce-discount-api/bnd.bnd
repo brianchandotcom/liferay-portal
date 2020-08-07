@@ -1,6 +1,10 @@
 Bundle-Name: Liferay Commerce Discount API
 Bundle-SymbolicName: com.liferay.commerce.discount.api
+<<<<<<< HEAD
 Bundle-Version: 4.3.2
+=======
+Bundle-Version: 5.0.0
+>>>>>>> e47493f9f... COMMERCE-4072 Regen service and rest
 Export-Package:\
 	com.liferay.commerce.discount.application.strategy,\
 	com.liferay.commerce.discount.constants,\

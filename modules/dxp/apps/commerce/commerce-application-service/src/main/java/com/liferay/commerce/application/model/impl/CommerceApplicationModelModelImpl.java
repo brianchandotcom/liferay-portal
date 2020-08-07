@@ -19,6 +19,7 @@ import com.liferay.commerce.application.model.CommerceApplicationModelModel;
 import com.liferay.commerce.application.model.CommerceApplicationModelSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -73,6 +73,7 @@ public class CommerceApplicationModelModelImpl
 	public static final String TABLE_NAME = "CommerceApplicationModel";
 
 	public static final Object[][] TABLE_COLUMNS = {
+		{"mvccVersion", Types.BIGINT},
 		{"commerceApplicationModelId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -85,6 +86,7 @@ public class CommerceApplicationModelModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceApplicationModelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -97,7 +99,7 @@ public class CommerceApplicationModelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceApplicationModel (commerceApplicationModelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceApplicationBrandId LONG,name VARCHAR(75) null,year VARCHAR(75) null)";
+		"create table CommerceApplicationModel (mvccVersion LONG default 0 not null,commerceApplicationModelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceApplicationBrandId LONG,name VARCHAR(75) null,year VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceApplicationModel";
@@ -114,20 +116,23 @@ public class CommerceApplicationModelModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.application.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.application.model.CommerceApplicationModel"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.application.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.application.model.CommerceApplicationModel"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.application.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.application.model.CommerceApplicationModel"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long COMMERCEAPPLICATIONBRANDID_COLUMN_BITMASK = 1L;
 
@@ -150,6 +155,7 @@ public class CommerceApplicationModelModelImpl
 
 		CommerceApplicationModel model = new CommerceApplicationModelImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceApplicationModelId(
 			soapModel.getCommerceApplicationModelId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -244,9 +250,6 @@ public class CommerceApplicationModelModelImpl
 				attributeGetterFunction.apply((CommerceApplicationModel)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -326,243 +329,81 @@ public class CommerceApplicationModelModelImpl
 					<String, BiConsumer<CommerceApplicationModel, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", CommerceApplicationModel::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceApplicationModel, Long>)
+				CommerceApplicationModel::setMvccVersion);
+		attributeGetterFunctions.put(
 			"commerceApplicationModelId",
-			new Function<CommerceApplicationModel, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceApplicationModel commerceApplicationModel) {
-
-					return commerceApplicationModel.
-						getCommerceApplicationModelId();
-				}
-
-			});
+			CommerceApplicationModel::getCommerceApplicationModelId);
 		attributeSetterBiConsumers.put(
 			"commerceApplicationModelId",
-			new BiConsumer<CommerceApplicationModel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceApplicationModel commerceApplicationModel,
-					Object commerceApplicationModelIdObject) {
-
-					commerceApplicationModel.setCommerceApplicationModelId(
-						(Long)commerceApplicationModelIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceApplicationModel, Long>)
+				CommerceApplicationModel::setCommerceApplicationModelId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommerceApplicationModel, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceApplicationModel commerceApplicationModel) {
-
-					return commerceApplicationModel.getCompanyId();
-				}
-
-			});
+			"companyId", CommerceApplicationModel::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommerceApplicationModel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceApplicationModel commerceApplicationModel,
-					Object companyIdObject) {
-
-					commerceApplicationModel.setCompanyId(
-						(Long)companyIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceApplicationModel, Long>)
+				CommerceApplicationModel::setCompanyId);
 		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommerceApplicationModel, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceApplicationModel commerceApplicationModel) {
-
-					return commerceApplicationModel.getUserId();
-				}
-
-			});
+			"userId", CommerceApplicationModel::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommerceApplicationModel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceApplicationModel commerceApplicationModel,
-					Object userIdObject) {
-
-					commerceApplicationModel.setUserId((Long)userIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceApplicationModel, Long>)
+				CommerceApplicationModel::setUserId);
 		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommerceApplicationModel, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceApplicationModel commerceApplicationModel) {
-
-					return commerceApplicationModel.getUserName();
-				}
-
-			});
+			"userName", CommerceApplicationModel::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommerceApplicationModel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceApplicationModel commerceApplicationModel,
-					Object userNameObject) {
-
-					commerceApplicationModel.setUserName(
-						(String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceApplicationModel, String>)
+				CommerceApplicationModel::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommerceApplicationModel, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceApplicationModel commerceApplicationModel) {
-
-					return commerceApplicationModel.getCreateDate();
-				}
-
-			});
+			"createDate", CommerceApplicationModel::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommerceApplicationModel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceApplicationModel commerceApplicationModel,
-					Object createDateObject) {
-
-					commerceApplicationModel.setCreateDate(
-						(Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceApplicationModel, Date>)
+				CommerceApplicationModel::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CommerceApplicationModel, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceApplicationModel commerceApplicationModel) {
-
-					return commerceApplicationModel.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CommerceApplicationModel::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommerceApplicationModel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceApplicationModel commerceApplicationModel,
-					Object modifiedDateObject) {
-
-					commerceApplicationModel.setModifiedDate(
-						(Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceApplicationModel, Date>)
+				CommerceApplicationModel::setModifiedDate);
 		attributeGetterFunctions.put(
 			"commerceApplicationBrandId",
-			new Function<CommerceApplicationModel, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceApplicationModel commerceApplicationModel) {
-
-					return commerceApplicationModel.
-						getCommerceApplicationBrandId();
-				}
-
-			});
+			CommerceApplicationModel::getCommerceApplicationBrandId);
 		attributeSetterBiConsumers.put(
 			"commerceApplicationBrandId",
-			new BiConsumer<CommerceApplicationModel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceApplicationModel commerceApplicationModel,
-					Object commerceApplicationBrandIdObject) {
-
-					commerceApplicationModel.setCommerceApplicationBrandId(
-						(Long)commerceApplicationBrandIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"name",
-			new Function<CommerceApplicationModel, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceApplicationModel commerceApplicationModel) {
-
-					return commerceApplicationModel.getName();
-				}
-
-			});
+			(BiConsumer<CommerceApplicationModel, Long>)
+				CommerceApplicationModel::setCommerceApplicationBrandId);
+		attributeGetterFunctions.put("name", CommerceApplicationModel::getName);
 		attributeSetterBiConsumers.put(
 			"name",
-			new BiConsumer<CommerceApplicationModel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceApplicationModel commerceApplicationModel,
-					Object nameObject) {
-
-					commerceApplicationModel.setName((String)nameObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"year",
-			new Function<CommerceApplicationModel, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceApplicationModel commerceApplicationModel) {
-
-					return commerceApplicationModel.getYear();
-				}
-
-			});
+			(BiConsumer<CommerceApplicationModel, String>)
+				CommerceApplicationModel::setName);
+		attributeGetterFunctions.put("year", CommerceApplicationModel::getYear);
 		attributeSetterBiConsumers.put(
 			"year",
-			new BiConsumer<CommerceApplicationModel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceApplicationModel commerceApplicationModel,
-					Object yearObject) {
-
-					commerceApplicationModel.setYear((String)yearObject);
-				}
-
-			});
+			(BiConsumer<CommerceApplicationModel, String>)
+				CommerceApplicationModel::setYear);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -763,6 +604,7 @@ public class CommerceApplicationModelModelImpl
 		CommerceApplicationModelImpl commerceApplicationModelImpl =
 			new CommerceApplicationModelImpl();
 
+		commerceApplicationModelImpl.setMvccVersion(getMvccVersion());
 		commerceApplicationModelImpl.setCommerceApplicationModelId(
 			getCommerceApplicationModelId());
 		commerceApplicationModelImpl.setCompanyId(getCompanyId());
@@ -821,11 +663,19 @@ public class CommerceApplicationModelModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -849,6 +699,8 @@ public class CommerceApplicationModelModelImpl
 	public CacheModel<CommerceApplicationModel> toCacheModel() {
 		CommerceApplicationModelCacheModel commerceApplicationModelCacheModel =
 			new CommerceApplicationModelCacheModel();
+
+		commerceApplicationModelCacheModel.mvccVersion = getMvccVersion();
 
 		commerceApplicationModelCacheModel.commerceApplicationModelId =
 			getCommerceApplicationModelId();
@@ -981,6 +833,7 @@ public class CommerceApplicationModelModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _commerceApplicationModelId;
 	private long _companyId;
 	private long _originalCompanyId;

@@ -85,6 +85,18 @@ public class CommerceCurrencyLocalServiceWrapper
 			commerceCurrencyId);
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceCurrencyLocalService.createPersistedModel(
+			primaryKeyObj);
+	}
+
 	@Override
 	public void deleteCommerceCurrencies(long companyId) {
 		_commerceCurrencyLocalService.deleteCommerceCurrencies(companyId);
@@ -140,6 +152,11 @@ public class CommerceCurrencyLocalServiceWrapper
 
 		return _commerceCurrencyLocalService.deletePersistedModel(
 			persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _commerceCurrencyLocalService.dslQuery(dslQuery);
 	}
 
 	@Override

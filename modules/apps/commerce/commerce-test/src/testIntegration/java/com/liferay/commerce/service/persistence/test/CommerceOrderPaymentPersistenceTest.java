@@ -125,6 +125,8 @@ public class CommerceOrderPaymentPersistenceTest {
 
 		CommerceOrderPayment newCommerceOrderPayment = _persistence.create(pk);
 
+		newCommerceOrderPayment.setMvccVersion(RandomTestUtil.nextLong());
+
 		newCommerceOrderPayment.setGroupId(RandomTestUtil.nextLong());
 
 		newCommerceOrderPayment.setCompanyId(RandomTestUtil.nextLong());
@@ -153,6 +155,9 @@ public class CommerceOrderPaymentPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newCommerceOrderPayment.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCommerceOrderPayment.getMvccVersion(),
+			newCommerceOrderPayment.getMvccVersion());
 		Assert.assertEquals(
 			existingCommerceOrderPayment.getCommerceOrderPaymentId(),
 			newCommerceOrderPayment.getCommerceOrderPaymentId());
@@ -225,9 +230,10 @@ public class CommerceOrderPaymentPersistenceTest {
 
 	protected OrderByComparator<CommerceOrderPayment> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CommerceOrderPayment", "commerceOrderPaymentId", true, "groupId",
-			true, "companyId", true, "userId", true, "userName", true,
-			"createDate", true, "modifiedDate", true, "commerceOrderId", true,
+			"CommerceOrderPayment", "mvccVersion", true,
+			"commerceOrderPaymentId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "commerceOrderId", true,
 			"commercePaymentMethodKey", true, "status", true);
 	}
 
@@ -469,6 +475,8 @@ public class CommerceOrderPaymentPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		CommerceOrderPayment commerceOrderPayment = _persistence.create(pk);
+
+		commerceOrderPayment.setMvccVersion(RandomTestUtil.nextLong());
 
 		commerceOrderPayment.setGroupId(RandomTestUtil.nextLong());
 

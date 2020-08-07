@@ -33,6 +33,7 @@ public class CPDefinitionInventorySoap implements Serializable {
 
 		CPDefinitionInventorySoap soapModel = new CPDefinitionInventorySoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setCPDefinitionInventoryId(
 			model.getCPDefinitionInventoryId());
@@ -114,6 +115,14 @@ public class CPDefinitionInventorySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCPDefinitionInventoryId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -282,6 +291,7 @@ public class CPDefinitionInventorySoap implements Serializable {
 		_multipleOrderQuantity = multipleOrderQuantity;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _CPDefinitionInventoryId;
 	private long _groupId;

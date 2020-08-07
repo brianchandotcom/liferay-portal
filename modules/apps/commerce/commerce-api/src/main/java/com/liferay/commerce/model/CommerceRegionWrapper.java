@@ -14,17 +14,13 @@
 
 package com.liferay.commerce.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,26 +32,18 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceRegionWrapper
+	extends BaseModelWrapper<CommerceRegion>
 	implements CommerceRegion, ModelWrapper<CommerceRegion> {
 
 	public CommerceRegionWrapper(CommerceRegion commerceRegion) {
-		_commerceRegion = commerceRegion;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceRegion.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceRegion.class.getName();
+		super(commerceRegion);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("commerceRegionId", getCommerceRegionId());
 		attributes.put("companyId", getCompanyId());
@@ -75,6 +63,12 @@ public class CommerceRegionWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -154,17 +148,6 @@ public class CommerceRegionWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CommerceRegionWrapper(
-			(CommerceRegion)_commerceRegion.clone());
-	}
-
-	@Override
-	public int compareTo(CommerceRegion commerceRegion) {
-		return _commerceRegion.compareTo(commerceRegion);
-	}
-
 	/**
 	 * Returns the active of this commerce region.
 	 *
@@ -172,7 +155,7 @@ public class CommerceRegionWrapper
 	 */
 	@Override
 	public boolean getActive() {
-		return _commerceRegion.getActive();
+		return model.getActive();
 	}
 
 	/**
@@ -182,14 +165,14 @@ public class CommerceRegionWrapper
 	 */
 	@Override
 	public String getCode() {
-		return _commerceRegion.getCode();
+		return model.getCode();
 	}
 
 	@Override
 	public CommerceCountry getCommerceCountry()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceRegion.getCommerceCountry();
+		return model.getCommerceCountry();
 	}
 
 	/**
@@ -199,7 +182,7 @@ public class CommerceRegionWrapper
 	 */
 	@Override
 	public long getCommerceCountryId() {
-		return _commerceRegion.getCommerceCountryId();
+		return model.getCommerceCountryId();
 	}
 
 	/**
@@ -209,7 +192,7 @@ public class CommerceRegionWrapper
 	 */
 	@Override
 	public long getCommerceRegionId() {
-		return _commerceRegion.getCommerceRegionId();
+		return model.getCommerceRegionId();
 	}
 
 	/**
@@ -219,7 +202,7 @@ public class CommerceRegionWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceRegion.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -229,12 +212,7 @@ public class CommerceRegionWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceRegion.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceRegion.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -244,7 +222,7 @@ public class CommerceRegionWrapper
 	 */
 	@Override
 	public Date getLastPublishDate() {
-		return _commerceRegion.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -254,7 +232,17 @@ public class CommerceRegionWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceRegion.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce region.
+	 *
+	 * @return the mvcc version of this commerce region
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -264,7 +252,7 @@ public class CommerceRegionWrapper
 	 */
 	@Override
 	public String getName() {
-		return _commerceRegion.getName();
+		return model.getName();
 	}
 
 	/**
@@ -274,12 +262,7 @@ public class CommerceRegionWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceRegion.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceRegion.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -289,7 +272,7 @@ public class CommerceRegionWrapper
 	 */
 	@Override
 	public double getPriority() {
-		return _commerceRegion.getPriority();
+		return model.getPriority();
 	}
 
 	/**
@@ -299,7 +282,7 @@ public class CommerceRegionWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceRegion.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -309,7 +292,7 @@ public class CommerceRegionWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceRegion.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -319,7 +302,7 @@ public class CommerceRegionWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceRegion.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -329,12 +312,7 @@ public class CommerceRegionWrapper
 	 */
 	@Override
 	public String getUuid() {
-		return _commerceRegion.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceRegion.hashCode();
+		return model.getUuid();
 	}
 
 	/**
@@ -344,27 +322,12 @@ public class CommerceRegionWrapper
 	 */
 	@Override
 	public boolean isActive() {
-		return _commerceRegion.isActive();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceRegion.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceRegion.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceRegion.isNew();
+		return model.isActive();
 	}
 
 	@Override
 	public void persist() {
-		_commerceRegion.persist();
+		model.persist();
 	}
 
 	/**
@@ -374,12 +337,7 @@ public class CommerceRegionWrapper
 	 */
 	@Override
 	public void setActive(boolean active) {
-		_commerceRegion.setActive(active);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceRegion.setCachedModel(cachedModel);
+		model.setActive(active);
 	}
 
 	/**
@@ -389,7 +347,7 @@ public class CommerceRegionWrapper
 	 */
 	@Override
 	public void setCode(String code) {
-		_commerceRegion.setCode(code);
+		model.setCode(code);
 	}
 
 	/**
@@ -399,7 +357,7 @@ public class CommerceRegionWrapper
 	 */
 	@Override
 	public void setCommerceCountryId(long commerceCountryId) {
-		_commerceRegion.setCommerceCountryId(commerceCountryId);
+		model.setCommerceCountryId(commerceCountryId);
 	}
 
 	/**
@@ -409,7 +367,7 @@ public class CommerceRegionWrapper
 	 */
 	@Override
 	public void setCommerceRegionId(long commerceRegionId) {
-		_commerceRegion.setCommerceRegionId(commerceRegionId);
+		model.setCommerceRegionId(commerceRegionId);
 	}
 
 	/**
@@ -419,7 +377,7 @@ public class CommerceRegionWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceRegion.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -429,24 +387,7 @@ public class CommerceRegionWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceRegion.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceRegion.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceRegion.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceRegion.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -456,7 +397,7 @@ public class CommerceRegionWrapper
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_commerceRegion.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -466,7 +407,17 @@ public class CommerceRegionWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceRegion.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this commerce region.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce region
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -476,12 +427,7 @@ public class CommerceRegionWrapper
 	 */
 	@Override
 	public void setName(String name) {
-		_commerceRegion.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_commerceRegion.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -491,12 +437,7 @@ public class CommerceRegionWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceRegion.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceRegion.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -506,7 +447,7 @@ public class CommerceRegionWrapper
 	 */
 	@Override
 	public void setPriority(double priority) {
-		_commerceRegion.setPriority(priority);
+		model.setPriority(priority);
 	}
 
 	/**
@@ -516,7 +457,7 @@ public class CommerceRegionWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceRegion.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -526,7 +467,7 @@ public class CommerceRegionWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceRegion.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -536,7 +477,7 @@ public class CommerceRegionWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceRegion.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -546,83 +487,17 @@ public class CommerceRegionWrapper
 	 */
 	@Override
 	public void setUuid(String uuid) {
-		_commerceRegion.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceRegion>
-		toCacheModel() {
-
-		return _commerceRegion.toCacheModel();
-	}
-
-	@Override
-	public CommerceRegion toEscapedModel() {
-		return new CommerceRegionWrapper(_commerceRegion.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commerceRegion.toString();
-	}
-
-	@Override
-	public CommerceRegion toUnescapedModel() {
-		return new CommerceRegionWrapper(_commerceRegion.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceRegion.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceRegionWrapper)) {
-			return false;
-		}
-
-		CommerceRegionWrapper commerceRegionWrapper =
-			(CommerceRegionWrapper)object;
-
-		if (Objects.equals(
-				_commerceRegion, commerceRegionWrapper._commerceRegion)) {
-
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _commerceRegion.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public CommerceRegion getWrappedModel() {
-		return _commerceRegion;
+	protected CommerceRegionWrapper wrap(CommerceRegion commerceRegion) {
+		return new CommerceRegionWrapper(commerceRegion);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceRegion.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceRegion.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceRegion.resetOriginalValues();
-	}
-
-	private final CommerceRegion _commerceRegion;
 
 }

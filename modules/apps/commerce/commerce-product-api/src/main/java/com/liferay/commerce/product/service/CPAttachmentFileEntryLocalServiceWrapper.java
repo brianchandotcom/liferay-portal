@@ -132,6 +132,18 @@ public class CPAttachmentFileEntryLocalServiceWrapper
 			CPAttachmentFileEntryId);
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpAttachmentFileEntryLocalService.createPersistedModel(
+			primaryKeyObj);
+	}
+
 	@Override
 	public void deleteCPAttachmentFileEntries(String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -192,6 +204,11 @@ public class CPAttachmentFileEntryLocalServiceWrapper
 
 		return _cpAttachmentFileEntryLocalService.deletePersistedModel(
 			persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _cpAttachmentFileEntryLocalService.dslQuery(dslQuery);
 	}
 
 	@Override

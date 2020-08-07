@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.product.type.grouped.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.product.type.grouped.exception.NoSuchCPDefinitionGroupedEntryException;
 import com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the cp definition grouped entry service.
@@ -45,9 +40,6 @@ public interface CPDefinitionGroupedEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionGroupedEntryUtil} to access the cp definition grouped entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CPDefinitionGroupedEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the cp definition grouped entries where uuid = &#63;.
@@ -717,8 +709,5 @@ public interface CPDefinitionGroupedEntryPersistence
 	 * @return the number of cp definition grouped entries
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

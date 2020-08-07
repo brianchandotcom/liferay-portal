@@ -16,9 +16,11 @@ package com.liferay.commerce.notification.service.persistence.impl;
 
 import com.liferay.commerce.notification.exception.NoSuchNotificationAttachmentException;
 import com.liferay.commerce.notification.model.CommerceNotificationAttachment;
+import com.liferay.commerce.notification.model.CommerceNotificationAttachmentTable;
 import com.liferay.commerce.notification.model.impl.CommerceNotificationAttachmentImpl;
 import com.liferay.commerce.notification.model.impl.CommerceNotificationAttachmentModelImpl;
 import com.liferay.commerce.notification.service.persistence.CommerceNotificationAttachmentPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -35,21 +37,16 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -258,10 +255,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -625,8 +618,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -791,11 +782,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByUUID_G, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -886,8 +872,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1095,10 +1079,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1485,8 +1465,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1685,10 +1663,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2053,8 +2027,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2078,21 +2050,14 @@ public class CommerceNotificationAttachmentPersistenceImpl
 		dbColumnNames.put(
 			"commerceNotificationQueueEntryId", "CNotificationQueueEntryId");
 
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-				"_dbColumnNames");
-
-			field.setAccessible(true);
-
-			field.set(this, dbColumnNames);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
+		setDBColumnNames(dbColumnNames);
 
 		setModelClass(CommerceNotificationAttachment.class);
+
+		setModelImplClass(CommerceNotificationAttachmentImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CommerceNotificationAttachmentTable.INSTANCE);
 	}
 
 	/**
@@ -2105,7 +2070,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 		CommerceNotificationAttachment commerceNotificationAttachment) {
 
 		entityCache.putResult(
-			CommerceNotificationAttachmentModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceNotificationAttachmentImpl.class,
 			commerceNotificationAttachment.getPrimaryKey(),
 			commerceNotificationAttachment);
@@ -2134,8 +2098,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 				commerceNotificationAttachments) {
 
 			if (entityCache.getResult(
-					CommerceNotificationAttachmentModelImpl.
-						ENTITY_CACHE_ENABLED,
 					CommerceNotificationAttachmentImpl.class,
 					commerceNotificationAttachment.getPrimaryKey()) == null) {
 
@@ -2175,7 +2137,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 		CommerceNotificationAttachment commerceNotificationAttachment) {
 
 		entityCache.removeResult(
-			CommerceNotificationAttachmentModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceNotificationAttachmentImpl.class,
 			commerceNotificationAttachment.getPrimaryKey());
 
@@ -2199,7 +2160,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 				commerceNotificationAttachments) {
 
 			entityCache.removeResult(
-				CommerceNotificationAttachmentModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceNotificationAttachmentImpl.class,
 				commerceNotificationAttachment.getPrimaryKey());
 
@@ -2210,6 +2170,7 @@ public class CommerceNotificationAttachmentPersistenceImpl
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -2217,7 +2178,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(
-				CommerceNotificationAttachmentModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceNotificationAttachmentImpl.class, primaryKey);
 		}
 	}
@@ -2472,10 +2432,7 @@ public class CommerceNotificationAttachmentPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CommerceNotificationAttachmentModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				commerceNotificationAttachmentModelImpl.getUuid()
 			};
@@ -2583,7 +2540,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 		}
 
 		entityCache.putResult(
-			CommerceNotificationAttachmentModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceNotificationAttachmentImpl.class,
 			commerceNotificationAttachment.getPrimaryKey(),
 			commerceNotificationAttachment, false);
@@ -2641,64 +2597,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 	/**
 	 * Returns the commerce notification attachment with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the commerce notification attachment
-	 * @return the commerce notification attachment, or <code>null</code> if a commerce notification attachment with the primary key could not be found
-	 */
-	@Override
-	public CommerceNotificationAttachment fetchByPrimaryKey(
-		Serializable primaryKey) {
-
-		Serializable serializable = entityCache.getResult(
-			CommerceNotificationAttachmentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceNotificationAttachmentImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CommerceNotificationAttachment commerceNotificationAttachment =
-			(CommerceNotificationAttachment)serializable;
-
-		if (commerceNotificationAttachment == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				commerceNotificationAttachment =
-					(CommerceNotificationAttachment)session.get(
-						CommerceNotificationAttachmentImpl.class, primaryKey);
-
-				if (commerceNotificationAttachment != null) {
-					cacheResult(commerceNotificationAttachment);
-				}
-				else {
-					entityCache.putResult(
-						CommerceNotificationAttachmentModelImpl.
-							ENTITY_CACHE_ENABLED,
-						CommerceNotificationAttachmentImpl.class, primaryKey,
-						nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CommerceNotificationAttachmentModelImpl.
-						ENTITY_CACHE_ENABLED,
-					CommerceNotificationAttachmentImpl.class, primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return commerceNotificationAttachment;
-	}
-
-	/**
-	 * Returns the commerce notification attachment with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param commerceNotificationAttachmentId the primary key of the commerce notification attachment
 	 * @return the commerce notification attachment, or <code>null</code> if a commerce notification attachment with the primary key could not be found
 	 */
@@ -2708,114 +2606,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 
 		return fetchByPrimaryKey(
 			(Serializable)commerceNotificationAttachmentId);
-	}
-
-	@Override
-	public Map<Serializable, CommerceNotificationAttachment> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CommerceNotificationAttachment> map =
-			new HashMap<Serializable, CommerceNotificationAttachment>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CommerceNotificationAttachment commerceNotificationAttachment =
-				fetchByPrimaryKey(primaryKey);
-
-			if (commerceNotificationAttachment != null) {
-				map.put(primaryKey, commerceNotificationAttachment);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CommerceNotificationAttachmentModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceNotificationAttachmentImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(
-						primaryKey,
-						(CommerceNotificationAttachment)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(_SQL_SELECT_COMMERCENOTIFICATIONATTACHMENT_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CommerceNotificationAttachment commerceNotificationAttachment :
-					(List<CommerceNotificationAttachment>)query.list()) {
-
-				map.put(
-					commerceNotificationAttachment.getPrimaryKeyObj(),
-					commerceNotificationAttachment);
-
-				cacheResult(commerceNotificationAttachment);
-
-				uncachedPrimaryKeys.remove(
-					commerceNotificationAttachment.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CommerceNotificationAttachmentModelImpl.
-						ENTITY_CACHE_ENABLED,
-					CommerceNotificationAttachmentImpl.class, primaryKey,
-					nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -2945,10 +2735,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2997,9 +2783,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3016,6 +2799,21 @@ public class CommerceNotificationAttachmentPersistenceImpl
 	}
 
 	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "CNotificationAttachmentId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_COMMERCENOTIFICATIONATTACHMENT;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CommerceNotificationAttachmentModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3025,27 +2823,19 @@ public class CommerceNotificationAttachmentPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceNotificationAttachmentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceNotificationAttachmentModelImpl.FINDER_CACHE_ENABLED,
 			CommerceNotificationAttachmentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceNotificationAttachmentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceNotificationAttachmentModelImpl.FINDER_CACHE_ENABLED,
 			CommerceNotificationAttachmentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CommerceNotificationAttachmentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceNotificationAttachmentModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByUuid = new FinderPath(
-			CommerceNotificationAttachmentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceNotificationAttachmentModelImpl.FINDER_CACHE_ENABLED,
 			CommerceNotificationAttachmentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -3054,8 +2844,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			CommerceNotificationAttachmentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceNotificationAttachmentModelImpl.FINDER_CACHE_ENABLED,
 			CommerceNotificationAttachmentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
@@ -3063,14 +2851,10 @@ public class CommerceNotificationAttachmentPersistenceImpl
 			CommerceNotificationAttachmentModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
-			CommerceNotificationAttachmentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceNotificationAttachmentModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByUuid", new String[] {String.class.getName()});
 
 		_finderPathFetchByUUID_G = new FinderPath(
-			CommerceNotificationAttachmentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceNotificationAttachmentModelImpl.FINDER_CACHE_ENABLED,
 			CommerceNotificationAttachmentImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
@@ -3078,15 +2862,11 @@ public class CommerceNotificationAttachmentPersistenceImpl
 			CommerceNotificationAttachmentModelImpl.GROUPID_COLUMN_BITMASK);
 
 		_finderPathCountByUUID_G = new FinderPath(
-			CommerceNotificationAttachmentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceNotificationAttachmentModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			CommerceNotificationAttachmentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceNotificationAttachmentModelImpl.FINDER_CACHE_ENABLED,
 			CommerceNotificationAttachmentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
@@ -3096,8 +2876,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			CommerceNotificationAttachmentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceNotificationAttachmentModelImpl.FINDER_CACHE_ENABLED,
 			CommerceNotificationAttachmentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
@@ -3106,16 +2884,12 @@ public class CommerceNotificationAttachmentPersistenceImpl
 			CommerceNotificationAttachmentModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
-			CommerceNotificationAttachmentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceNotificationAttachmentModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByCommerceNotificationQueueEntryId =
 			new FinderPath(
-				CommerceNotificationAttachmentModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceNotificationAttachmentModelImpl.FINDER_CACHE_ENABLED,
 				CommerceNotificationAttachmentImpl.class,
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 				"findByCommerceNotificationQueueEntryId",
@@ -3126,8 +2900,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 
 		_finderPathWithoutPaginationFindByCommerceNotificationQueueEntryId =
 			new FinderPath(
-				CommerceNotificationAttachmentModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceNotificationAttachmentModelImpl.FINDER_CACHE_ENABLED,
 				CommerceNotificationAttachmentImpl.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCommerceNotificationQueueEntryId",
@@ -3138,8 +2910,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 					CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByCommerceNotificationQueueEntryId = new FinderPath(
-			CommerceNotificationAttachmentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceNotificationAttachmentModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCommerceNotificationQueueEntryId",
 			new String[] {Long.class.getName()});
@@ -3161,10 +2931,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 
 	private static final String _SQL_SELECT_COMMERCENOTIFICATIONATTACHMENT =
 		"SELECT commerceNotificationAttachment FROM CommerceNotificationAttachment commerceNotificationAttachment";
-
-	private static final String
-		_SQL_SELECT_COMMERCENOTIFICATIONATTACHMENT_WHERE_PKS_IN =
-			"SELECT commerceNotificationAttachment FROM CommerceNotificationAttachment commerceNotificationAttachment WHERE CNotificationAttachmentId IN (";
 
 	private static final String
 		_SQL_SELECT_COMMERCENOTIFICATIONATTACHMENT_WHERE =

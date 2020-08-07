@@ -14,19 +14,15 @@
 
 package com.liferay.commerce.currency.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.math.BigDecimal;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,26 +34,18 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceCurrencyWrapper
+	extends BaseModelWrapper<CommerceCurrency>
 	implements CommerceCurrency, ModelWrapper<CommerceCurrency> {
 
 	public CommerceCurrencyWrapper(CommerceCurrency commerceCurrency) {
-		_commerceCurrency = commerceCurrency;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceCurrency.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceCurrency.class.getName();
+		super(commerceCurrency);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("commerceCurrencyId", getCommerceCurrencyId());
 		attributes.put("companyId", getCompanyId());
@@ -83,6 +71,12 @@ public class CommerceCurrencyWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -200,17 +194,6 @@ public class CommerceCurrencyWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CommerceCurrencyWrapper(
-			(CommerceCurrency)_commerceCurrency.clone());
-	}
-
-	@Override
-	public int compareTo(CommerceCurrency commerceCurrency) {
-		return _commerceCurrency.compareTo(commerceCurrency);
-	}
-
 	/**
 	 * Returns the active of this commerce currency.
 	 *
@@ -218,12 +201,12 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public boolean getActive() {
-		return _commerceCurrency.getActive();
+		return model.getActive();
 	}
 
 	@Override
 	public String[] getAvailableLanguageIds() {
-		return _commerceCurrency.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -233,7 +216,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public String getCode() {
-		return _commerceCurrency.getCode();
+		return model.getCode();
 	}
 
 	/**
@@ -243,7 +226,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public long getCommerceCurrencyId() {
-		return _commerceCurrency.getCommerceCurrencyId();
+		return model.getCommerceCurrencyId();
 	}
 
 	/**
@@ -253,7 +236,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceCurrency.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -263,17 +246,12 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceCurrency.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _commerceCurrency.getDefaultLanguageId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceCurrency.getExpandoBridge();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -283,7 +261,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public String getFormatPattern() {
-		return _commerceCurrency.getFormatPattern();
+		return model.getFormatPattern();
 	}
 
 	/**
@@ -294,7 +272,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public String getFormatPattern(java.util.Locale locale) {
-		return _commerceCurrency.getFormatPattern(locale);
+		return model.getFormatPattern(locale);
 	}
 
 	/**
@@ -308,7 +286,7 @@ public class CommerceCurrencyWrapper
 	public String getFormatPattern(
 		java.util.Locale locale, boolean useDefault) {
 
-		return _commerceCurrency.getFormatPattern(locale, useDefault);
+		return model.getFormatPattern(locale, useDefault);
 	}
 
 	/**
@@ -319,7 +297,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public String getFormatPattern(String languageId) {
-		return _commerceCurrency.getFormatPattern(languageId);
+		return model.getFormatPattern(languageId);
 	}
 
 	/**
@@ -331,17 +309,17 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public String getFormatPattern(String languageId, boolean useDefault) {
-		return _commerceCurrency.getFormatPattern(languageId, useDefault);
+		return model.getFormatPattern(languageId, useDefault);
 	}
 
 	@Override
 	public String getFormatPatternCurrentLanguageId() {
-		return _commerceCurrency.getFormatPatternCurrentLanguageId();
+		return model.getFormatPatternCurrentLanguageId();
 	}
 
 	@Override
 	public String getFormatPatternCurrentValue() {
-		return _commerceCurrency.getFormatPatternCurrentValue();
+		return model.getFormatPatternCurrentValue();
 	}
 
 	/**
@@ -351,7 +329,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public Map<java.util.Locale, String> getFormatPatternMap() {
-		return _commerceCurrency.getFormatPatternMap();
+		return model.getFormatPatternMap();
 	}
 
 	/**
@@ -361,7 +339,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public Date getLastPublishDate() {
-		return _commerceCurrency.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -371,7 +349,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public int getMaxFractionDigits() {
-		return _commerceCurrency.getMaxFractionDigits();
+		return model.getMaxFractionDigits();
 	}
 
 	/**
@@ -381,7 +359,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public int getMinFractionDigits() {
-		return _commerceCurrency.getMinFractionDigits();
+		return model.getMinFractionDigits();
 	}
 
 	/**
@@ -391,7 +369,17 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceCurrency.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce currency.
+	 *
+	 * @return the mvcc version of this commerce currency
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -401,7 +389,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public String getName() {
-		return _commerceCurrency.getName();
+		return model.getName();
 	}
 
 	/**
@@ -412,7 +400,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public String getName(java.util.Locale locale) {
-		return _commerceCurrency.getName(locale);
+		return model.getName(locale);
 	}
 
 	/**
@@ -424,7 +412,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public String getName(java.util.Locale locale, boolean useDefault) {
-		return _commerceCurrency.getName(locale, useDefault);
+		return model.getName(locale, useDefault);
 	}
 
 	/**
@@ -435,7 +423,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public String getName(String languageId) {
-		return _commerceCurrency.getName(languageId);
+		return model.getName(languageId);
 	}
 
 	/**
@@ -447,17 +435,17 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public String getName(String languageId, boolean useDefault) {
-		return _commerceCurrency.getName(languageId, useDefault);
+		return model.getName(languageId, useDefault);
 	}
 
 	@Override
 	public String getNameCurrentLanguageId() {
-		return _commerceCurrency.getNameCurrentLanguageId();
+		return model.getNameCurrentLanguageId();
 	}
 
 	@Override
 	public String getNameCurrentValue() {
-		return _commerceCurrency.getNameCurrentValue();
+		return model.getNameCurrentValue();
 	}
 
 	/**
@@ -467,7 +455,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public Map<java.util.Locale, String> getNameMap() {
-		return _commerceCurrency.getNameMap();
+		return model.getNameMap();
 	}
 
 	/**
@@ -477,7 +465,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public boolean getPrimary() {
-		return _commerceCurrency.getPrimary();
+		return model.getPrimary();
 	}
 
 	/**
@@ -487,12 +475,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceCurrency.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceCurrency.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -502,7 +485,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public double getPriority() {
-		return _commerceCurrency.getPriority();
+		return model.getPriority();
 	}
 
 	/**
@@ -512,7 +495,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public BigDecimal getRate() {
-		return _commerceCurrency.getRate();
+		return model.getRate();
 	}
 
 	/**
@@ -522,7 +505,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public String getRoundingMode() {
-		return _commerceCurrency.getRoundingMode();
+		return model.getRoundingMode();
 	}
 
 	/**
@@ -532,7 +515,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public String getSymbol() {
-		return _commerceCurrency.getSymbol();
+		return model.getSymbol();
 	}
 
 	/**
@@ -542,7 +525,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceCurrency.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -552,7 +535,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceCurrency.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -562,7 +545,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceCurrency.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -572,17 +555,12 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public String getUuid() {
-		return _commerceCurrency.getUuid();
+		return model.getUuid();
 	}
 
 	@Override
 	public CommerceMoney getZero() {
-		return _commerceCurrency.getZero();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceCurrency.hashCode();
+		return model.getZero();
 	}
 
 	/**
@@ -592,22 +570,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public boolean isActive() {
-		return _commerceCurrency.isActive();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceCurrency.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceCurrency.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceCurrency.isNew();
+		return model.isActive();
 	}
 
 	/**
@@ -617,19 +580,19 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public boolean isPrimary() {
-		return _commerceCurrency.isPrimary();
+		return model.isPrimary();
 	}
 
 	@Override
 	public void persist() {
-		_commerceCurrency.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
-		_commerceCurrency.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
@@ -637,12 +600,12 @@ public class CommerceCurrencyWrapper
 			java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
-		_commerceCurrency.prepareLocalizedFieldsForImport(defaultImportLocale);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	@Override
 	public BigDecimal round(BigDecimal value) {
-		return _commerceCurrency.round(value);
+		return model.round(value);
 	}
 
 	/**
@@ -652,12 +615,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public void setActive(boolean active) {
-		_commerceCurrency.setActive(active);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceCurrency.setCachedModel(cachedModel);
+		model.setActive(active);
 	}
 
 	/**
@@ -667,7 +625,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public void setCode(String code) {
-		_commerceCurrency.setCode(code);
+		model.setCode(code);
 	}
 
 	/**
@@ -677,7 +635,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public void setCommerceCurrencyId(long commerceCurrencyId) {
-		_commerceCurrency.setCommerceCurrencyId(commerceCurrencyId);
+		model.setCommerceCurrencyId(commerceCurrencyId);
 	}
 
 	/**
@@ -687,7 +645,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceCurrency.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -697,24 +655,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceCurrency.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceCurrency.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceCurrency.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceCurrency.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -724,7 +665,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public void setFormatPattern(String formatPattern) {
-		_commerceCurrency.setFormatPattern(formatPattern);
+		model.setFormatPattern(formatPattern);
 	}
 
 	/**
@@ -737,7 +678,7 @@ public class CommerceCurrencyWrapper
 	public void setFormatPattern(
 		String formatPattern, java.util.Locale locale) {
 
-		_commerceCurrency.setFormatPattern(formatPattern, locale);
+		model.setFormatPattern(formatPattern, locale);
 	}
 
 	/**
@@ -752,13 +693,12 @@ public class CommerceCurrencyWrapper
 		String formatPattern, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 
-		_commerceCurrency.setFormatPattern(
-			formatPattern, locale, defaultLocale);
+		model.setFormatPattern(formatPattern, locale, defaultLocale);
 	}
 
 	@Override
 	public void setFormatPatternCurrentLanguageId(String languageId) {
-		_commerceCurrency.setFormatPatternCurrentLanguageId(languageId);
+		model.setFormatPatternCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -770,7 +710,7 @@ public class CommerceCurrencyWrapper
 	public void setFormatPatternMap(
 		Map<java.util.Locale, String> formatPatternMap) {
 
-		_commerceCurrency.setFormatPatternMap(formatPatternMap);
+		model.setFormatPatternMap(formatPatternMap);
 	}
 
 	/**
@@ -784,7 +724,7 @@ public class CommerceCurrencyWrapper
 		Map<java.util.Locale, String> formatPatternMap,
 		java.util.Locale defaultLocale) {
 
-		_commerceCurrency.setFormatPatternMap(formatPatternMap, defaultLocale);
+		model.setFormatPatternMap(formatPatternMap, defaultLocale);
 	}
 
 	/**
@@ -794,7 +734,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_commerceCurrency.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -804,7 +744,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public void setMaxFractionDigits(int maxFractionDigits) {
-		_commerceCurrency.setMaxFractionDigits(maxFractionDigits);
+		model.setMaxFractionDigits(maxFractionDigits);
 	}
 
 	/**
@@ -814,7 +754,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public void setMinFractionDigits(int minFractionDigits) {
-		_commerceCurrency.setMinFractionDigits(minFractionDigits);
+		model.setMinFractionDigits(minFractionDigits);
 	}
 
 	/**
@@ -824,7 +764,17 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceCurrency.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this commerce currency.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce currency
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -834,7 +784,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public void setName(String name) {
-		_commerceCurrency.setName(name);
+		model.setName(name);
 	}
 
 	/**
@@ -845,7 +795,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public void setName(String name, java.util.Locale locale) {
-		_commerceCurrency.setName(name, locale);
+		model.setName(name, locale);
 	}
 
 	/**
@@ -859,12 +809,12 @@ public class CommerceCurrencyWrapper
 	public void setName(
 		String name, java.util.Locale locale, java.util.Locale defaultLocale) {
 
-		_commerceCurrency.setName(name, locale, defaultLocale);
+		model.setName(name, locale, defaultLocale);
 	}
 
 	@Override
 	public void setNameCurrentLanguageId(String languageId) {
-		_commerceCurrency.setNameCurrentLanguageId(languageId);
+		model.setNameCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -874,7 +824,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap) {
-		_commerceCurrency.setNameMap(nameMap);
+		model.setNameMap(nameMap);
 	}
 
 	/**
@@ -887,12 +837,7 @@ public class CommerceCurrencyWrapper
 	public void setNameMap(
 		Map<java.util.Locale, String> nameMap, java.util.Locale defaultLocale) {
 
-		_commerceCurrency.setNameMap(nameMap, defaultLocale);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_commerceCurrency.setNew(n);
+		model.setNameMap(nameMap, defaultLocale);
 	}
 
 	/**
@@ -902,7 +847,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public void setPrimary(boolean primary) {
-		_commerceCurrency.setPrimary(primary);
+		model.setPrimary(primary);
 	}
 
 	/**
@@ -912,12 +857,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceCurrency.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceCurrency.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -927,7 +867,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public void setPriority(double priority) {
-		_commerceCurrency.setPriority(priority);
+		model.setPriority(priority);
 	}
 
 	/**
@@ -937,7 +877,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public void setRate(BigDecimal rate) {
-		_commerceCurrency.setRate(rate);
+		model.setRate(rate);
 	}
 
 	/**
@@ -947,7 +887,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public void setRoundingMode(String roundingMode) {
-		_commerceCurrency.setRoundingMode(roundingMode);
+		model.setRoundingMode(roundingMode);
 	}
 
 	/**
@@ -957,7 +897,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public void setSymbol(String symbol) {
-		_commerceCurrency.setSymbol(symbol);
+		model.setSymbol(symbol);
 	}
 
 	/**
@@ -967,7 +907,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceCurrency.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -977,7 +917,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceCurrency.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -987,7 +927,7 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceCurrency.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -997,84 +937,17 @@ public class CommerceCurrencyWrapper
 	 */
 	@Override
 	public void setUuid(String uuid) {
-		_commerceCurrency.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceCurrency>
-		toCacheModel() {
-
-		return _commerceCurrency.toCacheModel();
-	}
-
-	@Override
-	public CommerceCurrency toEscapedModel() {
-		return new CommerceCurrencyWrapper(_commerceCurrency.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commerceCurrency.toString();
-	}
-
-	@Override
-	public CommerceCurrency toUnescapedModel() {
-		return new CommerceCurrencyWrapper(
-			_commerceCurrency.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceCurrency.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceCurrencyWrapper)) {
-			return false;
-		}
-
-		CommerceCurrencyWrapper commerceCurrencyWrapper =
-			(CommerceCurrencyWrapper)object;
-
-		if (Objects.equals(
-				_commerceCurrency, commerceCurrencyWrapper._commerceCurrency)) {
-
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _commerceCurrency.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public CommerceCurrency getWrappedModel() {
-		return _commerceCurrency;
+	protected CommerceCurrencyWrapper wrap(CommerceCurrency commerceCurrency) {
+		return new CommerceCurrencyWrapper(commerceCurrency);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceCurrency.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceCurrency.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceCurrency.resetOriginalValues();
-	}
-
-	private final CommerceCurrency _commerceCurrency;
 
 }

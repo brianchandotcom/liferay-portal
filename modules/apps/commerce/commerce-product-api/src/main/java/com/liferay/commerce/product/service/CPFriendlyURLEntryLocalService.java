@@ -14,10 +14,9 @@
 
 package com.liferay.commerce.product.service;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.product.model.CPFriendlyURLEntry;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -40,6 +39,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for CPFriendlyURLEntry. Methods of this
@@ -100,6 +101,12 @@ public interface CPFriendlyURLEntryLocalService
 	public CPFriendlyURLEntry createCPFriendlyURLEntry(
 		long CPFriendlyURLEntryId);
 
+	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
 	public void deleteCPFriendlyURLEntries(
 		long groupId, Class<?> clazz, long classPK);
 
@@ -139,6 +146,9 @@ public interface CPFriendlyURLEntryLocalService
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();

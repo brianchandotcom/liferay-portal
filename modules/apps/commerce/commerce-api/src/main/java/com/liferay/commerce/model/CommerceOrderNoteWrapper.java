@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,26 +31,18 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceOrderNoteWrapper
+	extends BaseModelWrapper<CommerceOrderNote>
 	implements CommerceOrderNote, ModelWrapper<CommerceOrderNote> {
 
 	public CommerceOrderNoteWrapper(CommerceOrderNote commerceOrderNote) {
-		_commerceOrderNote = commerceOrderNote;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceOrderNote.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceOrderNote.class.getName();
+		super(commerceOrderNote);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("commerceOrderNoteId", getCommerceOrderNoteId());
 		attributes.put("groupId", getGroupId());
@@ -72,6 +60,12 @@ public class CommerceOrderNoteWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String externalReferenceCode = (String)attributes.get(
 			"externalReferenceCode");
 
@@ -140,17 +134,6 @@ public class CommerceOrderNoteWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CommerceOrderNoteWrapper(
-			(CommerceOrderNote)_commerceOrderNote.clone());
-	}
-
-	@Override
-	public int compareTo(CommerceOrderNote commerceOrderNote) {
-		return _commerceOrderNote.compareTo(commerceOrderNote);
-	}
-
 	/**
 	 * Returns the commerce order ID of this commerce order note.
 	 *
@@ -158,7 +141,7 @@ public class CommerceOrderNoteWrapper
 	 */
 	@Override
 	public long getCommerceOrderId() {
-		return _commerceOrderNote.getCommerceOrderId();
+		return model.getCommerceOrderId();
 	}
 
 	/**
@@ -168,7 +151,7 @@ public class CommerceOrderNoteWrapper
 	 */
 	@Override
 	public long getCommerceOrderNoteId() {
-		return _commerceOrderNote.getCommerceOrderNoteId();
+		return model.getCommerceOrderNoteId();
 	}
 
 	/**
@@ -178,7 +161,7 @@ public class CommerceOrderNoteWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceOrderNote.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -188,7 +171,7 @@ public class CommerceOrderNoteWrapper
 	 */
 	@Override
 	public String getContent() {
-		return _commerceOrderNote.getContent();
+		return model.getContent();
 	}
 
 	/**
@@ -198,12 +181,7 @@ public class CommerceOrderNoteWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceOrderNote.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceOrderNote.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -213,7 +191,7 @@ public class CommerceOrderNoteWrapper
 	 */
 	@Override
 	public String getExternalReferenceCode() {
-		return _commerceOrderNote.getExternalReferenceCode();
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -223,7 +201,7 @@ public class CommerceOrderNoteWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _commerceOrderNote.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -233,7 +211,17 @@ public class CommerceOrderNoteWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceOrderNote.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce order note.
+	 *
+	 * @return the mvcc version of this commerce order note
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -243,12 +231,7 @@ public class CommerceOrderNoteWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceOrderNote.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceOrderNote.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -258,12 +241,12 @@ public class CommerceOrderNoteWrapper
 	 */
 	@Override
 	public boolean getRestricted() {
-		return _commerceOrderNote.getRestricted();
+		return model.getRestricted();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.model.User getUser() {
-		return _commerceOrderNote.getUser();
+		return model.getUser();
 	}
 
 	/**
@@ -273,7 +256,7 @@ public class CommerceOrderNoteWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceOrderNote.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -283,7 +266,7 @@ public class CommerceOrderNoteWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceOrderNote.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -293,27 +276,7 @@ public class CommerceOrderNoteWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceOrderNote.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceOrderNote.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceOrderNote.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceOrderNote.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceOrderNote.isNew();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -323,17 +286,12 @@ public class CommerceOrderNoteWrapper
 	 */
 	@Override
 	public boolean isRestricted() {
-		return _commerceOrderNote.isRestricted();
+		return model.isRestricted();
 	}
 
 	@Override
 	public void persist() {
-		_commerceOrderNote.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceOrderNote.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -343,7 +301,7 @@ public class CommerceOrderNoteWrapper
 	 */
 	@Override
 	public void setCommerceOrderId(long commerceOrderId) {
-		_commerceOrderNote.setCommerceOrderId(commerceOrderId);
+		model.setCommerceOrderId(commerceOrderId);
 	}
 
 	/**
@@ -353,7 +311,7 @@ public class CommerceOrderNoteWrapper
 	 */
 	@Override
 	public void setCommerceOrderNoteId(long commerceOrderNoteId) {
-		_commerceOrderNote.setCommerceOrderNoteId(commerceOrderNoteId);
+		model.setCommerceOrderNoteId(commerceOrderNoteId);
 	}
 
 	/**
@@ -363,7 +321,7 @@ public class CommerceOrderNoteWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceOrderNote.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -373,7 +331,7 @@ public class CommerceOrderNoteWrapper
 	 */
 	@Override
 	public void setContent(String content) {
-		_commerceOrderNote.setContent(content);
+		model.setContent(content);
 	}
 
 	/**
@@ -383,24 +341,7 @@ public class CommerceOrderNoteWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceOrderNote.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceOrderNote.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceOrderNote.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceOrderNote.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -410,7 +351,7 @@ public class CommerceOrderNoteWrapper
 	 */
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
-		_commerceOrderNote.setExternalReferenceCode(externalReferenceCode);
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**
@@ -420,7 +361,7 @@ public class CommerceOrderNoteWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_commerceOrderNote.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -430,12 +371,17 @@ public class CommerceOrderNoteWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceOrderNote.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this commerce order note.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce order note
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_commerceOrderNote.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -445,12 +391,7 @@ public class CommerceOrderNoteWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceOrderNote.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceOrderNote.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -460,7 +401,7 @@ public class CommerceOrderNoteWrapper
 	 */
 	@Override
 	public void setRestricted(boolean restricted) {
-		_commerceOrderNote.setRestricted(restricted);
+		model.setRestricted(restricted);
 	}
 
 	/**
@@ -470,7 +411,7 @@ public class CommerceOrderNoteWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceOrderNote.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -480,7 +421,7 @@ public class CommerceOrderNoteWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceOrderNote.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -490,81 +431,14 @@ public class CommerceOrderNoteWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceOrderNote.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceOrderNote>
-		toCacheModel() {
+	protected CommerceOrderNoteWrapper wrap(
+		CommerceOrderNote commerceOrderNote) {
 
-		return _commerceOrderNote.toCacheModel();
+		return new CommerceOrderNoteWrapper(commerceOrderNote);
 	}
-
-	@Override
-	public CommerceOrderNote toEscapedModel() {
-		return new CommerceOrderNoteWrapper(
-			_commerceOrderNote.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commerceOrderNote.toString();
-	}
-
-	@Override
-	public CommerceOrderNote toUnescapedModel() {
-		return new CommerceOrderNoteWrapper(
-			_commerceOrderNote.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceOrderNote.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceOrderNoteWrapper)) {
-			return false;
-		}
-
-		CommerceOrderNoteWrapper commerceOrderNoteWrapper =
-			(CommerceOrderNoteWrapper)object;
-
-		if (Objects.equals(
-				_commerceOrderNote,
-				commerceOrderNoteWrapper._commerceOrderNote)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceOrderNote getWrappedModel() {
-		return _commerceOrderNote;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceOrderNote.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceOrderNote.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceOrderNote.resetOriginalValues();
-	}
-
-	private final CommerceOrderNote _commerceOrderNote;
 
 }

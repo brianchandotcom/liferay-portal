@@ -57,7 +57,7 @@ public class CommerceDataIntegrationProcessServiceHttp {
 					HttpPrincipal httpPrincipal, long userId, String name,
 					String type,
 					com.liferay.portal.kernel.util.UnicodeProperties
-						typeSettingsProperties)
+						typeSettingsUnicodeProperties)
 				throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -67,7 +67,7 @@ public class CommerceDataIntegrationProcessServiceHttp {
 				_addCommerceDataIntegrationProcessParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, name, type, typeSettingsProperties);
+				methodKey, userId, name, type, typeSettingsUnicodeProperties);
 
 			Object returnObj = null;
 
@@ -318,7 +318,7 @@ public class CommerceDataIntegrationProcessServiceHttp {
 					HttpPrincipal httpPrincipal,
 					long commerceDataIntegrationProcessId, String name,
 					com.liferay.portal.kernel.util.UnicodeProperties
-						typeSettingsProperties)
+						typeSettingsUnicodeProperties)
 				throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -329,7 +329,7 @@ public class CommerceDataIntegrationProcessServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceDataIntegrationProcessId, name,
-				typeSettingsProperties);
+				typeSettingsUnicodeProperties);
 
 			Object returnObj = null;
 

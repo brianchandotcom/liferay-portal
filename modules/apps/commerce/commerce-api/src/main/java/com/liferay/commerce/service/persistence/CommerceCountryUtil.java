@@ -1527,10 +1527,6 @@ public class CommerceCountryUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CommerceCountryPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

@@ -35,6 +35,7 @@ public class CommercePriceModifierSoap implements Serializable {
 
 		CommercePriceModifierSoap soapModel = new CommercePriceModifierSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setExternalReferenceCode(model.getExternalReferenceCode());
 		soapModel.setCommercePriceModifierId(
@@ -119,6 +120,14 @@ public class CommercePriceModifierSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommercePriceModifierId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -309,6 +318,7 @@ public class CommercePriceModifierSoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _externalReferenceCode;
 	private long _commercePriceModifierId;

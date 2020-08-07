@@ -696,10 +696,6 @@ public class CommerceApplicationModelCProductRelUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CommerceApplicationModelCProductRelPersistence
 		getPersistence() {
 

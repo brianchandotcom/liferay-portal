@@ -78,6 +78,18 @@ public class CommerceBOMEntryLocalServiceWrapper
 	}
 
 	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceBOMEntryLocalService.createPersistedModel(
+			primaryKeyObj);
+	}
+
+	/**
 	 * Deletes the commerce bom entry from the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -126,6 +138,11 @@ public class CommerceBOMEntryLocalServiceWrapper
 
 		return _commerceBOMEntryLocalService.deletePersistedModel(
 			persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _commerceBOMEntryLocalService.dslQuery(dslQuery);
 	}
 
 	@Override

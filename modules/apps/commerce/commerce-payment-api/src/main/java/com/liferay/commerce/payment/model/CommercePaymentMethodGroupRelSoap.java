@@ -34,6 +34,7 @@ public class CommercePaymentMethodGroupRelSoap implements Serializable {
 		CommercePaymentMethodGroupRelSoap soapModel =
 			new CommercePaymentMethodGroupRelSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCommercePaymentMethodGroupRelId(
 			model.getCommercePaymentMethodGroupRelId());
 		soapModel.setGroupId(model.getGroupId());
@@ -108,6 +109,14 @@ public class CommercePaymentMethodGroupRelSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommercePaymentMethodGroupRelId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getCommercePaymentMethodGroupRelId() {
@@ -220,6 +229,7 @@ public class CommercePaymentMethodGroupRelSoap implements Serializable {
 		_active = active;
 	}
 
+	private long _mvccVersion;
 	private long _commercePaymentMethodGroupRelId;
 	private long _groupId;
 	private long _companyId;

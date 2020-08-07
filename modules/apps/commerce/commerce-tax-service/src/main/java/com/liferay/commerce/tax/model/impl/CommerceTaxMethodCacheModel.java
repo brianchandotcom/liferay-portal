@@ -15,9 +15,10 @@
 package com.liferay.commerce.tax.model.impl;
 
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
+import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class CommerceTaxMethodCacheModel
-	implements CacheModel<CommerceTaxMethod>, Externalizable {
+	implements CacheModel<CommerceTaxMethod>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -48,8 +49,9 @@ public class CommerceTaxMethodCacheModel
 		CommerceTaxMethodCacheModel commerceTaxMethodCacheModel =
 			(CommerceTaxMethodCacheModel)object;
 
-		if (commerceTaxMethodId ==
-				commerceTaxMethodCacheModel.commerceTaxMethodId) {
+		if ((commerceTaxMethodId ==
+				commerceTaxMethodCacheModel.commerceTaxMethodId) &&
+			(mvccVersion == commerceTaxMethodCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -59,14 +61,28 @@ public class CommerceTaxMethodCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, commerceTaxMethodId);
+		int hashCode = HashUtil.hash(0, commerceTaxMethodId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
-		sb.append("{commerceTaxMethodId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", commerceTaxMethodId=");
 		sb.append(commerceTaxMethodId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -100,6 +116,7 @@ public class CommerceTaxMethodCacheModel
 		CommerceTaxMethodImpl commerceTaxMethodImpl =
 			new CommerceTaxMethodImpl();
 
+		commerceTaxMethodImpl.setMvccVersion(mvccVersion);
 		commerceTaxMethodImpl.setCommerceTaxMethodId(commerceTaxMethodId);
 		commerceTaxMethodImpl.setGroupId(groupId);
 		commerceTaxMethodImpl.setCompanyId(companyId);
@@ -157,6 +174,8 @@ public class CommerceTaxMethodCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		commerceTaxMethodId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -178,6 +197,8 @@ public class CommerceTaxMethodCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(commerceTaxMethodId);
 
 		objectOutput.writeLong(groupId);
@@ -222,6 +243,7 @@ public class CommerceTaxMethodCacheModel
 		objectOutput.writeBoolean(active);
 	}
 
+	public long mvccVersion;
 	public long commerceTaxMethodId;
 	public long groupId;
 	public long companyId;

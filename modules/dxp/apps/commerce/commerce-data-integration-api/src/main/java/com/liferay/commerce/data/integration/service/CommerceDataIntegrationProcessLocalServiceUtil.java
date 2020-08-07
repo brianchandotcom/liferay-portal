@@ -64,12 +64,12 @@ public class CommerceDataIntegrationProcessLocalServiceUtil {
 			CommerceDataIntegrationProcess addCommerceDataIntegrationProcess(
 					long userId, String name, String type,
 					com.liferay.portal.kernel.util.UnicodeProperties
-						typeSettingsProperties,
+						typeSettingsUnicodeProperties,
 					boolean system)
 				throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addCommerceDataIntegrationProcess(
-			userId, name, type, typeSettingsProperties, system);
+			userId, name, type, typeSettingsUnicodeProperties, system);
 	}
 
 	/**
@@ -85,6 +85,16 @@ public class CommerceDataIntegrationProcessLocalServiceUtil {
 
 		return getService().createCommerceDataIntegrationProcess(
 			commerceDataIntegrationProcessId);
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	public static com.liferay.portal.kernel.model.PersistedModel
+			createPersistedModel(java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().createPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -140,6 +150,12 @@ public class CommerceDataIntegrationProcessLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static <T> T dslQuery(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return getService().dslQuery(dslQuery);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
@@ -361,11 +377,12 @@ public class CommerceDataIntegrationProcessLocalServiceUtil {
 			CommerceDataIntegrationProcess updateCommerceDataIntegrationProcess(
 					long commerceDataIntegrationProcessId, String name,
 					com.liferay.portal.kernel.util.UnicodeProperties
-						typeSettingsProperties)
+						typeSettingsUnicodeProperties)
 				throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateCommerceDataIntegrationProcess(
-			commerceDataIntegrationProcessId, name, typeSettingsProperties);
+			commerceDataIntegrationProcessId, name,
+			typeSettingsUnicodeProperties);
 	}
 
 	public static

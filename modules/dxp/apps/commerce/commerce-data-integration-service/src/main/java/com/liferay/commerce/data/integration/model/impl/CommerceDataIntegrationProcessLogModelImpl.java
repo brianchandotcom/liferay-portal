@@ -19,6 +19,7 @@ import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProces
 import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcessLogSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -74,6 +74,7 @@ public class CommerceDataIntegrationProcessLogModelImpl
 	public static final String TABLE_NAME = "CDataIntegrationProcessLog";
 
 	public static final Object[][] TABLE_COLUMNS = {
+		{"mvccVersion", Types.BIGINT},
 		{"CDataIntegrationProcessLogId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -87,6 +88,7 @@ public class CommerceDataIntegrationProcessLogModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CDataIntegrationProcessLogId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -102,7 +104,7 @@ public class CommerceDataIntegrationProcessLogModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CDataIntegrationProcessLog (CDataIntegrationProcessLogId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CDataIntegrationProcessId LONG,error TEXT null,output_ TEXT null,startDate DATE null,endDate DATE null,status INTEGER)";
+		"create table CDataIntegrationProcessLog (mvccVersion LONG default 0 not null,CDataIntegrationProcessLogId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CDataIntegrationProcessId LONG,error TEXT null,output_ TEXT null,startDate DATE null,endDate DATE null,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CDataIntegrationProcessLog";
@@ -119,20 +121,23 @@ public class CommerceDataIntegrationProcessLogModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.data.integration.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcessLog"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.data.integration.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcessLog"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.data.integration.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcessLog"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long CDATAINTEGRATIONPROCESSID_COLUMN_BITMASK = 1L;
 
@@ -156,6 +161,7 @@ public class CommerceDataIntegrationProcessLogModelImpl
 		CommerceDataIntegrationProcessLog model =
 			new CommerceDataIntegrationProcessLogImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceDataIntegrationProcessLogId(
 			soapModel.getCommerceDataIntegrationProcessLogId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -255,9 +261,6 @@ public class CommerceDataIntegrationProcessLogModelImpl
 					(CommerceDataIntegrationProcessLog)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -341,350 +344,104 @@ public class CommerceDataIntegrationProcessLogModelImpl
 					 BiConsumer<CommerceDataIntegrationProcessLog, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", CommerceDataIntegrationProcessLog::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceDataIntegrationProcessLog, Long>)
+				CommerceDataIntegrationProcessLog::setMvccVersion);
+		attributeGetterFunctions.put(
 			"commerceDataIntegrationProcessLogId",
-			new Function<CommerceDataIntegrationProcessLog, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDataIntegrationProcessLog
-						commerceDataIntegrationProcessLog) {
-
-					return commerceDataIntegrationProcessLog.
-						getCommerceDataIntegrationProcessLogId();
-				}
-
-			});
+			CommerceDataIntegrationProcessLog::
+				getCommerceDataIntegrationProcessLogId);
 		attributeSetterBiConsumers.put(
 			"commerceDataIntegrationProcessLogId",
-			new BiConsumer<CommerceDataIntegrationProcessLog, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDataIntegrationProcessLog
-						commerceDataIntegrationProcessLog,
-					Object commerceDataIntegrationProcessLogIdObject) {
-
-					commerceDataIntegrationProcessLog.
-						setCommerceDataIntegrationProcessLogId(
-							(Long)commerceDataIntegrationProcessLogIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceDataIntegrationProcessLog, Long>)
+				CommerceDataIntegrationProcessLog::
+					setCommerceDataIntegrationProcessLogId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommerceDataIntegrationProcessLog, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDataIntegrationProcessLog
-						commerceDataIntegrationProcessLog) {
-
-					return commerceDataIntegrationProcessLog.getCompanyId();
-				}
-
-			});
+			"companyId", CommerceDataIntegrationProcessLog::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommerceDataIntegrationProcessLog, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDataIntegrationProcessLog
-						commerceDataIntegrationProcessLog,
-					Object companyIdObject) {
-
-					commerceDataIntegrationProcessLog.setCompanyId(
-						(Long)companyIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceDataIntegrationProcessLog, Long>)
+				CommerceDataIntegrationProcessLog::setCompanyId);
 		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommerceDataIntegrationProcessLog, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDataIntegrationProcessLog
-						commerceDataIntegrationProcessLog) {
-
-					return commerceDataIntegrationProcessLog.getUserId();
-				}
-
-			});
+			"userId", CommerceDataIntegrationProcessLog::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommerceDataIntegrationProcessLog, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDataIntegrationProcessLog
-						commerceDataIntegrationProcessLog,
-					Object userIdObject) {
-
-					commerceDataIntegrationProcessLog.setUserId(
-						(Long)userIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceDataIntegrationProcessLog, Long>)
+				CommerceDataIntegrationProcessLog::setUserId);
 		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommerceDataIntegrationProcessLog, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDataIntegrationProcessLog
-						commerceDataIntegrationProcessLog) {
-
-					return commerceDataIntegrationProcessLog.getUserName();
-				}
-
-			});
+			"userName", CommerceDataIntegrationProcessLog::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommerceDataIntegrationProcessLog, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDataIntegrationProcessLog
-						commerceDataIntegrationProcessLog,
-					Object userNameObject) {
-
-					commerceDataIntegrationProcessLog.setUserName(
-						(String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceDataIntegrationProcessLog, String>)
+				CommerceDataIntegrationProcessLog::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommerceDataIntegrationProcessLog, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDataIntegrationProcessLog
-						commerceDataIntegrationProcessLog) {
-
-					return commerceDataIntegrationProcessLog.getCreateDate();
-				}
-
-			});
+			"createDate", CommerceDataIntegrationProcessLog::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommerceDataIntegrationProcessLog, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDataIntegrationProcessLog
-						commerceDataIntegrationProcessLog,
-					Object createDateObject) {
-
-					commerceDataIntegrationProcessLog.setCreateDate(
-						(Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceDataIntegrationProcessLog, Date>)
+				CommerceDataIntegrationProcessLog::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CommerceDataIntegrationProcessLog, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDataIntegrationProcessLog
-						commerceDataIntegrationProcessLog) {
-
-					return commerceDataIntegrationProcessLog.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CommerceDataIntegrationProcessLog::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommerceDataIntegrationProcessLog, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDataIntegrationProcessLog
-						commerceDataIntegrationProcessLog,
-					Object modifiedDateObject) {
-
-					commerceDataIntegrationProcessLog.setModifiedDate(
-						(Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceDataIntegrationProcessLog, Date>)
+				CommerceDataIntegrationProcessLog::setModifiedDate);
 		attributeGetterFunctions.put(
 			"CDataIntegrationProcessId",
-			new Function<CommerceDataIntegrationProcessLog, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDataIntegrationProcessLog
-						commerceDataIntegrationProcessLog) {
-
-					return commerceDataIntegrationProcessLog.
-						getCDataIntegrationProcessId();
-				}
-
-			});
+			CommerceDataIntegrationProcessLog::getCDataIntegrationProcessId);
 		attributeSetterBiConsumers.put(
 			"CDataIntegrationProcessId",
-			new BiConsumer<CommerceDataIntegrationProcessLog, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDataIntegrationProcessLog
-						commerceDataIntegrationProcessLog,
-					Object CDataIntegrationProcessIdObject) {
-
-					commerceDataIntegrationProcessLog.
-						setCDataIntegrationProcessId(
-							(Long)CDataIntegrationProcessIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceDataIntegrationProcessLog, Long>)
+				CommerceDataIntegrationProcessLog::
+					setCDataIntegrationProcessId);
 		attributeGetterFunctions.put(
-			"error",
-			new Function<CommerceDataIntegrationProcessLog, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDataIntegrationProcessLog
-						commerceDataIntegrationProcessLog) {
-
-					return commerceDataIntegrationProcessLog.getError();
-				}
-
-			});
+			"error", CommerceDataIntegrationProcessLog::getError);
 		attributeSetterBiConsumers.put(
 			"error",
-			new BiConsumer<CommerceDataIntegrationProcessLog, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDataIntegrationProcessLog
-						commerceDataIntegrationProcessLog,
-					Object errorObject) {
-
-					commerceDataIntegrationProcessLog.setError(
-						(String)errorObject);
-				}
-
-			});
+			(BiConsumer<CommerceDataIntegrationProcessLog, String>)
+				CommerceDataIntegrationProcessLog::setError);
 		attributeGetterFunctions.put(
-			"output",
-			new Function<CommerceDataIntegrationProcessLog, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDataIntegrationProcessLog
-						commerceDataIntegrationProcessLog) {
-
-					return commerceDataIntegrationProcessLog.getOutput();
-				}
-
-			});
+			"output", CommerceDataIntegrationProcessLog::getOutput);
 		attributeSetterBiConsumers.put(
 			"output",
-			new BiConsumer<CommerceDataIntegrationProcessLog, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDataIntegrationProcessLog
-						commerceDataIntegrationProcessLog,
-					Object outputObject) {
-
-					commerceDataIntegrationProcessLog.setOutput(
-						(String)outputObject);
-				}
-
-			});
+			(BiConsumer<CommerceDataIntegrationProcessLog, String>)
+				CommerceDataIntegrationProcessLog::setOutput);
 		attributeGetterFunctions.put(
-			"startDate",
-			new Function<CommerceDataIntegrationProcessLog, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDataIntegrationProcessLog
-						commerceDataIntegrationProcessLog) {
-
-					return commerceDataIntegrationProcessLog.getStartDate();
-				}
-
-			});
+			"startDate", CommerceDataIntegrationProcessLog::getStartDate);
 		attributeSetterBiConsumers.put(
 			"startDate",
-			new BiConsumer<CommerceDataIntegrationProcessLog, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDataIntegrationProcessLog
-						commerceDataIntegrationProcessLog,
-					Object startDateObject) {
-
-					commerceDataIntegrationProcessLog.setStartDate(
-						(Date)startDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceDataIntegrationProcessLog, Date>)
+				CommerceDataIntegrationProcessLog::setStartDate);
 		attributeGetterFunctions.put(
-			"endDate",
-			new Function<CommerceDataIntegrationProcessLog, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDataIntegrationProcessLog
-						commerceDataIntegrationProcessLog) {
-
-					return commerceDataIntegrationProcessLog.getEndDate();
-				}
-
-			});
+			"endDate", CommerceDataIntegrationProcessLog::getEndDate);
 		attributeSetterBiConsumers.put(
 			"endDate",
-			new BiConsumer<CommerceDataIntegrationProcessLog, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDataIntegrationProcessLog
-						commerceDataIntegrationProcessLog,
-					Object endDateObject) {
-
-					commerceDataIntegrationProcessLog.setEndDate(
-						(Date)endDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceDataIntegrationProcessLog, Date>)
+				CommerceDataIntegrationProcessLog::setEndDate);
 		attributeGetterFunctions.put(
-			"status",
-			new Function<CommerceDataIntegrationProcessLog, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDataIntegrationProcessLog
-						commerceDataIntegrationProcessLog) {
-
-					return commerceDataIntegrationProcessLog.getStatus();
-				}
-
-			});
+			"status", CommerceDataIntegrationProcessLog::getStatus);
 		attributeSetterBiConsumers.put(
 			"status",
-			new BiConsumer<CommerceDataIntegrationProcessLog, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDataIntegrationProcessLog
-						commerceDataIntegrationProcessLog,
-					Object statusObject) {
-
-					commerceDataIntegrationProcessLog.setStatus(
-						(Integer)statusObject);
-				}
-
-			});
+			(BiConsumer<CommerceDataIntegrationProcessLog, Integer>)
+				CommerceDataIntegrationProcessLog::setStatus);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -922,6 +679,7 @@ public class CommerceDataIntegrationProcessLogModelImpl
 			commerceDataIntegrationProcessLogImpl =
 				new CommerceDataIntegrationProcessLogImpl();
 
+		commerceDataIntegrationProcessLogImpl.setMvccVersion(getMvccVersion());
 		commerceDataIntegrationProcessLogImpl.
 			setCommerceDataIntegrationProcessLogId(
 				getCommerceDataIntegrationProcessLogId());
@@ -991,11 +749,19 @@ public class CommerceDataIntegrationProcessLogModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -1020,6 +786,9 @@ public class CommerceDataIntegrationProcessLogModelImpl
 		CommerceDataIntegrationProcessLogCacheModel
 			commerceDataIntegrationProcessLogCacheModel =
 				new CommerceDataIntegrationProcessLogCacheModel();
+
+		commerceDataIntegrationProcessLogCacheModel.mvccVersion =
+			getMvccVersion();
 
 		commerceDataIntegrationProcessLogCacheModel.
 			commerceDataIntegrationProcessLogId =
@@ -1183,6 +952,7 @@ public class CommerceDataIntegrationProcessLogModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _commerceDataIntegrationProcessLogId;
 	private long _companyId;
 	private long _userId;

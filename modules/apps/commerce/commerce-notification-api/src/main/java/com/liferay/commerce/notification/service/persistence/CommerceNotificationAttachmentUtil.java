@@ -931,10 +931,6 @@ public class CommerceNotificationAttachmentUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CommerceNotificationAttachmentPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

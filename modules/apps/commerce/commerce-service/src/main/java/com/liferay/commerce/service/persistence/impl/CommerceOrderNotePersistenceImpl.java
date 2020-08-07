@@ -16,9 +16,11 @@ package com.liferay.commerce.service.persistence.impl;
 
 import com.liferay.commerce.exception.NoSuchOrderNoteException;
 import com.liferay.commerce.model.CommerceOrderNote;
+import com.liferay.commerce.model.CommerceOrderNoteTable;
 import com.liferay.commerce.model.impl.CommerceOrderNoteImpl;
 import com.liferay.commerce.model.impl.CommerceOrderNoteModelImpl;
 import com.liferay.commerce.service.persistence.CommerceOrderNotePersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -34,7 +36,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -44,9 +45,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -243,10 +241,6 @@ public class CommerceOrderNotePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -584,8 +578,6 @@ public class CommerceOrderNotePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -772,10 +764,6 @@ public class CommerceOrderNotePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1134,8 +1122,6 @@ public class CommerceOrderNotePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1316,11 +1302,6 @@ public class CommerceOrderNotePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByC_ERC, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1411,8 +1392,6 @@ public class CommerceOrderNotePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1434,6 +1413,11 @@ public class CommerceOrderNotePersistenceImpl
 
 	public CommerceOrderNotePersistenceImpl() {
 		setModelClass(CommerceOrderNote.class);
+
+		setModelImplClass(CommerceOrderNoteImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CommerceOrderNoteTable.INSTANCE);
 	}
 
 	/**
@@ -1444,7 +1428,6 @@ public class CommerceOrderNotePersistenceImpl
 	@Override
 	public void cacheResult(CommerceOrderNote commerceOrderNote) {
 		entityCache.putResult(
-			CommerceOrderNoteModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceOrderNoteImpl.class, commerceOrderNote.getPrimaryKey(),
 			commerceOrderNote);
 
@@ -1468,7 +1451,6 @@ public class CommerceOrderNotePersistenceImpl
 	public void cacheResult(List<CommerceOrderNote> commerceOrderNotes) {
 		for (CommerceOrderNote commerceOrderNote : commerceOrderNotes) {
 			if (entityCache.getResult(
-					CommerceOrderNoteModelImpl.ENTITY_CACHE_ENABLED,
 					CommerceOrderNoteImpl.class,
 					commerceOrderNote.getPrimaryKey()) == null) {
 
@@ -1506,7 +1488,6 @@ public class CommerceOrderNotePersistenceImpl
 	@Override
 	public void clearCache(CommerceOrderNote commerceOrderNote) {
 		entityCache.removeResult(
-			CommerceOrderNoteModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceOrderNoteImpl.class, commerceOrderNote.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1523,7 +1504,6 @@ public class CommerceOrderNotePersistenceImpl
 
 		for (CommerceOrderNote commerceOrderNote : commerceOrderNotes) {
 			entityCache.removeResult(
-				CommerceOrderNoteModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceOrderNoteImpl.class, commerceOrderNote.getPrimaryKey());
 
 			clearUniqueFindersCache(
@@ -1531,15 +1511,14 @@ public class CommerceOrderNotePersistenceImpl
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceOrderNoteModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceOrderNoteImpl.class, primaryKey);
+			entityCache.removeResult(CommerceOrderNoteImpl.class, primaryKey);
 		}
 	}
 
@@ -1764,10 +1743,7 @@ public class CommerceOrderNotePersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CommerceOrderNoteModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				commerceOrderNoteModelImpl.getCommerceOrderId()
 			};
@@ -1838,7 +1814,6 @@ public class CommerceOrderNotePersistenceImpl
 		}
 
 		entityCache.putResult(
-			CommerceOrderNoteModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceOrderNoteImpl.class, commerceOrderNote.getPrimaryKey(),
 			commerceOrderNote, false);
 
@@ -1892,165 +1867,12 @@ public class CommerceOrderNotePersistenceImpl
 	/**
 	 * Returns the commerce order note with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the commerce order note
-	 * @return the commerce order note, or <code>null</code> if a commerce order note with the primary key could not be found
-	 */
-	@Override
-	public CommerceOrderNote fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(
-			CommerceOrderNoteModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceOrderNoteImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CommerceOrderNote commerceOrderNote = (CommerceOrderNote)serializable;
-
-		if (commerceOrderNote == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				commerceOrderNote = (CommerceOrderNote)session.get(
-					CommerceOrderNoteImpl.class, primaryKey);
-
-				if (commerceOrderNote != null) {
-					cacheResult(commerceOrderNote);
-				}
-				else {
-					entityCache.putResult(
-						CommerceOrderNoteModelImpl.ENTITY_CACHE_ENABLED,
-						CommerceOrderNoteImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CommerceOrderNoteModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceOrderNoteImpl.class, primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return commerceOrderNote;
-	}
-
-	/**
-	 * Returns the commerce order note with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param commerceOrderNoteId the primary key of the commerce order note
 	 * @return the commerce order note, or <code>null</code> if a commerce order note with the primary key could not be found
 	 */
 	@Override
 	public CommerceOrderNote fetchByPrimaryKey(long commerceOrderNoteId) {
 		return fetchByPrimaryKey((Serializable)commerceOrderNoteId);
-	}
-
-	@Override
-	public Map<Serializable, CommerceOrderNote> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CommerceOrderNote> map =
-			new HashMap<Serializable, CommerceOrderNote>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CommerceOrderNote commerceOrderNote = fetchByPrimaryKey(primaryKey);
-
-			if (commerceOrderNote != null) {
-				map.put(primaryKey, commerceOrderNote);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CommerceOrderNoteModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceOrderNoteImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (CommerceOrderNote)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(_SQL_SELECT_COMMERCEORDERNOTE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CommerceOrderNote commerceOrderNote :
-					(List<CommerceOrderNote>)query.list()) {
-
-				map.put(
-					commerceOrderNote.getPrimaryKeyObj(), commerceOrderNote);
-
-				cacheResult(commerceOrderNote);
-
-				uncachedPrimaryKeys.remove(
-					commerceOrderNote.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CommerceOrderNoteModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceOrderNoteImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -2179,10 +2001,6 @@ public class CommerceOrderNotePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2228,9 +2046,6 @@ public class CommerceOrderNotePersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2239,6 +2054,21 @@ public class CommerceOrderNotePersistenceImpl
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "commerceOrderNoteId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_COMMERCEORDERNOTE;
 	}
 
 	@Override
@@ -2251,27 +2081,19 @@ public class CommerceOrderNotePersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceOrderNoteModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceOrderNoteModelImpl.FINDER_CACHE_ENABLED,
 			CommerceOrderNoteImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceOrderNoteModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceOrderNoteModelImpl.FINDER_CACHE_ENABLED,
 			CommerceOrderNoteImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CommerceOrderNoteModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceOrderNoteModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByCommerceOrderId = new FinderPath(
-			CommerceOrderNoteModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceOrderNoteModelImpl.FINDER_CACHE_ENABLED,
 			CommerceOrderNoteImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByCommerceOrderId",
 			new String[] {
@@ -2280,8 +2102,6 @@ public class CommerceOrderNotePersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByCommerceOrderId = new FinderPath(
-			CommerceOrderNoteModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceOrderNoteModelImpl.FINDER_CACHE_ENABLED,
 			CommerceOrderNoteImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCommerceOrderId",
 			new String[] {Long.class.getName()},
@@ -2289,14 +2109,10 @@ public class CommerceOrderNotePersistenceImpl
 			CommerceOrderNoteModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByCommerceOrderId = new FinderPath(
-			CommerceOrderNoteModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceOrderNoteModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCommerceOrderId",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCommerceOrderId", new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByC_R = new FinderPath(
-			CommerceOrderNoteModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceOrderNoteModelImpl.FINDER_CACHE_ENABLED,
 			CommerceOrderNoteImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByC_R",
 			new String[] {
@@ -2306,8 +2122,6 @@ public class CommerceOrderNotePersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByC_R = new FinderPath(
-			CommerceOrderNoteModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceOrderNoteModelImpl.FINDER_CACHE_ENABLED,
 			CommerceOrderNoteImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_R",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
@@ -2316,14 +2130,10 @@ public class CommerceOrderNotePersistenceImpl
 			CommerceOrderNoteModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByC_R = new FinderPath(
-			CommerceOrderNoteModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceOrderNoteModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R",
 			new String[] {Long.class.getName(), Boolean.class.getName()});
 
 		_finderPathFetchByC_ERC = new FinderPath(
-			CommerceOrderNoteModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceOrderNoteModelImpl.FINDER_CACHE_ENABLED,
 			CommerceOrderNoteImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByC_ERC",
 			new String[] {Long.class.getName(), String.class.getName()},
@@ -2331,9 +2141,8 @@ public class CommerceOrderNotePersistenceImpl
 			CommerceOrderNoteModelImpl.EXTERNALREFERENCECODE_COLUMN_BITMASK);
 
 		_finderPathCountByC_ERC = new FinderPath(
-			CommerceOrderNoteModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceOrderNoteModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ERC",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByC_ERC",
 			new String[] {Long.class.getName(), String.class.getName()});
 	}
 
@@ -2352,9 +2161,6 @@ public class CommerceOrderNotePersistenceImpl
 
 	private static final String _SQL_SELECT_COMMERCEORDERNOTE =
 		"SELECT commerceOrderNote FROM CommerceOrderNote commerceOrderNote";
-
-	private static final String _SQL_SELECT_COMMERCEORDERNOTE_WHERE_PKS_IN =
-		"SELECT commerceOrderNote FROM CommerceOrderNote commerceOrderNote WHERE commerceOrderNoteId IN (";
 
 	private static final String _SQL_SELECT_COMMERCEORDERNOTE_WHERE =
 		"SELECT commerceOrderNote FROM CommerceOrderNote commerceOrderNote WHERE ";

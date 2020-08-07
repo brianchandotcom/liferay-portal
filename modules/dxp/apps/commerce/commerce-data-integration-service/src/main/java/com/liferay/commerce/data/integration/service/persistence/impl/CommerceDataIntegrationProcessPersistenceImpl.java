@@ -16,9 +16,11 @@ package com.liferay.commerce.data.integration.service.persistence.impl;
 
 import com.liferay.commerce.data.integration.exception.NoSuchDataIntegrationProcessException;
 import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcess;
+import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcessTable;
 import com.liferay.commerce.data.integration.model.impl.CommerceDataIntegrationProcessImpl;
 import com.liferay.commerce.data.integration.model.impl.CommerceDataIntegrationProcessModelImpl;
 import com.liferay.commerce.data.integration.service.persistence.CommerceDataIntegrationProcessPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -37,19 +39,14 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -250,10 +247,6 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -938,8 +931,6 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1148,10 +1139,6 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(_finderPathFetchByC_N, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1242,8 +1229,6 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1450,10 +1435,6 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2225,8 +2206,6 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2327,21 +2306,14 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 		dbColumnNames.put("system", "system_");
 		dbColumnNames.put("active", "active_");
 
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-				"_dbColumnNames");
-
-			field.setAccessible(true);
-
-			field.set(this, dbColumnNames);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
+		setDBColumnNames(dbColumnNames);
 
 		setModelClass(CommerceDataIntegrationProcess.class);
+
+		setModelImplClass(CommerceDataIntegrationProcessImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CommerceDataIntegrationProcessTable.INSTANCE);
 	}
 
 	/**
@@ -2354,7 +2326,6 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 		CommerceDataIntegrationProcess commerceDataIntegrationProcess) {
 
 		entityCache.putResult(
-			CommerceDataIntegrationProcessModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceDataIntegrationProcessImpl.class,
 			commerceDataIntegrationProcess.getPrimaryKey(),
 			commerceDataIntegrationProcess);
@@ -2383,8 +2354,6 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 				commerceDataIntegrationProcesses) {
 
 			if (entityCache.getResult(
-					CommerceDataIntegrationProcessModelImpl.
-						ENTITY_CACHE_ENABLED,
 					CommerceDataIntegrationProcessImpl.class,
 					commerceDataIntegrationProcess.getPrimaryKey()) == null) {
 
@@ -2424,7 +2393,6 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 		CommerceDataIntegrationProcess commerceDataIntegrationProcess) {
 
 		entityCache.removeResult(
-			CommerceDataIntegrationProcessModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceDataIntegrationProcessImpl.class,
 			commerceDataIntegrationProcess.getPrimaryKey());
 
@@ -2448,7 +2416,6 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 				commerceDataIntegrationProcesses) {
 
 			entityCache.removeResult(
-				CommerceDataIntegrationProcessModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceDataIntegrationProcessImpl.class,
 				commerceDataIntegrationProcess.getPrimaryKey());
 
@@ -2459,6 +2426,7 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -2466,7 +2434,6 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(
-				CommerceDataIntegrationProcessModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceDataIntegrationProcessImpl.class, primaryKey);
 		}
 	}
@@ -2711,10 +2678,7 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CommerceDataIntegrationProcessModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				commerceDataIntegrationProcessModelImpl.getCompanyId()
 			};
@@ -2785,7 +2749,6 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 		}
 
 		entityCache.putResult(
-			CommerceDataIntegrationProcessModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceDataIntegrationProcessImpl.class,
 			commerceDataIntegrationProcess.getPrimaryKey(),
 			commerceDataIntegrationProcess, false);
@@ -2843,64 +2806,6 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 	/**
 	 * Returns the commerce data integration process with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the commerce data integration process
-	 * @return the commerce data integration process, or <code>null</code> if a commerce data integration process with the primary key could not be found
-	 */
-	@Override
-	public CommerceDataIntegrationProcess fetchByPrimaryKey(
-		Serializable primaryKey) {
-
-		Serializable serializable = entityCache.getResult(
-			CommerceDataIntegrationProcessModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDataIntegrationProcessImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CommerceDataIntegrationProcess commerceDataIntegrationProcess =
-			(CommerceDataIntegrationProcess)serializable;
-
-		if (commerceDataIntegrationProcess == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				commerceDataIntegrationProcess =
-					(CommerceDataIntegrationProcess)session.get(
-						CommerceDataIntegrationProcessImpl.class, primaryKey);
-
-				if (commerceDataIntegrationProcess != null) {
-					cacheResult(commerceDataIntegrationProcess);
-				}
-				else {
-					entityCache.putResult(
-						CommerceDataIntegrationProcessModelImpl.
-							ENTITY_CACHE_ENABLED,
-						CommerceDataIntegrationProcessImpl.class, primaryKey,
-						nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CommerceDataIntegrationProcessModelImpl.
-						ENTITY_CACHE_ENABLED,
-					CommerceDataIntegrationProcessImpl.class, primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return commerceDataIntegrationProcess;
-	}
-
-	/**
-	 * Returns the commerce data integration process with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param commerceDataIntegrationProcessId the primary key of the commerce data integration process
 	 * @return the commerce data integration process, or <code>null</code> if a commerce data integration process with the primary key could not be found
 	 */
@@ -2910,114 +2815,6 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 
 		return fetchByPrimaryKey(
 			(Serializable)commerceDataIntegrationProcessId);
-	}
-
-	@Override
-	public Map<Serializable, CommerceDataIntegrationProcess> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CommerceDataIntegrationProcess> map =
-			new HashMap<Serializable, CommerceDataIntegrationProcess>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CommerceDataIntegrationProcess commerceDataIntegrationProcess =
-				fetchByPrimaryKey(primaryKey);
-
-			if (commerceDataIntegrationProcess != null) {
-				map.put(primaryKey, commerceDataIntegrationProcess);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CommerceDataIntegrationProcessModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceDataIntegrationProcessImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(
-						primaryKey,
-						(CommerceDataIntegrationProcess)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(_SQL_SELECT_COMMERCEDATAINTEGRATIONPROCESS_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CommerceDataIntegrationProcess commerceDataIntegrationProcess :
-					(List<CommerceDataIntegrationProcess>)query.list()) {
-
-				map.put(
-					commerceDataIntegrationProcess.getPrimaryKeyObj(),
-					commerceDataIntegrationProcess);
-
-				cacheResult(commerceDataIntegrationProcess);
-
-				uncachedPrimaryKeys.remove(
-					commerceDataIntegrationProcess.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CommerceDataIntegrationProcessModelImpl.
-						ENTITY_CACHE_ENABLED,
-					CommerceDataIntegrationProcessImpl.class, primaryKey,
-					nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -3147,10 +2944,6 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3199,9 +2992,6 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3218,6 +3008,21 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 	}
 
 	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "CDataIntegrationProcessId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_COMMERCEDATAINTEGRATIONPROCESS;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CommerceDataIntegrationProcessModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3227,27 +3032,19 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceDataIntegrationProcessModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDataIntegrationProcessModelImpl.FINDER_CACHE_ENABLED,
 			CommerceDataIntegrationProcessImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceDataIntegrationProcessModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDataIntegrationProcessModelImpl.FINDER_CACHE_ENABLED,
 			CommerceDataIntegrationProcessImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CommerceDataIntegrationProcessModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDataIntegrationProcessModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			CommerceDataIntegrationProcessModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDataIntegrationProcessModelImpl.FINDER_CACHE_ENABLED,
 			CommerceDataIntegrationProcessImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -3256,8 +3053,6 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			CommerceDataIntegrationProcessModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDataIntegrationProcessModelImpl.FINDER_CACHE_ENABLED,
 			CommerceDataIntegrationProcessImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()},
@@ -3266,14 +3061,10 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 				MODIFIEDDATE_COLUMN_BITMASK);
 
 		_finderPathCountByCompanyId = new FinderPath(
-			CommerceDataIntegrationProcessModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDataIntegrationProcessModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCompanyId", new String[] {Long.class.getName()});
 
 		_finderPathFetchByC_N = new FinderPath(
-			CommerceDataIntegrationProcessModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDataIntegrationProcessModelImpl.FINDER_CACHE_ENABLED,
 			CommerceDataIntegrationProcessImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
@@ -3281,14 +3072,10 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 			CommerceDataIntegrationProcessModelImpl.NAME_COLUMN_BITMASK);
 
 		_finderPathCountByC_N = new FinderPath(
-			CommerceDataIntegrationProcessModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDataIntegrationProcessModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N",
 			new String[] {Long.class.getName(), String.class.getName()});
 
 		_finderPathWithPaginationFindByC_T = new FinderPath(
-			CommerceDataIntegrationProcessModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDataIntegrationProcessModelImpl.FINDER_CACHE_ENABLED,
 			CommerceDataIntegrationProcessImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_T",
 			new String[] {
@@ -3298,8 +3085,6 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByC_T = new FinderPath(
-			CommerceDataIntegrationProcessModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDataIntegrationProcessModelImpl.FINDER_CACHE_ENABLED,
 			CommerceDataIntegrationProcessImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_T",
 			new String[] {Long.class.getName(), String.class.getName()},
@@ -3309,8 +3094,6 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 				MODIFIEDDATE_COLUMN_BITMASK);
 
 		_finderPathCountByC_T = new FinderPath(
-			CommerceDataIntegrationProcessModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDataIntegrationProcessModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_T",
 			new String[] {Long.class.getName(), String.class.getName()});
 	}
@@ -3331,10 +3114,6 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 
 	private static final String _SQL_SELECT_COMMERCEDATAINTEGRATIONPROCESS =
 		"SELECT commerceDataIntegrationProcess FROM CommerceDataIntegrationProcess commerceDataIntegrationProcess";
-
-	private static final String
-		_SQL_SELECT_COMMERCEDATAINTEGRATIONPROCESS_WHERE_PKS_IN =
-			"SELECT commerceDataIntegrationProcess FROM CommerceDataIntegrationProcess commerceDataIntegrationProcess WHERE CDataIntegrationProcessId IN (";
 
 	private static final String
 		_SQL_SELECT_COMMERCEDATAINTEGRATIONPROCESS_WHERE =

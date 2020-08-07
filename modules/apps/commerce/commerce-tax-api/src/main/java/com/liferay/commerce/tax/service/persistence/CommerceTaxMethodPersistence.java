@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.tax.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.tax.exception.NoSuchTaxMethodException;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce tax method service.
@@ -45,9 +40,6 @@ public interface CommerceTaxMethodPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceTaxMethodUtil} to access the commerce tax method persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceTaxMethod> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce tax methods where groupId = &#63;.
@@ -517,8 +509,5 @@ public interface CommerceTaxMethodPersistence
 	 * @return the number of commerce tax methods
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

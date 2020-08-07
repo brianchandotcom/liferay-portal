@@ -703,10 +703,6 @@ public class CommerceShippingFixedOptionRelUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CommerceShippingFixedOptionRelPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

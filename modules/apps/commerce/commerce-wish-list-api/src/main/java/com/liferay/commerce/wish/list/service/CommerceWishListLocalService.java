@@ -14,10 +14,9 @@
 
 package com.liferay.commerce.wish.list.service;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -41,6 +40,8 @@ import java.io.Serializable;
 
 import java.util.Date;
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for CommerceWishList. Methods of this
@@ -94,6 +95,12 @@ public interface CommerceWishListLocalService
 	public CommerceWishList createCommerceWishList(long commerceWishListId);
 
 	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
 	 * Deletes the commerce wish list from the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -134,6 +141,9 @@ public interface CommerceWishListLocalService
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();

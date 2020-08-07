@@ -14,17 +14,13 @@
 
 package com.liferay.commerce.product.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,26 +32,18 @@ import java.util.Objects;
  * @generated
  */
 public class CPDefinitionWrapper
+	extends BaseModelWrapper<CPDefinition>
 	implements CPDefinition, ModelWrapper<CPDefinition> {
 
 	public CPDefinitionWrapper(CPDefinition cpDefinition) {
-		_cpDefinition = cpDefinition;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CPDefinition.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CPDefinition.class.getName();
+		super(cpDefinition);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("defaultLanguageId", getDefaultLanguageId());
 		attributes.put("CPDefinitionId", getCPDefinitionId());
@@ -117,6 +105,12 @@ public class CPDefinitionWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -412,12 +406,12 @@ public class CPDefinitionWrapper
 
 	@Override
 	public Object clone() {
-		return new CPDefinitionWrapper((CPDefinition)_cpDefinition.clone());
+		return new CPDefinitionWrapper((CPDefinition)model.clone());
 	}
 
 	@Override
-	public int compareTo(CPDefinition cpDefinition) {
-		return _cpDefinition.compareTo(cpDefinition);
+	public boolean equals(Object object) {
+		return model.equals(object);
 	}
 
 	/**
@@ -427,7 +421,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public boolean getAccountGroupFilterEnabled() {
-		return _cpDefinition.getAccountGroupFilterEnabled();
+		return model.getAccountGroupFilterEnabled();
 	}
 
 	/**
@@ -437,12 +431,12 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public boolean getAvailableIndividually() {
-		return _cpDefinition.getAvailableIndividually();
+		return model.getAvailableIndividually();
 	}
 
 	@Override
 	public String[] getAvailableLanguageIds() {
-		return _cpDefinition.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -452,12 +446,12 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public boolean getChannelFilterEnabled() {
-		return _cpDefinition.getChannelFilterEnabled();
+		return model.getChannelFilterEnabled();
 	}
 
 	@Override
 	public CommerceCatalog getCommerceCatalog() {
-		return _cpDefinition.getCommerceCatalog();
+		return model.getCommerceCatalog();
 	}
 
 	/**
@@ -467,7 +461,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _cpDefinition.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	@Override
@@ -475,7 +469,7 @@ public class CPDefinitionWrapper
 			int type, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _cpDefinition.getCPAttachmentFileEntries(type, status);
+		return model.getCPAttachmentFileEntries(type, status);
 	}
 
 	/**
@@ -485,31 +479,31 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public long getCPDefinitionId() {
-		return _cpDefinition.getCPDefinitionId();
+		return model.getCPDefinitionId();
 	}
 
 	@Override
 	public java.util.List<CPDefinitionOptionRel> getCPDefinitionOptionRels() {
-		return _cpDefinition.getCPDefinitionOptionRels();
+		return model.getCPDefinitionOptionRels();
 	}
 
 	@Override
 	public java.util.List<CPDefinitionSpecificationOptionValue>
 		getCPDefinitionSpecificationOptionValues() {
 
-		return _cpDefinition.getCPDefinitionSpecificationOptionValues();
+		return model.getCPDefinitionSpecificationOptionValues();
 	}
 
 	@Override
 	public java.util.List<CPInstance> getCPInstances() {
-		return _cpDefinition.getCPInstances();
+		return model.getCPInstances();
 	}
 
 	@Override
 	public CProduct getCProduct()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _cpDefinition.getCProduct();
+		return model.getCProduct();
 	}
 
 	/**
@@ -519,14 +513,14 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public long getCProductId() {
-		return _cpDefinition.getCProductId();
+		return model.getCProductId();
 	}
 
 	@Override
 	public CPTaxCategory getCPTaxCategory()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _cpDefinition.getCPTaxCategory();
+		return model.getCPTaxCategory();
 	}
 
 	/**
@@ -536,7 +530,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public long getCPTaxCategoryId() {
-		return _cpDefinition.getCPTaxCategoryId();
+		return model.getCPTaxCategoryId();
 	}
 
 	/**
@@ -546,7 +540,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _cpDefinition.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -556,19 +550,19 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public String getDDMStructureKey() {
-		return _cpDefinition.getDDMStructureKey();
+		return model.getDDMStructureKey();
 	}
 
 	@Override
 	public String getDefaultImageFileURL()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _cpDefinition.getDefaultImageFileURL();
+		return model.getDefaultImageFileURL();
 	}
 
 	@Override
 	public String getDefaultImageThumbnailSrc() throws Exception {
-		return _cpDefinition.getDefaultImageThumbnailSrc();
+		return model.getDefaultImageThumbnailSrc();
 	}
 
 	/**
@@ -578,7 +572,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public String getDefaultLanguageId() {
-		return _cpDefinition.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -588,7 +582,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public long getDeliveryMaxSubscriptionCycles() {
-		return _cpDefinition.getDeliveryMaxSubscriptionCycles();
+		return model.getDeliveryMaxSubscriptionCycles();
 	}
 
 	/**
@@ -598,7 +592,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public boolean getDeliverySubscriptionEnabled() {
-		return _cpDefinition.getDeliverySubscriptionEnabled();
+		return model.getDeliverySubscriptionEnabled();
 	}
 
 	/**
@@ -608,7 +602,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public int getDeliverySubscriptionLength() {
-		return _cpDefinition.getDeliverySubscriptionLength();
+		return model.getDeliverySubscriptionLength();
 	}
 
 	/**
@@ -618,7 +612,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public String getDeliverySubscriptionType() {
-		return _cpDefinition.getDeliverySubscriptionType();
+		return model.getDeliverySubscriptionType();
 	}
 
 	/**
@@ -628,14 +622,14 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public String getDeliverySubscriptionTypeSettings() {
-		return _cpDefinition.getDeliverySubscriptionTypeSettings();
+		return model.getDeliverySubscriptionTypeSettings();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties
 		getDeliverySubscriptionTypeSettingsProperties() {
 
-		return _cpDefinition.getDeliverySubscriptionTypeSettingsProperties();
+		return model.getDeliverySubscriptionTypeSettingsProperties();
 	}
 
 	/**
@@ -645,32 +639,32 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public double getDepth() {
-		return _cpDefinition.getDepth();
+		return model.getDepth();
 	}
 
 	@Override
 	public String getDescription() {
-		return _cpDefinition.getDescription();
+		return model.getDescription();
 	}
 
 	@Override
 	public String getDescription(String languageId) {
-		return _cpDefinition.getDescription(languageId);
+		return model.getDescription(languageId);
 	}
 
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return _cpDefinition.getDescription(languageId, useDefault);
+		return model.getDescription(languageId, useDefault);
 	}
 
 	@Override
 	public Map<java.util.Locale, String> getDescriptionMap() {
-		return _cpDefinition.getDescriptionMap();
+		return model.getDescriptionMap();
 	}
 
 	@Override
 	public String getDescriptionMapAsXML() {
-		return _cpDefinition.getDescriptionMapAsXML();
+		return model.getDescriptionMapAsXML();
 	}
 
 	/**
@@ -680,12 +674,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public Date getDisplayDate() {
-		return _cpDefinition.getDisplayDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _cpDefinition.getExpandoBridge();
+		return model.getDisplayDate();
 	}
 
 	/**
@@ -695,7 +684,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public Date getExpirationDate() {
-		return _cpDefinition.getExpirationDate();
+		return model.getExpirationDate();
 	}
 
 	/**
@@ -705,7 +694,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public boolean getFreeShipping() {
-		return _cpDefinition.getFreeShipping();
+		return model.getFreeShipping();
 	}
 
 	/**
@@ -715,7 +704,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _cpDefinition.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -725,7 +714,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public double getHeight() {
-		return _cpDefinition.getHeight();
+		return model.getHeight();
 	}
 
 	/**
@@ -735,37 +724,37 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public boolean getIgnoreSKUCombinations() {
-		return _cpDefinition.getIgnoreSKUCombinations();
+		return model.getIgnoreSKUCombinations();
 	}
 
 	@Override
 	public Map<String, String> getLanguageIdToDescriptionMap() {
-		return _cpDefinition.getLanguageIdToDescriptionMap();
+		return model.getLanguageIdToDescriptionMap();
 	}
 
 	@Override
 	public Map<String, String> getLanguageIdToMetaDescriptionMap() {
-		return _cpDefinition.getLanguageIdToMetaDescriptionMap();
+		return model.getLanguageIdToMetaDescriptionMap();
 	}
 
 	@Override
 	public Map<String, String> getLanguageIdToMetaKeywordsMap() {
-		return _cpDefinition.getLanguageIdToMetaKeywordsMap();
+		return model.getLanguageIdToMetaKeywordsMap();
 	}
 
 	@Override
 	public Map<String, String> getLanguageIdToMetaTitleMap() {
-		return _cpDefinition.getLanguageIdToMetaTitleMap();
+		return model.getLanguageIdToMetaTitleMap();
 	}
 
 	@Override
 	public Map<String, String> getLanguageIdToNameMap() {
-		return _cpDefinition.getLanguageIdToNameMap();
+		return model.getLanguageIdToNameMap();
 	}
 
 	@Override
 	public Map<String, String> getLanguageIdToShortDescriptionMap() {
-		return _cpDefinition.getLanguageIdToShortDescriptionMap();
+		return model.getLanguageIdToShortDescriptionMap();
 	}
 
 	/**
@@ -775,12 +764,12 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public Date getLastPublishDate() {
-		return _cpDefinition.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	@Override
 	public String getLayoutUuid() {
-		return _cpDefinition.getLayoutUuid();
+		return model.getLayoutUuid();
 	}
 
 	/**
@@ -790,82 +779,82 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public long getMaxSubscriptionCycles() {
-		return _cpDefinition.getMaxSubscriptionCycles();
+		return model.getMaxSubscriptionCycles();
 	}
 
 	@Override
 	public String getMetaDescription() {
-		return _cpDefinition.getMetaDescription();
+		return model.getMetaDescription();
 	}
 
 	@Override
 	public String getMetaDescription(String languageId) {
-		return _cpDefinition.getMetaDescription(languageId);
+		return model.getMetaDescription(languageId);
 	}
 
 	@Override
 	public String getMetaDescription(String languageId, boolean useDefault) {
-		return _cpDefinition.getMetaDescription(languageId, useDefault);
+		return model.getMetaDescription(languageId, useDefault);
 	}
 
 	@Override
 	public Map<java.util.Locale, String> getMetaDescriptionMap() {
-		return _cpDefinition.getMetaDescriptionMap();
+		return model.getMetaDescriptionMap();
 	}
 
 	@Override
 	public String getMetaDescriptionMapAsXML() {
-		return _cpDefinition.getMetaDescriptionMapAsXML();
+		return model.getMetaDescriptionMapAsXML();
 	}
 
 	@Override
 	public String getMetaKeywords() {
-		return _cpDefinition.getMetaKeywords();
+		return model.getMetaKeywords();
 	}
 
 	@Override
 	public String getMetaKeywords(String languageId) {
-		return _cpDefinition.getMetaKeywords(languageId);
+		return model.getMetaKeywords(languageId);
 	}
 
 	@Override
 	public String getMetaKeywords(String languageId, boolean useDefault) {
-		return _cpDefinition.getMetaKeywords(languageId, useDefault);
+		return model.getMetaKeywords(languageId, useDefault);
 	}
 
 	@Override
 	public Map<java.util.Locale, String> getMetaKeywordsMap() {
-		return _cpDefinition.getMetaKeywordsMap();
+		return model.getMetaKeywordsMap();
 	}
 
 	@Override
 	public String getMetaKeywordsMapAsXML() {
-		return _cpDefinition.getMetaKeywordsMapAsXML();
+		return model.getMetaKeywordsMapAsXML();
 	}
 
 	@Override
 	public String getMetaTitle() {
-		return _cpDefinition.getMetaTitle();
+		return model.getMetaTitle();
 	}
 
 	@Override
 	public String getMetaTitle(String languageId) {
-		return _cpDefinition.getMetaTitle(languageId);
+		return model.getMetaTitle(languageId);
 	}
 
 	@Override
 	public String getMetaTitle(String languageId, boolean useDefault) {
-		return _cpDefinition.getMetaTitle(languageId, useDefault);
+		return model.getMetaTitle(languageId, useDefault);
 	}
 
 	@Override
 	public Map<java.util.Locale, String> getMetaTitleMap() {
-		return _cpDefinition.getMetaTitleMap();
+		return model.getMetaTitleMap();
 	}
 
 	@Override
 	public String getMetaTitleMapAsXML() {
-		return _cpDefinition.getMetaTitleMapAsXML();
+		return model.getMetaTitleMapAsXML();
 	}
 
 	/**
@@ -875,37 +864,47 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _cpDefinition.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this cp definition.
+	 *
+	 * @return the mvcc version of this cp definition
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	@Override
 	public String getName() {
-		return _cpDefinition.getName();
+		return model.getName();
 	}
 
 	@Override
 	public String getName(String languageId) {
-		return _cpDefinition.getName(languageId);
+		return model.getName(languageId);
 	}
 
 	@Override
 	public String getName(String languageId, boolean useDefault) {
-		return _cpDefinition.getName(languageId, useDefault);
+		return model.getName(languageId, useDefault);
 	}
 
 	@Override
 	public String getNameCurrentValue() {
-		return _cpDefinition.getNameCurrentValue();
+		return model.getNameCurrentValue();
 	}
 
 	@Override
 	public Map<java.util.Locale, String> getNameMap() {
-		return _cpDefinition.getNameMap();
+		return model.getNameMap();
 	}
 
 	@Override
 	public String getNameMapAsXML() {
-		return _cpDefinition.getNameMapAsXML();
+		return model.getNameMapAsXML();
 	}
 
 	/**
@@ -915,12 +914,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _cpDefinition.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _cpDefinition.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -930,7 +924,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public String getProductTypeName() {
-		return _cpDefinition.getProductTypeName();
+		return model.getProductTypeName();
 	}
 
 	/**
@@ -940,7 +934,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public boolean getPublished() {
-		return _cpDefinition.getPublished();
+		return model.getPublished();
 	}
 
 	/**
@@ -950,7 +944,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public boolean getShippable() {
-		return _cpDefinition.getShippable();
+		return model.getShippable();
 	}
 
 	/**
@@ -960,7 +954,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public double getShippingExtraPrice() {
-		return _cpDefinition.getShippingExtraPrice();
+		return model.getShippingExtraPrice();
 	}
 
 	/**
@@ -970,32 +964,32 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public boolean getShipSeparately() {
-		return _cpDefinition.getShipSeparately();
+		return model.getShipSeparately();
 	}
 
 	@Override
 	public String getShortDescription() {
-		return _cpDefinition.getShortDescription();
+		return model.getShortDescription();
 	}
 
 	@Override
 	public String getShortDescription(String languageId) {
-		return _cpDefinition.getShortDescription(languageId);
+		return model.getShortDescription(languageId);
 	}
 
 	@Override
 	public String getShortDescription(String languageId, boolean useDefault) {
-		return _cpDefinition.getShortDescription(languageId, useDefault);
+		return model.getShortDescription(languageId, useDefault);
 	}
 
 	@Override
 	public Map<java.util.Locale, String> getShortDescriptionMap() {
-		return _cpDefinition.getShortDescriptionMap();
+		return model.getShortDescriptionMap();
 	}
 
 	@Override
 	public String getShortDescriptionMapAsXML() {
-		return _cpDefinition.getShortDescriptionMapAsXML();
+		return model.getShortDescriptionMapAsXML();
 	}
 
 	/**
@@ -1005,7 +999,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public int getStatus() {
-		return _cpDefinition.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -1015,7 +1009,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public long getStatusByUserId() {
-		return _cpDefinition.getStatusByUserId();
+		return model.getStatusByUserId();
 	}
 
 	/**
@@ -1025,7 +1019,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public String getStatusByUserName() {
-		return _cpDefinition.getStatusByUserName();
+		return model.getStatusByUserName();
 	}
 
 	/**
@@ -1035,7 +1029,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public String getStatusByUserUuid() {
-		return _cpDefinition.getStatusByUserUuid();
+		return model.getStatusByUserUuid();
 	}
 
 	/**
@@ -1045,7 +1039,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public Date getStatusDate() {
-		return _cpDefinition.getStatusDate();
+		return model.getStatusDate();
 	}
 
 	/**
@@ -1055,7 +1049,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public boolean getSubscriptionEnabled() {
-		return _cpDefinition.getSubscriptionEnabled();
+		return model.getSubscriptionEnabled();
 	}
 
 	/**
@@ -1065,7 +1059,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public int getSubscriptionLength() {
-		return _cpDefinition.getSubscriptionLength();
+		return model.getSubscriptionLength();
 	}
 
 	/**
@@ -1075,7 +1069,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public String getSubscriptionType() {
-		return _cpDefinition.getSubscriptionType();
+		return model.getSubscriptionType();
 	}
 
 	/**
@@ -1085,14 +1079,14 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public String getSubscriptionTypeSettings() {
-		return _cpDefinition.getSubscriptionTypeSettings();
+		return model.getSubscriptionTypeSettings();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties
 		getSubscriptionTypeSettingsProperties() {
 
-		return _cpDefinition.getSubscriptionTypeSettingsProperties();
+		return model.getSubscriptionTypeSettingsProperties();
 	}
 
 	/**
@@ -1102,7 +1096,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public boolean getTaxExempt() {
-		return _cpDefinition.getTaxExempt();
+		return model.getTaxExempt();
 	}
 
 	/**
@@ -1112,17 +1106,17 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public boolean getTelcoOrElectronics() {
-		return _cpDefinition.getTelcoOrElectronics();
+		return model.getTelcoOrElectronics();
 	}
 
 	@Override
 	public String getURL(String languageId) {
-		return _cpDefinition.getURL(languageId);
+		return model.getURL(languageId);
 	}
 
 	@Override
 	public Map<java.util.Locale, String> getUrlTitleMap() {
-		return _cpDefinition.getUrlTitleMap();
+		return model.getUrlTitleMap();
 	}
 
 	/**
@@ -1132,7 +1126,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _cpDefinition.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -1142,7 +1136,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _cpDefinition.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -1152,7 +1146,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _cpDefinition.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -1162,7 +1156,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public String getUuid() {
-		return _cpDefinition.getUuid();
+		return model.getUuid();
 	}
 
 	/**
@@ -1172,7 +1166,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public int getVersion() {
-		return _cpDefinition.getVersion();
+		return model.getVersion();
 	}
 
 	/**
@@ -1182,7 +1176,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public double getWeight() {
-		return _cpDefinition.getWeight();
+		return model.getWeight();
 	}
 
 	/**
@@ -1192,12 +1186,12 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public double getWidth() {
-		return _cpDefinition.getWidth();
+		return model.getWidth();
 	}
 
 	@Override
 	public int hashCode() {
-		return _cpDefinition.hashCode();
+		return model.hashCode();
 	}
 
 	/**
@@ -1207,7 +1201,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public boolean isAccountGroupFilterEnabled() {
-		return _cpDefinition.isAccountGroupFilterEnabled();
+		return model.isAccountGroupFilterEnabled();
 	}
 
 	/**
@@ -1217,7 +1211,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public boolean isApproved() {
-		return _cpDefinition.isApproved();
+		return model.isApproved();
 	}
 
 	/**
@@ -1227,12 +1221,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public boolean isAvailableIndividually() {
-		return _cpDefinition.isAvailableIndividually();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _cpDefinition.isCachedModel();
+		return model.isAvailableIndividually();
 	}
 
 	/**
@@ -1242,7 +1231,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public boolean isChannelFilterEnabled() {
-		return _cpDefinition.isChannelFilterEnabled();
+		return model.isChannelFilterEnabled();
 	}
 
 	/**
@@ -1252,7 +1241,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public boolean isDeliverySubscriptionEnabled() {
-		return _cpDefinition.isDeliverySubscriptionEnabled();
+		return model.isDeliverySubscriptionEnabled();
 	}
 
 	/**
@@ -1262,7 +1251,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public boolean isDenied() {
-		return _cpDefinition.isDenied();
+		return model.isDenied();
 	}
 
 	/**
@@ -1272,12 +1261,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public boolean isDraft() {
-		return _cpDefinition.isDraft();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _cpDefinition.isEscapedModel();
+		return model.isDraft();
 	}
 
 	/**
@@ -1287,7 +1271,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public boolean isExpired() {
-		return _cpDefinition.isExpired();
+		return model.isExpired();
 	}
 
 	/**
@@ -1297,7 +1281,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public boolean isFreeShipping() {
-		return _cpDefinition.isFreeShipping();
+		return model.isFreeShipping();
 	}
 
 	/**
@@ -1307,7 +1291,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public boolean isIgnoreSKUCombinations() {
-		return _cpDefinition.isIgnoreSKUCombinations();
+		return model.isIgnoreSKUCombinations();
 	}
 
 	/**
@@ -1317,7 +1301,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public boolean isInactive() {
-		return _cpDefinition.isInactive();
+		return model.isInactive();
 	}
 
 	/**
@@ -1327,12 +1311,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public boolean isIncomplete() {
-		return _cpDefinition.isIncomplete();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _cpDefinition.isNew();
+		return model.isIncomplete();
 	}
 
 	/**
@@ -1342,7 +1321,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public boolean isPending() {
-		return _cpDefinition.isPending();
+		return model.isPending();
 	}
 
 	/**
@@ -1352,7 +1331,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public boolean isPublished() {
-		return _cpDefinition.isPublished();
+		return model.isPublished();
 	}
 
 	/**
@@ -1362,7 +1341,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public boolean isScheduled() {
-		return _cpDefinition.isScheduled();
+		return model.isScheduled();
 	}
 
 	/**
@@ -1372,7 +1351,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public boolean isShippable() {
-		return _cpDefinition.isShippable();
+		return model.isShippable();
 	}
 
 	/**
@@ -1382,7 +1361,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public boolean isShipSeparately() {
-		return _cpDefinition.isShipSeparately();
+		return model.isShipSeparately();
 	}
 
 	/**
@@ -1392,7 +1371,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public boolean isSubscriptionEnabled() {
-		return _cpDefinition.isSubscriptionEnabled();
+		return model.isSubscriptionEnabled();
 	}
 
 	/**
@@ -1402,7 +1381,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public boolean isTaxExempt() {
-		return _cpDefinition.isTaxExempt();
+		return model.isTaxExempt();
 	}
 
 	/**
@@ -1412,12 +1391,12 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public boolean isTelcoOrElectronics() {
-		return _cpDefinition.isTelcoOrElectronics();
+		return model.isTelcoOrElectronics();
 	}
 
 	@Override
 	public void persist() {
-		_cpDefinition.persist();
+		model.persist();
 	}
 
 	/**
@@ -1429,7 +1408,7 @@ public class CPDefinitionWrapper
 	public void setAccountGroupFilterEnabled(
 		boolean accountGroupFilterEnabled) {
 
-		_cpDefinition.setAccountGroupFilterEnabled(accountGroupFilterEnabled);
+		model.setAccountGroupFilterEnabled(accountGroupFilterEnabled);
 	}
 
 	/**
@@ -1439,12 +1418,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setAvailableIndividually(boolean availableIndividually) {
-		_cpDefinition.setAvailableIndividually(availableIndividually);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_cpDefinition.setCachedModel(cachedModel);
+		model.setAvailableIndividually(availableIndividually);
 	}
 
 	/**
@@ -1454,7 +1428,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setChannelFilterEnabled(boolean channelFilterEnabled) {
-		_cpDefinition.setChannelFilterEnabled(channelFilterEnabled);
+		model.setChannelFilterEnabled(channelFilterEnabled);
 	}
 
 	/**
@@ -1464,7 +1438,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_cpDefinition.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -1474,7 +1448,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setCPDefinitionId(long CPDefinitionId) {
-		_cpDefinition.setCPDefinitionId(CPDefinitionId);
+		model.setCPDefinitionId(CPDefinitionId);
 	}
 
 	/**
@@ -1484,7 +1458,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setCProductId(long CProductId) {
-		_cpDefinition.setCProductId(CProductId);
+		model.setCProductId(CProductId);
 	}
 
 	/**
@@ -1494,7 +1468,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setCPTaxCategoryId(long CPTaxCategoryId) {
-		_cpDefinition.setCPTaxCategoryId(CPTaxCategoryId);
+		model.setCPTaxCategoryId(CPTaxCategoryId);
 	}
 
 	/**
@@ -1504,7 +1478,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_cpDefinition.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -1514,7 +1488,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setDDMStructureKey(String DDMStructureKey) {
-		_cpDefinition.setDDMStructureKey(DDMStructureKey);
+		model.setDDMStructureKey(DDMStructureKey);
 	}
 
 	/**
@@ -1524,7 +1498,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setDefaultLanguageId(String defaultLanguageId) {
-		_cpDefinition.setDefaultLanguageId(defaultLanguageId);
+		model.setDefaultLanguageId(defaultLanguageId);
 	}
 
 	/**
@@ -1536,8 +1510,7 @@ public class CPDefinitionWrapper
 	public void setDeliveryMaxSubscriptionCycles(
 		long deliveryMaxSubscriptionCycles) {
 
-		_cpDefinition.setDeliveryMaxSubscriptionCycles(
-			deliveryMaxSubscriptionCycles);
+		model.setDeliveryMaxSubscriptionCycles(deliveryMaxSubscriptionCycles);
 	}
 
 	/**
@@ -1549,8 +1522,7 @@ public class CPDefinitionWrapper
 	public void setDeliverySubscriptionEnabled(
 		boolean deliverySubscriptionEnabled) {
 
-		_cpDefinition.setDeliverySubscriptionEnabled(
-			deliverySubscriptionEnabled);
+		model.setDeliverySubscriptionEnabled(deliverySubscriptionEnabled);
 	}
 
 	/**
@@ -1560,7 +1532,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setDeliverySubscriptionLength(int deliverySubscriptionLength) {
-		_cpDefinition.setDeliverySubscriptionLength(deliverySubscriptionLength);
+		model.setDeliverySubscriptionLength(deliverySubscriptionLength);
 	}
 
 	/**
@@ -1570,7 +1542,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setDeliverySubscriptionType(String deliverySubscriptionType) {
-		_cpDefinition.setDeliverySubscriptionType(deliverySubscriptionType);
+		model.setDeliverySubscriptionType(deliverySubscriptionType);
 	}
 
 	/**
@@ -1582,17 +1554,17 @@ public class CPDefinitionWrapper
 	public void setDeliverySubscriptionTypeSettings(
 		String deliverySubscriptionTypeSettings) {
 
-		_cpDefinition.setDeliverySubscriptionTypeSettings(
+		model.setDeliverySubscriptionTypeSettings(
 			deliverySubscriptionTypeSettings);
 	}
 
 	@Override
 	public void setDeliverySubscriptionTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties
-			deliverySubscriptionTypeSettingsProperties) {
+			deliverySubscriptionTypeSettingsUnicodeProperties) {
 
-		_cpDefinition.setDeliverySubscriptionTypeSettingsProperties(
-			deliverySubscriptionTypeSettingsProperties);
+		model.setDeliverySubscriptionTypeSettingsProperties(
+			deliverySubscriptionTypeSettingsUnicodeProperties);
 	}
 
 	/**
@@ -1602,14 +1574,14 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setDepth(double depth) {
-		_cpDefinition.setDepth(depth);
+		model.setDepth(depth);
 	}
 
 	@Override
 	public void setDescriptionMap(
 		Map<java.util.Locale, String> descriptionMap) {
 
-		_cpDefinition.setDescriptionMap(descriptionMap);
+		model.setDescriptionMap(descriptionMap);
 	}
 
 	/**
@@ -1619,24 +1591,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setDisplayDate(Date displayDate) {
-		_cpDefinition.setDisplayDate(displayDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_cpDefinition.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_cpDefinition.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_cpDefinition.setExpandoBridgeAttributes(serviceContext);
+		model.setDisplayDate(displayDate);
 	}
 
 	/**
@@ -1646,7 +1601,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setExpirationDate(Date expirationDate) {
-		_cpDefinition.setExpirationDate(expirationDate);
+		model.setExpirationDate(expirationDate);
 	}
 
 	/**
@@ -1656,7 +1611,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setFreeShipping(boolean freeShipping) {
-		_cpDefinition.setFreeShipping(freeShipping);
+		model.setFreeShipping(freeShipping);
 	}
 
 	/**
@@ -1666,7 +1621,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_cpDefinition.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -1676,7 +1631,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setHeight(double height) {
-		_cpDefinition.setHeight(height);
+		model.setHeight(height);
 	}
 
 	/**
@@ -1686,7 +1641,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setIgnoreSKUCombinations(boolean ignoreSKUCombinations) {
-		_cpDefinition.setIgnoreSKUCombinations(ignoreSKUCombinations);
+		model.setIgnoreSKUCombinations(ignoreSKUCombinations);
 	}
 
 	/**
@@ -1696,12 +1651,12 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_cpDefinition.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	@Override
 	public void setLayoutUuid(String layoutUuid) {
-		_cpDefinition.setLayoutUuid(layoutUuid);
+		model.setLayoutUuid(layoutUuid);
 	}
 
 	/**
@@ -1711,7 +1666,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setMaxSubscriptionCycles(long maxSubscriptionCycles) {
-		_cpDefinition.setMaxSubscriptionCycles(maxSubscriptionCycles);
+		model.setMaxSubscriptionCycles(maxSubscriptionCycles);
 	}
 
 	/**
@@ -1721,17 +1676,22 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_cpDefinition.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this cp definition.
+	 *
+	 * @param mvccVersion the mvcc version of this cp definition
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap) {
-		_cpDefinition.setNameMap(nameMap);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_cpDefinition.setNew(n);
+		model.setNameMap(nameMap);
 	}
 
 	/**
@@ -1741,12 +1701,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_cpDefinition.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_cpDefinition.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -1756,7 +1711,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setProductTypeName(String productTypeName) {
-		_cpDefinition.setProductTypeName(productTypeName);
+		model.setProductTypeName(productTypeName);
 	}
 
 	/**
@@ -1766,7 +1721,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setPublished(boolean published) {
-		_cpDefinition.setPublished(published);
+		model.setPublished(published);
 	}
 
 	/**
@@ -1776,7 +1731,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setShippable(boolean shippable) {
-		_cpDefinition.setShippable(shippable);
+		model.setShippable(shippable);
 	}
 
 	/**
@@ -1786,7 +1741,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setShippingExtraPrice(double shippingExtraPrice) {
-		_cpDefinition.setShippingExtraPrice(shippingExtraPrice);
+		model.setShippingExtraPrice(shippingExtraPrice);
 	}
 
 	/**
@@ -1796,14 +1751,14 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setShipSeparately(boolean shipSeparately) {
-		_cpDefinition.setShipSeparately(shipSeparately);
+		model.setShipSeparately(shipSeparately);
 	}
 
 	@Override
 	public void setShortDescriptionMap(
 		Map<java.util.Locale, String> shortDescriptionMap) {
 
-		_cpDefinition.setShortDescriptionMap(shortDescriptionMap);
+		model.setShortDescriptionMap(shortDescriptionMap);
 	}
 
 	/**
@@ -1813,7 +1768,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setStatus(int status) {
-		_cpDefinition.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -1823,7 +1778,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
-		_cpDefinition.setStatusByUserId(statusByUserId);
+		model.setStatusByUserId(statusByUserId);
 	}
 
 	/**
@@ -1833,7 +1788,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
-		_cpDefinition.setStatusByUserName(statusByUserName);
+		model.setStatusByUserName(statusByUserName);
 	}
 
 	/**
@@ -1843,7 +1798,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setStatusByUserUuid(String statusByUserUuid) {
-		_cpDefinition.setStatusByUserUuid(statusByUserUuid);
+		model.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
@@ -1853,7 +1808,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setStatusDate(Date statusDate) {
-		_cpDefinition.setStatusDate(statusDate);
+		model.setStatusDate(statusDate);
 	}
 
 	/**
@@ -1863,7 +1818,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setSubscriptionEnabled(boolean subscriptionEnabled) {
-		_cpDefinition.setSubscriptionEnabled(subscriptionEnabled);
+		model.setSubscriptionEnabled(subscriptionEnabled);
 	}
 
 	/**
@@ -1873,7 +1828,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setSubscriptionLength(int subscriptionLength) {
-		_cpDefinition.setSubscriptionLength(subscriptionLength);
+		model.setSubscriptionLength(subscriptionLength);
 	}
 
 	/**
@@ -1883,7 +1838,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setSubscriptionType(String subscriptionType) {
-		_cpDefinition.setSubscriptionType(subscriptionType);
+		model.setSubscriptionType(subscriptionType);
 	}
 
 	/**
@@ -1893,16 +1848,16 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setSubscriptionTypeSettings(String subscriptionTypeSettings) {
-		_cpDefinition.setSubscriptionTypeSettings(subscriptionTypeSettings);
+		model.setSubscriptionTypeSettings(subscriptionTypeSettings);
 	}
 
 	@Override
 	public void setSubscriptionTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties
-			subscriptionTypeSettingsProperties) {
+			subscriptionTypeSettingsUnicodeProperties) {
 
-		_cpDefinition.setSubscriptionTypeSettingsProperties(
-			subscriptionTypeSettingsProperties);
+		model.setSubscriptionTypeSettingsProperties(
+			subscriptionTypeSettingsUnicodeProperties);
 	}
 
 	/**
@@ -1912,7 +1867,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setTaxExempt(boolean taxExempt) {
-		_cpDefinition.setTaxExempt(taxExempt);
+		model.setTaxExempt(taxExempt);
 	}
 
 	/**
@@ -1922,12 +1877,12 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setTelcoOrElectronics(boolean telcoOrElectronics) {
-		_cpDefinition.setTelcoOrElectronics(telcoOrElectronics);
+		model.setTelcoOrElectronics(telcoOrElectronics);
 	}
 
 	@Override
 	public void setUrlTitleMap(Map<java.util.Locale, String> urlTitleMap) {
-		_cpDefinition.setUrlTitleMap(urlTitleMap);
+		model.setUrlTitleMap(urlTitleMap);
 	}
 
 	/**
@@ -1937,7 +1892,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_cpDefinition.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -1947,7 +1902,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_cpDefinition.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -1957,7 +1912,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_cpDefinition.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -1967,7 +1922,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setUuid(String uuid) {
-		_cpDefinition.setUuid(uuid);
+		model.setUuid(uuid);
 	}
 
 	/**
@@ -1977,7 +1932,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setVersion(int version) {
-		_cpDefinition.setVersion(version);
+		model.setVersion(version);
 	}
 
 	/**
@@ -1987,7 +1942,7 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setWeight(double weight) {
-		_cpDefinition.setWeight(weight);
+		model.setWeight(weight);
 	}
 
 	/**
@@ -1997,80 +1952,17 @@ public class CPDefinitionWrapper
 	 */
 	@Override
 	public void setWidth(double width) {
-		_cpDefinition.setWidth(width);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CPDefinition>
-		toCacheModel() {
-
-		return _cpDefinition.toCacheModel();
-	}
-
-	@Override
-	public CPDefinition toEscapedModel() {
-		return new CPDefinitionWrapper(_cpDefinition.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _cpDefinition.toString();
-	}
-
-	@Override
-	public CPDefinition toUnescapedModel() {
-		return new CPDefinitionWrapper(_cpDefinition.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _cpDefinition.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CPDefinitionWrapper)) {
-			return false;
-		}
-
-		CPDefinitionWrapper cpDefinitionWrapper = (CPDefinitionWrapper)object;
-
-		if (Objects.equals(_cpDefinition, cpDefinitionWrapper._cpDefinition)) {
-			return true;
-		}
-
-		return false;
+		model.setWidth(width);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _cpDefinition.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public CPDefinition getWrappedModel() {
-		return _cpDefinition;
+	protected CPDefinitionWrapper wrap(CPDefinition cpDefinition) {
+		return new CPDefinitionWrapper(cpDefinition);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _cpDefinition.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _cpDefinition.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_cpDefinition.resetOriginalValues();
-	}
-
-	private final CPDefinition _cpDefinition;
 
 }

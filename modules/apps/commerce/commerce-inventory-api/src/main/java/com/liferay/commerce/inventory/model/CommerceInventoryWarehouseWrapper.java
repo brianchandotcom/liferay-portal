@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.inventory.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,23 +31,14 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceInventoryWarehouseWrapper
+	extends BaseModelWrapper<CommerceInventoryWarehouse>
 	implements CommerceInventoryWarehouse,
 			   ModelWrapper<CommerceInventoryWarehouse> {
 
 	public CommerceInventoryWarehouseWrapper(
 		CommerceInventoryWarehouse commerceInventoryWarehouse) {
 
-		_commerceInventoryWarehouse = commerceInventoryWarehouse;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceInventoryWarehouse.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceInventoryWarehouse.class.getName();
+		super(commerceInventoryWarehouse);
 	}
 
 	@Override
@@ -218,20 +205,6 @@ public class CommerceInventoryWarehouseWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CommerceInventoryWarehouseWrapper(
-			(CommerceInventoryWarehouse)_commerceInventoryWarehouse.clone());
-	}
-
-	@Override
-	public int compareTo(
-		CommerceInventoryWarehouse commerceInventoryWarehouse) {
-
-		return _commerceInventoryWarehouse.compareTo(
-			commerceInventoryWarehouse);
-	}
-
 	/**
 	 * Returns the active of this commerce inventory warehouse.
 	 *
@@ -239,7 +212,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public boolean getActive() {
-		return _commerceInventoryWarehouse.getActive();
+		return model.getActive();
 	}
 
 	/**
@@ -249,7 +222,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public String getCity() {
-		return _commerceInventoryWarehouse.getCity();
+		return model.getCity();
 	}
 
 	/**
@@ -259,14 +232,14 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public long getCommerceInventoryWarehouseId() {
-		return _commerceInventoryWarehouse.getCommerceInventoryWarehouseId();
+		return model.getCommerceInventoryWarehouseId();
 	}
 
 	@Override
 	public java.util.List<CommerceInventoryWarehouseItem>
 		getCommerceInventoryWarehouseItems() {
 
-		return _commerceInventoryWarehouse.getCommerceInventoryWarehouseItems();
+		return model.getCommerceInventoryWarehouseItems();
 	}
 
 	/**
@@ -276,7 +249,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public String getCommerceRegionCode() {
-		return _commerceInventoryWarehouse.getCommerceRegionCode();
+		return model.getCommerceRegionCode();
 	}
 
 	/**
@@ -286,7 +259,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceInventoryWarehouse.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -296,7 +269,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public String getCountryTwoLettersISOCode() {
-		return _commerceInventoryWarehouse.getCountryTwoLettersISOCode();
+		return model.getCountryTwoLettersISOCode();
 	}
 
 	/**
@@ -306,7 +279,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceInventoryWarehouse.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -316,12 +289,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public String getDescription() {
-		return _commerceInventoryWarehouse.getDescription();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceInventoryWarehouse.getExpandoBridge();
+		return model.getDescription();
 	}
 
 	/**
@@ -331,7 +299,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public String getExternalReferenceCode() {
-		return _commerceInventoryWarehouse.getExternalReferenceCode();
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -341,7 +309,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public double getLatitude() {
-		return _commerceInventoryWarehouse.getLatitude();
+		return model.getLatitude();
 	}
 
 	/**
@@ -351,7 +319,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public double getLongitude() {
-		return _commerceInventoryWarehouse.getLongitude();
+		return model.getLongitude();
 	}
 
 	/**
@@ -361,7 +329,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceInventoryWarehouse.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -371,7 +339,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public long getMvccVersion() {
-		return _commerceInventoryWarehouse.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -381,7 +349,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public String getName() {
-		return _commerceInventoryWarehouse.getName();
+		return model.getName();
 	}
 
 	/**
@@ -391,12 +359,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceInventoryWarehouse.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceInventoryWarehouse.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -406,7 +369,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public String getStreet1() {
-		return _commerceInventoryWarehouse.getStreet1();
+		return model.getStreet1();
 	}
 
 	/**
@@ -416,7 +379,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public String getStreet2() {
-		return _commerceInventoryWarehouse.getStreet2();
+		return model.getStreet2();
 	}
 
 	/**
@@ -426,7 +389,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public String getStreet3() {
-		return _commerceInventoryWarehouse.getStreet3();
+		return model.getStreet3();
 	}
 
 	/**
@@ -436,7 +399,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public String getType() {
-		return _commerceInventoryWarehouse.getType();
+		return model.getType();
 	}
 
 	/**
@@ -446,7 +409,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceInventoryWarehouse.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -456,7 +419,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceInventoryWarehouse.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -466,7 +429,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceInventoryWarehouse.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -476,12 +439,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public String getZip() {
-		return _commerceInventoryWarehouse.getZip();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceInventoryWarehouse.hashCode();
+		return model.getZip();
 	}
 
 	/**
@@ -491,32 +449,17 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public boolean isActive() {
-		return _commerceInventoryWarehouse.isActive();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceInventoryWarehouse.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceInventoryWarehouse.isEscapedModel();
+		return model.isActive();
 	}
 
 	@Override
 	public boolean isGeolocated() {
-		return _commerceInventoryWarehouse.isGeolocated();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceInventoryWarehouse.isNew();
+		return model.isGeolocated();
 	}
 
 	@Override
 	public void persist() {
-		_commerceInventoryWarehouse.persist();
+		model.persist();
 	}
 
 	/**
@@ -526,12 +469,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public void setActive(boolean active) {
-		_commerceInventoryWarehouse.setActive(active);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceInventoryWarehouse.setCachedModel(cachedModel);
+		model.setActive(active);
 	}
 
 	/**
@@ -541,7 +479,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public void setCity(String city) {
-		_commerceInventoryWarehouse.setCity(city);
+		model.setCity(city);
 	}
 
 	/**
@@ -553,8 +491,7 @@ public class CommerceInventoryWarehouseWrapper
 	public void setCommerceInventoryWarehouseId(
 		long commerceInventoryWarehouseId) {
 
-		_commerceInventoryWarehouse.setCommerceInventoryWarehouseId(
-			commerceInventoryWarehouseId);
+		model.setCommerceInventoryWarehouseId(commerceInventoryWarehouseId);
 	}
 
 	/**
@@ -564,7 +501,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public void setCommerceRegionCode(String commerceRegionCode) {
-		_commerceInventoryWarehouse.setCommerceRegionCode(commerceRegionCode);
+		model.setCommerceRegionCode(commerceRegionCode);
 	}
 
 	/**
@@ -574,7 +511,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceInventoryWarehouse.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -584,8 +521,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public void setCountryTwoLettersISOCode(String countryTwoLettersISOCode) {
-		_commerceInventoryWarehouse.setCountryTwoLettersISOCode(
-			countryTwoLettersISOCode);
+		model.setCountryTwoLettersISOCode(countryTwoLettersISOCode);
 	}
 
 	/**
@@ -595,7 +531,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceInventoryWarehouse.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -605,24 +541,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public void setDescription(String description) {
-		_commerceInventoryWarehouse.setDescription(description);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceInventoryWarehouse.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceInventoryWarehouse.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceInventoryWarehouse.setExpandoBridgeAttributes(serviceContext);
+		model.setDescription(description);
 	}
 
 	/**
@@ -632,8 +551,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
-		_commerceInventoryWarehouse.setExternalReferenceCode(
-			externalReferenceCode);
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**
@@ -643,7 +561,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public void setLatitude(double latitude) {
-		_commerceInventoryWarehouse.setLatitude(latitude);
+		model.setLatitude(latitude);
 	}
 
 	/**
@@ -653,7 +571,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public void setLongitude(double longitude) {
-		_commerceInventoryWarehouse.setLongitude(longitude);
+		model.setLongitude(longitude);
 	}
 
 	/**
@@ -663,7 +581,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceInventoryWarehouse.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -673,7 +591,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_commerceInventoryWarehouse.setMvccVersion(mvccVersion);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -683,12 +601,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public void setName(String name) {
-		_commerceInventoryWarehouse.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_commerceInventoryWarehouse.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -698,12 +611,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceInventoryWarehouse.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceInventoryWarehouse.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -713,7 +621,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public void setStreet1(String street1) {
-		_commerceInventoryWarehouse.setStreet1(street1);
+		model.setStreet1(street1);
 	}
 
 	/**
@@ -723,7 +631,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public void setStreet2(String street2) {
-		_commerceInventoryWarehouse.setStreet2(street2);
+		model.setStreet2(street2);
 	}
 
 	/**
@@ -733,7 +641,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public void setStreet3(String street3) {
-		_commerceInventoryWarehouse.setStreet3(street3);
+		model.setStreet3(street3);
 	}
 
 	/**
@@ -743,7 +651,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public void setType(String type) {
-		_commerceInventoryWarehouse.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -753,7 +661,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceInventoryWarehouse.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -763,7 +671,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceInventoryWarehouse.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -773,7 +681,7 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceInventoryWarehouse.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -783,82 +691,15 @@ public class CommerceInventoryWarehouseWrapper
 	 */
 	@Override
 	public void setZip(String zip) {
-		_commerceInventoryWarehouse.setZip(zip);
+		model.setZip(zip);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel
-		<CommerceInventoryWarehouse> toCacheModel() {
+	protected CommerceInventoryWarehouseWrapper wrap(
+		CommerceInventoryWarehouse commerceInventoryWarehouse) {
 
-		return _commerceInventoryWarehouse.toCacheModel();
-	}
-
-	@Override
-	public CommerceInventoryWarehouse toEscapedModel() {
 		return new CommerceInventoryWarehouseWrapper(
-			_commerceInventoryWarehouse.toEscapedModel());
+			commerceInventoryWarehouse);
 	}
-
-	@Override
-	public String toString() {
-		return _commerceInventoryWarehouse.toString();
-	}
-
-	@Override
-	public CommerceInventoryWarehouse toUnescapedModel() {
-		return new CommerceInventoryWarehouseWrapper(
-			_commerceInventoryWarehouse.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceInventoryWarehouse.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceInventoryWarehouseWrapper)) {
-			return false;
-		}
-
-		CommerceInventoryWarehouseWrapper commerceInventoryWarehouseWrapper =
-			(CommerceInventoryWarehouseWrapper)object;
-
-		if (Objects.equals(
-				_commerceInventoryWarehouse,
-				commerceInventoryWarehouseWrapper.
-					_commerceInventoryWarehouse)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceInventoryWarehouse getWrappedModel() {
-		return _commerceInventoryWarehouse;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceInventoryWarehouse.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceInventoryWarehouse.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceInventoryWarehouse.resetOriginalValues();
-	}
-
-	private final CommerceInventoryWarehouse _commerceInventoryWarehouse;
 
 }

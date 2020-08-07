@@ -1060,11 +1060,11 @@ public class CPInstanceServiceHttp {
 				boolean overrideSubscriptionInfo, boolean subscriptionEnabled,
 				int subscriptionLength, String subscriptionType,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					subscriptionTypeSettingsProperties,
+					subscriptionTypeSettingsUnicodeProperties,
 				long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
 				int deliverySubscriptionLength, String deliverySubscriptionType,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					deliverySubscriptionTypeSettingsProperties,
+					deliverySubscriptionTypeSettingsUnicodeProperties,
 				long deliveryMaxSubscriptionCycles)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -1076,10 +1076,10 @@ public class CPInstanceServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpInstanceId, overrideSubscriptionInfo,
 				subscriptionEnabled, subscriptionLength, subscriptionType,
-				subscriptionTypeSettingsProperties, maxSubscriptionCycles,
-				deliverySubscriptionEnabled, deliverySubscriptionLength,
-				deliverySubscriptionType,
-				deliverySubscriptionTypeSettingsProperties,
+				subscriptionTypeSettingsUnicodeProperties,
+				maxSubscriptionCycles, deliverySubscriptionEnabled,
+				deliverySubscriptionLength, deliverySubscriptionType,
+				deliverySubscriptionTypeSettingsUnicodeProperties,
 				deliveryMaxSubscriptionCycles);
 
 			Object returnObj = null;
@@ -1116,7 +1116,7 @@ public class CPInstanceServiceHttp {
 				boolean overrideSubscriptionInfo, boolean subscriptionEnabled,
 				int subscriptionLength, String subscriptionType,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					subscriptionTypeSettingsProperties,
+					subscriptionTypeSettingsUnicodeProperties,
 				long maxSubscriptionCycles,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1129,8 +1129,8 @@ public class CPInstanceServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpInstanceId, overrideSubscriptionInfo,
 				subscriptionEnabled, subscriptionLength, subscriptionType,
-				subscriptionTypeSettingsProperties, maxSubscriptionCycles,
-				serviceContext);
+				subscriptionTypeSettingsUnicodeProperties,
+				maxSubscriptionCycles, serviceContext);
 
 			Object returnObj = null;
 

@@ -85,6 +85,18 @@ public class CommerceInventoryAuditLocalServiceWrapper
 	}
 
 	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceInventoryAuditLocalService.createPersistedModel(
+			primaryKeyObj);
+	}
+
+	/**
 	 * Deletes the commerce inventory audit from the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -134,6 +146,11 @@ public class CommerceInventoryAuditLocalServiceWrapper
 
 		return _commerceInventoryAuditLocalService.deletePersistedModel(
 			persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _commerceInventoryAuditLocalService.dslQuery(dslQuery);
 	}
 
 	@Override

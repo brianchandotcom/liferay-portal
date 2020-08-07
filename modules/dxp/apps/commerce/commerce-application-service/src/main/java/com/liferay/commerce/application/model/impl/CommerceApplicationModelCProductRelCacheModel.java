@@ -15,9 +15,10 @@
 package com.liferay.commerce.application.model.impl;
 
 import com.liferay.commerce.application.model.CommerceApplicationModelCProductRel;
+import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,8 @@ import java.util.Date;
  * @generated
  */
 public class CommerceApplicationModelCProductRelCacheModel
-	implements CacheModel<CommerceApplicationModelCProductRel>, Externalizable {
+	implements CacheModel<CommerceApplicationModelCProductRel>, Externalizable,
+			   MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -51,9 +53,11 @@ public class CommerceApplicationModelCProductRelCacheModel
 			commerceApplicationModelCProductRelCacheModel =
 				(CommerceApplicationModelCProductRelCacheModel)object;
 
-		if (commerceApplicationModelCProductRelId ==
+		if ((commerceApplicationModelCProductRelId ==
 				commerceApplicationModelCProductRelCacheModel.
-					commerceApplicationModelCProductRelId) {
+					commerceApplicationModelCProductRelId) &&
+			(mvccVersion ==
+				commerceApplicationModelCProductRelCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -63,14 +67,28 @@ public class CommerceApplicationModelCProductRelCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, commerceApplicationModelCProductRelId);
+		int hashCode = HashUtil.hash(0, commerceApplicationModelCProductRelId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
-		sb.append("{commerceApplicationModelCProductRelId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", commerceApplicationModelCProductRelId=");
 		sb.append(commerceApplicationModelCProductRelId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -97,6 +115,7 @@ public class CommerceApplicationModelCProductRelCacheModel
 			commerceApplicationModelCProductRelImpl =
 				new CommerceApplicationModelCProductRelImpl();
 
+		commerceApplicationModelCProductRelImpl.setMvccVersion(mvccVersion);
 		commerceApplicationModelCProductRelImpl.
 			setCommerceApplicationModelCProductRelId(
 				commerceApplicationModelCProductRelId);
@@ -137,6 +156,8 @@ public class CommerceApplicationModelCProductRelCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		commerceApplicationModelCProductRelId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -153,6 +174,8 @@ public class CommerceApplicationModelCProductRelCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(commerceApplicationModelCProductRelId);
 
 		objectOutput.writeLong(companyId);
@@ -174,6 +197,7 @@ public class CommerceApplicationModelCProductRelCacheModel
 		objectOutput.writeLong(CProductId);
 	}
 
+	public long mvccVersion;
 	public long commerceApplicationModelCProductRelId;
 	public long companyId;
 	public long userId;

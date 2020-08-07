@@ -14,17 +14,13 @@
 
 package com.liferay.commerce.price.list.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,29 +32,21 @@ import java.util.Objects;
  * @generated
  */
 public class CommercePriceListChannelRelWrapper
+	extends BaseModelWrapper<CommercePriceListChannelRel>
 	implements CommercePriceListChannelRel,
 			   ModelWrapper<CommercePriceListChannelRel> {
 
 	public CommercePriceListChannelRelWrapper(
 		CommercePriceListChannelRel commercePriceListChannelRel) {
 
-		_commercePriceListChannelRel = commercePriceListChannelRel;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommercePriceListChannelRel.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommercePriceListChannelRel.class.getName();
+		super(commercePriceListChannelRel);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put(
 			"CommercePriceListChannelRelId",
@@ -78,6 +66,12 @@ public class CommercePriceListChannelRelWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -147,25 +141,11 @@ public class CommercePriceListChannelRelWrapper
 	}
 
 	@Override
-	public Object clone() {
-		return new CommercePriceListChannelRelWrapper(
-			(CommercePriceListChannelRel)_commercePriceListChannelRel.clone());
-	}
-
-	@Override
-	public int compareTo(
-		CommercePriceListChannelRel commercePriceListChannelRel) {
-
-		return _commercePriceListChannelRel.compareTo(
-			commercePriceListChannelRel);
-	}
-
-	@Override
 	public com.liferay.commerce.product.model.CommerceChannel
 			getCommerceChannel()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commercePriceListChannelRel.getCommerceChannel();
+		return model.getCommerceChannel();
 	}
 
 	/**
@@ -175,14 +155,14 @@ public class CommercePriceListChannelRelWrapper
 	 */
 	@Override
 	public long getCommerceChannelId() {
-		return _commercePriceListChannelRel.getCommerceChannelId();
+		return model.getCommerceChannelId();
 	}
 
 	@Override
 	public CommercePriceList getCommercePriceList()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commercePriceListChannelRel.getCommercePriceList();
+		return model.getCommercePriceList();
 	}
 
 	/**
@@ -192,7 +172,7 @@ public class CommercePriceListChannelRelWrapper
 	 */
 	@Override
 	public long getCommercePriceListChannelRelId() {
-		return _commercePriceListChannelRel.getCommercePriceListChannelRelId();
+		return model.getCommercePriceListChannelRelId();
 	}
 
 	/**
@@ -202,7 +182,7 @@ public class CommercePriceListChannelRelWrapper
 	 */
 	@Override
 	public long getCommercePriceListId() {
-		return _commercePriceListChannelRel.getCommercePriceListId();
+		return model.getCommercePriceListId();
 	}
 
 	/**
@@ -212,7 +192,7 @@ public class CommercePriceListChannelRelWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commercePriceListChannelRel.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -222,12 +202,7 @@ public class CommercePriceListChannelRelWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commercePriceListChannelRel.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commercePriceListChannelRel.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -237,7 +212,7 @@ public class CommercePriceListChannelRelWrapper
 	 */
 	@Override
 	public Date getLastPublishDate() {
-		return _commercePriceListChannelRel.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -247,7 +222,17 @@ public class CommercePriceListChannelRelWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commercePriceListChannelRel.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce price list channel rel.
+	 *
+	 * @return the mvcc version of this commerce price list channel rel
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -257,7 +242,7 @@ public class CommercePriceListChannelRelWrapper
 	 */
 	@Override
 	public int getOrder() {
-		return _commercePriceListChannelRel.getOrder();
+		return model.getOrder();
 	}
 
 	/**
@@ -267,12 +252,7 @@ public class CommercePriceListChannelRelWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commercePriceListChannelRel.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commercePriceListChannelRel.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -282,7 +262,7 @@ public class CommercePriceListChannelRelWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commercePriceListChannelRel.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -292,7 +272,7 @@ public class CommercePriceListChannelRelWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commercePriceListChannelRel.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -302,7 +282,7 @@ public class CommercePriceListChannelRelWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commercePriceListChannelRel.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -312,37 +292,12 @@ public class CommercePriceListChannelRelWrapper
 	 */
 	@Override
 	public String getUuid() {
-		return _commercePriceListChannelRel.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commercePriceListChannelRel.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commercePriceListChannelRel.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commercePriceListChannelRel.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commercePriceListChannelRel.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_commercePriceListChannelRel.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commercePriceListChannelRel.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -352,7 +307,7 @@ public class CommercePriceListChannelRelWrapper
 	 */
 	@Override
 	public void setCommerceChannelId(long commerceChannelId) {
-		_commercePriceListChannelRel.setCommerceChannelId(commerceChannelId);
+		model.setCommerceChannelId(commerceChannelId);
 	}
 
 	/**
@@ -364,8 +319,7 @@ public class CommercePriceListChannelRelWrapper
 	public void setCommercePriceListChannelRelId(
 		long CommercePriceListChannelRelId) {
 
-		_commercePriceListChannelRel.setCommercePriceListChannelRelId(
-			CommercePriceListChannelRelId);
+		model.setCommercePriceListChannelRelId(CommercePriceListChannelRelId);
 	}
 
 	/**
@@ -375,8 +329,7 @@ public class CommercePriceListChannelRelWrapper
 	 */
 	@Override
 	public void setCommercePriceListId(long commercePriceListId) {
-		_commercePriceListChannelRel.setCommercePriceListId(
-			commercePriceListId);
+		model.setCommercePriceListId(commercePriceListId);
 	}
 
 	/**
@@ -386,7 +339,7 @@ public class CommercePriceListChannelRelWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commercePriceListChannelRel.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -396,24 +349,7 @@ public class CommercePriceListChannelRelWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commercePriceListChannelRel.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commercePriceListChannelRel.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commercePriceListChannelRel.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commercePriceListChannelRel.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -423,7 +359,7 @@ public class CommercePriceListChannelRelWrapper
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_commercePriceListChannelRel.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -433,12 +369,17 @@ public class CommercePriceListChannelRelWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commercePriceListChannelRel.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this commerce price list channel rel.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce price list channel rel
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_commercePriceListChannelRel.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -448,7 +389,7 @@ public class CommercePriceListChannelRelWrapper
 	 */
 	@Override
 	public void setOrder(int order) {
-		_commercePriceListChannelRel.setOrder(order);
+		model.setOrder(order);
 	}
 
 	/**
@@ -458,12 +399,7 @@ public class CommercePriceListChannelRelWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commercePriceListChannelRel.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commercePriceListChannelRel.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -473,7 +409,7 @@ public class CommercePriceListChannelRelWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commercePriceListChannelRel.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -483,7 +419,7 @@ public class CommercePriceListChannelRelWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commercePriceListChannelRel.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -493,7 +429,7 @@ public class CommercePriceListChannelRelWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commercePriceListChannelRel.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -503,87 +439,20 @@ public class CommercePriceListChannelRelWrapper
 	 */
 	@Override
 	public void setUuid(String uuid) {
-		_commercePriceListChannelRel.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel
-		<CommercePriceListChannelRel> toCacheModel() {
-
-		return _commercePriceListChannelRel.toCacheModel();
-	}
-
-	@Override
-	public CommercePriceListChannelRel toEscapedModel() {
-		return new CommercePriceListChannelRelWrapper(
-			_commercePriceListChannelRel.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commercePriceListChannelRel.toString();
-	}
-
-	@Override
-	public CommercePriceListChannelRel toUnescapedModel() {
-		return new CommercePriceListChannelRelWrapper(
-			_commercePriceListChannelRel.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commercePriceListChannelRel.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommercePriceListChannelRelWrapper)) {
-			return false;
-		}
-
-		CommercePriceListChannelRelWrapper commercePriceListChannelRelWrapper =
-			(CommercePriceListChannelRelWrapper)object;
-
-		if (Objects.equals(
-				_commercePriceListChannelRel,
-				commercePriceListChannelRelWrapper.
-					_commercePriceListChannelRel)) {
-
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _commercePriceListChannelRel.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public CommercePriceListChannelRel getWrappedModel() {
-		return _commercePriceListChannelRel;
-	}
+	protected CommercePriceListChannelRelWrapper wrap(
+		CommercePriceListChannelRel commercePriceListChannelRel) {
 
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commercePriceListChannelRel.isEntityCacheEnabled();
+		return new CommercePriceListChannelRelWrapper(
+			commercePriceListChannelRel);
 	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commercePriceListChannelRel.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commercePriceListChannelRel.resetOriginalValues();
-	}
-
-	private final CommercePriceListChannelRel _commercePriceListChannelRel;
 
 }

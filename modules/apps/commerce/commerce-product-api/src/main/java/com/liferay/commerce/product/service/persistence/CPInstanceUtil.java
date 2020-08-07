@@ -2361,10 +2361,6 @@ public class CPInstanceUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CPInstancePersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

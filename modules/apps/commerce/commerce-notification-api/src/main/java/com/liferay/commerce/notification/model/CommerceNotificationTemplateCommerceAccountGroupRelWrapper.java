@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.notification.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,6 +31,8 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
+	extends BaseModelWrapper
+		<CommerceNotificationTemplateCommerceAccountGroupRel>
 	implements CommerceNotificationTemplateCommerceAccountGroupRel,
 			   ModelWrapper
 				   <CommerceNotificationTemplateCommerceAccountGroupRel> {
@@ -43,25 +41,14 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 		CommerceNotificationTemplateCommerceAccountGroupRel
 			commerceNotificationTemplateCommerceAccountGroupRel) {
 
-		_commerceNotificationTemplateCommerceAccountGroupRel =
-			commerceNotificationTemplateCommerceAccountGroupRel;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceNotificationTemplateCommerceAccountGroupRel.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceNotificationTemplateCommerceAccountGroupRel.class.
-			getName();
+		super(commerceNotificationTemplateCommerceAccountGroupRel);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put(
 			"commerceNotificationTemplateCommerceAccountGroupRelId",
 			getCommerceNotificationTemplateCommerceAccountGroupRelId());
@@ -81,6 +68,12 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long commerceNotificationTemplateCommerceAccountGroupRelId =
 			(Long)attributes.get(
 				"commerceNotificationTemplateCommerceAccountGroupRelId");
@@ -141,22 +134,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CommerceNotificationTemplateCommerceAccountGroupRelWrapper(
-			(CommerceNotificationTemplateCommerceAccountGroupRel)
-				_commerceNotificationTemplateCommerceAccountGroupRel.clone());
-	}
-
-	@Override
-	public int compareTo(
-		CommerceNotificationTemplateCommerceAccountGroupRel
-			commerceNotificationTemplateCommerceAccountGroupRel) {
-
-		return _commerceNotificationTemplateCommerceAccountGroupRel.compareTo(
-			commerceNotificationTemplateCommerceAccountGroupRel);
-	}
-
 	/**
 	 * Returns the commerce account group ID of this commerce notification template commerce account group rel.
 	 *
@@ -164,8 +141,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 	 */
 	@Override
 	public long getCommerceAccountGroupId() {
-		return _commerceNotificationTemplateCommerceAccountGroupRel.
-			getCommerceAccountGroupId();
+		return model.getCommerceAccountGroupId();
 	}
 
 	/**
@@ -175,8 +151,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 	 */
 	@Override
 	public long getCommerceNotificationTemplateCommerceAccountGroupRelId() {
-		return _commerceNotificationTemplateCommerceAccountGroupRel.
-			getCommerceNotificationTemplateCommerceAccountGroupRelId();
+		return model.getCommerceNotificationTemplateCommerceAccountGroupRelId();
 	}
 
 	/**
@@ -186,8 +161,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 	 */
 	@Override
 	public long getCommerceNotificationTemplateId() {
-		return _commerceNotificationTemplateCommerceAccountGroupRel.
-			getCommerceNotificationTemplateId();
+		return model.getCommerceNotificationTemplateId();
 	}
 
 	/**
@@ -197,8 +171,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceNotificationTemplateCommerceAccountGroupRel.
-			getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -208,14 +181,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceNotificationTemplateCommerceAccountGroupRel.
-			getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceNotificationTemplateCommerceAccountGroupRel.
-			getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -225,8 +191,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _commerceNotificationTemplateCommerceAccountGroupRel.
-			getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -236,8 +201,17 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceNotificationTemplateCommerceAccountGroupRel.
-			getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce notification template commerce account group rel.
+	 *
+	 * @return the mvcc version of this commerce notification template commerce account group rel
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -247,14 +221,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceNotificationTemplateCommerceAccountGroupRel.
-			getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceNotificationTemplateCommerceAccountGroupRel.
-			getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -264,7 +231,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceNotificationTemplateCommerceAccountGroupRel.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -274,8 +241,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceNotificationTemplateCommerceAccountGroupRel.
-			getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -285,41 +251,12 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceNotificationTemplateCommerceAccountGroupRel.
-			getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceNotificationTemplateCommerceAccountGroupRel.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceNotificationTemplateCommerceAccountGroupRel.
-			isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceNotificationTemplateCommerceAccountGroupRel.
-			isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceNotificationTemplateCommerceAccountGroupRel.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_commerceNotificationTemplateCommerceAccountGroupRel.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceNotificationTemplateCommerceAccountGroupRel.setCachedModel(
-			cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -329,8 +266,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 	 */
 	@Override
 	public void setCommerceAccountGroupId(long commerceAccountGroupId) {
-		_commerceNotificationTemplateCommerceAccountGroupRel.
-			setCommerceAccountGroupId(commerceAccountGroupId);
+		model.setCommerceAccountGroupId(commerceAccountGroupId);
 	}
 
 	/**
@@ -342,9 +278,8 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 	public void setCommerceNotificationTemplateCommerceAccountGroupRelId(
 		long commerceNotificationTemplateCommerceAccountGroupRelId) {
 
-		_commerceNotificationTemplateCommerceAccountGroupRel.
-			setCommerceNotificationTemplateCommerceAccountGroupRelId(
-				commerceNotificationTemplateCommerceAccountGroupRelId);
+		model.setCommerceNotificationTemplateCommerceAccountGroupRelId(
+			commerceNotificationTemplateCommerceAccountGroupRelId);
 	}
 
 	/**
@@ -356,8 +291,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 	public void setCommerceNotificationTemplateId(
 		long commerceNotificationTemplateId) {
 
-		_commerceNotificationTemplateCommerceAccountGroupRel.
-			setCommerceNotificationTemplateId(commerceNotificationTemplateId);
+		model.setCommerceNotificationTemplateId(commerceNotificationTemplateId);
 	}
 
 	/**
@@ -367,8 +301,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceNotificationTemplateCommerceAccountGroupRel.setCompanyId(
-			companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -378,28 +311,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceNotificationTemplateCommerceAccountGroupRel.setCreateDate(
-			createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceNotificationTemplateCommerceAccountGroupRel.
-			setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceNotificationTemplateCommerceAccountGroupRel.
-			setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceNotificationTemplateCommerceAccountGroupRel.
-			setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -409,8 +321,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_commerceNotificationTemplateCommerceAccountGroupRel.setGroupId(
-			groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -420,13 +331,17 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceNotificationTemplateCommerceAccountGroupRel.setModifiedDate(
-			modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this commerce notification template commerce account group rel.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce notification template commerce account group rel
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_commerceNotificationTemplateCommerceAccountGroupRel.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -436,14 +351,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceNotificationTemplateCommerceAccountGroupRel.setPrimaryKey(
-			primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceNotificationTemplateCommerceAccountGroupRel.setPrimaryKeyObj(
-			primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -453,7 +361,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceNotificationTemplateCommerceAccountGroupRel.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -463,8 +371,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceNotificationTemplateCommerceAccountGroupRel.setUserName(
-			userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -474,101 +381,16 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceNotificationTemplateCommerceAccountGroupRel.setUserUuid(
-			userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel
-		<CommerceNotificationTemplateCommerceAccountGroupRel> toCacheModel() {
-
-		return _commerceNotificationTemplateCommerceAccountGroupRel.
-			toCacheModel();
-	}
-
-	@Override
-	public CommerceNotificationTemplateCommerceAccountGroupRel
-		toEscapedModel() {
+	protected CommerceNotificationTemplateCommerceAccountGroupRelWrapper wrap(
+		CommerceNotificationTemplateCommerceAccountGroupRel
+			commerceNotificationTemplateCommerceAccountGroupRel) {
 
 		return new CommerceNotificationTemplateCommerceAccountGroupRelWrapper(
-			_commerceNotificationTemplateCommerceAccountGroupRel.
-				toEscapedModel());
+			commerceNotificationTemplateCommerceAccountGroupRel);
 	}
-
-	@Override
-	public String toString() {
-		return _commerceNotificationTemplateCommerceAccountGroupRel.toString();
-	}
-
-	@Override
-	public CommerceNotificationTemplateCommerceAccountGroupRel
-		toUnescapedModel() {
-
-		return new CommerceNotificationTemplateCommerceAccountGroupRelWrapper(
-			_commerceNotificationTemplateCommerceAccountGroupRel.
-				toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceNotificationTemplateCommerceAccountGroupRel.
-			toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof
-				CommerceNotificationTemplateCommerceAccountGroupRelWrapper)) {
-
-			return false;
-		}
-
-		CommerceNotificationTemplateCommerceAccountGroupRelWrapper
-			commerceNotificationTemplateCommerceAccountGroupRelWrapper =
-				(CommerceNotificationTemplateCommerceAccountGroupRelWrapper)
-					object;
-
-		if (Objects.equals(
-				_commerceNotificationTemplateCommerceAccountGroupRel,
-				commerceNotificationTemplateCommerceAccountGroupRelWrapper.
-					_commerceNotificationTemplateCommerceAccountGroupRel)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceNotificationTemplateCommerceAccountGroupRel
-		getWrappedModel() {
-
-		return _commerceNotificationTemplateCommerceAccountGroupRel;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceNotificationTemplateCommerceAccountGroupRel.
-			isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceNotificationTemplateCommerceAccountGroupRel.
-			isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceNotificationTemplateCommerceAccountGroupRel.
-			resetOriginalValues();
-	}
-
-	private final CommerceNotificationTemplateCommerceAccountGroupRel
-		_commerceNotificationTemplateCommerceAccountGroupRel;
 
 }

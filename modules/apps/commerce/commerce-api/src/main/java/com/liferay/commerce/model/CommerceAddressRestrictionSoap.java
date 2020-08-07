@@ -34,6 +34,7 @@ public class CommerceAddressRestrictionSoap implements Serializable {
 		CommerceAddressRestrictionSoap soapModel =
 			new CommerceAddressRestrictionSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCommerceAddressRestrictionId(
 			model.getCommerceAddressRestrictionId());
 		soapModel.setGroupId(model.getGroupId());
@@ -106,6 +107,14 @@ public class CommerceAddressRestrictionSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceAddressRestrictionId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getCommerceAddressRestrictionId() {
@@ -190,6 +199,7 @@ public class CommerceAddressRestrictionSoap implements Serializable {
 		_commerceCountryId = commerceCountryId;
 	}
 
+	private long _mvccVersion;
 	private long _commerceAddressRestrictionId;
 	private long _groupId;
 	private long _companyId;

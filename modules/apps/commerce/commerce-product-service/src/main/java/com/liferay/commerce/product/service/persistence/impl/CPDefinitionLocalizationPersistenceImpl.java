@@ -16,9 +16,11 @@ package com.liferay.commerce.product.service.persistence.impl;
 
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionLocalizationException;
 import com.liferay.commerce.product.model.CPDefinitionLocalization;
+import com.liferay.commerce.product.model.CPDefinitionLocalizationTable;
 import com.liferay.commerce.product.model.impl.CPDefinitionLocalizationImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionLocalizationModelImpl;
 import com.liferay.commerce.product.service.persistence.CPDefinitionLocalizationPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -32,17 +34,12 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -241,10 +238,6 @@ public class CPDefinitionLocalizationPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -583,8 +576,6 @@ public class CPDefinitionLocalizationPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -752,12 +743,6 @@ public class CPDefinitionLocalizationPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByCPDefinitionId_LanguageId,
-						finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -853,8 +838,6 @@ public class CPDefinitionLocalizationPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -879,6 +862,11 @@ public class CPDefinitionLocalizationPersistenceImpl
 
 	public CPDefinitionLocalizationPersistenceImpl() {
 		setModelClass(CPDefinitionLocalization.class);
+
+		setModelImplClass(CPDefinitionLocalizationImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CPDefinitionLocalizationTable.INSTANCE);
 	}
 
 	/**
@@ -889,7 +877,6 @@ public class CPDefinitionLocalizationPersistenceImpl
 	@Override
 	public void cacheResult(CPDefinitionLocalization cpDefinitionLocalization) {
 		entityCache.putResult(
-			CPDefinitionLocalizationModelImpl.ENTITY_CACHE_ENABLED,
 			CPDefinitionLocalizationImpl.class,
 			cpDefinitionLocalization.getPrimaryKey(), cpDefinitionLocalization);
 
@@ -917,7 +904,6 @@ public class CPDefinitionLocalizationPersistenceImpl
 				cpDefinitionLocalizations) {
 
 			if (entityCache.getResult(
-					CPDefinitionLocalizationModelImpl.ENTITY_CACHE_ENABLED,
 					CPDefinitionLocalizationImpl.class,
 					cpDefinitionLocalization.getPrimaryKey()) == null) {
 
@@ -955,7 +941,6 @@ public class CPDefinitionLocalizationPersistenceImpl
 	@Override
 	public void clearCache(CPDefinitionLocalization cpDefinitionLocalization) {
 		entityCache.removeResult(
-			CPDefinitionLocalizationModelImpl.ENTITY_CACHE_ENABLED,
 			CPDefinitionLocalizationImpl.class,
 			cpDefinitionLocalization.getPrimaryKey());
 
@@ -977,7 +962,6 @@ public class CPDefinitionLocalizationPersistenceImpl
 				cpDefinitionLocalizations) {
 
 			entityCache.removeResult(
-				CPDefinitionLocalizationModelImpl.ENTITY_CACHE_ENABLED,
 				CPDefinitionLocalizationImpl.class,
 				cpDefinitionLocalization.getPrimaryKey());
 
@@ -987,6 +971,7 @@ public class CPDefinitionLocalizationPersistenceImpl
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -994,7 +979,6 @@ public class CPDefinitionLocalizationPersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(
-				CPDefinitionLocalizationModelImpl.ENTITY_CACHE_ENABLED,
 				CPDefinitionLocalizationImpl.class, primaryKey);
 		}
 	}
@@ -1210,10 +1194,7 @@ public class CPDefinitionLocalizationPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CPDefinitionLocalizationModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				cpDefinitionLocalizationModelImpl.getCPDefinitionId()
 			};
@@ -1253,7 +1234,6 @@ public class CPDefinitionLocalizationPersistenceImpl
 		}
 
 		entityCache.putResult(
-			CPDefinitionLocalizationModelImpl.ENTITY_CACHE_ENABLED,
 			CPDefinitionLocalizationImpl.class,
 			cpDefinitionLocalization.getPrimaryKey(), cpDefinitionLocalization,
 			false);
@@ -1310,60 +1290,6 @@ public class CPDefinitionLocalizationPersistenceImpl
 	/**
 	 * Returns the cp definition localization with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the cp definition localization
-	 * @return the cp definition localization, or <code>null</code> if a cp definition localization with the primary key could not be found
-	 */
-	@Override
-	public CPDefinitionLocalization fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(
-			CPDefinitionLocalizationModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionLocalizationImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CPDefinitionLocalization cpDefinitionLocalization =
-			(CPDefinitionLocalization)serializable;
-
-		if (cpDefinitionLocalization == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				cpDefinitionLocalization =
-					(CPDefinitionLocalization)session.get(
-						CPDefinitionLocalizationImpl.class, primaryKey);
-
-				if (cpDefinitionLocalization != null) {
-					cacheResult(cpDefinitionLocalization);
-				}
-				else {
-					entityCache.putResult(
-						CPDefinitionLocalizationModelImpl.ENTITY_CACHE_ENABLED,
-						CPDefinitionLocalizationImpl.class, primaryKey,
-						nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CPDefinitionLocalizationModelImpl.ENTITY_CACHE_ENABLED,
-					CPDefinitionLocalizationImpl.class, primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return cpDefinitionLocalization;
-	}
-
-	/**
-	 * Returns the cp definition localization with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param cpDefinitionLocalizationId the primary key of the cp definition localization
 	 * @return the cp definition localization, or <code>null</code> if a cp definition localization with the primary key could not be found
 	 */
@@ -1372,110 +1298,6 @@ public class CPDefinitionLocalizationPersistenceImpl
 		long cpDefinitionLocalizationId) {
 
 		return fetchByPrimaryKey((Serializable)cpDefinitionLocalizationId);
-	}
-
-	@Override
-	public Map<Serializable, CPDefinitionLocalization> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CPDefinitionLocalization> map =
-			new HashMap<Serializable, CPDefinitionLocalization>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CPDefinitionLocalization cpDefinitionLocalization =
-				fetchByPrimaryKey(primaryKey);
-
-			if (cpDefinitionLocalization != null) {
-				map.put(primaryKey, cpDefinitionLocalization);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CPDefinitionLocalizationModelImpl.ENTITY_CACHE_ENABLED,
-				CPDefinitionLocalizationImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (CPDefinitionLocalization)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(_SQL_SELECT_CPDEFINITIONLOCALIZATION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CPDefinitionLocalization cpDefinitionLocalization :
-					(List<CPDefinitionLocalization>)query.list()) {
-
-				map.put(
-					cpDefinitionLocalization.getPrimaryKeyObj(),
-					cpDefinitionLocalization);
-
-				cacheResult(cpDefinitionLocalization);
-
-				uncachedPrimaryKeys.remove(
-					cpDefinitionLocalization.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CPDefinitionLocalizationModelImpl.ENTITY_CACHE_ENABLED,
-					CPDefinitionLocalizationImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -1605,10 +1427,6 @@ public class CPDefinitionLocalizationPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1655,9 +1473,6 @@ public class CPDefinitionLocalizationPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1666,6 +1481,21 @@ public class CPDefinitionLocalizationPersistenceImpl
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "cpDefinitionLocalizationId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_CPDEFINITIONLOCALIZATION;
 	}
 
 	@Override
@@ -1678,27 +1508,19 @@ public class CPDefinitionLocalizationPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CPDefinitionLocalizationModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionLocalizationModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionLocalizationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CPDefinitionLocalizationModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionLocalizationModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionLocalizationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CPDefinitionLocalizationModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionLocalizationModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByCPDefinitionId = new FinderPath(
-			CPDefinitionLocalizationModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionLocalizationModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionLocalizationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPDefinitionId",
 			new String[] {
@@ -1707,22 +1529,16 @@ public class CPDefinitionLocalizationPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByCPDefinitionId = new FinderPath(
-			CPDefinitionLocalizationModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionLocalizationModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionLocalizationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPDefinitionId",
 			new String[] {Long.class.getName()},
 			CPDefinitionLocalizationModelImpl.CPDEFINITIONID_COLUMN_BITMASK);
 
 		_finderPathCountByCPDefinitionId = new FinderPath(
-			CPDefinitionLocalizationModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionLocalizationModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPDefinitionId",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCPDefinitionId", new String[] {Long.class.getName()});
 
 		_finderPathFetchByCPDefinitionId_LanguageId = new FinderPath(
-			CPDefinitionLocalizationModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionLocalizationModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionLocalizationImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByCPDefinitionId_LanguageId",
 			new String[] {Long.class.getName(), String.class.getName()},
@@ -1730,9 +1546,7 @@ public class CPDefinitionLocalizationPersistenceImpl
 			CPDefinitionLocalizationModelImpl.LANGUAGEID_COLUMN_BITMASK);
 
 		_finderPathCountByCPDefinitionId_LanguageId = new FinderPath(
-			CPDefinitionLocalizationModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionLocalizationModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCPDefinitionId_LanguageId",
 			new String[] {Long.class.getName(), String.class.getName()});
 	}
@@ -1752,10 +1566,6 @@ public class CPDefinitionLocalizationPersistenceImpl
 
 	private static final String _SQL_SELECT_CPDEFINITIONLOCALIZATION =
 		"SELECT cpDefinitionLocalization FROM CPDefinitionLocalization cpDefinitionLocalization";
-
-	private static final String
-		_SQL_SELECT_CPDEFINITIONLOCALIZATION_WHERE_PKS_IN =
-			"SELECT cpDefinitionLocalization FROM CPDefinitionLocalization cpDefinitionLocalization WHERE cpDefinitionLocalizationId IN (";
 
 	private static final String _SQL_SELECT_CPDEFINITIONLOCALIZATION_WHERE =
 		"SELECT cpDefinitionLocalization FROM CPDefinitionLocalization cpDefinitionLocalization WHERE ";

@@ -14,17 +14,13 @@
 
 package com.liferay.commerce.product.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -39,26 +35,18 @@ import java.util.Objects;
  */
 @Deprecated
 public class CPFriendlyURLEntryWrapper
+	extends BaseModelWrapper<CPFriendlyURLEntry>
 	implements CPFriendlyURLEntry, ModelWrapper<CPFriendlyURLEntry> {
 
 	public CPFriendlyURLEntryWrapper(CPFriendlyURLEntry cpFriendlyURLEntry) {
-		_cpFriendlyURLEntry = cpFriendlyURLEntry;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CPFriendlyURLEntry.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CPFriendlyURLEntry.class.getName();
+		super(cpFriendlyURLEntry);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("CPFriendlyURLEntryId", getCPFriendlyURLEntryId());
 		attributes.put("groupId", getGroupId());
@@ -78,6 +66,12 @@ public class CPFriendlyURLEntryWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -158,17 +152,6 @@ public class CPFriendlyURLEntryWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CPFriendlyURLEntryWrapper(
-			(CPFriendlyURLEntry)_cpFriendlyURLEntry.clone());
-	}
-
-	@Override
-	public int compareTo(CPFriendlyURLEntry cpFriendlyURLEntry) {
-		return _cpFriendlyURLEntry.compareTo(cpFriendlyURLEntry);
-	}
-
 	/**
 	 * Returns the fully qualified class name of this cp friendly url entry.
 	 *
@@ -176,7 +159,7 @@ public class CPFriendlyURLEntryWrapper
 	 */
 	@Override
 	public String getClassName() {
-		return _cpFriendlyURLEntry.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -186,7 +169,7 @@ public class CPFriendlyURLEntryWrapper
 	 */
 	@Override
 	public long getClassNameId() {
-		return _cpFriendlyURLEntry.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -196,7 +179,7 @@ public class CPFriendlyURLEntryWrapper
 	 */
 	@Override
 	public long getClassPK() {
-		return _cpFriendlyURLEntry.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -206,7 +189,7 @@ public class CPFriendlyURLEntryWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _cpFriendlyURLEntry.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -216,7 +199,7 @@ public class CPFriendlyURLEntryWrapper
 	 */
 	@Override
 	public long getCPFriendlyURLEntryId() {
-		return _cpFriendlyURLEntry.getCPFriendlyURLEntryId();
+		return model.getCPFriendlyURLEntryId();
 	}
 
 	/**
@@ -226,12 +209,7 @@ public class CPFriendlyURLEntryWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _cpFriendlyURLEntry.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _cpFriendlyURLEntry.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -241,7 +219,7 @@ public class CPFriendlyURLEntryWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _cpFriendlyURLEntry.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -251,12 +229,12 @@ public class CPFriendlyURLEntryWrapper
 	 */
 	@Override
 	public String getLanguageId() {
-		return _cpFriendlyURLEntry.getLanguageId();
+		return model.getLanguageId();
 	}
 
 	@Override
 	public java.util.Locale getLocale() {
-		return _cpFriendlyURLEntry.getLocale();
+		return model.getLocale();
 	}
 
 	/**
@@ -266,7 +244,7 @@ public class CPFriendlyURLEntryWrapper
 	 */
 	@Override
 	public boolean getMain() {
-		return _cpFriendlyURLEntry.getMain();
+		return model.getMain();
 	}
 
 	/**
@@ -276,7 +254,17 @@ public class CPFriendlyURLEntryWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _cpFriendlyURLEntry.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this cp friendly url entry.
+	 *
+	 * @return the mvcc version of this cp friendly url entry
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -286,12 +274,7 @@ public class CPFriendlyURLEntryWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _cpFriendlyURLEntry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _cpFriendlyURLEntry.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -301,7 +284,7 @@ public class CPFriendlyURLEntryWrapper
 	 */
 	@Override
 	public String getUrlTitle() {
-		return _cpFriendlyURLEntry.getUrlTitle();
+		return model.getUrlTitle();
 	}
 
 	/**
@@ -311,7 +294,7 @@ public class CPFriendlyURLEntryWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _cpFriendlyURLEntry.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -321,7 +304,7 @@ public class CPFriendlyURLEntryWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _cpFriendlyURLEntry.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -331,7 +314,7 @@ public class CPFriendlyURLEntryWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _cpFriendlyURLEntry.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -341,22 +324,7 @@ public class CPFriendlyURLEntryWrapper
 	 */
 	@Override
 	public String getUuid() {
-		return _cpFriendlyURLEntry.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _cpFriendlyURLEntry.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _cpFriendlyURLEntry.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _cpFriendlyURLEntry.isEscapedModel();
+		return model.getUuid();
 	}
 
 	/**
@@ -366,27 +334,17 @@ public class CPFriendlyURLEntryWrapper
 	 */
 	@Override
 	public boolean isMain() {
-		return _cpFriendlyURLEntry.isMain();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _cpFriendlyURLEntry.isNew();
+		return model.isMain();
 	}
 
 	@Override
 	public void persist() {
-		_cpFriendlyURLEntry.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_cpFriendlyURLEntry.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_cpFriendlyURLEntry.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -396,7 +354,7 @@ public class CPFriendlyURLEntryWrapper
 	 */
 	@Override
 	public void setClassNameId(long classNameId) {
-		_cpFriendlyURLEntry.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -406,7 +364,7 @@ public class CPFriendlyURLEntryWrapper
 	 */
 	@Override
 	public void setClassPK(long classPK) {
-		_cpFriendlyURLEntry.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -416,7 +374,7 @@ public class CPFriendlyURLEntryWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_cpFriendlyURLEntry.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -426,7 +384,7 @@ public class CPFriendlyURLEntryWrapper
 	 */
 	@Override
 	public void setCPFriendlyURLEntryId(long CPFriendlyURLEntryId) {
-		_cpFriendlyURLEntry.setCPFriendlyURLEntryId(CPFriendlyURLEntryId);
+		model.setCPFriendlyURLEntryId(CPFriendlyURLEntryId);
 	}
 
 	/**
@@ -436,24 +394,7 @@ public class CPFriendlyURLEntryWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_cpFriendlyURLEntry.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_cpFriendlyURLEntry.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_cpFriendlyURLEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_cpFriendlyURLEntry.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -463,7 +404,7 @@ public class CPFriendlyURLEntryWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_cpFriendlyURLEntry.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -473,7 +414,7 @@ public class CPFriendlyURLEntryWrapper
 	 */
 	@Override
 	public void setLanguageId(String languageId) {
-		_cpFriendlyURLEntry.setLanguageId(languageId);
+		model.setLanguageId(languageId);
 	}
 
 	/**
@@ -483,7 +424,7 @@ public class CPFriendlyURLEntryWrapper
 	 */
 	@Override
 	public void setMain(boolean main) {
-		_cpFriendlyURLEntry.setMain(main);
+		model.setMain(main);
 	}
 
 	/**
@@ -493,12 +434,17 @@ public class CPFriendlyURLEntryWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_cpFriendlyURLEntry.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this cp friendly url entry.
+	 *
+	 * @param mvccVersion the mvcc version of this cp friendly url entry
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_cpFriendlyURLEntry.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -508,12 +454,7 @@ public class CPFriendlyURLEntryWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_cpFriendlyURLEntry.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_cpFriendlyURLEntry.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -523,7 +464,7 @@ public class CPFriendlyURLEntryWrapper
 	 */
 	@Override
 	public void setUrlTitle(String urlTitle) {
-		_cpFriendlyURLEntry.setUrlTitle(urlTitle);
+		model.setUrlTitle(urlTitle);
 	}
 
 	/**
@@ -533,7 +474,7 @@ public class CPFriendlyURLEntryWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_cpFriendlyURLEntry.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -543,7 +484,7 @@ public class CPFriendlyURLEntryWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_cpFriendlyURLEntry.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -553,7 +494,7 @@ public class CPFriendlyURLEntryWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_cpFriendlyURLEntry.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -563,86 +504,19 @@ public class CPFriendlyURLEntryWrapper
 	 */
 	@Override
 	public void setUuid(String uuid) {
-		_cpFriendlyURLEntry.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CPFriendlyURLEntry>
-		toCacheModel() {
-
-		return _cpFriendlyURLEntry.toCacheModel();
-	}
-
-	@Override
-	public CPFriendlyURLEntry toEscapedModel() {
-		return new CPFriendlyURLEntryWrapper(
-			_cpFriendlyURLEntry.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _cpFriendlyURLEntry.toString();
-	}
-
-	@Override
-	public CPFriendlyURLEntry toUnescapedModel() {
-		return new CPFriendlyURLEntryWrapper(
-			_cpFriendlyURLEntry.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _cpFriendlyURLEntry.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CPFriendlyURLEntryWrapper)) {
-			return false;
-		}
-
-		CPFriendlyURLEntryWrapper cpFriendlyURLEntryWrapper =
-			(CPFriendlyURLEntryWrapper)object;
-
-		if (Objects.equals(
-				_cpFriendlyURLEntry,
-				cpFriendlyURLEntryWrapper._cpFriendlyURLEntry)) {
-
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _cpFriendlyURLEntry.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public CPFriendlyURLEntry getWrappedModel() {
-		return _cpFriendlyURLEntry;
-	}
+	protected CPFriendlyURLEntryWrapper wrap(
+		CPFriendlyURLEntry cpFriendlyURLEntry) {
 
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _cpFriendlyURLEntry.isEntityCacheEnabled();
+		return new CPFriendlyURLEntryWrapper(cpFriendlyURLEntry);
 	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _cpFriendlyURLEntry.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_cpFriendlyURLEntry.resetOriginalValues();
-	}
-
-	private final CPFriendlyURLEntry _cpFriendlyURLEntry;
 
 }

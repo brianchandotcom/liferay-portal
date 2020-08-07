@@ -15,9 +15,10 @@
 package com.liferay.commerce.product.type.virtual.order.model.impl;
 
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem;
+import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class CommerceVirtualOrderItemCacheModel
-	implements CacheModel<CommerceVirtualOrderItem>, Externalizable {
+	implements CacheModel<CommerceVirtualOrderItem>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -48,8 +49,10 @@ public class CommerceVirtualOrderItemCacheModel
 		CommerceVirtualOrderItemCacheModel commerceVirtualOrderItemCacheModel =
 			(CommerceVirtualOrderItemCacheModel)object;
 
-		if (commerceVirtualOrderItemId ==
-				commerceVirtualOrderItemCacheModel.commerceVirtualOrderItemId) {
+		if ((commerceVirtualOrderItemId ==
+				commerceVirtualOrderItemCacheModel.
+					commerceVirtualOrderItemId) &&
+			(mvccVersion == commerceVirtualOrderItemCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -59,14 +62,28 @@ public class CommerceVirtualOrderItemCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, commerceVirtualOrderItemId);
+		int hashCode = HashUtil.hash(0, commerceVirtualOrderItemId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", commerceVirtualOrderItemId=");
 		sb.append(commerceVirtualOrderItemId);
@@ -111,6 +128,8 @@ public class CommerceVirtualOrderItemCacheModel
 	public CommerceVirtualOrderItem toEntityModel() {
 		CommerceVirtualOrderItemImpl commerceVirtualOrderItemImpl =
 			new CommerceVirtualOrderItemImpl();
+
+		commerceVirtualOrderItemImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			commerceVirtualOrderItemImpl.setUuid("");
@@ -185,6 +204,7 @@ public class CommerceVirtualOrderItemCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		commerceVirtualOrderItemId = objectInput.readLong();
@@ -218,6 +238,8 @@ public class CommerceVirtualOrderItemCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -267,6 +289,7 @@ public class CommerceVirtualOrderItemCacheModel
 		objectOutput.writeLong(endDate);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long commerceVirtualOrderItemId;
 	public long groupId;

@@ -31,6 +31,7 @@ public class CommerceAddressSoap implements Serializable {
 	public static CommerceAddressSoap toSoapModel(CommerceAddress model) {
 		CommerceAddressSoap soapModel = new CommerceAddressSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setExternalReferenceCode(model.getExternalReferenceCode());
 		soapModel.setCommerceAddressId(model.getCommerceAddressId());
 		soapModel.setGroupId(model.getGroupId());
@@ -113,6 +114,14 @@ public class CommerceAddressSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceAddressId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getExternalReferenceCode() {
@@ -323,6 +332,7 @@ public class CommerceAddressSoap implements Serializable {
 		_type = type;
 	}
 
+	private long _mvccVersion;
 	private String _externalReferenceCode;
 	private long _commerceAddressId;
 	private long _groupId;

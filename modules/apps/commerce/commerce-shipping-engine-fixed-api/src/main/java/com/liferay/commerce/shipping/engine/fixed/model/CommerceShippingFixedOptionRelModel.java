@@ -14,21 +14,17 @@
 
 package com.liferay.commerce.shipping.engine.fixed.model;
 
-import aQute.bnd.annotation.ProviderType;
-
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
 
 import java.math.BigDecimal;
 
 import java.util.Date;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The base model interface for the CommerceShippingFixedOptionRel service. Represents a row in the &quot;CShippingFixedOptionRel&quot; database table, with each column mapped to a property of this class.
@@ -43,7 +39,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface CommerceShippingFixedOptionRelModel
-	extends BaseModel<CommerceShippingFixedOptionRel>, GroupedModel,
+	extends BaseModel<CommerceShippingFixedOptionRel>, GroupedModel, MVCCModel,
 			ShardedModel {
 
 	/*
@@ -65,6 +61,22 @@ public interface CommerceShippingFixedOptionRelModel
 	 * @param primaryKey the primary key of this commerce shipping fixed option rel
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this commerce shipping fixed option rel.
+	 *
+	 * @return the mvcc version of this commerce shipping fixed option rel
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this commerce shipping fixed option rel.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce shipping fixed option rel
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the commerce shipping fixed option rel ID of this commerce shipping fixed option rel.
@@ -350,63 +362,5 @@ public interface CommerceShippingFixedOptionRelModel
 	 * @param ratePercentage the rate percentage of this commerce shipping fixed option rel
 	 */
 	public void setRatePercentage(double ratePercentage);
-
-	@Override
-	public boolean isNew();
-
-	@Override
-	public void setNew(boolean n);
-
-	@Override
-	public boolean isCachedModel();
-
-	@Override
-	public void setCachedModel(boolean cachedModel);
-
-	@Override
-	public boolean isEscapedModel();
-
-	@Override
-	public Serializable getPrimaryKeyObj();
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj);
-
-	@Override
-	public ExpandoBridge getExpandoBridge();
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel);
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge);
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
-
-	@Override
-	public Object clone();
-
-	@Override
-	public int compareTo(
-		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel);
-
-	@Override
-	public int hashCode();
-
-	@Override
-	public CacheModel<CommerceShippingFixedOptionRel> toCacheModel();
-
-	@Override
-	public CommerceShippingFixedOptionRel toEscapedModel();
-
-	@Override
-	public CommerceShippingFixedOptionRel toUnescapedModel();
-
-	@Override
-	public String toString();
-
-	@Override
-	public String toXmlString();
 
 }

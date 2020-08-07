@@ -16,9 +16,11 @@ package com.liferay.commerce.account.service.persistence.impl;
 
 import com.liferay.commerce.account.exception.NoSuchAccountGroupRelException;
 import com.liferay.commerce.account.model.CommerceAccountGroupRel;
+import com.liferay.commerce.account.model.CommerceAccountGroupRelTable;
 import com.liferay.commerce.account.model.impl.CommerceAccountGroupRelImpl;
 import com.liferay.commerce.account.model.impl.CommerceAccountGroupRelModelImpl;
 import com.liferay.commerce.account.service.persistence.CommerceAccountGroupRelPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -34,18 +36,13 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -247,10 +244,6 @@ public class CommerceAccountGroupRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -593,8 +586,6 @@ public class CommerceAccountGroupRelPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -780,10 +771,6 @@ public class CommerceAccountGroupRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1143,8 +1130,6 @@ public class CommerceAccountGroupRelPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1310,11 +1295,6 @@ public class CommerceAccountGroupRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByC_C_C, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1402,8 +1382,6 @@ public class CommerceAccountGroupRelPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1425,6 +1403,11 @@ public class CommerceAccountGroupRelPersistenceImpl
 
 	public CommerceAccountGroupRelPersistenceImpl() {
 		setModelClass(CommerceAccountGroupRel.class);
+
+		setModelImplClass(CommerceAccountGroupRelImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CommerceAccountGroupRelTable.INSTANCE);
 	}
 
 	/**
@@ -1435,7 +1418,6 @@ public class CommerceAccountGroupRelPersistenceImpl
 	@Override
 	public void cacheResult(CommerceAccountGroupRel commerceAccountGroupRel) {
 		entityCache.putResult(
-			CommerceAccountGroupRelModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceAccountGroupRelImpl.class,
 			commerceAccountGroupRel.getPrimaryKey(), commerceAccountGroupRel);
 
@@ -1464,7 +1446,6 @@ public class CommerceAccountGroupRelPersistenceImpl
 				commerceAccountGroupRels) {
 
 			if (entityCache.getResult(
-					CommerceAccountGroupRelModelImpl.ENTITY_CACHE_ENABLED,
 					CommerceAccountGroupRelImpl.class,
 					commerceAccountGroupRel.getPrimaryKey()) == null) {
 
@@ -1502,7 +1483,6 @@ public class CommerceAccountGroupRelPersistenceImpl
 	@Override
 	public void clearCache(CommerceAccountGroupRel commerceAccountGroupRel) {
 		entityCache.removeResult(
-			CommerceAccountGroupRelModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceAccountGroupRelImpl.class,
 			commerceAccountGroupRel.getPrimaryKey());
 
@@ -1524,7 +1504,6 @@ public class CommerceAccountGroupRelPersistenceImpl
 				commerceAccountGroupRels) {
 
 			entityCache.removeResult(
-				CommerceAccountGroupRelModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceAccountGroupRelImpl.class,
 				commerceAccountGroupRel.getPrimaryKey());
 
@@ -1534,6 +1513,7 @@ public class CommerceAccountGroupRelPersistenceImpl
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1541,7 +1521,6 @@ public class CommerceAccountGroupRelPersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(
-				CommerceAccountGroupRelModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceAccountGroupRelImpl.class, primaryKey);
 		}
 	}
@@ -1778,10 +1757,7 @@ public class CommerceAccountGroupRelPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CommerceAccountGroupRelModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				commerceAccountGroupRelModelImpl.getCommerceAccountGroupId()
 			};
@@ -1856,7 +1832,6 @@ public class CommerceAccountGroupRelPersistenceImpl
 		}
 
 		entityCache.putResult(
-			CommerceAccountGroupRelModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceAccountGroupRelImpl.class,
 			commerceAccountGroupRel.getPrimaryKey(), commerceAccountGroupRel,
 			false);
@@ -1913,59 +1888,6 @@ public class CommerceAccountGroupRelPersistenceImpl
 	/**
 	 * Returns the commerce account group rel with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the commerce account group rel
-	 * @return the commerce account group rel, or <code>null</code> if a commerce account group rel with the primary key could not be found
-	 */
-	@Override
-	public CommerceAccountGroupRel fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(
-			CommerceAccountGroupRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAccountGroupRelImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CommerceAccountGroupRel commerceAccountGroupRel =
-			(CommerceAccountGroupRel)serializable;
-
-		if (commerceAccountGroupRel == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				commerceAccountGroupRel = (CommerceAccountGroupRel)session.get(
-					CommerceAccountGroupRelImpl.class, primaryKey);
-
-				if (commerceAccountGroupRel != null) {
-					cacheResult(commerceAccountGroupRel);
-				}
-				else {
-					entityCache.putResult(
-						CommerceAccountGroupRelModelImpl.ENTITY_CACHE_ENABLED,
-						CommerceAccountGroupRelImpl.class, primaryKey,
-						nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CommerceAccountGroupRelModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceAccountGroupRelImpl.class, primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return commerceAccountGroupRel;
-	}
-
-	/**
-	 * Returns the commerce account group rel with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param commerceAccountGroupRelId the primary key of the commerce account group rel
 	 * @return the commerce account group rel, or <code>null</code> if a commerce account group rel with the primary key could not be found
 	 */
@@ -1974,110 +1896,6 @@ public class CommerceAccountGroupRelPersistenceImpl
 		long commerceAccountGroupRelId) {
 
 		return fetchByPrimaryKey((Serializable)commerceAccountGroupRelId);
-	}
-
-	@Override
-	public Map<Serializable, CommerceAccountGroupRel> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CommerceAccountGroupRel> map =
-			new HashMap<Serializable, CommerceAccountGroupRel>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CommerceAccountGroupRel commerceAccountGroupRel = fetchByPrimaryKey(
-				primaryKey);
-
-			if (commerceAccountGroupRel != null) {
-				map.put(primaryKey, commerceAccountGroupRel);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CommerceAccountGroupRelModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceAccountGroupRelImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (CommerceAccountGroupRel)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(_SQL_SELECT_COMMERCEACCOUNTGROUPREL_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CommerceAccountGroupRel commerceAccountGroupRel :
-					(List<CommerceAccountGroupRel>)query.list()) {
-
-				map.put(
-					commerceAccountGroupRel.getPrimaryKeyObj(),
-					commerceAccountGroupRel);
-
-				cacheResult(commerceAccountGroupRel);
-
-				uncachedPrimaryKeys.remove(
-					commerceAccountGroupRel.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CommerceAccountGroupRelModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceAccountGroupRelImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -2207,10 +2025,6 @@ public class CommerceAccountGroupRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2257,9 +2071,6 @@ public class CommerceAccountGroupRelPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2268,6 +2079,21 @@ public class CommerceAccountGroupRelPersistenceImpl
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "commerceAccountGroupRelId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_COMMERCEACCOUNTGROUPREL;
 	}
 
 	@Override
@@ -2280,27 +2106,19 @@ public class CommerceAccountGroupRelPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceAccountGroupRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAccountGroupRelModelImpl.FINDER_CACHE_ENABLED,
 			CommerceAccountGroupRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceAccountGroupRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAccountGroupRelModelImpl.FINDER_CACHE_ENABLED,
 			CommerceAccountGroupRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CommerceAccountGroupRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAccountGroupRelModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByCommerceAccountGroupId = new FinderPath(
-			CommerceAccountGroupRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAccountGroupRelModelImpl.FINDER_CACHE_ENABLED,
 			CommerceAccountGroupRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByCommerceAccountGroupId",
@@ -2311,8 +2129,6 @@ public class CommerceAccountGroupRelPersistenceImpl
 
 		_finderPathWithoutPaginationFindByCommerceAccountGroupId =
 			new FinderPath(
-				CommerceAccountGroupRelModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceAccountGroupRelModelImpl.FINDER_CACHE_ENABLED,
 				CommerceAccountGroupRelImpl.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCommerceAccountGroupId",
@@ -2322,15 +2138,11 @@ public class CommerceAccountGroupRelPersistenceImpl
 				CommerceAccountGroupRelModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByCommerceAccountGroupId = new FinderPath(
-			CommerceAccountGroupRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAccountGroupRelModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCommerceAccountGroupId",
 			new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByC_C = new FinderPath(
-			CommerceAccountGroupRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAccountGroupRelModelImpl.FINDER_CACHE_ENABLED,
 			CommerceAccountGroupRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
 			new String[] {
@@ -2340,8 +2152,6 @@ public class CommerceAccountGroupRelPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByC_C = new FinderPath(
-			CommerceAccountGroupRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAccountGroupRelModelImpl.FINDER_CACHE_ENABLED,
 			CommerceAccountGroupRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
@@ -2350,14 +2160,10 @@ public class CommerceAccountGroupRelPersistenceImpl
 			CommerceAccountGroupRelModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByC_C = new FinderPath(
-			CommerceAccountGroupRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAccountGroupRelModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()});
 
 		_finderPathFetchByC_C_C = new FinderPath(
-			CommerceAccountGroupRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAccountGroupRelModelImpl.FINDER_CACHE_ENABLED,
 			CommerceAccountGroupRelImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByC_C_C",
 			new String[] {
@@ -2369,9 +2175,8 @@ public class CommerceAccountGroupRelPersistenceImpl
 				COMMERCEACCOUNTGROUPID_COLUMN_BITMASK);
 
 		_finderPathCountByC_C_C = new FinderPath(
-			CommerceAccountGroupRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAccountGroupRelModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByC_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			});
@@ -2392,10 +2197,6 @@ public class CommerceAccountGroupRelPersistenceImpl
 
 	private static final String _SQL_SELECT_COMMERCEACCOUNTGROUPREL =
 		"SELECT commerceAccountGroupRel FROM CommerceAccountGroupRel commerceAccountGroupRel";
-
-	private static final String
-		_SQL_SELECT_COMMERCEACCOUNTGROUPREL_WHERE_PKS_IN =
-			"SELECT commerceAccountGroupRel FROM CommerceAccountGroupRel commerceAccountGroupRel WHERE commerceAccountGroupRelId IN (";
 
 	private static final String _SQL_SELECT_COMMERCEACCOUNTGROUPREL_WHERE =
 		"SELECT commerceAccountGroupRel FROM CommerceAccountGroupRel commerceAccountGroupRel WHERE ";

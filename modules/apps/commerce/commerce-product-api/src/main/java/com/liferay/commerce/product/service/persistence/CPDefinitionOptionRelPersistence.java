@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.product.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionRelException;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the cp definition option rel service.
@@ -45,9 +40,6 @@ public interface CPDefinitionOptionRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionOptionRelUtil} to access the cp definition option rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CPDefinitionOptionRel> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the cp definition option rels where uuid = &#63;.
@@ -1363,8 +1355,5 @@ public interface CPDefinitionOptionRelPersistence
 	 * @return the number of cp definition option rels
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

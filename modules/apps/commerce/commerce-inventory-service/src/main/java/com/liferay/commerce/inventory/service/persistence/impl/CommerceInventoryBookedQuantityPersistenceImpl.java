@@ -16,9 +16,11 @@ package com.liferay.commerce.inventory.service.persistence.impl;
 
 import com.liferay.commerce.inventory.exception.NoSuchInventoryBookedQuantityException;
 import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
+import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantityTable;
 import com.liferay.commerce.inventory.model.impl.CommerceInventoryBookedQuantityImpl;
 import com.liferay.commerce.inventory.model.impl.CommerceInventoryBookedQuantityModelImpl;
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryBookedQuantityPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -35,21 +37,16 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -256,10 +253,6 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -626,8 +619,6 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -810,10 +801,6 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1179,8 +1166,6 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1385,10 +1370,6 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1778,8 +1759,6 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1805,21 +1784,14 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 		dbColumnNames.put(
 			"commerceInventoryBookedQuantityId", "CIBookedQuantityId");
 
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-				"_dbColumnNames");
-
-			field.setAccessible(true);
-
-			field.set(this, dbColumnNames);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
+		setDBColumnNames(dbColumnNames);
 
 		setModelClass(CommerceInventoryBookedQuantity.class);
+
+		setModelImplClass(CommerceInventoryBookedQuantityImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CommerceInventoryBookedQuantityTable.INSTANCE);
 	}
 
 	/**
@@ -1832,7 +1804,6 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity) {
 
 		entityCache.putResult(
-			CommerceInventoryBookedQuantityModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceInventoryBookedQuantityImpl.class,
 			commerceInventoryBookedQuantity.getPrimaryKey(),
 			commerceInventoryBookedQuantity);
@@ -1854,8 +1825,6 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 				commerceInventoryBookedQuantities) {
 
 			if (entityCache.getResult(
-					CommerceInventoryBookedQuantityModelImpl.
-						ENTITY_CACHE_ENABLED,
 					CommerceInventoryBookedQuantityImpl.class,
 					commerceInventoryBookedQuantity.getPrimaryKey()) == null) {
 
@@ -1895,7 +1864,6 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity) {
 
 		entityCache.removeResult(
-			CommerceInventoryBookedQuantityModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceInventoryBookedQuantityImpl.class,
 			commerceInventoryBookedQuantity.getPrimaryKey());
 
@@ -1915,12 +1883,12 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 				commerceInventoryBookedQuantities) {
 
 			entityCache.removeResult(
-				CommerceInventoryBookedQuantityModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceInventoryBookedQuantityImpl.class,
 				commerceInventoryBookedQuantity.getPrimaryKey());
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1928,7 +1896,6 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(
-				CommerceInventoryBookedQuantityModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceInventoryBookedQuantityImpl.class, primaryKey);
 		}
 	}
@@ -2131,10 +2098,7 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CommerceInventoryBookedQuantityModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				commerceInventoryBookedQuantityModelImpl.getSku()
 			};
@@ -2204,7 +2168,6 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 		}
 
 		entityCache.putResult(
-			CommerceInventoryBookedQuantityModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceInventoryBookedQuantityImpl.class,
 			commerceInventoryBookedQuantity.getPrimaryKey(),
 			commerceInventoryBookedQuantity, false);
@@ -2260,64 +2223,6 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 	/**
 	 * Returns the commerce inventory booked quantity with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the commerce inventory booked quantity
-	 * @return the commerce inventory booked quantity, or <code>null</code> if a commerce inventory booked quantity with the primary key could not be found
-	 */
-	@Override
-	public CommerceInventoryBookedQuantity fetchByPrimaryKey(
-		Serializable primaryKey) {
-
-		Serializable serializable = entityCache.getResult(
-			CommerceInventoryBookedQuantityModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceInventoryBookedQuantityImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
-			(CommerceInventoryBookedQuantity)serializable;
-
-		if (commerceInventoryBookedQuantity == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				commerceInventoryBookedQuantity =
-					(CommerceInventoryBookedQuantity)session.get(
-						CommerceInventoryBookedQuantityImpl.class, primaryKey);
-
-				if (commerceInventoryBookedQuantity != null) {
-					cacheResult(commerceInventoryBookedQuantity);
-				}
-				else {
-					entityCache.putResult(
-						CommerceInventoryBookedQuantityModelImpl.
-							ENTITY_CACHE_ENABLED,
-						CommerceInventoryBookedQuantityImpl.class, primaryKey,
-						nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CommerceInventoryBookedQuantityModelImpl.
-						ENTITY_CACHE_ENABLED,
-					CommerceInventoryBookedQuantityImpl.class, primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return commerceInventoryBookedQuantity;
-	}
-
-	/**
-	 * Returns the commerce inventory booked quantity with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param commerceInventoryBookedQuantityId the primary key of the commerce inventory booked quantity
 	 * @return the commerce inventory booked quantity, or <code>null</code> if a commerce inventory booked quantity with the primary key could not be found
 	 */
@@ -2327,115 +2232,6 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 
 		return fetchByPrimaryKey(
 			(Serializable)commerceInventoryBookedQuantityId);
-	}
-
-	@Override
-	public Map<Serializable, CommerceInventoryBookedQuantity>
-		fetchByPrimaryKeys(Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CommerceInventoryBookedQuantity> map =
-			new HashMap<Serializable, CommerceInventoryBookedQuantity>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
-				fetchByPrimaryKey(primaryKey);
-
-			if (commerceInventoryBookedQuantity != null) {
-				map.put(primaryKey, commerceInventoryBookedQuantity);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CommerceInventoryBookedQuantityModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceInventoryBookedQuantityImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(
-						primaryKey,
-						(CommerceInventoryBookedQuantity)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(_SQL_SELECT_COMMERCEINVENTORYBOOKEDQUANTITY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CommerceInventoryBookedQuantity
-					commerceInventoryBookedQuantity :
-						(List<CommerceInventoryBookedQuantity>)query.list()) {
-
-				map.put(
-					commerceInventoryBookedQuantity.getPrimaryKeyObj(),
-					commerceInventoryBookedQuantity);
-
-				cacheResult(commerceInventoryBookedQuantity);
-
-				uncachedPrimaryKeys.remove(
-					commerceInventoryBookedQuantity.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CommerceInventoryBookedQuantityModelImpl.
-						ENTITY_CACHE_ENABLED,
-					CommerceInventoryBookedQuantityImpl.class, primaryKey,
-					nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -2565,10 +2361,6 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2617,9 +2409,6 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2636,6 +2425,21 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 	}
 
 	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "CIBookedQuantityId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_COMMERCEINVENTORYBOOKEDQUANTITY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CommerceInventoryBookedQuantityModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2645,27 +2449,19 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceInventoryBookedQuantityModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceInventoryBookedQuantityModelImpl.FINDER_CACHE_ENABLED,
 			CommerceInventoryBookedQuantityImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceInventoryBookedQuantityModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceInventoryBookedQuantityModelImpl.FINDER_CACHE_ENABLED,
 			CommerceInventoryBookedQuantityImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CommerceInventoryBookedQuantityModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceInventoryBookedQuantityModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindBySku = new FinderPath(
-			CommerceInventoryBookedQuantityModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceInventoryBookedQuantityModelImpl.FINDER_CACHE_ENABLED,
 			CommerceInventoryBookedQuantityImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySku",
 			new String[] {
@@ -2674,22 +2470,16 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindBySku = new FinderPath(
-			CommerceInventoryBookedQuantityModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceInventoryBookedQuantityModelImpl.FINDER_CACHE_ENABLED,
 			CommerceInventoryBookedQuantityImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySku",
 			new String[] {String.class.getName()},
 			CommerceInventoryBookedQuantityModelImpl.SKU_COLUMN_BITMASK);
 
 		_finderPathCountBySku = new FinderPath(
-			CommerceInventoryBookedQuantityModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceInventoryBookedQuantityModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySku",
 			new String[] {String.class.getName()});
 
 		_finderPathWithPaginationFindByLtExpirationDate = new FinderPath(
-			CommerceInventoryBookedQuantityModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceInventoryBookedQuantityModelImpl.FINDER_CACHE_ENABLED,
 			CommerceInventoryBookedQuantityImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtExpirationDate",
 			new String[] {
@@ -2698,14 +2488,10 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 			});
 
 		_finderPathWithPaginationCountByLtExpirationDate = new FinderPath(
-			CommerceInventoryBookedQuantityModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceInventoryBookedQuantityModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"countByLtExpirationDate", new String[] {Date.class.getName()});
 
 		_finderPathWithPaginationFindByC_S = new FinderPath(
-			CommerceInventoryBookedQuantityModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceInventoryBookedQuantityModelImpl.FINDER_CACHE_ENABLED,
 			CommerceInventoryBookedQuantityImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S",
 			new String[] {
@@ -2715,8 +2501,6 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByC_S = new FinderPath(
-			CommerceInventoryBookedQuantityModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceInventoryBookedQuantityModelImpl.FINDER_CACHE_ENABLED,
 			CommerceInventoryBookedQuantityImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
 			new String[] {Long.class.getName(), String.class.getName()},
@@ -2724,8 +2508,6 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 			CommerceInventoryBookedQuantityModelImpl.SKU_COLUMN_BITMASK);
 
 		_finderPathCountByC_S = new FinderPath(
-			CommerceInventoryBookedQuantityModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceInventoryBookedQuantityModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
 			new String[] {Long.class.getName(), String.class.getName()});
 	}
@@ -2754,10 +2536,6 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 
 	private static final String _SQL_SELECT_COMMERCEINVENTORYBOOKEDQUANTITY =
 		"SELECT commerceInventoryBookedQuantity FROM CommerceInventoryBookedQuantity commerceInventoryBookedQuantity";
-
-	private static final String
-		_SQL_SELECT_COMMERCEINVENTORYBOOKEDQUANTITY_WHERE_PKS_IN =
-			"SELECT commerceInventoryBookedQuantity FROM CommerceInventoryBookedQuantity commerceInventoryBookedQuantity WHERE CIBookedQuantityId IN (";
 
 	private static final String
 		_SQL_SELECT_COMMERCEINVENTORYBOOKEDQUANTITY_WHERE =

@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.discount.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,28 +31,20 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceDiscountRuleWrapper
+	extends BaseModelWrapper<CommerceDiscountRule>
 	implements CommerceDiscountRule, ModelWrapper<CommerceDiscountRule> {
 
 	public CommerceDiscountRuleWrapper(
 		CommerceDiscountRule commerceDiscountRule) {
 
-		_commerceDiscountRule = commerceDiscountRule;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceDiscountRule.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceDiscountRule.class.getName();
+		super(commerceDiscountRule);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("commerceDiscountRuleId", getCommerceDiscountRuleId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -73,6 +61,12 @@ public class CommerceDiscountRuleWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long commerceDiscountRuleId = (Long)attributes.get(
 			"commerceDiscountRuleId");
 
@@ -135,17 +129,6 @@ public class CommerceDiscountRuleWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CommerceDiscountRuleWrapper(
-			(CommerceDiscountRule)_commerceDiscountRule.clone());
-	}
-
-	@Override
-	public int compareTo(CommerceDiscountRule commerceDiscountRule) {
-		return _commerceDiscountRule.compareTo(commerceDiscountRule);
-	}
-
 	/**
 	 * Returns the commerce discount ID of this commerce discount rule.
 	 *
@@ -153,7 +136,7 @@ public class CommerceDiscountRuleWrapper
 	 */
 	@Override
 	public long getCommerceDiscountId() {
-		return _commerceDiscountRule.getCommerceDiscountId();
+		return model.getCommerceDiscountId();
 	}
 
 	/**
@@ -163,7 +146,7 @@ public class CommerceDiscountRuleWrapper
 	 */
 	@Override
 	public long getCommerceDiscountRuleId() {
-		return _commerceDiscountRule.getCommerceDiscountRuleId();
+		return model.getCommerceDiscountRuleId();
 	}
 
 	/**
@@ -173,7 +156,7 @@ public class CommerceDiscountRuleWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceDiscountRule.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -183,12 +166,7 @@ public class CommerceDiscountRuleWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceDiscountRule.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceDiscountRule.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -198,7 +176,17 @@ public class CommerceDiscountRuleWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceDiscountRule.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce discount rule.
+	 *
+	 * @return the mvcc version of this commerce discount rule
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -208,7 +196,7 @@ public class CommerceDiscountRuleWrapper
 	 */
 	@Override
 	public String getName() {
-		return _commerceDiscountRule.getName();
+		return model.getName();
 	}
 
 	/**
@@ -218,24 +206,19 @@ public class CommerceDiscountRuleWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceDiscountRule.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceDiscountRule.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties
 		getSettingsProperties() {
 
-		return _commerceDiscountRule.getSettingsProperties();
+		return model.getSettingsProperties();
 	}
 
 	@Override
 	public String getSettingsProperty(String key) {
-		return _commerceDiscountRule.getSettingsProperty(key);
+		return model.getSettingsProperty(key);
 	}
 
 	/**
@@ -245,7 +228,7 @@ public class CommerceDiscountRuleWrapper
 	 */
 	@Override
 	public String getType() {
-		return _commerceDiscountRule.getType();
+		return model.getType();
 	}
 
 	/**
@@ -255,7 +238,7 @@ public class CommerceDiscountRuleWrapper
 	 */
 	@Override
 	public String getTypeSettings() {
-		return _commerceDiscountRule.getTypeSettings();
+		return model.getTypeSettings();
 	}
 
 	/**
@@ -265,7 +248,7 @@ public class CommerceDiscountRuleWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceDiscountRule.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -275,7 +258,7 @@ public class CommerceDiscountRuleWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceDiscountRule.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -285,37 +268,12 @@ public class CommerceDiscountRuleWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceDiscountRule.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceDiscountRule.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceDiscountRule.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceDiscountRule.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceDiscountRule.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_commerceDiscountRule.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceDiscountRule.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -325,7 +283,7 @@ public class CommerceDiscountRuleWrapper
 	 */
 	@Override
 	public void setCommerceDiscountId(long commerceDiscountId) {
-		_commerceDiscountRule.setCommerceDiscountId(commerceDiscountId);
+		model.setCommerceDiscountId(commerceDiscountId);
 	}
 
 	/**
@@ -335,7 +293,7 @@ public class CommerceDiscountRuleWrapper
 	 */
 	@Override
 	public void setCommerceDiscountRuleId(long commerceDiscountRuleId) {
-		_commerceDiscountRule.setCommerceDiscountRuleId(commerceDiscountRuleId);
+		model.setCommerceDiscountRuleId(commerceDiscountRuleId);
 	}
 
 	/**
@@ -345,7 +303,7 @@ public class CommerceDiscountRuleWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceDiscountRule.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -355,24 +313,7 @@ public class CommerceDiscountRuleWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceDiscountRule.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceDiscountRule.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceDiscountRule.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceDiscountRule.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -382,7 +323,17 @@ public class CommerceDiscountRuleWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceDiscountRule.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this commerce discount rule.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce discount rule
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -392,12 +343,7 @@ public class CommerceDiscountRuleWrapper
 	 */
 	@Override
 	public void setName(String name) {
-		_commerceDiscountRule.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_commerceDiscountRule.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -407,19 +353,14 @@ public class CommerceDiscountRuleWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceDiscountRule.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceDiscountRule.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	@Override
 	public void setSettingsProperties(
-		com.liferay.portal.kernel.util.UnicodeProperties settingsProperties) {
+		com.liferay.portal.kernel.util.UnicodeProperties unicodeProperties) {
 
-		_commerceDiscountRule.setSettingsProperties(settingsProperties);
+		model.setSettingsProperties(unicodeProperties);
 	}
 
 	/**
@@ -429,7 +370,7 @@ public class CommerceDiscountRuleWrapper
 	 */
 	@Override
 	public void setType(String type) {
-		_commerceDiscountRule.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -439,7 +380,7 @@ public class CommerceDiscountRuleWrapper
 	 */
 	@Override
 	public void setTypeSettings(String typeSettings) {
-		_commerceDiscountRule.setTypeSettings(typeSettings);
+		model.setTypeSettings(typeSettings);
 	}
 
 	/**
@@ -449,7 +390,7 @@ public class CommerceDiscountRuleWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceDiscountRule.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -459,7 +400,7 @@ public class CommerceDiscountRuleWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceDiscountRule.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -469,81 +410,14 @@ public class CommerceDiscountRuleWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceDiscountRule.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceDiscountRule>
-		toCacheModel() {
+	protected CommerceDiscountRuleWrapper wrap(
+		CommerceDiscountRule commerceDiscountRule) {
 
-		return _commerceDiscountRule.toCacheModel();
+		return new CommerceDiscountRuleWrapper(commerceDiscountRule);
 	}
-
-	@Override
-	public CommerceDiscountRule toEscapedModel() {
-		return new CommerceDiscountRuleWrapper(
-			_commerceDiscountRule.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commerceDiscountRule.toString();
-	}
-
-	@Override
-	public CommerceDiscountRule toUnescapedModel() {
-		return new CommerceDiscountRuleWrapper(
-			_commerceDiscountRule.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceDiscountRule.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceDiscountRuleWrapper)) {
-			return false;
-		}
-
-		CommerceDiscountRuleWrapper commerceDiscountRuleWrapper =
-			(CommerceDiscountRuleWrapper)object;
-
-		if (Objects.equals(
-				_commerceDiscountRule,
-				commerceDiscountRuleWrapper._commerceDiscountRule)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceDiscountRule getWrappedModel() {
-		return _commerceDiscountRule;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceDiscountRule.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceDiscountRule.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceDiscountRule.resetOriginalValues();
-	}
-
-	private final CommerceDiscountRule _commerceDiscountRule;
 
 }

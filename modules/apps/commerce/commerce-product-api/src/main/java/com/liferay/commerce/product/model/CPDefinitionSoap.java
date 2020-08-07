@@ -31,6 +31,7 @@ public class CPDefinitionSoap implements Serializable {
 	public static CPDefinitionSoap toSoapModel(CPDefinition model) {
 		CPDefinitionSoap soapModel = new CPDefinitionSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setDefaultLanguageId(model.getDefaultLanguageId());
 		soapModel.setCPDefinitionId(model.getCPDefinitionId());
@@ -135,6 +136,14 @@ public class CPDefinitionSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCPDefinitionId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -561,6 +570,7 @@ public class CPDefinitionSoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _defaultLanguageId;
 	private long _CPDefinitionId;

@@ -20,6 +20,7 @@ import com.liferay.commerce.bom.service.persistence.CommerceBOMDefinitionPersist
 import com.liferay.commerce.bom.service.persistence.CommerceBOMEntryPersistence;
 import com.liferay.commerce.bom.service.persistence.CommerceBOMFolderApplicationRelPersistence;
 import com.liferay.commerce.bom.service.persistence.CommerceBOMFolderPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -141,6 +142,11 @@ public abstract class CommerceBOMEntryLocalServiceBaseImpl
 		CommerceBOMEntry commerceBOMEntry) {
 
 		return commerceBOMEntryPersistence.remove(commerceBOMEntry);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return commerceBOMEntryPersistence.dslQuery(dslQuery);
 	}
 
 	@Override
@@ -292,6 +298,16 @@ public abstract class CommerceBOMEntryLocalServiceBaseImpl
 		actionableDynamicQuery.setModelClass(CommerceBOMEntry.class);
 
 		actionableDynamicQuery.setPrimaryKeyPropertyName("commerceBOMEntryId");
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
+
+		return commerceBOMEntryPersistence.create(
+			((Long)primaryKeyObj).longValue());
 	}
 
 	/**

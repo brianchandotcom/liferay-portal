@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.product.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionSpecificationOptionValueException;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the cp definition specification option value service.
@@ -45,9 +40,6 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionSpecificationOptionValueUtil} to access the cp definition specification option value persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CPDefinitionSpecificationOptionValue>
-		fetchByPrimaryKeys(Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the cp definition specification option values where uuid = &#63;.
@@ -1493,8 +1485,5 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	 * @return the number of cp definition specification option values
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

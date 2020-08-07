@@ -34,6 +34,7 @@ public class CPFriendlyURLEntrySoap implements Serializable {
 	public static CPFriendlyURLEntrySoap toSoapModel(CPFriendlyURLEntry model) {
 		CPFriendlyURLEntrySoap soapModel = new CPFriendlyURLEntrySoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setCPFriendlyURLEntryId(model.getCPFriendlyURLEntryId());
 		soapModel.setGroupId(model.getGroupId());
@@ -107,6 +108,14 @@ public class CPFriendlyURLEntrySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCPFriendlyURLEntryId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -217,6 +226,7 @@ public class CPFriendlyURLEntrySoap implements Serializable {
 		_main = main;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _CPFriendlyURLEntryId;
 	private long _groupId;

@@ -15,9 +15,10 @@
 package com.liferay.commerce.model.impl;
 
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -35,7 +36,7 @@ import java.util.Date;
  * @generated
  */
 public class CommerceOrderCacheModel
-	implements CacheModel<CommerceOrder>, Externalizable {
+	implements CacheModel<CommerceOrder>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -50,7 +51,9 @@ public class CommerceOrderCacheModel
 		CommerceOrderCacheModel commerceOrderCacheModel =
 			(CommerceOrderCacheModel)object;
 
-		if (commerceOrderId == commerceOrderCacheModel.commerceOrderId) {
+		if ((commerceOrderId == commerceOrderCacheModel.commerceOrderId) &&
+			(mvccVersion == commerceOrderCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -59,14 +62,28 @@ public class CommerceOrderCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, commerceOrderId);
+		int hashCode = HashUtil.hash(0, commerceOrderId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(137);
+		StringBundler sb = new StringBundler(139);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", externalReferenceCode=");
 		sb.append(externalReferenceCode);
@@ -210,6 +227,8 @@ public class CommerceOrderCacheModel
 	@Override
 	public CommerceOrder toEntityModel() {
 		CommerceOrderImpl commerceOrderImpl = new CommerceOrderImpl();
+
+		commerceOrderImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			commerceOrderImpl.setUuid("");
@@ -427,6 +446,7 @@ public class CommerceOrderCacheModel
 	public void readExternal(ObjectInput objectInput)
 		throws ClassNotFoundException, IOException {
 
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		externalReferenceCode = objectInput.readUTF();
 
@@ -525,6 +545,8 @@ public class CommerceOrderCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -678,6 +700,7 @@ public class CommerceOrderCacheModel
 		objectOutput.writeLong(statusDate);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public String externalReferenceCode;
 	public long commerceOrderId;

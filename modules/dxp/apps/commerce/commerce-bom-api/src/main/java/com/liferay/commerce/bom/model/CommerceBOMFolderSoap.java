@@ -31,6 +31,7 @@ public class CommerceBOMFolderSoap implements Serializable {
 	public static CommerceBOMFolderSoap toSoapModel(CommerceBOMFolder model) {
 		CommerceBOMFolderSoap soapModel = new CommerceBOMFolderSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCommerceBOMFolderId(model.getCommerceBOMFolderId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -101,6 +102,14 @@ public class CommerceBOMFolderSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceBOMFolderId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getCommerceBOMFolderId() {
@@ -183,6 +192,7 @@ public class CommerceBOMFolderSoap implements Serializable {
 		_treePath = treePath;
 	}
 
+	private long _mvccVersion;
 	private long _commerceBOMFolderId;
 	private long _companyId;
 	private long _userId;

@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,26 +31,18 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceAddressWrapper
+	extends BaseModelWrapper<CommerceAddress>
 	implements CommerceAddress, ModelWrapper<CommerceAddress> {
 
 	public CommerceAddressWrapper(CommerceAddress commerceAddress) {
-		_commerceAddress = commerceAddress;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceAddress.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceAddress.class.getName();
+		super(commerceAddress);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("commerceAddressId", getCommerceAddressId());
 		attributes.put("groupId", getGroupId());
@@ -86,6 +74,12 @@ public class CommerceAddressWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String externalReferenceCode = (String)attributes.get(
 			"externalReferenceCode");
 
@@ -239,19 +233,8 @@ public class CommerceAddressWrapper
 	}
 
 	@Override
-	public Object clone() {
-		return new CommerceAddressWrapper(
-			(CommerceAddress)_commerceAddress.clone());
-	}
-
-	@Override
-	public int compareTo(CommerceAddress commerceAddress) {
-		return _commerceAddress.compareTo(commerceAddress);
-	}
-
-	@Override
 	public CommerceCountry fetchCommerceCountry() {
-		return _commerceAddress.fetchCommerceCountry();
+		return model.fetchCommerceCountry();
 	}
 
 	/**
@@ -261,7 +244,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public String getCity() {
-		return _commerceAddress.getCity();
+		return model.getCity();
 	}
 
 	/**
@@ -271,7 +254,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public String getClassName() {
-		return _commerceAddress.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -281,7 +264,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public long getClassNameId() {
-		return _commerceAddress.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -291,7 +274,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public long getClassPK() {
-		return _commerceAddress.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -301,14 +284,14 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public long getCommerceAddressId() {
-		return _commerceAddress.getCommerceAddressId();
+		return model.getCommerceAddressId();
 	}
 
 	@Override
 	public CommerceCountry getCommerceCountry()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceAddress.getCommerceCountry();
+		return model.getCommerceCountry();
 	}
 
 	/**
@@ -318,14 +301,14 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public long getCommerceCountryId() {
-		return _commerceAddress.getCommerceCountryId();
+		return model.getCommerceCountryId();
 	}
 
 	@Override
 	public CommerceRegion getCommerceRegion()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceAddress.getCommerceRegion();
+		return model.getCommerceRegion();
 	}
 
 	/**
@@ -335,7 +318,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public long getCommerceRegionId() {
-		return _commerceAddress.getCommerceRegionId();
+		return model.getCommerceRegionId();
 	}
 
 	/**
@@ -345,7 +328,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceAddress.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -355,7 +338,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceAddress.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -365,7 +348,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public boolean getDefaultBilling() {
-		return _commerceAddress.getDefaultBilling();
+		return model.getDefaultBilling();
 	}
 
 	/**
@@ -375,7 +358,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public boolean getDefaultShipping() {
-		return _commerceAddress.getDefaultShipping();
+		return model.getDefaultShipping();
 	}
 
 	/**
@@ -385,12 +368,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public String getDescription() {
-		return _commerceAddress.getDescription();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceAddress.getExpandoBridge();
+		return model.getDescription();
 	}
 
 	/**
@@ -400,7 +378,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public String getExternalReferenceCode() {
-		return _commerceAddress.getExternalReferenceCode();
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -410,7 +388,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _commerceAddress.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -420,7 +398,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public double getLatitude() {
-		return _commerceAddress.getLatitude();
+		return model.getLatitude();
 	}
 
 	/**
@@ -430,7 +408,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public double getLongitude() {
-		return _commerceAddress.getLongitude();
+		return model.getLongitude();
 	}
 
 	/**
@@ -440,7 +418,17 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceAddress.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce address.
+	 *
+	 * @return the mvcc version of this commerce address
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -450,7 +438,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public String getName() {
-		return _commerceAddress.getName();
+		return model.getName();
 	}
 
 	/**
@@ -460,7 +448,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public String getPhoneNumber() {
-		return _commerceAddress.getPhoneNumber();
+		return model.getPhoneNumber();
 	}
 
 	/**
@@ -470,12 +458,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceAddress.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceAddress.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -485,7 +468,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public String getStreet1() {
-		return _commerceAddress.getStreet1();
+		return model.getStreet1();
 	}
 
 	/**
@@ -495,7 +478,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public String getStreet2() {
-		return _commerceAddress.getStreet2();
+		return model.getStreet2();
 	}
 
 	/**
@@ -505,7 +488,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public String getStreet3() {
-		return _commerceAddress.getStreet3();
+		return model.getStreet3();
 	}
 
 	/**
@@ -515,7 +498,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public int getType() {
-		return _commerceAddress.getType();
+		return model.getType();
 	}
 
 	/**
@@ -525,7 +508,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceAddress.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -535,7 +518,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceAddress.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -545,7 +528,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceAddress.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -555,17 +538,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public String getZip() {
-		return _commerceAddress.getZip();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceAddress.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceAddress.isCachedModel();
+		return model.getZip();
 	}
 
 	/**
@@ -575,7 +548,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public boolean isDefaultBilling() {
-		return _commerceAddress.isDefaultBilling();
+		return model.isDefaultBilling();
 	}
 
 	/**
@@ -585,37 +558,22 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public boolean isDefaultShipping() {
-		return _commerceAddress.isDefaultShipping();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceAddress.isEscapedModel();
+		return model.isDefaultShipping();
 	}
 
 	@Override
 	public boolean isGeolocated() {
-		return _commerceAddress.isGeolocated();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceAddress.isNew();
+		return model.isGeolocated();
 	}
 
 	@Override
 	public boolean isSameAddress(CommerceAddress commerceAddress) {
-		return _commerceAddress.isSameAddress(commerceAddress);
+		return model.isSameAddress(commerceAddress);
 	}
 
 	@Override
 	public void persist() {
-		_commerceAddress.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceAddress.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -625,12 +583,12 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public void setCity(String city) {
-		_commerceAddress.setCity(city);
+		model.setCity(city);
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_commerceAddress.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -640,7 +598,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public void setClassNameId(long classNameId) {
-		_commerceAddress.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -650,7 +608,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public void setClassPK(long classPK) {
-		_commerceAddress.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -660,7 +618,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public void setCommerceAddressId(long commerceAddressId) {
-		_commerceAddress.setCommerceAddressId(commerceAddressId);
+		model.setCommerceAddressId(commerceAddressId);
 	}
 
 	/**
@@ -670,7 +628,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public void setCommerceCountryId(long commerceCountryId) {
-		_commerceAddress.setCommerceCountryId(commerceCountryId);
+		model.setCommerceCountryId(commerceCountryId);
 	}
 
 	/**
@@ -680,7 +638,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public void setCommerceRegionId(long commerceRegionId) {
-		_commerceAddress.setCommerceRegionId(commerceRegionId);
+		model.setCommerceRegionId(commerceRegionId);
 	}
 
 	/**
@@ -690,7 +648,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceAddress.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -700,7 +658,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceAddress.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -710,7 +668,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public void setDefaultBilling(boolean defaultBilling) {
-		_commerceAddress.setDefaultBilling(defaultBilling);
+		model.setDefaultBilling(defaultBilling);
 	}
 
 	/**
@@ -720,7 +678,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public void setDefaultShipping(boolean defaultShipping) {
-		_commerceAddress.setDefaultShipping(defaultShipping);
+		model.setDefaultShipping(defaultShipping);
 	}
 
 	/**
@@ -730,24 +688,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public void setDescription(String description) {
-		_commerceAddress.setDescription(description);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceAddress.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceAddress.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceAddress.setExpandoBridgeAttributes(serviceContext);
+		model.setDescription(description);
 	}
 
 	/**
@@ -757,7 +698,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
-		_commerceAddress.setExternalReferenceCode(externalReferenceCode);
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**
@@ -767,7 +708,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_commerceAddress.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -777,7 +718,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public void setLatitude(double latitude) {
-		_commerceAddress.setLatitude(latitude);
+		model.setLatitude(latitude);
 	}
 
 	/**
@@ -787,7 +728,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public void setLongitude(double longitude) {
-		_commerceAddress.setLongitude(longitude);
+		model.setLongitude(longitude);
 	}
 
 	/**
@@ -797,7 +738,17 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceAddress.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this commerce address.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce address
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -807,12 +758,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public void setName(String name) {
-		_commerceAddress.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_commerceAddress.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -822,7 +768,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public void setPhoneNumber(String phoneNumber) {
-		_commerceAddress.setPhoneNumber(phoneNumber);
+		model.setPhoneNumber(phoneNumber);
 	}
 
 	/**
@@ -832,12 +778,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceAddress.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceAddress.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -847,7 +788,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public void setStreet1(String street1) {
-		_commerceAddress.setStreet1(street1);
+		model.setStreet1(street1);
 	}
 
 	/**
@@ -857,7 +798,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public void setStreet2(String street2) {
-		_commerceAddress.setStreet2(street2);
+		model.setStreet2(street2);
 	}
 
 	/**
@@ -867,7 +808,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public void setStreet3(String street3) {
-		_commerceAddress.setStreet3(street3);
+		model.setStreet3(street3);
 	}
 
 	/**
@@ -877,7 +818,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public void setType(int type) {
-		_commerceAddress.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -887,7 +828,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceAddress.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -897,7 +838,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceAddress.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -907,7 +848,7 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceAddress.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -917,78 +858,12 @@ public class CommerceAddressWrapper
 	 */
 	@Override
 	public void setZip(String zip) {
-		_commerceAddress.setZip(zip);
+		model.setZip(zip);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceAddress>
-		toCacheModel() {
-
-		return _commerceAddress.toCacheModel();
+	protected CommerceAddressWrapper wrap(CommerceAddress commerceAddress) {
+		return new CommerceAddressWrapper(commerceAddress);
 	}
-
-	@Override
-	public CommerceAddress toEscapedModel() {
-		return new CommerceAddressWrapper(_commerceAddress.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commerceAddress.toString();
-	}
-
-	@Override
-	public CommerceAddress toUnescapedModel() {
-		return new CommerceAddressWrapper(_commerceAddress.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceAddress.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceAddressWrapper)) {
-			return false;
-		}
-
-		CommerceAddressWrapper commerceAddressWrapper =
-			(CommerceAddressWrapper)object;
-
-		if (Objects.equals(
-				_commerceAddress, commerceAddressWrapper._commerceAddress)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceAddress getWrappedModel() {
-		return _commerceAddress;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceAddress.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceAddress.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceAddress.resetOriginalValues();
-	}
-
-	private final CommerceAddress _commerceAddress;
 
 }

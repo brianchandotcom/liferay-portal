@@ -20,6 +20,7 @@ import com.liferay.commerce.model.CommerceCountrySoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,7 +36,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -81,11 +81,12 @@ public class CommerceCountryModelImpl
 	public static final String TABLE_NAME = "CommerceCountry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"commerceCountryId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
-		{"billingAllowed", Types.BOOLEAN}, {"shippingAllowed", Types.BOOLEAN},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"commerceCountryId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"name", Types.VARCHAR}, {"billingAllowed", Types.BOOLEAN},
+		{"shippingAllowed", Types.BOOLEAN},
 		{"twoLettersISOCode", Types.VARCHAR},
 		{"threeLettersISOCode", Types.VARCHAR},
 		{"numericISOCode", Types.INTEGER}, {"subjectToVAT", Types.BOOLEAN},
@@ -98,6 +99,7 @@ public class CommerceCountryModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceCountryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -119,7 +121,7 @@ public class CommerceCountryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceCountry (uuid_ VARCHAR(75) null,commerceCountryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,billingAllowed BOOLEAN,shippingAllowed BOOLEAN,twoLettersISOCode VARCHAR(75) null,threeLettersISOCode VARCHAR(75) null,numericISOCode INTEGER,subjectToVAT BOOLEAN,priority DOUBLE,active_ BOOLEAN,lastPublishDate DATE null,channelFilterEnabled BOOLEAN)";
+		"create table CommerceCountry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,commerceCountryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,billingAllowed BOOLEAN,shippingAllowed BOOLEAN,twoLettersISOCode VARCHAR(75) null,threeLettersISOCode VARCHAR(75) null,numericISOCode INTEGER,subjectToVAT BOOLEAN,priority DOUBLE,active_ BOOLEAN,lastPublishDate DATE null,channelFilterEnabled BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceCountry";
 
@@ -135,20 +137,23 @@ public class CommerceCountryModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.model.CommerceCountry"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.model.CommerceCountry"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.model.CommerceCountry"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long ACTIVE_COLUMN_BITMASK = 1L;
 
@@ -179,6 +184,7 @@ public class CommerceCountryModelImpl
 
 		CommerceCountry model = new CommerceCountryImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCommerceCountryId(soapModel.getCommerceCountryId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -280,9 +286,6 @@ public class CommerceCountryModelImpl
 				attributeGetterFunction.apply((CommerceCountry)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -357,425 +360,120 @@ public class CommerceCountryModelImpl
 			new LinkedHashMap<String, BiConsumer<CommerceCountry, ?>>();
 
 		attributeGetterFunctions.put(
-			"uuid",
-			new Function<CommerceCountry, Object>() {
-
-				@Override
-				public Object apply(CommerceCountry commerceCountry) {
-					return commerceCountry.getUuid();
-				}
-
-			});
+			"mvccVersion", CommerceCountry::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceCountry, Long>)CommerceCountry::setMvccVersion);
+		attributeGetterFunctions.put("uuid", CommerceCountry::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
-			new BiConsumer<CommerceCountry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCountry commerceCountry, Object uuidObject) {
-
-					commerceCountry.setUuid((String)uuidObject);
-				}
-
-			});
+			(BiConsumer<CommerceCountry, String>)CommerceCountry::setUuid);
 		attributeGetterFunctions.put(
-			"commerceCountryId",
-			new Function<CommerceCountry, Object>() {
-
-				@Override
-				public Object apply(CommerceCountry commerceCountry) {
-					return commerceCountry.getCommerceCountryId();
-				}
-
-			});
+			"commerceCountryId", CommerceCountry::getCommerceCountryId);
 		attributeSetterBiConsumers.put(
 			"commerceCountryId",
-			new BiConsumer<CommerceCountry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCountry commerceCountry,
-					Object commerceCountryIdObject) {
-
-					commerceCountry.setCommerceCountryId(
-						(Long)commerceCountryIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceCountry, Long>)
+				CommerceCountry::setCommerceCountryId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommerceCountry, Object>() {
-
-				@Override
-				public Object apply(CommerceCountry commerceCountry) {
-					return commerceCountry.getCompanyId();
-				}
-
-			});
+			"companyId", CommerceCountry::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommerceCountry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCountry commerceCountry, Object companyIdObject) {
-
-					commerceCountry.setCompanyId((Long)companyIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommerceCountry, Object>() {
-
-				@Override
-				public Object apply(CommerceCountry commerceCountry) {
-					return commerceCountry.getUserId();
-				}
-
-			});
+			(BiConsumer<CommerceCountry, Long>)CommerceCountry::setCompanyId);
+		attributeGetterFunctions.put("userId", CommerceCountry::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommerceCountry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCountry commerceCountry, Object userIdObject) {
-
-					commerceCountry.setUserId((Long)userIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommerceCountry, Object>() {
-
-				@Override
-				public Object apply(CommerceCountry commerceCountry) {
-					return commerceCountry.getUserName();
-				}
-
-			});
+			(BiConsumer<CommerceCountry, Long>)CommerceCountry::setUserId);
+		attributeGetterFunctions.put("userName", CommerceCountry::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommerceCountry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCountry commerceCountry, Object userNameObject) {
-
-					commerceCountry.setUserName((String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceCountry, String>)CommerceCountry::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommerceCountry, Object>() {
-
-				@Override
-				public Object apply(CommerceCountry commerceCountry) {
-					return commerceCountry.getCreateDate();
-				}
-
-			});
+			"createDate", CommerceCountry::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommerceCountry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCountry commerceCountry, Object createDateObject) {
-
-					commerceCountry.setCreateDate((Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceCountry, Date>)CommerceCountry::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CommerceCountry, Object>() {
-
-				@Override
-				public Object apply(CommerceCountry commerceCountry) {
-					return commerceCountry.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CommerceCountry::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommerceCountry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCountry commerceCountry,
-					Object modifiedDateObject) {
-
-					commerceCountry.setModifiedDate((Date)modifiedDateObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"name",
-			new Function<CommerceCountry, Object>() {
-
-				@Override
-				public Object apply(CommerceCountry commerceCountry) {
-					return commerceCountry.getName();
-				}
-
-			});
+			(BiConsumer<CommerceCountry, Date>)
+				CommerceCountry::setModifiedDate);
+		attributeGetterFunctions.put("name", CommerceCountry::getName);
 		attributeSetterBiConsumers.put(
 			"name",
-			new BiConsumer<CommerceCountry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCountry commerceCountry, Object nameObject) {
-
-					commerceCountry.setName((String)nameObject);
-				}
-
-			});
+			(BiConsumer<CommerceCountry, String>)CommerceCountry::setName);
 		attributeGetterFunctions.put(
-			"billingAllowed",
-			new Function<CommerceCountry, Object>() {
-
-				@Override
-				public Object apply(CommerceCountry commerceCountry) {
-					return commerceCountry.getBillingAllowed();
-				}
-
-			});
+			"billingAllowed", CommerceCountry::getBillingAllowed);
 		attributeSetterBiConsumers.put(
 			"billingAllowed",
-			new BiConsumer<CommerceCountry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCountry commerceCountry,
-					Object billingAllowedObject) {
-
-					commerceCountry.setBillingAllowed(
-						(Boolean)billingAllowedObject);
-				}
-
-			});
+			(BiConsumer<CommerceCountry, Boolean>)
+				CommerceCountry::setBillingAllowed);
 		attributeGetterFunctions.put(
-			"shippingAllowed",
-			new Function<CommerceCountry, Object>() {
-
-				@Override
-				public Object apply(CommerceCountry commerceCountry) {
-					return commerceCountry.getShippingAllowed();
-				}
-
-			});
+			"shippingAllowed", CommerceCountry::getShippingAllowed);
 		attributeSetterBiConsumers.put(
 			"shippingAllowed",
-			new BiConsumer<CommerceCountry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCountry commerceCountry,
-					Object shippingAllowedObject) {
-
-					commerceCountry.setShippingAllowed(
-						(Boolean)shippingAllowedObject);
-				}
-
-			});
+			(BiConsumer<CommerceCountry, Boolean>)
+				CommerceCountry::setShippingAllowed);
 		attributeGetterFunctions.put(
-			"twoLettersISOCode",
-			new Function<CommerceCountry, Object>() {
-
-				@Override
-				public Object apply(CommerceCountry commerceCountry) {
-					return commerceCountry.getTwoLettersISOCode();
-				}
-
-			});
+			"twoLettersISOCode", CommerceCountry::getTwoLettersISOCode);
 		attributeSetterBiConsumers.put(
 			"twoLettersISOCode",
-			new BiConsumer<CommerceCountry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCountry commerceCountry,
-					Object twoLettersISOCodeObject) {
-
-					commerceCountry.setTwoLettersISOCode(
-						(String)twoLettersISOCodeObject);
-				}
-
-			});
+			(BiConsumer<CommerceCountry, String>)
+				CommerceCountry::setTwoLettersISOCode);
 		attributeGetterFunctions.put(
-			"threeLettersISOCode",
-			new Function<CommerceCountry, Object>() {
-
-				@Override
-				public Object apply(CommerceCountry commerceCountry) {
-					return commerceCountry.getThreeLettersISOCode();
-				}
-
-			});
+			"threeLettersISOCode", CommerceCountry::getThreeLettersISOCode);
 		attributeSetterBiConsumers.put(
 			"threeLettersISOCode",
-			new BiConsumer<CommerceCountry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCountry commerceCountry,
-					Object threeLettersISOCodeObject) {
-
-					commerceCountry.setThreeLettersISOCode(
-						(String)threeLettersISOCodeObject);
-				}
-
-			});
+			(BiConsumer<CommerceCountry, String>)
+				CommerceCountry::setThreeLettersISOCode);
 		attributeGetterFunctions.put(
-			"numericISOCode",
-			new Function<CommerceCountry, Object>() {
-
-				@Override
-				public Object apply(CommerceCountry commerceCountry) {
-					return commerceCountry.getNumericISOCode();
-				}
-
-			});
+			"numericISOCode", CommerceCountry::getNumericISOCode);
 		attributeSetterBiConsumers.put(
 			"numericISOCode",
-			new BiConsumer<CommerceCountry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCountry commerceCountry,
-					Object numericISOCodeObject) {
-
-					commerceCountry.setNumericISOCode(
-						(Integer)numericISOCodeObject);
-				}
-
-			});
+			(BiConsumer<CommerceCountry, Integer>)
+				CommerceCountry::setNumericISOCode);
 		attributeGetterFunctions.put(
-			"subjectToVAT",
-			new Function<CommerceCountry, Object>() {
-
-				@Override
-				public Object apply(CommerceCountry commerceCountry) {
-					return commerceCountry.getSubjectToVAT();
-				}
-
-			});
+			"subjectToVAT", CommerceCountry::getSubjectToVAT);
 		attributeSetterBiConsumers.put(
 			"subjectToVAT",
-			new BiConsumer<CommerceCountry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCountry commerceCountry,
-					Object subjectToVATObject) {
-
-					commerceCountry.setSubjectToVAT(
-						(Boolean)subjectToVATObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"priority",
-			new Function<CommerceCountry, Object>() {
-
-				@Override
-				public Object apply(CommerceCountry commerceCountry) {
-					return commerceCountry.getPriority();
-				}
-
-			});
+			(BiConsumer<CommerceCountry, Boolean>)
+				CommerceCountry::setSubjectToVAT);
+		attributeGetterFunctions.put("priority", CommerceCountry::getPriority);
 		attributeSetterBiConsumers.put(
 			"priority",
-			new BiConsumer<CommerceCountry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCountry commerceCountry, Object priorityObject) {
-
-					commerceCountry.setPriority((Double)priorityObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"active",
-			new Function<CommerceCountry, Object>() {
-
-				@Override
-				public Object apply(CommerceCountry commerceCountry) {
-					return commerceCountry.getActive();
-				}
-
-			});
+			(BiConsumer<CommerceCountry, Double>)CommerceCountry::setPriority);
+		attributeGetterFunctions.put("active", CommerceCountry::getActive);
 		attributeSetterBiConsumers.put(
 			"active",
-			new BiConsumer<CommerceCountry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCountry commerceCountry, Object activeObject) {
-
-					commerceCountry.setActive((Boolean)activeObject);
-				}
-
-			});
+			(BiConsumer<CommerceCountry, Boolean>)CommerceCountry::setActive);
 		attributeGetterFunctions.put(
-			"lastPublishDate",
-			new Function<CommerceCountry, Object>() {
-
-				@Override
-				public Object apply(CommerceCountry commerceCountry) {
-					return commerceCountry.getLastPublishDate();
-				}
-
-			});
+			"lastPublishDate", CommerceCountry::getLastPublishDate);
 		attributeSetterBiConsumers.put(
 			"lastPublishDate",
-			new BiConsumer<CommerceCountry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCountry commerceCountry,
-					Object lastPublishDateObject) {
-
-					commerceCountry.setLastPublishDate(
-						(Date)lastPublishDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceCountry, Date>)
+				CommerceCountry::setLastPublishDate);
 		attributeGetterFunctions.put(
-			"channelFilterEnabled",
-			new Function<CommerceCountry, Object>() {
-
-				@Override
-				public Object apply(CommerceCountry commerceCountry) {
-					return commerceCountry.getChannelFilterEnabled();
-				}
-
-			});
+			"channelFilterEnabled", CommerceCountry::getChannelFilterEnabled);
 		attributeSetterBiConsumers.put(
 			"channelFilterEnabled",
-			new BiConsumer<CommerceCountry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCountry commerceCountry,
-					Object channelFilterEnabledObject) {
-
-					commerceCountry.setChannelFilterEnabled(
-						(Boolean)channelFilterEnabledObject);
-				}
-
-			});
+			(BiConsumer<CommerceCountry, Boolean>)
+				CommerceCountry::setChannelFilterEnabled);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1328,6 +1026,7 @@ public class CommerceCountryModelImpl
 	public Object clone() {
 		CommerceCountryImpl commerceCountryImpl = new CommerceCountryImpl();
 
+		commerceCountryImpl.setMvccVersion(getMvccVersion());
 		commerceCountryImpl.setUuid(getUuid());
 		commerceCountryImpl.setCommerceCountryId(getCommerceCountryId());
 		commerceCountryImpl.setCompanyId(getCompanyId());
@@ -1400,11 +1099,19 @@ public class CommerceCountryModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -1445,6 +1152,8 @@ public class CommerceCountryModelImpl
 	public CacheModel<CommerceCountry> toCacheModel() {
 		CommerceCountryCacheModel commerceCountryCacheModel =
 			new CommerceCountryCacheModel();
+
+		commerceCountryCacheModel.mvccVersion = getMvccVersion();
 
 		commerceCountryCacheModel.uuid = getUuid();
 
@@ -1612,6 +1321,7 @@ public class CommerceCountryModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _commerceCountryId;

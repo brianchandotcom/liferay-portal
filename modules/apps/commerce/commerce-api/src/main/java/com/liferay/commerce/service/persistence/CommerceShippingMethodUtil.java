@@ -709,10 +709,6 @@ public class CommerceShippingMethodUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CommerceShippingMethodPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

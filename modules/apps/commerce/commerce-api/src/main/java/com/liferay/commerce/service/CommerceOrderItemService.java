@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.service;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,6 +33,8 @@ import java.math.BigDecimal;
 
 import java.util.Date;
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the remote service interface for CommerceOrderItem. Methods of this

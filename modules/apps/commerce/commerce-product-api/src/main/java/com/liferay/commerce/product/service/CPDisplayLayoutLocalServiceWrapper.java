@@ -92,6 +92,17 @@ public class CPDisplayLayoutLocalServiceWrapper
 			CPDisplayLayoutId);
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDisplayLayoutLocalService.createPersistedModel(primaryKeyObj);
+	}
+
 	@Override
 	public com.liferay.commerce.product.model.CPDisplayLayout
 		deleteCPDisplayLayout(Class<?> clazz, long classPK) {
@@ -162,6 +173,11 @@ public class CPDisplayLayoutLocalServiceWrapper
 
 		return _cpDisplayLayoutLocalService.deletePersistedModel(
 			persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _cpDisplayLayoutLocalService.dslQuery(dslQuery);
 	}
 
 	@Override

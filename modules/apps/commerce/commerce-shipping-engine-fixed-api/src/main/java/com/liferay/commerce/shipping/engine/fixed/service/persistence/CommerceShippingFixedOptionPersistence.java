@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.shipping.engine.fixed.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.shipping.engine.fixed.exception.NoSuchShippingFixedOptionException;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce shipping fixed option service.
@@ -45,9 +40,6 @@ public interface CommerceShippingFixedOptionPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceShippingFixedOptionUtil} to access the commerce shipping fixed option persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceShippingFixedOption> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce shipping fixed options where commerceShippingMethodId = &#63;.

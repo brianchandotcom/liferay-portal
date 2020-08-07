@@ -128,6 +128,8 @@ public class CommerceShippingMethodPersistenceTest {
 		CommerceShippingMethod newCommerceShippingMethod = _persistence.create(
 			pk);
 
+		newCommerceShippingMethod.setMvccVersion(RandomTestUtil.nextLong());
+
 		newCommerceShippingMethod.setGroupId(RandomTestUtil.nextLong());
 
 		newCommerceShippingMethod.setCompanyId(RandomTestUtil.nextLong());
@@ -159,6 +161,9 @@ public class CommerceShippingMethodPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newCommerceShippingMethod.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCommerceShippingMethod.getMvccVersion(),
+			newCommerceShippingMethod.getMvccVersion());
 		Assert.assertEquals(
 			existingCommerceShippingMethod.getCommerceShippingMethodId(),
 			newCommerceShippingMethod.getCommerceShippingMethodId());
@@ -255,11 +260,11 @@ public class CommerceShippingMethodPersistenceTest {
 
 	protected OrderByComparator<CommerceShippingMethod> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CommerceShippingMethod", "commerceShippingMethodId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true, "name", true,
-			"description", true, "imageId", true, "engineKey", true, "priority",
-			true, "active", true);
+			"CommerceShippingMethod", "mvccVersion", true,
+			"commerceShippingMethodId", true, "groupId", true, "companyId",
+			true, "userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "name", true, "description", true, "imageId",
+			true, "engineKey", true, "priority", true, "active", true);
 	}
 
 	@Test
@@ -527,6 +532,8 @@ public class CommerceShippingMethodPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		CommerceShippingMethod commerceShippingMethod = _persistence.create(pk);
+
+		commerceShippingMethod.setMvccVersion(RandomTestUtil.nextLong());
 
 		commerceShippingMethod.setGroupId(RandomTestUtil.nextLong());
 

@@ -1816,10 +1816,6 @@ public class CPFriendlyURLEntryUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CPFriendlyURLEntryPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

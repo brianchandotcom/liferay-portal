@@ -14,18 +14,14 @@
 
 package com.liferay.commerce.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.math.BigDecimal;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -37,26 +33,18 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceOrderItemWrapper
+	extends BaseModelWrapper<CommerceOrderItem>
 	implements CommerceOrderItem, ModelWrapper<CommerceOrderItem> {
 
 	public CommerceOrderItemWrapper(CommerceOrderItem commerceOrderItem) {
-		_commerceOrderItem = commerceOrderItem;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceOrderItem.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceOrderItem.class.getName();
+		super(commerceOrderItem);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("commerceOrderItemId", getCommerceOrderItemId());
 		attributes.put("groupId", getGroupId());
@@ -117,6 +105,12 @@ public class CommerceOrderItemWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String externalReferenceCode = (String)attributes.get(
 			"externalReferenceCode");
 
@@ -385,29 +379,18 @@ public class CommerceOrderItemWrapper
 	}
 
 	@Override
-	public Object clone() {
-		return new CommerceOrderItemWrapper(
-			(CommerceOrderItem)_commerceOrderItem.clone());
-	}
-
-	@Override
-	public int compareTo(CommerceOrderItem commerceOrderItem) {
-		return _commerceOrderItem.compareTo(commerceOrderItem);
-	}
-
-	@Override
 	public com.liferay.commerce.product.model.CPInstance fetchCPInstance() {
-		return _commerceOrderItem.fetchCPInstance();
+		return model.fetchCPInstance();
 	}
 
 	@Override
 	public com.liferay.commerce.product.model.CProduct fetchCProduct() {
-		return _commerceOrderItem.fetchCProduct();
+		return model.fetchCProduct();
 	}
 
 	@Override
 	public String[] getAvailableLanguageIds() {
-		return _commerceOrderItem.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -417,19 +400,19 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public long getBookedQuantityId() {
-		return _commerceOrderItem.getBookedQuantityId();
+		return model.getBookedQuantityId();
 	}
 
 	@Override
 	public java.util.List<CommerceOrderItem> getChildCommerceOrderItems() {
-		return _commerceOrderItem.getChildCommerceOrderItems();
+		return model.getChildCommerceOrderItems();
 	}
 
 	@Override
 	public CommerceOrder getCommerceOrder()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceOrderItem.getCommerceOrder();
+		return model.getCommerceOrder();
 	}
 
 	/**
@@ -439,7 +422,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public long getCommerceOrderId() {
-		return _commerceOrderItem.getCommerceOrderId();
+		return model.getCommerceOrderId();
 	}
 
 	/**
@@ -449,7 +432,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public long getCommerceOrderItemId() {
-		return _commerceOrderItem.getCommerceOrderItemId();
+		return model.getCommerceOrderItemId();
 	}
 
 	/**
@@ -459,7 +442,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public long getCommercePriceListId() {
-		return _commerceOrderItem.getCommercePriceListId();
+		return model.getCommercePriceListId();
 	}
 
 	/**
@@ -469,19 +452,19 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceOrderItem.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	@Override
 	public com.liferay.commerce.product.model.CPDefinition getCPDefinition()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceOrderItem.getCPDefinition();
+		return model.getCPDefinition();
 	}
 
 	@Override
 	public long getCPDefinitionId() {
-		return _commerceOrderItem.getCPDefinitionId();
+		return model.getCPDefinitionId();
 	}
 
 	/**
@@ -492,7 +475,7 @@ public class CommerceOrderItemWrapper
 	public com.liferay.commerce.product.model.CPInstance getCPInstance()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceOrderItem.getCPInstance();
+		return model.getCPInstance();
 	}
 
 	/**
@@ -502,7 +485,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public long getCPInstanceId() {
-		return _commerceOrderItem.getCPInstanceId();
+		return model.getCPInstanceId();
 	}
 
 	/**
@@ -513,7 +496,7 @@ public class CommerceOrderItemWrapper
 	public com.liferay.commerce.product.model.CProduct getCProduct()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceOrderItem.getCProduct();
+		return model.getCProduct();
 	}
 
 	/**
@@ -523,7 +506,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public long getCProductId() {
-		return _commerceOrderItem.getCProductId();
+		return model.getCProductId();
 	}
 
 	/**
@@ -533,12 +516,12 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceOrderItem.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _commerceOrderItem.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -548,7 +531,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public String getDeliveryGroup() {
-		return _commerceOrderItem.getDeliveryGroup();
+		return model.getDeliveryGroup();
 	}
 
 	/**
@@ -558,7 +541,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public BigDecimal getDiscountAmount() {
-		return _commerceOrderItem.getDiscountAmount();
+		return model.getDiscountAmount();
 	}
 
 	@Override
@@ -566,7 +549,7 @@ public class CommerceOrderItemWrapper
 			getDiscountAmountMoney()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceOrderItem.getDiscountAmountMoney();
+		return model.getDiscountAmountMoney();
 	}
 
 	/**
@@ -576,7 +559,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public BigDecimal getDiscountPercentageLevel1() {
-		return _commerceOrderItem.getDiscountPercentageLevel1();
+		return model.getDiscountPercentageLevel1();
 	}
 
 	/**
@@ -586,7 +569,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public BigDecimal getDiscountPercentageLevel1WithTaxAmount() {
-		return _commerceOrderItem.getDiscountPercentageLevel1WithTaxAmount();
+		return model.getDiscountPercentageLevel1WithTaxAmount();
 	}
 
 	/**
@@ -596,7 +579,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public BigDecimal getDiscountPercentageLevel2() {
-		return _commerceOrderItem.getDiscountPercentageLevel2();
+		return model.getDiscountPercentageLevel2();
 	}
 
 	/**
@@ -606,7 +589,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public BigDecimal getDiscountPercentageLevel2WithTaxAmount() {
-		return _commerceOrderItem.getDiscountPercentageLevel2WithTaxAmount();
+		return model.getDiscountPercentageLevel2WithTaxAmount();
 	}
 
 	/**
@@ -616,7 +599,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public BigDecimal getDiscountPercentageLevel3() {
-		return _commerceOrderItem.getDiscountPercentageLevel3();
+		return model.getDiscountPercentageLevel3();
 	}
 
 	/**
@@ -626,7 +609,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public BigDecimal getDiscountPercentageLevel3WithTaxAmount() {
-		return _commerceOrderItem.getDiscountPercentageLevel3WithTaxAmount();
+		return model.getDiscountPercentageLevel3WithTaxAmount();
 	}
 
 	/**
@@ -636,7 +619,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public BigDecimal getDiscountPercentageLevel4() {
-		return _commerceOrderItem.getDiscountPercentageLevel4();
+		return model.getDiscountPercentageLevel4();
 	}
 
 	/**
@@ -646,7 +629,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public BigDecimal getDiscountPercentageLevel4WithTaxAmount() {
-		return _commerceOrderItem.getDiscountPercentageLevel4WithTaxAmount();
+		return model.getDiscountPercentageLevel4WithTaxAmount();
 	}
 
 	/**
@@ -656,7 +639,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public BigDecimal getDiscountWithTaxAmount() {
-		return _commerceOrderItem.getDiscountWithTaxAmount();
+		return model.getDiscountWithTaxAmount();
 	}
 
 	@Override
@@ -664,12 +647,7 @@ public class CommerceOrderItemWrapper
 			getDiscountWithTaxAmountMoney()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceOrderItem.getDiscountWithTaxAmountMoney();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceOrderItem.getExpandoBridge();
+		return model.getDiscountWithTaxAmountMoney();
 	}
 
 	/**
@@ -679,7 +657,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public String getExternalReferenceCode() {
-		return _commerceOrderItem.getExternalReferenceCode();
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -689,7 +667,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public BigDecimal getFinalPrice() {
-		return _commerceOrderItem.getFinalPrice();
+		return model.getFinalPrice();
 	}
 
 	@Override
@@ -697,7 +675,7 @@ public class CommerceOrderItemWrapper
 			getFinalPriceMoney()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceOrderItem.getFinalPriceMoney();
+		return model.getFinalPriceMoney();
 	}
 
 	/**
@@ -707,7 +685,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public BigDecimal getFinalPriceWithTaxAmount() {
-		return _commerceOrderItem.getFinalPriceWithTaxAmount();
+		return model.getFinalPriceWithTaxAmount();
 	}
 
 	@Override
@@ -715,7 +693,7 @@ public class CommerceOrderItemWrapper
 			getFinalPriceWithTaxAmountMoney()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceOrderItem.getFinalPriceWithTaxAmountMoney();
+		return model.getFinalPriceWithTaxAmountMoney();
 	}
 
 	/**
@@ -725,7 +703,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _commerceOrderItem.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -735,7 +713,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public String getJson() {
-		return _commerceOrderItem.getJson();
+		return model.getJson();
 	}
 
 	/**
@@ -745,7 +723,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public boolean getManuallyAdjusted() {
-		return _commerceOrderItem.getManuallyAdjusted();
+		return model.getManuallyAdjusted();
 	}
 
 	/**
@@ -755,7 +733,17 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceOrderItem.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce order item.
+	 *
+	 * @return the mvcc version of this commerce order item
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -765,7 +753,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public String getName() {
-		return _commerceOrderItem.getName();
+		return model.getName();
 	}
 
 	/**
@@ -776,7 +764,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public String getName(java.util.Locale locale) {
-		return _commerceOrderItem.getName(locale);
+		return model.getName(locale);
 	}
 
 	/**
@@ -788,7 +776,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public String getName(java.util.Locale locale, boolean useDefault) {
-		return _commerceOrderItem.getName(locale, useDefault);
+		return model.getName(locale, useDefault);
 	}
 
 	/**
@@ -799,7 +787,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public String getName(String languageId) {
-		return _commerceOrderItem.getName(languageId);
+		return model.getName(languageId);
 	}
 
 	/**
@@ -811,17 +799,17 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public String getName(String languageId, boolean useDefault) {
-		return _commerceOrderItem.getName(languageId, useDefault);
+		return model.getName(languageId, useDefault);
 	}
 
 	@Override
 	public String getNameCurrentLanguageId() {
-		return _commerceOrderItem.getNameCurrentLanguageId();
+		return model.getNameCurrentLanguageId();
 	}
 
 	@Override
 	public String getNameCurrentValue() {
-		return _commerceOrderItem.getNameCurrentValue();
+		return model.getNameCurrentValue();
 	}
 
 	/**
@@ -831,12 +819,12 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public Map<java.util.Locale, String> getNameMap() {
-		return _commerceOrderItem.getNameMap();
+		return model.getNameMap();
 	}
 
 	@Override
 	public long getParentCommerceOrderItemCPDefinitionId() {
-		return _commerceOrderItem.getParentCommerceOrderItemCPDefinitionId();
+		return model.getParentCommerceOrderItemCPDefinitionId();
 	}
 
 	/**
@@ -846,7 +834,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public long getParentCommerceOrderItemId() {
-		return _commerceOrderItem.getParentCommerceOrderItemId();
+		return model.getParentCommerceOrderItemId();
 	}
 
 	/**
@@ -856,12 +844,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceOrderItem.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceOrderItem.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -871,7 +854,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public String getPrintedNote() {
-		return _commerceOrderItem.getPrintedNote();
+		return model.getPrintedNote();
 	}
 
 	/**
@@ -881,7 +864,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public BigDecimal getPromoPrice() {
-		return _commerceOrderItem.getPromoPrice();
+		return model.getPromoPrice();
 	}
 
 	@Override
@@ -889,7 +872,7 @@ public class CommerceOrderItemWrapper
 			getPromoPriceMoney()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceOrderItem.getPromoPriceMoney();
+		return model.getPromoPriceMoney();
 	}
 
 	/**
@@ -899,7 +882,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public BigDecimal getPromoPriceWithTaxAmount() {
-		return _commerceOrderItem.getPromoPriceWithTaxAmount();
+		return model.getPromoPriceWithTaxAmount();
 	}
 
 	@Override
@@ -907,7 +890,7 @@ public class CommerceOrderItemWrapper
 			getPromoPriceWithTaxAmountMoney()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceOrderItem.getPromoPriceWithTaxAmountMoney();
+		return model.getPromoPriceWithTaxAmountMoney();
 	}
 
 	/**
@@ -917,7 +900,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public int getQuantity() {
-		return _commerceOrderItem.getQuantity();
+		return model.getQuantity();
 	}
 
 	/**
@@ -927,7 +910,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public Date getRequestedDeliveryDate() {
-		return _commerceOrderItem.getRequestedDeliveryDate();
+		return model.getRequestedDeliveryDate();
 	}
 
 	/**
@@ -937,7 +920,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public int getShippedQuantity() {
-		return _commerceOrderItem.getShippedQuantity();
+		return model.getShippedQuantity();
 	}
 
 	/**
@@ -947,7 +930,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public long getShippingAddressId() {
-		return _commerceOrderItem.getShippingAddressId();
+		return model.getShippingAddressId();
 	}
 
 	/**
@@ -957,7 +940,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public String getSku() {
-		return _commerceOrderItem.getSku();
+		return model.getSku();
 	}
 
 	/**
@@ -967,7 +950,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public boolean getSubscription() {
-		return _commerceOrderItem.getSubscription();
+		return model.getSubscription();
 	}
 
 	/**
@@ -977,14 +960,14 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public BigDecimal getUnitPrice() {
-		return _commerceOrderItem.getUnitPrice();
+		return model.getUnitPrice();
 	}
 
 	@Override
 	public com.liferay.commerce.currency.model.CommerceMoney getUnitPriceMoney()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceOrderItem.getUnitPriceMoney();
+		return model.getUnitPriceMoney();
 	}
 
 	/**
@@ -994,7 +977,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public BigDecimal getUnitPriceWithTaxAmount() {
-		return _commerceOrderItem.getUnitPriceWithTaxAmount();
+		return model.getUnitPriceWithTaxAmount();
 	}
 
 	@Override
@@ -1002,7 +985,7 @@ public class CommerceOrderItemWrapper
 			getUnitPriceWithTaxAmountMoney()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceOrderItem.getUnitPriceWithTaxAmountMoney();
+		return model.getUnitPriceWithTaxAmountMoney();
 	}
 
 	/**
@@ -1012,7 +995,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceOrderItem.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -1022,7 +1005,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceOrderItem.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -1032,27 +1015,12 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceOrderItem.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceOrderItem.hashCode();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public boolean hasParentCommerceOrderItem() {
-		return _commerceOrderItem.hasParentCommerceOrderItem();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceOrderItem.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceOrderItem.isEscapedModel();
+		return model.hasParentCommerceOrderItem();
 	}
 
 	/**
@@ -1062,12 +1030,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public boolean isManuallyAdjusted() {
-		return _commerceOrderItem.isManuallyAdjusted();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceOrderItem.isNew();
+		return model.isManuallyAdjusted();
 	}
 
 	/**
@@ -1077,19 +1040,19 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public boolean isSubscription() {
-		return _commerceOrderItem.isSubscription();
+		return model.isSubscription();
 	}
 
 	@Override
 	public void persist() {
-		_commerceOrderItem.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
-		_commerceOrderItem.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
@@ -1097,7 +1060,7 @@ public class CommerceOrderItemWrapper
 			java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
-		_commerceOrderItem.prepareLocalizedFieldsForImport(defaultImportLocale);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -1107,12 +1070,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setBookedQuantityId(long bookedQuantityId) {
-		_commerceOrderItem.setBookedQuantityId(bookedQuantityId);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceOrderItem.setCachedModel(cachedModel);
+		model.setBookedQuantityId(bookedQuantityId);
 	}
 
 	/**
@@ -1122,7 +1080,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setCommerceOrderId(long commerceOrderId) {
-		_commerceOrderItem.setCommerceOrderId(commerceOrderId);
+		model.setCommerceOrderId(commerceOrderId);
 	}
 
 	/**
@@ -1132,7 +1090,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setCommerceOrderItemId(long commerceOrderItemId) {
-		_commerceOrderItem.setCommerceOrderItemId(commerceOrderItemId);
+		model.setCommerceOrderItemId(commerceOrderItemId);
 	}
 
 	/**
@@ -1142,7 +1100,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setCommercePriceListId(long commercePriceListId) {
-		_commerceOrderItem.setCommercePriceListId(commercePriceListId);
+		model.setCommercePriceListId(commercePriceListId);
 	}
 
 	/**
@@ -1152,7 +1110,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceOrderItem.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -1162,7 +1120,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setCPInstanceId(long CPInstanceId) {
-		_commerceOrderItem.setCPInstanceId(CPInstanceId);
+		model.setCPInstanceId(CPInstanceId);
 	}
 
 	/**
@@ -1172,7 +1130,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setCProductId(long CProductId) {
-		_commerceOrderItem.setCProductId(CProductId);
+		model.setCProductId(CProductId);
 	}
 
 	/**
@@ -1182,7 +1140,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceOrderItem.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -1192,7 +1150,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setDeliveryGroup(String deliveryGroup) {
-		_commerceOrderItem.setDeliveryGroup(deliveryGroup);
+		model.setDeliveryGroup(deliveryGroup);
 	}
 
 	/**
@@ -1202,7 +1160,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setDiscountAmount(BigDecimal discountAmount) {
-		_commerceOrderItem.setDiscountAmount(discountAmount);
+		model.setDiscountAmount(discountAmount);
 	}
 
 	/**
@@ -1214,8 +1172,7 @@ public class CommerceOrderItemWrapper
 	public void setDiscountPercentageLevel1(
 		BigDecimal discountPercentageLevel1) {
 
-		_commerceOrderItem.setDiscountPercentageLevel1(
-			discountPercentageLevel1);
+		model.setDiscountPercentageLevel1(discountPercentageLevel1);
 	}
 
 	/**
@@ -1227,7 +1184,7 @@ public class CommerceOrderItemWrapper
 	public void setDiscountPercentageLevel1WithTaxAmount(
 		BigDecimal discountPercentageLevel1WithTaxAmount) {
 
-		_commerceOrderItem.setDiscountPercentageLevel1WithTaxAmount(
+		model.setDiscountPercentageLevel1WithTaxAmount(
 			discountPercentageLevel1WithTaxAmount);
 	}
 
@@ -1240,8 +1197,7 @@ public class CommerceOrderItemWrapper
 	public void setDiscountPercentageLevel2(
 		BigDecimal discountPercentageLevel2) {
 
-		_commerceOrderItem.setDiscountPercentageLevel2(
-			discountPercentageLevel2);
+		model.setDiscountPercentageLevel2(discountPercentageLevel2);
 	}
 
 	/**
@@ -1253,7 +1209,7 @@ public class CommerceOrderItemWrapper
 	public void setDiscountPercentageLevel2WithTaxAmount(
 		BigDecimal discountPercentageLevel2WithTaxAmount) {
 
-		_commerceOrderItem.setDiscountPercentageLevel2WithTaxAmount(
+		model.setDiscountPercentageLevel2WithTaxAmount(
 			discountPercentageLevel2WithTaxAmount);
 	}
 
@@ -1266,8 +1222,7 @@ public class CommerceOrderItemWrapper
 	public void setDiscountPercentageLevel3(
 		BigDecimal discountPercentageLevel3) {
 
-		_commerceOrderItem.setDiscountPercentageLevel3(
-			discountPercentageLevel3);
+		model.setDiscountPercentageLevel3(discountPercentageLevel3);
 	}
 
 	/**
@@ -1279,7 +1234,7 @@ public class CommerceOrderItemWrapper
 	public void setDiscountPercentageLevel3WithTaxAmount(
 		BigDecimal discountPercentageLevel3WithTaxAmount) {
 
-		_commerceOrderItem.setDiscountPercentageLevel3WithTaxAmount(
+		model.setDiscountPercentageLevel3WithTaxAmount(
 			discountPercentageLevel3WithTaxAmount);
 	}
 
@@ -1292,8 +1247,7 @@ public class CommerceOrderItemWrapper
 	public void setDiscountPercentageLevel4(
 		BigDecimal discountPercentageLevel4) {
 
-		_commerceOrderItem.setDiscountPercentageLevel4(
-			discountPercentageLevel4);
+		model.setDiscountPercentageLevel4(discountPercentageLevel4);
 	}
 
 	/**
@@ -1305,7 +1259,7 @@ public class CommerceOrderItemWrapper
 	public void setDiscountPercentageLevel4WithTaxAmount(
 		BigDecimal discountPercentageLevel4WithTaxAmount) {
 
-		_commerceOrderItem.setDiscountPercentageLevel4WithTaxAmount(
+		model.setDiscountPercentageLevel4WithTaxAmount(
 			discountPercentageLevel4WithTaxAmount);
 	}
 
@@ -1316,24 +1270,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setDiscountWithTaxAmount(BigDecimal discountWithTaxAmount) {
-		_commerceOrderItem.setDiscountWithTaxAmount(discountWithTaxAmount);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceOrderItem.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceOrderItem.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceOrderItem.setExpandoBridgeAttributes(serviceContext);
+		model.setDiscountWithTaxAmount(discountWithTaxAmount);
 	}
 
 	/**
@@ -1343,7 +1280,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
-		_commerceOrderItem.setExternalReferenceCode(externalReferenceCode);
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**
@@ -1353,7 +1290,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setFinalPrice(BigDecimal finalPrice) {
-		_commerceOrderItem.setFinalPrice(finalPrice);
+		model.setFinalPrice(finalPrice);
 	}
 
 	/**
@@ -1363,7 +1300,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setFinalPriceWithTaxAmount(BigDecimal finalPriceWithTaxAmount) {
-		_commerceOrderItem.setFinalPriceWithTaxAmount(finalPriceWithTaxAmount);
+		model.setFinalPriceWithTaxAmount(finalPriceWithTaxAmount);
 	}
 
 	/**
@@ -1373,7 +1310,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_commerceOrderItem.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -1383,7 +1320,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setJson(String json) {
-		_commerceOrderItem.setJson(json);
+		model.setJson(json);
 	}
 
 	/**
@@ -1393,7 +1330,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setManuallyAdjusted(boolean manuallyAdjusted) {
-		_commerceOrderItem.setManuallyAdjusted(manuallyAdjusted);
+		model.setManuallyAdjusted(manuallyAdjusted);
 	}
 
 	/**
@@ -1403,7 +1340,17 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceOrderItem.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this commerce order item.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce order item
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -1413,7 +1360,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setName(String name) {
-		_commerceOrderItem.setName(name);
+		model.setName(name);
 	}
 
 	/**
@@ -1424,7 +1371,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setName(String name, java.util.Locale locale) {
-		_commerceOrderItem.setName(name, locale);
+		model.setName(name, locale);
 	}
 
 	/**
@@ -1438,12 +1385,12 @@ public class CommerceOrderItemWrapper
 	public void setName(
 		String name, java.util.Locale locale, java.util.Locale defaultLocale) {
 
-		_commerceOrderItem.setName(name, locale, defaultLocale);
+		model.setName(name, locale, defaultLocale);
 	}
 
 	@Override
 	public void setNameCurrentLanguageId(String languageId) {
-		_commerceOrderItem.setNameCurrentLanguageId(languageId);
+		model.setNameCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -1453,7 +1400,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap) {
-		_commerceOrderItem.setNameMap(nameMap);
+		model.setNameMap(nameMap);
 	}
 
 	/**
@@ -1466,12 +1413,7 @@ public class CommerceOrderItemWrapper
 	public void setNameMap(
 		Map<java.util.Locale, String> nameMap, java.util.Locale defaultLocale) {
 
-		_commerceOrderItem.setNameMap(nameMap, defaultLocale);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_commerceOrderItem.setNew(n);
+		model.setNameMap(nameMap, defaultLocale);
 	}
 
 	/**
@@ -1481,8 +1423,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setParentCommerceOrderItemId(long parentCommerceOrderItemId) {
-		_commerceOrderItem.setParentCommerceOrderItemId(
-			parentCommerceOrderItemId);
+		model.setParentCommerceOrderItemId(parentCommerceOrderItemId);
 	}
 
 	/**
@@ -1492,12 +1433,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceOrderItem.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceOrderItem.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -1507,7 +1443,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setPrintedNote(String printedNote) {
-		_commerceOrderItem.setPrintedNote(printedNote);
+		model.setPrintedNote(printedNote);
 	}
 
 	/**
@@ -1517,7 +1453,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setPromoPrice(BigDecimal promoPrice) {
-		_commerceOrderItem.setPromoPrice(promoPrice);
+		model.setPromoPrice(promoPrice);
 	}
 
 	/**
@@ -1527,7 +1463,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setPromoPriceWithTaxAmount(BigDecimal promoPriceWithTaxAmount) {
-		_commerceOrderItem.setPromoPriceWithTaxAmount(promoPriceWithTaxAmount);
+		model.setPromoPriceWithTaxAmount(promoPriceWithTaxAmount);
 	}
 
 	/**
@@ -1537,7 +1473,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setQuantity(int quantity) {
-		_commerceOrderItem.setQuantity(quantity);
+		model.setQuantity(quantity);
 	}
 
 	/**
@@ -1547,7 +1483,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setRequestedDeliveryDate(Date requestedDeliveryDate) {
-		_commerceOrderItem.setRequestedDeliveryDate(requestedDeliveryDate);
+		model.setRequestedDeliveryDate(requestedDeliveryDate);
 	}
 
 	/**
@@ -1557,7 +1493,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setShippedQuantity(int shippedQuantity) {
-		_commerceOrderItem.setShippedQuantity(shippedQuantity);
+		model.setShippedQuantity(shippedQuantity);
 	}
 
 	/**
@@ -1567,7 +1503,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setShippingAddressId(long shippingAddressId) {
-		_commerceOrderItem.setShippingAddressId(shippingAddressId);
+		model.setShippingAddressId(shippingAddressId);
 	}
 
 	/**
@@ -1577,7 +1513,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setSku(String sku) {
-		_commerceOrderItem.setSku(sku);
+		model.setSku(sku);
 	}
 
 	/**
@@ -1587,7 +1523,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setSubscription(boolean subscription) {
-		_commerceOrderItem.setSubscription(subscription);
+		model.setSubscription(subscription);
 	}
 
 	/**
@@ -1597,7 +1533,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setUnitPrice(BigDecimal unitPrice) {
-		_commerceOrderItem.setUnitPrice(unitPrice);
+		model.setUnitPrice(unitPrice);
 	}
 
 	/**
@@ -1607,7 +1543,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setUnitPriceWithTaxAmount(BigDecimal unitPriceWithTaxAmount) {
-		_commerceOrderItem.setUnitPriceWithTaxAmount(unitPriceWithTaxAmount);
+		model.setUnitPriceWithTaxAmount(unitPriceWithTaxAmount);
 	}
 
 	/**
@@ -1617,7 +1553,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceOrderItem.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -1627,7 +1563,7 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceOrderItem.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -1637,81 +1573,14 @@ public class CommerceOrderItemWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceOrderItem.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceOrderItem>
-		toCacheModel() {
+	protected CommerceOrderItemWrapper wrap(
+		CommerceOrderItem commerceOrderItem) {
 
-		return _commerceOrderItem.toCacheModel();
+		return new CommerceOrderItemWrapper(commerceOrderItem);
 	}
-
-	@Override
-	public CommerceOrderItem toEscapedModel() {
-		return new CommerceOrderItemWrapper(
-			_commerceOrderItem.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commerceOrderItem.toString();
-	}
-
-	@Override
-	public CommerceOrderItem toUnescapedModel() {
-		return new CommerceOrderItemWrapper(
-			_commerceOrderItem.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceOrderItem.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceOrderItemWrapper)) {
-			return false;
-		}
-
-		CommerceOrderItemWrapper commerceOrderItemWrapper =
-			(CommerceOrderItemWrapper)object;
-
-		if (Objects.equals(
-				_commerceOrderItem,
-				commerceOrderItemWrapper._commerceOrderItem)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceOrderItem getWrappedModel() {
-		return _commerceOrderItem;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceOrderItem.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceOrderItem.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceOrderItem.resetOriginalValues();
-	}
-
-	private final CommerceOrderItem _commerceOrderItem;
 
 }

@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.product.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,26 +31,18 @@ import java.util.Objects;
  * @generated
  */
 public class CPTaxCategoryWrapper
+	extends BaseModelWrapper<CPTaxCategory>
 	implements CPTaxCategory, ModelWrapper<CPTaxCategory> {
 
 	public CPTaxCategoryWrapper(CPTaxCategory cpTaxCategory) {
-		_cpTaxCategory = cpTaxCategory;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CPTaxCategory.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CPTaxCategory.class.getName();
+		super(cpTaxCategory);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("CPTaxCategoryId", getCPTaxCategoryId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -69,6 +57,12 @@ public class CPTaxCategoryWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long CPTaxCategoryId = (Long)attributes.get("CPTaxCategoryId");
 
 		if (CPTaxCategoryId != null) {
@@ -119,18 +113,8 @@ public class CPTaxCategoryWrapper
 	}
 
 	@Override
-	public Object clone() {
-		return new CPTaxCategoryWrapper((CPTaxCategory)_cpTaxCategory.clone());
-	}
-
-	@Override
-	public int compareTo(CPTaxCategory cpTaxCategory) {
-		return _cpTaxCategory.compareTo(cpTaxCategory);
-	}
-
-	@Override
 	public String[] getAvailableLanguageIds() {
-		return _cpTaxCategory.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -140,7 +124,7 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _cpTaxCategory.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -150,7 +134,7 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public long getCPTaxCategoryId() {
-		return _cpTaxCategory.getCPTaxCategoryId();
+		return model.getCPTaxCategoryId();
 	}
 
 	/**
@@ -160,12 +144,12 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _cpTaxCategory.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _cpTaxCategory.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -175,7 +159,7 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public String getDescription() {
-		return _cpTaxCategory.getDescription();
+		return model.getDescription();
 	}
 
 	/**
@@ -186,7 +170,7 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public String getDescription(java.util.Locale locale) {
-		return _cpTaxCategory.getDescription(locale);
+		return model.getDescription(locale);
 	}
 
 	/**
@@ -198,7 +182,7 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public String getDescription(java.util.Locale locale, boolean useDefault) {
-		return _cpTaxCategory.getDescription(locale, useDefault);
+		return model.getDescription(locale, useDefault);
 	}
 
 	/**
@@ -209,7 +193,7 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public String getDescription(String languageId) {
-		return _cpTaxCategory.getDescription(languageId);
+		return model.getDescription(languageId);
 	}
 
 	/**
@@ -221,17 +205,17 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return _cpTaxCategory.getDescription(languageId, useDefault);
+		return model.getDescription(languageId, useDefault);
 	}
 
 	@Override
 	public String getDescriptionCurrentLanguageId() {
-		return _cpTaxCategory.getDescriptionCurrentLanguageId();
+		return model.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
 	public String getDescriptionCurrentValue() {
-		return _cpTaxCategory.getDescriptionCurrentValue();
+		return model.getDescriptionCurrentValue();
 	}
 
 	/**
@@ -241,12 +225,7 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public Map<java.util.Locale, String> getDescriptionMap() {
-		return _cpTaxCategory.getDescriptionMap();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _cpTaxCategory.getExpandoBridge();
+		return model.getDescriptionMap();
 	}
 
 	/**
@@ -256,7 +235,17 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _cpTaxCategory.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this cp tax category.
+	 *
+	 * @return the mvcc version of this cp tax category
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -266,7 +255,7 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public String getName() {
-		return _cpTaxCategory.getName();
+		return model.getName();
 	}
 
 	/**
@@ -277,7 +266,7 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public String getName(java.util.Locale locale) {
-		return _cpTaxCategory.getName(locale);
+		return model.getName(locale);
 	}
 
 	/**
@@ -289,7 +278,7 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public String getName(java.util.Locale locale, boolean useDefault) {
-		return _cpTaxCategory.getName(locale, useDefault);
+		return model.getName(locale, useDefault);
 	}
 
 	/**
@@ -300,7 +289,7 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public String getName(String languageId) {
-		return _cpTaxCategory.getName(languageId);
+		return model.getName(languageId);
 	}
 
 	/**
@@ -312,17 +301,17 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public String getName(String languageId, boolean useDefault) {
-		return _cpTaxCategory.getName(languageId, useDefault);
+		return model.getName(languageId, useDefault);
 	}
 
 	@Override
 	public String getNameCurrentLanguageId() {
-		return _cpTaxCategory.getNameCurrentLanguageId();
+		return model.getNameCurrentLanguageId();
 	}
 
 	@Override
 	public String getNameCurrentValue() {
-		return _cpTaxCategory.getNameCurrentValue();
+		return model.getNameCurrentValue();
 	}
 
 	/**
@@ -332,7 +321,7 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public Map<java.util.Locale, String> getNameMap() {
-		return _cpTaxCategory.getNameMap();
+		return model.getNameMap();
 	}
 
 	/**
@@ -342,12 +331,7 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _cpTaxCategory.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _cpTaxCategory.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -357,7 +341,7 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _cpTaxCategory.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -367,7 +351,7 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _cpTaxCategory.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -377,39 +361,19 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _cpTaxCategory.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _cpTaxCategory.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _cpTaxCategory.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _cpTaxCategory.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _cpTaxCategory.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_cpTaxCategory.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
-		_cpTaxCategory.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
@@ -417,12 +381,7 @@ public class CPTaxCategoryWrapper
 			java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
-		_cpTaxCategory.prepareLocalizedFieldsForImport(defaultImportLocale);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_cpTaxCategory.setCachedModel(cachedModel);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -432,7 +391,7 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_cpTaxCategory.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -442,7 +401,7 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public void setCPTaxCategoryId(long CPTaxCategoryId) {
-		_cpTaxCategory.setCPTaxCategoryId(CPTaxCategoryId);
+		model.setCPTaxCategoryId(CPTaxCategoryId);
 	}
 
 	/**
@@ -452,7 +411,7 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_cpTaxCategory.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -462,7 +421,7 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public void setDescription(String description) {
-		_cpTaxCategory.setDescription(description);
+		model.setDescription(description);
 	}
 
 	/**
@@ -473,7 +432,7 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public void setDescription(String description, java.util.Locale locale) {
-		_cpTaxCategory.setDescription(description, locale);
+		model.setDescription(description, locale);
 	}
 
 	/**
@@ -488,12 +447,12 @@ public class CPTaxCategoryWrapper
 		String description, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 
-		_cpTaxCategory.setDescription(description, locale, defaultLocale);
+		model.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
 	public void setDescriptionCurrentLanguageId(String languageId) {
-		_cpTaxCategory.setDescriptionCurrentLanguageId(languageId);
+		model.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -505,7 +464,7 @@ public class CPTaxCategoryWrapper
 	public void setDescriptionMap(
 		Map<java.util.Locale, String> descriptionMap) {
 
-		_cpTaxCategory.setDescriptionMap(descriptionMap);
+		model.setDescriptionMap(descriptionMap);
 	}
 
 	/**
@@ -519,24 +478,7 @@ public class CPTaxCategoryWrapper
 		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
 
-		_cpTaxCategory.setDescriptionMap(descriptionMap, defaultLocale);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_cpTaxCategory.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_cpTaxCategory.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_cpTaxCategory.setExpandoBridgeAttributes(serviceContext);
+		model.setDescriptionMap(descriptionMap, defaultLocale);
 	}
 
 	/**
@@ -546,7 +488,17 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_cpTaxCategory.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this cp tax category.
+	 *
+	 * @param mvccVersion the mvcc version of this cp tax category
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -556,7 +508,7 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public void setName(String name) {
-		_cpTaxCategory.setName(name);
+		model.setName(name);
 	}
 
 	/**
@@ -567,7 +519,7 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public void setName(String name, java.util.Locale locale) {
-		_cpTaxCategory.setName(name, locale);
+		model.setName(name, locale);
 	}
 
 	/**
@@ -581,12 +533,12 @@ public class CPTaxCategoryWrapper
 	public void setName(
 		String name, java.util.Locale locale, java.util.Locale defaultLocale) {
 
-		_cpTaxCategory.setName(name, locale, defaultLocale);
+		model.setName(name, locale, defaultLocale);
 	}
 
 	@Override
 	public void setNameCurrentLanguageId(String languageId) {
-		_cpTaxCategory.setNameCurrentLanguageId(languageId);
+		model.setNameCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -596,7 +548,7 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap) {
-		_cpTaxCategory.setNameMap(nameMap);
+		model.setNameMap(nameMap);
 	}
 
 	/**
@@ -609,12 +561,7 @@ public class CPTaxCategoryWrapper
 	public void setNameMap(
 		Map<java.util.Locale, String> nameMap, java.util.Locale defaultLocale) {
 
-		_cpTaxCategory.setNameMap(nameMap, defaultLocale);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_cpTaxCategory.setNew(n);
+		model.setNameMap(nameMap, defaultLocale);
 	}
 
 	/**
@@ -624,12 +571,7 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_cpTaxCategory.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_cpTaxCategory.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -639,7 +581,7 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_cpTaxCategory.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -649,7 +591,7 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_cpTaxCategory.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -659,78 +601,12 @@ public class CPTaxCategoryWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_cpTaxCategory.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CPTaxCategory>
-		toCacheModel() {
-
-		return _cpTaxCategory.toCacheModel();
+	protected CPTaxCategoryWrapper wrap(CPTaxCategory cpTaxCategory) {
+		return new CPTaxCategoryWrapper(cpTaxCategory);
 	}
-
-	@Override
-	public CPTaxCategory toEscapedModel() {
-		return new CPTaxCategoryWrapper(_cpTaxCategory.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _cpTaxCategory.toString();
-	}
-
-	@Override
-	public CPTaxCategory toUnescapedModel() {
-		return new CPTaxCategoryWrapper(_cpTaxCategory.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _cpTaxCategory.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CPTaxCategoryWrapper)) {
-			return false;
-		}
-
-		CPTaxCategoryWrapper cpTaxCategoryWrapper =
-			(CPTaxCategoryWrapper)object;
-
-		if (Objects.equals(
-				_cpTaxCategory, cpTaxCategoryWrapper._cpTaxCategory)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CPTaxCategory getWrappedModel() {
-		return _cpTaxCategory;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _cpTaxCategory.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _cpTaxCategory.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_cpTaxCategory.resetOriginalValues();
-	}
-
-	private final CPTaxCategory _cpTaxCategory;
 
 }

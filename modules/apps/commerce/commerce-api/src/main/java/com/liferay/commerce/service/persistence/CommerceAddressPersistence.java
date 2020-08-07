@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.exception.NoSuchAddressException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce address service.
@@ -45,9 +40,6 @@ public interface CommerceAddressPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceAddressUtil} to access the commerce address persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceAddress> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce addresses where commerceRegionId = &#63;.
@@ -1551,8 +1543,5 @@ public interface CommerceAddressPersistence
 	 * @return the number of commerce addresses
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

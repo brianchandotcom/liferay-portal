@@ -129,6 +129,9 @@ public class CommercePaymentMethodGroupRelPersistenceTest {
 		CommercePaymentMethodGroupRel newCommercePaymentMethodGroupRel =
 			_persistence.create(pk);
 
+		newCommercePaymentMethodGroupRel.setMvccVersion(
+			RandomTestUtil.nextLong());
+
 		newCommercePaymentMethodGroupRel.setGroupId(RandomTestUtil.nextLong());
 
 		newCommercePaymentMethodGroupRel.setCompanyId(
@@ -168,6 +171,9 @@ public class CommercePaymentMethodGroupRelPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newCommercePaymentMethodGroupRel.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCommercePaymentMethodGroupRel.getMvccVersion(),
+			newCommercePaymentMethodGroupRel.getMvccVersion());
 		Assert.assertEquals(
 			existingCommercePaymentMethodGroupRel.
 				getCommercePaymentMethodGroupRelId(),
@@ -270,11 +276,12 @@ public class CommercePaymentMethodGroupRelPersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"CommercePaymentMethodGroupRel", "commercePaymentMethodGroupRelId",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true, "name",
-			true, "description", true, "imageId", true, "engineKey", true,
-			"priority", true, "active", true);
+			"CommercePaymentMethodGroupRel", "mvccVersion", true,
+			"commercePaymentMethodGroupRelId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "name", true, "description", true,
+			"imageId", true, "engineKey", true, "priority", true, "active",
+			true);
 	}
 
 	@Test
@@ -556,6 +563,8 @@ public class CommercePaymentMethodGroupRelPersistenceTest {
 
 		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
 			_persistence.create(pk);
+
+		commercePaymentMethodGroupRel.setMvccVersion(RandomTestUtil.nextLong());
 
 		commercePaymentMethodGroupRel.setGroupId(RandomTestUtil.nextLong());
 

@@ -111,6 +111,18 @@ public class CommerceNotificationQueueEntryLocalServiceWrapper
 				commerceNotificationQueueEntryId);
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceNotificationQueueEntryLocalService.createPersistedModel(
+			primaryKeyObj);
+	}
+
 	@Override
 	public
 		com.liferay.commerce.notification.model.CommerceNotificationQueueEntry
@@ -196,6 +208,11 @@ public class CommerceNotificationQueueEntryLocalServiceWrapper
 
 		return _commerceNotificationQueueEntryLocalService.deletePersistedModel(
 			persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _commerceNotificationQueueEntryLocalService.dslQuery(dslQuery);
 	}
 
 	@Override

@@ -31,6 +31,7 @@ public class CProductSoap implements Serializable {
 	public static CProductSoap toSoapModel(CProduct model) {
 		CProductSoap soapModel = new CProductSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setExternalReferenceCode(model.getExternalReferenceCode());
 		soapModel.setCProductId(model.getCProductId());
@@ -94,6 +95,14 @@ public class CProductSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCProductId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -184,6 +193,7 @@ public class CProductSoap implements Serializable {
 		_latestVersion = latestVersion;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _externalReferenceCode;
 	private long _CProductId;

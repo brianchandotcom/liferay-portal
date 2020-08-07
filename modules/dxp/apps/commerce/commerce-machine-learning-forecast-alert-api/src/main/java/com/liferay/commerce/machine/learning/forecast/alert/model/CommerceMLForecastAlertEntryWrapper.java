@@ -14,17 +14,13 @@
 
 package com.liferay.commerce.machine.learning.forecast.alert.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,29 +32,21 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceMLForecastAlertEntryWrapper
+	extends BaseModelWrapper<CommerceMLForecastAlertEntry>
 	implements CommerceMLForecastAlertEntry,
 			   ModelWrapper<CommerceMLForecastAlertEntry> {
 
 	public CommerceMLForecastAlertEntryWrapper(
 		CommerceMLForecastAlertEntry commerceMLForecastAlertEntry) {
 
-		_commerceMLForecastAlertEntry = commerceMLForecastAlertEntry;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceMLForecastAlertEntry.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceMLForecastAlertEntry.class.getName();
+		super(commerceMLForecastAlertEntry);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put(
 			"commerceMLForecastAlertEntryId",
@@ -80,6 +68,12 @@ public class CommerceMLForecastAlertEntryWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -160,21 +154,6 @@ public class CommerceMLForecastAlertEntryWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CommerceMLForecastAlertEntryWrapper(
-			(CommerceMLForecastAlertEntry)
-				_commerceMLForecastAlertEntry.clone());
-	}
-
-	@Override
-	public int compareTo(
-		CommerceMLForecastAlertEntry commerceMLForecastAlertEntry) {
-
-		return _commerceMLForecastAlertEntry.compareTo(
-			commerceMLForecastAlertEntry);
-	}
-
 	/**
 	 * Returns the actual of this commerce ml forecast alert entry.
 	 *
@@ -182,7 +161,7 @@ public class CommerceMLForecastAlertEntryWrapper
 	 */
 	@Override
 	public double getActual() {
-		return _commerceMLForecastAlertEntry.getActual();
+		return model.getActual();
 	}
 
 	/**
@@ -192,7 +171,7 @@ public class CommerceMLForecastAlertEntryWrapper
 	 */
 	@Override
 	public long getCommerceAccountId() {
-		return _commerceMLForecastAlertEntry.getCommerceAccountId();
+		return model.getCommerceAccountId();
 	}
 
 	/**
@@ -202,8 +181,7 @@ public class CommerceMLForecastAlertEntryWrapper
 	 */
 	@Override
 	public long getCommerceMLForecastAlertEntryId() {
-		return _commerceMLForecastAlertEntry.
-			getCommerceMLForecastAlertEntryId();
+		return model.getCommerceMLForecastAlertEntryId();
 	}
 
 	/**
@@ -213,7 +191,7 @@ public class CommerceMLForecastAlertEntryWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceMLForecastAlertEntry.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -223,12 +201,7 @@ public class CommerceMLForecastAlertEntryWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceMLForecastAlertEntry.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceMLForecastAlertEntry.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -238,7 +211,7 @@ public class CommerceMLForecastAlertEntryWrapper
 	 */
 	@Override
 	public double getForecast() {
-		return _commerceMLForecastAlertEntry.getForecast();
+		return model.getForecast();
 	}
 
 	/**
@@ -248,7 +221,17 @@ public class CommerceMLForecastAlertEntryWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceMLForecastAlertEntry.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce ml forecast alert entry.
+	 *
+	 * @return the mvcc version of this commerce ml forecast alert entry
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -258,12 +241,7 @@ public class CommerceMLForecastAlertEntryWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceMLForecastAlertEntry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceMLForecastAlertEntry.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -273,7 +251,7 @@ public class CommerceMLForecastAlertEntryWrapper
 	 */
 	@Override
 	public double getRelativeChange() {
-		return _commerceMLForecastAlertEntry.getRelativeChange();
+		return model.getRelativeChange();
 	}
 
 	/**
@@ -283,7 +261,7 @@ public class CommerceMLForecastAlertEntryWrapper
 	 */
 	@Override
 	public int getStatus() {
-		return _commerceMLForecastAlertEntry.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -293,7 +271,7 @@ public class CommerceMLForecastAlertEntryWrapper
 	 */
 	@Override
 	public Date getTimestamp() {
-		return _commerceMLForecastAlertEntry.getTimestamp();
+		return model.getTimestamp();
 	}
 
 	/**
@@ -303,7 +281,7 @@ public class CommerceMLForecastAlertEntryWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceMLForecastAlertEntry.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -313,7 +291,7 @@ public class CommerceMLForecastAlertEntryWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceMLForecastAlertEntry.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -323,7 +301,7 @@ public class CommerceMLForecastAlertEntryWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceMLForecastAlertEntry.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -333,32 +311,12 @@ public class CommerceMLForecastAlertEntryWrapper
 	 */
 	@Override
 	public String getUuid() {
-		return _commerceMLForecastAlertEntry.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceMLForecastAlertEntry.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceMLForecastAlertEntry.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceMLForecastAlertEntry.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceMLForecastAlertEntry.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_commerceMLForecastAlertEntry.persist();
+		model.persist();
 	}
 
 	/**
@@ -368,12 +326,7 @@ public class CommerceMLForecastAlertEntryWrapper
 	 */
 	@Override
 	public void setActual(double actual) {
-		_commerceMLForecastAlertEntry.setActual(actual);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceMLForecastAlertEntry.setCachedModel(cachedModel);
+		model.setActual(actual);
 	}
 
 	/**
@@ -383,7 +336,7 @@ public class CommerceMLForecastAlertEntryWrapper
 	 */
 	@Override
 	public void setCommerceAccountId(long commerceAccountId) {
-		_commerceMLForecastAlertEntry.setCommerceAccountId(commerceAccountId);
+		model.setCommerceAccountId(commerceAccountId);
 	}
 
 	/**
@@ -395,8 +348,7 @@ public class CommerceMLForecastAlertEntryWrapper
 	public void setCommerceMLForecastAlertEntryId(
 		long commerceMLForecastAlertEntryId) {
 
-		_commerceMLForecastAlertEntry.setCommerceMLForecastAlertEntryId(
-			commerceMLForecastAlertEntryId);
+		model.setCommerceMLForecastAlertEntryId(commerceMLForecastAlertEntryId);
 	}
 
 	/**
@@ -406,7 +358,7 @@ public class CommerceMLForecastAlertEntryWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceMLForecastAlertEntry.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -416,25 +368,7 @@ public class CommerceMLForecastAlertEntryWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceMLForecastAlertEntry.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceMLForecastAlertEntry.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceMLForecastAlertEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceMLForecastAlertEntry.setExpandoBridgeAttributes(
-			serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -444,7 +378,7 @@ public class CommerceMLForecastAlertEntryWrapper
 	 */
 	@Override
 	public void setForecast(double forecast) {
-		_commerceMLForecastAlertEntry.setForecast(forecast);
+		model.setForecast(forecast);
 	}
 
 	/**
@@ -454,12 +388,17 @@ public class CommerceMLForecastAlertEntryWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceMLForecastAlertEntry.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this commerce ml forecast alert entry.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce ml forecast alert entry
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_commerceMLForecastAlertEntry.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -469,12 +408,7 @@ public class CommerceMLForecastAlertEntryWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceMLForecastAlertEntry.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceMLForecastAlertEntry.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -484,7 +418,7 @@ public class CommerceMLForecastAlertEntryWrapper
 	 */
 	@Override
 	public void setRelativeChange(double relativeChange) {
-		_commerceMLForecastAlertEntry.setRelativeChange(relativeChange);
+		model.setRelativeChange(relativeChange);
 	}
 
 	/**
@@ -494,7 +428,7 @@ public class CommerceMLForecastAlertEntryWrapper
 	 */
 	@Override
 	public void setStatus(int status) {
-		_commerceMLForecastAlertEntry.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -504,7 +438,7 @@ public class CommerceMLForecastAlertEntryWrapper
 	 */
 	@Override
 	public void setTimestamp(Date timestamp) {
-		_commerceMLForecastAlertEntry.setTimestamp(timestamp);
+		model.setTimestamp(timestamp);
 	}
 
 	/**
@@ -514,7 +448,7 @@ public class CommerceMLForecastAlertEntryWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceMLForecastAlertEntry.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -524,7 +458,7 @@ public class CommerceMLForecastAlertEntryWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceMLForecastAlertEntry.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -534,7 +468,7 @@ public class CommerceMLForecastAlertEntryWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceMLForecastAlertEntry.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -544,88 +478,20 @@ public class CommerceMLForecastAlertEntryWrapper
 	 */
 	@Override
 	public void setUuid(String uuid) {
-		_commerceMLForecastAlertEntry.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel
-		<CommerceMLForecastAlertEntry> toCacheModel() {
-
-		return _commerceMLForecastAlertEntry.toCacheModel();
-	}
-
-	@Override
-	public CommerceMLForecastAlertEntry toEscapedModel() {
-		return new CommerceMLForecastAlertEntryWrapper(
-			_commerceMLForecastAlertEntry.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commerceMLForecastAlertEntry.toString();
-	}
-
-	@Override
-	public CommerceMLForecastAlertEntry toUnescapedModel() {
-		return new CommerceMLForecastAlertEntryWrapper(
-			_commerceMLForecastAlertEntry.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceMLForecastAlertEntry.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceMLForecastAlertEntryWrapper)) {
-			return false;
-		}
-
-		CommerceMLForecastAlertEntryWrapper
-			commerceMLForecastAlertEntryWrapper =
-				(CommerceMLForecastAlertEntryWrapper)object;
-
-		if (Objects.equals(
-				_commerceMLForecastAlertEntry,
-				commerceMLForecastAlertEntryWrapper.
-					_commerceMLForecastAlertEntry)) {
-
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _commerceMLForecastAlertEntry.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public CommerceMLForecastAlertEntry getWrappedModel() {
-		return _commerceMLForecastAlertEntry;
-	}
+	protected CommerceMLForecastAlertEntryWrapper wrap(
+		CommerceMLForecastAlertEntry commerceMLForecastAlertEntry) {
 
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceMLForecastAlertEntry.isEntityCacheEnabled();
+		return new CommerceMLForecastAlertEntryWrapper(
+			commerceMLForecastAlertEntry);
 	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceMLForecastAlertEntry.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceMLForecastAlertEntry.resetOriginalValues();
-	}
-
-	private final CommerceMLForecastAlertEntry _commerceMLForecastAlertEntry;
 
 }

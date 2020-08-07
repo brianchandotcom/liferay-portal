@@ -71,11 +71,11 @@ public class CPInstanceLocalServiceUtil {
 			boolean subscriptionEnabled, int subscriptionLength,
 			String subscriptionType,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				subscriptionTypeSettingsProperties,
+				subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
 			int deliverySubscriptionLength, String deliverySubscriptionType,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				deliverySubscriptionTypeSettingsProperties,
+				deliverySubscriptionTypeSettingsUnicodeProperties,
 			long deliveryMaxSubscriptionCycles,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -89,10 +89,10 @@ public class CPInstanceLocalServiceUtil {
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			overrideSubscriptionInfo, subscriptionEnabled, subscriptionLength,
-			subscriptionType, subscriptionTypeSettingsProperties,
+			subscriptionType, subscriptionTypeSettingsUnicodeProperties,
 			maxSubscriptionCycles, deliverySubscriptionEnabled,
 			deliverySubscriptionLength, deliverySubscriptionType,
-			deliverySubscriptionTypeSettingsProperties,
+			deliverySubscriptionTypeSettingsUnicodeProperties,
 			deliveryMaxSubscriptionCycles, serviceContext);
 	}
 
@@ -113,11 +113,11 @@ public class CPInstanceLocalServiceUtil {
 			boolean subscriptionEnabled, int subscriptionLength,
 			String subscriptionType,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				subscriptionTypeSettingsProperties,
+				subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
 			int deliverySubscriptionLength, String deliverySubscriptionType,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				deliverySubscriptionTypeSettingsProperties,
+				deliverySubscriptionTypeSettingsUnicodeProperties,
 			long deliveryMaxSubscriptionCycles, String unspsc,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -131,10 +131,10 @@ public class CPInstanceLocalServiceUtil {
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			overrideSubscriptionInfo, subscriptionEnabled, subscriptionLength,
-			subscriptionType, subscriptionTypeSettingsProperties,
+			subscriptionType, subscriptionTypeSettingsUnicodeProperties,
 			maxSubscriptionCycles, deliverySubscriptionEnabled,
 			deliverySubscriptionLength, deliverySubscriptionType,
-			deliverySubscriptionTypeSettingsProperties,
+			deliverySubscriptionTypeSettingsUnicodeProperties,
 			deliveryMaxSubscriptionCycles, unspsc, serviceContext);
 	}
 
@@ -155,7 +155,7 @@ public class CPInstanceLocalServiceUtil {
 			boolean subscriptionEnabled, int subscriptionLength,
 			String subscriptionType,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				subscriptionTypeSettingsProperties,
+				subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -169,7 +169,7 @@ public class CPInstanceLocalServiceUtil {
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			overrideSubscriptionInfo, subscriptionEnabled, subscriptionLength,
-			subscriptionType, subscriptionTypeSettingsProperties,
+			subscriptionType, subscriptionTypeSettingsUnicodeProperties,
 			maxSubscriptionCycles, serviceContext);
 	}
 
@@ -190,7 +190,7 @@ public class CPInstanceLocalServiceUtil {
 			boolean subscriptionEnabled, int subscriptionLength,
 			String subscriptionType,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				subscriptionTypeSettingsProperties,
+				subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, String unspsc,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -204,7 +204,7 @@ public class CPInstanceLocalServiceUtil {
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			overrideSubscriptionInfo, subscriptionEnabled, subscriptionLength,
-			subscriptionType, subscriptionTypeSettingsProperties,
+			subscriptionType, subscriptionTypeSettingsUnicodeProperties,
 			maxSubscriptionCycles, unspsc, serviceContext);
 	}
 
@@ -343,7 +343,7 @@ public class CPInstanceLocalServiceUtil {
 	 * @param subscriptionEnabled
 	 * @param subscriptionLength
 	 * @param subscriptionType
-	 * @param subscriptionTypeSettingsProperties
+	 * @param subscriptionTypeSettingsUnicodeProperties
 	 * @param maxSubscriptionCycles
 	 * @param serviceContext
 	 * @return
@@ -371,7 +371,7 @@ public class CPInstanceLocalServiceUtil {
 			boolean subscriptionEnabled, int subscriptionLength,
 			String subscriptionType,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				subscriptionTypeSettingsProperties,
+				subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -384,7 +384,7 @@ public class CPInstanceLocalServiceUtil {
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			overrideSubscriptionInfo, subscriptionEnabled, subscriptionLength,
-			subscriptionType, subscriptionTypeSettingsProperties,
+			subscriptionType, subscriptionTypeSettingsUnicodeProperties,
 			maxSubscriptionCycles, serviceContext);
 	}
 
@@ -420,7 +420,7 @@ public class CPInstanceLocalServiceUtil {
 	 * @param subscriptionEnabled
 	 * @param subscriptionLength
 	 * @param subscriptionType
-	 * @param subscriptionTypeSettingsProperties
+	 * @param subscriptionTypeSettingsUnicodeProperties
 	 * @param maxSubscriptionCycles
 	 * @param unspsc
 	 * @param serviceContext
@@ -449,7 +449,7 @@ public class CPInstanceLocalServiceUtil {
 			boolean subscriptionEnabled, int subscriptionLength,
 			String subscriptionType,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				subscriptionTypeSettingsProperties,
+				subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, String unspsc,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -462,7 +462,7 @@ public class CPInstanceLocalServiceUtil {
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			overrideSubscriptionInfo, subscriptionEnabled, subscriptionLength,
-			subscriptionType, subscriptionTypeSettingsProperties,
+			subscriptionType, subscriptionTypeSettingsUnicodeProperties,
 			maxSubscriptionCycles, unspsc, serviceContext);
 	}
 
@@ -628,6 +628,16 @@ public class CPInstanceLocalServiceUtil {
 	}
 
 	/**
+	 * @throws PortalException
+	 */
+	public static com.liferay.portal.kernel.model.PersistedModel
+			createPersistedModel(java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().createPersistedModel(primaryKeyObj);
+	}
+
+	/**
 	 * Deletes the cp instance from the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -679,6 +689,12 @@ public class CPInstanceLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static <T> T dslQuery(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return getService().dslQuery(dslQuery);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
@@ -1287,21 +1303,21 @@ public class CPInstanceLocalServiceUtil {
 				boolean subscriptionEnabled, int subscriptionLength,
 				String subscriptionType,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					subscriptionTypeSettingsProperties,
+					subscriptionTypeSettingsUnicodeProperties,
 				long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
 				int deliverySubscriptionLength, String deliverySubscriptionType,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					deliverySubscriptionTypeSettingsProperties,
+					deliverySubscriptionTypeSettingsUnicodeProperties,
 				long deliveryMaxSubscriptionCycles)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateSubscriptionInfo(
 			cpInstanceId, overrideSubscriptionInfo, subscriptionEnabled,
 			subscriptionLength, subscriptionType,
-			subscriptionTypeSettingsProperties, maxSubscriptionCycles,
+			subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles,
 			deliverySubscriptionEnabled, deliverySubscriptionLength,
 			deliverySubscriptionType,
-			deliverySubscriptionTypeSettingsProperties,
+			deliverySubscriptionTypeSettingsUnicodeProperties,
 			deliveryMaxSubscriptionCycles);
 	}
 
@@ -1315,7 +1331,7 @@ public class CPInstanceLocalServiceUtil {
 				boolean subscriptionEnabled, int subscriptionLength,
 				String subscriptionType,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					subscriptionTypeSettingsProperties,
+					subscriptionTypeSettingsUnicodeProperties,
 				long maxSubscriptionCycles,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1323,7 +1339,7 @@ public class CPInstanceLocalServiceUtil {
 		return getService().updateSubscriptionInfo(
 			cpInstanceId, overrideSubscriptionInfo, subscriptionEnabled,
 			subscriptionLength, subscriptionType,
-			subscriptionTypeSettingsProperties, maxSubscriptionCycles,
+			subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles,
 			serviceContext);
 	}
 

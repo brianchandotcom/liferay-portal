@@ -901,10 +901,6 @@ public class CommerceDataIntegrationProcessUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CommerceDataIntegrationProcessPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

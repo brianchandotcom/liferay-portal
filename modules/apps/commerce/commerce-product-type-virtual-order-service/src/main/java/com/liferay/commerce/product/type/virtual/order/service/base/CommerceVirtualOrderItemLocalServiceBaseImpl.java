@@ -23,6 +23,7 @@ import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -152,6 +153,11 @@ public abstract class CommerceVirtualOrderItemLocalServiceBaseImpl
 
 		return commerceVirtualOrderItemPersistence.remove(
 			commerceVirtualOrderItem);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return commerceVirtualOrderItemPersistence.dslQuery(dslQuery);
 	}
 
 	@Override
@@ -396,6 +402,16 @@ public abstract class CommerceVirtualOrderItemLocalServiceBaseImpl
 					CommerceVirtualOrderItem.class.getName())));
 
 		return exportActionableDynamicQuery;
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
+
+		return commerceVirtualOrderItemPersistence.create(
+			((Long)primaryKeyObj).longValue());
 	}
 
 	/**

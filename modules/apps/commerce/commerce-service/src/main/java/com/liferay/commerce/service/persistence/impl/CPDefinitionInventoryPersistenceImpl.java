@@ -16,9 +16,11 @@ package com.liferay.commerce.service.persistence.impl;
 
 import com.liferay.commerce.exception.NoSuchCPDefinitionInventoryException;
 import com.liferay.commerce.model.CPDefinitionInventory;
+import com.liferay.commerce.model.CPDefinitionInventoryTable;
 import com.liferay.commerce.model.impl.CPDefinitionInventoryImpl;
 import com.liferay.commerce.model.impl.CPDefinitionInventoryModelImpl;
 import com.liferay.commerce.service.persistence.CPDefinitionInventoryPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -35,21 +37,16 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -253,10 +250,6 @@ public class CPDefinitionInventoryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -615,8 +608,6 @@ public class CPDefinitionInventoryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -776,11 +767,6 @@ public class CPDefinitionInventoryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByUUID_G, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -870,8 +856,6 @@ public class CPDefinitionInventoryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1074,10 +1058,6 @@ public class CPDefinitionInventoryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1462,8 +1442,6 @@ public class CPDefinitionInventoryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1601,11 +1579,6 @@ public class CPDefinitionInventoryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByCPDefinitionId, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1676,8 +1649,6 @@ public class CPDefinitionInventoryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1696,21 +1667,14 @@ public class CPDefinitionInventoryPersistenceImpl
 
 		dbColumnNames.put("uuid", "uuid_");
 
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-				"_dbColumnNames");
-
-			field.setAccessible(true);
-
-			field.set(this, dbColumnNames);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
+		setDBColumnNames(dbColumnNames);
 
 		setModelClass(CPDefinitionInventory.class);
+
+		setModelImplClass(CPDefinitionInventoryImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CPDefinitionInventoryTable.INSTANCE);
 	}
 
 	/**
@@ -1721,7 +1685,6 @@ public class CPDefinitionInventoryPersistenceImpl
 	@Override
 	public void cacheResult(CPDefinitionInventory cpDefinitionInventory) {
 		entityCache.putResult(
-			CPDefinitionInventoryModelImpl.ENTITY_CACHE_ENABLED,
 			CPDefinitionInventoryImpl.class,
 			cpDefinitionInventory.getPrimaryKey(), cpDefinitionInventory);
 
@@ -1754,7 +1717,6 @@ public class CPDefinitionInventoryPersistenceImpl
 				cpDefinitionInventories) {
 
 			if (entityCache.getResult(
-					CPDefinitionInventoryModelImpl.ENTITY_CACHE_ENABLED,
 					CPDefinitionInventoryImpl.class,
 					cpDefinitionInventory.getPrimaryKey()) == null) {
 
@@ -1792,7 +1754,6 @@ public class CPDefinitionInventoryPersistenceImpl
 	@Override
 	public void clearCache(CPDefinitionInventory cpDefinitionInventory) {
 		entityCache.removeResult(
-			CPDefinitionInventoryModelImpl.ENTITY_CACHE_ENABLED,
 			CPDefinitionInventoryImpl.class,
 			cpDefinitionInventory.getPrimaryKey());
 
@@ -1814,7 +1775,6 @@ public class CPDefinitionInventoryPersistenceImpl
 				cpDefinitionInventories) {
 
 			entityCache.removeResult(
-				CPDefinitionInventoryModelImpl.ENTITY_CACHE_ENABLED,
 				CPDefinitionInventoryImpl.class,
 				cpDefinitionInventory.getPrimaryKey());
 
@@ -1823,6 +1783,7 @@ public class CPDefinitionInventoryPersistenceImpl
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1830,7 +1791,6 @@ public class CPDefinitionInventoryPersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(
-				CPDefinitionInventoryModelImpl.ENTITY_CACHE_ENABLED,
 				CPDefinitionInventoryImpl.class, primaryKey);
 		}
 	}
@@ -2102,10 +2062,7 @@ public class CPDefinitionInventoryPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CPDefinitionInventoryModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				cpDefinitionInventoryModelImpl.getUuid()
 			};
@@ -2172,7 +2129,6 @@ public class CPDefinitionInventoryPersistenceImpl
 		}
 
 		entityCache.putResult(
-			CPDefinitionInventoryModelImpl.ENTITY_CACHE_ENABLED,
 			CPDefinitionInventoryImpl.class,
 			cpDefinitionInventory.getPrimaryKey(), cpDefinitionInventory,
 			false);
@@ -2228,58 +2184,6 @@ public class CPDefinitionInventoryPersistenceImpl
 	/**
 	 * Returns the cp definition inventory with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the cp definition inventory
-	 * @return the cp definition inventory, or <code>null</code> if a cp definition inventory with the primary key could not be found
-	 */
-	@Override
-	public CPDefinitionInventory fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(
-			CPDefinitionInventoryModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionInventoryImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CPDefinitionInventory cpDefinitionInventory =
-			(CPDefinitionInventory)serializable;
-
-		if (cpDefinitionInventory == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				cpDefinitionInventory = (CPDefinitionInventory)session.get(
-					CPDefinitionInventoryImpl.class, primaryKey);
-
-				if (cpDefinitionInventory != null) {
-					cacheResult(cpDefinitionInventory);
-				}
-				else {
-					entityCache.putResult(
-						CPDefinitionInventoryModelImpl.ENTITY_CACHE_ENABLED,
-						CPDefinitionInventoryImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CPDefinitionInventoryModelImpl.ENTITY_CACHE_ENABLED,
-					CPDefinitionInventoryImpl.class, primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return cpDefinitionInventory;
-	}
-
-	/**
-	 * Returns the cp definition inventory with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param CPDefinitionInventoryId the primary key of the cp definition inventory
 	 * @return the cp definition inventory, or <code>null</code> if a cp definition inventory with the primary key could not be found
 	 */
@@ -2288,110 +2192,6 @@ public class CPDefinitionInventoryPersistenceImpl
 		long CPDefinitionInventoryId) {
 
 		return fetchByPrimaryKey((Serializable)CPDefinitionInventoryId);
-	}
-
-	@Override
-	public Map<Serializable, CPDefinitionInventory> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CPDefinitionInventory> map =
-			new HashMap<Serializable, CPDefinitionInventory>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CPDefinitionInventory cpDefinitionInventory = fetchByPrimaryKey(
-				primaryKey);
-
-			if (cpDefinitionInventory != null) {
-				map.put(primaryKey, cpDefinitionInventory);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CPDefinitionInventoryModelImpl.ENTITY_CACHE_ENABLED,
-				CPDefinitionInventoryImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (CPDefinitionInventory)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(_SQL_SELECT_CPDEFINITIONINVENTORY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CPDefinitionInventory cpDefinitionInventory :
-					(List<CPDefinitionInventory>)query.list()) {
-
-				map.put(
-					cpDefinitionInventory.getPrimaryKeyObj(),
-					cpDefinitionInventory);
-
-				cacheResult(cpDefinitionInventory);
-
-				uncachedPrimaryKeys.remove(
-					cpDefinitionInventory.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CPDefinitionInventoryModelImpl.ENTITY_CACHE_ENABLED,
-					CPDefinitionInventoryImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -2520,10 +2320,6 @@ public class CPDefinitionInventoryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2570,9 +2366,6 @@ public class CPDefinitionInventoryPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2589,6 +2382,21 @@ public class CPDefinitionInventoryPersistenceImpl
 	}
 
 	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "CPDefinitionInventoryId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_CPDEFINITIONINVENTORY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CPDefinitionInventoryModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2598,27 +2406,19 @@ public class CPDefinitionInventoryPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CPDefinitionInventoryModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionInventoryModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionInventoryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CPDefinitionInventoryModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionInventoryModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionInventoryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CPDefinitionInventoryModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionInventoryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByUuid = new FinderPath(
-			CPDefinitionInventoryModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionInventoryModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionInventoryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2627,22 +2427,16 @@ public class CPDefinitionInventoryPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			CPDefinitionInventoryModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionInventoryModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionInventoryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
 			CPDefinitionInventoryModelImpl.UUID_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
-			CPDefinitionInventoryModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionInventoryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUuid", new String[] {String.class.getName()});
 
 		_finderPathFetchByUUID_G = new FinderPath(
-			CPDefinitionInventoryModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionInventoryModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionInventoryImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
@@ -2650,14 +2444,11 @@ public class CPDefinitionInventoryPersistenceImpl
 			CPDefinitionInventoryModelImpl.GROUPID_COLUMN_BITMASK);
 
 		_finderPathCountByUUID_G = new FinderPath(
-			CPDefinitionInventoryModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionInventoryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			CPDefinitionInventoryModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionInventoryModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionInventoryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
@@ -2667,8 +2458,6 @@ public class CPDefinitionInventoryPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			CPDefinitionInventoryModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionInventoryModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionInventoryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
@@ -2676,23 +2465,18 @@ public class CPDefinitionInventoryPersistenceImpl
 			CPDefinitionInventoryModelImpl.COMPANYID_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
-			CPDefinitionInventoryModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionInventoryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathFetchByCPDefinitionId = new FinderPath(
-			CPDefinitionInventoryModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionInventoryModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionInventoryImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByCPDefinitionId", new String[] {Long.class.getName()},
 			CPDefinitionInventoryModelImpl.CPDEFINITIONID_COLUMN_BITMASK);
 
 		_finderPathCountByCPDefinitionId = new FinderPath(
-			CPDefinitionInventoryModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionInventoryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPDefinitionId",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCPDefinitionId", new String[] {Long.class.getName()});
 	}
 
 	public void destroy() {
@@ -2710,9 +2494,6 @@ public class CPDefinitionInventoryPersistenceImpl
 
 	private static final String _SQL_SELECT_CPDEFINITIONINVENTORY =
 		"SELECT cpDefinitionInventory FROM CPDefinitionInventory cpDefinitionInventory";
-
-	private static final String _SQL_SELECT_CPDEFINITIONINVENTORY_WHERE_PKS_IN =
-		"SELECT cpDefinitionInventory FROM CPDefinitionInventory cpDefinitionInventory WHERE CPDefinitionInventoryId IN (";
 
 	private static final String _SQL_SELECT_CPDEFINITIONINVENTORY_WHERE =
 		"SELECT cpDefinitionInventory FROM CPDefinitionInventory cpDefinitionInventory WHERE ";

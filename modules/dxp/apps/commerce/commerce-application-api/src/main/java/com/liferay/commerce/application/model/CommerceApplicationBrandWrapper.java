@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.application.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,29 +31,21 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceApplicationBrandWrapper
+	extends BaseModelWrapper<CommerceApplicationBrand>
 	implements CommerceApplicationBrand,
 			   ModelWrapper<CommerceApplicationBrand> {
 
 	public CommerceApplicationBrandWrapper(
 		CommerceApplicationBrand commerceApplicationBrand) {
 
-		_commerceApplicationBrand = commerceApplicationBrand;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceApplicationBrand.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceApplicationBrand.class.getName();
+		super(commerceApplicationBrand);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put(
 			"commerceApplicationBrandId", getCommerceApplicationBrandId());
 		attributes.put("companyId", getCompanyId());
@@ -73,6 +61,12 @@ public class CommerceApplicationBrandWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long commerceApplicationBrandId = (Long)attributes.get(
 			"commerceApplicationBrandId");
 
@@ -123,17 +117,6 @@ public class CommerceApplicationBrandWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CommerceApplicationBrandWrapper(
-			(CommerceApplicationBrand)_commerceApplicationBrand.clone());
-	}
-
-	@Override
-	public int compareTo(CommerceApplicationBrand commerceApplicationBrand) {
-		return _commerceApplicationBrand.compareTo(commerceApplicationBrand);
-	}
-
 	/**
 	 * Returns the commerce application brand ID of this commerce application brand.
 	 *
@@ -141,7 +124,7 @@ public class CommerceApplicationBrandWrapper
 	 */
 	@Override
 	public long getCommerceApplicationBrandId() {
-		return _commerceApplicationBrand.getCommerceApplicationBrandId();
+		return model.getCommerceApplicationBrandId();
 	}
 
 	/**
@@ -151,7 +134,7 @@ public class CommerceApplicationBrandWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceApplicationBrand.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -161,12 +144,7 @@ public class CommerceApplicationBrandWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceApplicationBrand.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceApplicationBrand.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -176,7 +154,7 @@ public class CommerceApplicationBrandWrapper
 	 */
 	@Override
 	public long getLogoId() {
-		return _commerceApplicationBrand.getLogoId();
+		return model.getLogoId();
 	}
 
 	/**
@@ -186,7 +164,17 @@ public class CommerceApplicationBrandWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceApplicationBrand.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce application brand.
+	 *
+	 * @return the mvcc version of this commerce application brand
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -196,7 +184,7 @@ public class CommerceApplicationBrandWrapper
 	 */
 	@Override
 	public String getName() {
-		return _commerceApplicationBrand.getName();
+		return model.getName();
 	}
 
 	/**
@@ -206,12 +194,7 @@ public class CommerceApplicationBrandWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceApplicationBrand.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceApplicationBrand.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -221,7 +204,7 @@ public class CommerceApplicationBrandWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceApplicationBrand.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -231,7 +214,7 @@ public class CommerceApplicationBrandWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceApplicationBrand.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -241,37 +224,12 @@ public class CommerceApplicationBrandWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceApplicationBrand.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceApplicationBrand.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceApplicationBrand.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceApplicationBrand.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceApplicationBrand.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_commerceApplicationBrand.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceApplicationBrand.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -281,8 +239,7 @@ public class CommerceApplicationBrandWrapper
 	 */
 	@Override
 	public void setCommerceApplicationBrandId(long commerceApplicationBrandId) {
-		_commerceApplicationBrand.setCommerceApplicationBrandId(
-			commerceApplicationBrandId);
+		model.setCommerceApplicationBrandId(commerceApplicationBrandId);
 	}
 
 	/**
@@ -292,7 +249,7 @@ public class CommerceApplicationBrandWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceApplicationBrand.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -302,24 +259,7 @@ public class CommerceApplicationBrandWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceApplicationBrand.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceApplicationBrand.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceApplicationBrand.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceApplicationBrand.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -329,7 +269,7 @@ public class CommerceApplicationBrandWrapper
 	 */
 	@Override
 	public void setLogoId(long logoId) {
-		_commerceApplicationBrand.setLogoId(logoId);
+		model.setLogoId(logoId);
 	}
 
 	/**
@@ -339,7 +279,17 @@ public class CommerceApplicationBrandWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceApplicationBrand.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this commerce application brand.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce application brand
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -349,12 +299,7 @@ public class CommerceApplicationBrandWrapper
 	 */
 	@Override
 	public void setName(String name) {
-		_commerceApplicationBrand.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_commerceApplicationBrand.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -364,12 +309,7 @@ public class CommerceApplicationBrandWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceApplicationBrand.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceApplicationBrand.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -379,7 +319,7 @@ public class CommerceApplicationBrandWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceApplicationBrand.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -389,7 +329,7 @@ public class CommerceApplicationBrandWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceApplicationBrand.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -399,81 +339,14 @@ public class CommerceApplicationBrandWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceApplicationBrand.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceApplicationBrand>
-		toCacheModel() {
+	protected CommerceApplicationBrandWrapper wrap(
+		CommerceApplicationBrand commerceApplicationBrand) {
 
-		return _commerceApplicationBrand.toCacheModel();
+		return new CommerceApplicationBrandWrapper(commerceApplicationBrand);
 	}
-
-	@Override
-	public CommerceApplicationBrand toEscapedModel() {
-		return new CommerceApplicationBrandWrapper(
-			_commerceApplicationBrand.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commerceApplicationBrand.toString();
-	}
-
-	@Override
-	public CommerceApplicationBrand toUnescapedModel() {
-		return new CommerceApplicationBrandWrapper(
-			_commerceApplicationBrand.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceApplicationBrand.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceApplicationBrandWrapper)) {
-			return false;
-		}
-
-		CommerceApplicationBrandWrapper commerceApplicationBrandWrapper =
-			(CommerceApplicationBrandWrapper)object;
-
-		if (Objects.equals(
-				_commerceApplicationBrand,
-				commerceApplicationBrandWrapper._commerceApplicationBrand)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceApplicationBrand getWrappedModel() {
-		return _commerceApplicationBrand;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceApplicationBrand.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceApplicationBrand.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceApplicationBrand.resetOriginalValues();
-	}
-
-	private final CommerceApplicationBrand _commerceApplicationBrand;
 
 }

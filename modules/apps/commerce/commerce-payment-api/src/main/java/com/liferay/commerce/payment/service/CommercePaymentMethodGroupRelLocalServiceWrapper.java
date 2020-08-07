@@ -117,6 +117,18 @@ public class CommercePaymentMethodGroupRelLocalServiceWrapper
 				commercePaymentMethodGroupRelId);
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePaymentMethodGroupRelLocalService.createPersistedModel(
+			primaryKeyObj);
+	}
+
 	@Override
 	public void deleteCommerceAddressRestriction(
 			long commerceAddressRestrictionId)
@@ -188,6 +200,11 @@ public class CommercePaymentMethodGroupRelLocalServiceWrapper
 
 		return _commercePaymentMethodGroupRelLocalService.deletePersistedModel(
 			persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _commercePaymentMethodGroupRelLocalService.dslQuery(dslQuery);
 	}
 
 	@Override

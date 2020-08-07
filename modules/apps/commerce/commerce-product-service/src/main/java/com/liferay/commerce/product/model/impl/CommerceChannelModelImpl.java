@@ -19,6 +19,7 @@ import com.liferay.commerce.product.model.CommerceChannelModel;
 import com.liferay.commerce.product.model.CommerceChannelSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -73,7 +73,7 @@ public class CommerceChannelModelImpl
 	public static final String TABLE_NAME = "CommerceChannel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"externalReferenceCode", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"externalReferenceCode", Types.VARCHAR},
 		{"commerceChannelId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
@@ -88,6 +88,7 @@ public class CommerceChannelModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceChannelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -105,7 +106,7 @@ public class CommerceChannelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceChannel (externalReferenceCode VARCHAR(75) null,commerceChannelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,siteGroupId LONG,name VARCHAR(75) null,type_ VARCHAR(75) null,typeSettings VARCHAR(75) null,commerceCurrencyCode VARCHAR(75) null,priceDisplayType VARCHAR(75) null,discountsTargetNetPrice BOOLEAN)";
+		"create table CommerceChannel (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,commerceChannelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,siteGroupId LONG,name VARCHAR(75) null,type_ VARCHAR(75) null,typeSettings VARCHAR(75) null,commerceCurrencyCode VARCHAR(75) null,priceDisplayType VARCHAR(75) null,discountsTargetNetPrice BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceChannel";
 
@@ -121,20 +122,23 @@ public class CommerceChannelModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.product.model.CommerceChannel"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.product.model.CommerceChannel"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.product.model.CommerceChannel"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
@@ -157,6 +161,7 @@ public class CommerceChannelModelImpl
 
 		CommerceChannel model = new CommerceChannelImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setCommerceChannelId(soapModel.getCommerceChannelId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -254,9 +259,6 @@ public class CommerceChannelModelImpl
 				attributeGetterFunction.apply((CommerceChannel)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -331,330 +333,100 @@ public class CommerceChannelModelImpl
 			new LinkedHashMap<String, BiConsumer<CommerceChannel, ?>>();
 
 		attributeGetterFunctions.put(
-			"externalReferenceCode",
-			new Function<CommerceChannel, Object>() {
-
-				@Override
-				public Object apply(CommerceChannel commerceChannel) {
-					return commerceChannel.getExternalReferenceCode();
-				}
-
-			});
+			"mvccVersion", CommerceChannel::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceChannel, Long>)CommerceChannel::setMvccVersion);
+		attributeGetterFunctions.put(
+			"externalReferenceCode", CommerceChannel::getExternalReferenceCode);
 		attributeSetterBiConsumers.put(
 			"externalReferenceCode",
-			new BiConsumer<CommerceChannel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceChannel commerceChannel,
-					Object externalReferenceCodeObject) {
-
-					commerceChannel.setExternalReferenceCode(
-						(String)externalReferenceCodeObject);
-				}
-
-			});
+			(BiConsumer<CommerceChannel, String>)
+				CommerceChannel::setExternalReferenceCode);
 		attributeGetterFunctions.put(
-			"commerceChannelId",
-			new Function<CommerceChannel, Object>() {
-
-				@Override
-				public Object apply(CommerceChannel commerceChannel) {
-					return commerceChannel.getCommerceChannelId();
-				}
-
-			});
+			"commerceChannelId", CommerceChannel::getCommerceChannelId);
 		attributeSetterBiConsumers.put(
 			"commerceChannelId",
-			new BiConsumer<CommerceChannel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceChannel commerceChannel,
-					Object commerceChannelIdObject) {
-
-					commerceChannel.setCommerceChannelId(
-						(Long)commerceChannelIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceChannel, Long>)
+				CommerceChannel::setCommerceChannelId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommerceChannel, Object>() {
-
-				@Override
-				public Object apply(CommerceChannel commerceChannel) {
-					return commerceChannel.getCompanyId();
-				}
-
-			});
+			"companyId", CommerceChannel::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommerceChannel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceChannel commerceChannel, Object companyIdObject) {
-
-					commerceChannel.setCompanyId((Long)companyIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommerceChannel, Object>() {
-
-				@Override
-				public Object apply(CommerceChannel commerceChannel) {
-					return commerceChannel.getUserId();
-				}
-
-			});
+			(BiConsumer<CommerceChannel, Long>)CommerceChannel::setCompanyId);
+		attributeGetterFunctions.put("userId", CommerceChannel::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommerceChannel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceChannel commerceChannel, Object userIdObject) {
-
-					commerceChannel.setUserId((Long)userIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommerceChannel, Object>() {
-
-				@Override
-				public Object apply(CommerceChannel commerceChannel) {
-					return commerceChannel.getUserName();
-				}
-
-			});
+			(BiConsumer<CommerceChannel, Long>)CommerceChannel::setUserId);
+		attributeGetterFunctions.put("userName", CommerceChannel::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommerceChannel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceChannel commerceChannel, Object userNameObject) {
-
-					commerceChannel.setUserName((String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceChannel, String>)CommerceChannel::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommerceChannel, Object>() {
-
-				@Override
-				public Object apply(CommerceChannel commerceChannel) {
-					return commerceChannel.getCreateDate();
-				}
-
-			});
+			"createDate", CommerceChannel::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommerceChannel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceChannel commerceChannel, Object createDateObject) {
-
-					commerceChannel.setCreateDate((Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceChannel, Date>)CommerceChannel::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CommerceChannel, Object>() {
-
-				@Override
-				public Object apply(CommerceChannel commerceChannel) {
-					return commerceChannel.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CommerceChannel::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommerceChannel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceChannel commerceChannel,
-					Object modifiedDateObject) {
-
-					commerceChannel.setModifiedDate((Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceChannel, Date>)
+				CommerceChannel::setModifiedDate);
 		attributeGetterFunctions.put(
-			"siteGroupId",
-			new Function<CommerceChannel, Object>() {
-
-				@Override
-				public Object apply(CommerceChannel commerceChannel) {
-					return commerceChannel.getSiteGroupId();
-				}
-
-			});
+			"siteGroupId", CommerceChannel::getSiteGroupId);
 		attributeSetterBiConsumers.put(
 			"siteGroupId",
-			new BiConsumer<CommerceChannel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceChannel commerceChannel, Object siteGroupIdObject) {
-
-					commerceChannel.setSiteGroupId((Long)siteGroupIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"name",
-			new Function<CommerceChannel, Object>() {
-
-				@Override
-				public Object apply(CommerceChannel commerceChannel) {
-					return commerceChannel.getName();
-				}
-
-			});
+			(BiConsumer<CommerceChannel, Long>)CommerceChannel::setSiteGroupId);
+		attributeGetterFunctions.put("name", CommerceChannel::getName);
 		attributeSetterBiConsumers.put(
 			"name",
-			new BiConsumer<CommerceChannel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceChannel commerceChannel, Object nameObject) {
-
-					commerceChannel.setName((String)nameObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"type",
-			new Function<CommerceChannel, Object>() {
-
-				@Override
-				public Object apply(CommerceChannel commerceChannel) {
-					return commerceChannel.getType();
-				}
-
-			});
+			(BiConsumer<CommerceChannel, String>)CommerceChannel::setName);
+		attributeGetterFunctions.put("type", CommerceChannel::getType);
 		attributeSetterBiConsumers.put(
 			"type",
-			new BiConsumer<CommerceChannel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceChannel commerceChannel, Object typeObject) {
-
-					commerceChannel.setType((String)typeObject);
-				}
-
-			});
+			(BiConsumer<CommerceChannel, String>)CommerceChannel::setType);
 		attributeGetterFunctions.put(
-			"typeSettings",
-			new Function<CommerceChannel, Object>() {
-
-				@Override
-				public Object apply(CommerceChannel commerceChannel) {
-					return commerceChannel.getTypeSettings();
-				}
-
-			});
+			"typeSettings", CommerceChannel::getTypeSettings);
 		attributeSetterBiConsumers.put(
 			"typeSettings",
-			new BiConsumer<CommerceChannel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceChannel commerceChannel,
-					Object typeSettingsObject) {
-
-					commerceChannel.setTypeSettings((String)typeSettingsObject);
-				}
-
-			});
+			(BiConsumer<CommerceChannel, String>)
+				CommerceChannel::setTypeSettings);
 		attributeGetterFunctions.put(
-			"commerceCurrencyCode",
-			new Function<CommerceChannel, Object>() {
-
-				@Override
-				public Object apply(CommerceChannel commerceChannel) {
-					return commerceChannel.getCommerceCurrencyCode();
-				}
-
-			});
+			"commerceCurrencyCode", CommerceChannel::getCommerceCurrencyCode);
 		attributeSetterBiConsumers.put(
 			"commerceCurrencyCode",
-			new BiConsumer<CommerceChannel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceChannel commerceChannel,
-					Object commerceCurrencyCodeObject) {
-
-					commerceChannel.setCommerceCurrencyCode(
-						(String)commerceCurrencyCodeObject);
-				}
-
-			});
+			(BiConsumer<CommerceChannel, String>)
+				CommerceChannel::setCommerceCurrencyCode);
 		attributeGetterFunctions.put(
-			"priceDisplayType",
-			new Function<CommerceChannel, Object>() {
-
-				@Override
-				public Object apply(CommerceChannel commerceChannel) {
-					return commerceChannel.getPriceDisplayType();
-				}
-
-			});
+			"priceDisplayType", CommerceChannel::getPriceDisplayType);
 		attributeSetterBiConsumers.put(
 			"priceDisplayType",
-			new BiConsumer<CommerceChannel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceChannel commerceChannel,
-					Object priceDisplayTypeObject) {
-
-					commerceChannel.setPriceDisplayType(
-						(String)priceDisplayTypeObject);
-				}
-
-			});
+			(BiConsumer<CommerceChannel, String>)
+				CommerceChannel::setPriceDisplayType);
 		attributeGetterFunctions.put(
 			"discountsTargetNetPrice",
-			new Function<CommerceChannel, Object>() {
-
-				@Override
-				public Object apply(CommerceChannel commerceChannel) {
-					return commerceChannel.getDiscountsTargetNetPrice();
-				}
-
-			});
+			CommerceChannel::getDiscountsTargetNetPrice);
 		attributeSetterBiConsumers.put(
 			"discountsTargetNetPrice",
-			new BiConsumer<CommerceChannel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceChannel commerceChannel,
-					Object discountsTargetNetPriceObject) {
-
-					commerceChannel.setDiscountsTargetNetPrice(
-						(Boolean)discountsTargetNetPriceObject);
-				}
-
-			});
+			(BiConsumer<CommerceChannel, Boolean>)
+				CommerceChannel::setDiscountsTargetNetPrice);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -944,6 +716,7 @@ public class CommerceChannelModelImpl
 	public Object clone() {
 		CommerceChannelImpl commerceChannelImpl = new CommerceChannelImpl();
 
+		commerceChannelImpl.setMvccVersion(getMvccVersion());
 		commerceChannelImpl.setExternalReferenceCode(
 			getExternalReferenceCode());
 		commerceChannelImpl.setCommerceChannelId(getCommerceChannelId());
@@ -1009,11 +782,19 @@ public class CommerceChannelModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -1039,6 +820,8 @@ public class CommerceChannelModelImpl
 	public CacheModel<CommerceChannel> toCacheModel() {
 		CommerceChannelCacheModel commerceChannelCacheModel =
 			new CommerceChannelCacheModel();
+
+		commerceChannelCacheModel.mvccVersion = getMvccVersion();
 
 		commerceChannelCacheModel.externalReferenceCode =
 			getExternalReferenceCode();
@@ -1206,6 +989,7 @@ public class CommerceChannelModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _externalReferenceCode;
 	private String _originalExternalReferenceCode;
 	private long _commerceChannelId;

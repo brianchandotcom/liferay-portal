@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.product.service;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -31,6 +29,8 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the remote service interface for CommerceChannel. Methods of this
@@ -64,7 +64,7 @@ public interface CommerceChannelService extends BaseService {
 	 */
 	public CommerceChannel addCommerceChannel(
 			long siteGroupId, String name, String type,
-			UnicodeProperties typeSettingsProperties,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			String commerceCurrencyCode, String externalReferenceCode,
 			ServiceContext serviceContext)
 		throws PortalException;
@@ -119,13 +119,13 @@ public interface CommerceChannelService extends BaseService {
 
 	public CommerceChannel updateCommerceChannel(
 			long commerceChannelId, long siteGroupId, String name, String type,
-			UnicodeProperties typeSettingsProperties,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			String commerceCurrencyCode)
 		throws PortalException;
 
 	public CommerceChannel updateCommerceChannel(
 			long commerceChannelId, long siteGroupId, String name, String type,
-			UnicodeProperties typeSettingsProperties,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			String commerceCurrencyCode, String priceDisplayType,
 			boolean discountsTargetNetPrice)
 		throws PortalException;

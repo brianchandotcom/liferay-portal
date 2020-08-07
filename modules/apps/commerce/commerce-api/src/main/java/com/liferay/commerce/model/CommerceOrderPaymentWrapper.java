@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,28 +31,20 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceOrderPaymentWrapper
+	extends BaseModelWrapper<CommerceOrderPayment>
 	implements CommerceOrderPayment, ModelWrapper<CommerceOrderPayment> {
 
 	public CommerceOrderPaymentWrapper(
 		CommerceOrderPayment commerceOrderPayment) {
 
-		_commerceOrderPayment = commerceOrderPayment;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceOrderPayment.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceOrderPayment.class.getName();
+		super(commerceOrderPayment);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("commerceOrderPaymentId", getCommerceOrderPaymentId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -75,6 +63,12 @@ public class CommerceOrderPaymentWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long commerceOrderPaymentId = (Long)attributes.get(
 			"commerceOrderPaymentId");
 
@@ -144,17 +138,6 @@ public class CommerceOrderPaymentWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CommerceOrderPaymentWrapper(
-			(CommerceOrderPayment)_commerceOrderPayment.clone());
-	}
-
-	@Override
-	public int compareTo(CommerceOrderPayment commerceOrderPayment) {
-		return _commerceOrderPayment.compareTo(commerceOrderPayment);
-	}
-
 	/**
 	 * Returns the commerce order ID of this commerce order payment.
 	 *
@@ -162,7 +145,7 @@ public class CommerceOrderPaymentWrapper
 	 */
 	@Override
 	public long getCommerceOrderId() {
-		return _commerceOrderPayment.getCommerceOrderId();
+		return model.getCommerceOrderId();
 	}
 
 	/**
@@ -172,7 +155,7 @@ public class CommerceOrderPaymentWrapper
 	 */
 	@Override
 	public long getCommerceOrderPaymentId() {
-		return _commerceOrderPayment.getCommerceOrderPaymentId();
+		return model.getCommerceOrderPaymentId();
 	}
 
 	/**
@@ -182,7 +165,7 @@ public class CommerceOrderPaymentWrapper
 	 */
 	@Override
 	public String getCommercePaymentMethodKey() {
-		return _commerceOrderPayment.getCommercePaymentMethodKey();
+		return model.getCommercePaymentMethodKey();
 	}
 
 	/**
@@ -192,7 +175,7 @@ public class CommerceOrderPaymentWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceOrderPayment.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -202,7 +185,7 @@ public class CommerceOrderPaymentWrapper
 	 */
 	@Override
 	public String getContent() {
-		return _commerceOrderPayment.getContent();
+		return model.getContent();
 	}
 
 	/**
@@ -212,12 +195,7 @@ public class CommerceOrderPaymentWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceOrderPayment.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceOrderPayment.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -227,7 +205,7 @@ public class CommerceOrderPaymentWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _commerceOrderPayment.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -237,7 +215,17 @@ public class CommerceOrderPaymentWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceOrderPayment.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce order payment.
+	 *
+	 * @return the mvcc version of this commerce order payment
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -247,12 +235,7 @@ public class CommerceOrderPaymentWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceOrderPayment.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceOrderPayment.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -262,7 +245,7 @@ public class CommerceOrderPaymentWrapper
 	 */
 	@Override
 	public int getStatus() {
-		return _commerceOrderPayment.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -272,7 +255,7 @@ public class CommerceOrderPaymentWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceOrderPayment.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -282,7 +265,7 @@ public class CommerceOrderPaymentWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceOrderPayment.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -292,37 +275,12 @@ public class CommerceOrderPaymentWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceOrderPayment.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceOrderPayment.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceOrderPayment.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceOrderPayment.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceOrderPayment.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_commerceOrderPayment.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceOrderPayment.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -332,7 +290,7 @@ public class CommerceOrderPaymentWrapper
 	 */
 	@Override
 	public void setCommerceOrderId(long commerceOrderId) {
-		_commerceOrderPayment.setCommerceOrderId(commerceOrderId);
+		model.setCommerceOrderId(commerceOrderId);
 	}
 
 	/**
@@ -342,7 +300,7 @@ public class CommerceOrderPaymentWrapper
 	 */
 	@Override
 	public void setCommerceOrderPaymentId(long commerceOrderPaymentId) {
-		_commerceOrderPayment.setCommerceOrderPaymentId(commerceOrderPaymentId);
+		model.setCommerceOrderPaymentId(commerceOrderPaymentId);
 	}
 
 	/**
@@ -352,8 +310,7 @@ public class CommerceOrderPaymentWrapper
 	 */
 	@Override
 	public void setCommercePaymentMethodKey(String commercePaymentMethodKey) {
-		_commerceOrderPayment.setCommercePaymentMethodKey(
-			commercePaymentMethodKey);
+		model.setCommercePaymentMethodKey(commercePaymentMethodKey);
 	}
 
 	/**
@@ -363,7 +320,7 @@ public class CommerceOrderPaymentWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceOrderPayment.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -373,7 +330,7 @@ public class CommerceOrderPaymentWrapper
 	 */
 	@Override
 	public void setContent(String content) {
-		_commerceOrderPayment.setContent(content);
+		model.setContent(content);
 	}
 
 	/**
@@ -383,24 +340,7 @@ public class CommerceOrderPaymentWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceOrderPayment.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceOrderPayment.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceOrderPayment.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceOrderPayment.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -410,7 +350,7 @@ public class CommerceOrderPaymentWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_commerceOrderPayment.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -420,12 +360,17 @@ public class CommerceOrderPaymentWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceOrderPayment.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this commerce order payment.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce order payment
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_commerceOrderPayment.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -435,12 +380,7 @@ public class CommerceOrderPaymentWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceOrderPayment.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceOrderPayment.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -450,7 +390,7 @@ public class CommerceOrderPaymentWrapper
 	 */
 	@Override
 	public void setStatus(int status) {
-		_commerceOrderPayment.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -460,7 +400,7 @@ public class CommerceOrderPaymentWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceOrderPayment.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -470,7 +410,7 @@ public class CommerceOrderPaymentWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceOrderPayment.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -480,81 +420,14 @@ public class CommerceOrderPaymentWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceOrderPayment.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceOrderPayment>
-		toCacheModel() {
+	protected CommerceOrderPaymentWrapper wrap(
+		CommerceOrderPayment commerceOrderPayment) {
 
-		return _commerceOrderPayment.toCacheModel();
+		return new CommerceOrderPaymentWrapper(commerceOrderPayment);
 	}
-
-	@Override
-	public CommerceOrderPayment toEscapedModel() {
-		return new CommerceOrderPaymentWrapper(
-			_commerceOrderPayment.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commerceOrderPayment.toString();
-	}
-
-	@Override
-	public CommerceOrderPayment toUnescapedModel() {
-		return new CommerceOrderPaymentWrapper(
-			_commerceOrderPayment.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceOrderPayment.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceOrderPaymentWrapper)) {
-			return false;
-		}
-
-		CommerceOrderPaymentWrapper commerceOrderPaymentWrapper =
-			(CommerceOrderPaymentWrapper)object;
-
-		if (Objects.equals(
-				_commerceOrderPayment,
-				commerceOrderPaymentWrapper._commerceOrderPayment)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceOrderPayment getWrappedModel() {
-		return _commerceOrderPayment;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceOrderPayment.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceOrderPayment.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceOrderPayment.resetOriginalValues();
-	}
-
-	private final CommerceOrderPayment _commerceOrderPayment;
 
 }

@@ -14,17 +14,13 @@
 
 package com.liferay.commerce.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,26 +32,18 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceCountryWrapper
+	extends BaseModelWrapper<CommerceCountry>
 	implements CommerceCountry, ModelWrapper<CommerceCountry> {
 
 	public CommerceCountryWrapper(CommerceCountry commerceCountry) {
-		_commerceCountry = commerceCountry;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceCountry.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceCountry.class.getName();
+		super(commerceCountry);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("commerceCountryId", getCommerceCountryId());
 		attributes.put("companyId", getCompanyId());
@@ -80,6 +68,12 @@ public class CommerceCountryWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -191,17 +185,6 @@ public class CommerceCountryWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CommerceCountryWrapper(
-			(CommerceCountry)_commerceCountry.clone());
-	}
-
-	@Override
-	public int compareTo(CommerceCountry commerceCountry) {
-		return _commerceCountry.compareTo(commerceCountry);
-	}
-
 	/**
 	 * Returns the active of this commerce country.
 	 *
@@ -209,12 +192,12 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public boolean getActive() {
-		return _commerceCountry.getActive();
+		return model.getActive();
 	}
 
 	@Override
 	public String[] getAvailableLanguageIds() {
-		return _commerceCountry.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -224,7 +207,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public boolean getBillingAllowed() {
-		return _commerceCountry.getBillingAllowed();
+		return model.getBillingAllowed();
 	}
 
 	/**
@@ -234,7 +217,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public boolean getChannelFilterEnabled() {
-		return _commerceCountry.getChannelFilterEnabled();
+		return model.getChannelFilterEnabled();
 	}
 
 	/**
@@ -244,12 +227,12 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public long getCommerceCountryId() {
-		return _commerceCountry.getCommerceCountryId();
+		return model.getCommerceCountryId();
 	}
 
 	@Override
 	public java.util.List<CommerceRegion> getCommerceRegions() {
-		return _commerceCountry.getCommerceRegions();
+		return model.getCommerceRegions();
 	}
 
 	/**
@@ -259,7 +242,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceCountry.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -269,17 +252,12 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceCountry.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _commerceCountry.getDefaultLanguageId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceCountry.getExpandoBridge();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -289,7 +267,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public Date getLastPublishDate() {
-		return _commerceCountry.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -299,7 +277,17 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceCountry.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce country.
+	 *
+	 * @return the mvcc version of this commerce country
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -309,7 +297,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public String getName() {
-		return _commerceCountry.getName();
+		return model.getName();
 	}
 
 	/**
@@ -320,7 +308,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public String getName(java.util.Locale locale) {
-		return _commerceCountry.getName(locale);
+		return model.getName(locale);
 	}
 
 	/**
@@ -332,7 +320,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public String getName(java.util.Locale locale, boolean useDefault) {
-		return _commerceCountry.getName(locale, useDefault);
+		return model.getName(locale, useDefault);
 	}
 
 	/**
@@ -343,7 +331,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public String getName(String languageId) {
-		return _commerceCountry.getName(languageId);
+		return model.getName(languageId);
 	}
 
 	/**
@@ -355,17 +343,17 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public String getName(String languageId, boolean useDefault) {
-		return _commerceCountry.getName(languageId, useDefault);
+		return model.getName(languageId, useDefault);
 	}
 
 	@Override
 	public String getNameCurrentLanguageId() {
-		return _commerceCountry.getNameCurrentLanguageId();
+		return model.getNameCurrentLanguageId();
 	}
 
 	@Override
 	public String getNameCurrentValue() {
-		return _commerceCountry.getNameCurrentValue();
+		return model.getNameCurrentValue();
 	}
 
 	/**
@@ -375,7 +363,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public Map<java.util.Locale, String> getNameMap() {
-		return _commerceCountry.getNameMap();
+		return model.getNameMap();
 	}
 
 	/**
@@ -385,7 +373,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public int getNumericISOCode() {
-		return _commerceCountry.getNumericISOCode();
+		return model.getNumericISOCode();
 	}
 
 	/**
@@ -395,12 +383,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceCountry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceCountry.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -410,7 +393,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public double getPriority() {
-		return _commerceCountry.getPriority();
+		return model.getPriority();
 	}
 
 	/**
@@ -420,7 +403,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public boolean getShippingAllowed() {
-		return _commerceCountry.getShippingAllowed();
+		return model.getShippingAllowed();
 	}
 
 	/**
@@ -430,7 +413,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public boolean getSubjectToVAT() {
-		return _commerceCountry.getSubjectToVAT();
+		return model.getSubjectToVAT();
 	}
 
 	/**
@@ -440,7 +423,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public String getThreeLettersISOCode() {
-		return _commerceCountry.getThreeLettersISOCode();
+		return model.getThreeLettersISOCode();
 	}
 
 	/**
@@ -450,7 +433,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public String getTwoLettersISOCode() {
-		return _commerceCountry.getTwoLettersISOCode();
+		return model.getTwoLettersISOCode();
 	}
 
 	/**
@@ -460,7 +443,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceCountry.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -470,7 +453,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceCountry.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -480,7 +463,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceCountry.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -490,12 +473,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public String getUuid() {
-		return _commerceCountry.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceCountry.hashCode();
+		return model.getUuid();
 	}
 
 	/**
@@ -505,7 +483,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public boolean isActive() {
-		return _commerceCountry.isActive();
+		return model.isActive();
 	}
 
 	/**
@@ -515,12 +493,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public boolean isBillingAllowed() {
-		return _commerceCountry.isBillingAllowed();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceCountry.isCachedModel();
+		return model.isBillingAllowed();
 	}
 
 	/**
@@ -530,17 +503,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public boolean isChannelFilterEnabled() {
-		return _commerceCountry.isChannelFilterEnabled();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceCountry.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceCountry.isNew();
+		return model.isChannelFilterEnabled();
 	}
 
 	/**
@@ -550,7 +513,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public boolean isShippingAllowed() {
-		return _commerceCountry.isShippingAllowed();
+		return model.isShippingAllowed();
 	}
 
 	/**
@@ -560,19 +523,19 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public boolean isSubjectToVAT() {
-		return _commerceCountry.isSubjectToVAT();
+		return model.isSubjectToVAT();
 	}
 
 	@Override
 	public void persist() {
-		_commerceCountry.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
-		_commerceCountry.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
@@ -580,7 +543,7 @@ public class CommerceCountryWrapper
 			java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
-		_commerceCountry.prepareLocalizedFieldsForImport(defaultImportLocale);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -590,7 +553,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public void setActive(boolean active) {
-		_commerceCountry.setActive(active);
+		model.setActive(active);
 	}
 
 	/**
@@ -600,12 +563,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public void setBillingAllowed(boolean billingAllowed) {
-		_commerceCountry.setBillingAllowed(billingAllowed);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceCountry.setCachedModel(cachedModel);
+		model.setBillingAllowed(billingAllowed);
 	}
 
 	/**
@@ -615,7 +573,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public void setChannelFilterEnabled(boolean channelFilterEnabled) {
-		_commerceCountry.setChannelFilterEnabled(channelFilterEnabled);
+		model.setChannelFilterEnabled(channelFilterEnabled);
 	}
 
 	/**
@@ -625,7 +583,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public void setCommerceCountryId(long commerceCountryId) {
-		_commerceCountry.setCommerceCountryId(commerceCountryId);
+		model.setCommerceCountryId(commerceCountryId);
 	}
 
 	/**
@@ -635,7 +593,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceCountry.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -645,24 +603,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceCountry.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceCountry.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceCountry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceCountry.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -672,7 +613,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_commerceCountry.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -682,7 +623,17 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceCountry.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this commerce country.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce country
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -692,7 +643,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public void setName(String name) {
-		_commerceCountry.setName(name);
+		model.setName(name);
 	}
 
 	/**
@@ -703,7 +654,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public void setName(String name, java.util.Locale locale) {
-		_commerceCountry.setName(name, locale);
+		model.setName(name, locale);
 	}
 
 	/**
@@ -717,12 +668,12 @@ public class CommerceCountryWrapper
 	public void setName(
 		String name, java.util.Locale locale, java.util.Locale defaultLocale) {
 
-		_commerceCountry.setName(name, locale, defaultLocale);
+		model.setName(name, locale, defaultLocale);
 	}
 
 	@Override
 	public void setNameCurrentLanguageId(String languageId) {
-		_commerceCountry.setNameCurrentLanguageId(languageId);
+		model.setNameCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -732,7 +683,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap) {
-		_commerceCountry.setNameMap(nameMap);
+		model.setNameMap(nameMap);
 	}
 
 	/**
@@ -745,12 +696,7 @@ public class CommerceCountryWrapper
 	public void setNameMap(
 		Map<java.util.Locale, String> nameMap, java.util.Locale defaultLocale) {
 
-		_commerceCountry.setNameMap(nameMap, defaultLocale);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_commerceCountry.setNew(n);
+		model.setNameMap(nameMap, defaultLocale);
 	}
 
 	/**
@@ -760,7 +706,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public void setNumericISOCode(int numericISOCode) {
-		_commerceCountry.setNumericISOCode(numericISOCode);
+		model.setNumericISOCode(numericISOCode);
 	}
 
 	/**
@@ -770,12 +716,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceCountry.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceCountry.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -785,7 +726,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public void setPriority(double priority) {
-		_commerceCountry.setPriority(priority);
+		model.setPriority(priority);
 	}
 
 	/**
@@ -795,7 +736,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public void setShippingAllowed(boolean shippingAllowed) {
-		_commerceCountry.setShippingAllowed(shippingAllowed);
+		model.setShippingAllowed(shippingAllowed);
 	}
 
 	/**
@@ -805,7 +746,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public void setSubjectToVAT(boolean subjectToVAT) {
-		_commerceCountry.setSubjectToVAT(subjectToVAT);
+		model.setSubjectToVAT(subjectToVAT);
 	}
 
 	/**
@@ -815,7 +756,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public void setThreeLettersISOCode(String threeLettersISOCode) {
-		_commerceCountry.setThreeLettersISOCode(threeLettersISOCode);
+		model.setThreeLettersISOCode(threeLettersISOCode);
 	}
 
 	/**
@@ -825,7 +766,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public void setTwoLettersISOCode(String twoLettersISOCode) {
-		_commerceCountry.setTwoLettersISOCode(twoLettersISOCode);
+		model.setTwoLettersISOCode(twoLettersISOCode);
 	}
 
 	/**
@@ -835,7 +776,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceCountry.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -845,7 +786,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceCountry.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -855,7 +796,7 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceCountry.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -865,83 +806,17 @@ public class CommerceCountryWrapper
 	 */
 	@Override
 	public void setUuid(String uuid) {
-		_commerceCountry.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceCountry>
-		toCacheModel() {
-
-		return _commerceCountry.toCacheModel();
-	}
-
-	@Override
-	public CommerceCountry toEscapedModel() {
-		return new CommerceCountryWrapper(_commerceCountry.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commerceCountry.toString();
-	}
-
-	@Override
-	public CommerceCountry toUnescapedModel() {
-		return new CommerceCountryWrapper(_commerceCountry.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceCountry.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceCountryWrapper)) {
-			return false;
-		}
-
-		CommerceCountryWrapper commerceCountryWrapper =
-			(CommerceCountryWrapper)object;
-
-		if (Objects.equals(
-				_commerceCountry, commerceCountryWrapper._commerceCountry)) {
-
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _commerceCountry.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public CommerceCountry getWrappedModel() {
-		return _commerceCountry;
+	protected CommerceCountryWrapper wrap(CommerceCountry commerceCountry) {
+		return new CommerceCountryWrapper(commerceCountry);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceCountry.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceCountry.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceCountry.resetOriginalValues();
-	}
-
-	private final CommerceCountry _commerceCountry;
 
 }

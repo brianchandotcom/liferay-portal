@@ -15,9 +15,10 @@
 package com.liferay.commerce.discount.model.impl;
 
 import com.liferay.commerce.discount.model.CommerceDiscountUsageEntry;
+import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,8 @@ import java.util.Date;
  * @generated
  */
 public class CommerceDiscountUsageEntryCacheModel
-	implements CacheModel<CommerceDiscountUsageEntry>, Externalizable {
+	implements CacheModel<CommerceDiscountUsageEntry>, Externalizable,
+			   MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -49,9 +51,10 @@ public class CommerceDiscountUsageEntryCacheModel
 			commerceDiscountUsageEntryCacheModel =
 				(CommerceDiscountUsageEntryCacheModel)object;
 
-		if (commerceDiscountUsageEntryId ==
+		if ((commerceDiscountUsageEntryId ==
 				commerceDiscountUsageEntryCacheModel.
-					commerceDiscountUsageEntryId) {
+					commerceDiscountUsageEntryId) &&
+			(mvccVersion == commerceDiscountUsageEntryCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -61,14 +64,28 @@ public class CommerceDiscountUsageEntryCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, commerceDiscountUsageEntryId);
+		int hashCode = HashUtil.hash(0, commerceDiscountUsageEntryId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
-		sb.append("{commerceDiscountUsageEntryId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", commerceDiscountUsageEntryId=");
 		sb.append(commerceDiscountUsageEntryId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -96,6 +113,7 @@ public class CommerceDiscountUsageEntryCacheModel
 		CommerceDiscountUsageEntryImpl commerceDiscountUsageEntryImpl =
 			new CommerceDiscountUsageEntryImpl();
 
+		commerceDiscountUsageEntryImpl.setMvccVersion(mvccVersion);
 		commerceDiscountUsageEntryImpl.setCommerceDiscountUsageEntryId(
 			commerceDiscountUsageEntryId);
 		commerceDiscountUsageEntryImpl.setCompanyId(companyId);
@@ -135,6 +153,8 @@ public class CommerceDiscountUsageEntryCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		commerceDiscountUsageEntryId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -153,6 +173,8 @@ public class CommerceDiscountUsageEntryCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(commerceDiscountUsageEntryId);
 
 		objectOutput.writeLong(companyId);
@@ -176,6 +198,7 @@ public class CommerceDiscountUsageEntryCacheModel
 		objectOutput.writeLong(commerceDiscountId);
 	}
 
+	public long mvccVersion;
 	public long commerceDiscountUsageEntryId;
 	public long companyId;
 	public long userId;

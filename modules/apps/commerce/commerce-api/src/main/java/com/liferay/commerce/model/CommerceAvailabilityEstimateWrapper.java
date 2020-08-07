@@ -14,17 +14,13 @@
 
 package com.liferay.commerce.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,29 +32,21 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceAvailabilityEstimateWrapper
+	extends BaseModelWrapper<CommerceAvailabilityEstimate>
 	implements CommerceAvailabilityEstimate,
 			   ModelWrapper<CommerceAvailabilityEstimate> {
 
 	public CommerceAvailabilityEstimateWrapper(
 		CommerceAvailabilityEstimate commerceAvailabilityEstimate) {
 
-		_commerceAvailabilityEstimate = commerceAvailabilityEstimate;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceAvailabilityEstimate.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceAvailabilityEstimate.class.getName();
+		super(commerceAvailabilityEstimate);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put(
 			"commerceAvailabilityEstimateId",
@@ -77,6 +65,12 @@ public class CommerceAvailabilityEstimateWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -140,23 +134,8 @@ public class CommerceAvailabilityEstimateWrapper
 	}
 
 	@Override
-	public Object clone() {
-		return new CommerceAvailabilityEstimateWrapper(
-			(CommerceAvailabilityEstimate)
-				_commerceAvailabilityEstimate.clone());
-	}
-
-	@Override
-	public int compareTo(
-		CommerceAvailabilityEstimate commerceAvailabilityEstimate) {
-
-		return _commerceAvailabilityEstimate.compareTo(
-			commerceAvailabilityEstimate);
-	}
-
-	@Override
 	public String[] getAvailableLanguageIds() {
-		return _commerceAvailabilityEstimate.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -166,8 +145,7 @@ public class CommerceAvailabilityEstimateWrapper
 	 */
 	@Override
 	public long getCommerceAvailabilityEstimateId() {
-		return _commerceAvailabilityEstimate.
-			getCommerceAvailabilityEstimateId();
+		return model.getCommerceAvailabilityEstimateId();
 	}
 
 	/**
@@ -177,7 +155,7 @@ public class CommerceAvailabilityEstimateWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceAvailabilityEstimate.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -187,17 +165,12 @@ public class CommerceAvailabilityEstimateWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceAvailabilityEstimate.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _commerceAvailabilityEstimate.getDefaultLanguageId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceAvailabilityEstimate.getExpandoBridge();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -207,7 +180,7 @@ public class CommerceAvailabilityEstimateWrapper
 	 */
 	@Override
 	public Date getLastPublishDate() {
-		return _commerceAvailabilityEstimate.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -217,7 +190,17 @@ public class CommerceAvailabilityEstimateWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceAvailabilityEstimate.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce availability estimate.
+	 *
+	 * @return the mvcc version of this commerce availability estimate
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -227,12 +210,7 @@ public class CommerceAvailabilityEstimateWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceAvailabilityEstimate.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceAvailabilityEstimate.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -242,7 +220,7 @@ public class CommerceAvailabilityEstimateWrapper
 	 */
 	@Override
 	public double getPriority() {
-		return _commerceAvailabilityEstimate.getPriority();
+		return model.getPriority();
 	}
 
 	/**
@@ -252,7 +230,7 @@ public class CommerceAvailabilityEstimateWrapper
 	 */
 	@Override
 	public String getTitle() {
-		return _commerceAvailabilityEstimate.getTitle();
+		return model.getTitle();
 	}
 
 	/**
@@ -263,7 +241,7 @@ public class CommerceAvailabilityEstimateWrapper
 	 */
 	@Override
 	public String getTitle(java.util.Locale locale) {
-		return _commerceAvailabilityEstimate.getTitle(locale);
+		return model.getTitle(locale);
 	}
 
 	/**
@@ -275,7 +253,7 @@ public class CommerceAvailabilityEstimateWrapper
 	 */
 	@Override
 	public String getTitle(java.util.Locale locale, boolean useDefault) {
-		return _commerceAvailabilityEstimate.getTitle(locale, useDefault);
+		return model.getTitle(locale, useDefault);
 	}
 
 	/**
@@ -286,7 +264,7 @@ public class CommerceAvailabilityEstimateWrapper
 	 */
 	@Override
 	public String getTitle(String languageId) {
-		return _commerceAvailabilityEstimate.getTitle(languageId);
+		return model.getTitle(languageId);
 	}
 
 	/**
@@ -298,17 +276,17 @@ public class CommerceAvailabilityEstimateWrapper
 	 */
 	@Override
 	public String getTitle(String languageId, boolean useDefault) {
-		return _commerceAvailabilityEstimate.getTitle(languageId, useDefault);
+		return model.getTitle(languageId, useDefault);
 	}
 
 	@Override
 	public String getTitleCurrentLanguageId() {
-		return _commerceAvailabilityEstimate.getTitleCurrentLanguageId();
+		return model.getTitleCurrentLanguageId();
 	}
 
 	@Override
 	public String getTitleCurrentValue() {
-		return _commerceAvailabilityEstimate.getTitleCurrentValue();
+		return model.getTitleCurrentValue();
 	}
 
 	/**
@@ -318,7 +296,7 @@ public class CommerceAvailabilityEstimateWrapper
 	 */
 	@Override
 	public Map<java.util.Locale, String> getTitleMap() {
-		return _commerceAvailabilityEstimate.getTitleMap();
+		return model.getTitleMap();
 	}
 
 	/**
@@ -328,7 +306,7 @@ public class CommerceAvailabilityEstimateWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceAvailabilityEstimate.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -338,7 +316,7 @@ public class CommerceAvailabilityEstimateWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceAvailabilityEstimate.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -348,7 +326,7 @@ public class CommerceAvailabilityEstimateWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceAvailabilityEstimate.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -358,39 +336,19 @@ public class CommerceAvailabilityEstimateWrapper
 	 */
 	@Override
 	public String getUuid() {
-		return _commerceAvailabilityEstimate.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceAvailabilityEstimate.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceAvailabilityEstimate.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceAvailabilityEstimate.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceAvailabilityEstimate.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_commerceAvailabilityEstimate.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
-		_commerceAvailabilityEstimate.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
@@ -398,13 +356,7 @@ public class CommerceAvailabilityEstimateWrapper
 			java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
-		_commerceAvailabilityEstimate.prepareLocalizedFieldsForImport(
-			defaultImportLocale);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceAvailabilityEstimate.setCachedModel(cachedModel);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -416,8 +368,7 @@ public class CommerceAvailabilityEstimateWrapper
 	public void setCommerceAvailabilityEstimateId(
 		long commerceAvailabilityEstimateId) {
 
-		_commerceAvailabilityEstimate.setCommerceAvailabilityEstimateId(
-			commerceAvailabilityEstimateId);
+		model.setCommerceAvailabilityEstimateId(commerceAvailabilityEstimateId);
 	}
 
 	/**
@@ -427,7 +378,7 @@ public class CommerceAvailabilityEstimateWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceAvailabilityEstimate.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -437,25 +388,7 @@ public class CommerceAvailabilityEstimateWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceAvailabilityEstimate.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceAvailabilityEstimate.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceAvailabilityEstimate.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceAvailabilityEstimate.setExpandoBridgeAttributes(
-			serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -465,7 +398,7 @@ public class CommerceAvailabilityEstimateWrapper
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_commerceAvailabilityEstimate.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -475,12 +408,17 @@ public class CommerceAvailabilityEstimateWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceAvailabilityEstimate.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this commerce availability estimate.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce availability estimate
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_commerceAvailabilityEstimate.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -490,12 +428,7 @@ public class CommerceAvailabilityEstimateWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceAvailabilityEstimate.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceAvailabilityEstimate.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -505,7 +438,7 @@ public class CommerceAvailabilityEstimateWrapper
 	 */
 	@Override
 	public void setPriority(double priority) {
-		_commerceAvailabilityEstimate.setPriority(priority);
+		model.setPriority(priority);
 	}
 
 	/**
@@ -515,7 +448,7 @@ public class CommerceAvailabilityEstimateWrapper
 	 */
 	@Override
 	public void setTitle(String title) {
-		_commerceAvailabilityEstimate.setTitle(title);
+		model.setTitle(title);
 	}
 
 	/**
@@ -526,7 +459,7 @@ public class CommerceAvailabilityEstimateWrapper
 	 */
 	@Override
 	public void setTitle(String title, java.util.Locale locale) {
-		_commerceAvailabilityEstimate.setTitle(title, locale);
+		model.setTitle(title, locale);
 	}
 
 	/**
@@ -540,12 +473,12 @@ public class CommerceAvailabilityEstimateWrapper
 	public void setTitle(
 		String title, java.util.Locale locale, java.util.Locale defaultLocale) {
 
-		_commerceAvailabilityEstimate.setTitle(title, locale, defaultLocale);
+		model.setTitle(title, locale, defaultLocale);
 	}
 
 	@Override
 	public void setTitleCurrentLanguageId(String languageId) {
-		_commerceAvailabilityEstimate.setTitleCurrentLanguageId(languageId);
+		model.setTitleCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -555,7 +488,7 @@ public class CommerceAvailabilityEstimateWrapper
 	 */
 	@Override
 	public void setTitleMap(Map<java.util.Locale, String> titleMap) {
-		_commerceAvailabilityEstimate.setTitleMap(titleMap);
+		model.setTitleMap(titleMap);
 	}
 
 	/**
@@ -569,7 +502,7 @@ public class CommerceAvailabilityEstimateWrapper
 		Map<java.util.Locale, String> titleMap,
 		java.util.Locale defaultLocale) {
 
-		_commerceAvailabilityEstimate.setTitleMap(titleMap, defaultLocale);
+		model.setTitleMap(titleMap, defaultLocale);
 	}
 
 	/**
@@ -579,7 +512,7 @@ public class CommerceAvailabilityEstimateWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceAvailabilityEstimate.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -589,7 +522,7 @@ public class CommerceAvailabilityEstimateWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceAvailabilityEstimate.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -599,7 +532,7 @@ public class CommerceAvailabilityEstimateWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceAvailabilityEstimate.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -609,88 +542,20 @@ public class CommerceAvailabilityEstimateWrapper
 	 */
 	@Override
 	public void setUuid(String uuid) {
-		_commerceAvailabilityEstimate.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel
-		<CommerceAvailabilityEstimate> toCacheModel() {
-
-		return _commerceAvailabilityEstimate.toCacheModel();
-	}
-
-	@Override
-	public CommerceAvailabilityEstimate toEscapedModel() {
-		return new CommerceAvailabilityEstimateWrapper(
-			_commerceAvailabilityEstimate.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commerceAvailabilityEstimate.toString();
-	}
-
-	@Override
-	public CommerceAvailabilityEstimate toUnescapedModel() {
-		return new CommerceAvailabilityEstimateWrapper(
-			_commerceAvailabilityEstimate.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceAvailabilityEstimate.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceAvailabilityEstimateWrapper)) {
-			return false;
-		}
-
-		CommerceAvailabilityEstimateWrapper
-			commerceAvailabilityEstimateWrapper =
-				(CommerceAvailabilityEstimateWrapper)object;
-
-		if (Objects.equals(
-				_commerceAvailabilityEstimate,
-				commerceAvailabilityEstimateWrapper.
-					_commerceAvailabilityEstimate)) {
-
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _commerceAvailabilityEstimate.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public CommerceAvailabilityEstimate getWrappedModel() {
-		return _commerceAvailabilityEstimate;
-	}
+	protected CommerceAvailabilityEstimateWrapper wrap(
+		CommerceAvailabilityEstimate commerceAvailabilityEstimate) {
 
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceAvailabilityEstimate.isEntityCacheEnabled();
+		return new CommerceAvailabilityEstimateWrapper(
+			commerceAvailabilityEstimate);
 	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceAvailabilityEstimate.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceAvailabilityEstimate.resetOriginalValues();
-	}
-
-	private final CommerceAvailabilityEstimate _commerceAvailabilityEstimate;
 
 }

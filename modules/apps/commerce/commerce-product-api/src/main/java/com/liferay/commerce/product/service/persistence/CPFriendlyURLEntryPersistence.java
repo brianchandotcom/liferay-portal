@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.product.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException;
 import com.liferay.commerce.product.model.CPFriendlyURLEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the cp friendly url entry service.
@@ -48,9 +43,6 @@ public interface CPFriendlyURLEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPFriendlyURLEntryUtil} to access the cp friendly url entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CPFriendlyURLEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the cp friendly url entries where uuid = &#63;.
@@ -1405,8 +1397,5 @@ public interface CPFriendlyURLEntryPersistence
 	 * @return the number of cp friendly url entries
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

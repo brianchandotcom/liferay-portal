@@ -35,6 +35,7 @@ public class CommerceAccountGroupCommerceAccountRelSoap
 		CommerceAccountGroupCommerceAccountRelSoap soapModel =
 			new CommerceAccountGroupCommerceAccountRelSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setExternalReferenceCode(model.getExternalReferenceCode());
 		soapModel.setCommerceAccountGroupCommerceAccountRelId(
 			model.getCommerceAccountGroupCommerceAccountRelId());
@@ -106,6 +107,14 @@ public class CommerceAccountGroupCommerceAccountRelSoap
 
 	public void setPrimaryKey(long pk) {
 		setCommerceAccountGroupCommerceAccountRelId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getExternalReferenceCode() {
@@ -183,6 +192,7 @@ public class CommerceAccountGroupCommerceAccountRelSoap
 		_commerceAccountId = commerceAccountId;
 	}
 
+	private long _mvccVersion;
 	private String _externalReferenceCode;
 	private long _commerceAccountGroupCommerceAccountRelId;
 	private long _companyId;

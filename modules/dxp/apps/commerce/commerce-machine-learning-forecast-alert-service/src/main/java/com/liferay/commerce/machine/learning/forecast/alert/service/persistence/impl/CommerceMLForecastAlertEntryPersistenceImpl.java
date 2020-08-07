@@ -16,9 +16,11 @@ package com.liferay.commerce.machine.learning.forecast.alert.service.persistence
 
 import com.liferay.commerce.machine.learning.forecast.alert.exception.NoSuchMLForecastAlertEntryException;
 import com.liferay.commerce.machine.learning.forecast.alert.model.CommerceMLForecastAlertEntry;
+import com.liferay.commerce.machine.learning.forecast.alert.model.CommerceMLForecastAlertEntryTable;
 import com.liferay.commerce.machine.learning.forecast.alert.model.impl.CommerceMLForecastAlertEntryImpl;
 import com.liferay.commerce.machine.learning.forecast.alert.model.impl.CommerceMLForecastAlertEntryModelImpl;
 import com.liferay.commerce.machine.learning.forecast.alert.service.persistence.CommerceMLForecastAlertEntryPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -36,7 +38,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -44,17 +45,13 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -260,10 +257,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -626,8 +619,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -830,10 +821,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1220,8 +1207,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1420,11 +1405,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByC_C_T, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1523,8 +1503,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1739,10 +1717,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2158,9 +2132,7 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			commerceAccountIds = new long[0];
 		}
 		else if (commerceAccountIds.length > 1) {
-			commerceAccountIds = ArrayUtil.unique(commerceAccountIds);
-
-			Arrays.sort(commerceAccountIds);
+			commerceAccountIds = ArrayUtil.sortedUnique(commerceAccountIds);
 		}
 
 		if (commerceAccountIds.length == 1) {
@@ -2273,11 +2245,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByC_C_S, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2361,8 +2328,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2389,9 +2354,7 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			commerceAccountIds = new long[0];
 		}
 		else if (commerceAccountIds.length > 1) {
-			commerceAccountIds = ArrayUtil.unique(commerceAccountIds);
-
-			Arrays.sort(commerceAccountIds);
+			commerceAccountIds = ArrayUtil.sortedUnique(commerceAccountIds);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -2448,9 +2411,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 					_finderPathWithPaginationCountByC_C_S, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByC_C_S, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2665,10 +2625,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3116,9 +3072,7 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			commerceAccountIds = new long[0];
 		}
 		else if (commerceAccountIds.length > 1) {
-			commerceAccountIds = ArrayUtil.unique(commerceAccountIds);
-
-			Arrays.sort(commerceAccountIds);
+			commerceAccountIds = ArrayUtil.sortedUnique(commerceAccountIds);
 		}
 
 		if (commerceAccountIds.length == 1) {
@@ -3239,11 +3193,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByC_C_GtRc_S, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3335,8 +3284,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3365,9 +3312,7 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			commerceAccountIds = new long[0];
 		}
 		else if (commerceAccountIds.length > 1) {
-			commerceAccountIds = ArrayUtil.unique(commerceAccountIds);
-
-			Arrays.sort(commerceAccountIds);
+			commerceAccountIds = ArrayUtil.sortedUnique(commerceAccountIds);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -3430,9 +3375,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 					count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByC_C_GtRc_S, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3650,10 +3592,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -4101,9 +4039,7 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			commerceAccountIds = new long[0];
 		}
 		else if (commerceAccountIds.length > 1) {
-			commerceAccountIds = ArrayUtil.unique(commerceAccountIds);
-
-			Arrays.sort(commerceAccountIds);
+			commerceAccountIds = ArrayUtil.sortedUnique(commerceAccountIds);
 		}
 
 		if (commerceAccountIds.length == 1) {
@@ -4224,11 +4160,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByC_C_LtRc_S, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -4320,8 +4251,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -4350,9 +4279,7 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			commerceAccountIds = new long[0];
 		}
 		else if (commerceAccountIds.length > 1) {
-			commerceAccountIds = ArrayUtil.unique(commerceAccountIds);
-
-			Arrays.sort(commerceAccountIds);
+			commerceAccountIds = ArrayUtil.sortedUnique(commerceAccountIds);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -4415,9 +4342,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 					count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByC_C_LtRc_S, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -4448,21 +4372,14 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 
 		dbColumnNames.put("uuid", "uuid_");
 
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-				"_dbColumnNames");
-
-			field.setAccessible(true);
-
-			field.set(this, dbColumnNames);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
+		setDBColumnNames(dbColumnNames);
 
 		setModelClass(CommerceMLForecastAlertEntry.class);
+
+		setModelImplClass(CommerceMLForecastAlertEntryImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CommerceMLForecastAlertEntryTable.INSTANCE);
 	}
 
 	/**
@@ -4475,7 +4392,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		CommerceMLForecastAlertEntry commerceMLForecastAlertEntry) {
 
 		entityCache.putResult(
-			CommerceMLForecastAlertEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceMLForecastAlertEntryImpl.class,
 			commerceMLForecastAlertEntry.getPrimaryKey(),
 			commerceMLForecastAlertEntry);
@@ -4505,7 +4421,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 				commerceMLForecastAlertEntries) {
 
 			if (entityCache.getResult(
-					CommerceMLForecastAlertEntryModelImpl.ENTITY_CACHE_ENABLED,
 					CommerceMLForecastAlertEntryImpl.class,
 					commerceMLForecastAlertEntry.getPrimaryKey()) == null) {
 
@@ -4545,7 +4460,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		CommerceMLForecastAlertEntry commerceMLForecastAlertEntry) {
 
 		entityCache.removeResult(
-			CommerceMLForecastAlertEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceMLForecastAlertEntryImpl.class,
 			commerceMLForecastAlertEntry.getPrimaryKey());
 
@@ -4568,7 +4482,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 				commerceMLForecastAlertEntries) {
 
 			entityCache.removeResult(
-				CommerceMLForecastAlertEntryModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceMLForecastAlertEntryImpl.class,
 				commerceMLForecastAlertEntry.getPrimaryKey());
 
@@ -4579,6 +4492,7 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -4586,7 +4500,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(
-				CommerceMLForecastAlertEntryModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceMLForecastAlertEntryImpl.class, primaryKey);
 		}
 	}
@@ -4847,10 +4760,7 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CommerceMLForecastAlertEntryModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				commerceMLForecastAlertEntryModelImpl.getUuid()
 			};
@@ -4957,7 +4867,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		}
 
 		entityCache.putResult(
-			CommerceMLForecastAlertEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceMLForecastAlertEntryImpl.class,
 			commerceMLForecastAlertEntry.getPrimaryKey(),
 			commerceMLForecastAlertEntry, false);
@@ -5015,63 +4924,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	/**
 	 * Returns the commerce ml forecast alert entry with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the commerce ml forecast alert entry
-	 * @return the commerce ml forecast alert entry, or <code>null</code> if a commerce ml forecast alert entry with the primary key could not be found
-	 */
-	@Override
-	public CommerceMLForecastAlertEntry fetchByPrimaryKey(
-		Serializable primaryKey) {
-
-		Serializable serializable = entityCache.getResult(
-			CommerceMLForecastAlertEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceMLForecastAlertEntryImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CommerceMLForecastAlertEntry commerceMLForecastAlertEntry =
-			(CommerceMLForecastAlertEntry)serializable;
-
-		if (commerceMLForecastAlertEntry == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				commerceMLForecastAlertEntry =
-					(CommerceMLForecastAlertEntry)session.get(
-						CommerceMLForecastAlertEntryImpl.class, primaryKey);
-
-				if (commerceMLForecastAlertEntry != null) {
-					cacheResult(commerceMLForecastAlertEntry);
-				}
-				else {
-					entityCache.putResult(
-						CommerceMLForecastAlertEntryModelImpl.
-							ENTITY_CACHE_ENABLED,
-						CommerceMLForecastAlertEntryImpl.class, primaryKey,
-						nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CommerceMLForecastAlertEntryModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceMLForecastAlertEntryImpl.class, primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return commerceMLForecastAlertEntry;
-	}
-
-	/**
-	 * Returns the commerce ml forecast alert entry with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param commerceMLForecastAlertEntryId the primary key of the commerce ml forecast alert entry
 	 * @return the commerce ml forecast alert entry, or <code>null</code> if a commerce ml forecast alert entry with the primary key could not be found
 	 */
@@ -5080,112 +4932,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		long commerceMLForecastAlertEntryId) {
 
 		return fetchByPrimaryKey((Serializable)commerceMLForecastAlertEntryId);
-	}
-
-	@Override
-	public Map<Serializable, CommerceMLForecastAlertEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CommerceMLForecastAlertEntry> map =
-			new HashMap<Serializable, CommerceMLForecastAlertEntry>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CommerceMLForecastAlertEntry commerceMLForecastAlertEntry =
-				fetchByPrimaryKey(primaryKey);
-
-			if (commerceMLForecastAlertEntry != null) {
-				map.put(primaryKey, commerceMLForecastAlertEntry);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CommerceMLForecastAlertEntryModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceMLForecastAlertEntryImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(
-						primaryKey, (CommerceMLForecastAlertEntry)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(_SQL_SELECT_COMMERCEMLFORECASTALERTENTRY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CommerceMLForecastAlertEntry commerceMLForecastAlertEntry :
-					(List<CommerceMLForecastAlertEntry>)query.list()) {
-
-				map.put(
-					commerceMLForecastAlertEntry.getPrimaryKeyObj(),
-					commerceMLForecastAlertEntry);
-
-				cacheResult(commerceMLForecastAlertEntry);
-
-				uncachedPrimaryKeys.remove(
-					commerceMLForecastAlertEntry.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CommerceMLForecastAlertEntryModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceMLForecastAlertEntryImpl.class, primaryKey,
-					nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -5315,10 +5061,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -5367,9 +5109,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -5386,6 +5125,21 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	}
 
 	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "commerceMLForecastAlertEntryId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_COMMERCEMLFORECASTALERTENTRY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CommerceMLForecastAlertEntryModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -5395,27 +5149,19 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceMLForecastAlertEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceMLForecastAlertEntryModelImpl.FINDER_CACHE_ENABLED,
 			CommerceMLForecastAlertEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceMLForecastAlertEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceMLForecastAlertEntryModelImpl.FINDER_CACHE_ENABLED,
 			CommerceMLForecastAlertEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CommerceMLForecastAlertEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceMLForecastAlertEntryModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByUuid = new FinderPath(
-			CommerceMLForecastAlertEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceMLForecastAlertEntryModelImpl.FINDER_CACHE_ENABLED,
 			CommerceMLForecastAlertEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -5424,8 +5170,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			CommerceMLForecastAlertEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceMLForecastAlertEntryModelImpl.FINDER_CACHE_ENABLED,
 			CommerceMLForecastAlertEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
@@ -5433,14 +5177,10 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			CommerceMLForecastAlertEntryModelImpl.TIMESTAMP_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
-			CommerceMLForecastAlertEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceMLForecastAlertEntryModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByUuid", new String[] {String.class.getName()});
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			CommerceMLForecastAlertEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceMLForecastAlertEntryModelImpl.FINDER_CACHE_ENABLED,
 			CommerceMLForecastAlertEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
@@ -5450,8 +5190,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			CommerceMLForecastAlertEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceMLForecastAlertEntryModelImpl.FINDER_CACHE_ENABLED,
 			CommerceMLForecastAlertEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
@@ -5460,15 +5198,11 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			CommerceMLForecastAlertEntryModelImpl.TIMESTAMP_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
-			CommerceMLForecastAlertEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceMLForecastAlertEntryModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathFetchByC_C_T = new FinderPath(
-			CommerceMLForecastAlertEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceMLForecastAlertEntryModelImpl.FINDER_CACHE_ENABLED,
 			CommerceMLForecastAlertEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByC_C_T",
 			new String[] {
@@ -5480,8 +5214,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			CommerceMLForecastAlertEntryModelImpl.TIMESTAMP_COLUMN_BITMASK);
 
 		_finderPathCountByC_C_T = new FinderPath(
-			CommerceMLForecastAlertEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceMLForecastAlertEntryModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByC_C_T",
 			new String[] {
@@ -5489,8 +5221,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			});
 
 		_finderPathWithPaginationFindByC_C_S = new FinderPath(
-			CommerceMLForecastAlertEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceMLForecastAlertEntryModelImpl.FINDER_CACHE_ENABLED,
 			CommerceMLForecastAlertEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_S",
 			new String[] {
@@ -5500,8 +5230,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByC_C_S = new FinderPath(
-			CommerceMLForecastAlertEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceMLForecastAlertEntryModelImpl.FINDER_CACHE_ENABLED,
 			CommerceMLForecastAlertEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_S",
 			new String[] {
@@ -5515,8 +5243,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			CommerceMLForecastAlertEntryModelImpl.TIMESTAMP_COLUMN_BITMASK);
 
 		_finderPathCountByC_C_S = new FinderPath(
-			CommerceMLForecastAlertEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceMLForecastAlertEntryModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByC_C_S",
 			new String[] {
@@ -5525,8 +5251,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			});
 
 		_finderPathWithPaginationCountByC_C_S = new FinderPath(
-			CommerceMLForecastAlertEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceMLForecastAlertEntryModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -5534,8 +5258,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			});
 
 		_finderPathWithPaginationFindByC_C_GtRc_S = new FinderPath(
-			CommerceMLForecastAlertEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceMLForecastAlertEntryModelImpl.FINDER_CACHE_ENABLED,
 			CommerceMLForecastAlertEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_GtRc_S",
 			new String[] {
@@ -5546,8 +5268,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			});
 
 		_finderPathWithPaginationCountByC_C_GtRc_S = new FinderPath(
-			CommerceMLForecastAlertEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceMLForecastAlertEntryModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"countByC_C_GtRc_S",
 			new String[] {
@@ -5556,8 +5276,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			});
 
 		_finderPathWithPaginationFindByC_C_LtRc_S = new FinderPath(
-			CommerceMLForecastAlertEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceMLForecastAlertEntryModelImpl.FINDER_CACHE_ENABLED,
 			CommerceMLForecastAlertEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_LtRc_S",
 			new String[] {
@@ -5568,8 +5286,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			});
 
 		_finderPathWithPaginationCountByC_C_LtRc_S = new FinderPath(
-			CommerceMLForecastAlertEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceMLForecastAlertEntryModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"countByC_C_LtRc_S",
 			new String[] {
@@ -5602,10 +5318,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 
 	private static final String _SQL_SELECT_COMMERCEMLFORECASTALERTENTRY =
 		"SELECT commerceMLForecastAlertEntry FROM CommerceMLForecastAlertEntry commerceMLForecastAlertEntry";
-
-	private static final String
-		_SQL_SELECT_COMMERCEMLFORECASTALERTENTRY_WHERE_PKS_IN =
-			"SELECT commerceMLForecastAlertEntry FROM CommerceMLForecastAlertEntry commerceMLForecastAlertEntry WHERE commerceMLForecastAlertEntryId IN (";
 
 	private static final String _SQL_SELECT_COMMERCEMLFORECASTALERTENTRY_WHERE =
 		"SELECT commerceMLForecastAlertEntry FROM CommerceMLForecastAlertEntry commerceMLForecastAlertEntry WHERE ";

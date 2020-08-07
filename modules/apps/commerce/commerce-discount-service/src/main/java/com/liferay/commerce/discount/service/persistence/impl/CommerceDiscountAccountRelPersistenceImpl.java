@@ -16,9 +16,11 @@ package com.liferay.commerce.discount.service.persistence.impl;
 
 import com.liferay.commerce.discount.exception.NoSuchDiscountAccountRelException;
 import com.liferay.commerce.discount.model.CommerceDiscountAccountRel;
+import com.liferay.commerce.discount.model.CommerceDiscountAccountRelTable;
 import com.liferay.commerce.discount.model.impl.CommerceDiscountAccountRelImpl;
 import com.liferay.commerce.discount.model.impl.CommerceDiscountAccountRelModelImpl;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountAccountRelPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -35,21 +37,16 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -255,10 +252,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -621,8 +614,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -825,10 +816,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1214,8 +1201,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1400,10 +1385,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1743,8 +1724,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1925,10 +1904,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2269,8 +2244,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2422,10 +2395,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(_finderPathFetchByC_C, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2505,8 +2474,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2529,21 +2496,14 @@ public class CommerceDiscountAccountRelPersistenceImpl
 		dbColumnNames.put("uuid", "uuid_");
 		dbColumnNames.put("order", "order_");
 
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-				"_dbColumnNames");
-
-			field.setAccessible(true);
-
-			field.set(this, dbColumnNames);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
+		setDBColumnNames(dbColumnNames);
 
 		setModelClass(CommerceDiscountAccountRel.class);
+
+		setModelImplClass(CommerceDiscountAccountRelImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CommerceDiscountAccountRelTable.INSTANCE);
 	}
 
 	/**
@@ -2556,7 +2516,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 		CommerceDiscountAccountRel commerceDiscountAccountRel) {
 
 		entityCache.putResult(
-			CommerceDiscountAccountRelModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceDiscountAccountRelImpl.class,
 			commerceDiscountAccountRel.getPrimaryKey(),
 			commerceDiscountAccountRel);
@@ -2585,7 +2544,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 				commerceDiscountAccountRels) {
 
 			if (entityCache.getResult(
-					CommerceDiscountAccountRelModelImpl.ENTITY_CACHE_ENABLED,
 					CommerceDiscountAccountRelImpl.class,
 					commerceDiscountAccountRel.getPrimaryKey()) == null) {
 
@@ -2625,7 +2583,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 		CommerceDiscountAccountRel commerceDiscountAccountRel) {
 
 		entityCache.removeResult(
-			CommerceDiscountAccountRelModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceDiscountAccountRelImpl.class,
 			commerceDiscountAccountRel.getPrimaryKey());
 
@@ -2648,7 +2605,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 				commerceDiscountAccountRels) {
 
 			entityCache.removeResult(
-				CommerceDiscountAccountRelModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceDiscountAccountRelImpl.class,
 				commerceDiscountAccountRel.getPrimaryKey());
 
@@ -2658,6 +2614,7 @@ public class CommerceDiscountAccountRelPersistenceImpl
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -2665,7 +2622,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(
-				CommerceDiscountAccountRelModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceDiscountAccountRelImpl.class, primaryKey);
 		}
 	}
@@ -2916,10 +2872,7 @@ public class CommerceDiscountAccountRelPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CommerceDiscountAccountRelModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				commerceDiscountAccountRelModelImpl.getUuid()
 			};
@@ -3053,7 +3006,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 		}
 
 		entityCache.putResult(
-			CommerceDiscountAccountRelModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceDiscountAccountRelImpl.class,
 			commerceDiscountAccountRel.getPrimaryKey(),
 			commerceDiscountAccountRel, false);
@@ -3110,63 +3062,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 	/**
 	 * Returns the commerce discount account rel with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the commerce discount account rel
-	 * @return the commerce discount account rel, or <code>null</code> if a commerce discount account rel with the primary key could not be found
-	 */
-	@Override
-	public CommerceDiscountAccountRel fetchByPrimaryKey(
-		Serializable primaryKey) {
-
-		Serializable serializable = entityCache.getResult(
-			CommerceDiscountAccountRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDiscountAccountRelImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CommerceDiscountAccountRel commerceDiscountAccountRel =
-			(CommerceDiscountAccountRel)serializable;
-
-		if (commerceDiscountAccountRel == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				commerceDiscountAccountRel =
-					(CommerceDiscountAccountRel)session.get(
-						CommerceDiscountAccountRelImpl.class, primaryKey);
-
-				if (commerceDiscountAccountRel != null) {
-					cacheResult(commerceDiscountAccountRel);
-				}
-				else {
-					entityCache.putResult(
-						CommerceDiscountAccountRelModelImpl.
-							ENTITY_CACHE_ENABLED,
-						CommerceDiscountAccountRelImpl.class, primaryKey,
-						nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CommerceDiscountAccountRelModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceDiscountAccountRelImpl.class, primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return commerceDiscountAccountRel;
-	}
-
-	/**
-	 * Returns the commerce discount account rel with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param commerceDiscountAccountRelId the primary key of the commerce discount account rel
 	 * @return the commerce discount account rel, or <code>null</code> if a commerce discount account rel with the primary key could not be found
 	 */
@@ -3175,112 +3070,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 		long commerceDiscountAccountRelId) {
 
 		return fetchByPrimaryKey((Serializable)commerceDiscountAccountRelId);
-	}
-
-	@Override
-	public Map<Serializable, CommerceDiscountAccountRel> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CommerceDiscountAccountRel> map =
-			new HashMap<Serializable, CommerceDiscountAccountRel>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CommerceDiscountAccountRel commerceDiscountAccountRel =
-				fetchByPrimaryKey(primaryKey);
-
-			if (commerceDiscountAccountRel != null) {
-				map.put(primaryKey, commerceDiscountAccountRel);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CommerceDiscountAccountRelModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceDiscountAccountRelImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(
-						primaryKey, (CommerceDiscountAccountRel)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(_SQL_SELECT_COMMERCEDISCOUNTACCOUNTREL_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CommerceDiscountAccountRel commerceDiscountAccountRel :
-					(List<CommerceDiscountAccountRel>)query.list()) {
-
-				map.put(
-					commerceDiscountAccountRel.getPrimaryKeyObj(),
-					commerceDiscountAccountRel);
-
-				cacheResult(commerceDiscountAccountRel);
-
-				uncachedPrimaryKeys.remove(
-					commerceDiscountAccountRel.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CommerceDiscountAccountRelModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceDiscountAccountRelImpl.class, primaryKey,
-					nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -3410,10 +3199,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3462,9 +3247,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3481,6 +3263,21 @@ public class CommerceDiscountAccountRelPersistenceImpl
 	}
 
 	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "commerceDiscountAccountRelId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_COMMERCEDISCOUNTACCOUNTREL;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CommerceDiscountAccountRelModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3490,27 +3287,19 @@ public class CommerceDiscountAccountRelPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceDiscountAccountRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDiscountAccountRelModelImpl.FINDER_CACHE_ENABLED,
 			CommerceDiscountAccountRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceDiscountAccountRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDiscountAccountRelModelImpl.FINDER_CACHE_ENABLED,
 			CommerceDiscountAccountRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CommerceDiscountAccountRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDiscountAccountRelModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByUuid = new FinderPath(
-			CommerceDiscountAccountRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDiscountAccountRelModelImpl.FINDER_CACHE_ENABLED,
 			CommerceDiscountAccountRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -3519,8 +3308,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			CommerceDiscountAccountRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDiscountAccountRelModelImpl.FINDER_CACHE_ENABLED,
 			CommerceDiscountAccountRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
@@ -3528,14 +3315,10 @@ public class CommerceDiscountAccountRelPersistenceImpl
 			CommerceDiscountAccountRelModelImpl.ORDER_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
-			CommerceDiscountAccountRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDiscountAccountRelModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByUuid", new String[] {String.class.getName()});
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			CommerceDiscountAccountRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDiscountAccountRelModelImpl.FINDER_CACHE_ENABLED,
 			CommerceDiscountAccountRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
@@ -3545,8 +3328,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			CommerceDiscountAccountRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDiscountAccountRelModelImpl.FINDER_CACHE_ENABLED,
 			CommerceDiscountAccountRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
@@ -3555,15 +3336,11 @@ public class CommerceDiscountAccountRelPersistenceImpl
 			CommerceDiscountAccountRelModelImpl.ORDER_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
-			CommerceDiscountAccountRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDiscountAccountRelModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByCommerceAccountId = new FinderPath(
-			CommerceDiscountAccountRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDiscountAccountRelModelImpl.FINDER_CACHE_ENABLED,
 			CommerceDiscountAccountRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceAccountId",
 			new String[] {
@@ -3572,8 +3349,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByCommerceAccountId = new FinderPath(
-			CommerceDiscountAccountRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDiscountAccountRelModelImpl.FINDER_CACHE_ENABLED,
 			CommerceDiscountAccountRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCommerceAccountId", new String[] {Long.class.getName()},
@@ -3582,14 +3357,10 @@ public class CommerceDiscountAccountRelPersistenceImpl
 			CommerceDiscountAccountRelModelImpl.ORDER_COLUMN_BITMASK);
 
 		_finderPathCountByCommerceAccountId = new FinderPath(
-			CommerceDiscountAccountRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDiscountAccountRelModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCommerceAccountId", new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByCommerceDiscountId = new FinderPath(
-			CommerceDiscountAccountRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDiscountAccountRelModelImpl.FINDER_CACHE_ENABLED,
 			CommerceDiscountAccountRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceDiscountId",
 			new String[] {
@@ -3598,8 +3369,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByCommerceDiscountId = new FinderPath(
-			CommerceDiscountAccountRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDiscountAccountRelModelImpl.FINDER_CACHE_ENABLED,
 			CommerceDiscountAccountRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCommerceDiscountId", new String[] {Long.class.getName()},
@@ -3608,14 +3377,10 @@ public class CommerceDiscountAccountRelPersistenceImpl
 			CommerceDiscountAccountRelModelImpl.ORDER_COLUMN_BITMASK);
 
 		_finderPathCountByCommerceDiscountId = new FinderPath(
-			CommerceDiscountAccountRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDiscountAccountRelModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCommerceDiscountId", new String[] {Long.class.getName()});
 
 		_finderPathFetchByC_C = new FinderPath(
-			CommerceDiscountAccountRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDiscountAccountRelModelImpl.FINDER_CACHE_ENABLED,
 			CommerceDiscountAccountRelImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
@@ -3625,8 +3390,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 				COMMERCEDISCOUNTID_COLUMN_BITMASK);
 
 		_finderPathCountByC_C = new FinderPath(
-			CommerceDiscountAccountRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDiscountAccountRelModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()});
 	}
@@ -3646,10 +3409,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 
 	private static final String _SQL_SELECT_COMMERCEDISCOUNTACCOUNTREL =
 		"SELECT commerceDiscountAccountRel FROM CommerceDiscountAccountRel commerceDiscountAccountRel";
-
-	private static final String
-		_SQL_SELECT_COMMERCEDISCOUNTACCOUNTREL_WHERE_PKS_IN =
-			"SELECT commerceDiscountAccountRel FROM CommerceDiscountAccountRel commerceDiscountAccountRel WHERE commerceDiscountAccountRelId IN (";
 
 	private static final String _SQL_SELECT_COMMERCEDISCOUNTACCOUNTREL_WHERE =
 		"SELECT commerceDiscountAccountRel FROM CommerceDiscountAccountRel commerceDiscountAccountRel WHERE ";

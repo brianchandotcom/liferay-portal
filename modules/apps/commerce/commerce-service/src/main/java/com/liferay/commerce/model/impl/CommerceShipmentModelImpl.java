@@ -19,6 +19,7 @@ import com.liferay.commerce.model.CommerceShipmentModel;
 import com.liferay.commerce.model.CommerceShipmentSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -73,10 +73,11 @@ public class CommerceShipmentModelImpl
 	public static final String TABLE_NAME = "CommerceShipment";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"commerceShipmentId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"commerceAccountId", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT}, {"commerceShipmentId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"commerceAccountId", Types.BIGINT},
 		{"commerceAddressId", Types.BIGINT},
 		{"commerceShippingMethodId", Types.BIGINT},
 		{"shippingOptionName", Types.CLOB}, {"carrier", Types.VARCHAR},
@@ -88,6 +89,7 @@ public class CommerceShipmentModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceShipmentId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -107,7 +109,7 @@ public class CommerceShipmentModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceShipment (commerceShipmentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceAccountId LONG,commerceAddressId LONG,commerceShippingMethodId LONG,shippingOptionName TEXT null,carrier VARCHAR(75) null,trackingNumber VARCHAR(75) null,shippingDate DATE null,expectedDate DATE null,status INTEGER)";
+		"create table CommerceShipment (mvccVersion LONG default 0 not null,commerceShipmentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceAccountId LONG,commerceAddressId LONG,commerceShippingMethodId LONG,shippingOptionName TEXT null,carrier VARCHAR(75) null,trackingNumber VARCHAR(75) null,shippingDate DATE null,expectedDate DATE null,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceShipment";
 
@@ -123,20 +125,23 @@ public class CommerceShipmentModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.model.CommerceShipment"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.model.CommerceShipment"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.model.CommerceShipment"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long COMMERCEADDRESSID_COLUMN_BITMASK = 1L;
 
@@ -159,6 +164,7 @@ public class CommerceShipmentModelImpl
 
 		CommerceShipment model = new CommerceShipmentImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceShipmentId(soapModel.getCommerceShipmentId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -259,9 +265,6 @@ public class CommerceShipmentModelImpl
 				attributeGetterFunction.apply((CommerceShipment)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -337,378 +340,114 @@ public class CommerceShipmentModelImpl
 				new LinkedHashMap<String, BiConsumer<CommerceShipment, ?>>();
 
 		attributeGetterFunctions.put(
-			"commerceShipmentId",
-			new Function<CommerceShipment, Object>() {
-
-				@Override
-				public Object apply(CommerceShipment commerceShipment) {
-					return commerceShipment.getCommerceShipmentId();
-				}
-
-			});
+			"mvccVersion", CommerceShipment::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceShipment, Long>)
+				CommerceShipment::setMvccVersion);
+		attributeGetterFunctions.put(
+			"commerceShipmentId", CommerceShipment::getCommerceShipmentId);
 		attributeSetterBiConsumers.put(
 			"commerceShipmentId",
-			new BiConsumer<CommerceShipment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceShipment commerceShipment,
-					Object commerceShipmentIdObject) {
-
-					commerceShipment.setCommerceShipmentId(
-						(Long)commerceShipmentIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"groupId",
-			new Function<CommerceShipment, Object>() {
-
-				@Override
-				public Object apply(CommerceShipment commerceShipment) {
-					return commerceShipment.getGroupId();
-				}
-
-			});
+			(BiConsumer<CommerceShipment, Long>)
+				CommerceShipment::setCommerceShipmentId);
+		attributeGetterFunctions.put("groupId", CommerceShipment::getGroupId);
 		attributeSetterBiConsumers.put(
 			"groupId",
-			new BiConsumer<CommerceShipment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceShipment commerceShipment, Object groupIdObject) {
-
-					commerceShipment.setGroupId((Long)groupIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceShipment, Long>)CommerceShipment::setGroupId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommerceShipment, Object>() {
-
-				@Override
-				public Object apply(CommerceShipment commerceShipment) {
-					return commerceShipment.getCompanyId();
-				}
-
-			});
+			"companyId", CommerceShipment::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommerceShipment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceShipment commerceShipment, Object companyIdObject) {
-
-					commerceShipment.setCompanyId((Long)companyIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommerceShipment, Object>() {
-
-				@Override
-				public Object apply(CommerceShipment commerceShipment) {
-					return commerceShipment.getUserId();
-				}
-
-			});
+			(BiConsumer<CommerceShipment, Long>)CommerceShipment::setCompanyId);
+		attributeGetterFunctions.put("userId", CommerceShipment::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommerceShipment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceShipment commerceShipment, Object userIdObject) {
-
-					commerceShipment.setUserId((Long)userIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommerceShipment, Object>() {
-
-				@Override
-				public Object apply(CommerceShipment commerceShipment) {
-					return commerceShipment.getUserName();
-				}
-
-			});
+			(BiConsumer<CommerceShipment, Long>)CommerceShipment::setUserId);
+		attributeGetterFunctions.put("userName", CommerceShipment::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommerceShipment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceShipment commerceShipment, Object userNameObject) {
-
-					commerceShipment.setUserName((String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceShipment, String>)
+				CommerceShipment::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommerceShipment, Object>() {
-
-				@Override
-				public Object apply(CommerceShipment commerceShipment) {
-					return commerceShipment.getCreateDate();
-				}
-
-			});
+			"createDate", CommerceShipment::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommerceShipment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceShipment commerceShipment,
-					Object createDateObject) {
-
-					commerceShipment.setCreateDate((Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceShipment, Date>)
+				CommerceShipment::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CommerceShipment, Object>() {
-
-				@Override
-				public Object apply(CommerceShipment commerceShipment) {
-					return commerceShipment.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CommerceShipment::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommerceShipment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceShipment commerceShipment,
-					Object modifiedDateObject) {
-
-					commerceShipment.setModifiedDate((Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceShipment, Date>)
+				CommerceShipment::setModifiedDate);
 		attributeGetterFunctions.put(
-			"commerceAccountId",
-			new Function<CommerceShipment, Object>() {
-
-				@Override
-				public Object apply(CommerceShipment commerceShipment) {
-					return commerceShipment.getCommerceAccountId();
-				}
-
-			});
+			"commerceAccountId", CommerceShipment::getCommerceAccountId);
 		attributeSetterBiConsumers.put(
 			"commerceAccountId",
-			new BiConsumer<CommerceShipment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceShipment commerceShipment,
-					Object commerceAccountIdObject) {
-
-					commerceShipment.setCommerceAccountId(
-						(Long)commerceAccountIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceShipment, Long>)
+				CommerceShipment::setCommerceAccountId);
 		attributeGetterFunctions.put(
-			"commerceAddressId",
-			new Function<CommerceShipment, Object>() {
-
-				@Override
-				public Object apply(CommerceShipment commerceShipment) {
-					return commerceShipment.getCommerceAddressId();
-				}
-
-			});
+			"commerceAddressId", CommerceShipment::getCommerceAddressId);
 		attributeSetterBiConsumers.put(
 			"commerceAddressId",
-			new BiConsumer<CommerceShipment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceShipment commerceShipment,
-					Object commerceAddressIdObject) {
-
-					commerceShipment.setCommerceAddressId(
-						(Long)commerceAddressIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceShipment, Long>)
+				CommerceShipment::setCommerceAddressId);
 		attributeGetterFunctions.put(
 			"commerceShippingMethodId",
-			new Function<CommerceShipment, Object>() {
-
-				@Override
-				public Object apply(CommerceShipment commerceShipment) {
-					return commerceShipment.getCommerceShippingMethodId();
-				}
-
-			});
+			CommerceShipment::getCommerceShippingMethodId);
 		attributeSetterBiConsumers.put(
 			"commerceShippingMethodId",
-			new BiConsumer<CommerceShipment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceShipment commerceShipment,
-					Object commerceShippingMethodIdObject) {
-
-					commerceShipment.setCommerceShippingMethodId(
-						(Long)commerceShippingMethodIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceShipment, Long>)
+				CommerceShipment::setCommerceShippingMethodId);
 		attributeGetterFunctions.put(
-			"shippingOptionName",
-			new Function<CommerceShipment, Object>() {
-
-				@Override
-				public Object apply(CommerceShipment commerceShipment) {
-					return commerceShipment.getShippingOptionName();
-				}
-
-			});
+			"shippingOptionName", CommerceShipment::getShippingOptionName);
 		attributeSetterBiConsumers.put(
 			"shippingOptionName",
-			new BiConsumer<CommerceShipment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceShipment commerceShipment,
-					Object shippingOptionNameObject) {
-
-					commerceShipment.setShippingOptionName(
-						(String)shippingOptionNameObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"carrier",
-			new Function<CommerceShipment, Object>() {
-
-				@Override
-				public Object apply(CommerceShipment commerceShipment) {
-					return commerceShipment.getCarrier();
-				}
-
-			});
+			(BiConsumer<CommerceShipment, String>)
+				CommerceShipment::setShippingOptionName);
+		attributeGetterFunctions.put("carrier", CommerceShipment::getCarrier);
 		attributeSetterBiConsumers.put(
 			"carrier",
-			new BiConsumer<CommerceShipment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceShipment commerceShipment, Object carrierObject) {
-
-					commerceShipment.setCarrier((String)carrierObject);
-				}
-
-			});
+			(BiConsumer<CommerceShipment, String>)CommerceShipment::setCarrier);
 		attributeGetterFunctions.put(
-			"trackingNumber",
-			new Function<CommerceShipment, Object>() {
-
-				@Override
-				public Object apply(CommerceShipment commerceShipment) {
-					return commerceShipment.getTrackingNumber();
-				}
-
-			});
+			"trackingNumber", CommerceShipment::getTrackingNumber);
 		attributeSetterBiConsumers.put(
 			"trackingNumber",
-			new BiConsumer<CommerceShipment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceShipment commerceShipment,
-					Object trackingNumberObject) {
-
-					commerceShipment.setTrackingNumber(
-						(String)trackingNumberObject);
-				}
-
-			});
+			(BiConsumer<CommerceShipment, String>)
+				CommerceShipment::setTrackingNumber);
 		attributeGetterFunctions.put(
-			"shippingDate",
-			new Function<CommerceShipment, Object>() {
-
-				@Override
-				public Object apply(CommerceShipment commerceShipment) {
-					return commerceShipment.getShippingDate();
-				}
-
-			});
+			"shippingDate", CommerceShipment::getShippingDate);
 		attributeSetterBiConsumers.put(
 			"shippingDate",
-			new BiConsumer<CommerceShipment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceShipment commerceShipment,
-					Object shippingDateObject) {
-
-					commerceShipment.setShippingDate((Date)shippingDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceShipment, Date>)
+				CommerceShipment::setShippingDate);
 		attributeGetterFunctions.put(
-			"expectedDate",
-			new Function<CommerceShipment, Object>() {
-
-				@Override
-				public Object apply(CommerceShipment commerceShipment) {
-					return commerceShipment.getExpectedDate();
-				}
-
-			});
+			"expectedDate", CommerceShipment::getExpectedDate);
 		attributeSetterBiConsumers.put(
 			"expectedDate",
-			new BiConsumer<CommerceShipment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceShipment commerceShipment,
-					Object expectedDateObject) {
-
-					commerceShipment.setExpectedDate((Date)expectedDateObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"status",
-			new Function<CommerceShipment, Object>() {
-
-				@Override
-				public Object apply(CommerceShipment commerceShipment) {
-					return commerceShipment.getStatus();
-				}
-
-			});
+			(BiConsumer<CommerceShipment, Date>)
+				CommerceShipment::setExpectedDate);
+		attributeGetterFunctions.put("status", CommerceShipment::getStatus);
 		attributeSetterBiConsumers.put(
 			"status",
-			new BiConsumer<CommerceShipment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceShipment commerceShipment, Object statusObject) {
-
-					commerceShipment.setStatus((Integer)statusObject);
-				}
-
-			});
+			(BiConsumer<CommerceShipment, Integer>)CommerceShipment::setStatus);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1001,6 +740,7 @@ public class CommerceShipmentModelImpl
 	public Object clone() {
 		CommerceShipmentImpl commerceShipmentImpl = new CommerceShipmentImpl();
 
+		commerceShipmentImpl.setMvccVersion(getMvccVersion());
 		commerceShipmentImpl.setCommerceShipmentId(getCommerceShipmentId());
 		commerceShipmentImpl.setGroupId(getGroupId());
 		commerceShipmentImpl.setCompanyId(getCompanyId());
@@ -1067,11 +807,19 @@ public class CommerceShipmentModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -1100,6 +848,8 @@ public class CommerceShipmentModelImpl
 	public CacheModel<CommerceShipment> toCacheModel() {
 		CommerceShipmentCacheModel commerceShipmentCacheModel =
 			new CommerceShipmentCacheModel();
+
+		commerceShipmentCacheModel.mvccVersion = getMvccVersion();
 
 		commerceShipmentCacheModel.commerceShipmentId = getCommerceShipmentId();
 
@@ -1262,6 +1012,7 @@ public class CommerceShipmentModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _commerceShipmentId;
 	private long _groupId;
 	private long _originalGroupId;

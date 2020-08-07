@@ -1,4 +1,5 @@
 create table CommerceTaxFixedRate (
+	mvccVersion LONG default 0 not null,
 	commerceTaxFixedRateId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -12,6 +13,7 @@ create table CommerceTaxFixedRate (
 );
 
 create table CommerceTaxFixedRateAddressRel (
+	mvccVersion LONG default 0 not null,
 	CTaxFixedRateAddressRelId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,

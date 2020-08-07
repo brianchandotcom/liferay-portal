@@ -20,6 +20,7 @@ import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrde
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -76,10 +76,11 @@ public class CommerceVirtualOrderItemModelImpl
 	public static final String TABLE_NAME = "CommerceVirtualOrderItem";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"commerceVirtualOrderItemId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"commerceVirtualOrderItemId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP},
 		{"commerceOrderItemId", Types.BIGINT}, {"fileEntryId", Types.BIGINT},
 		{"url", Types.VARCHAR}, {"activationStatus", Types.INTEGER},
 		{"duration", Types.BIGINT}, {"usages", Types.INTEGER},
@@ -91,6 +92,7 @@ public class CommerceVirtualOrderItemModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceVirtualOrderItemId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -112,7 +114,7 @@ public class CommerceVirtualOrderItemModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceVirtualOrderItem (uuid_ VARCHAR(75) null,commerceVirtualOrderItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderItemId LONG,fileEntryId LONG,url VARCHAR(75) null,activationStatus INTEGER,duration LONG,usages INTEGER,maxUsages INTEGER,active_ BOOLEAN,startDate DATE null,endDate DATE null)";
+		"create table CommerceVirtualOrderItem (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,commerceVirtualOrderItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderItemId LONG,fileEntryId LONG,url VARCHAR(75) null,activationStatus INTEGER,duration LONG,usages INTEGER,maxUsages INTEGER,active_ BOOLEAN,startDate DATE null,endDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceVirtualOrderItem";
@@ -129,23 +131,23 @@ public class CommerceVirtualOrderItemModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.type.virtual.order.service.util.
-			ServiceProps.get(
-				"value.object.entity.cache.enabled.com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.type.virtual.order.service.util.
-			ServiceProps.get(
-				"value.object.finder.cache.enabled.com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.type.virtual.order.service.util.
-			ServiceProps.get(
-				"value.object.column.bitmask.enabled.com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long COMMERCEORDERITEMID_COLUMN_BITMASK = 1L;
 
@@ -172,6 +174,7 @@ public class CommerceVirtualOrderItemModelImpl
 
 		CommerceVirtualOrderItem model = new CommerceVirtualOrderItemImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCommerceVirtualOrderItemId(
 			soapModel.getCommerceVirtualOrderItemId());
@@ -275,9 +278,6 @@ public class CommerceVirtualOrderItemModelImpl
 				attributeGetterFunction.apply((CommerceVirtualOrderItem)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -357,471 +357,135 @@ public class CommerceVirtualOrderItemModelImpl
 					<String, BiConsumer<CommerceVirtualOrderItem, ?>>();
 
 		attributeGetterFunctions.put(
-			"uuid",
-			new Function<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceVirtualOrderItem commerceVirtualOrderItem) {
-
-					return commerceVirtualOrderItem.getUuid();
-				}
-
-			});
+			"mvccVersion", CommerceVirtualOrderItem::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceVirtualOrderItem, Long>)
+				CommerceVirtualOrderItem::setMvccVersion);
+		attributeGetterFunctions.put("uuid", CommerceVirtualOrderItem::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
-			new BiConsumer<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public void accept(
-					CommerceVirtualOrderItem commerceVirtualOrderItem,
-					Object uuidObject) {
-
-					commerceVirtualOrderItem.setUuid((String)uuidObject);
-				}
-
-			});
+			(BiConsumer<CommerceVirtualOrderItem, String>)
+				CommerceVirtualOrderItem::setUuid);
 		attributeGetterFunctions.put(
 			"commerceVirtualOrderItemId",
-			new Function<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceVirtualOrderItem commerceVirtualOrderItem) {
-
-					return commerceVirtualOrderItem.
-						getCommerceVirtualOrderItemId();
-				}
-
-			});
+			CommerceVirtualOrderItem::getCommerceVirtualOrderItemId);
 		attributeSetterBiConsumers.put(
 			"commerceVirtualOrderItemId",
-			new BiConsumer<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public void accept(
-					CommerceVirtualOrderItem commerceVirtualOrderItem,
-					Object commerceVirtualOrderItemIdObject) {
-
-					commerceVirtualOrderItem.setCommerceVirtualOrderItemId(
-						(Long)commerceVirtualOrderItemIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceVirtualOrderItem, Long>)
+				CommerceVirtualOrderItem::setCommerceVirtualOrderItemId);
 		attributeGetterFunctions.put(
-			"groupId",
-			new Function<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceVirtualOrderItem commerceVirtualOrderItem) {
-
-					return commerceVirtualOrderItem.getGroupId();
-				}
-
-			});
+			"groupId", CommerceVirtualOrderItem::getGroupId);
 		attributeSetterBiConsumers.put(
 			"groupId",
-			new BiConsumer<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public void accept(
-					CommerceVirtualOrderItem commerceVirtualOrderItem,
-					Object groupIdObject) {
-
-					commerceVirtualOrderItem.setGroupId((Long)groupIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceVirtualOrderItem, Long>)
+				CommerceVirtualOrderItem::setGroupId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceVirtualOrderItem commerceVirtualOrderItem) {
-
-					return commerceVirtualOrderItem.getCompanyId();
-				}
-
-			});
+			"companyId", CommerceVirtualOrderItem::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public void accept(
-					CommerceVirtualOrderItem commerceVirtualOrderItem,
-					Object companyIdObject) {
-
-					commerceVirtualOrderItem.setCompanyId(
-						(Long)companyIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceVirtualOrderItem, Long>)
+				CommerceVirtualOrderItem::setCompanyId);
 		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceVirtualOrderItem commerceVirtualOrderItem) {
-
-					return commerceVirtualOrderItem.getUserId();
-				}
-
-			});
+			"userId", CommerceVirtualOrderItem::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public void accept(
-					CommerceVirtualOrderItem commerceVirtualOrderItem,
-					Object userIdObject) {
-
-					commerceVirtualOrderItem.setUserId((Long)userIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceVirtualOrderItem, Long>)
+				CommerceVirtualOrderItem::setUserId);
 		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceVirtualOrderItem commerceVirtualOrderItem) {
-
-					return commerceVirtualOrderItem.getUserName();
-				}
-
-			});
+			"userName", CommerceVirtualOrderItem::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public void accept(
-					CommerceVirtualOrderItem commerceVirtualOrderItem,
-					Object userNameObject) {
-
-					commerceVirtualOrderItem.setUserName(
-						(String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceVirtualOrderItem, String>)
+				CommerceVirtualOrderItem::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceVirtualOrderItem commerceVirtualOrderItem) {
-
-					return commerceVirtualOrderItem.getCreateDate();
-				}
-
-			});
+			"createDate", CommerceVirtualOrderItem::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public void accept(
-					CommerceVirtualOrderItem commerceVirtualOrderItem,
-					Object createDateObject) {
-
-					commerceVirtualOrderItem.setCreateDate(
-						(Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceVirtualOrderItem, Date>)
+				CommerceVirtualOrderItem::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceVirtualOrderItem commerceVirtualOrderItem) {
-
-					return commerceVirtualOrderItem.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CommerceVirtualOrderItem::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public void accept(
-					CommerceVirtualOrderItem commerceVirtualOrderItem,
-					Object modifiedDateObject) {
-
-					commerceVirtualOrderItem.setModifiedDate(
-						(Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceVirtualOrderItem, Date>)
+				CommerceVirtualOrderItem::setModifiedDate);
 		attributeGetterFunctions.put(
 			"commerceOrderItemId",
-			new Function<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceVirtualOrderItem commerceVirtualOrderItem) {
-
-					return commerceVirtualOrderItem.getCommerceOrderItemId();
-				}
-
-			});
+			CommerceVirtualOrderItem::getCommerceOrderItemId);
 		attributeSetterBiConsumers.put(
 			"commerceOrderItemId",
-			new BiConsumer<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public void accept(
-					CommerceVirtualOrderItem commerceVirtualOrderItem,
-					Object commerceOrderItemIdObject) {
-
-					commerceVirtualOrderItem.setCommerceOrderItemId(
-						(Long)commerceOrderItemIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceVirtualOrderItem, Long>)
+				CommerceVirtualOrderItem::setCommerceOrderItemId);
 		attributeGetterFunctions.put(
-			"fileEntryId",
-			new Function<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceVirtualOrderItem commerceVirtualOrderItem) {
-
-					return commerceVirtualOrderItem.getFileEntryId();
-				}
-
-			});
+			"fileEntryId", CommerceVirtualOrderItem::getFileEntryId);
 		attributeSetterBiConsumers.put(
 			"fileEntryId",
-			new BiConsumer<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public void accept(
-					CommerceVirtualOrderItem commerceVirtualOrderItem,
-					Object fileEntryIdObject) {
-
-					commerceVirtualOrderItem.setFileEntryId(
-						(Long)fileEntryIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"url",
-			new Function<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceVirtualOrderItem commerceVirtualOrderItem) {
-
-					return commerceVirtualOrderItem.getUrl();
-				}
-
-			});
+			(BiConsumer<CommerceVirtualOrderItem, Long>)
+				CommerceVirtualOrderItem::setFileEntryId);
+		attributeGetterFunctions.put("url", CommerceVirtualOrderItem::getUrl);
 		attributeSetterBiConsumers.put(
 			"url",
-			new BiConsumer<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public void accept(
-					CommerceVirtualOrderItem commerceVirtualOrderItem,
-					Object urlObject) {
-
-					commerceVirtualOrderItem.setUrl((String)urlObject);
-				}
-
-			});
+			(BiConsumer<CommerceVirtualOrderItem, String>)
+				CommerceVirtualOrderItem::setUrl);
 		attributeGetterFunctions.put(
-			"activationStatus",
-			new Function<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceVirtualOrderItem commerceVirtualOrderItem) {
-
-					return commerceVirtualOrderItem.getActivationStatus();
-				}
-
-			});
+			"activationStatus", CommerceVirtualOrderItem::getActivationStatus);
 		attributeSetterBiConsumers.put(
 			"activationStatus",
-			new BiConsumer<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public void accept(
-					CommerceVirtualOrderItem commerceVirtualOrderItem,
-					Object activationStatusObject) {
-
-					commerceVirtualOrderItem.setActivationStatus(
-						(Integer)activationStatusObject);
-				}
-
-			});
+			(BiConsumer<CommerceVirtualOrderItem, Integer>)
+				CommerceVirtualOrderItem::setActivationStatus);
 		attributeGetterFunctions.put(
-			"duration",
-			new Function<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceVirtualOrderItem commerceVirtualOrderItem) {
-
-					return commerceVirtualOrderItem.getDuration();
-				}
-
-			});
+			"duration", CommerceVirtualOrderItem::getDuration);
 		attributeSetterBiConsumers.put(
 			"duration",
-			new BiConsumer<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public void accept(
-					CommerceVirtualOrderItem commerceVirtualOrderItem,
-					Object durationObject) {
-
-					commerceVirtualOrderItem.setDuration((Long)durationObject);
-				}
-
-			});
+			(BiConsumer<CommerceVirtualOrderItem, Long>)
+				CommerceVirtualOrderItem::setDuration);
 		attributeGetterFunctions.put(
-			"usages",
-			new Function<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceVirtualOrderItem commerceVirtualOrderItem) {
-
-					return commerceVirtualOrderItem.getUsages();
-				}
-
-			});
+			"usages", CommerceVirtualOrderItem::getUsages);
 		attributeSetterBiConsumers.put(
 			"usages",
-			new BiConsumer<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public void accept(
-					CommerceVirtualOrderItem commerceVirtualOrderItem,
-					Object usagesObject) {
-
-					commerceVirtualOrderItem.setUsages((Integer)usagesObject);
-				}
-
-			});
+			(BiConsumer<CommerceVirtualOrderItem, Integer>)
+				CommerceVirtualOrderItem::setUsages);
 		attributeGetterFunctions.put(
-			"maxUsages",
-			new Function<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceVirtualOrderItem commerceVirtualOrderItem) {
-
-					return commerceVirtualOrderItem.getMaxUsages();
-				}
-
-			});
+			"maxUsages", CommerceVirtualOrderItem::getMaxUsages);
 		attributeSetterBiConsumers.put(
 			"maxUsages",
-			new BiConsumer<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public void accept(
-					CommerceVirtualOrderItem commerceVirtualOrderItem,
-					Object maxUsagesObject) {
-
-					commerceVirtualOrderItem.setMaxUsages(
-						(Integer)maxUsagesObject);
-				}
-
-			});
+			(BiConsumer<CommerceVirtualOrderItem, Integer>)
+				CommerceVirtualOrderItem::setMaxUsages);
 		attributeGetterFunctions.put(
-			"active",
-			new Function<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceVirtualOrderItem commerceVirtualOrderItem) {
-
-					return commerceVirtualOrderItem.getActive();
-				}
-
-			});
+			"active", CommerceVirtualOrderItem::getActive);
 		attributeSetterBiConsumers.put(
 			"active",
-			new BiConsumer<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public void accept(
-					CommerceVirtualOrderItem commerceVirtualOrderItem,
-					Object activeObject) {
-
-					commerceVirtualOrderItem.setActive((Boolean)activeObject);
-				}
-
-			});
+			(BiConsumer<CommerceVirtualOrderItem, Boolean>)
+				CommerceVirtualOrderItem::setActive);
 		attributeGetterFunctions.put(
-			"startDate",
-			new Function<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceVirtualOrderItem commerceVirtualOrderItem) {
-
-					return commerceVirtualOrderItem.getStartDate();
-				}
-
-			});
+			"startDate", CommerceVirtualOrderItem::getStartDate);
 		attributeSetterBiConsumers.put(
 			"startDate",
-			new BiConsumer<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public void accept(
-					CommerceVirtualOrderItem commerceVirtualOrderItem,
-					Object startDateObject) {
-
-					commerceVirtualOrderItem.setStartDate(
-						(Date)startDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceVirtualOrderItem, Date>)
+				CommerceVirtualOrderItem::setStartDate);
 		attributeGetterFunctions.put(
-			"endDate",
-			new Function<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceVirtualOrderItem commerceVirtualOrderItem) {
-
-					return commerceVirtualOrderItem.getEndDate();
-				}
-
-			});
+			"endDate", CommerceVirtualOrderItem::getEndDate);
 		attributeSetterBiConsumers.put(
 			"endDate",
-			new BiConsumer<CommerceVirtualOrderItem, Object>() {
-
-				@Override
-				public void accept(
-					CommerceVirtualOrderItem commerceVirtualOrderItem,
-					Object endDateObject) {
-
-					commerceVirtualOrderItem.setEndDate((Date)endDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceVirtualOrderItem, Date>)
+				CommerceVirtualOrderItem::setEndDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1156,6 +820,7 @@ public class CommerceVirtualOrderItemModelImpl
 		CommerceVirtualOrderItemImpl commerceVirtualOrderItemImpl =
 			new CommerceVirtualOrderItemImpl();
 
+		commerceVirtualOrderItemImpl.setMvccVersion(getMvccVersion());
 		commerceVirtualOrderItemImpl.setUuid(getUuid());
 		commerceVirtualOrderItemImpl.setCommerceVirtualOrderItemId(
 			getCommerceVirtualOrderItemId());
@@ -1226,11 +891,19 @@ public class CommerceVirtualOrderItemModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -1260,6 +933,8 @@ public class CommerceVirtualOrderItemModelImpl
 	public CacheModel<CommerceVirtualOrderItem> toCacheModel() {
 		CommerceVirtualOrderItemCacheModel commerceVirtualOrderItemCacheModel =
 			new CommerceVirtualOrderItemCacheModel();
+
+		commerceVirtualOrderItemCacheModel.mvccVersion = getMvccVersion();
 
 		commerceVirtualOrderItemCacheModel.uuid = getUuid();
 
@@ -1425,6 +1100,7 @@ public class CommerceVirtualOrderItemModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _commerceVirtualOrderItemId;

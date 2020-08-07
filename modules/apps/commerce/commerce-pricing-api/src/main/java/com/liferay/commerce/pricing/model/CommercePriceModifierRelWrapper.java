@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.pricing.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,29 +31,21 @@ import java.util.Objects;
  * @generated
  */
 public class CommercePriceModifierRelWrapper
+	extends BaseModelWrapper<CommercePriceModifierRel>
 	implements CommercePriceModifierRel,
 			   ModelWrapper<CommercePriceModifierRel> {
 
 	public CommercePriceModifierRelWrapper(
 		CommercePriceModifierRel commercePriceModifierRel) {
 
-		_commercePriceModifierRel = commercePriceModifierRel;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommercePriceModifierRel.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommercePriceModifierRel.class.getName();
+		super(commercePriceModifierRel);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put(
 			"commercePriceModifierRelId", getCommercePriceModifierRelId());
 		attributes.put("companyId", getCompanyId());
@@ -74,6 +62,12 @@ public class CommercePriceModifierRelWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long commercePriceModifierRelId = (Long)attributes.get(
 			"commercePriceModifierRelId");
 
@@ -131,17 +125,6 @@ public class CommercePriceModifierRelWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CommercePriceModifierRelWrapper(
-			(CommercePriceModifierRel)_commercePriceModifierRel.clone());
-	}
-
-	@Override
-	public int compareTo(CommercePriceModifierRel commercePriceModifierRel) {
-		return _commercePriceModifierRel.compareTo(commercePriceModifierRel);
-	}
-
 	/**
 	 * Returns the fully qualified class name of this commerce price modifier rel.
 	 *
@@ -149,7 +132,7 @@ public class CommercePriceModifierRelWrapper
 	 */
 	@Override
 	public String getClassName() {
-		return _commercePriceModifierRel.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -159,7 +142,7 @@ public class CommercePriceModifierRelWrapper
 	 */
 	@Override
 	public long getClassNameId() {
-		return _commercePriceModifierRel.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -169,14 +152,14 @@ public class CommercePriceModifierRelWrapper
 	 */
 	@Override
 	public long getClassPK() {
-		return _commercePriceModifierRel.getClassPK();
+		return model.getClassPK();
 	}
 
 	@Override
 	public CommercePriceModifier getCommercePriceModifier()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commercePriceModifierRel.getCommercePriceModifier();
+		return model.getCommercePriceModifier();
 	}
 
 	/**
@@ -186,7 +169,7 @@ public class CommercePriceModifierRelWrapper
 	 */
 	@Override
 	public long getCommercePriceModifierId() {
-		return _commercePriceModifierRel.getCommercePriceModifierId();
+		return model.getCommercePriceModifierId();
 	}
 
 	/**
@@ -196,7 +179,7 @@ public class CommercePriceModifierRelWrapper
 	 */
 	@Override
 	public long getCommercePriceModifierRelId() {
-		return _commercePriceModifierRel.getCommercePriceModifierRelId();
+		return model.getCommercePriceModifierRelId();
 	}
 
 	/**
@@ -206,7 +189,7 @@ public class CommercePriceModifierRelWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commercePriceModifierRel.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -216,12 +199,7 @@ public class CommercePriceModifierRelWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commercePriceModifierRel.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commercePriceModifierRel.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -231,7 +209,17 @@ public class CommercePriceModifierRelWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commercePriceModifierRel.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce price modifier rel.
+	 *
+	 * @return the mvcc version of this commerce price modifier rel
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -241,12 +229,7 @@ public class CommercePriceModifierRelWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commercePriceModifierRel.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commercePriceModifierRel.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -256,7 +239,7 @@ public class CommercePriceModifierRelWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commercePriceModifierRel.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -266,7 +249,7 @@ public class CommercePriceModifierRelWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commercePriceModifierRel.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -276,42 +259,17 @@ public class CommercePriceModifierRelWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commercePriceModifierRel.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commercePriceModifierRel.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commercePriceModifierRel.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commercePriceModifierRel.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commercePriceModifierRel.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_commercePriceModifierRel.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commercePriceModifierRel.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_commercePriceModifierRel.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -321,7 +279,7 @@ public class CommercePriceModifierRelWrapper
 	 */
 	@Override
 	public void setClassNameId(long classNameId) {
-		_commercePriceModifierRel.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -331,7 +289,7 @@ public class CommercePriceModifierRelWrapper
 	 */
 	@Override
 	public void setClassPK(long classPK) {
-		_commercePriceModifierRel.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -341,8 +299,7 @@ public class CommercePriceModifierRelWrapper
 	 */
 	@Override
 	public void setCommercePriceModifierId(long commercePriceModifierId) {
-		_commercePriceModifierRel.setCommercePriceModifierId(
-			commercePriceModifierId);
+		model.setCommercePriceModifierId(commercePriceModifierId);
 	}
 
 	/**
@@ -352,8 +309,7 @@ public class CommercePriceModifierRelWrapper
 	 */
 	@Override
 	public void setCommercePriceModifierRelId(long commercePriceModifierRelId) {
-		_commercePriceModifierRel.setCommercePriceModifierRelId(
-			commercePriceModifierRelId);
+		model.setCommercePriceModifierRelId(commercePriceModifierRelId);
 	}
 
 	/**
@@ -363,7 +319,7 @@ public class CommercePriceModifierRelWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commercePriceModifierRel.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -373,24 +329,7 @@ public class CommercePriceModifierRelWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commercePriceModifierRel.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commercePriceModifierRel.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commercePriceModifierRel.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commercePriceModifierRel.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -400,12 +339,17 @@ public class CommercePriceModifierRelWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commercePriceModifierRel.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this commerce price modifier rel.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce price modifier rel
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_commercePriceModifierRel.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -415,12 +359,7 @@ public class CommercePriceModifierRelWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commercePriceModifierRel.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commercePriceModifierRel.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -430,7 +369,7 @@ public class CommercePriceModifierRelWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commercePriceModifierRel.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -440,7 +379,7 @@ public class CommercePriceModifierRelWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commercePriceModifierRel.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -450,81 +389,14 @@ public class CommercePriceModifierRelWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commercePriceModifierRel.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommercePriceModifierRel>
-		toCacheModel() {
+	protected CommercePriceModifierRelWrapper wrap(
+		CommercePriceModifierRel commercePriceModifierRel) {
 
-		return _commercePriceModifierRel.toCacheModel();
+		return new CommercePriceModifierRelWrapper(commercePriceModifierRel);
 	}
-
-	@Override
-	public CommercePriceModifierRel toEscapedModel() {
-		return new CommercePriceModifierRelWrapper(
-			_commercePriceModifierRel.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commercePriceModifierRel.toString();
-	}
-
-	@Override
-	public CommercePriceModifierRel toUnescapedModel() {
-		return new CommercePriceModifierRelWrapper(
-			_commercePriceModifierRel.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commercePriceModifierRel.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommercePriceModifierRelWrapper)) {
-			return false;
-		}
-
-		CommercePriceModifierRelWrapper commercePriceModifierRelWrapper =
-			(CommercePriceModifierRelWrapper)object;
-
-		if (Objects.equals(
-				_commercePriceModifierRel,
-				commercePriceModifierRelWrapper._commercePriceModifierRel)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommercePriceModifierRel getWrappedModel() {
-		return _commercePriceModifierRel;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commercePriceModifierRel.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commercePriceModifierRel.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commercePriceModifierRel.resetOriginalValues();
-	}
-
-	private final CommercePriceModifierRel _commercePriceModifierRel;
 
 }

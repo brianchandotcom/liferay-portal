@@ -133,6 +133,9 @@ public class CPDefinitionSpecificationOptionValuePersistenceTest {
 		CPDefinitionSpecificationOptionValue
 			newCPDefinitionSpecificationOptionValue = _persistence.create(pk);
 
+		newCPDefinitionSpecificationOptionValue.setMvccVersion(
+			RandomTestUtil.nextLong());
+
 		newCPDefinitionSpecificationOptionValue.setUuid(
 			RandomTestUtil.randomString());
 
@@ -180,6 +183,9 @@ public class CPDefinitionSpecificationOptionValuePersistenceTest {
 				_persistence.findByPrimaryKey(
 					newCPDefinitionSpecificationOptionValue.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCPDefinitionSpecificationOptionValue.getMvccVersion(),
+			newCPDefinitionSpecificationOptionValue.getMvccVersion());
 		Assert.assertEquals(
 			existingCPDefinitionSpecificationOptionValue.getUuid(),
 			newCPDefinitionSpecificationOptionValue.getUuid());
@@ -348,7 +354,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"CPDSpecificationOptionValue", "uuid", true,
+			"CPDSpecificationOptionValue", "mvccVersion", true, "uuid", true,
 			"CPDefinitionSpecificationOptionValueId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "CPDefinitionId", true,
@@ -675,6 +681,9 @@ public class CPDefinitionSpecificationOptionValuePersistenceTest {
 
 		CPDefinitionSpecificationOptionValue
 			cpDefinitionSpecificationOptionValue = _persistence.create(pk);
+
+		cpDefinitionSpecificationOptionValue.setMvccVersion(
+			RandomTestUtil.nextLong());
 
 		cpDefinitionSpecificationOptionValue.setUuid(
 			RandomTestUtil.randomString());

@@ -19,6 +19,7 @@ import com.liferay.commerce.tax.model.CommerceTaxMethodModel;
 import com.liferay.commerce.tax.model.CommerceTaxMethodSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -34,7 +35,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -80,18 +80,20 @@ public class CommerceTaxMethodModelImpl
 	public static final String TABLE_NAME = "CommerceTaxMethod";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"commerceTaxMethodId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"engineKey", Types.VARCHAR},
-		{"percentage", Types.BOOLEAN}, {"active_", Types.BOOLEAN}
+		{"mvccVersion", Types.BIGINT}, {"commerceTaxMethodId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
+		{"engineKey", Types.VARCHAR}, {"percentage", Types.BOOLEAN},
+		{"active_", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceTaxMethodId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -107,7 +109,7 @@ public class CommerceTaxMethodModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceTaxMethod (commerceTaxMethodId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,engineKey VARCHAR(75) null,percentage BOOLEAN,active_ BOOLEAN)";
+		"create table CommerceTaxMethod (mvccVersion LONG default 0 not null,commerceTaxMethodId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,engineKey VARCHAR(75) null,percentage BOOLEAN,active_ BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceTaxMethod";
 
@@ -123,20 +125,23 @@ public class CommerceTaxMethodModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.tax.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.tax.model.CommerceTaxMethod"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.tax.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.tax.model.CommerceTaxMethod"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.tax.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.tax.model.CommerceTaxMethod"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long ACTIVE_COLUMN_BITMASK = 1L;
 
@@ -159,6 +164,7 @@ public class CommerceTaxMethodModelImpl
 
 		CommerceTaxMethod model = new CommerceTaxMethodImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceTaxMethodId(soapModel.getCommerceTaxMethodId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -254,9 +260,6 @@ public class CommerceTaxMethodModelImpl
 				attributeGetterFunction.apply((CommerceTaxMethod)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -333,283 +336,92 @@ public class CommerceTaxMethodModelImpl
 				new LinkedHashMap<String, BiConsumer<CommerceTaxMethod, ?>>();
 
 		attributeGetterFunctions.put(
-			"commerceTaxMethodId",
-			new Function<CommerceTaxMethod, Object>() {
-
-				@Override
-				public Object apply(CommerceTaxMethod commerceTaxMethod) {
-					return commerceTaxMethod.getCommerceTaxMethodId();
-				}
-
-			});
+			"mvccVersion", CommerceTaxMethod::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceTaxMethod, Long>)
+				CommerceTaxMethod::setMvccVersion);
+		attributeGetterFunctions.put(
+			"commerceTaxMethodId", CommerceTaxMethod::getCommerceTaxMethodId);
 		attributeSetterBiConsumers.put(
 			"commerceTaxMethodId",
-			new BiConsumer<CommerceTaxMethod, Object>() {
-
-				@Override
-				public void accept(
-					CommerceTaxMethod commerceTaxMethod,
-					Object commerceTaxMethodIdObject) {
-
-					commerceTaxMethod.setCommerceTaxMethodId(
-						(Long)commerceTaxMethodIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"groupId",
-			new Function<CommerceTaxMethod, Object>() {
-
-				@Override
-				public Object apply(CommerceTaxMethod commerceTaxMethod) {
-					return commerceTaxMethod.getGroupId();
-				}
-
-			});
+			(BiConsumer<CommerceTaxMethod, Long>)
+				CommerceTaxMethod::setCommerceTaxMethodId);
+		attributeGetterFunctions.put("groupId", CommerceTaxMethod::getGroupId);
 		attributeSetterBiConsumers.put(
 			"groupId",
-			new BiConsumer<CommerceTaxMethod, Object>() {
-
-				@Override
-				public void accept(
-					CommerceTaxMethod commerceTaxMethod, Object groupIdObject) {
-
-					commerceTaxMethod.setGroupId((Long)groupIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceTaxMethod, Long>)CommerceTaxMethod::setGroupId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommerceTaxMethod, Object>() {
-
-				@Override
-				public Object apply(CommerceTaxMethod commerceTaxMethod) {
-					return commerceTaxMethod.getCompanyId();
-				}
-
-			});
+			"companyId", CommerceTaxMethod::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommerceTaxMethod, Object>() {
-
-				@Override
-				public void accept(
-					CommerceTaxMethod commerceTaxMethod,
-					Object companyIdObject) {
-
-					commerceTaxMethod.setCompanyId((Long)companyIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommerceTaxMethod, Object>() {
-
-				@Override
-				public Object apply(CommerceTaxMethod commerceTaxMethod) {
-					return commerceTaxMethod.getUserId();
-				}
-
-			});
+			(BiConsumer<CommerceTaxMethod, Long>)
+				CommerceTaxMethod::setCompanyId);
+		attributeGetterFunctions.put("userId", CommerceTaxMethod::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommerceTaxMethod, Object>() {
-
-				@Override
-				public void accept(
-					CommerceTaxMethod commerceTaxMethod, Object userIdObject) {
-
-					commerceTaxMethod.setUserId((Long)userIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceTaxMethod, Long>)CommerceTaxMethod::setUserId);
 		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommerceTaxMethod, Object>() {
-
-				@Override
-				public Object apply(CommerceTaxMethod commerceTaxMethod) {
-					return commerceTaxMethod.getUserName();
-				}
-
-			});
+			"userName", CommerceTaxMethod::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommerceTaxMethod, Object>() {
-
-				@Override
-				public void accept(
-					CommerceTaxMethod commerceTaxMethod,
-					Object userNameObject) {
-
-					commerceTaxMethod.setUserName((String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceTaxMethod, String>)
+				CommerceTaxMethod::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommerceTaxMethod, Object>() {
-
-				@Override
-				public Object apply(CommerceTaxMethod commerceTaxMethod) {
-					return commerceTaxMethod.getCreateDate();
-				}
-
-			});
+			"createDate", CommerceTaxMethod::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommerceTaxMethod, Object>() {
-
-				@Override
-				public void accept(
-					CommerceTaxMethod commerceTaxMethod,
-					Object createDateObject) {
-
-					commerceTaxMethod.setCreateDate((Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceTaxMethod, Date>)
+				CommerceTaxMethod::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CommerceTaxMethod, Object>() {
-
-				@Override
-				public Object apply(CommerceTaxMethod commerceTaxMethod) {
-					return commerceTaxMethod.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CommerceTaxMethod::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommerceTaxMethod, Object>() {
-
-				@Override
-				public void accept(
-					CommerceTaxMethod commerceTaxMethod,
-					Object modifiedDateObject) {
-
-					commerceTaxMethod.setModifiedDate((Date)modifiedDateObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"name",
-			new Function<CommerceTaxMethod, Object>() {
-
-				@Override
-				public Object apply(CommerceTaxMethod commerceTaxMethod) {
-					return commerceTaxMethod.getName();
-				}
-
-			});
+			(BiConsumer<CommerceTaxMethod, Date>)
+				CommerceTaxMethod::setModifiedDate);
+		attributeGetterFunctions.put("name", CommerceTaxMethod::getName);
 		attributeSetterBiConsumers.put(
 			"name",
-			new BiConsumer<CommerceTaxMethod, Object>() {
-
-				@Override
-				public void accept(
-					CommerceTaxMethod commerceTaxMethod, Object nameObject) {
-
-					commerceTaxMethod.setName((String)nameObject);
-				}
-
-			});
+			(BiConsumer<CommerceTaxMethod, String>)CommerceTaxMethod::setName);
 		attributeGetterFunctions.put(
-			"description",
-			new Function<CommerceTaxMethod, Object>() {
-
-				@Override
-				public Object apply(CommerceTaxMethod commerceTaxMethod) {
-					return commerceTaxMethod.getDescription();
-				}
-
-			});
+			"description", CommerceTaxMethod::getDescription);
 		attributeSetterBiConsumers.put(
 			"description",
-			new BiConsumer<CommerceTaxMethod, Object>() {
-
-				@Override
-				public void accept(
-					CommerceTaxMethod commerceTaxMethod,
-					Object descriptionObject) {
-
-					commerceTaxMethod.setDescription((String)descriptionObject);
-				}
-
-			});
+			(BiConsumer<CommerceTaxMethod, String>)
+				CommerceTaxMethod::setDescription);
 		attributeGetterFunctions.put(
-			"engineKey",
-			new Function<CommerceTaxMethod, Object>() {
-
-				@Override
-				public Object apply(CommerceTaxMethod commerceTaxMethod) {
-					return commerceTaxMethod.getEngineKey();
-				}
-
-			});
+			"engineKey", CommerceTaxMethod::getEngineKey);
 		attributeSetterBiConsumers.put(
 			"engineKey",
-			new BiConsumer<CommerceTaxMethod, Object>() {
-
-				@Override
-				public void accept(
-					CommerceTaxMethod commerceTaxMethod,
-					Object engineKeyObject) {
-
-					commerceTaxMethod.setEngineKey((String)engineKeyObject);
-				}
-
-			});
+			(BiConsumer<CommerceTaxMethod, String>)
+				CommerceTaxMethod::setEngineKey);
 		attributeGetterFunctions.put(
-			"percentage",
-			new Function<CommerceTaxMethod, Object>() {
-
-				@Override
-				public Object apply(CommerceTaxMethod commerceTaxMethod) {
-					return commerceTaxMethod.getPercentage();
-				}
-
-			});
+			"percentage", CommerceTaxMethod::getPercentage);
 		attributeSetterBiConsumers.put(
 			"percentage",
-			new BiConsumer<CommerceTaxMethod, Object>() {
-
-				@Override
-				public void accept(
-					CommerceTaxMethod commerceTaxMethod,
-					Object percentageObject) {
-
-					commerceTaxMethod.setPercentage((Boolean)percentageObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"active",
-			new Function<CommerceTaxMethod, Object>() {
-
-				@Override
-				public Object apply(CommerceTaxMethod commerceTaxMethod) {
-					return commerceTaxMethod.getActive();
-				}
-
-			});
+			(BiConsumer<CommerceTaxMethod, Boolean>)
+				CommerceTaxMethod::setPercentage);
+		attributeGetterFunctions.put("active", CommerceTaxMethod::getActive);
 		attributeSetterBiConsumers.put(
 			"active",
-			new BiConsumer<CommerceTaxMethod, Object>() {
-
-				@Override
-				public void accept(
-					CommerceTaxMethod commerceTaxMethod, Object activeObject) {
-
-					commerceTaxMethod.setActive((Boolean)activeObject);
-				}
-
-			});
+			(BiConsumer<CommerceTaxMethod, Boolean>)
+				CommerceTaxMethod::setActive);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1136,6 +948,7 @@ public class CommerceTaxMethodModelImpl
 		CommerceTaxMethodImpl commerceTaxMethodImpl =
 			new CommerceTaxMethodImpl();
 
+		commerceTaxMethodImpl.setMvccVersion(getMvccVersion());
 		commerceTaxMethodImpl.setCommerceTaxMethodId(getCommerceTaxMethodId());
 		commerceTaxMethodImpl.setGroupId(getGroupId());
 		commerceTaxMethodImpl.setCompanyId(getCompanyId());
@@ -1197,11 +1010,19 @@ public class CommerceTaxMethodModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -1228,6 +1049,8 @@ public class CommerceTaxMethodModelImpl
 	public CacheModel<CommerceTaxMethod> toCacheModel() {
 		CommerceTaxMethodCacheModel commerceTaxMethodCacheModel =
 			new CommerceTaxMethodCacheModel();
+
+		commerceTaxMethodCacheModel.mvccVersion = getMvccVersion();
 
 		commerceTaxMethodCacheModel.commerceTaxMethodId =
 			getCommerceTaxMethodId();
@@ -1365,6 +1188,7 @@ public class CommerceTaxMethodModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _commerceTaxMethodId;
 	private long _groupId;
 	private long _originalGroupId;

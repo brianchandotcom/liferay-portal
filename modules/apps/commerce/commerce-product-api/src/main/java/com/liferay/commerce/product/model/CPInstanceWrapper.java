@@ -14,19 +14,15 @@
 
 package com.liferay.commerce.product.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.math.BigDecimal;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -37,26 +33,19 @@ import java.util.Objects;
  * @see CPInstance
  * @generated
  */
-public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
+public class CPInstanceWrapper
+	extends BaseModelWrapper<CPInstance>
+	implements CPInstance, ModelWrapper<CPInstance> {
 
 	public CPInstanceWrapper(CPInstance cpInstance) {
-		_cpInstance = cpInstance;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CPInstance.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CPInstance.class.getName();
+		super(cpInstance);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("CPInstanceId", getCPInstanceId());
@@ -114,6 +103,12 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -381,20 +376,10 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	}
 
 	@Override
-	public Object clone() {
-		return new CPInstanceWrapper((CPInstance)_cpInstance.clone());
-	}
-
-	@Override
-	public int compareTo(CPInstance cpInstance) {
-		return _cpInstance.compareTo(cpInstance);
-	}
-
-	@Override
 	public CommerceCatalog getCommerceCatalog()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _cpInstance.getCommerceCatalog();
+		return model.getCommerceCatalog();
 	}
 
 	/**
@@ -404,7 +389,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public long getCompanyId() {
-		return _cpInstance.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -414,14 +399,14 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public BigDecimal getCost() {
-		return _cpInstance.getCost();
+		return model.getCost();
 	}
 
 	@Override
 	public CPDefinition getCPDefinition()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _cpInstance.getCPDefinition();
+		return model.getCPDefinition();
 	}
 
 	/**
@@ -431,7 +416,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public long getCPDefinitionId() {
-		return _cpInstance.getCPDefinitionId();
+		return model.getCPDefinitionId();
 	}
 
 	/**
@@ -441,7 +426,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public long getCPInstanceId() {
-		return _cpInstance.getCPInstanceId();
+		return model.getCPInstanceId();
 	}
 
 	/**
@@ -451,14 +436,14 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public String getCPInstanceUuid() {
-		return _cpInstance.getCPInstanceUuid();
+		return model.getCPInstanceUuid();
 	}
 
 	@Override
 	public CPSubscriptionInfo getCPSubscriptionInfo()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _cpInstance.getCPSubscriptionInfo();
+		return model.getCPSubscriptionInfo();
 	}
 
 	/**
@@ -468,7 +453,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _cpInstance.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -478,7 +463,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public long getDeliveryMaxSubscriptionCycles() {
-		return _cpInstance.getDeliveryMaxSubscriptionCycles();
+		return model.getDeliveryMaxSubscriptionCycles();
 	}
 
 	/**
@@ -488,7 +473,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public boolean getDeliverySubscriptionEnabled() {
-		return _cpInstance.getDeliverySubscriptionEnabled();
+		return model.getDeliverySubscriptionEnabled();
 	}
 
 	/**
@@ -498,7 +483,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public int getDeliverySubscriptionLength() {
-		return _cpInstance.getDeliverySubscriptionLength();
+		return model.getDeliverySubscriptionLength();
 	}
 
 	/**
@@ -508,7 +493,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public String getDeliverySubscriptionType() {
-		return _cpInstance.getDeliverySubscriptionType();
+		return model.getDeliverySubscriptionType();
 	}
 
 	/**
@@ -518,14 +503,14 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public String getDeliverySubscriptionTypeSettings() {
-		return _cpInstance.getDeliverySubscriptionTypeSettings();
+		return model.getDeliverySubscriptionTypeSettings();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties
 		getDeliverySubscriptionTypeSettingsProperties() {
 
-		return _cpInstance.getDeliverySubscriptionTypeSettingsProperties();
+		return model.getDeliverySubscriptionTypeSettingsProperties();
 	}
 
 	/**
@@ -535,7 +520,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public double getDepth() {
-		return _cpInstance.getDepth();
+		return model.getDepth();
 	}
 
 	/**
@@ -545,12 +530,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public Date getDisplayDate() {
-		return _cpInstance.getDisplayDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _cpInstance.getExpandoBridge();
+		return model.getDisplayDate();
 	}
 
 	/**
@@ -560,7 +540,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public Date getExpirationDate() {
-		return _cpInstance.getExpirationDate();
+		return model.getExpirationDate();
 	}
 
 	/**
@@ -570,7 +550,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public String getExternalReferenceCode() {
-		return _cpInstance.getExternalReferenceCode();
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -580,7 +560,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public long getGroupId() {
-		return _cpInstance.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -590,7 +570,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public String getGtin() {
-		return _cpInstance.getGtin();
+		return model.getGtin();
 	}
 
 	/**
@@ -600,7 +580,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public double getHeight() {
-		return _cpInstance.getHeight();
+		return model.getHeight();
 	}
 
 	/**
@@ -610,7 +590,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public Date getLastPublishDate() {
-		return _cpInstance.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -620,7 +600,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public String getManufacturerPartNumber() {
-		return _cpInstance.getManufacturerPartNumber();
+		return model.getManufacturerPartNumber();
 	}
 
 	/**
@@ -630,7 +610,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public long getMaxSubscriptionCycles() {
-		return _cpInstance.getMaxSubscriptionCycles();
+		return model.getMaxSubscriptionCycles();
 	}
 
 	/**
@@ -640,7 +620,17 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _cpInstance.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this cp instance.
+	 *
+	 * @return the mvcc version of this cp instance
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -650,7 +640,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public boolean getOverrideSubscriptionInfo() {
-		return _cpInstance.getOverrideSubscriptionInfo();
+		return model.getOverrideSubscriptionInfo();
 	}
 
 	/**
@@ -660,7 +650,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public BigDecimal getPrice() {
-		return _cpInstance.getPrice();
+		return model.getPrice();
 	}
 
 	/**
@@ -670,12 +660,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _cpInstance.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _cpInstance.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -685,7 +670,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public BigDecimal getPromoPrice() {
-		return _cpInstance.getPromoPrice();
+		return model.getPromoPrice();
 	}
 
 	/**
@@ -695,7 +680,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public boolean getPublished() {
-		return _cpInstance.getPublished();
+		return model.getPublished();
 	}
 
 	/**
@@ -705,7 +690,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public boolean getPurchasable() {
-		return _cpInstance.getPurchasable();
+		return model.getPurchasable();
 	}
 
 	/**
@@ -715,7 +700,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public String getSku() {
-		return _cpInstance.getSku();
+		return model.getSku();
 	}
 
 	/**
@@ -725,7 +710,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public int getStatus() {
-		return _cpInstance.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -735,7 +720,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public long getStatusByUserId() {
-		return _cpInstance.getStatusByUserId();
+		return model.getStatusByUserId();
 	}
 
 	/**
@@ -745,7 +730,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public String getStatusByUserName() {
-		return _cpInstance.getStatusByUserName();
+		return model.getStatusByUserName();
 	}
 
 	/**
@@ -755,7 +740,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public String getStatusByUserUuid() {
-		return _cpInstance.getStatusByUserUuid();
+		return model.getStatusByUserUuid();
 	}
 
 	/**
@@ -765,7 +750,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public Date getStatusDate() {
-		return _cpInstance.getStatusDate();
+		return model.getStatusDate();
 	}
 
 	/**
@@ -775,7 +760,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public boolean getSubscriptionEnabled() {
-		return _cpInstance.getSubscriptionEnabled();
+		return model.getSubscriptionEnabled();
 	}
 
 	/**
@@ -785,7 +770,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public int getSubscriptionLength() {
-		return _cpInstance.getSubscriptionLength();
+		return model.getSubscriptionLength();
 	}
 
 	/**
@@ -795,7 +780,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public String getSubscriptionType() {
-		return _cpInstance.getSubscriptionType();
+		return model.getSubscriptionType();
 	}
 
 	/**
@@ -805,14 +790,14 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public String getSubscriptionTypeSettings() {
-		return _cpInstance.getSubscriptionTypeSettings();
+		return model.getSubscriptionTypeSettings();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties
 		getSubscriptionTypeSettingsProperties() {
 
-		return _cpInstance.getSubscriptionTypeSettingsProperties();
+		return model.getSubscriptionTypeSettingsProperties();
 	}
 
 	/**
@@ -822,7 +807,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public String getUnspsc() {
-		return _cpInstance.getUnspsc();
+		return model.getUnspsc();
 	}
 
 	/**
@@ -832,7 +817,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public long getUserId() {
-		return _cpInstance.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -842,7 +827,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public String getUserName() {
-		return _cpInstance.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -852,7 +837,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public String getUserUuid() {
-		return _cpInstance.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -862,7 +847,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public String getUuid() {
-		return _cpInstance.getUuid();
+		return model.getUuid();
 	}
 
 	/**
@@ -872,7 +857,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public double getWeight() {
-		return _cpInstance.getWeight();
+		return model.getWeight();
 	}
 
 	/**
@@ -882,12 +867,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public double getWidth() {
-		return _cpInstance.getWidth();
-	}
-
-	@Override
-	public int hashCode() {
-		return _cpInstance.hashCode();
+		return model.getWidth();
 	}
 
 	/**
@@ -897,12 +877,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public boolean isApproved() {
-		return _cpInstance.isApproved();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _cpInstance.isCachedModel();
+		return model.isApproved();
 	}
 
 	/**
@@ -912,7 +887,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public boolean isDeliverySubscriptionEnabled() {
-		return _cpInstance.isDeliverySubscriptionEnabled();
+		return model.isDeliverySubscriptionEnabled();
 	}
 
 	/**
@@ -922,7 +897,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public boolean isDenied() {
-		return _cpInstance.isDenied();
+		return model.isDenied();
 	}
 
 	/**
@@ -932,12 +907,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public boolean isDraft() {
-		return _cpInstance.isDraft();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _cpInstance.isEscapedModel();
+		return model.isDraft();
 	}
 
 	/**
@@ -947,7 +917,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public boolean isExpired() {
-		return _cpInstance.isExpired();
+		return model.isExpired();
 	}
 
 	/**
@@ -957,7 +927,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public boolean isInactive() {
-		return _cpInstance.isInactive();
+		return model.isInactive();
 	}
 
 	/**
@@ -967,12 +937,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public boolean isIncomplete() {
-		return _cpInstance.isIncomplete();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _cpInstance.isNew();
+		return model.isIncomplete();
 	}
 
 	/**
@@ -982,7 +947,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public boolean isOverrideSubscriptionInfo() {
-		return _cpInstance.isOverrideSubscriptionInfo();
+		return model.isOverrideSubscriptionInfo();
 	}
 
 	/**
@@ -992,7 +957,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public boolean isPending() {
-		return _cpInstance.isPending();
+		return model.isPending();
 	}
 
 	/**
@@ -1002,7 +967,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public boolean isPublished() {
-		return _cpInstance.isPublished();
+		return model.isPublished();
 	}
 
 	/**
@@ -1012,7 +977,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public boolean isPurchasable() {
-		return _cpInstance.isPurchasable();
+		return model.isPurchasable();
 	}
 
 	/**
@@ -1022,7 +987,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public boolean isScheduled() {
-		return _cpInstance.isScheduled();
+		return model.isScheduled();
 	}
 
 	/**
@@ -1032,17 +997,12 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public boolean isSubscriptionEnabled() {
-		return _cpInstance.isSubscriptionEnabled();
+		return model.isSubscriptionEnabled();
 	}
 
 	@Override
 	public void persist() {
-		_cpInstance.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_cpInstance.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -1052,7 +1012,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_cpInstance.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -1062,7 +1022,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setCost(BigDecimal cost) {
-		_cpInstance.setCost(cost);
+		model.setCost(cost);
 	}
 
 	/**
@@ -1072,7 +1032,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setCPDefinitionId(long CPDefinitionId) {
-		_cpInstance.setCPDefinitionId(CPDefinitionId);
+		model.setCPDefinitionId(CPDefinitionId);
 	}
 
 	/**
@@ -1082,7 +1042,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setCPInstanceId(long CPInstanceId) {
-		_cpInstance.setCPInstanceId(CPInstanceId);
+		model.setCPInstanceId(CPInstanceId);
 	}
 
 	/**
@@ -1092,7 +1052,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setCPInstanceUuid(String CPInstanceUuid) {
-		_cpInstance.setCPInstanceUuid(CPInstanceUuid);
+		model.setCPInstanceUuid(CPInstanceUuid);
 	}
 
 	/**
@@ -1102,7 +1062,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_cpInstance.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -1114,8 +1074,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	public void setDeliveryMaxSubscriptionCycles(
 		long deliveryMaxSubscriptionCycles) {
 
-		_cpInstance.setDeliveryMaxSubscriptionCycles(
-			deliveryMaxSubscriptionCycles);
+		model.setDeliveryMaxSubscriptionCycles(deliveryMaxSubscriptionCycles);
 	}
 
 	/**
@@ -1127,7 +1086,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	public void setDeliverySubscriptionEnabled(
 		boolean deliverySubscriptionEnabled) {
 
-		_cpInstance.setDeliverySubscriptionEnabled(deliverySubscriptionEnabled);
+		model.setDeliverySubscriptionEnabled(deliverySubscriptionEnabled);
 	}
 
 	/**
@@ -1137,7 +1096,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setDeliverySubscriptionLength(int deliverySubscriptionLength) {
-		_cpInstance.setDeliverySubscriptionLength(deliverySubscriptionLength);
+		model.setDeliverySubscriptionLength(deliverySubscriptionLength);
 	}
 
 	/**
@@ -1147,7 +1106,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setDeliverySubscriptionType(String deliverySubscriptionType) {
-		_cpInstance.setDeliverySubscriptionType(deliverySubscriptionType);
+		model.setDeliverySubscriptionType(deliverySubscriptionType);
 	}
 
 	/**
@@ -1159,17 +1118,17 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	public void setDeliverySubscriptionTypeSettings(
 		String deliverySubscriptionTypeSettings) {
 
-		_cpInstance.setDeliverySubscriptionTypeSettings(
+		model.setDeliverySubscriptionTypeSettings(
 			deliverySubscriptionTypeSettings);
 	}
 
 	@Override
 	public void setDeliverySubscriptionTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties
-			deliverySubscriptionTypeSettingsProperties) {
+			deliverySubscriptionTypeSettingsUnicodeProperties) {
 
-		_cpInstance.setDeliverySubscriptionTypeSettingsProperties(
-			deliverySubscriptionTypeSettingsProperties);
+		model.setDeliverySubscriptionTypeSettingsProperties(
+			deliverySubscriptionTypeSettingsUnicodeProperties);
 	}
 
 	/**
@@ -1179,7 +1138,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setDepth(double depth) {
-		_cpInstance.setDepth(depth);
+		model.setDepth(depth);
 	}
 
 	/**
@@ -1189,24 +1148,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setDisplayDate(Date displayDate) {
-		_cpInstance.setDisplayDate(displayDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_cpInstance.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_cpInstance.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_cpInstance.setExpandoBridgeAttributes(serviceContext);
+		model.setDisplayDate(displayDate);
 	}
 
 	/**
@@ -1216,7 +1158,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setExpirationDate(Date expirationDate) {
-		_cpInstance.setExpirationDate(expirationDate);
+		model.setExpirationDate(expirationDate);
 	}
 
 	/**
@@ -1226,7 +1168,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
-		_cpInstance.setExternalReferenceCode(externalReferenceCode);
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**
@@ -1236,7 +1178,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_cpInstance.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -1246,7 +1188,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setGtin(String gtin) {
-		_cpInstance.setGtin(gtin);
+		model.setGtin(gtin);
 	}
 
 	/**
@@ -1256,7 +1198,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setHeight(double height) {
-		_cpInstance.setHeight(height);
+		model.setHeight(height);
 	}
 
 	/**
@@ -1266,7 +1208,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_cpInstance.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -1276,7 +1218,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setManufacturerPartNumber(String manufacturerPartNumber) {
-		_cpInstance.setManufacturerPartNumber(manufacturerPartNumber);
+		model.setManufacturerPartNumber(manufacturerPartNumber);
 	}
 
 	/**
@@ -1286,7 +1228,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setMaxSubscriptionCycles(long maxSubscriptionCycles) {
-		_cpInstance.setMaxSubscriptionCycles(maxSubscriptionCycles);
+		model.setMaxSubscriptionCycles(maxSubscriptionCycles);
 	}
 
 	/**
@@ -1296,12 +1238,17 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_cpInstance.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this cp instance.
+	 *
+	 * @param mvccVersion the mvcc version of this cp instance
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_cpInstance.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -1311,7 +1258,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setOverrideSubscriptionInfo(boolean overrideSubscriptionInfo) {
-		_cpInstance.setOverrideSubscriptionInfo(overrideSubscriptionInfo);
+		model.setOverrideSubscriptionInfo(overrideSubscriptionInfo);
 	}
 
 	/**
@@ -1321,7 +1268,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setPrice(BigDecimal price) {
-		_cpInstance.setPrice(price);
+		model.setPrice(price);
 	}
 
 	/**
@@ -1331,12 +1278,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_cpInstance.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_cpInstance.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -1346,7 +1288,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setPromoPrice(BigDecimal promoPrice) {
-		_cpInstance.setPromoPrice(promoPrice);
+		model.setPromoPrice(promoPrice);
 	}
 
 	/**
@@ -1356,7 +1298,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setPublished(boolean published) {
-		_cpInstance.setPublished(published);
+		model.setPublished(published);
 	}
 
 	/**
@@ -1366,7 +1308,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setPurchasable(boolean purchasable) {
-		_cpInstance.setPurchasable(purchasable);
+		model.setPurchasable(purchasable);
 	}
 
 	/**
@@ -1376,7 +1318,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setSku(String sku) {
-		_cpInstance.setSku(sku);
+		model.setSku(sku);
 	}
 
 	/**
@@ -1386,7 +1328,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setStatus(int status) {
-		_cpInstance.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -1396,7 +1338,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
-		_cpInstance.setStatusByUserId(statusByUserId);
+		model.setStatusByUserId(statusByUserId);
 	}
 
 	/**
@@ -1406,7 +1348,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
-		_cpInstance.setStatusByUserName(statusByUserName);
+		model.setStatusByUserName(statusByUserName);
 	}
 
 	/**
@@ -1416,7 +1358,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setStatusByUserUuid(String statusByUserUuid) {
-		_cpInstance.setStatusByUserUuid(statusByUserUuid);
+		model.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
@@ -1426,7 +1368,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setStatusDate(Date statusDate) {
-		_cpInstance.setStatusDate(statusDate);
+		model.setStatusDate(statusDate);
 	}
 
 	/**
@@ -1436,7 +1378,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setSubscriptionEnabled(boolean subscriptionEnabled) {
-		_cpInstance.setSubscriptionEnabled(subscriptionEnabled);
+		model.setSubscriptionEnabled(subscriptionEnabled);
 	}
 
 	/**
@@ -1446,7 +1388,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setSubscriptionLength(int subscriptionLength) {
-		_cpInstance.setSubscriptionLength(subscriptionLength);
+		model.setSubscriptionLength(subscriptionLength);
 	}
 
 	/**
@@ -1456,7 +1398,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setSubscriptionType(String subscriptionType) {
-		_cpInstance.setSubscriptionType(subscriptionType);
+		model.setSubscriptionType(subscriptionType);
 	}
 
 	/**
@@ -1466,16 +1408,16 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setSubscriptionTypeSettings(String subscriptionTypeSettings) {
-		_cpInstance.setSubscriptionTypeSettings(subscriptionTypeSettings);
+		model.setSubscriptionTypeSettings(subscriptionTypeSettings);
 	}
 
 	@Override
 	public void setSubscriptionTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties
-			subscriptionTypeSettingsProperties) {
+			subscriptionTypeSettingsUnicodeProperties) {
 
-		_cpInstance.setSubscriptionTypeSettingsProperties(
-			subscriptionTypeSettingsProperties);
+		model.setSubscriptionTypeSettingsProperties(
+			subscriptionTypeSettingsUnicodeProperties);
 	}
 
 	/**
@@ -1485,7 +1427,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setUnspsc(String unspsc) {
-		_cpInstance.setUnspsc(unspsc);
+		model.setUnspsc(unspsc);
 	}
 
 	/**
@@ -1495,7 +1437,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_cpInstance.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -1505,7 +1447,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_cpInstance.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -1515,7 +1457,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_cpInstance.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -1525,7 +1467,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setUuid(String uuid) {
-		_cpInstance.setUuid(uuid);
+		model.setUuid(uuid);
 	}
 
 	/**
@@ -1535,7 +1477,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setWeight(double weight) {
-		_cpInstance.setWeight(weight);
+		model.setWeight(weight);
 	}
 
 	/**
@@ -1545,80 +1487,17 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	 */
 	@Override
 	public void setWidth(double width) {
-		_cpInstance.setWidth(width);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CPInstance>
-		toCacheModel() {
-
-		return _cpInstance.toCacheModel();
-	}
-
-	@Override
-	public CPInstance toEscapedModel() {
-		return new CPInstanceWrapper(_cpInstance.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _cpInstance.toString();
-	}
-
-	@Override
-	public CPInstance toUnescapedModel() {
-		return new CPInstanceWrapper(_cpInstance.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _cpInstance.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CPInstanceWrapper)) {
-			return false;
-		}
-
-		CPInstanceWrapper cpInstanceWrapper = (CPInstanceWrapper)object;
-
-		if (Objects.equals(_cpInstance, cpInstanceWrapper._cpInstance)) {
-			return true;
-		}
-
-		return false;
+		model.setWidth(width);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _cpInstance.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public CPInstance getWrappedModel() {
-		return _cpInstance;
+	protected CPInstanceWrapper wrap(CPInstance cpInstance) {
+		return new CPInstanceWrapper(cpInstance);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _cpInstance.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _cpInstance.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_cpInstance.resetOriginalValues();
-	}
-
-	private final CPInstance _cpInstance;
 
 }

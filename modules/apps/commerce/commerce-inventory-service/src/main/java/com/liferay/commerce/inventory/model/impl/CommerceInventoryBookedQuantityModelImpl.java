@@ -19,6 +19,7 @@ import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantityModel
 import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantitySoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -115,20 +115,23 @@ public class CommerceInventoryBookedQuantityModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.inventory.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.inventory.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.inventory.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
@@ -252,9 +255,6 @@ public class CommerceInventoryBookedQuantityModelImpl
 					(CommerceInventoryBookedQuantity)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -336,314 +336,75 @@ public class CommerceInventoryBookedQuantityModelImpl
 					<String, BiConsumer<CommerceInventoryBookedQuantity, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion",
-			new Function<CommerceInventoryBookedQuantity, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryBookedQuantity
-						commerceInventoryBookedQuantity) {
-
-					return commerceInventoryBookedQuantity.getMvccVersion();
-				}
-
-			});
+			"mvccVersion", CommerceInventoryBookedQuantity::getMvccVersion);
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
-			new BiConsumer<CommerceInventoryBookedQuantity, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryBookedQuantity
-						commerceInventoryBookedQuantity,
-					Object mvccVersionObject) {
-
-					commerceInventoryBookedQuantity.setMvccVersion(
-						(Long)mvccVersionObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryBookedQuantity, Long>)
+				CommerceInventoryBookedQuantity::setMvccVersion);
 		attributeGetterFunctions.put(
 			"commerceInventoryBookedQuantityId",
-			new Function<CommerceInventoryBookedQuantity, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryBookedQuantity
-						commerceInventoryBookedQuantity) {
-
-					return commerceInventoryBookedQuantity.
-						getCommerceInventoryBookedQuantityId();
-				}
-
-			});
+			CommerceInventoryBookedQuantity::
+				getCommerceInventoryBookedQuantityId);
 		attributeSetterBiConsumers.put(
 			"commerceInventoryBookedQuantityId",
-			new BiConsumer<CommerceInventoryBookedQuantity, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryBookedQuantity
-						commerceInventoryBookedQuantity,
-					Object commerceInventoryBookedQuantityIdObject) {
-
-					commerceInventoryBookedQuantity.
-						setCommerceInventoryBookedQuantityId(
-							(Long)commerceInventoryBookedQuantityIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryBookedQuantity, Long>)
+				CommerceInventoryBookedQuantity::
+					setCommerceInventoryBookedQuantityId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommerceInventoryBookedQuantity, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryBookedQuantity
-						commerceInventoryBookedQuantity) {
-
-					return commerceInventoryBookedQuantity.getCompanyId();
-				}
-
-			});
+			"companyId", CommerceInventoryBookedQuantity::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommerceInventoryBookedQuantity, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryBookedQuantity
-						commerceInventoryBookedQuantity,
-					Object companyIdObject) {
-
-					commerceInventoryBookedQuantity.setCompanyId(
-						(Long)companyIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryBookedQuantity, Long>)
+				CommerceInventoryBookedQuantity::setCompanyId);
 		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommerceInventoryBookedQuantity, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryBookedQuantity
-						commerceInventoryBookedQuantity) {
-
-					return commerceInventoryBookedQuantity.getUserId();
-				}
-
-			});
+			"userId", CommerceInventoryBookedQuantity::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommerceInventoryBookedQuantity, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryBookedQuantity
-						commerceInventoryBookedQuantity,
-					Object userIdObject) {
-
-					commerceInventoryBookedQuantity.setUserId(
-						(Long)userIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryBookedQuantity, Long>)
+				CommerceInventoryBookedQuantity::setUserId);
 		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommerceInventoryBookedQuantity, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryBookedQuantity
-						commerceInventoryBookedQuantity) {
-
-					return commerceInventoryBookedQuantity.getUserName();
-				}
-
-			});
+			"userName", CommerceInventoryBookedQuantity::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommerceInventoryBookedQuantity, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryBookedQuantity
-						commerceInventoryBookedQuantity,
-					Object userNameObject) {
-
-					commerceInventoryBookedQuantity.setUserName(
-						(String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryBookedQuantity, String>)
+				CommerceInventoryBookedQuantity::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommerceInventoryBookedQuantity, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryBookedQuantity
-						commerceInventoryBookedQuantity) {
-
-					return commerceInventoryBookedQuantity.getCreateDate();
-				}
-
-			});
+			"createDate", CommerceInventoryBookedQuantity::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommerceInventoryBookedQuantity, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryBookedQuantity
-						commerceInventoryBookedQuantity,
-					Object createDateObject) {
-
-					commerceInventoryBookedQuantity.setCreateDate(
-						(Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryBookedQuantity, Date>)
+				CommerceInventoryBookedQuantity::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CommerceInventoryBookedQuantity, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryBookedQuantity
-						commerceInventoryBookedQuantity) {
-
-					return commerceInventoryBookedQuantity.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CommerceInventoryBookedQuantity::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommerceInventoryBookedQuantity, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryBookedQuantity
-						commerceInventoryBookedQuantity,
-					Object modifiedDateObject) {
-
-					commerceInventoryBookedQuantity.setModifiedDate(
-						(Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryBookedQuantity, Date>)
+				CommerceInventoryBookedQuantity::setModifiedDate);
 		attributeGetterFunctions.put(
-			"sku",
-			new Function<CommerceInventoryBookedQuantity, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryBookedQuantity
-						commerceInventoryBookedQuantity) {
-
-					return commerceInventoryBookedQuantity.getSku();
-				}
-
-			});
+			"sku", CommerceInventoryBookedQuantity::getSku);
 		attributeSetterBiConsumers.put(
 			"sku",
-			new BiConsumer<CommerceInventoryBookedQuantity, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryBookedQuantity
-						commerceInventoryBookedQuantity,
-					Object skuObject) {
-
-					commerceInventoryBookedQuantity.setSku((String)skuObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryBookedQuantity, String>)
+				CommerceInventoryBookedQuantity::setSku);
 		attributeGetterFunctions.put(
-			"quantity",
-			new Function<CommerceInventoryBookedQuantity, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryBookedQuantity
-						commerceInventoryBookedQuantity) {
-
-					return commerceInventoryBookedQuantity.getQuantity();
-				}
-
-			});
+			"quantity", CommerceInventoryBookedQuantity::getQuantity);
 		attributeSetterBiConsumers.put(
 			"quantity",
-			new BiConsumer<CommerceInventoryBookedQuantity, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryBookedQuantity
-						commerceInventoryBookedQuantity,
-					Object quantityObject) {
-
-					commerceInventoryBookedQuantity.setQuantity(
-						(Integer)quantityObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryBookedQuantity, Integer>)
+				CommerceInventoryBookedQuantity::setQuantity);
 		attributeGetterFunctions.put(
 			"expirationDate",
-			new Function<CommerceInventoryBookedQuantity, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryBookedQuantity
-						commerceInventoryBookedQuantity) {
-
-					return commerceInventoryBookedQuantity.getExpirationDate();
-				}
-
-			});
+			CommerceInventoryBookedQuantity::getExpirationDate);
 		attributeSetterBiConsumers.put(
 			"expirationDate",
-			new BiConsumer<CommerceInventoryBookedQuantity, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryBookedQuantity
-						commerceInventoryBookedQuantity,
-					Object expirationDateObject) {
-
-					commerceInventoryBookedQuantity.setExpirationDate(
-						(Date)expirationDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryBookedQuantity, Date>)
+				CommerceInventoryBookedQuantity::setExpirationDate);
 		attributeGetterFunctions.put(
-			"bookedNote",
-			new Function<CommerceInventoryBookedQuantity, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryBookedQuantity
-						commerceInventoryBookedQuantity) {
-
-					return commerceInventoryBookedQuantity.getBookedNote();
-				}
-
-			});
+			"bookedNote", CommerceInventoryBookedQuantity::getBookedNote);
 		attributeSetterBiConsumers.put(
 			"bookedNote",
-			new BiConsumer<CommerceInventoryBookedQuantity, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryBookedQuantity
-						commerceInventoryBookedQuantity,
-					Object bookedNoteObject) {
-
-					commerceInventoryBookedQuantity.setBookedNote(
-						(String)bookedNoteObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryBookedQuantity, String>)
+				CommerceInventoryBookedQuantity::setBookedNote);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -947,11 +708,19 @@ public class CommerceInventoryBookedQuantityModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;

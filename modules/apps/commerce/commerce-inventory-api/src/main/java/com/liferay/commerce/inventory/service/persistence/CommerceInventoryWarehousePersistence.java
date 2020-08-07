@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.inventory.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.inventory.exception.NoSuchInventoryWarehouseException;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce inventory warehouse service.
@@ -45,9 +40,6 @@ public interface CommerceInventoryWarehousePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceInventoryWarehouseUtil} to access the commerce inventory warehouse persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceInventoryWarehouse> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce inventory warehouses where companyId = &#63;.
@@ -1140,8 +1132,5 @@ public interface CommerceInventoryWarehousePersistence
 	 * @return the number of commerce inventory warehouses
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

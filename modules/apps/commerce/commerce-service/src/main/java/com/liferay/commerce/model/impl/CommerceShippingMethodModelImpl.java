@@ -19,6 +19,7 @@ import com.liferay.commerce.model.CommerceShippingMethodModel;
 import com.liferay.commerce.model.CommerceShippingMethodSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -80,6 +80,7 @@ public class CommerceShippingMethodModelImpl
 	public static final String TABLE_NAME = "CommerceShippingMethod";
 
 	public static final Object[][] TABLE_COLUMNS = {
+		{"mvccVersion", Types.BIGINT},
 		{"commerceShippingMethodId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -93,6 +94,7 @@ public class CommerceShippingMethodModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceShippingMethodId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -109,7 +111,7 @@ public class CommerceShippingMethodModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceShippingMethod (commerceShippingMethodId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,imageId LONG,engineKey VARCHAR(75) null,priority DOUBLE,active_ BOOLEAN)";
+		"create table CommerceShippingMethod (mvccVersion LONG default 0 not null,commerceShippingMethodId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,imageId LONG,engineKey VARCHAR(75) null,priority DOUBLE,active_ BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceShippingMethod";
@@ -126,20 +128,23 @@ public class CommerceShippingMethodModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.model.CommerceShippingMethod"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.model.CommerceShippingMethod"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.model.CommerceShippingMethod"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long ACTIVE_COLUMN_BITMASK = 1L;
 
@@ -164,6 +169,7 @@ public class CommerceShippingMethodModelImpl
 
 		CommerceShippingMethod model = new CommerceShippingMethodImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceShippingMethodId(
 			soapModel.getCommerceShippingMethodId());
 		model.setGroupId(soapModel.getGroupId());
@@ -261,9 +267,6 @@ public class CommerceShippingMethodModelImpl
 				attributeGetterFunction.apply((CommerceShippingMethod)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -342,340 +345,105 @@ public class CommerceShippingMethodModelImpl
 					<String, BiConsumer<CommerceShippingMethod, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", CommerceShippingMethod::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceShippingMethod, Long>)
+				CommerceShippingMethod::setMvccVersion);
+		attributeGetterFunctions.put(
 			"commerceShippingMethodId",
-			new Function<CommerceShippingMethod, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceShippingMethod commerceShippingMethod) {
-
-					return commerceShippingMethod.getCommerceShippingMethodId();
-				}
-
-			});
+			CommerceShippingMethod::getCommerceShippingMethodId);
 		attributeSetterBiConsumers.put(
 			"commerceShippingMethodId",
-			new BiConsumer<CommerceShippingMethod, Object>() {
-
-				@Override
-				public void accept(
-					CommerceShippingMethod commerceShippingMethod,
-					Object commerceShippingMethodIdObject) {
-
-					commerceShippingMethod.setCommerceShippingMethodId(
-						(Long)commerceShippingMethodIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceShippingMethod, Long>)
+				CommerceShippingMethod::setCommerceShippingMethodId);
 		attributeGetterFunctions.put(
-			"groupId",
-			new Function<CommerceShippingMethod, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceShippingMethod commerceShippingMethod) {
-
-					return commerceShippingMethod.getGroupId();
-				}
-
-			});
+			"groupId", CommerceShippingMethod::getGroupId);
 		attributeSetterBiConsumers.put(
 			"groupId",
-			new BiConsumer<CommerceShippingMethod, Object>() {
-
-				@Override
-				public void accept(
-					CommerceShippingMethod commerceShippingMethod,
-					Object groupIdObject) {
-
-					commerceShippingMethod.setGroupId((Long)groupIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceShippingMethod, Long>)
+				CommerceShippingMethod::setGroupId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommerceShippingMethod, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceShippingMethod commerceShippingMethod) {
-
-					return commerceShippingMethod.getCompanyId();
-				}
-
-			});
+			"companyId", CommerceShippingMethod::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommerceShippingMethod, Object>() {
-
-				@Override
-				public void accept(
-					CommerceShippingMethod commerceShippingMethod,
-					Object companyIdObject) {
-
-					commerceShippingMethod.setCompanyId((Long)companyIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceShippingMethod, Long>)
+				CommerceShippingMethod::setCompanyId);
 		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommerceShippingMethod, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceShippingMethod commerceShippingMethod) {
-
-					return commerceShippingMethod.getUserId();
-				}
-
-			});
+			"userId", CommerceShippingMethod::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommerceShippingMethod, Object>() {
-
-				@Override
-				public void accept(
-					CommerceShippingMethod commerceShippingMethod,
-					Object userIdObject) {
-
-					commerceShippingMethod.setUserId((Long)userIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceShippingMethod, Long>)
+				CommerceShippingMethod::setUserId);
 		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommerceShippingMethod, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceShippingMethod commerceShippingMethod) {
-
-					return commerceShippingMethod.getUserName();
-				}
-
-			});
+			"userName", CommerceShippingMethod::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommerceShippingMethod, Object>() {
-
-				@Override
-				public void accept(
-					CommerceShippingMethod commerceShippingMethod,
-					Object userNameObject) {
-
-					commerceShippingMethod.setUserName((String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceShippingMethod, String>)
+				CommerceShippingMethod::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommerceShippingMethod, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceShippingMethod commerceShippingMethod) {
-
-					return commerceShippingMethod.getCreateDate();
-				}
-
-			});
+			"createDate", CommerceShippingMethod::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommerceShippingMethod, Object>() {
-
-				@Override
-				public void accept(
-					CommerceShippingMethod commerceShippingMethod,
-					Object createDateObject) {
-
-					commerceShippingMethod.setCreateDate(
-						(Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceShippingMethod, Date>)
+				CommerceShippingMethod::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CommerceShippingMethod, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceShippingMethod commerceShippingMethod) {
-
-					return commerceShippingMethod.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CommerceShippingMethod::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommerceShippingMethod, Object>() {
-
-				@Override
-				public void accept(
-					CommerceShippingMethod commerceShippingMethod,
-					Object modifiedDateObject) {
-
-					commerceShippingMethod.setModifiedDate(
-						(Date)modifiedDateObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"name",
-			new Function<CommerceShippingMethod, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceShippingMethod commerceShippingMethod) {
-
-					return commerceShippingMethod.getName();
-				}
-
-			});
+			(BiConsumer<CommerceShippingMethod, Date>)
+				CommerceShippingMethod::setModifiedDate);
+		attributeGetterFunctions.put("name", CommerceShippingMethod::getName);
 		attributeSetterBiConsumers.put(
 			"name",
-			new BiConsumer<CommerceShippingMethod, Object>() {
-
-				@Override
-				public void accept(
-					CommerceShippingMethod commerceShippingMethod,
-					Object nameObject) {
-
-					commerceShippingMethod.setName((String)nameObject);
-				}
-
-			});
+			(BiConsumer<CommerceShippingMethod, String>)
+				CommerceShippingMethod::setName);
 		attributeGetterFunctions.put(
-			"description",
-			new Function<CommerceShippingMethod, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceShippingMethod commerceShippingMethod) {
-
-					return commerceShippingMethod.getDescription();
-				}
-
-			});
+			"description", CommerceShippingMethod::getDescription);
 		attributeSetterBiConsumers.put(
 			"description",
-			new BiConsumer<CommerceShippingMethod, Object>() {
-
-				@Override
-				public void accept(
-					CommerceShippingMethod commerceShippingMethod,
-					Object descriptionObject) {
-
-					commerceShippingMethod.setDescription(
-						(String)descriptionObject);
-				}
-
-			});
+			(BiConsumer<CommerceShippingMethod, String>)
+				CommerceShippingMethod::setDescription);
 		attributeGetterFunctions.put(
-			"imageId",
-			new Function<CommerceShippingMethod, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceShippingMethod commerceShippingMethod) {
-
-					return commerceShippingMethod.getImageId();
-				}
-
-			});
+			"imageId", CommerceShippingMethod::getImageId);
 		attributeSetterBiConsumers.put(
 			"imageId",
-			new BiConsumer<CommerceShippingMethod, Object>() {
-
-				@Override
-				public void accept(
-					CommerceShippingMethod commerceShippingMethod,
-					Object imageIdObject) {
-
-					commerceShippingMethod.setImageId((Long)imageIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceShippingMethod, Long>)
+				CommerceShippingMethod::setImageId);
 		attributeGetterFunctions.put(
-			"engineKey",
-			new Function<CommerceShippingMethod, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceShippingMethod commerceShippingMethod) {
-
-					return commerceShippingMethod.getEngineKey();
-				}
-
-			});
+			"engineKey", CommerceShippingMethod::getEngineKey);
 		attributeSetterBiConsumers.put(
 			"engineKey",
-			new BiConsumer<CommerceShippingMethod, Object>() {
-
-				@Override
-				public void accept(
-					CommerceShippingMethod commerceShippingMethod,
-					Object engineKeyObject) {
-
-					commerceShippingMethod.setEngineKey(
-						(String)engineKeyObject);
-				}
-
-			});
+			(BiConsumer<CommerceShippingMethod, String>)
+				CommerceShippingMethod::setEngineKey);
 		attributeGetterFunctions.put(
-			"priority",
-			new Function<CommerceShippingMethod, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceShippingMethod commerceShippingMethod) {
-
-					return commerceShippingMethod.getPriority();
-				}
-
-			});
+			"priority", CommerceShippingMethod::getPriority);
 		attributeSetterBiConsumers.put(
 			"priority",
-			new BiConsumer<CommerceShippingMethod, Object>() {
-
-				@Override
-				public void accept(
-					CommerceShippingMethod commerceShippingMethod,
-					Object priorityObject) {
-
-					commerceShippingMethod.setPriority((Double)priorityObject);
-				}
-
-			});
+			(BiConsumer<CommerceShippingMethod, Double>)
+				CommerceShippingMethod::setPriority);
 		attributeGetterFunctions.put(
-			"active",
-			new Function<CommerceShippingMethod, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceShippingMethod commerceShippingMethod) {
-
-					return commerceShippingMethod.getActive();
-				}
-
-			});
+			"active", CommerceShippingMethod::getActive);
 		attributeSetterBiConsumers.put(
 			"active",
-			new BiConsumer<CommerceShippingMethod, Object>() {
-
-				@Override
-				public void accept(
-					CommerceShippingMethod commerceShippingMethod,
-					Object activeObject) {
-
-					commerceShippingMethod.setActive((Boolean)activeObject);
-				}
-
-			});
+			(BiConsumer<CommerceShippingMethod, Boolean>)
+				CommerceShippingMethod::setActive);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1208,6 +976,7 @@ public class CommerceShippingMethodModelImpl
 		CommerceShippingMethodImpl commerceShippingMethodImpl =
 			new CommerceShippingMethodImpl();
 
+		commerceShippingMethodImpl.setMvccVersion(getMvccVersion());
 		commerceShippingMethodImpl.setCommerceShippingMethodId(
 			getCommerceShippingMethodId());
 		commerceShippingMethodImpl.setGroupId(getGroupId());
@@ -1277,11 +1046,19 @@ public class CommerceShippingMethodModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -1308,6 +1085,8 @@ public class CommerceShippingMethodModelImpl
 	public CacheModel<CommerceShippingMethod> toCacheModel() {
 		CommerceShippingMethodCacheModel commerceShippingMethodCacheModel =
 			new CommerceShippingMethodCacheModel();
+
+		commerceShippingMethodCacheModel.mvccVersion = getMvccVersion();
 
 		commerceShippingMethodCacheModel.commerceShippingMethodId =
 			getCommerceShippingMethodId();
@@ -1450,6 +1229,7 @@ public class CommerceShippingMethodModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _commerceShippingMethodId;
 	private long _groupId;
 	private long _originalGroupId;

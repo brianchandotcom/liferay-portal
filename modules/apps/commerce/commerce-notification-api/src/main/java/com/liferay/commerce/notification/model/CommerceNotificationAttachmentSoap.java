@@ -34,6 +34,7 @@ public class CommerceNotificationAttachmentSoap implements Serializable {
 		CommerceNotificationAttachmentSoap soapModel =
 			new CommerceNotificationAttachmentSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setCommerceNotificationAttachmentId(
 			model.getCommerceNotificationAttachmentId());
@@ -107,6 +108,14 @@ public class CommerceNotificationAttachmentSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceNotificationAttachmentId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -205,6 +214,7 @@ public class CommerceNotificationAttachmentSoap implements Serializable {
 		_deleteOnSend = deleteOnSend;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _commerceNotificationAttachmentId;
 	private long _groupId;

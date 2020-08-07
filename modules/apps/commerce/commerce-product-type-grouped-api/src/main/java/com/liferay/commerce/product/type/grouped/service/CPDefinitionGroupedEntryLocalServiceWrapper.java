@@ -140,6 +140,18 @@ public class CPDefinitionGroupedEntryLocalServiceWrapper
 			createCPDefinitionGroupedEntry(CPDefinitionGroupedEntryId);
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionGroupedEntryLocalService.createPersistedModel(
+			primaryKeyObj);
+	}
+
 	@Override
 	public void deleteCPDefinitionGroupedEntries(long cpDefinitionId) {
 		_cpDefinitionGroupedEntryLocalService.deleteCPDefinitionGroupedEntries(
@@ -198,6 +210,11 @@ public class CPDefinitionGroupedEntryLocalServiceWrapper
 
 		return _cpDefinitionGroupedEntryLocalService.deletePersistedModel(
 			persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _cpDefinitionGroupedEntryLocalService.dslQuery(dslQuery);
 	}
 
 	@Override

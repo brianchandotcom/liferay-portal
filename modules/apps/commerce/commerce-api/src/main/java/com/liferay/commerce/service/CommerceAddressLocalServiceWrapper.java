@@ -124,6 +124,17 @@ public class CommerceAddressLocalServiceWrapper
 	}
 
 	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceAddressLocalService.createPersistedModel(primaryKeyObj);
+	}
+
+	/**
 	 * Deletes the commerce address from the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -197,6 +208,11 @@ public class CommerceAddressLocalServiceWrapper
 
 		_commerceAddressLocalService.deleteRegionCommerceAddresses(
 			commerceRegionId);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _commerceAddressLocalService.dslQuery(dslQuery);
 	}
 
 	@Override

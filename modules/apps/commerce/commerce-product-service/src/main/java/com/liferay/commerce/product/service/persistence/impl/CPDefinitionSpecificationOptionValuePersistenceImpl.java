@@ -16,9 +16,11 @@ package com.liferay.commerce.product.service.persistence.impl;
 
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionSpecificationOptionValueException;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
+import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValueTable;
 import com.liferay.commerce.product.model.impl.CPDefinitionSpecificationOptionValueImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionSpecificationOptionValueModelImpl;
 import com.liferay.commerce.product.service.persistence.CPDefinitionSpecificationOptionValuePersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -35,21 +37,16 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -263,10 +260,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -645,8 +638,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -814,11 +805,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByUUID_G, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -909,8 +895,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1124,10 +1108,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1529,8 +1509,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1717,10 +1695,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2073,8 +2047,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2259,10 +2231,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2619,8 +2587,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2813,10 +2779,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3183,8 +3145,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3371,10 +3331,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3735,8 +3691,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3896,11 +3850,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByC_CSOVI, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3984,8 +3933,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -4191,10 +4138,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -4575,8 +4518,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -4779,10 +4720,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -5159,8 +5096,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -5185,21 +5120,14 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 			"CPDefinitionSpecificationOptionValueId",
 			"CPDSpecificationOptionValueId");
 
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-				"_dbColumnNames");
-
-			field.setAccessible(true);
-
-			field.set(this, dbColumnNames);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
+		setDBColumnNames(dbColumnNames);
 
 		setModelClass(CPDefinitionSpecificationOptionValue.class);
+
+		setModelImplClass(CPDefinitionSpecificationOptionValueImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CPDefinitionSpecificationOptionValueTable.INSTANCE);
 	}
 
 	/**
@@ -5213,7 +5141,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 			cpDefinitionSpecificationOptionValue) {
 
 		entityCache.putResult(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
 			CPDefinitionSpecificationOptionValueImpl.class,
 			cpDefinitionSpecificationOptionValue.getPrimaryKey(),
 			cpDefinitionSpecificationOptionValue);
@@ -5253,8 +5180,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 					cpDefinitionSpecificationOptionValues) {
 
 			if (entityCache.getResult(
-					CPDefinitionSpecificationOptionValueModelImpl.
-						ENTITY_CACHE_ENABLED,
 					CPDefinitionSpecificationOptionValueImpl.class,
 					cpDefinitionSpecificationOptionValue.getPrimaryKey()) ==
 						null) {
@@ -5296,7 +5221,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 			cpDefinitionSpecificationOptionValue) {
 
 		entityCache.removeResult(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
 			CPDefinitionSpecificationOptionValueImpl.class,
 			cpDefinitionSpecificationOptionValue.getPrimaryKey());
 
@@ -5322,8 +5246,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 					cpDefinitionSpecificationOptionValues) {
 
 			entityCache.removeResult(
-				CPDefinitionSpecificationOptionValueModelImpl.
-					ENTITY_CACHE_ENABLED,
 				CPDefinitionSpecificationOptionValueImpl.class,
 				cpDefinitionSpecificationOptionValue.getPrimaryKey());
 
@@ -5334,6 +5256,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -5341,8 +5264,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(
-				CPDefinitionSpecificationOptionValueModelImpl.
-					ENTITY_CACHE_ENABLED,
 				CPDefinitionSpecificationOptionValueImpl.class, primaryKey);
 		}
 	}
@@ -5648,12 +5569,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CPDefinitionSpecificationOptionValueModelImpl.
-				COLUMN_BITMASK_ENABLED) {
-
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				cpDefinitionSpecificationOptionValueModelImpl.getUuid()
 			};
@@ -5946,7 +5862,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 		}
 
 		entityCache.putResult(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
 			CPDefinitionSpecificationOptionValueImpl.class,
 			cpDefinitionSpecificationOptionValue.getPrimaryKey(),
 			cpDefinitionSpecificationOptionValue, false);
@@ -6007,66 +5922,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 	/**
 	 * Returns the cp definition specification option value with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the cp definition specification option value
-	 * @return the cp definition specification option value, or <code>null</code> if a cp definition specification option value with the primary key could not be found
-	 */
-	@Override
-	public CPDefinitionSpecificationOptionValue fetchByPrimaryKey(
-		Serializable primaryKey) {
-
-		Serializable serializable = entityCache.getResult(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionSpecificationOptionValueImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CPDefinitionSpecificationOptionValue
-			cpDefinitionSpecificationOptionValue =
-				(CPDefinitionSpecificationOptionValue)serializable;
-
-		if (cpDefinitionSpecificationOptionValue == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				cpDefinitionSpecificationOptionValue =
-					(CPDefinitionSpecificationOptionValue)session.get(
-						CPDefinitionSpecificationOptionValueImpl.class,
-						primaryKey);
-
-				if (cpDefinitionSpecificationOptionValue != null) {
-					cacheResult(cpDefinitionSpecificationOptionValue);
-				}
-				else {
-					entityCache.putResult(
-						CPDefinitionSpecificationOptionValueModelImpl.
-							ENTITY_CACHE_ENABLED,
-						CPDefinitionSpecificationOptionValueImpl.class,
-						primaryKey, nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CPDefinitionSpecificationOptionValueModelImpl.
-						ENTITY_CACHE_ENABLED,
-					CPDefinitionSpecificationOptionValueImpl.class, primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return cpDefinitionSpecificationOptionValue;
-	}
-
-	/**
-	 * Returns the cp definition specification option value with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param CPDefinitionSpecificationOptionValueId the primary key of the cp definition specification option value
 	 * @return the cp definition specification option value, or <code>null</code> if a cp definition specification option value with the primary key could not be found
 	 */
@@ -6076,119 +5931,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 
 		return fetchByPrimaryKey(
 			(Serializable)CPDefinitionSpecificationOptionValueId);
-	}
-
-	@Override
-	public Map<Serializable, CPDefinitionSpecificationOptionValue>
-		fetchByPrimaryKeys(Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CPDefinitionSpecificationOptionValue> map =
-			new HashMap<Serializable, CPDefinitionSpecificationOptionValue>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CPDefinitionSpecificationOptionValue
-				cpDefinitionSpecificationOptionValue = fetchByPrimaryKey(
-					primaryKey);
-
-			if (cpDefinitionSpecificationOptionValue != null) {
-				map.put(primaryKey, cpDefinitionSpecificationOptionValue);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CPDefinitionSpecificationOptionValueModelImpl.
-					ENTITY_CACHE_ENABLED,
-				CPDefinitionSpecificationOptionValueImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(
-						primaryKey,
-						(CPDefinitionSpecificationOptionValue)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(
-			_SQL_SELECT_CPDEFINITIONSPECIFICATIONOPTIONVALUE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CPDefinitionSpecificationOptionValue
-					cpDefinitionSpecificationOptionValue :
-						(List<CPDefinitionSpecificationOptionValue>)
-							query.list()) {
-
-				map.put(
-					cpDefinitionSpecificationOptionValue.getPrimaryKeyObj(),
-					cpDefinitionSpecificationOptionValue);
-
-				cacheResult(cpDefinitionSpecificationOptionValue);
-
-				uncachedPrimaryKeys.remove(
-					cpDefinitionSpecificationOptionValue.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CPDefinitionSpecificationOptionValueModelImpl.
-						ENTITY_CACHE_ENABLED,
-					CPDefinitionSpecificationOptionValueImpl.class, primaryKey,
-					nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -6325,10 +6067,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -6377,9 +6115,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -6396,6 +6131,21 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 	}
 
 	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "CPDSpecificationOptionValueId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_CPDEFINITIONSPECIFICATIONOPTIONVALUE;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CPDefinitionSpecificationOptionValueModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -6405,27 +6155,19 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionSpecificationOptionValueModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionSpecificationOptionValueImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionSpecificationOptionValueModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionSpecificationOptionValueImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionSpecificationOptionValueModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByUuid = new FinderPath(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionSpecificationOptionValueModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionSpecificationOptionValueImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -6434,8 +6176,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionSpecificationOptionValueModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionSpecificationOptionValueImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
@@ -6444,14 +6184,10 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionSpecificationOptionValueModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByUuid", new String[] {String.class.getName()});
 
 		_finderPathFetchByUUID_G = new FinderPath(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionSpecificationOptionValueModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionSpecificationOptionValueImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
@@ -6460,15 +6196,11 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				GROUPID_COLUMN_BITMASK);
 
 		_finderPathCountByUUID_G = new FinderPath(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionSpecificationOptionValueModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionSpecificationOptionValueModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionSpecificationOptionValueImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
@@ -6478,8 +6210,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionSpecificationOptionValueModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionSpecificationOptionValueImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
@@ -6490,15 +6220,11 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionSpecificationOptionValueModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionSpecificationOptionValueModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionSpecificationOptionValueImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -6507,8 +6233,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionSpecificationOptionValueModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionSpecificationOptionValueImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] {Long.class.getName()},
@@ -6518,14 +6242,10 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByGroupId = new FinderPath(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionSpecificationOptionValueModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByGroupId", new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByCPDefinitionId = new FinderPath(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionSpecificationOptionValueModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionSpecificationOptionValueImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPDefinitionId",
 			new String[] {
@@ -6534,8 +6254,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByCPDefinitionId = new FinderPath(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionSpecificationOptionValueModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionSpecificationOptionValueImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPDefinitionId",
 			new String[] {Long.class.getName()},
@@ -6545,14 +6263,10 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByCPDefinitionId = new FinderPath(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionSpecificationOptionValueModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCPDefinitionId", new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByCPSpecificationOptionId = new FinderPath(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionSpecificationOptionValueModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionSpecificationOptionValueImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByCPSpecificationOptionId",
@@ -6563,10 +6277,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 
 		_finderPathWithoutPaginationFindByCPSpecificationOptionId =
 			new FinderPath(
-				CPDefinitionSpecificationOptionValueModelImpl.
-					ENTITY_CACHE_ENABLED,
-				CPDefinitionSpecificationOptionValueModelImpl.
-					FINDER_CACHE_ENABLED,
 				CPDefinitionSpecificationOptionValueImpl.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCPSpecificationOptionId",
@@ -6577,15 +6287,11 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 					PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByCPSpecificationOptionId = new FinderPath(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionSpecificationOptionValueModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCPSpecificationOptionId",
 			new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByCPOptionCategoryId = new FinderPath(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionSpecificationOptionValueModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionSpecificationOptionValueImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPOptionCategoryId",
 			new String[] {
@@ -6594,8 +6300,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByCPOptionCategoryId = new FinderPath(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionSpecificationOptionValueModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionSpecificationOptionValueImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCPOptionCategoryId", new String[] {Long.class.getName()},
@@ -6605,14 +6309,10 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByCPOptionCategoryId = new FinderPath(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionSpecificationOptionValueModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCPOptionCategoryId", new String[] {Long.class.getName()});
 
 		_finderPathFetchByC_CSOVI = new FinderPath(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionSpecificationOptionValueModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionSpecificationOptionValueImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_CSOVI",
 			new String[] {Long.class.getName(), Long.class.getName()},
@@ -6622,15 +6322,11 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				CPDEFINITIONID_COLUMN_BITMASK);
 
 		_finderPathCountByC_CSOVI = new FinderPath(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionSpecificationOptionValueModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByC_CSOVI",
 			new String[] {Long.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByC_CSO = new FinderPath(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionSpecificationOptionValueModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionSpecificationOptionValueImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_CSO",
 			new String[] {
@@ -6640,8 +6336,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByC_CSO = new FinderPath(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionSpecificationOptionValueModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionSpecificationOptionValueImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_CSO",
 			new String[] {Long.class.getName(), Long.class.getName()},
@@ -6653,15 +6347,11 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByC_CSO = new FinderPath(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionSpecificationOptionValueModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByC_CSO",
 			new String[] {Long.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByC_COC = new FinderPath(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionSpecificationOptionValueModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionSpecificationOptionValueImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_COC",
 			new String[] {
@@ -6671,8 +6361,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByC_COC = new FinderPath(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionSpecificationOptionValueModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionSpecificationOptionValueImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_COC",
 			new String[] {Long.class.getName(), Long.class.getName()},
@@ -6684,8 +6372,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByC_COC = new FinderPath(
-			CPDefinitionSpecificationOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionSpecificationOptionValueModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByC_COC",
 			new String[] {Long.class.getName(), Long.class.getName()});
@@ -6708,10 +6394,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 	private static final String
 		_SQL_SELECT_CPDEFINITIONSPECIFICATIONOPTIONVALUE =
 			"SELECT cpDefinitionSpecificationOptionValue FROM CPDefinitionSpecificationOptionValue cpDefinitionSpecificationOptionValue";
-
-	private static final String
-		_SQL_SELECT_CPDEFINITIONSPECIFICATIONOPTIONVALUE_WHERE_PKS_IN =
-			"SELECT cpDefinitionSpecificationOptionValue FROM CPDefinitionSpecificationOptionValue cpDefinitionSpecificationOptionValue WHERE CPDSpecificationOptionValueId IN (";
 
 	private static final String
 		_SQL_SELECT_CPDEFINITIONSPECIFICATIONOPTIONVALUE_WHERE =

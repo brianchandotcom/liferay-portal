@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.product.service;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -32,6 +30,8 @@ import com.liferay.portal.kernel.transaction.Transactional;
 
 import java.util.Locale;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the remote service interface for CPSpecificationOption. Methods of this

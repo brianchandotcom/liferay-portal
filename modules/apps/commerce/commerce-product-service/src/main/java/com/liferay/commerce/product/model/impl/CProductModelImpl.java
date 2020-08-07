@@ -19,6 +19,7 @@ import com.liferay.commerce.product.model.CProductModel;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -70,11 +70,11 @@ public class CProductModelImpl
 	public static final String TABLE_NAME = "CProduct";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
-		{"CProductId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR}, {"CProductId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"publishedCPDefinitionId", Types.BIGINT},
 		{"latestVersion", Types.INTEGER}
 	};
@@ -83,6 +83,7 @@ public class CProductModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CProductId", Types.BIGINT);
@@ -97,7 +98,7 @@ public class CProductModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CProduct (uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CProductId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,publishedCPDefinitionId LONG,latestVersion INTEGER)";
+		"create table CProduct (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CProductId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,publishedCPDefinitionId LONG,latestVersion INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table CProduct";
 
@@ -113,20 +114,23 @@ public class CProductModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.product.model.CProduct"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.product.model.CProduct"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.product.model.CProduct"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
@@ -192,9 +196,6 @@ public class CProductModelImpl
 			attributes.put(
 				attributeName, attributeGetterFunction.apply((CProduct)this));
 		}
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
@@ -268,241 +269,65 @@ public class CProductModelImpl
 		Map<String, BiConsumer<CProduct, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<CProduct, ?>>();
 
-		attributeGetterFunctions.put(
-			"uuid",
-			new Function<CProduct, Object>() {
-
-				@Override
-				public Object apply(CProduct cProduct) {
-					return cProduct.getUuid();
-				}
-
-			});
+		attributeGetterFunctions.put("mvccVersion", CProduct::getMvccVersion);
 		attributeSetterBiConsumers.put(
-			"uuid",
-			new BiConsumer<CProduct, Object>() {
-
-				@Override
-				public void accept(CProduct cProduct, Object uuidObject) {
-					cProduct.setUuid((String)uuidObject);
-				}
-
-			});
+			"mvccVersion",
+			(BiConsumer<CProduct, Long>)CProduct::setMvccVersion);
+		attributeGetterFunctions.put("uuid", CProduct::getUuid);
+		attributeSetterBiConsumers.put(
+			"uuid", (BiConsumer<CProduct, String>)CProduct::setUuid);
 		attributeGetterFunctions.put(
-			"externalReferenceCode",
-			new Function<CProduct, Object>() {
-
-				@Override
-				public Object apply(CProduct cProduct) {
-					return cProduct.getExternalReferenceCode();
-				}
-
-			});
+			"externalReferenceCode", CProduct::getExternalReferenceCode);
 		attributeSetterBiConsumers.put(
 			"externalReferenceCode",
-			new BiConsumer<CProduct, Object>() {
-
-				@Override
-				public void accept(
-					CProduct cProduct, Object externalReferenceCodeObject) {
-
-					cProduct.setExternalReferenceCode(
-						(String)externalReferenceCodeObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"CProductId",
-			new Function<CProduct, Object>() {
-
-				@Override
-				public Object apply(CProduct cProduct) {
-					return cProduct.getCProductId();
-				}
-
-			});
+			(BiConsumer<CProduct, String>)CProduct::setExternalReferenceCode);
+		attributeGetterFunctions.put("CProductId", CProduct::getCProductId);
 		attributeSetterBiConsumers.put(
-			"CProductId",
-			new BiConsumer<CProduct, Object>() {
-
-				@Override
-				public void accept(CProduct cProduct, Object CProductIdObject) {
-					cProduct.setCProductId((Long)CProductIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"groupId",
-			new Function<CProduct, Object>() {
-
-				@Override
-				public Object apply(CProduct cProduct) {
-					return cProduct.getGroupId();
-				}
-
-			});
+			"CProductId", (BiConsumer<CProduct, Long>)CProduct::setCProductId);
+		attributeGetterFunctions.put("groupId", CProduct::getGroupId);
 		attributeSetterBiConsumers.put(
-			"groupId",
-			new BiConsumer<CProduct, Object>() {
-
-				@Override
-				public void accept(CProduct cProduct, Object groupIdObject) {
-					cProduct.setGroupId((Long)groupIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CProduct, Object>() {
-
-				@Override
-				public Object apply(CProduct cProduct) {
-					return cProduct.getCompanyId();
-				}
-
-			});
+			"groupId", (BiConsumer<CProduct, Long>)CProduct::setGroupId);
+		attributeGetterFunctions.put("companyId", CProduct::getCompanyId);
 		attributeSetterBiConsumers.put(
-			"companyId",
-			new BiConsumer<CProduct, Object>() {
-
-				@Override
-				public void accept(CProduct cProduct, Object companyIdObject) {
-					cProduct.setCompanyId((Long)companyIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userId",
-			new Function<CProduct, Object>() {
-
-				@Override
-				public Object apply(CProduct cProduct) {
-					return cProduct.getUserId();
-				}
-
-			});
+			"companyId", (BiConsumer<CProduct, Long>)CProduct::setCompanyId);
+		attributeGetterFunctions.put("userId", CProduct::getUserId);
 		attributeSetterBiConsumers.put(
-			"userId",
-			new BiConsumer<CProduct, Object>() {
-
-				@Override
-				public void accept(CProduct cProduct, Object userIdObject) {
-					cProduct.setUserId((Long)userIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userName",
-			new Function<CProduct, Object>() {
-
-				@Override
-				public Object apply(CProduct cProduct) {
-					return cProduct.getUserName();
-				}
-
-			});
+			"userId", (BiConsumer<CProduct, Long>)CProduct::setUserId);
+		attributeGetterFunctions.put("userName", CProduct::getUserName);
 		attributeSetterBiConsumers.put(
-			"userName",
-			new BiConsumer<CProduct, Object>() {
-
-				@Override
-				public void accept(CProduct cProduct, Object userNameObject) {
-					cProduct.setUserName((String)userNameObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CProduct, Object>() {
-
-				@Override
-				public Object apply(CProduct cProduct) {
-					return cProduct.getCreateDate();
-				}
-
-			});
+			"userName", (BiConsumer<CProduct, String>)CProduct::setUserName);
+		attributeGetterFunctions.put("createDate", CProduct::getCreateDate);
 		attributeSetterBiConsumers.put(
-			"createDate",
-			new BiConsumer<CProduct, Object>() {
-
-				@Override
-				public void accept(CProduct cProduct, Object createDateObject) {
-					cProduct.setCreateDate((Date)createDateObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CProduct, Object>() {
-
-				@Override
-				public Object apply(CProduct cProduct) {
-					return cProduct.getModifiedDate();
-				}
-
-			});
+			"createDate", (BiConsumer<CProduct, Date>)CProduct::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", CProduct::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CProduct, Object>() {
-
-				@Override
-				public void accept(
-					CProduct cProduct, Object modifiedDateObject) {
-
-					cProduct.setModifiedDate((Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CProduct, Date>)CProduct::setModifiedDate);
 		attributeGetterFunctions.put(
-			"publishedCPDefinitionId",
-			new Function<CProduct, Object>() {
-
-				@Override
-				public Object apply(CProduct cProduct) {
-					return cProduct.getPublishedCPDefinitionId();
-				}
-
-			});
+			"publishedCPDefinitionId", CProduct::getPublishedCPDefinitionId);
 		attributeSetterBiConsumers.put(
 			"publishedCPDefinitionId",
-			new BiConsumer<CProduct, Object>() {
-
-				@Override
-				public void accept(
-					CProduct cProduct, Object publishedCPDefinitionIdObject) {
-
-					cProduct.setPublishedCPDefinitionId(
-						(Long)publishedCPDefinitionIdObject);
-				}
-
-			});
+			(BiConsumer<CProduct, Long>)CProduct::setPublishedCPDefinitionId);
 		attributeGetterFunctions.put(
-			"latestVersion",
-			new Function<CProduct, Object>() {
-
-				@Override
-				public Object apply(CProduct cProduct) {
-					return cProduct.getLatestVersion();
-				}
-
-			});
+			"latestVersion", CProduct::getLatestVersion);
 		attributeSetterBiConsumers.put(
 			"latestVersion",
-			new BiConsumer<CProduct, Object>() {
-
-				@Override
-				public void accept(
-					CProduct cProduct, Object latestVersionObject) {
-
-					cProduct.setLatestVersion((Integer)latestVersionObject);
-				}
-
-			});
+			(BiConsumer<CProduct, Integer>)CProduct::setLatestVersion);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -738,6 +563,7 @@ public class CProductModelImpl
 	public Object clone() {
 		CProductImpl cProductImpl = new CProductImpl();
 
+		cProductImpl.setMvccVersion(getMvccVersion());
 		cProductImpl.setUuid(getUuid());
 		cProductImpl.setExternalReferenceCode(getExternalReferenceCode());
 		cProductImpl.setCProductId(getCProductId());
@@ -797,11 +623,19 @@ public class CProductModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -829,6 +663,8 @@ public class CProductModelImpl
 	@Override
 	public CacheModel<CProduct> toCacheModel() {
 		CProductCacheModel cProductCacheModel = new CProductCacheModel();
+
+		cProductCacheModel.mvccVersion = getMvccVersion();
 
 		cProductCacheModel.uuid = getUuid();
 
@@ -960,6 +796,7 @@ public class CProductModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private String _externalReferenceCode;

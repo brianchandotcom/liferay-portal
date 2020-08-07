@@ -35,6 +35,7 @@ public class CommerceDiscountCommerceAccountGroupRelSoap
 		CommerceDiscountCommerceAccountGroupRelSoap soapModel =
 			new CommerceDiscountCommerceAccountGroupRelSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCommerceDiscountCommerceAccountGroupRelId(
 			model.getCommerceDiscountCommerceAccountGroupRelId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -107,6 +108,14 @@ public class CommerceDiscountCommerceAccountGroupRelSoap
 		setCommerceDiscountCommerceAccountGroupRelId(pk);
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public long getCommerceDiscountCommerceAccountGroupRelId() {
 		return _commerceDiscountCommerceAccountGroupRelId;
 	}
@@ -174,6 +183,7 @@ public class CommerceDiscountCommerceAccountGroupRelSoap
 		_commerceAccountGroupId = commerceAccountGroupId;
 	}
 
+	private long _mvccVersion;
 	private long _commerceDiscountCommerceAccountGroupRelId;
 	private long _companyId;
 	private long _userId;

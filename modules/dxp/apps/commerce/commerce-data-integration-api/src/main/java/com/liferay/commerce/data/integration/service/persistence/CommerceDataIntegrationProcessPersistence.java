@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.data.integration.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.data.integration.exception.NoSuchDataIntegrationProcessException;
 import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcess;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce data integration process service.
@@ -45,9 +40,6 @@ public interface CommerceDataIntegrationProcessPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceDataIntegrationProcessUtil} to access the commerce data integration process persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceDataIntegrationProcess> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce data integration processes where companyId = &#63;.
@@ -663,8 +655,5 @@ public interface CommerceDataIntegrationProcessPersistence
 	 * @return the number of commerce data integration processes
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

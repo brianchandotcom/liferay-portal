@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.inventory.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,24 +31,14 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceInventoryReplenishmentItemWrapper
+	extends BaseModelWrapper<CommerceInventoryReplenishmentItem>
 	implements CommerceInventoryReplenishmentItem,
 			   ModelWrapper<CommerceInventoryReplenishmentItem> {
 
 	public CommerceInventoryReplenishmentItemWrapper(
 		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem) {
 
-		_commerceInventoryReplenishmentItem =
-			commerceInventoryReplenishmentItem;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceInventoryReplenishmentItem.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceInventoryReplenishmentItem.class.getName();
+		super(commerceInventoryReplenishmentItem);
 	}
 
 	@Override
@@ -149,21 +135,6 @@ public class CommerceInventoryReplenishmentItemWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CommerceInventoryReplenishmentItemWrapper(
-			(CommerceInventoryReplenishmentItem)
-				_commerceInventoryReplenishmentItem.clone());
-	}
-
-	@Override
-	public int compareTo(
-		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem) {
-
-		return _commerceInventoryReplenishmentItem.compareTo(
-			commerceInventoryReplenishmentItem);
-	}
-
 	/**
 	 * Returns the availability date of this commerce inventory replenishment item.
 	 *
@@ -171,7 +142,7 @@ public class CommerceInventoryReplenishmentItemWrapper
 	 */
 	@Override
 	public Date getAvailabilityDate() {
-		return _commerceInventoryReplenishmentItem.getAvailabilityDate();
+		return model.getAvailabilityDate();
 	}
 
 	/**
@@ -181,16 +152,14 @@ public class CommerceInventoryReplenishmentItemWrapper
 	 */
 	@Override
 	public long getCommerceInventoryReplenishmentItemId() {
-		return _commerceInventoryReplenishmentItem.
-			getCommerceInventoryReplenishmentItemId();
+		return model.getCommerceInventoryReplenishmentItemId();
 	}
 
 	@Override
 	public CommerceInventoryWarehouse getCommerceInventoryWarehouse()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceInventoryReplenishmentItem.
-			getCommerceInventoryWarehouse();
+		return model.getCommerceInventoryWarehouse();
 	}
 
 	/**
@@ -200,8 +169,7 @@ public class CommerceInventoryReplenishmentItemWrapper
 	 */
 	@Override
 	public long getCommerceInventoryWarehouseId() {
-		return _commerceInventoryReplenishmentItem.
-			getCommerceInventoryWarehouseId();
+		return model.getCommerceInventoryWarehouseId();
 	}
 
 	/**
@@ -211,7 +179,7 @@ public class CommerceInventoryReplenishmentItemWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceInventoryReplenishmentItem.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -221,12 +189,7 @@ public class CommerceInventoryReplenishmentItemWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceInventoryReplenishmentItem.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceInventoryReplenishmentItem.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -236,7 +199,7 @@ public class CommerceInventoryReplenishmentItemWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceInventoryReplenishmentItem.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -246,7 +209,7 @@ public class CommerceInventoryReplenishmentItemWrapper
 	 */
 	@Override
 	public long getMvccVersion() {
-		return _commerceInventoryReplenishmentItem.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -256,12 +219,7 @@ public class CommerceInventoryReplenishmentItemWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceInventoryReplenishmentItem.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceInventoryReplenishmentItem.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -271,7 +229,7 @@ public class CommerceInventoryReplenishmentItemWrapper
 	 */
 	@Override
 	public int getQuantity() {
-		return _commerceInventoryReplenishmentItem.getQuantity();
+		return model.getQuantity();
 	}
 
 	/**
@@ -281,7 +239,7 @@ public class CommerceInventoryReplenishmentItemWrapper
 	 */
 	@Override
 	public String getSku() {
-		return _commerceInventoryReplenishmentItem.getSku();
+		return model.getSku();
 	}
 
 	/**
@@ -291,7 +249,7 @@ public class CommerceInventoryReplenishmentItemWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceInventoryReplenishmentItem.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -301,7 +259,7 @@ public class CommerceInventoryReplenishmentItemWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceInventoryReplenishmentItem.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -311,32 +269,12 @@ public class CommerceInventoryReplenishmentItemWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceInventoryReplenishmentItem.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceInventoryReplenishmentItem.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceInventoryReplenishmentItem.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceInventoryReplenishmentItem.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceInventoryReplenishmentItem.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_commerceInventoryReplenishmentItem.persist();
+		model.persist();
 	}
 
 	/**
@@ -346,13 +284,7 @@ public class CommerceInventoryReplenishmentItemWrapper
 	 */
 	@Override
 	public void setAvailabilityDate(Date availabilityDate) {
-		_commerceInventoryReplenishmentItem.setAvailabilityDate(
-			availabilityDate);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceInventoryReplenishmentItem.setCachedModel(cachedModel);
+		model.setAvailabilityDate(availabilityDate);
 	}
 
 	/**
@@ -364,9 +296,8 @@ public class CommerceInventoryReplenishmentItemWrapper
 	public void setCommerceInventoryReplenishmentItemId(
 		long commerceInventoryReplenishmentItemId) {
 
-		_commerceInventoryReplenishmentItem.
-			setCommerceInventoryReplenishmentItemId(
-				commerceInventoryReplenishmentItemId);
+		model.setCommerceInventoryReplenishmentItemId(
+			commerceInventoryReplenishmentItemId);
 	}
 
 	/**
@@ -378,8 +309,7 @@ public class CommerceInventoryReplenishmentItemWrapper
 	public void setCommerceInventoryWarehouseId(
 		long commerceInventoryWarehouseId) {
 
-		_commerceInventoryReplenishmentItem.setCommerceInventoryWarehouseId(
-			commerceInventoryWarehouseId);
+		model.setCommerceInventoryWarehouseId(commerceInventoryWarehouseId);
 	}
 
 	/**
@@ -389,7 +319,7 @@ public class CommerceInventoryReplenishmentItemWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceInventoryReplenishmentItem.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -399,27 +329,7 @@ public class CommerceInventoryReplenishmentItemWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceInventoryReplenishmentItem.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceInventoryReplenishmentItem.setExpandoBridgeAttributes(
-			baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceInventoryReplenishmentItem.setExpandoBridgeAttributes(
-			expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceInventoryReplenishmentItem.setExpandoBridgeAttributes(
-			serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -429,7 +339,7 @@ public class CommerceInventoryReplenishmentItemWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceInventoryReplenishmentItem.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -439,12 +349,7 @@ public class CommerceInventoryReplenishmentItemWrapper
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_commerceInventoryReplenishmentItem.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_commerceInventoryReplenishmentItem.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -454,12 +359,7 @@ public class CommerceInventoryReplenishmentItemWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceInventoryReplenishmentItem.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceInventoryReplenishmentItem.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -469,7 +369,7 @@ public class CommerceInventoryReplenishmentItemWrapper
 	 */
 	@Override
 	public void setQuantity(int quantity) {
-		_commerceInventoryReplenishmentItem.setQuantity(quantity);
+		model.setQuantity(quantity);
 	}
 
 	/**
@@ -479,7 +379,7 @@ public class CommerceInventoryReplenishmentItemWrapper
 	 */
 	@Override
 	public void setSku(String sku) {
-		_commerceInventoryReplenishmentItem.setSku(sku);
+		model.setSku(sku);
 	}
 
 	/**
@@ -489,7 +389,7 @@ public class CommerceInventoryReplenishmentItemWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceInventoryReplenishmentItem.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -499,7 +399,7 @@ public class CommerceInventoryReplenishmentItemWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceInventoryReplenishmentItem.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -509,84 +409,15 @@ public class CommerceInventoryReplenishmentItemWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceInventoryReplenishmentItem.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel
-		<CommerceInventoryReplenishmentItem> toCacheModel() {
+	protected CommerceInventoryReplenishmentItemWrapper wrap(
+		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem) {
 
-		return _commerceInventoryReplenishmentItem.toCacheModel();
-	}
-
-	@Override
-	public CommerceInventoryReplenishmentItem toEscapedModel() {
 		return new CommerceInventoryReplenishmentItemWrapper(
-			_commerceInventoryReplenishmentItem.toEscapedModel());
+			commerceInventoryReplenishmentItem);
 	}
-
-	@Override
-	public String toString() {
-		return _commerceInventoryReplenishmentItem.toString();
-	}
-
-	@Override
-	public CommerceInventoryReplenishmentItem toUnescapedModel() {
-		return new CommerceInventoryReplenishmentItemWrapper(
-			_commerceInventoryReplenishmentItem.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceInventoryReplenishmentItem.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceInventoryReplenishmentItemWrapper)) {
-			return false;
-		}
-
-		CommerceInventoryReplenishmentItemWrapper
-			commerceInventoryReplenishmentItemWrapper =
-				(CommerceInventoryReplenishmentItemWrapper)object;
-
-		if (Objects.equals(
-				_commerceInventoryReplenishmentItem,
-				commerceInventoryReplenishmentItemWrapper.
-					_commerceInventoryReplenishmentItem)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceInventoryReplenishmentItem getWrappedModel() {
-		return _commerceInventoryReplenishmentItem;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceInventoryReplenishmentItem.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceInventoryReplenishmentItem.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceInventoryReplenishmentItem.resetOriginalValues();
-	}
-
-	private final CommerceInventoryReplenishmentItem
-		_commerceInventoryReplenishmentItem;
 
 }

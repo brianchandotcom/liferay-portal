@@ -23,6 +23,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.journal.service.persistence.JournalArticlePersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -154,6 +155,11 @@ public abstract class CPDefinitionVirtualSettingLocalServiceBaseImpl
 
 		return cpDefinitionVirtualSettingPersistence.remove(
 			cpDefinitionVirtualSetting);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return cpDefinitionVirtualSettingPersistence.dslQuery(dslQuery);
 	}
 
 	@Override
@@ -427,6 +433,16 @@ public abstract class CPDefinitionVirtualSettingLocalServiceBaseImpl
 				StagedModelType.REFERRER_CLASS_NAME_ID_ALL));
 
 		return exportActionableDynamicQuery;
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
+
+		return cpDefinitionVirtualSettingPersistence.create(
+			((Long)primaryKeyObj).longValue());
 	}
 
 	/**

@@ -855,10 +855,6 @@ public class CommerceAccountUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CommerceAccountPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

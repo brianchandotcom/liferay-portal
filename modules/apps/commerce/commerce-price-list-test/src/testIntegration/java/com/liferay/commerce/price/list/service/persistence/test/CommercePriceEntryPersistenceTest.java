@@ -128,6 +128,8 @@ public class CommercePriceEntryPersistenceTest {
 
 		CommercePriceEntry newCommercePriceEntry = _persistence.create(pk);
 
+		newCommercePriceEntry.setMvccVersion(RandomTestUtil.nextLong());
+
 		newCommercePriceEntry.setUuid(RandomTestUtil.randomString());
 
 		newCommercePriceEntry.setExternalReferenceCode(
@@ -195,6 +197,9 @@ public class CommercePriceEntryPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newCommercePriceEntry.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCommercePriceEntry.getMvccVersion(),
+			newCommercePriceEntry.getMvccVersion());
 		Assert.assertEquals(
 			existingCommercePriceEntry.getUuid(),
 			newCommercePriceEntry.getUuid());
@@ -376,16 +381,17 @@ public class CommercePriceEntryPersistenceTest {
 
 	protected OrderByComparator<CommercePriceEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CommercePriceEntry", "uuid", true, "externalReferenceCode", true,
-			"commercePriceEntryId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"commercePriceListId", true, "CPInstanceUuid", true, "CProductId",
-			true, "price", true, "promoPrice", true, "discountDiscovery", true,
-			"discountLevel1", true, "discountLevel2", true, "discountLevel3",
-			true, "discountLevel4", true, "hasTierPrice", true, "bulkPricing",
-			true, "displayDate", true, "expirationDate", true,
-			"lastPublishDate", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true);
+			"CommercePriceEntry", "mvccVersion", true, "uuid", true,
+			"externalReferenceCode", true, "commercePriceEntryId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "commercePriceListId", true,
+			"CPInstanceUuid", true, "CProductId", true, "price", true,
+			"promoPrice", true, "discountDiscovery", true, "discountLevel1",
+			true, "discountLevel2", true, "discountLevel3", true,
+			"discountLevel4", true, "hasTierPrice", true, "bulkPricing", true,
+			"displayDate", true, "expirationDate", true, "lastPublishDate",
+			true, "status", true, "statusByUserId", true, "statusByUserName",
+			true, "statusDate", true);
 	}
 
 	@Test
@@ -664,6 +670,8 @@ public class CommercePriceEntryPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		CommercePriceEntry commercePriceEntry = _persistence.create(pk);
+
+		commercePriceEntry.setMvccVersion(RandomTestUtil.nextLong());
 
 		commercePriceEntry.setUuid(RandomTestUtil.randomString());
 

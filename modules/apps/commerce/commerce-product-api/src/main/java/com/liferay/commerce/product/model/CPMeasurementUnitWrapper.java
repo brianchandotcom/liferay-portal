@@ -14,17 +14,13 @@
 
 package com.liferay.commerce.product.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,26 +32,18 @@ import java.util.Objects;
  * @generated
  */
 public class CPMeasurementUnitWrapper
+	extends BaseModelWrapper<CPMeasurementUnit>
 	implements CPMeasurementUnit, ModelWrapper<CPMeasurementUnit> {
 
 	public CPMeasurementUnitWrapper(CPMeasurementUnit cpMeasurementUnit) {
-		_cpMeasurementUnit = cpMeasurementUnit;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CPMeasurementUnit.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CPMeasurementUnit.class.getName();
+		super(cpMeasurementUnit);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("CPMeasurementUnitId", getCPMeasurementUnitId());
 		attributes.put("groupId", getGroupId());
@@ -77,6 +65,12 @@ public class CPMeasurementUnitWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -169,19 +163,8 @@ public class CPMeasurementUnitWrapper
 	}
 
 	@Override
-	public Object clone() {
-		return new CPMeasurementUnitWrapper(
-			(CPMeasurementUnit)_cpMeasurementUnit.clone());
-	}
-
-	@Override
-	public int compareTo(CPMeasurementUnit cpMeasurementUnit) {
-		return _cpMeasurementUnit.compareTo(cpMeasurementUnit);
-	}
-
-	@Override
 	public String[] getAvailableLanguageIds() {
-		return _cpMeasurementUnit.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -191,7 +174,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _cpMeasurementUnit.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -201,7 +184,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public long getCPMeasurementUnitId() {
-		return _cpMeasurementUnit.getCPMeasurementUnitId();
+		return model.getCPMeasurementUnitId();
 	}
 
 	/**
@@ -211,17 +194,12 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _cpMeasurementUnit.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _cpMeasurementUnit.getDefaultLanguageId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _cpMeasurementUnit.getExpandoBridge();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -231,7 +209,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _cpMeasurementUnit.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -241,7 +219,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public String getKey() {
-		return _cpMeasurementUnit.getKey();
+		return model.getKey();
 	}
 
 	/**
@@ -251,7 +229,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public Date getLastPublishDate() {
-		return _cpMeasurementUnit.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -261,7 +239,17 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _cpMeasurementUnit.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this cp measurement unit.
+	 *
+	 * @return the mvcc version of this cp measurement unit
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -271,7 +259,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public String getName() {
-		return _cpMeasurementUnit.getName();
+		return model.getName();
 	}
 
 	/**
@@ -282,7 +270,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public String getName(java.util.Locale locale) {
-		return _cpMeasurementUnit.getName(locale);
+		return model.getName(locale);
 	}
 
 	/**
@@ -294,7 +282,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public String getName(java.util.Locale locale, boolean useDefault) {
-		return _cpMeasurementUnit.getName(locale, useDefault);
+		return model.getName(locale, useDefault);
 	}
 
 	/**
@@ -305,7 +293,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public String getName(String languageId) {
-		return _cpMeasurementUnit.getName(languageId);
+		return model.getName(languageId);
 	}
 
 	/**
@@ -317,17 +305,17 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public String getName(String languageId, boolean useDefault) {
-		return _cpMeasurementUnit.getName(languageId, useDefault);
+		return model.getName(languageId, useDefault);
 	}
 
 	@Override
 	public String getNameCurrentLanguageId() {
-		return _cpMeasurementUnit.getNameCurrentLanguageId();
+		return model.getNameCurrentLanguageId();
 	}
 
 	@Override
 	public String getNameCurrentValue() {
-		return _cpMeasurementUnit.getNameCurrentValue();
+		return model.getNameCurrentValue();
 	}
 
 	/**
@@ -337,7 +325,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public Map<java.util.Locale, String> getNameMap() {
-		return _cpMeasurementUnit.getNameMap();
+		return model.getNameMap();
 	}
 
 	/**
@@ -347,7 +335,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public boolean getPrimary() {
-		return _cpMeasurementUnit.getPrimary();
+		return model.getPrimary();
 	}
 
 	/**
@@ -357,12 +345,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _cpMeasurementUnit.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _cpMeasurementUnit.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -372,7 +355,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public double getPriority() {
-		return _cpMeasurementUnit.getPriority();
+		return model.getPriority();
 	}
 
 	/**
@@ -382,7 +365,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public double getRate() {
-		return _cpMeasurementUnit.getRate();
+		return model.getRate();
 	}
 
 	/**
@@ -392,7 +375,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public int getType() {
-		return _cpMeasurementUnit.getType();
+		return model.getType();
 	}
 
 	/**
@@ -402,7 +385,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _cpMeasurementUnit.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -412,7 +395,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _cpMeasurementUnit.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -422,7 +405,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _cpMeasurementUnit.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -432,27 +415,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public String getUuid() {
-		return _cpMeasurementUnit.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _cpMeasurementUnit.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _cpMeasurementUnit.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _cpMeasurementUnit.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _cpMeasurementUnit.isNew();
+		return model.getUuid();
 	}
 
 	/**
@@ -462,19 +425,19 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public boolean isPrimary() {
-		return _cpMeasurementUnit.isPrimary();
+		return model.isPrimary();
 	}
 
 	@Override
 	public void persist() {
-		_cpMeasurementUnit.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
-		_cpMeasurementUnit.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
@@ -482,12 +445,7 @@ public class CPMeasurementUnitWrapper
 			java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
-		_cpMeasurementUnit.prepareLocalizedFieldsForImport(defaultImportLocale);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_cpMeasurementUnit.setCachedModel(cachedModel);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -497,7 +455,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_cpMeasurementUnit.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -507,7 +465,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public void setCPMeasurementUnitId(long CPMeasurementUnitId) {
-		_cpMeasurementUnit.setCPMeasurementUnitId(CPMeasurementUnitId);
+		model.setCPMeasurementUnitId(CPMeasurementUnitId);
 	}
 
 	/**
@@ -517,24 +475,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_cpMeasurementUnit.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_cpMeasurementUnit.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_cpMeasurementUnit.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_cpMeasurementUnit.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -544,7 +485,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_cpMeasurementUnit.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -554,7 +495,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public void setKey(String key) {
-		_cpMeasurementUnit.setKey(key);
+		model.setKey(key);
 	}
 
 	/**
@@ -564,7 +505,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_cpMeasurementUnit.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -574,7 +515,17 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_cpMeasurementUnit.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this cp measurement unit.
+	 *
+	 * @param mvccVersion the mvcc version of this cp measurement unit
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -584,7 +535,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public void setName(String name) {
-		_cpMeasurementUnit.setName(name);
+		model.setName(name);
 	}
 
 	/**
@@ -595,7 +546,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public void setName(String name, java.util.Locale locale) {
-		_cpMeasurementUnit.setName(name, locale);
+		model.setName(name, locale);
 	}
 
 	/**
@@ -609,12 +560,12 @@ public class CPMeasurementUnitWrapper
 	public void setName(
 		String name, java.util.Locale locale, java.util.Locale defaultLocale) {
 
-		_cpMeasurementUnit.setName(name, locale, defaultLocale);
+		model.setName(name, locale, defaultLocale);
 	}
 
 	@Override
 	public void setNameCurrentLanguageId(String languageId) {
-		_cpMeasurementUnit.setNameCurrentLanguageId(languageId);
+		model.setNameCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -624,7 +575,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap) {
-		_cpMeasurementUnit.setNameMap(nameMap);
+		model.setNameMap(nameMap);
 	}
 
 	/**
@@ -637,12 +588,7 @@ public class CPMeasurementUnitWrapper
 	public void setNameMap(
 		Map<java.util.Locale, String> nameMap, java.util.Locale defaultLocale) {
 
-		_cpMeasurementUnit.setNameMap(nameMap, defaultLocale);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_cpMeasurementUnit.setNew(n);
+		model.setNameMap(nameMap, defaultLocale);
 	}
 
 	/**
@@ -652,7 +598,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public void setPrimary(boolean primary) {
-		_cpMeasurementUnit.setPrimary(primary);
+		model.setPrimary(primary);
 	}
 
 	/**
@@ -662,12 +608,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_cpMeasurementUnit.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_cpMeasurementUnit.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -677,7 +618,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public void setPriority(double priority) {
-		_cpMeasurementUnit.setPriority(priority);
+		model.setPriority(priority);
 	}
 
 	/**
@@ -687,7 +628,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public void setRate(double rate) {
-		_cpMeasurementUnit.setRate(rate);
+		model.setRate(rate);
 	}
 
 	/**
@@ -697,7 +638,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public void setType(int type) {
-		_cpMeasurementUnit.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -707,7 +648,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_cpMeasurementUnit.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -717,7 +658,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_cpMeasurementUnit.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -727,7 +668,7 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_cpMeasurementUnit.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -737,86 +678,19 @@ public class CPMeasurementUnitWrapper
 	 */
 	@Override
 	public void setUuid(String uuid) {
-		_cpMeasurementUnit.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CPMeasurementUnit>
-		toCacheModel() {
-
-		return _cpMeasurementUnit.toCacheModel();
-	}
-
-	@Override
-	public CPMeasurementUnit toEscapedModel() {
-		return new CPMeasurementUnitWrapper(
-			_cpMeasurementUnit.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _cpMeasurementUnit.toString();
-	}
-
-	@Override
-	public CPMeasurementUnit toUnescapedModel() {
-		return new CPMeasurementUnitWrapper(
-			_cpMeasurementUnit.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _cpMeasurementUnit.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CPMeasurementUnitWrapper)) {
-			return false;
-		}
-
-		CPMeasurementUnitWrapper cpMeasurementUnitWrapper =
-			(CPMeasurementUnitWrapper)object;
-
-		if (Objects.equals(
-				_cpMeasurementUnit,
-				cpMeasurementUnitWrapper._cpMeasurementUnit)) {
-
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _cpMeasurementUnit.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public CPMeasurementUnit getWrappedModel() {
-		return _cpMeasurementUnit;
-	}
+	protected CPMeasurementUnitWrapper wrap(
+		CPMeasurementUnit cpMeasurementUnit) {
 
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _cpMeasurementUnit.isEntityCacheEnabled();
+		return new CPMeasurementUnitWrapper(cpMeasurementUnit);
 	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _cpMeasurementUnit.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_cpMeasurementUnit.resetOriginalValues();
-	}
-
-	private final CPMeasurementUnit _cpMeasurementUnit;
 
 }

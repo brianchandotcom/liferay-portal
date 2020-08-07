@@ -20,6 +20,7 @@ import com.liferay.commerce.product.model.CPDefinitionOptionRelSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,7 +36,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -82,22 +82,23 @@ public class CPDefinitionOptionRelModelImpl
 	public static final String TABLE_NAME = "CPDefinitionOptionRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"CPDefinitionOptionRelId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"CPDefinitionId", Types.BIGINT}, {"CPOptionId", Types.BIGINT},
-		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"DDMFormFieldTypeName", Types.VARCHAR}, {"priority", Types.DOUBLE},
-		{"facetable", Types.BOOLEAN}, {"required", Types.BOOLEAN},
-		{"skuContributor", Types.BOOLEAN}, {"key_", Types.VARCHAR},
-		{"priceType", Types.VARCHAR}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"CPDefinitionOptionRelId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"CPDefinitionId", Types.BIGINT},
+		{"CPOptionId", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"description", Types.VARCHAR}, {"DDMFormFieldTypeName", Types.VARCHAR},
+		{"priority", Types.DOUBLE}, {"facetable", Types.BOOLEAN},
+		{"required", Types.BOOLEAN}, {"skuContributor", Types.BOOLEAN},
+		{"key_", Types.VARCHAR}, {"priceType", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPDefinitionOptionRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -120,7 +121,7 @@ public class CPDefinitionOptionRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPDefinitionOptionRel (uuid_ VARCHAR(75) null,CPDefinitionOptionRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,CPOptionId LONG,name STRING null,description STRING null,DDMFormFieldTypeName VARCHAR(75) null,priority DOUBLE,facetable BOOLEAN,required BOOLEAN,skuContributor BOOLEAN,key_ VARCHAR(75) null,priceType VARCHAR(75) null)";
+		"create table CPDefinitionOptionRel (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,CPDefinitionOptionRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,CPOptionId LONG,name STRING null,description STRING null,DDMFormFieldTypeName VARCHAR(75) null,priority DOUBLE,facetable BOOLEAN,required BOOLEAN,skuContributor BOOLEAN,key_ VARCHAR(75) null,priceType VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CPDefinitionOptionRel";
@@ -137,20 +138,23 @@ public class CPDefinitionOptionRelModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.product.model.CPDefinitionOptionRel"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.product.model.CPDefinitionOptionRel"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.product.model.CPDefinitionOptionRel"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long CPDEFINITIONID_COLUMN_BITMASK = 1L;
 
@@ -185,6 +189,7 @@ public class CPDefinitionOptionRelModelImpl
 
 		CPDefinitionOptionRel model = new CPDefinitionOptionRelImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCPDefinitionOptionRelId(
 			soapModel.getCPDefinitionOptionRelId());
@@ -288,9 +293,6 @@ public class CPDefinitionOptionRelModelImpl
 				attributeGetterFunction.apply((CPDefinitionOptionRel)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -369,492 +371,140 @@ public class CPDefinitionOptionRelModelImpl
 					<String, BiConsumer<CPDefinitionOptionRel, ?>>();
 
 		attributeGetterFunctions.put(
-			"uuid",
-			new Function<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionOptionRel cpDefinitionOptionRel) {
-
-					return cpDefinitionOptionRel.getUuid();
-				}
-
-			});
+			"mvccVersion", CPDefinitionOptionRel::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CPDefinitionOptionRel, Long>)
+				CPDefinitionOptionRel::setMvccVersion);
+		attributeGetterFunctions.put("uuid", CPDefinitionOptionRel::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
-			new BiConsumer<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionOptionRel cpDefinitionOptionRel,
-					Object uuidObject) {
-
-					cpDefinitionOptionRel.setUuid((String)uuidObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionOptionRel, String>)
+				CPDefinitionOptionRel::setUuid);
 		attributeGetterFunctions.put(
 			"CPDefinitionOptionRelId",
-			new Function<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionOptionRel cpDefinitionOptionRel) {
-
-					return cpDefinitionOptionRel.getCPDefinitionOptionRelId();
-				}
-
-			});
+			CPDefinitionOptionRel::getCPDefinitionOptionRelId);
 		attributeSetterBiConsumers.put(
 			"CPDefinitionOptionRelId",
-			new BiConsumer<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionOptionRel cpDefinitionOptionRel,
-					Object CPDefinitionOptionRelIdObject) {
-
-					cpDefinitionOptionRel.setCPDefinitionOptionRelId(
-						(Long)CPDefinitionOptionRelIdObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionOptionRel, Long>)
+				CPDefinitionOptionRel::setCPDefinitionOptionRelId);
 		attributeGetterFunctions.put(
-			"groupId",
-			new Function<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionOptionRel cpDefinitionOptionRel) {
-
-					return cpDefinitionOptionRel.getGroupId();
-				}
-
-			});
+			"groupId", CPDefinitionOptionRel::getGroupId);
 		attributeSetterBiConsumers.put(
 			"groupId",
-			new BiConsumer<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionOptionRel cpDefinitionOptionRel,
-					Object groupIdObject) {
-
-					cpDefinitionOptionRel.setGroupId((Long)groupIdObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionOptionRel, Long>)
+				CPDefinitionOptionRel::setGroupId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionOptionRel cpDefinitionOptionRel) {
-
-					return cpDefinitionOptionRel.getCompanyId();
-				}
-
-			});
+			"companyId", CPDefinitionOptionRel::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionOptionRel cpDefinitionOptionRel,
-					Object companyIdObject) {
-
-					cpDefinitionOptionRel.setCompanyId((Long)companyIdObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionOptionRel, Long>)
+				CPDefinitionOptionRel::setCompanyId);
 		attributeGetterFunctions.put(
-			"userId",
-			new Function<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionOptionRel cpDefinitionOptionRel) {
-
-					return cpDefinitionOptionRel.getUserId();
-				}
-
-			});
+			"userId", CPDefinitionOptionRel::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionOptionRel cpDefinitionOptionRel,
-					Object userIdObject) {
-
-					cpDefinitionOptionRel.setUserId((Long)userIdObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionOptionRel, Long>)
+				CPDefinitionOptionRel::setUserId);
 		attributeGetterFunctions.put(
-			"userName",
-			new Function<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionOptionRel cpDefinitionOptionRel) {
-
-					return cpDefinitionOptionRel.getUserName();
-				}
-
-			});
+			"userName", CPDefinitionOptionRel::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionOptionRel cpDefinitionOptionRel,
-					Object userNameObject) {
-
-					cpDefinitionOptionRel.setUserName((String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionOptionRel, String>)
+				CPDefinitionOptionRel::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionOptionRel cpDefinitionOptionRel) {
-
-					return cpDefinitionOptionRel.getCreateDate();
-				}
-
-			});
+			"createDate", CPDefinitionOptionRel::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionOptionRel cpDefinitionOptionRel,
-					Object createDateObject) {
-
-					cpDefinitionOptionRel.setCreateDate((Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionOptionRel, Date>)
+				CPDefinitionOptionRel::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionOptionRel cpDefinitionOptionRel) {
-
-					return cpDefinitionOptionRel.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CPDefinitionOptionRel::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionOptionRel cpDefinitionOptionRel,
-					Object modifiedDateObject) {
-
-					cpDefinitionOptionRel.setModifiedDate(
-						(Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionOptionRel, Date>)
+				CPDefinitionOptionRel::setModifiedDate);
 		attributeGetterFunctions.put(
-			"CPDefinitionId",
-			new Function<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionOptionRel cpDefinitionOptionRel) {
-
-					return cpDefinitionOptionRel.getCPDefinitionId();
-				}
-
-			});
+			"CPDefinitionId", CPDefinitionOptionRel::getCPDefinitionId);
 		attributeSetterBiConsumers.put(
 			"CPDefinitionId",
-			new BiConsumer<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionOptionRel cpDefinitionOptionRel,
-					Object CPDefinitionIdObject) {
-
-					cpDefinitionOptionRel.setCPDefinitionId(
-						(Long)CPDefinitionIdObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionOptionRel, Long>)
+				CPDefinitionOptionRel::setCPDefinitionId);
 		attributeGetterFunctions.put(
-			"CPOptionId",
-			new Function<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionOptionRel cpDefinitionOptionRel) {
-
-					return cpDefinitionOptionRel.getCPOptionId();
-				}
-
-			});
+			"CPOptionId", CPDefinitionOptionRel::getCPOptionId);
 		attributeSetterBiConsumers.put(
 			"CPOptionId",
-			new BiConsumer<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionOptionRel cpDefinitionOptionRel,
-					Object CPOptionIdObject) {
-
-					cpDefinitionOptionRel.setCPOptionId((Long)CPOptionIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"name",
-			new Function<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionOptionRel cpDefinitionOptionRel) {
-
-					return cpDefinitionOptionRel.getName();
-				}
-
-			});
+			(BiConsumer<CPDefinitionOptionRel, Long>)
+				CPDefinitionOptionRel::setCPOptionId);
+		attributeGetterFunctions.put("name", CPDefinitionOptionRel::getName);
 		attributeSetterBiConsumers.put(
 			"name",
-			new BiConsumer<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionOptionRel cpDefinitionOptionRel,
-					Object nameObject) {
-
-					cpDefinitionOptionRel.setName((String)nameObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionOptionRel, String>)
+				CPDefinitionOptionRel::setName);
 		attributeGetterFunctions.put(
-			"description",
-			new Function<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionOptionRel cpDefinitionOptionRel) {
-
-					return cpDefinitionOptionRel.getDescription();
-				}
-
-			});
+			"description", CPDefinitionOptionRel::getDescription);
 		attributeSetterBiConsumers.put(
 			"description",
-			new BiConsumer<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionOptionRel cpDefinitionOptionRel,
-					Object descriptionObject) {
-
-					cpDefinitionOptionRel.setDescription(
-						(String)descriptionObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionOptionRel, String>)
+				CPDefinitionOptionRel::setDescription);
 		attributeGetterFunctions.put(
 			"DDMFormFieldTypeName",
-			new Function<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionOptionRel cpDefinitionOptionRel) {
-
-					return cpDefinitionOptionRel.getDDMFormFieldTypeName();
-				}
-
-			});
+			CPDefinitionOptionRel::getDDMFormFieldTypeName);
 		attributeSetterBiConsumers.put(
 			"DDMFormFieldTypeName",
-			new BiConsumer<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionOptionRel cpDefinitionOptionRel,
-					Object DDMFormFieldTypeNameObject) {
-
-					cpDefinitionOptionRel.setDDMFormFieldTypeName(
-						(String)DDMFormFieldTypeNameObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionOptionRel, String>)
+				CPDefinitionOptionRel::setDDMFormFieldTypeName);
 		attributeGetterFunctions.put(
-			"priority",
-			new Function<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionOptionRel cpDefinitionOptionRel) {
-
-					return cpDefinitionOptionRel.getPriority();
-				}
-
-			});
+			"priority", CPDefinitionOptionRel::getPriority);
 		attributeSetterBiConsumers.put(
 			"priority",
-			new BiConsumer<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionOptionRel cpDefinitionOptionRel,
-					Object priorityObject) {
-
-					cpDefinitionOptionRel.setPriority((Double)priorityObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionOptionRel, Double>)
+				CPDefinitionOptionRel::setPriority);
 		attributeGetterFunctions.put(
-			"facetable",
-			new Function<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionOptionRel cpDefinitionOptionRel) {
-
-					return cpDefinitionOptionRel.getFacetable();
-				}
-
-			});
+			"facetable", CPDefinitionOptionRel::getFacetable);
 		attributeSetterBiConsumers.put(
 			"facetable",
-			new BiConsumer<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionOptionRel cpDefinitionOptionRel,
-					Object facetableObject) {
-
-					cpDefinitionOptionRel.setFacetable(
-						(Boolean)facetableObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionOptionRel, Boolean>)
+				CPDefinitionOptionRel::setFacetable);
 		attributeGetterFunctions.put(
-			"required",
-			new Function<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionOptionRel cpDefinitionOptionRel) {
-
-					return cpDefinitionOptionRel.getRequired();
-				}
-
-			});
+			"required", CPDefinitionOptionRel::getRequired);
 		attributeSetterBiConsumers.put(
 			"required",
-			new BiConsumer<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionOptionRel cpDefinitionOptionRel,
-					Object requiredObject) {
-
-					cpDefinitionOptionRel.setRequired((Boolean)requiredObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionOptionRel, Boolean>)
+				CPDefinitionOptionRel::setRequired);
 		attributeGetterFunctions.put(
-			"skuContributor",
-			new Function<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionOptionRel cpDefinitionOptionRel) {
-
-					return cpDefinitionOptionRel.getSkuContributor();
-				}
-
-			});
+			"skuContributor", CPDefinitionOptionRel::getSkuContributor);
 		attributeSetterBiConsumers.put(
 			"skuContributor",
-			new BiConsumer<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionOptionRel cpDefinitionOptionRel,
-					Object skuContributorObject) {
-
-					cpDefinitionOptionRel.setSkuContributor(
-						(Boolean)skuContributorObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"key",
-			new Function<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionOptionRel cpDefinitionOptionRel) {
-
-					return cpDefinitionOptionRel.getKey();
-				}
-
-			});
+			(BiConsumer<CPDefinitionOptionRel, Boolean>)
+				CPDefinitionOptionRel::setSkuContributor);
+		attributeGetterFunctions.put("key", CPDefinitionOptionRel::getKey);
 		attributeSetterBiConsumers.put(
 			"key",
-			new BiConsumer<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionOptionRel cpDefinitionOptionRel,
-					Object keyObject) {
-
-					cpDefinitionOptionRel.setKey((String)keyObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionOptionRel, String>)
+				CPDefinitionOptionRel::setKey);
 		attributeGetterFunctions.put(
-			"priceType",
-			new Function<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionOptionRel cpDefinitionOptionRel) {
-
-					return cpDefinitionOptionRel.getPriceType();
-				}
-
-			});
+			"priceType", CPDefinitionOptionRel::getPriceType);
 		attributeSetterBiConsumers.put(
 			"priceType",
-			new BiConsumer<CPDefinitionOptionRel, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionOptionRel cpDefinitionOptionRel,
-					Object priceTypeObject) {
-
-					cpDefinitionOptionRel.setPriceType((String)priceTypeObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionOptionRel, String>)
+				CPDefinitionOptionRel::setPriceType);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1544,6 +1194,7 @@ public class CPDefinitionOptionRelModelImpl
 		CPDefinitionOptionRelImpl cpDefinitionOptionRelImpl =
 			new CPDefinitionOptionRelImpl();
 
+		cpDefinitionOptionRelImpl.setMvccVersion(getMvccVersion());
 		cpDefinitionOptionRelImpl.setUuid(getUuid());
 		cpDefinitionOptionRelImpl.setCPDefinitionOptionRelId(
 			getCPDefinitionOptionRelId());
@@ -1620,11 +1271,19 @@ public class CPDefinitionOptionRelModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -1668,6 +1327,8 @@ public class CPDefinitionOptionRelModelImpl
 	public CacheModel<CPDefinitionOptionRel> toCacheModel() {
 		CPDefinitionOptionRelCacheModel cpDefinitionOptionRelCacheModel =
 			new CPDefinitionOptionRelCacheModel();
+
+		cpDefinitionOptionRelCacheModel.mvccVersion = getMvccVersion();
 
 		cpDefinitionOptionRelCacheModel.uuid = getUuid();
 
@@ -1844,6 +1505,7 @@ public class CPDefinitionOptionRelModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _CPDefinitionOptionRelId;

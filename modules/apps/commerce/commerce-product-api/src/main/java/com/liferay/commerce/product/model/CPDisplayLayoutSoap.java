@@ -31,6 +31,7 @@ public class CPDisplayLayoutSoap implements Serializable {
 	public static CPDisplayLayoutSoap toSoapModel(CPDisplayLayout model) {
 		CPDisplayLayoutSoap soapModel = new CPDisplayLayoutSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setCPDisplayLayoutId(model.getCPDisplayLayoutId());
 		soapModel.setGroupId(model.getGroupId());
@@ -99,6 +100,14 @@ public class CPDisplayLayoutSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCPDisplayLayoutId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -189,6 +198,7 @@ public class CPDisplayLayoutSoap implements Serializable {
 		_layoutUuid = layoutUuid;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _CPDisplayLayoutId;
 	private long _groupId;

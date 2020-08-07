@@ -14,19 +14,15 @@
 
 package com.liferay.commerce.tax.engine.fixed.model;
 
-import aQute.bnd.annotation.ProviderType;
-
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
 
 import java.util.Date;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The base model interface for the CommerceTaxFixedRate service. Represents a row in the &quot;CommerceTaxFixedRate&quot; database table, with each column mapped to a property of this class.
@@ -41,7 +37,8 @@ import java.util.Date;
  */
 @ProviderType
 public interface CommerceTaxFixedRateModel
-	extends BaseModel<CommerceTaxFixedRate>, GroupedModel, ShardedModel {
+	extends BaseModel<CommerceTaxFixedRate>, GroupedModel, MVCCModel,
+			ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -62,6 +59,22 @@ public interface CommerceTaxFixedRateModel
 	 * @param primaryKey the primary key of this commerce tax fixed rate
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this commerce tax fixed rate.
+	 *
+	 * @return the mvcc version of this commerce tax fixed rate
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this commerce tax fixed rate.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce tax fixed rate
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the commerce tax fixed rate ID of this commerce tax fixed rate.
@@ -231,62 +244,5 @@ public interface CommerceTaxFixedRateModel
 	 * @param rate the rate of this commerce tax fixed rate
 	 */
 	public void setRate(double rate);
-
-	@Override
-	public boolean isNew();
-
-	@Override
-	public void setNew(boolean n);
-
-	@Override
-	public boolean isCachedModel();
-
-	@Override
-	public void setCachedModel(boolean cachedModel);
-
-	@Override
-	public boolean isEscapedModel();
-
-	@Override
-	public Serializable getPrimaryKeyObj();
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj);
-
-	@Override
-	public ExpandoBridge getExpandoBridge();
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel);
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge);
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
-
-	@Override
-	public Object clone();
-
-	@Override
-	public int compareTo(CommerceTaxFixedRate commerceTaxFixedRate);
-
-	@Override
-	public int hashCode();
-
-	@Override
-	public CacheModel<CommerceTaxFixedRate> toCacheModel();
-
-	@Override
-	public CommerceTaxFixedRate toEscapedModel();
-
-	@Override
-	public CommerceTaxFixedRate toUnescapedModel();
-
-	@Override
-	public String toString();
-
-	@Override
-	public String toXmlString();
 
 }

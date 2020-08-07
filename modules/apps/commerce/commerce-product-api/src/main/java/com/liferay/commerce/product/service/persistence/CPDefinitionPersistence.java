@@ -14,17 +14,13 @@
 
 package com.liferay.commerce.product.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
 import java.util.Date;
-import java.util.Map;
-import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the cp definition service.
@@ -45,9 +41,6 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionUtil} to access the cp definition persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CPDefinition> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the cp definitions where uuid = &#63;.
@@ -1614,8 +1607,5 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	 * @return the number of cp definitions
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

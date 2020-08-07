@@ -15,9 +15,10 @@
 package com.liferay.commerce.tax.engine.fixed.model.impl;
 
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel;
+import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,8 @@ import java.util.Date;
  * @generated
  */
 public class CommerceTaxFixedRateAddressRelCacheModel
-	implements CacheModel<CommerceTaxFixedRateAddressRel>, Externalizable {
+	implements CacheModel<CommerceTaxFixedRateAddressRel>, Externalizable,
+			   MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -49,9 +51,11 @@ public class CommerceTaxFixedRateAddressRelCacheModel
 			commerceTaxFixedRateAddressRelCacheModel =
 				(CommerceTaxFixedRateAddressRelCacheModel)object;
 
-		if (commerceTaxFixedRateAddressRelId ==
+		if ((commerceTaxFixedRateAddressRelId ==
 				commerceTaxFixedRateAddressRelCacheModel.
-					commerceTaxFixedRateAddressRelId) {
+					commerceTaxFixedRateAddressRelId) &&
+			(mvccVersion ==
+				commerceTaxFixedRateAddressRelCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -61,14 +65,28 @@ public class CommerceTaxFixedRateAddressRelCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, commerceTaxFixedRateAddressRelId);
+		int hashCode = HashUtil.hash(0, commerceTaxFixedRateAddressRelId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
-		sb.append("{commerceTaxFixedRateAddressRelId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", commerceTaxFixedRateAddressRelId=");
 		sb.append(commerceTaxFixedRateAddressRelId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -104,6 +122,7 @@ public class CommerceTaxFixedRateAddressRelCacheModel
 		CommerceTaxFixedRateAddressRelImpl commerceTaxFixedRateAddressRelImpl =
 			new CommerceTaxFixedRateAddressRelImpl();
 
+		commerceTaxFixedRateAddressRelImpl.setMvccVersion(mvccVersion);
 		commerceTaxFixedRateAddressRelImpl.setCommerceTaxFixedRateAddressRelId(
 			commerceTaxFixedRateAddressRelId);
 		commerceTaxFixedRateAddressRelImpl.setGroupId(groupId);
@@ -157,6 +176,8 @@ public class CommerceTaxFixedRateAddressRelCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		commerceTaxFixedRateAddressRelId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -182,6 +203,8 @@ public class CommerceTaxFixedRateAddressRelCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(commerceTaxFixedRateAddressRelId);
 
 		objectOutput.writeLong(groupId);
@@ -218,6 +241,7 @@ public class CommerceTaxFixedRateAddressRelCacheModel
 		objectOutput.writeDouble(rate);
 	}
 
+	public long mvccVersion;
 	public long commerceTaxFixedRateAddressRelId;
 	public long groupId;
 	public long companyId;

@@ -127,6 +127,8 @@ public class CPDefinitionInventoryPersistenceTest {
 		CPDefinitionInventory newCPDefinitionInventory = _persistence.create(
 			pk);
 
+		newCPDefinitionInventory.setMvccVersion(RandomTestUtil.nextLong());
+
 		newCPDefinitionInventory.setUuid(RandomTestUtil.randomString());
 
 		newCPDefinitionInventory.setGroupId(RandomTestUtil.nextLong());
@@ -176,6 +178,9 @@ public class CPDefinitionInventoryPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newCPDefinitionInventory.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCPDefinitionInventory.getMvccVersion(),
+			newCPDefinitionInventory.getMvccVersion());
 		Assert.assertEquals(
 			existingCPDefinitionInventory.getUuid(),
 			newCPDefinitionInventory.getUuid());
@@ -299,15 +304,15 @@ public class CPDefinitionInventoryPersistenceTest {
 
 	protected OrderByComparator<CPDefinitionInventory> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CPDefinitionInventory", "uuid", true, "CPDefinitionInventoryId",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"CPDefinitionId", true, "CPDefinitionInventoryEngine", true,
-			"lowStockActivity", true, "displayAvailability", true,
-			"displayStockQuantity", true, "minStockQuantity", true,
-			"backOrders", true, "minOrderQuantity", true, "maxOrderQuantity",
-			true, "allowedOrderQuantities", true, "multipleOrderQuantity",
-			true);
+			"CPDefinitionInventory", "mvccVersion", true, "uuid", true,
+			"CPDefinitionInventoryId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "CPDefinitionId", true,
+			"CPDefinitionInventoryEngine", true, "lowStockActivity", true,
+			"displayAvailability", true, "displayStockQuantity", true,
+			"minStockQuantity", true, "backOrders", true, "minOrderQuantity",
+			true, "maxOrderQuantity", true, "allowedOrderQuantities", true,
+			"multipleOrderQuantity", true);
 	}
 
 	@Test
@@ -581,6 +586,8 @@ public class CPDefinitionInventoryPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		CPDefinitionInventory cpDefinitionInventory = _persistence.create(pk);
+
+		cpDefinitionInventory.setMvccVersion(RandomTestUtil.nextLong());
 
 		cpDefinitionInventory.setUuid(RandomTestUtil.randomString());
 

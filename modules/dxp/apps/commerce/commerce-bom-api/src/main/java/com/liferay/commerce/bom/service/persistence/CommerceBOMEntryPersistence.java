@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.bom.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.bom.exception.NoSuchBOMEntryException;
 import com.liferay.commerce.bom.model.CommerceBOMEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce bom entry service.
@@ -45,9 +40,6 @@ public interface CommerceBOMEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceBOMEntryUtil} to access the commerce bom entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceBOMEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce bom entries where commerceBOMDefinitionId = &#63;.
@@ -313,8 +305,5 @@ public interface CommerceBOMEntryPersistence
 	 * @return the number of commerce bom entries
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

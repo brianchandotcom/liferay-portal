@@ -20,6 +20,7 @@ import com.liferay.commerce.wish.list.model.CommerceWishListSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -74,17 +74,19 @@ public class CommerceWishListModelImpl
 	public static final String TABLE_NAME = "CommerceWishList";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"commerceWishListId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"name", Types.VARCHAR}, {"defaultWishList", Types.BOOLEAN}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"commerceWishListId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
+		{"defaultWishList", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceWishListId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -98,7 +100,7 @@ public class CommerceWishListModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceWishList (uuid_ VARCHAR(75) null,commerceWishListId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,defaultWishList BOOLEAN)";
+		"create table CommerceWishList (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,commerceWishListId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,defaultWishList BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceWishList";
 
@@ -114,20 +116,23 @@ public class CommerceWishListModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.wish.list.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.wish.list.model.CommerceWishList"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.wish.list.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.wish.list.model.CommerceWishList"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.wish.list.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.wish.list.model.CommerceWishList"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
@@ -156,6 +161,7 @@ public class CommerceWishListModelImpl
 
 		CommerceWishList model = new CommerceWishListImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCommerceWishListId(soapModel.getCommerceWishListId());
 		model.setGroupId(soapModel.getGroupId());
@@ -249,9 +255,6 @@ public class CommerceWishListModelImpl
 				attributeGetterFunction.apply((CommerceWishList)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -327,236 +330,77 @@ public class CommerceWishListModelImpl
 				new LinkedHashMap<String, BiConsumer<CommerceWishList, ?>>();
 
 		attributeGetterFunctions.put(
-			"uuid",
-			new Function<CommerceWishList, Object>() {
-
-				@Override
-				public Object apply(CommerceWishList commerceWishList) {
-					return commerceWishList.getUuid();
-				}
-
-			});
+			"mvccVersion", CommerceWishList::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceWishList, Long>)
+				CommerceWishList::setMvccVersion);
+		attributeGetterFunctions.put("uuid", CommerceWishList::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
-			new BiConsumer<CommerceWishList, Object>() {
-
-				@Override
-				public void accept(
-					CommerceWishList commerceWishList, Object uuidObject) {
-
-					commerceWishList.setUuid((String)uuidObject);
-				}
-
-			});
+			(BiConsumer<CommerceWishList, String>)CommerceWishList::setUuid);
 		attributeGetterFunctions.put(
-			"commerceWishListId",
-			new Function<CommerceWishList, Object>() {
-
-				@Override
-				public Object apply(CommerceWishList commerceWishList) {
-					return commerceWishList.getCommerceWishListId();
-				}
-
-			});
+			"commerceWishListId", CommerceWishList::getCommerceWishListId);
 		attributeSetterBiConsumers.put(
 			"commerceWishListId",
-			new BiConsumer<CommerceWishList, Object>() {
-
-				@Override
-				public void accept(
-					CommerceWishList commerceWishList,
-					Object commerceWishListIdObject) {
-
-					commerceWishList.setCommerceWishListId(
-						(Long)commerceWishListIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"groupId",
-			new Function<CommerceWishList, Object>() {
-
-				@Override
-				public Object apply(CommerceWishList commerceWishList) {
-					return commerceWishList.getGroupId();
-				}
-
-			});
+			(BiConsumer<CommerceWishList, Long>)
+				CommerceWishList::setCommerceWishListId);
+		attributeGetterFunctions.put("groupId", CommerceWishList::getGroupId);
 		attributeSetterBiConsumers.put(
 			"groupId",
-			new BiConsumer<CommerceWishList, Object>() {
-
-				@Override
-				public void accept(
-					CommerceWishList commerceWishList, Object groupIdObject) {
-
-					commerceWishList.setGroupId((Long)groupIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceWishList, Long>)CommerceWishList::setGroupId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommerceWishList, Object>() {
-
-				@Override
-				public Object apply(CommerceWishList commerceWishList) {
-					return commerceWishList.getCompanyId();
-				}
-
-			});
+			"companyId", CommerceWishList::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommerceWishList, Object>() {
-
-				@Override
-				public void accept(
-					CommerceWishList commerceWishList, Object companyIdObject) {
-
-					commerceWishList.setCompanyId((Long)companyIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommerceWishList, Object>() {
-
-				@Override
-				public Object apply(CommerceWishList commerceWishList) {
-					return commerceWishList.getUserId();
-				}
-
-			});
+			(BiConsumer<CommerceWishList, Long>)CommerceWishList::setCompanyId);
+		attributeGetterFunctions.put("userId", CommerceWishList::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommerceWishList, Object>() {
-
-				@Override
-				public void accept(
-					CommerceWishList commerceWishList, Object userIdObject) {
-
-					commerceWishList.setUserId((Long)userIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommerceWishList, Object>() {
-
-				@Override
-				public Object apply(CommerceWishList commerceWishList) {
-					return commerceWishList.getUserName();
-				}
-
-			});
+			(BiConsumer<CommerceWishList, Long>)CommerceWishList::setUserId);
+		attributeGetterFunctions.put("userName", CommerceWishList::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommerceWishList, Object>() {
-
-				@Override
-				public void accept(
-					CommerceWishList commerceWishList, Object userNameObject) {
-
-					commerceWishList.setUserName((String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceWishList, String>)
+				CommerceWishList::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommerceWishList, Object>() {
-
-				@Override
-				public Object apply(CommerceWishList commerceWishList) {
-					return commerceWishList.getCreateDate();
-				}
-
-			});
+			"createDate", CommerceWishList::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommerceWishList, Object>() {
-
-				@Override
-				public void accept(
-					CommerceWishList commerceWishList,
-					Object createDateObject) {
-
-					commerceWishList.setCreateDate((Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceWishList, Date>)
+				CommerceWishList::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CommerceWishList, Object>() {
-
-				@Override
-				public Object apply(CommerceWishList commerceWishList) {
-					return commerceWishList.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CommerceWishList::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommerceWishList, Object>() {
-
-				@Override
-				public void accept(
-					CommerceWishList commerceWishList,
-					Object modifiedDateObject) {
-
-					commerceWishList.setModifiedDate((Date)modifiedDateObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"name",
-			new Function<CommerceWishList, Object>() {
-
-				@Override
-				public Object apply(CommerceWishList commerceWishList) {
-					return commerceWishList.getName();
-				}
-
-			});
+			(BiConsumer<CommerceWishList, Date>)
+				CommerceWishList::setModifiedDate);
+		attributeGetterFunctions.put("name", CommerceWishList::getName);
 		attributeSetterBiConsumers.put(
 			"name",
-			new BiConsumer<CommerceWishList, Object>() {
-
-				@Override
-				public void accept(
-					CommerceWishList commerceWishList, Object nameObject) {
-
-					commerceWishList.setName((String)nameObject);
-				}
-
-			});
+			(BiConsumer<CommerceWishList, String>)CommerceWishList::setName);
 		attributeGetterFunctions.put(
-			"defaultWishList",
-			new Function<CommerceWishList, Object>() {
-
-				@Override
-				public Object apply(CommerceWishList commerceWishList) {
-					return commerceWishList.getDefaultWishList();
-				}
-
-			});
+			"defaultWishList", CommerceWishList::getDefaultWishList);
 		attributeSetterBiConsumers.put(
 			"defaultWishList",
-			new BiConsumer<CommerceWishList, Object>() {
-
-				@Override
-				public void accept(
-					CommerceWishList commerceWishList,
-					Object defaultWishListObject) {
-
-					commerceWishList.setDefaultWishList(
-						(Boolean)defaultWishListObject);
-				}
-
-			});
+			(BiConsumer<CommerceWishList, Boolean>)
+				CommerceWishList::setDefaultWishList);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -822,6 +666,7 @@ public class CommerceWishListModelImpl
 	public Object clone() {
 		CommerceWishListImpl commerceWishListImpl = new CommerceWishListImpl();
 
+		commerceWishListImpl.setMvccVersion(getMvccVersion());
 		commerceWishListImpl.setUuid(getUuid());
 		commerceWishListImpl.setCommerceWishListId(getCommerceWishListId());
 		commerceWishListImpl.setGroupId(getGroupId());
@@ -878,11 +723,19 @@ public class CommerceWishListModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -919,6 +772,8 @@ public class CommerceWishListModelImpl
 	public CacheModel<CommerceWishList> toCacheModel() {
 		CommerceWishListCacheModel commerceWishListCacheModel =
 			new CommerceWishListCacheModel();
+
+		commerceWishListCacheModel.mvccVersion = getMvccVersion();
 
 		commerceWishListCacheModel.uuid = getUuid();
 
@@ -1045,6 +900,7 @@ public class CommerceWishListModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _commerceWishListId;

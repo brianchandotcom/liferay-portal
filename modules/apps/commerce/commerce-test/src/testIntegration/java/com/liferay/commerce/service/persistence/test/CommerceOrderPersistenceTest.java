@@ -125,6 +125,8 @@ public class CommerceOrderPersistenceTest {
 
 		CommerceOrder newCommerceOrder = _persistence.create(pk);
 
+		newCommerceOrder.setMvccVersion(RandomTestUtil.nextLong());
+
 		newCommerceOrder.setUuid(RandomTestUtil.randomString());
 
 		newCommerceOrder.setExternalReferenceCode(
@@ -302,6 +304,9 @@ public class CommerceOrderPersistenceTest {
 		CommerceOrder existingCommerceOrder = _persistence.findByPrimaryKey(
 			newCommerceOrder.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCommerceOrder.getMvccVersion(),
+			newCommerceOrder.getMvccVersion());
 		Assert.assertEquals(
 			existingCommerceOrder.getUuid(), newCommerceOrder.getUuid());
 		Assert.assertEquals(
@@ -675,10 +680,10 @@ public class CommerceOrderPersistenceTest {
 
 	protected OrderByComparator<CommerceOrder> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CommerceOrder", "uuid", true, "externalReferenceCode", true,
-			"commerceOrderId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "commerceAccountId", true,
+			"CommerceOrder", "mvccVersion", true, "uuid", true,
+			"externalReferenceCode", true, "commerceOrderId", true, "groupId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "commerceAccountId", true,
 			"commerceCurrencyId", true, "billingAddressId", true,
 			"shippingAddressId", true, "commercePaymentMethodKey", true,
 			"commerceShippingMethodId", true, "shippingOptionName", true,
@@ -965,6 +970,8 @@ public class CommerceOrderPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		CommerceOrder commerceOrder = _persistence.create(pk);
+
+		commerceOrder.setMvccVersion(RandomTestUtil.nextLong());
 
 		commerceOrder.setUuid(RandomTestUtil.randomString());
 

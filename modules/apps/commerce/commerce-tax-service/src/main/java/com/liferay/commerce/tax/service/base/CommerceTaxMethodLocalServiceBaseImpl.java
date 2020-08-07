@@ -17,6 +17,7 @@ package com.liferay.commerce.tax.service.base;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.commerce.tax.service.CommerceTaxMethodLocalService;
 import com.liferay.commerce.tax.service.persistence.CommerceTaxMethodPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -138,6 +139,11 @@ public abstract class CommerceTaxMethodLocalServiceBaseImpl
 		CommerceTaxMethod commerceTaxMethod) {
 
 		return commerceTaxMethodPersistence.remove(commerceTaxMethod);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return commerceTaxMethodPersistence.dslQuery(dslQuery);
 	}
 
 	@Override
@@ -290,6 +296,16 @@ public abstract class CommerceTaxMethodLocalServiceBaseImpl
 		actionableDynamicQuery.setModelClass(CommerceTaxMethod.class);
 
 		actionableDynamicQuery.setPrimaryKeyPropertyName("commerceTaxMethodId");
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
+
+		return commerceTaxMethodPersistence.create(
+			((Long)primaryKeyObj).longValue());
 	}
 
 	/**

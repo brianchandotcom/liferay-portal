@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.exception.NoSuchAddressRestrictionException;
 import com.liferay.commerce.model.CommerceAddressRestriction;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce address restriction service.
@@ -45,9 +40,6 @@ public interface CommerceAddressRestrictionPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceAddressRestrictionUtil} to access the commerce address restriction persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceAddressRestriction> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce address restrictions where commerceCountryId = &#63;.

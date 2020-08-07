@@ -1457,10 +1457,6 @@ public class CPInstanceOptionValueRelUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CPInstanceOptionValueRelPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

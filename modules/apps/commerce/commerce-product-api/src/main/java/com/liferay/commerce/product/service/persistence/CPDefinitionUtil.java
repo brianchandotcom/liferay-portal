@@ -2029,10 +2029,6 @@ public class CPDefinitionUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CPDefinitionPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,26 +31,18 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceShipmentWrapper
+	extends BaseModelWrapper<CommerceShipment>
 	implements CommerceShipment, ModelWrapper<CommerceShipment> {
 
 	public CommerceShipmentWrapper(CommerceShipment commerceShipment) {
-		_commerceShipment = commerceShipment;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceShipment.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceShipment.class.getName();
+		super(commerceShipment);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("commerceShipmentId", getCommerceShipmentId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -78,6 +66,12 @@ public class CommerceShipmentWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long commerceShipmentId = (Long)attributes.get("commerceShipmentId");
 
 		if (commerceShipmentId != null) {
@@ -178,24 +172,13 @@ public class CommerceShipmentWrapper
 	}
 
 	@Override
-	public Object clone() {
-		return new CommerceShipmentWrapper(
-			(CommerceShipment)_commerceShipment.clone());
-	}
-
-	@Override
-	public int compareTo(CommerceShipment commerceShipment) {
-		return _commerceShipment.compareTo(commerceShipment);
-	}
-
-	@Override
 	public CommerceAddress fetchCommerceAddress() {
-		return _commerceShipment.fetchCommerceAddress();
+		return model.fetchCommerceAddress();
 	}
 
 	@Override
 	public CommerceShippingMethod fetchCommerceShippingMethod() {
-		return _commerceShipment.fetchCommerceShippingMethod();
+		return model.fetchCommerceShippingMethod();
 	}
 
 	/**
@@ -205,7 +188,7 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public String getCarrier() {
-		return _commerceShipment.getCarrier();
+		return model.getCarrier();
 	}
 
 	@Override
@@ -213,7 +196,7 @@ public class CommerceShipmentWrapper
 			getCommerceAccount()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceShipment.getCommerceAccount();
+		return model.getCommerceAccount();
 	}
 
 	/**
@@ -223,14 +206,14 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public long getCommerceAccountId() {
-		return _commerceShipment.getCommerceAccountId();
+		return model.getCommerceAccountId();
 	}
 
 	@Override
 	public String getCommerceAccountName()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceShipment.getCommerceAccountName();
+		return model.getCommerceAccountName();
 	}
 
 	/**
@@ -240,7 +223,7 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public long getCommerceAddressId() {
-		return _commerceShipment.getCommerceAddressId();
+		return model.getCommerceAddressId();
 	}
 
 	/**
@@ -250,14 +233,14 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public long getCommerceShipmentId() {
-		return _commerceShipment.getCommerceShipmentId();
+		return model.getCommerceShipmentId();
 	}
 
 	@Override
 	public CommerceShippingMethod getCommerceShippingMethod()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceShipment.getCommerceShippingMethod();
+		return model.getCommerceShippingMethod();
 	}
 
 	/**
@@ -267,7 +250,7 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public long getCommerceShippingMethodId() {
-		return _commerceShipment.getCommerceShippingMethodId();
+		return model.getCommerceShippingMethodId();
 	}
 
 	/**
@@ -277,7 +260,7 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceShipment.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -287,12 +270,7 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceShipment.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceShipment.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -302,7 +280,7 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public Date getExpectedDate() {
-		return _commerceShipment.getExpectedDate();
+		return model.getExpectedDate();
 	}
 
 	/**
@@ -312,7 +290,7 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _commerceShipment.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -322,7 +300,17 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceShipment.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce shipment.
+	 *
+	 * @return the mvcc version of this commerce shipment
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -332,12 +320,7 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceShipment.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceShipment.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -347,7 +330,7 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public Date getShippingDate() {
-		return _commerceShipment.getShippingDate();
+		return model.getShippingDate();
 	}
 
 	/**
@@ -357,7 +340,7 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public String getShippingOptionName() {
-		return _commerceShipment.getShippingOptionName();
+		return model.getShippingOptionName();
 	}
 
 	/**
@@ -367,7 +350,7 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public int getStatus() {
-		return _commerceShipment.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -377,7 +360,7 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public String getTrackingNumber() {
-		return _commerceShipment.getTrackingNumber();
+		return model.getTrackingNumber();
 	}
 
 	/**
@@ -387,7 +370,7 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceShipment.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -397,7 +380,7 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceShipment.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -407,37 +390,12 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceShipment.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceShipment.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceShipment.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceShipment.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceShipment.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_commerceShipment.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceShipment.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -447,7 +405,7 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public void setCarrier(String carrier) {
-		_commerceShipment.setCarrier(carrier);
+		model.setCarrier(carrier);
 	}
 
 	/**
@@ -457,7 +415,7 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public void setCommerceAccountId(long commerceAccountId) {
-		_commerceShipment.setCommerceAccountId(commerceAccountId);
+		model.setCommerceAccountId(commerceAccountId);
 	}
 
 	/**
@@ -467,7 +425,7 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public void setCommerceAddressId(long commerceAddressId) {
-		_commerceShipment.setCommerceAddressId(commerceAddressId);
+		model.setCommerceAddressId(commerceAddressId);
 	}
 
 	/**
@@ -477,7 +435,7 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public void setCommerceShipmentId(long commerceShipmentId) {
-		_commerceShipment.setCommerceShipmentId(commerceShipmentId);
+		model.setCommerceShipmentId(commerceShipmentId);
 	}
 
 	/**
@@ -487,7 +445,7 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public void setCommerceShippingMethodId(long commerceShippingMethodId) {
-		_commerceShipment.setCommerceShippingMethodId(commerceShippingMethodId);
+		model.setCommerceShippingMethodId(commerceShippingMethodId);
 	}
 
 	/**
@@ -497,7 +455,7 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceShipment.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -507,24 +465,7 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceShipment.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceShipment.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceShipment.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceShipment.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -534,7 +475,7 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public void setExpectedDate(Date expectedDate) {
-		_commerceShipment.setExpectedDate(expectedDate);
+		model.setExpectedDate(expectedDate);
 	}
 
 	/**
@@ -544,7 +485,7 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_commerceShipment.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -554,12 +495,17 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceShipment.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this commerce shipment.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce shipment
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_commerceShipment.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -569,12 +515,7 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceShipment.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceShipment.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -584,7 +525,7 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public void setShippingDate(Date shippingDate) {
-		_commerceShipment.setShippingDate(shippingDate);
+		model.setShippingDate(shippingDate);
 	}
 
 	/**
@@ -594,7 +535,7 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public void setShippingOptionName(String shippingOptionName) {
-		_commerceShipment.setShippingOptionName(shippingOptionName);
+		model.setShippingOptionName(shippingOptionName);
 	}
 
 	/**
@@ -604,7 +545,7 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public void setStatus(int status) {
-		_commerceShipment.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -614,7 +555,7 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public void setTrackingNumber(String trackingNumber) {
-		_commerceShipment.setTrackingNumber(trackingNumber);
+		model.setTrackingNumber(trackingNumber);
 	}
 
 	/**
@@ -624,7 +565,7 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceShipment.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -634,7 +575,7 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceShipment.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -644,79 +585,12 @@ public class CommerceShipmentWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceShipment.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceShipment>
-		toCacheModel() {
-
-		return _commerceShipment.toCacheModel();
+	protected CommerceShipmentWrapper wrap(CommerceShipment commerceShipment) {
+		return new CommerceShipmentWrapper(commerceShipment);
 	}
-
-	@Override
-	public CommerceShipment toEscapedModel() {
-		return new CommerceShipmentWrapper(_commerceShipment.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commerceShipment.toString();
-	}
-
-	@Override
-	public CommerceShipment toUnescapedModel() {
-		return new CommerceShipmentWrapper(
-			_commerceShipment.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceShipment.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceShipmentWrapper)) {
-			return false;
-		}
-
-		CommerceShipmentWrapper commerceShipmentWrapper =
-			(CommerceShipmentWrapper)object;
-
-		if (Objects.equals(
-				_commerceShipment, commerceShipmentWrapper._commerceShipment)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceShipment getWrappedModel() {
-		return _commerceShipment;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceShipment.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceShipment.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceShipment.resetOriginalValues();
-	}
-
-	private final CommerceShipment _commerceShipment;
 
 }

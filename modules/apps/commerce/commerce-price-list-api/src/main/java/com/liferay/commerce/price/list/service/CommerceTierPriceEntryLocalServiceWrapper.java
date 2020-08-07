@@ -179,6 +179,18 @@ public class CommerceTierPriceEntryLocalServiceWrapper
 			commerceTierPriceEntryId);
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceTierPriceEntryLocalService.createPersistedModel(
+			primaryKeyObj);
+	}
+
 	@Override
 	public void deleteCommerceTierPriceEntries(long commercePriceEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -239,6 +251,11 @@ public class CommerceTierPriceEntryLocalServiceWrapper
 
 		return _commerceTierPriceEntryLocalService.deletePersistedModel(
 			persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _commerceTierPriceEntryLocalService.dslQuery(dslQuery);
 	}
 
 	@Override

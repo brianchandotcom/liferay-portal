@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.application.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.application.exception.NoSuchApplicationModelCProductRelException;
 import com.liferay.commerce.application.model.CommerceApplicationModelCProductRel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce application model c product rel service.
@@ -45,9 +40,6 @@ public interface CommerceApplicationModelCProductRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceApplicationModelCProductRelUtil} to access the commerce application model c product rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceApplicationModelCProductRel>
-		fetchByPrimaryKeys(Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce application model c product rels where commerceApplicationModelId = &#63;.
@@ -478,8 +470,5 @@ public interface CommerceApplicationModelCProductRelPersistence
 	 * @return the number of commerce application model c product rels
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

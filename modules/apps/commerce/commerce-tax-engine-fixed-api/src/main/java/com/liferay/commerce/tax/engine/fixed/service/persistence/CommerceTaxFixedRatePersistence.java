@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.tax.engine.fixed.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.tax.engine.fixed.exception.NoSuchTaxFixedRateException;
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce tax fixed rate service.
@@ -45,9 +40,6 @@ public interface CommerceTaxFixedRatePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceTaxFixedRateUtil} to access the commerce tax fixed rate persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceTaxFixedRate> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce tax fixed rates where CPTaxCategoryId = &#63;.

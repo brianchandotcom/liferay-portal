@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.exception.NoSuchOrderItemException;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce order item service.
@@ -45,9 +40,6 @@ public interface CommerceOrderItemPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceOrderItemUtil} to access the commerce order item persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceOrderItem> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce order items where commerceOrderId = &#63;.
@@ -1154,8 +1146,5 @@ public interface CommerceOrderItemPersistence
 	 * @return the number of commerce order items
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

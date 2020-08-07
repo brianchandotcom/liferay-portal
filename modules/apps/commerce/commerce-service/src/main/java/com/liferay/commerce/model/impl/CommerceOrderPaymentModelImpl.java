@@ -18,6 +18,7 @@ import com.liferay.commerce.model.CommerceOrderPayment;
 import com.liferay.commerce.model.CommerceOrderPaymentModel;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -69,10 +69,11 @@ public class CommerceOrderPaymentModelImpl
 	public static final String TABLE_NAME = "CommerceOrderPayment";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"commerceOrderPaymentId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"commerceOrderId", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT}, {"commerceOrderPaymentId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"commerceOrderId", Types.BIGINT},
 		{"commercePaymentMethodKey", Types.VARCHAR}, {"content", Types.CLOB},
 		{"status", Types.INTEGER}
 	};
@@ -81,6 +82,7 @@ public class CommerceOrderPaymentModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceOrderPaymentId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -95,7 +97,7 @@ public class CommerceOrderPaymentModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceOrderPayment (commerceOrderPaymentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderId LONG,commercePaymentMethodKey VARCHAR(75) null,content TEXT null,status INTEGER)";
+		"create table CommerceOrderPayment (mvccVersion LONG default 0 not null,commerceOrderPaymentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderId LONG,commercePaymentMethodKey VARCHAR(75) null,content TEXT null,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceOrderPayment";
@@ -112,20 +114,23 @@ public class CommerceOrderPaymentModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.model.CommerceOrderPayment"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.model.CommerceOrderPayment"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.model.CommerceOrderPayment"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long COMMERCEORDERID_COLUMN_BITMASK = 1L;
 
@@ -186,9 +191,6 @@ public class CommerceOrderPaymentModelImpl
 				attributeName,
 				attributeGetterFunction.apply((CommerceOrderPayment)this));
 		}
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
@@ -267,267 +269,92 @@ public class CommerceOrderPaymentModelImpl
 					<String, BiConsumer<CommerceOrderPayment, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", CommerceOrderPayment::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceOrderPayment, Long>)
+				CommerceOrderPayment::setMvccVersion);
+		attributeGetterFunctions.put(
 			"commerceOrderPaymentId",
-			new Function<CommerceOrderPayment, Object>() {
-
-				@Override
-				public Object apply(CommerceOrderPayment commerceOrderPayment) {
-					return commerceOrderPayment.getCommerceOrderPaymentId();
-				}
-
-			});
+			CommerceOrderPayment::getCommerceOrderPaymentId);
 		attributeSetterBiConsumers.put(
 			"commerceOrderPaymentId",
-			new BiConsumer<CommerceOrderPayment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrderPayment commerceOrderPayment,
-					Object commerceOrderPaymentIdObject) {
-
-					commerceOrderPayment.setCommerceOrderPaymentId(
-						(Long)commerceOrderPaymentIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrderPayment, Long>)
+				CommerceOrderPayment::setCommerceOrderPaymentId);
 		attributeGetterFunctions.put(
-			"groupId",
-			new Function<CommerceOrderPayment, Object>() {
-
-				@Override
-				public Object apply(CommerceOrderPayment commerceOrderPayment) {
-					return commerceOrderPayment.getGroupId();
-				}
-
-			});
+			"groupId", CommerceOrderPayment::getGroupId);
 		attributeSetterBiConsumers.put(
 			"groupId",
-			new BiConsumer<CommerceOrderPayment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrderPayment commerceOrderPayment,
-					Object groupIdObject) {
-
-					commerceOrderPayment.setGroupId((Long)groupIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrderPayment, Long>)
+				CommerceOrderPayment::setGroupId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommerceOrderPayment, Object>() {
-
-				@Override
-				public Object apply(CommerceOrderPayment commerceOrderPayment) {
-					return commerceOrderPayment.getCompanyId();
-				}
-
-			});
+			"companyId", CommerceOrderPayment::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommerceOrderPayment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrderPayment commerceOrderPayment,
-					Object companyIdObject) {
-
-					commerceOrderPayment.setCompanyId((Long)companyIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommerceOrderPayment, Object>() {
-
-				@Override
-				public Object apply(CommerceOrderPayment commerceOrderPayment) {
-					return commerceOrderPayment.getUserId();
-				}
-
-			});
+			(BiConsumer<CommerceOrderPayment, Long>)
+				CommerceOrderPayment::setCompanyId);
+		attributeGetterFunctions.put("userId", CommerceOrderPayment::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommerceOrderPayment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrderPayment commerceOrderPayment,
-					Object userIdObject) {
-
-					commerceOrderPayment.setUserId((Long)userIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrderPayment, Long>)
+				CommerceOrderPayment::setUserId);
 		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommerceOrderPayment, Object>() {
-
-				@Override
-				public Object apply(CommerceOrderPayment commerceOrderPayment) {
-					return commerceOrderPayment.getUserName();
-				}
-
-			});
+			"userName", CommerceOrderPayment::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommerceOrderPayment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrderPayment commerceOrderPayment,
-					Object userNameObject) {
-
-					commerceOrderPayment.setUserName((String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrderPayment, String>)
+				CommerceOrderPayment::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommerceOrderPayment, Object>() {
-
-				@Override
-				public Object apply(CommerceOrderPayment commerceOrderPayment) {
-					return commerceOrderPayment.getCreateDate();
-				}
-
-			});
+			"createDate", CommerceOrderPayment::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommerceOrderPayment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrderPayment commerceOrderPayment,
-					Object createDateObject) {
-
-					commerceOrderPayment.setCreateDate((Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrderPayment, Date>)
+				CommerceOrderPayment::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CommerceOrderPayment, Object>() {
-
-				@Override
-				public Object apply(CommerceOrderPayment commerceOrderPayment) {
-					return commerceOrderPayment.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CommerceOrderPayment::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommerceOrderPayment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrderPayment commerceOrderPayment,
-					Object modifiedDateObject) {
-
-					commerceOrderPayment.setModifiedDate(
-						(Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrderPayment, Date>)
+				CommerceOrderPayment::setModifiedDate);
 		attributeGetterFunctions.put(
-			"commerceOrderId",
-			new Function<CommerceOrderPayment, Object>() {
-
-				@Override
-				public Object apply(CommerceOrderPayment commerceOrderPayment) {
-					return commerceOrderPayment.getCommerceOrderId();
-				}
-
-			});
+			"commerceOrderId", CommerceOrderPayment::getCommerceOrderId);
 		attributeSetterBiConsumers.put(
 			"commerceOrderId",
-			new BiConsumer<CommerceOrderPayment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrderPayment commerceOrderPayment,
-					Object commerceOrderIdObject) {
-
-					commerceOrderPayment.setCommerceOrderId(
-						(Long)commerceOrderIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrderPayment, Long>)
+				CommerceOrderPayment::setCommerceOrderId);
 		attributeGetterFunctions.put(
 			"commercePaymentMethodKey",
-			new Function<CommerceOrderPayment, Object>() {
-
-				@Override
-				public Object apply(CommerceOrderPayment commerceOrderPayment) {
-					return commerceOrderPayment.getCommercePaymentMethodKey();
-				}
-
-			});
+			CommerceOrderPayment::getCommercePaymentMethodKey);
 		attributeSetterBiConsumers.put(
 			"commercePaymentMethodKey",
-			new BiConsumer<CommerceOrderPayment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrderPayment commerceOrderPayment,
-					Object commercePaymentMethodKeyObject) {
-
-					commerceOrderPayment.setCommercePaymentMethodKey(
-						(String)commercePaymentMethodKeyObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrderPayment, String>)
+				CommerceOrderPayment::setCommercePaymentMethodKey);
 		attributeGetterFunctions.put(
-			"content",
-			new Function<CommerceOrderPayment, Object>() {
-
-				@Override
-				public Object apply(CommerceOrderPayment commerceOrderPayment) {
-					return commerceOrderPayment.getContent();
-				}
-
-			});
+			"content", CommerceOrderPayment::getContent);
 		attributeSetterBiConsumers.put(
 			"content",
-			new BiConsumer<CommerceOrderPayment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrderPayment commerceOrderPayment,
-					Object contentObject) {
-
-					commerceOrderPayment.setContent((String)contentObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"status",
-			new Function<CommerceOrderPayment, Object>() {
-
-				@Override
-				public Object apply(CommerceOrderPayment commerceOrderPayment) {
-					return commerceOrderPayment.getStatus();
-				}
-
-			});
+			(BiConsumer<CommerceOrderPayment, String>)
+				CommerceOrderPayment::setContent);
+		attributeGetterFunctions.put("status", CommerceOrderPayment::getStatus);
 		attributeSetterBiConsumers.put(
 			"status",
-			new BiConsumer<CommerceOrderPayment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrderPayment commerceOrderPayment,
-					Object statusObject) {
-
-					commerceOrderPayment.setStatus((Integer)statusObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrderPayment, Integer>)
+				CommerceOrderPayment::setStatus);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -727,6 +554,7 @@ public class CommerceOrderPaymentModelImpl
 		CommerceOrderPaymentImpl commerceOrderPaymentImpl =
 			new CommerceOrderPaymentImpl();
 
+		commerceOrderPaymentImpl.setMvccVersion(getMvccVersion());
 		commerceOrderPaymentImpl.setCommerceOrderPaymentId(
 			getCommerceOrderPaymentId());
 		commerceOrderPaymentImpl.setGroupId(getGroupId());
@@ -790,11 +618,19 @@ public class CommerceOrderPaymentModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -814,6 +650,8 @@ public class CommerceOrderPaymentModelImpl
 	public CacheModel<CommerceOrderPayment> toCacheModel() {
 		CommerceOrderPaymentCacheModel commerceOrderPaymentCacheModel =
 			new CommerceOrderPaymentCacheModel();
+
+		commerceOrderPaymentCacheModel.mvccVersion = getMvccVersion();
 
 		commerceOrderPaymentCacheModel.commerceOrderPaymentId =
 			getCommerceOrderPaymentId();
@@ -950,6 +788,7 @@ public class CommerceOrderPaymentModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _commerceOrderPaymentId;
 	private long _groupId;
 	private long _companyId;

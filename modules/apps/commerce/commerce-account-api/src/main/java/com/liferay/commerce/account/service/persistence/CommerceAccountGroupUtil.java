@@ -1284,10 +1284,6 @@ public class CommerceAccountGroupUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CommerceAccountGroupPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

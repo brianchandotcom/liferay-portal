@@ -14,19 +14,15 @@
 
 package com.liferay.commerce.inventory.model;
 
-import aQute.bnd.annotation.ProviderType;
-
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
 
 import java.util.Date;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The base model interface for the CommerceInventoryAudit service. Represents a row in the &quot;CIAudit&quot; database table, with each column mapped to a property of this class.
@@ -41,7 +37,8 @@ import java.util.Date;
  */
 @ProviderType
 public interface CommerceInventoryAuditModel
-	extends AuditedModel, BaseModel<CommerceInventoryAudit>, ShardedModel {
+	extends AuditedModel, BaseModel<CommerceInventoryAudit>, MVCCModel,
+			ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -62,6 +59,22 @@ public interface CommerceInventoryAuditModel
 	 * @param primaryKey the primary key of this commerce inventory audit
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this commerce inventory audit.
+	 *
+	 * @return the mvcc version of this commerce inventory audit
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this commerce inventory audit.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce inventory audit
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the commerce inventory audit ID of this commerce inventory audit.
@@ -232,62 +245,5 @@ public interface CommerceInventoryAuditModel
 	 * @param quantity the quantity of this commerce inventory audit
 	 */
 	public void setQuantity(int quantity);
-
-	@Override
-	public boolean isNew();
-
-	@Override
-	public void setNew(boolean n);
-
-	@Override
-	public boolean isCachedModel();
-
-	@Override
-	public void setCachedModel(boolean cachedModel);
-
-	@Override
-	public boolean isEscapedModel();
-
-	@Override
-	public Serializable getPrimaryKeyObj();
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj);
-
-	@Override
-	public ExpandoBridge getExpandoBridge();
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel);
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge);
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
-
-	@Override
-	public Object clone();
-
-	@Override
-	public int compareTo(CommerceInventoryAudit commerceInventoryAudit);
-
-	@Override
-	public int hashCode();
-
-	@Override
-	public CacheModel<CommerceInventoryAudit> toCacheModel();
-
-	@Override
-	public CommerceInventoryAudit toEscapedModel();
-
-	@Override
-	public CommerceInventoryAudit toUnescapedModel();
-
-	@Override
-	public String toString();
-
-	@Override
-	public String toXmlString();
 
 }

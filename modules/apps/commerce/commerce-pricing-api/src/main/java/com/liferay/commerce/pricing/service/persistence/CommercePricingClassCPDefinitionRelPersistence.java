@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.pricing.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.pricing.exception.NoSuchPricingClassCPDefinitionRelException;
 import com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce pricing class cp definition rel service.
@@ -45,9 +40,6 @@ public interface CommercePricingClassCPDefinitionRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommercePricingClassCPDefinitionRelUtil} to access the commerce pricing class cp definition rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommercePricingClassCPDefinitionRel>
-		fetchByPrimaryKeys(Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce pricing class cp definition rels where commercePricingClassId = &#63;.
@@ -533,8 +525,5 @@ public interface CommercePricingClassCPDefinitionRelPersistence
 	 * @return the number of commerce pricing class cp definition rels
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

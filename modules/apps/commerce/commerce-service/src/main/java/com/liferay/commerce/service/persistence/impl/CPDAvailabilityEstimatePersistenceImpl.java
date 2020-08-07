@@ -16,9 +16,11 @@ package com.liferay.commerce.service.persistence.impl;
 
 import com.liferay.commerce.exception.NoSuchCPDAvailabilityEstimateException;
 import com.liferay.commerce.model.CPDAvailabilityEstimate;
+import com.liferay.commerce.model.CPDAvailabilityEstimateTable;
 import com.liferay.commerce.model.impl.CPDAvailabilityEstimateImpl;
 import com.liferay.commerce.model.impl.CPDAvailabilityEstimateModelImpl;
 import com.liferay.commerce.service.persistence.CPDAvailabilityEstimatePersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -35,21 +37,16 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -253,10 +250,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -619,8 +612,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -820,10 +811,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1209,8 +1196,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1401,10 +1386,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1759,8 +1740,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1894,11 +1873,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByCProductId, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1969,8 +1943,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1989,21 +1961,14 @@ public class CPDAvailabilityEstimatePersistenceImpl
 
 		dbColumnNames.put("uuid", "uuid_");
 
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-				"_dbColumnNames");
-
-			field.setAccessible(true);
-
-			field.set(this, dbColumnNames);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
+		setDBColumnNames(dbColumnNames);
 
 		setModelClass(CPDAvailabilityEstimate.class);
+
+		setModelImplClass(CPDAvailabilityEstimateImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CPDAvailabilityEstimateTable.INSTANCE);
 	}
 
 	/**
@@ -2014,7 +1979,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 	@Override
 	public void cacheResult(CPDAvailabilityEstimate cpdAvailabilityEstimate) {
 		entityCache.putResult(
-			CPDAvailabilityEstimateModelImpl.ENTITY_CACHE_ENABLED,
 			CPDAvailabilityEstimateImpl.class,
 			cpdAvailabilityEstimate.getPrimaryKey(), cpdAvailabilityEstimate);
 
@@ -2039,7 +2003,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 				cpdAvailabilityEstimates) {
 
 			if (entityCache.getResult(
-					CPDAvailabilityEstimateModelImpl.ENTITY_CACHE_ENABLED,
 					CPDAvailabilityEstimateImpl.class,
 					cpdAvailabilityEstimate.getPrimaryKey()) == null) {
 
@@ -2077,7 +2040,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 	@Override
 	public void clearCache(CPDAvailabilityEstimate cpdAvailabilityEstimate) {
 		entityCache.removeResult(
-			CPDAvailabilityEstimateModelImpl.ENTITY_CACHE_ENABLED,
 			CPDAvailabilityEstimateImpl.class,
 			cpdAvailabilityEstimate.getPrimaryKey());
 
@@ -2099,7 +2061,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 				cpdAvailabilityEstimates) {
 
 			entityCache.removeResult(
-				CPDAvailabilityEstimateModelImpl.ENTITY_CACHE_ENABLED,
 				CPDAvailabilityEstimateImpl.class,
 				cpdAvailabilityEstimate.getPrimaryKey());
 
@@ -2109,6 +2070,7 @@ public class CPDAvailabilityEstimatePersistenceImpl
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -2116,7 +2078,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(
-				CPDAvailabilityEstimateModelImpl.ENTITY_CACHE_ENABLED,
 				CPDAvailabilityEstimateImpl.class, primaryKey);
 		}
 	}
@@ -2356,10 +2317,7 @@ public class CPDAvailabilityEstimatePersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CPDAvailabilityEstimateModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				cpdAvailabilityEstimateModelImpl.getUuid()
 			};
@@ -2466,7 +2424,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 		}
 
 		entityCache.putResult(
-			CPDAvailabilityEstimateModelImpl.ENTITY_CACHE_ENABLED,
 			CPDAvailabilityEstimateImpl.class,
 			cpdAvailabilityEstimate.getPrimaryKey(), cpdAvailabilityEstimate,
 			false);
@@ -2523,59 +2480,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 	/**
 	 * Returns the cpd availability estimate with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the cpd availability estimate
-	 * @return the cpd availability estimate, or <code>null</code> if a cpd availability estimate with the primary key could not be found
-	 */
-	@Override
-	public CPDAvailabilityEstimate fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(
-			CPDAvailabilityEstimateModelImpl.ENTITY_CACHE_ENABLED,
-			CPDAvailabilityEstimateImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CPDAvailabilityEstimate cpdAvailabilityEstimate =
-			(CPDAvailabilityEstimate)serializable;
-
-		if (cpdAvailabilityEstimate == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				cpdAvailabilityEstimate = (CPDAvailabilityEstimate)session.get(
-					CPDAvailabilityEstimateImpl.class, primaryKey);
-
-				if (cpdAvailabilityEstimate != null) {
-					cacheResult(cpdAvailabilityEstimate);
-				}
-				else {
-					entityCache.putResult(
-						CPDAvailabilityEstimateModelImpl.ENTITY_CACHE_ENABLED,
-						CPDAvailabilityEstimateImpl.class, primaryKey,
-						nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CPDAvailabilityEstimateModelImpl.ENTITY_CACHE_ENABLED,
-					CPDAvailabilityEstimateImpl.class, primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return cpdAvailabilityEstimate;
-	}
-
-	/**
-	 * Returns the cpd availability estimate with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param CPDAvailabilityEstimateId the primary key of the cpd availability estimate
 	 * @return the cpd availability estimate, or <code>null</code> if a cpd availability estimate with the primary key could not be found
 	 */
@@ -2584,110 +2488,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 		long CPDAvailabilityEstimateId) {
 
 		return fetchByPrimaryKey((Serializable)CPDAvailabilityEstimateId);
-	}
-
-	@Override
-	public Map<Serializable, CPDAvailabilityEstimate> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CPDAvailabilityEstimate> map =
-			new HashMap<Serializable, CPDAvailabilityEstimate>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CPDAvailabilityEstimate cpdAvailabilityEstimate = fetchByPrimaryKey(
-				primaryKey);
-
-			if (cpdAvailabilityEstimate != null) {
-				map.put(primaryKey, cpdAvailabilityEstimate);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CPDAvailabilityEstimateModelImpl.ENTITY_CACHE_ENABLED,
-				CPDAvailabilityEstimateImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (CPDAvailabilityEstimate)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(_SQL_SELECT_CPDAVAILABILITYESTIMATE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CPDAvailabilityEstimate cpdAvailabilityEstimate :
-					(List<CPDAvailabilityEstimate>)query.list()) {
-
-				map.put(
-					cpdAvailabilityEstimate.getPrimaryKeyObj(),
-					cpdAvailabilityEstimate);
-
-				cacheResult(cpdAvailabilityEstimate);
-
-				uncachedPrimaryKeys.remove(
-					cpdAvailabilityEstimate.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CPDAvailabilityEstimateModelImpl.ENTITY_CACHE_ENABLED,
-					CPDAvailabilityEstimateImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -2817,10 +2617,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2867,9 +2663,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2886,6 +2679,21 @@ public class CPDAvailabilityEstimatePersistenceImpl
 	}
 
 	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "CPDAvailabilityEstimateId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_CPDAVAILABILITYESTIMATE;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CPDAvailabilityEstimateModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2895,27 +2703,19 @@ public class CPDAvailabilityEstimatePersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CPDAvailabilityEstimateModelImpl.ENTITY_CACHE_ENABLED,
-			CPDAvailabilityEstimateModelImpl.FINDER_CACHE_ENABLED,
 			CPDAvailabilityEstimateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CPDAvailabilityEstimateModelImpl.ENTITY_CACHE_ENABLED,
-			CPDAvailabilityEstimateModelImpl.FINDER_CACHE_ENABLED,
 			CPDAvailabilityEstimateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CPDAvailabilityEstimateModelImpl.ENTITY_CACHE_ENABLED,
-			CPDAvailabilityEstimateModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByUuid = new FinderPath(
-			CPDAvailabilityEstimateModelImpl.ENTITY_CACHE_ENABLED,
-			CPDAvailabilityEstimateModelImpl.FINDER_CACHE_ENABLED,
 			CPDAvailabilityEstimateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2924,22 +2724,16 @@ public class CPDAvailabilityEstimatePersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			CPDAvailabilityEstimateModelImpl.ENTITY_CACHE_ENABLED,
-			CPDAvailabilityEstimateModelImpl.FINDER_CACHE_ENABLED,
 			CPDAvailabilityEstimateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
 			CPDAvailabilityEstimateModelImpl.UUID_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
-			CPDAvailabilityEstimateModelImpl.ENTITY_CACHE_ENABLED,
-			CPDAvailabilityEstimateModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUuid", new String[] {String.class.getName()});
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			CPDAvailabilityEstimateModelImpl.ENTITY_CACHE_ENABLED,
-			CPDAvailabilityEstimateModelImpl.FINDER_CACHE_ENABLED,
 			CPDAvailabilityEstimateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
@@ -2949,8 +2743,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			CPDAvailabilityEstimateModelImpl.ENTITY_CACHE_ENABLED,
-			CPDAvailabilityEstimateModelImpl.FINDER_CACHE_ENABLED,
 			CPDAvailabilityEstimateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
@@ -2958,15 +2750,12 @@ public class CPDAvailabilityEstimatePersistenceImpl
 			CPDAvailabilityEstimateModelImpl.COMPANYID_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
-			CPDAvailabilityEstimateModelImpl.ENTITY_CACHE_ENABLED,
-			CPDAvailabilityEstimateModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByCommerceAvailabilityEstimateId =
 			new FinderPath(
-				CPDAvailabilityEstimateModelImpl.ENTITY_CACHE_ENABLED,
-				CPDAvailabilityEstimateModelImpl.FINDER_CACHE_ENABLED,
 				CPDAvailabilityEstimateImpl.class,
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 				"findByCommerceAvailabilityEstimateId",
@@ -2977,8 +2766,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 
 		_finderPathWithoutPaginationFindByCommerceAvailabilityEstimateId =
 			new FinderPath(
-				CPDAvailabilityEstimateModelImpl.ENTITY_CACHE_ENABLED,
-				CPDAvailabilityEstimateModelImpl.FINDER_CACHE_ENABLED,
 				CPDAvailabilityEstimateImpl.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCommerceAvailabilityEstimateId",
@@ -2987,24 +2774,18 @@ public class CPDAvailabilityEstimatePersistenceImpl
 					COMMERCEAVAILABILITYESTIMATEID_COLUMN_BITMASK);
 
 		_finderPathCountByCommerceAvailabilityEstimateId = new FinderPath(
-			CPDAvailabilityEstimateModelImpl.ENTITY_CACHE_ENABLED,
-			CPDAvailabilityEstimateModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCommerceAvailabilityEstimateId",
 			new String[] {Long.class.getName()});
 
 		_finderPathFetchByCProductId = new FinderPath(
-			CPDAvailabilityEstimateModelImpl.ENTITY_CACHE_ENABLED,
-			CPDAvailabilityEstimateModelImpl.FINDER_CACHE_ENABLED,
 			CPDAvailabilityEstimateImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByCProductId", new String[] {Long.class.getName()},
 			CPDAvailabilityEstimateModelImpl.CPRODUCTID_COLUMN_BITMASK);
 
 		_finderPathCountByCProductId = new FinderPath(
-			CPDAvailabilityEstimateModelImpl.ENTITY_CACHE_ENABLED,
-			CPDAvailabilityEstimateModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCProductId",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCProductId", new String[] {Long.class.getName()});
 	}
 
 	public void destroy() {
@@ -3022,10 +2803,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 
 	private static final String _SQL_SELECT_CPDAVAILABILITYESTIMATE =
 		"SELECT cpdAvailabilityEstimate FROM CPDAvailabilityEstimate cpdAvailabilityEstimate";
-
-	private static final String
-		_SQL_SELECT_CPDAVAILABILITYESTIMATE_WHERE_PKS_IN =
-			"SELECT cpdAvailabilityEstimate FROM CPDAvailabilityEstimate cpdAvailabilityEstimate WHERE CPDAvailabilityEstimateId IN (";
 
 	private static final String _SQL_SELECT_CPDAVAILABILITYESTIMATE_WHERE =
 		"SELECT cpdAvailabilityEstimate FROM CPDAvailabilityEstimate cpdAvailabilityEstimate WHERE ";

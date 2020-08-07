@@ -14,18 +14,14 @@
 
 package com.liferay.commerce.shipping.engine.fixed.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.math.BigDecimal;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -37,29 +33,21 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceShippingFixedOptionRelWrapper
+	extends BaseModelWrapper<CommerceShippingFixedOptionRel>
 	implements CommerceShippingFixedOptionRel,
 			   ModelWrapper<CommerceShippingFixedOptionRel> {
 
 	public CommerceShippingFixedOptionRelWrapper(
 		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel) {
 
-		_commerceShippingFixedOptionRel = commerceShippingFixedOptionRel;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceShippingFixedOptionRel.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceShippingFixedOptionRel.class.getName();
+		super(commerceShippingFixedOptionRel);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put(
 			"commerceShippingFixedOptionRelId",
 			getCommerceShippingFixedOptionRelId());
@@ -90,6 +78,12 @@ public class CommerceShippingFixedOptionRelWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long commerceShippingFixedOptionRelId = (Long)attributes.get(
 			"commerceShippingFixedOptionRelId");
 
@@ -206,25 +200,10 @@ public class CommerceShippingFixedOptionRelWrapper
 	}
 
 	@Override
-	public Object clone() {
-		return new CommerceShippingFixedOptionRelWrapper(
-			(CommerceShippingFixedOptionRel)
-				_commerceShippingFixedOptionRel.clone());
-	}
-
-	@Override
-	public int compareTo(
-		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel) {
-
-		return _commerceShippingFixedOptionRel.compareTo(
-			commerceShippingFixedOptionRel);
-	}
-
-	@Override
 	public com.liferay.commerce.model.CommerceCountry getCommerceCountry()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceShippingFixedOptionRel.getCommerceCountry();
+		return model.getCommerceCountry();
 	}
 
 	/**
@@ -234,7 +213,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public long getCommerceCountryId() {
-		return _commerceShippingFixedOptionRel.getCommerceCountryId();
+		return model.getCommerceCountryId();
 	}
 
 	@Override
@@ -242,7 +221,7 @@ public class CommerceShippingFixedOptionRelWrapper
 			getCommerceInventoryWarehouse()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceShippingFixedOptionRel.getCommerceInventoryWarehouse();
+		return model.getCommerceInventoryWarehouse();
 	}
 
 	/**
@@ -252,15 +231,14 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public long getCommerceInventoryWarehouseId() {
-		return _commerceShippingFixedOptionRel.
-			getCommerceInventoryWarehouseId();
+		return model.getCommerceInventoryWarehouseId();
 	}
 
 	@Override
 	public com.liferay.commerce.model.CommerceRegion getCommerceRegion()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceShippingFixedOptionRel.getCommerceRegion();
+		return model.getCommerceRegion();
 	}
 
 	/**
@@ -270,14 +248,14 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public long getCommerceRegionId() {
-		return _commerceShippingFixedOptionRel.getCommerceRegionId();
+		return model.getCommerceRegionId();
 	}
 
 	@Override
 	public CommerceShippingFixedOption getCommerceShippingFixedOption()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceShippingFixedOptionRel.getCommerceShippingFixedOption();
+		return model.getCommerceShippingFixedOption();
 	}
 
 	/**
@@ -287,8 +265,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public long getCommerceShippingFixedOptionId() {
-		return _commerceShippingFixedOptionRel.
-			getCommerceShippingFixedOptionId();
+		return model.getCommerceShippingFixedOptionId();
 	}
 
 	/**
@@ -298,8 +275,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public long getCommerceShippingFixedOptionRelId() {
-		return _commerceShippingFixedOptionRel.
-			getCommerceShippingFixedOptionRelId();
+		return model.getCommerceShippingFixedOptionRelId();
 	}
 
 	@Override
@@ -307,7 +283,7 @@ public class CommerceShippingFixedOptionRelWrapper
 			getCommerceShippingMethod()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceShippingFixedOptionRel.getCommerceShippingMethod();
+		return model.getCommerceShippingMethod();
 	}
 
 	/**
@@ -317,7 +293,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public long getCommerceShippingMethodId() {
-		return _commerceShippingFixedOptionRel.getCommerceShippingMethodId();
+		return model.getCommerceShippingMethodId();
 	}
 
 	/**
@@ -327,7 +303,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceShippingFixedOptionRel.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -337,12 +313,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceShippingFixedOptionRel.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceShippingFixedOptionRel.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -352,7 +323,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public BigDecimal getFixedPrice() {
-		return _commerceShippingFixedOptionRel.getFixedPrice();
+		return model.getFixedPrice();
 	}
 
 	/**
@@ -362,7 +333,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _commerceShippingFixedOptionRel.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -372,7 +343,17 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceShippingFixedOptionRel.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce shipping fixed option rel.
+	 *
+	 * @return the mvcc version of this commerce shipping fixed option rel
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -382,12 +363,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceShippingFixedOptionRel.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceShippingFixedOptionRel.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -397,7 +373,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public double getRatePercentage() {
-		return _commerceShippingFixedOptionRel.getRatePercentage();
+		return model.getRatePercentage();
 	}
 
 	/**
@@ -407,7 +383,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public BigDecimal getRateUnitWeightPrice() {
-		return _commerceShippingFixedOptionRel.getRateUnitWeightPrice();
+		return model.getRateUnitWeightPrice();
 	}
 
 	/**
@@ -417,7 +393,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceShippingFixedOptionRel.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -427,7 +403,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceShippingFixedOptionRel.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -437,7 +413,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceShippingFixedOptionRel.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -447,7 +423,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public double getWeightFrom() {
-		return _commerceShippingFixedOptionRel.getWeightFrom();
+		return model.getWeightFrom();
 	}
 
 	/**
@@ -457,7 +433,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public double getWeightTo() {
-		return _commerceShippingFixedOptionRel.getWeightTo();
+		return model.getWeightTo();
 	}
 
 	/**
@@ -467,37 +443,12 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public String getZip() {
-		return _commerceShippingFixedOptionRel.getZip();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceShippingFixedOptionRel.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceShippingFixedOptionRel.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceShippingFixedOptionRel.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceShippingFixedOptionRel.isNew();
+		return model.getZip();
 	}
 
 	@Override
 	public void persist() {
-		_commerceShippingFixedOptionRel.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceShippingFixedOptionRel.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -507,7 +458,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public void setCommerceCountryId(long commerceCountryId) {
-		_commerceShippingFixedOptionRel.setCommerceCountryId(commerceCountryId);
+		model.setCommerceCountryId(commerceCountryId);
 	}
 
 	/**
@@ -519,8 +470,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	public void setCommerceInventoryWarehouseId(
 		long commerceInventoryWarehouseId) {
 
-		_commerceShippingFixedOptionRel.setCommerceInventoryWarehouseId(
-			commerceInventoryWarehouseId);
+		model.setCommerceInventoryWarehouseId(commerceInventoryWarehouseId);
 	}
 
 	/**
@@ -530,7 +480,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public void setCommerceRegionId(long commerceRegionId) {
-		_commerceShippingFixedOptionRel.setCommerceRegionId(commerceRegionId);
+		model.setCommerceRegionId(commerceRegionId);
 	}
 
 	/**
@@ -542,8 +492,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	public void setCommerceShippingFixedOptionId(
 		long commerceShippingFixedOptionId) {
 
-		_commerceShippingFixedOptionRel.setCommerceShippingFixedOptionId(
-			commerceShippingFixedOptionId);
+		model.setCommerceShippingFixedOptionId(commerceShippingFixedOptionId);
 	}
 
 	/**
@@ -555,7 +504,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	public void setCommerceShippingFixedOptionRelId(
 		long commerceShippingFixedOptionRelId) {
 
-		_commerceShippingFixedOptionRel.setCommerceShippingFixedOptionRelId(
+		model.setCommerceShippingFixedOptionRelId(
 			commerceShippingFixedOptionRelId);
 	}
 
@@ -566,8 +515,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public void setCommerceShippingMethodId(long commerceShippingMethodId) {
-		_commerceShippingFixedOptionRel.setCommerceShippingMethodId(
-			commerceShippingMethodId);
+		model.setCommerceShippingMethodId(commerceShippingMethodId);
 	}
 
 	/**
@@ -577,7 +525,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceShippingFixedOptionRel.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -587,26 +535,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceShippingFixedOptionRel.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceShippingFixedOptionRel.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceShippingFixedOptionRel.setExpandoBridgeAttributes(
-			expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceShippingFixedOptionRel.setExpandoBridgeAttributes(
-			serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -616,7 +545,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public void setFixedPrice(BigDecimal fixedPrice) {
-		_commerceShippingFixedOptionRel.setFixedPrice(fixedPrice);
+		model.setFixedPrice(fixedPrice);
 	}
 
 	/**
@@ -626,7 +555,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_commerceShippingFixedOptionRel.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -636,12 +565,17 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceShippingFixedOptionRel.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this commerce shipping fixed option rel.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce shipping fixed option rel
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_commerceShippingFixedOptionRel.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -651,12 +585,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceShippingFixedOptionRel.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceShippingFixedOptionRel.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -666,7 +595,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public void setRatePercentage(double ratePercentage) {
-		_commerceShippingFixedOptionRel.setRatePercentage(ratePercentage);
+		model.setRatePercentage(ratePercentage);
 	}
 
 	/**
@@ -676,8 +605,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public void setRateUnitWeightPrice(BigDecimal rateUnitWeightPrice) {
-		_commerceShippingFixedOptionRel.setRateUnitWeightPrice(
-			rateUnitWeightPrice);
+		model.setRateUnitWeightPrice(rateUnitWeightPrice);
 	}
 
 	/**
@@ -687,7 +615,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceShippingFixedOptionRel.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -697,7 +625,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceShippingFixedOptionRel.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -707,7 +635,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceShippingFixedOptionRel.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -717,7 +645,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public void setWeightFrom(double weightFrom) {
-		_commerceShippingFixedOptionRel.setWeightFrom(weightFrom);
+		model.setWeightFrom(weightFrom);
 	}
 
 	/**
@@ -727,7 +655,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public void setWeightTo(double weightTo) {
-		_commerceShippingFixedOptionRel.setWeightTo(weightTo);
+		model.setWeightTo(weightTo);
 	}
 
 	/**
@@ -737,84 +665,15 @@ public class CommerceShippingFixedOptionRelWrapper
 	 */
 	@Override
 	public void setZip(String zip) {
-		_commerceShippingFixedOptionRel.setZip(zip);
+		model.setZip(zip);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel
-		<CommerceShippingFixedOptionRel> toCacheModel() {
+	protected CommerceShippingFixedOptionRelWrapper wrap(
+		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel) {
 
-		return _commerceShippingFixedOptionRel.toCacheModel();
-	}
-
-	@Override
-	public CommerceShippingFixedOptionRel toEscapedModel() {
 		return new CommerceShippingFixedOptionRelWrapper(
-			_commerceShippingFixedOptionRel.toEscapedModel());
+			commerceShippingFixedOptionRel);
 	}
-
-	@Override
-	public String toString() {
-		return _commerceShippingFixedOptionRel.toString();
-	}
-
-	@Override
-	public CommerceShippingFixedOptionRel toUnescapedModel() {
-		return new CommerceShippingFixedOptionRelWrapper(
-			_commerceShippingFixedOptionRel.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceShippingFixedOptionRel.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceShippingFixedOptionRelWrapper)) {
-			return false;
-		}
-
-		CommerceShippingFixedOptionRelWrapper
-			commerceShippingFixedOptionRelWrapper =
-				(CommerceShippingFixedOptionRelWrapper)object;
-
-		if (Objects.equals(
-				_commerceShippingFixedOptionRel,
-				commerceShippingFixedOptionRelWrapper.
-					_commerceShippingFixedOptionRel)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceShippingFixedOptionRel getWrappedModel() {
-		return _commerceShippingFixedOptionRel;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceShippingFixedOptionRel.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceShippingFixedOptionRel.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceShippingFixedOptionRel.resetOriginalValues();
-	}
-
-	private final CommerceShippingFixedOptionRel
-		_commerceShippingFixedOptionRel;
 
 }

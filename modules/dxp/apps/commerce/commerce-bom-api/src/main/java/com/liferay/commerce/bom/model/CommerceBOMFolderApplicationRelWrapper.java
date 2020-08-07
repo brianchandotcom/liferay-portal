@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.bom.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,29 +31,21 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceBOMFolderApplicationRelWrapper
+	extends BaseModelWrapper<CommerceBOMFolderApplicationRel>
 	implements CommerceBOMFolderApplicationRel,
 			   ModelWrapper<CommerceBOMFolderApplicationRel> {
 
 	public CommerceBOMFolderApplicationRelWrapper(
 		CommerceBOMFolderApplicationRel commerceBOMFolderApplicationRel) {
 
-		_commerceBOMFolderApplicationRel = commerceBOMFolderApplicationRel;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceBOMFolderApplicationRel.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceBOMFolderApplicationRel.class.getName();
+		super(commerceBOMFolderApplicationRel);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put(
 			"commerceBOMFolderApplicationRelId",
 			getCommerceBOMFolderApplicationRelId());
@@ -75,6 +63,12 @@ public class CommerceBOMFolderApplicationRelWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long commerceBOMFolderApplicationRelId = (Long)attributes.get(
 			"commerceBOMFolderApplicationRelId");
 
@@ -128,26 +122,11 @@ public class CommerceBOMFolderApplicationRelWrapper
 	}
 
 	@Override
-	public Object clone() {
-		return new CommerceBOMFolderApplicationRelWrapper(
-			(CommerceBOMFolderApplicationRel)
-				_commerceBOMFolderApplicationRel.clone());
-	}
-
-	@Override
-	public int compareTo(
-		CommerceBOMFolderApplicationRel commerceBOMFolderApplicationRel) {
-
-		return _commerceBOMFolderApplicationRel.compareTo(
-			commerceBOMFolderApplicationRel);
-	}
-
-	@Override
 	public com.liferay.commerce.application.model.CommerceApplicationModel
 			getCommerceApplicationModel()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceBOMFolderApplicationRel.getCommerceApplicationModel();
+		return model.getCommerceApplicationModel();
 	}
 
 	/**
@@ -157,14 +136,14 @@ public class CommerceBOMFolderApplicationRelWrapper
 	 */
 	@Override
 	public long getCommerceApplicationModelId() {
-		return _commerceBOMFolderApplicationRel.getCommerceApplicationModelId();
+		return model.getCommerceApplicationModelId();
 	}
 
 	@Override
 	public CommerceBOMFolder getCommerceBOMFolder()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceBOMFolderApplicationRel.getCommerceBOMFolder();
+		return model.getCommerceBOMFolder();
 	}
 
 	/**
@@ -174,8 +153,7 @@ public class CommerceBOMFolderApplicationRelWrapper
 	 */
 	@Override
 	public long getCommerceBOMFolderApplicationRelId() {
-		return _commerceBOMFolderApplicationRel.
-			getCommerceBOMFolderApplicationRelId();
+		return model.getCommerceBOMFolderApplicationRelId();
 	}
 
 	/**
@@ -185,7 +163,7 @@ public class CommerceBOMFolderApplicationRelWrapper
 	 */
 	@Override
 	public long getCommerceBOMFolderId() {
-		return _commerceBOMFolderApplicationRel.getCommerceBOMFolderId();
+		return model.getCommerceBOMFolderId();
 	}
 
 	/**
@@ -195,7 +173,7 @@ public class CommerceBOMFolderApplicationRelWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceBOMFolderApplicationRel.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -205,12 +183,7 @@ public class CommerceBOMFolderApplicationRelWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceBOMFolderApplicationRel.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceBOMFolderApplicationRel.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -220,7 +193,17 @@ public class CommerceBOMFolderApplicationRelWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceBOMFolderApplicationRel.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce bom folder application rel.
+	 *
+	 * @return the mvcc version of this commerce bom folder application rel
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -230,12 +213,7 @@ public class CommerceBOMFolderApplicationRelWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceBOMFolderApplicationRel.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceBOMFolderApplicationRel.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -245,7 +223,7 @@ public class CommerceBOMFolderApplicationRelWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceBOMFolderApplicationRel.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -255,7 +233,7 @@ public class CommerceBOMFolderApplicationRelWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceBOMFolderApplicationRel.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -265,37 +243,12 @@ public class CommerceBOMFolderApplicationRelWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceBOMFolderApplicationRel.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceBOMFolderApplicationRel.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceBOMFolderApplicationRel.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceBOMFolderApplicationRel.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceBOMFolderApplicationRel.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_commerceBOMFolderApplicationRel.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceBOMFolderApplicationRel.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -305,8 +258,7 @@ public class CommerceBOMFolderApplicationRelWrapper
 	 */
 	@Override
 	public void setCommerceApplicationModelId(long commerceApplicationModelId) {
-		_commerceBOMFolderApplicationRel.setCommerceApplicationModelId(
-			commerceApplicationModelId);
+		model.setCommerceApplicationModelId(commerceApplicationModelId);
 	}
 
 	/**
@@ -318,7 +270,7 @@ public class CommerceBOMFolderApplicationRelWrapper
 	public void setCommerceBOMFolderApplicationRelId(
 		long commerceBOMFolderApplicationRelId) {
 
-		_commerceBOMFolderApplicationRel.setCommerceBOMFolderApplicationRelId(
+		model.setCommerceBOMFolderApplicationRelId(
 			commerceBOMFolderApplicationRelId);
 	}
 
@@ -329,8 +281,7 @@ public class CommerceBOMFolderApplicationRelWrapper
 	 */
 	@Override
 	public void setCommerceBOMFolderId(long commerceBOMFolderId) {
-		_commerceBOMFolderApplicationRel.setCommerceBOMFolderId(
-			commerceBOMFolderId);
+		model.setCommerceBOMFolderId(commerceBOMFolderId);
 	}
 
 	/**
@@ -340,7 +291,7 @@ public class CommerceBOMFolderApplicationRelWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceBOMFolderApplicationRel.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -350,26 +301,7 @@ public class CommerceBOMFolderApplicationRelWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceBOMFolderApplicationRel.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceBOMFolderApplicationRel.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceBOMFolderApplicationRel.setExpandoBridgeAttributes(
-			expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceBOMFolderApplicationRel.setExpandoBridgeAttributes(
-			serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -379,12 +311,17 @@ public class CommerceBOMFolderApplicationRelWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceBOMFolderApplicationRel.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this commerce bom folder application rel.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce bom folder application rel
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_commerceBOMFolderApplicationRel.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -394,12 +331,7 @@ public class CommerceBOMFolderApplicationRelWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceBOMFolderApplicationRel.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceBOMFolderApplicationRel.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -409,7 +341,7 @@ public class CommerceBOMFolderApplicationRelWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceBOMFolderApplicationRel.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -419,7 +351,7 @@ public class CommerceBOMFolderApplicationRelWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceBOMFolderApplicationRel.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -429,84 +361,15 @@ public class CommerceBOMFolderApplicationRelWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceBOMFolderApplicationRel.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel
-		<CommerceBOMFolderApplicationRel> toCacheModel() {
+	protected CommerceBOMFolderApplicationRelWrapper wrap(
+		CommerceBOMFolderApplicationRel commerceBOMFolderApplicationRel) {
 
-		return _commerceBOMFolderApplicationRel.toCacheModel();
-	}
-
-	@Override
-	public CommerceBOMFolderApplicationRel toEscapedModel() {
 		return new CommerceBOMFolderApplicationRelWrapper(
-			_commerceBOMFolderApplicationRel.toEscapedModel());
+			commerceBOMFolderApplicationRel);
 	}
-
-	@Override
-	public String toString() {
-		return _commerceBOMFolderApplicationRel.toString();
-	}
-
-	@Override
-	public CommerceBOMFolderApplicationRel toUnescapedModel() {
-		return new CommerceBOMFolderApplicationRelWrapper(
-			_commerceBOMFolderApplicationRel.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceBOMFolderApplicationRel.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceBOMFolderApplicationRelWrapper)) {
-			return false;
-		}
-
-		CommerceBOMFolderApplicationRelWrapper
-			commerceBOMFolderApplicationRelWrapper =
-				(CommerceBOMFolderApplicationRelWrapper)object;
-
-		if (Objects.equals(
-				_commerceBOMFolderApplicationRel,
-				commerceBOMFolderApplicationRelWrapper.
-					_commerceBOMFolderApplicationRel)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceBOMFolderApplicationRel getWrappedModel() {
-		return _commerceBOMFolderApplicationRel;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceBOMFolderApplicationRel.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceBOMFolderApplicationRel.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceBOMFolderApplicationRel.resetOriginalValues();
-	}
-
-	private final CommerceBOMFolderApplicationRel
-		_commerceBOMFolderApplicationRel;
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.tax.engine.fixed.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Alessio Antonio Rendina

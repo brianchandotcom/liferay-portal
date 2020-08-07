@@ -20,6 +20,7 @@ import com.liferay.commerce.notification.service.persistence.CommerceNotificatio
 import com.liferay.commerce.notification.service.persistence.CommerceNotificationQueueEntryPersistence;
 import com.liferay.commerce.notification.service.persistence.CommerceNotificationTemplateCommerceAccountGroupRelPersistence;
 import com.liferay.commerce.notification.service.persistence.CommerceNotificationTemplatePersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -149,6 +150,11 @@ public abstract class CommerceNotificationQueueEntryLocalServiceBaseImpl
 
 		return commerceNotificationQueueEntryPersistence.remove(
 			commerceNotificationQueueEntry);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return commerceNotificationQueueEntryPersistence.dslQuery(dslQuery);
 	}
 
 	@Override
@@ -311,6 +317,16 @@ public abstract class CommerceNotificationQueueEntryLocalServiceBaseImpl
 
 		actionableDynamicQuery.setPrimaryKeyPropertyName(
 			"commerceNotificationQueueEntryId");
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
+
+		return commerceNotificationQueueEntryPersistence.create(
+			((Long)primaryKeyObj).longValue());
 	}
 
 	/**

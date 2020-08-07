@@ -16,9 +16,11 @@ package com.liferay.commerce.product.service.persistence.impl;
 
 import com.liferay.commerce.product.exception.NoSuchChannelRelException;
 import com.liferay.commerce.product.model.CommerceChannelRel;
+import com.liferay.commerce.product.model.CommerceChannelRelTable;
 import com.liferay.commerce.product.model.impl.CommerceChannelRelImpl;
 import com.liferay.commerce.product.model.impl.CommerceChannelRelModelImpl;
 import com.liferay.commerce.product.service.persistence.CommerceChannelRelPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -34,18 +36,13 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -244,10 +241,6 @@ public class CommerceChannelRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -585,8 +578,6 @@ public class CommerceChannelRelPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -769,10 +760,6 @@ public class CommerceChannelRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1131,8 +1118,6 @@ public class CommerceChannelRelPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1294,11 +1279,6 @@ public class CommerceChannelRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByC_C_C, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1386,8 +1366,6 @@ public class CommerceChannelRelPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1409,6 +1387,11 @@ public class CommerceChannelRelPersistenceImpl
 
 	public CommerceChannelRelPersistenceImpl() {
 		setModelClass(CommerceChannelRel.class);
+
+		setModelImplClass(CommerceChannelRelImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CommerceChannelRelTable.INSTANCE);
 	}
 
 	/**
@@ -1419,7 +1402,6 @@ public class CommerceChannelRelPersistenceImpl
 	@Override
 	public void cacheResult(CommerceChannelRel commerceChannelRel) {
 		entityCache.putResult(
-			CommerceChannelRelModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceChannelRelImpl.class, commerceChannelRel.getPrimaryKey(),
 			commerceChannelRel);
 
@@ -1444,7 +1426,6 @@ public class CommerceChannelRelPersistenceImpl
 	public void cacheResult(List<CommerceChannelRel> commerceChannelRels) {
 		for (CommerceChannelRel commerceChannelRel : commerceChannelRels) {
 			if (entityCache.getResult(
-					CommerceChannelRelModelImpl.ENTITY_CACHE_ENABLED,
 					CommerceChannelRelImpl.class,
 					commerceChannelRel.getPrimaryKey()) == null) {
 
@@ -1482,7 +1463,6 @@ public class CommerceChannelRelPersistenceImpl
 	@Override
 	public void clearCache(CommerceChannelRel commerceChannelRel) {
 		entityCache.removeResult(
-			CommerceChannelRelModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceChannelRelImpl.class, commerceChannelRel.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1499,7 +1479,6 @@ public class CommerceChannelRelPersistenceImpl
 
 		for (CommerceChannelRel commerceChannelRel : commerceChannelRels) {
 			entityCache.removeResult(
-				CommerceChannelRelModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceChannelRelImpl.class,
 				commerceChannelRel.getPrimaryKey());
 
@@ -1508,15 +1487,14 @@ public class CommerceChannelRelPersistenceImpl
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceChannelRelImpl.class, primaryKey);
+			entityCache.removeResult(CommerceChannelRelImpl.class, primaryKey);
 		}
 	}
 
@@ -1746,10 +1724,7 @@ public class CommerceChannelRelPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CommerceChannelRelModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				commerceChannelRelModelImpl.getCommerceChannelId()
 			};
@@ -1820,7 +1795,6 @@ public class CommerceChannelRelPersistenceImpl
 		}
 
 		entityCache.putResult(
-			CommerceChannelRelModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceChannelRelImpl.class, commerceChannelRel.getPrimaryKey(),
 			commerceChannelRel, false);
 
@@ -1874,167 +1848,12 @@ public class CommerceChannelRelPersistenceImpl
 	/**
 	 * Returns the commerce channel rel with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the commerce channel rel
-	 * @return the commerce channel rel, or <code>null</code> if a commerce channel rel with the primary key could not be found
-	 */
-	@Override
-	public CommerceChannelRel fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(
-			CommerceChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceChannelRelImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CommerceChannelRel commerceChannelRel =
-			(CommerceChannelRel)serializable;
-
-		if (commerceChannelRel == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				commerceChannelRel = (CommerceChannelRel)session.get(
-					CommerceChannelRelImpl.class, primaryKey);
-
-				if (commerceChannelRel != null) {
-					cacheResult(commerceChannelRel);
-				}
-				else {
-					entityCache.putResult(
-						CommerceChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-						CommerceChannelRelImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CommerceChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceChannelRelImpl.class, primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return commerceChannelRel;
-	}
-
-	/**
-	 * Returns the commerce channel rel with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param commerceChannelRelId the primary key of the commerce channel rel
 	 * @return the commerce channel rel, or <code>null</code> if a commerce channel rel with the primary key could not be found
 	 */
 	@Override
 	public CommerceChannelRel fetchByPrimaryKey(long commerceChannelRelId) {
 		return fetchByPrimaryKey((Serializable)commerceChannelRelId);
-	}
-
-	@Override
-	public Map<Serializable, CommerceChannelRel> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CommerceChannelRel> map =
-			new HashMap<Serializable, CommerceChannelRel>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CommerceChannelRel commerceChannelRel = fetchByPrimaryKey(
-				primaryKey);
-
-			if (commerceChannelRel != null) {
-				map.put(primaryKey, commerceChannelRel);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CommerceChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceChannelRelImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (CommerceChannelRel)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(_SQL_SELECT_COMMERCECHANNELREL_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CommerceChannelRel commerceChannelRel :
-					(List<CommerceChannelRel>)query.list()) {
-
-				map.put(
-					commerceChannelRel.getPrimaryKeyObj(), commerceChannelRel);
-
-				cacheResult(commerceChannelRel);
-
-				uncachedPrimaryKeys.remove(
-					commerceChannelRel.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CommerceChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceChannelRelImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -2163,10 +1982,6 @@ public class CommerceChannelRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2213,9 +2028,6 @@ public class CommerceChannelRelPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2224,6 +2036,21 @@ public class CommerceChannelRelPersistenceImpl
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "commerceChannelRelId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_COMMERCECHANNELREL;
 	}
 
 	@Override
@@ -2236,27 +2063,19 @@ public class CommerceChannelRelPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceChannelRelModelImpl.FINDER_CACHE_ENABLED,
 			CommerceChannelRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceChannelRelModelImpl.FINDER_CACHE_ENABLED,
 			CommerceChannelRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CommerceChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceChannelRelModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByCommerceChannelId = new FinderPath(
-			CommerceChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceChannelRelModelImpl.FINDER_CACHE_ENABLED,
 			CommerceChannelRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceChannelId",
 			new String[] {
@@ -2265,8 +2084,6 @@ public class CommerceChannelRelPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByCommerceChannelId = new FinderPath(
-			CommerceChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceChannelRelModelImpl.FINDER_CACHE_ENABLED,
 			CommerceChannelRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCommerceChannelId", new String[] {Long.class.getName()},
@@ -2274,14 +2091,10 @@ public class CommerceChannelRelPersistenceImpl
 			CommerceChannelRelModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByCommerceChannelId = new FinderPath(
-			CommerceChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceChannelRelModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCommerceChannelId", new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByC_C = new FinderPath(
-			CommerceChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceChannelRelModelImpl.FINDER_CACHE_ENABLED,
 			CommerceChannelRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
 			new String[] {
@@ -2291,8 +2104,6 @@ public class CommerceChannelRelPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByC_C = new FinderPath(
-			CommerceChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceChannelRelModelImpl.FINDER_CACHE_ENABLED,
 			CommerceChannelRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
@@ -2301,14 +2112,10 @@ public class CommerceChannelRelPersistenceImpl
 			CommerceChannelRelModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByC_C = new FinderPath(
-			CommerceChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceChannelRelModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()});
 
 		_finderPathFetchByC_C_C = new FinderPath(
-			CommerceChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceChannelRelModelImpl.FINDER_CACHE_ENABLED,
 			CommerceChannelRelImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByC_C_C",
 			new String[] {
@@ -2319,9 +2126,8 @@ public class CommerceChannelRelPersistenceImpl
 			CommerceChannelRelModelImpl.COMMERCECHANNELID_COLUMN_BITMASK);
 
 		_finderPathCountByC_C_C = new FinderPath(
-			CommerceChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceChannelRelModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByC_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			});
@@ -2342,9 +2148,6 @@ public class CommerceChannelRelPersistenceImpl
 
 	private static final String _SQL_SELECT_COMMERCECHANNELREL =
 		"SELECT commerceChannelRel FROM CommerceChannelRel commerceChannelRel";
-
-	private static final String _SQL_SELECT_COMMERCECHANNELREL_WHERE_PKS_IN =
-		"SELECT commerceChannelRel FROM CommerceChannelRel commerceChannelRel WHERE commerceChannelRelId IN (";
 
 	private static final String _SQL_SELECT_COMMERCECHANNELREL_WHERE =
 		"SELECT commerceChannelRel FROM CommerceChannelRel commerceChannelRel WHERE ";

@@ -89,6 +89,18 @@ public class CommerceDataIntegrationProcessLogLocalServiceWrapper
 	}
 
 	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceDataIntegrationProcessLogLocalService.
+			createPersistedModel(primaryKeyObj);
+	}
+
+	/**
 	 * Deletes the commerce data integration process log from the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -153,6 +165,12 @@ public class CommerceDataIntegrationProcessLogLocalServiceWrapper
 
 		return _commerceDataIntegrationProcessLogLocalService.
 			deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _commerceDataIntegrationProcessLogLocalService.dslQuery(
+			dslQuery);
 	}
 
 	@Override

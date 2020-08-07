@@ -34,6 +34,7 @@ public class CommerceApplicationModelSoap implements Serializable {
 		CommerceApplicationModelSoap soapModel =
 			new CommerceApplicationModelSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCommerceApplicationModelId(
 			model.getCommerceApplicationModelId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -108,6 +109,14 @@ public class CommerceApplicationModelSoap implements Serializable {
 		setCommerceApplicationModelId(pk);
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public long getCommerceApplicationModelId() {
 		return _commerceApplicationModelId;
 	}
@@ -180,6 +189,7 @@ public class CommerceApplicationModelSoap implements Serializable {
 		_year = year;
 	}
 
+	private long _mvccVersion;
 	private long _commerceApplicationModelId;
 	private long _companyId;
 	private long _userId;

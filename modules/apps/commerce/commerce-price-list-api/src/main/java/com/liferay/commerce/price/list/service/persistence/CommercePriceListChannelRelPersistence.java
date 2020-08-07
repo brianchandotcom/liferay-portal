@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.price.list.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.price.list.exception.NoSuchPriceListChannelRelException;
 import com.liferay.commerce.price.list.model.CommercePriceListChannelRel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce price list channel rel service.
@@ -45,9 +40,6 @@ public interface CommercePriceListChannelRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommercePriceListChannelRelUtil} to access the commerce price list channel rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommercePriceListChannelRel> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce price list channel rels where uuid = &#63;.
@@ -675,8 +667,5 @@ public interface CommercePriceListChannelRelPersistence
 	 * @return the number of commerce price list channel rels
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

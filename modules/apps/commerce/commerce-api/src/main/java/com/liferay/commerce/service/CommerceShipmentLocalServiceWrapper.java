@@ -105,6 +105,18 @@ public class CommerceShipmentLocalServiceWrapper
 	}
 
 	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentLocalService.createPersistedModel(
+			primaryKeyObj);
+	}
+
+	/**
 	 * Deletes the commerce shipment from the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -162,6 +174,11 @@ public class CommerceShipmentLocalServiceWrapper
 
 		return _commerceShipmentLocalService.deletePersistedModel(
 			persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _commerceShipmentLocalService.dslQuery(dslQuery);
 	}
 
 	@Override

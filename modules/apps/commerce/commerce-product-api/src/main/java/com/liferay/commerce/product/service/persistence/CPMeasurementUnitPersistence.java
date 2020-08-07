@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.product.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.product.exception.NoSuchCPMeasurementUnitException;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the cp measurement unit service.
@@ -45,9 +40,6 @@ public interface CPMeasurementUnitPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPMeasurementUnitUtil} to access the cp measurement unit persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CPMeasurementUnit> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the cp measurement units where uuid = &#63;.
@@ -1036,8 +1028,5 @@ public interface CPMeasurementUnitPersistence
 	 * @return the number of cp measurement units
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

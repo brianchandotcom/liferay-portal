@@ -89,6 +89,18 @@ public class CommerceOrderPaymentLocalServiceWrapper
 	}
 
 	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderPaymentLocalService.createPersistedModel(
+			primaryKeyObj);
+	}
+
+	/**
 	 * Deletes the commerce order payment from the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -144,6 +156,11 @@ public class CommerceOrderPaymentLocalServiceWrapper
 
 		return _commerceOrderPaymentLocalService.deletePersistedModel(
 			persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _commerceOrderPaymentLocalService.dslQuery(dslQuery);
 	}
 
 	@Override

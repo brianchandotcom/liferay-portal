@@ -19,6 +19,7 @@ import com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRelMod
 import com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRelSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -74,6 +74,7 @@ public class CommercePricingClassCPDefinitionRelModelImpl
 	public static final String TABLE_NAME = "CPricingClassCPDefinitionRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
+		{"mvccVersion", Types.BIGINT},
 		{"CPricingClassCPDefinitionRelId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -86,6 +87,7 @@ public class CommercePricingClassCPDefinitionRelModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CPricingClassCPDefinitionRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -97,7 +99,7 @@ public class CommercePricingClassCPDefinitionRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPricingClassCPDefinitionRel (CPricingClassCPDefinitionRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commercePricingClassId LONG,CPDefinitionId LONG)";
+		"create table CPricingClassCPDefinitionRel (mvccVersion LONG default 0 not null,CPricingClassCPDefinitionRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commercePricingClassId LONG,CPDefinitionId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CPricingClassCPDefinitionRel";
@@ -114,20 +116,23 @@ public class CommercePricingClassCPDefinitionRelModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.pricing.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.pricing.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.pricing.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long CPDEFINITIONID_COLUMN_BITMASK = 1L;
 
@@ -151,6 +156,7 @@ public class CommercePricingClassCPDefinitionRelModelImpl
 		CommercePricingClassCPDefinitionRel model =
 			new CommercePricingClassCPDefinitionRelImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommercePricingClassCPDefinitionRelId(
 			soapModel.getCommercePricingClassCPDefinitionRelId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -246,9 +252,6 @@ public class CommercePricingClassCPDefinitionRelModelImpl
 					(CommercePricingClassCPDefinitionRel)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -333,240 +336,81 @@ public class CommercePricingClassCPDefinitionRelModelImpl
 					 BiConsumer<CommercePricingClassCPDefinitionRel, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", CommercePricingClassCPDefinitionRel::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommercePricingClassCPDefinitionRel, Long>)
+				CommercePricingClassCPDefinitionRel::setMvccVersion);
+		attributeGetterFunctions.put(
 			"CommercePricingClassCPDefinitionRelId",
-			new Function<CommercePricingClassCPDefinitionRel, Object>() {
-
-				@Override
-				public Object apply(
-					CommercePricingClassCPDefinitionRel
-						commercePricingClassCPDefinitionRel) {
-
-					return commercePricingClassCPDefinitionRel.
-						getCommercePricingClassCPDefinitionRelId();
-				}
-
-			});
+			CommercePricingClassCPDefinitionRel::
+				getCommercePricingClassCPDefinitionRelId);
 		attributeSetterBiConsumers.put(
 			"CommercePricingClassCPDefinitionRelId",
-			new BiConsumer<CommercePricingClassCPDefinitionRel, Object>() {
-
-				@Override
-				public void accept(
-					CommercePricingClassCPDefinitionRel
-						commercePricingClassCPDefinitionRel,
-					Object CommercePricingClassCPDefinitionRelIdObject) {
-
-					commercePricingClassCPDefinitionRel.
-						setCommercePricingClassCPDefinitionRelId(
-							(Long)CommercePricingClassCPDefinitionRelIdObject);
-				}
-
-			});
+			(BiConsumer<CommercePricingClassCPDefinitionRel, Long>)
+				CommercePricingClassCPDefinitionRel::
+					setCommercePricingClassCPDefinitionRelId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommercePricingClassCPDefinitionRel, Object>() {
-
-				@Override
-				public Object apply(
-					CommercePricingClassCPDefinitionRel
-						commercePricingClassCPDefinitionRel) {
-
-					return commercePricingClassCPDefinitionRel.getCompanyId();
-				}
-
-			});
+			"companyId", CommercePricingClassCPDefinitionRel::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommercePricingClassCPDefinitionRel, Object>() {
-
-				@Override
-				public void accept(
-					CommercePricingClassCPDefinitionRel
-						commercePricingClassCPDefinitionRel,
-					Object companyIdObject) {
-
-					commercePricingClassCPDefinitionRel.setCompanyId(
-						(Long)companyIdObject);
-				}
-
-			});
+			(BiConsumer<CommercePricingClassCPDefinitionRel, Long>)
+				CommercePricingClassCPDefinitionRel::setCompanyId);
 		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommercePricingClassCPDefinitionRel, Object>() {
-
-				@Override
-				public Object apply(
-					CommercePricingClassCPDefinitionRel
-						commercePricingClassCPDefinitionRel) {
-
-					return commercePricingClassCPDefinitionRel.getUserId();
-				}
-
-			});
+			"userId", CommercePricingClassCPDefinitionRel::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommercePricingClassCPDefinitionRel, Object>() {
-
-				@Override
-				public void accept(
-					CommercePricingClassCPDefinitionRel
-						commercePricingClassCPDefinitionRel,
-					Object userIdObject) {
-
-					commercePricingClassCPDefinitionRel.setUserId(
-						(Long)userIdObject);
-				}
-
-			});
+			(BiConsumer<CommercePricingClassCPDefinitionRel, Long>)
+				CommercePricingClassCPDefinitionRel::setUserId);
 		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommercePricingClassCPDefinitionRel, Object>() {
-
-				@Override
-				public Object apply(
-					CommercePricingClassCPDefinitionRel
-						commercePricingClassCPDefinitionRel) {
-
-					return commercePricingClassCPDefinitionRel.getUserName();
-				}
-
-			});
+			"userName", CommercePricingClassCPDefinitionRel::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommercePricingClassCPDefinitionRel, Object>() {
-
-				@Override
-				public void accept(
-					CommercePricingClassCPDefinitionRel
-						commercePricingClassCPDefinitionRel,
-					Object userNameObject) {
-
-					commercePricingClassCPDefinitionRel.setUserName(
-						(String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommercePricingClassCPDefinitionRel, String>)
+				CommercePricingClassCPDefinitionRel::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommercePricingClassCPDefinitionRel, Object>() {
-
-				@Override
-				public Object apply(
-					CommercePricingClassCPDefinitionRel
-						commercePricingClassCPDefinitionRel) {
-
-					return commercePricingClassCPDefinitionRel.getCreateDate();
-				}
-
-			});
+			"createDate", CommercePricingClassCPDefinitionRel::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommercePricingClassCPDefinitionRel, Object>() {
-
-				@Override
-				public void accept(
-					CommercePricingClassCPDefinitionRel
-						commercePricingClassCPDefinitionRel,
-					Object createDateObject) {
-
-					commercePricingClassCPDefinitionRel.setCreateDate(
-						(Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommercePricingClassCPDefinitionRel, Date>)
+				CommercePricingClassCPDefinitionRel::setCreateDate);
 		attributeGetterFunctions.put(
 			"modifiedDate",
-			new Function<CommercePricingClassCPDefinitionRel, Object>() {
-
-				@Override
-				public Object apply(
-					CommercePricingClassCPDefinitionRel
-						commercePricingClassCPDefinitionRel) {
-
-					return commercePricingClassCPDefinitionRel.
-						getModifiedDate();
-				}
-
-			});
+			CommercePricingClassCPDefinitionRel::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommercePricingClassCPDefinitionRel, Object>() {
-
-				@Override
-				public void accept(
-					CommercePricingClassCPDefinitionRel
-						commercePricingClassCPDefinitionRel,
-					Object modifiedDateObject) {
-
-					commercePricingClassCPDefinitionRel.setModifiedDate(
-						(Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CommercePricingClassCPDefinitionRel, Date>)
+				CommercePricingClassCPDefinitionRel::setModifiedDate);
 		attributeGetterFunctions.put(
 			"commercePricingClassId",
-			new Function<CommercePricingClassCPDefinitionRel, Object>() {
-
-				@Override
-				public Object apply(
-					CommercePricingClassCPDefinitionRel
-						commercePricingClassCPDefinitionRel) {
-
-					return commercePricingClassCPDefinitionRel.
-						getCommercePricingClassId();
-				}
-
-			});
+			CommercePricingClassCPDefinitionRel::getCommercePricingClassId);
 		attributeSetterBiConsumers.put(
 			"commercePricingClassId",
-			new BiConsumer<CommercePricingClassCPDefinitionRel, Object>() {
-
-				@Override
-				public void accept(
-					CommercePricingClassCPDefinitionRel
-						commercePricingClassCPDefinitionRel,
-					Object commercePricingClassIdObject) {
-
-					commercePricingClassCPDefinitionRel.
-						setCommercePricingClassId(
-							(Long)commercePricingClassIdObject);
-				}
-
-			});
+			(BiConsumer<CommercePricingClassCPDefinitionRel, Long>)
+				CommercePricingClassCPDefinitionRel::setCommercePricingClassId);
 		attributeGetterFunctions.put(
 			"CPDefinitionId",
-			new Function<CommercePricingClassCPDefinitionRel, Object>() {
-
-				@Override
-				public Object apply(
-					CommercePricingClassCPDefinitionRel
-						commercePricingClassCPDefinitionRel) {
-
-					return commercePricingClassCPDefinitionRel.
-						getCPDefinitionId();
-				}
-
-			});
+			CommercePricingClassCPDefinitionRel::getCPDefinitionId);
 		attributeSetterBiConsumers.put(
 			"CPDefinitionId",
-			new BiConsumer<CommercePricingClassCPDefinitionRel, Object>() {
-
-				@Override
-				public void accept(
-					CommercePricingClassCPDefinitionRel
-						commercePricingClassCPDefinitionRel,
-					Object CPDefinitionIdObject) {
-
-					commercePricingClassCPDefinitionRel.setCPDefinitionId(
-						(Long)CPDefinitionIdObject);
-				}
-
-			});
+			(BiConsumer<CommercePricingClassCPDefinitionRel, Long>)
+				CommercePricingClassCPDefinitionRel::setCPDefinitionId);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -750,6 +594,8 @@ public class CommercePricingClassCPDefinitionRelModelImpl
 			commercePricingClassCPDefinitionRelImpl =
 				new CommercePricingClassCPDefinitionRelImpl();
 
+		commercePricingClassCPDefinitionRelImpl.setMvccVersion(
+			getMvccVersion());
 		commercePricingClassCPDefinitionRelImpl.
 			setCommercePricingClassCPDefinitionRelId(
 				getCommercePricingClassCPDefinitionRelId());
@@ -818,11 +664,19 @@ public class CommercePricingClassCPDefinitionRelModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -847,6 +701,9 @@ public class CommercePricingClassCPDefinitionRelModelImpl
 		CommercePricingClassCPDefinitionRelCacheModel
 			commercePricingClassCPDefinitionRelCacheModel =
 				new CommercePricingClassCPDefinitionRelCacheModel();
+
+		commercePricingClassCPDefinitionRelCacheModel.mvccVersion =
+			getMvccVersion();
 
 		commercePricingClassCPDefinitionRelCacheModel.
 			CommercePricingClassCPDefinitionRelId =
@@ -975,6 +832,7 @@ public class CommercePricingClassCPDefinitionRelModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _CommercePricingClassCPDefinitionRelId;
 	private long _companyId;
 	private long _userId;

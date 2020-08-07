@@ -129,6 +129,18 @@ public class CPDefinitionVirtualSettingLocalServiceWrapper
 	}
 
 	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionVirtualSettingLocalService.createPersistedModel(
+			primaryKeyObj);
+	}
+
+	/**
 	 * Deletes the cp definition virtual setting from the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -192,6 +204,11 @@ public class CPDefinitionVirtualSettingLocalServiceWrapper
 
 		return _cpDefinitionVirtualSettingLocalService.deletePersistedModel(
 			persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _cpDefinitionVirtualSettingLocalService.dslQuery(dslQuery);
 	}
 
 	@Override

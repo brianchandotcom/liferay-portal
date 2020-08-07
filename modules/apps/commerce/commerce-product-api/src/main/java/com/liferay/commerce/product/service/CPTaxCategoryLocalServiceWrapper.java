@@ -80,6 +80,17 @@ public class CPTaxCategoryLocalServiceWrapper
 		return _cpTaxCategoryLocalService.createCPTaxCategory(CPTaxCategoryId);
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpTaxCategoryLocalService.createPersistedModel(primaryKeyObj);
+	}
+
 	@Override
 	public void deleteCPTaxCategories(long companyId) {
 		_cpTaxCategoryLocalService.deleteCPTaxCategories(companyId);
@@ -132,6 +143,11 @@ public class CPTaxCategoryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpTaxCategoryLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _cpTaxCategoryLocalService.dslQuery(dslQuery);
 	}
 
 	@Override

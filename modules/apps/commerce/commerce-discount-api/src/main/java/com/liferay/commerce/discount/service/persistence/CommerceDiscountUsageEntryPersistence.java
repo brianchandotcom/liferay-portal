@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.discount.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.discount.exception.NoSuchDiscountUsageEntryException;
 import com.liferay.commerce.discount.model.CommerceDiscountUsageEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce discount usage entry service.
@@ -45,9 +40,6 @@ public interface CommerceDiscountUsageEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceDiscountUsageEntryUtil} to access the commerce discount usage entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceDiscountUsageEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce discount usage entries where commerceDiscountId = &#63;.

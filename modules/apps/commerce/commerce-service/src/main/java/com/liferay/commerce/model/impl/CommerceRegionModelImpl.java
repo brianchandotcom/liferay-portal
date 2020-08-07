@@ -20,6 +20,7 @@ import com.liferay.commerce.model.CommerceRegionSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -74,19 +74,20 @@ public class CommerceRegionModelImpl
 	public static final String TABLE_NAME = "CommerceRegion";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"commerceRegionId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"commerceCountryId", Types.BIGINT},
-		{"name", Types.VARCHAR}, {"code_", Types.VARCHAR},
-		{"priority", Types.DOUBLE}, {"active_", Types.BOOLEAN},
-		{"lastPublishDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"commerceRegionId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"commerceCountryId", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"code_", Types.VARCHAR}, {"priority", Types.DOUBLE},
+		{"active_", Types.BOOLEAN}, {"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceRegionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -103,7 +104,7 @@ public class CommerceRegionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceRegion (uuid_ VARCHAR(75) null,commerceRegionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceCountryId LONG,name VARCHAR(75) null,code_ VARCHAR(75) null,priority DOUBLE,active_ BOOLEAN,lastPublishDate DATE null)";
+		"create table CommerceRegion (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,commerceRegionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceCountryId LONG,name VARCHAR(75) null,code_ VARCHAR(75) null,priority DOUBLE,active_ BOOLEAN,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceRegion";
 
@@ -119,20 +120,23 @@ public class CommerceRegionModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.model.CommerceRegion"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.model.CommerceRegion"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.model.CommerceRegion"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long ACTIVE_COLUMN_BITMASK = 1L;
 
@@ -159,6 +163,7 @@ public class CommerceRegionModelImpl
 
 		CommerceRegion model = new CommerceRegionImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCommerceRegionId(soapModel.getCommerceRegionId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -255,9 +260,6 @@ public class CommerceRegionModelImpl
 				attributeGetterFunction.apply((CommerceRegion)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -331,302 +333,86 @@ public class CommerceRegionModelImpl
 			new LinkedHashMap<String, BiConsumer<CommerceRegion, ?>>();
 
 		attributeGetterFunctions.put(
-			"uuid",
-			new Function<CommerceRegion, Object>() {
-
-				@Override
-				public Object apply(CommerceRegion commerceRegion) {
-					return commerceRegion.getUuid();
-				}
-
-			});
+			"mvccVersion", CommerceRegion::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceRegion, Long>)CommerceRegion::setMvccVersion);
+		attributeGetterFunctions.put("uuid", CommerceRegion::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
-			new BiConsumer<CommerceRegion, Object>() {
-
-				@Override
-				public void accept(
-					CommerceRegion commerceRegion, Object uuidObject) {
-
-					commerceRegion.setUuid((String)uuidObject);
-				}
-
-			});
+			(BiConsumer<CommerceRegion, String>)CommerceRegion::setUuid);
 		attributeGetterFunctions.put(
-			"commerceRegionId",
-			new Function<CommerceRegion, Object>() {
-
-				@Override
-				public Object apply(CommerceRegion commerceRegion) {
-					return commerceRegion.getCommerceRegionId();
-				}
-
-			});
+			"commerceRegionId", CommerceRegion::getCommerceRegionId);
 		attributeSetterBiConsumers.put(
 			"commerceRegionId",
-			new BiConsumer<CommerceRegion, Object>() {
-
-				@Override
-				public void accept(
-					CommerceRegion commerceRegion,
-					Object commerceRegionIdObject) {
-
-					commerceRegion.setCommerceRegionId(
-						(Long)commerceRegionIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommerceRegion, Object>() {
-
-				@Override
-				public Object apply(CommerceRegion commerceRegion) {
-					return commerceRegion.getCompanyId();
-				}
-
-			});
+			(BiConsumer<CommerceRegion, Long>)
+				CommerceRegion::setCommerceRegionId);
+		attributeGetterFunctions.put("companyId", CommerceRegion::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommerceRegion, Object>() {
-
-				@Override
-				public void accept(
-					CommerceRegion commerceRegion, Object companyIdObject) {
-
-					commerceRegion.setCompanyId((Long)companyIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommerceRegion, Object>() {
-
-				@Override
-				public Object apply(CommerceRegion commerceRegion) {
-					return commerceRegion.getUserId();
-				}
-
-			});
+			(BiConsumer<CommerceRegion, Long>)CommerceRegion::setCompanyId);
+		attributeGetterFunctions.put("userId", CommerceRegion::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommerceRegion, Object>() {
-
-				@Override
-				public void accept(
-					CommerceRegion commerceRegion, Object userIdObject) {
-
-					commerceRegion.setUserId((Long)userIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommerceRegion, Object>() {
-
-				@Override
-				public Object apply(CommerceRegion commerceRegion) {
-					return commerceRegion.getUserName();
-				}
-
-			});
+			(BiConsumer<CommerceRegion, Long>)CommerceRegion::setUserId);
+		attributeGetterFunctions.put("userName", CommerceRegion::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommerceRegion, Object>() {
-
-				@Override
-				public void accept(
-					CommerceRegion commerceRegion, Object userNameObject) {
-
-					commerceRegion.setUserName((String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceRegion, String>)CommerceRegion::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommerceRegion, Object>() {
-
-				@Override
-				public Object apply(CommerceRegion commerceRegion) {
-					return commerceRegion.getCreateDate();
-				}
-
-			});
+			"createDate", CommerceRegion::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommerceRegion, Object>() {
-
-				@Override
-				public void accept(
-					CommerceRegion commerceRegion, Object createDateObject) {
-
-					commerceRegion.setCreateDate((Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceRegion, Date>)CommerceRegion::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CommerceRegion, Object>() {
-
-				@Override
-				public Object apply(CommerceRegion commerceRegion) {
-					return commerceRegion.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CommerceRegion::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommerceRegion, Object>() {
-
-				@Override
-				public void accept(
-					CommerceRegion commerceRegion, Object modifiedDateObject) {
-
-					commerceRegion.setModifiedDate((Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceRegion, Date>)CommerceRegion::setModifiedDate);
 		attributeGetterFunctions.put(
-			"commerceCountryId",
-			new Function<CommerceRegion, Object>() {
-
-				@Override
-				public Object apply(CommerceRegion commerceRegion) {
-					return commerceRegion.getCommerceCountryId();
-				}
-
-			});
+			"commerceCountryId", CommerceRegion::getCommerceCountryId);
 		attributeSetterBiConsumers.put(
 			"commerceCountryId",
-			new BiConsumer<CommerceRegion, Object>() {
-
-				@Override
-				public void accept(
-					CommerceRegion commerceRegion,
-					Object commerceCountryIdObject) {
-
-					commerceRegion.setCommerceCountryId(
-						(Long)commerceCountryIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"name",
-			new Function<CommerceRegion, Object>() {
-
-				@Override
-				public Object apply(CommerceRegion commerceRegion) {
-					return commerceRegion.getName();
-				}
-
-			});
+			(BiConsumer<CommerceRegion, Long>)
+				CommerceRegion::setCommerceCountryId);
+		attributeGetterFunctions.put("name", CommerceRegion::getName);
 		attributeSetterBiConsumers.put(
 			"name",
-			new BiConsumer<CommerceRegion, Object>() {
-
-				@Override
-				public void accept(
-					CommerceRegion commerceRegion, Object nameObject) {
-
-					commerceRegion.setName((String)nameObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"code",
-			new Function<CommerceRegion, Object>() {
-
-				@Override
-				public Object apply(CommerceRegion commerceRegion) {
-					return commerceRegion.getCode();
-				}
-
-			});
+			(BiConsumer<CommerceRegion, String>)CommerceRegion::setName);
+		attributeGetterFunctions.put("code", CommerceRegion::getCode);
 		attributeSetterBiConsumers.put(
 			"code",
-			new BiConsumer<CommerceRegion, Object>() {
-
-				@Override
-				public void accept(
-					CommerceRegion commerceRegion, Object codeObject) {
-
-					commerceRegion.setCode((String)codeObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"priority",
-			new Function<CommerceRegion, Object>() {
-
-				@Override
-				public Object apply(CommerceRegion commerceRegion) {
-					return commerceRegion.getPriority();
-				}
-
-			});
+			(BiConsumer<CommerceRegion, String>)CommerceRegion::setCode);
+		attributeGetterFunctions.put("priority", CommerceRegion::getPriority);
 		attributeSetterBiConsumers.put(
 			"priority",
-			new BiConsumer<CommerceRegion, Object>() {
-
-				@Override
-				public void accept(
-					CommerceRegion commerceRegion, Object priorityObject) {
-
-					commerceRegion.setPriority((Double)priorityObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"active",
-			new Function<CommerceRegion, Object>() {
-
-				@Override
-				public Object apply(CommerceRegion commerceRegion) {
-					return commerceRegion.getActive();
-				}
-
-			});
+			(BiConsumer<CommerceRegion, Double>)CommerceRegion::setPriority);
+		attributeGetterFunctions.put("active", CommerceRegion::getActive);
 		attributeSetterBiConsumers.put(
 			"active",
-			new BiConsumer<CommerceRegion, Object>() {
-
-				@Override
-				public void accept(
-					CommerceRegion commerceRegion, Object activeObject) {
-
-					commerceRegion.setActive((Boolean)activeObject);
-				}
-
-			});
+			(BiConsumer<CommerceRegion, Boolean>)CommerceRegion::setActive);
 		attributeGetterFunctions.put(
-			"lastPublishDate",
-			new Function<CommerceRegion, Object>() {
-
-				@Override
-				public Object apply(CommerceRegion commerceRegion) {
-					return commerceRegion.getLastPublishDate();
-				}
-
-			});
+			"lastPublishDate", CommerceRegion::getLastPublishDate);
 		attributeSetterBiConsumers.put(
 			"lastPublishDate",
-			new BiConsumer<CommerceRegion, Object>() {
-
-				@Override
-				public void accept(
-					CommerceRegion commerceRegion,
-					Object lastPublishDateObject) {
-
-					commerceRegion.setLastPublishDate(
-						(Date)lastPublishDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceRegion, Date>)
+				CommerceRegion::setLastPublishDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -918,6 +704,7 @@ public class CommerceRegionModelImpl
 	public Object clone() {
 		CommerceRegionImpl commerceRegionImpl = new CommerceRegionImpl();
 
+		commerceRegionImpl.setMvccVersion(getMvccVersion());
 		commerceRegionImpl.setUuid(getUuid());
 		commerceRegionImpl.setCommerceRegionId(getCommerceRegionId());
 		commerceRegionImpl.setCompanyId(getCompanyId());
@@ -985,11 +772,19 @@ public class CommerceRegionModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -1021,6 +816,8 @@ public class CommerceRegionModelImpl
 	public CacheModel<CommerceRegion> toCacheModel() {
 		CommerceRegionCacheModel commerceRegionCacheModel =
 			new CommerceRegionCacheModel();
+
+		commerceRegionCacheModel.mvccVersion = getMvccVersion();
 
 		commerceRegionCacheModel.uuid = getUuid();
 
@@ -1167,6 +964,7 @@ public class CommerceRegionModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _commerceRegionId;

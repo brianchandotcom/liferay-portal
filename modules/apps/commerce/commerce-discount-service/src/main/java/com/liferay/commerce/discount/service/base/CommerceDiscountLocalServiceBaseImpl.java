@@ -35,6 +35,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -166,6 +167,11 @@ public abstract class CommerceDiscountLocalServiceBaseImpl
 		throws PortalException {
 
 		return commerceDiscountPersistence.remove(commerceDiscount);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return commerceDiscountPersistence.dslQuery(dslQuery);
 	}
 
 	@Override
@@ -448,6 +454,16 @@ public abstract class CommerceDiscountLocalServiceBaseImpl
 				PortalUtil.getClassNameId(CommerceDiscount.class.getName())));
 
 		return exportActionableDynamicQuery;
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
+
+		return commerceDiscountPersistence.create(
+			((Long)primaryKeyObj).longValue());
 	}
 
 	/**

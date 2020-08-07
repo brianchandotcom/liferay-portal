@@ -92,6 +92,18 @@ public class CommercePriceListCommerceAccountGroupRelLocalServiceWrapper
 				commercePriceListCommerceAccountGroupRelId);
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePriceListCommerceAccountGroupRelLocalService.
+			createPersistedModel(primaryKeyObj);
+	}
+
 	@Override
 	public void deleteCommercePriceListAccountGroupRelsByCommercePriceListId(
 		long commercePriceListId) {
@@ -169,6 +181,12 @@ public class CommercePriceListCommerceAccountGroupRelLocalServiceWrapper
 
 		return _commercePriceListCommerceAccountGroupRelLocalService.
 			deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _commercePriceListCommerceAccountGroupRelLocalService.dslQuery(
+			dslQuery);
 	}
 
 	@Override

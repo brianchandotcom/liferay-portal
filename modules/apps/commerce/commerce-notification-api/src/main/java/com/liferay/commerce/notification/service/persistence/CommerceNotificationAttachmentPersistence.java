@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.notification.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.notification.exception.NoSuchNotificationAttachmentException;
 import com.liferay.commerce.notification.model.CommerceNotificationAttachment;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce notification attachment service.
@@ -45,9 +40,6 @@ public interface CommerceNotificationAttachmentPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceNotificationAttachmentUtil} to access the commerce notification attachment persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceNotificationAttachment> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce notification attachments where uuid = &#63;.
@@ -685,8 +677,5 @@ public interface CommerceNotificationAttachmentPersistence
 	 * @return the number of commerce notification attachments
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

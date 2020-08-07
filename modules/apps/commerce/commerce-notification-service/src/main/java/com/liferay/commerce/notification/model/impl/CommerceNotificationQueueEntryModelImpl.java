@@ -19,6 +19,7 @@ import com.liferay.commerce.notification.model.CommerceNotificationQueueEntryMod
 import com.liferay.commerce.notification.model.CommerceNotificationQueueEntrySoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -75,6 +75,7 @@ public class CommerceNotificationQueueEntryModelImpl
 	public static final String TABLE_NAME = "CommerceNotificationQueueEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
+		{"mvccVersion", Types.BIGINT},
 		{"CNotificationQueueEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -93,6 +94,7 @@ public class CommerceNotificationQueueEntryModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CNotificationQueueEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -117,7 +119,7 @@ public class CommerceNotificationQueueEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceNotificationQueueEntry (CNotificationQueueEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,commerceNotificationTemplateId LONG,from_ VARCHAR(75) null,fromName VARCHAR(75) null,to_ VARCHAR(75) null,toName VARCHAR(75) null,cc VARCHAR(255) null,bcc VARCHAR(255) null,subject VARCHAR(255) null,body TEXT null,priority DOUBLE,sent BOOLEAN,sentDate DATE null)";
+		"create table CommerceNotificationQueueEntry (mvccVersion LONG default 0 not null,CNotificationQueueEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,commerceNotificationTemplateId LONG,from_ VARCHAR(75) null,fromName VARCHAR(75) null,to_ VARCHAR(75) null,toName VARCHAR(75) null,cc VARCHAR(255) null,bcc VARCHAR(255) null,subject VARCHAR(255) null,body TEXT null,priority DOUBLE,sent BOOLEAN,sentDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceNotificationQueueEntry";
@@ -134,20 +136,23 @@ public class CommerceNotificationQueueEntryModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.notification.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.notification.model.CommerceNotificationQueueEntry"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.notification.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.notification.model.CommerceNotificationQueueEntry"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.notification.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.notification.model.CommerceNotificationQueueEntry"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
 
@@ -179,6 +184,7 @@ public class CommerceNotificationQueueEntryModelImpl
 		CommerceNotificationQueueEntry model =
 			new CommerceNotificationQueueEntryImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceNotificationQueueEntryId(
 			soapModel.getCommerceNotificationQueueEntryId());
 		model.setGroupId(soapModel.getGroupId());
@@ -286,9 +292,6 @@ public class CommerceNotificationQueueEntryModelImpl
 					(CommerceNotificationQueueEntry)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -370,596 +373,158 @@ public class CommerceNotificationQueueEntryModelImpl
 					<String, BiConsumer<CommerceNotificationQueueEntry, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", CommerceNotificationQueueEntry::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceNotificationQueueEntry, Long>)
+				CommerceNotificationQueueEntry::setMvccVersion);
+		attributeGetterFunctions.put(
 			"commerceNotificationQueueEntryId",
-			new Function<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry) {
-
-					return commerceNotificationQueueEntry.
-						getCommerceNotificationQueueEntryId();
-				}
-
-			});
+			CommerceNotificationQueueEntry::
+				getCommerceNotificationQueueEntryId);
 		attributeSetterBiConsumers.put(
 			"commerceNotificationQueueEntryId",
-			new BiConsumer<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry,
-					Object commerceNotificationQueueEntryIdObject) {
-
-					commerceNotificationQueueEntry.
-						setCommerceNotificationQueueEntryId(
-							(Long)commerceNotificationQueueEntryIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationQueueEntry, Long>)
+				CommerceNotificationQueueEntry::
+					setCommerceNotificationQueueEntryId);
 		attributeGetterFunctions.put(
-			"groupId",
-			new Function<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry) {
-
-					return commerceNotificationQueueEntry.getGroupId();
-				}
-
-			});
+			"groupId", CommerceNotificationQueueEntry::getGroupId);
 		attributeSetterBiConsumers.put(
 			"groupId",
-			new BiConsumer<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry,
-					Object groupIdObject) {
-
-					commerceNotificationQueueEntry.setGroupId(
-						(Long)groupIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationQueueEntry, Long>)
+				CommerceNotificationQueueEntry::setGroupId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry) {
-
-					return commerceNotificationQueueEntry.getCompanyId();
-				}
-
-			});
+			"companyId", CommerceNotificationQueueEntry::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry,
-					Object companyIdObject) {
-
-					commerceNotificationQueueEntry.setCompanyId(
-						(Long)companyIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationQueueEntry, Long>)
+				CommerceNotificationQueueEntry::setCompanyId);
 		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry) {
-
-					return commerceNotificationQueueEntry.getUserId();
-				}
-
-			});
+			"userId", CommerceNotificationQueueEntry::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry,
-					Object userIdObject) {
-
-					commerceNotificationQueueEntry.setUserId(
-						(Long)userIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationQueueEntry, Long>)
+				CommerceNotificationQueueEntry::setUserId);
 		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry) {
-
-					return commerceNotificationQueueEntry.getUserName();
-				}
-
-			});
+			"userName", CommerceNotificationQueueEntry::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry,
-					Object userNameObject) {
-
-					commerceNotificationQueueEntry.setUserName(
-						(String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationQueueEntry, String>)
+				CommerceNotificationQueueEntry::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry) {
-
-					return commerceNotificationQueueEntry.getCreateDate();
-				}
-
-			});
+			"createDate", CommerceNotificationQueueEntry::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry,
-					Object createDateObject) {
-
-					commerceNotificationQueueEntry.setCreateDate(
-						(Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationQueueEntry, Date>)
+				CommerceNotificationQueueEntry::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry) {
-
-					return commerceNotificationQueueEntry.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CommerceNotificationQueueEntry::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry,
-					Object modifiedDateObject) {
-
-					commerceNotificationQueueEntry.setModifiedDate(
-						(Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationQueueEntry, Date>)
+				CommerceNotificationQueueEntry::setModifiedDate);
 		attributeGetterFunctions.put(
-			"classNameId",
-			new Function<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry) {
-
-					return commerceNotificationQueueEntry.getClassNameId();
-				}
-
-			});
+			"classNameId", CommerceNotificationQueueEntry::getClassNameId);
 		attributeSetterBiConsumers.put(
 			"classNameId",
-			new BiConsumer<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry,
-					Object classNameIdObject) {
-
-					commerceNotificationQueueEntry.setClassNameId(
-						(Long)classNameIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationQueueEntry, Long>)
+				CommerceNotificationQueueEntry::setClassNameId);
 		attributeGetterFunctions.put(
-			"classPK",
-			new Function<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry) {
-
-					return commerceNotificationQueueEntry.getClassPK();
-				}
-
-			});
+			"classPK", CommerceNotificationQueueEntry::getClassPK);
 		attributeSetterBiConsumers.put(
 			"classPK",
-			new BiConsumer<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry,
-					Object classPKObject) {
-
-					commerceNotificationQueueEntry.setClassPK(
-						(Long)classPKObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationQueueEntry, Long>)
+				CommerceNotificationQueueEntry::setClassPK);
 		attributeGetterFunctions.put(
 			"commerceNotificationTemplateId",
-			new Function<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry) {
-
-					return commerceNotificationQueueEntry.
-						getCommerceNotificationTemplateId();
-				}
-
-			});
+			CommerceNotificationQueueEntry::getCommerceNotificationTemplateId);
 		attributeSetterBiConsumers.put(
 			"commerceNotificationTemplateId",
-			new BiConsumer<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry,
-					Object commerceNotificationTemplateIdObject) {
-
-					commerceNotificationQueueEntry.
-						setCommerceNotificationTemplateId(
-							(Long)commerceNotificationTemplateIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationQueueEntry, Long>)
+				CommerceNotificationQueueEntry::
+					setCommerceNotificationTemplateId);
 		attributeGetterFunctions.put(
-			"from",
-			new Function<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry) {
-
-					return commerceNotificationQueueEntry.getFrom();
-				}
-
-			});
+			"from", CommerceNotificationQueueEntry::getFrom);
 		attributeSetterBiConsumers.put(
 			"from",
-			new BiConsumer<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry,
-					Object fromObject) {
-
-					commerceNotificationQueueEntry.setFrom((String)fromObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationQueueEntry, String>)
+				CommerceNotificationQueueEntry::setFrom);
 		attributeGetterFunctions.put(
-			"fromName",
-			new Function<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry) {
-
-					return commerceNotificationQueueEntry.getFromName();
-				}
-
-			});
+			"fromName", CommerceNotificationQueueEntry::getFromName);
 		attributeSetterBiConsumers.put(
 			"fromName",
-			new BiConsumer<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry,
-					Object fromNameObject) {
-
-					commerceNotificationQueueEntry.setFromName(
-						(String)fromNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationQueueEntry, String>)
+				CommerceNotificationQueueEntry::setFromName);
 		attributeGetterFunctions.put(
-			"to",
-			new Function<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry) {
-
-					return commerceNotificationQueueEntry.getTo();
-				}
-
-			});
+			"to", CommerceNotificationQueueEntry::getTo);
 		attributeSetterBiConsumers.put(
 			"to",
-			new BiConsumer<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry,
-					Object toObject) {
-
-					commerceNotificationQueueEntry.setTo((String)toObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationQueueEntry, String>)
+				CommerceNotificationQueueEntry::setTo);
 		attributeGetterFunctions.put(
-			"toName",
-			new Function<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry) {
-
-					return commerceNotificationQueueEntry.getToName();
-				}
-
-			});
+			"toName", CommerceNotificationQueueEntry::getToName);
 		attributeSetterBiConsumers.put(
 			"toName",
-			new BiConsumer<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry,
-					Object toNameObject) {
-
-					commerceNotificationQueueEntry.setToName(
-						(String)toNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationQueueEntry, String>)
+				CommerceNotificationQueueEntry::setToName);
 		attributeGetterFunctions.put(
-			"cc",
-			new Function<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry) {
-
-					return commerceNotificationQueueEntry.getCc();
-				}
-
-			});
+			"cc", CommerceNotificationQueueEntry::getCc);
 		attributeSetterBiConsumers.put(
 			"cc",
-			new BiConsumer<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry,
-					Object ccObject) {
-
-					commerceNotificationQueueEntry.setCc((String)ccObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationQueueEntry, String>)
+				CommerceNotificationQueueEntry::setCc);
 		attributeGetterFunctions.put(
-			"bcc",
-			new Function<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry) {
-
-					return commerceNotificationQueueEntry.getBcc();
-				}
-
-			});
+			"bcc", CommerceNotificationQueueEntry::getBcc);
 		attributeSetterBiConsumers.put(
 			"bcc",
-			new BiConsumer<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry,
-					Object bccObject) {
-
-					commerceNotificationQueueEntry.setBcc((String)bccObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationQueueEntry, String>)
+				CommerceNotificationQueueEntry::setBcc);
 		attributeGetterFunctions.put(
-			"subject",
-			new Function<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry) {
-
-					return commerceNotificationQueueEntry.getSubject();
-				}
-
-			});
+			"subject", CommerceNotificationQueueEntry::getSubject);
 		attributeSetterBiConsumers.put(
 			"subject",
-			new BiConsumer<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry,
-					Object subjectObject) {
-
-					commerceNotificationQueueEntry.setSubject(
-						(String)subjectObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationQueueEntry, String>)
+				CommerceNotificationQueueEntry::setSubject);
 		attributeGetterFunctions.put(
-			"body",
-			new Function<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry) {
-
-					return commerceNotificationQueueEntry.getBody();
-				}
-
-			});
+			"body", CommerceNotificationQueueEntry::getBody);
 		attributeSetterBiConsumers.put(
 			"body",
-			new BiConsumer<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry,
-					Object bodyObject) {
-
-					commerceNotificationQueueEntry.setBody((String)bodyObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationQueueEntry, String>)
+				CommerceNotificationQueueEntry::setBody);
 		attributeGetterFunctions.put(
-			"priority",
-			new Function<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry) {
-
-					return commerceNotificationQueueEntry.getPriority();
-				}
-
-			});
+			"priority", CommerceNotificationQueueEntry::getPriority);
 		attributeSetterBiConsumers.put(
 			"priority",
-			new BiConsumer<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry,
-					Object priorityObject) {
-
-					commerceNotificationQueueEntry.setPriority(
-						(Double)priorityObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationQueueEntry, Double>)
+				CommerceNotificationQueueEntry::setPriority);
 		attributeGetterFunctions.put(
-			"sent",
-			new Function<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry) {
-
-					return commerceNotificationQueueEntry.getSent();
-				}
-
-			});
+			"sent", CommerceNotificationQueueEntry::getSent);
 		attributeSetterBiConsumers.put(
 			"sent",
-			new BiConsumer<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry,
-					Object sentObject) {
-
-					commerceNotificationQueueEntry.setSent((Boolean)sentObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationQueueEntry, Boolean>)
+				CommerceNotificationQueueEntry::setSent);
 		attributeGetterFunctions.put(
-			"sentDate",
-			new Function<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry) {
-
-					return commerceNotificationQueueEntry.getSentDate();
-				}
-
-			});
+			"sentDate", CommerceNotificationQueueEntry::getSentDate);
 		attributeSetterBiConsumers.put(
 			"sentDate",
-			new BiConsumer<CommerceNotificationQueueEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry,
-					Object sentDateObject) {
-
-					commerceNotificationQueueEntry.setSentDate(
-						(Date)sentDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationQueueEntry, Date>)
+				CommerceNotificationQueueEntry::setSentDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1399,6 +964,7 @@ public class CommerceNotificationQueueEntryModelImpl
 		CommerceNotificationQueueEntryImpl commerceNotificationQueueEntryImpl =
 			new CommerceNotificationQueueEntryImpl();
 
+		commerceNotificationQueueEntryImpl.setMvccVersion(getMvccVersion());
 		commerceNotificationQueueEntryImpl.setCommerceNotificationQueueEntryId(
 			getCommerceNotificationQueueEntryId());
 		commerceNotificationQueueEntryImpl.setGroupId(getGroupId());
@@ -1481,11 +1047,19 @@ public class CommerceNotificationQueueEntryModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -1525,6 +1099,8 @@ public class CommerceNotificationQueueEntryModelImpl
 		CommerceNotificationQueueEntryCacheModel
 			commerceNotificationQueueEntryCacheModel =
 				new CommerceNotificationQueueEntryCacheModel();
+
+		commerceNotificationQueueEntryCacheModel.mvccVersion = getMvccVersion();
 
 		commerceNotificationQueueEntryCacheModel.
 			commerceNotificationQueueEntryId =
@@ -1731,6 +1307,7 @@ public class CommerceNotificationQueueEntryModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _commerceNotificationQueueEntryId;
 	private long _groupId;
 	private long _originalGroupId;

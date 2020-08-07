@@ -15,9 +15,10 @@
 package com.liferay.commerce.product.model.impl;
 
 import com.liferay.commerce.product.model.CProduct;
+import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class CProductCacheModel
-	implements CacheModel<CProduct>, Externalizable {
+	implements CacheModel<CProduct>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -47,7 +48,9 @@ public class CProductCacheModel
 
 		CProductCacheModel cProductCacheModel = (CProductCacheModel)object;
 
-		if (CProductId == cProductCacheModel.CProductId) {
+		if ((CProductId == cProductCacheModel.CProductId) &&
+			(mvccVersion == cProductCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -56,14 +59,28 @@ public class CProductCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, CProductId);
+		int hashCode = HashUtil.hash(0, CProductId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", externalReferenceCode=");
 		sb.append(externalReferenceCode);
@@ -93,6 +110,8 @@ public class CProductCacheModel
 	@Override
 	public CProduct toEntityModel() {
 		CProductImpl cProductImpl = new CProductImpl();
+
+		cProductImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			cProductImpl.setUuid("");
@@ -144,6 +163,7 @@ public class CProductCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		externalReferenceCode = objectInput.readUTF();
 
@@ -165,6 +185,8 @@ public class CProductCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -202,6 +224,7 @@ public class CProductCacheModel
 		objectOutput.writeInt(latestVersion);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public String externalReferenceCode;
 	public long CProductId;

@@ -17,6 +17,7 @@ package com.liferay.commerce.payment.service.base;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.commerce.payment.service.persistence.CommercePaymentMethodGroupRelPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -149,6 +150,11 @@ public abstract class CommercePaymentMethodGroupRelLocalServiceBaseImpl
 
 		return commercePaymentMethodGroupRelPersistence.remove(
 			commercePaymentMethodGroupRel);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return commercePaymentMethodGroupRelPersistence.dslQuery(dslQuery);
 	}
 
 	@Override
@@ -311,6 +317,16 @@ public abstract class CommercePaymentMethodGroupRelLocalServiceBaseImpl
 
 		actionableDynamicQuery.setPrimaryKeyPropertyName(
 			"commercePaymentMethodGroupRelId");
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
+
+		return commercePaymentMethodGroupRelPersistence.create(
+			((Long)primaryKeyObj).longValue());
 	}
 
 	/**

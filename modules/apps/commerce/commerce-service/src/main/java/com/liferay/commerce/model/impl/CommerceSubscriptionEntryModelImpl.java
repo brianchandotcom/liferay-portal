@@ -20,6 +20,7 @@ import com.liferay.commerce.model.CommerceSubscriptionEntrySoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -76,7 +76,8 @@ public class CommerceSubscriptionEntryModelImpl
 	public static final String TABLE_NAME = "CommerceSubscriptionEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"commerceSubscriptionEntryId", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"commerceSubscriptionEntryId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
@@ -104,6 +105,7 @@ public class CommerceSubscriptionEntryModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceSubscriptionEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -136,7 +138,7 @@ public class CommerceSubscriptionEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceSubscriptionEntry (uuid_ VARCHAR(75) null,commerceSubscriptionEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPInstanceUuid VARCHAR(75) null,CProductId LONG,commerceOrderItemId LONG,subscriptionLength INTEGER,subscriptionType VARCHAR(75) null,subscriptionTypeSettings TEXT null,currentCycle LONG,maxSubscriptionCycles LONG,subscriptionStatus INTEGER,lastIterationDate DATE null,nextIterationDate DATE null,startDate DATE null,deliverySubscriptionLength INTEGER,deliverySubscriptionType VARCHAR(75) null,deliverySubTypeSettings VARCHAR(75) null,deliveryCurrentCycle LONG,deliveryMaxSubscriptionCycles LONG,deliverySubscriptionStatus INTEGER,deliveryLastIterationDate DATE null,deliveryNextIterationDate DATE null,deliveryStartDate DATE null)";
+		"create table CommerceSubscriptionEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,commerceSubscriptionEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPInstanceUuid VARCHAR(75) null,CProductId LONG,commerceOrderItemId LONG,subscriptionLength INTEGER,subscriptionType VARCHAR(75) null,subscriptionTypeSettings TEXT null,currentCycle LONG,maxSubscriptionCycles LONG,subscriptionStatus INTEGER,lastIterationDate DATE null,nextIterationDate DATE null,startDate DATE null,deliverySubscriptionLength INTEGER,deliverySubscriptionType VARCHAR(75) null,deliverySubTypeSettings VARCHAR(75) null,deliveryCurrentCycle LONG,deliveryMaxSubscriptionCycles LONG,deliverySubscriptionStatus INTEGER,deliveryLastIterationDate DATE null,deliveryNextIterationDate DATE null,deliveryStartDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceSubscriptionEntry";
@@ -153,20 +155,23 @@ public class CommerceSubscriptionEntryModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.model.CommerceSubscriptionEntry"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.model.CommerceSubscriptionEntry"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.model.CommerceSubscriptionEntry"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long CPINSTANCEUUID_COLUMN_BITMASK = 1L;
 
@@ -201,6 +206,7 @@ public class CommerceSubscriptionEntryModelImpl
 
 		CommerceSubscriptionEntry model = new CommerceSubscriptionEntryImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCommerceSubscriptionEntryId(
 			soapModel.getCommerceSubscriptionEntryId());
@@ -322,9 +328,6 @@ public class CommerceSubscriptionEntryModelImpl
 				attributeGetterFunction.apply((CommerceSubscriptionEntry)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -405,771 +408,218 @@ public class CommerceSubscriptionEntryModelImpl
 					<String, BiConsumer<CommerceSubscriptionEntry, ?>>();
 
 		attributeGetterFunctions.put(
-			"uuid",
-			new Function<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceSubscriptionEntry commerceSubscriptionEntry) {
-
-					return commerceSubscriptionEntry.getUuid();
-				}
-
-			});
+			"mvccVersion", CommerceSubscriptionEntry::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceSubscriptionEntry, Long>)
+				CommerceSubscriptionEntry::setMvccVersion);
+		attributeGetterFunctions.put(
+			"uuid", CommerceSubscriptionEntry::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
-			new BiConsumer<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceSubscriptionEntry commerceSubscriptionEntry,
-					Object uuidObject) {
-
-					commerceSubscriptionEntry.setUuid((String)uuidObject);
-				}
-
-			});
+			(BiConsumer<CommerceSubscriptionEntry, String>)
+				CommerceSubscriptionEntry::setUuid);
 		attributeGetterFunctions.put(
 			"commerceSubscriptionEntryId",
-			new Function<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceSubscriptionEntry commerceSubscriptionEntry) {
-
-					return commerceSubscriptionEntry.
-						getCommerceSubscriptionEntryId();
-				}
-
-			});
+			CommerceSubscriptionEntry::getCommerceSubscriptionEntryId);
 		attributeSetterBiConsumers.put(
 			"commerceSubscriptionEntryId",
-			new BiConsumer<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceSubscriptionEntry commerceSubscriptionEntry,
-					Object commerceSubscriptionEntryIdObject) {
-
-					commerceSubscriptionEntry.setCommerceSubscriptionEntryId(
-						(Long)commerceSubscriptionEntryIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceSubscriptionEntry, Long>)
+				CommerceSubscriptionEntry::setCommerceSubscriptionEntryId);
 		attributeGetterFunctions.put(
-			"groupId",
-			new Function<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceSubscriptionEntry commerceSubscriptionEntry) {
-
-					return commerceSubscriptionEntry.getGroupId();
-				}
-
-			});
+			"groupId", CommerceSubscriptionEntry::getGroupId);
 		attributeSetterBiConsumers.put(
 			"groupId",
-			new BiConsumer<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceSubscriptionEntry commerceSubscriptionEntry,
-					Object groupIdObject) {
-
-					commerceSubscriptionEntry.setGroupId((Long)groupIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceSubscriptionEntry, Long>)
+				CommerceSubscriptionEntry::setGroupId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceSubscriptionEntry commerceSubscriptionEntry) {
-
-					return commerceSubscriptionEntry.getCompanyId();
-				}
-
-			});
+			"companyId", CommerceSubscriptionEntry::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceSubscriptionEntry commerceSubscriptionEntry,
-					Object companyIdObject) {
-
-					commerceSubscriptionEntry.setCompanyId(
-						(Long)companyIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceSubscriptionEntry, Long>)
+				CommerceSubscriptionEntry::setCompanyId);
 		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceSubscriptionEntry commerceSubscriptionEntry) {
-
-					return commerceSubscriptionEntry.getUserId();
-				}
-
-			});
+			"userId", CommerceSubscriptionEntry::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceSubscriptionEntry commerceSubscriptionEntry,
-					Object userIdObject) {
-
-					commerceSubscriptionEntry.setUserId((Long)userIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceSubscriptionEntry, Long>)
+				CommerceSubscriptionEntry::setUserId);
 		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceSubscriptionEntry commerceSubscriptionEntry) {
-
-					return commerceSubscriptionEntry.getUserName();
-				}
-
-			});
+			"userName", CommerceSubscriptionEntry::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceSubscriptionEntry commerceSubscriptionEntry,
-					Object userNameObject) {
-
-					commerceSubscriptionEntry.setUserName(
-						(String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceSubscriptionEntry, String>)
+				CommerceSubscriptionEntry::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceSubscriptionEntry commerceSubscriptionEntry) {
-
-					return commerceSubscriptionEntry.getCreateDate();
-				}
-
-			});
+			"createDate", CommerceSubscriptionEntry::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceSubscriptionEntry commerceSubscriptionEntry,
-					Object createDateObject) {
-
-					commerceSubscriptionEntry.setCreateDate(
-						(Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceSubscriptionEntry, Date>)
+				CommerceSubscriptionEntry::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceSubscriptionEntry commerceSubscriptionEntry) {
-
-					return commerceSubscriptionEntry.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CommerceSubscriptionEntry::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceSubscriptionEntry commerceSubscriptionEntry,
-					Object modifiedDateObject) {
-
-					commerceSubscriptionEntry.setModifiedDate(
-						(Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceSubscriptionEntry, Date>)
+				CommerceSubscriptionEntry::setModifiedDate);
 		attributeGetterFunctions.put(
-			"CPInstanceUuid",
-			new Function<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceSubscriptionEntry commerceSubscriptionEntry) {
-
-					return commerceSubscriptionEntry.getCPInstanceUuid();
-				}
-
-			});
+			"CPInstanceUuid", CommerceSubscriptionEntry::getCPInstanceUuid);
 		attributeSetterBiConsumers.put(
 			"CPInstanceUuid",
-			new BiConsumer<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceSubscriptionEntry commerceSubscriptionEntry,
-					Object CPInstanceUuidObject) {
-
-					commerceSubscriptionEntry.setCPInstanceUuid(
-						(String)CPInstanceUuidObject);
-				}
-
-			});
+			(BiConsumer<CommerceSubscriptionEntry, String>)
+				CommerceSubscriptionEntry::setCPInstanceUuid);
 		attributeGetterFunctions.put(
-			"CProductId",
-			new Function<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceSubscriptionEntry commerceSubscriptionEntry) {
-
-					return commerceSubscriptionEntry.getCProductId();
-				}
-
-			});
+			"CProductId", CommerceSubscriptionEntry::getCProductId);
 		attributeSetterBiConsumers.put(
 			"CProductId",
-			new BiConsumer<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceSubscriptionEntry commerceSubscriptionEntry,
-					Object CProductIdObject) {
-
-					commerceSubscriptionEntry.setCProductId(
-						(Long)CProductIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceSubscriptionEntry, Long>)
+				CommerceSubscriptionEntry::setCProductId);
 		attributeGetterFunctions.put(
 			"commerceOrderItemId",
-			new Function<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceSubscriptionEntry commerceSubscriptionEntry) {
-
-					return commerceSubscriptionEntry.getCommerceOrderItemId();
-				}
-
-			});
+			CommerceSubscriptionEntry::getCommerceOrderItemId);
 		attributeSetterBiConsumers.put(
 			"commerceOrderItemId",
-			new BiConsumer<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceSubscriptionEntry commerceSubscriptionEntry,
-					Object commerceOrderItemIdObject) {
-
-					commerceSubscriptionEntry.setCommerceOrderItemId(
-						(Long)commerceOrderItemIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceSubscriptionEntry, Long>)
+				CommerceSubscriptionEntry::setCommerceOrderItemId);
 		attributeGetterFunctions.put(
 			"subscriptionLength",
-			new Function<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceSubscriptionEntry commerceSubscriptionEntry) {
-
-					return commerceSubscriptionEntry.getSubscriptionLength();
-				}
-
-			});
+			CommerceSubscriptionEntry::getSubscriptionLength);
 		attributeSetterBiConsumers.put(
 			"subscriptionLength",
-			new BiConsumer<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceSubscriptionEntry commerceSubscriptionEntry,
-					Object subscriptionLengthObject) {
-
-					commerceSubscriptionEntry.setSubscriptionLength(
-						(Integer)subscriptionLengthObject);
-				}
-
-			});
+			(BiConsumer<CommerceSubscriptionEntry, Integer>)
+				CommerceSubscriptionEntry::setSubscriptionLength);
 		attributeGetterFunctions.put(
-			"subscriptionType",
-			new Function<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceSubscriptionEntry commerceSubscriptionEntry) {
-
-					return commerceSubscriptionEntry.getSubscriptionType();
-				}
-
-			});
+			"subscriptionType", CommerceSubscriptionEntry::getSubscriptionType);
 		attributeSetterBiConsumers.put(
 			"subscriptionType",
-			new BiConsumer<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceSubscriptionEntry commerceSubscriptionEntry,
-					Object subscriptionTypeObject) {
-
-					commerceSubscriptionEntry.setSubscriptionType(
-						(String)subscriptionTypeObject);
-				}
-
-			});
+			(BiConsumer<CommerceSubscriptionEntry, String>)
+				CommerceSubscriptionEntry::setSubscriptionType);
 		attributeGetterFunctions.put(
 			"subscriptionTypeSettings",
-			new Function<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceSubscriptionEntry commerceSubscriptionEntry) {
-
-					return commerceSubscriptionEntry.
-						getSubscriptionTypeSettings();
-				}
-
-			});
+			CommerceSubscriptionEntry::getSubscriptionTypeSettings);
 		attributeSetterBiConsumers.put(
 			"subscriptionTypeSettings",
-			new BiConsumer<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceSubscriptionEntry commerceSubscriptionEntry,
-					Object subscriptionTypeSettingsObject) {
-
-					commerceSubscriptionEntry.setSubscriptionTypeSettings(
-						(String)subscriptionTypeSettingsObject);
-				}
-
-			});
+			(BiConsumer<CommerceSubscriptionEntry, String>)
+				CommerceSubscriptionEntry::setSubscriptionTypeSettings);
 		attributeGetterFunctions.put(
-			"currentCycle",
-			new Function<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceSubscriptionEntry commerceSubscriptionEntry) {
-
-					return commerceSubscriptionEntry.getCurrentCycle();
-				}
-
-			});
+			"currentCycle", CommerceSubscriptionEntry::getCurrentCycle);
 		attributeSetterBiConsumers.put(
 			"currentCycle",
-			new BiConsumer<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceSubscriptionEntry commerceSubscriptionEntry,
-					Object currentCycleObject) {
-
-					commerceSubscriptionEntry.setCurrentCycle(
-						(Long)currentCycleObject);
-				}
-
-			});
+			(BiConsumer<CommerceSubscriptionEntry, Long>)
+				CommerceSubscriptionEntry::setCurrentCycle);
 		attributeGetterFunctions.put(
 			"maxSubscriptionCycles",
-			new Function<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceSubscriptionEntry commerceSubscriptionEntry) {
-
-					return commerceSubscriptionEntry.getMaxSubscriptionCycles();
-				}
-
-			});
+			CommerceSubscriptionEntry::getMaxSubscriptionCycles);
 		attributeSetterBiConsumers.put(
 			"maxSubscriptionCycles",
-			new BiConsumer<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceSubscriptionEntry commerceSubscriptionEntry,
-					Object maxSubscriptionCyclesObject) {
-
-					commerceSubscriptionEntry.setMaxSubscriptionCycles(
-						(Long)maxSubscriptionCyclesObject);
-				}
-
-			});
+			(BiConsumer<CommerceSubscriptionEntry, Long>)
+				CommerceSubscriptionEntry::setMaxSubscriptionCycles);
 		attributeGetterFunctions.put(
 			"subscriptionStatus",
-			new Function<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceSubscriptionEntry commerceSubscriptionEntry) {
-
-					return commerceSubscriptionEntry.getSubscriptionStatus();
-				}
-
-			});
+			CommerceSubscriptionEntry::getSubscriptionStatus);
 		attributeSetterBiConsumers.put(
 			"subscriptionStatus",
-			new BiConsumer<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceSubscriptionEntry commerceSubscriptionEntry,
-					Object subscriptionStatusObject) {
-
-					commerceSubscriptionEntry.setSubscriptionStatus(
-						(Integer)subscriptionStatusObject);
-				}
-
-			});
+			(BiConsumer<CommerceSubscriptionEntry, Integer>)
+				CommerceSubscriptionEntry::setSubscriptionStatus);
 		attributeGetterFunctions.put(
 			"lastIterationDate",
-			new Function<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceSubscriptionEntry commerceSubscriptionEntry) {
-
-					return commerceSubscriptionEntry.getLastIterationDate();
-				}
-
-			});
+			CommerceSubscriptionEntry::getLastIterationDate);
 		attributeSetterBiConsumers.put(
 			"lastIterationDate",
-			new BiConsumer<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceSubscriptionEntry commerceSubscriptionEntry,
-					Object lastIterationDateObject) {
-
-					commerceSubscriptionEntry.setLastIterationDate(
-						(Date)lastIterationDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceSubscriptionEntry, Date>)
+				CommerceSubscriptionEntry::setLastIterationDate);
 		attributeGetterFunctions.put(
 			"nextIterationDate",
-			new Function<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceSubscriptionEntry commerceSubscriptionEntry) {
-
-					return commerceSubscriptionEntry.getNextIterationDate();
-				}
-
-			});
+			CommerceSubscriptionEntry::getNextIterationDate);
 		attributeSetterBiConsumers.put(
 			"nextIterationDate",
-			new BiConsumer<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceSubscriptionEntry commerceSubscriptionEntry,
-					Object nextIterationDateObject) {
-
-					commerceSubscriptionEntry.setNextIterationDate(
-						(Date)nextIterationDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceSubscriptionEntry, Date>)
+				CommerceSubscriptionEntry::setNextIterationDate);
 		attributeGetterFunctions.put(
-			"startDate",
-			new Function<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceSubscriptionEntry commerceSubscriptionEntry) {
-
-					return commerceSubscriptionEntry.getStartDate();
-				}
-
-			});
+			"startDate", CommerceSubscriptionEntry::getStartDate);
 		attributeSetterBiConsumers.put(
 			"startDate",
-			new BiConsumer<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceSubscriptionEntry commerceSubscriptionEntry,
-					Object startDateObject) {
-
-					commerceSubscriptionEntry.setStartDate(
-						(Date)startDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceSubscriptionEntry, Date>)
+				CommerceSubscriptionEntry::setStartDate);
 		attributeGetterFunctions.put(
 			"deliverySubscriptionLength",
-			new Function<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceSubscriptionEntry commerceSubscriptionEntry) {
-
-					return commerceSubscriptionEntry.
-						getDeliverySubscriptionLength();
-				}
-
-			});
+			CommerceSubscriptionEntry::getDeliverySubscriptionLength);
 		attributeSetterBiConsumers.put(
 			"deliverySubscriptionLength",
-			new BiConsumer<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceSubscriptionEntry commerceSubscriptionEntry,
-					Object deliverySubscriptionLengthObject) {
-
-					commerceSubscriptionEntry.setDeliverySubscriptionLength(
-						(Integer)deliverySubscriptionLengthObject);
-				}
-
-			});
+			(BiConsumer<CommerceSubscriptionEntry, Integer>)
+				CommerceSubscriptionEntry::setDeliverySubscriptionLength);
 		attributeGetterFunctions.put(
 			"deliverySubscriptionType",
-			new Function<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceSubscriptionEntry commerceSubscriptionEntry) {
-
-					return commerceSubscriptionEntry.
-						getDeliverySubscriptionType();
-				}
-
-			});
+			CommerceSubscriptionEntry::getDeliverySubscriptionType);
 		attributeSetterBiConsumers.put(
 			"deliverySubscriptionType",
-			new BiConsumer<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceSubscriptionEntry commerceSubscriptionEntry,
-					Object deliverySubscriptionTypeObject) {
-
-					commerceSubscriptionEntry.setDeliverySubscriptionType(
-						(String)deliverySubscriptionTypeObject);
-				}
-
-			});
+			(BiConsumer<CommerceSubscriptionEntry, String>)
+				CommerceSubscriptionEntry::setDeliverySubscriptionType);
 		attributeGetterFunctions.put(
 			"deliverySubscriptionTypeSettings",
-			new Function<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceSubscriptionEntry commerceSubscriptionEntry) {
-
-					return commerceSubscriptionEntry.
-						getDeliverySubscriptionTypeSettings();
-				}
-
-			});
+			CommerceSubscriptionEntry::getDeliverySubscriptionTypeSettings);
 		attributeSetterBiConsumers.put(
 			"deliverySubscriptionTypeSettings",
-			new BiConsumer<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceSubscriptionEntry commerceSubscriptionEntry,
-					Object deliverySubscriptionTypeSettingsObject) {
-
-					commerceSubscriptionEntry.
-						setDeliverySubscriptionTypeSettings(
-							(String)deliverySubscriptionTypeSettingsObject);
-				}
-
-			});
+			(BiConsumer<CommerceSubscriptionEntry, String>)
+				CommerceSubscriptionEntry::setDeliverySubscriptionTypeSettings);
 		attributeGetterFunctions.put(
 			"deliveryCurrentCycle",
-			new Function<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceSubscriptionEntry commerceSubscriptionEntry) {
-
-					return commerceSubscriptionEntry.getDeliveryCurrentCycle();
-				}
-
-			});
+			CommerceSubscriptionEntry::getDeliveryCurrentCycle);
 		attributeSetterBiConsumers.put(
 			"deliveryCurrentCycle",
-			new BiConsumer<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceSubscriptionEntry commerceSubscriptionEntry,
-					Object deliveryCurrentCycleObject) {
-
-					commerceSubscriptionEntry.setDeliveryCurrentCycle(
-						(Long)deliveryCurrentCycleObject);
-				}
-
-			});
+			(BiConsumer<CommerceSubscriptionEntry, Long>)
+				CommerceSubscriptionEntry::setDeliveryCurrentCycle);
 		attributeGetterFunctions.put(
 			"deliveryMaxSubscriptionCycles",
-			new Function<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceSubscriptionEntry commerceSubscriptionEntry) {
-
-					return commerceSubscriptionEntry.
-						getDeliveryMaxSubscriptionCycles();
-				}
-
-			});
+			CommerceSubscriptionEntry::getDeliveryMaxSubscriptionCycles);
 		attributeSetterBiConsumers.put(
 			"deliveryMaxSubscriptionCycles",
-			new BiConsumer<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceSubscriptionEntry commerceSubscriptionEntry,
-					Object deliveryMaxSubscriptionCyclesObject) {
-
-					commerceSubscriptionEntry.setDeliveryMaxSubscriptionCycles(
-						(Long)deliveryMaxSubscriptionCyclesObject);
-				}
-
-			});
+			(BiConsumer<CommerceSubscriptionEntry, Long>)
+				CommerceSubscriptionEntry::setDeliveryMaxSubscriptionCycles);
 		attributeGetterFunctions.put(
 			"deliverySubscriptionStatus",
-			new Function<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceSubscriptionEntry commerceSubscriptionEntry) {
-
-					return commerceSubscriptionEntry.
-						getDeliverySubscriptionStatus();
-				}
-
-			});
+			CommerceSubscriptionEntry::getDeliverySubscriptionStatus);
 		attributeSetterBiConsumers.put(
 			"deliverySubscriptionStatus",
-			new BiConsumer<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceSubscriptionEntry commerceSubscriptionEntry,
-					Object deliverySubscriptionStatusObject) {
-
-					commerceSubscriptionEntry.setDeliverySubscriptionStatus(
-						(Integer)deliverySubscriptionStatusObject);
-				}
-
-			});
+			(BiConsumer<CommerceSubscriptionEntry, Integer>)
+				CommerceSubscriptionEntry::setDeliverySubscriptionStatus);
 		attributeGetterFunctions.put(
 			"deliveryLastIterationDate",
-			new Function<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceSubscriptionEntry commerceSubscriptionEntry) {
-
-					return commerceSubscriptionEntry.
-						getDeliveryLastIterationDate();
-				}
-
-			});
+			CommerceSubscriptionEntry::getDeliveryLastIterationDate);
 		attributeSetterBiConsumers.put(
 			"deliveryLastIterationDate",
-			new BiConsumer<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceSubscriptionEntry commerceSubscriptionEntry,
-					Object deliveryLastIterationDateObject) {
-
-					commerceSubscriptionEntry.setDeliveryLastIterationDate(
-						(Date)deliveryLastIterationDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceSubscriptionEntry, Date>)
+				CommerceSubscriptionEntry::setDeliveryLastIterationDate);
 		attributeGetterFunctions.put(
 			"deliveryNextIterationDate",
-			new Function<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceSubscriptionEntry commerceSubscriptionEntry) {
-
-					return commerceSubscriptionEntry.
-						getDeliveryNextIterationDate();
-				}
-
-			});
+			CommerceSubscriptionEntry::getDeliveryNextIterationDate);
 		attributeSetterBiConsumers.put(
 			"deliveryNextIterationDate",
-			new BiConsumer<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceSubscriptionEntry commerceSubscriptionEntry,
-					Object deliveryNextIterationDateObject) {
-
-					commerceSubscriptionEntry.setDeliveryNextIterationDate(
-						(Date)deliveryNextIterationDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceSubscriptionEntry, Date>)
+				CommerceSubscriptionEntry::setDeliveryNextIterationDate);
 		attributeGetterFunctions.put(
 			"deliveryStartDate",
-			new Function<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceSubscriptionEntry commerceSubscriptionEntry) {
-
-					return commerceSubscriptionEntry.getDeliveryStartDate();
-				}
-
-			});
+			CommerceSubscriptionEntry::getDeliveryStartDate);
 		attributeSetterBiConsumers.put(
 			"deliveryStartDate",
-			new BiConsumer<CommerceSubscriptionEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceSubscriptionEntry commerceSubscriptionEntry,
-					Object deliveryStartDateObject) {
-
-					commerceSubscriptionEntry.setDeliveryStartDate(
-						(Date)deliveryStartDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceSubscriptionEntry, Date>)
+				CommerceSubscriptionEntry::setDeliveryStartDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1691,6 +1141,7 @@ public class CommerceSubscriptionEntryModelImpl
 		CommerceSubscriptionEntryImpl commerceSubscriptionEntryImpl =
 			new CommerceSubscriptionEntryImpl();
 
+		commerceSubscriptionEntryImpl.setMvccVersion(getMvccVersion());
 		commerceSubscriptionEntryImpl.setUuid(getUuid());
 		commerceSubscriptionEntryImpl.setCommerceSubscriptionEntryId(
 			getCommerceSubscriptionEntryId());
@@ -1788,11 +1239,19 @@ public class CommerceSubscriptionEntryModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -1837,6 +1296,8 @@ public class CommerceSubscriptionEntryModelImpl
 		CommerceSubscriptionEntryCacheModel
 			commerceSubscriptionEntryCacheModel =
 				new CommerceSubscriptionEntryCacheModel();
+
+		commerceSubscriptionEntryCacheModel.mvccVersion = getMvccVersion();
 
 		commerceSubscriptionEntryCacheModel.uuid = getUuid();
 
@@ -2110,6 +1571,7 @@ public class CommerceSubscriptionEntryModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _commerceSubscriptionEntryId;

@@ -14,17 +14,13 @@
 
 package com.liferay.commerce.inventory.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.inventory.exception.NoSuchInventoryAuditException;
 import com.liferay.commerce.inventory.model.CommerceInventoryAudit;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
 import java.util.Date;
-import java.util.Map;
-import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce inventory audit service.
@@ -46,9 +42,6 @@ public interface CommerceInventoryAuditPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceInventoryAuditUtil} to access the commerce inventory audit persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceInventoryAudit> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce inventory audits where createDate &lt; &#63;.
@@ -472,8 +465,5 @@ public interface CommerceInventoryAuditPersistence
 	 * @return the number of commerce inventory audits
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

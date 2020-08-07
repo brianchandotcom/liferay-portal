@@ -1,4 +1,5 @@
 create table CShippingFixedOptionRel (
+	mvccVersion LONG default 0 not null,
 	CShippingFixedOptionRelId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -20,6 +21,7 @@ create table CShippingFixedOptionRel (
 );
 
 create table CommerceShippingFixedOption (
+	mvccVersion LONG default 0 not null,
 	commerceShippingFixedOptionId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,

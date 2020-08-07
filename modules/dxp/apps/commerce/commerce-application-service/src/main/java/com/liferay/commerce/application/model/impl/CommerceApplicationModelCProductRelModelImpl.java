@@ -19,6 +19,7 @@ import com.liferay.commerce.application.model.CommerceApplicationModelCProductRe
 import com.liferay.commerce.application.model.CommerceApplicationModelCProductRelSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -73,9 +73,10 @@ public class CommerceApplicationModelCProductRelModelImpl
 	public static final String TABLE_NAME = "CAModelCProductRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"CAModelCProductRelId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"mvccVersion", Types.BIGINT}, {"CAModelCProductRelId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP},
 		{"commerceApplicationModelId", Types.BIGINT},
 		{"CProductId", Types.BIGINT}
 	};
@@ -84,6 +85,7 @@ public class CommerceApplicationModelCProductRelModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CAModelCProductRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -95,7 +97,7 @@ public class CommerceApplicationModelCProductRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CAModelCProductRel (CAModelCProductRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceApplicationModelId LONG,CProductId LONG)";
+		"create table CAModelCProductRel (mvccVersion LONG default 0 not null,CAModelCProductRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceApplicationModelId LONG,CProductId LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table CAModelCProductRel";
 
@@ -111,20 +113,23 @@ public class CommerceApplicationModelCProductRelModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.application.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.application.model.CommerceApplicationModelCProductRel"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.application.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.application.model.CommerceApplicationModelCProductRel"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.application.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.application.model.CommerceApplicationModelCProductRel"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long CPRODUCTID_COLUMN_BITMASK = 1L;
 
@@ -149,6 +154,7 @@ public class CommerceApplicationModelCProductRelModelImpl
 		CommerceApplicationModelCProductRel model =
 			new CommerceApplicationModelCProductRelImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceApplicationModelCProductRelId(
 			soapModel.getCommerceApplicationModelCProductRelId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -245,9 +251,6 @@ public class CommerceApplicationModelCProductRelModelImpl
 					(CommerceApplicationModelCProductRel)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -332,239 +335,81 @@ public class CommerceApplicationModelCProductRelModelImpl
 					 BiConsumer<CommerceApplicationModelCProductRel, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", CommerceApplicationModelCProductRel::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceApplicationModelCProductRel, Long>)
+				CommerceApplicationModelCProductRel::setMvccVersion);
+		attributeGetterFunctions.put(
 			"commerceApplicationModelCProductRelId",
-			new Function<CommerceApplicationModelCProductRel, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceApplicationModelCProductRel
-						commerceApplicationModelCProductRel) {
-
-					return commerceApplicationModelCProductRel.
-						getCommerceApplicationModelCProductRelId();
-				}
-
-			});
+			CommerceApplicationModelCProductRel::
+				getCommerceApplicationModelCProductRelId);
 		attributeSetterBiConsumers.put(
 			"commerceApplicationModelCProductRelId",
-			new BiConsumer<CommerceApplicationModelCProductRel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceApplicationModelCProductRel
-						commerceApplicationModelCProductRel,
-					Object commerceApplicationModelCProductRelIdObject) {
-
-					commerceApplicationModelCProductRel.
-						setCommerceApplicationModelCProductRelId(
-							(Long)commerceApplicationModelCProductRelIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceApplicationModelCProductRel, Long>)
+				CommerceApplicationModelCProductRel::
+					setCommerceApplicationModelCProductRelId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommerceApplicationModelCProductRel, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceApplicationModelCProductRel
-						commerceApplicationModelCProductRel) {
-
-					return commerceApplicationModelCProductRel.getCompanyId();
-				}
-
-			});
+			"companyId", CommerceApplicationModelCProductRel::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommerceApplicationModelCProductRel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceApplicationModelCProductRel
-						commerceApplicationModelCProductRel,
-					Object companyIdObject) {
-
-					commerceApplicationModelCProductRel.setCompanyId(
-						(Long)companyIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceApplicationModelCProductRel, Long>)
+				CommerceApplicationModelCProductRel::setCompanyId);
 		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommerceApplicationModelCProductRel, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceApplicationModelCProductRel
-						commerceApplicationModelCProductRel) {
-
-					return commerceApplicationModelCProductRel.getUserId();
-				}
-
-			});
+			"userId", CommerceApplicationModelCProductRel::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommerceApplicationModelCProductRel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceApplicationModelCProductRel
-						commerceApplicationModelCProductRel,
-					Object userIdObject) {
-
-					commerceApplicationModelCProductRel.setUserId(
-						(Long)userIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceApplicationModelCProductRel, Long>)
+				CommerceApplicationModelCProductRel::setUserId);
 		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommerceApplicationModelCProductRel, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceApplicationModelCProductRel
-						commerceApplicationModelCProductRel) {
-
-					return commerceApplicationModelCProductRel.getUserName();
-				}
-
-			});
+			"userName", CommerceApplicationModelCProductRel::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommerceApplicationModelCProductRel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceApplicationModelCProductRel
-						commerceApplicationModelCProductRel,
-					Object userNameObject) {
-
-					commerceApplicationModelCProductRel.setUserName(
-						(String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceApplicationModelCProductRel, String>)
+				CommerceApplicationModelCProductRel::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommerceApplicationModelCProductRel, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceApplicationModelCProductRel
-						commerceApplicationModelCProductRel) {
-
-					return commerceApplicationModelCProductRel.getCreateDate();
-				}
-
-			});
+			"createDate", CommerceApplicationModelCProductRel::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommerceApplicationModelCProductRel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceApplicationModelCProductRel
-						commerceApplicationModelCProductRel,
-					Object createDateObject) {
-
-					commerceApplicationModelCProductRel.setCreateDate(
-						(Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceApplicationModelCProductRel, Date>)
+				CommerceApplicationModelCProductRel::setCreateDate);
 		attributeGetterFunctions.put(
 			"modifiedDate",
-			new Function<CommerceApplicationModelCProductRel, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceApplicationModelCProductRel
-						commerceApplicationModelCProductRel) {
-
-					return commerceApplicationModelCProductRel.
-						getModifiedDate();
-				}
-
-			});
+			CommerceApplicationModelCProductRel::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommerceApplicationModelCProductRel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceApplicationModelCProductRel
-						commerceApplicationModelCProductRel,
-					Object modifiedDateObject) {
-
-					commerceApplicationModelCProductRel.setModifiedDate(
-						(Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceApplicationModelCProductRel, Date>)
+				CommerceApplicationModelCProductRel::setModifiedDate);
 		attributeGetterFunctions.put(
 			"commerceApplicationModelId",
-			new Function<CommerceApplicationModelCProductRel, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceApplicationModelCProductRel
-						commerceApplicationModelCProductRel) {
-
-					return commerceApplicationModelCProductRel.
-						getCommerceApplicationModelId();
-				}
-
-			});
+			CommerceApplicationModelCProductRel::getCommerceApplicationModelId);
 		attributeSetterBiConsumers.put(
 			"commerceApplicationModelId",
-			new BiConsumer<CommerceApplicationModelCProductRel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceApplicationModelCProductRel
-						commerceApplicationModelCProductRel,
-					Object commerceApplicationModelIdObject) {
-
-					commerceApplicationModelCProductRel.
-						setCommerceApplicationModelId(
-							(Long)commerceApplicationModelIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceApplicationModelCProductRel, Long>)
+				CommerceApplicationModelCProductRel::
+					setCommerceApplicationModelId);
 		attributeGetterFunctions.put(
-			"CProductId",
-			new Function<CommerceApplicationModelCProductRel, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceApplicationModelCProductRel
-						commerceApplicationModelCProductRel) {
-
-					return commerceApplicationModelCProductRel.getCProductId();
-				}
-
-			});
+			"CProductId", CommerceApplicationModelCProductRel::getCProductId);
 		attributeSetterBiConsumers.put(
 			"CProductId",
-			new BiConsumer<CommerceApplicationModelCProductRel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceApplicationModelCProductRel
-						commerceApplicationModelCProductRel,
-					Object CProductIdObject) {
-
-					commerceApplicationModelCProductRel.setCProductId(
-						(Long)CProductIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceApplicationModelCProductRel, Long>)
+				CommerceApplicationModelCProductRel::setCProductId);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -748,6 +593,8 @@ public class CommerceApplicationModelCProductRelModelImpl
 			commerceApplicationModelCProductRelImpl =
 				new CommerceApplicationModelCProductRelImpl();
 
+		commerceApplicationModelCProductRelImpl.setMvccVersion(
+			getMvccVersion());
 		commerceApplicationModelCProductRelImpl.
 			setCommerceApplicationModelCProductRelId(
 				getCommerceApplicationModelCProductRelId());
@@ -813,11 +660,19 @@ public class CommerceApplicationModelCProductRelModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -842,6 +697,9 @@ public class CommerceApplicationModelCProductRelModelImpl
 		CommerceApplicationModelCProductRelCacheModel
 			commerceApplicationModelCProductRelCacheModel =
 				new CommerceApplicationModelCProductRelCacheModel();
+
+		commerceApplicationModelCProductRelCacheModel.mvccVersion =
+			getMvccVersion();
 
 		commerceApplicationModelCProductRelCacheModel.
 			commerceApplicationModelCProductRelId =
@@ -970,6 +828,7 @@ public class CommerceApplicationModelCProductRelModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _commerceApplicationModelCProductRelId;
 	private long _companyId;
 	private long _userId;

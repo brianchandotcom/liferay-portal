@@ -34,6 +34,7 @@ public class CommerceBOMFolderApplicationRelSoap implements Serializable {
 		CommerceBOMFolderApplicationRelSoap soapModel =
 			new CommerceBOMFolderApplicationRelSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCommerceBOMFolderApplicationRelId(
 			model.getCommerceBOMFolderApplicationRelId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -106,6 +107,14 @@ public class CommerceBOMFolderApplicationRelSoap implements Serializable {
 		setCommerceBOMFolderApplicationRelId(pk);
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public long getCommerceBOMFolderApplicationRelId() {
 		return _commerceBOMFolderApplicationRelId;
 	}
@@ -172,6 +181,7 @@ public class CommerceBOMFolderApplicationRelSoap implements Serializable {
 		_commerceApplicationModelId = commerceApplicationModelId;
 	}
 
+	private long _mvccVersion;
 	private long _commerceBOMFolderApplicationRelId;
 	private long _companyId;
 	private long _userId;

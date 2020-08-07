@@ -94,6 +94,18 @@ public class CommercePricingClassLocalServiceWrapper
 	}
 
 	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePricingClassLocalService.createPersistedModel(
+			primaryKeyObj);
+	}
+
+	/**
 	 * Deletes the commerce pricing class from the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -153,6 +165,11 @@ public class CommercePricingClassLocalServiceWrapper
 
 		return _commercePricingClassLocalService.deletePersistedModel(
 			persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _commercePricingClassLocalService.dslQuery(dslQuery);
 	}
 
 	@Override

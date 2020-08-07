@@ -791,10 +791,6 @@ public class CPDefinitionVirtualSettingUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CPDefinitionVirtualSettingPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

@@ -24,6 +24,7 @@ import com.liferay.commerce.pricing.service.persistence.CommercePricingClassCPDe
 import com.liferay.commerce.pricing.service.persistence.CommercePricingClassCPDefinitionRelPersistence;
 import com.liferay.commerce.pricing.service.persistence.CommercePricingClassFinder;
 import com.liferay.commerce.pricing.service.persistence.CommercePricingClassPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -154,6 +155,11 @@ public abstract class CommercePriceModifierRelLocalServiceBaseImpl
 
 		return commercePriceModifierRelPersistence.remove(
 			commercePriceModifierRel);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return commercePriceModifierRelPersistence.dslQuery(dslQuery);
 	}
 
 	@Override
@@ -314,6 +320,16 @@ public abstract class CommercePriceModifierRelLocalServiceBaseImpl
 
 		actionableDynamicQuery.setPrimaryKeyPropertyName(
 			"commercePriceModifierRelId");
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
+
+		return commercePriceModifierRelPersistence.create(
+			((Long)primaryKeyObj).longValue());
 	}
 
 	/**

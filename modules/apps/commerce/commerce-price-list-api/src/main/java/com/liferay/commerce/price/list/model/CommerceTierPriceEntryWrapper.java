@@ -14,19 +14,15 @@
 
 package com.liferay.commerce.price.list.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.math.BigDecimal;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,28 +34,20 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceTierPriceEntryWrapper
+	extends BaseModelWrapper<CommerceTierPriceEntry>
 	implements CommerceTierPriceEntry, ModelWrapper<CommerceTierPriceEntry> {
 
 	public CommerceTierPriceEntryWrapper(
 		CommerceTierPriceEntry commerceTierPriceEntry) {
 
-		_commerceTierPriceEntry = commerceTierPriceEntry;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceTierPriceEntry.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceTierPriceEntry.class.getName();
+		super(commerceTierPriceEntry);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put(
@@ -91,6 +79,12 @@ public class CommerceTierPriceEntryWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -245,21 +239,10 @@ public class CommerceTierPriceEntryWrapper
 	}
 
 	@Override
-	public Object clone() {
-		return new CommerceTierPriceEntryWrapper(
-			(CommerceTierPriceEntry)_commerceTierPriceEntry.clone());
-	}
-
-	@Override
-	public int compareTo(CommerceTierPriceEntry commerceTierPriceEntry) {
-		return _commerceTierPriceEntry.compareTo(commerceTierPriceEntry);
-	}
-
-	@Override
 	public CommercePriceEntry getCommercePriceEntry()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceTierPriceEntry.getCommercePriceEntry();
+		return model.getCommercePriceEntry();
 	}
 
 	/**
@@ -269,7 +252,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public long getCommercePriceEntryId() {
-		return _commerceTierPriceEntry.getCommercePriceEntryId();
+		return model.getCommercePriceEntryId();
 	}
 
 	/**
@@ -279,7 +262,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public long getCommerceTierPriceEntryId() {
-		return _commerceTierPriceEntry.getCommerceTierPriceEntryId();
+		return model.getCommerceTierPriceEntryId();
 	}
 
 	/**
@@ -289,7 +272,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceTierPriceEntry.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -299,7 +282,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceTierPriceEntry.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -309,7 +292,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public boolean getDiscountDiscovery() {
-		return _commerceTierPriceEntry.getDiscountDiscovery();
+		return model.getDiscountDiscovery();
 	}
 
 	/**
@@ -319,7 +302,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public BigDecimal getDiscountLevel1() {
-		return _commerceTierPriceEntry.getDiscountLevel1();
+		return model.getDiscountLevel1();
 	}
 
 	/**
@@ -329,7 +312,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public BigDecimal getDiscountLevel2() {
-		return _commerceTierPriceEntry.getDiscountLevel2();
+		return model.getDiscountLevel2();
 	}
 
 	/**
@@ -339,7 +322,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public BigDecimal getDiscountLevel3() {
-		return _commerceTierPriceEntry.getDiscountLevel3();
+		return model.getDiscountLevel3();
 	}
 
 	/**
@@ -349,7 +332,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public BigDecimal getDiscountLevel4() {
-		return _commerceTierPriceEntry.getDiscountLevel4();
+		return model.getDiscountLevel4();
 	}
 
 	/**
@@ -359,12 +342,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public Date getDisplayDate() {
-		return _commerceTierPriceEntry.getDisplayDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceTierPriceEntry.getExpandoBridge();
+		return model.getDisplayDate();
 	}
 
 	/**
@@ -374,7 +352,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public Date getExpirationDate() {
-		return _commerceTierPriceEntry.getExpirationDate();
+		return model.getExpirationDate();
 	}
 
 	/**
@@ -384,7 +362,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public String getExternalReferenceCode() {
-		return _commerceTierPriceEntry.getExternalReferenceCode();
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -394,7 +372,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public Date getLastPublishDate() {
-		return _commerceTierPriceEntry.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -404,7 +382,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public int getMinQuantity() {
-		return _commerceTierPriceEntry.getMinQuantity();
+		return model.getMinQuantity();
 	}
 
 	/**
@@ -414,7 +392,17 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceTierPriceEntry.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce tier price entry.
+	 *
+	 * @return the mvcc version of this commerce tier price entry
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -424,7 +412,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public BigDecimal getPrice() {
-		return _commerceTierPriceEntry.getPrice();
+		return model.getPrice();
 	}
 
 	@Override
@@ -432,7 +420,7 @@ public class CommerceTierPriceEntryWrapper
 			long commerceCurrencyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceTierPriceEntry.getPriceMoney(commerceCurrencyId);
+		return model.getPriceMoney(commerceCurrencyId);
 	}
 
 	/**
@@ -442,12 +430,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceTierPriceEntry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceTierPriceEntry.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -457,7 +440,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public BigDecimal getPromoPrice() {
-		return _commerceTierPriceEntry.getPromoPrice();
+		return model.getPromoPrice();
 	}
 
 	@Override
@@ -465,7 +448,7 @@ public class CommerceTierPriceEntryWrapper
 			long commerceCurrencyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceTierPriceEntry.getPromoPriceMoney(commerceCurrencyId);
+		return model.getPromoPriceMoney(commerceCurrencyId);
 	}
 
 	/**
@@ -475,7 +458,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public int getStatus() {
-		return _commerceTierPriceEntry.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -485,7 +468,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public long getStatusByUserId() {
-		return _commerceTierPriceEntry.getStatusByUserId();
+		return model.getStatusByUserId();
 	}
 
 	/**
@@ -495,7 +478,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public String getStatusByUserName() {
-		return _commerceTierPriceEntry.getStatusByUserName();
+		return model.getStatusByUserName();
 	}
 
 	/**
@@ -505,7 +488,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public String getStatusByUserUuid() {
-		return _commerceTierPriceEntry.getStatusByUserUuid();
+		return model.getStatusByUserUuid();
 	}
 
 	/**
@@ -515,7 +498,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public Date getStatusDate() {
-		return _commerceTierPriceEntry.getStatusDate();
+		return model.getStatusDate();
 	}
 
 	/**
@@ -525,7 +508,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceTierPriceEntry.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -535,7 +518,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceTierPriceEntry.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -545,7 +528,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceTierPriceEntry.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -555,12 +538,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public String getUuid() {
-		return _commerceTierPriceEntry.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceTierPriceEntry.hashCode();
+		return model.getUuid();
 	}
 
 	/**
@@ -570,12 +548,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public boolean isApproved() {
-		return _commerceTierPriceEntry.isApproved();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceTierPriceEntry.isCachedModel();
+		return model.isApproved();
 	}
 
 	/**
@@ -585,7 +558,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public boolean isDenied() {
-		return _commerceTierPriceEntry.isDenied();
+		return model.isDenied();
 	}
 
 	/**
@@ -595,7 +568,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public boolean isDiscountDiscovery() {
-		return _commerceTierPriceEntry.isDiscountDiscovery();
+		return model.isDiscountDiscovery();
 	}
 
 	/**
@@ -605,12 +578,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public boolean isDraft() {
-		return _commerceTierPriceEntry.isDraft();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceTierPriceEntry.isEscapedModel();
+		return model.isDraft();
 	}
 
 	/**
@@ -620,7 +588,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public boolean isExpired() {
-		return _commerceTierPriceEntry.isExpired();
+		return model.isExpired();
 	}
 
 	/**
@@ -630,7 +598,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public boolean isInactive() {
-		return _commerceTierPriceEntry.isInactive();
+		return model.isInactive();
 	}
 
 	/**
@@ -640,12 +608,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public boolean isIncomplete() {
-		return _commerceTierPriceEntry.isIncomplete();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceTierPriceEntry.isNew();
+		return model.isIncomplete();
 	}
 
 	/**
@@ -655,7 +618,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public boolean isPending() {
-		return _commerceTierPriceEntry.isPending();
+		return model.isPending();
 	}
 
 	/**
@@ -665,17 +628,12 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public boolean isScheduled() {
-		return _commerceTierPriceEntry.isScheduled();
+		return model.isScheduled();
 	}
 
 	@Override
 	public void persist() {
-		_commerceTierPriceEntry.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceTierPriceEntry.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -685,7 +643,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public void setCommercePriceEntryId(long commercePriceEntryId) {
-		_commerceTierPriceEntry.setCommercePriceEntryId(commercePriceEntryId);
+		model.setCommercePriceEntryId(commercePriceEntryId);
 	}
 
 	/**
@@ -695,8 +653,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public void setCommerceTierPriceEntryId(long commerceTierPriceEntryId) {
-		_commerceTierPriceEntry.setCommerceTierPriceEntryId(
-			commerceTierPriceEntryId);
+		model.setCommerceTierPriceEntryId(commerceTierPriceEntryId);
 	}
 
 	/**
@@ -706,7 +663,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceTierPriceEntry.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -716,7 +673,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceTierPriceEntry.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -726,7 +683,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public void setDiscountDiscovery(boolean discountDiscovery) {
-		_commerceTierPriceEntry.setDiscountDiscovery(discountDiscovery);
+		model.setDiscountDiscovery(discountDiscovery);
 	}
 
 	/**
@@ -736,7 +693,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public void setDiscountLevel1(BigDecimal discountLevel1) {
-		_commerceTierPriceEntry.setDiscountLevel1(discountLevel1);
+		model.setDiscountLevel1(discountLevel1);
 	}
 
 	/**
@@ -746,7 +703,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public void setDiscountLevel2(BigDecimal discountLevel2) {
-		_commerceTierPriceEntry.setDiscountLevel2(discountLevel2);
+		model.setDiscountLevel2(discountLevel2);
 	}
 
 	/**
@@ -756,7 +713,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public void setDiscountLevel3(BigDecimal discountLevel3) {
-		_commerceTierPriceEntry.setDiscountLevel3(discountLevel3);
+		model.setDiscountLevel3(discountLevel3);
 	}
 
 	/**
@@ -766,7 +723,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public void setDiscountLevel4(BigDecimal discountLevel4) {
-		_commerceTierPriceEntry.setDiscountLevel4(discountLevel4);
+		model.setDiscountLevel4(discountLevel4);
 	}
 
 	/**
@@ -776,24 +733,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public void setDisplayDate(Date displayDate) {
-		_commerceTierPriceEntry.setDisplayDate(displayDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceTierPriceEntry.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceTierPriceEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceTierPriceEntry.setExpandoBridgeAttributes(serviceContext);
+		model.setDisplayDate(displayDate);
 	}
 
 	/**
@@ -803,7 +743,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public void setExpirationDate(Date expirationDate) {
-		_commerceTierPriceEntry.setExpirationDate(expirationDate);
+		model.setExpirationDate(expirationDate);
 	}
 
 	/**
@@ -813,7 +753,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
-		_commerceTierPriceEntry.setExternalReferenceCode(externalReferenceCode);
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**
@@ -823,7 +763,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_commerceTierPriceEntry.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -833,7 +773,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public void setMinQuantity(int minQuantity) {
-		_commerceTierPriceEntry.setMinQuantity(minQuantity);
+		model.setMinQuantity(minQuantity);
 	}
 
 	/**
@@ -843,12 +783,17 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceTierPriceEntry.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this commerce tier price entry.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce tier price entry
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_commerceTierPriceEntry.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -858,7 +803,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public void setPrice(BigDecimal price) {
-		_commerceTierPriceEntry.setPrice(price);
+		model.setPrice(price);
 	}
 
 	/**
@@ -868,12 +813,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceTierPriceEntry.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceTierPriceEntry.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -883,7 +823,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public void setPromoPrice(BigDecimal promoPrice) {
-		_commerceTierPriceEntry.setPromoPrice(promoPrice);
+		model.setPromoPrice(promoPrice);
 	}
 
 	/**
@@ -893,7 +833,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public void setStatus(int status) {
-		_commerceTierPriceEntry.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -903,7 +843,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
-		_commerceTierPriceEntry.setStatusByUserId(statusByUserId);
+		model.setStatusByUserId(statusByUserId);
 	}
 
 	/**
@@ -913,7 +853,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
-		_commerceTierPriceEntry.setStatusByUserName(statusByUserName);
+		model.setStatusByUserName(statusByUserName);
 	}
 
 	/**
@@ -923,7 +863,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public void setStatusByUserUuid(String statusByUserUuid) {
-		_commerceTierPriceEntry.setStatusByUserUuid(statusByUserUuid);
+		model.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
@@ -933,7 +873,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public void setStatusDate(Date statusDate) {
-		_commerceTierPriceEntry.setStatusDate(statusDate);
+		model.setStatusDate(statusDate);
 	}
 
 	/**
@@ -943,7 +883,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceTierPriceEntry.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -953,7 +893,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceTierPriceEntry.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -963,7 +903,7 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceTierPriceEntry.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -973,86 +913,19 @@ public class CommerceTierPriceEntryWrapper
 	 */
 	@Override
 	public void setUuid(String uuid) {
-		_commerceTierPriceEntry.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceTierPriceEntry>
-		toCacheModel() {
-
-		return _commerceTierPriceEntry.toCacheModel();
-	}
-
-	@Override
-	public CommerceTierPriceEntry toEscapedModel() {
-		return new CommerceTierPriceEntryWrapper(
-			_commerceTierPriceEntry.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commerceTierPriceEntry.toString();
-	}
-
-	@Override
-	public CommerceTierPriceEntry toUnescapedModel() {
-		return new CommerceTierPriceEntryWrapper(
-			_commerceTierPriceEntry.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceTierPriceEntry.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceTierPriceEntryWrapper)) {
-			return false;
-		}
-
-		CommerceTierPriceEntryWrapper commerceTierPriceEntryWrapper =
-			(CommerceTierPriceEntryWrapper)object;
-
-		if (Objects.equals(
-				_commerceTierPriceEntry,
-				commerceTierPriceEntryWrapper._commerceTierPriceEntry)) {
-
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _commerceTierPriceEntry.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public CommerceTierPriceEntry getWrappedModel() {
-		return _commerceTierPriceEntry;
-	}
+	protected CommerceTierPriceEntryWrapper wrap(
+		CommerceTierPriceEntry commerceTierPriceEntry) {
 
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceTierPriceEntry.isEntityCacheEnabled();
+		return new CommerceTierPriceEntryWrapper(commerceTierPriceEntry);
 	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceTierPriceEntry.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceTierPriceEntry.resetOriginalValues();
-	}
-
-	private final CommerceTierPriceEntry _commerceTierPriceEntry;
 
 }

@@ -458,10 +458,6 @@ public class CommerceBOMEntryUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CommerceBOMEntryPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

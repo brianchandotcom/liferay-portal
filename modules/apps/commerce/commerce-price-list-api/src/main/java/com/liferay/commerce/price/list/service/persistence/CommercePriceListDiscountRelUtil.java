@@ -915,10 +915,6 @@ public class CommercePriceListDiscountRelUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CommercePriceListDiscountRelPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

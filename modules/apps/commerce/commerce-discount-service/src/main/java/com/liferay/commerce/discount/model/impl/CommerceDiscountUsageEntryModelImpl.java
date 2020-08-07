@@ -18,6 +18,7 @@ import com.liferay.commerce.discount.model.CommerceDiscountUsageEntry;
 import com.liferay.commerce.discount.model.CommerceDiscountUsageEntryModel;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -69,6 +69,7 @@ public class CommerceDiscountUsageEntryModelImpl
 	public static final String TABLE_NAME = "CommerceDiscountUsageEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
+		{"mvccVersion", Types.BIGINT},
 		{"commerceDiscountUsageEntryId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -80,6 +81,7 @@ public class CommerceDiscountUsageEntryModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceDiscountUsageEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -92,7 +94,7 @@ public class CommerceDiscountUsageEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceDiscountUsageEntry (commerceDiscountUsageEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceAccountId LONG,commerceOrderId LONG,commerceDiscountId LONG)";
+		"create table CommerceDiscountUsageEntry (mvccVersion LONG default 0 not null,commerceDiscountUsageEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceAccountId LONG,commerceOrderId LONG,commerceDiscountId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceDiscountUsageEntry";
@@ -109,20 +111,23 @@ public class CommerceDiscountUsageEntryModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.discount.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.discount.model.CommerceDiscountUsageEntry"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.discount.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.discount.model.CommerceDiscountUsageEntry"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.discount.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.discount.model.CommerceDiscountUsageEntry"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long COMMERCEACCOUNTID_COLUMN_BITMASK = 1L;
 
@@ -188,9 +193,6 @@ public class CommerceDiscountUsageEntryModelImpl
 				attributeGetterFunction.apply(
 					(CommerceDiscountUsageEntry)this));
 		}
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
@@ -272,244 +274,83 @@ public class CommerceDiscountUsageEntryModelImpl
 					<String, BiConsumer<CommerceDiscountUsageEntry, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", CommerceDiscountUsageEntry::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceDiscountUsageEntry, Long>)
+				CommerceDiscountUsageEntry::setMvccVersion);
+		attributeGetterFunctions.put(
 			"commerceDiscountUsageEntryId",
-			new Function<CommerceDiscountUsageEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDiscountUsageEntry commerceDiscountUsageEntry) {
-
-					return commerceDiscountUsageEntry.
-						getCommerceDiscountUsageEntryId();
-				}
-
-			});
+			CommerceDiscountUsageEntry::getCommerceDiscountUsageEntryId);
 		attributeSetterBiConsumers.put(
 			"commerceDiscountUsageEntryId",
-			new BiConsumer<CommerceDiscountUsageEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDiscountUsageEntry commerceDiscountUsageEntry,
-					Object commerceDiscountUsageEntryIdObject) {
-
-					commerceDiscountUsageEntry.setCommerceDiscountUsageEntryId(
-						(Long)commerceDiscountUsageEntryIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceDiscountUsageEntry, Long>)
+				CommerceDiscountUsageEntry::setCommerceDiscountUsageEntryId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommerceDiscountUsageEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDiscountUsageEntry commerceDiscountUsageEntry) {
-
-					return commerceDiscountUsageEntry.getCompanyId();
-				}
-
-			});
+			"companyId", CommerceDiscountUsageEntry::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommerceDiscountUsageEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDiscountUsageEntry commerceDiscountUsageEntry,
-					Object companyIdObject) {
-
-					commerceDiscountUsageEntry.setCompanyId(
-						(Long)companyIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceDiscountUsageEntry, Long>)
+				CommerceDiscountUsageEntry::setCompanyId);
 		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommerceDiscountUsageEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDiscountUsageEntry commerceDiscountUsageEntry) {
-
-					return commerceDiscountUsageEntry.getUserId();
-				}
-
-			});
+			"userId", CommerceDiscountUsageEntry::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommerceDiscountUsageEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDiscountUsageEntry commerceDiscountUsageEntry,
-					Object userIdObject) {
-
-					commerceDiscountUsageEntry.setUserId((Long)userIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceDiscountUsageEntry, Long>)
+				CommerceDiscountUsageEntry::setUserId);
 		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommerceDiscountUsageEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDiscountUsageEntry commerceDiscountUsageEntry) {
-
-					return commerceDiscountUsageEntry.getUserName();
-				}
-
-			});
+			"userName", CommerceDiscountUsageEntry::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommerceDiscountUsageEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDiscountUsageEntry commerceDiscountUsageEntry,
-					Object userNameObject) {
-
-					commerceDiscountUsageEntry.setUserName(
-						(String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceDiscountUsageEntry, String>)
+				CommerceDiscountUsageEntry::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommerceDiscountUsageEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDiscountUsageEntry commerceDiscountUsageEntry) {
-
-					return commerceDiscountUsageEntry.getCreateDate();
-				}
-
-			});
+			"createDate", CommerceDiscountUsageEntry::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommerceDiscountUsageEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDiscountUsageEntry commerceDiscountUsageEntry,
-					Object createDateObject) {
-
-					commerceDiscountUsageEntry.setCreateDate(
-						(Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceDiscountUsageEntry, Date>)
+				CommerceDiscountUsageEntry::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CommerceDiscountUsageEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDiscountUsageEntry commerceDiscountUsageEntry) {
-
-					return commerceDiscountUsageEntry.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CommerceDiscountUsageEntry::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommerceDiscountUsageEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDiscountUsageEntry commerceDiscountUsageEntry,
-					Object modifiedDateObject) {
-
-					commerceDiscountUsageEntry.setModifiedDate(
-						(Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceDiscountUsageEntry, Date>)
+				CommerceDiscountUsageEntry::setModifiedDate);
 		attributeGetterFunctions.put(
 			"commerceAccountId",
-			new Function<CommerceDiscountUsageEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDiscountUsageEntry commerceDiscountUsageEntry) {
-
-					return commerceDiscountUsageEntry.getCommerceAccountId();
-				}
-
-			});
+			CommerceDiscountUsageEntry::getCommerceAccountId);
 		attributeSetterBiConsumers.put(
 			"commerceAccountId",
-			new BiConsumer<CommerceDiscountUsageEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDiscountUsageEntry commerceDiscountUsageEntry,
-					Object commerceAccountIdObject) {
-
-					commerceDiscountUsageEntry.setCommerceAccountId(
-						(Long)commerceAccountIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceDiscountUsageEntry, Long>)
+				CommerceDiscountUsageEntry::setCommerceAccountId);
 		attributeGetterFunctions.put(
-			"commerceOrderId",
-			new Function<CommerceDiscountUsageEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDiscountUsageEntry commerceDiscountUsageEntry) {
-
-					return commerceDiscountUsageEntry.getCommerceOrderId();
-				}
-
-			});
+			"commerceOrderId", CommerceDiscountUsageEntry::getCommerceOrderId);
 		attributeSetterBiConsumers.put(
 			"commerceOrderId",
-			new BiConsumer<CommerceDiscountUsageEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDiscountUsageEntry commerceDiscountUsageEntry,
-					Object commerceOrderIdObject) {
-
-					commerceDiscountUsageEntry.setCommerceOrderId(
-						(Long)commerceOrderIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceDiscountUsageEntry, Long>)
+				CommerceDiscountUsageEntry::setCommerceOrderId);
 		attributeGetterFunctions.put(
 			"commerceDiscountId",
-			new Function<CommerceDiscountUsageEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDiscountUsageEntry commerceDiscountUsageEntry) {
-
-					return commerceDiscountUsageEntry.getCommerceDiscountId();
-				}
-
-			});
+			CommerceDiscountUsageEntry::getCommerceDiscountId);
 		attributeSetterBiConsumers.put(
 			"commerceDiscountId",
-			new BiConsumer<CommerceDiscountUsageEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDiscountUsageEntry commerceDiscountUsageEntry,
-					Object commerceDiscountIdObject) {
-
-					commerceDiscountUsageEntry.setCommerceDiscountId(
-						(Long)commerceDiscountIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceDiscountUsageEntry, Long>)
+				CommerceDiscountUsageEntry::setCommerceDiscountId);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -705,6 +546,7 @@ public class CommerceDiscountUsageEntryModelImpl
 		CommerceDiscountUsageEntryImpl commerceDiscountUsageEntryImpl =
 			new CommerceDiscountUsageEntryImpl();
 
+		commerceDiscountUsageEntryImpl.setMvccVersion(getMvccVersion());
 		commerceDiscountUsageEntryImpl.setCommerceDiscountUsageEntryId(
 			getCommerceDiscountUsageEntryId());
 		commerceDiscountUsageEntryImpl.setCompanyId(getCompanyId());
@@ -769,11 +611,19 @@ public class CommerceDiscountUsageEntryModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -802,6 +652,8 @@ public class CommerceDiscountUsageEntryModelImpl
 		CommerceDiscountUsageEntryCacheModel
 			commerceDiscountUsageEntryCacheModel =
 				new CommerceDiscountUsageEntryCacheModel();
+
+		commerceDiscountUsageEntryCacheModel.mvccVersion = getMvccVersion();
 
 		commerceDiscountUsageEntryCacheModel.commerceDiscountUsageEntryId =
 			getCommerceDiscountUsageEntryId();
@@ -926,6 +778,7 @@ public class CommerceDiscountUsageEntryModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _commerceDiscountUsageEntryId;
 	private long _companyId;
 	private long _userId;

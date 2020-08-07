@@ -16,9 +16,10 @@ package com.liferay.commerce.account.model.impl;
 
 import com.liferay.commerce.account.model.CommerceAccountOrganizationRel;
 import com.liferay.commerce.account.service.persistence.CommerceAccountOrganizationRelPK;
+import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,7 +35,8 @@ import java.util.Date;
  * @generated
  */
 public class CommerceAccountOrganizationRelCacheModel
-	implements CacheModel<CommerceAccountOrganizationRel>, Externalizable {
+	implements CacheModel<CommerceAccountOrganizationRel>, Externalizable,
+			   MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -52,7 +54,9 @@ public class CommerceAccountOrganizationRelCacheModel
 
 		if (commerceAccountOrganizationRelPK.equals(
 				commerceAccountOrganizationRelCacheModel.
-					commerceAccountOrganizationRelPK)) {
+					commerceAccountOrganizationRelPK) &&
+			(mvccVersion ==
+				commerceAccountOrganizationRelCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -62,14 +66,28 @@ public class CommerceAccountOrganizationRelCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, commerceAccountOrganizationRelPK);
+		int hashCode = HashUtil.hash(0, commerceAccountOrganizationRelPK);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
-		sb.append("{commerceAccountId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", commerceAccountId=");
 		sb.append(commerceAccountId);
 		sb.append(", organizationId=");
 		sb.append(organizationId);
@@ -93,6 +111,7 @@ public class CommerceAccountOrganizationRelCacheModel
 		CommerceAccountOrganizationRelImpl commerceAccountOrganizationRelImpl =
 			new CommerceAccountOrganizationRelImpl();
 
+		commerceAccountOrganizationRelImpl.setMvccVersion(mvccVersion);
 		commerceAccountOrganizationRelImpl.setCommerceAccountId(
 			commerceAccountId);
 		commerceAccountOrganizationRelImpl.setOrganizationId(organizationId);
@@ -129,6 +148,8 @@ public class CommerceAccountOrganizationRelCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		commerceAccountId = objectInput.readLong();
 
 		organizationId = objectInput.readLong();
@@ -146,6 +167,8 @@ public class CommerceAccountOrganizationRelCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(commerceAccountId);
 
 		objectOutput.writeLong(organizationId);
@@ -165,6 +188,7 @@ public class CommerceAccountOrganizationRelCacheModel
 		objectOutput.writeLong(modifiedDate);
 	}
 
+	public long mvccVersion;
 	public long commerceAccountId;
 	public long organizationId;
 	public long companyId;

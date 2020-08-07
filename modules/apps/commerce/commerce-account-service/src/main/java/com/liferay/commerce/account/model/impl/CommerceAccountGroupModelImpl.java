@@ -19,6 +19,7 @@ import com.liferay.commerce.account.model.CommerceAccountGroupModel;
 import com.liferay.commerce.account.model.CommerceAccountGroupSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -73,7 +73,7 @@ public class CommerceAccountGroupModelImpl
 	public static final String TABLE_NAME = "CommerceAccountGroup";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"externalReferenceCode", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"externalReferenceCode", Types.VARCHAR},
 		{"commerceAccountGroupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
@@ -85,6 +85,7 @@ public class CommerceAccountGroupModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceAccountGroupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -98,7 +99,7 @@ public class CommerceAccountGroupModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceAccountGroup (externalReferenceCode VARCHAR(75) null,commerceAccountGroupId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,type_ INTEGER,system_ BOOLEAN)";
+		"create table CommerceAccountGroup (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,commerceAccountGroupId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,type_ INTEGER,system_ BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceAccountGroup";
@@ -115,20 +116,23 @@ public class CommerceAccountGroupModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.account.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.account.model.CommerceAccountGroup"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.account.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.account.model.CommerceAccountGroup"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.account.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.account.model.CommerceAccountGroup"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long COMMERCEACCOUNTGROUPID_COLUMN_BITMASK = 1L;
 
@@ -155,6 +159,7 @@ public class CommerceAccountGroupModelImpl
 
 		CommerceAccountGroup model = new CommerceAccountGroupImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setCommerceAccountGroupId(soapModel.getCommerceAccountGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -248,9 +253,6 @@ public class CommerceAccountGroupModelImpl
 				attributeGetterFunction.apply((CommerceAccountGroup)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -328,243 +330,85 @@ public class CommerceAccountGroupModelImpl
 					<String, BiConsumer<CommerceAccountGroup, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", CommerceAccountGroup::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceAccountGroup, Long>)
+				CommerceAccountGroup::setMvccVersion);
+		attributeGetterFunctions.put(
 			"externalReferenceCode",
-			new Function<CommerceAccountGroup, Object>() {
-
-				@Override
-				public Object apply(CommerceAccountGroup commerceAccountGroup) {
-					return commerceAccountGroup.getExternalReferenceCode();
-				}
-
-			});
+			CommerceAccountGroup::getExternalReferenceCode);
 		attributeSetterBiConsumers.put(
 			"externalReferenceCode",
-			new BiConsumer<CommerceAccountGroup, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccountGroup commerceAccountGroup,
-					Object externalReferenceCodeObject) {
-
-					commerceAccountGroup.setExternalReferenceCode(
-						(String)externalReferenceCodeObject);
-				}
-
-			});
+			(BiConsumer<CommerceAccountGroup, String>)
+				CommerceAccountGroup::setExternalReferenceCode);
 		attributeGetterFunctions.put(
 			"commerceAccountGroupId",
-			new Function<CommerceAccountGroup, Object>() {
-
-				@Override
-				public Object apply(CommerceAccountGroup commerceAccountGroup) {
-					return commerceAccountGroup.getCommerceAccountGroupId();
-				}
-
-			});
+			CommerceAccountGroup::getCommerceAccountGroupId);
 		attributeSetterBiConsumers.put(
 			"commerceAccountGroupId",
-			new BiConsumer<CommerceAccountGroup, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccountGroup commerceAccountGroup,
-					Object commerceAccountGroupIdObject) {
-
-					commerceAccountGroup.setCommerceAccountGroupId(
-						(Long)commerceAccountGroupIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceAccountGroup, Long>)
+				CommerceAccountGroup::setCommerceAccountGroupId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommerceAccountGroup, Object>() {
-
-				@Override
-				public Object apply(CommerceAccountGroup commerceAccountGroup) {
-					return commerceAccountGroup.getCompanyId();
-				}
-
-			});
+			"companyId", CommerceAccountGroup::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommerceAccountGroup, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccountGroup commerceAccountGroup,
-					Object companyIdObject) {
-
-					commerceAccountGroup.setCompanyId((Long)companyIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommerceAccountGroup, Object>() {
-
-				@Override
-				public Object apply(CommerceAccountGroup commerceAccountGroup) {
-					return commerceAccountGroup.getUserId();
-				}
-
-			});
+			(BiConsumer<CommerceAccountGroup, Long>)
+				CommerceAccountGroup::setCompanyId);
+		attributeGetterFunctions.put("userId", CommerceAccountGroup::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommerceAccountGroup, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccountGroup commerceAccountGroup,
-					Object userIdObject) {
-
-					commerceAccountGroup.setUserId((Long)userIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceAccountGroup, Long>)
+				CommerceAccountGroup::setUserId);
 		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommerceAccountGroup, Object>() {
-
-				@Override
-				public Object apply(CommerceAccountGroup commerceAccountGroup) {
-					return commerceAccountGroup.getUserName();
-				}
-
-			});
+			"userName", CommerceAccountGroup::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommerceAccountGroup, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccountGroup commerceAccountGroup,
-					Object userNameObject) {
-
-					commerceAccountGroup.setUserName((String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceAccountGroup, String>)
+				CommerceAccountGroup::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommerceAccountGroup, Object>() {
-
-				@Override
-				public Object apply(CommerceAccountGroup commerceAccountGroup) {
-					return commerceAccountGroup.getCreateDate();
-				}
-
-			});
+			"createDate", CommerceAccountGroup::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommerceAccountGroup, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccountGroup commerceAccountGroup,
-					Object createDateObject) {
-
-					commerceAccountGroup.setCreateDate((Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceAccountGroup, Date>)
+				CommerceAccountGroup::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CommerceAccountGroup, Object>() {
-
-				@Override
-				public Object apply(CommerceAccountGroup commerceAccountGroup) {
-					return commerceAccountGroup.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CommerceAccountGroup::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommerceAccountGroup, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccountGroup commerceAccountGroup,
-					Object modifiedDateObject) {
-
-					commerceAccountGroup.setModifiedDate(
-						(Date)modifiedDateObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"name",
-			new Function<CommerceAccountGroup, Object>() {
-
-				@Override
-				public Object apply(CommerceAccountGroup commerceAccountGroup) {
-					return commerceAccountGroup.getName();
-				}
-
-			});
+			(BiConsumer<CommerceAccountGroup, Date>)
+				CommerceAccountGroup::setModifiedDate);
+		attributeGetterFunctions.put("name", CommerceAccountGroup::getName);
 		attributeSetterBiConsumers.put(
 			"name",
-			new BiConsumer<CommerceAccountGroup, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccountGroup commerceAccountGroup,
-					Object nameObject) {
-
-					commerceAccountGroup.setName((String)nameObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"type",
-			new Function<CommerceAccountGroup, Object>() {
-
-				@Override
-				public Object apply(CommerceAccountGroup commerceAccountGroup) {
-					return commerceAccountGroup.getType();
-				}
-
-			});
+			(BiConsumer<CommerceAccountGroup, String>)
+				CommerceAccountGroup::setName);
+		attributeGetterFunctions.put("type", CommerceAccountGroup::getType);
 		attributeSetterBiConsumers.put(
 			"type",
-			new BiConsumer<CommerceAccountGroup, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccountGroup commerceAccountGroup,
-					Object typeObject) {
-
-					commerceAccountGroup.setType((Integer)typeObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"system",
-			new Function<CommerceAccountGroup, Object>() {
-
-				@Override
-				public Object apply(CommerceAccountGroup commerceAccountGroup) {
-					return commerceAccountGroup.getSystem();
-				}
-
-			});
+			(BiConsumer<CommerceAccountGroup, Integer>)
+				CommerceAccountGroup::setType);
+		attributeGetterFunctions.put("system", CommerceAccountGroup::getSystem);
 		attributeSetterBiConsumers.put(
 			"system",
-			new BiConsumer<CommerceAccountGroup, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAccountGroup commerceAccountGroup,
-					Object systemObject) {
-
-					commerceAccountGroup.setSystem((Boolean)systemObject);
-				}
-
-			});
+			(BiConsumer<CommerceAccountGroup, Boolean>)
+				CommerceAccountGroup::setSystem);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -804,6 +648,7 @@ public class CommerceAccountGroupModelImpl
 		CommerceAccountGroupImpl commerceAccountGroupImpl =
 			new CommerceAccountGroupImpl();
 
+		commerceAccountGroupImpl.setMvccVersion(getMvccVersion());
 		commerceAccountGroupImpl.setExternalReferenceCode(
 			getExternalReferenceCode());
 		commerceAccountGroupImpl.setCommerceAccountGroupId(
@@ -863,11 +708,19 @@ public class CommerceAccountGroupModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -898,6 +751,8 @@ public class CommerceAccountGroupModelImpl
 	public CacheModel<CommerceAccountGroup> toCacheModel() {
 		CommerceAccountGroupCacheModel commerceAccountGroupCacheModel =
 			new CommerceAccountGroupCacheModel();
+
+		commerceAccountGroupCacheModel.mvccVersion = getMvccVersion();
 
 		commerceAccountGroupCacheModel.externalReferenceCode =
 			getExternalReferenceCode();
@@ -1032,6 +887,7 @@ public class CommerceAccountGroupModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _externalReferenceCode;
 	private String _originalExternalReferenceCode;
 	private long _commerceAccountGroupId;

@@ -16,9 +16,11 @@ package com.liferay.commerce.inventory.service.persistence.impl;
 
 import com.liferay.commerce.inventory.exception.NoSuchInventoryAuditException;
 import com.liferay.commerce.inventory.model.CommerceInventoryAudit;
+import com.liferay.commerce.inventory.model.CommerceInventoryAuditTable;
 import com.liferay.commerce.inventory.model.impl.CommerceInventoryAuditImpl;
 import com.liferay.commerce.inventory.model.impl.CommerceInventoryAuditModelImpl;
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryAuditPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -35,21 +37,16 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -246,10 +243,6 @@ public class CommerceInventoryAuditPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -608,8 +601,6 @@ public class CommerceInventoryAuditPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -806,10 +797,6 @@ public class CommerceInventoryAuditPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1194,8 +1181,6 @@ public class CommerceInventoryAuditPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1220,21 +1205,14 @@ public class CommerceInventoryAuditPersistenceImpl
 
 		dbColumnNames.put("commerceInventoryAuditId", "CIAuditId");
 
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-				"_dbColumnNames");
-
-			field.setAccessible(true);
-
-			field.set(this, dbColumnNames);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
+		setDBColumnNames(dbColumnNames);
 
 		setModelClass(CommerceInventoryAudit.class);
+
+		setModelImplClass(CommerceInventoryAuditImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CommerceInventoryAuditTable.INSTANCE);
 	}
 
 	/**
@@ -1245,7 +1223,6 @@ public class CommerceInventoryAuditPersistenceImpl
 	@Override
 	public void cacheResult(CommerceInventoryAudit commerceInventoryAudit) {
 		entityCache.putResult(
-			CommerceInventoryAuditModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceInventoryAuditImpl.class,
 			commerceInventoryAudit.getPrimaryKey(), commerceInventoryAudit);
 
@@ -1265,7 +1242,6 @@ public class CommerceInventoryAuditPersistenceImpl
 				commerceInventoryAudits) {
 
 			if (entityCache.getResult(
-					CommerceInventoryAuditModelImpl.ENTITY_CACHE_ENABLED,
 					CommerceInventoryAuditImpl.class,
 					commerceInventoryAudit.getPrimaryKey()) == null) {
 
@@ -1303,7 +1279,6 @@ public class CommerceInventoryAuditPersistenceImpl
 	@Override
 	public void clearCache(CommerceInventoryAudit commerceInventoryAudit) {
 		entityCache.removeResult(
-			CommerceInventoryAuditModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceInventoryAuditImpl.class,
 			commerceInventoryAudit.getPrimaryKey());
 
@@ -1322,12 +1297,12 @@ public class CommerceInventoryAuditPersistenceImpl
 				commerceInventoryAudits) {
 
 			entityCache.removeResult(
-				CommerceInventoryAuditModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceInventoryAuditImpl.class,
 				commerceInventoryAudit.getPrimaryKey());
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1335,7 +1310,6 @@ public class CommerceInventoryAuditPersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(
-				CommerceInventoryAuditModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceInventoryAuditImpl.class, primaryKey);
 		}
 	}
@@ -1525,10 +1499,7 @@ public class CommerceInventoryAuditPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CommerceInventoryAuditModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				commerceInventoryAuditModelImpl.getCompanyId(),
 				commerceInventoryAuditModelImpl.getSku()
@@ -1568,7 +1539,6 @@ public class CommerceInventoryAuditPersistenceImpl
 		}
 
 		entityCache.putResult(
-			CommerceInventoryAuditModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceInventoryAuditImpl.class,
 			commerceInventoryAudit.getPrimaryKey(), commerceInventoryAudit,
 			false);
@@ -1622,59 +1592,6 @@ public class CommerceInventoryAuditPersistenceImpl
 	/**
 	 * Returns the commerce inventory audit with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the commerce inventory audit
-	 * @return the commerce inventory audit, or <code>null</code> if a commerce inventory audit with the primary key could not be found
-	 */
-	@Override
-	public CommerceInventoryAudit fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(
-			CommerceInventoryAuditModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceInventoryAuditImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CommerceInventoryAudit commerceInventoryAudit =
-			(CommerceInventoryAudit)serializable;
-
-		if (commerceInventoryAudit == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				commerceInventoryAudit = (CommerceInventoryAudit)session.get(
-					CommerceInventoryAuditImpl.class, primaryKey);
-
-				if (commerceInventoryAudit != null) {
-					cacheResult(commerceInventoryAudit);
-				}
-				else {
-					entityCache.putResult(
-						CommerceInventoryAuditModelImpl.ENTITY_CACHE_ENABLED,
-						CommerceInventoryAuditImpl.class, primaryKey,
-						nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CommerceInventoryAuditModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceInventoryAuditImpl.class, primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return commerceInventoryAudit;
-	}
-
-	/**
-	 * Returns the commerce inventory audit with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param commerceInventoryAuditId the primary key of the commerce inventory audit
 	 * @return the commerce inventory audit, or <code>null</code> if a commerce inventory audit with the primary key could not be found
 	 */
@@ -1683,110 +1600,6 @@ public class CommerceInventoryAuditPersistenceImpl
 		long commerceInventoryAuditId) {
 
 		return fetchByPrimaryKey((Serializable)commerceInventoryAuditId);
-	}
-
-	@Override
-	public Map<Serializable, CommerceInventoryAudit> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CommerceInventoryAudit> map =
-			new HashMap<Serializable, CommerceInventoryAudit>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CommerceInventoryAudit commerceInventoryAudit = fetchByPrimaryKey(
-				primaryKey);
-
-			if (commerceInventoryAudit != null) {
-				map.put(primaryKey, commerceInventoryAudit);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CommerceInventoryAuditModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceInventoryAuditImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (CommerceInventoryAudit)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(_SQL_SELECT_COMMERCEINVENTORYAUDIT_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CommerceInventoryAudit commerceInventoryAudit :
-					(List<CommerceInventoryAudit>)query.list()) {
-
-				map.put(
-					commerceInventoryAudit.getPrimaryKeyObj(),
-					commerceInventoryAudit);
-
-				cacheResult(commerceInventoryAudit);
-
-				uncachedPrimaryKeys.remove(
-					commerceInventoryAudit.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CommerceInventoryAuditModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceInventoryAuditImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -1915,10 +1728,6 @@ public class CommerceInventoryAuditPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1965,9 +1774,6 @@ public class CommerceInventoryAuditPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1984,6 +1790,21 @@ public class CommerceInventoryAuditPersistenceImpl
 	}
 
 	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "CIAuditId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_COMMERCEINVENTORYAUDIT;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CommerceInventoryAuditModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -1993,27 +1814,19 @@ public class CommerceInventoryAuditPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceInventoryAuditModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceInventoryAuditModelImpl.FINDER_CACHE_ENABLED,
 			CommerceInventoryAuditImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceInventoryAuditModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceInventoryAuditModelImpl.FINDER_CACHE_ENABLED,
 			CommerceInventoryAuditImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CommerceInventoryAuditModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceInventoryAuditModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByLtCreateDate = new FinderPath(
-			CommerceInventoryAuditModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceInventoryAuditModelImpl.FINDER_CACHE_ENABLED,
 			CommerceInventoryAuditImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtCreateDate",
 			new String[] {
@@ -2022,14 +1835,10 @@ public class CommerceInventoryAuditPersistenceImpl
 			});
 
 		_finderPathWithPaginationCountByLtCreateDate = new FinderPath(
-			CommerceInventoryAuditModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceInventoryAuditModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtCreateDate",
-			new String[] {Date.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"countByLtCreateDate", new String[] {Date.class.getName()});
 
 		_finderPathWithPaginationFindByC_S = new FinderPath(
-			CommerceInventoryAuditModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceInventoryAuditModelImpl.FINDER_CACHE_ENABLED,
 			CommerceInventoryAuditImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S",
 			new String[] {
@@ -2039,8 +1848,6 @@ public class CommerceInventoryAuditPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByC_S = new FinderPath(
-			CommerceInventoryAuditModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceInventoryAuditModelImpl.FINDER_CACHE_ENABLED,
 			CommerceInventoryAuditImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
 			new String[] {Long.class.getName(), String.class.getName()},
@@ -2049,9 +1856,7 @@ public class CommerceInventoryAuditPersistenceImpl
 			CommerceInventoryAuditModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByC_S = new FinderPath(
-			CommerceInventoryAuditModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceInventoryAuditModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
 			new String[] {Long.class.getName(), String.class.getName()});
 	}
 
@@ -2078,10 +1883,6 @@ public class CommerceInventoryAuditPersistenceImpl
 
 	private static final String _SQL_SELECT_COMMERCEINVENTORYAUDIT =
 		"SELECT commerceInventoryAudit FROM CommerceInventoryAudit commerceInventoryAudit";
-
-	private static final String
-		_SQL_SELECT_COMMERCEINVENTORYAUDIT_WHERE_PKS_IN =
-			"SELECT commerceInventoryAudit FROM CommerceInventoryAudit commerceInventoryAudit WHERE CIAuditId IN (";
 
 	private static final String _SQL_SELECT_COMMERCEINVENTORYAUDIT_WHERE =
 		"SELECT commerceInventoryAudit FROM CommerceInventoryAudit commerceInventoryAudit WHERE ";

@@ -103,6 +103,17 @@ public class CommerceCatalogLocalServiceWrapper
 	}
 
 	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceCatalogLocalService.createPersistedModel(primaryKeyObj);
+	}
+
+	/**
 	 * Deletes the commerce catalog from the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -161,6 +172,11 @@ public class CommerceCatalogLocalServiceWrapper
 
 		return _commerceCatalogLocalService.deletePersistedModel(
 			persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _commerceCatalogLocalService.dslQuery(dslQuery);
 	}
 
 	@Override

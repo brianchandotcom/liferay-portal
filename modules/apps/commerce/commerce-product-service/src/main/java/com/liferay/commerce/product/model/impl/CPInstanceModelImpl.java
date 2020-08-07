@@ -20,6 +20,7 @@ import com.liferay.commerce.product.model.CPInstanceSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
@@ -78,7 +78,8 @@ public class CPInstanceModelImpl
 	public static final String TABLE_NAME = "CPInstance";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR},
 		{"CPInstanceId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -112,6 +113,7 @@ public class CPInstanceModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPInstanceId", Types.BIGINT);
@@ -157,7 +159,7 @@ public class CPInstanceModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPInstance (uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CPInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,CPInstanceUuid VARCHAR(75) null,sku VARCHAR(75) null,gtin VARCHAR(75) null,manufacturerPartNumber VARCHAR(75) null,purchasable BOOLEAN,width DOUBLE,height DOUBLE,depth DOUBLE,weight DOUBLE,price DECIMAL(30, 16) null,promoPrice DECIMAL(30, 16) null,cost DECIMAL(30, 16) null,published BOOLEAN,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,overrideSubscriptionInfo BOOLEAN,subscriptionEnabled BOOLEAN,subscriptionLength INTEGER,subscriptionType VARCHAR(75) null,subscriptionTypeSettings TEXT null,maxSubscriptionCycles LONG,deliverySubscriptionEnabled BOOLEAN,deliverySubscriptionLength INTEGER,deliverySubscriptionType VARCHAR(75) null,deliverySubTypeSettings VARCHAR(75) null,deliveryMaxSubscriptionCycles LONG,unspsc VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table CPInstance (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CPInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,CPInstanceUuid VARCHAR(75) null,sku VARCHAR(75) null,gtin VARCHAR(75) null,manufacturerPartNumber VARCHAR(75) null,purchasable BOOLEAN,width DOUBLE,height DOUBLE,depth DOUBLE,weight DOUBLE,price DECIMAL(30, 16) null,promoPrice DECIMAL(30, 16) null,cost DECIMAL(30, 16) null,published BOOLEAN,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,overrideSubscriptionInfo BOOLEAN,subscriptionEnabled BOOLEAN,subscriptionLength INTEGER,subscriptionType VARCHAR(75) null,subscriptionTypeSettings TEXT null,maxSubscriptionCycles LONG,deliverySubscriptionEnabled BOOLEAN,deliverySubscriptionLength INTEGER,deliverySubscriptionType VARCHAR(75) null,deliverySubTypeSettings VARCHAR(75) null,deliveryMaxSubscriptionCycles LONG,unspsc VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CPInstance";
 
@@ -173,20 +175,23 @@ public class CPInstanceModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.product.model.CPInstance"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.product.model.CPInstance"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.product.model.CPInstance"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long CPDEFINITIONID_COLUMN_BITMASK = 1L;
 
@@ -221,6 +226,7 @@ public class CPInstanceModelImpl
 
 		CPInstance model = new CPInstanceImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setCPInstanceId(soapModel.getCPInstanceId());
@@ -349,9 +355,6 @@ public class CPInstanceModelImpl
 				attributeName, attributeGetterFunction.apply((CPInstance)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -424,933 +427,219 @@ public class CPInstanceModelImpl
 		Map<String, BiConsumer<CPInstance, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<CPInstance, ?>>();
 
-		attributeGetterFunctions.put(
-			"uuid",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getUuid();
-				}
-
-			});
+		attributeGetterFunctions.put("mvccVersion", CPInstance::getMvccVersion);
 		attributeSetterBiConsumers.put(
-			"uuid",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(CPInstance cpInstance, Object uuidObject) {
-					cpInstance.setUuid((String)uuidObject);
-				}
-
-			});
+			"mvccVersion",
+			(BiConsumer<CPInstance, Long>)CPInstance::setMvccVersion);
+		attributeGetterFunctions.put("uuid", CPInstance::getUuid);
+		attributeSetterBiConsumers.put(
+			"uuid", (BiConsumer<CPInstance, String>)CPInstance::setUuid);
 		attributeGetterFunctions.put(
-			"externalReferenceCode",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getExternalReferenceCode();
-				}
-
-			});
+			"externalReferenceCode", CPInstance::getExternalReferenceCode);
 		attributeSetterBiConsumers.put(
 			"externalReferenceCode",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(
-					CPInstance cpInstance, Object externalReferenceCodeObject) {
-
-					cpInstance.setExternalReferenceCode(
-						(String)externalReferenceCodeObject);
-				}
-
-			});
+			(BiConsumer<CPInstance, String>)
+				CPInstance::setExternalReferenceCode);
 		attributeGetterFunctions.put(
-			"CPInstanceId",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getCPInstanceId();
-				}
-
-			});
+			"CPInstanceId", CPInstance::getCPInstanceId);
 		attributeSetterBiConsumers.put(
 			"CPInstanceId",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(
-					CPInstance cpInstance, Object CPInstanceIdObject) {
-
-					cpInstance.setCPInstanceId((Long)CPInstanceIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"groupId",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getGroupId();
-				}
-
-			});
+			(BiConsumer<CPInstance, Long>)CPInstance::setCPInstanceId);
+		attributeGetterFunctions.put("groupId", CPInstance::getGroupId);
 		attributeSetterBiConsumers.put(
-			"groupId",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(
-					CPInstance cpInstance, Object groupIdObject) {
-
-					cpInstance.setGroupId((Long)groupIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getCompanyId();
-				}
-
-			});
+			"groupId", (BiConsumer<CPInstance, Long>)CPInstance::setGroupId);
+		attributeGetterFunctions.put("companyId", CPInstance::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(
-					CPInstance cpInstance, Object companyIdObject) {
-
-					cpInstance.setCompanyId((Long)companyIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userId",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getUserId();
-				}
-
-			});
+			(BiConsumer<CPInstance, Long>)CPInstance::setCompanyId);
+		attributeGetterFunctions.put("userId", CPInstance::getUserId);
 		attributeSetterBiConsumers.put(
-			"userId",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(CPInstance cpInstance, Object userIdObject) {
-					cpInstance.setUserId((Long)userIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userName",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getUserName();
-				}
-
-			});
+			"userId", (BiConsumer<CPInstance, Long>)CPInstance::setUserId);
+		attributeGetterFunctions.put("userName", CPInstance::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(
-					CPInstance cpInstance, Object userNameObject) {
-
-					cpInstance.setUserName((String)userNameObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getCreateDate();
-				}
-
-			});
+			(BiConsumer<CPInstance, String>)CPInstance::setUserName);
+		attributeGetterFunctions.put("createDate", CPInstance::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(
-					CPInstance cpInstance, Object createDateObject) {
-
-					cpInstance.setCreateDate((Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CPInstance, Date>)CPInstance::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CPInstance::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(
-					CPInstance cpInstance, Object modifiedDateObject) {
-
-					cpInstance.setModifiedDate((Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CPInstance, Date>)CPInstance::setModifiedDate);
 		attributeGetterFunctions.put(
-			"CPDefinitionId",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getCPDefinitionId();
-				}
-
-			});
+			"CPDefinitionId", CPInstance::getCPDefinitionId);
 		attributeSetterBiConsumers.put(
 			"CPDefinitionId",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(
-					CPInstance cpInstance, Object CPDefinitionIdObject) {
-
-					cpInstance.setCPDefinitionId((Long)CPDefinitionIdObject);
-				}
-
-			});
+			(BiConsumer<CPInstance, Long>)CPInstance::setCPDefinitionId);
 		attributeGetterFunctions.put(
-			"CPInstanceUuid",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getCPInstanceUuid();
-				}
-
-			});
+			"CPInstanceUuid", CPInstance::getCPInstanceUuid);
 		attributeSetterBiConsumers.put(
 			"CPInstanceUuid",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(
-					CPInstance cpInstance, Object CPInstanceUuidObject) {
-
-					cpInstance.setCPInstanceUuid((String)CPInstanceUuidObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"sku",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getSku();
-				}
-
-			});
+			(BiConsumer<CPInstance, String>)CPInstance::setCPInstanceUuid);
+		attributeGetterFunctions.put("sku", CPInstance::getSku);
 		attributeSetterBiConsumers.put(
-			"sku",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(CPInstance cpInstance, Object skuObject) {
-					cpInstance.setSku((String)skuObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"gtin",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getGtin();
-				}
-
-			});
+			"sku", (BiConsumer<CPInstance, String>)CPInstance::setSku);
+		attributeGetterFunctions.put("gtin", CPInstance::getGtin);
 		attributeSetterBiConsumers.put(
-			"gtin",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(CPInstance cpInstance, Object gtinObject) {
-					cpInstance.setGtin((String)gtinObject);
-				}
-
-			});
+			"gtin", (BiConsumer<CPInstance, String>)CPInstance::setGtin);
 		attributeGetterFunctions.put(
-			"manufacturerPartNumber",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getManufacturerPartNumber();
-				}
-
-			});
+			"manufacturerPartNumber", CPInstance::getManufacturerPartNumber);
 		attributeSetterBiConsumers.put(
 			"manufacturerPartNumber",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(
-					CPInstance cpInstance,
-					Object manufacturerPartNumberObject) {
-
-					cpInstance.setManufacturerPartNumber(
-						(String)manufacturerPartNumberObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"purchasable",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getPurchasable();
-				}
-
-			});
+			(BiConsumer<CPInstance, String>)
+				CPInstance::setManufacturerPartNumber);
+		attributeGetterFunctions.put("purchasable", CPInstance::getPurchasable);
 		attributeSetterBiConsumers.put(
 			"purchasable",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(
-					CPInstance cpInstance, Object purchasableObject) {
-
-					cpInstance.setPurchasable((Boolean)purchasableObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"width",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getWidth();
-				}
-
-			});
+			(BiConsumer<CPInstance, Boolean>)CPInstance::setPurchasable);
+		attributeGetterFunctions.put("width", CPInstance::getWidth);
 		attributeSetterBiConsumers.put(
-			"width",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(CPInstance cpInstance, Object widthObject) {
-					cpInstance.setWidth((Double)widthObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"height",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getHeight();
-				}
-
-			});
+			"width", (BiConsumer<CPInstance, Double>)CPInstance::setWidth);
+		attributeGetterFunctions.put("height", CPInstance::getHeight);
 		attributeSetterBiConsumers.put(
-			"height",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(CPInstance cpInstance, Object heightObject) {
-					cpInstance.setHeight((Double)heightObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"depth",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getDepth();
-				}
-
-			});
+			"height", (BiConsumer<CPInstance, Double>)CPInstance::setHeight);
+		attributeGetterFunctions.put("depth", CPInstance::getDepth);
 		attributeSetterBiConsumers.put(
-			"depth",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(CPInstance cpInstance, Object depthObject) {
-					cpInstance.setDepth((Double)depthObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"weight",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getWeight();
-				}
-
-			});
+			"depth", (BiConsumer<CPInstance, Double>)CPInstance::setDepth);
+		attributeGetterFunctions.put("weight", CPInstance::getWeight);
 		attributeSetterBiConsumers.put(
-			"weight",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(CPInstance cpInstance, Object weightObject) {
-					cpInstance.setWeight((Double)weightObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"price",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getPrice();
-				}
-
-			});
+			"weight", (BiConsumer<CPInstance, Double>)CPInstance::setWeight);
+		attributeGetterFunctions.put("price", CPInstance::getPrice);
 		attributeSetterBiConsumers.put(
-			"price",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(CPInstance cpInstance, Object priceObject) {
-					cpInstance.setPrice((BigDecimal)priceObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"promoPrice",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getPromoPrice();
-				}
-
-			});
+			"price", (BiConsumer<CPInstance, BigDecimal>)CPInstance::setPrice);
+		attributeGetterFunctions.put("promoPrice", CPInstance::getPromoPrice);
 		attributeSetterBiConsumers.put(
 			"promoPrice",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(
-					CPInstance cpInstance, Object promoPriceObject) {
-
-					cpInstance.setPromoPrice((BigDecimal)promoPriceObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"cost",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getCost();
-				}
-
-			});
+			(BiConsumer<CPInstance, BigDecimal>)CPInstance::setPromoPrice);
+		attributeGetterFunctions.put("cost", CPInstance::getCost);
 		attributeSetterBiConsumers.put(
-			"cost",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(CPInstance cpInstance, Object costObject) {
-					cpInstance.setCost((BigDecimal)costObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"published",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getPublished();
-				}
-
-			});
+			"cost", (BiConsumer<CPInstance, BigDecimal>)CPInstance::setCost);
+		attributeGetterFunctions.put("published", CPInstance::getPublished);
 		attributeSetterBiConsumers.put(
 			"published",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(
-					CPInstance cpInstance, Object publishedObject) {
-
-					cpInstance.setPublished((Boolean)publishedObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"displayDate",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getDisplayDate();
-				}
-
-			});
+			(BiConsumer<CPInstance, Boolean>)CPInstance::setPublished);
+		attributeGetterFunctions.put("displayDate", CPInstance::getDisplayDate);
 		attributeSetterBiConsumers.put(
 			"displayDate",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(
-					CPInstance cpInstance, Object displayDateObject) {
-
-					cpInstance.setDisplayDate((Date)displayDateObject);
-				}
-
-			});
+			(BiConsumer<CPInstance, Date>)CPInstance::setDisplayDate);
 		attributeGetterFunctions.put(
-			"expirationDate",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getExpirationDate();
-				}
-
-			});
+			"expirationDate", CPInstance::getExpirationDate);
 		attributeSetterBiConsumers.put(
 			"expirationDate",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(
-					CPInstance cpInstance, Object expirationDateObject) {
-
-					cpInstance.setExpirationDate((Date)expirationDateObject);
-				}
-
-			});
+			(BiConsumer<CPInstance, Date>)CPInstance::setExpirationDate);
 		attributeGetterFunctions.put(
-			"lastPublishDate",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getLastPublishDate();
-				}
-
-			});
+			"lastPublishDate", CPInstance::getLastPublishDate);
 		attributeSetterBiConsumers.put(
 			"lastPublishDate",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(
-					CPInstance cpInstance, Object lastPublishDateObject) {
-
-					cpInstance.setLastPublishDate((Date)lastPublishDateObject);
-				}
-
-			});
+			(BiConsumer<CPInstance, Date>)CPInstance::setLastPublishDate);
 		attributeGetterFunctions.put(
 			"overrideSubscriptionInfo",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getOverrideSubscriptionInfo();
-				}
-
-			});
+			CPInstance::getOverrideSubscriptionInfo);
 		attributeSetterBiConsumers.put(
 			"overrideSubscriptionInfo",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(
-					CPInstance cpInstance,
-					Object overrideSubscriptionInfoObject) {
-
-					cpInstance.setOverrideSubscriptionInfo(
-						(Boolean)overrideSubscriptionInfoObject);
-				}
-
-			});
+			(BiConsumer<CPInstance, Boolean>)
+				CPInstance::setOverrideSubscriptionInfo);
 		attributeGetterFunctions.put(
-			"subscriptionEnabled",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getSubscriptionEnabled();
-				}
-
-			});
+			"subscriptionEnabled", CPInstance::getSubscriptionEnabled);
 		attributeSetterBiConsumers.put(
 			"subscriptionEnabled",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(
-					CPInstance cpInstance, Object subscriptionEnabledObject) {
-
-					cpInstance.setSubscriptionEnabled(
-						(Boolean)subscriptionEnabledObject);
-				}
-
-			});
+			(BiConsumer<CPInstance, Boolean>)
+				CPInstance::setSubscriptionEnabled);
 		attributeGetterFunctions.put(
-			"subscriptionLength",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getSubscriptionLength();
-				}
-
-			});
+			"subscriptionLength", CPInstance::getSubscriptionLength);
 		attributeSetterBiConsumers.put(
 			"subscriptionLength",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(
-					CPInstance cpInstance, Object subscriptionLengthObject) {
-
-					cpInstance.setSubscriptionLength(
-						(Integer)subscriptionLengthObject);
-				}
-
-			});
+			(BiConsumer<CPInstance, Integer>)CPInstance::setSubscriptionLength);
 		attributeGetterFunctions.put(
-			"subscriptionType",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getSubscriptionType();
-				}
-
-			});
+			"subscriptionType", CPInstance::getSubscriptionType);
 		attributeSetterBiConsumers.put(
 			"subscriptionType",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(
-					CPInstance cpInstance, Object subscriptionTypeObject) {
-
-					cpInstance.setSubscriptionType(
-						(String)subscriptionTypeObject);
-				}
-
-			});
+			(BiConsumer<CPInstance, String>)CPInstance::setSubscriptionType);
 		attributeGetterFunctions.put(
 			"subscriptionTypeSettings",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getSubscriptionTypeSettings();
-				}
-
-			});
+			CPInstance::getSubscriptionTypeSettings);
 		attributeSetterBiConsumers.put(
 			"subscriptionTypeSettings",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(
-					CPInstance cpInstance,
-					Object subscriptionTypeSettingsObject) {
-
-					cpInstance.setSubscriptionTypeSettings(
-						(String)subscriptionTypeSettingsObject);
-				}
-
-			});
+			(BiConsumer<CPInstance, String>)
+				CPInstance::setSubscriptionTypeSettings);
 		attributeGetterFunctions.put(
-			"maxSubscriptionCycles",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getMaxSubscriptionCycles();
-				}
-
-			});
+			"maxSubscriptionCycles", CPInstance::getMaxSubscriptionCycles);
 		attributeSetterBiConsumers.put(
 			"maxSubscriptionCycles",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(
-					CPInstance cpInstance, Object maxSubscriptionCyclesObject) {
-
-					cpInstance.setMaxSubscriptionCycles(
-						(Long)maxSubscriptionCyclesObject);
-				}
-
-			});
+			(BiConsumer<CPInstance, Long>)CPInstance::setMaxSubscriptionCycles);
 		attributeGetterFunctions.put(
 			"deliverySubscriptionEnabled",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getDeliverySubscriptionEnabled();
-				}
-
-			});
+			CPInstance::getDeliverySubscriptionEnabled);
 		attributeSetterBiConsumers.put(
 			"deliverySubscriptionEnabled",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(
-					CPInstance cpInstance,
-					Object deliverySubscriptionEnabledObject) {
-
-					cpInstance.setDeliverySubscriptionEnabled(
-						(Boolean)deliverySubscriptionEnabledObject);
-				}
-
-			});
+			(BiConsumer<CPInstance, Boolean>)
+				CPInstance::setDeliverySubscriptionEnabled);
 		attributeGetterFunctions.put(
 			"deliverySubscriptionLength",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getDeliverySubscriptionLength();
-				}
-
-			});
+			CPInstance::getDeliverySubscriptionLength);
 		attributeSetterBiConsumers.put(
 			"deliverySubscriptionLength",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(
-					CPInstance cpInstance,
-					Object deliverySubscriptionLengthObject) {
-
-					cpInstance.setDeliverySubscriptionLength(
-						(Integer)deliverySubscriptionLengthObject);
-				}
-
-			});
+			(BiConsumer<CPInstance, Integer>)
+				CPInstance::setDeliverySubscriptionLength);
 		attributeGetterFunctions.put(
 			"deliverySubscriptionType",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getDeliverySubscriptionType();
-				}
-
-			});
+			CPInstance::getDeliverySubscriptionType);
 		attributeSetterBiConsumers.put(
 			"deliverySubscriptionType",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(
-					CPInstance cpInstance,
-					Object deliverySubscriptionTypeObject) {
-
-					cpInstance.setDeliverySubscriptionType(
-						(String)deliverySubscriptionTypeObject);
-				}
-
-			});
+			(BiConsumer<CPInstance, String>)
+				CPInstance::setDeliverySubscriptionType);
 		attributeGetterFunctions.put(
 			"deliverySubscriptionTypeSettings",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getDeliverySubscriptionTypeSettings();
-				}
-
-			});
+			CPInstance::getDeliverySubscriptionTypeSettings);
 		attributeSetterBiConsumers.put(
 			"deliverySubscriptionTypeSettings",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(
-					CPInstance cpInstance,
-					Object deliverySubscriptionTypeSettingsObject) {
-
-					cpInstance.setDeliverySubscriptionTypeSettings(
-						(String)deliverySubscriptionTypeSettingsObject);
-				}
-
-			});
+			(BiConsumer<CPInstance, String>)
+				CPInstance::setDeliverySubscriptionTypeSettings);
 		attributeGetterFunctions.put(
 			"deliveryMaxSubscriptionCycles",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getDeliveryMaxSubscriptionCycles();
-				}
-
-			});
+			CPInstance::getDeliveryMaxSubscriptionCycles);
 		attributeSetterBiConsumers.put(
 			"deliveryMaxSubscriptionCycles",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(
-					CPInstance cpInstance,
-					Object deliveryMaxSubscriptionCyclesObject) {
-
-					cpInstance.setDeliveryMaxSubscriptionCycles(
-						(Long)deliveryMaxSubscriptionCyclesObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"unspsc",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getUnspsc();
-				}
-
-			});
+			(BiConsumer<CPInstance, Long>)
+				CPInstance::setDeliveryMaxSubscriptionCycles);
+		attributeGetterFunctions.put("unspsc", CPInstance::getUnspsc);
 		attributeSetterBiConsumers.put(
-			"unspsc",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(CPInstance cpInstance, Object unspscObject) {
-					cpInstance.setUnspsc((String)unspscObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"status",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getStatus();
-				}
-
-			});
+			"unspsc", (BiConsumer<CPInstance, String>)CPInstance::setUnspsc);
+		attributeGetterFunctions.put("status", CPInstance::getStatus);
 		attributeSetterBiConsumers.put(
-			"status",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(CPInstance cpInstance, Object statusObject) {
-					cpInstance.setStatus((Integer)statusObject);
-				}
-
-			});
+			"status", (BiConsumer<CPInstance, Integer>)CPInstance::setStatus);
 		attributeGetterFunctions.put(
-			"statusByUserId",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getStatusByUserId();
-				}
-
-			});
+			"statusByUserId", CPInstance::getStatusByUserId);
 		attributeSetterBiConsumers.put(
 			"statusByUserId",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(
-					CPInstance cpInstance, Object statusByUserIdObject) {
-
-					cpInstance.setStatusByUserId((Long)statusByUserIdObject);
-				}
-
-			});
+			(BiConsumer<CPInstance, Long>)CPInstance::setStatusByUserId);
 		attributeGetterFunctions.put(
-			"statusByUserName",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getStatusByUserName();
-				}
-
-			});
+			"statusByUserName", CPInstance::getStatusByUserName);
 		attributeSetterBiConsumers.put(
 			"statusByUserName",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(
-					CPInstance cpInstance, Object statusByUserNameObject) {
-
-					cpInstance.setStatusByUserName(
-						(String)statusByUserNameObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"statusDate",
-			new Function<CPInstance, Object>() {
-
-				@Override
-				public Object apply(CPInstance cpInstance) {
-					return cpInstance.getStatusDate();
-				}
-
-			});
+			(BiConsumer<CPInstance, String>)CPInstance::setStatusByUserName);
+		attributeGetterFunctions.put("statusDate", CPInstance::getStatusDate);
 		attributeSetterBiConsumers.put(
 			"statusDate",
-			new BiConsumer<CPInstance, Object>() {
-
-				@Override
-				public void accept(
-					CPInstance cpInstance, Object statusDateObject) {
-
-					cpInstance.setStatusDate((Date)statusDateObject);
-				}
-
-			});
+			(BiConsumer<CPInstance, Date>)CPInstance::setStatusDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -2174,6 +1463,7 @@ public class CPInstanceModelImpl
 	public Object clone() {
 		CPInstanceImpl cpInstanceImpl = new CPInstanceImpl();
 
+		cpInstanceImpl.setMvccVersion(getMvccVersion());
 		cpInstanceImpl.setUuid(getUuid());
 		cpInstanceImpl.setExternalReferenceCode(getExternalReferenceCode());
 		cpInstanceImpl.setCPInstanceId(getCPInstanceId());
@@ -2280,11 +1570,19 @@ public class CPInstanceModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -2325,6 +1623,8 @@ public class CPInstanceModelImpl
 	@Override
 	public CacheModel<CPInstance> toCacheModel() {
 		CPInstanceCacheModel cpInstanceCacheModel = new CPInstanceCacheModel();
+
+		cpInstanceCacheModel.mvccVersion = getMvccVersion();
 
 		cpInstanceCacheModel.uuid = getUuid();
 
@@ -2626,6 +1926,7 @@ public class CPInstanceModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private String _externalReferenceCode;

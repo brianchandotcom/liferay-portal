@@ -1,4 +1,5 @@
 create table CDataIntegrationProcess (
+	mvccVersion LONG default 0 not null,
 	CDataIntegrationProcessId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
@@ -16,6 +17,7 @@ create table CDataIntegrationProcess (
 );
 
 create table CDataIntegrationProcessLog (
+	mvccVersion LONG default 0 not null,
 	CDataIntegrationProcessLogId LONG not null primary key,
 	companyId LONG,
 	userId LONG,

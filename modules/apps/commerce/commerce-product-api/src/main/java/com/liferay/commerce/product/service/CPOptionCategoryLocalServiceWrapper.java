@@ -80,6 +80,18 @@ public class CPOptionCategoryLocalServiceWrapper
 			CPOptionCategoryId);
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpOptionCategoryLocalService.createPersistedModel(
+			primaryKeyObj);
+	}
+
 	@Override
 	public void deleteCPOptionCategories(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -139,6 +151,11 @@ public class CPOptionCategoryLocalServiceWrapper
 
 		return _cpOptionCategoryLocalService.deletePersistedModel(
 			persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _cpOptionCategoryLocalService.dslQuery(dslQuery);
 	}
 
 	@Override

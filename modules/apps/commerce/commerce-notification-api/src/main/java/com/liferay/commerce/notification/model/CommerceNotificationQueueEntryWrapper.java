@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.notification.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,29 +31,21 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceNotificationQueueEntryWrapper
+	extends BaseModelWrapper<CommerceNotificationQueueEntry>
 	implements CommerceNotificationQueueEntry,
 			   ModelWrapper<CommerceNotificationQueueEntry> {
 
 	public CommerceNotificationQueueEntryWrapper(
 		CommerceNotificationQueueEntry commerceNotificationQueueEntry) {
 
-		_commerceNotificationQueueEntry = commerceNotificationQueueEntry;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceNotificationQueueEntry.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceNotificationQueueEntry.class.getName();
+		super(commerceNotificationQueueEntry);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put(
 			"commerceNotificationQueueEntryId",
 			getCommerceNotificationQueueEntryId());
@@ -89,6 +77,12 @@ public class CommerceNotificationQueueEntryWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long commerceNotificationQueueEntryId = (Long)attributes.get(
 			"commerceNotificationQueueEntryId");
 
@@ -219,21 +213,6 @@ public class CommerceNotificationQueueEntryWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CommerceNotificationQueueEntryWrapper(
-			(CommerceNotificationQueueEntry)
-				_commerceNotificationQueueEntry.clone());
-	}
-
-	@Override
-	public int compareTo(
-		CommerceNotificationQueueEntry commerceNotificationQueueEntry) {
-
-		return _commerceNotificationQueueEntry.compareTo(
-			commerceNotificationQueueEntry);
-	}
-
 	/**
 	 * Returns the bcc of this commerce notification queue entry.
 	 *
@@ -241,7 +220,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public String getBcc() {
-		return _commerceNotificationQueueEntry.getBcc();
+		return model.getBcc();
 	}
 
 	/**
@@ -251,7 +230,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public String getBody() {
-		return _commerceNotificationQueueEntry.getBody();
+		return model.getBody();
 	}
 
 	/**
@@ -261,7 +240,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public String getCc() {
-		return _commerceNotificationQueueEntry.getCc();
+		return model.getCc();
 	}
 
 	/**
@@ -271,7 +250,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public String getClassName() {
-		return _commerceNotificationQueueEntry.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -281,7 +260,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public long getClassNameId() {
-		return _commerceNotificationQueueEntry.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -291,7 +270,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public long getClassPK() {
-		return _commerceNotificationQueueEntry.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -301,8 +280,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public long getCommerceNotificationQueueEntryId() {
-		return _commerceNotificationQueueEntry.
-			getCommerceNotificationQueueEntryId();
+		return model.getCommerceNotificationQueueEntryId();
 	}
 
 	/**
@@ -312,8 +290,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public long getCommerceNotificationTemplateId() {
-		return _commerceNotificationQueueEntry.
-			getCommerceNotificationTemplateId();
+		return model.getCommerceNotificationTemplateId();
 	}
 
 	/**
@@ -323,7 +300,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceNotificationQueueEntry.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -333,12 +310,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceNotificationQueueEntry.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceNotificationQueueEntry.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -348,7 +320,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public String getFrom() {
-		return _commerceNotificationQueueEntry.getFrom();
+		return model.getFrom();
 	}
 
 	/**
@@ -358,7 +330,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public String getFromName() {
-		return _commerceNotificationQueueEntry.getFromName();
+		return model.getFromName();
 	}
 
 	/**
@@ -368,7 +340,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _commerceNotificationQueueEntry.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -378,7 +350,17 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceNotificationQueueEntry.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce notification queue entry.
+	 *
+	 * @return the mvcc version of this commerce notification queue entry
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -388,12 +370,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceNotificationQueueEntry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceNotificationQueueEntry.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -403,7 +380,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public double getPriority() {
-		return _commerceNotificationQueueEntry.getPriority();
+		return model.getPriority();
 	}
 
 	/**
@@ -413,7 +390,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public boolean getSent() {
-		return _commerceNotificationQueueEntry.getSent();
+		return model.getSent();
 	}
 
 	/**
@@ -423,7 +400,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public Date getSentDate() {
-		return _commerceNotificationQueueEntry.getSentDate();
+		return model.getSentDate();
 	}
 
 	/**
@@ -433,7 +410,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public String getSubject() {
-		return _commerceNotificationQueueEntry.getSubject();
+		return model.getSubject();
 	}
 
 	/**
@@ -443,7 +420,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public String getTo() {
-		return _commerceNotificationQueueEntry.getTo();
+		return model.getTo();
 	}
 
 	/**
@@ -453,7 +430,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public String getToName() {
-		return _commerceNotificationQueueEntry.getToName();
+		return model.getToName();
 	}
 
 	/**
@@ -463,7 +440,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceNotificationQueueEntry.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -473,7 +450,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceNotificationQueueEntry.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -483,27 +460,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceNotificationQueueEntry.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceNotificationQueueEntry.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceNotificationQueueEntry.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceNotificationQueueEntry.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceNotificationQueueEntry.isNew();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -513,12 +470,12 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public boolean isSent() {
-		return _commerceNotificationQueueEntry.isSent();
+		return model.isSent();
 	}
 
 	@Override
 	public void persist() {
-		_commerceNotificationQueueEntry.persist();
+		model.persist();
 	}
 
 	/**
@@ -528,7 +485,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public void setBcc(String bcc) {
-		_commerceNotificationQueueEntry.setBcc(bcc);
+		model.setBcc(bcc);
 	}
 
 	/**
@@ -538,12 +495,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public void setBody(String body) {
-		_commerceNotificationQueueEntry.setBody(body);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceNotificationQueueEntry.setCachedModel(cachedModel);
+		model.setBody(body);
 	}
 
 	/**
@@ -553,12 +505,12 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public void setCc(String cc) {
-		_commerceNotificationQueueEntry.setCc(cc);
+		model.setCc(cc);
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_commerceNotificationQueueEntry.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -568,7 +520,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public void setClassNameId(long classNameId) {
-		_commerceNotificationQueueEntry.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -578,7 +530,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public void setClassPK(long classPK) {
-		_commerceNotificationQueueEntry.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -590,7 +542,7 @@ public class CommerceNotificationQueueEntryWrapper
 	public void setCommerceNotificationQueueEntryId(
 		long commerceNotificationQueueEntryId) {
 
-		_commerceNotificationQueueEntry.setCommerceNotificationQueueEntryId(
+		model.setCommerceNotificationQueueEntryId(
 			commerceNotificationQueueEntryId);
 	}
 
@@ -603,8 +555,7 @@ public class CommerceNotificationQueueEntryWrapper
 	public void setCommerceNotificationTemplateId(
 		long commerceNotificationTemplateId) {
 
-		_commerceNotificationQueueEntry.setCommerceNotificationTemplateId(
-			commerceNotificationTemplateId);
+		model.setCommerceNotificationTemplateId(commerceNotificationTemplateId);
 	}
 
 	/**
@@ -614,7 +565,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceNotificationQueueEntry.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -624,26 +575,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceNotificationQueueEntry.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceNotificationQueueEntry.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceNotificationQueueEntry.setExpandoBridgeAttributes(
-			expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceNotificationQueueEntry.setExpandoBridgeAttributes(
-			serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -653,7 +585,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public void setFrom(String from) {
-		_commerceNotificationQueueEntry.setFrom(from);
+		model.setFrom(from);
 	}
 
 	/**
@@ -663,7 +595,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public void setFromName(String fromName) {
-		_commerceNotificationQueueEntry.setFromName(fromName);
+		model.setFromName(fromName);
 	}
 
 	/**
@@ -673,7 +605,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_commerceNotificationQueueEntry.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -683,12 +615,17 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceNotificationQueueEntry.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this commerce notification queue entry.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce notification queue entry
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_commerceNotificationQueueEntry.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -698,12 +635,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceNotificationQueueEntry.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceNotificationQueueEntry.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -713,7 +645,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public void setPriority(double priority) {
-		_commerceNotificationQueueEntry.setPriority(priority);
+		model.setPriority(priority);
 	}
 
 	/**
@@ -723,7 +655,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public void setSent(boolean sent) {
-		_commerceNotificationQueueEntry.setSent(sent);
+		model.setSent(sent);
 	}
 
 	/**
@@ -733,7 +665,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public void setSentDate(Date sentDate) {
-		_commerceNotificationQueueEntry.setSentDate(sentDate);
+		model.setSentDate(sentDate);
 	}
 
 	/**
@@ -743,7 +675,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public void setSubject(String subject) {
-		_commerceNotificationQueueEntry.setSubject(subject);
+		model.setSubject(subject);
 	}
 
 	/**
@@ -753,7 +685,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public void setTo(String to) {
-		_commerceNotificationQueueEntry.setTo(to);
+		model.setTo(to);
 	}
 
 	/**
@@ -763,7 +695,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public void setToName(String toName) {
-		_commerceNotificationQueueEntry.setToName(toName);
+		model.setToName(toName);
 	}
 
 	/**
@@ -773,7 +705,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceNotificationQueueEntry.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -783,7 +715,7 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceNotificationQueueEntry.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -793,84 +725,15 @@ public class CommerceNotificationQueueEntryWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceNotificationQueueEntry.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel
-		<CommerceNotificationQueueEntry> toCacheModel() {
+	protected CommerceNotificationQueueEntryWrapper wrap(
+		CommerceNotificationQueueEntry commerceNotificationQueueEntry) {
 
-		return _commerceNotificationQueueEntry.toCacheModel();
-	}
-
-	@Override
-	public CommerceNotificationQueueEntry toEscapedModel() {
 		return new CommerceNotificationQueueEntryWrapper(
-			_commerceNotificationQueueEntry.toEscapedModel());
+			commerceNotificationQueueEntry);
 	}
-
-	@Override
-	public String toString() {
-		return _commerceNotificationQueueEntry.toString();
-	}
-
-	@Override
-	public CommerceNotificationQueueEntry toUnescapedModel() {
-		return new CommerceNotificationQueueEntryWrapper(
-			_commerceNotificationQueueEntry.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceNotificationQueueEntry.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceNotificationQueueEntryWrapper)) {
-			return false;
-		}
-
-		CommerceNotificationQueueEntryWrapper
-			commerceNotificationQueueEntryWrapper =
-				(CommerceNotificationQueueEntryWrapper)object;
-
-		if (Objects.equals(
-				_commerceNotificationQueueEntry,
-				commerceNotificationQueueEntryWrapper.
-					_commerceNotificationQueueEntry)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceNotificationQueueEntry getWrappedModel() {
-		return _commerceNotificationQueueEntry;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceNotificationQueueEntry.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceNotificationQueueEntry.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceNotificationQueueEntry.resetOriginalValues();
-	}
-
-	private final CommerceNotificationQueueEntry
-		_commerceNotificationQueueEntry;
 
 }

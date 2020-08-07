@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.bom.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,26 +31,18 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceBOMFolderWrapper
+	extends BaseModelWrapper<CommerceBOMFolder>
 	implements CommerceBOMFolder, ModelWrapper<CommerceBOMFolder> {
 
 	public CommerceBOMFolderWrapper(CommerceBOMFolder commerceBOMFolder) {
-		_commerceBOMFolder = commerceBOMFolder;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceBOMFolder.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceBOMFolder.class.getName();
+		super(commerceBOMFolder);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("commerceBOMFolderId", getCommerceBOMFolderId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -72,6 +60,12 @@ public class CommerceBOMFolderWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long commerceBOMFolderId = (Long)attributes.get("commerceBOMFolderId");
 
 		if (commerceBOMFolderId != null) {
@@ -138,32 +132,21 @@ public class CommerceBOMFolderWrapper
 	public String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceBOMFolder.buildTreePath();
-	}
-
-	@Override
-	public Object clone() {
-		return new CommerceBOMFolderWrapper(
-			(CommerceBOMFolder)_commerceBOMFolder.clone());
-	}
-
-	@Override
-	public int compareTo(CommerceBOMFolder commerceBOMFolder) {
-		return _commerceBOMFolder.compareTo(commerceBOMFolder);
+		return model.buildTreePath();
 	}
 
 	@Override
 	public java.util.List<Long> getAncestorCommerceBOMFolderIds()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceBOMFolder.getAncestorCommerceBOMFolderIds();
+		return model.getAncestorCommerceBOMFolderIds();
 	}
 
 	@Override
 	public java.util.List<CommerceBOMFolder> getAncestors()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceBOMFolder.getAncestors();
+		return model.getAncestors();
 	}
 
 	/**
@@ -173,7 +156,7 @@ public class CommerceBOMFolderWrapper
 	 */
 	@Override
 	public long getCommerceBOMFolderId() {
-		return _commerceBOMFolder.getCommerceBOMFolderId();
+		return model.getCommerceBOMFolderId();
 	}
 
 	/**
@@ -183,7 +166,7 @@ public class CommerceBOMFolderWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceBOMFolder.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -193,12 +176,7 @@ public class CommerceBOMFolderWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceBOMFolder.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceBOMFolder.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -208,7 +186,7 @@ public class CommerceBOMFolderWrapper
 	 */
 	@Override
 	public long getLogoId() {
-		return _commerceBOMFolder.getLogoId();
+		return model.getLogoId();
 	}
 
 	/**
@@ -218,7 +196,17 @@ public class CommerceBOMFolderWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceBOMFolder.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce bom folder.
+	 *
+	 * @return the mvcc version of this commerce bom folder
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -228,14 +216,14 @@ public class CommerceBOMFolderWrapper
 	 */
 	@Override
 	public String getName() {
-		return _commerceBOMFolder.getName();
+		return model.getName();
 	}
 
 	@Override
 	public CommerceBOMFolder getParentCommerceBOMFolder()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceBOMFolder.getParentCommerceBOMFolder();
+		return model.getParentCommerceBOMFolder();
 	}
 
 	/**
@@ -245,7 +233,7 @@ public class CommerceBOMFolderWrapper
 	 */
 	@Override
 	public long getParentCommerceBOMFolderId() {
-		return _commerceBOMFolder.getParentCommerceBOMFolderId();
+		return model.getParentCommerceBOMFolderId();
 	}
 
 	/**
@@ -255,12 +243,7 @@ public class CommerceBOMFolderWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceBOMFolder.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceBOMFolder.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -270,7 +253,7 @@ public class CommerceBOMFolderWrapper
 	 */
 	@Override
 	public String getTreePath() {
-		return _commerceBOMFolder.getTreePath();
+		return model.getTreePath();
 	}
 
 	/**
@@ -280,7 +263,7 @@ public class CommerceBOMFolderWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceBOMFolder.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -290,7 +273,7 @@ public class CommerceBOMFolderWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceBOMFolder.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -300,42 +283,17 @@ public class CommerceBOMFolderWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceBOMFolder.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceBOMFolder.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceBOMFolder.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceBOMFolder.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceBOMFolder.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public boolean isRoot() {
-		return _commerceBOMFolder.isRoot();
+		return model.isRoot();
 	}
 
 	@Override
 	public void persist() {
-		_commerceBOMFolder.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceBOMFolder.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -345,7 +303,7 @@ public class CommerceBOMFolderWrapper
 	 */
 	@Override
 	public void setCommerceBOMFolderId(long commerceBOMFolderId) {
-		_commerceBOMFolder.setCommerceBOMFolderId(commerceBOMFolderId);
+		model.setCommerceBOMFolderId(commerceBOMFolderId);
 	}
 
 	/**
@@ -355,7 +313,7 @@ public class CommerceBOMFolderWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceBOMFolder.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -365,24 +323,7 @@ public class CommerceBOMFolderWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceBOMFolder.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceBOMFolder.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceBOMFolder.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceBOMFolder.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -392,7 +333,7 @@ public class CommerceBOMFolderWrapper
 	 */
 	@Override
 	public void setLogoId(long logoId) {
-		_commerceBOMFolder.setLogoId(logoId);
+		model.setLogoId(logoId);
 	}
 
 	/**
@@ -402,7 +343,17 @@ public class CommerceBOMFolderWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceBOMFolder.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this commerce bom folder.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce bom folder
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -412,12 +363,7 @@ public class CommerceBOMFolderWrapper
 	 */
 	@Override
 	public void setName(String name) {
-		_commerceBOMFolder.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_commerceBOMFolder.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -427,8 +373,7 @@ public class CommerceBOMFolderWrapper
 	 */
 	@Override
 	public void setParentCommerceBOMFolderId(long parentCommerceBOMFolderId) {
-		_commerceBOMFolder.setParentCommerceBOMFolderId(
-			parentCommerceBOMFolderId);
+		model.setParentCommerceBOMFolderId(parentCommerceBOMFolderId);
 	}
 
 	/**
@@ -438,12 +383,7 @@ public class CommerceBOMFolderWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceBOMFolder.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceBOMFolder.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -453,7 +393,7 @@ public class CommerceBOMFolderWrapper
 	 */
 	@Override
 	public void setTreePath(String treePath) {
-		_commerceBOMFolder.setTreePath(treePath);
+		model.setTreePath(treePath);
 	}
 
 	/**
@@ -463,7 +403,7 @@ public class CommerceBOMFolderWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceBOMFolder.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -473,7 +413,7 @@ public class CommerceBOMFolderWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceBOMFolder.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -483,86 +423,19 @@ public class CommerceBOMFolderWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceBOMFolder.setUserUuid(userUuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceBOMFolder>
-		toCacheModel() {
-
-		return _commerceBOMFolder.toCacheModel();
-	}
-
-	@Override
-	public CommerceBOMFolder toEscapedModel() {
-		return new CommerceBOMFolderWrapper(
-			_commerceBOMFolder.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commerceBOMFolder.toString();
-	}
-
-	@Override
-	public CommerceBOMFolder toUnescapedModel() {
-		return new CommerceBOMFolderWrapper(
-			_commerceBOMFolder.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceBOMFolder.toXmlString();
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
 	public void updateTreePath(String treePath) {
-		_commerceBOMFolder.updateTreePath(treePath);
+		model.updateTreePath(treePath);
 	}
 
 	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
+	protected CommerceBOMFolderWrapper wrap(
+		CommerceBOMFolder commerceBOMFolder) {
 
-		if (!(object instanceof CommerceBOMFolderWrapper)) {
-			return false;
-		}
-
-		CommerceBOMFolderWrapper commerceBOMFolderWrapper =
-			(CommerceBOMFolderWrapper)object;
-
-		if (Objects.equals(
-				_commerceBOMFolder,
-				commerceBOMFolderWrapper._commerceBOMFolder)) {
-
-			return true;
-		}
-
-		return false;
+		return new CommerceBOMFolderWrapper(commerceBOMFolder);
 	}
-
-	@Override
-	public CommerceBOMFolder getWrappedModel() {
-		return _commerceBOMFolder;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceBOMFolder.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceBOMFolder.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceBOMFolder.resetOriginalValues();
-	}
-
-	private final CommerceBOMFolder _commerceBOMFolder;
 
 }

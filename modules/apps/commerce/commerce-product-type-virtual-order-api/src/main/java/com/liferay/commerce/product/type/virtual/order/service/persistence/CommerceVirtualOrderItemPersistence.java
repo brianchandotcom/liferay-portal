@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.product.type.virtual.order.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.product.type.virtual.order.exception.NoSuchVirtualOrderItemException;
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce virtual order item service.
@@ -45,9 +40,6 @@ public interface CommerceVirtualOrderItemPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceVirtualOrderItemUtil} to access the commerce virtual order item persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceVirtualOrderItem> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce virtual order items where uuid = &#63;.
@@ -568,8 +560,5 @@ public interface CommerceVirtualOrderItemPersistence
 	 * @return the number of commerce virtual order items
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

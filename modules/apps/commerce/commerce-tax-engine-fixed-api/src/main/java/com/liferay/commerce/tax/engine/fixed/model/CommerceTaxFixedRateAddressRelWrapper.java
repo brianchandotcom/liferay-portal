@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.tax.engine.fixed.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,29 +31,21 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceTaxFixedRateAddressRelWrapper
+	extends BaseModelWrapper<CommerceTaxFixedRateAddressRel>
 	implements CommerceTaxFixedRateAddressRel,
 			   ModelWrapper<CommerceTaxFixedRateAddressRel> {
 
 	public CommerceTaxFixedRateAddressRelWrapper(
 		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel) {
 
-		_commerceTaxFixedRateAddressRel = commerceTaxFixedRateAddressRel;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceTaxFixedRateAddressRel.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceTaxFixedRateAddressRel.class.getName();
+		super(commerceTaxFixedRateAddressRel);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put(
 			"commerceTaxFixedRateAddressRelId",
 			getCommerceTaxFixedRateAddressRelId());
@@ -79,6 +67,12 @@ public class CommerceTaxFixedRateAddressRelWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long commerceTaxFixedRateAddressRelId = (Long)attributes.get(
 			"commerceTaxFixedRateAddressRelId");
 
@@ -161,25 +155,10 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	}
 
 	@Override
-	public Object clone() {
-		return new CommerceTaxFixedRateAddressRelWrapper(
-			(CommerceTaxFixedRateAddressRel)
-				_commerceTaxFixedRateAddressRel.clone());
-	}
-
-	@Override
-	public int compareTo(
-		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel) {
-
-		return _commerceTaxFixedRateAddressRel.compareTo(
-			commerceTaxFixedRateAddressRel);
-	}
-
-	@Override
 	public com.liferay.commerce.model.CommerceCountry getCommerceCountry()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceTaxFixedRateAddressRel.getCommerceCountry();
+		return model.getCommerceCountry();
 	}
 
 	/**
@@ -189,14 +168,14 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	 */
 	@Override
 	public long getCommerceCountryId() {
-		return _commerceTaxFixedRateAddressRel.getCommerceCountryId();
+		return model.getCommerceCountryId();
 	}
 
 	@Override
 	public com.liferay.commerce.model.CommerceRegion getCommerceRegion()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceTaxFixedRateAddressRel.getCommerceRegion();
+		return model.getCommerceRegion();
 	}
 
 	/**
@@ -206,7 +185,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	 */
 	@Override
 	public long getCommerceRegionId() {
-		return _commerceTaxFixedRateAddressRel.getCommerceRegionId();
+		return model.getCommerceRegionId();
 	}
 
 	/**
@@ -216,8 +195,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	 */
 	@Override
 	public long getCommerceTaxFixedRateAddressRelId() {
-		return _commerceTaxFixedRateAddressRel.
-			getCommerceTaxFixedRateAddressRelId();
+		return model.getCommerceTaxFixedRateAddressRelId();
 	}
 
 	@Override
@@ -225,7 +203,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 			getCommerceTaxMethod()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceTaxFixedRateAddressRel.getCommerceTaxMethod();
+		return model.getCommerceTaxMethod();
 	}
 
 	/**
@@ -235,7 +213,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	 */
 	@Override
 	public long getCommerceTaxMethodId() {
-		return _commerceTaxFixedRateAddressRel.getCommerceTaxMethodId();
+		return model.getCommerceTaxMethodId();
 	}
 
 	/**
@@ -245,14 +223,14 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceTaxFixedRateAddressRel.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	@Override
 	public com.liferay.commerce.product.model.CPTaxCategory getCPTaxCategory()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceTaxFixedRateAddressRel.getCPTaxCategory();
+		return model.getCPTaxCategory();
 	}
 
 	/**
@@ -262,7 +240,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	 */
 	@Override
 	public long getCPTaxCategoryId() {
-		return _commerceTaxFixedRateAddressRel.getCPTaxCategoryId();
+		return model.getCPTaxCategoryId();
 	}
 
 	/**
@@ -272,12 +250,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceTaxFixedRateAddressRel.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceTaxFixedRateAddressRel.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -287,7 +260,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _commerceTaxFixedRateAddressRel.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -297,7 +270,17 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceTaxFixedRateAddressRel.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce tax fixed rate address rel.
+	 *
+	 * @return the mvcc version of this commerce tax fixed rate address rel
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -307,12 +290,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceTaxFixedRateAddressRel.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceTaxFixedRateAddressRel.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -322,7 +300,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	 */
 	@Override
 	public double getRate() {
-		return _commerceTaxFixedRateAddressRel.getRate();
+		return model.getRate();
 	}
 
 	/**
@@ -332,7 +310,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceTaxFixedRateAddressRel.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -342,7 +320,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceTaxFixedRateAddressRel.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -352,7 +330,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceTaxFixedRateAddressRel.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -362,37 +340,12 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	 */
 	@Override
 	public String getZip() {
-		return _commerceTaxFixedRateAddressRel.getZip();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceTaxFixedRateAddressRel.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceTaxFixedRateAddressRel.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceTaxFixedRateAddressRel.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceTaxFixedRateAddressRel.isNew();
+		return model.getZip();
 	}
 
 	@Override
 	public void persist() {
-		_commerceTaxFixedRateAddressRel.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceTaxFixedRateAddressRel.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -402,7 +355,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	 */
 	@Override
 	public void setCommerceCountryId(long commerceCountryId) {
-		_commerceTaxFixedRateAddressRel.setCommerceCountryId(commerceCountryId);
+		model.setCommerceCountryId(commerceCountryId);
 	}
 
 	/**
@@ -412,7 +365,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	 */
 	@Override
 	public void setCommerceRegionId(long commerceRegionId) {
-		_commerceTaxFixedRateAddressRel.setCommerceRegionId(commerceRegionId);
+		model.setCommerceRegionId(commerceRegionId);
 	}
 
 	/**
@@ -424,7 +377,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	public void setCommerceTaxFixedRateAddressRelId(
 		long commerceTaxFixedRateAddressRelId) {
 
-		_commerceTaxFixedRateAddressRel.setCommerceTaxFixedRateAddressRelId(
+		model.setCommerceTaxFixedRateAddressRelId(
 			commerceTaxFixedRateAddressRelId);
 	}
 
@@ -435,8 +388,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	 */
 	@Override
 	public void setCommerceTaxMethodId(long commerceTaxMethodId) {
-		_commerceTaxFixedRateAddressRel.setCommerceTaxMethodId(
-			commerceTaxMethodId);
+		model.setCommerceTaxMethodId(commerceTaxMethodId);
 	}
 
 	/**
@@ -446,7 +398,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceTaxFixedRateAddressRel.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -456,7 +408,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	 */
 	@Override
 	public void setCPTaxCategoryId(long CPTaxCategoryId) {
-		_commerceTaxFixedRateAddressRel.setCPTaxCategoryId(CPTaxCategoryId);
+		model.setCPTaxCategoryId(CPTaxCategoryId);
 	}
 
 	/**
@@ -466,26 +418,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceTaxFixedRateAddressRel.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceTaxFixedRateAddressRel.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceTaxFixedRateAddressRel.setExpandoBridgeAttributes(
-			expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceTaxFixedRateAddressRel.setExpandoBridgeAttributes(
-			serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -495,7 +428,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_commerceTaxFixedRateAddressRel.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -505,12 +438,17 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceTaxFixedRateAddressRel.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this commerce tax fixed rate address rel.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce tax fixed rate address rel
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_commerceTaxFixedRateAddressRel.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -520,12 +458,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceTaxFixedRateAddressRel.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceTaxFixedRateAddressRel.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -535,7 +468,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	 */
 	@Override
 	public void setRate(double rate) {
-		_commerceTaxFixedRateAddressRel.setRate(rate);
+		model.setRate(rate);
 	}
 
 	/**
@@ -545,7 +478,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceTaxFixedRateAddressRel.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -555,7 +488,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceTaxFixedRateAddressRel.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -565,7 +498,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceTaxFixedRateAddressRel.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -575,84 +508,15 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	 */
 	@Override
 	public void setZip(String zip) {
-		_commerceTaxFixedRateAddressRel.setZip(zip);
+		model.setZip(zip);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel
-		<CommerceTaxFixedRateAddressRel> toCacheModel() {
+	protected CommerceTaxFixedRateAddressRelWrapper wrap(
+		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel) {
 
-		return _commerceTaxFixedRateAddressRel.toCacheModel();
-	}
-
-	@Override
-	public CommerceTaxFixedRateAddressRel toEscapedModel() {
 		return new CommerceTaxFixedRateAddressRelWrapper(
-			_commerceTaxFixedRateAddressRel.toEscapedModel());
+			commerceTaxFixedRateAddressRel);
 	}
-
-	@Override
-	public String toString() {
-		return _commerceTaxFixedRateAddressRel.toString();
-	}
-
-	@Override
-	public CommerceTaxFixedRateAddressRel toUnescapedModel() {
-		return new CommerceTaxFixedRateAddressRelWrapper(
-			_commerceTaxFixedRateAddressRel.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceTaxFixedRateAddressRel.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceTaxFixedRateAddressRelWrapper)) {
-			return false;
-		}
-
-		CommerceTaxFixedRateAddressRelWrapper
-			commerceTaxFixedRateAddressRelWrapper =
-				(CommerceTaxFixedRateAddressRelWrapper)object;
-
-		if (Objects.equals(
-				_commerceTaxFixedRateAddressRel,
-				commerceTaxFixedRateAddressRelWrapper.
-					_commerceTaxFixedRateAddressRel)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceTaxFixedRateAddressRel getWrappedModel() {
-		return _commerceTaxFixedRateAddressRel;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceTaxFixedRateAddressRel.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceTaxFixedRateAddressRel.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceTaxFixedRateAddressRel.resetOriginalValues();
-	}
-
-	private final CommerceTaxFixedRateAddressRel
-		_commerceTaxFixedRateAddressRel;
 
 }

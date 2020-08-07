@@ -20,6 +20,7 @@ import com.liferay.commerce.product.model.CPMeasurementUnitSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,7 +36,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -81,20 +81,21 @@ public class CPMeasurementUnitModelImpl
 	public static final String TABLE_NAME = "CPMeasurementUnit";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"CPMeasurementUnitId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"name", Types.VARCHAR}, {"key_", Types.VARCHAR},
-		{"rate", Types.DOUBLE}, {"primary_", Types.BOOLEAN},
-		{"priority", Types.DOUBLE}, {"type_", Types.INTEGER},
-		{"lastPublishDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"CPMeasurementUnitId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
+		{"key_", Types.VARCHAR}, {"rate", Types.DOUBLE},
+		{"primary_", Types.BOOLEAN}, {"priority", Types.DOUBLE},
+		{"type_", Types.INTEGER}, {"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPMeasurementUnitId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -113,7 +114,7 @@ public class CPMeasurementUnitModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPMeasurementUnit (uuid_ VARCHAR(75) null,CPMeasurementUnitId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,key_ VARCHAR(75) null,rate DOUBLE,primary_ BOOLEAN,priority DOUBLE,type_ INTEGER,lastPublishDate DATE null)";
+		"create table CPMeasurementUnit (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,CPMeasurementUnitId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,key_ VARCHAR(75) null,rate DOUBLE,primary_ BOOLEAN,priority DOUBLE,type_ INTEGER,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CPMeasurementUnit";
 
@@ -129,20 +130,23 @@ public class CPMeasurementUnitModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.product.model.CPMeasurementUnit"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.product.model.CPMeasurementUnit"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.product.model.CPMeasurementUnit"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
@@ -171,6 +175,7 @@ public class CPMeasurementUnitModelImpl
 
 		CPMeasurementUnit model = new CPMeasurementUnitImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCPMeasurementUnitId(soapModel.getCPMeasurementUnitId());
 		model.setGroupId(soapModel.getGroupId());
@@ -269,9 +274,6 @@ public class CPMeasurementUnitModelImpl
 				attributeGetterFunction.apply((CPMeasurementUnit)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -348,349 +350,102 @@ public class CPMeasurementUnitModelImpl
 				new LinkedHashMap<String, BiConsumer<CPMeasurementUnit, ?>>();
 
 		attributeGetterFunctions.put(
-			"uuid",
-			new Function<CPMeasurementUnit, Object>() {
-
-				@Override
-				public Object apply(CPMeasurementUnit cpMeasurementUnit) {
-					return cpMeasurementUnit.getUuid();
-				}
-
-			});
+			"mvccVersion", CPMeasurementUnit::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CPMeasurementUnit, Long>)
+				CPMeasurementUnit::setMvccVersion);
+		attributeGetterFunctions.put("uuid", CPMeasurementUnit::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
-			new BiConsumer<CPMeasurementUnit, Object>() {
-
-				@Override
-				public void accept(
-					CPMeasurementUnit cpMeasurementUnit, Object uuidObject) {
-
-					cpMeasurementUnit.setUuid((String)uuidObject);
-				}
-
-			});
+			(BiConsumer<CPMeasurementUnit, String>)CPMeasurementUnit::setUuid);
 		attributeGetterFunctions.put(
-			"CPMeasurementUnitId",
-			new Function<CPMeasurementUnit, Object>() {
-
-				@Override
-				public Object apply(CPMeasurementUnit cpMeasurementUnit) {
-					return cpMeasurementUnit.getCPMeasurementUnitId();
-				}
-
-			});
+			"CPMeasurementUnitId", CPMeasurementUnit::getCPMeasurementUnitId);
 		attributeSetterBiConsumers.put(
 			"CPMeasurementUnitId",
-			new BiConsumer<CPMeasurementUnit, Object>() {
-
-				@Override
-				public void accept(
-					CPMeasurementUnit cpMeasurementUnit,
-					Object CPMeasurementUnitIdObject) {
-
-					cpMeasurementUnit.setCPMeasurementUnitId(
-						(Long)CPMeasurementUnitIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"groupId",
-			new Function<CPMeasurementUnit, Object>() {
-
-				@Override
-				public Object apply(CPMeasurementUnit cpMeasurementUnit) {
-					return cpMeasurementUnit.getGroupId();
-				}
-
-			});
+			(BiConsumer<CPMeasurementUnit, Long>)
+				CPMeasurementUnit::setCPMeasurementUnitId);
+		attributeGetterFunctions.put("groupId", CPMeasurementUnit::getGroupId);
 		attributeSetterBiConsumers.put(
 			"groupId",
-			new BiConsumer<CPMeasurementUnit, Object>() {
-
-				@Override
-				public void accept(
-					CPMeasurementUnit cpMeasurementUnit, Object groupIdObject) {
-
-					cpMeasurementUnit.setGroupId((Long)groupIdObject);
-				}
-
-			});
+			(BiConsumer<CPMeasurementUnit, Long>)CPMeasurementUnit::setGroupId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CPMeasurementUnit, Object>() {
-
-				@Override
-				public Object apply(CPMeasurementUnit cpMeasurementUnit) {
-					return cpMeasurementUnit.getCompanyId();
-				}
-
-			});
+			"companyId", CPMeasurementUnit::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CPMeasurementUnit, Object>() {
-
-				@Override
-				public void accept(
-					CPMeasurementUnit cpMeasurementUnit,
-					Object companyIdObject) {
-
-					cpMeasurementUnit.setCompanyId((Long)companyIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userId",
-			new Function<CPMeasurementUnit, Object>() {
-
-				@Override
-				public Object apply(CPMeasurementUnit cpMeasurementUnit) {
-					return cpMeasurementUnit.getUserId();
-				}
-
-			});
+			(BiConsumer<CPMeasurementUnit, Long>)
+				CPMeasurementUnit::setCompanyId);
+		attributeGetterFunctions.put("userId", CPMeasurementUnit::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CPMeasurementUnit, Object>() {
-
-				@Override
-				public void accept(
-					CPMeasurementUnit cpMeasurementUnit, Object userIdObject) {
-
-					cpMeasurementUnit.setUserId((Long)userIdObject);
-				}
-
-			});
+			(BiConsumer<CPMeasurementUnit, Long>)CPMeasurementUnit::setUserId);
 		attributeGetterFunctions.put(
-			"userName",
-			new Function<CPMeasurementUnit, Object>() {
-
-				@Override
-				public Object apply(CPMeasurementUnit cpMeasurementUnit) {
-					return cpMeasurementUnit.getUserName();
-				}
-
-			});
+			"userName", CPMeasurementUnit::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CPMeasurementUnit, Object>() {
-
-				@Override
-				public void accept(
-					CPMeasurementUnit cpMeasurementUnit,
-					Object userNameObject) {
-
-					cpMeasurementUnit.setUserName((String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CPMeasurementUnit, String>)
+				CPMeasurementUnit::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CPMeasurementUnit, Object>() {
-
-				@Override
-				public Object apply(CPMeasurementUnit cpMeasurementUnit) {
-					return cpMeasurementUnit.getCreateDate();
-				}
-
-			});
+			"createDate", CPMeasurementUnit::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CPMeasurementUnit, Object>() {
-
-				@Override
-				public void accept(
-					CPMeasurementUnit cpMeasurementUnit,
-					Object createDateObject) {
-
-					cpMeasurementUnit.setCreateDate((Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CPMeasurementUnit, Date>)
+				CPMeasurementUnit::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CPMeasurementUnit, Object>() {
-
-				@Override
-				public Object apply(CPMeasurementUnit cpMeasurementUnit) {
-					return cpMeasurementUnit.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CPMeasurementUnit::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CPMeasurementUnit, Object>() {
-
-				@Override
-				public void accept(
-					CPMeasurementUnit cpMeasurementUnit,
-					Object modifiedDateObject) {
-
-					cpMeasurementUnit.setModifiedDate((Date)modifiedDateObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"name",
-			new Function<CPMeasurementUnit, Object>() {
-
-				@Override
-				public Object apply(CPMeasurementUnit cpMeasurementUnit) {
-					return cpMeasurementUnit.getName();
-				}
-
-			});
+			(BiConsumer<CPMeasurementUnit, Date>)
+				CPMeasurementUnit::setModifiedDate);
+		attributeGetterFunctions.put("name", CPMeasurementUnit::getName);
 		attributeSetterBiConsumers.put(
 			"name",
-			new BiConsumer<CPMeasurementUnit, Object>() {
-
-				@Override
-				public void accept(
-					CPMeasurementUnit cpMeasurementUnit, Object nameObject) {
-
-					cpMeasurementUnit.setName((String)nameObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"key",
-			new Function<CPMeasurementUnit, Object>() {
-
-				@Override
-				public Object apply(CPMeasurementUnit cpMeasurementUnit) {
-					return cpMeasurementUnit.getKey();
-				}
-
-			});
+			(BiConsumer<CPMeasurementUnit, String>)CPMeasurementUnit::setName);
+		attributeGetterFunctions.put("key", CPMeasurementUnit::getKey);
 		attributeSetterBiConsumers.put(
 			"key",
-			new BiConsumer<CPMeasurementUnit, Object>() {
-
-				@Override
-				public void accept(
-					CPMeasurementUnit cpMeasurementUnit, Object keyObject) {
-
-					cpMeasurementUnit.setKey((String)keyObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"rate",
-			new Function<CPMeasurementUnit, Object>() {
-
-				@Override
-				public Object apply(CPMeasurementUnit cpMeasurementUnit) {
-					return cpMeasurementUnit.getRate();
-				}
-
-			});
+			(BiConsumer<CPMeasurementUnit, String>)CPMeasurementUnit::setKey);
+		attributeGetterFunctions.put("rate", CPMeasurementUnit::getRate);
 		attributeSetterBiConsumers.put(
 			"rate",
-			new BiConsumer<CPMeasurementUnit, Object>() {
-
-				@Override
-				public void accept(
-					CPMeasurementUnit cpMeasurementUnit, Object rateObject) {
-
-					cpMeasurementUnit.setRate((Double)rateObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"primary",
-			new Function<CPMeasurementUnit, Object>() {
-
-				@Override
-				public Object apply(CPMeasurementUnit cpMeasurementUnit) {
-					return cpMeasurementUnit.getPrimary();
-				}
-
-			});
+			(BiConsumer<CPMeasurementUnit, Double>)CPMeasurementUnit::setRate);
+		attributeGetterFunctions.put("primary", CPMeasurementUnit::getPrimary);
 		attributeSetterBiConsumers.put(
 			"primary",
-			new BiConsumer<CPMeasurementUnit, Object>() {
-
-				@Override
-				public void accept(
-					CPMeasurementUnit cpMeasurementUnit, Object primaryObject) {
-
-					cpMeasurementUnit.setPrimary((Boolean)primaryObject);
-				}
-
-			});
+			(BiConsumer<CPMeasurementUnit, Boolean>)
+				CPMeasurementUnit::setPrimary);
 		attributeGetterFunctions.put(
-			"priority",
-			new Function<CPMeasurementUnit, Object>() {
-
-				@Override
-				public Object apply(CPMeasurementUnit cpMeasurementUnit) {
-					return cpMeasurementUnit.getPriority();
-				}
-
-			});
+			"priority", CPMeasurementUnit::getPriority);
 		attributeSetterBiConsumers.put(
 			"priority",
-			new BiConsumer<CPMeasurementUnit, Object>() {
-
-				@Override
-				public void accept(
-					CPMeasurementUnit cpMeasurementUnit,
-					Object priorityObject) {
-
-					cpMeasurementUnit.setPriority((Double)priorityObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"type",
-			new Function<CPMeasurementUnit, Object>() {
-
-				@Override
-				public Object apply(CPMeasurementUnit cpMeasurementUnit) {
-					return cpMeasurementUnit.getType();
-				}
-
-			});
+			(BiConsumer<CPMeasurementUnit, Double>)
+				CPMeasurementUnit::setPriority);
+		attributeGetterFunctions.put("type", CPMeasurementUnit::getType);
 		attributeSetterBiConsumers.put(
 			"type",
-			new BiConsumer<CPMeasurementUnit, Object>() {
-
-				@Override
-				public void accept(
-					CPMeasurementUnit cpMeasurementUnit, Object typeObject) {
-
-					cpMeasurementUnit.setType((Integer)typeObject);
-				}
-
-			});
+			(BiConsumer<CPMeasurementUnit, Integer>)CPMeasurementUnit::setType);
 		attributeGetterFunctions.put(
-			"lastPublishDate",
-			new Function<CPMeasurementUnit, Object>() {
-
-				@Override
-				public Object apply(CPMeasurementUnit cpMeasurementUnit) {
-					return cpMeasurementUnit.getLastPublishDate();
-				}
-
-			});
+			"lastPublishDate", CPMeasurementUnit::getLastPublishDate);
 		attributeSetterBiConsumers.put(
 			"lastPublishDate",
-			new BiConsumer<CPMeasurementUnit, Object>() {
-
-				@Override
-				public void accept(
-					CPMeasurementUnit cpMeasurementUnit,
-					Object lastPublishDateObject) {
-
-					cpMeasurementUnit.setLastPublishDate(
-						(Date)lastPublishDateObject);
-				}
-
-			});
+			(BiConsumer<CPMeasurementUnit, Date>)
+				CPMeasurementUnit::setLastPublishDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1170,6 +925,7 @@ public class CPMeasurementUnitModelImpl
 		CPMeasurementUnitImpl cpMeasurementUnitImpl =
 			new CPMeasurementUnitImpl();
 
+		cpMeasurementUnitImpl.setMvccVersion(getMvccVersion());
 		cpMeasurementUnitImpl.setUuid(getUuid());
 		cpMeasurementUnitImpl.setCPMeasurementUnitId(getCPMeasurementUnitId());
 		cpMeasurementUnitImpl.setGroupId(getGroupId());
@@ -1239,11 +995,19 @@ public class CPMeasurementUnitModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -1280,6 +1044,8 @@ public class CPMeasurementUnitModelImpl
 	public CacheModel<CPMeasurementUnit> toCacheModel() {
 		CPMeasurementUnitCacheModel cpMeasurementUnitCacheModel =
 			new CPMeasurementUnitCacheModel();
+
+		cpMeasurementUnitCacheModel.mvccVersion = getMvccVersion();
 
 		cpMeasurementUnitCacheModel.uuid = getUuid();
 
@@ -1431,6 +1197,7 @@ public class CPMeasurementUnitModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _CPMeasurementUnitId;

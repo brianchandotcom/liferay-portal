@@ -128,6 +128,8 @@ public class CPDefinitionOptionRelPersistenceTest {
 		CPDefinitionOptionRel newCPDefinitionOptionRel = _persistence.create(
 			pk);
 
+		newCPDefinitionOptionRel.setMvccVersion(RandomTestUtil.nextLong());
+
 		newCPDefinitionOptionRel.setUuid(RandomTestUtil.randomString());
 
 		newCPDefinitionOptionRel.setGroupId(RandomTestUtil.nextLong());
@@ -173,6 +175,9 @@ public class CPDefinitionOptionRelPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newCPDefinitionOptionRel.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCPDefinitionOptionRel.getMvccVersion(),
+			newCPDefinitionOptionRel.getMvccVersion());
 		Assert.assertEquals(
 			existingCPDefinitionOptionRel.getUuid(),
 			newCPDefinitionOptionRel.getUuid());
@@ -343,13 +348,13 @@ public class CPDefinitionOptionRelPersistenceTest {
 
 	protected OrderByComparator<CPDefinitionOptionRel> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CPDefinitionOptionRel", "uuid", true, "CPDefinitionOptionRelId",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"CPDefinitionId", true, "CPOptionId", true, "name", true,
-			"description", true, "DDMFormFieldTypeName", true, "priority", true,
-			"facetable", true, "required", true, "skuContributor", true, "key",
-			true, "priceType", true);
+			"CPDefinitionOptionRel", "mvccVersion", true, "uuid", true,
+			"CPDefinitionOptionRelId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "CPDefinitionId", true, "CPOptionId", true,
+			"name", true, "description", true, "DDMFormFieldTypeName", true,
+			"priority", true, "facetable", true, "required", true,
+			"skuContributor", true, "key", true, "priceType", true);
 	}
 
 	@Test
@@ -639,6 +644,8 @@ public class CPDefinitionOptionRelPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		CPDefinitionOptionRel cpDefinitionOptionRel = _persistence.create(pk);
+
+		cpDefinitionOptionRel.setMvccVersion(RandomTestUtil.nextLong());
 
 		cpDefinitionOptionRel.setUuid(RandomTestUtil.randomString());
 

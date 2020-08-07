@@ -15,9 +15,10 @@
 package com.liferay.commerce.application.model.impl;
 
 import com.liferay.commerce.application.model.CommerceApplicationBrand;
+import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class CommerceApplicationBrandCacheModel
-	implements CacheModel<CommerceApplicationBrand>, Externalizable {
+	implements CacheModel<CommerceApplicationBrand>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -48,8 +49,10 @@ public class CommerceApplicationBrandCacheModel
 		CommerceApplicationBrandCacheModel commerceApplicationBrandCacheModel =
 			(CommerceApplicationBrandCacheModel)object;
 
-		if (commerceApplicationBrandId ==
-				commerceApplicationBrandCacheModel.commerceApplicationBrandId) {
+		if ((commerceApplicationBrandId ==
+				commerceApplicationBrandCacheModel.
+					commerceApplicationBrandId) &&
+			(mvccVersion == commerceApplicationBrandCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -59,14 +62,28 @@ public class CommerceApplicationBrandCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, commerceApplicationBrandId);
+		int hashCode = HashUtil.hash(0, commerceApplicationBrandId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
-		sb.append("{commerceApplicationBrandId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", commerceApplicationBrandId=");
 		sb.append(commerceApplicationBrandId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -92,6 +109,7 @@ public class CommerceApplicationBrandCacheModel
 		CommerceApplicationBrandImpl commerceApplicationBrandImpl =
 			new CommerceApplicationBrandImpl();
 
+		commerceApplicationBrandImpl.setMvccVersion(mvccVersion);
 		commerceApplicationBrandImpl.setCommerceApplicationBrandId(
 			commerceApplicationBrandId);
 		commerceApplicationBrandImpl.setCompanyId(companyId);
@@ -135,6 +153,8 @@ public class CommerceApplicationBrandCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		commerceApplicationBrandId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -150,6 +170,8 @@ public class CommerceApplicationBrandCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(commerceApplicationBrandId);
 
 		objectOutput.writeLong(companyId);
@@ -176,6 +198,7 @@ public class CommerceApplicationBrandCacheModel
 		objectOutput.writeLong(logoId);
 	}
 
+	public long mvccVersion;
 	public long commerceApplicationBrandId;
 	public long companyId;
 	public long userId;

@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.data.integration.service;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcess;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -29,6 +27,8 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the remote service interface for CommerceDataIntegrationProcess. Methods of this
@@ -62,7 +62,7 @@ public interface CommerceDataIntegrationProcessService extends BaseService {
 	 */
 	public CommerceDataIntegrationProcess addCommerceDataIntegrationProcess(
 			long userId, String name, String type,
-			UnicodeProperties typeSettingsProperties)
+			UnicodeProperties typeSettingsUnicodeProperties)
 		throws PortalException;
 
 	public void deleteCommerceDataIntegrationProcess(
@@ -98,7 +98,7 @@ public interface CommerceDataIntegrationProcessService extends BaseService {
 
 	public CommerceDataIntegrationProcess updateCommerceDataIntegrationProcess(
 			long commerceDataIntegrationProcessId, String name,
-			UnicodeProperties typeSettingsProperties)
+			UnicodeProperties typeSettingsUnicodeProperties)
 		throws PortalException;
 
 	public CommerceDataIntegrationProcess

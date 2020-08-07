@@ -129,6 +129,9 @@ public class CommerceNotificationAttachmentPersistenceTest {
 		CommerceNotificationAttachment newCommerceNotificationAttachment =
 			_persistence.create(pk);
 
+		newCommerceNotificationAttachment.setMvccVersion(
+			RandomTestUtil.nextLong());
+
 		newCommerceNotificationAttachment.setUuid(
 			RandomTestUtil.randomString());
 
@@ -164,6 +167,9 @@ public class CommerceNotificationAttachmentPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newCommerceNotificationAttachment.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCommerceNotificationAttachment.getMvccVersion(),
+			newCommerceNotificationAttachment.getMvccVersion());
 		Assert.assertEquals(
 			existingCommerceNotificationAttachment.getUuid(),
 			newCommerceNotificationAttachment.getUuid());
@@ -273,7 +279,7 @@ public class CommerceNotificationAttachmentPersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"CNotificationAttachment", "uuid", true,
+			"CNotificationAttachment", "mvccVersion", true, "uuid", true,
 			"commerceNotificationAttachmentId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "commerceNotificationQueueEntryId",
@@ -559,6 +565,9 @@ public class CommerceNotificationAttachmentPersistenceTest {
 
 		CommerceNotificationAttachment commerceNotificationAttachment =
 			_persistence.create(pk);
+
+		commerceNotificationAttachment.setMvccVersion(
+			RandomTestUtil.nextLong());
 
 		commerceNotificationAttachment.setUuid(RandomTestUtil.randomString());
 

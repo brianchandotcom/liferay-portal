@@ -122,6 +122,8 @@ public class CommerceShipmentPersistenceTest {
 
 		CommerceShipment newCommerceShipment = _persistence.create(pk);
 
+		newCommerceShipment.setMvccVersion(RandomTestUtil.nextLong());
+
 		newCommerceShipment.setGroupId(RandomTestUtil.nextLong());
 
 		newCommerceShipment.setCompanyId(RandomTestUtil.nextLong());
@@ -159,6 +161,9 @@ public class CommerceShipmentPersistenceTest {
 		CommerceShipment existingCommerceShipment =
 			_persistence.findByPrimaryKey(newCommerceShipment.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCommerceShipment.getMvccVersion(),
+			newCommerceShipment.getMvccVersion());
 		Assert.assertEquals(
 			existingCommerceShipment.getCommerceShipmentId(),
 			newCommerceShipment.getCommerceShipmentId());
@@ -277,10 +282,10 @@ public class CommerceShipmentPersistenceTest {
 
 	protected OrderByComparator<CommerceShipment> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CommerceShipment", "commerceShipmentId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "commerceAccountId", true,
-			"commerceAddressId", true, "commerceShippingMethodId", true,
+			"CommerceShipment", "mvccVersion", true, "commerceShipmentId", true,
+			"groupId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "commerceAccountId",
+			true, "commerceAddressId", true, "commerceShippingMethodId", true,
 			"carrier", true, "trackingNumber", true, "shippingDate", true,
 			"expectedDate", true, "status", true);
 	}
@@ -506,6 +511,8 @@ public class CommerceShipmentPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		CommerceShipment commerceShipment = _persistence.create(pk);
+
+		commerceShipment.setMvccVersion(RandomTestUtil.nextLong());
 
 		commerceShipment.setGroupId(RandomTestUtil.nextLong());
 

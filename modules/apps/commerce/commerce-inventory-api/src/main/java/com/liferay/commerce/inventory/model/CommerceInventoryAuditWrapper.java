@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.inventory.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,28 +31,20 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceInventoryAuditWrapper
+	extends BaseModelWrapper<CommerceInventoryAudit>
 	implements CommerceInventoryAudit, ModelWrapper<CommerceInventoryAudit> {
 
 	public CommerceInventoryAuditWrapper(
 		CommerceInventoryAudit commerceInventoryAudit) {
 
-		_commerceInventoryAudit = commerceInventoryAudit;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceInventoryAudit.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceInventoryAudit.class.getName();
+		super(commerceInventoryAudit);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put(
 			"commerceInventoryAuditId", getCommerceInventoryAuditId());
 		attributes.put("companyId", getCompanyId());
@@ -74,6 +62,12 @@ public class CommerceInventoryAuditWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long commerceInventoryAuditId = (Long)attributes.get(
 			"commerceInventoryAuditId");
 
@@ -136,17 +130,6 @@ public class CommerceInventoryAuditWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CommerceInventoryAuditWrapper(
-			(CommerceInventoryAudit)_commerceInventoryAudit.clone());
-	}
-
-	@Override
-	public int compareTo(CommerceInventoryAudit commerceInventoryAudit) {
-		return _commerceInventoryAudit.compareTo(commerceInventoryAudit);
-	}
-
 	/**
 	 * Returns the commerce inventory audit ID of this commerce inventory audit.
 	 *
@@ -154,7 +137,7 @@ public class CommerceInventoryAuditWrapper
 	 */
 	@Override
 	public long getCommerceInventoryAuditId() {
-		return _commerceInventoryAudit.getCommerceInventoryAuditId();
+		return model.getCommerceInventoryAuditId();
 	}
 
 	/**
@@ -164,7 +147,7 @@ public class CommerceInventoryAuditWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceInventoryAudit.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -174,12 +157,7 @@ public class CommerceInventoryAuditWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceInventoryAudit.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceInventoryAudit.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -189,7 +167,7 @@ public class CommerceInventoryAuditWrapper
 	 */
 	@Override
 	public String getLogType() {
-		return _commerceInventoryAudit.getLogType();
+		return model.getLogType();
 	}
 
 	/**
@@ -199,7 +177,7 @@ public class CommerceInventoryAuditWrapper
 	 */
 	@Override
 	public String getLogTypeSettings() {
-		return _commerceInventoryAudit.getLogTypeSettings();
+		return model.getLogTypeSettings();
 	}
 
 	/**
@@ -209,7 +187,17 @@ public class CommerceInventoryAuditWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceInventoryAudit.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce inventory audit.
+	 *
+	 * @return the mvcc version of this commerce inventory audit
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -219,12 +207,7 @@ public class CommerceInventoryAuditWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceInventoryAudit.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceInventoryAudit.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -234,7 +217,7 @@ public class CommerceInventoryAuditWrapper
 	 */
 	@Override
 	public int getQuantity() {
-		return _commerceInventoryAudit.getQuantity();
+		return model.getQuantity();
 	}
 
 	/**
@@ -244,7 +227,7 @@ public class CommerceInventoryAuditWrapper
 	 */
 	@Override
 	public String getSku() {
-		return _commerceInventoryAudit.getSku();
+		return model.getSku();
 	}
 
 	/**
@@ -254,7 +237,7 @@ public class CommerceInventoryAuditWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceInventoryAudit.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -264,7 +247,7 @@ public class CommerceInventoryAuditWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceInventoryAudit.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -274,37 +257,12 @@ public class CommerceInventoryAuditWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceInventoryAudit.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceInventoryAudit.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceInventoryAudit.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceInventoryAudit.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceInventoryAudit.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_commerceInventoryAudit.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceInventoryAudit.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -314,8 +272,7 @@ public class CommerceInventoryAuditWrapper
 	 */
 	@Override
 	public void setCommerceInventoryAuditId(long commerceInventoryAuditId) {
-		_commerceInventoryAudit.setCommerceInventoryAuditId(
-			commerceInventoryAuditId);
+		model.setCommerceInventoryAuditId(commerceInventoryAuditId);
 	}
 
 	/**
@@ -325,7 +282,7 @@ public class CommerceInventoryAuditWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceInventoryAudit.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -335,24 +292,7 @@ public class CommerceInventoryAuditWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceInventoryAudit.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceInventoryAudit.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceInventoryAudit.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceInventoryAudit.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -362,7 +302,7 @@ public class CommerceInventoryAuditWrapper
 	 */
 	@Override
 	public void setLogType(String logType) {
-		_commerceInventoryAudit.setLogType(logType);
+		model.setLogType(logType);
 	}
 
 	/**
@@ -372,7 +312,7 @@ public class CommerceInventoryAuditWrapper
 	 */
 	@Override
 	public void setLogTypeSettings(String logTypeSettings) {
-		_commerceInventoryAudit.setLogTypeSettings(logTypeSettings);
+		model.setLogTypeSettings(logTypeSettings);
 	}
 
 	/**
@@ -382,12 +322,17 @@ public class CommerceInventoryAuditWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceInventoryAudit.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this commerce inventory audit.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce inventory audit
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_commerceInventoryAudit.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -397,12 +342,7 @@ public class CommerceInventoryAuditWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceInventoryAudit.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceInventoryAudit.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -412,7 +352,7 @@ public class CommerceInventoryAuditWrapper
 	 */
 	@Override
 	public void setQuantity(int quantity) {
-		_commerceInventoryAudit.setQuantity(quantity);
+		model.setQuantity(quantity);
 	}
 
 	/**
@@ -422,7 +362,7 @@ public class CommerceInventoryAuditWrapper
 	 */
 	@Override
 	public void setSku(String sku) {
-		_commerceInventoryAudit.setSku(sku);
+		model.setSku(sku);
 	}
 
 	/**
@@ -432,7 +372,7 @@ public class CommerceInventoryAuditWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceInventoryAudit.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -442,7 +382,7 @@ public class CommerceInventoryAuditWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceInventoryAudit.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -452,81 +392,14 @@ public class CommerceInventoryAuditWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceInventoryAudit.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceInventoryAudit>
-		toCacheModel() {
+	protected CommerceInventoryAuditWrapper wrap(
+		CommerceInventoryAudit commerceInventoryAudit) {
 
-		return _commerceInventoryAudit.toCacheModel();
+		return new CommerceInventoryAuditWrapper(commerceInventoryAudit);
 	}
-
-	@Override
-	public CommerceInventoryAudit toEscapedModel() {
-		return new CommerceInventoryAuditWrapper(
-			_commerceInventoryAudit.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commerceInventoryAudit.toString();
-	}
-
-	@Override
-	public CommerceInventoryAudit toUnescapedModel() {
-		return new CommerceInventoryAuditWrapper(
-			_commerceInventoryAudit.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceInventoryAudit.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceInventoryAuditWrapper)) {
-			return false;
-		}
-
-		CommerceInventoryAuditWrapper commerceInventoryAuditWrapper =
-			(CommerceInventoryAuditWrapper)object;
-
-		if (Objects.equals(
-				_commerceInventoryAudit,
-				commerceInventoryAuditWrapper._commerceInventoryAudit)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceInventoryAudit getWrappedModel() {
-		return _commerceInventoryAudit;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceInventoryAudit.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceInventoryAudit.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceInventoryAudit.resetOriginalValues();
-	}
-
-	private final CommerceInventoryAudit _commerceInventoryAudit;
 
 }

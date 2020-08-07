@@ -16,9 +16,11 @@ package com.liferay.commerce.service.persistence.impl;
 
 import com.liferay.commerce.exception.NoSuchAddressRestrictionException;
 import com.liferay.commerce.model.CommerceAddressRestriction;
+import com.liferay.commerce.model.CommerceAddressRestrictionTable;
 import com.liferay.commerce.model.impl.CommerceAddressRestrictionImpl;
 import com.liferay.commerce.model.impl.CommerceAddressRestrictionModelImpl;
 import com.liferay.commerce.service.persistence.CommerceAddressRestrictionPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -34,18 +36,13 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -246,10 +243,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -589,8 +582,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -778,10 +769,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1141,8 +1128,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1306,11 +1291,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByC_C_C, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1398,8 +1378,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1421,6 +1399,11 @@ public class CommerceAddressRestrictionPersistenceImpl
 
 	public CommerceAddressRestrictionPersistenceImpl() {
 		setModelClass(CommerceAddressRestriction.class);
+
+		setModelImplClass(CommerceAddressRestrictionImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CommerceAddressRestrictionTable.INSTANCE);
 	}
 
 	/**
@@ -1433,7 +1416,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 		CommerceAddressRestriction commerceAddressRestriction) {
 
 		entityCache.putResult(
-			CommerceAddressRestrictionModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceAddressRestrictionImpl.class,
 			commerceAddressRestriction.getPrimaryKey(),
 			commerceAddressRestriction);
@@ -1463,7 +1445,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 				commerceAddressRestrictions) {
 
 			if (entityCache.getResult(
-					CommerceAddressRestrictionModelImpl.ENTITY_CACHE_ENABLED,
 					CommerceAddressRestrictionImpl.class,
 					commerceAddressRestriction.getPrimaryKey()) == null) {
 
@@ -1503,7 +1484,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 		CommerceAddressRestriction commerceAddressRestriction) {
 
 		entityCache.removeResult(
-			CommerceAddressRestrictionModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceAddressRestrictionImpl.class,
 			commerceAddressRestriction.getPrimaryKey());
 
@@ -1526,7 +1506,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 				commerceAddressRestrictions) {
 
 			entityCache.removeResult(
-				CommerceAddressRestrictionModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceAddressRestrictionImpl.class,
 				commerceAddressRestriction.getPrimaryKey());
 
@@ -1536,6 +1515,7 @@ public class CommerceAddressRestrictionPersistenceImpl
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1543,7 +1523,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(
-				CommerceAddressRestrictionModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceAddressRestrictionImpl.class, primaryKey);
 		}
 	}
@@ -1786,10 +1765,7 @@ public class CommerceAddressRestrictionPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CommerceAddressRestrictionModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				commerceAddressRestrictionModelImpl.getCommerceCountryId()
 			};
@@ -1862,7 +1838,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 		}
 
 		entityCache.putResult(
-			CommerceAddressRestrictionModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceAddressRestrictionImpl.class,
 			commerceAddressRestriction.getPrimaryKey(),
 			commerceAddressRestriction, false);
@@ -1919,63 +1894,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 	/**
 	 * Returns the commerce address restriction with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the commerce address restriction
-	 * @return the commerce address restriction, or <code>null</code> if a commerce address restriction with the primary key could not be found
-	 */
-	@Override
-	public CommerceAddressRestriction fetchByPrimaryKey(
-		Serializable primaryKey) {
-
-		Serializable serializable = entityCache.getResult(
-			CommerceAddressRestrictionModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAddressRestrictionImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CommerceAddressRestriction commerceAddressRestriction =
-			(CommerceAddressRestriction)serializable;
-
-		if (commerceAddressRestriction == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				commerceAddressRestriction =
-					(CommerceAddressRestriction)session.get(
-						CommerceAddressRestrictionImpl.class, primaryKey);
-
-				if (commerceAddressRestriction != null) {
-					cacheResult(commerceAddressRestriction);
-				}
-				else {
-					entityCache.putResult(
-						CommerceAddressRestrictionModelImpl.
-							ENTITY_CACHE_ENABLED,
-						CommerceAddressRestrictionImpl.class, primaryKey,
-						nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CommerceAddressRestrictionModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceAddressRestrictionImpl.class, primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return commerceAddressRestriction;
-	}
-
-	/**
-	 * Returns the commerce address restriction with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param commerceAddressRestrictionId the primary key of the commerce address restriction
 	 * @return the commerce address restriction, or <code>null</code> if a commerce address restriction with the primary key could not be found
 	 */
@@ -1984,112 +1902,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 		long commerceAddressRestrictionId) {
 
 		return fetchByPrimaryKey((Serializable)commerceAddressRestrictionId);
-	}
-
-	@Override
-	public Map<Serializable, CommerceAddressRestriction> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CommerceAddressRestriction> map =
-			new HashMap<Serializable, CommerceAddressRestriction>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CommerceAddressRestriction commerceAddressRestriction =
-				fetchByPrimaryKey(primaryKey);
-
-			if (commerceAddressRestriction != null) {
-				map.put(primaryKey, commerceAddressRestriction);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CommerceAddressRestrictionModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceAddressRestrictionImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(
-						primaryKey, (CommerceAddressRestriction)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(_SQL_SELECT_COMMERCEADDRESSRESTRICTION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CommerceAddressRestriction commerceAddressRestriction :
-					(List<CommerceAddressRestriction>)query.list()) {
-
-				map.put(
-					commerceAddressRestriction.getPrimaryKeyObj(),
-					commerceAddressRestriction);
-
-				cacheResult(commerceAddressRestriction);
-
-				uncachedPrimaryKeys.remove(
-					commerceAddressRestriction.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CommerceAddressRestrictionModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceAddressRestrictionImpl.class, primaryKey,
-					nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -2219,10 +2031,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2271,9 +2079,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2282,6 +2087,21 @@ public class CommerceAddressRestrictionPersistenceImpl
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "commerceAddressRestrictionId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_COMMERCEADDRESSRESTRICTION;
 	}
 
 	@Override
@@ -2294,27 +2114,19 @@ public class CommerceAddressRestrictionPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceAddressRestrictionModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAddressRestrictionModelImpl.FINDER_CACHE_ENABLED,
 			CommerceAddressRestrictionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceAddressRestrictionModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAddressRestrictionModelImpl.FINDER_CACHE_ENABLED,
 			CommerceAddressRestrictionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CommerceAddressRestrictionModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAddressRestrictionModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByCommerceCountryId = new FinderPath(
-			CommerceAddressRestrictionModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAddressRestrictionModelImpl.FINDER_CACHE_ENABLED,
 			CommerceAddressRestrictionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceCountryId",
 			new String[] {
@@ -2323,8 +2135,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByCommerceCountryId = new FinderPath(
-			CommerceAddressRestrictionModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAddressRestrictionModelImpl.FINDER_CACHE_ENABLED,
 			CommerceAddressRestrictionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCommerceCountryId", new String[] {Long.class.getName()},
@@ -2333,14 +2143,10 @@ public class CommerceAddressRestrictionPersistenceImpl
 			CommerceAddressRestrictionModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByCommerceCountryId = new FinderPath(
-			CommerceAddressRestrictionModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAddressRestrictionModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCommerceCountryId", new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByC_C = new FinderPath(
-			CommerceAddressRestrictionModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAddressRestrictionModelImpl.FINDER_CACHE_ENABLED,
 			CommerceAddressRestrictionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
 			new String[] {
@@ -2350,8 +2156,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByC_C = new FinderPath(
-			CommerceAddressRestrictionModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAddressRestrictionModelImpl.FINDER_CACHE_ENABLED,
 			CommerceAddressRestrictionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
@@ -2360,14 +2164,10 @@ public class CommerceAddressRestrictionPersistenceImpl
 			CommerceAddressRestrictionModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByC_C = new FinderPath(
-			CommerceAddressRestrictionModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAddressRestrictionModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()});
 
 		_finderPathFetchByC_C_C = new FinderPath(
-			CommerceAddressRestrictionModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAddressRestrictionModelImpl.FINDER_CACHE_ENABLED,
 			CommerceAddressRestrictionImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByC_C_C",
 			new String[] {
@@ -2379,8 +2179,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 				COMMERCECOUNTRYID_COLUMN_BITMASK);
 
 		_finderPathCountByC_C_C = new FinderPath(
-			CommerceAddressRestrictionModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAddressRestrictionModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByC_C_C",
 			new String[] {
@@ -2403,10 +2201,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 
 	private static final String _SQL_SELECT_COMMERCEADDRESSRESTRICTION =
 		"SELECT commerceAddressRestriction FROM CommerceAddressRestriction commerceAddressRestriction";
-
-	private static final String
-		_SQL_SELECT_COMMERCEADDRESSRESTRICTION_WHERE_PKS_IN =
-			"SELECT commerceAddressRestriction FROM CommerceAddressRestriction commerceAddressRestriction WHERE commerceAddressRestrictionId IN (";
 
 	private static final String _SQL_SELECT_COMMERCEADDRESSRESTRICTION_WHERE =
 		"SELECT commerceAddressRestriction FROM CommerceAddressRestriction commerceAddressRestriction WHERE ";

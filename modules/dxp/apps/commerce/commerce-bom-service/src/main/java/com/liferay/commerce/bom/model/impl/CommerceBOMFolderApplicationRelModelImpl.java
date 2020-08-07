@@ -19,6 +19,7 @@ import com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRelModel;
 import com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRelSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -73,6 +73,7 @@ public class CommerceBOMFolderApplicationRelModelImpl
 	public static final String TABLE_NAME = "CBOMFolderApplicationRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
+		{"mvccVersion", Types.BIGINT},
 		{"CBOMFolderApplicationRelId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -85,6 +86,7 @@ public class CommerceBOMFolderApplicationRelModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CBOMFolderApplicationRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -96,7 +98,7 @@ public class CommerceBOMFolderApplicationRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CBOMFolderApplicationRel (CBOMFolderApplicationRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceBOMFolderId LONG,commerceApplicationModelId LONG)";
+		"create table CBOMFolderApplicationRel (mvccVersion LONG default 0 not null,CBOMFolderApplicationRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceBOMFolderId LONG,commerceApplicationModelId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CBOMFolderApplicationRel";
@@ -113,20 +115,23 @@ public class CommerceBOMFolderApplicationRelModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.bom.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.bom.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.bom.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long COMMERCEAPPLICATIONMODELID_COLUMN_BITMASK = 1L;
 
@@ -151,6 +156,7 @@ public class CommerceBOMFolderApplicationRelModelImpl
 		CommerceBOMFolderApplicationRel model =
 			new CommerceBOMFolderApplicationRelImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceBOMFolderApplicationRelId(
 			soapModel.getCommerceBOMFolderApplicationRelId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -246,9 +252,6 @@ public class CommerceBOMFolderApplicationRelModelImpl
 					(CommerceBOMFolderApplicationRel)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -330,239 +333,80 @@ public class CommerceBOMFolderApplicationRelModelImpl
 					<String, BiConsumer<CommerceBOMFolderApplicationRel, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", CommerceBOMFolderApplicationRel::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceBOMFolderApplicationRel, Long>)
+				CommerceBOMFolderApplicationRel::setMvccVersion);
+		attributeGetterFunctions.put(
 			"commerceBOMFolderApplicationRelId",
-			new Function<CommerceBOMFolderApplicationRel, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceBOMFolderApplicationRel
-						commerceBOMFolderApplicationRel) {
-
-					return commerceBOMFolderApplicationRel.
-						getCommerceBOMFolderApplicationRelId();
-				}
-
-			});
+			CommerceBOMFolderApplicationRel::
+				getCommerceBOMFolderApplicationRelId);
 		attributeSetterBiConsumers.put(
 			"commerceBOMFolderApplicationRelId",
-			new BiConsumer<CommerceBOMFolderApplicationRel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceBOMFolderApplicationRel
-						commerceBOMFolderApplicationRel,
-					Object commerceBOMFolderApplicationRelIdObject) {
-
-					commerceBOMFolderApplicationRel.
-						setCommerceBOMFolderApplicationRelId(
-							(Long)commerceBOMFolderApplicationRelIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceBOMFolderApplicationRel, Long>)
+				CommerceBOMFolderApplicationRel::
+					setCommerceBOMFolderApplicationRelId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommerceBOMFolderApplicationRel, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceBOMFolderApplicationRel
-						commerceBOMFolderApplicationRel) {
-
-					return commerceBOMFolderApplicationRel.getCompanyId();
-				}
-
-			});
+			"companyId", CommerceBOMFolderApplicationRel::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommerceBOMFolderApplicationRel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceBOMFolderApplicationRel
-						commerceBOMFolderApplicationRel,
-					Object companyIdObject) {
-
-					commerceBOMFolderApplicationRel.setCompanyId(
-						(Long)companyIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceBOMFolderApplicationRel, Long>)
+				CommerceBOMFolderApplicationRel::setCompanyId);
 		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommerceBOMFolderApplicationRel, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceBOMFolderApplicationRel
-						commerceBOMFolderApplicationRel) {
-
-					return commerceBOMFolderApplicationRel.getUserId();
-				}
-
-			});
+			"userId", CommerceBOMFolderApplicationRel::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommerceBOMFolderApplicationRel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceBOMFolderApplicationRel
-						commerceBOMFolderApplicationRel,
-					Object userIdObject) {
-
-					commerceBOMFolderApplicationRel.setUserId(
-						(Long)userIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceBOMFolderApplicationRel, Long>)
+				CommerceBOMFolderApplicationRel::setUserId);
 		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommerceBOMFolderApplicationRel, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceBOMFolderApplicationRel
-						commerceBOMFolderApplicationRel) {
-
-					return commerceBOMFolderApplicationRel.getUserName();
-				}
-
-			});
+			"userName", CommerceBOMFolderApplicationRel::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommerceBOMFolderApplicationRel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceBOMFolderApplicationRel
-						commerceBOMFolderApplicationRel,
-					Object userNameObject) {
-
-					commerceBOMFolderApplicationRel.setUserName(
-						(String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceBOMFolderApplicationRel, String>)
+				CommerceBOMFolderApplicationRel::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommerceBOMFolderApplicationRel, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceBOMFolderApplicationRel
-						commerceBOMFolderApplicationRel) {
-
-					return commerceBOMFolderApplicationRel.getCreateDate();
-				}
-
-			});
+			"createDate", CommerceBOMFolderApplicationRel::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommerceBOMFolderApplicationRel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceBOMFolderApplicationRel
-						commerceBOMFolderApplicationRel,
-					Object createDateObject) {
-
-					commerceBOMFolderApplicationRel.setCreateDate(
-						(Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceBOMFolderApplicationRel, Date>)
+				CommerceBOMFolderApplicationRel::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CommerceBOMFolderApplicationRel, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceBOMFolderApplicationRel
-						commerceBOMFolderApplicationRel) {
-
-					return commerceBOMFolderApplicationRel.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CommerceBOMFolderApplicationRel::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommerceBOMFolderApplicationRel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceBOMFolderApplicationRel
-						commerceBOMFolderApplicationRel,
-					Object modifiedDateObject) {
-
-					commerceBOMFolderApplicationRel.setModifiedDate(
-						(Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceBOMFolderApplicationRel, Date>)
+				CommerceBOMFolderApplicationRel::setModifiedDate);
 		attributeGetterFunctions.put(
 			"commerceBOMFolderId",
-			new Function<CommerceBOMFolderApplicationRel, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceBOMFolderApplicationRel
-						commerceBOMFolderApplicationRel) {
-
-					return commerceBOMFolderApplicationRel.
-						getCommerceBOMFolderId();
-				}
-
-			});
+			CommerceBOMFolderApplicationRel::getCommerceBOMFolderId);
 		attributeSetterBiConsumers.put(
 			"commerceBOMFolderId",
-			new BiConsumer<CommerceBOMFolderApplicationRel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceBOMFolderApplicationRel
-						commerceBOMFolderApplicationRel,
-					Object commerceBOMFolderIdObject) {
-
-					commerceBOMFolderApplicationRel.setCommerceBOMFolderId(
-						(Long)commerceBOMFolderIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceBOMFolderApplicationRel, Long>)
+				CommerceBOMFolderApplicationRel::setCommerceBOMFolderId);
 		attributeGetterFunctions.put(
 			"commerceApplicationModelId",
-			new Function<CommerceBOMFolderApplicationRel, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceBOMFolderApplicationRel
-						commerceBOMFolderApplicationRel) {
-
-					return commerceBOMFolderApplicationRel.
-						getCommerceApplicationModelId();
-				}
-
-			});
+			CommerceBOMFolderApplicationRel::getCommerceApplicationModelId);
 		attributeSetterBiConsumers.put(
 			"commerceApplicationModelId",
-			new BiConsumer<CommerceBOMFolderApplicationRel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceBOMFolderApplicationRel
-						commerceBOMFolderApplicationRel,
-					Object commerceApplicationModelIdObject) {
-
-					commerceBOMFolderApplicationRel.
-						setCommerceApplicationModelId(
-							(Long)commerceApplicationModelIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceBOMFolderApplicationRel, Long>)
+				CommerceBOMFolderApplicationRel::setCommerceApplicationModelId);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -745,6 +589,7 @@ public class CommerceBOMFolderApplicationRelModelImpl
 			commerceBOMFolderApplicationRelImpl =
 				new CommerceBOMFolderApplicationRelImpl();
 
+		commerceBOMFolderApplicationRelImpl.setMvccVersion(getMvccVersion());
 		commerceBOMFolderApplicationRelImpl.
 			setCommerceBOMFolderApplicationRelId(
 				getCommerceBOMFolderApplicationRelId());
@@ -808,11 +653,19 @@ public class CommerceBOMFolderApplicationRelModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -837,6 +690,9 @@ public class CommerceBOMFolderApplicationRelModelImpl
 		CommerceBOMFolderApplicationRelCacheModel
 			commerceBOMFolderApplicationRelCacheModel =
 				new CommerceBOMFolderApplicationRelCacheModel();
+
+		commerceBOMFolderApplicationRelCacheModel.mvccVersion =
+			getMvccVersion();
 
 		commerceBOMFolderApplicationRelCacheModel.
 			commerceBOMFolderApplicationRelId =
@@ -963,6 +819,7 @@ public class CommerceBOMFolderApplicationRelModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _commerceBOMFolderApplicationRelId;
 	private long _companyId;
 	private long _userId;

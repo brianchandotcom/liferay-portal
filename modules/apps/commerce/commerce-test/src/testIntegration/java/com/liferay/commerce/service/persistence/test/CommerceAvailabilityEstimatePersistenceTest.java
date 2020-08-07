@@ -128,6 +128,9 @@ public class CommerceAvailabilityEstimatePersistenceTest {
 		CommerceAvailabilityEstimate newCommerceAvailabilityEstimate =
 			_persistence.create(pk);
 
+		newCommerceAvailabilityEstimate.setMvccVersion(
+			RandomTestUtil.nextLong());
+
 		newCommerceAvailabilityEstimate.setUuid(RandomTestUtil.randomString());
 
 		newCommerceAvailabilityEstimate.setCompanyId(RandomTestUtil.nextLong());
@@ -158,6 +161,9 @@ public class CommerceAvailabilityEstimatePersistenceTest {
 			_persistence.findByPrimaryKey(
 				newCommerceAvailabilityEstimate.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCommerceAvailabilityEstimate.getMvccVersion(),
+			newCommerceAvailabilityEstimate.getMvccVersion());
 		Assert.assertEquals(
 			existingCommerceAvailabilityEstimate.getUuid(),
 			newCommerceAvailabilityEstimate.getUuid());
@@ -254,7 +260,7 @@ public class CommerceAvailabilityEstimatePersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"CommerceAvailabilityEstimate", "uuid", true,
+			"CommerceAvailabilityEstimate", "mvccVersion", true, "uuid", true,
 			"commerceAvailabilityEstimateId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"title", true, "priority", true, "lastPublishDate", true);
@@ -514,6 +520,8 @@ public class CommerceAvailabilityEstimatePersistenceTest {
 
 		CommerceAvailabilityEstimate commerceAvailabilityEstimate =
 			_persistence.create(pk);
+
+		commerceAvailabilityEstimate.setMvccVersion(RandomTestUtil.nextLong());
 
 		commerceAvailabilityEstimate.setUuid(RandomTestUtil.randomString());
 

@@ -15,9 +15,10 @@
 package com.liferay.commerce.product.model.impl;
 
 import com.liferay.commerce.product.model.CPSpecificationOption;
+import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class CPSpecificationOptionCacheModel
-	implements CacheModel<CPSpecificationOption>, Externalizable {
+	implements CacheModel<CPSpecificationOption>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -48,8 +49,9 @@ public class CPSpecificationOptionCacheModel
 		CPSpecificationOptionCacheModel cpSpecificationOptionCacheModel =
 			(CPSpecificationOptionCacheModel)object;
 
-		if (CPSpecificationOptionId ==
-				cpSpecificationOptionCacheModel.CPSpecificationOptionId) {
+		if ((CPSpecificationOptionId ==
+				cpSpecificationOptionCacheModel.CPSpecificationOptionId) &&
+			(mvccVersion == cpSpecificationOptionCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -59,14 +61,28 @@ public class CPSpecificationOptionCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, CPSpecificationOptionId);
+		int hashCode = HashUtil.hash(0, CPSpecificationOptionId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", CPSpecificationOptionId=");
 		sb.append(CPSpecificationOptionId);
@@ -101,6 +117,8 @@ public class CPSpecificationOptionCacheModel
 	public CPSpecificationOption toEntityModel() {
 		CPSpecificationOptionImpl cpSpecificationOptionImpl =
 			new CPSpecificationOptionImpl();
+
+		cpSpecificationOptionImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			cpSpecificationOptionImpl.setUuid("");
@@ -175,6 +193,7 @@ public class CPSpecificationOptionCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		CPSpecificationOptionId = objectInput.readLong();
@@ -197,6 +216,8 @@ public class CPSpecificationOptionCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -248,6 +269,7 @@ public class CPSpecificationOptionCacheModel
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long CPSpecificationOptionId;
 	public long companyId;

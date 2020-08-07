@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.exception.NoSuchCPDAvailabilityEstimateException;
 import com.liferay.commerce.model.CPDAvailabilityEstimate;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the cpd availability estimate service.
@@ -45,9 +40,6 @@ public interface CPDAvailabilityEstimatePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDAvailabilityEstimateUtil} to access the cpd availability estimate persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CPDAvailabilityEstimate> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the cpd availability estimates where uuid = &#63;.
@@ -667,8 +659,5 @@ public interface CPDAvailabilityEstimatePersistence
 	 * @return the number of cpd availability estimates
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

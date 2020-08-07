@@ -14,19 +14,15 @@
 
 package com.liferay.commerce.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.math.BigDecimal;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,26 +34,18 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceOrderWrapper
+	extends BaseModelWrapper<CommerceOrder>
 	implements CommerceOrder, ModelWrapper<CommerceOrder> {
 
 	public CommerceOrderWrapper(CommerceOrder commerceOrder) {
-		_commerceOrder = commerceOrder;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceOrder.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceOrder.class.getName();
+		super(commerceOrder);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("commerceOrderId", getCommerceOrderId());
@@ -187,6 +175,12 @@ public class CommerceOrderWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -668,16 +662,6 @@ public class CommerceOrderWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CommerceOrderWrapper((CommerceOrder)_commerceOrder.clone());
-	}
-
-	@Override
-	public int compareTo(CommerceOrder commerceOrder) {
-		return _commerceOrder.compareTo(commerceOrder);
-	}
-
 	/**
 	 * Returns the advance status of this commerce order.
 	 *
@@ -685,14 +669,14 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public String getAdvanceStatus() {
-		return _commerceOrder.getAdvanceStatus();
+		return model.getAdvanceStatus();
 	}
 
 	@Override
 	public CommerceAddress getBillingAddress()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceOrder.getBillingAddress();
+		return model.getBillingAddress();
 	}
 
 	/**
@@ -702,7 +686,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public long getBillingAddressId() {
-		return _commerceOrder.getBillingAddressId();
+		return model.getBillingAddressId();
 	}
 
 	@Override
@@ -710,7 +694,7 @@ public class CommerceOrderWrapper
 			getCommerceAccount()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceOrder.getCommerceAccount();
+		return model.getCommerceAccount();
 	}
 
 	/**
@@ -720,14 +704,14 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public long getCommerceAccountId() {
-		return _commerceOrder.getCommerceAccountId();
+		return model.getCommerceAccountId();
 	}
 
 	@Override
 	public String getCommerceAccountName()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceOrder.getCommerceAccountName();
+		return model.getCommerceAccountName();
 	}
 
 	@Override
@@ -735,7 +719,7 @@ public class CommerceOrderWrapper
 			getCommerceCurrency()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceOrder.getCommerceCurrency();
+		return model.getCommerceCurrency();
 	}
 
 	/**
@@ -745,7 +729,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public long getCommerceCurrencyId() {
-		return _commerceOrder.getCommerceCurrencyId();
+		return model.getCommerceCurrencyId();
 	}
 
 	/**
@@ -755,24 +739,24 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public long getCommerceOrderId() {
-		return _commerceOrder.getCommerceOrderId();
+		return model.getCommerceOrderId();
 	}
 
 	@Override
 	public java.util.List<CommerceOrderItem> getCommerceOrderItems() {
-		return _commerceOrder.getCommerceOrderItems();
+		return model.getCommerceOrderItems();
 	}
 
 	@Override
 	public java.util.List<CommerceOrderItem> getCommerceOrderItems(
 		long cpInstanceId) {
 
-		return _commerceOrder.getCommerceOrderItems(cpInstanceId);
+		return model.getCommerceOrderItems(cpInstanceId);
 	}
 
 	@Override
 	public int getCommerceOrderItemsCount(long cpInstanceId) {
-		return _commerceOrder.getCommerceOrderItemsCount(cpInstanceId);
+		return model.getCommerceOrderItemsCount(cpInstanceId);
 	}
 
 	/**
@@ -782,14 +766,14 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public String getCommercePaymentMethodKey() {
-		return _commerceOrder.getCommercePaymentMethodKey();
+		return model.getCommercePaymentMethodKey();
 	}
 
 	@Override
 	public CommerceShippingMethod getCommerceShippingMethod()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceOrder.getCommerceShippingMethod();
+		return model.getCommerceShippingMethod();
 	}
 
 	/**
@@ -799,7 +783,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public long getCommerceShippingMethodId() {
-		return _commerceOrder.getCommerceShippingMethodId();
+		return model.getCommerceShippingMethodId();
 	}
 
 	/**
@@ -809,7 +793,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceOrder.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -819,7 +803,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public String getCouponCode() {
-		return _commerceOrder.getCouponCode();
+		return model.getCouponCode();
 	}
 
 	/**
@@ -829,12 +813,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceOrder.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceOrder.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -844,7 +823,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public String getExternalReferenceCode() {
-		return _commerceOrder.getExternalReferenceCode();
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -854,7 +833,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _commerceOrder.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -864,7 +843,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public Date getLastPriceUpdateDate() {
-		return _commerceOrder.getLastPriceUpdateDate();
+		return model.getLastPriceUpdateDate();
 	}
 
 	/**
@@ -874,7 +853,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public boolean getManuallyAdjusted() {
-		return _commerceOrder.getManuallyAdjusted();
+		return model.getManuallyAdjusted();
 	}
 
 	/**
@@ -884,7 +863,17 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceOrder.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce order.
+	 *
+	 * @return the mvcc version of this commerce order
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -894,7 +883,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public Date getOrderDate() {
-		return _commerceOrder.getOrderDate();
+		return model.getOrderDate();
 	}
 
 	/**
@@ -904,7 +893,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public int getOrderStatus() {
-		return _commerceOrder.getOrderStatus();
+		return model.getOrderStatus();
 	}
 
 	/**
@@ -914,7 +903,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public int getPaymentStatus() {
-		return _commerceOrder.getPaymentStatus();
+		return model.getPaymentStatus();
 	}
 
 	/**
@@ -924,12 +913,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceOrder.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceOrder.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -939,7 +923,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public String getPrintedNote() {
-		return _commerceOrder.getPrintedNote();
+		return model.getPrintedNote();
 	}
 
 	/**
@@ -949,7 +933,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public String getPurchaseOrderNumber() {
-		return _commerceOrder.getPurchaseOrderNumber();
+		return model.getPurchaseOrderNumber();
 	}
 
 	/**
@@ -959,21 +943,21 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public Date getRequestedDeliveryDate() {
-		return _commerceOrder.getRequestedDeliveryDate();
+		return model.getRequestedDeliveryDate();
 	}
 
 	@Override
 	public long getScopeGroupId()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceOrder.getScopeGroupId();
+		return model.getScopeGroupId();
 	}
 
 	@Override
 	public CommerceAddress getShippingAddress()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceOrder.getShippingAddress();
+		return model.getShippingAddress();
 	}
 
 	/**
@@ -983,7 +967,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public long getShippingAddressId() {
-		return _commerceOrder.getShippingAddressId();
+		return model.getShippingAddressId();
 	}
 
 	/**
@@ -993,7 +977,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getShippingAmount() {
-		return _commerceOrder.getShippingAmount();
+		return model.getShippingAmount();
 	}
 
 	/**
@@ -1003,7 +987,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getShippingDiscountAmount() {
-		return _commerceOrder.getShippingDiscountAmount();
+		return model.getShippingDiscountAmount();
 	}
 
 	/**
@@ -1013,7 +997,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getShippingDiscountPercentageLevel1() {
-		return _commerceOrder.getShippingDiscountPercentageLevel1();
+		return model.getShippingDiscountPercentageLevel1();
 	}
 
 	/**
@@ -1023,8 +1007,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getShippingDiscountPercentageLevel1WithTaxAmount() {
-		return _commerceOrder.
-			getShippingDiscountPercentageLevel1WithTaxAmount();
+		return model.getShippingDiscountPercentageLevel1WithTaxAmount();
 	}
 
 	/**
@@ -1034,7 +1017,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getShippingDiscountPercentageLevel2() {
-		return _commerceOrder.getShippingDiscountPercentageLevel2();
+		return model.getShippingDiscountPercentageLevel2();
 	}
 
 	/**
@@ -1044,8 +1027,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getShippingDiscountPercentageLevel2WithTaxAmount() {
-		return _commerceOrder.
-			getShippingDiscountPercentageLevel2WithTaxAmount();
+		return model.getShippingDiscountPercentageLevel2WithTaxAmount();
 	}
 
 	/**
@@ -1055,7 +1037,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getShippingDiscountPercentageLevel3() {
-		return _commerceOrder.getShippingDiscountPercentageLevel3();
+		return model.getShippingDiscountPercentageLevel3();
 	}
 
 	/**
@@ -1065,8 +1047,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getShippingDiscountPercentageLevel3WithTaxAmount() {
-		return _commerceOrder.
-			getShippingDiscountPercentageLevel3WithTaxAmount();
+		return model.getShippingDiscountPercentageLevel3WithTaxAmount();
 	}
 
 	/**
@@ -1076,7 +1057,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getShippingDiscountPercentageLevel4() {
-		return _commerceOrder.getShippingDiscountPercentageLevel4();
+		return model.getShippingDiscountPercentageLevel4();
 	}
 
 	/**
@@ -1086,8 +1067,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getShippingDiscountPercentageLevel4WithTaxAmount() {
-		return _commerceOrder.
-			getShippingDiscountPercentageLevel4WithTaxAmount();
+		return model.getShippingDiscountPercentageLevel4WithTaxAmount();
 	}
 
 	/**
@@ -1097,14 +1077,14 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getShippingDiscountWithTaxAmount() {
-		return _commerceOrder.getShippingDiscountWithTaxAmount();
+		return model.getShippingDiscountWithTaxAmount();
 	}
 
 	@Override
 	public com.liferay.commerce.currency.model.CommerceMoney getShippingMoney()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceOrder.getShippingMoney();
+		return model.getShippingMoney();
 	}
 
 	/**
@@ -1114,7 +1094,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public String getShippingOptionName() {
-		return _commerceOrder.getShippingOptionName();
+		return model.getShippingOptionName();
 	}
 
 	/**
@@ -1124,7 +1104,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getShippingWithTaxAmount() {
-		return _commerceOrder.getShippingWithTaxAmount();
+		return model.getShippingWithTaxAmount();
 	}
 
 	@Override
@@ -1132,7 +1112,7 @@ public class CommerceOrderWrapper
 			getShippingWithTaxAmountMoney()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceOrder.getShippingWithTaxAmountMoney();
+		return model.getShippingWithTaxAmountMoney();
 	}
 
 	/**
@@ -1142,7 +1122,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public int getStatus() {
-		return _commerceOrder.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -1152,7 +1132,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public long getStatusByUserId() {
-		return _commerceOrder.getStatusByUserId();
+		return model.getStatusByUserId();
 	}
 
 	/**
@@ -1162,7 +1142,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public String getStatusByUserName() {
-		return _commerceOrder.getStatusByUserName();
+		return model.getStatusByUserName();
 	}
 
 	/**
@@ -1172,7 +1152,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public String getStatusByUserUuid() {
-		return _commerceOrder.getStatusByUserUuid();
+		return model.getStatusByUserUuid();
 	}
 
 	/**
@@ -1182,7 +1162,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public Date getStatusDate() {
-		return _commerceOrder.getStatusDate();
+		return model.getStatusDate();
 	}
 
 	/**
@@ -1192,7 +1172,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getSubtotal() {
-		return _commerceOrder.getSubtotal();
+		return model.getSubtotal();
 	}
 
 	/**
@@ -1202,7 +1182,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getSubtotalDiscountAmount() {
-		return _commerceOrder.getSubtotalDiscountAmount();
+		return model.getSubtotalDiscountAmount();
 	}
 
 	/**
@@ -1212,7 +1192,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getSubtotalDiscountPercentageLevel1() {
-		return _commerceOrder.getSubtotalDiscountPercentageLevel1();
+		return model.getSubtotalDiscountPercentageLevel1();
 	}
 
 	/**
@@ -1222,8 +1202,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getSubtotalDiscountPercentageLevel1WithTaxAmount() {
-		return _commerceOrder.
-			getSubtotalDiscountPercentageLevel1WithTaxAmount();
+		return model.getSubtotalDiscountPercentageLevel1WithTaxAmount();
 	}
 
 	/**
@@ -1233,7 +1212,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getSubtotalDiscountPercentageLevel2() {
-		return _commerceOrder.getSubtotalDiscountPercentageLevel2();
+		return model.getSubtotalDiscountPercentageLevel2();
 	}
 
 	/**
@@ -1243,8 +1222,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getSubtotalDiscountPercentageLevel2WithTaxAmount() {
-		return _commerceOrder.
-			getSubtotalDiscountPercentageLevel2WithTaxAmount();
+		return model.getSubtotalDiscountPercentageLevel2WithTaxAmount();
 	}
 
 	/**
@@ -1254,7 +1232,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getSubtotalDiscountPercentageLevel3() {
-		return _commerceOrder.getSubtotalDiscountPercentageLevel3();
+		return model.getSubtotalDiscountPercentageLevel3();
 	}
 
 	/**
@@ -1264,8 +1242,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getSubtotalDiscountPercentageLevel3WithTaxAmount() {
-		return _commerceOrder.
-			getSubtotalDiscountPercentageLevel3WithTaxAmount();
+		return model.getSubtotalDiscountPercentageLevel3WithTaxAmount();
 	}
 
 	/**
@@ -1275,7 +1252,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getSubtotalDiscountPercentageLevel4() {
-		return _commerceOrder.getSubtotalDiscountPercentageLevel4();
+		return model.getSubtotalDiscountPercentageLevel4();
 	}
 
 	/**
@@ -1285,8 +1262,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getSubtotalDiscountPercentageLevel4WithTaxAmount() {
-		return _commerceOrder.
-			getSubtotalDiscountPercentageLevel4WithTaxAmount();
+		return model.getSubtotalDiscountPercentageLevel4WithTaxAmount();
 	}
 
 	/**
@@ -1296,14 +1272,14 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getSubtotalDiscountWithTaxAmount() {
-		return _commerceOrder.getSubtotalDiscountWithTaxAmount();
+		return model.getSubtotalDiscountWithTaxAmount();
 	}
 
 	@Override
 	public com.liferay.commerce.currency.model.CommerceMoney getSubtotalMoney()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceOrder.getSubtotalMoney();
+		return model.getSubtotalMoney();
 	}
 
 	/**
@@ -1313,7 +1289,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getSubtotalWithTaxAmount() {
-		return _commerceOrder.getSubtotalWithTaxAmount();
+		return model.getSubtotalWithTaxAmount();
 	}
 
 	@Override
@@ -1321,7 +1297,7 @@ public class CommerceOrderWrapper
 			getSubtotalWithTaxAmountMoney()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceOrder.getSubtotalWithTaxAmountMoney();
+		return model.getSubtotalWithTaxAmountMoney();
 	}
 
 	/**
@@ -1331,7 +1307,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getTaxAmount() {
-		return _commerceOrder.getTaxAmount();
+		return model.getTaxAmount();
 	}
 
 	/**
@@ -1341,7 +1317,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getTotal() {
-		return _commerceOrder.getTotal();
+		return model.getTotal();
 	}
 
 	/**
@@ -1351,7 +1327,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getTotalDiscountAmount() {
-		return _commerceOrder.getTotalDiscountAmount();
+		return model.getTotalDiscountAmount();
 	}
 
 	/**
@@ -1361,7 +1337,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getTotalDiscountPercentageLevel1() {
-		return _commerceOrder.getTotalDiscountPercentageLevel1();
+		return model.getTotalDiscountPercentageLevel1();
 	}
 
 	/**
@@ -1371,7 +1347,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getTotalDiscountPercentageLevel1WithTaxAmount() {
-		return _commerceOrder.getTotalDiscountPercentageLevel1WithTaxAmount();
+		return model.getTotalDiscountPercentageLevel1WithTaxAmount();
 	}
 
 	/**
@@ -1381,7 +1357,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getTotalDiscountPercentageLevel2() {
-		return _commerceOrder.getTotalDiscountPercentageLevel2();
+		return model.getTotalDiscountPercentageLevel2();
 	}
 
 	/**
@@ -1391,7 +1367,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getTotalDiscountPercentageLevel2WithTaxAmount() {
-		return _commerceOrder.getTotalDiscountPercentageLevel2WithTaxAmount();
+		return model.getTotalDiscountPercentageLevel2WithTaxAmount();
 	}
 
 	/**
@@ -1401,7 +1377,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getTotalDiscountPercentageLevel3() {
-		return _commerceOrder.getTotalDiscountPercentageLevel3();
+		return model.getTotalDiscountPercentageLevel3();
 	}
 
 	/**
@@ -1411,7 +1387,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getTotalDiscountPercentageLevel3WithTaxAmount() {
-		return _commerceOrder.getTotalDiscountPercentageLevel3WithTaxAmount();
+		return model.getTotalDiscountPercentageLevel3WithTaxAmount();
 	}
 
 	/**
@@ -1421,7 +1397,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getTotalDiscountPercentageLevel4() {
-		return _commerceOrder.getTotalDiscountPercentageLevel4();
+		return model.getTotalDiscountPercentageLevel4();
 	}
 
 	/**
@@ -1431,7 +1407,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getTotalDiscountPercentageLevel4WithTaxAmount() {
-		return _commerceOrder.getTotalDiscountPercentageLevel4WithTaxAmount();
+		return model.getTotalDiscountPercentageLevel4WithTaxAmount();
 	}
 
 	/**
@@ -1441,14 +1417,14 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getTotalDiscountWithTaxAmount() {
-		return _commerceOrder.getTotalDiscountWithTaxAmount();
+		return model.getTotalDiscountWithTaxAmount();
 	}
 
 	@Override
 	public com.liferay.commerce.currency.model.CommerceMoney getTotalMoney()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceOrder.getTotalMoney();
+		return model.getTotalMoney();
 	}
 
 	/**
@@ -1458,7 +1434,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public BigDecimal getTotalWithTaxAmount() {
-		return _commerceOrder.getTotalWithTaxAmount();
+		return model.getTotalWithTaxAmount();
 	}
 
 	@Override
@@ -1466,7 +1442,7 @@ public class CommerceOrderWrapper
 			getTotalWithTaxAmountMoney()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceOrder.getTotalWithTaxAmountMoney();
+		return model.getTotalWithTaxAmountMoney();
 	}
 
 	/**
@@ -1476,7 +1452,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public String getTransactionId() {
-		return _commerceOrder.getTransactionId();
+		return model.getTransactionId();
 	}
 
 	/**
@@ -1486,7 +1462,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceOrder.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -1496,7 +1472,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceOrder.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -1506,7 +1482,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceOrder.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -1516,12 +1492,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public String getUuid() {
-		return _commerceOrder.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceOrder.hashCode();
+		return model.getUuid();
 	}
 
 	/**
@@ -1531,19 +1502,14 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public boolean isApproved() {
-		return _commerceOrder.isApproved();
+		return model.isApproved();
 	}
 
 	@Override
 	public boolean isB2B()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceOrder.isB2B();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceOrder.isCachedModel();
+		return model.isB2B();
 	}
 
 	/**
@@ -1553,7 +1519,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public boolean isDenied() {
-		return _commerceOrder.isDenied();
+		return model.isDenied();
 	}
 
 	/**
@@ -1563,17 +1529,12 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public boolean isDraft() {
-		return _commerceOrder.isDraft();
+		return model.isDraft();
 	}
 
 	@Override
 	public boolean isEmpty() {
-		return _commerceOrder.isEmpty();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceOrder.isEscapedModel();
+		return model.isEmpty();
 	}
 
 	/**
@@ -1583,14 +1544,14 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public boolean isExpired() {
-		return _commerceOrder.isExpired();
+		return model.isExpired();
 	}
 
 	@Override
 	public boolean isGuestOrder()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceOrder.isGuestOrder();
+		return model.isGuestOrder();
 	}
 
 	/**
@@ -1600,7 +1561,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public boolean isInactive() {
-		return _commerceOrder.isInactive();
+		return model.isInactive();
 	}
 
 	/**
@@ -1610,7 +1571,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public boolean isIncomplete() {
-		return _commerceOrder.isIncomplete();
+		return model.isIncomplete();
 	}
 
 	/**
@@ -1620,17 +1581,12 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public boolean isManuallyAdjusted() {
-		return _commerceOrder.isManuallyAdjusted();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceOrder.isNew();
+		return model.isManuallyAdjusted();
 	}
 
 	@Override
 	public boolean isOpen() {
-		return _commerceOrder.isOpen();
+		return model.isOpen();
 	}
 
 	/**
@@ -1640,7 +1596,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public boolean isPending() {
-		return _commerceOrder.isPending();
+		return model.isPending();
 	}
 
 	/**
@@ -1650,22 +1606,22 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public boolean isScheduled() {
-		return _commerceOrder.isScheduled();
+		return model.isScheduled();
 	}
 
 	@Override
 	public boolean isSubscription() {
-		return _commerceOrder.isSubscription();
+		return model.isSubscription();
 	}
 
 	@Override
 	public boolean isSubscriptionOrder() {
-		return _commerceOrder.isSubscriptionOrder();
+		return model.isSubscriptionOrder();
 	}
 
 	@Override
 	public void persist() {
-		_commerceOrder.persist();
+		model.persist();
 	}
 
 	/**
@@ -1675,7 +1631,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setAdvanceStatus(String advanceStatus) {
-		_commerceOrder.setAdvanceStatus(advanceStatus);
+		model.setAdvanceStatus(advanceStatus);
 	}
 
 	/**
@@ -1685,12 +1641,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setBillingAddressId(long billingAddressId) {
-		_commerceOrder.setBillingAddressId(billingAddressId);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceOrder.setCachedModel(cachedModel);
+		model.setBillingAddressId(billingAddressId);
 	}
 
 	/**
@@ -1700,7 +1651,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setCommerceAccountId(long commerceAccountId) {
-		_commerceOrder.setCommerceAccountId(commerceAccountId);
+		model.setCommerceAccountId(commerceAccountId);
 	}
 
 	/**
@@ -1710,7 +1661,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setCommerceCurrencyId(long commerceCurrencyId) {
-		_commerceOrder.setCommerceCurrencyId(commerceCurrencyId);
+		model.setCommerceCurrencyId(commerceCurrencyId);
 	}
 
 	/**
@@ -1720,7 +1671,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setCommerceOrderId(long commerceOrderId) {
-		_commerceOrder.setCommerceOrderId(commerceOrderId);
+		model.setCommerceOrderId(commerceOrderId);
 	}
 
 	/**
@@ -1730,7 +1681,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setCommercePaymentMethodKey(String commercePaymentMethodKey) {
-		_commerceOrder.setCommercePaymentMethodKey(commercePaymentMethodKey);
+		model.setCommercePaymentMethodKey(commercePaymentMethodKey);
 	}
 
 	/**
@@ -1740,7 +1691,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setCommerceShippingMethodId(long commerceShippingMethodId) {
-		_commerceOrder.setCommerceShippingMethodId(commerceShippingMethodId);
+		model.setCommerceShippingMethodId(commerceShippingMethodId);
 	}
 
 	/**
@@ -1750,7 +1701,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceOrder.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -1760,7 +1711,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setCouponCode(String couponCode) {
-		_commerceOrder.setCouponCode(couponCode);
+		model.setCouponCode(couponCode);
 	}
 
 	/**
@@ -1770,24 +1721,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceOrder.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceOrder.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceOrder.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceOrder.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -1797,7 +1731,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
-		_commerceOrder.setExternalReferenceCode(externalReferenceCode);
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**
@@ -1807,7 +1741,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_commerceOrder.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -1817,7 +1751,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setLastPriceUpdateDate(Date lastPriceUpdateDate) {
-		_commerceOrder.setLastPriceUpdateDate(lastPriceUpdateDate);
+		model.setLastPriceUpdateDate(lastPriceUpdateDate);
 	}
 
 	/**
@@ -1827,7 +1761,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setManuallyAdjusted(boolean manuallyAdjusted) {
-		_commerceOrder.setManuallyAdjusted(manuallyAdjusted);
+		model.setManuallyAdjusted(manuallyAdjusted);
 	}
 
 	/**
@@ -1837,12 +1771,17 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceOrder.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this commerce order.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce order
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_commerceOrder.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -1852,7 +1791,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setOrderDate(Date orderDate) {
-		_commerceOrder.setOrderDate(orderDate);
+		model.setOrderDate(orderDate);
 	}
 
 	/**
@@ -1862,7 +1801,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setOrderStatus(int orderStatus) {
-		_commerceOrder.setOrderStatus(orderStatus);
+		model.setOrderStatus(orderStatus);
 	}
 
 	/**
@@ -1872,7 +1811,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setPaymentStatus(int paymentStatus) {
-		_commerceOrder.setPaymentStatus(paymentStatus);
+		model.setPaymentStatus(paymentStatus);
 	}
 
 	/**
@@ -1882,12 +1821,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceOrder.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceOrder.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -1897,7 +1831,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setPrintedNote(String printedNote) {
-		_commerceOrder.setPrintedNote(printedNote);
+		model.setPrintedNote(printedNote);
 	}
 
 	/**
@@ -1907,7 +1841,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setPurchaseOrderNumber(String purchaseOrderNumber) {
-		_commerceOrder.setPurchaseOrderNumber(purchaseOrderNumber);
+		model.setPurchaseOrderNumber(purchaseOrderNumber);
 	}
 
 	/**
@@ -1917,7 +1851,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setRequestedDeliveryDate(Date requestedDeliveryDate) {
-		_commerceOrder.setRequestedDeliveryDate(requestedDeliveryDate);
+		model.setRequestedDeliveryDate(requestedDeliveryDate);
 	}
 
 	/**
@@ -1927,7 +1861,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setShippingAddressId(long shippingAddressId) {
-		_commerceOrder.setShippingAddressId(shippingAddressId);
+		model.setShippingAddressId(shippingAddressId);
 	}
 
 	/**
@@ -1937,7 +1871,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setShippingAmount(BigDecimal shippingAmount) {
-		_commerceOrder.setShippingAmount(shippingAmount);
+		model.setShippingAmount(shippingAmount);
 	}
 
 	/**
@@ -1947,7 +1881,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setShippingDiscountAmount(BigDecimal shippingDiscountAmount) {
-		_commerceOrder.setShippingDiscountAmount(shippingDiscountAmount);
+		model.setShippingDiscountAmount(shippingDiscountAmount);
 	}
 
 	/**
@@ -1959,7 +1893,7 @@ public class CommerceOrderWrapper
 	public void setShippingDiscountPercentageLevel1(
 		BigDecimal shippingDiscountPercentageLevel1) {
 
-		_commerceOrder.setShippingDiscountPercentageLevel1(
+		model.setShippingDiscountPercentageLevel1(
 			shippingDiscountPercentageLevel1);
 	}
 
@@ -1972,7 +1906,7 @@ public class CommerceOrderWrapper
 	public void setShippingDiscountPercentageLevel1WithTaxAmount(
 		BigDecimal shippingDiscountPercentageLevel1WithTaxAmount) {
 
-		_commerceOrder.setShippingDiscountPercentageLevel1WithTaxAmount(
+		model.setShippingDiscountPercentageLevel1WithTaxAmount(
 			shippingDiscountPercentageLevel1WithTaxAmount);
 	}
 
@@ -1985,7 +1919,7 @@ public class CommerceOrderWrapper
 	public void setShippingDiscountPercentageLevel2(
 		BigDecimal shippingDiscountPercentageLevel2) {
 
-		_commerceOrder.setShippingDiscountPercentageLevel2(
+		model.setShippingDiscountPercentageLevel2(
 			shippingDiscountPercentageLevel2);
 	}
 
@@ -1998,7 +1932,7 @@ public class CommerceOrderWrapper
 	public void setShippingDiscountPercentageLevel2WithTaxAmount(
 		BigDecimal shippingDiscountPercentageLevel2WithTaxAmount) {
 
-		_commerceOrder.setShippingDiscountPercentageLevel2WithTaxAmount(
+		model.setShippingDiscountPercentageLevel2WithTaxAmount(
 			shippingDiscountPercentageLevel2WithTaxAmount);
 	}
 
@@ -2011,7 +1945,7 @@ public class CommerceOrderWrapper
 	public void setShippingDiscountPercentageLevel3(
 		BigDecimal shippingDiscountPercentageLevel3) {
 
-		_commerceOrder.setShippingDiscountPercentageLevel3(
+		model.setShippingDiscountPercentageLevel3(
 			shippingDiscountPercentageLevel3);
 	}
 
@@ -2024,7 +1958,7 @@ public class CommerceOrderWrapper
 	public void setShippingDiscountPercentageLevel3WithTaxAmount(
 		BigDecimal shippingDiscountPercentageLevel3WithTaxAmount) {
 
-		_commerceOrder.setShippingDiscountPercentageLevel3WithTaxAmount(
+		model.setShippingDiscountPercentageLevel3WithTaxAmount(
 			shippingDiscountPercentageLevel3WithTaxAmount);
 	}
 
@@ -2037,7 +1971,7 @@ public class CommerceOrderWrapper
 	public void setShippingDiscountPercentageLevel4(
 		BigDecimal shippingDiscountPercentageLevel4) {
 
-		_commerceOrder.setShippingDiscountPercentageLevel4(
+		model.setShippingDiscountPercentageLevel4(
 			shippingDiscountPercentageLevel4);
 	}
 
@@ -2050,7 +1984,7 @@ public class CommerceOrderWrapper
 	public void setShippingDiscountPercentageLevel4WithTaxAmount(
 		BigDecimal shippingDiscountPercentageLevel4WithTaxAmount) {
 
-		_commerceOrder.setShippingDiscountPercentageLevel4WithTaxAmount(
+		model.setShippingDiscountPercentageLevel4WithTaxAmount(
 			shippingDiscountPercentageLevel4WithTaxAmount);
 	}
 
@@ -2059,7 +1993,7 @@ public class CommerceOrderWrapper
 		com.liferay.commerce.discount.CommerceDiscountValue
 			commerceDiscountValue) {
 
-		_commerceOrder.setShippingDiscounts(commerceDiscountValue);
+		model.setShippingDiscounts(commerceDiscountValue);
 	}
 
 	/**
@@ -2071,8 +2005,7 @@ public class CommerceOrderWrapper
 	public void setShippingDiscountWithTaxAmount(
 		BigDecimal shippingDiscountWithTaxAmount) {
 
-		_commerceOrder.setShippingDiscountWithTaxAmount(
-			shippingDiscountWithTaxAmount);
+		model.setShippingDiscountWithTaxAmount(shippingDiscountWithTaxAmount);
 	}
 
 	/**
@@ -2082,7 +2015,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setShippingOptionName(String shippingOptionName) {
-		_commerceOrder.setShippingOptionName(shippingOptionName);
+		model.setShippingOptionName(shippingOptionName);
 	}
 
 	/**
@@ -2092,7 +2025,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setShippingWithTaxAmount(BigDecimal shippingWithTaxAmount) {
-		_commerceOrder.setShippingWithTaxAmount(shippingWithTaxAmount);
+		model.setShippingWithTaxAmount(shippingWithTaxAmount);
 	}
 
 	/**
@@ -2102,7 +2035,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setStatus(int status) {
-		_commerceOrder.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -2112,7 +2045,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
-		_commerceOrder.setStatusByUserId(statusByUserId);
+		model.setStatusByUserId(statusByUserId);
 	}
 
 	/**
@@ -2122,7 +2055,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
-		_commerceOrder.setStatusByUserName(statusByUserName);
+		model.setStatusByUserName(statusByUserName);
 	}
 
 	/**
@@ -2132,7 +2065,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setStatusByUserUuid(String statusByUserUuid) {
-		_commerceOrder.setStatusByUserUuid(statusByUserUuid);
+		model.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
@@ -2142,7 +2075,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setStatusDate(Date statusDate) {
-		_commerceOrder.setStatusDate(statusDate);
+		model.setStatusDate(statusDate);
 	}
 
 	/**
@@ -2152,7 +2085,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setSubtotal(BigDecimal subtotal) {
-		_commerceOrder.setSubtotal(subtotal);
+		model.setSubtotal(subtotal);
 	}
 
 	/**
@@ -2162,7 +2095,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setSubtotalDiscountAmount(BigDecimal subtotalDiscountAmount) {
-		_commerceOrder.setSubtotalDiscountAmount(subtotalDiscountAmount);
+		model.setSubtotalDiscountAmount(subtotalDiscountAmount);
 	}
 
 	/**
@@ -2174,7 +2107,7 @@ public class CommerceOrderWrapper
 	public void setSubtotalDiscountPercentageLevel1(
 		BigDecimal subtotalDiscountPercentageLevel1) {
 
-		_commerceOrder.setSubtotalDiscountPercentageLevel1(
+		model.setSubtotalDiscountPercentageLevel1(
 			subtotalDiscountPercentageLevel1);
 	}
 
@@ -2187,7 +2120,7 @@ public class CommerceOrderWrapper
 	public void setSubtotalDiscountPercentageLevel1WithTaxAmount(
 		BigDecimal subtotalDiscountPercentageLevel1WithTaxAmount) {
 
-		_commerceOrder.setSubtotalDiscountPercentageLevel1WithTaxAmount(
+		model.setSubtotalDiscountPercentageLevel1WithTaxAmount(
 			subtotalDiscountPercentageLevel1WithTaxAmount);
 	}
 
@@ -2200,7 +2133,7 @@ public class CommerceOrderWrapper
 	public void setSubtotalDiscountPercentageLevel2(
 		BigDecimal subtotalDiscountPercentageLevel2) {
 
-		_commerceOrder.setSubtotalDiscountPercentageLevel2(
+		model.setSubtotalDiscountPercentageLevel2(
 			subtotalDiscountPercentageLevel2);
 	}
 
@@ -2213,7 +2146,7 @@ public class CommerceOrderWrapper
 	public void setSubtotalDiscountPercentageLevel2WithTaxAmount(
 		BigDecimal subtotalDiscountPercentageLevel2WithTaxAmount) {
 
-		_commerceOrder.setSubtotalDiscountPercentageLevel2WithTaxAmount(
+		model.setSubtotalDiscountPercentageLevel2WithTaxAmount(
 			subtotalDiscountPercentageLevel2WithTaxAmount);
 	}
 
@@ -2226,7 +2159,7 @@ public class CommerceOrderWrapper
 	public void setSubtotalDiscountPercentageLevel3(
 		BigDecimal subtotalDiscountPercentageLevel3) {
 
-		_commerceOrder.setSubtotalDiscountPercentageLevel3(
+		model.setSubtotalDiscountPercentageLevel3(
 			subtotalDiscountPercentageLevel3);
 	}
 
@@ -2239,7 +2172,7 @@ public class CommerceOrderWrapper
 	public void setSubtotalDiscountPercentageLevel3WithTaxAmount(
 		BigDecimal subtotalDiscountPercentageLevel3WithTaxAmount) {
 
-		_commerceOrder.setSubtotalDiscountPercentageLevel3WithTaxAmount(
+		model.setSubtotalDiscountPercentageLevel3WithTaxAmount(
 			subtotalDiscountPercentageLevel3WithTaxAmount);
 	}
 
@@ -2252,7 +2185,7 @@ public class CommerceOrderWrapper
 	public void setSubtotalDiscountPercentageLevel4(
 		BigDecimal subtotalDiscountPercentageLevel4) {
 
-		_commerceOrder.setSubtotalDiscountPercentageLevel4(
+		model.setSubtotalDiscountPercentageLevel4(
 			subtotalDiscountPercentageLevel4);
 	}
 
@@ -2265,7 +2198,7 @@ public class CommerceOrderWrapper
 	public void setSubtotalDiscountPercentageLevel4WithTaxAmount(
 		BigDecimal subtotalDiscountPercentageLevel4WithTaxAmount) {
 
-		_commerceOrder.setSubtotalDiscountPercentageLevel4WithTaxAmount(
+		model.setSubtotalDiscountPercentageLevel4WithTaxAmount(
 			subtotalDiscountPercentageLevel4WithTaxAmount);
 	}
 
@@ -2274,7 +2207,7 @@ public class CommerceOrderWrapper
 		com.liferay.commerce.discount.CommerceDiscountValue
 			commerceDiscountValue) {
 
-		_commerceOrder.setSubtotalDiscounts(commerceDiscountValue);
+		model.setSubtotalDiscounts(commerceDiscountValue);
 	}
 
 	/**
@@ -2286,8 +2219,7 @@ public class CommerceOrderWrapper
 	public void setSubtotalDiscountWithTaxAmount(
 		BigDecimal subtotalDiscountWithTaxAmount) {
 
-		_commerceOrder.setSubtotalDiscountWithTaxAmount(
-			subtotalDiscountWithTaxAmount);
+		model.setSubtotalDiscountWithTaxAmount(subtotalDiscountWithTaxAmount);
 	}
 
 	/**
@@ -2297,7 +2229,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setSubtotalWithTaxAmount(BigDecimal subtotalWithTaxAmount) {
-		_commerceOrder.setSubtotalWithTaxAmount(subtotalWithTaxAmount);
+		model.setSubtotalWithTaxAmount(subtotalWithTaxAmount);
 	}
 
 	/**
@@ -2307,7 +2239,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setTaxAmount(BigDecimal taxAmount) {
-		_commerceOrder.setTaxAmount(taxAmount);
+		model.setTaxAmount(taxAmount);
 	}
 
 	/**
@@ -2317,7 +2249,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setTotal(BigDecimal total) {
-		_commerceOrder.setTotal(total);
+		model.setTotal(total);
 	}
 
 	/**
@@ -2327,7 +2259,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setTotalDiscountAmount(BigDecimal totalDiscountAmount) {
-		_commerceOrder.setTotalDiscountAmount(totalDiscountAmount);
+		model.setTotalDiscountAmount(totalDiscountAmount);
 	}
 
 	/**
@@ -2339,8 +2271,7 @@ public class CommerceOrderWrapper
 	public void setTotalDiscountPercentageLevel1(
 		BigDecimal totalDiscountPercentageLevel1) {
 
-		_commerceOrder.setTotalDiscountPercentageLevel1(
-			totalDiscountPercentageLevel1);
+		model.setTotalDiscountPercentageLevel1(totalDiscountPercentageLevel1);
 	}
 
 	/**
@@ -2352,7 +2283,7 @@ public class CommerceOrderWrapper
 	public void setTotalDiscountPercentageLevel1WithTaxAmount(
 		BigDecimal totalDiscountPercentageLevel1WithTaxAmount) {
 
-		_commerceOrder.setTotalDiscountPercentageLevel1WithTaxAmount(
+		model.setTotalDiscountPercentageLevel1WithTaxAmount(
 			totalDiscountPercentageLevel1WithTaxAmount);
 	}
 
@@ -2365,8 +2296,7 @@ public class CommerceOrderWrapper
 	public void setTotalDiscountPercentageLevel2(
 		BigDecimal totalDiscountPercentageLevel2) {
 
-		_commerceOrder.setTotalDiscountPercentageLevel2(
-			totalDiscountPercentageLevel2);
+		model.setTotalDiscountPercentageLevel2(totalDiscountPercentageLevel2);
 	}
 
 	/**
@@ -2378,7 +2308,7 @@ public class CommerceOrderWrapper
 	public void setTotalDiscountPercentageLevel2WithTaxAmount(
 		BigDecimal totalDiscountPercentageLevel2WithTaxAmount) {
 
-		_commerceOrder.setTotalDiscountPercentageLevel2WithTaxAmount(
+		model.setTotalDiscountPercentageLevel2WithTaxAmount(
 			totalDiscountPercentageLevel2WithTaxAmount);
 	}
 
@@ -2391,8 +2321,7 @@ public class CommerceOrderWrapper
 	public void setTotalDiscountPercentageLevel3(
 		BigDecimal totalDiscountPercentageLevel3) {
 
-		_commerceOrder.setTotalDiscountPercentageLevel3(
-			totalDiscountPercentageLevel3);
+		model.setTotalDiscountPercentageLevel3(totalDiscountPercentageLevel3);
 	}
 
 	/**
@@ -2404,7 +2333,7 @@ public class CommerceOrderWrapper
 	public void setTotalDiscountPercentageLevel3WithTaxAmount(
 		BigDecimal totalDiscountPercentageLevel3WithTaxAmount) {
 
-		_commerceOrder.setTotalDiscountPercentageLevel3WithTaxAmount(
+		model.setTotalDiscountPercentageLevel3WithTaxAmount(
 			totalDiscountPercentageLevel3WithTaxAmount);
 	}
 
@@ -2417,8 +2346,7 @@ public class CommerceOrderWrapper
 	public void setTotalDiscountPercentageLevel4(
 		BigDecimal totalDiscountPercentageLevel4) {
 
-		_commerceOrder.setTotalDiscountPercentageLevel4(
-			totalDiscountPercentageLevel4);
+		model.setTotalDiscountPercentageLevel4(totalDiscountPercentageLevel4);
 	}
 
 	/**
@@ -2430,7 +2358,7 @@ public class CommerceOrderWrapper
 	public void setTotalDiscountPercentageLevel4WithTaxAmount(
 		BigDecimal totalDiscountPercentageLevel4WithTaxAmount) {
 
-		_commerceOrder.setTotalDiscountPercentageLevel4WithTaxAmount(
+		model.setTotalDiscountPercentageLevel4WithTaxAmount(
 			totalDiscountPercentageLevel4WithTaxAmount);
 	}
 
@@ -2439,7 +2367,7 @@ public class CommerceOrderWrapper
 		com.liferay.commerce.discount.CommerceDiscountValue
 			commerceDiscountValue) {
 
-		_commerceOrder.setTotalDiscounts(commerceDiscountValue);
+		model.setTotalDiscounts(commerceDiscountValue);
 	}
 
 	/**
@@ -2451,8 +2379,7 @@ public class CommerceOrderWrapper
 	public void setTotalDiscountWithTaxAmount(
 		BigDecimal totalDiscountWithTaxAmount) {
 
-		_commerceOrder.setTotalDiscountWithTaxAmount(
-			totalDiscountWithTaxAmount);
+		model.setTotalDiscountWithTaxAmount(totalDiscountWithTaxAmount);
 	}
 
 	/**
@@ -2462,7 +2389,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setTotalWithTaxAmount(BigDecimal totalWithTaxAmount) {
-		_commerceOrder.setTotalWithTaxAmount(totalWithTaxAmount);
+		model.setTotalWithTaxAmount(totalWithTaxAmount);
 	}
 
 	/**
@@ -2472,7 +2399,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setTransactionId(String transactionId) {
-		_commerceOrder.setTransactionId(transactionId);
+		model.setTransactionId(transactionId);
 	}
 
 	/**
@@ -2482,7 +2409,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceOrder.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -2492,7 +2419,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceOrder.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -2502,7 +2429,7 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceOrder.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -2512,83 +2439,17 @@ public class CommerceOrderWrapper
 	 */
 	@Override
 	public void setUuid(String uuid) {
-		_commerceOrder.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceOrder>
-		toCacheModel() {
-
-		return _commerceOrder.toCacheModel();
-	}
-
-	@Override
-	public CommerceOrder toEscapedModel() {
-		return new CommerceOrderWrapper(_commerceOrder.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commerceOrder.toString();
-	}
-
-	@Override
-	public CommerceOrder toUnescapedModel() {
-		return new CommerceOrderWrapper(_commerceOrder.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceOrder.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceOrderWrapper)) {
-			return false;
-		}
-
-		CommerceOrderWrapper commerceOrderWrapper =
-			(CommerceOrderWrapper)object;
-
-		if (Objects.equals(
-				_commerceOrder, commerceOrderWrapper._commerceOrder)) {
-
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _commerceOrder.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public CommerceOrder getWrappedModel() {
-		return _commerceOrder;
+	protected CommerceOrderWrapper wrap(CommerceOrder commerceOrder) {
+		return new CommerceOrderWrapper(commerceOrder);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceOrder.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceOrder.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceOrder.resetOriginalValues();
-	}
-
-	private final CommerceOrder _commerceOrder;
 
 }

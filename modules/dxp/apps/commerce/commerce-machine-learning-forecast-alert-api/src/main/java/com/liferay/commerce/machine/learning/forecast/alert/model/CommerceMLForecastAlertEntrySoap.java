@@ -34,6 +34,7 @@ public class CommerceMLForecastAlertEntrySoap implements Serializable {
 		CommerceMLForecastAlertEntrySoap soapModel =
 			new CommerceMLForecastAlertEntrySoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setCommerceMLForecastAlertEntryId(
 			model.getCommerceMLForecastAlertEntryId());
@@ -108,6 +109,14 @@ public class CommerceMLForecastAlertEntrySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceMLForecastAlertEntryId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -216,6 +225,7 @@ public class CommerceMLForecastAlertEntrySoap implements Serializable {
 		_status = status;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _commerceMLForecastAlertEntryId;
 	private long _companyId;

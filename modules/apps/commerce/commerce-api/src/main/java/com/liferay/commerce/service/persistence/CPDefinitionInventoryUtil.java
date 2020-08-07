@@ -779,10 +779,6 @@ public class CPDefinitionInventoryUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CPDefinitionInventoryPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

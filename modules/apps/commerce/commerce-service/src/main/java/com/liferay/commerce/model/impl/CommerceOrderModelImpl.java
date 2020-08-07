@@ -20,6 +20,7 @@ import com.liferay.commerce.model.CommerceOrderSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
@@ -78,7 +78,8 @@ public class CommerceOrderModelImpl
 	public static final String TABLE_NAME = "CommerceOrder";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR},
 		{"commerceOrderId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -139,6 +140,7 @@ public class CommerceOrderModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceOrderId", Types.BIGINT);
@@ -210,7 +212,7 @@ public class CommerceOrderModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceOrder (uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commerceOrderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceAccountId LONG,commerceCurrencyId LONG,billingAddressId LONG,shippingAddressId LONG,commercePaymentMethodKey VARCHAR(75) null,transactionId TEXT null,commerceShippingMethodId LONG,shippingOptionName VARCHAR(255) null,purchaseOrderNumber VARCHAR(75) null,couponCode VARCHAR(75) null,lastPriceUpdateDate DATE null,subtotal DECIMAL(30, 16) null,subtotalDiscountAmount DECIMAL(30, 16) null,subtotalDiscountPercentLevel1 DECIMAL(30, 16) null,subtotalDiscountPercentLevel2 DECIMAL(30, 16) null,subtotalDiscountPercentLevel3 DECIMAL(30, 16) null,subtotalDiscountPercentLevel4 DECIMAL(30, 16) null,shippingAmount DECIMAL(30, 16) null,shippingDiscountAmount DECIMAL(30, 16) null,shippingDiscountPercentLevel1 DECIMAL(30, 16) null,shippingDiscountPercentLevel2 DECIMAL(30, 16) null,shippingDiscountPercentLevel3 DECIMAL(30, 16) null,shippingDiscountPercentLevel4 DECIMAL(30, 16) null,taxAmount DECIMAL(30, 16) null,total DECIMAL(30, 16) null,totalDiscountAmount DECIMAL(30, 16) null,totalDiscountPercentageLevel1 DECIMAL(30, 16) null,totalDiscountPercentageLevel2 DECIMAL(30, 16) null,totalDiscountPercentageLevel3 DECIMAL(30, 16) null,totalDiscountPercentageLevel4 DECIMAL(30, 16) null,subtotalWithTaxAmount DECIMAL(30, 16) null,subtotalDiscountWithTaxAmount DECIMAL(30, 16) null,subtotalDiscountPctLev1WithTax DECIMAL(30, 16) null,subtotalDiscountPctLev2WithTax DECIMAL(30, 16) null,subtotalDiscountPctLev3WithTax DECIMAL(30, 16) null,subtotalDiscountPctLev4WithTax DECIMAL(30, 16) null,shippingWithTaxAmount DECIMAL(30, 16) null,shippingDiscountWithTaxAmount DECIMAL(30, 16) null,shippingDiscountPctLev1WithTax DECIMAL(30, 16) null,shippingDiscountPctLev2WithTax DECIMAL(30, 16) null,shippingDiscountPctLev3WithTax DECIMAL(30, 16) null,shippingDiscountPctLev4WithTax DECIMAL(30, 16) null,totalWithTaxAmount DECIMAL(30, 16) null,totalDiscountWithTaxAmount DECIMAL(30, 16) null,totalDiscountPctLev1WithTax DECIMAL(30, 16) null,totalDiscountPctLev2WithTax DECIMAL(30, 16) null,totalDiscountPctLev3WithTax DECIMAL(30, 16) null,totalDiscountPctLev4WithTax DECIMAL(30, 16) null,advanceStatus VARCHAR(75) null,paymentStatus INTEGER,orderDate DATE null,orderStatus INTEGER,printedNote STRING null,requestedDeliveryDate DATE null,manuallyAdjusted BOOLEAN,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table CommerceOrder (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commerceOrderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceAccountId LONG,commerceCurrencyId LONG,billingAddressId LONG,shippingAddressId LONG,commercePaymentMethodKey VARCHAR(75) null,transactionId TEXT null,commerceShippingMethodId LONG,shippingOptionName VARCHAR(255) null,purchaseOrderNumber VARCHAR(75) null,couponCode VARCHAR(75) null,lastPriceUpdateDate DATE null,subtotal DECIMAL(30, 16) null,subtotalDiscountAmount DECIMAL(30, 16) null,subtotalDiscountPercentLevel1 DECIMAL(30, 16) null,subtotalDiscountPercentLevel2 DECIMAL(30, 16) null,subtotalDiscountPercentLevel3 DECIMAL(30, 16) null,subtotalDiscountPercentLevel4 DECIMAL(30, 16) null,shippingAmount DECIMAL(30, 16) null,shippingDiscountAmount DECIMAL(30, 16) null,shippingDiscountPercentLevel1 DECIMAL(30, 16) null,shippingDiscountPercentLevel2 DECIMAL(30, 16) null,shippingDiscountPercentLevel3 DECIMAL(30, 16) null,shippingDiscountPercentLevel4 DECIMAL(30, 16) null,taxAmount DECIMAL(30, 16) null,total DECIMAL(30, 16) null,totalDiscountAmount DECIMAL(30, 16) null,totalDiscountPercentageLevel1 DECIMAL(30, 16) null,totalDiscountPercentageLevel2 DECIMAL(30, 16) null,totalDiscountPercentageLevel3 DECIMAL(30, 16) null,totalDiscountPercentageLevel4 DECIMAL(30, 16) null,subtotalWithTaxAmount DECIMAL(30, 16) null,subtotalDiscountWithTaxAmount DECIMAL(30, 16) null,subtotalDiscountPctLev1WithTax DECIMAL(30, 16) null,subtotalDiscountPctLev2WithTax DECIMAL(30, 16) null,subtotalDiscountPctLev3WithTax DECIMAL(30, 16) null,subtotalDiscountPctLev4WithTax DECIMAL(30, 16) null,shippingWithTaxAmount DECIMAL(30, 16) null,shippingDiscountWithTaxAmount DECIMAL(30, 16) null,shippingDiscountPctLev1WithTax DECIMAL(30, 16) null,shippingDiscountPctLev2WithTax DECIMAL(30, 16) null,shippingDiscountPctLev3WithTax DECIMAL(30, 16) null,shippingDiscountPctLev4WithTax DECIMAL(30, 16) null,totalWithTaxAmount DECIMAL(30, 16) null,totalDiscountWithTaxAmount DECIMAL(30, 16) null,totalDiscountPctLev1WithTax DECIMAL(30, 16) null,totalDiscountPctLev2WithTax DECIMAL(30, 16) null,totalDiscountPctLev3WithTax DECIMAL(30, 16) null,totalDiscountPctLev4WithTax DECIMAL(30, 16) null,advanceStatus VARCHAR(75) null,paymentStatus INTEGER,orderDate DATE null,orderStatus INTEGER,printedNote STRING null,requestedDeliveryDate DATE null,manuallyAdjusted BOOLEAN,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrder";
 
@@ -226,20 +228,23 @@ public class CommerceOrderModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.model.CommerceOrder"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.model.CommerceOrder"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.model.CommerceOrder"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long BILLINGADDRESSID_COLUMN_BITMASK = 1L;
 
@@ -276,6 +281,7 @@ public class CommerceOrderModelImpl
 
 		CommerceOrder model = new CommerceOrderImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setCommerceOrderId(soapModel.getCommerceOrderId());
@@ -454,9 +460,6 @@ public class CommerceOrderModelImpl
 				attributeGetterFunction.apply((CommerceOrder)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -530,1641 +533,440 @@ public class CommerceOrderModelImpl
 			new LinkedHashMap<String, BiConsumer<CommerceOrder, ?>>();
 
 		attributeGetterFunctions.put(
-			"uuid",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getUuid();
-				}
-
-			});
+			"mvccVersion", CommerceOrder::getMvccVersion);
 		attributeSetterBiConsumers.put(
-			"uuid",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder, Object uuidObject) {
-
-					commerceOrder.setUuid((String)uuidObject);
-				}
-
-			});
+			"mvccVersion",
+			(BiConsumer<CommerceOrder, Long>)CommerceOrder::setMvccVersion);
+		attributeGetterFunctions.put("uuid", CommerceOrder::getUuid);
+		attributeSetterBiConsumers.put(
+			"uuid", (BiConsumer<CommerceOrder, String>)CommerceOrder::setUuid);
 		attributeGetterFunctions.put(
-			"externalReferenceCode",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getExternalReferenceCode();
-				}
-
-			});
+			"externalReferenceCode", CommerceOrder::getExternalReferenceCode);
 		attributeSetterBiConsumers.put(
 			"externalReferenceCode",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object externalReferenceCodeObject) {
-
-					commerceOrder.setExternalReferenceCode(
-						(String)externalReferenceCodeObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, String>)
+				CommerceOrder::setExternalReferenceCode);
 		attributeGetterFunctions.put(
-			"commerceOrderId",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getCommerceOrderId();
-				}
-
-			});
+			"commerceOrderId", CommerceOrder::getCommerceOrderId);
 		attributeSetterBiConsumers.put(
 			"commerceOrderId",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder, Object commerceOrderIdObject) {
-
-					commerceOrder.setCommerceOrderId(
-						(Long)commerceOrderIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"groupId",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getGroupId();
-				}
-
-			});
+			(BiConsumer<CommerceOrder, Long>)CommerceOrder::setCommerceOrderId);
+		attributeGetterFunctions.put("groupId", CommerceOrder::getGroupId);
 		attributeSetterBiConsumers.put(
 			"groupId",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder, Object groupIdObject) {
-
-					commerceOrder.setGroupId((Long)groupIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getCompanyId();
-				}
-
-			});
+			(BiConsumer<CommerceOrder, Long>)CommerceOrder::setGroupId);
+		attributeGetterFunctions.put("companyId", CommerceOrder::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder, Object companyIdObject) {
-
-					commerceOrder.setCompanyId((Long)companyIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getUserId();
-				}
-
-			});
+			(BiConsumer<CommerceOrder, Long>)CommerceOrder::setCompanyId);
+		attributeGetterFunctions.put("userId", CommerceOrder::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder, Object userIdObject) {
-
-					commerceOrder.setUserId((Long)userIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getUserName();
-				}
-
-			});
+			(BiConsumer<CommerceOrder, Long>)CommerceOrder::setUserId);
+		attributeGetterFunctions.put("userName", CommerceOrder::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder, Object userNameObject) {
-
-					commerceOrder.setUserName((String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, String>)CommerceOrder::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getCreateDate();
-				}
-
-			});
+			"createDate", CommerceOrder::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder, Object createDateObject) {
-
-					commerceOrder.setCreateDate((Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, Date>)CommerceOrder::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CommerceOrder::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder, Object modifiedDateObject) {
-
-					commerceOrder.setModifiedDate((Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, Date>)CommerceOrder::setModifiedDate);
 		attributeGetterFunctions.put(
-			"commerceAccountId",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getCommerceAccountId();
-				}
-
-			});
+			"commerceAccountId", CommerceOrder::getCommerceAccountId);
 		attributeSetterBiConsumers.put(
 			"commerceAccountId",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object commerceAccountIdObject) {
-
-					commerceOrder.setCommerceAccountId(
-						(Long)commerceAccountIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, Long>)
+				CommerceOrder::setCommerceAccountId);
 		attributeGetterFunctions.put(
-			"commerceCurrencyId",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getCommerceCurrencyId();
-				}
-
-			});
+			"commerceCurrencyId", CommerceOrder::getCommerceCurrencyId);
 		attributeSetterBiConsumers.put(
 			"commerceCurrencyId",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object commerceCurrencyIdObject) {
-
-					commerceOrder.setCommerceCurrencyId(
-						(Long)commerceCurrencyIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, Long>)
+				CommerceOrder::setCommerceCurrencyId);
 		attributeGetterFunctions.put(
-			"billingAddressId",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getBillingAddressId();
-				}
-
-			});
+			"billingAddressId", CommerceOrder::getBillingAddressId);
 		attributeSetterBiConsumers.put(
 			"billingAddressId",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object billingAddressIdObject) {
-
-					commerceOrder.setBillingAddressId(
-						(Long)billingAddressIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, Long>)
+				CommerceOrder::setBillingAddressId);
 		attributeGetterFunctions.put(
-			"shippingAddressId",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getShippingAddressId();
-				}
-
-			});
+			"shippingAddressId", CommerceOrder::getShippingAddressId);
 		attributeSetterBiConsumers.put(
 			"shippingAddressId",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object shippingAddressIdObject) {
-
-					commerceOrder.setShippingAddressId(
-						(Long)shippingAddressIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, Long>)
+				CommerceOrder::setShippingAddressId);
 		attributeGetterFunctions.put(
 			"commercePaymentMethodKey",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getCommercePaymentMethodKey();
-				}
-
-			});
+			CommerceOrder::getCommercePaymentMethodKey);
 		attributeSetterBiConsumers.put(
 			"commercePaymentMethodKey",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object commercePaymentMethodKeyObject) {
-
-					commerceOrder.setCommercePaymentMethodKey(
-						(String)commercePaymentMethodKeyObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, String>)
+				CommerceOrder::setCommercePaymentMethodKey);
 		attributeGetterFunctions.put(
-			"transactionId",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getTransactionId();
-				}
-
-			});
+			"transactionId", CommerceOrder::getTransactionId);
 		attributeSetterBiConsumers.put(
 			"transactionId",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder, Object transactionIdObject) {
-
-					commerceOrder.setTransactionId((String)transactionIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, String>)CommerceOrder::setTransactionId);
 		attributeGetterFunctions.put(
 			"commerceShippingMethodId",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getCommerceShippingMethodId();
-				}
-
-			});
+			CommerceOrder::getCommerceShippingMethodId);
 		attributeSetterBiConsumers.put(
 			"commerceShippingMethodId",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object commerceShippingMethodIdObject) {
-
-					commerceOrder.setCommerceShippingMethodId(
-						(Long)commerceShippingMethodIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, Long>)
+				CommerceOrder::setCommerceShippingMethodId);
 		attributeGetterFunctions.put(
-			"shippingOptionName",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getShippingOptionName();
-				}
-
-			});
+			"shippingOptionName", CommerceOrder::getShippingOptionName);
 		attributeSetterBiConsumers.put(
 			"shippingOptionName",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object shippingOptionNameObject) {
-
-					commerceOrder.setShippingOptionName(
-						(String)shippingOptionNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, String>)
+				CommerceOrder::setShippingOptionName);
 		attributeGetterFunctions.put(
-			"purchaseOrderNumber",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getPurchaseOrderNumber();
-				}
-
-			});
+			"purchaseOrderNumber", CommerceOrder::getPurchaseOrderNumber);
 		attributeSetterBiConsumers.put(
 			"purchaseOrderNumber",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object purchaseOrderNumberObject) {
-
-					commerceOrder.setPurchaseOrderNumber(
-						(String)purchaseOrderNumberObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, String>)
+				CommerceOrder::setPurchaseOrderNumber);
 		attributeGetterFunctions.put(
-			"couponCode",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getCouponCode();
-				}
-
-			});
+			"couponCode", CommerceOrder::getCouponCode);
 		attributeSetterBiConsumers.put(
 			"couponCode",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder, Object couponCodeObject) {
-
-					commerceOrder.setCouponCode((String)couponCodeObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, String>)CommerceOrder::setCouponCode);
 		attributeGetterFunctions.put(
-			"lastPriceUpdateDate",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getLastPriceUpdateDate();
-				}
-
-			});
+			"lastPriceUpdateDate", CommerceOrder::getLastPriceUpdateDate);
 		attributeSetterBiConsumers.put(
 			"lastPriceUpdateDate",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object lastPriceUpdateDateObject) {
-
-					commerceOrder.setLastPriceUpdateDate(
-						(Date)lastPriceUpdateDateObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"subtotal",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getSubtotal();
-				}
-
-			});
+			(BiConsumer<CommerceOrder, Date>)
+				CommerceOrder::setLastPriceUpdateDate);
+		attributeGetterFunctions.put("subtotal", CommerceOrder::getSubtotal);
 		attributeSetterBiConsumers.put(
 			"subtotal",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder, Object subtotalObject) {
-
-					commerceOrder.setSubtotal((BigDecimal)subtotalObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)CommerceOrder::setSubtotal);
 		attributeGetterFunctions.put(
-			"subtotalDiscountAmount",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getSubtotalDiscountAmount();
-				}
-
-			});
+			"subtotalDiscountAmount", CommerceOrder::getSubtotalDiscountAmount);
 		attributeSetterBiConsumers.put(
 			"subtotalDiscountAmount",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object subtotalDiscountAmountObject) {
-
-					commerceOrder.setSubtotalDiscountAmount(
-						(BigDecimal)subtotalDiscountAmountObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::setSubtotalDiscountAmount);
 		attributeGetterFunctions.put(
 			"subtotalDiscountPercentageLevel1",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getSubtotalDiscountPercentageLevel1();
-				}
-
-			});
+			CommerceOrder::getSubtotalDiscountPercentageLevel1);
 		attributeSetterBiConsumers.put(
 			"subtotalDiscountPercentageLevel1",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object subtotalDiscountPercentageLevel1Object) {
-
-					commerceOrder.setSubtotalDiscountPercentageLevel1(
-						(BigDecimal)subtotalDiscountPercentageLevel1Object);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::setSubtotalDiscountPercentageLevel1);
 		attributeGetterFunctions.put(
 			"subtotalDiscountPercentageLevel2",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getSubtotalDiscountPercentageLevel2();
-				}
-
-			});
+			CommerceOrder::getSubtotalDiscountPercentageLevel2);
 		attributeSetterBiConsumers.put(
 			"subtotalDiscountPercentageLevel2",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object subtotalDiscountPercentageLevel2Object) {
-
-					commerceOrder.setSubtotalDiscountPercentageLevel2(
-						(BigDecimal)subtotalDiscountPercentageLevel2Object);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::setSubtotalDiscountPercentageLevel2);
 		attributeGetterFunctions.put(
 			"subtotalDiscountPercentageLevel3",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getSubtotalDiscountPercentageLevel3();
-				}
-
-			});
+			CommerceOrder::getSubtotalDiscountPercentageLevel3);
 		attributeSetterBiConsumers.put(
 			"subtotalDiscountPercentageLevel3",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object subtotalDiscountPercentageLevel3Object) {
-
-					commerceOrder.setSubtotalDiscountPercentageLevel3(
-						(BigDecimal)subtotalDiscountPercentageLevel3Object);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::setSubtotalDiscountPercentageLevel3);
 		attributeGetterFunctions.put(
 			"subtotalDiscountPercentageLevel4",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getSubtotalDiscountPercentageLevel4();
-				}
-
-			});
+			CommerceOrder::getSubtotalDiscountPercentageLevel4);
 		attributeSetterBiConsumers.put(
 			"subtotalDiscountPercentageLevel4",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object subtotalDiscountPercentageLevel4Object) {
-
-					commerceOrder.setSubtotalDiscountPercentageLevel4(
-						(BigDecimal)subtotalDiscountPercentageLevel4Object);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::setSubtotalDiscountPercentageLevel4);
 		attributeGetterFunctions.put(
-			"shippingAmount",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getShippingAmount();
-				}
-
-			});
+			"shippingAmount", CommerceOrder::getShippingAmount);
 		attributeSetterBiConsumers.put(
 			"shippingAmount",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder, Object shippingAmountObject) {
-
-					commerceOrder.setShippingAmount(
-						(BigDecimal)shippingAmountObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::setShippingAmount);
 		attributeGetterFunctions.put(
-			"shippingDiscountAmount",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getShippingDiscountAmount();
-				}
-
-			});
+			"shippingDiscountAmount", CommerceOrder::getShippingDiscountAmount);
 		attributeSetterBiConsumers.put(
 			"shippingDiscountAmount",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object shippingDiscountAmountObject) {
-
-					commerceOrder.setShippingDiscountAmount(
-						(BigDecimal)shippingDiscountAmountObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::setShippingDiscountAmount);
 		attributeGetterFunctions.put(
 			"shippingDiscountPercentageLevel1",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getShippingDiscountPercentageLevel1();
-				}
-
-			});
+			CommerceOrder::getShippingDiscountPercentageLevel1);
 		attributeSetterBiConsumers.put(
 			"shippingDiscountPercentageLevel1",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object shippingDiscountPercentageLevel1Object) {
-
-					commerceOrder.setShippingDiscountPercentageLevel1(
-						(BigDecimal)shippingDiscountPercentageLevel1Object);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::setShippingDiscountPercentageLevel1);
 		attributeGetterFunctions.put(
 			"shippingDiscountPercentageLevel2",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getShippingDiscountPercentageLevel2();
-				}
-
-			});
+			CommerceOrder::getShippingDiscountPercentageLevel2);
 		attributeSetterBiConsumers.put(
 			"shippingDiscountPercentageLevel2",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object shippingDiscountPercentageLevel2Object) {
-
-					commerceOrder.setShippingDiscountPercentageLevel2(
-						(BigDecimal)shippingDiscountPercentageLevel2Object);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::setShippingDiscountPercentageLevel2);
 		attributeGetterFunctions.put(
 			"shippingDiscountPercentageLevel3",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getShippingDiscountPercentageLevel3();
-				}
-
-			});
+			CommerceOrder::getShippingDiscountPercentageLevel3);
 		attributeSetterBiConsumers.put(
 			"shippingDiscountPercentageLevel3",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object shippingDiscountPercentageLevel3Object) {
-
-					commerceOrder.setShippingDiscountPercentageLevel3(
-						(BigDecimal)shippingDiscountPercentageLevel3Object);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::setShippingDiscountPercentageLevel3);
 		attributeGetterFunctions.put(
 			"shippingDiscountPercentageLevel4",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getShippingDiscountPercentageLevel4();
-				}
-
-			});
+			CommerceOrder::getShippingDiscountPercentageLevel4);
 		attributeSetterBiConsumers.put(
 			"shippingDiscountPercentageLevel4",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object shippingDiscountPercentageLevel4Object) {
-
-					commerceOrder.setShippingDiscountPercentageLevel4(
-						(BigDecimal)shippingDiscountPercentageLevel4Object);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"taxAmount",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getTaxAmount();
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::setShippingDiscountPercentageLevel4);
+		attributeGetterFunctions.put("taxAmount", CommerceOrder::getTaxAmount);
 		attributeSetterBiConsumers.put(
 			"taxAmount",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder, Object taxAmountObject) {
-
-					commerceOrder.setTaxAmount((BigDecimal)taxAmountObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"total",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getTotal();
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)CommerceOrder::setTaxAmount);
+		attributeGetterFunctions.put("total", CommerceOrder::getTotal);
 		attributeSetterBiConsumers.put(
 			"total",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder, Object totalObject) {
-
-					commerceOrder.setTotal((BigDecimal)totalObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)CommerceOrder::setTotal);
 		attributeGetterFunctions.put(
-			"totalDiscountAmount",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getTotalDiscountAmount();
-				}
-
-			});
+			"totalDiscountAmount", CommerceOrder::getTotalDiscountAmount);
 		attributeSetterBiConsumers.put(
 			"totalDiscountAmount",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object totalDiscountAmountObject) {
-
-					commerceOrder.setTotalDiscountAmount(
-						(BigDecimal)totalDiscountAmountObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::setTotalDiscountAmount);
 		attributeGetterFunctions.put(
 			"totalDiscountPercentageLevel1",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getTotalDiscountPercentageLevel1();
-				}
-
-			});
+			CommerceOrder::getTotalDiscountPercentageLevel1);
 		attributeSetterBiConsumers.put(
 			"totalDiscountPercentageLevel1",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object totalDiscountPercentageLevel1Object) {
-
-					commerceOrder.setTotalDiscountPercentageLevel1(
-						(BigDecimal)totalDiscountPercentageLevel1Object);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::setTotalDiscountPercentageLevel1);
 		attributeGetterFunctions.put(
 			"totalDiscountPercentageLevel2",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getTotalDiscountPercentageLevel2();
-				}
-
-			});
+			CommerceOrder::getTotalDiscountPercentageLevel2);
 		attributeSetterBiConsumers.put(
 			"totalDiscountPercentageLevel2",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object totalDiscountPercentageLevel2Object) {
-
-					commerceOrder.setTotalDiscountPercentageLevel2(
-						(BigDecimal)totalDiscountPercentageLevel2Object);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::setTotalDiscountPercentageLevel2);
 		attributeGetterFunctions.put(
 			"totalDiscountPercentageLevel3",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getTotalDiscountPercentageLevel3();
-				}
-
-			});
+			CommerceOrder::getTotalDiscountPercentageLevel3);
 		attributeSetterBiConsumers.put(
 			"totalDiscountPercentageLevel3",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object totalDiscountPercentageLevel3Object) {
-
-					commerceOrder.setTotalDiscountPercentageLevel3(
-						(BigDecimal)totalDiscountPercentageLevel3Object);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::setTotalDiscountPercentageLevel3);
 		attributeGetterFunctions.put(
 			"totalDiscountPercentageLevel4",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getTotalDiscountPercentageLevel4();
-				}
-
-			});
+			CommerceOrder::getTotalDiscountPercentageLevel4);
 		attributeSetterBiConsumers.put(
 			"totalDiscountPercentageLevel4",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object totalDiscountPercentageLevel4Object) {
-
-					commerceOrder.setTotalDiscountPercentageLevel4(
-						(BigDecimal)totalDiscountPercentageLevel4Object);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::setTotalDiscountPercentageLevel4);
 		attributeGetterFunctions.put(
-			"subtotalWithTaxAmount",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getSubtotalWithTaxAmount();
-				}
-
-			});
+			"subtotalWithTaxAmount", CommerceOrder::getSubtotalWithTaxAmount);
 		attributeSetterBiConsumers.put(
 			"subtotalWithTaxAmount",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object subtotalWithTaxAmountObject) {
-
-					commerceOrder.setSubtotalWithTaxAmount(
-						(BigDecimal)subtotalWithTaxAmountObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::setSubtotalWithTaxAmount);
 		attributeGetterFunctions.put(
 			"subtotalDiscountWithTaxAmount",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getSubtotalDiscountWithTaxAmount();
-				}
-
-			});
+			CommerceOrder::getSubtotalDiscountWithTaxAmount);
 		attributeSetterBiConsumers.put(
 			"subtotalDiscountWithTaxAmount",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object subtotalDiscountWithTaxAmountObject) {
-
-					commerceOrder.setSubtotalDiscountWithTaxAmount(
-						(BigDecimal)subtotalDiscountWithTaxAmountObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::setSubtotalDiscountWithTaxAmount);
 		attributeGetterFunctions.put(
 			"subtotalDiscountPercentageLevel1WithTaxAmount",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.
-						getSubtotalDiscountPercentageLevel1WithTaxAmount();
-				}
-
-			});
+			CommerceOrder::getSubtotalDiscountPercentageLevel1WithTaxAmount);
 		attributeSetterBiConsumers.put(
 			"subtotalDiscountPercentageLevel1WithTaxAmount",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object
-						subtotalDiscountPercentageLevel1WithTaxAmountObject) {
-
-					commerceOrder.
-						setSubtotalDiscountPercentageLevel1WithTaxAmount(
-							(BigDecimal)
-								subtotalDiscountPercentageLevel1WithTaxAmountObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::
+					setSubtotalDiscountPercentageLevel1WithTaxAmount);
 		attributeGetterFunctions.put(
 			"subtotalDiscountPercentageLevel2WithTaxAmount",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.
-						getSubtotalDiscountPercentageLevel2WithTaxAmount();
-				}
-
-			});
+			CommerceOrder::getSubtotalDiscountPercentageLevel2WithTaxAmount);
 		attributeSetterBiConsumers.put(
 			"subtotalDiscountPercentageLevel2WithTaxAmount",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object
-						subtotalDiscountPercentageLevel2WithTaxAmountObject) {
-
-					commerceOrder.
-						setSubtotalDiscountPercentageLevel2WithTaxAmount(
-							(BigDecimal)
-								subtotalDiscountPercentageLevel2WithTaxAmountObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::
+					setSubtotalDiscountPercentageLevel2WithTaxAmount);
 		attributeGetterFunctions.put(
 			"subtotalDiscountPercentageLevel3WithTaxAmount",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.
-						getSubtotalDiscountPercentageLevel3WithTaxAmount();
-				}
-
-			});
+			CommerceOrder::getSubtotalDiscountPercentageLevel3WithTaxAmount);
 		attributeSetterBiConsumers.put(
 			"subtotalDiscountPercentageLevel3WithTaxAmount",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object
-						subtotalDiscountPercentageLevel3WithTaxAmountObject) {
-
-					commerceOrder.
-						setSubtotalDiscountPercentageLevel3WithTaxAmount(
-							(BigDecimal)
-								subtotalDiscountPercentageLevel3WithTaxAmountObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::
+					setSubtotalDiscountPercentageLevel3WithTaxAmount);
 		attributeGetterFunctions.put(
 			"subtotalDiscountPercentageLevel4WithTaxAmount",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.
-						getSubtotalDiscountPercentageLevel4WithTaxAmount();
-				}
-
-			});
+			CommerceOrder::getSubtotalDiscountPercentageLevel4WithTaxAmount);
 		attributeSetterBiConsumers.put(
 			"subtotalDiscountPercentageLevel4WithTaxAmount",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object
-						subtotalDiscountPercentageLevel4WithTaxAmountObject) {
-
-					commerceOrder.
-						setSubtotalDiscountPercentageLevel4WithTaxAmount(
-							(BigDecimal)
-								subtotalDiscountPercentageLevel4WithTaxAmountObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::
+					setSubtotalDiscountPercentageLevel4WithTaxAmount);
 		attributeGetterFunctions.put(
-			"shippingWithTaxAmount",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getShippingWithTaxAmount();
-				}
-
-			});
+			"shippingWithTaxAmount", CommerceOrder::getShippingWithTaxAmount);
 		attributeSetterBiConsumers.put(
 			"shippingWithTaxAmount",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object shippingWithTaxAmountObject) {
-
-					commerceOrder.setShippingWithTaxAmount(
-						(BigDecimal)shippingWithTaxAmountObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::setShippingWithTaxAmount);
 		attributeGetterFunctions.put(
 			"shippingDiscountWithTaxAmount",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getShippingDiscountWithTaxAmount();
-				}
-
-			});
+			CommerceOrder::getShippingDiscountWithTaxAmount);
 		attributeSetterBiConsumers.put(
 			"shippingDiscountWithTaxAmount",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object shippingDiscountWithTaxAmountObject) {
-
-					commerceOrder.setShippingDiscountWithTaxAmount(
-						(BigDecimal)shippingDiscountWithTaxAmountObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::setShippingDiscountWithTaxAmount);
 		attributeGetterFunctions.put(
 			"shippingDiscountPercentageLevel1WithTaxAmount",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.
-						getShippingDiscountPercentageLevel1WithTaxAmount();
-				}
-
-			});
+			CommerceOrder::getShippingDiscountPercentageLevel1WithTaxAmount);
 		attributeSetterBiConsumers.put(
 			"shippingDiscountPercentageLevel1WithTaxAmount",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object
-						shippingDiscountPercentageLevel1WithTaxAmountObject) {
-
-					commerceOrder.
-						setShippingDiscountPercentageLevel1WithTaxAmount(
-							(BigDecimal)
-								shippingDiscountPercentageLevel1WithTaxAmountObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::
+					setShippingDiscountPercentageLevel1WithTaxAmount);
 		attributeGetterFunctions.put(
 			"shippingDiscountPercentageLevel2WithTaxAmount",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.
-						getShippingDiscountPercentageLevel2WithTaxAmount();
-				}
-
-			});
+			CommerceOrder::getShippingDiscountPercentageLevel2WithTaxAmount);
 		attributeSetterBiConsumers.put(
 			"shippingDiscountPercentageLevel2WithTaxAmount",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object
-						shippingDiscountPercentageLevel2WithTaxAmountObject) {
-
-					commerceOrder.
-						setShippingDiscountPercentageLevel2WithTaxAmount(
-							(BigDecimal)
-								shippingDiscountPercentageLevel2WithTaxAmountObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::
+					setShippingDiscountPercentageLevel2WithTaxAmount);
 		attributeGetterFunctions.put(
 			"shippingDiscountPercentageLevel3WithTaxAmount",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.
-						getShippingDiscountPercentageLevel3WithTaxAmount();
-				}
-
-			});
+			CommerceOrder::getShippingDiscountPercentageLevel3WithTaxAmount);
 		attributeSetterBiConsumers.put(
 			"shippingDiscountPercentageLevel3WithTaxAmount",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object
-						shippingDiscountPercentageLevel3WithTaxAmountObject) {
-
-					commerceOrder.
-						setShippingDiscountPercentageLevel3WithTaxAmount(
-							(BigDecimal)
-								shippingDiscountPercentageLevel3WithTaxAmountObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::
+					setShippingDiscountPercentageLevel3WithTaxAmount);
 		attributeGetterFunctions.put(
 			"shippingDiscountPercentageLevel4WithTaxAmount",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.
-						getShippingDiscountPercentageLevel4WithTaxAmount();
-				}
-
-			});
+			CommerceOrder::getShippingDiscountPercentageLevel4WithTaxAmount);
 		attributeSetterBiConsumers.put(
 			"shippingDiscountPercentageLevel4WithTaxAmount",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object
-						shippingDiscountPercentageLevel4WithTaxAmountObject) {
-
-					commerceOrder.
-						setShippingDiscountPercentageLevel4WithTaxAmount(
-							(BigDecimal)
-								shippingDiscountPercentageLevel4WithTaxAmountObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::
+					setShippingDiscountPercentageLevel4WithTaxAmount);
 		attributeGetterFunctions.put(
-			"totalWithTaxAmount",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getTotalWithTaxAmount();
-				}
-
-			});
+			"totalWithTaxAmount", CommerceOrder::getTotalWithTaxAmount);
 		attributeSetterBiConsumers.put(
 			"totalWithTaxAmount",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object totalWithTaxAmountObject) {
-
-					commerceOrder.setTotalWithTaxAmount(
-						(BigDecimal)totalWithTaxAmountObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::setTotalWithTaxAmount);
 		attributeGetterFunctions.put(
 			"totalDiscountWithTaxAmount",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getTotalDiscountWithTaxAmount();
-				}
-
-			});
+			CommerceOrder::getTotalDiscountWithTaxAmount);
 		attributeSetterBiConsumers.put(
 			"totalDiscountWithTaxAmount",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object totalDiscountWithTaxAmountObject) {
-
-					commerceOrder.setTotalDiscountWithTaxAmount(
-						(BigDecimal)totalDiscountWithTaxAmountObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::setTotalDiscountWithTaxAmount);
 		attributeGetterFunctions.put(
 			"totalDiscountPercentageLevel1WithTaxAmount",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.
-						getTotalDiscountPercentageLevel1WithTaxAmount();
-				}
-
-			});
+			CommerceOrder::getTotalDiscountPercentageLevel1WithTaxAmount);
 		attributeSetterBiConsumers.put(
 			"totalDiscountPercentageLevel1WithTaxAmount",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object totalDiscountPercentageLevel1WithTaxAmountObject) {
-
-					commerceOrder.setTotalDiscountPercentageLevel1WithTaxAmount(
-						(BigDecimal)
-							totalDiscountPercentageLevel1WithTaxAmountObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::setTotalDiscountPercentageLevel1WithTaxAmount);
 		attributeGetterFunctions.put(
 			"totalDiscountPercentageLevel2WithTaxAmount",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.
-						getTotalDiscountPercentageLevel2WithTaxAmount();
-				}
-
-			});
+			CommerceOrder::getTotalDiscountPercentageLevel2WithTaxAmount);
 		attributeSetterBiConsumers.put(
 			"totalDiscountPercentageLevel2WithTaxAmount",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object totalDiscountPercentageLevel2WithTaxAmountObject) {
-
-					commerceOrder.setTotalDiscountPercentageLevel2WithTaxAmount(
-						(BigDecimal)
-							totalDiscountPercentageLevel2WithTaxAmountObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::setTotalDiscountPercentageLevel2WithTaxAmount);
 		attributeGetterFunctions.put(
 			"totalDiscountPercentageLevel3WithTaxAmount",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.
-						getTotalDiscountPercentageLevel3WithTaxAmount();
-				}
-
-			});
+			CommerceOrder::getTotalDiscountPercentageLevel3WithTaxAmount);
 		attributeSetterBiConsumers.put(
 			"totalDiscountPercentageLevel3WithTaxAmount",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object totalDiscountPercentageLevel3WithTaxAmountObject) {
-
-					commerceOrder.setTotalDiscountPercentageLevel3WithTaxAmount(
-						(BigDecimal)
-							totalDiscountPercentageLevel3WithTaxAmountObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::setTotalDiscountPercentageLevel3WithTaxAmount);
 		attributeGetterFunctions.put(
 			"totalDiscountPercentageLevel4WithTaxAmount",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.
-						getTotalDiscountPercentageLevel4WithTaxAmount();
-				}
-
-			});
+			CommerceOrder::getTotalDiscountPercentageLevel4WithTaxAmount);
 		attributeSetterBiConsumers.put(
 			"totalDiscountPercentageLevel4WithTaxAmount",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object totalDiscountPercentageLevel4WithTaxAmountObject) {
-
-					commerceOrder.setTotalDiscountPercentageLevel4WithTaxAmount(
-						(BigDecimal)
-							totalDiscountPercentageLevel4WithTaxAmountObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, BigDecimal>)
+				CommerceOrder::setTotalDiscountPercentageLevel4WithTaxAmount);
 		attributeGetterFunctions.put(
-			"advanceStatus",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getAdvanceStatus();
-				}
-
-			});
+			"advanceStatus", CommerceOrder::getAdvanceStatus);
 		attributeSetterBiConsumers.put(
 			"advanceStatus",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder, Object advanceStatusObject) {
-
-					commerceOrder.setAdvanceStatus((String)advanceStatusObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, String>)CommerceOrder::setAdvanceStatus);
 		attributeGetterFunctions.put(
-			"paymentStatus",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getPaymentStatus();
-				}
-
-			});
+			"paymentStatus", CommerceOrder::getPaymentStatus);
 		attributeSetterBiConsumers.put(
 			"paymentStatus",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder, Object paymentStatusObject) {
-
-					commerceOrder.setPaymentStatus(
-						(Integer)paymentStatusObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"orderDate",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getOrderDate();
-				}
-
-			});
+			(BiConsumer<CommerceOrder, Integer>)
+				CommerceOrder::setPaymentStatus);
+		attributeGetterFunctions.put("orderDate", CommerceOrder::getOrderDate);
 		attributeSetterBiConsumers.put(
 			"orderDate",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder, Object orderDateObject) {
-
-					commerceOrder.setOrderDate((Date)orderDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, Date>)CommerceOrder::setOrderDate);
 		attributeGetterFunctions.put(
-			"orderStatus",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getOrderStatus();
-				}
-
-			});
+			"orderStatus", CommerceOrder::getOrderStatus);
 		attributeSetterBiConsumers.put(
 			"orderStatus",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder, Object orderStatusObject) {
-
-					commerceOrder.setOrderStatus((Integer)orderStatusObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, Integer>)CommerceOrder::setOrderStatus);
 		attributeGetterFunctions.put(
-			"printedNote",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getPrintedNote();
-				}
-
-			});
+			"printedNote", CommerceOrder::getPrintedNote);
 		attributeSetterBiConsumers.put(
 			"printedNote",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder, Object printedNoteObject) {
-
-					commerceOrder.setPrintedNote((String)printedNoteObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, String>)CommerceOrder::setPrintedNote);
 		attributeGetterFunctions.put(
-			"requestedDeliveryDate",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getRequestedDeliveryDate();
-				}
-
-			});
+			"requestedDeliveryDate", CommerceOrder::getRequestedDeliveryDate);
 		attributeSetterBiConsumers.put(
 			"requestedDeliveryDate",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object requestedDeliveryDateObject) {
-
-					commerceOrder.setRequestedDeliveryDate(
-						(Date)requestedDeliveryDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, Date>)
+				CommerceOrder::setRequestedDeliveryDate);
 		attributeGetterFunctions.put(
-			"manuallyAdjusted",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getManuallyAdjusted();
-				}
-
-			});
+			"manuallyAdjusted", CommerceOrder::getManuallyAdjusted);
 		attributeSetterBiConsumers.put(
 			"manuallyAdjusted",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object manuallyAdjustedObject) {
-
-					commerceOrder.setManuallyAdjusted(
-						(Boolean)manuallyAdjustedObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"status",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getStatus();
-				}
-
-			});
+			(BiConsumer<CommerceOrder, Boolean>)
+				CommerceOrder::setManuallyAdjusted);
+		attributeGetterFunctions.put("status", CommerceOrder::getStatus);
 		attributeSetterBiConsumers.put(
 			"status",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder, Object statusObject) {
-
-					commerceOrder.setStatus((Integer)statusObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, Integer>)CommerceOrder::setStatus);
 		attributeGetterFunctions.put(
-			"statusByUserId",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getStatusByUserId();
-				}
-
-			});
+			"statusByUserId", CommerceOrder::getStatusByUserId);
 		attributeSetterBiConsumers.put(
 			"statusByUserId",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder, Object statusByUserIdObject) {
-
-					commerceOrder.setStatusByUserId((Long)statusByUserIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, Long>)CommerceOrder::setStatusByUserId);
 		attributeGetterFunctions.put(
-			"statusByUserName",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getStatusByUserName();
-				}
-
-			});
+			"statusByUserName", CommerceOrder::getStatusByUserName);
 		attributeSetterBiConsumers.put(
 			"statusByUserName",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder,
-					Object statusByUserNameObject) {
-
-					commerceOrder.setStatusByUserName(
-						(String)statusByUserNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, String>)
+				CommerceOrder::setStatusByUserName);
 		attributeGetterFunctions.put(
-			"statusDate",
-			new Function<CommerceOrder, Object>() {
-
-				@Override
-				public Object apply(CommerceOrder commerceOrder) {
-					return commerceOrder.getStatusDate();
-				}
-
-			});
+			"statusDate", CommerceOrder::getStatusDate);
 		attributeSetterBiConsumers.put(
 			"statusDate",
-			new BiConsumer<CommerceOrder, Object>() {
-
-				@Override
-				public void accept(
-					CommerceOrder commerceOrder, Object statusDateObject) {
-
-					commerceOrder.setStatusDate((Date)statusDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceOrder, Date>)CommerceOrder::setStatusDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -3326,6 +2128,7 @@ public class CommerceOrderModelImpl
 	public Object clone() {
 		CommerceOrderImpl commerceOrderImpl = new CommerceOrderImpl();
 
+		commerceOrderImpl.setMvccVersion(getMvccVersion());
 		commerceOrderImpl.setUuid(getUuid());
 		commerceOrderImpl.setExternalReferenceCode(getExternalReferenceCode());
 		commerceOrderImpl.setCommerceOrderId(getCommerceOrderId());
@@ -3472,11 +2275,19 @@ public class CommerceOrderModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -3528,6 +2339,8 @@ public class CommerceOrderModelImpl
 	public CacheModel<CommerceOrder> toCacheModel() {
 		CommerceOrderCacheModel commerceOrderCacheModel =
 			new CommerceOrderCacheModel();
+
+		commerceOrderCacheModel.mvccVersion = getMvccVersion();
 
 		commerceOrderCacheModel.uuid = getUuid();
 
@@ -3893,6 +2706,7 @@ public class CommerceOrderModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private String _externalReferenceCode;

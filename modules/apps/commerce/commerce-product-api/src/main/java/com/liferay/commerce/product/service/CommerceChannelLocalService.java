@@ -14,9 +14,8 @@
 
 package com.liferay.commerce.product.service;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -42,6 +41,8 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import java.io.Serializable;
 
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for CommerceChannel. Methods of this
@@ -83,7 +84,7 @@ public interface CommerceChannelLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceChannel addCommerceChannel(
 			long siteGroupId, String name, String type,
-			UnicodeProperties typeSettingsProperties,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			String commerceCurrencyCode, String externalReferenceCode,
 			ServiceContext serviceContext)
 		throws PortalException;
@@ -96,6 +97,12 @@ public interface CommerceChannelLocalService
 	 */
 	@Transactional(enabled = false)
 	public CommerceChannel createCommerceChannel(long commerceChannelId);
+
+	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	 * Deletes the commerce channel from the database. Also notifies the appropriate model listeners.
@@ -137,6 +144,9 @@ public interface CommerceChannelLocalService
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();
@@ -328,14 +338,14 @@ public interface CommerceChannelLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceChannel updateCommerceChannel(
 			long commerceChannelId, long siteGroupId, String name, String type,
-			UnicodeProperties typeSettingsProperties,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			String commerceCurrencyCode)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceChannel updateCommerceChannel(
 			long commerceChannelId, long siteGroupId, String name, String type,
-			UnicodeProperties typeSettingsProperties,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			String commerceCurrencyCode, String priceDisplayType,
 			boolean discountsTargetNetPrice)
 		throws PortalException;

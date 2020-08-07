@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.exception.NoSuchAvailabilityEstimateException;
 import com.liferay.commerce.model.CommerceAvailabilityEstimate;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce availability estimate service.
@@ -45,9 +40,6 @@ public interface CommerceAvailabilityEstimatePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceAvailabilityEstimateUtil} to access the commerce availability estimate persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceAvailabilityEstimate> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce availability estimates where uuid = &#63;.
@@ -619,8 +611,5 @@ public interface CommerceAvailabilityEstimatePersistence
 	 * @return the number of commerce availability estimates
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

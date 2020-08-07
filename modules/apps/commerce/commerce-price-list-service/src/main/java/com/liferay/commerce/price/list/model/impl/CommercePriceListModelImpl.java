@@ -20,6 +20,7 @@ import com.liferay.commerce.price.list.model.CommercePriceListSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
@@ -76,7 +76,8 @@ public class CommercePriceListModelImpl
 	public static final String TABLE_NAME = "CommercePriceList";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR},
 		{"commercePriceListId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -95,6 +96,7 @@ public class CommercePriceListModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commercePriceListId", Types.BIGINT);
@@ -121,7 +123,7 @@ public class CommercePriceListModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommercePriceList (uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commercePriceListId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceCurrencyId LONG,parentCommercePriceListId LONG,catalogBasePriceList BOOLEAN,netPrice BOOLEAN,type_ VARCHAR(75) null,name VARCHAR(75) null,priority DOUBLE,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table CommercePriceList (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commercePriceListId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceCurrencyId LONG,parentCommercePriceListId LONG,catalogBasePriceList BOOLEAN,netPrice BOOLEAN,type_ VARCHAR(75) null,name VARCHAR(75) null,priority DOUBLE,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommercePriceList";
 
@@ -137,20 +139,23 @@ public class CommercePriceListModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.price.list.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.price.list.model.CommercePriceList"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.price.list.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.price.list.model.CommercePriceList"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.price.list.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.price.list.model.CommercePriceList"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long CATALOGBASEPRICELIST_COLUMN_BITMASK = 1L;
 
@@ -189,6 +194,7 @@ public class CommercePriceListModelImpl
 
 		CommercePriceList model = new CommercePriceListImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setCommercePriceListId(soapModel.getCommercePriceListId());
@@ -296,9 +302,6 @@ public class CommercePriceListModelImpl
 				attributeGetterFunction.apply((CommercePriceList)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -375,542 +378,156 @@ public class CommercePriceListModelImpl
 				new LinkedHashMap<String, BiConsumer<CommercePriceList, ?>>();
 
 		attributeGetterFunctions.put(
-			"uuid",
-			new Function<CommercePriceList, Object>() {
-
-				@Override
-				public Object apply(CommercePriceList commercePriceList) {
-					return commercePriceList.getUuid();
-				}
-
-			});
+			"mvccVersion", CommercePriceList::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommercePriceList, Long>)
+				CommercePriceList::setMvccVersion);
+		attributeGetterFunctions.put("uuid", CommercePriceList::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
-			new BiConsumer<CommercePriceList, Object>() {
-
-				@Override
-				public void accept(
-					CommercePriceList commercePriceList, Object uuidObject) {
-
-					commercePriceList.setUuid((String)uuidObject);
-				}
-
-			});
+			(BiConsumer<CommercePriceList, String>)CommercePriceList::setUuid);
 		attributeGetterFunctions.put(
 			"externalReferenceCode",
-			new Function<CommercePriceList, Object>() {
-
-				@Override
-				public Object apply(CommercePriceList commercePriceList) {
-					return commercePriceList.getExternalReferenceCode();
-				}
-
-			});
+			CommercePriceList::getExternalReferenceCode);
 		attributeSetterBiConsumers.put(
 			"externalReferenceCode",
-			new BiConsumer<CommercePriceList, Object>() {
-
-				@Override
-				public void accept(
-					CommercePriceList commercePriceList,
-					Object externalReferenceCodeObject) {
-
-					commercePriceList.setExternalReferenceCode(
-						(String)externalReferenceCodeObject);
-				}
-
-			});
+			(BiConsumer<CommercePriceList, String>)
+				CommercePriceList::setExternalReferenceCode);
 		attributeGetterFunctions.put(
-			"commercePriceListId",
-			new Function<CommercePriceList, Object>() {
-
-				@Override
-				public Object apply(CommercePriceList commercePriceList) {
-					return commercePriceList.getCommercePriceListId();
-				}
-
-			});
+			"commercePriceListId", CommercePriceList::getCommercePriceListId);
 		attributeSetterBiConsumers.put(
 			"commercePriceListId",
-			new BiConsumer<CommercePriceList, Object>() {
-
-				@Override
-				public void accept(
-					CommercePriceList commercePriceList,
-					Object commercePriceListIdObject) {
-
-					commercePriceList.setCommercePriceListId(
-						(Long)commercePriceListIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"groupId",
-			new Function<CommercePriceList, Object>() {
-
-				@Override
-				public Object apply(CommercePriceList commercePriceList) {
-					return commercePriceList.getGroupId();
-				}
-
-			});
+			(BiConsumer<CommercePriceList, Long>)
+				CommercePriceList::setCommercePriceListId);
+		attributeGetterFunctions.put("groupId", CommercePriceList::getGroupId);
 		attributeSetterBiConsumers.put(
 			"groupId",
-			new BiConsumer<CommercePriceList, Object>() {
-
-				@Override
-				public void accept(
-					CommercePriceList commercePriceList, Object groupIdObject) {
-
-					commercePriceList.setGroupId((Long)groupIdObject);
-				}
-
-			});
+			(BiConsumer<CommercePriceList, Long>)CommercePriceList::setGroupId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommercePriceList, Object>() {
-
-				@Override
-				public Object apply(CommercePriceList commercePriceList) {
-					return commercePriceList.getCompanyId();
-				}
-
-			});
+			"companyId", CommercePriceList::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommercePriceList, Object>() {
-
-				@Override
-				public void accept(
-					CommercePriceList commercePriceList,
-					Object companyIdObject) {
-
-					commercePriceList.setCompanyId((Long)companyIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommercePriceList, Object>() {
-
-				@Override
-				public Object apply(CommercePriceList commercePriceList) {
-					return commercePriceList.getUserId();
-				}
-
-			});
+			(BiConsumer<CommercePriceList, Long>)
+				CommercePriceList::setCompanyId);
+		attributeGetterFunctions.put("userId", CommercePriceList::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommercePriceList, Object>() {
-
-				@Override
-				public void accept(
-					CommercePriceList commercePriceList, Object userIdObject) {
-
-					commercePriceList.setUserId((Long)userIdObject);
-				}
-
-			});
+			(BiConsumer<CommercePriceList, Long>)CommercePriceList::setUserId);
 		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommercePriceList, Object>() {
-
-				@Override
-				public Object apply(CommercePriceList commercePriceList) {
-					return commercePriceList.getUserName();
-				}
-
-			});
+			"userName", CommercePriceList::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommercePriceList, Object>() {
-
-				@Override
-				public void accept(
-					CommercePriceList commercePriceList,
-					Object userNameObject) {
-
-					commercePriceList.setUserName((String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommercePriceList, String>)
+				CommercePriceList::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommercePriceList, Object>() {
-
-				@Override
-				public Object apply(CommercePriceList commercePriceList) {
-					return commercePriceList.getCreateDate();
-				}
-
-			});
+			"createDate", CommercePriceList::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommercePriceList, Object>() {
-
-				@Override
-				public void accept(
-					CommercePriceList commercePriceList,
-					Object createDateObject) {
-
-					commercePriceList.setCreateDate((Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommercePriceList, Date>)
+				CommercePriceList::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CommercePriceList, Object>() {
-
-				@Override
-				public Object apply(CommercePriceList commercePriceList) {
-					return commercePriceList.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CommercePriceList::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommercePriceList, Object>() {
-
-				@Override
-				public void accept(
-					CommercePriceList commercePriceList,
-					Object modifiedDateObject) {
-
-					commercePriceList.setModifiedDate((Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CommercePriceList, Date>)
+				CommercePriceList::setModifiedDate);
 		attributeGetterFunctions.put(
-			"commerceCurrencyId",
-			new Function<CommercePriceList, Object>() {
-
-				@Override
-				public Object apply(CommercePriceList commercePriceList) {
-					return commercePriceList.getCommerceCurrencyId();
-				}
-
-			});
+			"commerceCurrencyId", CommercePriceList::getCommerceCurrencyId);
 		attributeSetterBiConsumers.put(
 			"commerceCurrencyId",
-			new BiConsumer<CommercePriceList, Object>() {
-
-				@Override
-				public void accept(
-					CommercePriceList commercePriceList,
-					Object commerceCurrencyIdObject) {
-
-					commercePriceList.setCommerceCurrencyId(
-						(Long)commerceCurrencyIdObject);
-				}
-
-			});
+			(BiConsumer<CommercePriceList, Long>)
+				CommercePriceList::setCommerceCurrencyId);
 		attributeGetterFunctions.put(
 			"parentCommercePriceListId",
-			new Function<CommercePriceList, Object>() {
-
-				@Override
-				public Object apply(CommercePriceList commercePriceList) {
-					return commercePriceList.getParentCommercePriceListId();
-				}
-
-			});
+			CommercePriceList::getParentCommercePriceListId);
 		attributeSetterBiConsumers.put(
 			"parentCommercePriceListId",
-			new BiConsumer<CommercePriceList, Object>() {
-
-				@Override
-				public void accept(
-					CommercePriceList commercePriceList,
-					Object parentCommercePriceListIdObject) {
-
-					commercePriceList.setParentCommercePriceListId(
-						(Long)parentCommercePriceListIdObject);
-				}
-
-			});
+			(BiConsumer<CommercePriceList, Long>)
+				CommercePriceList::setParentCommercePriceListId);
 		attributeGetterFunctions.put(
-			"catalogBasePriceList",
-			new Function<CommercePriceList, Object>() {
-
-				@Override
-				public Object apply(CommercePriceList commercePriceList) {
-					return commercePriceList.getCatalogBasePriceList();
-				}
-
-			});
+			"catalogBasePriceList", CommercePriceList::getCatalogBasePriceList);
 		attributeSetterBiConsumers.put(
 			"catalogBasePriceList",
-			new BiConsumer<CommercePriceList, Object>() {
-
-				@Override
-				public void accept(
-					CommercePriceList commercePriceList,
-					Object catalogBasePriceListObject) {
-
-					commercePriceList.setCatalogBasePriceList(
-						(Boolean)catalogBasePriceListObject);
-				}
-
-			});
+			(BiConsumer<CommercePriceList, Boolean>)
+				CommercePriceList::setCatalogBasePriceList);
 		attributeGetterFunctions.put(
-			"netPrice",
-			new Function<CommercePriceList, Object>() {
-
-				@Override
-				public Object apply(CommercePriceList commercePriceList) {
-					return commercePriceList.getNetPrice();
-				}
-
-			});
+			"netPrice", CommercePriceList::getNetPrice);
 		attributeSetterBiConsumers.put(
 			"netPrice",
-			new BiConsumer<CommercePriceList, Object>() {
-
-				@Override
-				public void accept(
-					CommercePriceList commercePriceList,
-					Object netPriceObject) {
-
-					commercePriceList.setNetPrice((Boolean)netPriceObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"type",
-			new Function<CommercePriceList, Object>() {
-
-				@Override
-				public Object apply(CommercePriceList commercePriceList) {
-					return commercePriceList.getType();
-				}
-
-			});
+			(BiConsumer<CommercePriceList, Boolean>)
+				CommercePriceList::setNetPrice);
+		attributeGetterFunctions.put("type", CommercePriceList::getType);
 		attributeSetterBiConsumers.put(
 			"type",
-			new BiConsumer<CommercePriceList, Object>() {
-
-				@Override
-				public void accept(
-					CommercePriceList commercePriceList, Object typeObject) {
-
-					commercePriceList.setType((String)typeObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"name",
-			new Function<CommercePriceList, Object>() {
-
-				@Override
-				public Object apply(CommercePriceList commercePriceList) {
-					return commercePriceList.getName();
-				}
-
-			});
+			(BiConsumer<CommercePriceList, String>)CommercePriceList::setType);
+		attributeGetterFunctions.put("name", CommercePriceList::getName);
 		attributeSetterBiConsumers.put(
 			"name",
-			new BiConsumer<CommercePriceList, Object>() {
-
-				@Override
-				public void accept(
-					CommercePriceList commercePriceList, Object nameObject) {
-
-					commercePriceList.setName((String)nameObject);
-				}
-
-			});
+			(BiConsumer<CommercePriceList, String>)CommercePriceList::setName);
 		attributeGetterFunctions.put(
-			"priority",
-			new Function<CommercePriceList, Object>() {
-
-				@Override
-				public Object apply(CommercePriceList commercePriceList) {
-					return commercePriceList.getPriority();
-				}
-
-			});
+			"priority", CommercePriceList::getPriority);
 		attributeSetterBiConsumers.put(
 			"priority",
-			new BiConsumer<CommercePriceList, Object>() {
-
-				@Override
-				public void accept(
-					CommercePriceList commercePriceList,
-					Object priorityObject) {
-
-					commercePriceList.setPriority((Double)priorityObject);
-				}
-
-			});
+			(BiConsumer<CommercePriceList, Double>)
+				CommercePriceList::setPriority);
 		attributeGetterFunctions.put(
-			"displayDate",
-			new Function<CommercePriceList, Object>() {
-
-				@Override
-				public Object apply(CommercePriceList commercePriceList) {
-					return commercePriceList.getDisplayDate();
-				}
-
-			});
+			"displayDate", CommercePriceList::getDisplayDate);
 		attributeSetterBiConsumers.put(
 			"displayDate",
-			new BiConsumer<CommercePriceList, Object>() {
-
-				@Override
-				public void accept(
-					CommercePriceList commercePriceList,
-					Object displayDateObject) {
-
-					commercePriceList.setDisplayDate((Date)displayDateObject);
-				}
-
-			});
+			(BiConsumer<CommercePriceList, Date>)
+				CommercePriceList::setDisplayDate);
 		attributeGetterFunctions.put(
-			"expirationDate",
-			new Function<CommercePriceList, Object>() {
-
-				@Override
-				public Object apply(CommercePriceList commercePriceList) {
-					return commercePriceList.getExpirationDate();
-				}
-
-			});
+			"expirationDate", CommercePriceList::getExpirationDate);
 		attributeSetterBiConsumers.put(
 			"expirationDate",
-			new BiConsumer<CommercePriceList, Object>() {
-
-				@Override
-				public void accept(
-					CommercePriceList commercePriceList,
-					Object expirationDateObject) {
-
-					commercePriceList.setExpirationDate(
-						(Date)expirationDateObject);
-				}
-
-			});
+			(BiConsumer<CommercePriceList, Date>)
+				CommercePriceList::setExpirationDate);
 		attributeGetterFunctions.put(
-			"lastPublishDate",
-			new Function<CommercePriceList, Object>() {
-
-				@Override
-				public Object apply(CommercePriceList commercePriceList) {
-					return commercePriceList.getLastPublishDate();
-				}
-
-			});
+			"lastPublishDate", CommercePriceList::getLastPublishDate);
 		attributeSetterBiConsumers.put(
 			"lastPublishDate",
-			new BiConsumer<CommercePriceList, Object>() {
-
-				@Override
-				public void accept(
-					CommercePriceList commercePriceList,
-					Object lastPublishDateObject) {
-
-					commercePriceList.setLastPublishDate(
-						(Date)lastPublishDateObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"status",
-			new Function<CommercePriceList, Object>() {
-
-				@Override
-				public Object apply(CommercePriceList commercePriceList) {
-					return commercePriceList.getStatus();
-				}
-
-			});
+			(BiConsumer<CommercePriceList, Date>)
+				CommercePriceList::setLastPublishDate);
+		attributeGetterFunctions.put("status", CommercePriceList::getStatus);
 		attributeSetterBiConsumers.put(
 			"status",
-			new BiConsumer<CommercePriceList, Object>() {
-
-				@Override
-				public void accept(
-					CommercePriceList commercePriceList, Object statusObject) {
-
-					commercePriceList.setStatus((Integer)statusObject);
-				}
-
-			});
+			(BiConsumer<CommercePriceList, Integer>)
+				CommercePriceList::setStatus);
 		attributeGetterFunctions.put(
-			"statusByUserId",
-			new Function<CommercePriceList, Object>() {
-
-				@Override
-				public Object apply(CommercePriceList commercePriceList) {
-					return commercePriceList.getStatusByUserId();
-				}
-
-			});
+			"statusByUserId", CommercePriceList::getStatusByUserId);
 		attributeSetterBiConsumers.put(
 			"statusByUserId",
-			new BiConsumer<CommercePriceList, Object>() {
-
-				@Override
-				public void accept(
-					CommercePriceList commercePriceList,
-					Object statusByUserIdObject) {
-
-					commercePriceList.setStatusByUserId(
-						(Long)statusByUserIdObject);
-				}
-
-			});
+			(BiConsumer<CommercePriceList, Long>)
+				CommercePriceList::setStatusByUserId);
 		attributeGetterFunctions.put(
-			"statusByUserName",
-			new Function<CommercePriceList, Object>() {
-
-				@Override
-				public Object apply(CommercePriceList commercePriceList) {
-					return commercePriceList.getStatusByUserName();
-				}
-
-			});
+			"statusByUserName", CommercePriceList::getStatusByUserName);
 		attributeSetterBiConsumers.put(
 			"statusByUserName",
-			new BiConsumer<CommercePriceList, Object>() {
-
-				@Override
-				public void accept(
-					CommercePriceList commercePriceList,
-					Object statusByUserNameObject) {
-
-					commercePriceList.setStatusByUserName(
-						(String)statusByUserNameObject);
-				}
-
-			});
+			(BiConsumer<CommercePriceList, String>)
+				CommercePriceList::setStatusByUserName);
 		attributeGetterFunctions.put(
-			"statusDate",
-			new Function<CommercePriceList, Object>() {
-
-				@Override
-				public Object apply(CommercePriceList commercePriceList) {
-					return commercePriceList.getStatusDate();
-				}
-
-			});
+			"statusDate", CommercePriceList::getStatusDate);
 		attributeSetterBiConsumers.put(
 			"statusDate",
-			new BiConsumer<CommercePriceList, Object>() {
-
-				@Override
-				public void accept(
-					CommercePriceList commercePriceList,
-					Object statusDateObject) {
-
-					commercePriceList.setStatusDate((Date)statusDateObject);
-				}
-
-			});
+			(BiConsumer<CommercePriceList, Date>)
+				CommercePriceList::setStatusDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1481,6 +1098,7 @@ public class CommercePriceListModelImpl
 		CommercePriceListImpl commercePriceListImpl =
 			new CommercePriceListImpl();
 
+		commercePriceListImpl.setMvccVersion(getMvccVersion());
 		commercePriceListImpl.setUuid(getUuid());
 		commercePriceListImpl.setExternalReferenceCode(
 			getExternalReferenceCode());
@@ -1580,11 +1198,19 @@ public class CommercePriceListModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -1632,6 +1258,8 @@ public class CommercePriceListModelImpl
 	public CacheModel<CommercePriceList> toCacheModel() {
 		CommercePriceListCacheModel commercePriceListCacheModel =
 			new CommercePriceListCacheModel();
+
+		commercePriceListCacheModel.mvccVersion = getMvccVersion();
 
 		commercePriceListCacheModel.uuid = getUuid();
 
@@ -1840,6 +1468,7 @@ public class CommercePriceListModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private String _externalReferenceCode;

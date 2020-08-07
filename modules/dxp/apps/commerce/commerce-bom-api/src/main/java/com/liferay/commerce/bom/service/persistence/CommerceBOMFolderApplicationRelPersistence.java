@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.bom.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.bom.exception.NoSuchBOMFolderApplicationRelException;
 import com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce bom folder application rel service.
@@ -45,9 +40,6 @@ public interface CommerceBOMFolderApplicationRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceBOMFolderApplicationRelUtil} to access the commerce bom folder application rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceBOMFolderApplicationRel>
-		fetchByPrimaryKeys(Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce bom folder application rels where commerceBOMFolderId = &#63;.
@@ -480,8 +472,5 @@ public interface CommerceBOMFolderApplicationRelPersistence
 	 * @return the number of commerce bom folder application rels
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

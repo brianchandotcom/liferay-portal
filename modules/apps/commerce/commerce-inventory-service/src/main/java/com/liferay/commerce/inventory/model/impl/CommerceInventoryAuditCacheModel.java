@@ -15,9 +15,10 @@
 package com.liferay.commerce.inventory.model.impl;
 
 import com.liferay.commerce.inventory.model.CommerceInventoryAudit;
+import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class CommerceInventoryAuditCacheModel
-	implements CacheModel<CommerceInventoryAudit>, Externalizable {
+	implements CacheModel<CommerceInventoryAudit>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -48,8 +49,9 @@ public class CommerceInventoryAuditCacheModel
 		CommerceInventoryAuditCacheModel commerceInventoryAuditCacheModel =
 			(CommerceInventoryAuditCacheModel)object;
 
-		if (commerceInventoryAuditId ==
-				commerceInventoryAuditCacheModel.commerceInventoryAuditId) {
+		if ((commerceInventoryAuditId ==
+				commerceInventoryAuditCacheModel.commerceInventoryAuditId) &&
+			(mvccVersion == commerceInventoryAuditCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -59,14 +61,28 @@ public class CommerceInventoryAuditCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, commerceInventoryAuditId);
+		int hashCode = HashUtil.hash(0, commerceInventoryAuditId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
-		sb.append("{commerceInventoryAuditId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", commerceInventoryAuditId=");
 		sb.append(commerceInventoryAuditId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -96,6 +112,7 @@ public class CommerceInventoryAuditCacheModel
 		CommerceInventoryAuditImpl commerceInventoryAuditImpl =
 			new CommerceInventoryAuditImpl();
 
+		commerceInventoryAuditImpl.setMvccVersion(mvccVersion);
 		commerceInventoryAuditImpl.setCommerceInventoryAuditId(
 			commerceInventoryAuditId);
 		commerceInventoryAuditImpl.setCompanyId(companyId);
@@ -154,6 +171,8 @@ public class CommerceInventoryAuditCacheModel
 	public void readExternal(ObjectInput objectInput)
 		throws ClassNotFoundException, IOException {
 
+		mvccVersion = objectInput.readLong();
+
 		commerceInventoryAuditId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -171,6 +190,8 @@ public class CommerceInventoryAuditCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(commerceInventoryAuditId);
 
 		objectOutput.writeLong(companyId);
@@ -211,6 +232,7 @@ public class CommerceInventoryAuditCacheModel
 		objectOutput.writeInt(quantity);
 	}
 
+	public long mvccVersion;
 	public long commerceInventoryAuditId;
 	public long companyId;
 	public long userId;

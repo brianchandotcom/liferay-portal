@@ -20,6 +20,7 @@ import com.liferay.commerce.machine.learning.forecast.alert.model.CommerceMLFore
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -76,7 +76,7 @@ public class CommerceMLForecastAlertEntryModelImpl
 	public static final String TABLE_NAME = "CommerceMLForecastAlertEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
 		{"commerceMLForecastAlertEntryId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -90,6 +90,7 @@ public class CommerceMLForecastAlertEntryModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceMLForecastAlertEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -106,7 +107,7 @@ public class CommerceMLForecastAlertEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceMLForecastAlertEntry (uuid_ VARCHAR(75) null,commerceMLForecastAlertEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceAccountId LONG,actual DOUBLE,forecast DOUBLE,timestamp DATE null,relativeChange DOUBLE,status INTEGER)";
+		"create table CommerceMLForecastAlertEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,commerceMLForecastAlertEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceAccountId LONG,actual DOUBLE,forecast DOUBLE,timestamp DATE null,relativeChange DOUBLE,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceMLForecastAlertEntry";
@@ -123,23 +124,23 @@ public class CommerceMLForecastAlertEntryModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.machine.learning.forecast.alert.service.util.
-			ServiceProps.get(
-				"value.object.entity.cache.enabled.com.liferay.commerce.machine.learning.forecast.alert.model.CommerceMLForecastAlertEntry"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.machine.learning.forecast.alert.service.util.
-			ServiceProps.get(
-				"value.object.finder.cache.enabled.com.liferay.commerce.machine.learning.forecast.alert.model.CommerceMLForecastAlertEntry"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.machine.learning.forecast.alert.service.util.
-			ServiceProps.get(
-				"value.object.column.bitmask.enabled.com.liferay.commerce.machine.learning.forecast.alert.model.CommerceMLForecastAlertEntry"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long COMMERCEACCOUNTID_COLUMN_BITMASK = 1L;
 
@@ -169,6 +170,7 @@ public class CommerceMLForecastAlertEntryModelImpl
 		CommerceMLForecastAlertEntry model =
 			new CommerceMLForecastAlertEntryImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCommerceMLForecastAlertEntryId(
 			soapModel.getCommerceMLForecastAlertEntryId());
@@ -268,9 +270,6 @@ public class CommerceMLForecastAlertEntryModelImpl
 					(CommerceMLForecastAlertEntry)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -351,348 +350,108 @@ public class CommerceMLForecastAlertEntryModelImpl
 					<String, BiConsumer<CommerceMLForecastAlertEntry, ?>>();
 
 		attributeGetterFunctions.put(
-			"uuid",
-			new Function<CommerceMLForecastAlertEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceMLForecastAlertEntry commerceMLForecastAlertEntry) {
-
-					return commerceMLForecastAlertEntry.getUuid();
-				}
-
-			});
+			"mvccVersion", CommerceMLForecastAlertEntry::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceMLForecastAlertEntry, Long>)
+				CommerceMLForecastAlertEntry::setMvccVersion);
+		attributeGetterFunctions.put(
+			"uuid", CommerceMLForecastAlertEntry::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
-			new BiConsumer<CommerceMLForecastAlertEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceMLForecastAlertEntry commerceMLForecastAlertEntry,
-					Object uuidObject) {
-
-					commerceMLForecastAlertEntry.setUuid((String)uuidObject);
-				}
-
-			});
+			(BiConsumer<CommerceMLForecastAlertEntry, String>)
+				CommerceMLForecastAlertEntry::setUuid);
 		attributeGetterFunctions.put(
 			"commerceMLForecastAlertEntryId",
-			new Function<CommerceMLForecastAlertEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceMLForecastAlertEntry commerceMLForecastAlertEntry) {
-
-					return commerceMLForecastAlertEntry.
-						getCommerceMLForecastAlertEntryId();
-				}
-
-			});
+			CommerceMLForecastAlertEntry::getCommerceMLForecastAlertEntryId);
 		attributeSetterBiConsumers.put(
 			"commerceMLForecastAlertEntryId",
-			new BiConsumer<CommerceMLForecastAlertEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceMLForecastAlertEntry commerceMLForecastAlertEntry,
-					Object commerceMLForecastAlertEntryIdObject) {
-
-					commerceMLForecastAlertEntry.
-						setCommerceMLForecastAlertEntryId(
-							(Long)commerceMLForecastAlertEntryIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceMLForecastAlertEntry, Long>)
+				CommerceMLForecastAlertEntry::
+					setCommerceMLForecastAlertEntryId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommerceMLForecastAlertEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceMLForecastAlertEntry commerceMLForecastAlertEntry) {
-
-					return commerceMLForecastAlertEntry.getCompanyId();
-				}
-
-			});
+			"companyId", CommerceMLForecastAlertEntry::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommerceMLForecastAlertEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceMLForecastAlertEntry commerceMLForecastAlertEntry,
-					Object companyIdObject) {
-
-					commerceMLForecastAlertEntry.setCompanyId(
-						(Long)companyIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceMLForecastAlertEntry, Long>)
+				CommerceMLForecastAlertEntry::setCompanyId);
 		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommerceMLForecastAlertEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceMLForecastAlertEntry commerceMLForecastAlertEntry) {
-
-					return commerceMLForecastAlertEntry.getUserId();
-				}
-
-			});
+			"userId", CommerceMLForecastAlertEntry::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommerceMLForecastAlertEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceMLForecastAlertEntry commerceMLForecastAlertEntry,
-					Object userIdObject) {
-
-					commerceMLForecastAlertEntry.setUserId((Long)userIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceMLForecastAlertEntry, Long>)
+				CommerceMLForecastAlertEntry::setUserId);
 		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommerceMLForecastAlertEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceMLForecastAlertEntry commerceMLForecastAlertEntry) {
-
-					return commerceMLForecastAlertEntry.getUserName();
-				}
-
-			});
+			"userName", CommerceMLForecastAlertEntry::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommerceMLForecastAlertEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceMLForecastAlertEntry commerceMLForecastAlertEntry,
-					Object userNameObject) {
-
-					commerceMLForecastAlertEntry.setUserName(
-						(String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceMLForecastAlertEntry, String>)
+				CommerceMLForecastAlertEntry::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommerceMLForecastAlertEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceMLForecastAlertEntry commerceMLForecastAlertEntry) {
-
-					return commerceMLForecastAlertEntry.getCreateDate();
-				}
-
-			});
+			"createDate", CommerceMLForecastAlertEntry::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommerceMLForecastAlertEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceMLForecastAlertEntry commerceMLForecastAlertEntry,
-					Object createDateObject) {
-
-					commerceMLForecastAlertEntry.setCreateDate(
-						(Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceMLForecastAlertEntry, Date>)
+				CommerceMLForecastAlertEntry::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CommerceMLForecastAlertEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceMLForecastAlertEntry commerceMLForecastAlertEntry) {
-
-					return commerceMLForecastAlertEntry.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CommerceMLForecastAlertEntry::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommerceMLForecastAlertEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceMLForecastAlertEntry commerceMLForecastAlertEntry,
-					Object modifiedDateObject) {
-
-					commerceMLForecastAlertEntry.setModifiedDate(
-						(Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceMLForecastAlertEntry, Date>)
+				CommerceMLForecastAlertEntry::setModifiedDate);
 		attributeGetterFunctions.put(
 			"commerceAccountId",
-			new Function<CommerceMLForecastAlertEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceMLForecastAlertEntry commerceMLForecastAlertEntry) {
-
-					return commerceMLForecastAlertEntry.getCommerceAccountId();
-				}
-
-			});
+			CommerceMLForecastAlertEntry::getCommerceAccountId);
 		attributeSetterBiConsumers.put(
 			"commerceAccountId",
-			new BiConsumer<CommerceMLForecastAlertEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceMLForecastAlertEntry commerceMLForecastAlertEntry,
-					Object commerceAccountIdObject) {
-
-					commerceMLForecastAlertEntry.setCommerceAccountId(
-						(Long)commerceAccountIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceMLForecastAlertEntry, Long>)
+				CommerceMLForecastAlertEntry::setCommerceAccountId);
 		attributeGetterFunctions.put(
-			"actual",
-			new Function<CommerceMLForecastAlertEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceMLForecastAlertEntry commerceMLForecastAlertEntry) {
-
-					return commerceMLForecastAlertEntry.getActual();
-				}
-
-			});
+			"actual", CommerceMLForecastAlertEntry::getActual);
 		attributeSetterBiConsumers.put(
 			"actual",
-			new BiConsumer<CommerceMLForecastAlertEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceMLForecastAlertEntry commerceMLForecastAlertEntry,
-					Object actualObject) {
-
-					commerceMLForecastAlertEntry.setActual(
-						(Double)actualObject);
-				}
-
-			});
+			(BiConsumer<CommerceMLForecastAlertEntry, Double>)
+				CommerceMLForecastAlertEntry::setActual);
 		attributeGetterFunctions.put(
-			"forecast",
-			new Function<CommerceMLForecastAlertEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceMLForecastAlertEntry commerceMLForecastAlertEntry) {
-
-					return commerceMLForecastAlertEntry.getForecast();
-				}
-
-			});
+			"forecast", CommerceMLForecastAlertEntry::getForecast);
 		attributeSetterBiConsumers.put(
 			"forecast",
-			new BiConsumer<CommerceMLForecastAlertEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceMLForecastAlertEntry commerceMLForecastAlertEntry,
-					Object forecastObject) {
-
-					commerceMLForecastAlertEntry.setForecast(
-						(Double)forecastObject);
-				}
-
-			});
+			(BiConsumer<CommerceMLForecastAlertEntry, Double>)
+				CommerceMLForecastAlertEntry::setForecast);
 		attributeGetterFunctions.put(
-			"timestamp",
-			new Function<CommerceMLForecastAlertEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceMLForecastAlertEntry commerceMLForecastAlertEntry) {
-
-					return commerceMLForecastAlertEntry.getTimestamp();
-				}
-
-			});
+			"timestamp", CommerceMLForecastAlertEntry::getTimestamp);
 		attributeSetterBiConsumers.put(
 			"timestamp",
-			new BiConsumer<CommerceMLForecastAlertEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceMLForecastAlertEntry commerceMLForecastAlertEntry,
-					Object timestampObject) {
-
-					commerceMLForecastAlertEntry.setTimestamp(
-						(Date)timestampObject);
-				}
-
-			});
+			(BiConsumer<CommerceMLForecastAlertEntry, Date>)
+				CommerceMLForecastAlertEntry::setTimestamp);
 		attributeGetterFunctions.put(
-			"relativeChange",
-			new Function<CommerceMLForecastAlertEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceMLForecastAlertEntry commerceMLForecastAlertEntry) {
-
-					return commerceMLForecastAlertEntry.getRelativeChange();
-				}
-
-			});
+			"relativeChange", CommerceMLForecastAlertEntry::getRelativeChange);
 		attributeSetterBiConsumers.put(
 			"relativeChange",
-			new BiConsumer<CommerceMLForecastAlertEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceMLForecastAlertEntry commerceMLForecastAlertEntry,
-					Object relativeChangeObject) {
-
-					commerceMLForecastAlertEntry.setRelativeChange(
-						(Double)relativeChangeObject);
-				}
-
-			});
+			(BiConsumer<CommerceMLForecastAlertEntry, Double>)
+				CommerceMLForecastAlertEntry::setRelativeChange);
 		attributeGetterFunctions.put(
-			"status",
-			new Function<CommerceMLForecastAlertEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceMLForecastAlertEntry commerceMLForecastAlertEntry) {
-
-					return commerceMLForecastAlertEntry.getStatus();
-				}
-
-			});
+			"status", CommerceMLForecastAlertEntry::getStatus);
 		attributeSetterBiConsumers.put(
 			"status",
-			new BiConsumer<CommerceMLForecastAlertEntry, Object>() {
-
-				@Override
-				public void accept(
-					CommerceMLForecastAlertEntry commerceMLForecastAlertEntry,
-					Object statusObject) {
-
-					commerceMLForecastAlertEntry.setStatus(
-						(Integer)statusObject);
-				}
-
-			});
+			(BiConsumer<CommerceMLForecastAlertEntry, Integer>)
+				CommerceMLForecastAlertEntry::setStatus);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -985,6 +744,7 @@ public class CommerceMLForecastAlertEntryModelImpl
 		CommerceMLForecastAlertEntryImpl commerceMLForecastAlertEntryImpl =
 			new CommerceMLForecastAlertEntryImpl();
 
+		commerceMLForecastAlertEntryImpl.setMvccVersion(getMvccVersion());
 		commerceMLForecastAlertEntryImpl.setUuid(getUuid());
 		commerceMLForecastAlertEntryImpl.setCommerceMLForecastAlertEntryId(
 			getCommerceMLForecastAlertEntryId());
@@ -1050,11 +810,19 @@ public class CommerceMLForecastAlertEntryModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -1091,6 +859,8 @@ public class CommerceMLForecastAlertEntryModelImpl
 		CommerceMLForecastAlertEntryCacheModel
 			commerceMLForecastAlertEntryCacheModel =
 				new CommerceMLForecastAlertEntryCacheModel();
+
+		commerceMLForecastAlertEntryCacheModel.mvccVersion = getMvccVersion();
 
 		commerceMLForecastAlertEntryCacheModel.uuid = getUuid();
 
@@ -1237,6 +1007,7 @@ public class CommerceMLForecastAlertEntryModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _commerceMLForecastAlertEntryId;

@@ -37,6 +37,7 @@ import com.liferay.commerce.service.persistence.CommerceShipmentPersistence;
 import com.liferay.commerce.service.persistence.CommerceShippingMethodPersistence;
 import com.liferay.commerce.service.persistence.CommerceSubscriptionEntryFinder;
 import com.liferay.commerce.service.persistence.CommerceSubscriptionEntryPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -158,6 +159,11 @@ public abstract class CommerceShipmentLocalServiceBaseImpl
 		CommerceShipment commerceShipment) {
 
 		return commerceShipmentPersistence.remove(commerceShipment);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return commerceShipmentPersistence.dslQuery(dslQuery);
 	}
 
 	@Override
@@ -309,6 +315,16 @@ public abstract class CommerceShipmentLocalServiceBaseImpl
 		actionableDynamicQuery.setModelClass(CommerceShipment.class);
 
 		actionableDynamicQuery.setPrimaryKeyPropertyName("commerceShipmentId");
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
+
+		return commerceShipmentPersistence.create(
+			((Long)primaryKeyObj).longValue());
 	}
 
 	/**

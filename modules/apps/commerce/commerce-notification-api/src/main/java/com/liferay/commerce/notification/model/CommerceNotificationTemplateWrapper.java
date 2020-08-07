@@ -14,17 +14,13 @@
 
 package com.liferay.commerce.notification.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,29 +32,21 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceNotificationTemplateWrapper
+	extends BaseModelWrapper<CommerceNotificationTemplate>
 	implements CommerceNotificationTemplate,
 			   ModelWrapper<CommerceNotificationTemplate> {
 
 	public CommerceNotificationTemplateWrapper(
 		CommerceNotificationTemplate commerceNotificationTemplate) {
 
-		_commerceNotificationTemplate = commerceNotificationTemplate;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceNotificationTemplate.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceNotificationTemplate.class.getName();
+		super(commerceNotificationTemplate);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put(
 			"commerceNotificationTemplateId",
@@ -86,6 +74,12 @@ public class CommerceNotificationTemplateWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -203,23 +197,8 @@ public class CommerceNotificationTemplateWrapper
 	}
 
 	@Override
-	public Object clone() {
-		return new CommerceNotificationTemplateWrapper(
-			(CommerceNotificationTemplate)
-				_commerceNotificationTemplate.clone());
-	}
-
-	@Override
-	public int compareTo(
-		CommerceNotificationTemplate commerceNotificationTemplate) {
-
-		return _commerceNotificationTemplate.compareTo(
-			commerceNotificationTemplate);
-	}
-
-	@Override
 	public String[] getAvailableLanguageIds() {
-		return _commerceNotificationTemplate.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -229,7 +208,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public String getBcc() {
-		return _commerceNotificationTemplate.getBcc();
+		return model.getBcc();
 	}
 
 	/**
@@ -239,7 +218,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public String getBody() {
-		return _commerceNotificationTemplate.getBody();
+		return model.getBody();
 	}
 
 	/**
@@ -250,7 +229,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public String getBody(java.util.Locale locale) {
-		return _commerceNotificationTemplate.getBody(locale);
+		return model.getBody(locale);
 	}
 
 	/**
@@ -262,7 +241,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public String getBody(java.util.Locale locale, boolean useDefault) {
-		return _commerceNotificationTemplate.getBody(locale, useDefault);
+		return model.getBody(locale, useDefault);
 	}
 
 	/**
@@ -273,7 +252,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public String getBody(String languageId) {
-		return _commerceNotificationTemplate.getBody(languageId);
+		return model.getBody(languageId);
 	}
 
 	/**
@@ -285,17 +264,17 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public String getBody(String languageId, boolean useDefault) {
-		return _commerceNotificationTemplate.getBody(languageId, useDefault);
+		return model.getBody(languageId, useDefault);
 	}
 
 	@Override
 	public String getBodyCurrentLanguageId() {
-		return _commerceNotificationTemplate.getBodyCurrentLanguageId();
+		return model.getBodyCurrentLanguageId();
 	}
 
 	@Override
 	public String getBodyCurrentValue() {
-		return _commerceNotificationTemplate.getBodyCurrentValue();
+		return model.getBodyCurrentValue();
 	}
 
 	/**
@@ -305,7 +284,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public Map<java.util.Locale, String> getBodyMap() {
-		return _commerceNotificationTemplate.getBodyMap();
+		return model.getBodyMap();
 	}
 
 	/**
@@ -315,7 +294,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public String getCc() {
-		return _commerceNotificationTemplate.getCc();
+		return model.getCc();
 	}
 
 	/**
@@ -325,8 +304,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public long getCommerceNotificationTemplateId() {
-		return _commerceNotificationTemplate.
-			getCommerceNotificationTemplateId();
+		return model.getCommerceNotificationTemplateId();
 	}
 
 	/**
@@ -336,7 +314,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceNotificationTemplate.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -346,12 +324,12 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceNotificationTemplate.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _commerceNotificationTemplate.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -361,7 +339,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public String getDescription() {
-		return _commerceNotificationTemplate.getDescription();
+		return model.getDescription();
 	}
 
 	/**
@@ -371,12 +349,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public boolean getEnabled() {
-		return _commerceNotificationTemplate.getEnabled();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceNotificationTemplate.getExpandoBridge();
+		return model.getEnabled();
 	}
 
 	/**
@@ -386,7 +359,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public String getFrom() {
-		return _commerceNotificationTemplate.getFrom();
+		return model.getFrom();
 	}
 
 	/**
@@ -396,7 +369,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public String getFromName() {
-		return _commerceNotificationTemplate.getFromName();
+		return model.getFromName();
 	}
 
 	/**
@@ -407,7 +380,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public String getFromName(java.util.Locale locale) {
-		return _commerceNotificationTemplate.getFromName(locale);
+		return model.getFromName(locale);
 	}
 
 	/**
@@ -419,7 +392,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public String getFromName(java.util.Locale locale, boolean useDefault) {
-		return _commerceNotificationTemplate.getFromName(locale, useDefault);
+		return model.getFromName(locale, useDefault);
 	}
 
 	/**
@@ -430,7 +403,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public String getFromName(String languageId) {
-		return _commerceNotificationTemplate.getFromName(languageId);
+		return model.getFromName(languageId);
 	}
 
 	/**
@@ -442,18 +415,17 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public String getFromName(String languageId, boolean useDefault) {
-		return _commerceNotificationTemplate.getFromName(
-			languageId, useDefault);
+		return model.getFromName(languageId, useDefault);
 	}
 
 	@Override
 	public String getFromNameCurrentLanguageId() {
-		return _commerceNotificationTemplate.getFromNameCurrentLanguageId();
+		return model.getFromNameCurrentLanguageId();
 	}
 
 	@Override
 	public String getFromNameCurrentValue() {
-		return _commerceNotificationTemplate.getFromNameCurrentValue();
+		return model.getFromNameCurrentValue();
 	}
 
 	/**
@@ -463,7 +435,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public Map<java.util.Locale, String> getFromNameMap() {
-		return _commerceNotificationTemplate.getFromNameMap();
+		return model.getFromNameMap();
 	}
 
 	/**
@@ -473,7 +445,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _commerceNotificationTemplate.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -483,7 +455,17 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceNotificationTemplate.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce notification template.
+	 *
+	 * @return the mvcc version of this commerce notification template
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -493,7 +475,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public String getName() {
-		return _commerceNotificationTemplate.getName();
+		return model.getName();
 	}
 
 	/**
@@ -503,12 +485,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceNotificationTemplate.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceNotificationTemplate.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -518,7 +495,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public String getSubject() {
-		return _commerceNotificationTemplate.getSubject();
+		return model.getSubject();
 	}
 
 	/**
@@ -529,7 +506,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public String getSubject(java.util.Locale locale) {
-		return _commerceNotificationTemplate.getSubject(locale);
+		return model.getSubject(locale);
 	}
 
 	/**
@@ -541,7 +518,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public String getSubject(java.util.Locale locale, boolean useDefault) {
-		return _commerceNotificationTemplate.getSubject(locale, useDefault);
+		return model.getSubject(locale, useDefault);
 	}
 
 	/**
@@ -552,7 +529,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public String getSubject(String languageId) {
-		return _commerceNotificationTemplate.getSubject(languageId);
+		return model.getSubject(languageId);
 	}
 
 	/**
@@ -564,17 +541,17 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public String getSubject(String languageId, boolean useDefault) {
-		return _commerceNotificationTemplate.getSubject(languageId, useDefault);
+		return model.getSubject(languageId, useDefault);
 	}
 
 	@Override
 	public String getSubjectCurrentLanguageId() {
-		return _commerceNotificationTemplate.getSubjectCurrentLanguageId();
+		return model.getSubjectCurrentLanguageId();
 	}
 
 	@Override
 	public String getSubjectCurrentValue() {
-		return _commerceNotificationTemplate.getSubjectCurrentValue();
+		return model.getSubjectCurrentValue();
 	}
 
 	/**
@@ -584,7 +561,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public Map<java.util.Locale, String> getSubjectMap() {
-		return _commerceNotificationTemplate.getSubjectMap();
+		return model.getSubjectMap();
 	}
 
 	/**
@@ -594,7 +571,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public String getTo() {
-		return _commerceNotificationTemplate.getTo();
+		return model.getTo();
 	}
 
 	/**
@@ -604,7 +581,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public String getType() {
-		return _commerceNotificationTemplate.getType();
+		return model.getType();
 	}
 
 	/**
@@ -614,7 +591,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceNotificationTemplate.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -624,7 +601,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceNotificationTemplate.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -634,7 +611,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceNotificationTemplate.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -644,17 +621,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public String getUuid() {
-		return _commerceNotificationTemplate.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceNotificationTemplate.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceNotificationTemplate.isCachedModel();
+		return model.getUuid();
 	}
 
 	/**
@@ -664,29 +631,19 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public boolean isEnabled() {
-		return _commerceNotificationTemplate.isEnabled();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceNotificationTemplate.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceNotificationTemplate.isNew();
+		return model.isEnabled();
 	}
 
 	@Override
 	public void persist() {
-		_commerceNotificationTemplate.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
-		_commerceNotificationTemplate.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
@@ -694,8 +651,7 @@ public class CommerceNotificationTemplateWrapper
 			java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
-		_commerceNotificationTemplate.prepareLocalizedFieldsForImport(
-			defaultImportLocale);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -705,7 +661,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public void setBcc(String bcc) {
-		_commerceNotificationTemplate.setBcc(bcc);
+		model.setBcc(bcc);
 	}
 
 	/**
@@ -715,7 +671,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public void setBody(String body) {
-		_commerceNotificationTemplate.setBody(body);
+		model.setBody(body);
 	}
 
 	/**
@@ -726,7 +682,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public void setBody(String body, java.util.Locale locale) {
-		_commerceNotificationTemplate.setBody(body, locale);
+		model.setBody(body, locale);
 	}
 
 	/**
@@ -740,12 +696,12 @@ public class CommerceNotificationTemplateWrapper
 	public void setBody(
 		String body, java.util.Locale locale, java.util.Locale defaultLocale) {
 
-		_commerceNotificationTemplate.setBody(body, locale, defaultLocale);
+		model.setBody(body, locale, defaultLocale);
 	}
 
 	@Override
 	public void setBodyCurrentLanguageId(String languageId) {
-		_commerceNotificationTemplate.setBodyCurrentLanguageId(languageId);
+		model.setBodyCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -755,7 +711,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public void setBodyMap(Map<java.util.Locale, String> bodyMap) {
-		_commerceNotificationTemplate.setBodyMap(bodyMap);
+		model.setBodyMap(bodyMap);
 	}
 
 	/**
@@ -768,12 +724,7 @@ public class CommerceNotificationTemplateWrapper
 	public void setBodyMap(
 		Map<java.util.Locale, String> bodyMap, java.util.Locale defaultLocale) {
 
-		_commerceNotificationTemplate.setBodyMap(bodyMap, defaultLocale);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceNotificationTemplate.setCachedModel(cachedModel);
+		model.setBodyMap(bodyMap, defaultLocale);
 	}
 
 	/**
@@ -783,7 +734,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public void setCc(String cc) {
-		_commerceNotificationTemplate.setCc(cc);
+		model.setCc(cc);
 	}
 
 	/**
@@ -795,8 +746,7 @@ public class CommerceNotificationTemplateWrapper
 	public void setCommerceNotificationTemplateId(
 		long commerceNotificationTemplateId) {
 
-		_commerceNotificationTemplate.setCommerceNotificationTemplateId(
-			commerceNotificationTemplateId);
+		model.setCommerceNotificationTemplateId(commerceNotificationTemplateId);
 	}
 
 	/**
@@ -806,7 +756,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceNotificationTemplate.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -816,7 +766,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceNotificationTemplate.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -826,7 +776,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public void setDescription(String description) {
-		_commerceNotificationTemplate.setDescription(description);
+		model.setDescription(description);
 	}
 
 	/**
@@ -836,25 +786,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public void setEnabled(boolean enabled) {
-		_commerceNotificationTemplate.setEnabled(enabled);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceNotificationTemplate.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceNotificationTemplate.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceNotificationTemplate.setExpandoBridgeAttributes(
-			serviceContext);
+		model.setEnabled(enabled);
 	}
 
 	/**
@@ -864,7 +796,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public void setFrom(String from) {
-		_commerceNotificationTemplate.setFrom(from);
+		model.setFrom(from);
 	}
 
 	/**
@@ -874,7 +806,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public void setFromName(String fromName) {
-		_commerceNotificationTemplate.setFromName(fromName);
+		model.setFromName(fromName);
 	}
 
 	/**
@@ -885,7 +817,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public void setFromName(String fromName, java.util.Locale locale) {
-		_commerceNotificationTemplate.setFromName(fromName, locale);
+		model.setFromName(fromName, locale);
 	}
 
 	/**
@@ -900,13 +832,12 @@ public class CommerceNotificationTemplateWrapper
 		String fromName, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 
-		_commerceNotificationTemplate.setFromName(
-			fromName, locale, defaultLocale);
+		model.setFromName(fromName, locale, defaultLocale);
 	}
 
 	@Override
 	public void setFromNameCurrentLanguageId(String languageId) {
-		_commerceNotificationTemplate.setFromNameCurrentLanguageId(languageId);
+		model.setFromNameCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -916,7 +847,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public void setFromNameMap(Map<java.util.Locale, String> fromNameMap) {
-		_commerceNotificationTemplate.setFromNameMap(fromNameMap);
+		model.setFromNameMap(fromNameMap);
 	}
 
 	/**
@@ -930,8 +861,7 @@ public class CommerceNotificationTemplateWrapper
 		Map<java.util.Locale, String> fromNameMap,
 		java.util.Locale defaultLocale) {
 
-		_commerceNotificationTemplate.setFromNameMap(
-			fromNameMap, defaultLocale);
+		model.setFromNameMap(fromNameMap, defaultLocale);
 	}
 
 	/**
@@ -941,7 +871,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_commerceNotificationTemplate.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -951,7 +881,17 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceNotificationTemplate.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this commerce notification template.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce notification template
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -961,12 +901,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public void setName(String name) {
-		_commerceNotificationTemplate.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_commerceNotificationTemplate.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -976,12 +911,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceNotificationTemplate.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceNotificationTemplate.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -991,7 +921,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public void setSubject(String subject) {
-		_commerceNotificationTemplate.setSubject(subject);
+		model.setSubject(subject);
 	}
 
 	/**
@@ -1002,7 +932,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public void setSubject(String subject, java.util.Locale locale) {
-		_commerceNotificationTemplate.setSubject(subject, locale);
+		model.setSubject(subject, locale);
 	}
 
 	/**
@@ -1017,13 +947,12 @@ public class CommerceNotificationTemplateWrapper
 		String subject, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 
-		_commerceNotificationTemplate.setSubject(
-			subject, locale, defaultLocale);
+		model.setSubject(subject, locale, defaultLocale);
 	}
 
 	@Override
 	public void setSubjectCurrentLanguageId(String languageId) {
-		_commerceNotificationTemplate.setSubjectCurrentLanguageId(languageId);
+		model.setSubjectCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -1033,7 +962,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public void setSubjectMap(Map<java.util.Locale, String> subjectMap) {
-		_commerceNotificationTemplate.setSubjectMap(subjectMap);
+		model.setSubjectMap(subjectMap);
 	}
 
 	/**
@@ -1047,7 +976,7 @@ public class CommerceNotificationTemplateWrapper
 		Map<java.util.Locale, String> subjectMap,
 		java.util.Locale defaultLocale) {
 
-		_commerceNotificationTemplate.setSubjectMap(subjectMap, defaultLocale);
+		model.setSubjectMap(subjectMap, defaultLocale);
 	}
 
 	/**
@@ -1057,7 +986,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public void setTo(String to) {
-		_commerceNotificationTemplate.setTo(to);
+		model.setTo(to);
 	}
 
 	/**
@@ -1067,7 +996,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public void setType(String type) {
-		_commerceNotificationTemplate.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -1077,7 +1006,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceNotificationTemplate.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -1087,7 +1016,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceNotificationTemplate.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -1097,7 +1026,7 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceNotificationTemplate.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -1107,88 +1036,20 @@ public class CommerceNotificationTemplateWrapper
 	 */
 	@Override
 	public void setUuid(String uuid) {
-		_commerceNotificationTemplate.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel
-		<CommerceNotificationTemplate> toCacheModel() {
-
-		return _commerceNotificationTemplate.toCacheModel();
-	}
-
-	@Override
-	public CommerceNotificationTemplate toEscapedModel() {
-		return new CommerceNotificationTemplateWrapper(
-			_commerceNotificationTemplate.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commerceNotificationTemplate.toString();
-	}
-
-	@Override
-	public CommerceNotificationTemplate toUnescapedModel() {
-		return new CommerceNotificationTemplateWrapper(
-			_commerceNotificationTemplate.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceNotificationTemplate.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceNotificationTemplateWrapper)) {
-			return false;
-		}
-
-		CommerceNotificationTemplateWrapper
-			commerceNotificationTemplateWrapper =
-				(CommerceNotificationTemplateWrapper)object;
-
-		if (Objects.equals(
-				_commerceNotificationTemplate,
-				commerceNotificationTemplateWrapper.
-					_commerceNotificationTemplate)) {
-
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _commerceNotificationTemplate.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public CommerceNotificationTemplate getWrappedModel() {
-		return _commerceNotificationTemplate;
-	}
+	protected CommerceNotificationTemplateWrapper wrap(
+		CommerceNotificationTemplate commerceNotificationTemplate) {
 
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceNotificationTemplate.isEntityCacheEnabled();
+		return new CommerceNotificationTemplateWrapper(
+			commerceNotificationTemplate);
 	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceNotificationTemplate.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceNotificationTemplate.resetOriginalValues();
-	}
-
-	private final CommerceNotificationTemplate _commerceNotificationTemplate;
 
 }

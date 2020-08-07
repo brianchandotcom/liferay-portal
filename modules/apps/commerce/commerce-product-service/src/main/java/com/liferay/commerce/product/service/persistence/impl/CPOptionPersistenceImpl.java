@@ -16,9 +16,11 @@ package com.liferay.commerce.product.service.persistence.impl;
 
 import com.liferay.commerce.product.exception.NoSuchCPOptionException;
 import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.model.CPOptionTable;
 import com.liferay.commerce.product.model.impl.CPOptionImpl;
 import com.liferay.commerce.product.model.impl.CPOptionModelImpl;
 import com.liferay.commerce.product.service.persistence.CPOptionPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -37,7 +39,6 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -45,14 +46,11 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -252,10 +250,6 @@ public class CPOptionPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -951,8 +945,6 @@ public class CPOptionPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1216,10 +1208,6 @@ public class CPOptionPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1960,8 +1948,6 @@ public class CPOptionPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2207,10 +2193,6 @@ public class CPOptionPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2860,8 +2842,6 @@ public class CPOptionPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3064,10 +3044,6 @@ public class CPOptionPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(_finderPathFetchByC_K, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3156,8 +3132,6 @@ public class CPOptionPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3336,11 +3310,6 @@ public class CPOptionPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByC_ERC, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3429,8 +3398,6 @@ public class CPOptionPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3456,21 +3423,14 @@ public class CPOptionPersistenceImpl
 		dbColumnNames.put("uuid", "uuid_");
 		dbColumnNames.put("key", "key_");
 
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-				"_dbColumnNames");
-
-			field.setAccessible(true);
-
-			field.set(this, dbColumnNames);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
+		setDBColumnNames(dbColumnNames);
 
 		setModelClass(CPOption.class);
+
+		setModelImplClass(CPOptionImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CPOptionTable.INSTANCE);
 	}
 
 	/**
@@ -3481,8 +3441,7 @@ public class CPOptionPersistenceImpl
 	@Override
 	public void cacheResult(CPOption cpOption) {
 		entityCache.putResult(
-			CPOptionModelImpl.ENTITY_CACHE_ENABLED, CPOptionImpl.class,
-			cpOption.getPrimaryKey(), cpOption);
+			CPOptionImpl.class, cpOption.getPrimaryKey(), cpOption);
 
 		finderCache.putResult(
 			_finderPathFetchByC_K,
@@ -3508,8 +3467,7 @@ public class CPOptionPersistenceImpl
 	public void cacheResult(List<CPOption> cpOptions) {
 		for (CPOption cpOption : cpOptions) {
 			if (entityCache.getResult(
-					CPOptionModelImpl.ENTITY_CACHE_ENABLED, CPOptionImpl.class,
-					cpOption.getPrimaryKey()) == null) {
+					CPOptionImpl.class, cpOption.getPrimaryKey()) == null) {
 
 				cacheResult(cpOption);
 			}
@@ -3544,9 +3502,7 @@ public class CPOptionPersistenceImpl
 	 */
 	@Override
 	public void clearCache(CPOption cpOption) {
-		entityCache.removeResult(
-			CPOptionModelImpl.ENTITY_CACHE_ENABLED, CPOptionImpl.class,
-			cpOption.getPrimaryKey());
+		entityCache.removeResult(CPOptionImpl.class, cpOption.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -3561,22 +3517,20 @@ public class CPOptionPersistenceImpl
 
 		for (CPOption cpOption : cpOptions) {
 			entityCache.removeResult(
-				CPOptionModelImpl.ENTITY_CACHE_ENABLED, CPOptionImpl.class,
-				cpOption.getPrimaryKey());
+				CPOptionImpl.class, cpOption.getPrimaryKey());
 
 			clearUniqueFindersCache((CPOptionModelImpl)cpOption, true);
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CPOptionModelImpl.ENTITY_CACHE_ENABLED, CPOptionImpl.class,
-				primaryKey);
+			entityCache.removeResult(CPOptionImpl.class, primaryKey);
 		}
 	}
 
@@ -3829,10 +3783,7 @@ public class CPOptionPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CPOptionModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {cpOptionModelImpl.getUuid()};
 
 			finderCache.removeResult(_finderPathCountByUuid, args);
@@ -3921,8 +3872,7 @@ public class CPOptionPersistenceImpl
 		}
 
 		entityCache.putResult(
-			CPOptionModelImpl.ENTITY_CACHE_ENABLED, CPOptionImpl.class,
-			cpOption.getPrimaryKey(), cpOption, false);
+			CPOptionImpl.class, cpOption.getPrimaryKey(), cpOption, false);
 
 		clearUniqueFindersCache(cpOptionModelImpl, false);
 		cacheUniqueFindersCache(cpOptionModelImpl);
@@ -3974,160 +3924,12 @@ public class CPOptionPersistenceImpl
 	/**
 	 * Returns the cp option with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the cp option
-	 * @return the cp option, or <code>null</code> if a cp option with the primary key could not be found
-	 */
-	@Override
-	public CPOption fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(
-			CPOptionModelImpl.ENTITY_CACHE_ENABLED, CPOptionImpl.class,
-			primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CPOption cpOption = (CPOption)serializable;
-
-		if (cpOption == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				cpOption = (CPOption)session.get(
-					CPOptionImpl.class, primaryKey);
-
-				if (cpOption != null) {
-					cacheResult(cpOption);
-				}
-				else {
-					entityCache.putResult(
-						CPOptionModelImpl.ENTITY_CACHE_ENABLED,
-						CPOptionImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CPOptionModelImpl.ENTITY_CACHE_ENABLED, CPOptionImpl.class,
-					primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return cpOption;
-	}
-
-	/**
-	 * Returns the cp option with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param CPOptionId the primary key of the cp option
 	 * @return the cp option, or <code>null</code> if a cp option with the primary key could not be found
 	 */
 	@Override
 	public CPOption fetchByPrimaryKey(long CPOptionId) {
 		return fetchByPrimaryKey((Serializable)CPOptionId);
-	}
-
-	@Override
-	public Map<Serializable, CPOption> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CPOption> map = new HashMap<Serializable, CPOption>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CPOption cpOption = fetchByPrimaryKey(primaryKey);
-
-			if (cpOption != null) {
-				map.put(primaryKey, cpOption);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CPOptionModelImpl.ENTITY_CACHE_ENABLED, CPOptionImpl.class,
-				primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (CPOption)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(_SQL_SELECT_CPOPTION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CPOption cpOption : (List<CPOption>)query.list()) {
-				map.put(cpOption.getPrimaryKeyObj(), cpOption);
-
-				cacheResult(cpOption);
-
-				uncachedPrimaryKeys.remove(cpOption.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CPOptionModelImpl.ENTITY_CACHE_ENABLED, CPOptionImpl.class,
-					primaryKey, nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -4254,10 +4056,6 @@ public class CPOptionPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -4303,9 +4101,6 @@ public class CPOptionPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -4322,6 +4117,21 @@ public class CPOptionPersistenceImpl
 	}
 
 	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "CPOptionId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_CPOPTION;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CPOptionModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -4331,49 +4141,38 @@ public class CPOptionPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CPOptionModelImpl.ENTITY_CACHE_ENABLED,
-			CPOptionModelImpl.FINDER_CACHE_ENABLED, CPOptionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+			CPOptionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CPOptionModelImpl.ENTITY_CACHE_ENABLED,
-			CPOptionModelImpl.FINDER_CACHE_ENABLED, CPOptionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-			new String[0]);
+			CPOptionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findAll", new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CPOptionModelImpl.ENTITY_CACHE_ENABLED,
-			CPOptionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByUuid = new FinderPath(
-			CPOptionModelImpl.ENTITY_CACHE_ENABLED,
-			CPOptionModelImpl.FINDER_CACHE_ENABLED, CPOptionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+			CPOptionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByUuid",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			});
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			CPOptionModelImpl.ENTITY_CACHE_ENABLED,
-			CPOptionModelImpl.FINDER_CACHE_ENABLED, CPOptionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()},
+			CPOptionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByUuid", new String[] {String.class.getName()},
 			CPOptionModelImpl.UUID_COLUMN_BITMASK |
 			CPOptionModelImpl.NAME_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
-			CPOptionModelImpl.ENTITY_CACHE_ENABLED,
-			CPOptionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUuid", new String[] {String.class.getName()});
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			CPOptionModelImpl.ENTITY_CACHE_ENABLED,
-			CPOptionModelImpl.FINDER_CACHE_ENABLED, CPOptionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+			CPOptionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByUuid_C",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -4381,69 +4180,55 @@ public class CPOptionPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			CPOptionModelImpl.ENTITY_CACHE_ENABLED,
-			CPOptionModelImpl.FINDER_CACHE_ENABLED, CPOptionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+			CPOptionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			CPOptionModelImpl.UUID_COLUMN_BITMASK |
 			CPOptionModelImpl.COMPANYID_COLUMN_BITMASK |
 			CPOptionModelImpl.NAME_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
-			CPOptionModelImpl.ENTITY_CACHE_ENABLED,
-			CPOptionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			CPOptionModelImpl.ENTITY_CACHE_ENABLED,
-			CPOptionModelImpl.FINDER_CACHE_ENABLED, CPOptionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+			CPOptionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByCompanyId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			});
 
 		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			CPOptionModelImpl.ENTITY_CACHE_ENABLED,
-			CPOptionModelImpl.FINDER_CACHE_ENABLED, CPOptionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()},
+			CPOptionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByCompanyId", new String[] {Long.class.getName()},
 			CPOptionModelImpl.COMPANYID_COLUMN_BITMASK |
 			CPOptionModelImpl.NAME_COLUMN_BITMASK);
 
 		_finderPathCountByCompanyId = new FinderPath(
-			CPOptionModelImpl.ENTITY_CACHE_ENABLED,
-			CPOptionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCompanyId", new String[] {Long.class.getName()});
 
 		_finderPathFetchByC_K = new FinderPath(
-			CPOptionModelImpl.ENTITY_CACHE_ENABLED,
-			CPOptionModelImpl.FINDER_CACHE_ENABLED, CPOptionImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_K",
+			CPOptionImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_K",
 			new String[] {Long.class.getName(), String.class.getName()},
 			CPOptionModelImpl.COMPANYID_COLUMN_BITMASK |
 			CPOptionModelImpl.KEY_COLUMN_BITMASK);
 
 		_finderPathCountByC_K = new FinderPath(
-			CPOptionModelImpl.ENTITY_CACHE_ENABLED,
-			CPOptionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_K",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_K",
 			new String[] {Long.class.getName(), String.class.getName()});
 
 		_finderPathFetchByC_ERC = new FinderPath(
-			CPOptionModelImpl.ENTITY_CACHE_ENABLED,
-			CPOptionModelImpl.FINDER_CACHE_ENABLED, CPOptionImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_ERC",
+			CPOptionImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_ERC",
 			new String[] {Long.class.getName(), String.class.getName()},
 			CPOptionModelImpl.COMPANYID_COLUMN_BITMASK |
 			CPOptionModelImpl.EXTERNALREFERENCECODE_COLUMN_BITMASK);
 
 		_finderPathCountByC_ERC = new FinderPath(
-			CPOptionModelImpl.ENTITY_CACHE_ENABLED,
-			CPOptionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ERC",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByC_ERC",
 			new String[] {Long.class.getName(), String.class.getName()});
 	}
 
@@ -4462,9 +4247,6 @@ public class CPOptionPersistenceImpl
 
 	private static final String _SQL_SELECT_CPOPTION =
 		"SELECT cpOption FROM CPOption cpOption";
-
-	private static final String _SQL_SELECT_CPOPTION_WHERE_PKS_IN =
-		"SELECT cpOption FROM CPOption cpOption WHERE CPOptionId IN (";
 
 	private static final String _SQL_SELECT_CPOPTION_WHERE =
 		"SELECT cpOption FROM CPOption cpOption WHERE ";

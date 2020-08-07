@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.notification.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.notification.exception.NoSuchNotificationTemplateException;
 import com.liferay.commerce.notification.model.CommerceNotificationTemplate;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce notification template service.
@@ -45,9 +40,6 @@ public interface CommerceNotificationTemplatePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceNotificationTemplateUtil} to access the commerce notification template persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceNotificationTemplate> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce notification templates where uuid = &#63;.
@@ -1204,8 +1196,5 @@ public interface CommerceNotificationTemplatePersistence
 	 * @return the number of commerce notification templates
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

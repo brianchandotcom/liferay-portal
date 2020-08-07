@@ -14,12 +14,11 @@
 
 package com.liferay.commerce.product.service;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLocalization;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -52,6 +51,8 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for CPDefinition. Methods of this
@@ -110,10 +111,10 @@ public interface CPDefinitionLocalService
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, String defaultSku, boolean subscriptionEnabled,
 			int subscriptionLength, String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
 			int deliverySubscriptionLength, String deliverySubscriptionType,
-			UnicodeProperties deliverySubscriptionTypeSettingsProperties,
+			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
 			long deliveryMaxSubscriptionCycles, String externalReferenceCode,
 			ServiceContext serviceContext)
 		throws PortalException;
@@ -138,7 +139,7 @@ public interface CPDefinitionLocalService
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, String defaultSku, boolean subscriptionEnabled,
 			int subscriptionLength, String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, String externalReferenceCode,
 			ServiceContext serviceContext)
 		throws PortalException;
@@ -160,6 +161,12 @@ public interface CPDefinitionLocalService
 	 */
 	@Transactional(enabled = false)
 	public CPDefinition createCPDefinition(long CPDefinitionId);
+
+	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	public void deleteAssetCategoryCPDefinition(
 			long cpDefinitionId, long categoryId, ServiceContext serviceContext)
@@ -206,6 +213,9 @@ public interface CPDefinitionLocalService
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();
@@ -622,10 +632,10 @@ public interface CPDefinitionLocalService
 	public CPDefinition updateSubscriptionInfo(
 			long cpDefinitionId, boolean subscriptionEnabled,
 			int subscriptionLength, String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
 			int deliverySubscriptionLength, String deliverySubscriptionType,
-			UnicodeProperties deliverySubscriptionTypeSettingsProperties,
+			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
 			long deliveryMaxSubscriptionCycles)
 		throws PortalException;
 
@@ -636,7 +646,7 @@ public interface CPDefinitionLocalService
 	public CPDefinition updateSubscriptionInfo(
 			long cpDefinitionId, boolean subscriptionEnabled,
 			int subscriptionLength, String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -664,10 +674,10 @@ public interface CPDefinitionLocalService
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, String defaultSku, boolean subscriptionEnabled,
 			int subscriptionLength, String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
 			int deliverySubscriptionLength, String deliverySubscriptionType,
-			UnicodeProperties deliverySubscriptionTypeSettingsProperties,
+			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
 			long deliveryMaxSubscriptionCycles, String externalReferenceCode,
 			ServiceContext serviceContext)
 		throws PortalException;
@@ -691,7 +701,7 @@ public interface CPDefinitionLocalService
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, String defaultSku, boolean subscriptionEnabled,
 			int subscriptionLength, String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, String externalReferenceCode,
 			ServiceContext serviceContext)
 		throws PortalException;

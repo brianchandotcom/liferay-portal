@@ -14,10 +14,9 @@
 
 package com.liferay.commerce.service;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.model.CommerceSubscriptionEntry;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -42,6 +41,8 @@ import java.io.Serializable;
 
 import java.util.Date;
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for CommerceSubscriptionEntry. Methods of this
@@ -89,7 +90,7 @@ public interface CommerceSubscriptionEntryLocalService
 			long userId, long groupId, long commerceOrderItemId,
 			int subscriptionLength, String subscriptionType,
 			long maxSubscriptionCycles,
-			UnicodeProperties subscriptionTypeSettingsProperties)
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -97,10 +98,10 @@ public interface CommerceSubscriptionEntryLocalService
 			long userId, long groupId, long commerceOrderItemId,
 			int subscriptionLength, String subscriptionType,
 			long maxSubscriptionCycles,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			int deliverySubscriptionLength, String deliverySubscriptionType,
 			long deliveryMaxSubscriptionCycles,
-			UnicodeProperties deliverySubscriptionTypeSettingsProperties)
+			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties)
 		throws PortalException;
 
 	/**
@@ -112,6 +113,12 @@ public interface CommerceSubscriptionEntryLocalService
 	@Transactional(enabled = false)
 	public CommerceSubscriptionEntry createCommerceSubscriptionEntry(
 		long commerceSubscriptionEntryId);
+
+	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	public void deleteCommerceSubscriptionEntries(long groupId);
 
@@ -151,6 +158,9 @@ public interface CommerceSubscriptionEntryLocalService
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();
@@ -432,7 +442,7 @@ public interface CommerceSubscriptionEntryLocalService
 	public CommerceSubscriptionEntry updateCommerceSubscriptionEntry(
 			long commerceSubscriptionEntryId, int subscriptionLength,
 			String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, int subscriptionStatus,
 			int nextIterationDateMonth, int nextIterationDateDay,
 			int nextIterationDateYear, int nextIterationDateHour,
@@ -443,13 +453,13 @@ public interface CommerceSubscriptionEntryLocalService
 	public CommerceSubscriptionEntry updateCommerceSubscriptionEntry(
 			long commerceSubscriptionEntryId, int subscriptionLength,
 			String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, int subscriptionStatus,
 			int nextIterationDateMonth, int nextIterationDateDay,
 			int nextIterationDateYear, int nextIterationDateHour,
 			int nextIterationDateMinute, int deliverySubscriptionLength,
 			String deliverySubscriptionType,
-			UnicodeProperties deliverySubscriptionTypeSettingsProperties,
+			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
 			long deliveryMaxSubscriptionCycles, int deliverySubscriptionStatus,
 			int deliveryNextIterationDateMonth,
 			int deliveryNextIterationDateDay, int deliveryNextIterationDateYear,

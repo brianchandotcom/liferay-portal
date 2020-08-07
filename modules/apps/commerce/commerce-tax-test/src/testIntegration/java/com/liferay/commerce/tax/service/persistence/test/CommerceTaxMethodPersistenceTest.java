@@ -124,6 +124,8 @@ public class CommerceTaxMethodPersistenceTest {
 
 		CommerceTaxMethod newCommerceTaxMethod = _persistence.create(pk);
 
+		newCommerceTaxMethod.setMvccVersion(RandomTestUtil.nextLong());
+
 		newCommerceTaxMethod.setGroupId(RandomTestUtil.nextLong());
 
 		newCommerceTaxMethod.setCompanyId(RandomTestUtil.nextLong());
@@ -151,6 +153,9 @@ public class CommerceTaxMethodPersistenceTest {
 		CommerceTaxMethod existingCommerceTaxMethod =
 			_persistence.findByPrimaryKey(newCommerceTaxMethod.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCommerceTaxMethod.getMvccVersion(),
+			newCommerceTaxMethod.getMvccVersion());
 		Assert.assertEquals(
 			existingCommerceTaxMethod.getCommerceTaxMethodId(),
 			newCommerceTaxMethod.getCommerceTaxMethodId());
@@ -238,10 +243,11 @@ public class CommerceTaxMethodPersistenceTest {
 
 	protected OrderByComparator<CommerceTaxMethod> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CommerceTaxMethod", "commerceTaxMethodId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "name", true, "description", true,
-			"engineKey", true, "percentage", true, "active", true);
+			"CommerceTaxMethod", "mvccVersion", true, "commerceTaxMethodId",
+			true, "groupId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true, "name",
+			true, "description", true, "engineKey", true, "percentage", true,
+			"active", true);
 	}
 
 	@Test
@@ -489,6 +495,8 @@ public class CommerceTaxMethodPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		CommerceTaxMethod commerceTaxMethod = _persistence.create(pk);
+
+		commerceTaxMethod.setMvccVersion(RandomTestUtil.nextLong());
 
 		commerceTaxMethod.setGroupId(RandomTestUtil.nextLong());
 

@@ -31,6 +31,7 @@ public class CommerceBOMEntrySoap implements Serializable {
 	public static CommerceBOMEntrySoap toSoapModel(CommerceBOMEntry model) {
 		CommerceBOMEntrySoap soapModel = new CommerceBOMEntrySoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCommerceBOMEntryId(model.getCommerceBOMEntryId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -104,6 +105,14 @@ public class CommerceBOMEntrySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceBOMEntryId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getCommerceBOMEntryId() {
@@ -210,6 +219,7 @@ public class CommerceBOMEntrySoap implements Serializable {
 		_radius = radius;
 	}
 
+	private long _mvccVersion;
 	private long _commerceBOMEntryId;
 	private long _companyId;
 	private long _userId;

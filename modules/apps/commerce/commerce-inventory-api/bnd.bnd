@@ -1,6 +1,10 @@
 Bundle-Name: Liferay Commerce Inventory API
 Bundle-SymbolicName: com.liferay.commerce.inventory.api
+<<<<<<< HEAD
 Bundle-Version: 6.2.7
+=======
+Bundle-Version: 7.0.0
+>>>>>>> e47493f9f... COMMERCE-4072 Regen service and rest
 Export-Package:\
 	com.liferay.commerce.inventory.constants,\
 	com.liferay.commerce.inventory.engine,\

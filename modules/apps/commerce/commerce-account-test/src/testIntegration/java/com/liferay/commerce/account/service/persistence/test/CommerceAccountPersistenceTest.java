@@ -123,6 +123,8 @@ public class CommerceAccountPersistenceTest {
 
 		CommerceAccount newCommerceAccount = _persistence.create(pk);
 
+		newCommerceAccount.setMvccVersion(RandomTestUtil.nextLong());
+
 		newCommerceAccount.setExternalReferenceCode(
 			RandomTestUtil.randomString());
 
@@ -176,6 +178,9 @@ public class CommerceAccountPersistenceTest {
 		CommerceAccount existingCommerceAccount = _persistence.findByPrimaryKey(
 			newCommerceAccount.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCommerceAccount.getMvccVersion(),
+			newCommerceAccount.getMvccVersion());
 		Assert.assertEquals(
 			existingCommerceAccount.getExternalReferenceCode(),
 			newCommerceAccount.getExternalReferenceCode());
@@ -292,8 +297,8 @@ public class CommerceAccountPersistenceTest {
 
 	protected OrderByComparator<CommerceAccount> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CommerceAccount", "externalReferenceCode", true,
-			"commerceAccountId", true, "companyId", true, "userId", true,
+			"CommerceAccount", "mvccVersion", true, "externalReferenceCode",
+			true, "commerceAccountId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"parentCommerceAccountId", true, "name", true, "logoId", true,
 			"email", true, "taxId", true, "type", true, "active", true,
@@ -543,6 +548,8 @@ public class CommerceAccountPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		CommerceAccount commerceAccount = _persistence.create(pk);
+
+		commerceAccount.setMvccVersion(RandomTestUtil.nextLong());
 
 		commerceAccount.setExternalReferenceCode(RandomTestUtil.randomString());
 

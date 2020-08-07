@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.product.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,26 +31,18 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceChannelWrapper
+	extends BaseModelWrapper<CommerceChannel>
 	implements CommerceChannel, ModelWrapper<CommerceChannel> {
 
 	public CommerceChannelWrapper(CommerceChannel commerceChannel) {
-		_commerceChannel = commerceChannel;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceChannel.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceChannel.class.getName();
+		super(commerceChannel);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("commerceChannelId", getCommerceChannelId());
 		attributes.put("companyId", getCompanyId());
@@ -75,6 +63,12 @@ public class CommerceChannelWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String externalReferenceCode = (String)attributes.get(
 			"externalReferenceCode");
 
@@ -163,17 +157,6 @@ public class CommerceChannelWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CommerceChannelWrapper(
-			(CommerceChannel)_commerceChannel.clone());
-	}
-
-	@Override
-	public int compareTo(CommerceChannel commerceChannel) {
-		return _commerceChannel.compareTo(commerceChannel);
-	}
-
 	/**
 	 * Returns the commerce channel ID of this commerce channel.
 	 *
@@ -181,7 +164,7 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public long getCommerceChannelId() {
-		return _commerceChannel.getCommerceChannelId();
+		return model.getCommerceChannelId();
 	}
 
 	/**
@@ -191,7 +174,7 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public String getCommerceCurrencyCode() {
-		return _commerceChannel.getCommerceCurrencyCode();
+		return model.getCommerceCurrencyCode();
 	}
 
 	/**
@@ -201,7 +184,7 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceChannel.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -211,7 +194,7 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceChannel.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -221,12 +204,7 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public boolean getDiscountsTargetNetPrice() {
-		return _commerceChannel.getDiscountsTargetNetPrice();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceChannel.getExpandoBridge();
+		return model.getDiscountsTargetNetPrice();
 	}
 
 	/**
@@ -236,17 +214,17 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public String getExternalReferenceCode() {
-		return _commerceChannel.getExternalReferenceCode();
+		return model.getExternalReferenceCode();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.model.Group getGroup() {
-		return _commerceChannel.getGroup();
+		return model.getGroup();
 	}
 
 	@Override
 	public long getGroupId() {
-		return _commerceChannel.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -256,7 +234,17 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceChannel.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce channel.
+	 *
+	 * @return the mvcc version of this commerce channel
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -266,7 +254,7 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public String getName() {
-		return _commerceChannel.getName();
+		return model.getName();
 	}
 
 	/**
@@ -276,7 +264,7 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public String getPriceDisplayType() {
-		return _commerceChannel.getPriceDisplayType();
+		return model.getPriceDisplayType();
 	}
 
 	/**
@@ -286,12 +274,7 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceChannel.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceChannel.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -301,7 +284,7 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public long getSiteGroupId() {
-		return _commerceChannel.getSiteGroupId();
+		return model.getSiteGroupId();
 	}
 
 	/**
@@ -311,7 +294,7 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public String getType() {
-		return _commerceChannel.getType();
+		return model.getType();
 	}
 
 	/**
@@ -321,14 +304,14 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public String getTypeSettings() {
-		return _commerceChannel.getTypeSettings();
+		return model.getTypeSettings();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties
 		getTypeSettingsProperties() {
 
-		return _commerceChannel.getTypeSettingsProperties();
+		return model.getTypeSettingsProperties();
 	}
 
 	/**
@@ -338,7 +321,7 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceChannel.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -348,7 +331,7 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceChannel.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -358,17 +341,7 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceChannel.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceChannel.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceChannel.isCachedModel();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -378,27 +351,12 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public boolean isDiscountsTargetNetPrice() {
-		return _commerceChannel.isDiscountsTargetNetPrice();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceChannel.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceChannel.isNew();
+		return model.isDiscountsTargetNetPrice();
 	}
 
 	@Override
 	public void persist() {
-		_commerceChannel.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceChannel.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -408,7 +366,7 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public void setCommerceChannelId(long commerceChannelId) {
-		_commerceChannel.setCommerceChannelId(commerceChannelId);
+		model.setCommerceChannelId(commerceChannelId);
 	}
 
 	/**
@@ -418,7 +376,7 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public void setCommerceCurrencyCode(String commerceCurrencyCode) {
-		_commerceChannel.setCommerceCurrencyCode(commerceCurrencyCode);
+		model.setCommerceCurrencyCode(commerceCurrencyCode);
 	}
 
 	/**
@@ -428,7 +386,7 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceChannel.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -438,7 +396,7 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceChannel.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -448,24 +406,7 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public void setDiscountsTargetNetPrice(boolean discountsTargetNetPrice) {
-		_commerceChannel.setDiscountsTargetNetPrice(discountsTargetNetPrice);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceChannel.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceChannel.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceChannel.setExpandoBridgeAttributes(serviceContext);
+		model.setDiscountsTargetNetPrice(discountsTargetNetPrice);
 	}
 
 	/**
@@ -475,7 +416,7 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
-		_commerceChannel.setExternalReferenceCode(externalReferenceCode);
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**
@@ -485,7 +426,17 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceChannel.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this commerce channel.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce channel
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -495,12 +446,7 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public void setName(String name) {
-		_commerceChannel.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_commerceChannel.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -510,7 +456,7 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public void setPriceDisplayType(String priceDisplayType) {
-		_commerceChannel.setPriceDisplayType(priceDisplayType);
+		model.setPriceDisplayType(priceDisplayType);
 	}
 
 	/**
@@ -520,12 +466,7 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceChannel.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceChannel.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -535,7 +476,7 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public void setSiteGroupId(long siteGroupId) {
-		_commerceChannel.setSiteGroupId(siteGroupId);
+		model.setSiteGroupId(siteGroupId);
 	}
 
 	/**
@@ -545,7 +486,7 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public void setType(String type) {
-		_commerceChannel.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -555,15 +496,15 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public void setTypeSettings(String typeSettings) {
-		_commerceChannel.setTypeSettings(typeSettings);
+		model.setTypeSettings(typeSettings);
 	}
 
 	@Override
 	public void setTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties
-			typeSettingsProperties) {
+			typeSettingsUnicodeProperties) {
 
-		_commerceChannel.setTypeSettingsProperties(typeSettingsProperties);
+		model.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 	}
 
 	/**
@@ -573,7 +514,7 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceChannel.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -583,7 +524,7 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceChannel.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -593,78 +534,12 @@ public class CommerceChannelWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceChannel.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceChannel>
-		toCacheModel() {
-
-		return _commerceChannel.toCacheModel();
+	protected CommerceChannelWrapper wrap(CommerceChannel commerceChannel) {
+		return new CommerceChannelWrapper(commerceChannel);
 	}
-
-	@Override
-	public CommerceChannel toEscapedModel() {
-		return new CommerceChannelWrapper(_commerceChannel.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commerceChannel.toString();
-	}
-
-	@Override
-	public CommerceChannel toUnescapedModel() {
-		return new CommerceChannelWrapper(_commerceChannel.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceChannel.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceChannelWrapper)) {
-			return false;
-		}
-
-		CommerceChannelWrapper commerceChannelWrapper =
-			(CommerceChannelWrapper)object;
-
-		if (Objects.equals(
-				_commerceChannel, commerceChannelWrapper._commerceChannel)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceChannel getWrappedModel() {
-		return _commerceChannel;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceChannel.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceChannel.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceChannel.resetOriginalValues();
-	}
-
-	private final CommerceChannel _commerceChannel;
 
 }

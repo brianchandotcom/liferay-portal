@@ -19,6 +19,7 @@ import com.liferay.commerce.application.service.CommerceApplicationModelCProduct
 import com.liferay.commerce.application.service.persistence.CommerceApplicationBrandPersistence;
 import com.liferay.commerce.application.service.persistence.CommerceApplicationModelCProductRelPersistence;
 import com.liferay.commerce.application.service.persistence.CommerceApplicationModelPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -154,6 +155,12 @@ public abstract class CommerceApplicationModelCProductRelLocalServiceBaseImpl
 
 		return commerceApplicationModelCProductRelPersistence.remove(
 			commerceApplicationModelCProductRel);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return commerceApplicationModelCProductRelPersistence.dslQuery(
+			dslQuery);
 	}
 
 	@Override
@@ -318,6 +325,16 @@ public abstract class CommerceApplicationModelCProductRelLocalServiceBaseImpl
 
 		actionableDynamicQuery.setPrimaryKeyPropertyName(
 			"commerceApplicationModelCProductRelId");
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
+
+		return commerceApplicationModelCProductRelPersistence.create(
+			((Long)primaryKeyObj).longValue());
 	}
 
 	/**

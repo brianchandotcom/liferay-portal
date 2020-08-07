@@ -16,9 +16,11 @@ package com.liferay.commerce.wish.list.service.persistence.impl;
 
 import com.liferay.commerce.wish.list.exception.NoSuchWishListItemException;
 import com.liferay.commerce.wish.list.model.CommerceWishListItem;
+import com.liferay.commerce.wish.list.model.CommerceWishListItemTable;
 import com.liferay.commerce.wish.list.model.impl.CommerceWishListItemImpl;
 import com.liferay.commerce.wish.list.model.impl.CommerceWishListItemModelImpl;
 import com.liferay.commerce.wish.list.service.persistence.CommerceWishListItemPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -34,7 +36,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -44,9 +45,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -246,10 +244,6 @@ public class CommerceWishListItemPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -589,8 +583,6 @@ public class CommerceWishListItemPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -780,10 +772,6 @@ public class CommerceWishListItemPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1147,8 +1135,6 @@ public class CommerceWishListItemPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1323,10 +1309,6 @@ public class CommerceWishListItemPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1663,8 +1645,6 @@ public class CommerceWishListItemPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1867,10 +1847,6 @@ public class CommerceWishListItemPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2257,8 +2233,6 @@ public class CommerceWishListItemPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2451,10 +2425,6 @@ public class CommerceWishListItemPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2815,8 +2785,6 @@ public class CommerceWishListItemPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3014,11 +2982,6 @@ public class CommerceWishListItemPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByCW_CPI_CP, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3119,8 +3082,6 @@ public class CommerceWishListItemPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3145,6 +3106,11 @@ public class CommerceWishListItemPersistenceImpl
 
 	public CommerceWishListItemPersistenceImpl() {
 		setModelClass(CommerceWishListItem.class);
+
+		setModelImplClass(CommerceWishListItemImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CommerceWishListItemTable.INSTANCE);
 	}
 
 	/**
@@ -3155,7 +3121,6 @@ public class CommerceWishListItemPersistenceImpl
 	@Override
 	public void cacheResult(CommerceWishListItem commerceWishListItem) {
 		entityCache.putResult(
-			CommerceWishListItemModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceWishListItemImpl.class,
 			commerceWishListItem.getPrimaryKey(), commerceWishListItem);
 
@@ -3182,7 +3147,6 @@ public class CommerceWishListItemPersistenceImpl
 				commerceWishListItems) {
 
 			if (entityCache.getResult(
-					CommerceWishListItemModelImpl.ENTITY_CACHE_ENABLED,
 					CommerceWishListItemImpl.class,
 					commerceWishListItem.getPrimaryKey()) == null) {
 
@@ -3220,7 +3184,6 @@ public class CommerceWishListItemPersistenceImpl
 	@Override
 	public void clearCache(CommerceWishListItem commerceWishListItem) {
 		entityCache.removeResult(
-			CommerceWishListItemModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceWishListItemImpl.class,
 			commerceWishListItem.getPrimaryKey());
 
@@ -3240,7 +3203,6 @@ public class CommerceWishListItemPersistenceImpl
 				commerceWishListItems) {
 
 			entityCache.removeResult(
-				CommerceWishListItemModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceWishListItemImpl.class,
 				commerceWishListItem.getPrimaryKey());
 
@@ -3249,6 +3211,7 @@ public class CommerceWishListItemPersistenceImpl
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -3256,7 +3219,6 @@ public class CommerceWishListItemPersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(
-				CommerceWishListItemModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceWishListItemImpl.class, primaryKey);
 		}
 	}
@@ -3489,10 +3451,7 @@ public class CommerceWishListItemPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CommerceWishListItemModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				commerceWishListItemModelImpl.getCommerceWishListId()
 			};
@@ -3657,7 +3616,6 @@ public class CommerceWishListItemPersistenceImpl
 		}
 
 		entityCache.putResult(
-			CommerceWishListItemModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceWishListItemImpl.class,
 			commerceWishListItem.getPrimaryKey(), commerceWishListItem, false);
 
@@ -3712,168 +3670,12 @@ public class CommerceWishListItemPersistenceImpl
 	/**
 	 * Returns the commerce wish list item with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the commerce wish list item
-	 * @return the commerce wish list item, or <code>null</code> if a commerce wish list item with the primary key could not be found
-	 */
-	@Override
-	public CommerceWishListItem fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(
-			CommerceWishListItemModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceWishListItemImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CommerceWishListItem commerceWishListItem =
-			(CommerceWishListItem)serializable;
-
-		if (commerceWishListItem == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				commerceWishListItem = (CommerceWishListItem)session.get(
-					CommerceWishListItemImpl.class, primaryKey);
-
-				if (commerceWishListItem != null) {
-					cacheResult(commerceWishListItem);
-				}
-				else {
-					entityCache.putResult(
-						CommerceWishListItemModelImpl.ENTITY_CACHE_ENABLED,
-						CommerceWishListItemImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CommerceWishListItemModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceWishListItemImpl.class, primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return commerceWishListItem;
-	}
-
-	/**
-	 * Returns the commerce wish list item with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param commerceWishListItemId the primary key of the commerce wish list item
 	 * @return the commerce wish list item, or <code>null</code> if a commerce wish list item with the primary key could not be found
 	 */
 	@Override
 	public CommerceWishListItem fetchByPrimaryKey(long commerceWishListItemId) {
 		return fetchByPrimaryKey((Serializable)commerceWishListItemId);
-	}
-
-	@Override
-	public Map<Serializable, CommerceWishListItem> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CommerceWishListItem> map =
-			new HashMap<Serializable, CommerceWishListItem>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CommerceWishListItem commerceWishListItem = fetchByPrimaryKey(
-				primaryKey);
-
-			if (commerceWishListItem != null) {
-				map.put(primaryKey, commerceWishListItem);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CommerceWishListItemModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceWishListItemImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (CommerceWishListItem)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(_SQL_SELECT_COMMERCEWISHLISTITEM_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CommerceWishListItem commerceWishListItem :
-					(List<CommerceWishListItem>)query.list()) {
-
-				map.put(
-					commerceWishListItem.getPrimaryKeyObj(),
-					commerceWishListItem);
-
-				cacheResult(commerceWishListItem);
-
-				uncachedPrimaryKeys.remove(
-					commerceWishListItem.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CommerceWishListItemModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceWishListItemImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -4002,10 +3804,6 @@ public class CommerceWishListItemPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -4052,9 +3850,6 @@ public class CommerceWishListItemPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -4063,6 +3858,21 @@ public class CommerceWishListItemPersistenceImpl
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "commerceWishListItemId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_COMMERCEWISHLISTITEM;
 	}
 
 	@Override
@@ -4075,27 +3885,19 @@ public class CommerceWishListItemPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceWishListItemModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceWishListItemModelImpl.FINDER_CACHE_ENABLED,
 			CommerceWishListItemImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceWishListItemModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceWishListItemModelImpl.FINDER_CACHE_ENABLED,
 			CommerceWishListItemImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CommerceWishListItemModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceWishListItemModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByCommerceWishListId = new FinderPath(
-			CommerceWishListItemModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceWishListItemModelImpl.FINDER_CACHE_ENABLED,
 			CommerceWishListItemImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceWishListId",
 			new String[] {
@@ -4104,8 +3906,6 @@ public class CommerceWishListItemPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByCommerceWishListId = new FinderPath(
-			CommerceWishListItemModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceWishListItemModelImpl.FINDER_CACHE_ENABLED,
 			CommerceWishListItemImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCommerceWishListId", new String[] {Long.class.getName()},
@@ -4113,14 +3913,10 @@ public class CommerceWishListItemPersistenceImpl
 			CommerceWishListItemModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByCommerceWishListId = new FinderPath(
-			CommerceWishListItemModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceWishListItemModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCommerceWishListId", new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByCPInstanceUuid = new FinderPath(
-			CommerceWishListItemModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceWishListItemModelImpl.FINDER_CACHE_ENABLED,
 			CommerceWishListItemImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPInstanceUuid",
 			new String[] {
@@ -4129,8 +3925,6 @@ public class CommerceWishListItemPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByCPInstanceUuid = new FinderPath(
-			CommerceWishListItemModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceWishListItemModelImpl.FINDER_CACHE_ENABLED,
 			CommerceWishListItemImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPInstanceUuid",
 			new String[] {String.class.getName()},
@@ -4138,14 +3932,10 @@ public class CommerceWishListItemPersistenceImpl
 			CommerceWishListItemModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByCPInstanceUuid = new FinderPath(
-			CommerceWishListItemModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceWishListItemModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPInstanceUuid",
-			new String[] {String.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCPInstanceUuid", new String[] {String.class.getName()});
 
 		_finderPathWithPaginationFindByCProductId = new FinderPath(
-			CommerceWishListItemModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceWishListItemModelImpl.FINDER_CACHE_ENABLED,
 			CommerceWishListItemImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCProductId",
 			new String[] {
@@ -4154,8 +3944,6 @@ public class CommerceWishListItemPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByCProductId = new FinderPath(
-			CommerceWishListItemModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceWishListItemModelImpl.FINDER_CACHE_ENABLED,
 			CommerceWishListItemImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCProductId",
 			new String[] {Long.class.getName()},
@@ -4163,14 +3951,10 @@ public class CommerceWishListItemPersistenceImpl
 			CommerceWishListItemModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByCProductId = new FinderPath(
-			CommerceWishListItemModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceWishListItemModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCProductId",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCProductId", new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByCW_CPI = new FinderPath(
-			CommerceWishListItemModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceWishListItemModelImpl.FINDER_CACHE_ENABLED,
 			CommerceWishListItemImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCW_CPI",
 			new String[] {
@@ -4180,8 +3964,6 @@ public class CommerceWishListItemPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByCW_CPI = new FinderPath(
-			CommerceWishListItemModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceWishListItemModelImpl.FINDER_CACHE_ENABLED,
 			CommerceWishListItemImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCW_CPI",
 			new String[] {Long.class.getName(), String.class.getName()},
@@ -4190,14 +3972,11 @@ public class CommerceWishListItemPersistenceImpl
 			CommerceWishListItemModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByCW_CPI = new FinderPath(
-			CommerceWishListItemModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceWishListItemModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCW_CPI",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCW_CPI",
 			new String[] {Long.class.getName(), String.class.getName()});
 
 		_finderPathWithPaginationFindByCW_CP = new FinderPath(
-			CommerceWishListItemModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceWishListItemModelImpl.FINDER_CACHE_ENABLED,
 			CommerceWishListItemImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCW_CP",
 			new String[] {
@@ -4207,8 +3986,6 @@ public class CommerceWishListItemPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByCW_CP = new FinderPath(
-			CommerceWishListItemModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceWishListItemModelImpl.FINDER_CACHE_ENABLED,
 			CommerceWishListItemImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCW_CP",
 			new String[] {Long.class.getName(), Long.class.getName()},
@@ -4217,14 +3994,11 @@ public class CommerceWishListItemPersistenceImpl
 			CommerceWishListItemModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByCW_CP = new FinderPath(
-			CommerceWishListItemModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceWishListItemModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCW_CP",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCW_CP",
 			new String[] {Long.class.getName(), Long.class.getName()});
 
 		_finderPathFetchByCW_CPI_CP = new FinderPath(
-			CommerceWishListItemModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceWishListItemModelImpl.FINDER_CACHE_ENABLED,
 			CommerceWishListItemImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByCW_CPI_CP",
 			new String[] {
@@ -4236,9 +4010,8 @@ public class CommerceWishListItemPersistenceImpl
 			CommerceWishListItemModelImpl.CPRODUCTID_COLUMN_BITMASK);
 
 		_finderPathCountByCW_CPI_CP = new FinderPath(
-			CommerceWishListItemModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceWishListItemModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCW_CPI_CP",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCW_CPI_CP",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Long.class.getName()
@@ -4260,9 +4033,6 @@ public class CommerceWishListItemPersistenceImpl
 
 	private static final String _SQL_SELECT_COMMERCEWISHLISTITEM =
 		"SELECT commerceWishListItem FROM CommerceWishListItem commerceWishListItem";
-
-	private static final String _SQL_SELECT_COMMERCEWISHLISTITEM_WHERE_PKS_IN =
-		"SELECT commerceWishListItem FROM CommerceWishListItem commerceWishListItem WHERE commerceWishListItemId IN (";
 
 	private static final String _SQL_SELECT_COMMERCEWISHLISTITEM_WHERE =
 		"SELECT commerceWishListItem FROM CommerceWishListItem commerceWishListItem WHERE ";

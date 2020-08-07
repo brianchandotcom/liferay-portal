@@ -63,13 +63,13 @@ public class CommerceDataIntegrationProcessLocalServiceWrapper
 			CommerceDataIntegrationProcess addCommerceDataIntegrationProcess(
 					long userId, String name, String type,
 					com.liferay.portal.kernel.util.UnicodeProperties
-						typeSettingsProperties,
+						typeSettingsUnicodeProperties,
 					boolean system)
 				throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceDataIntegrationProcessLocalService.
 			addCommerceDataIntegrationProcess(
-				userId, name, type, typeSettingsProperties, system);
+				userId, name, type, typeSettingsUnicodeProperties, system);
 	}
 
 	/**
@@ -87,6 +87,18 @@ public class CommerceDataIntegrationProcessLocalServiceWrapper
 		return _commerceDataIntegrationProcessLocalService.
 			createCommerceDataIntegrationProcess(
 				commerceDataIntegrationProcessId);
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceDataIntegrationProcessLocalService.createPersistedModel(
+			primaryKeyObj);
 	}
 
 	/**
@@ -147,6 +159,11 @@ public class CommerceDataIntegrationProcessLocalServiceWrapper
 
 		return _commerceDataIntegrationProcessLocalService.deletePersistedModel(
 			persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _commerceDataIntegrationProcessLocalService.dslQuery(dslQuery);
 	}
 
 	@Override
@@ -397,12 +414,13 @@ public class CommerceDataIntegrationProcessLocalServiceWrapper
 			CommerceDataIntegrationProcess updateCommerceDataIntegrationProcess(
 					long commerceDataIntegrationProcessId, String name,
 					com.liferay.portal.kernel.util.UnicodeProperties
-						typeSettingsProperties)
+						typeSettingsUnicodeProperties)
 				throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceDataIntegrationProcessLocalService.
 			updateCommerceDataIntegrationProcess(
-				commerceDataIntegrationProcessId, name, typeSettingsProperties);
+				commerceDataIntegrationProcessId, name,
+				typeSettingsUnicodeProperties);
 	}
 
 	@Override

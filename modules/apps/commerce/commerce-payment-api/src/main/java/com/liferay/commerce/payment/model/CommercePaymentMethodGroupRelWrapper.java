@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.payment.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,29 +31,21 @@ import java.util.Objects;
  * @generated
  */
 public class CommercePaymentMethodGroupRelWrapper
+	extends BaseModelWrapper<CommercePaymentMethodGroupRel>
 	implements CommercePaymentMethodGroupRel,
 			   ModelWrapper<CommercePaymentMethodGroupRel> {
 
 	public CommercePaymentMethodGroupRelWrapper(
 		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel) {
 
-		_commercePaymentMethodGroupRel = commercePaymentMethodGroupRel;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommercePaymentMethodGroupRel.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommercePaymentMethodGroupRel.class.getName();
+		super(commercePaymentMethodGroupRel);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put(
 			"commercePaymentMethodGroupRelId",
 			getCommercePaymentMethodGroupRelId());
@@ -79,6 +67,12 @@ public class CommercePaymentMethodGroupRelWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long commercePaymentMethodGroupRelId = (Long)attributes.get(
 			"commercePaymentMethodGroupRelId");
 
@@ -159,21 +153,6 @@ public class CommercePaymentMethodGroupRelWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CommercePaymentMethodGroupRelWrapper(
-			(CommercePaymentMethodGroupRel)
-				_commercePaymentMethodGroupRel.clone());
-	}
-
-	@Override
-	public int compareTo(
-		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel) {
-
-		return _commercePaymentMethodGroupRel.compareTo(
-			commercePaymentMethodGroupRel);
-	}
-
 	/**
 	 * Returns the active of this commerce payment method group rel.
 	 *
@@ -181,12 +160,12 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public boolean getActive() {
-		return _commercePaymentMethodGroupRel.getActive();
+		return model.getActive();
 	}
 
 	@Override
 	public String[] getAvailableLanguageIds() {
-		return _commercePaymentMethodGroupRel.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -196,8 +175,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public long getCommercePaymentMethodGroupRelId() {
-		return _commercePaymentMethodGroupRel.
-			getCommercePaymentMethodGroupRelId();
+		return model.getCommercePaymentMethodGroupRelId();
 	}
 
 	/**
@@ -207,7 +185,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commercePaymentMethodGroupRel.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -217,12 +195,12 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commercePaymentMethodGroupRel.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _commercePaymentMethodGroupRel.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -232,7 +210,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public String getDescription() {
-		return _commercePaymentMethodGroupRel.getDescription();
+		return model.getDescription();
 	}
 
 	/**
@@ -243,7 +221,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public String getDescription(java.util.Locale locale) {
-		return _commercePaymentMethodGroupRel.getDescription(locale);
+		return model.getDescription(locale);
 	}
 
 	/**
@@ -255,8 +233,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public String getDescription(java.util.Locale locale, boolean useDefault) {
-		return _commercePaymentMethodGroupRel.getDescription(
-			locale, useDefault);
+		return model.getDescription(locale, useDefault);
 	}
 
 	/**
@@ -267,7 +244,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public String getDescription(String languageId) {
-		return _commercePaymentMethodGroupRel.getDescription(languageId);
+		return model.getDescription(languageId);
 	}
 
 	/**
@@ -279,18 +256,17 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return _commercePaymentMethodGroupRel.getDescription(
-			languageId, useDefault);
+		return model.getDescription(languageId, useDefault);
 	}
 
 	@Override
 	public String getDescriptionCurrentLanguageId() {
-		return _commercePaymentMethodGroupRel.getDescriptionCurrentLanguageId();
+		return model.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
 	public String getDescriptionCurrentValue() {
-		return _commercePaymentMethodGroupRel.getDescriptionCurrentValue();
+		return model.getDescriptionCurrentValue();
 	}
 
 	/**
@@ -300,7 +276,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public Map<java.util.Locale, String> getDescriptionMap() {
-		return _commercePaymentMethodGroupRel.getDescriptionMap();
+		return model.getDescriptionMap();
 	}
 
 	/**
@@ -310,12 +286,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public String getEngineKey() {
-		return _commercePaymentMethodGroupRel.getEngineKey();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commercePaymentMethodGroupRel.getExpandoBridge();
+		return model.getEngineKey();
 	}
 
 	/**
@@ -325,7 +296,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _commercePaymentMethodGroupRel.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -335,14 +306,14 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public long getImageId() {
-		return _commercePaymentMethodGroupRel.getImageId();
+		return model.getImageId();
 	}
 
 	@Override
 	public String getImageURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
 
-		return _commercePaymentMethodGroupRel.getImageURL(themeDisplay);
+		return model.getImageURL(themeDisplay);
 	}
 
 	/**
@@ -352,7 +323,17 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commercePaymentMethodGroupRel.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce payment method group rel.
+	 *
+	 * @return the mvcc version of this commerce payment method group rel
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -362,7 +343,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public String getName() {
-		return _commercePaymentMethodGroupRel.getName();
+		return model.getName();
 	}
 
 	/**
@@ -373,7 +354,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public String getName(java.util.Locale locale) {
-		return _commercePaymentMethodGroupRel.getName(locale);
+		return model.getName(locale);
 	}
 
 	/**
@@ -385,7 +366,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public String getName(java.util.Locale locale, boolean useDefault) {
-		return _commercePaymentMethodGroupRel.getName(locale, useDefault);
+		return model.getName(locale, useDefault);
 	}
 
 	/**
@@ -396,7 +377,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public String getName(String languageId) {
-		return _commercePaymentMethodGroupRel.getName(languageId);
+		return model.getName(languageId);
 	}
 
 	/**
@@ -408,17 +389,17 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public String getName(String languageId, boolean useDefault) {
-		return _commercePaymentMethodGroupRel.getName(languageId, useDefault);
+		return model.getName(languageId, useDefault);
 	}
 
 	@Override
 	public String getNameCurrentLanguageId() {
-		return _commercePaymentMethodGroupRel.getNameCurrentLanguageId();
+		return model.getNameCurrentLanguageId();
 	}
 
 	@Override
 	public String getNameCurrentValue() {
-		return _commercePaymentMethodGroupRel.getNameCurrentValue();
+		return model.getNameCurrentValue();
 	}
 
 	/**
@@ -428,7 +409,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public Map<java.util.Locale, String> getNameMap() {
-		return _commercePaymentMethodGroupRel.getNameMap();
+		return model.getNameMap();
 	}
 
 	/**
@@ -438,12 +419,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commercePaymentMethodGroupRel.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commercePaymentMethodGroupRel.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -453,7 +429,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public double getPriority() {
-		return _commercePaymentMethodGroupRel.getPriority();
+		return model.getPriority();
 	}
 
 	/**
@@ -463,7 +439,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commercePaymentMethodGroupRel.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -473,7 +449,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commercePaymentMethodGroupRel.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -483,12 +459,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commercePaymentMethodGroupRel.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commercePaymentMethodGroupRel.hashCode();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -498,34 +469,19 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public boolean isActive() {
-		return _commercePaymentMethodGroupRel.isActive();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commercePaymentMethodGroupRel.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commercePaymentMethodGroupRel.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commercePaymentMethodGroupRel.isNew();
+		return model.isActive();
 	}
 
 	@Override
 	public void persist() {
-		_commercePaymentMethodGroupRel.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
-		_commercePaymentMethodGroupRel.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
@@ -533,8 +489,7 @@ public class CommercePaymentMethodGroupRelWrapper
 			java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
-		_commercePaymentMethodGroupRel.prepareLocalizedFieldsForImport(
-			defaultImportLocale);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -544,12 +499,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public void setActive(boolean active) {
-		_commercePaymentMethodGroupRel.setActive(active);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commercePaymentMethodGroupRel.setCachedModel(cachedModel);
+		model.setActive(active);
 	}
 
 	/**
@@ -561,7 +511,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	public void setCommercePaymentMethodGroupRelId(
 		long commercePaymentMethodGroupRelId) {
 
-		_commercePaymentMethodGroupRel.setCommercePaymentMethodGroupRelId(
+		model.setCommercePaymentMethodGroupRelId(
 			commercePaymentMethodGroupRelId);
 	}
 
@@ -572,7 +522,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commercePaymentMethodGroupRel.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -582,7 +532,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commercePaymentMethodGroupRel.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -592,7 +542,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public void setDescription(String description) {
-		_commercePaymentMethodGroupRel.setDescription(description);
+		model.setDescription(description);
 	}
 
 	/**
@@ -603,7 +553,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public void setDescription(String description, java.util.Locale locale) {
-		_commercePaymentMethodGroupRel.setDescription(description, locale);
+		model.setDescription(description, locale);
 	}
 
 	/**
@@ -618,14 +568,12 @@ public class CommercePaymentMethodGroupRelWrapper
 		String description, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 
-		_commercePaymentMethodGroupRel.setDescription(
-			description, locale, defaultLocale);
+		model.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
 	public void setDescriptionCurrentLanguageId(String languageId) {
-		_commercePaymentMethodGroupRel.setDescriptionCurrentLanguageId(
-			languageId);
+		model.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -637,7 +585,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	public void setDescriptionMap(
 		Map<java.util.Locale, String> descriptionMap) {
 
-		_commercePaymentMethodGroupRel.setDescriptionMap(descriptionMap);
+		model.setDescriptionMap(descriptionMap);
 	}
 
 	/**
@@ -651,8 +599,7 @@ public class CommercePaymentMethodGroupRelWrapper
 		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
 
-		_commercePaymentMethodGroupRel.setDescriptionMap(
-			descriptionMap, defaultLocale);
+		model.setDescriptionMap(descriptionMap, defaultLocale);
 	}
 
 	/**
@@ -662,26 +609,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public void setEngineKey(String engineKey) {
-		_commercePaymentMethodGroupRel.setEngineKey(engineKey);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commercePaymentMethodGroupRel.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commercePaymentMethodGroupRel.setExpandoBridgeAttributes(
-			expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commercePaymentMethodGroupRel.setExpandoBridgeAttributes(
-			serviceContext);
+		model.setEngineKey(engineKey);
 	}
 
 	/**
@@ -691,7 +619,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_commercePaymentMethodGroupRel.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -701,7 +629,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public void setImageId(long imageId) {
-		_commercePaymentMethodGroupRel.setImageId(imageId);
+		model.setImageId(imageId);
 	}
 
 	/**
@@ -711,7 +639,17 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commercePaymentMethodGroupRel.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this commerce payment method group rel.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce payment method group rel
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -721,7 +659,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public void setName(String name) {
-		_commercePaymentMethodGroupRel.setName(name);
+		model.setName(name);
 	}
 
 	/**
@@ -732,7 +670,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public void setName(String name, java.util.Locale locale) {
-		_commercePaymentMethodGroupRel.setName(name, locale);
+		model.setName(name, locale);
 	}
 
 	/**
@@ -746,12 +684,12 @@ public class CommercePaymentMethodGroupRelWrapper
 	public void setName(
 		String name, java.util.Locale locale, java.util.Locale defaultLocale) {
 
-		_commercePaymentMethodGroupRel.setName(name, locale, defaultLocale);
+		model.setName(name, locale, defaultLocale);
 	}
 
 	@Override
 	public void setNameCurrentLanguageId(String languageId) {
-		_commercePaymentMethodGroupRel.setNameCurrentLanguageId(languageId);
+		model.setNameCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -761,7 +699,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap) {
-		_commercePaymentMethodGroupRel.setNameMap(nameMap);
+		model.setNameMap(nameMap);
 	}
 
 	/**
@@ -774,12 +712,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	public void setNameMap(
 		Map<java.util.Locale, String> nameMap, java.util.Locale defaultLocale) {
 
-		_commercePaymentMethodGroupRel.setNameMap(nameMap, defaultLocale);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_commercePaymentMethodGroupRel.setNew(n);
+		model.setNameMap(nameMap, defaultLocale);
 	}
 
 	/**
@@ -789,12 +722,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commercePaymentMethodGroupRel.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commercePaymentMethodGroupRel.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -804,7 +732,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public void setPriority(double priority) {
-		_commercePaymentMethodGroupRel.setPriority(priority);
+		model.setPriority(priority);
 	}
 
 	/**
@@ -814,7 +742,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commercePaymentMethodGroupRel.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -824,7 +752,7 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commercePaymentMethodGroupRel.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -834,83 +762,15 @@ public class CommercePaymentMethodGroupRelWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commercePaymentMethodGroupRel.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel
-		<CommercePaymentMethodGroupRel> toCacheModel() {
+	protected CommercePaymentMethodGroupRelWrapper wrap(
+		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel) {
 
-		return _commercePaymentMethodGroupRel.toCacheModel();
-	}
-
-	@Override
-	public CommercePaymentMethodGroupRel toEscapedModel() {
 		return new CommercePaymentMethodGroupRelWrapper(
-			_commercePaymentMethodGroupRel.toEscapedModel());
+			commercePaymentMethodGroupRel);
 	}
-
-	@Override
-	public String toString() {
-		return _commercePaymentMethodGroupRel.toString();
-	}
-
-	@Override
-	public CommercePaymentMethodGroupRel toUnescapedModel() {
-		return new CommercePaymentMethodGroupRelWrapper(
-			_commercePaymentMethodGroupRel.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commercePaymentMethodGroupRel.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommercePaymentMethodGroupRelWrapper)) {
-			return false;
-		}
-
-		CommercePaymentMethodGroupRelWrapper
-			commercePaymentMethodGroupRelWrapper =
-				(CommercePaymentMethodGroupRelWrapper)object;
-
-		if (Objects.equals(
-				_commercePaymentMethodGroupRel,
-				commercePaymentMethodGroupRelWrapper.
-					_commercePaymentMethodGroupRel)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommercePaymentMethodGroupRel getWrappedModel() {
-		return _commercePaymentMethodGroupRel;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commercePaymentMethodGroupRel.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commercePaymentMethodGroupRel.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commercePaymentMethodGroupRel.resetOriginalValues();
-	}
-
-	private final CommercePaymentMethodGroupRel _commercePaymentMethodGroupRel;
 
 }

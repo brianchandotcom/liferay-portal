@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.product.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.product.exception.NoSuchCPSpecificationOptionException;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the cp specification option service.
@@ -45,9 +40,6 @@ public interface CPSpecificationOptionPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPSpecificationOptionUtil} to access the cp specification option persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CPSpecificationOption> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the cp specification options where uuid = &#63;.
@@ -1071,8 +1063,5 @@ public interface CPSpecificationOptionPersistence
 	 * @return the number of cp specification options
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

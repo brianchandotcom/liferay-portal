@@ -33,6 +33,7 @@ public class CommerceAccountGroupSoap implements Serializable {
 
 		CommerceAccountGroupSoap soapModel = new CommerceAccountGroupSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setExternalReferenceCode(model.getExternalReferenceCode());
 		soapModel.setCommerceAccountGroupId(model.getCommerceAccountGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -103,6 +104,14 @@ public class CommerceAccountGroupSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceAccountGroupId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getExternalReferenceCode() {
@@ -189,6 +198,7 @@ public class CommerceAccountGroupSoap implements Serializable {
 		_system = system;
 	}
 
+	private long _mvccVersion;
 	private String _externalReferenceCode;
 	private long _commerceAccountGroupId;
 	private long _companyId;

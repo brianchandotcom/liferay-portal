@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.discount.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,29 +31,21 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceDiscountUsageEntryWrapper
+	extends BaseModelWrapper<CommerceDiscountUsageEntry>
 	implements CommerceDiscountUsageEntry,
 			   ModelWrapper<CommerceDiscountUsageEntry> {
 
 	public CommerceDiscountUsageEntryWrapper(
 		CommerceDiscountUsageEntry commerceDiscountUsageEntry) {
 
-		_commerceDiscountUsageEntry = commerceDiscountUsageEntry;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceDiscountUsageEntry.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceDiscountUsageEntry.class.getName();
+		super(commerceDiscountUsageEntry);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put(
 			"commerceDiscountUsageEntryId", getCommerceDiscountUsageEntryId());
 		attributes.put("companyId", getCompanyId());
@@ -74,6 +62,12 @@ public class CommerceDiscountUsageEntryWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long commerceDiscountUsageEntryId = (Long)attributes.get(
 			"commerceDiscountUsageEntryId");
 
@@ -130,20 +124,6 @@ public class CommerceDiscountUsageEntryWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CommerceDiscountUsageEntryWrapper(
-			(CommerceDiscountUsageEntry)_commerceDiscountUsageEntry.clone());
-	}
-
-	@Override
-	public int compareTo(
-		CommerceDiscountUsageEntry commerceDiscountUsageEntry) {
-
-		return _commerceDiscountUsageEntry.compareTo(
-			commerceDiscountUsageEntry);
-	}
-
 	/**
 	 * Returns the commerce account ID of this commerce discount usage entry.
 	 *
@@ -151,7 +131,7 @@ public class CommerceDiscountUsageEntryWrapper
 	 */
 	@Override
 	public long getCommerceAccountId() {
-		return _commerceDiscountUsageEntry.getCommerceAccountId();
+		return model.getCommerceAccountId();
 	}
 
 	/**
@@ -161,7 +141,7 @@ public class CommerceDiscountUsageEntryWrapper
 	 */
 	@Override
 	public long getCommerceDiscountId() {
-		return _commerceDiscountUsageEntry.getCommerceDiscountId();
+		return model.getCommerceDiscountId();
 	}
 
 	/**
@@ -171,7 +151,7 @@ public class CommerceDiscountUsageEntryWrapper
 	 */
 	@Override
 	public long getCommerceDiscountUsageEntryId() {
-		return _commerceDiscountUsageEntry.getCommerceDiscountUsageEntryId();
+		return model.getCommerceDiscountUsageEntryId();
 	}
 
 	/**
@@ -181,7 +161,7 @@ public class CommerceDiscountUsageEntryWrapper
 	 */
 	@Override
 	public long getCommerceOrderId() {
-		return _commerceDiscountUsageEntry.getCommerceOrderId();
+		return model.getCommerceOrderId();
 	}
 
 	/**
@@ -191,7 +171,7 @@ public class CommerceDiscountUsageEntryWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceDiscountUsageEntry.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -201,12 +181,7 @@ public class CommerceDiscountUsageEntryWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceDiscountUsageEntry.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceDiscountUsageEntry.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -216,7 +191,17 @@ public class CommerceDiscountUsageEntryWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceDiscountUsageEntry.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce discount usage entry.
+	 *
+	 * @return the mvcc version of this commerce discount usage entry
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -226,12 +211,7 @@ public class CommerceDiscountUsageEntryWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceDiscountUsageEntry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceDiscountUsageEntry.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -241,7 +221,7 @@ public class CommerceDiscountUsageEntryWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceDiscountUsageEntry.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -251,7 +231,7 @@ public class CommerceDiscountUsageEntryWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceDiscountUsageEntry.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -261,37 +241,12 @@ public class CommerceDiscountUsageEntryWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceDiscountUsageEntry.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceDiscountUsageEntry.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceDiscountUsageEntry.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceDiscountUsageEntry.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceDiscountUsageEntry.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_commerceDiscountUsageEntry.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceDiscountUsageEntry.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -301,7 +256,7 @@ public class CommerceDiscountUsageEntryWrapper
 	 */
 	@Override
 	public void setCommerceAccountId(long commerceAccountId) {
-		_commerceDiscountUsageEntry.setCommerceAccountId(commerceAccountId);
+		model.setCommerceAccountId(commerceAccountId);
 	}
 
 	/**
@@ -311,7 +266,7 @@ public class CommerceDiscountUsageEntryWrapper
 	 */
 	@Override
 	public void setCommerceDiscountId(long commerceDiscountId) {
-		_commerceDiscountUsageEntry.setCommerceDiscountId(commerceDiscountId);
+		model.setCommerceDiscountId(commerceDiscountId);
 	}
 
 	/**
@@ -323,8 +278,7 @@ public class CommerceDiscountUsageEntryWrapper
 	public void setCommerceDiscountUsageEntryId(
 		long commerceDiscountUsageEntryId) {
 
-		_commerceDiscountUsageEntry.setCommerceDiscountUsageEntryId(
-			commerceDiscountUsageEntryId);
+		model.setCommerceDiscountUsageEntryId(commerceDiscountUsageEntryId);
 	}
 
 	/**
@@ -334,7 +288,7 @@ public class CommerceDiscountUsageEntryWrapper
 	 */
 	@Override
 	public void setCommerceOrderId(long commerceOrderId) {
-		_commerceDiscountUsageEntry.setCommerceOrderId(commerceOrderId);
+		model.setCommerceOrderId(commerceOrderId);
 	}
 
 	/**
@@ -344,7 +298,7 @@ public class CommerceDiscountUsageEntryWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceDiscountUsageEntry.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -354,24 +308,7 @@ public class CommerceDiscountUsageEntryWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceDiscountUsageEntry.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceDiscountUsageEntry.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceDiscountUsageEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceDiscountUsageEntry.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -381,12 +318,17 @@ public class CommerceDiscountUsageEntryWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceDiscountUsageEntry.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this commerce discount usage entry.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce discount usage entry
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_commerceDiscountUsageEntry.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -396,12 +338,7 @@ public class CommerceDiscountUsageEntryWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceDiscountUsageEntry.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceDiscountUsageEntry.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -411,7 +348,7 @@ public class CommerceDiscountUsageEntryWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceDiscountUsageEntry.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -421,7 +358,7 @@ public class CommerceDiscountUsageEntryWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceDiscountUsageEntry.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -431,82 +368,15 @@ public class CommerceDiscountUsageEntryWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceDiscountUsageEntry.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel
-		<CommerceDiscountUsageEntry> toCacheModel() {
+	protected CommerceDiscountUsageEntryWrapper wrap(
+		CommerceDiscountUsageEntry commerceDiscountUsageEntry) {
 
-		return _commerceDiscountUsageEntry.toCacheModel();
-	}
-
-	@Override
-	public CommerceDiscountUsageEntry toEscapedModel() {
 		return new CommerceDiscountUsageEntryWrapper(
-			_commerceDiscountUsageEntry.toEscapedModel());
+			commerceDiscountUsageEntry);
 	}
-
-	@Override
-	public String toString() {
-		return _commerceDiscountUsageEntry.toString();
-	}
-
-	@Override
-	public CommerceDiscountUsageEntry toUnescapedModel() {
-		return new CommerceDiscountUsageEntryWrapper(
-			_commerceDiscountUsageEntry.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceDiscountUsageEntry.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceDiscountUsageEntryWrapper)) {
-			return false;
-		}
-
-		CommerceDiscountUsageEntryWrapper commerceDiscountUsageEntryWrapper =
-			(CommerceDiscountUsageEntryWrapper)object;
-
-		if (Objects.equals(
-				_commerceDiscountUsageEntry,
-				commerceDiscountUsageEntryWrapper.
-					_commerceDiscountUsageEntry)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceDiscountUsageEntry getWrappedModel() {
-		return _commerceDiscountUsageEntry;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceDiscountUsageEntry.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceDiscountUsageEntry.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceDiscountUsageEntry.resetOriginalValues();
-	}
-
-	private final CommerceDiscountUsageEntry _commerceDiscountUsageEntry;
 
 }

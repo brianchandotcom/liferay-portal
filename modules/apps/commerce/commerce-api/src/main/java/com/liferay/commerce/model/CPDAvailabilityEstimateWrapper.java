@@ -14,17 +14,13 @@
 
 package com.liferay.commerce.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,28 +32,20 @@ import java.util.Objects;
  * @generated
  */
 public class CPDAvailabilityEstimateWrapper
+	extends BaseModelWrapper<CPDAvailabilityEstimate>
 	implements CPDAvailabilityEstimate, ModelWrapper<CPDAvailabilityEstimate> {
 
 	public CPDAvailabilityEstimateWrapper(
 		CPDAvailabilityEstimate cpdAvailabilityEstimate) {
 
-		_cpdAvailabilityEstimate = cpdAvailabilityEstimate;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CPDAvailabilityEstimate.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CPDAvailabilityEstimate.class.getName();
+		super(cpdAvailabilityEstimate);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put(
 			"CPDAvailabilityEstimateId", getCPDAvailabilityEstimateId());
@@ -77,6 +65,12 @@ public class CPDAvailabilityEstimateWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -141,21 +135,10 @@ public class CPDAvailabilityEstimateWrapper
 	}
 
 	@Override
-	public Object clone() {
-		return new CPDAvailabilityEstimateWrapper(
-			(CPDAvailabilityEstimate)_cpdAvailabilityEstimate.clone());
-	}
-
-	@Override
-	public int compareTo(CPDAvailabilityEstimate cpdAvailabilityEstimate) {
-		return _cpdAvailabilityEstimate.compareTo(cpdAvailabilityEstimate);
-	}
-
-	@Override
 	public CommerceAvailabilityEstimate getCommerceAvailabilityEstimate()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _cpdAvailabilityEstimate.getCommerceAvailabilityEstimate();
+		return model.getCommerceAvailabilityEstimate();
 	}
 
 	/**
@@ -165,7 +148,7 @@ public class CPDAvailabilityEstimateWrapper
 	 */
 	@Override
 	public long getCommerceAvailabilityEstimateId() {
-		return _cpdAvailabilityEstimate.getCommerceAvailabilityEstimateId();
+		return model.getCommerceAvailabilityEstimateId();
 	}
 
 	/**
@@ -175,7 +158,7 @@ public class CPDAvailabilityEstimateWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _cpdAvailabilityEstimate.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -185,7 +168,7 @@ public class CPDAvailabilityEstimateWrapper
 	 */
 	@Override
 	public long getCPDAvailabilityEstimateId() {
-		return _cpdAvailabilityEstimate.getCPDAvailabilityEstimateId();
+		return model.getCPDAvailabilityEstimateId();
 	}
 
 	/**
@@ -195,7 +178,7 @@ public class CPDAvailabilityEstimateWrapper
 	 */
 	@Override
 	public long getCProductId() {
-		return _cpdAvailabilityEstimate.getCProductId();
+		return model.getCProductId();
 	}
 
 	/**
@@ -205,12 +188,7 @@ public class CPDAvailabilityEstimateWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _cpdAvailabilityEstimate.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _cpdAvailabilityEstimate.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -220,7 +198,7 @@ public class CPDAvailabilityEstimateWrapper
 	 */
 	@Override
 	public Date getLastPublishDate() {
-		return _cpdAvailabilityEstimate.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -230,7 +208,17 @@ public class CPDAvailabilityEstimateWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _cpdAvailabilityEstimate.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this cpd availability estimate.
+	 *
+	 * @return the mvcc version of this cpd availability estimate
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -240,12 +228,7 @@ public class CPDAvailabilityEstimateWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _cpdAvailabilityEstimate.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _cpdAvailabilityEstimate.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -255,7 +238,7 @@ public class CPDAvailabilityEstimateWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _cpdAvailabilityEstimate.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -265,7 +248,7 @@ public class CPDAvailabilityEstimateWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _cpdAvailabilityEstimate.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -275,7 +258,7 @@ public class CPDAvailabilityEstimateWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _cpdAvailabilityEstimate.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -285,37 +268,12 @@ public class CPDAvailabilityEstimateWrapper
 	 */
 	@Override
 	public String getUuid() {
-		return _cpdAvailabilityEstimate.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _cpdAvailabilityEstimate.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _cpdAvailabilityEstimate.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _cpdAvailabilityEstimate.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _cpdAvailabilityEstimate.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_cpdAvailabilityEstimate.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_cpdAvailabilityEstimate.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -327,8 +285,7 @@ public class CPDAvailabilityEstimateWrapper
 	public void setCommerceAvailabilityEstimateId(
 		long commerceAvailabilityEstimateId) {
 
-		_cpdAvailabilityEstimate.setCommerceAvailabilityEstimateId(
-			commerceAvailabilityEstimateId);
+		model.setCommerceAvailabilityEstimateId(commerceAvailabilityEstimateId);
 	}
 
 	/**
@@ -338,7 +295,7 @@ public class CPDAvailabilityEstimateWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_cpdAvailabilityEstimate.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -348,8 +305,7 @@ public class CPDAvailabilityEstimateWrapper
 	 */
 	@Override
 	public void setCPDAvailabilityEstimateId(long CPDAvailabilityEstimateId) {
-		_cpdAvailabilityEstimate.setCPDAvailabilityEstimateId(
-			CPDAvailabilityEstimateId);
+		model.setCPDAvailabilityEstimateId(CPDAvailabilityEstimateId);
 	}
 
 	/**
@@ -359,7 +315,7 @@ public class CPDAvailabilityEstimateWrapper
 	 */
 	@Override
 	public void setCProductId(long CProductId) {
-		_cpdAvailabilityEstimate.setCProductId(CProductId);
+		model.setCProductId(CProductId);
 	}
 
 	/**
@@ -369,24 +325,7 @@ public class CPDAvailabilityEstimateWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_cpdAvailabilityEstimate.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_cpdAvailabilityEstimate.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_cpdAvailabilityEstimate.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_cpdAvailabilityEstimate.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -396,7 +335,7 @@ public class CPDAvailabilityEstimateWrapper
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_cpdAvailabilityEstimate.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -406,12 +345,17 @@ public class CPDAvailabilityEstimateWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_cpdAvailabilityEstimate.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this cpd availability estimate.
+	 *
+	 * @param mvccVersion the mvcc version of this cpd availability estimate
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_cpdAvailabilityEstimate.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -421,12 +365,7 @@ public class CPDAvailabilityEstimateWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_cpdAvailabilityEstimate.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_cpdAvailabilityEstimate.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -436,7 +375,7 @@ public class CPDAvailabilityEstimateWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_cpdAvailabilityEstimate.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -446,7 +385,7 @@ public class CPDAvailabilityEstimateWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_cpdAvailabilityEstimate.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -456,7 +395,7 @@ public class CPDAvailabilityEstimateWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_cpdAvailabilityEstimate.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -466,86 +405,19 @@ public class CPDAvailabilityEstimateWrapper
 	 */
 	@Override
 	public void setUuid(String uuid) {
-		_cpdAvailabilityEstimate.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CPDAvailabilityEstimate>
-		toCacheModel() {
-
-		return _cpdAvailabilityEstimate.toCacheModel();
-	}
-
-	@Override
-	public CPDAvailabilityEstimate toEscapedModel() {
-		return new CPDAvailabilityEstimateWrapper(
-			_cpdAvailabilityEstimate.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _cpdAvailabilityEstimate.toString();
-	}
-
-	@Override
-	public CPDAvailabilityEstimate toUnescapedModel() {
-		return new CPDAvailabilityEstimateWrapper(
-			_cpdAvailabilityEstimate.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _cpdAvailabilityEstimate.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CPDAvailabilityEstimateWrapper)) {
-			return false;
-		}
-
-		CPDAvailabilityEstimateWrapper cpdAvailabilityEstimateWrapper =
-			(CPDAvailabilityEstimateWrapper)object;
-
-		if (Objects.equals(
-				_cpdAvailabilityEstimate,
-				cpdAvailabilityEstimateWrapper._cpdAvailabilityEstimate)) {
-
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _cpdAvailabilityEstimate.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public CPDAvailabilityEstimate getWrappedModel() {
-		return _cpdAvailabilityEstimate;
-	}
+	protected CPDAvailabilityEstimateWrapper wrap(
+		CPDAvailabilityEstimate cpdAvailabilityEstimate) {
 
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _cpdAvailabilityEstimate.isEntityCacheEnabled();
+		return new CPDAvailabilityEstimateWrapper(cpdAvailabilityEstimate);
 	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _cpdAvailabilityEstimate.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_cpdAvailabilityEstimate.resetOriginalValues();
-	}
-
-	private final CPDAvailabilityEstimate _cpdAvailabilityEstimate;
 
 }

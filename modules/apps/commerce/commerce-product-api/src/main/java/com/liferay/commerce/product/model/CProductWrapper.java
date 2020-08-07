@@ -14,17 +14,13 @@
 
 package com.liferay.commerce.product.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,26 +31,19 @@ import java.util.Objects;
  * @see CProduct
  * @generated
  */
-public class CProductWrapper implements CProduct, ModelWrapper<CProduct> {
+public class CProductWrapper
+	extends BaseModelWrapper<CProduct>
+	implements CProduct, ModelWrapper<CProduct> {
 
 	public CProductWrapper(CProduct cProduct) {
-		_cProduct = cProduct;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CProduct.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CProduct.class.getName();
+		super(cProduct);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("CProductId", getCProductId());
@@ -72,6 +61,12 @@ public class CProductWrapper implements CProduct, ModelWrapper<CProduct> {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -141,16 +136,6 @@ public class CProductWrapper implements CProduct, ModelWrapper<CProduct> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CProductWrapper((CProduct)_cProduct.clone());
-	}
-
-	@Override
-	public int compareTo(CProduct cProduct) {
-		return _cProduct.compareTo(cProduct);
-	}
-
 	/**
 	 * Returns the company ID of this c product.
 	 *
@@ -158,7 +143,7 @@ public class CProductWrapper implements CProduct, ModelWrapper<CProduct> {
 	 */
 	@Override
 	public long getCompanyId() {
-		return _cProduct.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -168,7 +153,7 @@ public class CProductWrapper implements CProduct, ModelWrapper<CProduct> {
 	 */
 	@Override
 	public long getCProductId() {
-		return _cProduct.getCProductId();
+		return model.getCProductId();
 	}
 
 	/**
@@ -178,12 +163,7 @@ public class CProductWrapper implements CProduct, ModelWrapper<CProduct> {
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _cProduct.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _cProduct.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -193,7 +173,7 @@ public class CProductWrapper implements CProduct, ModelWrapper<CProduct> {
 	 */
 	@Override
 	public String getExternalReferenceCode() {
-		return _cProduct.getExternalReferenceCode();
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -203,7 +183,7 @@ public class CProductWrapper implements CProduct, ModelWrapper<CProduct> {
 	 */
 	@Override
 	public long getGroupId() {
-		return _cProduct.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -213,7 +193,7 @@ public class CProductWrapper implements CProduct, ModelWrapper<CProduct> {
 	 */
 	@Override
 	public int getLatestVersion() {
-		return _cProduct.getLatestVersion();
+		return model.getLatestVersion();
 	}
 
 	/**
@@ -223,7 +203,17 @@ public class CProductWrapper implements CProduct, ModelWrapper<CProduct> {
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _cProduct.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this c product.
+	 *
+	 * @return the mvcc version of this c product
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -233,12 +223,7 @@ public class CProductWrapper implements CProduct, ModelWrapper<CProduct> {
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _cProduct.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _cProduct.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -248,7 +233,7 @@ public class CProductWrapper implements CProduct, ModelWrapper<CProduct> {
 	 */
 	@Override
 	public long getPublishedCPDefinitionId() {
-		return _cProduct.getPublishedCPDefinitionId();
+		return model.getPublishedCPDefinitionId();
 	}
 
 	/**
@@ -258,7 +243,7 @@ public class CProductWrapper implements CProduct, ModelWrapper<CProduct> {
 	 */
 	@Override
 	public long getUserId() {
-		return _cProduct.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -268,7 +253,7 @@ public class CProductWrapper implements CProduct, ModelWrapper<CProduct> {
 	 */
 	@Override
 	public String getUserName() {
-		return _cProduct.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -278,7 +263,7 @@ public class CProductWrapper implements CProduct, ModelWrapper<CProduct> {
 	 */
 	@Override
 	public String getUserUuid() {
-		return _cProduct.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -288,37 +273,12 @@ public class CProductWrapper implements CProduct, ModelWrapper<CProduct> {
 	 */
 	@Override
 	public String getUuid() {
-		return _cProduct.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _cProduct.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _cProduct.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _cProduct.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _cProduct.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_cProduct.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_cProduct.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -328,7 +288,7 @@ public class CProductWrapper implements CProduct, ModelWrapper<CProduct> {
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_cProduct.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -338,7 +298,7 @@ public class CProductWrapper implements CProduct, ModelWrapper<CProduct> {
 	 */
 	@Override
 	public void setCProductId(long CProductId) {
-		_cProduct.setCProductId(CProductId);
+		model.setCProductId(CProductId);
 	}
 
 	/**
@@ -348,24 +308,7 @@ public class CProductWrapper implements CProduct, ModelWrapper<CProduct> {
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_cProduct.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_cProduct.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_cProduct.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_cProduct.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -375,7 +318,7 @@ public class CProductWrapper implements CProduct, ModelWrapper<CProduct> {
 	 */
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
-		_cProduct.setExternalReferenceCode(externalReferenceCode);
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**
@@ -385,7 +328,7 @@ public class CProductWrapper implements CProduct, ModelWrapper<CProduct> {
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_cProduct.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -395,7 +338,7 @@ public class CProductWrapper implements CProduct, ModelWrapper<CProduct> {
 	 */
 	@Override
 	public void setLatestVersion(int latestVersion) {
-		_cProduct.setLatestVersion(latestVersion);
+		model.setLatestVersion(latestVersion);
 	}
 
 	/**
@@ -405,12 +348,17 @@ public class CProductWrapper implements CProduct, ModelWrapper<CProduct> {
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_cProduct.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this c product.
+	 *
+	 * @param mvccVersion the mvcc version of this c product
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_cProduct.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -420,12 +368,7 @@ public class CProductWrapper implements CProduct, ModelWrapper<CProduct> {
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_cProduct.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_cProduct.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -435,7 +378,7 @@ public class CProductWrapper implements CProduct, ModelWrapper<CProduct> {
 	 */
 	@Override
 	public void setPublishedCPDefinitionId(long publishedCPDefinitionId) {
-		_cProduct.setPublishedCPDefinitionId(publishedCPDefinitionId);
+		model.setPublishedCPDefinitionId(publishedCPDefinitionId);
 	}
 
 	/**
@@ -445,7 +388,7 @@ public class CProductWrapper implements CProduct, ModelWrapper<CProduct> {
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_cProduct.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -455,7 +398,7 @@ public class CProductWrapper implements CProduct, ModelWrapper<CProduct> {
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_cProduct.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -465,7 +408,7 @@ public class CProductWrapper implements CProduct, ModelWrapper<CProduct> {
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_cProduct.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -475,78 +418,17 @@ public class CProductWrapper implements CProduct, ModelWrapper<CProduct> {
 	 */
 	@Override
 	public void setUuid(String uuid) {
-		_cProduct.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CProduct> toCacheModel() {
-		return _cProduct.toCacheModel();
-	}
-
-	@Override
-	public CProduct toEscapedModel() {
-		return new CProductWrapper(_cProduct.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _cProduct.toString();
-	}
-
-	@Override
-	public CProduct toUnescapedModel() {
-		return new CProductWrapper(_cProduct.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _cProduct.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CProductWrapper)) {
-			return false;
-		}
-
-		CProductWrapper cProductWrapper = (CProductWrapper)object;
-
-		if (Objects.equals(_cProduct, cProductWrapper._cProduct)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _cProduct.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public CProduct getWrappedModel() {
-		return _cProduct;
+	protected CProductWrapper wrap(CProduct cProduct) {
+		return new CProductWrapper(cProduct);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _cProduct.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _cProduct.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_cProduct.resetOriginalValues();
-	}
-
-	private final CProduct _cProduct;
 
 }

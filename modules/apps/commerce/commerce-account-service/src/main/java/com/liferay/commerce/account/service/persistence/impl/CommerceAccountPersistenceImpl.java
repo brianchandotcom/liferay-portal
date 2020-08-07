@@ -16,9 +16,11 @@ package com.liferay.commerce.account.service.persistence.impl;
 
 import com.liferay.commerce.account.exception.NoSuchAccountException;
 import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.account.model.CommerceAccountTable;
 import com.liferay.commerce.account.model.impl.CommerceAccountImpl;
 import com.liferay.commerce.account.model.impl.CommerceAccountModelImpl;
 import com.liferay.commerce.account.service.persistence.CommerceAccountPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -37,20 +39,16 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -244,10 +242,6 @@ public class CommerceAccountPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -910,8 +904,6 @@ public class CommerceAccountPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1140,10 +1132,6 @@ public class CommerceAccountPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1845,8 +1833,6 @@ public class CommerceAccountPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2083,11 +2069,6 @@ public class CommerceAccountPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByC_ERC, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2178,8 +2159,6 @@ public class CommerceAccountPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2205,21 +2184,14 @@ public class CommerceAccountPersistenceImpl
 		dbColumnNames.put("type", "type_");
 		dbColumnNames.put("active", "active_");
 
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-				"_dbColumnNames");
-
-			field.setAccessible(true);
-
-			field.set(this, dbColumnNames);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
+		setDBColumnNames(dbColumnNames);
 
 		setModelClass(CommerceAccount.class);
+
+		setModelImplClass(CommerceAccountImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CommerceAccountTable.INSTANCE);
 	}
 
 	/**
@@ -2230,7 +2202,6 @@ public class CommerceAccountPersistenceImpl
 	@Override
 	public void cacheResult(CommerceAccount commerceAccount) {
 		entityCache.putResult(
-			CommerceAccountModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceAccountImpl.class, commerceAccount.getPrimaryKey(),
 			commerceAccount);
 
@@ -2254,7 +2225,6 @@ public class CommerceAccountPersistenceImpl
 	public void cacheResult(List<CommerceAccount> commerceAccounts) {
 		for (CommerceAccount commerceAccount : commerceAccounts) {
 			if (entityCache.getResult(
-					CommerceAccountModelImpl.ENTITY_CACHE_ENABLED,
 					CommerceAccountImpl.class,
 					commerceAccount.getPrimaryKey()) == null) {
 
@@ -2292,7 +2262,6 @@ public class CommerceAccountPersistenceImpl
 	@Override
 	public void clearCache(CommerceAccount commerceAccount) {
 		entityCache.removeResult(
-			CommerceAccountModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceAccountImpl.class, commerceAccount.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -2309,7 +2278,6 @@ public class CommerceAccountPersistenceImpl
 
 		for (CommerceAccount commerceAccount : commerceAccounts) {
 			entityCache.removeResult(
-				CommerceAccountModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceAccountImpl.class, commerceAccount.getPrimaryKey());
 
 			clearUniqueFindersCache(
@@ -2317,15 +2285,14 @@ public class CommerceAccountPersistenceImpl
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceAccountModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceAccountImpl.class, primaryKey);
+			entityCache.removeResult(CommerceAccountImpl.class, primaryKey);
 		}
 	}
 
@@ -2547,10 +2514,7 @@ public class CommerceAccountPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CommerceAccountModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				commerceAccountModelImpl.getCompanyId()
 			};
@@ -2617,7 +2581,6 @@ public class CommerceAccountPersistenceImpl
 		}
 
 		entityCache.putResult(
-			CommerceAccountModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceAccountImpl.class, commerceAccount.getPrimaryKey(),
 			commerceAccount, false);
 
@@ -2671,163 +2634,12 @@ public class CommerceAccountPersistenceImpl
 	/**
 	 * Returns the commerce account with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the commerce account
-	 * @return the commerce account, or <code>null</code> if a commerce account with the primary key could not be found
-	 */
-	@Override
-	public CommerceAccount fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(
-			CommerceAccountModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAccountImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CommerceAccount commerceAccount = (CommerceAccount)serializable;
-
-		if (commerceAccount == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				commerceAccount = (CommerceAccount)session.get(
-					CommerceAccountImpl.class, primaryKey);
-
-				if (commerceAccount != null) {
-					cacheResult(commerceAccount);
-				}
-				else {
-					entityCache.putResult(
-						CommerceAccountModelImpl.ENTITY_CACHE_ENABLED,
-						CommerceAccountImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CommerceAccountModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceAccountImpl.class, primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return commerceAccount;
-	}
-
-	/**
-	 * Returns the commerce account with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param commerceAccountId the primary key of the commerce account
 	 * @return the commerce account, or <code>null</code> if a commerce account with the primary key could not be found
 	 */
 	@Override
 	public CommerceAccount fetchByPrimaryKey(long commerceAccountId) {
 		return fetchByPrimaryKey((Serializable)commerceAccountId);
-	}
-
-	@Override
-	public Map<Serializable, CommerceAccount> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CommerceAccount> map =
-			new HashMap<Serializable, CommerceAccount>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CommerceAccount commerceAccount = fetchByPrimaryKey(primaryKey);
-
-			if (commerceAccount != null) {
-				map.put(primaryKey, commerceAccount);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CommerceAccountModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceAccountImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (CommerceAccount)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(_SQL_SELECT_COMMERCEACCOUNT_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CommerceAccount commerceAccount :
-					(List<CommerceAccount>)query.list()) {
-
-				map.put(commerceAccount.getPrimaryKeyObj(), commerceAccount);
-
-				cacheResult(commerceAccount);
-
-				uncachedPrimaryKeys.remove(commerceAccount.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CommerceAccountModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceAccountImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -2956,10 +2768,6 @@ public class CommerceAccountPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3005,9 +2813,6 @@ public class CommerceAccountPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3024,6 +2829,21 @@ public class CommerceAccountPersistenceImpl
 	}
 
 	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "commerceAccountId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_COMMERCEACCOUNT;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CommerceAccountModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3033,27 +2853,19 @@ public class CommerceAccountPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceAccountModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAccountModelImpl.FINDER_CACHE_ENABLED,
 			CommerceAccountImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceAccountModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAccountModelImpl.FINDER_CACHE_ENABLED,
 			CommerceAccountImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CommerceAccountModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAccountModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			CommerceAccountModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAccountModelImpl.FINDER_CACHE_ENABLED,
 			CommerceAccountImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByCompanyId",
 			new String[] {
@@ -3062,8 +2874,6 @@ public class CommerceAccountPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			CommerceAccountModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAccountModelImpl.FINDER_CACHE_ENABLED,
 			CommerceAccountImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()},
@@ -3071,14 +2881,10 @@ public class CommerceAccountPersistenceImpl
 			CommerceAccountModelImpl.NAME_COLUMN_BITMASK);
 
 		_finderPathCountByCompanyId = new FinderPath(
-			CommerceAccountModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAccountModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCompanyId", new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByU_T = new FinderPath(
-			CommerceAccountModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAccountModelImpl.FINDER_CACHE_ENABLED,
 			CommerceAccountImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByU_T",
 			new String[] {
@@ -3088,8 +2894,6 @@ public class CommerceAccountPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByU_T = new FinderPath(
-			CommerceAccountModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAccountModelImpl.FINDER_CACHE_ENABLED,
 			CommerceAccountImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_T",
 			new String[] {Long.class.getName(), Integer.class.getName()},
@@ -3098,23 +2902,18 @@ public class CommerceAccountPersistenceImpl
 			CommerceAccountModelImpl.NAME_COLUMN_BITMASK);
 
 		_finderPathCountByU_T = new FinderPath(
-			CommerceAccountModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAccountModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_T",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_T",
 			new String[] {Long.class.getName(), Integer.class.getName()});
 
 		_finderPathFetchByC_ERC = new FinderPath(
-			CommerceAccountModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAccountModelImpl.FINDER_CACHE_ENABLED,
 			CommerceAccountImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_ERC",
 			new String[] {Long.class.getName(), String.class.getName()},
 			CommerceAccountModelImpl.COMPANYID_COLUMN_BITMASK |
 			CommerceAccountModelImpl.EXTERNALREFERENCECODE_COLUMN_BITMASK);
 
 		_finderPathCountByC_ERC = new FinderPath(
-			CommerceAccountModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceAccountModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ERC",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByC_ERC",
 			new String[] {Long.class.getName(), String.class.getName()});
 	}
 
@@ -3133,9 +2932,6 @@ public class CommerceAccountPersistenceImpl
 
 	private static final String _SQL_SELECT_COMMERCEACCOUNT =
 		"SELECT commerceAccount FROM CommerceAccount commerceAccount";
-
-	private static final String _SQL_SELECT_COMMERCEACCOUNT_WHERE_PKS_IN =
-		"SELECT commerceAccount FROM CommerceAccount commerceAccount WHERE commerceAccountId IN (";
 
 	private static final String _SQL_SELECT_COMMERCEACCOUNT_WHERE =
 		"SELECT commerceAccount FROM CommerceAccount commerceAccount WHERE ";

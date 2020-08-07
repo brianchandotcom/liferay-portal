@@ -1090,10 +1090,6 @@ public class CommerceDiscountAccountRelUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CommerceDiscountAccountRelPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

@@ -1344,10 +1344,6 @@ public class CommerceTierPriceEntryUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CommerceTierPriceEntryPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

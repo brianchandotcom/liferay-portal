@@ -19,6 +19,7 @@ import com.liferay.commerce.product.model.CPFriendlyURLEntryModel;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -74,19 +74,20 @@ public class CPFriendlyURLEntryModelImpl
 	public static final String TABLE_NAME = "CPFriendlyURLEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"CPFriendlyURLEntryId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"languageId", Types.VARCHAR}, {"urlTitle", Types.VARCHAR},
-		{"main", Types.BOOLEAN}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"CPFriendlyURLEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"languageId", Types.VARCHAR},
+		{"urlTitle", Types.VARCHAR}, {"main", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPFriendlyURLEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -103,7 +104,7 @@ public class CPFriendlyURLEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPFriendlyURLEntry (uuid_ VARCHAR(75) null,CPFriendlyURLEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,languageId VARCHAR(75) null,urlTitle VARCHAR(255) null,main BOOLEAN)";
+		"create table CPFriendlyURLEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,CPFriendlyURLEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,languageId VARCHAR(75) null,urlTitle VARCHAR(255) null,main BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table CPFriendlyURLEntry";
 
@@ -119,20 +120,23 @@ public class CPFriendlyURLEntryModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.product.model.CPFriendlyURLEntry"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.product.model.CPFriendlyURLEntry"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.product.model.CPFriendlyURLEntry"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
 
@@ -205,9 +209,6 @@ public class CPFriendlyURLEntryModelImpl
 				attributeName,
 				attributeGetterFunction.apply((CPFriendlyURLEntry)this));
 		}
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
@@ -285,309 +286,100 @@ public class CPFriendlyURLEntryModelImpl
 				new LinkedHashMap<String, BiConsumer<CPFriendlyURLEntry, ?>>();
 
 		attributeGetterFunctions.put(
-			"uuid",
-			new Function<CPFriendlyURLEntry, Object>() {
-
-				@Override
-				public Object apply(CPFriendlyURLEntry cpFriendlyURLEntry) {
-					return cpFriendlyURLEntry.getUuid();
-				}
-
-			});
+			"mvccVersion", CPFriendlyURLEntry::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CPFriendlyURLEntry, Long>)
+				CPFriendlyURLEntry::setMvccVersion);
+		attributeGetterFunctions.put("uuid", CPFriendlyURLEntry::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
-			new BiConsumer<CPFriendlyURLEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPFriendlyURLEntry cpFriendlyURLEntry, Object uuidObject) {
-
-					cpFriendlyURLEntry.setUuid((String)uuidObject);
-				}
-
-			});
+			(BiConsumer<CPFriendlyURLEntry, String>)
+				CPFriendlyURLEntry::setUuid);
 		attributeGetterFunctions.put(
 			"CPFriendlyURLEntryId",
-			new Function<CPFriendlyURLEntry, Object>() {
-
-				@Override
-				public Object apply(CPFriendlyURLEntry cpFriendlyURLEntry) {
-					return cpFriendlyURLEntry.getCPFriendlyURLEntryId();
-				}
-
-			});
+			CPFriendlyURLEntry::getCPFriendlyURLEntryId);
 		attributeSetterBiConsumers.put(
 			"CPFriendlyURLEntryId",
-			new BiConsumer<CPFriendlyURLEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPFriendlyURLEntry cpFriendlyURLEntry,
-					Object CPFriendlyURLEntryIdObject) {
-
-					cpFriendlyURLEntry.setCPFriendlyURLEntryId(
-						(Long)CPFriendlyURLEntryIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"groupId",
-			new Function<CPFriendlyURLEntry, Object>() {
-
-				@Override
-				public Object apply(CPFriendlyURLEntry cpFriendlyURLEntry) {
-					return cpFriendlyURLEntry.getGroupId();
-				}
-
-			});
+			(BiConsumer<CPFriendlyURLEntry, Long>)
+				CPFriendlyURLEntry::setCPFriendlyURLEntryId);
+		attributeGetterFunctions.put("groupId", CPFriendlyURLEntry::getGroupId);
 		attributeSetterBiConsumers.put(
 			"groupId",
-			new BiConsumer<CPFriendlyURLEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPFriendlyURLEntry cpFriendlyURLEntry,
-					Object groupIdObject) {
-
-					cpFriendlyURLEntry.setGroupId((Long)groupIdObject);
-				}
-
-			});
+			(BiConsumer<CPFriendlyURLEntry, Long>)
+				CPFriendlyURLEntry::setGroupId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CPFriendlyURLEntry, Object>() {
-
-				@Override
-				public Object apply(CPFriendlyURLEntry cpFriendlyURLEntry) {
-					return cpFriendlyURLEntry.getCompanyId();
-				}
-
-			});
+			"companyId", CPFriendlyURLEntry::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CPFriendlyURLEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPFriendlyURLEntry cpFriendlyURLEntry,
-					Object companyIdObject) {
-
-					cpFriendlyURLEntry.setCompanyId((Long)companyIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userId",
-			new Function<CPFriendlyURLEntry, Object>() {
-
-				@Override
-				public Object apply(CPFriendlyURLEntry cpFriendlyURLEntry) {
-					return cpFriendlyURLEntry.getUserId();
-				}
-
-			});
+			(BiConsumer<CPFriendlyURLEntry, Long>)
+				CPFriendlyURLEntry::setCompanyId);
+		attributeGetterFunctions.put("userId", CPFriendlyURLEntry::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CPFriendlyURLEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPFriendlyURLEntry cpFriendlyURLEntry,
-					Object userIdObject) {
-
-					cpFriendlyURLEntry.setUserId((Long)userIdObject);
-				}
-
-			});
+			(BiConsumer<CPFriendlyURLEntry, Long>)
+				CPFriendlyURLEntry::setUserId);
 		attributeGetterFunctions.put(
-			"userName",
-			new Function<CPFriendlyURLEntry, Object>() {
-
-				@Override
-				public Object apply(CPFriendlyURLEntry cpFriendlyURLEntry) {
-					return cpFriendlyURLEntry.getUserName();
-				}
-
-			});
+			"userName", CPFriendlyURLEntry::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CPFriendlyURLEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPFriendlyURLEntry cpFriendlyURLEntry,
-					Object userNameObject) {
-
-					cpFriendlyURLEntry.setUserName((String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CPFriendlyURLEntry, String>)
+				CPFriendlyURLEntry::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CPFriendlyURLEntry, Object>() {
-
-				@Override
-				public Object apply(CPFriendlyURLEntry cpFriendlyURLEntry) {
-					return cpFriendlyURLEntry.getCreateDate();
-				}
-
-			});
+			"createDate", CPFriendlyURLEntry::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CPFriendlyURLEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPFriendlyURLEntry cpFriendlyURLEntry,
-					Object createDateObject) {
-
-					cpFriendlyURLEntry.setCreateDate((Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CPFriendlyURLEntry, Date>)
+				CPFriendlyURLEntry::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CPFriendlyURLEntry, Object>() {
-
-				@Override
-				public Object apply(CPFriendlyURLEntry cpFriendlyURLEntry) {
-					return cpFriendlyURLEntry.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CPFriendlyURLEntry::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CPFriendlyURLEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPFriendlyURLEntry cpFriendlyURLEntry,
-					Object modifiedDateObject) {
-
-					cpFriendlyURLEntry.setModifiedDate(
-						(Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CPFriendlyURLEntry, Date>)
+				CPFriendlyURLEntry::setModifiedDate);
 		attributeGetterFunctions.put(
-			"classNameId",
-			new Function<CPFriendlyURLEntry, Object>() {
-
-				@Override
-				public Object apply(CPFriendlyURLEntry cpFriendlyURLEntry) {
-					return cpFriendlyURLEntry.getClassNameId();
-				}
-
-			});
+			"classNameId", CPFriendlyURLEntry::getClassNameId);
 		attributeSetterBiConsumers.put(
 			"classNameId",
-			new BiConsumer<CPFriendlyURLEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPFriendlyURLEntry cpFriendlyURLEntry,
-					Object classNameIdObject) {
-
-					cpFriendlyURLEntry.setClassNameId((Long)classNameIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"classPK",
-			new Function<CPFriendlyURLEntry, Object>() {
-
-				@Override
-				public Object apply(CPFriendlyURLEntry cpFriendlyURLEntry) {
-					return cpFriendlyURLEntry.getClassPK();
-				}
-
-			});
+			(BiConsumer<CPFriendlyURLEntry, Long>)
+				CPFriendlyURLEntry::setClassNameId);
+		attributeGetterFunctions.put("classPK", CPFriendlyURLEntry::getClassPK);
 		attributeSetterBiConsumers.put(
 			"classPK",
-			new BiConsumer<CPFriendlyURLEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPFriendlyURLEntry cpFriendlyURLEntry,
-					Object classPKObject) {
-
-					cpFriendlyURLEntry.setClassPK((Long)classPKObject);
-				}
-
-			});
+			(BiConsumer<CPFriendlyURLEntry, Long>)
+				CPFriendlyURLEntry::setClassPK);
 		attributeGetterFunctions.put(
-			"languageId",
-			new Function<CPFriendlyURLEntry, Object>() {
-
-				@Override
-				public Object apply(CPFriendlyURLEntry cpFriendlyURLEntry) {
-					return cpFriendlyURLEntry.getLanguageId();
-				}
-
-			});
+			"languageId", CPFriendlyURLEntry::getLanguageId);
 		attributeSetterBiConsumers.put(
 			"languageId",
-			new BiConsumer<CPFriendlyURLEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPFriendlyURLEntry cpFriendlyURLEntry,
-					Object languageIdObject) {
-
-					cpFriendlyURLEntry.setLanguageId((String)languageIdObject);
-				}
-
-			});
+			(BiConsumer<CPFriendlyURLEntry, String>)
+				CPFriendlyURLEntry::setLanguageId);
 		attributeGetterFunctions.put(
-			"urlTitle",
-			new Function<CPFriendlyURLEntry, Object>() {
-
-				@Override
-				public Object apply(CPFriendlyURLEntry cpFriendlyURLEntry) {
-					return cpFriendlyURLEntry.getUrlTitle();
-				}
-
-			});
+			"urlTitle", CPFriendlyURLEntry::getUrlTitle);
 		attributeSetterBiConsumers.put(
 			"urlTitle",
-			new BiConsumer<CPFriendlyURLEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPFriendlyURLEntry cpFriendlyURLEntry,
-					Object urlTitleObject) {
-
-					cpFriendlyURLEntry.setUrlTitle((String)urlTitleObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"main",
-			new Function<CPFriendlyURLEntry, Object>() {
-
-				@Override
-				public Object apply(CPFriendlyURLEntry cpFriendlyURLEntry) {
-					return cpFriendlyURLEntry.getMain();
-				}
-
-			});
+			(BiConsumer<CPFriendlyURLEntry, String>)
+				CPFriendlyURLEntry::setUrlTitle);
+		attributeGetterFunctions.put("main", CPFriendlyURLEntry::getMain);
 		attributeSetterBiConsumers.put(
 			"main",
-			new BiConsumer<CPFriendlyURLEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPFriendlyURLEntry cpFriendlyURLEntry, Object mainObject) {
-
-					cpFriendlyURLEntry.setMain((Boolean)mainObject);
-				}
-
-			});
+			(BiConsumer<CPFriendlyURLEntry, Boolean>)
+				CPFriendlyURLEntry::setMain);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -922,6 +714,7 @@ public class CPFriendlyURLEntryModelImpl
 		CPFriendlyURLEntryImpl cpFriendlyURLEntryImpl =
 			new CPFriendlyURLEntryImpl();
 
+		cpFriendlyURLEntryImpl.setMvccVersion(getMvccVersion());
 		cpFriendlyURLEntryImpl.setUuid(getUuid());
 		cpFriendlyURLEntryImpl.setCPFriendlyURLEntryId(
 			getCPFriendlyURLEntryId());
@@ -1010,11 +803,19 @@ public class CPFriendlyURLEntryModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -1056,6 +857,8 @@ public class CPFriendlyURLEntryModelImpl
 	public CacheModel<CPFriendlyURLEntry> toCacheModel() {
 		CPFriendlyURLEntryCacheModel cpFriendlyURLEntryCacheModel =
 			new CPFriendlyURLEntryCacheModel();
+
+		cpFriendlyURLEntryCacheModel.mvccVersion = getMvccVersion();
 
 		cpFriendlyURLEntryCacheModel.uuid = getUuid();
 
@@ -1195,6 +998,7 @@ public class CPFriendlyURLEntryModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _CPFriendlyURLEntryId;

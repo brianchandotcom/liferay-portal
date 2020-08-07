@@ -128,6 +128,8 @@ public class CPDAvailabilityEstimatePersistenceTest {
 		CPDAvailabilityEstimate newCPDAvailabilityEstimate =
 			_persistence.create(pk);
 
+		newCPDAvailabilityEstimate.setMvccVersion(RandomTestUtil.nextLong());
+
 		newCPDAvailabilityEstimate.setUuid(RandomTestUtil.randomString());
 
 		newCPDAvailabilityEstimate.setCompanyId(RandomTestUtil.nextLong());
@@ -155,6 +157,9 @@ public class CPDAvailabilityEstimatePersistenceTest {
 			_persistence.findByPrimaryKey(
 				newCPDAvailabilityEstimate.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCPDAvailabilityEstimate.getMvccVersion(),
+			newCPDAvailabilityEstimate.getMvccVersion());
 		Assert.assertEquals(
 			existingCPDAvailabilityEstimate.getUuid(),
 			newCPDAvailabilityEstimate.getUuid());
@@ -255,7 +260,7 @@ public class CPDAvailabilityEstimatePersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"CPDAvailabilityEstimate", "uuid", true,
+			"CPDAvailabilityEstimate", "mvccVersion", true, "uuid", true,
 			"CPDAvailabilityEstimateId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"commerceAvailabilityEstimateId", true, "CProductId", true,
@@ -523,6 +528,8 @@ public class CPDAvailabilityEstimatePersistenceTest {
 
 		CPDAvailabilityEstimate cpdAvailabilityEstimate = _persistence.create(
 			pk);
+
+		cpdAvailabilityEstimate.setMvccVersion(RandomTestUtil.nextLong());
 
 		cpdAvailabilityEstimate.setUuid(RandomTestUtil.randomString());
 

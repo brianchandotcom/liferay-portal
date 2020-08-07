@@ -24,6 +24,7 @@ import com.liferay.commerce.account.service.persistence.CommerceAccountGroupRelP
 import com.liferay.commerce.account.service.persistence.CommerceAccountOrganizationRelPersistence;
 import com.liferay.commerce.account.service.persistence.CommerceAccountPersistence;
 import com.liferay.commerce.account.service.persistence.CommerceAccountUserRelPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -152,6 +153,11 @@ public abstract class CommerceAccountGroupRelLocalServiceBaseImpl
 
 		return commerceAccountGroupRelPersistence.remove(
 			commerceAccountGroupRel);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return commerceAccountGroupRelPersistence.dslQuery(dslQuery);
 	}
 
 	@Override
@@ -312,6 +318,16 @@ public abstract class CommerceAccountGroupRelLocalServiceBaseImpl
 
 		actionableDynamicQuery.setPrimaryKeyPropertyName(
 			"commerceAccountGroupRelId");
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
+
+		return commerceAccountGroupRelPersistence.create(
+			((Long)primaryKeyObj).longValue());
 	}
 
 	/**

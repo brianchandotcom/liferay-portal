@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,28 +31,20 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceShipmentItemWrapper
+	extends BaseModelWrapper<CommerceShipmentItem>
 	implements CommerceShipmentItem, ModelWrapper<CommerceShipmentItem> {
 
 	public CommerceShipmentItemWrapper(
 		CommerceShipmentItem commerceShipmentItem) {
 
-		_commerceShipmentItem = commerceShipmentItem;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceShipmentItem.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceShipmentItem.class.getName();
+		super(commerceShipmentItem);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("commerceShipmentItemId", getCommerceShipmentItemId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -75,6 +63,12 @@ public class CommerceShipmentItemWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long commerceShipmentItemId = (Long)attributes.get(
 			"commerceShipmentItemId");
 
@@ -145,19 +139,8 @@ public class CommerceShipmentItemWrapper
 	}
 
 	@Override
-	public Object clone() {
-		return new CommerceShipmentItemWrapper(
-			(CommerceShipmentItem)_commerceShipmentItem.clone());
-	}
-
-	@Override
-	public int compareTo(CommerceShipmentItem commerceShipmentItem) {
-		return _commerceShipmentItem.compareTo(commerceShipmentItem);
-	}
-
-	@Override
 	public CommerceOrderItem fetchCommerceOrderItem() {
-		return _commerceShipmentItem.fetchCommerceOrderItem();
+		return model.fetchCommerceOrderItem();
 	}
 
 	/**
@@ -167,7 +150,7 @@ public class CommerceShipmentItemWrapper
 	 */
 	@Override
 	public long getCommerceInventoryWarehouseId() {
-		return _commerceShipmentItem.getCommerceInventoryWarehouseId();
+		return model.getCommerceInventoryWarehouseId();
 	}
 
 	/**
@@ -177,14 +160,14 @@ public class CommerceShipmentItemWrapper
 	 */
 	@Override
 	public long getCommerceOrderItemId() {
-		return _commerceShipmentItem.getCommerceOrderItemId();
+		return model.getCommerceOrderItemId();
 	}
 
 	@Override
 	public CommerceShipment getCommerceShipment()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceShipmentItem.getCommerceShipment();
+		return model.getCommerceShipment();
 	}
 
 	/**
@@ -194,7 +177,7 @@ public class CommerceShipmentItemWrapper
 	 */
 	@Override
 	public long getCommerceShipmentId() {
-		return _commerceShipmentItem.getCommerceShipmentId();
+		return model.getCommerceShipmentId();
 	}
 
 	/**
@@ -204,7 +187,7 @@ public class CommerceShipmentItemWrapper
 	 */
 	@Override
 	public long getCommerceShipmentItemId() {
-		return _commerceShipmentItem.getCommerceShipmentItemId();
+		return model.getCommerceShipmentItemId();
 	}
 
 	/**
@@ -214,7 +197,7 @@ public class CommerceShipmentItemWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceShipmentItem.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -224,12 +207,7 @@ public class CommerceShipmentItemWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceShipmentItem.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceShipmentItem.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -239,7 +217,7 @@ public class CommerceShipmentItemWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _commerceShipmentItem.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -249,7 +227,17 @@ public class CommerceShipmentItemWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceShipmentItem.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce shipment item.
+	 *
+	 * @return the mvcc version of this commerce shipment item
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -259,12 +247,7 @@ public class CommerceShipmentItemWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceShipmentItem.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceShipmentItem.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -274,7 +257,7 @@ public class CommerceShipmentItemWrapper
 	 */
 	@Override
 	public int getQuantity() {
-		return _commerceShipmentItem.getQuantity();
+		return model.getQuantity();
 	}
 
 	/**
@@ -284,7 +267,7 @@ public class CommerceShipmentItemWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceShipmentItem.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -294,7 +277,7 @@ public class CommerceShipmentItemWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceShipmentItem.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -304,37 +287,12 @@ public class CommerceShipmentItemWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceShipmentItem.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceShipmentItem.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceShipmentItem.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceShipmentItem.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceShipmentItem.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_commerceShipmentItem.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceShipmentItem.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -346,8 +304,7 @@ public class CommerceShipmentItemWrapper
 	public void setCommerceInventoryWarehouseId(
 		long commerceInventoryWarehouseId) {
 
-		_commerceShipmentItem.setCommerceInventoryWarehouseId(
-			commerceInventoryWarehouseId);
+		model.setCommerceInventoryWarehouseId(commerceInventoryWarehouseId);
 	}
 
 	/**
@@ -357,7 +314,7 @@ public class CommerceShipmentItemWrapper
 	 */
 	@Override
 	public void setCommerceOrderItemId(long commerceOrderItemId) {
-		_commerceShipmentItem.setCommerceOrderItemId(commerceOrderItemId);
+		model.setCommerceOrderItemId(commerceOrderItemId);
 	}
 
 	/**
@@ -367,7 +324,7 @@ public class CommerceShipmentItemWrapper
 	 */
 	@Override
 	public void setCommerceShipmentId(long commerceShipmentId) {
-		_commerceShipmentItem.setCommerceShipmentId(commerceShipmentId);
+		model.setCommerceShipmentId(commerceShipmentId);
 	}
 
 	/**
@@ -377,7 +334,7 @@ public class CommerceShipmentItemWrapper
 	 */
 	@Override
 	public void setCommerceShipmentItemId(long commerceShipmentItemId) {
-		_commerceShipmentItem.setCommerceShipmentItemId(commerceShipmentItemId);
+		model.setCommerceShipmentItemId(commerceShipmentItemId);
 	}
 
 	/**
@@ -387,7 +344,7 @@ public class CommerceShipmentItemWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceShipmentItem.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -397,24 +354,7 @@ public class CommerceShipmentItemWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceShipmentItem.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceShipmentItem.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceShipmentItem.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceShipmentItem.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -424,7 +364,7 @@ public class CommerceShipmentItemWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_commerceShipmentItem.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -434,12 +374,17 @@ public class CommerceShipmentItemWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceShipmentItem.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this commerce shipment item.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce shipment item
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_commerceShipmentItem.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -449,12 +394,7 @@ public class CommerceShipmentItemWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceShipmentItem.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceShipmentItem.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -464,7 +404,7 @@ public class CommerceShipmentItemWrapper
 	 */
 	@Override
 	public void setQuantity(int quantity) {
-		_commerceShipmentItem.setQuantity(quantity);
+		model.setQuantity(quantity);
 	}
 
 	/**
@@ -474,7 +414,7 @@ public class CommerceShipmentItemWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceShipmentItem.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -484,7 +424,7 @@ public class CommerceShipmentItemWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceShipmentItem.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -494,81 +434,14 @@ public class CommerceShipmentItemWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceShipmentItem.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceShipmentItem>
-		toCacheModel() {
+	protected CommerceShipmentItemWrapper wrap(
+		CommerceShipmentItem commerceShipmentItem) {
 
-		return _commerceShipmentItem.toCacheModel();
+		return new CommerceShipmentItemWrapper(commerceShipmentItem);
 	}
-
-	@Override
-	public CommerceShipmentItem toEscapedModel() {
-		return new CommerceShipmentItemWrapper(
-			_commerceShipmentItem.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commerceShipmentItem.toString();
-	}
-
-	@Override
-	public CommerceShipmentItem toUnescapedModel() {
-		return new CommerceShipmentItemWrapper(
-			_commerceShipmentItem.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceShipmentItem.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceShipmentItemWrapper)) {
-			return false;
-		}
-
-		CommerceShipmentItemWrapper commerceShipmentItemWrapper =
-			(CommerceShipmentItemWrapper)object;
-
-		if (Objects.equals(
-				_commerceShipmentItem,
-				commerceShipmentItemWrapper._commerceShipmentItem)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceShipmentItem getWrappedModel() {
-		return _commerceShipmentItem;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceShipmentItem.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceShipmentItem.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceShipmentItem.resetOriginalValues();
-	}
-
-	private final CommerceShipmentItem _commerceShipmentItem;
 
 }

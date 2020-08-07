@@ -14,9 +14,8 @@
 
 package com.liferay.commerce.data.integration.service;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcess;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -39,6 +38,8 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import java.io.Serializable;
 
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for CommerceDataIntegrationProcess. Methods of this
@@ -80,7 +81,7 @@ public interface CommerceDataIntegrationProcessLocalService
 
 	public CommerceDataIntegrationProcess addCommerceDataIntegrationProcess(
 			long userId, String name, String type,
-			UnicodeProperties typeSettingsProperties, boolean system)
+			UnicodeProperties typeSettingsUnicodeProperties, boolean system)
 		throws PortalException;
 
 	/**
@@ -92,6 +93,12 @@ public interface CommerceDataIntegrationProcessLocalService
 	@Transactional(enabled = false)
 	public CommerceDataIntegrationProcess createCommerceDataIntegrationProcess(
 		long commerceDataIntegrationProcessId);
+
+	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	 * Deletes the commerce data integration process from the database. Also notifies the appropriate model listeners.
@@ -132,6 +139,9 @@ public interface CommerceDataIntegrationProcessLocalService
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();
@@ -286,7 +296,7 @@ public interface CommerceDataIntegrationProcessLocalService
 
 	public CommerceDataIntegrationProcess updateCommerceDataIntegrationProcess(
 			long commerceDataIntegrationProcessId, String name,
-			UnicodeProperties typeSettingsProperties)
+			UnicodeProperties typeSettingsUnicodeProperties)
 		throws PortalException;
 
 	public CommerceDataIntegrationProcess

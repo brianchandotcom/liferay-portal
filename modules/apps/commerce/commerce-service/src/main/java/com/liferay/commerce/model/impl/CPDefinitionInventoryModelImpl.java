@@ -20,6 +20,7 @@ import com.liferay.commerce.model.CPDefinitionInventorySoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -75,11 +75,11 @@ public class CPDefinitionInventoryModelImpl
 	public static final String TABLE_NAME = "CPDefinitionInventory";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"CPDefinitionInventoryId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"CPDefinitionId", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"CPDefinitionInventoryId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"CPDefinitionId", Types.BIGINT},
 		{"CPDefinitionInventoryEngine", Types.VARCHAR},
 		{"lowStockActivity", Types.VARCHAR},
 		{"displayAvailability", Types.BOOLEAN},
@@ -95,6 +95,7 @@ public class CPDefinitionInventoryModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPDefinitionInventoryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -117,7 +118,7 @@ public class CPDefinitionInventoryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPDefinitionInventory (uuid_ VARCHAR(75) null,CPDefinitionInventoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,CPDefinitionInventoryEngine VARCHAR(75) null,lowStockActivity VARCHAR(75) null,displayAvailability BOOLEAN,displayStockQuantity BOOLEAN,minStockQuantity INTEGER,backOrders BOOLEAN,minOrderQuantity INTEGER,maxOrderQuantity INTEGER,allowedOrderQuantities VARCHAR(75) null,multipleOrderQuantity INTEGER)";
+		"create table CPDefinitionInventory (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,CPDefinitionInventoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,CPDefinitionInventoryEngine VARCHAR(75) null,lowStockActivity VARCHAR(75) null,displayAvailability BOOLEAN,displayStockQuantity BOOLEAN,minStockQuantity INTEGER,backOrders BOOLEAN,minOrderQuantity INTEGER,maxOrderQuantity INTEGER,allowedOrderQuantities VARCHAR(75) null,multipleOrderQuantity INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CPDefinitionInventory";
@@ -134,20 +135,23 @@ public class CPDefinitionInventoryModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.model.CPDefinitionInventory"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.model.CPDefinitionInventory"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.model.CPDefinitionInventory"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long CPDEFINITIONID_COLUMN_BITMASK = 1L;
 
@@ -174,6 +178,7 @@ public class CPDefinitionInventoryModelImpl
 
 		CPDefinitionInventory model = new CPDefinitionInventoryImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCPDefinitionInventoryId(
 			soapModel.getCPDefinitionInventoryId());
@@ -278,9 +283,6 @@ public class CPDefinitionInventoryModelImpl
 				attributeGetterFunction.apply((CPDefinitionInventory)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -359,499 +361,146 @@ public class CPDefinitionInventoryModelImpl
 					<String, BiConsumer<CPDefinitionInventory, ?>>();
 
 		attributeGetterFunctions.put(
-			"uuid",
-			new Function<CPDefinitionInventory, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionInventory cpDefinitionInventory) {
-
-					return cpDefinitionInventory.getUuid();
-				}
-
-			});
+			"mvccVersion", CPDefinitionInventory::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CPDefinitionInventory, Long>)
+				CPDefinitionInventory::setMvccVersion);
+		attributeGetterFunctions.put("uuid", CPDefinitionInventory::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
-			new BiConsumer<CPDefinitionInventory, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionInventory cpDefinitionInventory,
-					Object uuidObject) {
-
-					cpDefinitionInventory.setUuid((String)uuidObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionInventory, String>)
+				CPDefinitionInventory::setUuid);
 		attributeGetterFunctions.put(
 			"CPDefinitionInventoryId",
-			new Function<CPDefinitionInventory, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionInventory cpDefinitionInventory) {
-
-					return cpDefinitionInventory.getCPDefinitionInventoryId();
-				}
-
-			});
+			CPDefinitionInventory::getCPDefinitionInventoryId);
 		attributeSetterBiConsumers.put(
 			"CPDefinitionInventoryId",
-			new BiConsumer<CPDefinitionInventory, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionInventory cpDefinitionInventory,
-					Object CPDefinitionInventoryIdObject) {
-
-					cpDefinitionInventory.setCPDefinitionInventoryId(
-						(Long)CPDefinitionInventoryIdObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionInventory, Long>)
+				CPDefinitionInventory::setCPDefinitionInventoryId);
 		attributeGetterFunctions.put(
-			"groupId",
-			new Function<CPDefinitionInventory, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionInventory cpDefinitionInventory) {
-
-					return cpDefinitionInventory.getGroupId();
-				}
-
-			});
+			"groupId", CPDefinitionInventory::getGroupId);
 		attributeSetterBiConsumers.put(
 			"groupId",
-			new BiConsumer<CPDefinitionInventory, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionInventory cpDefinitionInventory,
-					Object groupIdObject) {
-
-					cpDefinitionInventory.setGroupId((Long)groupIdObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionInventory, Long>)
+				CPDefinitionInventory::setGroupId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CPDefinitionInventory, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionInventory cpDefinitionInventory) {
-
-					return cpDefinitionInventory.getCompanyId();
-				}
-
-			});
+			"companyId", CPDefinitionInventory::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CPDefinitionInventory, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionInventory cpDefinitionInventory,
-					Object companyIdObject) {
-
-					cpDefinitionInventory.setCompanyId((Long)companyIdObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionInventory, Long>)
+				CPDefinitionInventory::setCompanyId);
 		attributeGetterFunctions.put(
-			"userId",
-			new Function<CPDefinitionInventory, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionInventory cpDefinitionInventory) {
-
-					return cpDefinitionInventory.getUserId();
-				}
-
-			});
+			"userId", CPDefinitionInventory::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CPDefinitionInventory, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionInventory cpDefinitionInventory,
-					Object userIdObject) {
-
-					cpDefinitionInventory.setUserId((Long)userIdObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionInventory, Long>)
+				CPDefinitionInventory::setUserId);
 		attributeGetterFunctions.put(
-			"userName",
-			new Function<CPDefinitionInventory, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionInventory cpDefinitionInventory) {
-
-					return cpDefinitionInventory.getUserName();
-				}
-
-			});
+			"userName", CPDefinitionInventory::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CPDefinitionInventory, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionInventory cpDefinitionInventory,
-					Object userNameObject) {
-
-					cpDefinitionInventory.setUserName((String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionInventory, String>)
+				CPDefinitionInventory::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CPDefinitionInventory, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionInventory cpDefinitionInventory) {
-
-					return cpDefinitionInventory.getCreateDate();
-				}
-
-			});
+			"createDate", CPDefinitionInventory::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CPDefinitionInventory, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionInventory cpDefinitionInventory,
-					Object createDateObject) {
-
-					cpDefinitionInventory.setCreateDate((Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionInventory, Date>)
+				CPDefinitionInventory::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CPDefinitionInventory, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionInventory cpDefinitionInventory) {
-
-					return cpDefinitionInventory.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CPDefinitionInventory::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CPDefinitionInventory, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionInventory cpDefinitionInventory,
-					Object modifiedDateObject) {
-
-					cpDefinitionInventory.setModifiedDate(
-						(Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionInventory, Date>)
+				CPDefinitionInventory::setModifiedDate);
 		attributeGetterFunctions.put(
-			"CPDefinitionId",
-			new Function<CPDefinitionInventory, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionInventory cpDefinitionInventory) {
-
-					return cpDefinitionInventory.getCPDefinitionId();
-				}
-
-			});
+			"CPDefinitionId", CPDefinitionInventory::getCPDefinitionId);
 		attributeSetterBiConsumers.put(
 			"CPDefinitionId",
-			new BiConsumer<CPDefinitionInventory, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionInventory cpDefinitionInventory,
-					Object CPDefinitionIdObject) {
-
-					cpDefinitionInventory.setCPDefinitionId(
-						(Long)CPDefinitionIdObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionInventory, Long>)
+				CPDefinitionInventory::setCPDefinitionId);
 		attributeGetterFunctions.put(
 			"CPDefinitionInventoryEngine",
-			new Function<CPDefinitionInventory, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionInventory cpDefinitionInventory) {
-
-					return cpDefinitionInventory.
-						getCPDefinitionInventoryEngine();
-				}
-
-			});
+			CPDefinitionInventory::getCPDefinitionInventoryEngine);
 		attributeSetterBiConsumers.put(
 			"CPDefinitionInventoryEngine",
-			new BiConsumer<CPDefinitionInventory, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionInventory cpDefinitionInventory,
-					Object CPDefinitionInventoryEngineObject) {
-
-					cpDefinitionInventory.setCPDefinitionInventoryEngine(
-						(String)CPDefinitionInventoryEngineObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionInventory, String>)
+				CPDefinitionInventory::setCPDefinitionInventoryEngine);
 		attributeGetterFunctions.put(
-			"lowStockActivity",
-			new Function<CPDefinitionInventory, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionInventory cpDefinitionInventory) {
-
-					return cpDefinitionInventory.getLowStockActivity();
-				}
-
-			});
+			"lowStockActivity", CPDefinitionInventory::getLowStockActivity);
 		attributeSetterBiConsumers.put(
 			"lowStockActivity",
-			new BiConsumer<CPDefinitionInventory, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionInventory cpDefinitionInventory,
-					Object lowStockActivityObject) {
-
-					cpDefinitionInventory.setLowStockActivity(
-						(String)lowStockActivityObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionInventory, String>)
+				CPDefinitionInventory::setLowStockActivity);
 		attributeGetterFunctions.put(
 			"displayAvailability",
-			new Function<CPDefinitionInventory, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionInventory cpDefinitionInventory) {
-
-					return cpDefinitionInventory.getDisplayAvailability();
-				}
-
-			});
+			CPDefinitionInventory::getDisplayAvailability);
 		attributeSetterBiConsumers.put(
 			"displayAvailability",
-			new BiConsumer<CPDefinitionInventory, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionInventory cpDefinitionInventory,
-					Object displayAvailabilityObject) {
-
-					cpDefinitionInventory.setDisplayAvailability(
-						(Boolean)displayAvailabilityObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionInventory, Boolean>)
+				CPDefinitionInventory::setDisplayAvailability);
 		attributeGetterFunctions.put(
 			"displayStockQuantity",
-			new Function<CPDefinitionInventory, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionInventory cpDefinitionInventory) {
-
-					return cpDefinitionInventory.getDisplayStockQuantity();
-				}
-
-			});
+			CPDefinitionInventory::getDisplayStockQuantity);
 		attributeSetterBiConsumers.put(
 			"displayStockQuantity",
-			new BiConsumer<CPDefinitionInventory, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionInventory cpDefinitionInventory,
-					Object displayStockQuantityObject) {
-
-					cpDefinitionInventory.setDisplayStockQuantity(
-						(Boolean)displayStockQuantityObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionInventory, Boolean>)
+				CPDefinitionInventory::setDisplayStockQuantity);
 		attributeGetterFunctions.put(
-			"minStockQuantity",
-			new Function<CPDefinitionInventory, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionInventory cpDefinitionInventory) {
-
-					return cpDefinitionInventory.getMinStockQuantity();
-				}
-
-			});
+			"minStockQuantity", CPDefinitionInventory::getMinStockQuantity);
 		attributeSetterBiConsumers.put(
 			"minStockQuantity",
-			new BiConsumer<CPDefinitionInventory, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionInventory cpDefinitionInventory,
-					Object minStockQuantityObject) {
-
-					cpDefinitionInventory.setMinStockQuantity(
-						(Integer)minStockQuantityObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionInventory, Integer>)
+				CPDefinitionInventory::setMinStockQuantity);
 		attributeGetterFunctions.put(
-			"backOrders",
-			new Function<CPDefinitionInventory, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionInventory cpDefinitionInventory) {
-
-					return cpDefinitionInventory.getBackOrders();
-				}
-
-			});
+			"backOrders", CPDefinitionInventory::getBackOrders);
 		attributeSetterBiConsumers.put(
 			"backOrders",
-			new BiConsumer<CPDefinitionInventory, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionInventory cpDefinitionInventory,
-					Object backOrdersObject) {
-
-					cpDefinitionInventory.setBackOrders(
-						(Boolean)backOrdersObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionInventory, Boolean>)
+				CPDefinitionInventory::setBackOrders);
 		attributeGetterFunctions.put(
-			"minOrderQuantity",
-			new Function<CPDefinitionInventory, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionInventory cpDefinitionInventory) {
-
-					return cpDefinitionInventory.getMinOrderQuantity();
-				}
-
-			});
+			"minOrderQuantity", CPDefinitionInventory::getMinOrderQuantity);
 		attributeSetterBiConsumers.put(
 			"minOrderQuantity",
-			new BiConsumer<CPDefinitionInventory, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionInventory cpDefinitionInventory,
-					Object minOrderQuantityObject) {
-
-					cpDefinitionInventory.setMinOrderQuantity(
-						(Integer)minOrderQuantityObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionInventory, Integer>)
+				CPDefinitionInventory::setMinOrderQuantity);
 		attributeGetterFunctions.put(
-			"maxOrderQuantity",
-			new Function<CPDefinitionInventory, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionInventory cpDefinitionInventory) {
-
-					return cpDefinitionInventory.getMaxOrderQuantity();
-				}
-
-			});
+			"maxOrderQuantity", CPDefinitionInventory::getMaxOrderQuantity);
 		attributeSetterBiConsumers.put(
 			"maxOrderQuantity",
-			new BiConsumer<CPDefinitionInventory, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionInventory cpDefinitionInventory,
-					Object maxOrderQuantityObject) {
-
-					cpDefinitionInventory.setMaxOrderQuantity(
-						(Integer)maxOrderQuantityObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionInventory, Integer>)
+				CPDefinitionInventory::setMaxOrderQuantity);
 		attributeGetterFunctions.put(
 			"allowedOrderQuantities",
-			new Function<CPDefinitionInventory, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionInventory cpDefinitionInventory) {
-
-					return cpDefinitionInventory.getAllowedOrderQuantities();
-				}
-
-			});
+			CPDefinitionInventory::getAllowedOrderQuantities);
 		attributeSetterBiConsumers.put(
 			"allowedOrderQuantities",
-			new BiConsumer<CPDefinitionInventory, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionInventory cpDefinitionInventory,
-					Object allowedOrderQuantitiesObject) {
-
-					cpDefinitionInventory.setAllowedOrderQuantities(
-						(String)allowedOrderQuantitiesObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionInventory, String>)
+				CPDefinitionInventory::setAllowedOrderQuantities);
 		attributeGetterFunctions.put(
 			"multipleOrderQuantity",
-			new Function<CPDefinitionInventory, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionInventory cpDefinitionInventory) {
-
-					return cpDefinitionInventory.getMultipleOrderQuantity();
-				}
-
-			});
+			CPDefinitionInventory::getMultipleOrderQuantity);
 		attributeSetterBiConsumers.put(
 			"multipleOrderQuantity",
-			new BiConsumer<CPDefinitionInventory, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionInventory cpDefinitionInventory,
-					Object multipleOrderQuantityObject) {
-
-					cpDefinitionInventory.setMultipleOrderQuantity(
-						(Integer)multipleOrderQuantityObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionInventory, Integer>)
+				CPDefinitionInventory::setMultipleOrderQuantity);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1220,6 +869,7 @@ public class CPDefinitionInventoryModelImpl
 		CPDefinitionInventoryImpl cpDefinitionInventoryImpl =
 			new CPDefinitionInventoryImpl();
 
+		cpDefinitionInventoryImpl.setMvccVersion(getMvccVersion());
 		cpDefinitionInventoryImpl.setUuid(getUuid());
 		cpDefinitionInventoryImpl.setCPDefinitionInventoryId(
 			getCPDefinitionInventoryId());
@@ -1294,11 +944,19 @@ public class CPDefinitionInventoryModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -1328,6 +986,8 @@ public class CPDefinitionInventoryModelImpl
 	public CacheModel<CPDefinitionInventory> toCacheModel() {
 		CPDefinitionInventoryCacheModel cpDefinitionInventoryCacheModel =
 			new CPDefinitionInventoryCacheModel();
+
+		cpDefinitionInventoryCacheModel.mvccVersion = getMvccVersion();
 
 		cpDefinitionInventoryCacheModel.uuid = getUuid();
 
@@ -1504,6 +1164,7 @@ public class CPDefinitionInventoryModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _CPDefinitionInventoryId;

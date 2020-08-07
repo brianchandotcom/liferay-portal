@@ -1110,10 +1110,6 @@ public class CPOptionValueUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CPOptionValuePersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

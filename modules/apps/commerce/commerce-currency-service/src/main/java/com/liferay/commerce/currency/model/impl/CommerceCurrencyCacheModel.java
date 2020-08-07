@@ -15,9 +15,10 @@
 package com.liferay.commerce.currency.model.impl;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -35,7 +36,7 @@ import java.util.Date;
  * @generated
  */
 public class CommerceCurrencyCacheModel
-	implements CacheModel<CommerceCurrency>, Externalizable {
+	implements CacheModel<CommerceCurrency>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -50,8 +51,9 @@ public class CommerceCurrencyCacheModel
 		CommerceCurrencyCacheModel commerceCurrencyCacheModel =
 			(CommerceCurrencyCacheModel)object;
 
-		if (commerceCurrencyId ==
-				commerceCurrencyCacheModel.commerceCurrencyId) {
+		if ((commerceCurrencyId ==
+				commerceCurrencyCacheModel.commerceCurrencyId) &&
+			(mvccVersion == commerceCurrencyCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -61,14 +63,28 @@ public class CommerceCurrencyCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, commerceCurrencyId);
+		int hashCode = HashUtil.hash(0, commerceCurrencyId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", commerceCurrencyId=");
 		sb.append(commerceCurrencyId);
@@ -114,6 +130,8 @@ public class CommerceCurrencyCacheModel
 	@Override
 	public CommerceCurrency toEntityModel() {
 		CommerceCurrencyImpl commerceCurrencyImpl = new CommerceCurrencyImpl();
+
+		commerceCurrencyImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			commerceCurrencyImpl.setUuid("");
@@ -207,6 +225,7 @@ public class CommerceCurrencyCacheModel
 	public void readExternal(ObjectInput objectInput)
 		throws ClassNotFoundException, IOException {
 
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		commerceCurrencyId = objectInput.readLong();
@@ -238,6 +257,8 @@ public class CommerceCurrencyCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -310,6 +331,7 @@ public class CommerceCurrencyCacheModel
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long commerceCurrencyId;
 	public long companyId;

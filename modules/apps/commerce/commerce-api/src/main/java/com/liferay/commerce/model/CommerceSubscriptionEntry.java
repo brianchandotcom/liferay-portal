@@ -14,11 +14,11 @@
 
 package com.liferay.commerce.model;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.annotation.ImplementationClassName;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.Accessor;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model interface for the CommerceSubscriptionEntry service. Represents a row in the &quot;CommerceSubscriptionEntry&quot; database table, with each column mapped to a property of this class.
@@ -83,10 +83,10 @@ public interface CommerceSubscriptionEntry
 
 	public void setDeliverySubscriptionTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties
-			deliverySubscriptionTypeSettingsProperties);
+			deliverySubscriptionTypeSettingsUnicodeProperties);
 
 	public void setSubscriptionTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties
-			subscriptionTypeSettingsProperties);
+			subscriptionTypeSettingsUnicodeProperties);
 
 }

@@ -14,17 +14,13 @@
 
 package com.liferay.commerce.product.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,28 +32,20 @@ import java.util.Objects;
  * @generated
  */
 public class CPAttachmentFileEntryWrapper
+	extends BaseModelWrapper<CPAttachmentFileEntry>
 	implements CPAttachmentFileEntry, ModelWrapper<CPAttachmentFileEntry> {
 
 	public CPAttachmentFileEntryWrapper(
 		CPAttachmentFileEntry cpAttachmentFileEntry) {
 
-		_cpAttachmentFileEntry = cpAttachmentFileEntry;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CPAttachmentFileEntry.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CPAttachmentFileEntry.class.getName();
+		super(cpAttachmentFileEntry);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("CPAttachmentFileEntryId", getCPAttachmentFileEntryId());
@@ -87,6 +75,12 @@ public class CPAttachmentFileEntryWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -229,19 +223,8 @@ public class CPAttachmentFileEntryWrapper
 	}
 
 	@Override
-	public Object clone() {
-		return new CPAttachmentFileEntryWrapper(
-			(CPAttachmentFileEntry)_cpAttachmentFileEntry.clone());
-	}
-
-	@Override
-	public int compareTo(CPAttachmentFileEntry cpAttachmentFileEntry) {
-		return _cpAttachmentFileEntry.compareTo(cpAttachmentFileEntry);
-	}
-
-	@Override
 	public String[] getAvailableLanguageIds() {
-		return _cpAttachmentFileEntry.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -251,7 +234,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public String getClassName() {
-		return _cpAttachmentFileEntry.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -261,7 +244,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public long getClassNameId() {
-		return _cpAttachmentFileEntry.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -271,7 +254,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public long getClassPK() {
-		return _cpAttachmentFileEntry.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -281,7 +264,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _cpAttachmentFileEntry.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -291,7 +274,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public long getCPAttachmentFileEntryId() {
-		return _cpAttachmentFileEntry.getCPAttachmentFileEntryId();
+		return model.getCPAttachmentFileEntryId();
 	}
 
 	/**
@@ -301,12 +284,12 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _cpAttachmentFileEntry.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _cpAttachmentFileEntry.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -316,12 +299,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public Date getDisplayDate() {
-		return _cpAttachmentFileEntry.getDisplayDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _cpAttachmentFileEntry.getExpandoBridge();
+		return model.getDisplayDate();
 	}
 
 	/**
@@ -331,7 +309,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public Date getExpirationDate() {
-		return _cpAttachmentFileEntry.getExpirationDate();
+		return model.getExpirationDate();
 	}
 
 	/**
@@ -341,14 +319,14 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public String getExternalReferenceCode() {
-		return _cpAttachmentFileEntry.getExternalReferenceCode();
+		return model.getExternalReferenceCode();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry getFileEntry()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _cpAttachmentFileEntry.getFileEntry();
+		return model.getFileEntry();
 	}
 
 	/**
@@ -358,7 +336,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public long getFileEntryId() {
-		return _cpAttachmentFileEntry.getFileEntryId();
+		return model.getFileEntryId();
 	}
 
 	/**
@@ -368,7 +346,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _cpAttachmentFileEntry.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -378,7 +356,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public String getJson() {
-		return _cpAttachmentFileEntry.getJson();
+		return model.getJson();
 	}
 
 	/**
@@ -388,7 +366,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public Date getLastPublishDate() {
-		return _cpAttachmentFileEntry.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -398,7 +376,17 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _cpAttachmentFileEntry.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this cp attachment file entry.
+	 *
+	 * @return the mvcc version of this cp attachment file entry
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -408,12 +396,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _cpAttachmentFileEntry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _cpAttachmentFileEntry.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -423,7 +406,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public double getPriority() {
-		return _cpAttachmentFileEntry.getPriority();
+		return model.getPriority();
 	}
 
 	/**
@@ -433,7 +416,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public int getStatus() {
-		return _cpAttachmentFileEntry.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -443,7 +426,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public long getStatusByUserId() {
-		return _cpAttachmentFileEntry.getStatusByUserId();
+		return model.getStatusByUserId();
 	}
 
 	/**
@@ -453,7 +436,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public String getStatusByUserName() {
-		return _cpAttachmentFileEntry.getStatusByUserName();
+		return model.getStatusByUserName();
 	}
 
 	/**
@@ -463,7 +446,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public String getStatusByUserUuid() {
-		return _cpAttachmentFileEntry.getStatusByUserUuid();
+		return model.getStatusByUserUuid();
 	}
 
 	/**
@@ -473,7 +456,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public Date getStatusDate() {
-		return _cpAttachmentFileEntry.getStatusDate();
+		return model.getStatusDate();
 	}
 
 	/**
@@ -483,7 +466,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public String getTitle() {
-		return _cpAttachmentFileEntry.getTitle();
+		return model.getTitle();
 	}
 
 	/**
@@ -494,7 +477,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public String getTitle(java.util.Locale locale) {
-		return _cpAttachmentFileEntry.getTitle(locale);
+		return model.getTitle(locale);
 	}
 
 	/**
@@ -506,7 +489,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public String getTitle(java.util.Locale locale, boolean useDefault) {
-		return _cpAttachmentFileEntry.getTitle(locale, useDefault);
+		return model.getTitle(locale, useDefault);
 	}
 
 	/**
@@ -517,7 +500,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public String getTitle(String languageId) {
-		return _cpAttachmentFileEntry.getTitle(languageId);
+		return model.getTitle(languageId);
 	}
 
 	/**
@@ -529,17 +512,17 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public String getTitle(String languageId, boolean useDefault) {
-		return _cpAttachmentFileEntry.getTitle(languageId, useDefault);
+		return model.getTitle(languageId, useDefault);
 	}
 
 	@Override
 	public String getTitleCurrentLanguageId() {
-		return _cpAttachmentFileEntry.getTitleCurrentLanguageId();
+		return model.getTitleCurrentLanguageId();
 	}
 
 	@Override
 	public String getTitleCurrentValue() {
-		return _cpAttachmentFileEntry.getTitleCurrentValue();
+		return model.getTitleCurrentValue();
 	}
 
 	/**
@@ -549,7 +532,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public Map<java.util.Locale, String> getTitleMap() {
-		return _cpAttachmentFileEntry.getTitleMap();
+		return model.getTitleMap();
 	}
 
 	/**
@@ -559,7 +542,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public int getType() {
-		return _cpAttachmentFileEntry.getType();
+		return model.getType();
 	}
 
 	/**
@@ -569,7 +552,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _cpAttachmentFileEntry.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -579,7 +562,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _cpAttachmentFileEntry.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -589,7 +572,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _cpAttachmentFileEntry.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -599,12 +582,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public String getUuid() {
-		return _cpAttachmentFileEntry.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _cpAttachmentFileEntry.hashCode();
+		return model.getUuid();
 	}
 
 	/**
@@ -614,12 +592,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public boolean isApproved() {
-		return _cpAttachmentFileEntry.isApproved();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _cpAttachmentFileEntry.isCachedModel();
+		return model.isApproved();
 	}
 
 	/**
@@ -629,7 +602,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public boolean isDenied() {
-		return _cpAttachmentFileEntry.isDenied();
+		return model.isDenied();
 	}
 
 	/**
@@ -639,12 +612,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public boolean isDraft() {
-		return _cpAttachmentFileEntry.isDraft();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _cpAttachmentFileEntry.isEscapedModel();
+		return model.isDraft();
 	}
 
 	/**
@@ -654,7 +622,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public boolean isExpired() {
-		return _cpAttachmentFileEntry.isExpired();
+		return model.isExpired();
 	}
 
 	/**
@@ -664,7 +632,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public boolean isInactive() {
-		return _cpAttachmentFileEntry.isInactive();
+		return model.isInactive();
 	}
 
 	/**
@@ -674,12 +642,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public boolean isIncomplete() {
-		return _cpAttachmentFileEntry.isIncomplete();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _cpAttachmentFileEntry.isNew();
+		return model.isIncomplete();
 	}
 
 	/**
@@ -689,7 +652,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public boolean isPending() {
-		return _cpAttachmentFileEntry.isPending();
+		return model.isPending();
 	}
 
 	/**
@@ -699,19 +662,19 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public boolean isScheduled() {
-		return _cpAttachmentFileEntry.isScheduled();
+		return model.isScheduled();
 	}
 
 	@Override
 	public void persist() {
-		_cpAttachmentFileEntry.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
-		_cpAttachmentFileEntry.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
@@ -719,18 +682,12 @@ public class CPAttachmentFileEntryWrapper
 			java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
-		_cpAttachmentFileEntry.prepareLocalizedFieldsForImport(
-			defaultImportLocale);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_cpAttachmentFileEntry.setCachedModel(cachedModel);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_cpAttachmentFileEntry.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -740,7 +697,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public void setClassNameId(long classNameId) {
-		_cpAttachmentFileEntry.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -750,7 +707,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public void setClassPK(long classPK) {
-		_cpAttachmentFileEntry.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -760,7 +717,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_cpAttachmentFileEntry.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -770,8 +727,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public void setCPAttachmentFileEntryId(long CPAttachmentFileEntryId) {
-		_cpAttachmentFileEntry.setCPAttachmentFileEntryId(
-			CPAttachmentFileEntryId);
+		model.setCPAttachmentFileEntryId(CPAttachmentFileEntryId);
 	}
 
 	/**
@@ -781,7 +737,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_cpAttachmentFileEntry.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -791,24 +747,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public void setDisplayDate(Date displayDate) {
-		_cpAttachmentFileEntry.setDisplayDate(displayDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_cpAttachmentFileEntry.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_cpAttachmentFileEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_cpAttachmentFileEntry.setExpandoBridgeAttributes(serviceContext);
+		model.setDisplayDate(displayDate);
 	}
 
 	/**
@@ -818,7 +757,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public void setExpirationDate(Date expirationDate) {
-		_cpAttachmentFileEntry.setExpirationDate(expirationDate);
+		model.setExpirationDate(expirationDate);
 	}
 
 	/**
@@ -828,7 +767,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
-		_cpAttachmentFileEntry.setExternalReferenceCode(externalReferenceCode);
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**
@@ -838,7 +777,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public void setFileEntryId(long fileEntryId) {
-		_cpAttachmentFileEntry.setFileEntryId(fileEntryId);
+		model.setFileEntryId(fileEntryId);
 	}
 
 	/**
@@ -848,7 +787,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_cpAttachmentFileEntry.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -858,7 +797,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public void setJson(String json) {
-		_cpAttachmentFileEntry.setJson(json);
+		model.setJson(json);
 	}
 
 	/**
@@ -868,7 +807,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_cpAttachmentFileEntry.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -878,12 +817,17 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_cpAttachmentFileEntry.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this cp attachment file entry.
+	 *
+	 * @param mvccVersion the mvcc version of this cp attachment file entry
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_cpAttachmentFileEntry.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -893,12 +837,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_cpAttachmentFileEntry.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_cpAttachmentFileEntry.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -908,7 +847,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public void setPriority(double priority) {
-		_cpAttachmentFileEntry.setPriority(priority);
+		model.setPriority(priority);
 	}
 
 	/**
@@ -918,7 +857,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public void setStatus(int status) {
-		_cpAttachmentFileEntry.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -928,7 +867,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
-		_cpAttachmentFileEntry.setStatusByUserId(statusByUserId);
+		model.setStatusByUserId(statusByUserId);
 	}
 
 	/**
@@ -938,7 +877,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
-		_cpAttachmentFileEntry.setStatusByUserName(statusByUserName);
+		model.setStatusByUserName(statusByUserName);
 	}
 
 	/**
@@ -948,7 +887,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public void setStatusByUserUuid(String statusByUserUuid) {
-		_cpAttachmentFileEntry.setStatusByUserUuid(statusByUserUuid);
+		model.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
@@ -958,7 +897,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public void setStatusDate(Date statusDate) {
-		_cpAttachmentFileEntry.setStatusDate(statusDate);
+		model.setStatusDate(statusDate);
 	}
 
 	/**
@@ -968,7 +907,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public void setTitle(String title) {
-		_cpAttachmentFileEntry.setTitle(title);
+		model.setTitle(title);
 	}
 
 	/**
@@ -979,7 +918,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public void setTitle(String title, java.util.Locale locale) {
-		_cpAttachmentFileEntry.setTitle(title, locale);
+		model.setTitle(title, locale);
 	}
 
 	/**
@@ -993,12 +932,12 @@ public class CPAttachmentFileEntryWrapper
 	public void setTitle(
 		String title, java.util.Locale locale, java.util.Locale defaultLocale) {
 
-		_cpAttachmentFileEntry.setTitle(title, locale, defaultLocale);
+		model.setTitle(title, locale, defaultLocale);
 	}
 
 	@Override
 	public void setTitleCurrentLanguageId(String languageId) {
-		_cpAttachmentFileEntry.setTitleCurrentLanguageId(languageId);
+		model.setTitleCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -1008,7 +947,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public void setTitleMap(Map<java.util.Locale, String> titleMap) {
-		_cpAttachmentFileEntry.setTitleMap(titleMap);
+		model.setTitleMap(titleMap);
 	}
 
 	/**
@@ -1022,7 +961,7 @@ public class CPAttachmentFileEntryWrapper
 		Map<java.util.Locale, String> titleMap,
 		java.util.Locale defaultLocale) {
 
-		_cpAttachmentFileEntry.setTitleMap(titleMap, defaultLocale);
+		model.setTitleMap(titleMap, defaultLocale);
 	}
 
 	/**
@@ -1032,7 +971,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public void setType(int type) {
-		_cpAttachmentFileEntry.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -1042,7 +981,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_cpAttachmentFileEntry.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -1052,7 +991,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_cpAttachmentFileEntry.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -1062,7 +1001,7 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_cpAttachmentFileEntry.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -1072,86 +1011,19 @@ public class CPAttachmentFileEntryWrapper
 	 */
 	@Override
 	public void setUuid(String uuid) {
-		_cpAttachmentFileEntry.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CPAttachmentFileEntry>
-		toCacheModel() {
-
-		return _cpAttachmentFileEntry.toCacheModel();
-	}
-
-	@Override
-	public CPAttachmentFileEntry toEscapedModel() {
-		return new CPAttachmentFileEntryWrapper(
-			_cpAttachmentFileEntry.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _cpAttachmentFileEntry.toString();
-	}
-
-	@Override
-	public CPAttachmentFileEntry toUnescapedModel() {
-		return new CPAttachmentFileEntryWrapper(
-			_cpAttachmentFileEntry.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _cpAttachmentFileEntry.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CPAttachmentFileEntryWrapper)) {
-			return false;
-		}
-
-		CPAttachmentFileEntryWrapper cpAttachmentFileEntryWrapper =
-			(CPAttachmentFileEntryWrapper)object;
-
-		if (Objects.equals(
-				_cpAttachmentFileEntry,
-				cpAttachmentFileEntryWrapper._cpAttachmentFileEntry)) {
-
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _cpAttachmentFileEntry.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public CPAttachmentFileEntry getWrappedModel() {
-		return _cpAttachmentFileEntry;
-	}
+	protected CPAttachmentFileEntryWrapper wrap(
+		CPAttachmentFileEntry cpAttachmentFileEntry) {
 
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _cpAttachmentFileEntry.isEntityCacheEnabled();
+		return new CPAttachmentFileEntryWrapper(cpAttachmentFileEntry);
 	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _cpAttachmentFileEntry.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_cpAttachmentFileEntry.resetOriginalValues();
-	}
-
-	private final CPAttachmentFileEntry _cpAttachmentFileEntry;
 
 }

@@ -2,6 +2,7 @@
 
 <model-hints>
 	<model name="com.liferay.commerce.machine.learning.forecast.alert.model.CommerceMLForecastAlertEntry">
+		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="commerceMLForecastAlertEntryId" type="long" />
 		<field name="companyId" type="long" />

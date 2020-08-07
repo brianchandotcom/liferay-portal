@@ -20,6 +20,7 @@ import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSettin
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,7 +36,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -82,7 +82,7 @@ public class CPDefinitionVirtualSettingModelImpl
 	public static final String TABLE_NAME = "CPDefinitionVirtualSetting";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
 		{"CPDefinitionVirtualSettingId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
@@ -102,6 +102,7 @@ public class CPDefinitionVirtualSettingModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPDefinitionVirtualSettingId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -128,7 +129,7 @@ public class CPDefinitionVirtualSettingModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPDefinitionVirtualSetting (uuid_ VARCHAR(75) null,CPDefinitionVirtualSettingId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,fileEntryId LONG,url VARCHAR(75) null,activationStatus INTEGER,duration LONG,maxUsages INTEGER,useSample BOOLEAN,sampleFileEntryId LONG,sampleUrl VARCHAR(75) null,termsOfUseRequired BOOLEAN,termsOfUseContent STRING null,termsOfUseArticleResourcePK LONG,override BOOLEAN,lastPublishDate DATE null)";
+		"create table CPDefinitionVirtualSetting (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,CPDefinitionVirtualSettingId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,fileEntryId LONG,url VARCHAR(75) null,activationStatus INTEGER,duration LONG,maxUsages INTEGER,useSample BOOLEAN,sampleFileEntryId LONG,sampleUrl VARCHAR(75) null,termsOfUseRequired BOOLEAN,termsOfUseContent STRING null,termsOfUseArticleResourcePK LONG,override BOOLEAN,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CPDefinitionVirtualSetting";
@@ -145,20 +146,23 @@ public class CPDefinitionVirtualSettingModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.type.virtual.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.type.virtual.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.type.virtual.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
 
@@ -187,6 +191,7 @@ public class CPDefinitionVirtualSettingModelImpl
 
 		CPDefinitionVirtualSetting model = new CPDefinitionVirtualSettingImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCPDefinitionVirtualSettingId(
 			soapModel.getCPDefinitionVirtualSettingId());
@@ -296,9 +301,6 @@ public class CPDefinitionVirtualSettingModelImpl
 					(CPDefinitionVirtualSetting)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -379,607 +381,172 @@ public class CPDefinitionVirtualSettingModelImpl
 					<String, BiConsumer<CPDefinitionVirtualSetting, ?>>();
 
 		attributeGetterFunctions.put(
-			"uuid",
-			new Function<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
-
-					return cpDefinitionVirtualSetting.getUuid();
-				}
-
-			});
+			"mvccVersion", CPDefinitionVirtualSetting::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CPDefinitionVirtualSetting, Long>)
+				CPDefinitionVirtualSetting::setMvccVersion);
+		attributeGetterFunctions.put(
+			"uuid", CPDefinitionVirtualSetting::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
-			new BiConsumer<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting,
-					Object uuidObject) {
-
-					cpDefinitionVirtualSetting.setUuid((String)uuidObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionVirtualSetting, String>)
+				CPDefinitionVirtualSetting::setUuid);
 		attributeGetterFunctions.put(
 			"CPDefinitionVirtualSettingId",
-			new Function<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
-
-					return cpDefinitionVirtualSetting.
-						getCPDefinitionVirtualSettingId();
-				}
-
-			});
+			CPDefinitionVirtualSetting::getCPDefinitionVirtualSettingId);
 		attributeSetterBiConsumers.put(
 			"CPDefinitionVirtualSettingId",
-			new BiConsumer<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting,
-					Object CPDefinitionVirtualSettingIdObject) {
-
-					cpDefinitionVirtualSetting.setCPDefinitionVirtualSettingId(
-						(Long)CPDefinitionVirtualSettingIdObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionVirtualSetting, Long>)
+				CPDefinitionVirtualSetting::setCPDefinitionVirtualSettingId);
 		attributeGetterFunctions.put(
-			"groupId",
-			new Function<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
-
-					return cpDefinitionVirtualSetting.getGroupId();
-				}
-
-			});
+			"groupId", CPDefinitionVirtualSetting::getGroupId);
 		attributeSetterBiConsumers.put(
 			"groupId",
-			new BiConsumer<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting,
-					Object groupIdObject) {
-
-					cpDefinitionVirtualSetting.setGroupId((Long)groupIdObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionVirtualSetting, Long>)
+				CPDefinitionVirtualSetting::setGroupId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
-
-					return cpDefinitionVirtualSetting.getCompanyId();
-				}
-
-			});
+			"companyId", CPDefinitionVirtualSetting::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting,
-					Object companyIdObject) {
-
-					cpDefinitionVirtualSetting.setCompanyId(
-						(Long)companyIdObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionVirtualSetting, Long>)
+				CPDefinitionVirtualSetting::setCompanyId);
 		attributeGetterFunctions.put(
-			"userId",
-			new Function<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
-
-					return cpDefinitionVirtualSetting.getUserId();
-				}
-
-			});
+			"userId", CPDefinitionVirtualSetting::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting,
-					Object userIdObject) {
-
-					cpDefinitionVirtualSetting.setUserId((Long)userIdObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionVirtualSetting, Long>)
+				CPDefinitionVirtualSetting::setUserId);
 		attributeGetterFunctions.put(
-			"userName",
-			new Function<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
-
-					return cpDefinitionVirtualSetting.getUserName();
-				}
-
-			});
+			"userName", CPDefinitionVirtualSetting::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting,
-					Object userNameObject) {
-
-					cpDefinitionVirtualSetting.setUserName(
-						(String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionVirtualSetting, String>)
+				CPDefinitionVirtualSetting::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
-
-					return cpDefinitionVirtualSetting.getCreateDate();
-				}
-
-			});
+			"createDate", CPDefinitionVirtualSetting::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting,
-					Object createDateObject) {
-
-					cpDefinitionVirtualSetting.setCreateDate(
-						(Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionVirtualSetting, Date>)
+				CPDefinitionVirtualSetting::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
-
-					return cpDefinitionVirtualSetting.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CPDefinitionVirtualSetting::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting,
-					Object modifiedDateObject) {
-
-					cpDefinitionVirtualSetting.setModifiedDate(
-						(Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionVirtualSetting, Date>)
+				CPDefinitionVirtualSetting::setModifiedDate);
 		attributeGetterFunctions.put(
-			"classNameId",
-			new Function<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
-
-					return cpDefinitionVirtualSetting.getClassNameId();
-				}
-
-			});
+			"classNameId", CPDefinitionVirtualSetting::getClassNameId);
 		attributeSetterBiConsumers.put(
 			"classNameId",
-			new BiConsumer<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting,
-					Object classNameIdObject) {
-
-					cpDefinitionVirtualSetting.setClassNameId(
-						(Long)classNameIdObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionVirtualSetting, Long>)
+				CPDefinitionVirtualSetting::setClassNameId);
 		attributeGetterFunctions.put(
-			"classPK",
-			new Function<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
-
-					return cpDefinitionVirtualSetting.getClassPK();
-				}
-
-			});
+			"classPK", CPDefinitionVirtualSetting::getClassPK);
 		attributeSetterBiConsumers.put(
 			"classPK",
-			new BiConsumer<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting,
-					Object classPKObject) {
-
-					cpDefinitionVirtualSetting.setClassPK((Long)classPKObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionVirtualSetting, Long>)
+				CPDefinitionVirtualSetting::setClassPK);
 		attributeGetterFunctions.put(
-			"fileEntryId",
-			new Function<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
-
-					return cpDefinitionVirtualSetting.getFileEntryId();
-				}
-
-			});
+			"fileEntryId", CPDefinitionVirtualSetting::getFileEntryId);
 		attributeSetterBiConsumers.put(
 			"fileEntryId",
-			new BiConsumer<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting,
-					Object fileEntryIdObject) {
-
-					cpDefinitionVirtualSetting.setFileEntryId(
-						(Long)fileEntryIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"url",
-			new Function<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
-
-					return cpDefinitionVirtualSetting.getUrl();
-				}
-
-			});
+			(BiConsumer<CPDefinitionVirtualSetting, Long>)
+				CPDefinitionVirtualSetting::setFileEntryId);
+		attributeGetterFunctions.put("url", CPDefinitionVirtualSetting::getUrl);
 		attributeSetterBiConsumers.put(
 			"url",
-			new BiConsumer<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting,
-					Object urlObject) {
-
-					cpDefinitionVirtualSetting.setUrl((String)urlObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionVirtualSetting, String>)
+				CPDefinitionVirtualSetting::setUrl);
 		attributeGetterFunctions.put(
 			"activationStatus",
-			new Function<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
-
-					return cpDefinitionVirtualSetting.getActivationStatus();
-				}
-
-			});
+			CPDefinitionVirtualSetting::getActivationStatus);
 		attributeSetterBiConsumers.put(
 			"activationStatus",
-			new BiConsumer<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting,
-					Object activationStatusObject) {
-
-					cpDefinitionVirtualSetting.setActivationStatus(
-						(Integer)activationStatusObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionVirtualSetting, Integer>)
+				CPDefinitionVirtualSetting::setActivationStatus);
 		attributeGetterFunctions.put(
-			"duration",
-			new Function<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
-
-					return cpDefinitionVirtualSetting.getDuration();
-				}
-
-			});
+			"duration", CPDefinitionVirtualSetting::getDuration);
 		attributeSetterBiConsumers.put(
 			"duration",
-			new BiConsumer<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting,
-					Object durationObject) {
-
-					cpDefinitionVirtualSetting.setDuration(
-						(Long)durationObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionVirtualSetting, Long>)
+				CPDefinitionVirtualSetting::setDuration);
 		attributeGetterFunctions.put(
-			"maxUsages",
-			new Function<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
-
-					return cpDefinitionVirtualSetting.getMaxUsages();
-				}
-
-			});
+			"maxUsages", CPDefinitionVirtualSetting::getMaxUsages);
 		attributeSetterBiConsumers.put(
 			"maxUsages",
-			new BiConsumer<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting,
-					Object maxUsagesObject) {
-
-					cpDefinitionVirtualSetting.setMaxUsages(
-						(Integer)maxUsagesObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionVirtualSetting, Integer>)
+				CPDefinitionVirtualSetting::setMaxUsages);
 		attributeGetterFunctions.put(
-			"useSample",
-			new Function<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
-
-					return cpDefinitionVirtualSetting.getUseSample();
-				}
-
-			});
+			"useSample", CPDefinitionVirtualSetting::getUseSample);
 		attributeSetterBiConsumers.put(
 			"useSample",
-			new BiConsumer<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting,
-					Object useSampleObject) {
-
-					cpDefinitionVirtualSetting.setUseSample(
-						(Boolean)useSampleObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionVirtualSetting, Boolean>)
+				CPDefinitionVirtualSetting::setUseSample);
 		attributeGetterFunctions.put(
 			"sampleFileEntryId",
-			new Function<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
-
-					return cpDefinitionVirtualSetting.getSampleFileEntryId();
-				}
-
-			});
+			CPDefinitionVirtualSetting::getSampleFileEntryId);
 		attributeSetterBiConsumers.put(
 			"sampleFileEntryId",
-			new BiConsumer<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting,
-					Object sampleFileEntryIdObject) {
-
-					cpDefinitionVirtualSetting.setSampleFileEntryId(
-						(Long)sampleFileEntryIdObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionVirtualSetting, Long>)
+				CPDefinitionVirtualSetting::setSampleFileEntryId);
 		attributeGetterFunctions.put(
-			"sampleUrl",
-			new Function<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
-
-					return cpDefinitionVirtualSetting.getSampleUrl();
-				}
-
-			});
+			"sampleUrl", CPDefinitionVirtualSetting::getSampleUrl);
 		attributeSetterBiConsumers.put(
 			"sampleUrl",
-			new BiConsumer<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting,
-					Object sampleUrlObject) {
-
-					cpDefinitionVirtualSetting.setSampleUrl(
-						(String)sampleUrlObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionVirtualSetting, String>)
+				CPDefinitionVirtualSetting::setSampleUrl);
 		attributeGetterFunctions.put(
 			"termsOfUseRequired",
-			new Function<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
-
-					return cpDefinitionVirtualSetting.getTermsOfUseRequired();
-				}
-
-			});
+			CPDefinitionVirtualSetting::getTermsOfUseRequired);
 		attributeSetterBiConsumers.put(
 			"termsOfUseRequired",
-			new BiConsumer<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting,
-					Object termsOfUseRequiredObject) {
-
-					cpDefinitionVirtualSetting.setTermsOfUseRequired(
-						(Boolean)termsOfUseRequiredObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionVirtualSetting, Boolean>)
+				CPDefinitionVirtualSetting::setTermsOfUseRequired);
 		attributeGetterFunctions.put(
 			"termsOfUseContent",
-			new Function<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
-
-					return cpDefinitionVirtualSetting.getTermsOfUseContent();
-				}
-
-			});
+			CPDefinitionVirtualSetting::getTermsOfUseContent);
 		attributeSetterBiConsumers.put(
 			"termsOfUseContent",
-			new BiConsumer<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting,
-					Object termsOfUseContentObject) {
-
-					cpDefinitionVirtualSetting.setTermsOfUseContent(
-						(String)termsOfUseContentObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionVirtualSetting, String>)
+				CPDefinitionVirtualSetting::setTermsOfUseContent);
 		attributeGetterFunctions.put(
 			"termsOfUseJournalArticleResourcePrimKey",
-			new Function<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
-
-					return cpDefinitionVirtualSetting.
-						getTermsOfUseJournalArticleResourcePrimKey();
-				}
-
-			});
+			CPDefinitionVirtualSetting::
+				getTermsOfUseJournalArticleResourcePrimKey);
 		attributeSetterBiConsumers.put(
 			"termsOfUseJournalArticleResourcePrimKey",
-			new BiConsumer<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting,
-					Object termsOfUseJournalArticleResourcePrimKeyObject) {
-
-					cpDefinitionVirtualSetting.
-						setTermsOfUseJournalArticleResourcePrimKey(
-							(Long)
-								termsOfUseJournalArticleResourcePrimKeyObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionVirtualSetting, Long>)
+				CPDefinitionVirtualSetting::
+					setTermsOfUseJournalArticleResourcePrimKey);
 		attributeGetterFunctions.put(
-			"override",
-			new Function<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
-
-					return cpDefinitionVirtualSetting.getOverride();
-				}
-
-			});
+			"override", CPDefinitionVirtualSetting::getOverride);
 		attributeSetterBiConsumers.put(
 			"override",
-			new BiConsumer<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting,
-					Object overrideObject) {
-
-					cpDefinitionVirtualSetting.setOverride(
-						(Boolean)overrideObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionVirtualSetting, Boolean>)
+				CPDefinitionVirtualSetting::setOverride);
 		attributeGetterFunctions.put(
-			"lastPublishDate",
-			new Function<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
-
-					return cpDefinitionVirtualSetting.getLastPublishDate();
-				}
-
-			});
+			"lastPublishDate", CPDefinitionVirtualSetting::getLastPublishDate);
 		attributeSetterBiConsumers.put(
 			"lastPublishDate",
-			new BiConsumer<CPDefinitionVirtualSetting, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionVirtualSetting cpDefinitionVirtualSetting,
-					Object lastPublishDateObject) {
-
-					cpDefinitionVirtualSetting.setLastPublishDate(
-						(Date)lastPublishDateObject);
-				}
-
-			});
+			(BiConsumer<CPDefinitionVirtualSetting, Date>)
+				CPDefinitionVirtualSetting::setLastPublishDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1597,6 +1164,7 @@ public class CPDefinitionVirtualSettingModelImpl
 		CPDefinitionVirtualSettingImpl cpDefinitionVirtualSettingImpl =
 			new CPDefinitionVirtualSettingImpl();
 
+		cpDefinitionVirtualSettingImpl.setMvccVersion(getMvccVersion());
 		cpDefinitionVirtualSettingImpl.setUuid(getUuid());
 		cpDefinitionVirtualSettingImpl.setCPDefinitionVirtualSettingId(
 			getCPDefinitionVirtualSettingId());
@@ -1678,11 +1246,19 @@ public class CPDefinitionVirtualSettingModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -1717,6 +1293,8 @@ public class CPDefinitionVirtualSettingModelImpl
 		CPDefinitionVirtualSettingCacheModel
 			cpDefinitionVirtualSettingCacheModel =
 				new CPDefinitionVirtualSettingCacheModel();
+
+		cpDefinitionVirtualSettingCacheModel.mvccVersion = getMvccVersion();
 
 		cpDefinitionVirtualSettingCacheModel.uuid = getUuid();
 
@@ -1906,6 +1484,7 @@ public class CPDefinitionVirtualSettingModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _CPDefinitionVirtualSettingId;

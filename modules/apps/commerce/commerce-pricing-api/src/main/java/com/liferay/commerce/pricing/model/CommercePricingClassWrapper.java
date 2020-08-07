@@ -14,17 +14,13 @@
 
 package com.liferay.commerce.pricing.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,28 +32,20 @@ import java.util.Objects;
  * @generated
  */
 public class CommercePricingClassWrapper
+	extends BaseModelWrapper<CommercePricingClass>
 	implements CommercePricingClass, ModelWrapper<CommercePricingClass> {
 
 	public CommercePricingClassWrapper(
 		CommercePricingClass commercePricingClass) {
 
-		_commercePricingClass = commercePricingClass;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommercePricingClass.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommercePricingClass.class.getName();
+		super(commercePricingClass);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("commercePricingClassId", getCommercePricingClassId());
@@ -75,6 +63,12 @@ public class CommercePricingClassWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -145,19 +139,8 @@ public class CommercePricingClassWrapper
 	}
 
 	@Override
-	public Object clone() {
-		return new CommercePricingClassWrapper(
-			(CommercePricingClass)_commercePricingClass.clone());
-	}
-
-	@Override
-	public int compareTo(CommercePricingClass commercePricingClass) {
-		return _commercePricingClass.compareTo(commercePricingClass);
-	}
-
-	@Override
 	public String[] getAvailableLanguageIds() {
-		return _commercePricingClass.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -167,7 +150,7 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public long getCommercePricingClassId() {
-		return _commercePricingClass.getCommercePricingClassId();
+		return model.getCommercePricingClassId();
 	}
 
 	/**
@@ -177,7 +160,7 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commercePricingClass.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -187,12 +170,12 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commercePricingClass.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _commercePricingClass.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -202,7 +185,7 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public String getDescription() {
-		return _commercePricingClass.getDescription();
+		return model.getDescription();
 	}
 
 	/**
@@ -213,7 +196,7 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public String getDescription(java.util.Locale locale) {
-		return _commercePricingClass.getDescription(locale);
+		return model.getDescription(locale);
 	}
 
 	/**
@@ -225,7 +208,7 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public String getDescription(java.util.Locale locale, boolean useDefault) {
-		return _commercePricingClass.getDescription(locale, useDefault);
+		return model.getDescription(locale, useDefault);
 	}
 
 	/**
@@ -236,7 +219,7 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public String getDescription(String languageId) {
-		return _commercePricingClass.getDescription(languageId);
+		return model.getDescription(languageId);
 	}
 
 	/**
@@ -248,17 +231,17 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return _commercePricingClass.getDescription(languageId, useDefault);
+		return model.getDescription(languageId, useDefault);
 	}
 
 	@Override
 	public String getDescriptionCurrentLanguageId() {
-		return _commercePricingClass.getDescriptionCurrentLanguageId();
+		return model.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
 	public String getDescriptionCurrentValue() {
-		return _commercePricingClass.getDescriptionCurrentValue();
+		return model.getDescriptionCurrentValue();
 	}
 
 	/**
@@ -268,12 +251,7 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public Map<java.util.Locale, String> getDescriptionMap() {
-		return _commercePricingClass.getDescriptionMap();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commercePricingClass.getExpandoBridge();
+		return model.getDescriptionMap();
 	}
 
 	/**
@@ -283,7 +261,7 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public String getExternalReferenceCode() {
-		return _commercePricingClass.getExternalReferenceCode();
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -293,7 +271,7 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public Date getLastPublishDate() {
-		return _commercePricingClass.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -303,7 +281,17 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commercePricingClass.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce pricing class.
+	 *
+	 * @return the mvcc version of this commerce pricing class
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -313,12 +301,7 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commercePricingClass.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commercePricingClass.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -328,7 +311,7 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public String getTitle() {
-		return _commercePricingClass.getTitle();
+		return model.getTitle();
 	}
 
 	/**
@@ -339,7 +322,7 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public String getTitle(java.util.Locale locale) {
-		return _commercePricingClass.getTitle(locale);
+		return model.getTitle(locale);
 	}
 
 	/**
@@ -351,7 +334,7 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public String getTitle(java.util.Locale locale, boolean useDefault) {
-		return _commercePricingClass.getTitle(locale, useDefault);
+		return model.getTitle(locale, useDefault);
 	}
 
 	/**
@@ -362,7 +345,7 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public String getTitle(String languageId) {
-		return _commercePricingClass.getTitle(languageId);
+		return model.getTitle(languageId);
 	}
 
 	/**
@@ -374,17 +357,17 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public String getTitle(String languageId, boolean useDefault) {
-		return _commercePricingClass.getTitle(languageId, useDefault);
+		return model.getTitle(languageId, useDefault);
 	}
 
 	@Override
 	public String getTitleCurrentLanguageId() {
-		return _commercePricingClass.getTitleCurrentLanguageId();
+		return model.getTitleCurrentLanguageId();
 	}
 
 	@Override
 	public String getTitleCurrentValue() {
-		return _commercePricingClass.getTitleCurrentValue();
+		return model.getTitleCurrentValue();
 	}
 
 	/**
@@ -394,7 +377,7 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public Map<java.util.Locale, String> getTitleMap() {
-		return _commercePricingClass.getTitleMap();
+		return model.getTitleMap();
 	}
 
 	/**
@@ -404,7 +387,7 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commercePricingClass.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -414,7 +397,7 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commercePricingClass.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -424,7 +407,7 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commercePricingClass.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -434,39 +417,19 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public String getUuid() {
-		return _commercePricingClass.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commercePricingClass.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commercePricingClass.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commercePricingClass.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commercePricingClass.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_commercePricingClass.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
-		_commercePricingClass.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
@@ -474,13 +437,7 @@ public class CommercePricingClassWrapper
 			java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
-		_commercePricingClass.prepareLocalizedFieldsForImport(
-			defaultImportLocale);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commercePricingClass.setCachedModel(cachedModel);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -490,7 +447,7 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public void setCommercePricingClassId(long commercePricingClassId) {
-		_commercePricingClass.setCommercePricingClassId(commercePricingClassId);
+		model.setCommercePricingClassId(commercePricingClassId);
 	}
 
 	/**
@@ -500,7 +457,7 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commercePricingClass.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -510,7 +467,7 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commercePricingClass.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -520,7 +477,7 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public void setDescription(String description) {
-		_commercePricingClass.setDescription(description);
+		model.setDescription(description);
 	}
 
 	/**
@@ -531,7 +488,7 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public void setDescription(String description, java.util.Locale locale) {
-		_commercePricingClass.setDescription(description, locale);
+		model.setDescription(description, locale);
 	}
 
 	/**
@@ -546,13 +503,12 @@ public class CommercePricingClassWrapper
 		String description, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 
-		_commercePricingClass.setDescription(
-			description, locale, defaultLocale);
+		model.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
 	public void setDescriptionCurrentLanguageId(String languageId) {
-		_commercePricingClass.setDescriptionCurrentLanguageId(languageId);
+		model.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -564,7 +520,7 @@ public class CommercePricingClassWrapper
 	public void setDescriptionMap(
 		Map<java.util.Locale, String> descriptionMap) {
 
-		_commercePricingClass.setDescriptionMap(descriptionMap);
+		model.setDescriptionMap(descriptionMap);
 	}
 
 	/**
@@ -578,24 +534,7 @@ public class CommercePricingClassWrapper
 		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
 
-		_commercePricingClass.setDescriptionMap(descriptionMap, defaultLocale);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commercePricingClass.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commercePricingClass.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commercePricingClass.setExpandoBridgeAttributes(serviceContext);
+		model.setDescriptionMap(descriptionMap, defaultLocale);
 	}
 
 	/**
@@ -605,7 +544,7 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
-		_commercePricingClass.setExternalReferenceCode(externalReferenceCode);
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**
@@ -615,7 +554,7 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_commercePricingClass.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -625,12 +564,17 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commercePricingClass.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this commerce pricing class.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce pricing class
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_commercePricingClass.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -640,12 +584,7 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commercePricingClass.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commercePricingClass.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -655,7 +594,7 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public void setTitle(String title) {
-		_commercePricingClass.setTitle(title);
+		model.setTitle(title);
 	}
 
 	/**
@@ -666,7 +605,7 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public void setTitle(String title, java.util.Locale locale) {
-		_commercePricingClass.setTitle(title, locale);
+		model.setTitle(title, locale);
 	}
 
 	/**
@@ -680,12 +619,12 @@ public class CommercePricingClassWrapper
 	public void setTitle(
 		String title, java.util.Locale locale, java.util.Locale defaultLocale) {
 
-		_commercePricingClass.setTitle(title, locale, defaultLocale);
+		model.setTitle(title, locale, defaultLocale);
 	}
 
 	@Override
 	public void setTitleCurrentLanguageId(String languageId) {
-		_commercePricingClass.setTitleCurrentLanguageId(languageId);
+		model.setTitleCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -695,7 +634,7 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public void setTitleMap(Map<java.util.Locale, String> titleMap) {
-		_commercePricingClass.setTitleMap(titleMap);
+		model.setTitleMap(titleMap);
 	}
 
 	/**
@@ -709,7 +648,7 @@ public class CommercePricingClassWrapper
 		Map<java.util.Locale, String> titleMap,
 		java.util.Locale defaultLocale) {
 
-		_commercePricingClass.setTitleMap(titleMap, defaultLocale);
+		model.setTitleMap(titleMap, defaultLocale);
 	}
 
 	/**
@@ -719,7 +658,7 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commercePricingClass.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -729,7 +668,7 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commercePricingClass.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -739,7 +678,7 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commercePricingClass.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -749,86 +688,19 @@ public class CommercePricingClassWrapper
 	 */
 	@Override
 	public void setUuid(String uuid) {
-		_commercePricingClass.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommercePricingClass>
-		toCacheModel() {
-
-		return _commercePricingClass.toCacheModel();
-	}
-
-	@Override
-	public CommercePricingClass toEscapedModel() {
-		return new CommercePricingClassWrapper(
-			_commercePricingClass.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commercePricingClass.toString();
-	}
-
-	@Override
-	public CommercePricingClass toUnescapedModel() {
-		return new CommercePricingClassWrapper(
-			_commercePricingClass.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commercePricingClass.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommercePricingClassWrapper)) {
-			return false;
-		}
-
-		CommercePricingClassWrapper commercePricingClassWrapper =
-			(CommercePricingClassWrapper)object;
-
-		if (Objects.equals(
-				_commercePricingClass,
-				commercePricingClassWrapper._commercePricingClass)) {
-
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _commercePricingClass.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public CommercePricingClass getWrappedModel() {
-		return _commercePricingClass;
-	}
+	protected CommercePricingClassWrapper wrap(
+		CommercePricingClass commercePricingClass) {
 
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commercePricingClass.isEntityCacheEnabled();
+		return new CommercePricingClassWrapper(commercePricingClass);
 	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commercePricingClass.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commercePricingClass.resetOriginalValues();
-	}
-
-	private final CommercePricingClass _commercePricingClass;
 
 }

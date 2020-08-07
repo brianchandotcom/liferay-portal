@@ -1014,10 +1014,6 @@ public class CommerceInventoryWarehouseItemUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CommerceInventoryWarehouseItemPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

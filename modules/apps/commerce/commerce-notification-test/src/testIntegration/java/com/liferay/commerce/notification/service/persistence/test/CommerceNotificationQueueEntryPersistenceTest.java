@@ -129,6 +129,9 @@ public class CommerceNotificationQueueEntryPersistenceTest {
 		CommerceNotificationQueueEntry newCommerceNotificationQueueEntry =
 			_persistence.create(pk);
 
+		newCommerceNotificationQueueEntry.setMvccVersion(
+			RandomTestUtil.nextLong());
+
 		newCommerceNotificationQueueEntry.setGroupId(RandomTestUtil.nextLong());
 
 		newCommerceNotificationQueueEntry.setCompanyId(
@@ -190,6 +193,9 @@ public class CommerceNotificationQueueEntryPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newCommerceNotificationQueueEntry.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCommerceNotificationQueueEntry.getMvccVersion(),
+			newCommerceNotificationQueueEntry.getMvccVersion());
 		Assert.assertEquals(
 			existingCommerceNotificationQueueEntry.
 				getCommerceNotificationQueueEntryId(),
@@ -334,7 +340,7 @@ public class CommerceNotificationQueueEntryPersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"CommerceNotificationQueueEntry",
+			"CommerceNotificationQueueEntry", "mvccVersion", true,
 			"commerceNotificationQueueEntryId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "classNameId", true, "classPK", true,
@@ -599,6 +605,9 @@ public class CommerceNotificationQueueEntryPersistenceTest {
 
 		CommerceNotificationQueueEntry commerceNotificationQueueEntry =
 			_persistence.create(pk);
+
+		commerceNotificationQueueEntry.setMvccVersion(
+			RandomTestUtil.nextLong());
 
 		commerceNotificationQueueEntry.setGroupId(RandomTestUtil.nextLong());
 

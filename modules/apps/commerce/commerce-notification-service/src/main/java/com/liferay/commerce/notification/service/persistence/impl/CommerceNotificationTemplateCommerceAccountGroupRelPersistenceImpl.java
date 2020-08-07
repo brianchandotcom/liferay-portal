@@ -16,9 +16,11 @@ package com.liferay.commerce.notification.service.persistence.impl;
 
 import com.liferay.commerce.notification.exception.NoSuchNotificationTemplateCommerceAccountGroupRelException;
 import com.liferay.commerce.notification.model.CommerceNotificationTemplateCommerceAccountGroupRel;
+import com.liferay.commerce.notification.model.CommerceNotificationTemplateCommerceAccountGroupRelTable;
 import com.liferay.commerce.notification.model.impl.CommerceNotificationTemplateCommerceAccountGroupRelImpl;
 import com.liferay.commerce.notification.model.impl.CommerceNotificationTemplateCommerceAccountGroupRelModelImpl;
 import com.liferay.commerce.notification.service.persistence.CommerceNotificationTemplateCommerceAccountGroupRelPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -35,19 +37,14 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -270,10 +267,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -658,8 +651,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -854,10 +845,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1235,8 +1222,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1403,10 +1388,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(_finderPathFetchByC_C, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1490,8 +1471,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1516,22 +1495,17 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 			"commerceNotificationTemplateCommerceAccountGroupRelId",
 			"CNTemplateCAccountGroupRelId");
 
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-				"_dbColumnNames");
-
-			field.setAccessible(true);
-
-			field.set(this, dbColumnNames);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
+		setDBColumnNames(dbColumnNames);
 
 		setModelClass(
 			CommerceNotificationTemplateCommerceAccountGroupRel.class);
+
+		setModelImplClass(
+			CommerceNotificationTemplateCommerceAccountGroupRelImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(
+			CommerceNotificationTemplateCommerceAccountGroupRelTable.INSTANCE);
 	}
 
 	/**
@@ -1545,8 +1519,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 			commerceNotificationTemplateCommerceAccountGroupRel) {
 
 		entityCache.putResult(
-			CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-				ENTITY_CACHE_ENABLED,
 			CommerceNotificationTemplateCommerceAccountGroupRelImpl.class,
 			commerceNotificationTemplateCommerceAccountGroupRel.getPrimaryKey(),
 			commerceNotificationTemplateCommerceAccountGroupRel);
@@ -1580,7 +1552,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 					commerceNotificationTemplateCommerceAccountGroupRels) {
 
 			if (entityCache.getResult(
-					CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.ENTITY_CACHE_ENABLED,
 					CommerceNotificationTemplateCommerceAccountGroupRelImpl.
 						class,
 					commerceNotificationTemplateCommerceAccountGroupRel.
@@ -1626,8 +1597,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 			commerceNotificationTemplateCommerceAccountGroupRel) {
 
 		entityCache.removeResult(
-			CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-				ENTITY_CACHE_ENABLED,
 			CommerceNotificationTemplateCommerceAccountGroupRelImpl.class,
 			commerceNotificationTemplateCommerceAccountGroupRel.
 				getPrimaryKey());
@@ -1654,8 +1623,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 					commerceNotificationTemplateCommerceAccountGroupRels) {
 
 			entityCache.removeResult(
-				CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-					ENTITY_CACHE_ENABLED,
 				CommerceNotificationTemplateCommerceAccountGroupRelImpl.class,
 				commerceNotificationTemplateCommerceAccountGroupRel.
 					getPrimaryKey());
@@ -1667,6 +1634,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1674,8 +1642,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(
-				CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-					ENTITY_CACHE_ENABLED,
 				CommerceNotificationTemplateCommerceAccountGroupRelImpl.class,
 				primaryKey);
 		}
@@ -1958,12 +1924,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-				COLUMN_BITMASK_ENABLED) {
-
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				commerceNotificationTemplateCommerceAccountGroupRelModelImpl.
 					getCommerceNotificationTemplateId()
@@ -2048,8 +2009,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 		}
 
 		entityCache.putResult(
-			CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-				ENTITY_CACHE_ENABLED,
 			CommerceNotificationTemplateCommerceAccountGroupRelImpl.class,
 			commerceNotificationTemplateCommerceAccountGroupRel.getPrimaryKey(),
 			commerceNotificationTemplateCommerceAccountGroupRel, false);
@@ -2114,74 +2073,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 	/**
 	 * Returns the commerce notification template commerce account group rel with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the commerce notification template commerce account group rel
-	 * @return the commerce notification template commerce account group rel, or <code>null</code> if a commerce notification template commerce account group rel with the primary key could not be found
-	 */
-	@Override
-	public CommerceNotificationTemplateCommerceAccountGroupRel
-		fetchByPrimaryKey(Serializable primaryKey) {
-
-		Serializable serializable = entityCache.getResult(
-			CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-				ENTITY_CACHE_ENABLED,
-			CommerceNotificationTemplateCommerceAccountGroupRelImpl.class,
-			primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CommerceNotificationTemplateCommerceAccountGroupRel
-			commerceNotificationTemplateCommerceAccountGroupRel =
-				(CommerceNotificationTemplateCommerceAccountGroupRel)
-					serializable;
-
-		if (commerceNotificationTemplateCommerceAccountGroupRel == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				commerceNotificationTemplateCommerceAccountGroupRel =
-					(CommerceNotificationTemplateCommerceAccountGroupRel)
-						session.get(
-							CommerceNotificationTemplateCommerceAccountGroupRelImpl.class,
-							primaryKey);
-
-				if (commerceNotificationTemplateCommerceAccountGroupRel !=
-						null) {
-
-					cacheResult(
-						commerceNotificationTemplateCommerceAccountGroupRel);
-				}
-				else {
-					entityCache.putResult(
-						CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.ENTITY_CACHE_ENABLED,
-						CommerceNotificationTemplateCommerceAccountGroupRelImpl.
-							class,
-						primaryKey, nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceNotificationTemplateCommerceAccountGroupRelImpl.
-						class,
-					primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return commerceNotificationTemplateCommerceAccountGroupRel;
-	}
-
-	/**
-	 * Returns the commerce notification template commerce account group rel with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param commerceNotificationTemplateCommerceAccountGroupRelId the primary key of the commerce notification template commerce account group rel
 	 * @return the commerce notification template commerce account group rel, or <code>null</code> if a commerce notification template commerce account group rel with the primary key could not be found
 	 */
@@ -2193,131 +2084,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 		return fetchByPrimaryKey(
 			(Serializable)
 				commerceNotificationTemplateCommerceAccountGroupRelId);
-	}
-
-	@Override
-	public Map
-		<Serializable, CommerceNotificationTemplateCommerceAccountGroupRel>
-			fetchByPrimaryKeys(Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CommerceNotificationTemplateCommerceAccountGroupRel>
-			map =
-				new HashMap
-					<Serializable,
-					 CommerceNotificationTemplateCommerceAccountGroupRel>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CommerceNotificationTemplateCommerceAccountGroupRel
-				commerceNotificationTemplateCommerceAccountGroupRel =
-					fetchByPrimaryKey(primaryKey);
-
-			if (commerceNotificationTemplateCommerceAccountGroupRel != null) {
-				map.put(
-					primaryKey,
-					commerceNotificationTemplateCommerceAccountGroupRel);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-					ENTITY_CACHE_ENABLED,
-				CommerceNotificationTemplateCommerceAccountGroupRelImpl.class,
-				primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(
-						primaryKey,
-						(CommerceNotificationTemplateCommerceAccountGroupRel)
-							serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(
-			_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATECOMMERCEACCOUNTGROUPREL_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CommerceNotificationTemplateCommerceAccountGroupRel
-					commerceNotificationTemplateCommerceAccountGroupRel :
-						(List
-							<CommerceNotificationTemplateCommerceAccountGroupRel>)
-								query.list()) {
-
-				map.put(
-					commerceNotificationTemplateCommerceAccountGroupRel.
-						getPrimaryKeyObj(),
-					commerceNotificationTemplateCommerceAccountGroupRel);
-
-				cacheResult(
-					commerceNotificationTemplateCommerceAccountGroupRel);
-
-				uncachedPrimaryKeys.remove(
-					commerceNotificationTemplateCommerceAccountGroupRel.
-						getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceNotificationTemplateCommerceAccountGroupRelImpl.
-						class,
-					primaryKey, nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -2455,10 +2221,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2508,9 +2270,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2527,6 +2286,21 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 	}
 
 	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "CNTemplateCAccountGroupRelId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_COMMERCENOTIFICATIONTEMPLATECOMMERCEACCOUNTGROUPREL;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
 			TABLE_COLUMNS_MAP;
@@ -2537,36 +2311,20 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-				ENTITY_CACHE_ENABLED,
-			CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-				FINDER_CACHE_ENABLED,
 			CommerceNotificationTemplateCommerceAccountGroupRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-				ENTITY_CACHE_ENABLED,
-			CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-				FINDER_CACHE_ENABLED,
 			CommerceNotificationTemplateCommerceAccountGroupRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-				ENTITY_CACHE_ENABLED,
-			CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-				FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByCommerceNotificationTemplateId =
 			new FinderPath(
-				CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-					ENTITY_CACHE_ENABLED,
-				CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-					FINDER_CACHE_ENABLED,
 				CommerceNotificationTemplateCommerceAccountGroupRelImpl.class,
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 				"findByCommerceNotificationTemplateId",
@@ -2577,10 +2335,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 
 		_finderPathWithoutPaginationFindByCommerceNotificationTemplateId =
 			new FinderPath(
-				CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-					ENTITY_CACHE_ENABLED,
-				CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-					FINDER_CACHE_ENABLED,
 				CommerceNotificationTemplateCommerceAccountGroupRelImpl.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCommerceNotificationTemplateId",
@@ -2591,19 +2345,11 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 					CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByCommerceNotificationTemplateId = new FinderPath(
-			CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-				ENTITY_CACHE_ENABLED,
-			CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-				FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCommerceNotificationTemplateId",
 			new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByCommerceAccountGroupId = new FinderPath(
-			CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-				ENTITY_CACHE_ENABLED,
-			CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-				FINDER_CACHE_ENABLED,
 			CommerceNotificationTemplateCommerceAccountGroupRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByCommerceAccountGroupId",
@@ -2614,10 +2360,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 
 		_finderPathWithoutPaginationFindByCommerceAccountGroupId =
 			new FinderPath(
-				CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-					ENTITY_CACHE_ENABLED,
-				CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-					FINDER_CACHE_ENABLED,
 				CommerceNotificationTemplateCommerceAccountGroupRelImpl.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCommerceAccountGroupId",
@@ -2628,19 +2370,11 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 					CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByCommerceAccountGroupId = new FinderPath(
-			CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-				ENTITY_CACHE_ENABLED,
-			CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-				FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCommerceAccountGroupId",
 			new String[] {Long.class.getName()});
 
 		_finderPathFetchByC_C = new FinderPath(
-			CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-				ENTITY_CACHE_ENABLED,
-			CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-				FINDER_CACHE_ENABLED,
 			CommerceNotificationTemplateCommerceAccountGroupRelImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
@@ -2650,10 +2384,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 				COMMERCEACCOUNTGROUPID_COLUMN_BITMASK);
 
 		_finderPathCountByC_C = new FinderPath(
-			CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-				ENTITY_CACHE_ENABLED,
-			CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-				FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()});
 	}
@@ -2676,10 +2406,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 	private static final String
 		_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATECOMMERCEACCOUNTGROUPREL =
 			"SELECT commerceNotificationTemplateCommerceAccountGroupRel FROM CommerceNotificationTemplateCommerceAccountGroupRel commerceNotificationTemplateCommerceAccountGroupRel";
-
-	private static final String
-		_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATECOMMERCEACCOUNTGROUPREL_WHERE_PKS_IN =
-			"SELECT commerceNotificationTemplateCommerceAccountGroupRel FROM CommerceNotificationTemplateCommerceAccountGroupRel commerceNotificationTemplateCommerceAccountGroupRel WHERE CNTemplateCAccountGroupRelId IN (";
 
 	private static final String
 		_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATECOMMERCEACCOUNTGROUPREL_WHERE =

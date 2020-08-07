@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.pricing.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.pricing.exception.NoSuchPricingClassException;
 import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce pricing class service.
@@ -45,9 +40,6 @@ public interface CommercePricingClassPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommercePricingClassUtil} to access the commerce pricing class persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommercePricingClass> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce pricing classes where uuid = &#63;.
@@ -863,8 +855,5 @@ public interface CommercePricingClassPersistence
 	 * @return the number of commerce pricing classes
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

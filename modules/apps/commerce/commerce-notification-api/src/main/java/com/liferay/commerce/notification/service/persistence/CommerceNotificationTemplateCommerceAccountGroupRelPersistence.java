@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.notification.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.notification.exception.NoSuchNotificationTemplateCommerceAccountGroupRelException;
 import com.liferay.commerce.notification.model.CommerceNotificationTemplateCommerceAccountGroupRel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce notification template commerce account group rel service.
@@ -46,10 +41,6 @@ public interface CommerceNotificationTemplateCommerceAccountGroupRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceNotificationTemplateCommerceAccountGroupRelUtil} to access the commerce notification template commerce account group rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map
-		<Serializable, CommerceNotificationTemplateCommerceAccountGroupRel>
-			fetchByPrimaryKeys(Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce notification template commerce account group rels where commerceNotificationTemplateId = &#63;.
@@ -565,8 +556,5 @@ public interface CommerceNotificationTemplateCommerceAccountGroupRelPersistence
 	 * @return the number of commerce notification template commerce account group rels
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

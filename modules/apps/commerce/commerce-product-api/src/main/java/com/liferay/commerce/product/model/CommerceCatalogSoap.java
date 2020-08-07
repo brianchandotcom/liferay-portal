@@ -31,6 +31,7 @@ public class CommerceCatalogSoap implements Serializable {
 	public static CommerceCatalogSoap toSoapModel(CommerceCatalog model) {
 		CommerceCatalogSoap soapModel = new CommerceCatalogSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setExternalReferenceCode(model.getExternalReferenceCode());
 		soapModel.setCommerceCatalogId(model.getCommerceCatalogId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -100,6 +101,14 @@ public class CommerceCatalogSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceCatalogId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getExternalReferenceCode() {
@@ -194,6 +203,7 @@ public class CommerceCatalogSoap implements Serializable {
 		_system = system;
 	}
 
+	private long _mvccVersion;
 	private String _externalReferenceCode;
 	private long _commerceCatalogId;
 	private long _companyId;

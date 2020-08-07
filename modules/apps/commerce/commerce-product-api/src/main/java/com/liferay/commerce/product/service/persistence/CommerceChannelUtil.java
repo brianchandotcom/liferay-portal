@@ -648,10 +648,6 @@ public class CommerceChannelUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CommerceChannelPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

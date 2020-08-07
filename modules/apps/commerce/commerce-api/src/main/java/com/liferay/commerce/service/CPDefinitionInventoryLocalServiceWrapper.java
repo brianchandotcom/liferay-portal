@@ -94,6 +94,18 @@ public class CPDefinitionInventoryLocalServiceWrapper
 	}
 
 	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionInventoryLocalService.createPersistedModel(
+			primaryKeyObj);
+	}
+
+	/**
 	 * Deletes the cp definition inventory from the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -151,6 +163,11 @@ public class CPDefinitionInventoryLocalServiceWrapper
 
 		return _cpDefinitionInventoryLocalService.deletePersistedModel(
 			persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _cpDefinitionInventoryLocalService.dslQuery(dslQuery);
 	}
 
 	@Override

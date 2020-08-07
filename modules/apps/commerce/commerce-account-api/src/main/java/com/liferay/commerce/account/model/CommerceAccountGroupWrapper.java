@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.account.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,28 +31,20 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceAccountGroupWrapper
+	extends BaseModelWrapper<CommerceAccountGroup>
 	implements CommerceAccountGroup, ModelWrapper<CommerceAccountGroup> {
 
 	public CommerceAccountGroupWrapper(
 		CommerceAccountGroup commerceAccountGroup) {
 
-		_commerceAccountGroup = commerceAccountGroup;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceAccountGroup.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceAccountGroup.class.getName();
+		super(commerceAccountGroup);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("commerceAccountGroupId", getCommerceAccountGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -73,6 +61,12 @@ public class CommerceAccountGroupWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String externalReferenceCode = (String)attributes.get(
 			"externalReferenceCode");
 
@@ -136,17 +130,6 @@ public class CommerceAccountGroupWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CommerceAccountGroupWrapper(
-			(CommerceAccountGroup)_commerceAccountGroup.clone());
-	}
-
-	@Override
-	public int compareTo(CommerceAccountGroup commerceAccountGroup) {
-		return _commerceAccountGroup.compareTo(commerceAccountGroup);
-	}
-
 	/**
 	 * Returns the commerce account group ID of this commerce account group.
 	 *
@@ -154,7 +137,7 @@ public class CommerceAccountGroupWrapper
 	 */
 	@Override
 	public long getCommerceAccountGroupId() {
-		return _commerceAccountGroup.getCommerceAccountGroupId();
+		return model.getCommerceAccountGroupId();
 	}
 
 	/**
@@ -164,7 +147,7 @@ public class CommerceAccountGroupWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceAccountGroup.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -174,12 +157,7 @@ public class CommerceAccountGroupWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceAccountGroup.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceAccountGroup.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -189,7 +167,7 @@ public class CommerceAccountGroupWrapper
 	 */
 	@Override
 	public String getExternalReferenceCode() {
-		return _commerceAccountGroup.getExternalReferenceCode();
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -199,7 +177,17 @@ public class CommerceAccountGroupWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceAccountGroup.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce account group.
+	 *
+	 * @return the mvcc version of this commerce account group
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -209,7 +197,7 @@ public class CommerceAccountGroupWrapper
 	 */
 	@Override
 	public String getName() {
-		return _commerceAccountGroup.getName();
+		return model.getName();
 	}
 
 	/**
@@ -219,12 +207,7 @@ public class CommerceAccountGroupWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceAccountGroup.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceAccountGroup.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -234,7 +217,7 @@ public class CommerceAccountGroupWrapper
 	 */
 	@Override
 	public boolean getSystem() {
-		return _commerceAccountGroup.getSystem();
+		return model.getSystem();
 	}
 
 	/**
@@ -244,7 +227,7 @@ public class CommerceAccountGroupWrapper
 	 */
 	@Override
 	public int getType() {
-		return _commerceAccountGroup.getType();
+		return model.getType();
 	}
 
 	/**
@@ -254,7 +237,7 @@ public class CommerceAccountGroupWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceAccountGroup.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -264,7 +247,7 @@ public class CommerceAccountGroupWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceAccountGroup.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -274,27 +257,7 @@ public class CommerceAccountGroupWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceAccountGroup.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceAccountGroup.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceAccountGroup.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceAccountGroup.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceAccountGroup.isNew();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -304,17 +267,12 @@ public class CommerceAccountGroupWrapper
 	 */
 	@Override
 	public boolean isSystem() {
-		return _commerceAccountGroup.isSystem();
+		return model.isSystem();
 	}
 
 	@Override
 	public void persist() {
-		_commerceAccountGroup.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceAccountGroup.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -324,7 +282,7 @@ public class CommerceAccountGroupWrapper
 	 */
 	@Override
 	public void setCommerceAccountGroupId(long commerceAccountGroupId) {
-		_commerceAccountGroup.setCommerceAccountGroupId(commerceAccountGroupId);
+		model.setCommerceAccountGroupId(commerceAccountGroupId);
 	}
 
 	/**
@@ -334,7 +292,7 @@ public class CommerceAccountGroupWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceAccountGroup.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -344,24 +302,7 @@ public class CommerceAccountGroupWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceAccountGroup.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceAccountGroup.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceAccountGroup.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceAccountGroup.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -371,7 +312,7 @@ public class CommerceAccountGroupWrapper
 	 */
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
-		_commerceAccountGroup.setExternalReferenceCode(externalReferenceCode);
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**
@@ -381,7 +322,17 @@ public class CommerceAccountGroupWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceAccountGroup.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this commerce account group.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce account group
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -391,12 +342,7 @@ public class CommerceAccountGroupWrapper
 	 */
 	@Override
 	public void setName(String name) {
-		_commerceAccountGroup.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_commerceAccountGroup.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -406,12 +352,7 @@ public class CommerceAccountGroupWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceAccountGroup.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceAccountGroup.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -421,7 +362,7 @@ public class CommerceAccountGroupWrapper
 	 */
 	@Override
 	public void setSystem(boolean system) {
-		_commerceAccountGroup.setSystem(system);
+		model.setSystem(system);
 	}
 
 	/**
@@ -431,7 +372,7 @@ public class CommerceAccountGroupWrapper
 	 */
 	@Override
 	public void setType(int type) {
-		_commerceAccountGroup.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -441,7 +382,7 @@ public class CommerceAccountGroupWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceAccountGroup.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -451,7 +392,7 @@ public class CommerceAccountGroupWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceAccountGroup.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -461,81 +402,14 @@ public class CommerceAccountGroupWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceAccountGroup.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceAccountGroup>
-		toCacheModel() {
+	protected CommerceAccountGroupWrapper wrap(
+		CommerceAccountGroup commerceAccountGroup) {
 
-		return _commerceAccountGroup.toCacheModel();
+		return new CommerceAccountGroupWrapper(commerceAccountGroup);
 	}
-
-	@Override
-	public CommerceAccountGroup toEscapedModel() {
-		return new CommerceAccountGroupWrapper(
-			_commerceAccountGroup.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commerceAccountGroup.toString();
-	}
-
-	@Override
-	public CommerceAccountGroup toUnescapedModel() {
-		return new CommerceAccountGroupWrapper(
-			_commerceAccountGroup.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceAccountGroup.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceAccountGroupWrapper)) {
-			return false;
-		}
-
-		CommerceAccountGroupWrapper commerceAccountGroupWrapper =
-			(CommerceAccountGroupWrapper)object;
-
-		if (Objects.equals(
-				_commerceAccountGroup,
-				commerceAccountGroupWrapper._commerceAccountGroup)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceAccountGroup getWrappedModel() {
-		return _commerceAccountGroup;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceAccountGroup.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceAccountGroup.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceAccountGroup.resetOriginalValues();
-	}
-
-	private final CommerceAccountGroup _commerceAccountGroup;
 
 }

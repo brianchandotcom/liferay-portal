@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.payment.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.payment.exception.NoSuchPaymentMethodGroupRelException;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce payment method group rel service.
@@ -45,9 +40,6 @@ public interface CommercePaymentMethodGroupRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommercePaymentMethodGroupRelUtil} to access the commerce payment method group rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommercePaymentMethodGroupRel> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce payment method group rels where groupId = &#63;.
@@ -529,8 +521,5 @@ public interface CommercePaymentMethodGroupRelPersistence
 	 * @return the number of commerce payment method group rels
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

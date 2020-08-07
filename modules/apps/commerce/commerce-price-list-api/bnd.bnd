@@ -1,6 +1,10 @@
 Bundle-Name: Liferay Commerce Price List API
 Bundle-SymbolicName: com.liferay.commerce.price.list.api
+<<<<<<< HEAD
 Bundle-Version: 5.2.2
+=======
+Bundle-Version: 6.0.0
+>>>>>>> e47493f9f... COMMERCE-4072 Regen service and rest
 Export-Package:\
 	com.liferay.commerce.price.list.constants,\
 	com.liferay.commerce.price.list.discovery,\

@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.currency.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce currency service.
@@ -45,9 +40,6 @@ public interface CommerceCurrencyPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceCurrencyUtil} to access the commerce currency persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceCurrency> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce currencies where uuid = &#63;.
@@ -1137,8 +1129,5 @@ public interface CommerceCurrencyPersistence
 	 * @return the number of commerce currencies
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

@@ -20,6 +20,7 @@ import com.liferay.commerce.product.model.CPAttachmentFileEntrySoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,7 +36,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -83,7 +83,8 @@ public class CPAttachmentFileEntryModelImpl
 	public static final String TABLE_NAME = "CPAttachmentFileEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR},
 		{"CPAttachmentFileEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -101,6 +102,7 @@ public class CPAttachmentFileEntryModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPAttachmentFileEntryId", Types.BIGINT);
@@ -127,7 +129,7 @@ public class CPAttachmentFileEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPAttachmentFileEntry (uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CPAttachmentFileEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,fileEntryId LONG,displayDate DATE null,expirationDate DATE null,title STRING null,json TEXT null,priority DOUBLE,type_ INTEGER,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table CPAttachmentFileEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CPAttachmentFileEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,fileEntryId LONG,displayDate DATE null,expirationDate DATE null,title STRING null,json TEXT null,priority DOUBLE,type_ INTEGER,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CPAttachmentFileEntry";
@@ -144,20 +146,23 @@ public class CPAttachmentFileEntryModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.product.model.CPAttachmentFileEntry"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.product.model.CPAttachmentFileEntry"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.product.model.CPAttachmentFileEntry"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
 
@@ -196,6 +201,7 @@ public class CPAttachmentFileEntryModelImpl
 
 		CPAttachmentFileEntry model = new CPAttachmentFileEntryImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setCPAttachmentFileEntryId(
@@ -303,9 +309,6 @@ public class CPAttachmentFileEntryModelImpl
 				attributeGetterFunction.apply((CPAttachmentFileEntry)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -384,595 +387,163 @@ public class CPAttachmentFileEntryModelImpl
 					<String, BiConsumer<CPAttachmentFileEntry, ?>>();
 
 		attributeGetterFunctions.put(
-			"uuid",
-			new Function<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CPAttachmentFileEntry cpAttachmentFileEntry) {
-
-					return cpAttachmentFileEntry.getUuid();
-				}
-
-			});
+			"mvccVersion", CPAttachmentFileEntry::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CPAttachmentFileEntry, Long>)
+				CPAttachmentFileEntry::setMvccVersion);
+		attributeGetterFunctions.put("uuid", CPAttachmentFileEntry::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
-			new BiConsumer<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPAttachmentFileEntry cpAttachmentFileEntry,
-					Object uuidObject) {
-
-					cpAttachmentFileEntry.setUuid((String)uuidObject);
-				}
-
-			});
+			(BiConsumer<CPAttachmentFileEntry, String>)
+				CPAttachmentFileEntry::setUuid);
 		attributeGetterFunctions.put(
 			"externalReferenceCode",
-			new Function<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CPAttachmentFileEntry cpAttachmentFileEntry) {
-
-					return cpAttachmentFileEntry.getExternalReferenceCode();
-				}
-
-			});
+			CPAttachmentFileEntry::getExternalReferenceCode);
 		attributeSetterBiConsumers.put(
 			"externalReferenceCode",
-			new BiConsumer<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPAttachmentFileEntry cpAttachmentFileEntry,
-					Object externalReferenceCodeObject) {
-
-					cpAttachmentFileEntry.setExternalReferenceCode(
-						(String)externalReferenceCodeObject);
-				}
-
-			});
+			(BiConsumer<CPAttachmentFileEntry, String>)
+				CPAttachmentFileEntry::setExternalReferenceCode);
 		attributeGetterFunctions.put(
 			"CPAttachmentFileEntryId",
-			new Function<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CPAttachmentFileEntry cpAttachmentFileEntry) {
-
-					return cpAttachmentFileEntry.getCPAttachmentFileEntryId();
-				}
-
-			});
+			CPAttachmentFileEntry::getCPAttachmentFileEntryId);
 		attributeSetterBiConsumers.put(
 			"CPAttachmentFileEntryId",
-			new BiConsumer<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPAttachmentFileEntry cpAttachmentFileEntry,
-					Object CPAttachmentFileEntryIdObject) {
-
-					cpAttachmentFileEntry.setCPAttachmentFileEntryId(
-						(Long)CPAttachmentFileEntryIdObject);
-				}
-
-			});
+			(BiConsumer<CPAttachmentFileEntry, Long>)
+				CPAttachmentFileEntry::setCPAttachmentFileEntryId);
 		attributeGetterFunctions.put(
-			"groupId",
-			new Function<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CPAttachmentFileEntry cpAttachmentFileEntry) {
-
-					return cpAttachmentFileEntry.getGroupId();
-				}
-
-			});
+			"groupId", CPAttachmentFileEntry::getGroupId);
 		attributeSetterBiConsumers.put(
 			"groupId",
-			new BiConsumer<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPAttachmentFileEntry cpAttachmentFileEntry,
-					Object groupIdObject) {
-
-					cpAttachmentFileEntry.setGroupId((Long)groupIdObject);
-				}
-
-			});
+			(BiConsumer<CPAttachmentFileEntry, Long>)
+				CPAttachmentFileEntry::setGroupId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CPAttachmentFileEntry cpAttachmentFileEntry) {
-
-					return cpAttachmentFileEntry.getCompanyId();
-				}
-
-			});
+			"companyId", CPAttachmentFileEntry::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPAttachmentFileEntry cpAttachmentFileEntry,
-					Object companyIdObject) {
-
-					cpAttachmentFileEntry.setCompanyId((Long)companyIdObject);
-				}
-
-			});
+			(BiConsumer<CPAttachmentFileEntry, Long>)
+				CPAttachmentFileEntry::setCompanyId);
 		attributeGetterFunctions.put(
-			"userId",
-			new Function<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CPAttachmentFileEntry cpAttachmentFileEntry) {
-
-					return cpAttachmentFileEntry.getUserId();
-				}
-
-			});
+			"userId", CPAttachmentFileEntry::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPAttachmentFileEntry cpAttachmentFileEntry,
-					Object userIdObject) {
-
-					cpAttachmentFileEntry.setUserId((Long)userIdObject);
-				}
-
-			});
+			(BiConsumer<CPAttachmentFileEntry, Long>)
+				CPAttachmentFileEntry::setUserId);
 		attributeGetterFunctions.put(
-			"userName",
-			new Function<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CPAttachmentFileEntry cpAttachmentFileEntry) {
-
-					return cpAttachmentFileEntry.getUserName();
-				}
-
-			});
+			"userName", CPAttachmentFileEntry::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPAttachmentFileEntry cpAttachmentFileEntry,
-					Object userNameObject) {
-
-					cpAttachmentFileEntry.setUserName((String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CPAttachmentFileEntry, String>)
+				CPAttachmentFileEntry::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CPAttachmentFileEntry cpAttachmentFileEntry) {
-
-					return cpAttachmentFileEntry.getCreateDate();
-				}
-
-			});
+			"createDate", CPAttachmentFileEntry::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPAttachmentFileEntry cpAttachmentFileEntry,
-					Object createDateObject) {
-
-					cpAttachmentFileEntry.setCreateDate((Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CPAttachmentFileEntry, Date>)
+				CPAttachmentFileEntry::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CPAttachmentFileEntry cpAttachmentFileEntry) {
-
-					return cpAttachmentFileEntry.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CPAttachmentFileEntry::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPAttachmentFileEntry cpAttachmentFileEntry,
-					Object modifiedDateObject) {
-
-					cpAttachmentFileEntry.setModifiedDate(
-						(Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CPAttachmentFileEntry, Date>)
+				CPAttachmentFileEntry::setModifiedDate);
 		attributeGetterFunctions.put(
-			"classNameId",
-			new Function<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CPAttachmentFileEntry cpAttachmentFileEntry) {
-
-					return cpAttachmentFileEntry.getClassNameId();
-				}
-
-			});
+			"classNameId", CPAttachmentFileEntry::getClassNameId);
 		attributeSetterBiConsumers.put(
 			"classNameId",
-			new BiConsumer<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPAttachmentFileEntry cpAttachmentFileEntry,
-					Object classNameIdObject) {
-
-					cpAttachmentFileEntry.setClassNameId(
-						(Long)classNameIdObject);
-				}
-
-			});
+			(BiConsumer<CPAttachmentFileEntry, Long>)
+				CPAttachmentFileEntry::setClassNameId);
 		attributeGetterFunctions.put(
-			"classPK",
-			new Function<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CPAttachmentFileEntry cpAttachmentFileEntry) {
-
-					return cpAttachmentFileEntry.getClassPK();
-				}
-
-			});
+			"classPK", CPAttachmentFileEntry::getClassPK);
 		attributeSetterBiConsumers.put(
 			"classPK",
-			new BiConsumer<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPAttachmentFileEntry cpAttachmentFileEntry,
-					Object classPKObject) {
-
-					cpAttachmentFileEntry.setClassPK((Long)classPKObject);
-				}
-
-			});
+			(BiConsumer<CPAttachmentFileEntry, Long>)
+				CPAttachmentFileEntry::setClassPK);
 		attributeGetterFunctions.put(
-			"fileEntryId",
-			new Function<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CPAttachmentFileEntry cpAttachmentFileEntry) {
-
-					return cpAttachmentFileEntry.getFileEntryId();
-				}
-
-			});
+			"fileEntryId", CPAttachmentFileEntry::getFileEntryId);
 		attributeSetterBiConsumers.put(
 			"fileEntryId",
-			new BiConsumer<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPAttachmentFileEntry cpAttachmentFileEntry,
-					Object fileEntryIdObject) {
-
-					cpAttachmentFileEntry.setFileEntryId(
-						(Long)fileEntryIdObject);
-				}
-
-			});
+			(BiConsumer<CPAttachmentFileEntry, Long>)
+				CPAttachmentFileEntry::setFileEntryId);
 		attributeGetterFunctions.put(
-			"displayDate",
-			new Function<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CPAttachmentFileEntry cpAttachmentFileEntry) {
-
-					return cpAttachmentFileEntry.getDisplayDate();
-				}
-
-			});
+			"displayDate", CPAttachmentFileEntry::getDisplayDate);
 		attributeSetterBiConsumers.put(
 			"displayDate",
-			new BiConsumer<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPAttachmentFileEntry cpAttachmentFileEntry,
-					Object displayDateObject) {
-
-					cpAttachmentFileEntry.setDisplayDate(
-						(Date)displayDateObject);
-				}
-
-			});
+			(BiConsumer<CPAttachmentFileEntry, Date>)
+				CPAttachmentFileEntry::setDisplayDate);
 		attributeGetterFunctions.put(
-			"expirationDate",
-			new Function<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CPAttachmentFileEntry cpAttachmentFileEntry) {
-
-					return cpAttachmentFileEntry.getExpirationDate();
-				}
-
-			});
+			"expirationDate", CPAttachmentFileEntry::getExpirationDate);
 		attributeSetterBiConsumers.put(
 			"expirationDate",
-			new BiConsumer<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPAttachmentFileEntry cpAttachmentFileEntry,
-					Object expirationDateObject) {
-
-					cpAttachmentFileEntry.setExpirationDate(
-						(Date)expirationDateObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"title",
-			new Function<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CPAttachmentFileEntry cpAttachmentFileEntry) {
-
-					return cpAttachmentFileEntry.getTitle();
-				}
-
-			});
+			(BiConsumer<CPAttachmentFileEntry, Date>)
+				CPAttachmentFileEntry::setExpirationDate);
+		attributeGetterFunctions.put("title", CPAttachmentFileEntry::getTitle);
 		attributeSetterBiConsumers.put(
 			"title",
-			new BiConsumer<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPAttachmentFileEntry cpAttachmentFileEntry,
-					Object titleObject) {
-
-					cpAttachmentFileEntry.setTitle((String)titleObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"json",
-			new Function<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CPAttachmentFileEntry cpAttachmentFileEntry) {
-
-					return cpAttachmentFileEntry.getJson();
-				}
-
-			});
+			(BiConsumer<CPAttachmentFileEntry, String>)
+				CPAttachmentFileEntry::setTitle);
+		attributeGetterFunctions.put("json", CPAttachmentFileEntry::getJson);
 		attributeSetterBiConsumers.put(
 			"json",
-			new BiConsumer<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPAttachmentFileEntry cpAttachmentFileEntry,
-					Object jsonObject) {
-
-					cpAttachmentFileEntry.setJson((String)jsonObject);
-				}
-
-			});
+			(BiConsumer<CPAttachmentFileEntry, String>)
+				CPAttachmentFileEntry::setJson);
 		attributeGetterFunctions.put(
-			"priority",
-			new Function<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CPAttachmentFileEntry cpAttachmentFileEntry) {
-
-					return cpAttachmentFileEntry.getPriority();
-				}
-
-			});
+			"priority", CPAttachmentFileEntry::getPriority);
 		attributeSetterBiConsumers.put(
 			"priority",
-			new BiConsumer<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPAttachmentFileEntry cpAttachmentFileEntry,
-					Object priorityObject) {
-
-					cpAttachmentFileEntry.setPriority((Double)priorityObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"type",
-			new Function<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CPAttachmentFileEntry cpAttachmentFileEntry) {
-
-					return cpAttachmentFileEntry.getType();
-				}
-
-			});
+			(BiConsumer<CPAttachmentFileEntry, Double>)
+				CPAttachmentFileEntry::setPriority);
+		attributeGetterFunctions.put("type", CPAttachmentFileEntry::getType);
 		attributeSetterBiConsumers.put(
 			"type",
-			new BiConsumer<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPAttachmentFileEntry cpAttachmentFileEntry,
-					Object typeObject) {
-
-					cpAttachmentFileEntry.setType((Integer)typeObject);
-				}
-
-			});
+			(BiConsumer<CPAttachmentFileEntry, Integer>)
+				CPAttachmentFileEntry::setType);
 		attributeGetterFunctions.put(
-			"lastPublishDate",
-			new Function<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CPAttachmentFileEntry cpAttachmentFileEntry) {
-
-					return cpAttachmentFileEntry.getLastPublishDate();
-				}
-
-			});
+			"lastPublishDate", CPAttachmentFileEntry::getLastPublishDate);
 		attributeSetterBiConsumers.put(
 			"lastPublishDate",
-			new BiConsumer<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPAttachmentFileEntry cpAttachmentFileEntry,
-					Object lastPublishDateObject) {
-
-					cpAttachmentFileEntry.setLastPublishDate(
-						(Date)lastPublishDateObject);
-				}
-
-			});
+			(BiConsumer<CPAttachmentFileEntry, Date>)
+				CPAttachmentFileEntry::setLastPublishDate);
 		attributeGetterFunctions.put(
-			"status",
-			new Function<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CPAttachmentFileEntry cpAttachmentFileEntry) {
-
-					return cpAttachmentFileEntry.getStatus();
-				}
-
-			});
+			"status", CPAttachmentFileEntry::getStatus);
 		attributeSetterBiConsumers.put(
 			"status",
-			new BiConsumer<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPAttachmentFileEntry cpAttachmentFileEntry,
-					Object statusObject) {
-
-					cpAttachmentFileEntry.setStatus((Integer)statusObject);
-				}
-
-			});
+			(BiConsumer<CPAttachmentFileEntry, Integer>)
+				CPAttachmentFileEntry::setStatus);
 		attributeGetterFunctions.put(
-			"statusByUserId",
-			new Function<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CPAttachmentFileEntry cpAttachmentFileEntry) {
-
-					return cpAttachmentFileEntry.getStatusByUserId();
-				}
-
-			});
+			"statusByUserId", CPAttachmentFileEntry::getStatusByUserId);
 		attributeSetterBiConsumers.put(
 			"statusByUserId",
-			new BiConsumer<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPAttachmentFileEntry cpAttachmentFileEntry,
-					Object statusByUserIdObject) {
-
-					cpAttachmentFileEntry.setStatusByUserId(
-						(Long)statusByUserIdObject);
-				}
-
-			});
+			(BiConsumer<CPAttachmentFileEntry, Long>)
+				CPAttachmentFileEntry::setStatusByUserId);
 		attributeGetterFunctions.put(
-			"statusByUserName",
-			new Function<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CPAttachmentFileEntry cpAttachmentFileEntry) {
-
-					return cpAttachmentFileEntry.getStatusByUserName();
-				}
-
-			});
+			"statusByUserName", CPAttachmentFileEntry::getStatusByUserName);
 		attributeSetterBiConsumers.put(
 			"statusByUserName",
-			new BiConsumer<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPAttachmentFileEntry cpAttachmentFileEntry,
-					Object statusByUserNameObject) {
-
-					cpAttachmentFileEntry.setStatusByUserName(
-						(String)statusByUserNameObject);
-				}
-
-			});
+			(BiConsumer<CPAttachmentFileEntry, String>)
+				CPAttachmentFileEntry::setStatusByUserName);
 		attributeGetterFunctions.put(
-			"statusDate",
-			new Function<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public Object apply(
-					CPAttachmentFileEntry cpAttachmentFileEntry) {
-
-					return cpAttachmentFileEntry.getStatusDate();
-				}
-
-			});
+			"statusDate", CPAttachmentFileEntry::getStatusDate);
 		attributeSetterBiConsumers.put(
 			"statusDate",
-			new BiConsumer<CPAttachmentFileEntry, Object>() {
-
-				@Override
-				public void accept(
-					CPAttachmentFileEntry cpAttachmentFileEntry,
-					Object statusDateObject) {
-
-					cpAttachmentFileEntry.setStatusDate((Date)statusDateObject);
-				}
-
-			});
+			(BiConsumer<CPAttachmentFileEntry, Date>)
+				CPAttachmentFileEntry::setStatusDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1710,6 +1281,7 @@ public class CPAttachmentFileEntryModelImpl
 		CPAttachmentFileEntryImpl cpAttachmentFileEntryImpl =
 			new CPAttachmentFileEntryImpl();
 
+		cpAttachmentFileEntryImpl.setMvccVersion(getMvccVersion());
 		cpAttachmentFileEntryImpl.setUuid(getUuid());
 		cpAttachmentFileEntryImpl.setExternalReferenceCode(
 			getExternalReferenceCode());
@@ -1790,11 +1362,19 @@ public class CPAttachmentFileEntryModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -1844,6 +1424,8 @@ public class CPAttachmentFileEntryModelImpl
 	public CacheModel<CPAttachmentFileEntry> toCacheModel() {
 		CPAttachmentFileEntryCacheModel cpAttachmentFileEntryCacheModel =
 			new CPAttachmentFileEntryCacheModel();
+
+		cpAttachmentFileEntryCacheModel.mvccVersion = getMvccVersion();
 
 		cpAttachmentFileEntryCacheModel.uuid = getUuid();
 
@@ -2054,6 +1636,7 @@ public class CPAttachmentFileEntryModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private String _externalReferenceCode;

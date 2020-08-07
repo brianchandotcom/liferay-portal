@@ -14,17 +14,13 @@
 
 package com.liferay.commerce.machine.learning.forecast.alert.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.machine.learning.forecast.alert.exception.NoSuchMLForecastAlertEntryException;
 import com.liferay.commerce.machine.learning.forecast.alert.model.CommerceMLForecastAlertEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
 import java.util.Date;
-import java.util.Map;
-import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce ml forecast alert entry service.
@@ -46,9 +42,6 @@ public interface CommerceMLForecastAlertEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceMLForecastAlertEntryUtil} to access the commerce ml forecast alert entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceMLForecastAlertEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce ml forecast alert entries where uuid = &#63;.
@@ -1362,8 +1355,5 @@ public interface CommerceMLForecastAlertEntryPersistence
 	 * @return the number of commerce ml forecast alert entries
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

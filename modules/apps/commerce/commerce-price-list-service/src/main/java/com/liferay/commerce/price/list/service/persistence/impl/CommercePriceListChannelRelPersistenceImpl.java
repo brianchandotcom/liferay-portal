@@ -16,9 +16,11 @@ package com.liferay.commerce.price.list.service.persistence.impl;
 
 import com.liferay.commerce.price.list.exception.NoSuchPriceListChannelRelException;
 import com.liferay.commerce.price.list.model.CommercePriceListChannelRel;
+import com.liferay.commerce.price.list.model.CommercePriceListChannelRelTable;
 import com.liferay.commerce.price.list.model.impl.CommercePriceListChannelRelImpl;
 import com.liferay.commerce.price.list.model.impl.CommercePriceListChannelRelModelImpl;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListChannelRelPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -35,21 +37,16 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -255,10 +252,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -621,8 +614,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -825,10 +816,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1215,8 +1202,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1402,10 +1387,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1747,8 +1728,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1900,10 +1879,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(_finderPathFetchByC_C, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1983,8 +1958,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2007,21 +1980,14 @@ public class CommercePriceListChannelRelPersistenceImpl
 		dbColumnNames.put("uuid", "uuid_");
 		dbColumnNames.put("order", "order_");
 
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-				"_dbColumnNames");
-
-			field.setAccessible(true);
-
-			field.set(this, dbColumnNames);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
+		setDBColumnNames(dbColumnNames);
 
 		setModelClass(CommercePriceListChannelRel.class);
+
+		setModelImplClass(CommercePriceListChannelRelImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CommercePriceListChannelRelTable.INSTANCE);
 	}
 
 	/**
@@ -2034,7 +2000,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 		CommercePriceListChannelRel commercePriceListChannelRel) {
 
 		entityCache.putResult(
-			CommercePriceListChannelRelModelImpl.ENTITY_CACHE_ENABLED,
 			CommercePriceListChannelRelImpl.class,
 			commercePriceListChannelRel.getPrimaryKey(),
 			commercePriceListChannelRel);
@@ -2063,7 +2028,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 				commercePriceListChannelRels) {
 
 			if (entityCache.getResult(
-					CommercePriceListChannelRelModelImpl.ENTITY_CACHE_ENABLED,
 					CommercePriceListChannelRelImpl.class,
 					commercePriceListChannelRel.getPrimaryKey()) == null) {
 
@@ -2103,7 +2067,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 		CommercePriceListChannelRel commercePriceListChannelRel) {
 
 		entityCache.removeResult(
-			CommercePriceListChannelRelModelImpl.ENTITY_CACHE_ENABLED,
 			CommercePriceListChannelRelImpl.class,
 			commercePriceListChannelRel.getPrimaryKey());
 
@@ -2126,7 +2089,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 				commercePriceListChannelRels) {
 
 			entityCache.removeResult(
-				CommercePriceListChannelRelModelImpl.ENTITY_CACHE_ENABLED,
 				CommercePriceListChannelRelImpl.class,
 				commercePriceListChannelRel.getPrimaryKey());
 
@@ -2137,6 +2099,7 @@ public class CommercePriceListChannelRelPersistenceImpl
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -2144,7 +2107,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(
-				CommercePriceListChannelRelModelImpl.ENTITY_CACHE_ENABLED,
 				CommercePriceListChannelRelImpl.class, primaryKey);
 		}
 	}
@@ -2401,10 +2363,7 @@ public class CommercePriceListChannelRelPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CommercePriceListChannelRelModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				commercePriceListChannelRelModelImpl.getUuid()
 			};
@@ -2509,7 +2468,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 		}
 
 		entityCache.putResult(
-			CommercePriceListChannelRelModelImpl.ENTITY_CACHE_ENABLED,
 			CommercePriceListChannelRelImpl.class,
 			commercePriceListChannelRel.getPrimaryKey(),
 			commercePriceListChannelRel, false);
@@ -2566,63 +2524,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 	/**
 	 * Returns the commerce price list channel rel with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the commerce price list channel rel
-	 * @return the commerce price list channel rel, or <code>null</code> if a commerce price list channel rel with the primary key could not be found
-	 */
-	@Override
-	public CommercePriceListChannelRel fetchByPrimaryKey(
-		Serializable primaryKey) {
-
-		Serializable serializable = entityCache.getResult(
-			CommercePriceListChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommercePriceListChannelRelImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CommercePriceListChannelRel commercePriceListChannelRel =
-			(CommercePriceListChannelRel)serializable;
-
-		if (commercePriceListChannelRel == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				commercePriceListChannelRel =
-					(CommercePriceListChannelRel)session.get(
-						CommercePriceListChannelRelImpl.class, primaryKey);
-
-				if (commercePriceListChannelRel != null) {
-					cacheResult(commercePriceListChannelRel);
-				}
-				else {
-					entityCache.putResult(
-						CommercePriceListChannelRelModelImpl.
-							ENTITY_CACHE_ENABLED,
-						CommercePriceListChannelRelImpl.class, primaryKey,
-						nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CommercePriceListChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-					CommercePriceListChannelRelImpl.class, primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return commercePriceListChannelRel;
-	}
-
-	/**
-	 * Returns the commerce price list channel rel with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param CommercePriceListChannelRelId the primary key of the commerce price list channel rel
 	 * @return the commerce price list channel rel, or <code>null</code> if a commerce price list channel rel with the primary key could not be found
 	 */
@@ -2631,112 +2532,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 		long CommercePriceListChannelRelId) {
 
 		return fetchByPrimaryKey((Serializable)CommercePriceListChannelRelId);
-	}
-
-	@Override
-	public Map<Serializable, CommercePriceListChannelRel> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CommercePriceListChannelRel> map =
-			new HashMap<Serializable, CommercePriceListChannelRel>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CommercePriceListChannelRel commercePriceListChannelRel =
-				fetchByPrimaryKey(primaryKey);
-
-			if (commercePriceListChannelRel != null) {
-				map.put(primaryKey, commercePriceListChannelRel);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CommercePriceListChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-				CommercePriceListChannelRelImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(
-						primaryKey, (CommercePriceListChannelRel)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(_SQL_SELECT_COMMERCEPRICELISTCHANNELREL_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CommercePriceListChannelRel commercePriceListChannelRel :
-					(List<CommercePriceListChannelRel>)query.list()) {
-
-				map.put(
-					commercePriceListChannelRel.getPrimaryKeyObj(),
-					commercePriceListChannelRel);
-
-				cacheResult(commercePriceListChannelRel);
-
-				uncachedPrimaryKeys.remove(
-					commercePriceListChannelRel.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CommercePriceListChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-					CommercePriceListChannelRelImpl.class, primaryKey,
-					nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -2866,10 +2661,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2918,9 +2709,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2937,6 +2725,21 @@ public class CommercePriceListChannelRelPersistenceImpl
 	}
 
 	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "CommercePriceListChannelRelId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_COMMERCEPRICELISTCHANNELREL;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CommercePriceListChannelRelModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2946,27 +2749,19 @@ public class CommercePriceListChannelRelPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CommercePriceListChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommercePriceListChannelRelModelImpl.FINDER_CACHE_ENABLED,
 			CommercePriceListChannelRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommercePriceListChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommercePriceListChannelRelModelImpl.FINDER_CACHE_ENABLED,
 			CommercePriceListChannelRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CommercePriceListChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommercePriceListChannelRelModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByUuid = new FinderPath(
-			CommercePriceListChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommercePriceListChannelRelModelImpl.FINDER_CACHE_ENABLED,
 			CommercePriceListChannelRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2975,8 +2770,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			CommercePriceListChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommercePriceListChannelRelModelImpl.FINDER_CACHE_ENABLED,
 			CommercePriceListChannelRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
@@ -2984,14 +2777,10 @@ public class CommercePriceListChannelRelPersistenceImpl
 			CommercePriceListChannelRelModelImpl.ORDER_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
-			CommercePriceListChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommercePriceListChannelRelModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByUuid", new String[] {String.class.getName()});
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			CommercePriceListChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommercePriceListChannelRelModelImpl.FINDER_CACHE_ENABLED,
 			CommercePriceListChannelRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
@@ -3001,8 +2790,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			CommercePriceListChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommercePriceListChannelRelModelImpl.FINDER_CACHE_ENABLED,
 			CommercePriceListChannelRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
@@ -3011,15 +2798,11 @@ public class CommercePriceListChannelRelPersistenceImpl
 			CommercePriceListChannelRelModelImpl.ORDER_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
-			CommercePriceListChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommercePriceListChannelRelModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByCommercePriceListId = new FinderPath(
-			CommercePriceListChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommercePriceListChannelRelModelImpl.FINDER_CACHE_ENABLED,
 			CommercePriceListChannelRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommercePriceListId",
 			new String[] {
@@ -3028,8 +2811,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByCommercePriceListId = new FinderPath(
-			CommercePriceListChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommercePriceListChannelRelModelImpl.FINDER_CACHE_ENABLED,
 			CommercePriceListChannelRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCommercePriceListId", new String[] {Long.class.getName()},
@@ -3038,14 +2819,10 @@ public class CommercePriceListChannelRelPersistenceImpl
 			CommercePriceListChannelRelModelImpl.ORDER_COLUMN_BITMASK);
 
 		_finderPathCountByCommercePriceListId = new FinderPath(
-			CommercePriceListChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommercePriceListChannelRelModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCommercePriceListId", new String[] {Long.class.getName()});
 
 		_finderPathFetchByC_C = new FinderPath(
-			CommercePriceListChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommercePriceListChannelRelModelImpl.FINDER_CACHE_ENABLED,
 			CommercePriceListChannelRelImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
@@ -3055,8 +2832,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 				COMMERCEPRICELISTID_COLUMN_BITMASK);
 
 		_finderPathCountByC_C = new FinderPath(
-			CommercePriceListChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommercePriceListChannelRelModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()});
 	}
@@ -3077,10 +2852,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 
 	private static final String _SQL_SELECT_COMMERCEPRICELISTCHANNELREL =
 		"SELECT commercePriceListChannelRel FROM CommercePriceListChannelRel commercePriceListChannelRel";
-
-	private static final String
-		_SQL_SELECT_COMMERCEPRICELISTCHANNELREL_WHERE_PKS_IN =
-			"SELECT commercePriceListChannelRel FROM CommercePriceListChannelRel commercePriceListChannelRel WHERE CommercePriceListChannelRelId IN (";
 
 	private static final String _SQL_SELECT_COMMERCEPRICELISTCHANNELREL_WHERE =
 		"SELECT commercePriceListChannelRel FROM CommercePriceListChannelRel commercePriceListChannelRel WHERE ";

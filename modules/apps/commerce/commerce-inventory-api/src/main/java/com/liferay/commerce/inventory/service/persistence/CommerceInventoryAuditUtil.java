@@ -656,10 +656,6 @@ public class CommerceInventoryAuditUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CommerceInventoryAuditPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

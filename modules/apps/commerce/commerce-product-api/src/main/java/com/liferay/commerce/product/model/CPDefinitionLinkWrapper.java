@@ -14,17 +14,13 @@
 
 package com.liferay.commerce.product.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,26 +32,18 @@ import java.util.Objects;
  * @generated
  */
 public class CPDefinitionLinkWrapper
+	extends BaseModelWrapper<CPDefinitionLink>
 	implements CPDefinitionLink, ModelWrapper<CPDefinitionLink> {
 
 	public CPDefinitionLinkWrapper(CPDefinitionLink cpDefinitionLink) {
-		_cpDefinitionLink = cpDefinitionLink;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CPDefinitionLink.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CPDefinitionLink.class.getName();
+		super(cpDefinitionLink);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("CPDefinitionLinkId", getCPDefinitionLinkId());
 		attributes.put("groupId", getGroupId());
@@ -74,6 +62,12 @@ public class CPDefinitionLinkWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -147,17 +141,6 @@ public class CPDefinitionLinkWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CPDefinitionLinkWrapper(
-			(CPDefinitionLink)_cpDefinitionLink.clone());
-	}
-
-	@Override
-	public int compareTo(CPDefinitionLink cpDefinitionLink) {
-		return _cpDefinitionLink.compareTo(cpDefinitionLink);
-	}
-
 	/**
 	 * Returns the company ID of this cp definition link.
 	 *
@@ -165,12 +148,12 @@ public class CPDefinitionLinkWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _cpDefinitionLink.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	@Override
 	public CPDefinition getCPDefinition() {
-		return _cpDefinitionLink.getCPDefinition();
+		return model.getCPDefinition();
 	}
 
 	/**
@@ -179,7 +162,7 @@ public class CPDefinitionLinkWrapper
 	@Deprecated
 	@Override
 	public CPDefinition getCPDefinition1() {
-		return _cpDefinitionLink.getCPDefinition1();
+		return model.getCPDefinition1();
 	}
 
 	/**
@@ -188,7 +171,7 @@ public class CPDefinitionLinkWrapper
 	@Deprecated
 	@Override
 	public CPDefinition getCPDefinition2() {
-		return _cpDefinitionLink.getCPDefinition2();
+		return model.getCPDefinition2();
 	}
 
 	/**
@@ -198,7 +181,7 @@ public class CPDefinitionLinkWrapper
 	 */
 	@Override
 	public long getCPDefinitionId() {
-		return _cpDefinitionLink.getCPDefinitionId();
+		return model.getCPDefinitionId();
 	}
 
 	/**
@@ -208,12 +191,12 @@ public class CPDefinitionLinkWrapper
 	 */
 	@Override
 	public long getCPDefinitionLinkId() {
-		return _cpDefinitionLink.getCPDefinitionLinkId();
+		return model.getCPDefinitionLinkId();
 	}
 
 	@Override
 	public CProduct getCProduct() {
-		return _cpDefinitionLink.getCProduct();
+		return model.getCProduct();
 	}
 
 	/**
@@ -223,7 +206,7 @@ public class CPDefinitionLinkWrapper
 	 */
 	@Override
 	public long getCProductId() {
-		return _cpDefinitionLink.getCProductId();
+		return model.getCProductId();
 	}
 
 	/**
@@ -233,12 +216,7 @@ public class CPDefinitionLinkWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _cpDefinitionLink.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _cpDefinitionLink.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -248,7 +226,7 @@ public class CPDefinitionLinkWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _cpDefinitionLink.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -258,7 +236,17 @@ public class CPDefinitionLinkWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _cpDefinitionLink.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this cp definition link.
+	 *
+	 * @return the mvcc version of this cp definition link
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -268,12 +256,7 @@ public class CPDefinitionLinkWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _cpDefinitionLink.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _cpDefinitionLink.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -283,7 +266,7 @@ public class CPDefinitionLinkWrapper
 	 */
 	@Override
 	public double getPriority() {
-		return _cpDefinitionLink.getPriority();
+		return model.getPriority();
 	}
 
 	/**
@@ -293,7 +276,7 @@ public class CPDefinitionLinkWrapper
 	 */
 	@Override
 	public String getType() {
-		return _cpDefinitionLink.getType();
+		return model.getType();
 	}
 
 	/**
@@ -303,7 +286,7 @@ public class CPDefinitionLinkWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _cpDefinitionLink.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -313,7 +296,7 @@ public class CPDefinitionLinkWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _cpDefinitionLink.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -323,7 +306,7 @@ public class CPDefinitionLinkWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _cpDefinitionLink.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -333,37 +316,12 @@ public class CPDefinitionLinkWrapper
 	 */
 	@Override
 	public String getUuid() {
-		return _cpDefinitionLink.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _cpDefinitionLink.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _cpDefinitionLink.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _cpDefinitionLink.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _cpDefinitionLink.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_cpDefinitionLink.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_cpDefinitionLink.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -373,7 +331,7 @@ public class CPDefinitionLinkWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_cpDefinitionLink.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -383,7 +341,7 @@ public class CPDefinitionLinkWrapper
 	 */
 	@Override
 	public void setCPDefinitionId(long CPDefinitionId) {
-		_cpDefinitionLink.setCPDefinitionId(CPDefinitionId);
+		model.setCPDefinitionId(CPDefinitionId);
 	}
 
 	/**
@@ -393,7 +351,7 @@ public class CPDefinitionLinkWrapper
 	 */
 	@Override
 	public void setCPDefinitionLinkId(long CPDefinitionLinkId) {
-		_cpDefinitionLink.setCPDefinitionLinkId(CPDefinitionLinkId);
+		model.setCPDefinitionLinkId(CPDefinitionLinkId);
 	}
 
 	/**
@@ -403,7 +361,7 @@ public class CPDefinitionLinkWrapper
 	 */
 	@Override
 	public void setCProductId(long CProductId) {
-		_cpDefinitionLink.setCProductId(CProductId);
+		model.setCProductId(CProductId);
 	}
 
 	/**
@@ -413,24 +371,7 @@ public class CPDefinitionLinkWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_cpDefinitionLink.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_cpDefinitionLink.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_cpDefinitionLink.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_cpDefinitionLink.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -440,7 +381,7 @@ public class CPDefinitionLinkWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_cpDefinitionLink.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -450,12 +391,17 @@ public class CPDefinitionLinkWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_cpDefinitionLink.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this cp definition link.
+	 *
+	 * @param mvccVersion the mvcc version of this cp definition link
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_cpDefinitionLink.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -465,12 +411,7 @@ public class CPDefinitionLinkWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_cpDefinitionLink.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_cpDefinitionLink.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -480,7 +421,7 @@ public class CPDefinitionLinkWrapper
 	 */
 	@Override
 	public void setPriority(double priority) {
-		_cpDefinitionLink.setPriority(priority);
+		model.setPriority(priority);
 	}
 
 	/**
@@ -490,7 +431,7 @@ public class CPDefinitionLinkWrapper
 	 */
 	@Override
 	public void setType(String type) {
-		_cpDefinitionLink.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -500,7 +441,7 @@ public class CPDefinitionLinkWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_cpDefinitionLink.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -510,7 +451,7 @@ public class CPDefinitionLinkWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_cpDefinitionLink.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -520,7 +461,7 @@ public class CPDefinitionLinkWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_cpDefinitionLink.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -530,84 +471,17 @@ public class CPDefinitionLinkWrapper
 	 */
 	@Override
 	public void setUuid(String uuid) {
-		_cpDefinitionLink.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CPDefinitionLink>
-		toCacheModel() {
-
-		return _cpDefinitionLink.toCacheModel();
-	}
-
-	@Override
-	public CPDefinitionLink toEscapedModel() {
-		return new CPDefinitionLinkWrapper(_cpDefinitionLink.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _cpDefinitionLink.toString();
-	}
-
-	@Override
-	public CPDefinitionLink toUnescapedModel() {
-		return new CPDefinitionLinkWrapper(
-			_cpDefinitionLink.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _cpDefinitionLink.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CPDefinitionLinkWrapper)) {
-			return false;
-		}
-
-		CPDefinitionLinkWrapper cpDefinitionLinkWrapper =
-			(CPDefinitionLinkWrapper)object;
-
-		if (Objects.equals(
-				_cpDefinitionLink, cpDefinitionLinkWrapper._cpDefinitionLink)) {
-
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _cpDefinitionLink.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public CPDefinitionLink getWrappedModel() {
-		return _cpDefinitionLink;
+	protected CPDefinitionLinkWrapper wrap(CPDefinitionLink cpDefinitionLink) {
+		return new CPDefinitionLinkWrapper(cpDefinitionLink);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _cpDefinitionLink.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _cpDefinitionLink.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_cpDefinitionLink.resetOriginalValues();
-	}
-
-	private final CPDefinitionLink _cpDefinitionLink;
 
 }

@@ -2326,10 +2326,6 @@ public class CommercePriceModifierUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CommercePriceModifierPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

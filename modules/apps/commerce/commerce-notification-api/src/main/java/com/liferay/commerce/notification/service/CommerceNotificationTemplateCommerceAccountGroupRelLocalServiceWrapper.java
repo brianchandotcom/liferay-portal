@@ -93,6 +93,18 @@ public class
 				commerceNotificationTemplateCommerceAccountGroupRelId);
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceNotificationTemplateCommerceAccountGroupRelLocalService.
+			createPersistedModel(primaryKeyObj);
+	}
+
 	@Override
 	public void
 		deleteCNTemplateCommerceAccountGroupRelsBycommerceAccountGroupId(
@@ -169,6 +181,12 @@ public class
 
 		return _commerceNotificationTemplateCommerceAccountGroupRelLocalService.
 			deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _commerceNotificationTemplateCommerceAccountGroupRelLocalService.
+			dslQuery(dslQuery);
 	}
 
 	@Override

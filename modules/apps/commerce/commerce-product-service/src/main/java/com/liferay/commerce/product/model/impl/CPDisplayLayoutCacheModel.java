@@ -15,9 +15,10 @@
 package com.liferay.commerce.product.model.impl;
 
 import com.liferay.commerce.product.model.CPDisplayLayout;
+import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class CPDisplayLayoutCacheModel
-	implements CacheModel<CPDisplayLayout>, Externalizable {
+	implements CacheModel<CPDisplayLayout>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -48,7 +49,10 @@ public class CPDisplayLayoutCacheModel
 		CPDisplayLayoutCacheModel cpDisplayLayoutCacheModel =
 			(CPDisplayLayoutCacheModel)object;
 
-		if (CPDisplayLayoutId == cpDisplayLayoutCacheModel.CPDisplayLayoutId) {
+		if ((CPDisplayLayoutId ==
+				cpDisplayLayoutCacheModel.CPDisplayLayoutId) &&
+			(mvccVersion == cpDisplayLayoutCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -57,14 +61,28 @@ public class CPDisplayLayoutCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, CPDisplayLayoutId);
+		int hashCode = HashUtil.hash(0, CPDisplayLayoutId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", CPDisplayLayoutId=");
 		sb.append(CPDisplayLayoutId);
@@ -94,6 +112,8 @@ public class CPDisplayLayoutCacheModel
 	@Override
 	public CPDisplayLayout toEntityModel() {
 		CPDisplayLayoutImpl cpDisplayLayoutImpl = new CPDisplayLayoutImpl();
+
+		cpDisplayLayoutImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			cpDisplayLayoutImpl.setUuid("");
@@ -145,6 +165,7 @@ public class CPDisplayLayoutCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		CPDisplayLayoutId = objectInput.readLong();
@@ -166,6 +187,8 @@ public class CPDisplayLayoutCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -203,6 +226,7 @@ public class CPDisplayLayoutCacheModel
 		}
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long CPDisplayLayoutId;
 	public long groupId;

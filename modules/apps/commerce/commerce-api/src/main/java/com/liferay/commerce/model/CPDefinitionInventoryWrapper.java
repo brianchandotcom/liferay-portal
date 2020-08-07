@@ -14,17 +14,13 @@
 
 package com.liferay.commerce.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,28 +32,20 @@ import java.util.Objects;
  * @generated
  */
 public class CPDefinitionInventoryWrapper
+	extends BaseModelWrapper<CPDefinitionInventory>
 	implements CPDefinitionInventory, ModelWrapper<CPDefinitionInventory> {
 
 	public CPDefinitionInventoryWrapper(
 		CPDefinitionInventory cpDefinitionInventory) {
 
-		_cpDefinitionInventory = cpDefinitionInventory;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CPDefinitionInventory.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CPDefinitionInventory.class.getName();
+		super(cpDefinitionInventory);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("CPDefinitionInventoryId", getCPDefinitionInventoryId());
 		attributes.put("groupId", getGroupId());
@@ -84,6 +72,12 @@ public class CPDefinitionInventoryWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -205,17 +199,6 @@ public class CPDefinitionInventoryWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CPDefinitionInventoryWrapper(
-			(CPDefinitionInventory)_cpDefinitionInventory.clone());
-	}
-
-	@Override
-	public int compareTo(CPDefinitionInventory cpDefinitionInventory) {
-		return _cpDefinitionInventory.compareTo(cpDefinitionInventory);
-	}
-
 	/**
 	 * Returns the allowed order quantities of this cp definition inventory.
 	 *
@@ -223,12 +206,12 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public String getAllowedOrderQuantities() {
-		return _cpDefinitionInventory.getAllowedOrderQuantities();
+		return model.getAllowedOrderQuantities();
 	}
 
 	@Override
 	public int[] getAllowedOrderQuantitiesArray() {
-		return _cpDefinitionInventory.getAllowedOrderQuantitiesArray();
+		return model.getAllowedOrderQuantitiesArray();
 	}
 
 	/**
@@ -238,7 +221,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public boolean getBackOrders() {
-		return _cpDefinitionInventory.getBackOrders();
+		return model.getBackOrders();
 	}
 
 	/**
@@ -248,7 +231,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _cpDefinitionInventory.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -258,7 +241,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public long getCPDefinitionId() {
-		return _cpDefinitionInventory.getCPDefinitionId();
+		return model.getCPDefinitionId();
 	}
 
 	/**
@@ -268,7 +251,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public String getCPDefinitionInventoryEngine() {
-		return _cpDefinitionInventory.getCPDefinitionInventoryEngine();
+		return model.getCPDefinitionInventoryEngine();
 	}
 
 	/**
@@ -278,7 +261,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public long getCPDefinitionInventoryId() {
-		return _cpDefinitionInventory.getCPDefinitionInventoryId();
+		return model.getCPDefinitionInventoryId();
 	}
 
 	/**
@@ -288,7 +271,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _cpDefinitionInventory.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -298,7 +281,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public boolean getDisplayAvailability() {
-		return _cpDefinitionInventory.getDisplayAvailability();
+		return model.getDisplayAvailability();
 	}
 
 	/**
@@ -308,12 +291,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public boolean getDisplayStockQuantity() {
-		return _cpDefinitionInventory.getDisplayStockQuantity();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _cpDefinitionInventory.getExpandoBridge();
+		return model.getDisplayStockQuantity();
 	}
 
 	/**
@@ -323,7 +301,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _cpDefinitionInventory.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -333,7 +311,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public String getLowStockActivity() {
-		return _cpDefinitionInventory.getLowStockActivity();
+		return model.getLowStockActivity();
 	}
 
 	/**
@@ -343,7 +321,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public int getMaxOrderQuantity() {
-		return _cpDefinitionInventory.getMaxOrderQuantity();
+		return model.getMaxOrderQuantity();
 	}
 
 	/**
@@ -353,7 +331,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public int getMinOrderQuantity() {
-		return _cpDefinitionInventory.getMinOrderQuantity();
+		return model.getMinOrderQuantity();
 	}
 
 	/**
@@ -363,7 +341,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public int getMinStockQuantity() {
-		return _cpDefinitionInventory.getMinStockQuantity();
+		return model.getMinStockQuantity();
 	}
 
 	/**
@@ -373,7 +351,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _cpDefinitionInventory.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -383,7 +361,17 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public int getMultipleOrderQuantity() {
-		return _cpDefinitionInventory.getMultipleOrderQuantity();
+		return model.getMultipleOrderQuantity();
+	}
+
+	/**
+	 * Returns the mvcc version of this cp definition inventory.
+	 *
+	 * @return the mvcc version of this cp definition inventory
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -393,12 +381,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _cpDefinitionInventory.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _cpDefinitionInventory.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -408,7 +391,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _cpDefinitionInventory.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -418,7 +401,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _cpDefinitionInventory.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -428,7 +411,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _cpDefinitionInventory.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -438,12 +421,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public String getUuid() {
-		return _cpDefinitionInventory.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _cpDefinitionInventory.hashCode();
+		return model.getUuid();
 	}
 
 	/**
@@ -453,12 +431,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public boolean isBackOrders() {
-		return _cpDefinitionInventory.isBackOrders();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _cpDefinitionInventory.isCachedModel();
+		return model.isBackOrders();
 	}
 
 	/**
@@ -468,7 +441,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public boolean isDisplayAvailability() {
-		return _cpDefinitionInventory.isDisplayAvailability();
+		return model.isDisplayAvailability();
 	}
 
 	/**
@@ -478,22 +451,12 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public boolean isDisplayStockQuantity() {
-		return _cpDefinitionInventory.isDisplayStockQuantity();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _cpDefinitionInventory.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _cpDefinitionInventory.isNew();
+		return model.isDisplayStockQuantity();
 	}
 
 	@Override
 	public void persist() {
-		_cpDefinitionInventory.persist();
+		model.persist();
 	}
 
 	/**
@@ -503,8 +466,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public void setAllowedOrderQuantities(String allowedOrderQuantities) {
-		_cpDefinitionInventory.setAllowedOrderQuantities(
-			allowedOrderQuantities);
+		model.setAllowedOrderQuantities(allowedOrderQuantities);
 	}
 
 	/**
@@ -514,12 +476,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public void setBackOrders(boolean backOrders) {
-		_cpDefinitionInventory.setBackOrders(backOrders);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_cpDefinitionInventory.setCachedModel(cachedModel);
+		model.setBackOrders(backOrders);
 	}
 
 	/**
@@ -529,7 +486,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_cpDefinitionInventory.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -539,7 +496,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public void setCPDefinitionId(long CPDefinitionId) {
-		_cpDefinitionInventory.setCPDefinitionId(CPDefinitionId);
+		model.setCPDefinitionId(CPDefinitionId);
 	}
 
 	/**
@@ -551,8 +508,7 @@ public class CPDefinitionInventoryWrapper
 	public void setCPDefinitionInventoryEngine(
 		String CPDefinitionInventoryEngine) {
 
-		_cpDefinitionInventory.setCPDefinitionInventoryEngine(
-			CPDefinitionInventoryEngine);
+		model.setCPDefinitionInventoryEngine(CPDefinitionInventoryEngine);
 	}
 
 	/**
@@ -562,8 +518,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public void setCPDefinitionInventoryId(long CPDefinitionInventoryId) {
-		_cpDefinitionInventory.setCPDefinitionInventoryId(
-			CPDefinitionInventoryId);
+		model.setCPDefinitionInventoryId(CPDefinitionInventoryId);
 	}
 
 	/**
@@ -573,7 +528,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_cpDefinitionInventory.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -583,7 +538,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public void setDisplayAvailability(boolean displayAvailability) {
-		_cpDefinitionInventory.setDisplayAvailability(displayAvailability);
+		model.setDisplayAvailability(displayAvailability);
 	}
 
 	/**
@@ -593,24 +548,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public void setDisplayStockQuantity(boolean displayStockQuantity) {
-		_cpDefinitionInventory.setDisplayStockQuantity(displayStockQuantity);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_cpDefinitionInventory.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_cpDefinitionInventory.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_cpDefinitionInventory.setExpandoBridgeAttributes(serviceContext);
+		model.setDisplayStockQuantity(displayStockQuantity);
 	}
 
 	/**
@@ -620,7 +558,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_cpDefinitionInventory.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -630,7 +568,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public void setLowStockActivity(String lowStockActivity) {
-		_cpDefinitionInventory.setLowStockActivity(lowStockActivity);
+		model.setLowStockActivity(lowStockActivity);
 	}
 
 	/**
@@ -640,7 +578,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public void setMaxOrderQuantity(int maxOrderQuantity) {
-		_cpDefinitionInventory.setMaxOrderQuantity(maxOrderQuantity);
+		model.setMaxOrderQuantity(maxOrderQuantity);
 	}
 
 	/**
@@ -650,7 +588,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public void setMinOrderQuantity(int minOrderQuantity) {
-		_cpDefinitionInventory.setMinOrderQuantity(minOrderQuantity);
+		model.setMinOrderQuantity(minOrderQuantity);
 	}
 
 	/**
@@ -660,7 +598,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public void setMinStockQuantity(int minStockQuantity) {
-		_cpDefinitionInventory.setMinStockQuantity(minStockQuantity);
+		model.setMinStockQuantity(minStockQuantity);
 	}
 
 	/**
@@ -670,7 +608,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_cpDefinitionInventory.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -680,12 +618,17 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public void setMultipleOrderQuantity(int multipleOrderQuantity) {
-		_cpDefinitionInventory.setMultipleOrderQuantity(multipleOrderQuantity);
+		model.setMultipleOrderQuantity(multipleOrderQuantity);
 	}
 
+	/**
+	 * Sets the mvcc version of this cp definition inventory.
+	 *
+	 * @param mvccVersion the mvcc version of this cp definition inventory
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_cpDefinitionInventory.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -695,12 +638,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_cpDefinitionInventory.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_cpDefinitionInventory.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -710,7 +648,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_cpDefinitionInventory.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -720,7 +658,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_cpDefinitionInventory.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -730,7 +668,7 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_cpDefinitionInventory.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -740,86 +678,19 @@ public class CPDefinitionInventoryWrapper
 	 */
 	@Override
 	public void setUuid(String uuid) {
-		_cpDefinitionInventory.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CPDefinitionInventory>
-		toCacheModel() {
-
-		return _cpDefinitionInventory.toCacheModel();
-	}
-
-	@Override
-	public CPDefinitionInventory toEscapedModel() {
-		return new CPDefinitionInventoryWrapper(
-			_cpDefinitionInventory.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _cpDefinitionInventory.toString();
-	}
-
-	@Override
-	public CPDefinitionInventory toUnescapedModel() {
-		return new CPDefinitionInventoryWrapper(
-			_cpDefinitionInventory.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _cpDefinitionInventory.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CPDefinitionInventoryWrapper)) {
-			return false;
-		}
-
-		CPDefinitionInventoryWrapper cpDefinitionInventoryWrapper =
-			(CPDefinitionInventoryWrapper)object;
-
-		if (Objects.equals(
-				_cpDefinitionInventory,
-				cpDefinitionInventoryWrapper._cpDefinitionInventory)) {
-
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _cpDefinitionInventory.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public CPDefinitionInventory getWrappedModel() {
-		return _cpDefinitionInventory;
-	}
+	protected CPDefinitionInventoryWrapper wrap(
+		CPDefinitionInventory cpDefinitionInventory) {
 
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _cpDefinitionInventory.isEntityCacheEnabled();
+		return new CPDefinitionInventoryWrapper(cpDefinitionInventory);
 	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _cpDefinitionInventory.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_cpDefinitionInventory.resetOriginalValues();
-	}
-
-	private final CPDefinitionInventory _cpDefinitionInventory;
 
 }

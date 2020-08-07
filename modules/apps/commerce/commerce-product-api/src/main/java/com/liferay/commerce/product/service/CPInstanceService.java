@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.product.service;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -36,6 +34,8 @@ import java.math.BigDecimal;
 
 import java.util.List;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the remote service interface for CPInstance. Methods of this
@@ -283,10 +283,10 @@ public interface CPInstanceService extends BaseService {
 			long cpInstanceId, boolean overrideSubscriptionInfo,
 			boolean subscriptionEnabled, int subscriptionLength,
 			String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
 			int deliverySubscriptionLength, String deliverySubscriptionType,
-			UnicodeProperties deliverySubscriptionTypeSettingsProperties,
+			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
 			long deliveryMaxSubscriptionCycles)
 		throws PortalException;
 
@@ -298,7 +298,7 @@ public interface CPInstanceService extends BaseService {
 			long cpInstanceId, boolean overrideSubscriptionInfo,
 			boolean subscriptionEnabled, int subscriptionLength,
 			String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, ServiceContext serviceContext)
 		throws PortalException;
 

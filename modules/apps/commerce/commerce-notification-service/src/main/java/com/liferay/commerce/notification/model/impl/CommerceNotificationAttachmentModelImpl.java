@@ -19,6 +19,7 @@ import com.liferay.commerce.notification.model.CommerceNotificationAttachmentMod
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -71,10 +71,11 @@ public class CommerceNotificationAttachmentModelImpl
 	public static final String TABLE_NAME = "CNotificationAttachment";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"CNotificationAttachmentId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"CNotificationAttachmentId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP},
 		{"CNotificationQueueEntryId", Types.BIGINT},
 		{"fileEntryId", Types.BIGINT}, {"deleteOnSend", Types.BOOLEAN}
 	};
@@ -83,6 +84,7 @@ public class CommerceNotificationAttachmentModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CNotificationAttachmentId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -97,7 +99,7 @@ public class CommerceNotificationAttachmentModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CNotificationAttachment (uuid_ VARCHAR(75) null,CNotificationAttachmentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CNotificationQueueEntryId LONG,fileEntryId LONG,deleteOnSend BOOLEAN)";
+		"create table CNotificationAttachment (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,CNotificationAttachmentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CNotificationQueueEntryId LONG,fileEntryId LONG,deleteOnSend BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CNotificationAttachment";
@@ -114,20 +116,23 @@ public class CommerceNotificationAttachmentModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.notification.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.notification.model.CommerceNotificationAttachment"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.notification.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.notification.model.CommerceNotificationAttachment"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.notification.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.notification.model.CommerceNotificationAttachment"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long COMMERCENOTIFICATIONQUEUEENTRYID_COLUMN_BITMASK =
 		1L;
@@ -196,9 +201,6 @@ public class CommerceNotificationAttachmentModelImpl
 				attributeGetterFunction.apply(
 					(CommerceNotificationAttachment)this));
 		}
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
@@ -281,321 +283,98 @@ public class CommerceNotificationAttachmentModelImpl
 					<String, BiConsumer<CommerceNotificationAttachment, ?>>();
 
 		attributeGetterFunctions.put(
-			"uuid",
-			new Function<CommerceNotificationAttachment, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationAttachment
-						commerceNotificationAttachment) {
-
-					return commerceNotificationAttachment.getUuid();
-				}
-
-			});
+			"mvccVersion", CommerceNotificationAttachment::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceNotificationAttachment, Long>)
+				CommerceNotificationAttachment::setMvccVersion);
+		attributeGetterFunctions.put(
+			"uuid", CommerceNotificationAttachment::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
-			new BiConsumer<CommerceNotificationAttachment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationAttachment
-						commerceNotificationAttachment,
-					Object uuidObject) {
-
-					commerceNotificationAttachment.setUuid((String)uuidObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationAttachment, String>)
+				CommerceNotificationAttachment::setUuid);
 		attributeGetterFunctions.put(
 			"commerceNotificationAttachmentId",
-			new Function<CommerceNotificationAttachment, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationAttachment
-						commerceNotificationAttachment) {
-
-					return commerceNotificationAttachment.
-						getCommerceNotificationAttachmentId();
-				}
-
-			});
+			CommerceNotificationAttachment::
+				getCommerceNotificationAttachmentId);
 		attributeSetterBiConsumers.put(
 			"commerceNotificationAttachmentId",
-			new BiConsumer<CommerceNotificationAttachment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationAttachment
-						commerceNotificationAttachment,
-					Object commerceNotificationAttachmentIdObject) {
-
-					commerceNotificationAttachment.
-						setCommerceNotificationAttachmentId(
-							(Long)commerceNotificationAttachmentIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationAttachment, Long>)
+				CommerceNotificationAttachment::
+					setCommerceNotificationAttachmentId);
 		attributeGetterFunctions.put(
-			"groupId",
-			new Function<CommerceNotificationAttachment, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationAttachment
-						commerceNotificationAttachment) {
-
-					return commerceNotificationAttachment.getGroupId();
-				}
-
-			});
+			"groupId", CommerceNotificationAttachment::getGroupId);
 		attributeSetterBiConsumers.put(
 			"groupId",
-			new BiConsumer<CommerceNotificationAttachment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationAttachment
-						commerceNotificationAttachment,
-					Object groupIdObject) {
-
-					commerceNotificationAttachment.setGroupId(
-						(Long)groupIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationAttachment, Long>)
+				CommerceNotificationAttachment::setGroupId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommerceNotificationAttachment, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationAttachment
-						commerceNotificationAttachment) {
-
-					return commerceNotificationAttachment.getCompanyId();
-				}
-
-			});
+			"companyId", CommerceNotificationAttachment::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommerceNotificationAttachment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationAttachment
-						commerceNotificationAttachment,
-					Object companyIdObject) {
-
-					commerceNotificationAttachment.setCompanyId(
-						(Long)companyIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationAttachment, Long>)
+				CommerceNotificationAttachment::setCompanyId);
 		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommerceNotificationAttachment, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationAttachment
-						commerceNotificationAttachment) {
-
-					return commerceNotificationAttachment.getUserId();
-				}
-
-			});
+			"userId", CommerceNotificationAttachment::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommerceNotificationAttachment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationAttachment
-						commerceNotificationAttachment,
-					Object userIdObject) {
-
-					commerceNotificationAttachment.setUserId(
-						(Long)userIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationAttachment, Long>)
+				CommerceNotificationAttachment::setUserId);
 		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommerceNotificationAttachment, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationAttachment
-						commerceNotificationAttachment) {
-
-					return commerceNotificationAttachment.getUserName();
-				}
-
-			});
+			"userName", CommerceNotificationAttachment::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommerceNotificationAttachment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationAttachment
-						commerceNotificationAttachment,
-					Object userNameObject) {
-
-					commerceNotificationAttachment.setUserName(
-						(String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationAttachment, String>)
+				CommerceNotificationAttachment::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommerceNotificationAttachment, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationAttachment
-						commerceNotificationAttachment) {
-
-					return commerceNotificationAttachment.getCreateDate();
-				}
-
-			});
+			"createDate", CommerceNotificationAttachment::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommerceNotificationAttachment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationAttachment
-						commerceNotificationAttachment,
-					Object createDateObject) {
-
-					commerceNotificationAttachment.setCreateDate(
-						(Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationAttachment, Date>)
+				CommerceNotificationAttachment::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CommerceNotificationAttachment, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationAttachment
-						commerceNotificationAttachment) {
-
-					return commerceNotificationAttachment.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CommerceNotificationAttachment::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommerceNotificationAttachment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationAttachment
-						commerceNotificationAttachment,
-					Object modifiedDateObject) {
-
-					commerceNotificationAttachment.setModifiedDate(
-						(Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationAttachment, Date>)
+				CommerceNotificationAttachment::setModifiedDate);
 		attributeGetterFunctions.put(
 			"commerceNotificationQueueEntryId",
-			new Function<CommerceNotificationAttachment, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationAttachment
-						commerceNotificationAttachment) {
-
-					return commerceNotificationAttachment.
-						getCommerceNotificationQueueEntryId();
-				}
-
-			});
+			CommerceNotificationAttachment::
+				getCommerceNotificationQueueEntryId);
 		attributeSetterBiConsumers.put(
 			"commerceNotificationQueueEntryId",
-			new BiConsumer<CommerceNotificationAttachment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationAttachment
-						commerceNotificationAttachment,
-					Object commerceNotificationQueueEntryIdObject) {
-
-					commerceNotificationAttachment.
-						setCommerceNotificationQueueEntryId(
-							(Long)commerceNotificationQueueEntryIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationAttachment, Long>)
+				CommerceNotificationAttachment::
+					setCommerceNotificationQueueEntryId);
 		attributeGetterFunctions.put(
-			"fileEntryId",
-			new Function<CommerceNotificationAttachment, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationAttachment
-						commerceNotificationAttachment) {
-
-					return commerceNotificationAttachment.getFileEntryId();
-				}
-
-			});
+			"fileEntryId", CommerceNotificationAttachment::getFileEntryId);
 		attributeSetterBiConsumers.put(
 			"fileEntryId",
-			new BiConsumer<CommerceNotificationAttachment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationAttachment
-						commerceNotificationAttachment,
-					Object fileEntryIdObject) {
-
-					commerceNotificationAttachment.setFileEntryId(
-						(Long)fileEntryIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationAttachment, Long>)
+				CommerceNotificationAttachment::setFileEntryId);
 		attributeGetterFunctions.put(
-			"deleteOnSend",
-			new Function<CommerceNotificationAttachment, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationAttachment
-						commerceNotificationAttachment) {
-
-					return commerceNotificationAttachment.getDeleteOnSend();
-				}
-
-			});
+			"deleteOnSend", CommerceNotificationAttachment::getDeleteOnSend);
 		attributeSetterBiConsumers.put(
 			"deleteOnSend",
-			new BiConsumer<CommerceNotificationAttachment, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationAttachment
-						commerceNotificationAttachment,
-					Object deleteOnSendObject) {
-
-					commerceNotificationAttachment.setDeleteOnSend(
-						(Boolean)deleteOnSendObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationAttachment, Boolean>)
+				CommerceNotificationAttachment::setDeleteOnSend);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -841,6 +620,7 @@ public class CommerceNotificationAttachmentModelImpl
 		CommerceNotificationAttachmentImpl commerceNotificationAttachmentImpl =
 			new CommerceNotificationAttachmentImpl();
 
+		commerceNotificationAttachmentImpl.setMvccVersion(getMvccVersion());
 		commerceNotificationAttachmentImpl.setUuid(getUuid());
 		commerceNotificationAttachmentImpl.setCommerceNotificationAttachmentId(
 			getCommerceNotificationAttachmentId());
@@ -906,11 +686,19 @@ public class CommerceNotificationAttachmentModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -942,6 +730,8 @@ public class CommerceNotificationAttachmentModelImpl
 		CommerceNotificationAttachmentCacheModel
 			commerceNotificationAttachmentCacheModel =
 				new CommerceNotificationAttachmentCacheModel();
+
+		commerceNotificationAttachmentCacheModel.mvccVersion = getMvccVersion();
 
 		commerceNotificationAttachmentCacheModel.uuid = getUuid();
 
@@ -1079,6 +869,7 @@ public class CommerceNotificationAttachmentModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _commerceNotificationAttachmentId;

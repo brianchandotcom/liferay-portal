@@ -778,10 +778,6 @@ public class CommercePricingClassCPDefinitionRelUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CommercePricingClassCPDefinitionRelPersistence
 		getPersistence() {
 

@@ -14,17 +14,13 @@
 
 package com.liferay.commerce.product.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.product.exception.NoSuchCPAttachmentFileEntryException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
 import java.util.Date;
-import java.util.Map;
-import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the cp attachment file entry service.
@@ -46,9 +42,6 @@ public interface CPAttachmentFileEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPAttachmentFileEntryUtil} to access the cp attachment file entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CPAttachmentFileEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the cp attachment file entries where uuid = &#63;.
@@ -1491,8 +1484,5 @@ public interface CPAttachmentFileEntryPersistence
 	 * @return the number of cp attachment file entries
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

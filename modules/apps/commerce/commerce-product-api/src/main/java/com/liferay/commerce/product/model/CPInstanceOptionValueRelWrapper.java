@@ -14,17 +14,13 @@
 
 package com.liferay.commerce.product.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,29 +32,21 @@ import java.util.Objects;
  * @generated
  */
 public class CPInstanceOptionValueRelWrapper
+	extends BaseModelWrapper<CPInstanceOptionValueRel>
 	implements CPInstanceOptionValueRel,
 			   ModelWrapper<CPInstanceOptionValueRel> {
 
 	public CPInstanceOptionValueRelWrapper(
 		CPInstanceOptionValueRel cpInstanceOptionValueRel) {
 
-		_cpInstanceOptionValueRel = cpInstanceOptionValueRel;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CPInstanceOptionValueRel.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CPInstanceOptionValueRel.class.getName();
+		super(cpInstanceOptionValueRel);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put(
 			"CPInstanceOptionValueRelId", getCPInstanceOptionValueRelId());
@@ -78,6 +66,12 @@ public class CPInstanceOptionValueRelWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -148,17 +142,6 @@ public class CPInstanceOptionValueRelWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CPInstanceOptionValueRelWrapper(
-			(CPInstanceOptionValueRel)_cpInstanceOptionValueRel.clone());
-	}
-
-	@Override
-	public int compareTo(CPInstanceOptionValueRel cpInstanceOptionValueRel) {
-		return _cpInstanceOptionValueRel.compareTo(cpInstanceOptionValueRel);
-	}
-
 	/**
 	 * Returns the company ID of this cp instance option value rel.
 	 *
@@ -166,7 +149,7 @@ public class CPInstanceOptionValueRelWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _cpInstanceOptionValueRel.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -176,7 +159,7 @@ public class CPInstanceOptionValueRelWrapper
 	 */
 	@Override
 	public long getCPDefinitionOptionRelId() {
-		return _cpInstanceOptionValueRel.getCPDefinitionOptionRelId();
+		return model.getCPDefinitionOptionRelId();
 	}
 
 	/**
@@ -186,7 +169,7 @@ public class CPInstanceOptionValueRelWrapper
 	 */
 	@Override
 	public long getCPDefinitionOptionValueRelId() {
-		return _cpInstanceOptionValueRel.getCPDefinitionOptionValueRelId();
+		return model.getCPDefinitionOptionValueRelId();
 	}
 
 	/**
@@ -196,7 +179,7 @@ public class CPInstanceOptionValueRelWrapper
 	 */
 	@Override
 	public long getCPInstanceId() {
-		return _cpInstanceOptionValueRel.getCPInstanceId();
+		return model.getCPInstanceId();
 	}
 
 	/**
@@ -206,7 +189,7 @@ public class CPInstanceOptionValueRelWrapper
 	 */
 	@Override
 	public long getCPInstanceOptionValueRelId() {
-		return _cpInstanceOptionValueRel.getCPInstanceOptionValueRelId();
+		return model.getCPInstanceOptionValueRelId();
 	}
 
 	/**
@@ -216,12 +199,7 @@ public class CPInstanceOptionValueRelWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _cpInstanceOptionValueRel.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _cpInstanceOptionValueRel.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -231,7 +209,7 @@ public class CPInstanceOptionValueRelWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _cpInstanceOptionValueRel.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -241,7 +219,17 @@ public class CPInstanceOptionValueRelWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _cpInstanceOptionValueRel.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this cp instance option value rel.
+	 *
+	 * @return the mvcc version of this cp instance option value rel
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -251,12 +239,7 @@ public class CPInstanceOptionValueRelWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _cpInstanceOptionValueRel.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _cpInstanceOptionValueRel.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -266,7 +249,7 @@ public class CPInstanceOptionValueRelWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _cpInstanceOptionValueRel.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -276,7 +259,7 @@ public class CPInstanceOptionValueRelWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _cpInstanceOptionValueRel.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -286,7 +269,7 @@ public class CPInstanceOptionValueRelWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _cpInstanceOptionValueRel.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -296,37 +279,12 @@ public class CPInstanceOptionValueRelWrapper
 	 */
 	@Override
 	public String getUuid() {
-		return _cpInstanceOptionValueRel.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _cpInstanceOptionValueRel.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _cpInstanceOptionValueRel.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _cpInstanceOptionValueRel.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _cpInstanceOptionValueRel.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_cpInstanceOptionValueRel.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_cpInstanceOptionValueRel.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -336,7 +294,7 @@ public class CPInstanceOptionValueRelWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_cpInstanceOptionValueRel.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -346,8 +304,7 @@ public class CPInstanceOptionValueRelWrapper
 	 */
 	@Override
 	public void setCPDefinitionOptionRelId(long CPDefinitionOptionRelId) {
-		_cpInstanceOptionValueRel.setCPDefinitionOptionRelId(
-			CPDefinitionOptionRelId);
+		model.setCPDefinitionOptionRelId(CPDefinitionOptionRelId);
 	}
 
 	/**
@@ -359,8 +316,7 @@ public class CPInstanceOptionValueRelWrapper
 	public void setCPDefinitionOptionValueRelId(
 		long CPDefinitionOptionValueRelId) {
 
-		_cpInstanceOptionValueRel.setCPDefinitionOptionValueRelId(
-			CPDefinitionOptionValueRelId);
+		model.setCPDefinitionOptionValueRelId(CPDefinitionOptionValueRelId);
 	}
 
 	/**
@@ -370,7 +326,7 @@ public class CPInstanceOptionValueRelWrapper
 	 */
 	@Override
 	public void setCPInstanceId(long CPInstanceId) {
-		_cpInstanceOptionValueRel.setCPInstanceId(CPInstanceId);
+		model.setCPInstanceId(CPInstanceId);
 	}
 
 	/**
@@ -380,8 +336,7 @@ public class CPInstanceOptionValueRelWrapper
 	 */
 	@Override
 	public void setCPInstanceOptionValueRelId(long CPInstanceOptionValueRelId) {
-		_cpInstanceOptionValueRel.setCPInstanceOptionValueRelId(
-			CPInstanceOptionValueRelId);
+		model.setCPInstanceOptionValueRelId(CPInstanceOptionValueRelId);
 	}
 
 	/**
@@ -391,24 +346,7 @@ public class CPInstanceOptionValueRelWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_cpInstanceOptionValueRel.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_cpInstanceOptionValueRel.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_cpInstanceOptionValueRel.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_cpInstanceOptionValueRel.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -418,7 +356,7 @@ public class CPInstanceOptionValueRelWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_cpInstanceOptionValueRel.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -428,12 +366,17 @@ public class CPInstanceOptionValueRelWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_cpInstanceOptionValueRel.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this cp instance option value rel.
+	 *
+	 * @param mvccVersion the mvcc version of this cp instance option value rel
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_cpInstanceOptionValueRel.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -443,12 +386,7 @@ public class CPInstanceOptionValueRelWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_cpInstanceOptionValueRel.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_cpInstanceOptionValueRel.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -458,7 +396,7 @@ public class CPInstanceOptionValueRelWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_cpInstanceOptionValueRel.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -468,7 +406,7 @@ public class CPInstanceOptionValueRelWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_cpInstanceOptionValueRel.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -478,7 +416,7 @@ public class CPInstanceOptionValueRelWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_cpInstanceOptionValueRel.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -488,86 +426,19 @@ public class CPInstanceOptionValueRelWrapper
 	 */
 	@Override
 	public void setUuid(String uuid) {
-		_cpInstanceOptionValueRel.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CPInstanceOptionValueRel>
-		toCacheModel() {
-
-		return _cpInstanceOptionValueRel.toCacheModel();
-	}
-
-	@Override
-	public CPInstanceOptionValueRel toEscapedModel() {
-		return new CPInstanceOptionValueRelWrapper(
-			_cpInstanceOptionValueRel.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _cpInstanceOptionValueRel.toString();
-	}
-
-	@Override
-	public CPInstanceOptionValueRel toUnescapedModel() {
-		return new CPInstanceOptionValueRelWrapper(
-			_cpInstanceOptionValueRel.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _cpInstanceOptionValueRel.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CPInstanceOptionValueRelWrapper)) {
-			return false;
-		}
-
-		CPInstanceOptionValueRelWrapper cpInstanceOptionValueRelWrapper =
-			(CPInstanceOptionValueRelWrapper)object;
-
-		if (Objects.equals(
-				_cpInstanceOptionValueRel,
-				cpInstanceOptionValueRelWrapper._cpInstanceOptionValueRel)) {
-
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _cpInstanceOptionValueRel.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public CPInstanceOptionValueRel getWrappedModel() {
-		return _cpInstanceOptionValueRel;
-	}
+	protected CPInstanceOptionValueRelWrapper wrap(
+		CPInstanceOptionValueRel cpInstanceOptionValueRel) {
 
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _cpInstanceOptionValueRel.isEntityCacheEnabled();
+		return new CPInstanceOptionValueRelWrapper(cpInstanceOptionValueRel);
 	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _cpInstanceOptionValueRel.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_cpInstanceOptionValueRel.resetOriginalValues();
-	}
-
-	private final CPInstanceOptionValueRel _cpInstanceOptionValueRel;
 
 }

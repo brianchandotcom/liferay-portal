@@ -16,9 +16,11 @@ package com.liferay.commerce.discount.service.persistence.impl;
 
 import com.liferay.commerce.discount.exception.NoSuchDiscountRuleException;
 import com.liferay.commerce.discount.model.CommerceDiscountRule;
+import com.liferay.commerce.discount.model.CommerceDiscountRuleTable;
 import com.liferay.commerce.discount.model.impl.CommerceDiscountRuleImpl;
 import com.liferay.commerce.discount.model.impl.CommerceDiscountRuleModelImpl;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountRulePersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -35,19 +37,14 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -246,10 +243,6 @@ public class CommerceDiscountRulePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -589,8 +582,6 @@ public class CommerceDiscountRulePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -610,21 +601,14 @@ public class CommerceDiscountRulePersistenceImpl
 
 		dbColumnNames.put("type", "type_");
 
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-				"_dbColumnNames");
-
-			field.setAccessible(true);
-
-			field.set(this, dbColumnNames);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
+		setDBColumnNames(dbColumnNames);
 
 		setModelClass(CommerceDiscountRule.class);
+
+		setModelImplClass(CommerceDiscountRuleImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CommerceDiscountRuleTable.INSTANCE);
 	}
 
 	/**
@@ -635,7 +619,6 @@ public class CommerceDiscountRulePersistenceImpl
 	@Override
 	public void cacheResult(CommerceDiscountRule commerceDiscountRule) {
 		entityCache.putResult(
-			CommerceDiscountRuleModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceDiscountRuleImpl.class,
 			commerceDiscountRule.getPrimaryKey(), commerceDiscountRule);
 
@@ -653,7 +636,6 @@ public class CommerceDiscountRulePersistenceImpl
 				commerceDiscountRules) {
 
 			if (entityCache.getResult(
-					CommerceDiscountRuleModelImpl.ENTITY_CACHE_ENABLED,
 					CommerceDiscountRuleImpl.class,
 					commerceDiscountRule.getPrimaryKey()) == null) {
 
@@ -691,7 +673,6 @@ public class CommerceDiscountRulePersistenceImpl
 	@Override
 	public void clearCache(CommerceDiscountRule commerceDiscountRule) {
 		entityCache.removeResult(
-			CommerceDiscountRuleModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceDiscountRuleImpl.class,
 			commerceDiscountRule.getPrimaryKey());
 
@@ -708,12 +689,12 @@ public class CommerceDiscountRulePersistenceImpl
 				commerceDiscountRules) {
 
 			entityCache.removeResult(
-				CommerceDiscountRuleModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceDiscountRuleImpl.class,
 				commerceDiscountRule.getPrimaryKey());
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -721,7 +702,6 @@ public class CommerceDiscountRulePersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(
-				CommerceDiscountRuleModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceDiscountRuleImpl.class, primaryKey);
 		}
 	}
@@ -909,10 +889,7 @@ public class CommerceDiscountRulePersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CommerceDiscountRuleModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				commerceDiscountRuleModelImpl.getCommerceDiscountId()
 			};
@@ -953,7 +930,6 @@ public class CommerceDiscountRulePersistenceImpl
 		}
 
 		entityCache.putResult(
-			CommerceDiscountRuleModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceDiscountRuleImpl.class,
 			commerceDiscountRule.getPrimaryKey(), commerceDiscountRule, false);
 
@@ -1005,168 +981,12 @@ public class CommerceDiscountRulePersistenceImpl
 	/**
 	 * Returns the commerce discount rule with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the commerce discount rule
-	 * @return the commerce discount rule, or <code>null</code> if a commerce discount rule with the primary key could not be found
-	 */
-	@Override
-	public CommerceDiscountRule fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(
-			CommerceDiscountRuleModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDiscountRuleImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CommerceDiscountRule commerceDiscountRule =
-			(CommerceDiscountRule)serializable;
-
-		if (commerceDiscountRule == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				commerceDiscountRule = (CommerceDiscountRule)session.get(
-					CommerceDiscountRuleImpl.class, primaryKey);
-
-				if (commerceDiscountRule != null) {
-					cacheResult(commerceDiscountRule);
-				}
-				else {
-					entityCache.putResult(
-						CommerceDiscountRuleModelImpl.ENTITY_CACHE_ENABLED,
-						CommerceDiscountRuleImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CommerceDiscountRuleModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceDiscountRuleImpl.class, primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return commerceDiscountRule;
-	}
-
-	/**
-	 * Returns the commerce discount rule with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param commerceDiscountRuleId the primary key of the commerce discount rule
 	 * @return the commerce discount rule, or <code>null</code> if a commerce discount rule with the primary key could not be found
 	 */
 	@Override
 	public CommerceDiscountRule fetchByPrimaryKey(long commerceDiscountRuleId) {
 		return fetchByPrimaryKey((Serializable)commerceDiscountRuleId);
-	}
-
-	@Override
-	public Map<Serializable, CommerceDiscountRule> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CommerceDiscountRule> map =
-			new HashMap<Serializable, CommerceDiscountRule>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CommerceDiscountRule commerceDiscountRule = fetchByPrimaryKey(
-				primaryKey);
-
-			if (commerceDiscountRule != null) {
-				map.put(primaryKey, commerceDiscountRule);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CommerceDiscountRuleModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceDiscountRuleImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (CommerceDiscountRule)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(_SQL_SELECT_COMMERCEDISCOUNTRULE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CommerceDiscountRule commerceDiscountRule :
-					(List<CommerceDiscountRule>)query.list()) {
-
-				map.put(
-					commerceDiscountRule.getPrimaryKeyObj(),
-					commerceDiscountRule);
-
-				cacheResult(commerceDiscountRule);
-
-				uncachedPrimaryKeys.remove(
-					commerceDiscountRule.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CommerceDiscountRuleModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceDiscountRuleImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -1295,10 +1115,6 @@ public class CommerceDiscountRulePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1345,9 +1161,6 @@ public class CommerceDiscountRulePersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1364,6 +1177,21 @@ public class CommerceDiscountRulePersistenceImpl
 	}
 
 	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "commerceDiscountRuleId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_COMMERCEDISCOUNTRULE;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CommerceDiscountRuleModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -1373,27 +1201,19 @@ public class CommerceDiscountRulePersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceDiscountRuleModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDiscountRuleModelImpl.FINDER_CACHE_ENABLED,
 			CommerceDiscountRuleImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceDiscountRuleModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDiscountRuleModelImpl.FINDER_CACHE_ENABLED,
 			CommerceDiscountRuleImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CommerceDiscountRuleModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDiscountRuleModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByCommerceDiscountId = new FinderPath(
-			CommerceDiscountRuleModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDiscountRuleModelImpl.FINDER_CACHE_ENABLED,
 			CommerceDiscountRuleImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceDiscountId",
 			new String[] {
@@ -1402,8 +1222,6 @@ public class CommerceDiscountRulePersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByCommerceDiscountId = new FinderPath(
-			CommerceDiscountRuleModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDiscountRuleModelImpl.FINDER_CACHE_ENABLED,
 			CommerceDiscountRuleImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCommerceDiscountId", new String[] {Long.class.getName()},
@@ -1411,9 +1229,7 @@ public class CommerceDiscountRulePersistenceImpl
 			CommerceDiscountRuleModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByCommerceDiscountId = new FinderPath(
-			CommerceDiscountRuleModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceDiscountRuleModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCommerceDiscountId", new String[] {Long.class.getName()});
 	}
 
@@ -1432,9 +1248,6 @@ public class CommerceDiscountRulePersistenceImpl
 
 	private static final String _SQL_SELECT_COMMERCEDISCOUNTRULE =
 		"SELECT commerceDiscountRule FROM CommerceDiscountRule commerceDiscountRule";
-
-	private static final String _SQL_SELECT_COMMERCEDISCOUNTRULE_WHERE_PKS_IN =
-		"SELECT commerceDiscountRule FROM CommerceDiscountRule commerceDiscountRule WHERE commerceDiscountRuleId IN (";
 
 	private static final String _SQL_SELECT_COMMERCEDISCOUNTRULE_WHERE =
 		"SELECT commerceDiscountRule FROM CommerceDiscountRule commerceDiscountRule WHERE ";

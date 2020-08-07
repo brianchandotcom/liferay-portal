@@ -19,6 +19,7 @@ import com.liferay.commerce.product.model.CommerceChannelRelModel;
 import com.liferay.commerce.product.model.CommerceChannelRelSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -76,17 +76,18 @@ public class CommerceChannelRelModelImpl
 	public static final String TABLE_NAME = "CommerceChannelRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"commerceChannelRelId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"commerceChannelId", Types.BIGINT}
+		{"mvccVersion", Types.BIGINT}, {"commerceChannelRelId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"commerceChannelId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceChannelRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -99,7 +100,7 @@ public class CommerceChannelRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceChannelRel (commerceChannelRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,commerceChannelId LONG)";
+		"create table CommerceChannelRel (mvccVersion LONG default 0 not null,commerceChannelRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,commerceChannelId LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceChannelRel";
 
@@ -115,20 +116,23 @@ public class CommerceChannelRelModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.product.model.CommerceChannelRel"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.product.model.CommerceChannelRel"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.product.model.CommerceChannelRel"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
 
@@ -151,6 +155,7 @@ public class CommerceChannelRelModelImpl
 
 		CommerceChannelRel model = new CommerceChannelRelImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceChannelRelId(soapModel.getCommerceChannelRelId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
@@ -243,9 +248,6 @@ public class CommerceChannelRelModelImpl
 				attributeGetterFunction.apply((CommerceChannelRel)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -322,220 +324,80 @@ public class CommerceChannelRelModelImpl
 				new LinkedHashMap<String, BiConsumer<CommerceChannelRel, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", CommerceChannelRel::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceChannelRel, Long>)
+				CommerceChannelRel::setMvccVersion);
+		attributeGetterFunctions.put(
 			"commerceChannelRelId",
-			new Function<CommerceChannelRel, Object>() {
-
-				@Override
-				public Object apply(CommerceChannelRel commerceChannelRel) {
-					return commerceChannelRel.getCommerceChannelRelId();
-				}
-
-			});
+			CommerceChannelRel::getCommerceChannelRelId);
 		attributeSetterBiConsumers.put(
 			"commerceChannelRelId",
-			new BiConsumer<CommerceChannelRel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceChannelRel commerceChannelRel,
-					Object commerceChannelRelIdObject) {
-
-					commerceChannelRel.setCommerceChannelRelId(
-						(Long)commerceChannelRelIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceChannelRel, Long>)
+				CommerceChannelRel::setCommerceChannelRelId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommerceChannelRel, Object>() {
-
-				@Override
-				public Object apply(CommerceChannelRel commerceChannelRel) {
-					return commerceChannelRel.getCompanyId();
-				}
-
-			});
+			"companyId", CommerceChannelRel::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommerceChannelRel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceChannelRel commerceChannelRel,
-					Object companyIdObject) {
-
-					commerceChannelRel.setCompanyId((Long)companyIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommerceChannelRel, Object>() {
-
-				@Override
-				public Object apply(CommerceChannelRel commerceChannelRel) {
-					return commerceChannelRel.getUserId();
-				}
-
-			});
+			(BiConsumer<CommerceChannelRel, Long>)
+				CommerceChannelRel::setCompanyId);
+		attributeGetterFunctions.put("userId", CommerceChannelRel::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommerceChannelRel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceChannelRel commerceChannelRel,
-					Object userIdObject) {
-
-					commerceChannelRel.setUserId((Long)userIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceChannelRel, Long>)
+				CommerceChannelRel::setUserId);
 		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommerceChannelRel, Object>() {
-
-				@Override
-				public Object apply(CommerceChannelRel commerceChannelRel) {
-					return commerceChannelRel.getUserName();
-				}
-
-			});
+			"userName", CommerceChannelRel::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommerceChannelRel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceChannelRel commerceChannelRel,
-					Object userNameObject) {
-
-					commerceChannelRel.setUserName((String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceChannelRel, String>)
+				CommerceChannelRel::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommerceChannelRel, Object>() {
-
-				@Override
-				public Object apply(CommerceChannelRel commerceChannelRel) {
-					return commerceChannelRel.getCreateDate();
-				}
-
-			});
+			"createDate", CommerceChannelRel::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommerceChannelRel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceChannelRel commerceChannelRel,
-					Object createDateObject) {
-
-					commerceChannelRel.setCreateDate((Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceChannelRel, Date>)
+				CommerceChannelRel::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CommerceChannelRel, Object>() {
-
-				@Override
-				public Object apply(CommerceChannelRel commerceChannelRel) {
-					return commerceChannelRel.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CommerceChannelRel::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommerceChannelRel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceChannelRel commerceChannelRel,
-					Object modifiedDateObject) {
-
-					commerceChannelRel.setModifiedDate(
-						(Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceChannelRel, Date>)
+				CommerceChannelRel::setModifiedDate);
 		attributeGetterFunctions.put(
-			"classNameId",
-			new Function<CommerceChannelRel, Object>() {
-
-				@Override
-				public Object apply(CommerceChannelRel commerceChannelRel) {
-					return commerceChannelRel.getClassNameId();
-				}
-
-			});
+			"classNameId", CommerceChannelRel::getClassNameId);
 		attributeSetterBiConsumers.put(
 			"classNameId",
-			new BiConsumer<CommerceChannelRel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceChannelRel commerceChannelRel,
-					Object classNameIdObject) {
-
-					commerceChannelRel.setClassNameId((Long)classNameIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"classPK",
-			new Function<CommerceChannelRel, Object>() {
-
-				@Override
-				public Object apply(CommerceChannelRel commerceChannelRel) {
-					return commerceChannelRel.getClassPK();
-				}
-
-			});
+			(BiConsumer<CommerceChannelRel, Long>)
+				CommerceChannelRel::setClassNameId);
+		attributeGetterFunctions.put("classPK", CommerceChannelRel::getClassPK);
 		attributeSetterBiConsumers.put(
 			"classPK",
-			new BiConsumer<CommerceChannelRel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceChannelRel commerceChannelRel,
-					Object classPKObject) {
-
-					commerceChannelRel.setClassPK((Long)classPKObject);
-				}
-
-			});
+			(BiConsumer<CommerceChannelRel, Long>)
+				CommerceChannelRel::setClassPK);
 		attributeGetterFunctions.put(
-			"commerceChannelId",
-			new Function<CommerceChannelRel, Object>() {
-
-				@Override
-				public Object apply(CommerceChannelRel commerceChannelRel) {
-					return commerceChannelRel.getCommerceChannelId();
-				}
-
-			});
+			"commerceChannelId", CommerceChannelRel::getCommerceChannelId);
 		attributeSetterBiConsumers.put(
 			"commerceChannelId",
-			new BiConsumer<CommerceChannelRel, Object>() {
-
-				@Override
-				public void accept(
-					CommerceChannelRel commerceChannelRel,
-					Object commerceChannelIdObject) {
-
-					commerceChannelRel.setCommerceChannelId(
-						(Long)commerceChannelIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceChannelRel, Long>)
+				CommerceChannelRel::setCommerceChannelId);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -758,6 +620,7 @@ public class CommerceChannelRelModelImpl
 		CommerceChannelRelImpl commerceChannelRelImpl =
 			new CommerceChannelRelImpl();
 
+		commerceChannelRelImpl.setMvccVersion(getMvccVersion());
 		commerceChannelRelImpl.setCommerceChannelRelId(
 			getCommerceChannelRelId());
 		commerceChannelRelImpl.setCompanyId(getCompanyId());
@@ -817,11 +680,19 @@ public class CommerceChannelRelModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -849,6 +720,8 @@ public class CommerceChannelRelModelImpl
 	public CacheModel<CommerceChannelRel> toCacheModel() {
 		CommerceChannelRelCacheModel commerceChannelRelCacheModel =
 			new CommerceChannelRelCacheModel();
+
+		commerceChannelRelCacheModel.mvccVersion = getMvccVersion();
 
 		commerceChannelRelCacheModel.commerceChannelRelId =
 			getCommerceChannelRelId();
@@ -962,6 +835,7 @@ public class CommerceChannelRelModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _commerceChannelRelId;
 	private long _companyId;
 	private long _userId;

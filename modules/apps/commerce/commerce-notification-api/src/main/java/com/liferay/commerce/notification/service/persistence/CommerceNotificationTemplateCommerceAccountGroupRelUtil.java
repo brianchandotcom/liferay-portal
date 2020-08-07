@@ -830,10 +830,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CommerceNotificationTemplateCommerceAccountGroupRelPersistence
 		getPersistence() {
 

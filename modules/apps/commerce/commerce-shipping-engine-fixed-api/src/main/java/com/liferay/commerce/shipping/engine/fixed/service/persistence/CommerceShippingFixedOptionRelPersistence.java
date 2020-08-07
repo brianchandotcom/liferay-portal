@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.shipping.engine.fixed.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.shipping.engine.fixed.exception.NoSuchShippingFixedOptionRelException;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce shipping fixed option rel service.
@@ -45,9 +40,6 @@ public interface CommerceShippingFixedOptionRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceShippingFixedOptionRelUtil} to access the commerce shipping fixed option rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceShippingFixedOptionRel> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce shipping fixed option rels where commerceShippingMethodId = &#63;.
@@ -481,8 +473,5 @@ public interface CommerceShippingFixedOptionRelPersistence
 	 * @return the number of commerce shipping fixed option rels
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

@@ -66,8 +66,8 @@ public class Position {
 		catch (RuntimeException re) {
 			throw re;
 		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
+		catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -92,8 +92,8 @@ public class Position {
 		catch (RuntimeException re) {
 			throw re;
 		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
+		catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 	}
 

@@ -14,17 +14,13 @@
 
 package com.liferay.commerce.product.type.virtual.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,29 +32,21 @@ import java.util.Objects;
  * @generated
  */
 public class CPDefinitionVirtualSettingWrapper
+	extends BaseModelWrapper<CPDefinitionVirtualSetting>
 	implements CPDefinitionVirtualSetting,
 			   ModelWrapper<CPDefinitionVirtualSetting> {
 
 	public CPDefinitionVirtualSettingWrapper(
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
 
-		_cpDefinitionVirtualSetting = cpDefinitionVirtualSetting;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CPDefinitionVirtualSetting.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CPDefinitionVirtualSetting.class.getName();
+		super(cpDefinitionVirtualSetting);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put(
 			"CPDefinitionVirtualSettingId", getCPDefinitionVirtualSettingId());
@@ -91,6 +79,12 @@ public class CPDefinitionVirtualSettingWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -234,20 +228,6 @@ public class CPDefinitionVirtualSettingWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CPDefinitionVirtualSettingWrapper(
-			(CPDefinitionVirtualSetting)_cpDefinitionVirtualSetting.clone());
-	}
-
-	@Override
-	public int compareTo(
-		CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
-
-		return _cpDefinitionVirtualSetting.compareTo(
-			cpDefinitionVirtualSetting);
-	}
-
 	/**
 	 * Returns the activation status of this cp definition virtual setting.
 	 *
@@ -255,12 +235,12 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public int getActivationStatus() {
-		return _cpDefinitionVirtualSetting.getActivationStatus();
+		return model.getActivationStatus();
 	}
 
 	@Override
 	public String[] getAvailableLanguageIds() {
-		return _cpDefinitionVirtualSetting.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -270,7 +250,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public String getClassName() {
-		return _cpDefinitionVirtualSetting.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -280,7 +260,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public long getClassNameId() {
-		return _cpDefinitionVirtualSetting.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -290,7 +270,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public long getClassPK() {
-		return _cpDefinitionVirtualSetting.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -300,7 +280,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _cpDefinitionVirtualSetting.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -310,7 +290,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public long getCPDefinitionVirtualSettingId() {
-		return _cpDefinitionVirtualSetting.getCPDefinitionVirtualSettingId();
+		return model.getCPDefinitionVirtualSettingId();
 	}
 
 	/**
@@ -320,12 +300,12 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _cpDefinitionVirtualSetting.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _cpDefinitionVirtualSetting.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -335,19 +315,14 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public long getDuration() {
-		return _cpDefinitionVirtualSetting.getDuration();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _cpDefinitionVirtualSetting.getExpandoBridge();
+		return model.getDuration();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry getFileEntry()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _cpDefinitionVirtualSetting.getFileEntry();
+		return model.getFileEntry();
 	}
 
 	/**
@@ -357,7 +332,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public long getFileEntryId() {
-		return _cpDefinitionVirtualSetting.getFileEntryId();
+		return model.getFileEntryId();
 	}
 
 	/**
@@ -367,7 +342,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _cpDefinitionVirtualSetting.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -377,7 +352,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public Date getLastPublishDate() {
-		return _cpDefinitionVirtualSetting.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -387,7 +362,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public int getMaxUsages() {
-		return _cpDefinitionVirtualSetting.getMaxUsages();
+		return model.getMaxUsages();
 	}
 
 	/**
@@ -397,7 +372,17 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _cpDefinitionVirtualSetting.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this cp definition virtual setting.
+	 *
+	 * @return the mvcc version of this cp definition virtual setting
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -407,7 +392,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public boolean getOverride() {
-		return _cpDefinitionVirtualSetting.getOverride();
+		return model.getOverride();
 	}
 
 	/**
@@ -417,12 +402,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _cpDefinitionVirtualSetting.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _cpDefinitionVirtualSetting.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	@Override
@@ -430,7 +410,7 @@ public class CPDefinitionVirtualSettingWrapper
 			getSampleFileEntry()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _cpDefinitionVirtualSetting.getSampleFileEntry();
+		return model.getSampleFileEntry();
 	}
 
 	/**
@@ -440,7 +420,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public long getSampleFileEntryId() {
-		return _cpDefinitionVirtualSetting.getSampleFileEntryId();
+		return model.getSampleFileEntryId();
 	}
 
 	/**
@@ -450,7 +430,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public String getSampleUrl() {
-		return _cpDefinitionVirtualSetting.getSampleUrl();
+		return model.getSampleUrl();
 	}
 
 	/**
@@ -460,7 +440,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public String getTermsOfUseContent() {
-		return _cpDefinitionVirtualSetting.getTermsOfUseContent();
+		return model.getTermsOfUseContent();
 	}
 
 	/**
@@ -471,7 +451,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public String getTermsOfUseContent(java.util.Locale locale) {
-		return _cpDefinitionVirtualSetting.getTermsOfUseContent(locale);
+		return model.getTermsOfUseContent(locale);
 	}
 
 	/**
@@ -485,8 +465,7 @@ public class CPDefinitionVirtualSettingWrapper
 	public String getTermsOfUseContent(
 		java.util.Locale locale, boolean useDefault) {
 
-		return _cpDefinitionVirtualSetting.getTermsOfUseContent(
-			locale, useDefault);
+		return model.getTermsOfUseContent(locale, useDefault);
 	}
 
 	/**
@@ -497,7 +476,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public String getTermsOfUseContent(String languageId) {
-		return _cpDefinitionVirtualSetting.getTermsOfUseContent(languageId);
+		return model.getTermsOfUseContent(languageId);
 	}
 
 	/**
@@ -509,19 +488,17 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public String getTermsOfUseContent(String languageId, boolean useDefault) {
-		return _cpDefinitionVirtualSetting.getTermsOfUseContent(
-			languageId, useDefault);
+		return model.getTermsOfUseContent(languageId, useDefault);
 	}
 
 	@Override
 	public String getTermsOfUseContentCurrentLanguageId() {
-		return _cpDefinitionVirtualSetting.
-			getTermsOfUseContentCurrentLanguageId();
+		return model.getTermsOfUseContentCurrentLanguageId();
 	}
 
 	@Override
 	public String getTermsOfUseContentCurrentValue() {
-		return _cpDefinitionVirtualSetting.getTermsOfUseContentCurrentValue();
+		return model.getTermsOfUseContentCurrentValue();
 	}
 
 	/**
@@ -531,7 +508,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public Map<java.util.Locale, String> getTermsOfUseContentMap() {
-		return _cpDefinitionVirtualSetting.getTermsOfUseContentMap();
+		return model.getTermsOfUseContentMap();
 	}
 
 	@Override
@@ -539,7 +516,7 @@ public class CPDefinitionVirtualSettingWrapper
 			getTermsOfUseJournalArticle()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _cpDefinitionVirtualSetting.getTermsOfUseJournalArticle();
+		return model.getTermsOfUseJournalArticle();
 	}
 
 	/**
@@ -549,8 +526,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public long getTermsOfUseJournalArticleResourcePrimKey() {
-		return _cpDefinitionVirtualSetting.
-			getTermsOfUseJournalArticleResourcePrimKey();
+		return model.getTermsOfUseJournalArticleResourcePrimKey();
 	}
 
 	/**
@@ -560,7 +536,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public boolean getTermsOfUseRequired() {
-		return _cpDefinitionVirtualSetting.getTermsOfUseRequired();
+		return model.getTermsOfUseRequired();
 	}
 
 	/**
@@ -570,7 +546,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public String getUrl() {
-		return _cpDefinitionVirtualSetting.getUrl();
+		return model.getUrl();
 	}
 
 	/**
@@ -580,7 +556,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _cpDefinitionVirtualSetting.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -590,7 +566,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _cpDefinitionVirtualSetting.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -600,7 +576,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _cpDefinitionVirtualSetting.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -610,7 +586,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public boolean getUseSample() {
-		return _cpDefinitionVirtualSetting.getUseSample();
+		return model.getUseSample();
 	}
 
 	/**
@@ -620,27 +596,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public String getUuid() {
-		return _cpDefinitionVirtualSetting.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _cpDefinitionVirtualSetting.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _cpDefinitionVirtualSetting.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _cpDefinitionVirtualSetting.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _cpDefinitionVirtualSetting.isNew();
+		return model.getUuid();
 	}
 
 	/**
@@ -650,7 +606,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public boolean isOverride() {
-		return _cpDefinitionVirtualSetting.isOverride();
+		return model.isOverride();
 	}
 
 	/**
@@ -660,7 +616,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public boolean isTermsOfUseRequired() {
-		return _cpDefinitionVirtualSetting.isTermsOfUseRequired();
+		return model.isTermsOfUseRequired();
 	}
 
 	/**
@@ -670,34 +626,34 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public boolean isUseSample() {
-		return _cpDefinitionVirtualSetting.isUseSample();
+		return model.isUseSample();
 	}
 
 	@Override
 	public boolean isUseSampleUrl() {
-		return _cpDefinitionVirtualSetting.isUseSampleUrl();
+		return model.isUseSampleUrl();
 	}
 
 	@Override
 	public boolean isUseTermsOfUseJournal() {
-		return _cpDefinitionVirtualSetting.isUseTermsOfUseJournal();
+		return model.isUseTermsOfUseJournal();
 	}
 
 	@Override
 	public boolean isUseUrl() {
-		return _cpDefinitionVirtualSetting.isUseUrl();
+		return model.isUseUrl();
 	}
 
 	@Override
 	public void persist() {
-		_cpDefinitionVirtualSetting.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
-		_cpDefinitionVirtualSetting.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
@@ -705,8 +661,7 @@ public class CPDefinitionVirtualSettingWrapper
 			java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
-		_cpDefinitionVirtualSetting.prepareLocalizedFieldsForImport(
-			defaultImportLocale);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -716,17 +671,12 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public void setActivationStatus(int activationStatus) {
-		_cpDefinitionVirtualSetting.setActivationStatus(activationStatus);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_cpDefinitionVirtualSetting.setCachedModel(cachedModel);
+		model.setActivationStatus(activationStatus);
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_cpDefinitionVirtualSetting.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -736,7 +686,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public void setClassNameId(long classNameId) {
-		_cpDefinitionVirtualSetting.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -746,7 +696,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public void setClassPK(long classPK) {
-		_cpDefinitionVirtualSetting.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -756,7 +706,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_cpDefinitionVirtualSetting.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -768,8 +718,7 @@ public class CPDefinitionVirtualSettingWrapper
 	public void setCPDefinitionVirtualSettingId(
 		long CPDefinitionVirtualSettingId) {
 
-		_cpDefinitionVirtualSetting.setCPDefinitionVirtualSettingId(
-			CPDefinitionVirtualSettingId);
+		model.setCPDefinitionVirtualSettingId(CPDefinitionVirtualSettingId);
 	}
 
 	/**
@@ -779,7 +728,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_cpDefinitionVirtualSetting.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -789,24 +738,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public void setDuration(long duration) {
-		_cpDefinitionVirtualSetting.setDuration(duration);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_cpDefinitionVirtualSetting.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_cpDefinitionVirtualSetting.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_cpDefinitionVirtualSetting.setExpandoBridgeAttributes(serviceContext);
+		model.setDuration(duration);
 	}
 
 	/**
@@ -816,7 +748,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public void setFileEntryId(long fileEntryId) {
-		_cpDefinitionVirtualSetting.setFileEntryId(fileEntryId);
+		model.setFileEntryId(fileEntryId);
 	}
 
 	/**
@@ -826,7 +758,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_cpDefinitionVirtualSetting.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -836,7 +768,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_cpDefinitionVirtualSetting.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -846,7 +778,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public void setMaxUsages(int maxUsages) {
-		_cpDefinitionVirtualSetting.setMaxUsages(maxUsages);
+		model.setMaxUsages(maxUsages);
 	}
 
 	/**
@@ -856,12 +788,17 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_cpDefinitionVirtualSetting.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this cp definition virtual setting.
+	 *
+	 * @param mvccVersion the mvcc version of this cp definition virtual setting
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_cpDefinitionVirtualSetting.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -871,7 +808,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public void setOverride(boolean override) {
-		_cpDefinitionVirtualSetting.setOverride(override);
+		model.setOverride(override);
 	}
 
 	/**
@@ -881,12 +818,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_cpDefinitionVirtualSetting.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_cpDefinitionVirtualSetting.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -896,7 +828,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public void setSampleFileEntryId(long sampleFileEntryId) {
-		_cpDefinitionVirtualSetting.setSampleFileEntryId(sampleFileEntryId);
+		model.setSampleFileEntryId(sampleFileEntryId);
 	}
 
 	/**
@@ -906,7 +838,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public void setSampleUrl(String sampleUrl) {
-		_cpDefinitionVirtualSetting.setSampleUrl(sampleUrl);
+		model.setSampleUrl(sampleUrl);
 	}
 
 	/**
@@ -916,7 +848,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public void setTermsOfUseContent(String termsOfUseContent) {
-		_cpDefinitionVirtualSetting.setTermsOfUseContent(termsOfUseContent);
+		model.setTermsOfUseContent(termsOfUseContent);
 	}
 
 	/**
@@ -929,8 +861,7 @@ public class CPDefinitionVirtualSettingWrapper
 	public void setTermsOfUseContent(
 		String termsOfUseContent, java.util.Locale locale) {
 
-		_cpDefinitionVirtualSetting.setTermsOfUseContent(
-			termsOfUseContent, locale);
+		model.setTermsOfUseContent(termsOfUseContent, locale);
 	}
 
 	/**
@@ -945,14 +876,12 @@ public class CPDefinitionVirtualSettingWrapper
 		String termsOfUseContent, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 
-		_cpDefinitionVirtualSetting.setTermsOfUseContent(
-			termsOfUseContent, locale, defaultLocale);
+		model.setTermsOfUseContent(termsOfUseContent, locale, defaultLocale);
 	}
 
 	@Override
 	public void setTermsOfUseContentCurrentLanguageId(String languageId) {
-		_cpDefinitionVirtualSetting.setTermsOfUseContentCurrentLanguageId(
-			languageId);
+		model.setTermsOfUseContentCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -964,8 +893,7 @@ public class CPDefinitionVirtualSettingWrapper
 	public void setTermsOfUseContentMap(
 		Map<java.util.Locale, String> termsOfUseContentMap) {
 
-		_cpDefinitionVirtualSetting.setTermsOfUseContentMap(
-			termsOfUseContentMap);
+		model.setTermsOfUseContentMap(termsOfUseContentMap);
 	}
 
 	/**
@@ -979,8 +907,7 @@ public class CPDefinitionVirtualSettingWrapper
 		Map<java.util.Locale, String> termsOfUseContentMap,
 		java.util.Locale defaultLocale) {
 
-		_cpDefinitionVirtualSetting.setTermsOfUseContentMap(
-			termsOfUseContentMap, defaultLocale);
+		model.setTermsOfUseContentMap(termsOfUseContentMap, defaultLocale);
 	}
 
 	/**
@@ -992,7 +919,7 @@ public class CPDefinitionVirtualSettingWrapper
 	public void setTermsOfUseJournalArticleResourcePrimKey(
 		long termsOfUseJournalArticleResourcePrimKey) {
 
-		_cpDefinitionVirtualSetting.setTermsOfUseJournalArticleResourcePrimKey(
+		model.setTermsOfUseJournalArticleResourcePrimKey(
 			termsOfUseJournalArticleResourcePrimKey);
 	}
 
@@ -1003,7 +930,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public void setTermsOfUseRequired(boolean termsOfUseRequired) {
-		_cpDefinitionVirtualSetting.setTermsOfUseRequired(termsOfUseRequired);
+		model.setTermsOfUseRequired(termsOfUseRequired);
 	}
 
 	/**
@@ -1013,7 +940,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public void setUrl(String url) {
-		_cpDefinitionVirtualSetting.setUrl(url);
+		model.setUrl(url);
 	}
 
 	/**
@@ -1023,7 +950,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_cpDefinitionVirtualSetting.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -1033,7 +960,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_cpDefinitionVirtualSetting.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -1043,7 +970,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_cpDefinitionVirtualSetting.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -1053,7 +980,7 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public void setUseSample(boolean useSample) {
-		_cpDefinitionVirtualSetting.setUseSample(useSample);
+		model.setUseSample(useSample);
 	}
 
 	/**
@@ -1063,87 +990,20 @@ public class CPDefinitionVirtualSettingWrapper
 	 */
 	@Override
 	public void setUuid(String uuid) {
-		_cpDefinitionVirtualSetting.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel
-		<CPDefinitionVirtualSetting> toCacheModel() {
-
-		return _cpDefinitionVirtualSetting.toCacheModel();
-	}
-
-	@Override
-	public CPDefinitionVirtualSetting toEscapedModel() {
-		return new CPDefinitionVirtualSettingWrapper(
-			_cpDefinitionVirtualSetting.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _cpDefinitionVirtualSetting.toString();
-	}
-
-	@Override
-	public CPDefinitionVirtualSetting toUnescapedModel() {
-		return new CPDefinitionVirtualSettingWrapper(
-			_cpDefinitionVirtualSetting.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _cpDefinitionVirtualSetting.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CPDefinitionVirtualSettingWrapper)) {
-			return false;
-		}
-
-		CPDefinitionVirtualSettingWrapper cpDefinitionVirtualSettingWrapper =
-			(CPDefinitionVirtualSettingWrapper)object;
-
-		if (Objects.equals(
-				_cpDefinitionVirtualSetting,
-				cpDefinitionVirtualSettingWrapper.
-					_cpDefinitionVirtualSetting)) {
-
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _cpDefinitionVirtualSetting.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public CPDefinitionVirtualSetting getWrappedModel() {
-		return _cpDefinitionVirtualSetting;
-	}
+	protected CPDefinitionVirtualSettingWrapper wrap(
+		CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
 
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _cpDefinitionVirtualSetting.isEntityCacheEnabled();
+		return new CPDefinitionVirtualSettingWrapper(
+			cpDefinitionVirtualSetting);
 	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _cpDefinitionVirtualSetting.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_cpDefinitionVirtualSetting.resetOriginalValues();
-	}
-
-	private final CPDefinitionVirtualSetting _cpDefinitionVirtualSetting;
 
 }

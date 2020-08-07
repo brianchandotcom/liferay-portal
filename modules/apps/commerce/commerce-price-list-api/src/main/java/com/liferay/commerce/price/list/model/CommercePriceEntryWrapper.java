@@ -14,19 +14,15 @@
 
 package com.liferay.commerce.price.list.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.math.BigDecimal;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,26 +34,18 @@ import java.util.Objects;
  * @generated
  */
 public class CommercePriceEntryWrapper
+	extends BaseModelWrapper<CommercePriceEntry>
 	implements CommercePriceEntry, ModelWrapper<CommercePriceEntry> {
 
 	public CommercePriceEntryWrapper(CommercePriceEntry commercePriceEntry) {
-		_commercePriceEntry = commercePriceEntry;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommercePriceEntry.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommercePriceEntry.class.getName();
+		super(commercePriceEntry);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("commercePriceEntryId", getCommercePriceEntryId());
@@ -91,6 +79,12 @@ public class CommercePriceEntryWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -261,17 +255,6 @@ public class CommercePriceEntryWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CommercePriceEntryWrapper(
-			(CommercePriceEntry)_commercePriceEntry.clone());
-	}
-
-	@Override
-	public int compareTo(CommercePriceEntry commercePriceEntry) {
-		return _commercePriceEntry.compareTo(commercePriceEntry);
-	}
-
 	/**
 	 * Returns the bulk pricing of this commerce price entry.
 	 *
@@ -279,7 +262,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public boolean getBulkPricing() {
-		return _commercePriceEntry.getBulkPricing();
+		return model.getBulkPricing();
 	}
 
 	/**
@@ -289,14 +272,14 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public long getCommercePriceEntryId() {
-		return _commercePriceEntry.getCommercePriceEntryId();
+		return model.getCommercePriceEntryId();
 	}
 
 	@Override
 	public CommercePriceList getCommercePriceList()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commercePriceEntry.getCommercePriceList();
+		return model.getCommercePriceList();
 	}
 
 	/**
@@ -306,7 +289,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public long getCommercePriceListId() {
-		return _commercePriceEntry.getCommercePriceListId();
+		return model.getCommercePriceListId();
 	}
 
 	/**
@@ -316,14 +299,14 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commercePriceEntry.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	@Override
 	public com.liferay.commerce.product.model.CPInstance getCPInstance()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commercePriceEntry.getCPInstance();
+		return model.getCPInstance();
 	}
 
 	/**
@@ -333,7 +316,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public String getCPInstanceUuid() {
-		return _commercePriceEntry.getCPInstanceUuid();
+		return model.getCPInstanceUuid();
 	}
 
 	/**
@@ -343,7 +326,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public long getCProductId() {
-		return _commercePriceEntry.getCProductId();
+		return model.getCProductId();
 	}
 
 	/**
@@ -353,7 +336,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commercePriceEntry.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -363,7 +346,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public boolean getDiscountDiscovery() {
-		return _commercePriceEntry.getDiscountDiscovery();
+		return model.getDiscountDiscovery();
 	}
 
 	/**
@@ -373,7 +356,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public BigDecimal getDiscountLevel1() {
-		return _commercePriceEntry.getDiscountLevel1();
+		return model.getDiscountLevel1();
 	}
 
 	/**
@@ -383,7 +366,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public BigDecimal getDiscountLevel2() {
-		return _commercePriceEntry.getDiscountLevel2();
+		return model.getDiscountLevel2();
 	}
 
 	/**
@@ -393,7 +376,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public BigDecimal getDiscountLevel3() {
-		return _commercePriceEntry.getDiscountLevel3();
+		return model.getDiscountLevel3();
 	}
 
 	/**
@@ -403,7 +386,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public BigDecimal getDiscountLevel4() {
-		return _commercePriceEntry.getDiscountLevel4();
+		return model.getDiscountLevel4();
 	}
 
 	/**
@@ -413,12 +396,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public Date getDisplayDate() {
-		return _commercePriceEntry.getDisplayDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commercePriceEntry.getExpandoBridge();
+		return model.getDisplayDate();
 	}
 
 	/**
@@ -428,7 +406,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public Date getExpirationDate() {
-		return _commercePriceEntry.getExpirationDate();
+		return model.getExpirationDate();
 	}
 
 	/**
@@ -438,7 +416,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public String getExternalReferenceCode() {
-		return _commercePriceEntry.getExternalReferenceCode();
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -448,7 +426,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public boolean getHasTierPrice() {
-		return _commercePriceEntry.getHasTierPrice();
+		return model.getHasTierPrice();
 	}
 
 	/**
@@ -458,7 +436,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public Date getLastPublishDate() {
-		return _commercePriceEntry.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -468,7 +446,17 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commercePriceEntry.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce price entry.
+	 *
+	 * @return the mvcc version of this commerce price entry
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -478,7 +466,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public BigDecimal getPrice() {
-		return _commercePriceEntry.getPrice();
+		return model.getPrice();
 	}
 
 	@Override
@@ -486,7 +474,7 @@ public class CommercePriceEntryWrapper
 			long commerceCurrencyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commercePriceEntry.getPriceMoney(commerceCurrencyId);
+		return model.getPriceMoney(commerceCurrencyId);
 	}
 
 	/**
@@ -496,12 +484,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commercePriceEntry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commercePriceEntry.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -511,7 +494,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public BigDecimal getPromoPrice() {
-		return _commercePriceEntry.getPromoPrice();
+		return model.getPromoPrice();
 	}
 
 	@Override
@@ -519,7 +502,7 @@ public class CommercePriceEntryWrapper
 			long commerceCurrencyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commercePriceEntry.getPromoPriceMoney(commerceCurrencyId);
+		return model.getPromoPriceMoney(commerceCurrencyId);
 	}
 
 	/**
@@ -529,7 +512,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public int getStatus() {
-		return _commercePriceEntry.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -539,7 +522,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public long getStatusByUserId() {
-		return _commercePriceEntry.getStatusByUserId();
+		return model.getStatusByUserId();
 	}
 
 	/**
@@ -549,7 +532,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public String getStatusByUserName() {
-		return _commercePriceEntry.getStatusByUserName();
+		return model.getStatusByUserName();
 	}
 
 	/**
@@ -559,7 +542,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public String getStatusByUserUuid() {
-		return _commercePriceEntry.getStatusByUserUuid();
+		return model.getStatusByUserUuid();
 	}
 
 	/**
@@ -569,7 +552,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public Date getStatusDate() {
-		return _commercePriceEntry.getStatusDate();
+		return model.getStatusDate();
 	}
 
 	/**
@@ -579,7 +562,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commercePriceEntry.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -589,7 +572,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commercePriceEntry.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -599,7 +582,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commercePriceEntry.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -609,12 +592,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public String getUuid() {
-		return _commercePriceEntry.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commercePriceEntry.hashCode();
+		return model.getUuid();
 	}
 
 	/**
@@ -624,7 +602,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public boolean isApproved() {
-		return _commercePriceEntry.isApproved();
+		return model.isApproved();
 	}
 
 	/**
@@ -634,12 +612,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public boolean isBulkPricing() {
-		return _commercePriceEntry.isBulkPricing();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commercePriceEntry.isCachedModel();
+		return model.isBulkPricing();
 	}
 
 	/**
@@ -649,7 +622,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public boolean isDenied() {
-		return _commercePriceEntry.isDenied();
+		return model.isDenied();
 	}
 
 	/**
@@ -659,7 +632,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public boolean isDiscountDiscovery() {
-		return _commercePriceEntry.isDiscountDiscovery();
+		return model.isDiscountDiscovery();
 	}
 
 	/**
@@ -669,12 +642,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public boolean isDraft() {
-		return _commercePriceEntry.isDraft();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commercePriceEntry.isEscapedModel();
+		return model.isDraft();
 	}
 
 	/**
@@ -684,7 +652,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public boolean isExpired() {
-		return _commercePriceEntry.isExpired();
+		return model.isExpired();
 	}
 
 	/**
@@ -694,7 +662,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public boolean isHasTierPrice() {
-		return _commercePriceEntry.isHasTierPrice();
+		return model.isHasTierPrice();
 	}
 
 	/**
@@ -704,7 +672,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public boolean isInactive() {
-		return _commercePriceEntry.isInactive();
+		return model.isInactive();
 	}
 
 	/**
@@ -714,12 +682,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public boolean isIncomplete() {
-		return _commercePriceEntry.isIncomplete();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commercePriceEntry.isNew();
+		return model.isIncomplete();
 	}
 
 	/**
@@ -729,7 +692,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public boolean isPending() {
-		return _commercePriceEntry.isPending();
+		return model.isPending();
 	}
 
 	/**
@@ -739,12 +702,12 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public boolean isScheduled() {
-		return _commercePriceEntry.isScheduled();
+		return model.isScheduled();
 	}
 
 	@Override
 	public void persist() {
-		_commercePriceEntry.persist();
+		model.persist();
 	}
 
 	/**
@@ -754,12 +717,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public void setBulkPricing(boolean bulkPricing) {
-		_commercePriceEntry.setBulkPricing(bulkPricing);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commercePriceEntry.setCachedModel(cachedModel);
+		model.setBulkPricing(bulkPricing);
 	}
 
 	/**
@@ -769,7 +727,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public void setCommercePriceEntryId(long commercePriceEntryId) {
-		_commercePriceEntry.setCommercePriceEntryId(commercePriceEntryId);
+		model.setCommercePriceEntryId(commercePriceEntryId);
 	}
 
 	/**
@@ -779,7 +737,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public void setCommercePriceListId(long commercePriceListId) {
-		_commercePriceEntry.setCommercePriceListId(commercePriceListId);
+		model.setCommercePriceListId(commercePriceListId);
 	}
 
 	/**
@@ -789,7 +747,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commercePriceEntry.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -799,7 +757,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public void setCPInstanceUuid(String CPInstanceUuid) {
-		_commercePriceEntry.setCPInstanceUuid(CPInstanceUuid);
+		model.setCPInstanceUuid(CPInstanceUuid);
 	}
 
 	/**
@@ -809,7 +767,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public void setCProductId(long CProductId) {
-		_commercePriceEntry.setCProductId(CProductId);
+		model.setCProductId(CProductId);
 	}
 
 	/**
@@ -819,7 +777,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commercePriceEntry.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -829,7 +787,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public void setDiscountDiscovery(boolean discountDiscovery) {
-		_commercePriceEntry.setDiscountDiscovery(discountDiscovery);
+		model.setDiscountDiscovery(discountDiscovery);
 	}
 
 	/**
@@ -839,7 +797,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public void setDiscountLevel1(BigDecimal discountLevel1) {
-		_commercePriceEntry.setDiscountLevel1(discountLevel1);
+		model.setDiscountLevel1(discountLevel1);
 	}
 
 	/**
@@ -849,7 +807,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public void setDiscountLevel2(BigDecimal discountLevel2) {
-		_commercePriceEntry.setDiscountLevel2(discountLevel2);
+		model.setDiscountLevel2(discountLevel2);
 	}
 
 	/**
@@ -859,7 +817,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public void setDiscountLevel3(BigDecimal discountLevel3) {
-		_commercePriceEntry.setDiscountLevel3(discountLevel3);
+		model.setDiscountLevel3(discountLevel3);
 	}
 
 	/**
@@ -869,7 +827,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public void setDiscountLevel4(BigDecimal discountLevel4) {
-		_commercePriceEntry.setDiscountLevel4(discountLevel4);
+		model.setDiscountLevel4(discountLevel4);
 	}
 
 	/**
@@ -879,24 +837,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public void setDisplayDate(Date displayDate) {
-		_commercePriceEntry.setDisplayDate(displayDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commercePriceEntry.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commercePriceEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commercePriceEntry.setExpandoBridgeAttributes(serviceContext);
+		model.setDisplayDate(displayDate);
 	}
 
 	/**
@@ -906,7 +847,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public void setExpirationDate(Date expirationDate) {
-		_commercePriceEntry.setExpirationDate(expirationDate);
+		model.setExpirationDate(expirationDate);
 	}
 
 	/**
@@ -916,7 +857,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
-		_commercePriceEntry.setExternalReferenceCode(externalReferenceCode);
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**
@@ -926,7 +867,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public void setHasTierPrice(boolean hasTierPrice) {
-		_commercePriceEntry.setHasTierPrice(hasTierPrice);
+		model.setHasTierPrice(hasTierPrice);
 	}
 
 	/**
@@ -936,7 +877,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_commercePriceEntry.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -946,12 +887,17 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commercePriceEntry.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this commerce price entry.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce price entry
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_commercePriceEntry.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -961,7 +907,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public void setPrice(BigDecimal price) {
-		_commercePriceEntry.setPrice(price);
+		model.setPrice(price);
 	}
 
 	/**
@@ -971,12 +917,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commercePriceEntry.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commercePriceEntry.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -986,7 +927,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public void setPromoPrice(BigDecimal promoPrice) {
-		_commercePriceEntry.setPromoPrice(promoPrice);
+		model.setPromoPrice(promoPrice);
 	}
 
 	/**
@@ -996,7 +937,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public void setStatus(int status) {
-		_commercePriceEntry.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -1006,7 +947,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
-		_commercePriceEntry.setStatusByUserId(statusByUserId);
+		model.setStatusByUserId(statusByUserId);
 	}
 
 	/**
@@ -1016,7 +957,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
-		_commercePriceEntry.setStatusByUserName(statusByUserName);
+		model.setStatusByUserName(statusByUserName);
 	}
 
 	/**
@@ -1026,7 +967,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public void setStatusByUserUuid(String statusByUserUuid) {
-		_commercePriceEntry.setStatusByUserUuid(statusByUserUuid);
+		model.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
@@ -1036,7 +977,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public void setStatusDate(Date statusDate) {
-		_commercePriceEntry.setStatusDate(statusDate);
+		model.setStatusDate(statusDate);
 	}
 
 	/**
@@ -1046,7 +987,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commercePriceEntry.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -1056,7 +997,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commercePriceEntry.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -1066,7 +1007,7 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commercePriceEntry.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -1076,86 +1017,19 @@ public class CommercePriceEntryWrapper
 	 */
 	@Override
 	public void setUuid(String uuid) {
-		_commercePriceEntry.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommercePriceEntry>
-		toCacheModel() {
-
-		return _commercePriceEntry.toCacheModel();
-	}
-
-	@Override
-	public CommercePriceEntry toEscapedModel() {
-		return new CommercePriceEntryWrapper(
-			_commercePriceEntry.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commercePriceEntry.toString();
-	}
-
-	@Override
-	public CommercePriceEntry toUnescapedModel() {
-		return new CommercePriceEntryWrapper(
-			_commercePriceEntry.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commercePriceEntry.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommercePriceEntryWrapper)) {
-			return false;
-		}
-
-		CommercePriceEntryWrapper commercePriceEntryWrapper =
-			(CommercePriceEntryWrapper)object;
-
-		if (Objects.equals(
-				_commercePriceEntry,
-				commercePriceEntryWrapper._commercePriceEntry)) {
-
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _commercePriceEntry.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public CommercePriceEntry getWrappedModel() {
-		return _commercePriceEntry;
-	}
+	protected CommercePriceEntryWrapper wrap(
+		CommercePriceEntry commercePriceEntry) {
 
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commercePriceEntry.isEntityCacheEnabled();
+		return new CommercePriceEntryWrapper(commercePriceEntry);
 	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commercePriceEntry.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commercePriceEntry.resetOriginalValues();
-	}
-
-	private final CommercePriceEntry _commercePriceEntry;
 
 }

@@ -14,17 +14,13 @@
 
 package com.liferay.commerce.inventory.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.inventory.exception.NoSuchInventoryBookedQuantityException;
 import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
 import java.util.Date;
-import java.util.Map;
-import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce inventory booked quantity service.
@@ -46,9 +42,6 @@ public interface CommerceInventoryBookedQuantityPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceInventoryBookedQuantityUtil} to access the commerce inventory booked quantity persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceInventoryBookedQuantity>
-		fetchByPrimaryKeys(Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce inventory booked quantities where sku = &#63;.
@@ -623,8 +616,5 @@ public interface CommerceInventoryBookedQuantityPersistence
 	 * @return the number of commerce inventory booked quantities
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

@@ -19,6 +19,7 @@ import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseModel;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -129,20 +129,23 @@ public class CommerceInventoryWarehouseModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.inventory.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.inventory.model.CommerceInventoryWarehouse"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.inventory.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.inventory.model.CommerceInventoryWarehouse"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.inventory.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.inventory.model.CommerceInventoryWarehouse"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long ACTIVE_COLUMN_BITMASK = 1L;
 
@@ -276,9 +279,6 @@ public class CommerceInventoryWarehouseModelImpl
 					(CommerceInventoryWarehouse)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -359,548 +359,134 @@ public class CommerceInventoryWarehouseModelImpl
 					<String, BiConsumer<CommerceInventoryWarehouse, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion",
-			new Function<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryWarehouse commerceInventoryWarehouse) {
-
-					return commerceInventoryWarehouse.getMvccVersion();
-				}
-
-			});
+			"mvccVersion", CommerceInventoryWarehouse::getMvccVersion);
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
-			new BiConsumer<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryWarehouse commerceInventoryWarehouse,
-					Object mvccVersionObject) {
-
-					commerceInventoryWarehouse.setMvccVersion(
-						(Long)mvccVersionObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryWarehouse, Long>)
+				CommerceInventoryWarehouse::setMvccVersion);
 		attributeGetterFunctions.put(
 			"externalReferenceCode",
-			new Function<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryWarehouse commerceInventoryWarehouse) {
-
-					return commerceInventoryWarehouse.
-						getExternalReferenceCode();
-				}
-
-			});
+			CommerceInventoryWarehouse::getExternalReferenceCode);
 		attributeSetterBiConsumers.put(
 			"externalReferenceCode",
-			new BiConsumer<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryWarehouse commerceInventoryWarehouse,
-					Object externalReferenceCodeObject) {
-
-					commerceInventoryWarehouse.setExternalReferenceCode(
-						(String)externalReferenceCodeObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryWarehouse, String>)
+				CommerceInventoryWarehouse::setExternalReferenceCode);
 		attributeGetterFunctions.put(
 			"commerceInventoryWarehouseId",
-			new Function<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryWarehouse commerceInventoryWarehouse) {
-
-					return commerceInventoryWarehouse.
-						getCommerceInventoryWarehouseId();
-				}
-
-			});
+			CommerceInventoryWarehouse::getCommerceInventoryWarehouseId);
 		attributeSetterBiConsumers.put(
 			"commerceInventoryWarehouseId",
-			new BiConsumer<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryWarehouse commerceInventoryWarehouse,
-					Object commerceInventoryWarehouseIdObject) {
-
-					commerceInventoryWarehouse.setCommerceInventoryWarehouseId(
-						(Long)commerceInventoryWarehouseIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryWarehouse, Long>)
+				CommerceInventoryWarehouse::setCommerceInventoryWarehouseId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryWarehouse commerceInventoryWarehouse) {
-
-					return commerceInventoryWarehouse.getCompanyId();
-				}
-
-			});
+			"companyId", CommerceInventoryWarehouse::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryWarehouse commerceInventoryWarehouse,
-					Object companyIdObject) {
-
-					commerceInventoryWarehouse.setCompanyId(
-						(Long)companyIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryWarehouse, Long>)
+				CommerceInventoryWarehouse::setCompanyId);
 		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryWarehouse commerceInventoryWarehouse) {
-
-					return commerceInventoryWarehouse.getUserId();
-				}
-
-			});
+			"userId", CommerceInventoryWarehouse::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryWarehouse commerceInventoryWarehouse,
-					Object userIdObject) {
-
-					commerceInventoryWarehouse.setUserId((Long)userIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryWarehouse, Long>)
+				CommerceInventoryWarehouse::setUserId);
 		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryWarehouse commerceInventoryWarehouse) {
-
-					return commerceInventoryWarehouse.getUserName();
-				}
-
-			});
+			"userName", CommerceInventoryWarehouse::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryWarehouse commerceInventoryWarehouse,
-					Object userNameObject) {
-
-					commerceInventoryWarehouse.setUserName(
-						(String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryWarehouse, String>)
+				CommerceInventoryWarehouse::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryWarehouse commerceInventoryWarehouse) {
-
-					return commerceInventoryWarehouse.getCreateDate();
-				}
-
-			});
+			"createDate", CommerceInventoryWarehouse::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryWarehouse commerceInventoryWarehouse,
-					Object createDateObject) {
-
-					commerceInventoryWarehouse.setCreateDate(
-						(Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryWarehouse, Date>)
+				CommerceInventoryWarehouse::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryWarehouse commerceInventoryWarehouse) {
-
-					return commerceInventoryWarehouse.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CommerceInventoryWarehouse::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryWarehouse commerceInventoryWarehouse,
-					Object modifiedDateObject) {
-
-					commerceInventoryWarehouse.setModifiedDate(
-						(Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryWarehouse, Date>)
+				CommerceInventoryWarehouse::setModifiedDate);
 		attributeGetterFunctions.put(
-			"name",
-			new Function<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryWarehouse commerceInventoryWarehouse) {
-
-					return commerceInventoryWarehouse.getName();
-				}
-
-			});
+			"name", CommerceInventoryWarehouse::getName);
 		attributeSetterBiConsumers.put(
 			"name",
-			new BiConsumer<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryWarehouse commerceInventoryWarehouse,
-					Object nameObject) {
-
-					commerceInventoryWarehouse.setName((String)nameObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryWarehouse, String>)
+				CommerceInventoryWarehouse::setName);
 		attributeGetterFunctions.put(
-			"description",
-			new Function<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryWarehouse commerceInventoryWarehouse) {
-
-					return commerceInventoryWarehouse.getDescription();
-				}
-
-			});
+			"description", CommerceInventoryWarehouse::getDescription);
 		attributeSetterBiConsumers.put(
 			"description",
-			new BiConsumer<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryWarehouse commerceInventoryWarehouse,
-					Object descriptionObject) {
-
-					commerceInventoryWarehouse.setDescription(
-						(String)descriptionObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryWarehouse, String>)
+				CommerceInventoryWarehouse::setDescription);
 		attributeGetterFunctions.put(
-			"active",
-			new Function<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryWarehouse commerceInventoryWarehouse) {
-
-					return commerceInventoryWarehouse.getActive();
-				}
-
-			});
+			"active", CommerceInventoryWarehouse::getActive);
 		attributeSetterBiConsumers.put(
 			"active",
-			new BiConsumer<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryWarehouse commerceInventoryWarehouse,
-					Object activeObject) {
-
-					commerceInventoryWarehouse.setActive((Boolean)activeObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryWarehouse, Boolean>)
+				CommerceInventoryWarehouse::setActive);
 		attributeGetterFunctions.put(
-			"street1",
-			new Function<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryWarehouse commerceInventoryWarehouse) {
-
-					return commerceInventoryWarehouse.getStreet1();
-				}
-
-			});
+			"street1", CommerceInventoryWarehouse::getStreet1);
 		attributeSetterBiConsumers.put(
 			"street1",
-			new BiConsumer<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryWarehouse commerceInventoryWarehouse,
-					Object street1Object) {
-
-					commerceInventoryWarehouse.setStreet1(
-						(String)street1Object);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryWarehouse, String>)
+				CommerceInventoryWarehouse::setStreet1);
 		attributeGetterFunctions.put(
-			"street2",
-			new Function<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryWarehouse commerceInventoryWarehouse) {
-
-					return commerceInventoryWarehouse.getStreet2();
-				}
-
-			});
+			"street2", CommerceInventoryWarehouse::getStreet2);
 		attributeSetterBiConsumers.put(
 			"street2",
-			new BiConsumer<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryWarehouse commerceInventoryWarehouse,
-					Object street2Object) {
-
-					commerceInventoryWarehouse.setStreet2(
-						(String)street2Object);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryWarehouse, String>)
+				CommerceInventoryWarehouse::setStreet2);
 		attributeGetterFunctions.put(
-			"street3",
-			new Function<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryWarehouse commerceInventoryWarehouse) {
-
-					return commerceInventoryWarehouse.getStreet3();
-				}
-
-			});
+			"street3", CommerceInventoryWarehouse::getStreet3);
 		attributeSetterBiConsumers.put(
 			"street3",
-			new BiConsumer<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryWarehouse commerceInventoryWarehouse,
-					Object street3Object) {
-
-					commerceInventoryWarehouse.setStreet3(
-						(String)street3Object);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryWarehouse, String>)
+				CommerceInventoryWarehouse::setStreet3);
 		attributeGetterFunctions.put(
-			"city",
-			new Function<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryWarehouse commerceInventoryWarehouse) {
-
-					return commerceInventoryWarehouse.getCity();
-				}
-
-			});
+			"city", CommerceInventoryWarehouse::getCity);
 		attributeSetterBiConsumers.put(
 			"city",
-			new BiConsumer<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryWarehouse commerceInventoryWarehouse,
-					Object cityObject) {
-
-					commerceInventoryWarehouse.setCity((String)cityObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"zip",
-			new Function<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryWarehouse commerceInventoryWarehouse) {
-
-					return commerceInventoryWarehouse.getZip();
-				}
-
-			});
+			(BiConsumer<CommerceInventoryWarehouse, String>)
+				CommerceInventoryWarehouse::setCity);
+		attributeGetterFunctions.put("zip", CommerceInventoryWarehouse::getZip);
 		attributeSetterBiConsumers.put(
 			"zip",
-			new BiConsumer<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryWarehouse commerceInventoryWarehouse,
-					Object zipObject) {
-
-					commerceInventoryWarehouse.setZip((String)zipObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryWarehouse, String>)
+				CommerceInventoryWarehouse::setZip);
 		attributeGetterFunctions.put(
 			"commerceRegionCode",
-			new Function<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryWarehouse commerceInventoryWarehouse) {
-
-					return commerceInventoryWarehouse.getCommerceRegionCode();
-				}
-
-			});
+			CommerceInventoryWarehouse::getCommerceRegionCode);
 		attributeSetterBiConsumers.put(
 			"commerceRegionCode",
-			new BiConsumer<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryWarehouse commerceInventoryWarehouse,
-					Object commerceRegionCodeObject) {
-
-					commerceInventoryWarehouse.setCommerceRegionCode(
-						(String)commerceRegionCodeObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryWarehouse, String>)
+				CommerceInventoryWarehouse::setCommerceRegionCode);
 		attributeGetterFunctions.put(
 			"countryTwoLettersISOCode",
-			new Function<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryWarehouse commerceInventoryWarehouse) {
-
-					return commerceInventoryWarehouse.
-						getCountryTwoLettersISOCode();
-				}
-
-			});
+			CommerceInventoryWarehouse::getCountryTwoLettersISOCode);
 		attributeSetterBiConsumers.put(
 			"countryTwoLettersISOCode",
-			new BiConsumer<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryWarehouse commerceInventoryWarehouse,
-					Object countryTwoLettersISOCodeObject) {
-
-					commerceInventoryWarehouse.setCountryTwoLettersISOCode(
-						(String)countryTwoLettersISOCodeObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryWarehouse, String>)
+				CommerceInventoryWarehouse::setCountryTwoLettersISOCode);
 		attributeGetterFunctions.put(
-			"latitude",
-			new Function<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryWarehouse commerceInventoryWarehouse) {
-
-					return commerceInventoryWarehouse.getLatitude();
-				}
-
-			});
+			"latitude", CommerceInventoryWarehouse::getLatitude);
 		attributeSetterBiConsumers.put(
 			"latitude",
-			new BiConsumer<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryWarehouse commerceInventoryWarehouse,
-					Object latitudeObject) {
-
-					commerceInventoryWarehouse.setLatitude(
-						(Double)latitudeObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryWarehouse, Double>)
+				CommerceInventoryWarehouse::setLatitude);
 		attributeGetterFunctions.put(
-			"longitude",
-			new Function<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryWarehouse commerceInventoryWarehouse) {
-
-					return commerceInventoryWarehouse.getLongitude();
-				}
-
-			});
+			"longitude", CommerceInventoryWarehouse::getLongitude);
 		attributeSetterBiConsumers.put(
 			"longitude",
-			new BiConsumer<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryWarehouse commerceInventoryWarehouse,
-					Object longitudeObject) {
-
-					commerceInventoryWarehouse.setLongitude(
-						(Double)longitudeObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryWarehouse, Double>)
+				CommerceInventoryWarehouse::setLongitude);
 		attributeGetterFunctions.put(
-			"type",
-			new Function<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryWarehouse commerceInventoryWarehouse) {
-
-					return commerceInventoryWarehouse.getType();
-				}
-
-			});
+			"type", CommerceInventoryWarehouse::getType);
 		attributeSetterBiConsumers.put(
 			"type",
-			new BiConsumer<CommerceInventoryWarehouse, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryWarehouse commerceInventoryWarehouse,
-					Object typeObject) {
-
-					commerceInventoryWarehouse.setType((String)typeObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryWarehouse, String>)
+				CommerceInventoryWarehouse::setType);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -1385,11 +971,19 @@ public class CommerceInventoryWarehouseModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;

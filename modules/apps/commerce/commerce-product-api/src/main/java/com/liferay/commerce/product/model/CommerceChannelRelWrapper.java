@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.product.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,26 +31,18 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceChannelRelWrapper
+	extends BaseModelWrapper<CommerceChannelRel>
 	implements CommerceChannelRel, ModelWrapper<CommerceChannelRel> {
 
 	public CommerceChannelRelWrapper(CommerceChannelRel commerceChannelRel) {
-		_commerceChannelRel = commerceChannelRel;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceChannelRel.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceChannelRel.class.getName();
+		super(commerceChannelRel);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("commerceChannelRelId", getCommerceChannelRelId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -70,6 +58,12 @@ public class CommerceChannelRelWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long commerceChannelRelId = (Long)attributes.get(
 			"commerceChannelRelId");
 
@@ -126,17 +120,6 @@ public class CommerceChannelRelWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CommerceChannelRelWrapper(
-			(CommerceChannelRel)_commerceChannelRel.clone());
-	}
-
-	@Override
-	public int compareTo(CommerceChannelRel commerceChannelRel) {
-		return _commerceChannelRel.compareTo(commerceChannelRel);
-	}
-
 	/**
 	 * Returns the fully qualified class name of this commerce channel rel.
 	 *
@@ -144,7 +127,7 @@ public class CommerceChannelRelWrapper
 	 */
 	@Override
 	public String getClassName() {
-		return _commerceChannelRel.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -154,7 +137,7 @@ public class CommerceChannelRelWrapper
 	 */
 	@Override
 	public long getClassNameId() {
-		return _commerceChannelRel.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -164,14 +147,14 @@ public class CommerceChannelRelWrapper
 	 */
 	@Override
 	public long getClassPK() {
-		return _commerceChannelRel.getClassPK();
+		return model.getClassPK();
 	}
 
 	@Override
 	public CommerceChannel getCommerceChannel()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceChannelRel.getCommerceChannel();
+		return model.getCommerceChannel();
 	}
 
 	/**
@@ -181,7 +164,7 @@ public class CommerceChannelRelWrapper
 	 */
 	@Override
 	public long getCommerceChannelId() {
-		return _commerceChannelRel.getCommerceChannelId();
+		return model.getCommerceChannelId();
 	}
 
 	/**
@@ -191,7 +174,7 @@ public class CommerceChannelRelWrapper
 	 */
 	@Override
 	public long getCommerceChannelRelId() {
-		return _commerceChannelRel.getCommerceChannelRelId();
+		return model.getCommerceChannelRelId();
 	}
 
 	/**
@@ -201,7 +184,7 @@ public class CommerceChannelRelWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceChannelRel.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -211,12 +194,7 @@ public class CommerceChannelRelWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceChannelRel.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceChannelRel.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -226,7 +204,17 @@ public class CommerceChannelRelWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceChannelRel.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce channel rel.
+	 *
+	 * @return the mvcc version of this commerce channel rel
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -236,12 +224,7 @@ public class CommerceChannelRelWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceChannelRel.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceChannelRel.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -251,7 +234,7 @@ public class CommerceChannelRelWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceChannelRel.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -261,7 +244,7 @@ public class CommerceChannelRelWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceChannelRel.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -271,42 +254,17 @@ public class CommerceChannelRelWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceChannelRel.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceChannelRel.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceChannelRel.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceChannelRel.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceChannelRel.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_commerceChannelRel.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceChannelRel.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_commerceChannelRel.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -316,7 +274,7 @@ public class CommerceChannelRelWrapper
 	 */
 	@Override
 	public void setClassNameId(long classNameId) {
-		_commerceChannelRel.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -326,7 +284,7 @@ public class CommerceChannelRelWrapper
 	 */
 	@Override
 	public void setClassPK(long classPK) {
-		_commerceChannelRel.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -336,7 +294,7 @@ public class CommerceChannelRelWrapper
 	 */
 	@Override
 	public void setCommerceChannelId(long commerceChannelId) {
-		_commerceChannelRel.setCommerceChannelId(commerceChannelId);
+		model.setCommerceChannelId(commerceChannelId);
 	}
 
 	/**
@@ -346,7 +304,7 @@ public class CommerceChannelRelWrapper
 	 */
 	@Override
 	public void setCommerceChannelRelId(long commerceChannelRelId) {
-		_commerceChannelRel.setCommerceChannelRelId(commerceChannelRelId);
+		model.setCommerceChannelRelId(commerceChannelRelId);
 	}
 
 	/**
@@ -356,7 +314,7 @@ public class CommerceChannelRelWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceChannelRel.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -366,24 +324,7 @@ public class CommerceChannelRelWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceChannelRel.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceChannelRel.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceChannelRel.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceChannelRel.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -393,12 +334,17 @@ public class CommerceChannelRelWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceChannelRel.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this commerce channel rel.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce channel rel
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_commerceChannelRel.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -408,12 +354,7 @@ public class CommerceChannelRelWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceChannelRel.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceChannelRel.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -423,7 +364,7 @@ public class CommerceChannelRelWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceChannelRel.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -433,7 +374,7 @@ public class CommerceChannelRelWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceChannelRel.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -443,81 +384,14 @@ public class CommerceChannelRelWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceChannelRel.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceChannelRel>
-		toCacheModel() {
+	protected CommerceChannelRelWrapper wrap(
+		CommerceChannelRel commerceChannelRel) {
 
-		return _commerceChannelRel.toCacheModel();
+		return new CommerceChannelRelWrapper(commerceChannelRel);
 	}
-
-	@Override
-	public CommerceChannelRel toEscapedModel() {
-		return new CommerceChannelRelWrapper(
-			_commerceChannelRel.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commerceChannelRel.toString();
-	}
-
-	@Override
-	public CommerceChannelRel toUnescapedModel() {
-		return new CommerceChannelRelWrapper(
-			_commerceChannelRel.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceChannelRel.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceChannelRelWrapper)) {
-			return false;
-		}
-
-		CommerceChannelRelWrapper commerceChannelRelWrapper =
-			(CommerceChannelRelWrapper)object;
-
-		if (Objects.equals(
-				_commerceChannelRel,
-				commerceChannelRelWrapper._commerceChannelRel)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceChannelRel getWrappedModel() {
-		return _commerceChannelRel;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceChannelRel.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceChannelRel.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceChannelRel.resetOriginalValues();
-	}
-
-	private final CommerceChannelRel _commerceChannelRel;
 
 }

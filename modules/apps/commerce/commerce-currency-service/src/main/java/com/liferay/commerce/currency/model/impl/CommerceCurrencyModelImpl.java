@@ -20,6 +20,7 @@ import com.liferay.commerce.currency.model.CommerceCurrencySoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,7 +36,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -83,13 +83,13 @@ public class CommerceCurrencyModelImpl
 	public static final String TABLE_NAME = "CommerceCurrency";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"commerceCurrencyId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"code_", Types.VARCHAR},
-		{"name", Types.VARCHAR}, {"symbol", Types.VARCHAR},
-		{"rate", Types.DECIMAL}, {"formatPattern", Types.VARCHAR},
-		{"maxFractionDigits", Types.INTEGER},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"commerceCurrencyId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"code_", Types.VARCHAR}, {"name", Types.VARCHAR},
+		{"symbol", Types.VARCHAR}, {"rate", Types.DECIMAL},
+		{"formatPattern", Types.VARCHAR}, {"maxFractionDigits", Types.INTEGER},
 		{"minFractionDigits", Types.INTEGER}, {"roundingMode", Types.VARCHAR},
 		{"primary_", Types.BOOLEAN}, {"priority", Types.DOUBLE},
 		{"active_", Types.BOOLEAN}, {"lastPublishDate", Types.TIMESTAMP}
@@ -99,6 +99,7 @@ public class CommerceCurrencyModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceCurrencyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -121,7 +122,7 @@ public class CommerceCurrencyModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceCurrency (uuid_ VARCHAR(75) null,commerceCurrencyId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,code_ VARCHAR(75) null,name STRING null,symbol VARCHAR(75) null,rate DECIMAL(30, 16) null,formatPattern STRING null,maxFractionDigits INTEGER,minFractionDigits INTEGER,roundingMode VARCHAR(75) null,primary_ BOOLEAN,priority DOUBLE,active_ BOOLEAN,lastPublishDate DATE null)";
+		"create table CommerceCurrency (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,commerceCurrencyId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,code_ VARCHAR(75) null,name STRING null,symbol VARCHAR(75) null,rate DECIMAL(30, 16) null,formatPattern STRING null,maxFractionDigits INTEGER,minFractionDigits INTEGER,roundingMode VARCHAR(75) null,primary_ BOOLEAN,priority DOUBLE,active_ BOOLEAN,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceCurrency";
 
@@ -137,20 +138,23 @@ public class CommerceCurrencyModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.currency.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.currency.model.CommerceCurrency"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.currency.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.currency.model.CommerceCurrency"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.currency.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.currency.model.CommerceCurrency"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long ACTIVE_COLUMN_BITMASK = 1L;
 
@@ -177,6 +181,7 @@ public class CommerceCurrencyModelImpl
 
 		CommerceCurrency model = new CommerceCurrencyImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCommerceCurrencyId(soapModel.getCommerceCurrencyId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -279,9 +284,6 @@ public class CommerceCurrencyModelImpl
 				attributeGetterFunction.apply((CommerceCurrency)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -357,442 +359,124 @@ public class CommerceCurrencyModelImpl
 				new LinkedHashMap<String, BiConsumer<CommerceCurrency, ?>>();
 
 		attributeGetterFunctions.put(
-			"uuid",
-			new Function<CommerceCurrency, Object>() {
-
-				@Override
-				public Object apply(CommerceCurrency commerceCurrency) {
-					return commerceCurrency.getUuid();
-				}
-
-			});
+			"mvccVersion", CommerceCurrency::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceCurrency, Long>)
+				CommerceCurrency::setMvccVersion);
+		attributeGetterFunctions.put("uuid", CommerceCurrency::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
-			new BiConsumer<CommerceCurrency, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCurrency commerceCurrency, Object uuidObject) {
-
-					commerceCurrency.setUuid((String)uuidObject);
-				}
-
-			});
+			(BiConsumer<CommerceCurrency, String>)CommerceCurrency::setUuid);
 		attributeGetterFunctions.put(
-			"commerceCurrencyId",
-			new Function<CommerceCurrency, Object>() {
-
-				@Override
-				public Object apply(CommerceCurrency commerceCurrency) {
-					return commerceCurrency.getCommerceCurrencyId();
-				}
-
-			});
+			"commerceCurrencyId", CommerceCurrency::getCommerceCurrencyId);
 		attributeSetterBiConsumers.put(
 			"commerceCurrencyId",
-			new BiConsumer<CommerceCurrency, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCurrency commerceCurrency,
-					Object commerceCurrencyIdObject) {
-
-					commerceCurrency.setCommerceCurrencyId(
-						(Long)commerceCurrencyIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceCurrency, Long>)
+				CommerceCurrency::setCommerceCurrencyId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommerceCurrency, Object>() {
-
-				@Override
-				public Object apply(CommerceCurrency commerceCurrency) {
-					return commerceCurrency.getCompanyId();
-				}
-
-			});
+			"companyId", CommerceCurrency::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommerceCurrency, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCurrency commerceCurrency, Object companyIdObject) {
-
-					commerceCurrency.setCompanyId((Long)companyIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommerceCurrency, Object>() {
-
-				@Override
-				public Object apply(CommerceCurrency commerceCurrency) {
-					return commerceCurrency.getUserId();
-				}
-
-			});
+			(BiConsumer<CommerceCurrency, Long>)CommerceCurrency::setCompanyId);
+		attributeGetterFunctions.put("userId", CommerceCurrency::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommerceCurrency, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCurrency commerceCurrency, Object userIdObject) {
-
-					commerceCurrency.setUserId((Long)userIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommerceCurrency, Object>() {
-
-				@Override
-				public Object apply(CommerceCurrency commerceCurrency) {
-					return commerceCurrency.getUserName();
-				}
-
-			});
+			(BiConsumer<CommerceCurrency, Long>)CommerceCurrency::setUserId);
+		attributeGetterFunctions.put("userName", CommerceCurrency::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommerceCurrency, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCurrency commerceCurrency, Object userNameObject) {
-
-					commerceCurrency.setUserName((String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceCurrency, String>)
+				CommerceCurrency::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommerceCurrency, Object>() {
-
-				@Override
-				public Object apply(CommerceCurrency commerceCurrency) {
-					return commerceCurrency.getCreateDate();
-				}
-
-			});
+			"createDate", CommerceCurrency::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommerceCurrency, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCurrency commerceCurrency,
-					Object createDateObject) {
-
-					commerceCurrency.setCreateDate((Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceCurrency, Date>)
+				CommerceCurrency::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CommerceCurrency, Object>() {
-
-				@Override
-				public Object apply(CommerceCurrency commerceCurrency) {
-					return commerceCurrency.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CommerceCurrency::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommerceCurrency, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCurrency commerceCurrency,
-					Object modifiedDateObject) {
-
-					commerceCurrency.setModifiedDate((Date)modifiedDateObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"code",
-			new Function<CommerceCurrency, Object>() {
-
-				@Override
-				public Object apply(CommerceCurrency commerceCurrency) {
-					return commerceCurrency.getCode();
-				}
-
-			});
+			(BiConsumer<CommerceCurrency, Date>)
+				CommerceCurrency::setModifiedDate);
+		attributeGetterFunctions.put("code", CommerceCurrency::getCode);
 		attributeSetterBiConsumers.put(
 			"code",
-			new BiConsumer<CommerceCurrency, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCurrency commerceCurrency, Object codeObject) {
-
-					commerceCurrency.setCode((String)codeObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"name",
-			new Function<CommerceCurrency, Object>() {
-
-				@Override
-				public Object apply(CommerceCurrency commerceCurrency) {
-					return commerceCurrency.getName();
-				}
-
-			});
+			(BiConsumer<CommerceCurrency, String>)CommerceCurrency::setCode);
+		attributeGetterFunctions.put("name", CommerceCurrency::getName);
 		attributeSetterBiConsumers.put(
 			"name",
-			new BiConsumer<CommerceCurrency, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCurrency commerceCurrency, Object nameObject) {
-
-					commerceCurrency.setName((String)nameObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"symbol",
-			new Function<CommerceCurrency, Object>() {
-
-				@Override
-				public Object apply(CommerceCurrency commerceCurrency) {
-					return commerceCurrency.getSymbol();
-				}
-
-			});
+			(BiConsumer<CommerceCurrency, String>)CommerceCurrency::setName);
+		attributeGetterFunctions.put("symbol", CommerceCurrency::getSymbol);
 		attributeSetterBiConsumers.put(
 			"symbol",
-			new BiConsumer<CommerceCurrency, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCurrency commerceCurrency, Object symbolObject) {
-
-					commerceCurrency.setSymbol((String)symbolObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"rate",
-			new Function<CommerceCurrency, Object>() {
-
-				@Override
-				public Object apply(CommerceCurrency commerceCurrency) {
-					return commerceCurrency.getRate();
-				}
-
-			});
+			(BiConsumer<CommerceCurrency, String>)CommerceCurrency::setSymbol);
+		attributeGetterFunctions.put("rate", CommerceCurrency::getRate);
 		attributeSetterBiConsumers.put(
 			"rate",
-			new BiConsumer<CommerceCurrency, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCurrency commerceCurrency, Object rateObject) {
-
-					commerceCurrency.setRate((BigDecimal)rateObject);
-				}
-
-			});
+			(BiConsumer<CommerceCurrency, BigDecimal>)
+				CommerceCurrency::setRate);
 		attributeGetterFunctions.put(
-			"formatPattern",
-			new Function<CommerceCurrency, Object>() {
-
-				@Override
-				public Object apply(CommerceCurrency commerceCurrency) {
-					return commerceCurrency.getFormatPattern();
-				}
-
-			});
+			"formatPattern", CommerceCurrency::getFormatPattern);
 		attributeSetterBiConsumers.put(
 			"formatPattern",
-			new BiConsumer<CommerceCurrency, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCurrency commerceCurrency,
-					Object formatPatternObject) {
-
-					commerceCurrency.setFormatPattern(
-						(String)formatPatternObject);
-				}
-
-			});
+			(BiConsumer<CommerceCurrency, String>)
+				CommerceCurrency::setFormatPattern);
 		attributeGetterFunctions.put(
-			"maxFractionDigits",
-			new Function<CommerceCurrency, Object>() {
-
-				@Override
-				public Object apply(CommerceCurrency commerceCurrency) {
-					return commerceCurrency.getMaxFractionDigits();
-				}
-
-			});
+			"maxFractionDigits", CommerceCurrency::getMaxFractionDigits);
 		attributeSetterBiConsumers.put(
 			"maxFractionDigits",
-			new BiConsumer<CommerceCurrency, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCurrency commerceCurrency,
-					Object maxFractionDigitsObject) {
-
-					commerceCurrency.setMaxFractionDigits(
-						(Integer)maxFractionDigitsObject);
-				}
-
-			});
+			(BiConsumer<CommerceCurrency, Integer>)
+				CommerceCurrency::setMaxFractionDigits);
 		attributeGetterFunctions.put(
-			"minFractionDigits",
-			new Function<CommerceCurrency, Object>() {
-
-				@Override
-				public Object apply(CommerceCurrency commerceCurrency) {
-					return commerceCurrency.getMinFractionDigits();
-				}
-
-			});
+			"minFractionDigits", CommerceCurrency::getMinFractionDigits);
 		attributeSetterBiConsumers.put(
 			"minFractionDigits",
-			new BiConsumer<CommerceCurrency, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCurrency commerceCurrency,
-					Object minFractionDigitsObject) {
-
-					commerceCurrency.setMinFractionDigits(
-						(Integer)minFractionDigitsObject);
-				}
-
-			});
+			(BiConsumer<CommerceCurrency, Integer>)
+				CommerceCurrency::setMinFractionDigits);
 		attributeGetterFunctions.put(
-			"roundingMode",
-			new Function<CommerceCurrency, Object>() {
-
-				@Override
-				public Object apply(CommerceCurrency commerceCurrency) {
-					return commerceCurrency.getRoundingMode();
-				}
-
-			});
+			"roundingMode", CommerceCurrency::getRoundingMode);
 		attributeSetterBiConsumers.put(
 			"roundingMode",
-			new BiConsumer<CommerceCurrency, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCurrency commerceCurrency,
-					Object roundingModeObject) {
-
-					commerceCurrency.setRoundingMode(
-						(String)roundingModeObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"primary",
-			new Function<CommerceCurrency, Object>() {
-
-				@Override
-				public Object apply(CommerceCurrency commerceCurrency) {
-					return commerceCurrency.getPrimary();
-				}
-
-			});
+			(BiConsumer<CommerceCurrency, String>)
+				CommerceCurrency::setRoundingMode);
+		attributeGetterFunctions.put("primary", CommerceCurrency::getPrimary);
 		attributeSetterBiConsumers.put(
 			"primary",
-			new BiConsumer<CommerceCurrency, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCurrency commerceCurrency, Object primaryObject) {
-
-					commerceCurrency.setPrimary((Boolean)primaryObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"priority",
-			new Function<CommerceCurrency, Object>() {
-
-				@Override
-				public Object apply(CommerceCurrency commerceCurrency) {
-					return commerceCurrency.getPriority();
-				}
-
-			});
+			(BiConsumer<CommerceCurrency, Boolean>)
+				CommerceCurrency::setPrimary);
+		attributeGetterFunctions.put("priority", CommerceCurrency::getPriority);
 		attributeSetterBiConsumers.put(
 			"priority",
-			new BiConsumer<CommerceCurrency, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCurrency commerceCurrency, Object priorityObject) {
-
-					commerceCurrency.setPriority((Double)priorityObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"active",
-			new Function<CommerceCurrency, Object>() {
-
-				@Override
-				public Object apply(CommerceCurrency commerceCurrency) {
-					return commerceCurrency.getActive();
-				}
-
-			});
+			(BiConsumer<CommerceCurrency, Double>)
+				CommerceCurrency::setPriority);
+		attributeGetterFunctions.put("active", CommerceCurrency::getActive);
 		attributeSetterBiConsumers.put(
 			"active",
-			new BiConsumer<CommerceCurrency, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCurrency commerceCurrency, Object activeObject) {
-
-					commerceCurrency.setActive((Boolean)activeObject);
-				}
-
-			});
+			(BiConsumer<CommerceCurrency, Boolean>)CommerceCurrency::setActive);
 		attributeGetterFunctions.put(
-			"lastPublishDate",
-			new Function<CommerceCurrency, Object>() {
-
-				@Override
-				public Object apply(CommerceCurrency commerceCurrency) {
-					return commerceCurrency.getLastPublishDate();
-				}
-
-			});
+			"lastPublishDate", CommerceCurrency::getLastPublishDate);
 		attributeSetterBiConsumers.put(
 			"lastPublishDate",
-			new BiConsumer<CommerceCurrency, Object>() {
-
-				@Override
-				public void accept(
-					CommerceCurrency commerceCurrency,
-					Object lastPublishDateObject) {
-
-					commerceCurrency.setLastPublishDate(
-						(Date)lastPublishDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceCurrency, Date>)
+				CommerceCurrency::setLastPublishDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1438,6 +1122,7 @@ public class CommerceCurrencyModelImpl
 	public Object clone() {
 		CommerceCurrencyImpl commerceCurrencyImpl = new CommerceCurrencyImpl();
 
+		commerceCurrencyImpl.setMvccVersion(getMvccVersion());
 		commerceCurrencyImpl.setUuid(getUuid());
 		commerceCurrencyImpl.setCommerceCurrencyId(getCommerceCurrencyId());
 		commerceCurrencyImpl.setCompanyId(getCompanyId());
@@ -1511,11 +1196,19 @@ public class CommerceCurrencyModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -1547,6 +1240,8 @@ public class CommerceCurrencyModelImpl
 	public CacheModel<CommerceCurrency> toCacheModel() {
 		CommerceCurrencyCacheModel commerceCurrencyCacheModel =
 			new CommerceCurrencyCacheModel();
+
+		commerceCurrencyCacheModel.mvccVersion = getMvccVersion();
 
 		commerceCurrencyCacheModel.uuid = getUuid();
 
@@ -1723,6 +1418,7 @@ public class CommerceCurrencyModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _commerceCurrencyId;

@@ -126,6 +126,18 @@ public class CPDefinitionOptionRelLocalServiceWrapper
 	}
 
 	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionOptionRelLocalService.createPersistedModel(
+			primaryKeyObj);
+	}
+
+	/**
 	 * Deletes the cp definition option rel from the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -185,6 +197,11 @@ public class CPDefinitionOptionRelLocalServiceWrapper
 
 		return _cpDefinitionOptionRelLocalService.deletePersistedModel(
 			persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _cpDefinitionOptionRelLocalService.dslQuery(dslQuery);
 	}
 
 	@Override

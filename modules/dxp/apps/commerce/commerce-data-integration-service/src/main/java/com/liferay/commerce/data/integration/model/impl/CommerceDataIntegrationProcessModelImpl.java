@@ -19,6 +19,7 @@ import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProces
 import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcessSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -74,6 +74,7 @@ public class CommerceDataIntegrationProcessModelImpl
 	public static final String TABLE_NAME = "CDataIntegrationProcess";
 
 	public static final Object[][] TABLE_COLUMNS = {
+		{"mvccVersion", Types.BIGINT},
 		{"CDataIntegrationProcessId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -88,6 +89,7 @@ public class CommerceDataIntegrationProcessModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CDataIntegrationProcessId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -105,7 +107,7 @@ public class CommerceDataIntegrationProcessModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CDataIntegrationProcess (CDataIntegrationProcessId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,type_ VARCHAR(75) null,typeSettings TEXT null,system_ BOOLEAN,active_ BOOLEAN,cronExpression VARCHAR(75) null,startDate DATE null,endDate DATE null)";
+		"create table CDataIntegrationProcess (mvccVersion LONG default 0 not null,CDataIntegrationProcessId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,type_ VARCHAR(75) null,typeSettings TEXT null,system_ BOOLEAN,active_ BOOLEAN,cronExpression VARCHAR(75) null,startDate DATE null,endDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CDataIntegrationProcess";
@@ -122,20 +124,23 @@ public class CommerceDataIntegrationProcessModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.data.integration.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcess"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.data.integration.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcess"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.data.integration.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcess"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
@@ -161,6 +166,7 @@ public class CommerceDataIntegrationProcessModelImpl
 		CommerceDataIntegrationProcess model =
 			new CommerceDataIntegrationProcessImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceDataIntegrationProcessId(
 			soapModel.getCommerceDataIntegrationProcessId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -260,9 +266,6 @@ public class CommerceDataIntegrationProcessModelImpl
 					(CommerceDataIntegrationProcess)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -344,402 +347,115 @@ public class CommerceDataIntegrationProcessModelImpl
 					<String, BiConsumer<CommerceDataIntegrationProcess, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", CommerceDataIntegrationProcess::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceDataIntegrationProcess, Long>)
+				CommerceDataIntegrationProcess::setMvccVersion);
+		attributeGetterFunctions.put(
 			"commerceDataIntegrationProcessId",
-			new Function<CommerceDataIntegrationProcess, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDataIntegrationProcess
-						commerceDataIntegrationProcess) {
-
-					return commerceDataIntegrationProcess.
-						getCommerceDataIntegrationProcessId();
-				}
-
-			});
+			CommerceDataIntegrationProcess::
+				getCommerceDataIntegrationProcessId);
 		attributeSetterBiConsumers.put(
 			"commerceDataIntegrationProcessId",
-			new BiConsumer<CommerceDataIntegrationProcess, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDataIntegrationProcess
-						commerceDataIntegrationProcess,
-					Object commerceDataIntegrationProcessIdObject) {
-
-					commerceDataIntegrationProcess.
-						setCommerceDataIntegrationProcessId(
-							(Long)commerceDataIntegrationProcessIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceDataIntegrationProcess, Long>)
+				CommerceDataIntegrationProcess::
+					setCommerceDataIntegrationProcessId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommerceDataIntegrationProcess, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDataIntegrationProcess
-						commerceDataIntegrationProcess) {
-
-					return commerceDataIntegrationProcess.getCompanyId();
-				}
-
-			});
+			"companyId", CommerceDataIntegrationProcess::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommerceDataIntegrationProcess, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDataIntegrationProcess
-						commerceDataIntegrationProcess,
-					Object companyIdObject) {
-
-					commerceDataIntegrationProcess.setCompanyId(
-						(Long)companyIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceDataIntegrationProcess, Long>)
+				CommerceDataIntegrationProcess::setCompanyId);
 		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommerceDataIntegrationProcess, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDataIntegrationProcess
-						commerceDataIntegrationProcess) {
-
-					return commerceDataIntegrationProcess.getUserId();
-				}
-
-			});
+			"userId", CommerceDataIntegrationProcess::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommerceDataIntegrationProcess, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDataIntegrationProcess
-						commerceDataIntegrationProcess,
-					Object userIdObject) {
-
-					commerceDataIntegrationProcess.setUserId(
-						(Long)userIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceDataIntegrationProcess, Long>)
+				CommerceDataIntegrationProcess::setUserId);
 		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommerceDataIntegrationProcess, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDataIntegrationProcess
-						commerceDataIntegrationProcess) {
-
-					return commerceDataIntegrationProcess.getUserName();
-				}
-
-			});
+			"userName", CommerceDataIntegrationProcess::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommerceDataIntegrationProcess, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDataIntegrationProcess
-						commerceDataIntegrationProcess,
-					Object userNameObject) {
-
-					commerceDataIntegrationProcess.setUserName(
-						(String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceDataIntegrationProcess, String>)
+				CommerceDataIntegrationProcess::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommerceDataIntegrationProcess, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDataIntegrationProcess
-						commerceDataIntegrationProcess) {
-
-					return commerceDataIntegrationProcess.getCreateDate();
-				}
-
-			});
+			"createDate", CommerceDataIntegrationProcess::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommerceDataIntegrationProcess, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDataIntegrationProcess
-						commerceDataIntegrationProcess,
-					Object createDateObject) {
-
-					commerceDataIntegrationProcess.setCreateDate(
-						(Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceDataIntegrationProcess, Date>)
+				CommerceDataIntegrationProcess::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CommerceDataIntegrationProcess, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDataIntegrationProcess
-						commerceDataIntegrationProcess) {
-
-					return commerceDataIntegrationProcess.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CommerceDataIntegrationProcess::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommerceDataIntegrationProcess, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDataIntegrationProcess
-						commerceDataIntegrationProcess,
-					Object modifiedDateObject) {
-
-					commerceDataIntegrationProcess.setModifiedDate(
-						(Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceDataIntegrationProcess, Date>)
+				CommerceDataIntegrationProcess::setModifiedDate);
 		attributeGetterFunctions.put(
-			"name",
-			new Function<CommerceDataIntegrationProcess, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDataIntegrationProcess
-						commerceDataIntegrationProcess) {
-
-					return commerceDataIntegrationProcess.getName();
-				}
-
-			});
+			"name", CommerceDataIntegrationProcess::getName);
 		attributeSetterBiConsumers.put(
 			"name",
-			new BiConsumer<CommerceDataIntegrationProcess, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDataIntegrationProcess
-						commerceDataIntegrationProcess,
-					Object nameObject) {
-
-					commerceDataIntegrationProcess.setName((String)nameObject);
-				}
-
-			});
+			(BiConsumer<CommerceDataIntegrationProcess, String>)
+				CommerceDataIntegrationProcess::setName);
 		attributeGetterFunctions.put(
-			"type",
-			new Function<CommerceDataIntegrationProcess, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDataIntegrationProcess
-						commerceDataIntegrationProcess) {
-
-					return commerceDataIntegrationProcess.getType();
-				}
-
-			});
+			"type", CommerceDataIntegrationProcess::getType);
 		attributeSetterBiConsumers.put(
 			"type",
-			new BiConsumer<CommerceDataIntegrationProcess, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDataIntegrationProcess
-						commerceDataIntegrationProcess,
-					Object typeObject) {
-
-					commerceDataIntegrationProcess.setType((String)typeObject);
-				}
-
-			});
+			(BiConsumer<CommerceDataIntegrationProcess, String>)
+				CommerceDataIntegrationProcess::setType);
 		attributeGetterFunctions.put(
-			"typeSettings",
-			new Function<CommerceDataIntegrationProcess, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDataIntegrationProcess
-						commerceDataIntegrationProcess) {
-
-					return commerceDataIntegrationProcess.getTypeSettings();
-				}
-
-			});
+			"typeSettings", CommerceDataIntegrationProcess::getTypeSettings);
 		attributeSetterBiConsumers.put(
 			"typeSettings",
-			new BiConsumer<CommerceDataIntegrationProcess, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDataIntegrationProcess
-						commerceDataIntegrationProcess,
-					Object typeSettingsObject) {
-
-					commerceDataIntegrationProcess.setTypeSettings(
-						(String)typeSettingsObject);
-				}
-
-			});
+			(BiConsumer<CommerceDataIntegrationProcess, String>)
+				CommerceDataIntegrationProcess::setTypeSettings);
 		attributeGetterFunctions.put(
-			"system",
-			new Function<CommerceDataIntegrationProcess, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDataIntegrationProcess
-						commerceDataIntegrationProcess) {
-
-					return commerceDataIntegrationProcess.getSystem();
-				}
-
-			});
+			"system", CommerceDataIntegrationProcess::getSystem);
 		attributeSetterBiConsumers.put(
 			"system",
-			new BiConsumer<CommerceDataIntegrationProcess, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDataIntegrationProcess
-						commerceDataIntegrationProcess,
-					Object systemObject) {
-
-					commerceDataIntegrationProcess.setSystem(
-						(Boolean)systemObject);
-				}
-
-			});
+			(BiConsumer<CommerceDataIntegrationProcess, Boolean>)
+				CommerceDataIntegrationProcess::setSystem);
 		attributeGetterFunctions.put(
-			"active",
-			new Function<CommerceDataIntegrationProcess, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDataIntegrationProcess
-						commerceDataIntegrationProcess) {
-
-					return commerceDataIntegrationProcess.getActive();
-				}
-
-			});
+			"active", CommerceDataIntegrationProcess::getActive);
 		attributeSetterBiConsumers.put(
 			"active",
-			new BiConsumer<CommerceDataIntegrationProcess, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDataIntegrationProcess
-						commerceDataIntegrationProcess,
-					Object activeObject) {
-
-					commerceDataIntegrationProcess.setActive(
-						(Boolean)activeObject);
-				}
-
-			});
+			(BiConsumer<CommerceDataIntegrationProcess, Boolean>)
+				CommerceDataIntegrationProcess::setActive);
 		attributeGetterFunctions.put(
 			"cronExpression",
-			new Function<CommerceDataIntegrationProcess, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDataIntegrationProcess
-						commerceDataIntegrationProcess) {
-
-					return commerceDataIntegrationProcess.getCronExpression();
-				}
-
-			});
+			CommerceDataIntegrationProcess::getCronExpression);
 		attributeSetterBiConsumers.put(
 			"cronExpression",
-			new BiConsumer<CommerceDataIntegrationProcess, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDataIntegrationProcess
-						commerceDataIntegrationProcess,
-					Object cronExpressionObject) {
-
-					commerceDataIntegrationProcess.setCronExpression(
-						(String)cronExpressionObject);
-				}
-
-			});
+			(BiConsumer<CommerceDataIntegrationProcess, String>)
+				CommerceDataIntegrationProcess::setCronExpression);
 		attributeGetterFunctions.put(
-			"startDate",
-			new Function<CommerceDataIntegrationProcess, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDataIntegrationProcess
-						commerceDataIntegrationProcess) {
-
-					return commerceDataIntegrationProcess.getStartDate();
-				}
-
-			});
+			"startDate", CommerceDataIntegrationProcess::getStartDate);
 		attributeSetterBiConsumers.put(
 			"startDate",
-			new BiConsumer<CommerceDataIntegrationProcess, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDataIntegrationProcess
-						commerceDataIntegrationProcess,
-					Object startDateObject) {
-
-					commerceDataIntegrationProcess.setStartDate(
-						(Date)startDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceDataIntegrationProcess, Date>)
+				CommerceDataIntegrationProcess::setStartDate);
 		attributeGetterFunctions.put(
-			"endDate",
-			new Function<CommerceDataIntegrationProcess, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceDataIntegrationProcess
-						commerceDataIntegrationProcess) {
-
-					return commerceDataIntegrationProcess.getEndDate();
-				}
-
-			});
+			"endDate", CommerceDataIntegrationProcess::getEndDate);
 		attributeSetterBiConsumers.put(
 			"endDate",
-			new BiConsumer<CommerceDataIntegrationProcess, Object>() {
-
-				@Override
-				public void accept(
-					CommerceDataIntegrationProcess
-						commerceDataIntegrationProcess,
-					Object endDateObject) {
-
-					commerceDataIntegrationProcess.setEndDate(
-						(Date)endDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceDataIntegrationProcess, Date>)
+				CommerceDataIntegrationProcess::setEndDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1027,6 +743,7 @@ public class CommerceDataIntegrationProcessModelImpl
 		CommerceDataIntegrationProcessImpl commerceDataIntegrationProcessImpl =
 			new CommerceDataIntegrationProcessImpl();
 
+		commerceDataIntegrationProcessImpl.setMvccVersion(getMvccVersion());
 		commerceDataIntegrationProcessImpl.setCommerceDataIntegrationProcessId(
 			getCommerceDataIntegrationProcessId());
 		commerceDataIntegrationProcessImpl.setCompanyId(getCompanyId());
@@ -1096,11 +813,19 @@ public class CommerceDataIntegrationProcessModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -1125,6 +850,8 @@ public class CommerceDataIntegrationProcessModelImpl
 		CommerceDataIntegrationProcessCacheModel
 			commerceDataIntegrationProcessCacheModel =
 				new CommerceDataIntegrationProcessCacheModel();
+
+		commerceDataIntegrationProcessCacheModel.mvccVersion = getMvccVersion();
 
 		commerceDataIntegrationProcessCacheModel.
 			commerceDataIntegrationProcessId =
@@ -1303,6 +1030,7 @@ public class CommerceDataIntegrationProcessModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _commerceDataIntegrationProcessId;
 	private long _companyId;
 	private long _originalCompanyId;

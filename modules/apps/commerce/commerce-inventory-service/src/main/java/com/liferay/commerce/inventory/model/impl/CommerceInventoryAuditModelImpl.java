@@ -19,6 +19,7 @@ import com.liferay.commerce.inventory.model.CommerceInventoryAuditModel;
 import com.liferay.commerce.inventory.model.CommerceInventoryAuditSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -74,17 +74,19 @@ public class CommerceInventoryAuditModelImpl
 	public static final String TABLE_NAME = "CIAudit";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"CIAuditId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"sku", Types.VARCHAR}, {"logType", Types.VARCHAR},
-		{"logTypeSettings", Types.CLOB}, {"quantity", Types.INTEGER}
+		{"mvccVersion", Types.BIGINT}, {"CIAuditId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"sku", Types.VARCHAR},
+		{"logType", Types.VARCHAR}, {"logTypeSettings", Types.CLOB},
+		{"quantity", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CIAuditId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -98,7 +100,7 @@ public class CommerceInventoryAuditModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CIAudit (CIAuditId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,sku VARCHAR(75) null,logType VARCHAR(75) null,logTypeSettings TEXT null,quantity INTEGER)";
+		"create table CIAudit (mvccVersion LONG default 0 not null,CIAuditId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,sku VARCHAR(75) null,logType VARCHAR(75) null,logTypeSettings TEXT null,quantity INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table CIAudit";
 
@@ -114,20 +116,23 @@ public class CommerceInventoryAuditModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.inventory.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.inventory.model.CommerceInventoryAudit"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.inventory.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.inventory.model.CommerceInventoryAudit"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.inventory.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.inventory.model.CommerceInventoryAudit"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
@@ -150,6 +155,7 @@ public class CommerceInventoryAuditModelImpl
 
 		CommerceInventoryAudit model = new CommerceInventoryAuditImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceInventoryAuditId(
 			soapModel.getCommerceInventoryAuditId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -244,9 +250,6 @@ public class CommerceInventoryAuditModelImpl
 				attributeGetterFunction.apply((CommerceInventoryAudit)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -325,264 +328,87 @@ public class CommerceInventoryAuditModelImpl
 					<String, BiConsumer<CommerceInventoryAudit, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", CommerceInventoryAudit::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceInventoryAudit, Long>)
+				CommerceInventoryAudit::setMvccVersion);
+		attributeGetterFunctions.put(
 			"commerceInventoryAuditId",
-			new Function<CommerceInventoryAudit, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryAudit commerceInventoryAudit) {
-
-					return commerceInventoryAudit.getCommerceInventoryAuditId();
-				}
-
-			});
+			CommerceInventoryAudit::getCommerceInventoryAuditId);
 		attributeSetterBiConsumers.put(
 			"commerceInventoryAuditId",
-			new BiConsumer<CommerceInventoryAudit, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryAudit commerceInventoryAudit,
-					Object commerceInventoryAuditIdObject) {
-
-					commerceInventoryAudit.setCommerceInventoryAuditId(
-						(Long)commerceInventoryAuditIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryAudit, Long>)
+				CommerceInventoryAudit::setCommerceInventoryAuditId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommerceInventoryAudit, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryAudit commerceInventoryAudit) {
-
-					return commerceInventoryAudit.getCompanyId();
-				}
-
-			});
+			"companyId", CommerceInventoryAudit::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommerceInventoryAudit, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryAudit commerceInventoryAudit,
-					Object companyIdObject) {
-
-					commerceInventoryAudit.setCompanyId((Long)companyIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryAudit, Long>)
+				CommerceInventoryAudit::setCompanyId);
 		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommerceInventoryAudit, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryAudit commerceInventoryAudit) {
-
-					return commerceInventoryAudit.getUserId();
-				}
-
-			});
+			"userId", CommerceInventoryAudit::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommerceInventoryAudit, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryAudit commerceInventoryAudit,
-					Object userIdObject) {
-
-					commerceInventoryAudit.setUserId((Long)userIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryAudit, Long>)
+				CommerceInventoryAudit::setUserId);
 		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommerceInventoryAudit, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryAudit commerceInventoryAudit) {
-
-					return commerceInventoryAudit.getUserName();
-				}
-
-			});
+			"userName", CommerceInventoryAudit::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommerceInventoryAudit, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryAudit commerceInventoryAudit,
-					Object userNameObject) {
-
-					commerceInventoryAudit.setUserName((String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryAudit, String>)
+				CommerceInventoryAudit::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommerceInventoryAudit, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryAudit commerceInventoryAudit) {
-
-					return commerceInventoryAudit.getCreateDate();
-				}
-
-			});
+			"createDate", CommerceInventoryAudit::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommerceInventoryAudit, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryAudit commerceInventoryAudit,
-					Object createDateObject) {
-
-					commerceInventoryAudit.setCreateDate(
-						(Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryAudit, Date>)
+				CommerceInventoryAudit::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CommerceInventoryAudit, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryAudit commerceInventoryAudit) {
-
-					return commerceInventoryAudit.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CommerceInventoryAudit::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommerceInventoryAudit, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryAudit commerceInventoryAudit,
-					Object modifiedDateObject) {
-
-					commerceInventoryAudit.setModifiedDate(
-						(Date)modifiedDateObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"sku",
-			new Function<CommerceInventoryAudit, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryAudit commerceInventoryAudit) {
-
-					return commerceInventoryAudit.getSku();
-				}
-
-			});
+			(BiConsumer<CommerceInventoryAudit, Date>)
+				CommerceInventoryAudit::setModifiedDate);
+		attributeGetterFunctions.put("sku", CommerceInventoryAudit::getSku);
 		attributeSetterBiConsumers.put(
 			"sku",
-			new BiConsumer<CommerceInventoryAudit, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryAudit commerceInventoryAudit,
-					Object skuObject) {
-
-					commerceInventoryAudit.setSku((String)skuObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryAudit, String>)
+				CommerceInventoryAudit::setSku);
 		attributeGetterFunctions.put(
-			"logType",
-			new Function<CommerceInventoryAudit, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryAudit commerceInventoryAudit) {
-
-					return commerceInventoryAudit.getLogType();
-				}
-
-			});
+			"logType", CommerceInventoryAudit::getLogType);
 		attributeSetterBiConsumers.put(
 			"logType",
-			new BiConsumer<CommerceInventoryAudit, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryAudit commerceInventoryAudit,
-					Object logTypeObject) {
-
-					commerceInventoryAudit.setLogType((String)logTypeObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryAudit, String>)
+				CommerceInventoryAudit::setLogType);
 		attributeGetterFunctions.put(
-			"logTypeSettings",
-			new Function<CommerceInventoryAudit, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryAudit commerceInventoryAudit) {
-
-					return commerceInventoryAudit.getLogTypeSettings();
-				}
-
-			});
+			"logTypeSettings", CommerceInventoryAudit::getLogTypeSettings);
 		attributeSetterBiConsumers.put(
 			"logTypeSettings",
-			new BiConsumer<CommerceInventoryAudit, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryAudit commerceInventoryAudit,
-					Object logTypeSettingsObject) {
-
-					commerceInventoryAudit.setLogTypeSettings(
-						(String)logTypeSettingsObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryAudit, String>)
+				CommerceInventoryAudit::setLogTypeSettings);
 		attributeGetterFunctions.put(
-			"quantity",
-			new Function<CommerceInventoryAudit, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceInventoryAudit commerceInventoryAudit) {
-
-					return commerceInventoryAudit.getQuantity();
-				}
-
-			});
+			"quantity", CommerceInventoryAudit::getQuantity);
 		attributeSetterBiConsumers.put(
 			"quantity",
-			new BiConsumer<CommerceInventoryAudit, Object>() {
-
-				@Override
-				public void accept(
-					CommerceInventoryAudit commerceInventoryAudit,
-					Object quantityObject) {
-
-					commerceInventoryAudit.setQuantity((Integer)quantityObject);
-				}
-
-			});
+			(BiConsumer<CommerceInventoryAudit, Integer>)
+				CommerceInventoryAudit::setQuantity);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -807,6 +633,7 @@ public class CommerceInventoryAuditModelImpl
 		CommerceInventoryAuditImpl commerceInventoryAuditImpl =
 			new CommerceInventoryAuditImpl();
 
+		commerceInventoryAuditImpl.setMvccVersion(getMvccVersion());
 		commerceInventoryAuditImpl.setCommerceInventoryAuditId(
 			getCommerceInventoryAuditId());
 		commerceInventoryAuditImpl.setCompanyId(getCompanyId());
@@ -868,11 +695,19 @@ public class CommerceInventoryAuditModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -896,6 +731,8 @@ public class CommerceInventoryAuditModelImpl
 	public CacheModel<CommerceInventoryAudit> toCacheModel() {
 		CommerceInventoryAuditCacheModel commerceInventoryAuditCacheModel =
 			new CommerceInventoryAuditCacheModel();
+
+		commerceInventoryAuditCacheModel.mvccVersion = getMvccVersion();
 
 		commerceInventoryAuditCacheModel.commerceInventoryAuditId =
 			getCommerceInventoryAuditId();
@@ -1033,6 +870,7 @@ public class CommerceInventoryAuditModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _commerceInventoryAuditId;
 	private long _companyId;
 	private long _originalCompanyId;

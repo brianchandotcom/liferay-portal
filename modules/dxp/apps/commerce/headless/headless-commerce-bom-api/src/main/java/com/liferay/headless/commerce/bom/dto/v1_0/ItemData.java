@@ -71,8 +71,8 @@ public class ItemData {
 		catch (RuntimeException re) {
 			throw re;
 		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
+		catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -100,8 +100,8 @@ public class ItemData {
 		catch (RuntimeException re) {
 			throw re;
 		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
+		catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -129,8 +129,8 @@ public class ItemData {
 		catch (RuntimeException re) {
 			throw re;
 		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
+		catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -158,8 +158,8 @@ public class ItemData {
 		catch (RuntimeException re) {
 			throw re;
 		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
+		catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 	}
 

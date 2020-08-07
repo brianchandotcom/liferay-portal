@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.tax.engine.fixed.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.tax.engine.fixed.exception.NoSuchTaxFixedRateAddressRelException;
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce tax fixed rate address rel service.
@@ -45,9 +40,6 @@ public interface CommerceTaxFixedRateAddressRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceTaxFixedRateAddressRelUtil} to access the commerce tax fixed rate address rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceTaxFixedRateAddressRel> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce tax fixed rate address rels where commerceTaxMethodId = &#63;.
@@ -614,8 +606,5 @@ public interface CommerceTaxFixedRateAddressRelPersistence
 	 * @return the number of commerce tax fixed rate address rels
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

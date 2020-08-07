@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.discount.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.discount.exception.NoSuchDiscountRelException;
 import com.liferay.commerce.discount.model.CommerceDiscountRel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce discount rel service.
@@ -45,9 +40,6 @@ public interface CommerceDiscountRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceDiscountRelUtil} to access the commerce discount rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceDiscountRel> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce discount rels where commerceDiscountId = &#63;.

@@ -20,6 +20,7 @@ import com.liferay.commerce.notification.model.CommerceNotificationTemplateSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,7 +37,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -83,7 +83,7 @@ public class CommerceNotificationTemplateModelImpl
 	public static final String TABLE_NAME = "CommerceNotificationTemplate";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
 		{"commerceNotificationTemplateId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
@@ -99,6 +99,7 @@ public class CommerceNotificationTemplateModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceNotificationTemplateId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -121,7 +122,7 @@ public class CommerceNotificationTemplateModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceNotificationTemplate (uuid_ VARCHAR(75) null,commerceNotificationTemplateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null,from_ VARCHAR(75) null,fromName STRING null,to_ VARCHAR(75) null,cc VARCHAR(255) null,bcc VARCHAR(255) null,type_ VARCHAR(75) null,enabled BOOLEAN,subject STRING null,body TEXT null)";
+		"create table CommerceNotificationTemplate (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,commerceNotificationTemplateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null,from_ VARCHAR(75) null,fromName STRING null,to_ VARCHAR(75) null,cc VARCHAR(255) null,bcc VARCHAR(255) null,type_ VARCHAR(75) null,enabled BOOLEAN,subject STRING null,body TEXT null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceNotificationTemplate";
@@ -138,20 +139,23 @@ public class CommerceNotificationTemplateModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.notification.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.notification.model.CommerceNotificationTemplate"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.notification.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.notification.model.CommerceNotificationTemplate"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.notification.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.notification.model.CommerceNotificationTemplate"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
@@ -183,6 +187,7 @@ public class CommerceNotificationTemplateModelImpl
 		CommerceNotificationTemplate model =
 			new CommerceNotificationTemplateImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCommerceNotificationTemplateId(
 			soapModel.getCommerceNotificationTemplateId());
@@ -287,9 +292,6 @@ public class CommerceNotificationTemplateModelImpl
 					(CommerceNotificationTemplate)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -370,497 +372,141 @@ public class CommerceNotificationTemplateModelImpl
 					<String, BiConsumer<CommerceNotificationTemplate, ?>>();
 
 		attributeGetterFunctions.put(
-			"uuid",
-			new Function<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationTemplate commerceNotificationTemplate) {
-
-					return commerceNotificationTemplate.getUuid();
-				}
-
-			});
+			"mvccVersion", CommerceNotificationTemplate::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceNotificationTemplate, Long>)
+				CommerceNotificationTemplate::setMvccVersion);
+		attributeGetterFunctions.put(
+			"uuid", CommerceNotificationTemplate::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
-			new BiConsumer<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationTemplate commerceNotificationTemplate,
-					Object uuidObject) {
-
-					commerceNotificationTemplate.setUuid((String)uuidObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationTemplate, String>)
+				CommerceNotificationTemplate::setUuid);
 		attributeGetterFunctions.put(
 			"commerceNotificationTemplateId",
-			new Function<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationTemplate commerceNotificationTemplate) {
-
-					return commerceNotificationTemplate.
-						getCommerceNotificationTemplateId();
-				}
-
-			});
+			CommerceNotificationTemplate::getCommerceNotificationTemplateId);
 		attributeSetterBiConsumers.put(
 			"commerceNotificationTemplateId",
-			new BiConsumer<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationTemplate commerceNotificationTemplate,
-					Object commerceNotificationTemplateIdObject) {
-
-					commerceNotificationTemplate.
-						setCommerceNotificationTemplateId(
-							(Long)commerceNotificationTemplateIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationTemplate, Long>)
+				CommerceNotificationTemplate::
+					setCommerceNotificationTemplateId);
 		attributeGetterFunctions.put(
-			"groupId",
-			new Function<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationTemplate commerceNotificationTemplate) {
-
-					return commerceNotificationTemplate.getGroupId();
-				}
-
-			});
+			"groupId", CommerceNotificationTemplate::getGroupId);
 		attributeSetterBiConsumers.put(
 			"groupId",
-			new BiConsumer<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationTemplate commerceNotificationTemplate,
-					Object groupIdObject) {
-
-					commerceNotificationTemplate.setGroupId(
-						(Long)groupIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationTemplate, Long>)
+				CommerceNotificationTemplate::setGroupId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationTemplate commerceNotificationTemplate) {
-
-					return commerceNotificationTemplate.getCompanyId();
-				}
-
-			});
+			"companyId", CommerceNotificationTemplate::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationTemplate commerceNotificationTemplate,
-					Object companyIdObject) {
-
-					commerceNotificationTemplate.setCompanyId(
-						(Long)companyIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationTemplate, Long>)
+				CommerceNotificationTemplate::setCompanyId);
 		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationTemplate commerceNotificationTemplate) {
-
-					return commerceNotificationTemplate.getUserId();
-				}
-
-			});
+			"userId", CommerceNotificationTemplate::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationTemplate commerceNotificationTemplate,
-					Object userIdObject) {
-
-					commerceNotificationTemplate.setUserId((Long)userIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationTemplate, Long>)
+				CommerceNotificationTemplate::setUserId);
 		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationTemplate commerceNotificationTemplate) {
-
-					return commerceNotificationTemplate.getUserName();
-				}
-
-			});
+			"userName", CommerceNotificationTemplate::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationTemplate commerceNotificationTemplate,
-					Object userNameObject) {
-
-					commerceNotificationTemplate.setUserName(
-						(String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationTemplate, String>)
+				CommerceNotificationTemplate::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationTemplate commerceNotificationTemplate) {
-
-					return commerceNotificationTemplate.getCreateDate();
-				}
-
-			});
+			"createDate", CommerceNotificationTemplate::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationTemplate commerceNotificationTemplate,
-					Object createDateObject) {
-
-					commerceNotificationTemplate.setCreateDate(
-						(Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationTemplate, Date>)
+				CommerceNotificationTemplate::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationTemplate commerceNotificationTemplate) {
-
-					return commerceNotificationTemplate.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CommerceNotificationTemplate::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationTemplate commerceNotificationTemplate,
-					Object modifiedDateObject) {
-
-					commerceNotificationTemplate.setModifiedDate(
-						(Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationTemplate, Date>)
+				CommerceNotificationTemplate::setModifiedDate);
 		attributeGetterFunctions.put(
-			"name",
-			new Function<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationTemplate commerceNotificationTemplate) {
-
-					return commerceNotificationTemplate.getName();
-				}
-
-			});
+			"name", CommerceNotificationTemplate::getName);
 		attributeSetterBiConsumers.put(
 			"name",
-			new BiConsumer<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationTemplate commerceNotificationTemplate,
-					Object nameObject) {
-
-					commerceNotificationTemplate.setName((String)nameObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationTemplate, String>)
+				CommerceNotificationTemplate::setName);
 		attributeGetterFunctions.put(
-			"description",
-			new Function<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationTemplate commerceNotificationTemplate) {
-
-					return commerceNotificationTemplate.getDescription();
-				}
-
-			});
+			"description", CommerceNotificationTemplate::getDescription);
 		attributeSetterBiConsumers.put(
 			"description",
-			new BiConsumer<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationTemplate commerceNotificationTemplate,
-					Object descriptionObject) {
-
-					commerceNotificationTemplate.setDescription(
-						(String)descriptionObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationTemplate, String>)
+				CommerceNotificationTemplate::setDescription);
 		attributeGetterFunctions.put(
-			"from",
-			new Function<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationTemplate commerceNotificationTemplate) {
-
-					return commerceNotificationTemplate.getFrom();
-				}
-
-			});
+			"from", CommerceNotificationTemplate::getFrom);
 		attributeSetterBiConsumers.put(
 			"from",
-			new BiConsumer<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationTemplate commerceNotificationTemplate,
-					Object fromObject) {
-
-					commerceNotificationTemplate.setFrom((String)fromObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationTemplate, String>)
+				CommerceNotificationTemplate::setFrom);
 		attributeGetterFunctions.put(
-			"fromName",
-			new Function<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationTemplate commerceNotificationTemplate) {
-
-					return commerceNotificationTemplate.getFromName();
-				}
-
-			});
+			"fromName", CommerceNotificationTemplate::getFromName);
 		attributeSetterBiConsumers.put(
 			"fromName",
-			new BiConsumer<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationTemplate commerceNotificationTemplate,
-					Object fromNameObject) {
-
-					commerceNotificationTemplate.setFromName(
-						(String)fromNameObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"to",
-			new Function<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationTemplate commerceNotificationTemplate) {
-
-					return commerceNotificationTemplate.getTo();
-				}
-
-			});
+			(BiConsumer<CommerceNotificationTemplate, String>)
+				CommerceNotificationTemplate::setFromName);
+		attributeGetterFunctions.put("to", CommerceNotificationTemplate::getTo);
 		attributeSetterBiConsumers.put(
 			"to",
-			new BiConsumer<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationTemplate commerceNotificationTemplate,
-					Object toObject) {
-
-					commerceNotificationTemplate.setTo((String)toObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"cc",
-			new Function<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationTemplate commerceNotificationTemplate) {
-
-					return commerceNotificationTemplate.getCc();
-				}
-
-			});
+			(BiConsumer<CommerceNotificationTemplate, String>)
+				CommerceNotificationTemplate::setTo);
+		attributeGetterFunctions.put("cc", CommerceNotificationTemplate::getCc);
 		attributeSetterBiConsumers.put(
 			"cc",
-			new BiConsumer<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationTemplate commerceNotificationTemplate,
-					Object ccObject) {
-
-					commerceNotificationTemplate.setCc((String)ccObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationTemplate, String>)
+				CommerceNotificationTemplate::setCc);
 		attributeGetterFunctions.put(
-			"bcc",
-			new Function<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationTemplate commerceNotificationTemplate) {
-
-					return commerceNotificationTemplate.getBcc();
-				}
-
-			});
+			"bcc", CommerceNotificationTemplate::getBcc);
 		attributeSetterBiConsumers.put(
 			"bcc",
-			new BiConsumer<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationTemplate commerceNotificationTemplate,
-					Object bccObject) {
-
-					commerceNotificationTemplate.setBcc((String)bccObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationTemplate, String>)
+				CommerceNotificationTemplate::setBcc);
 		attributeGetterFunctions.put(
-			"type",
-			new Function<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationTemplate commerceNotificationTemplate) {
-
-					return commerceNotificationTemplate.getType();
-				}
-
-			});
+			"type", CommerceNotificationTemplate::getType);
 		attributeSetterBiConsumers.put(
 			"type",
-			new BiConsumer<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationTemplate commerceNotificationTemplate,
-					Object typeObject) {
-
-					commerceNotificationTemplate.setType((String)typeObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationTemplate, String>)
+				CommerceNotificationTemplate::setType);
 		attributeGetterFunctions.put(
-			"enabled",
-			new Function<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationTemplate commerceNotificationTemplate) {
-
-					return commerceNotificationTemplate.getEnabled();
-				}
-
-			});
+			"enabled", CommerceNotificationTemplate::getEnabled);
 		attributeSetterBiConsumers.put(
 			"enabled",
-			new BiConsumer<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationTemplate commerceNotificationTemplate,
-					Object enabledObject) {
-
-					commerceNotificationTemplate.setEnabled(
-						(Boolean)enabledObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationTemplate, Boolean>)
+				CommerceNotificationTemplate::setEnabled);
 		attributeGetterFunctions.put(
-			"subject",
-			new Function<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationTemplate commerceNotificationTemplate) {
-
-					return commerceNotificationTemplate.getSubject();
-				}
-
-			});
+			"subject", CommerceNotificationTemplate::getSubject);
 		attributeSetterBiConsumers.put(
 			"subject",
-			new BiConsumer<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationTemplate commerceNotificationTemplate,
-					Object subjectObject) {
-
-					commerceNotificationTemplate.setSubject(
-						(String)subjectObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationTemplate, String>)
+				CommerceNotificationTemplate::setSubject);
 		attributeGetterFunctions.put(
-			"body",
-			new Function<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceNotificationTemplate commerceNotificationTemplate) {
-
-					return commerceNotificationTemplate.getBody();
-				}
-
-			});
+			"body", CommerceNotificationTemplate::getBody);
 		attributeSetterBiConsumers.put(
 			"body",
-			new BiConsumer<CommerceNotificationTemplate, Object>() {
-
-				@Override
-				public void accept(
-					CommerceNotificationTemplate commerceNotificationTemplate,
-					Object bodyObject) {
-
-					commerceNotificationTemplate.setBody((String)bodyObject);
-				}
-
-			});
+			(BiConsumer<CommerceNotificationTemplate, String>)
+				CommerceNotificationTemplate::setBody);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1641,6 +1287,7 @@ public class CommerceNotificationTemplateModelImpl
 		CommerceNotificationTemplateImpl commerceNotificationTemplateImpl =
 			new CommerceNotificationTemplateImpl();
 
+		commerceNotificationTemplateImpl.setMvccVersion(getMvccVersion());
 		commerceNotificationTemplateImpl.setUuid(getUuid());
 		commerceNotificationTemplateImpl.setCommerceNotificationTemplateId(
 			getCommerceNotificationTemplateId());
@@ -1721,11 +1368,19 @@ public class CommerceNotificationTemplateModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -1759,6 +1414,8 @@ public class CommerceNotificationTemplateModelImpl
 		CommerceNotificationTemplateCacheModel
 			commerceNotificationTemplateCacheModel =
 				new CommerceNotificationTemplateCacheModel();
+
+		commerceNotificationTemplateCacheModel.mvccVersion = getMvccVersion();
 
 		commerceNotificationTemplateCacheModel.uuid = getUuid();
 
@@ -1967,6 +1624,7 @@ public class CommerceNotificationTemplateModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _commerceNotificationTemplateId;

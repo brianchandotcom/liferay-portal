@@ -34,6 +34,7 @@ public class CommercePriceModifierRelSoap implements Serializable {
 		CommercePriceModifierRelSoap soapModel =
 			new CommercePriceModifierRelSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCommercePriceModifierRelId(
 			model.getCommercePriceModifierRelId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -108,6 +109,14 @@ public class CommercePriceModifierRelSoap implements Serializable {
 		setCommercePriceModifierRelId(pk);
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public long getCommercePriceModifierRelId() {
 		return _commercePriceModifierRelId;
 	}
@@ -180,6 +189,7 @@ public class CommercePriceModifierRelSoap implements Serializable {
 		_classPK = classPK;
 	}
 
+	private long _mvccVersion;
 	private long _commercePriceModifierRelId;
 	private long _companyId;
 	private long _userId;

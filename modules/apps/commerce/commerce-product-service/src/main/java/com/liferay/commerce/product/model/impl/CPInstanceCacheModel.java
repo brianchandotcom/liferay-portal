@@ -15,9 +15,10 @@
 package com.liferay.commerce.product.model.impl;
 
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -35,7 +36,7 @@ import java.util.Date;
  * @generated
  */
 public class CPInstanceCacheModel
-	implements CacheModel<CPInstance>, Externalizable {
+	implements CacheModel<CPInstance>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -50,7 +51,9 @@ public class CPInstanceCacheModel
 		CPInstanceCacheModel cpInstanceCacheModel =
 			(CPInstanceCacheModel)object;
 
-		if (CPInstanceId == cpInstanceCacheModel.CPInstanceId) {
+		if ((CPInstanceId == cpInstanceCacheModel.CPInstanceId) &&
+			(mvccVersion == cpInstanceCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -59,14 +62,28 @@ public class CPInstanceCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, CPInstanceId);
+		int hashCode = HashUtil.hash(0, CPInstanceId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(85);
+		StringBundler sb = new StringBundler(87);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", externalReferenceCode=");
 		sb.append(externalReferenceCode);
@@ -158,6 +175,8 @@ public class CPInstanceCacheModel
 	@Override
 	public CPInstance toEntityModel() {
 		CPInstanceImpl cpInstanceImpl = new CPInstanceImpl();
+
+		cpInstanceImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			cpInstanceImpl.setUuid("");
@@ -337,6 +356,7 @@ public class CPInstanceCacheModel
 	public void readExternal(ObjectInput objectInput)
 		throws ClassNotFoundException, IOException {
 
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		externalReferenceCode = objectInput.readUTF();
 
@@ -403,6 +423,8 @@ public class CPInstanceCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -546,6 +568,7 @@ public class CPInstanceCacheModel
 		objectOutput.writeLong(statusDate);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public String externalReferenceCode;
 	public long CPInstanceId;

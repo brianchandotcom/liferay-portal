@@ -131,6 +131,9 @@ public class CommerceShippingFixedOptionRelPersistenceTest {
 		CommerceShippingFixedOptionRel newCommerceShippingFixedOptionRel =
 			_persistence.create(pk);
 
+		newCommerceShippingFixedOptionRel.setMvccVersion(
+			RandomTestUtil.nextLong());
+
 		newCommerceShippingFixedOptionRel.setGroupId(RandomTestUtil.nextLong());
 
 		newCommerceShippingFixedOptionRel.setCompanyId(
@@ -186,6 +189,9 @@ public class CommerceShippingFixedOptionRelPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newCommerceShippingFixedOptionRel.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCommerceShippingFixedOptionRel.getMvccVersion(),
+			newCommerceShippingFixedOptionRel.getMvccVersion());
 		Assert.assertEquals(
 			existingCommerceShippingFixedOptionRel.
 				getCommerceShippingFixedOptionRelId(),
@@ -299,12 +305,13 @@ public class CommerceShippingFixedOptionRelPersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"CShippingFixedOptionRel", "commerceShippingFixedOptionRelId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true,
-			"commerceShippingMethodId", true, "commerceShippingFixedOptionId",
-			true, "commerceInventoryWarehouseId", true, "commerceCountryId",
-			true, "commerceRegionId", true, "zip", true, "weightFrom", true,
+			"CShippingFixedOptionRel", "mvccVersion", true,
+			"commerceShippingFixedOptionRelId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "commerceShippingMethodId", true,
+			"commerceShippingFixedOptionId", true,
+			"commerceInventoryWarehouseId", true, "commerceCountryId", true,
+			"commerceRegionId", true, "zip", true, "weightFrom", true,
 			"weightTo", true, "fixedPrice", true, "rateUnitWeightPrice", true,
 			"ratePercentage", true);
 	}
@@ -565,6 +572,9 @@ public class CommerceShippingFixedOptionRelPersistenceTest {
 
 		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =
 			_persistence.create(pk);
+
+		commerceShippingFixedOptionRel.setMvccVersion(
+			RandomTestUtil.nextLong());
 
 		commerceShippingFixedOptionRel.setGroupId(RandomTestUtil.nextLong());
 

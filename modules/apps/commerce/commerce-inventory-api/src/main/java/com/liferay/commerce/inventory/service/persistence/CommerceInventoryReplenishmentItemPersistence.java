@@ -14,17 +14,13 @@
 
 package com.liferay.commerce.inventory.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.inventory.exception.NoSuchInventoryReplenishmentItemException;
 import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
 import java.util.Date;
-import java.util.Map;
-import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce inventory replenishment item service.
@@ -46,9 +42,6 @@ public interface CommerceInventoryReplenishmentItemPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceInventoryReplenishmentItemUtil} to access the commerce inventory replenishment item persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceInventoryReplenishmentItem>
-		fetchByPrimaryKeys(Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce inventory replenishment items where commerceInventoryWarehouseId = &#63;.
@@ -937,8 +930,5 @@ public interface CommerceInventoryReplenishmentItemPersistence
 	 * @return the number of commerce inventory replenishment items
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

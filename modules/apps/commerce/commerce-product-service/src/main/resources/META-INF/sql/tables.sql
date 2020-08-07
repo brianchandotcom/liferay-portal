@@ -1,4 +1,5 @@
 create table CPAttachmentFileEntry (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
 	CPAttachmentFileEntryId LONG not null primary key,
@@ -25,6 +26,7 @@ create table CPAttachmentFileEntry (
 );
 
 create table CPDSpecificationOptionValue (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	CPDSpecificationOptionValueId LONG not null primary key,
 	groupId LONG,
@@ -42,6 +44,7 @@ create table CPDSpecificationOptionValue (
 );
 
 create table CPDefinition (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	defaultLanguageId VARCHAR(75) null,
 	CPDefinitionId LONG not null primary key,
@@ -91,6 +94,7 @@ create table CPDefinition (
 );
 
 create table CPDefinitionLink (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	CPDefinitionLinkId LONG not null primary key,
 	groupId LONG,
@@ -120,6 +124,7 @@ create table CPDefinitionLocalization (
 );
 
 create table CPDefinitionOptionRel (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	CPDefinitionOptionRelId LONG not null primary key,
 	groupId LONG,
@@ -142,6 +147,7 @@ create table CPDefinitionOptionRel (
 );
 
 create table CPDefinitionOptionValueRel (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	CPDefinitionOptionValueRelId LONG not null primary key,
 	groupId LONG,
@@ -162,6 +168,7 @@ create table CPDefinitionOptionValueRel (
 );
 
 create table CPDisplayLayout (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	CPDisplayLayoutId LONG not null primary key,
 	groupId LONG,
@@ -192,6 +199,7 @@ create table CPFriendlyURLEntry (
 );
 
 create table CPInstance (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
 	CPInstanceId LONG not null primary key,
@@ -237,6 +245,7 @@ create table CPInstance (
 );
 
 create table CPInstanceOptionValueRel (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	CPInstanceOptionValueRelId LONG not null primary key,
 	groupId LONG,
@@ -251,6 +260,7 @@ create table CPInstanceOptionValueRel (
 );
 
 create table CPMeasurementUnit (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	CPMeasurementUnitId LONG not null primary key,
 	groupId LONG,
@@ -269,6 +279,7 @@ create table CPMeasurementUnit (
 );
 
 create table CPOption (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
 	CPOptionId LONG not null primary key,
@@ -288,6 +299,7 @@ create table CPOption (
 );
 
 create table CPOptionCategory (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	CPOptionCategoryId LONG not null primary key,
 	companyId LONG,
@@ -303,6 +315,7 @@ create table CPOptionCategory (
 );
 
 create table CPOptionValue (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
 	CPOptionValueId LONG not null primary key,
@@ -319,6 +332,7 @@ create table CPOptionValue (
 );
 
 create table CPSpecificationOption (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	CPSpecificationOptionId LONG not null primary key,
 	companyId LONG,
@@ -335,6 +349,7 @@ create table CPSpecificationOption (
 );
 
 create table CPTaxCategory (
+	mvccVersion LONG default 0 not null,
 	CPTaxCategoryId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
@@ -346,6 +361,7 @@ create table CPTaxCategory (
 );
 
 create table CProduct (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
 	CProductId LONG not null primary key,
@@ -360,6 +376,7 @@ create table CProduct (
 );
 
 create table CommerceCatalog (
+	mvccVersion LONG default 0 not null,
 	externalReferenceCode VARCHAR(75) null,
 	commerceCatalogId LONG not null primary key,
 	companyId LONG,
@@ -374,6 +391,7 @@ create table CommerceCatalog (
 );
 
 create table CommerceChannel (
+	mvccVersion LONG default 0 not null,
 	externalReferenceCode VARCHAR(75) null,
 	commerceChannelId LONG not null primary key,
 	companyId LONG,
@@ -391,6 +409,7 @@ create table CommerceChannel (
 );
 
 create table CommerceChannelRel (
+	mvccVersion LONG default 0 not null,
 	commerceChannelRelId LONG not null primary key,
 	companyId LONG,
 	userId LONG,

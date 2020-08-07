@@ -14,17 +14,13 @@
 
 package com.liferay.commerce.product.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
 import java.util.Date;
-import java.util.Map;
-import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the cp instance service.
@@ -45,9 +41,6 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPInstanceUtil} to access the cp instance persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CPInstance> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the cp instances where uuid = &#63;.
@@ -1872,8 +1865,5 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	 * @return the number of cp instances
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

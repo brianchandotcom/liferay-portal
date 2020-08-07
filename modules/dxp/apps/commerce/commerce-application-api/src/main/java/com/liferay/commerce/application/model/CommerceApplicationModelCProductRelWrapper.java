@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.application.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,6 +31,7 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceApplicationModelCProductRelWrapper
+	extends BaseModelWrapper<CommerceApplicationModelCProductRel>
 	implements CommerceApplicationModelCProductRel,
 			   ModelWrapper<CommerceApplicationModelCProductRel> {
 
@@ -42,24 +39,14 @@ public class CommerceApplicationModelCProductRelWrapper
 		CommerceApplicationModelCProductRel
 			commerceApplicationModelCProductRel) {
 
-		_commerceApplicationModelCProductRel =
-			commerceApplicationModelCProductRel;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceApplicationModelCProductRel.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceApplicationModelCProductRel.class.getName();
+		super(commerceApplicationModelCProductRel);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put(
 			"commerceApplicationModelCProductRelId",
 			getCommerceApplicationModelCProductRelId());
@@ -77,6 +64,12 @@ public class CommerceApplicationModelCProductRelWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long commerceApplicationModelCProductRelId = (Long)attributes.get(
 			"commerceApplicationModelCProductRelId");
 
@@ -129,22 +122,6 @@ public class CommerceApplicationModelCProductRelWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CommerceApplicationModelCProductRelWrapper(
-			(CommerceApplicationModelCProductRel)
-				_commerceApplicationModelCProductRel.clone());
-	}
-
-	@Override
-	public int compareTo(
-		CommerceApplicationModelCProductRel
-			commerceApplicationModelCProductRel) {
-
-		return _commerceApplicationModelCProductRel.compareTo(
-			commerceApplicationModelCProductRel);
-	}
-
 	/**
 	 * Returns the commerce application model c product rel ID of this commerce application model c product rel.
 	 *
@@ -152,8 +129,7 @@ public class CommerceApplicationModelCProductRelWrapper
 	 */
 	@Override
 	public long getCommerceApplicationModelCProductRelId() {
-		return _commerceApplicationModelCProductRel.
-			getCommerceApplicationModelCProductRelId();
+		return model.getCommerceApplicationModelCProductRelId();
 	}
 
 	/**
@@ -163,8 +139,7 @@ public class CommerceApplicationModelCProductRelWrapper
 	 */
 	@Override
 	public long getCommerceApplicationModelId() {
-		return _commerceApplicationModelCProductRel.
-			getCommerceApplicationModelId();
+		return model.getCommerceApplicationModelId();
 	}
 
 	/**
@@ -174,7 +149,7 @@ public class CommerceApplicationModelCProductRelWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceApplicationModelCProductRel.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -184,7 +159,7 @@ public class CommerceApplicationModelCProductRelWrapper
 	 */
 	@Override
 	public long getCProductId() {
-		return _commerceApplicationModelCProductRel.getCProductId();
+		return model.getCProductId();
 	}
 
 	/**
@@ -194,12 +169,7 @@ public class CommerceApplicationModelCProductRelWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceApplicationModelCProductRel.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceApplicationModelCProductRel.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -209,7 +179,17 @@ public class CommerceApplicationModelCProductRelWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceApplicationModelCProductRel.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce application model c product rel.
+	 *
+	 * @return the mvcc version of this commerce application model c product rel
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -219,12 +199,7 @@ public class CommerceApplicationModelCProductRelWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceApplicationModelCProductRel.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceApplicationModelCProductRel.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -234,7 +209,7 @@ public class CommerceApplicationModelCProductRelWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceApplicationModelCProductRel.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -244,7 +219,7 @@ public class CommerceApplicationModelCProductRelWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceApplicationModelCProductRel.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -254,37 +229,12 @@ public class CommerceApplicationModelCProductRelWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceApplicationModelCProductRel.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceApplicationModelCProductRel.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceApplicationModelCProductRel.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceApplicationModelCProductRel.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceApplicationModelCProductRel.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_commerceApplicationModelCProductRel.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceApplicationModelCProductRel.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -296,9 +246,8 @@ public class CommerceApplicationModelCProductRelWrapper
 	public void setCommerceApplicationModelCProductRelId(
 		long commerceApplicationModelCProductRelId) {
 
-		_commerceApplicationModelCProductRel.
-			setCommerceApplicationModelCProductRelId(
-				commerceApplicationModelCProductRelId);
+		model.setCommerceApplicationModelCProductRelId(
+			commerceApplicationModelCProductRelId);
 	}
 
 	/**
@@ -308,8 +257,7 @@ public class CommerceApplicationModelCProductRelWrapper
 	 */
 	@Override
 	public void setCommerceApplicationModelId(long commerceApplicationModelId) {
-		_commerceApplicationModelCProductRel.setCommerceApplicationModelId(
-			commerceApplicationModelId);
+		model.setCommerceApplicationModelId(commerceApplicationModelId);
 	}
 
 	/**
@@ -319,7 +267,7 @@ public class CommerceApplicationModelCProductRelWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceApplicationModelCProductRel.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -329,7 +277,7 @@ public class CommerceApplicationModelCProductRelWrapper
 	 */
 	@Override
 	public void setCProductId(long CProductId) {
-		_commerceApplicationModelCProductRel.setCProductId(CProductId);
+		model.setCProductId(CProductId);
 	}
 
 	/**
@@ -339,27 +287,7 @@ public class CommerceApplicationModelCProductRelWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceApplicationModelCProductRel.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceApplicationModelCProductRel.setExpandoBridgeAttributes(
-			baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceApplicationModelCProductRel.setExpandoBridgeAttributes(
-			expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceApplicationModelCProductRel.setExpandoBridgeAttributes(
-			serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -369,12 +297,17 @@ public class CommerceApplicationModelCProductRelWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceApplicationModelCProductRel.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this commerce application model c product rel.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce application model c product rel
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_commerceApplicationModelCProductRel.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -384,12 +317,7 @@ public class CommerceApplicationModelCProductRelWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceApplicationModelCProductRel.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceApplicationModelCProductRel.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -399,7 +327,7 @@ public class CommerceApplicationModelCProductRelWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceApplicationModelCProductRel.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -409,7 +337,7 @@ public class CommerceApplicationModelCProductRelWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceApplicationModelCProductRel.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -419,84 +347,16 @@ public class CommerceApplicationModelCProductRelWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceApplicationModelCProductRel.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel
-		<CommerceApplicationModelCProductRel> toCacheModel() {
+	protected CommerceApplicationModelCProductRelWrapper wrap(
+		CommerceApplicationModelCProductRel
+			commerceApplicationModelCProductRel) {
 
-		return _commerceApplicationModelCProductRel.toCacheModel();
-	}
-
-	@Override
-	public CommerceApplicationModelCProductRel toEscapedModel() {
 		return new CommerceApplicationModelCProductRelWrapper(
-			_commerceApplicationModelCProductRel.toEscapedModel());
+			commerceApplicationModelCProductRel);
 	}
-
-	@Override
-	public String toString() {
-		return _commerceApplicationModelCProductRel.toString();
-	}
-
-	@Override
-	public CommerceApplicationModelCProductRel toUnescapedModel() {
-		return new CommerceApplicationModelCProductRelWrapper(
-			_commerceApplicationModelCProductRel.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceApplicationModelCProductRel.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceApplicationModelCProductRelWrapper)) {
-			return false;
-		}
-
-		CommerceApplicationModelCProductRelWrapper
-			commerceApplicationModelCProductRelWrapper =
-				(CommerceApplicationModelCProductRelWrapper)object;
-
-		if (Objects.equals(
-				_commerceApplicationModelCProductRel,
-				commerceApplicationModelCProductRelWrapper.
-					_commerceApplicationModelCProductRel)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceApplicationModelCProductRel getWrappedModel() {
-		return _commerceApplicationModelCProductRel;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceApplicationModelCProductRel.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceApplicationModelCProductRel.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceApplicationModelCProductRel.resetOriginalValues();
-	}
-
-	private final CommerceApplicationModelCProductRel
-		_commerceApplicationModelCProductRel;
 
 }

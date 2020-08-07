@@ -126,6 +126,8 @@ public class CommerceAccountGroupPersistenceTest {
 
 		CommerceAccountGroup newCommerceAccountGroup = _persistence.create(pk);
 
+		newCommerceAccountGroup.setMvccVersion(RandomTestUtil.nextLong());
+
 		newCommerceAccountGroup.setExternalReferenceCode(
 			RandomTestUtil.randomString());
 
@@ -152,6 +154,9 @@ public class CommerceAccountGroupPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newCommerceAccountGroup.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCommerceAccountGroup.getMvccVersion(),
+			newCommerceAccountGroup.getMvccVersion());
 		Assert.assertEquals(
 			existingCommerceAccountGroup.getExternalReferenceCode(),
 			newCommerceAccountGroup.getExternalReferenceCode());
@@ -251,10 +256,11 @@ public class CommerceAccountGroupPersistenceTest {
 
 	protected OrderByComparator<CommerceAccountGroup> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CommerceAccountGroup", "externalReferenceCode", true,
-			"commerceAccountGroupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true, "name",
-			true, "type", true, "system", true);
+			"CommerceAccountGroup", "mvccVersion", true,
+			"externalReferenceCode", true, "commerceAccountGroupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "name", true, "type", true, "system",
+			true);
 	}
 
 	@Test
@@ -518,6 +524,8 @@ public class CommerceAccountGroupPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		CommerceAccountGroup commerceAccountGroup = _persistence.create(pk);
+
+		commerceAccountGroup.setMvccVersion(RandomTestUtil.nextLong());
 
 		commerceAccountGroup.setExternalReferenceCode(
 			RandomTestUtil.randomString());

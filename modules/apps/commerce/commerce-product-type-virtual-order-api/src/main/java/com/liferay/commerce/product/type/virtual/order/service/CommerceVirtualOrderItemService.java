@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.product.type.virtual.order.service;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -28,6 +26,8 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
 import java.io.File;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the remote service interface for CommerceVirtualOrderItem. Methods of this

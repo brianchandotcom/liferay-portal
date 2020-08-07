@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.data.integration.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,29 +31,21 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceDataIntegrationProcessLogWrapper
+	extends BaseModelWrapper<CommerceDataIntegrationProcessLog>
 	implements CommerceDataIntegrationProcessLog,
 			   ModelWrapper<CommerceDataIntegrationProcessLog> {
 
 	public CommerceDataIntegrationProcessLogWrapper(
 		CommerceDataIntegrationProcessLog commerceDataIntegrationProcessLog) {
 
-		_commerceDataIntegrationProcessLog = commerceDataIntegrationProcessLog;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceDataIntegrationProcessLog.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceDataIntegrationProcessLog.class.getName();
+		super(commerceDataIntegrationProcessLog);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put(
 			"commerceDataIntegrationProcessLogId",
 			getCommerceDataIntegrationProcessLogId());
@@ -79,6 +67,12 @@ public class CommerceDataIntegrationProcessLogWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long commerceDataIntegrationProcessLogId = (Long)attributes.get(
 			"commerceDataIntegrationProcessLogId");
 
@@ -155,21 +149,6 @@ public class CommerceDataIntegrationProcessLogWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CommerceDataIntegrationProcessLogWrapper(
-			(CommerceDataIntegrationProcessLog)
-				_commerceDataIntegrationProcessLog.clone());
-	}
-
-	@Override
-	public int compareTo(
-		CommerceDataIntegrationProcessLog commerceDataIntegrationProcessLog) {
-
-		return _commerceDataIntegrationProcessLog.compareTo(
-			commerceDataIntegrationProcessLog);
-	}
-
 	/**
 	 * Returns the c data integration process ID of this commerce data integration process log.
 	 *
@@ -177,8 +156,7 @@ public class CommerceDataIntegrationProcessLogWrapper
 	 */
 	@Override
 	public long getCDataIntegrationProcessId() {
-		return _commerceDataIntegrationProcessLog.
-			getCDataIntegrationProcessId();
+		return model.getCDataIntegrationProcessId();
 	}
 
 	/**
@@ -188,8 +166,7 @@ public class CommerceDataIntegrationProcessLogWrapper
 	 */
 	@Override
 	public long getCommerceDataIntegrationProcessLogId() {
-		return _commerceDataIntegrationProcessLog.
-			getCommerceDataIntegrationProcessLogId();
+		return model.getCommerceDataIntegrationProcessLogId();
 	}
 
 	/**
@@ -199,7 +176,7 @@ public class CommerceDataIntegrationProcessLogWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceDataIntegrationProcessLog.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -209,7 +186,7 @@ public class CommerceDataIntegrationProcessLogWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceDataIntegrationProcessLog.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -219,7 +196,7 @@ public class CommerceDataIntegrationProcessLogWrapper
 	 */
 	@Override
 	public Date getEndDate() {
-		return _commerceDataIntegrationProcessLog.getEndDate();
+		return model.getEndDate();
 	}
 
 	/**
@@ -229,12 +206,7 @@ public class CommerceDataIntegrationProcessLogWrapper
 	 */
 	@Override
 	public String getError() {
-		return _commerceDataIntegrationProcessLog.getError();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceDataIntegrationProcessLog.getExpandoBridge();
+		return model.getError();
 	}
 
 	/**
@@ -244,7 +216,17 @@ public class CommerceDataIntegrationProcessLogWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceDataIntegrationProcessLog.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce data integration process log.
+	 *
+	 * @return the mvcc version of this commerce data integration process log
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -254,7 +236,7 @@ public class CommerceDataIntegrationProcessLogWrapper
 	 */
 	@Override
 	public String getOutput() {
-		return _commerceDataIntegrationProcessLog.getOutput();
+		return model.getOutput();
 	}
 
 	/**
@@ -264,12 +246,7 @@ public class CommerceDataIntegrationProcessLogWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceDataIntegrationProcessLog.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceDataIntegrationProcessLog.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -279,7 +256,7 @@ public class CommerceDataIntegrationProcessLogWrapper
 	 */
 	@Override
 	public Date getStartDate() {
-		return _commerceDataIntegrationProcessLog.getStartDate();
+		return model.getStartDate();
 	}
 
 	/**
@@ -289,7 +266,7 @@ public class CommerceDataIntegrationProcessLogWrapper
 	 */
 	@Override
 	public int getStatus() {
-		return _commerceDataIntegrationProcessLog.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -299,7 +276,7 @@ public class CommerceDataIntegrationProcessLogWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceDataIntegrationProcessLog.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -309,7 +286,7 @@ public class CommerceDataIntegrationProcessLogWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceDataIntegrationProcessLog.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -319,37 +296,12 @@ public class CommerceDataIntegrationProcessLogWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceDataIntegrationProcessLog.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceDataIntegrationProcessLog.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceDataIntegrationProcessLog.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceDataIntegrationProcessLog.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceDataIntegrationProcessLog.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_commerceDataIntegrationProcessLog.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceDataIntegrationProcessLog.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -359,8 +311,7 @@ public class CommerceDataIntegrationProcessLogWrapper
 	 */
 	@Override
 	public void setCDataIntegrationProcessId(long CDataIntegrationProcessId) {
-		_commerceDataIntegrationProcessLog.setCDataIntegrationProcessId(
-			CDataIntegrationProcessId);
+		model.setCDataIntegrationProcessId(CDataIntegrationProcessId);
 	}
 
 	/**
@@ -372,9 +323,8 @@ public class CommerceDataIntegrationProcessLogWrapper
 	public void setCommerceDataIntegrationProcessLogId(
 		long commerceDataIntegrationProcessLogId) {
 
-		_commerceDataIntegrationProcessLog.
-			setCommerceDataIntegrationProcessLogId(
-				commerceDataIntegrationProcessLogId);
+		model.setCommerceDataIntegrationProcessLogId(
+			commerceDataIntegrationProcessLogId);
 	}
 
 	/**
@@ -384,7 +334,7 @@ public class CommerceDataIntegrationProcessLogWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceDataIntegrationProcessLog.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -394,7 +344,7 @@ public class CommerceDataIntegrationProcessLogWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceDataIntegrationProcessLog.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -404,7 +354,7 @@ public class CommerceDataIntegrationProcessLogWrapper
 	 */
 	@Override
 	public void setEndDate(Date endDate) {
-		_commerceDataIntegrationProcessLog.setEndDate(endDate);
+		model.setEndDate(endDate);
 	}
 
 	/**
@@ -414,27 +364,7 @@ public class CommerceDataIntegrationProcessLogWrapper
 	 */
 	@Override
 	public void setError(String error) {
-		_commerceDataIntegrationProcessLog.setError(error);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceDataIntegrationProcessLog.setExpandoBridgeAttributes(
-			baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceDataIntegrationProcessLog.setExpandoBridgeAttributes(
-			expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceDataIntegrationProcessLog.setExpandoBridgeAttributes(
-			serviceContext);
+		model.setError(error);
 	}
 
 	/**
@@ -444,12 +374,17 @@ public class CommerceDataIntegrationProcessLogWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceDataIntegrationProcessLog.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this commerce data integration process log.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce data integration process log
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_commerceDataIntegrationProcessLog.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -459,7 +394,7 @@ public class CommerceDataIntegrationProcessLogWrapper
 	 */
 	@Override
 	public void setOutput(String output) {
-		_commerceDataIntegrationProcessLog.setOutput(output);
+		model.setOutput(output);
 	}
 
 	/**
@@ -469,12 +404,7 @@ public class CommerceDataIntegrationProcessLogWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceDataIntegrationProcessLog.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceDataIntegrationProcessLog.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -484,7 +414,7 @@ public class CommerceDataIntegrationProcessLogWrapper
 	 */
 	@Override
 	public void setStartDate(Date startDate) {
-		_commerceDataIntegrationProcessLog.setStartDate(startDate);
+		model.setStartDate(startDate);
 	}
 
 	/**
@@ -494,7 +424,7 @@ public class CommerceDataIntegrationProcessLogWrapper
 	 */
 	@Override
 	public void setStatus(int status) {
-		_commerceDataIntegrationProcessLog.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -504,7 +434,7 @@ public class CommerceDataIntegrationProcessLogWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceDataIntegrationProcessLog.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -514,7 +444,7 @@ public class CommerceDataIntegrationProcessLogWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceDataIntegrationProcessLog.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -524,84 +454,15 @@ public class CommerceDataIntegrationProcessLogWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceDataIntegrationProcessLog.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel
-		<CommerceDataIntegrationProcessLog> toCacheModel() {
+	protected CommerceDataIntegrationProcessLogWrapper wrap(
+		CommerceDataIntegrationProcessLog commerceDataIntegrationProcessLog) {
 
-		return _commerceDataIntegrationProcessLog.toCacheModel();
-	}
-
-	@Override
-	public CommerceDataIntegrationProcessLog toEscapedModel() {
 		return new CommerceDataIntegrationProcessLogWrapper(
-			_commerceDataIntegrationProcessLog.toEscapedModel());
+			commerceDataIntegrationProcessLog);
 	}
-
-	@Override
-	public String toString() {
-		return _commerceDataIntegrationProcessLog.toString();
-	}
-
-	@Override
-	public CommerceDataIntegrationProcessLog toUnescapedModel() {
-		return new CommerceDataIntegrationProcessLogWrapper(
-			_commerceDataIntegrationProcessLog.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceDataIntegrationProcessLog.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceDataIntegrationProcessLogWrapper)) {
-			return false;
-		}
-
-		CommerceDataIntegrationProcessLogWrapper
-			commerceDataIntegrationProcessLogWrapper =
-				(CommerceDataIntegrationProcessLogWrapper)object;
-
-		if (Objects.equals(
-				_commerceDataIntegrationProcessLog,
-				commerceDataIntegrationProcessLogWrapper.
-					_commerceDataIntegrationProcessLog)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceDataIntegrationProcessLog getWrappedModel() {
-		return _commerceDataIntegrationProcessLog;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceDataIntegrationProcessLog.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceDataIntegrationProcessLog.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceDataIntegrationProcessLog.resetOriginalValues();
-	}
-
-	private final CommerceDataIntegrationProcessLog
-		_commerceDataIntegrationProcessLog;
 
 }

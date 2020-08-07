@@ -71,6 +71,18 @@ public class CommerceMLForecastAlertEntryLocalServiceWrapper
 	}
 
 	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceMLForecastAlertEntryLocalService.createPersistedModel(
+			primaryKeyObj);
+	}
+
+	/**
 	 * Deletes the commerce ml forecast alert entry from the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -121,6 +133,11 @@ public class CommerceMLForecastAlertEntryLocalServiceWrapper
 
 		return _commerceMLForecastAlertEntryLocalService.deletePersistedModel(
 			persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _commerceMLForecastAlertEntryLocalService.dslQuery(dslQuery);
 	}
 
 	@Override

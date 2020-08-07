@@ -2,6 +2,7 @@
 
 <model-hints>
 	<model name="com.liferay.commerce.wish.list.model.CommerceWishList">
+		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="commerceWishListId" type="long" />
 		<field name="groupId" type="long" />
@@ -16,6 +17,7 @@
 		<field name="defaultWishList" type="boolean" />
 	</model>
 	<model name="com.liferay.commerce.wish.list.model.CommerceWishListItem">
+		<field name="mvccVersion" type="long" />
 		<field name="commerceWishListItemId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />

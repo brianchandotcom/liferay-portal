@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.pricing.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,6 +31,7 @@ import java.util.Objects;
  * @generated
  */
 public class CommercePricingClassCPDefinitionRelWrapper
+	extends BaseModelWrapper<CommercePricingClassCPDefinitionRel>
 	implements CommercePricingClassCPDefinitionRel,
 			   ModelWrapper<CommercePricingClassCPDefinitionRel> {
 
@@ -42,24 +39,14 @@ public class CommercePricingClassCPDefinitionRelWrapper
 		CommercePricingClassCPDefinitionRel
 			commercePricingClassCPDefinitionRel) {
 
-		_commercePricingClassCPDefinitionRel =
-			commercePricingClassCPDefinitionRel;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommercePricingClassCPDefinitionRel.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommercePricingClassCPDefinitionRel.class.getName();
+		super(commercePricingClassCPDefinitionRel);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put(
 			"CommercePricingClassCPDefinitionRelId",
 			getCommercePricingClassCPDefinitionRelId());
@@ -76,6 +63,12 @@ public class CommercePricingClassCPDefinitionRelWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long CommercePricingClassCPDefinitionRelId = (Long)attributes.get(
 			"CommercePricingClassCPDefinitionRelId");
 
@@ -129,26 +122,10 @@ public class CommercePricingClassCPDefinitionRelWrapper
 	}
 
 	@Override
-	public Object clone() {
-		return new CommercePricingClassCPDefinitionRelWrapper(
-			(CommercePricingClassCPDefinitionRel)
-				_commercePricingClassCPDefinitionRel.clone());
-	}
-
-	@Override
-	public int compareTo(
-		CommercePricingClassCPDefinitionRel
-			commercePricingClassCPDefinitionRel) {
-
-		return _commercePricingClassCPDefinitionRel.compareTo(
-			commercePricingClassCPDefinitionRel);
-	}
-
-	@Override
 	public CommercePricingClass getCommercePricingClass()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commercePricingClassCPDefinitionRel.getCommercePricingClass();
+		return model.getCommercePricingClass();
 	}
 
 	/**
@@ -158,8 +135,7 @@ public class CommercePricingClassCPDefinitionRelWrapper
 	 */
 	@Override
 	public long getCommercePricingClassCPDefinitionRelId() {
-		return _commercePricingClassCPDefinitionRel.
-			getCommercePricingClassCPDefinitionRelId();
+		return model.getCommercePricingClassCPDefinitionRelId();
 	}
 
 	/**
@@ -169,7 +145,7 @@ public class CommercePricingClassCPDefinitionRelWrapper
 	 */
 	@Override
 	public long getCommercePricingClassId() {
-		return _commercePricingClassCPDefinitionRel.getCommercePricingClassId();
+		return model.getCommercePricingClassId();
 	}
 
 	/**
@@ -179,7 +155,7 @@ public class CommercePricingClassCPDefinitionRelWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commercePricingClassCPDefinitionRel.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -189,7 +165,7 @@ public class CommercePricingClassCPDefinitionRelWrapper
 	 */
 	@Override
 	public long getCPDefinitionId() {
-		return _commercePricingClassCPDefinitionRel.getCPDefinitionId();
+		return model.getCPDefinitionId();
 	}
 
 	/**
@@ -199,12 +175,7 @@ public class CommercePricingClassCPDefinitionRelWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commercePricingClassCPDefinitionRel.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commercePricingClassCPDefinitionRel.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -214,7 +185,17 @@ public class CommercePricingClassCPDefinitionRelWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commercePricingClassCPDefinitionRel.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce pricing class cp definition rel.
+	 *
+	 * @return the mvcc version of this commerce pricing class cp definition rel
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -224,12 +205,7 @@ public class CommercePricingClassCPDefinitionRelWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commercePricingClassCPDefinitionRel.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commercePricingClassCPDefinitionRel.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -239,7 +215,7 @@ public class CommercePricingClassCPDefinitionRelWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commercePricingClassCPDefinitionRel.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -249,7 +225,7 @@ public class CommercePricingClassCPDefinitionRelWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commercePricingClassCPDefinitionRel.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -259,37 +235,12 @@ public class CommercePricingClassCPDefinitionRelWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commercePricingClassCPDefinitionRel.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commercePricingClassCPDefinitionRel.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commercePricingClassCPDefinitionRel.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commercePricingClassCPDefinitionRel.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commercePricingClassCPDefinitionRel.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_commercePricingClassCPDefinitionRel.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commercePricingClassCPDefinitionRel.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -301,9 +252,8 @@ public class CommercePricingClassCPDefinitionRelWrapper
 	public void setCommercePricingClassCPDefinitionRelId(
 		long CommercePricingClassCPDefinitionRelId) {
 
-		_commercePricingClassCPDefinitionRel.
-			setCommercePricingClassCPDefinitionRelId(
-				CommercePricingClassCPDefinitionRelId);
+		model.setCommercePricingClassCPDefinitionRelId(
+			CommercePricingClassCPDefinitionRelId);
 	}
 
 	/**
@@ -313,8 +263,7 @@ public class CommercePricingClassCPDefinitionRelWrapper
 	 */
 	@Override
 	public void setCommercePricingClassId(long commercePricingClassId) {
-		_commercePricingClassCPDefinitionRel.setCommercePricingClassId(
-			commercePricingClassId);
+		model.setCommercePricingClassId(commercePricingClassId);
 	}
 
 	/**
@@ -324,7 +273,7 @@ public class CommercePricingClassCPDefinitionRelWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commercePricingClassCPDefinitionRel.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -334,7 +283,7 @@ public class CommercePricingClassCPDefinitionRelWrapper
 	 */
 	@Override
 	public void setCPDefinitionId(long CPDefinitionId) {
-		_commercePricingClassCPDefinitionRel.setCPDefinitionId(CPDefinitionId);
+		model.setCPDefinitionId(CPDefinitionId);
 	}
 
 	/**
@@ -344,27 +293,7 @@ public class CommercePricingClassCPDefinitionRelWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commercePricingClassCPDefinitionRel.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commercePricingClassCPDefinitionRel.setExpandoBridgeAttributes(
-			baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commercePricingClassCPDefinitionRel.setExpandoBridgeAttributes(
-			expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commercePricingClassCPDefinitionRel.setExpandoBridgeAttributes(
-			serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -374,12 +303,17 @@ public class CommercePricingClassCPDefinitionRelWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commercePricingClassCPDefinitionRel.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	 * Sets the mvcc version of this commerce pricing class cp definition rel.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce pricing class cp definition rel
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_commercePricingClassCPDefinitionRel.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -389,12 +323,7 @@ public class CommercePricingClassCPDefinitionRelWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commercePricingClassCPDefinitionRel.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commercePricingClassCPDefinitionRel.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -404,7 +333,7 @@ public class CommercePricingClassCPDefinitionRelWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commercePricingClassCPDefinitionRel.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -414,7 +343,7 @@ public class CommercePricingClassCPDefinitionRelWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commercePricingClassCPDefinitionRel.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -424,84 +353,16 @@ public class CommercePricingClassCPDefinitionRelWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commercePricingClassCPDefinitionRel.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel
-		<CommercePricingClassCPDefinitionRel> toCacheModel() {
+	protected CommercePricingClassCPDefinitionRelWrapper wrap(
+		CommercePricingClassCPDefinitionRel
+			commercePricingClassCPDefinitionRel) {
 
-		return _commercePricingClassCPDefinitionRel.toCacheModel();
-	}
-
-	@Override
-	public CommercePricingClassCPDefinitionRel toEscapedModel() {
 		return new CommercePricingClassCPDefinitionRelWrapper(
-			_commercePricingClassCPDefinitionRel.toEscapedModel());
+			commercePricingClassCPDefinitionRel);
 	}
-
-	@Override
-	public String toString() {
-		return _commercePricingClassCPDefinitionRel.toString();
-	}
-
-	@Override
-	public CommercePricingClassCPDefinitionRel toUnescapedModel() {
-		return new CommercePricingClassCPDefinitionRelWrapper(
-			_commercePricingClassCPDefinitionRel.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commercePricingClassCPDefinitionRel.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommercePricingClassCPDefinitionRelWrapper)) {
-			return false;
-		}
-
-		CommercePricingClassCPDefinitionRelWrapper
-			commercePricingClassCPDefinitionRelWrapper =
-				(CommercePricingClassCPDefinitionRelWrapper)object;
-
-		if (Objects.equals(
-				_commercePricingClassCPDefinitionRel,
-				commercePricingClassCPDefinitionRelWrapper.
-					_commercePricingClassCPDefinitionRel)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommercePricingClassCPDefinitionRel getWrappedModel() {
-		return _commercePricingClassCPDefinitionRel;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commercePricingClassCPDefinitionRel.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commercePricingClassCPDefinitionRel.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commercePricingClassCPDefinitionRel.resetOriginalValues();
-	}
-
-	private final CommercePricingClassCPDefinitionRel
-		_commercePricingClassCPDefinitionRel;
 
 }

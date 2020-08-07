@@ -20,6 +20,7 @@ import com.liferay.commerce.model.CPDAvailabilityEstimateSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -75,7 +75,8 @@ public class CPDAvailabilityEstimateModelImpl
 	public static final String TABLE_NAME = "CPDAvailabilityEstimate";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"CPDAvailabilityEstimateId", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"CPDAvailabilityEstimateId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP},
@@ -87,6 +88,7 @@ public class CPDAvailabilityEstimateModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPDAvailabilityEstimateId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -100,7 +102,7 @@ public class CPDAvailabilityEstimateModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPDAvailabilityEstimate (uuid_ VARCHAR(75) null,CPDAvailabilityEstimateId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceAvailabilityEstimateId LONG,CProductId LONG,lastPublishDate DATE null)";
+		"create table CPDAvailabilityEstimate (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,CPDAvailabilityEstimateId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceAvailabilityEstimateId LONG,CProductId LONG,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CPDAvailabilityEstimate";
@@ -117,20 +119,23 @@ public class CPDAvailabilityEstimateModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.model.CPDAvailabilityEstimate"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.model.CPDAvailabilityEstimate"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.model.CPDAvailabilityEstimate"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long CPRODUCTID_COLUMN_BITMASK = 1L;
 
@@ -157,6 +162,7 @@ public class CPDAvailabilityEstimateModelImpl
 
 		CPDAvailabilityEstimate model = new CPDAvailabilityEstimateImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCPDAvailabilityEstimateId(
 			soapModel.getCPDAvailabilityEstimateId());
@@ -252,9 +258,6 @@ public class CPDAvailabilityEstimateModelImpl
 				attributeGetterFunction.apply((CPDAvailabilityEstimate)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -334,268 +337,88 @@ public class CPDAvailabilityEstimateModelImpl
 					<String, BiConsumer<CPDAvailabilityEstimate, ?>>();
 
 		attributeGetterFunctions.put(
-			"uuid",
-			new Function<CPDAvailabilityEstimate, Object>() {
-
-				@Override
-				public Object apply(
-					CPDAvailabilityEstimate cpdAvailabilityEstimate) {
-
-					return cpdAvailabilityEstimate.getUuid();
-				}
-
-			});
+			"mvccVersion", CPDAvailabilityEstimate::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CPDAvailabilityEstimate, Long>)
+				CPDAvailabilityEstimate::setMvccVersion);
+		attributeGetterFunctions.put("uuid", CPDAvailabilityEstimate::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
-			new BiConsumer<CPDAvailabilityEstimate, Object>() {
-
-				@Override
-				public void accept(
-					CPDAvailabilityEstimate cpdAvailabilityEstimate,
-					Object uuidObject) {
-
-					cpdAvailabilityEstimate.setUuid((String)uuidObject);
-				}
-
-			});
+			(BiConsumer<CPDAvailabilityEstimate, String>)
+				CPDAvailabilityEstimate::setUuid);
 		attributeGetterFunctions.put(
 			"CPDAvailabilityEstimateId",
-			new Function<CPDAvailabilityEstimate, Object>() {
-
-				@Override
-				public Object apply(
-					CPDAvailabilityEstimate cpdAvailabilityEstimate) {
-
-					return cpdAvailabilityEstimate.
-						getCPDAvailabilityEstimateId();
-				}
-
-			});
+			CPDAvailabilityEstimate::getCPDAvailabilityEstimateId);
 		attributeSetterBiConsumers.put(
 			"CPDAvailabilityEstimateId",
-			new BiConsumer<CPDAvailabilityEstimate, Object>() {
-
-				@Override
-				public void accept(
-					CPDAvailabilityEstimate cpdAvailabilityEstimate,
-					Object CPDAvailabilityEstimateIdObject) {
-
-					cpdAvailabilityEstimate.setCPDAvailabilityEstimateId(
-						(Long)CPDAvailabilityEstimateIdObject);
-				}
-
-			});
+			(BiConsumer<CPDAvailabilityEstimate, Long>)
+				CPDAvailabilityEstimate::setCPDAvailabilityEstimateId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CPDAvailabilityEstimate, Object>() {
-
-				@Override
-				public Object apply(
-					CPDAvailabilityEstimate cpdAvailabilityEstimate) {
-
-					return cpdAvailabilityEstimate.getCompanyId();
-				}
-
-			});
+			"companyId", CPDAvailabilityEstimate::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CPDAvailabilityEstimate, Object>() {
-
-				@Override
-				public void accept(
-					CPDAvailabilityEstimate cpdAvailabilityEstimate,
-					Object companyIdObject) {
-
-					cpdAvailabilityEstimate.setCompanyId((Long)companyIdObject);
-				}
-
-			});
+			(BiConsumer<CPDAvailabilityEstimate, Long>)
+				CPDAvailabilityEstimate::setCompanyId);
 		attributeGetterFunctions.put(
-			"userId",
-			new Function<CPDAvailabilityEstimate, Object>() {
-
-				@Override
-				public Object apply(
-					CPDAvailabilityEstimate cpdAvailabilityEstimate) {
-
-					return cpdAvailabilityEstimate.getUserId();
-				}
-
-			});
+			"userId", CPDAvailabilityEstimate::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CPDAvailabilityEstimate, Object>() {
-
-				@Override
-				public void accept(
-					CPDAvailabilityEstimate cpdAvailabilityEstimate,
-					Object userIdObject) {
-
-					cpdAvailabilityEstimate.setUserId((Long)userIdObject);
-				}
-
-			});
+			(BiConsumer<CPDAvailabilityEstimate, Long>)
+				CPDAvailabilityEstimate::setUserId);
 		attributeGetterFunctions.put(
-			"userName",
-			new Function<CPDAvailabilityEstimate, Object>() {
-
-				@Override
-				public Object apply(
-					CPDAvailabilityEstimate cpdAvailabilityEstimate) {
-
-					return cpdAvailabilityEstimate.getUserName();
-				}
-
-			});
+			"userName", CPDAvailabilityEstimate::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CPDAvailabilityEstimate, Object>() {
-
-				@Override
-				public void accept(
-					CPDAvailabilityEstimate cpdAvailabilityEstimate,
-					Object userNameObject) {
-
-					cpdAvailabilityEstimate.setUserName((String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CPDAvailabilityEstimate, String>)
+				CPDAvailabilityEstimate::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CPDAvailabilityEstimate, Object>() {
-
-				@Override
-				public Object apply(
-					CPDAvailabilityEstimate cpdAvailabilityEstimate) {
-
-					return cpdAvailabilityEstimate.getCreateDate();
-				}
-
-			});
+			"createDate", CPDAvailabilityEstimate::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CPDAvailabilityEstimate, Object>() {
-
-				@Override
-				public void accept(
-					CPDAvailabilityEstimate cpdAvailabilityEstimate,
-					Object createDateObject) {
-
-					cpdAvailabilityEstimate.setCreateDate(
-						(Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CPDAvailabilityEstimate, Date>)
+				CPDAvailabilityEstimate::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CPDAvailabilityEstimate, Object>() {
-
-				@Override
-				public Object apply(
-					CPDAvailabilityEstimate cpdAvailabilityEstimate) {
-
-					return cpdAvailabilityEstimate.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CPDAvailabilityEstimate::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CPDAvailabilityEstimate, Object>() {
-
-				@Override
-				public void accept(
-					CPDAvailabilityEstimate cpdAvailabilityEstimate,
-					Object modifiedDateObject) {
-
-					cpdAvailabilityEstimate.setModifiedDate(
-						(Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CPDAvailabilityEstimate, Date>)
+				CPDAvailabilityEstimate::setModifiedDate);
 		attributeGetterFunctions.put(
 			"commerceAvailabilityEstimateId",
-			new Function<CPDAvailabilityEstimate, Object>() {
-
-				@Override
-				public Object apply(
-					CPDAvailabilityEstimate cpdAvailabilityEstimate) {
-
-					return cpdAvailabilityEstimate.
-						getCommerceAvailabilityEstimateId();
-				}
-
-			});
+			CPDAvailabilityEstimate::getCommerceAvailabilityEstimateId);
 		attributeSetterBiConsumers.put(
 			"commerceAvailabilityEstimateId",
-			new BiConsumer<CPDAvailabilityEstimate, Object>() {
-
-				@Override
-				public void accept(
-					CPDAvailabilityEstimate cpdAvailabilityEstimate,
-					Object commerceAvailabilityEstimateIdObject) {
-
-					cpdAvailabilityEstimate.setCommerceAvailabilityEstimateId(
-						(Long)commerceAvailabilityEstimateIdObject);
-				}
-
-			});
+			(BiConsumer<CPDAvailabilityEstimate, Long>)
+				CPDAvailabilityEstimate::setCommerceAvailabilityEstimateId);
 		attributeGetterFunctions.put(
-			"CProductId",
-			new Function<CPDAvailabilityEstimate, Object>() {
-
-				@Override
-				public Object apply(
-					CPDAvailabilityEstimate cpdAvailabilityEstimate) {
-
-					return cpdAvailabilityEstimate.getCProductId();
-				}
-
-			});
+			"CProductId", CPDAvailabilityEstimate::getCProductId);
 		attributeSetterBiConsumers.put(
 			"CProductId",
-			new BiConsumer<CPDAvailabilityEstimate, Object>() {
-
-				@Override
-				public void accept(
-					CPDAvailabilityEstimate cpdAvailabilityEstimate,
-					Object CProductIdObject) {
-
-					cpdAvailabilityEstimate.setCProductId(
-						(Long)CProductIdObject);
-				}
-
-			});
+			(BiConsumer<CPDAvailabilityEstimate, Long>)
+				CPDAvailabilityEstimate::setCProductId);
 		attributeGetterFunctions.put(
-			"lastPublishDate",
-			new Function<CPDAvailabilityEstimate, Object>() {
-
-				@Override
-				public Object apply(
-					CPDAvailabilityEstimate cpdAvailabilityEstimate) {
-
-					return cpdAvailabilityEstimate.getLastPublishDate();
-				}
-
-			});
+			"lastPublishDate", CPDAvailabilityEstimate::getLastPublishDate);
 		attributeSetterBiConsumers.put(
 			"lastPublishDate",
-			new BiConsumer<CPDAvailabilityEstimate, Object>() {
-
-				@Override
-				public void accept(
-					CPDAvailabilityEstimate cpdAvailabilityEstimate,
-					Object lastPublishDateObject) {
-
-					cpdAvailabilityEstimate.setLastPublishDate(
-						(Date)lastPublishDateObject);
-				}
-
-			});
+			(BiConsumer<CPDAvailabilityEstimate, Date>)
+				CPDAvailabilityEstimate::setLastPublishDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -833,6 +656,7 @@ public class CPDAvailabilityEstimateModelImpl
 		CPDAvailabilityEstimateImpl cpdAvailabilityEstimateImpl =
 			new CPDAvailabilityEstimateImpl();
 
+		cpdAvailabilityEstimateImpl.setMvccVersion(getMvccVersion());
 		cpdAvailabilityEstimateImpl.setUuid(getUuid());
 		cpdAvailabilityEstimateImpl.setCPDAvailabilityEstimateId(
 			getCPDAvailabilityEstimateId());
@@ -894,11 +718,19 @@ public class CPDAvailabilityEstimateModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -929,6 +761,8 @@ public class CPDAvailabilityEstimateModelImpl
 	public CacheModel<CPDAvailabilityEstimate> toCacheModel() {
 		CPDAvailabilityEstimateCacheModel cpdAvailabilityEstimateCacheModel =
 			new CPDAvailabilityEstimateCacheModel();
+
+		cpdAvailabilityEstimateCacheModel.mvccVersion = getMvccVersion();
 
 		cpdAvailabilityEstimateCacheModel.uuid = getUuid();
 
@@ -1064,6 +898,7 @@ public class CPDAvailabilityEstimateModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _CPDAvailabilityEstimateId;

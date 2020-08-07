@@ -41,12 +41,12 @@ public class CommerceDataIntegrationProcessServiceWrapper
 			CommerceDataIntegrationProcess addCommerceDataIntegrationProcess(
 					long userId, String name, String type,
 					com.liferay.portal.kernel.util.UnicodeProperties
-						typeSettingsProperties)
+						typeSettingsUnicodeProperties)
 				throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceDataIntegrationProcessService.
 			addCommerceDataIntegrationProcess(
-				userId, name, type, typeSettingsProperties);
+				userId, name, type, typeSettingsUnicodeProperties);
 	}
 
 	@Override
@@ -118,12 +118,13 @@ public class CommerceDataIntegrationProcessServiceWrapper
 			CommerceDataIntegrationProcess updateCommerceDataIntegrationProcess(
 					long commerceDataIntegrationProcessId, String name,
 					com.liferay.portal.kernel.util.UnicodeProperties
-						typeSettingsProperties)
+						typeSettingsUnicodeProperties)
 				throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceDataIntegrationProcessService.
 			updateCommerceDataIntegrationProcess(
-				commerceDataIntegrationProcessId, name, typeSettingsProperties);
+				commerceDataIntegrationProcessId, name,
+				typeSettingsUnicodeProperties);
 	}
 
 	@Override

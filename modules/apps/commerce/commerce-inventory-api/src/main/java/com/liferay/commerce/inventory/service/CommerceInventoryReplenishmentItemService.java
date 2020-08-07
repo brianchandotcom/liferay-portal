@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.inventory.service;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -29,6 +27,8 @@ import com.liferay.portal.kernel.transaction.Transactional;
 
 import java.util.Date;
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the remote service interface for CommerceInventoryReplenishmentItem. Methods of this

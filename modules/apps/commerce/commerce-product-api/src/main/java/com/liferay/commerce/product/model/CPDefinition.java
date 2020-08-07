@@ -14,11 +14,11 @@
 
 package com.liferay.commerce.product.model;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.annotation.ImplementationClassName;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.Accessor;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model interface for the CPDefinition service. Represents a row in the &quot;CPDefinition&quot; database table, with each column mapped to a property of this class.
@@ -57,6 +57,8 @@ public interface CPDefinition extends CPDefinitionModel, PersistedModel {
 			}
 
 		};
+
+	public Object clone();
 
 	@Override
 	public boolean equals(Object object);
@@ -111,9 +113,11 @@ public interface CPDefinition extends CPDefinitionModel, PersistedModel {
 
 	public java.util.Map<java.util.Locale, String> getUrlTitleMap();
 
+	public int hashCode();
+
 	public void setDeliverySubscriptionTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties
-			deliverySubscriptionTypeSettingsProperties);
+			deliverySubscriptionTypeSettingsUnicodeProperties);
 
 	public void setDescriptionMap(
 		java.util.Map<java.util.Locale, String> descriptionMap);
@@ -127,7 +131,7 @@ public interface CPDefinition extends CPDefinitionModel, PersistedModel {
 
 	public void setSubscriptionTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties
-			subscriptionTypeSettingsProperties);
+			subscriptionTypeSettingsUnicodeProperties);
 
 	public void setUrlTitleMap(
 		java.util.Map<java.util.Locale, String> urlTitleMap);

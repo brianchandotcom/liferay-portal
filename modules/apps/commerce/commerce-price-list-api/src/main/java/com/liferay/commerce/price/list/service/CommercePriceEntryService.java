@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.price.list.service;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -34,6 +32,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.math.BigDecimal;
 
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the remote service interface for CommercePriceEntry. Methods of this

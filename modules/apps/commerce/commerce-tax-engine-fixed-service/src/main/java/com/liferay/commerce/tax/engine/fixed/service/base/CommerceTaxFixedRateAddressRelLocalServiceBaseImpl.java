@@ -19,6 +19,7 @@ import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateAddress
 import com.liferay.commerce.tax.engine.fixed.service.persistence.CommerceTaxFixedRateAddressRelFinder;
 import com.liferay.commerce.tax.engine.fixed.service.persistence.CommerceTaxFixedRateAddressRelPersistence;
 import com.liferay.commerce.tax.engine.fixed.service.persistence.CommerceTaxFixedRatePersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -148,6 +149,11 @@ public abstract class CommerceTaxFixedRateAddressRelLocalServiceBaseImpl
 
 		return commerceTaxFixedRateAddressRelPersistence.remove(
 			commerceTaxFixedRateAddressRel);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return commerceTaxFixedRateAddressRelPersistence.dslQuery(dslQuery);
 	}
 
 	@Override
@@ -310,6 +316,16 @@ public abstract class CommerceTaxFixedRateAddressRelLocalServiceBaseImpl
 
 		actionableDynamicQuery.setPrimaryKeyPropertyName(
 			"commerceTaxFixedRateAddressRelId");
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
+
+		return commerceTaxFixedRateAddressRelPersistence.create(
+			((Long)primaryKeyObj).longValue());
 	}
 
 	/**

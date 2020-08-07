@@ -66,14 +66,14 @@ public class CommerceSubscriptionEntryLocalServiceWrapper
 				int subscriptionLength, String subscriptionType,
 				long maxSubscriptionCycles,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					subscriptionTypeSettingsProperties)
+					subscriptionTypeSettingsUnicodeProperties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceSubscriptionEntryLocalService.
 			addCommerceSubscriptionEntry(
 				userId, groupId, commerceOrderItemId, subscriptionLength,
 				subscriptionType, maxSubscriptionCycles,
-				subscriptionTypeSettingsProperties);
+				subscriptionTypeSettingsUnicodeProperties);
 	}
 
 	@Override
@@ -83,20 +83,21 @@ public class CommerceSubscriptionEntryLocalServiceWrapper
 				int subscriptionLength, String subscriptionType,
 				long maxSubscriptionCycles,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					subscriptionTypeSettingsProperties,
+					subscriptionTypeSettingsUnicodeProperties,
 				int deliverySubscriptionLength, String deliverySubscriptionType,
 				long deliveryMaxSubscriptionCycles,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					deliverySubscriptionTypeSettingsProperties)
+					deliverySubscriptionTypeSettingsUnicodeProperties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceSubscriptionEntryLocalService.
 			addCommerceSubscriptionEntry(
 				userId, groupId, commerceOrderItemId, subscriptionLength,
 				subscriptionType, maxSubscriptionCycles,
-				subscriptionTypeSettingsProperties, deliverySubscriptionLength,
-				deliverySubscriptionType, deliveryMaxSubscriptionCycles,
-				deliverySubscriptionTypeSettingsProperties);
+				subscriptionTypeSettingsUnicodeProperties,
+				deliverySubscriptionLength, deliverySubscriptionType,
+				deliveryMaxSubscriptionCycles,
+				deliverySubscriptionTypeSettingsUnicodeProperties);
 	}
 
 	/**
@@ -111,6 +112,18 @@ public class CommerceSubscriptionEntryLocalServiceWrapper
 
 		return _commerceSubscriptionEntryLocalService.
 			createCommerceSubscriptionEntry(commerceSubscriptionEntryId);
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceSubscriptionEntryLocalService.createPersistedModel(
+			primaryKeyObj);
 	}
 
 	@Override
@@ -169,6 +182,11 @@ public class CommerceSubscriptionEntryLocalServiceWrapper
 
 		return _commerceSubscriptionEntryLocalService.deletePersistedModel(
 			persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _commerceSubscriptionEntryLocalService.dslQuery(dslQuery);
 	}
 
 	@Override
@@ -618,7 +636,7 @@ public class CommerceSubscriptionEntryLocalServiceWrapper
 				long commerceSubscriptionEntryId, int subscriptionLength,
 				String subscriptionType,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					subscriptionTypeSettingsProperties,
+					subscriptionTypeSettingsUnicodeProperties,
 				long maxSubscriptionCycles, int subscriptionStatus,
 				int nextIterationDateMonth, int nextIterationDateDay,
 				int nextIterationDateYear, int nextIterationDateHour,
@@ -628,7 +646,7 @@ public class CommerceSubscriptionEntryLocalServiceWrapper
 		return _commerceSubscriptionEntryLocalService.
 			updateCommerceSubscriptionEntry(
 				commerceSubscriptionEntryId, subscriptionLength,
-				subscriptionType, subscriptionTypeSettingsProperties,
+				subscriptionType, subscriptionTypeSettingsUnicodeProperties,
 				maxSubscriptionCycles, subscriptionStatus,
 				nextIterationDateMonth, nextIterationDateDay,
 				nextIterationDateYear, nextIterationDateHour,
@@ -641,14 +659,14 @@ public class CommerceSubscriptionEntryLocalServiceWrapper
 				long commerceSubscriptionEntryId, int subscriptionLength,
 				String subscriptionType,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					subscriptionTypeSettingsProperties,
+					subscriptionTypeSettingsUnicodeProperties,
 				long maxSubscriptionCycles, int subscriptionStatus,
 				int nextIterationDateMonth, int nextIterationDateDay,
 				int nextIterationDateYear, int nextIterationDateHour,
 				int nextIterationDateMinute, int deliverySubscriptionLength,
 				String deliverySubscriptionType,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					deliverySubscriptionTypeSettingsProperties,
+					deliverySubscriptionTypeSettingsUnicodeProperties,
 				long deliveryMaxSubscriptionCycles,
 				int deliverySubscriptionStatus,
 				int deliveryNextIterationDateMonth,
@@ -661,13 +679,13 @@ public class CommerceSubscriptionEntryLocalServiceWrapper
 		return _commerceSubscriptionEntryLocalService.
 			updateCommerceSubscriptionEntry(
 				commerceSubscriptionEntryId, subscriptionLength,
-				subscriptionType, subscriptionTypeSettingsProperties,
+				subscriptionType, subscriptionTypeSettingsUnicodeProperties,
 				maxSubscriptionCycles, subscriptionStatus,
 				nextIterationDateMonth, nextIterationDateDay,
 				nextIterationDateYear, nextIterationDateHour,
 				nextIterationDateMinute, deliverySubscriptionLength,
 				deliverySubscriptionType,
-				deliverySubscriptionTypeSettingsProperties,
+				deliverySubscriptionTypeSettingsUnicodeProperties,
 				deliveryMaxSubscriptionCycles, deliverySubscriptionStatus,
 				deliveryNextIterationDateMonth, deliveryNextIterationDateDay,
 				deliveryNextIterationDateYear, deliveryNextIterationDateHour,

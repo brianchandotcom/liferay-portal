@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.account.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.account.exception.NoSuchAccountGroupCommerceAccountRelException;
 import com.liferay.commerce.account.model.CommerceAccountGroupCommerceAccountRel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce account group commerce account rel service.
@@ -45,9 +40,6 @@ public interface CommerceAccountGroupCommerceAccountRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceAccountGroupCommerceAccountRelUtil} to access the commerce account group commerce account rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceAccountGroupCommerceAccountRel>
-		fetchByPrimaryKeys(Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce account group commerce account rels where commerceAccountGroupId = &#63;.
@@ -588,8 +580,5 @@ public interface CommerceAccountGroupCommerceAccountRelPersistence
 	 * @return the number of commerce account group commerce account rels
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

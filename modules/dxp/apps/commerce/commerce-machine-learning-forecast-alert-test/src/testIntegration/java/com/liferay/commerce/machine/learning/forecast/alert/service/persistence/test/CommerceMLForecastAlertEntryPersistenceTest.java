@@ -130,6 +130,9 @@ public class CommerceMLForecastAlertEntryPersistenceTest {
 		CommerceMLForecastAlertEntry newCommerceMLForecastAlertEntry =
 			_persistence.create(pk);
 
+		newCommerceMLForecastAlertEntry.setMvccVersion(
+			RandomTestUtil.nextLong());
+
 		newCommerceMLForecastAlertEntry.setUuid(RandomTestUtil.randomString());
 
 		newCommerceMLForecastAlertEntry.setCompanyId(RandomTestUtil.nextLong());
@@ -167,6 +170,9 @@ public class CommerceMLForecastAlertEntryPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newCommerceMLForecastAlertEntry.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCommerceMLForecastAlertEntry.getMvccVersion(),
+			newCommerceMLForecastAlertEntry.getMvccVersion());
 		Assert.assertEquals(
 			existingCommerceMLForecastAlertEntry.getUuid(),
 			newCommerceMLForecastAlertEntry.getUuid());
@@ -325,7 +331,7 @@ public class CommerceMLForecastAlertEntryPersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"CommerceMLForecastAlertEntry", "uuid", true,
+			"CommerceMLForecastAlertEntry", "mvccVersion", true, "uuid", true,
 			"commerceMLForecastAlertEntryId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"commerceAccountId", true, "actual", true, "forecast", true,
@@ -615,6 +621,8 @@ public class CommerceMLForecastAlertEntryPersistenceTest {
 
 		CommerceMLForecastAlertEntry commerceMLForecastAlertEntry =
 			_persistence.create(pk);
+
+		commerceMLForecastAlertEntry.setMvccVersion(RandomTestUtil.nextLong());
 
 		commerceMLForecastAlertEntry.setUuid(RandomTestUtil.randomString());
 

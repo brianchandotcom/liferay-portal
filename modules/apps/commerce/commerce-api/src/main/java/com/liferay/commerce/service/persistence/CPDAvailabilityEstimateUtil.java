@@ -909,10 +909,6 @@ public class CPDAvailabilityEstimateUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CPDAvailabilityEstimatePersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

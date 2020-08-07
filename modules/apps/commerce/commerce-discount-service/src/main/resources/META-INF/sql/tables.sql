@@ -1,4 +1,5 @@
 create table CDiscountCAccountGroupRel (
+	mvccVersion LONG default 0 not null,
 	CDiscountCAccountGroupRelId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
@@ -10,6 +11,7 @@ create table CDiscountCAccountGroupRel (
 );
 
 create table CommerceDiscount (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
 	commerceDiscountId LONG not null primary key,
@@ -45,6 +47,7 @@ create table CommerceDiscount (
 );
 
 create table CommerceDiscountAccountRel (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	commerceDiscountAccountRelId LONG not null primary key,
 	companyId LONG,
@@ -59,6 +62,7 @@ create table CommerceDiscountAccountRel (
 );
 
 create table CommerceDiscountRel (
+	mvccVersion LONG default 0 not null,
 	commerceDiscountRelId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
@@ -71,6 +75,7 @@ create table CommerceDiscountRel (
 );
 
 create table CommerceDiscountRule (
+	mvccVersion LONG default 0 not null,
 	commerceDiscountRuleId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
@@ -84,6 +89,7 @@ create table CommerceDiscountRule (
 );
 
 create table CommerceDiscountUsageEntry (
+	mvccVersion LONG default 0 not null,
 	commerceDiscountUsageEntryId LONG not null primary key,
 	companyId LONG,
 	userId LONG,

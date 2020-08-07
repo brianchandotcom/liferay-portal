@@ -14,17 +14,13 @@
 
 package com.liferay.commerce.product.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,28 +32,20 @@ import java.util.Objects;
  * @generated
  */
 public class CPDefinitionOptionRelWrapper
+	extends BaseModelWrapper<CPDefinitionOptionRel>
 	implements CPDefinitionOptionRel, ModelWrapper<CPDefinitionOptionRel> {
 
 	public CPDefinitionOptionRelWrapper(
 		CPDefinitionOptionRel cpDefinitionOptionRel) {
 
-		_cpDefinitionOptionRel = cpDefinitionOptionRel;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CPDefinitionOptionRel.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CPDefinitionOptionRel.class.getName();
+		super(cpDefinitionOptionRel);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("CPDefinitionOptionRelId", getCPDefinitionOptionRelId());
 		attributes.put("groupId", getGroupId());
@@ -83,6 +71,12 @@ public class CPDefinitionOptionRelWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -201,27 +195,15 @@ public class CPDefinitionOptionRelWrapper
 	}
 
 	@Override
-	public Object clone() {
-		return new CPDefinitionOptionRelWrapper(
-			(CPDefinitionOptionRel)_cpDefinitionOptionRel.clone());
-	}
-
-	@Override
-	public int compareTo(CPDefinitionOptionRel cpDefinitionOptionRel) {
-		return _cpDefinitionOptionRel.compareTo(cpDefinitionOptionRel);
-	}
-
-	@Override
 	public CPDefinitionOptionValueRel
 		fetchPreselectedCPDefinitionOptionValueRel() {
 
-		return _cpDefinitionOptionRel.
-			fetchPreselectedCPDefinitionOptionValueRel();
+		return model.fetchPreselectedCPDefinitionOptionValueRel();
 	}
 
 	@Override
 	public String[] getAvailableLanguageIds() {
-		return _cpDefinitionOptionRel.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -231,14 +213,14 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _cpDefinitionOptionRel.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	@Override
 	public CPDefinition getCPDefinition()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _cpDefinitionOptionRel.getCPDefinition();
+		return model.getCPDefinition();
 	}
 
 	/**
@@ -248,7 +230,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public long getCPDefinitionId() {
-		return _cpDefinitionOptionRel.getCPDefinitionId();
+		return model.getCPDefinitionId();
 	}
 
 	/**
@@ -258,26 +240,26 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public long getCPDefinitionOptionRelId() {
-		return _cpDefinitionOptionRel.getCPDefinitionOptionRelId();
+		return model.getCPDefinitionOptionRelId();
 	}
 
 	@Override
 	public java.util.List<CPDefinitionOptionValueRel>
 		getCPDefinitionOptionValueRels() {
 
-		return _cpDefinitionOptionRel.getCPDefinitionOptionValueRels();
+		return model.getCPDefinitionOptionValueRels();
 	}
 
 	@Override
 	public int getCPDefinitionOptionValueRelsCount() {
-		return _cpDefinitionOptionRel.getCPDefinitionOptionValueRelsCount();
+		return model.getCPDefinitionOptionValueRelsCount();
 	}
 
 	@Override
 	public CPOption getCPOption()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _cpDefinitionOptionRel.getCPOption();
+		return model.getCPOption();
 	}
 
 	/**
@@ -287,7 +269,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public long getCPOptionId() {
-		return _cpDefinitionOptionRel.getCPOptionId();
+		return model.getCPOptionId();
 	}
 
 	/**
@@ -297,7 +279,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _cpDefinitionOptionRel.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -307,12 +289,12 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public String getDDMFormFieldTypeName() {
-		return _cpDefinitionOptionRel.getDDMFormFieldTypeName();
+		return model.getDDMFormFieldTypeName();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _cpDefinitionOptionRel.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -322,7 +304,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public String getDescription() {
-		return _cpDefinitionOptionRel.getDescription();
+		return model.getDescription();
 	}
 
 	/**
@@ -333,7 +315,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public String getDescription(java.util.Locale locale) {
-		return _cpDefinitionOptionRel.getDescription(locale);
+		return model.getDescription(locale);
 	}
 
 	/**
@@ -345,7 +327,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public String getDescription(java.util.Locale locale, boolean useDefault) {
-		return _cpDefinitionOptionRel.getDescription(locale, useDefault);
+		return model.getDescription(locale, useDefault);
 	}
 
 	/**
@@ -356,7 +338,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public String getDescription(String languageId) {
-		return _cpDefinitionOptionRel.getDescription(languageId);
+		return model.getDescription(languageId);
 	}
 
 	/**
@@ -368,17 +350,17 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return _cpDefinitionOptionRel.getDescription(languageId, useDefault);
+		return model.getDescription(languageId, useDefault);
 	}
 
 	@Override
 	public String getDescriptionCurrentLanguageId() {
-		return _cpDefinitionOptionRel.getDescriptionCurrentLanguageId();
+		return model.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
 	public String getDescriptionCurrentValue() {
-		return _cpDefinitionOptionRel.getDescriptionCurrentValue();
+		return model.getDescriptionCurrentValue();
 	}
 
 	/**
@@ -388,12 +370,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public Map<java.util.Locale, String> getDescriptionMap() {
-		return _cpDefinitionOptionRel.getDescriptionMap();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _cpDefinitionOptionRel.getExpandoBridge();
+		return model.getDescriptionMap();
 	}
 
 	/**
@@ -403,7 +380,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public boolean getFacetable() {
-		return _cpDefinitionOptionRel.getFacetable();
+		return model.getFacetable();
 	}
 
 	/**
@@ -413,7 +390,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _cpDefinitionOptionRel.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -423,7 +400,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public String getKey() {
-		return _cpDefinitionOptionRel.getKey();
+		return model.getKey();
 	}
 
 	/**
@@ -433,7 +410,17 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _cpDefinitionOptionRel.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this cp definition option rel.
+	 *
+	 * @return the mvcc version of this cp definition option rel
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -443,7 +430,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public String getName() {
-		return _cpDefinitionOptionRel.getName();
+		return model.getName();
 	}
 
 	/**
@@ -454,7 +441,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public String getName(java.util.Locale locale) {
-		return _cpDefinitionOptionRel.getName(locale);
+		return model.getName(locale);
 	}
 
 	/**
@@ -466,7 +453,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public String getName(java.util.Locale locale, boolean useDefault) {
-		return _cpDefinitionOptionRel.getName(locale, useDefault);
+		return model.getName(locale, useDefault);
 	}
 
 	/**
@@ -477,7 +464,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public String getName(String languageId) {
-		return _cpDefinitionOptionRel.getName(languageId);
+		return model.getName(languageId);
 	}
 
 	/**
@@ -489,17 +476,17 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public String getName(String languageId, boolean useDefault) {
-		return _cpDefinitionOptionRel.getName(languageId, useDefault);
+		return model.getName(languageId, useDefault);
 	}
 
 	@Override
 	public String getNameCurrentLanguageId() {
-		return _cpDefinitionOptionRel.getNameCurrentLanguageId();
+		return model.getNameCurrentLanguageId();
 	}
 
 	@Override
 	public String getNameCurrentValue() {
-		return _cpDefinitionOptionRel.getNameCurrentValue();
+		return model.getNameCurrentValue();
 	}
 
 	/**
@@ -509,7 +496,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public Map<java.util.Locale, String> getNameMap() {
-		return _cpDefinitionOptionRel.getNameMap();
+		return model.getNameMap();
 	}
 
 	/**
@@ -519,7 +506,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public String getPriceType() {
-		return _cpDefinitionOptionRel.getPriceType();
+		return model.getPriceType();
 	}
 
 	/**
@@ -529,12 +516,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _cpDefinitionOptionRel.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _cpDefinitionOptionRel.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -544,7 +526,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public double getPriority() {
-		return _cpDefinitionOptionRel.getPriority();
+		return model.getPriority();
 	}
 
 	/**
@@ -554,7 +536,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public boolean getRequired() {
-		return _cpDefinitionOptionRel.getRequired();
+		return model.getRequired();
 	}
 
 	/**
@@ -564,7 +546,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public boolean getSkuContributor() {
-		return _cpDefinitionOptionRel.getSkuContributor();
+		return model.getSkuContributor();
 	}
 
 	/**
@@ -574,7 +556,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _cpDefinitionOptionRel.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -584,7 +566,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _cpDefinitionOptionRel.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -594,7 +576,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _cpDefinitionOptionRel.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -604,22 +586,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public String getUuid() {
-		return _cpDefinitionOptionRel.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _cpDefinitionOptionRel.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _cpDefinitionOptionRel.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _cpDefinitionOptionRel.isEscapedModel();
+		return model.getUuid();
 	}
 
 	/**
@@ -629,27 +596,22 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public boolean isFacetable() {
-		return _cpDefinitionOptionRel.isFacetable();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _cpDefinitionOptionRel.isNew();
+		return model.isFacetable();
 	}
 
 	@Override
 	public boolean isPriceContributor() {
-		return _cpDefinitionOptionRel.isPriceContributor();
+		return model.isPriceContributor();
 	}
 
 	@Override
 	public boolean isPriceTypeDynamic() {
-		return _cpDefinitionOptionRel.isPriceTypeDynamic();
+		return model.isPriceTypeDynamic();
 	}
 
 	@Override
 	public boolean isPriceTypeStatic() {
-		return _cpDefinitionOptionRel.isPriceTypeStatic();
+		return model.isPriceTypeStatic();
 	}
 
 	/**
@@ -659,7 +621,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public boolean isRequired() {
-		return _cpDefinitionOptionRel.isRequired();
+		return model.isRequired();
 	}
 
 	/**
@@ -669,19 +631,19 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public boolean isSkuContributor() {
-		return _cpDefinitionOptionRel.isSkuContributor();
+		return model.isSkuContributor();
 	}
 
 	@Override
 	public void persist() {
-		_cpDefinitionOptionRel.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
-		_cpDefinitionOptionRel.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
@@ -689,13 +651,7 @@ public class CPDefinitionOptionRelWrapper
 			java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
-		_cpDefinitionOptionRel.prepareLocalizedFieldsForImport(
-			defaultImportLocale);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_cpDefinitionOptionRel.setCachedModel(cachedModel);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -705,7 +661,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_cpDefinitionOptionRel.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -715,7 +671,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public void setCPDefinitionId(long CPDefinitionId) {
-		_cpDefinitionOptionRel.setCPDefinitionId(CPDefinitionId);
+		model.setCPDefinitionId(CPDefinitionId);
 	}
 
 	/**
@@ -725,8 +681,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public void setCPDefinitionOptionRelId(long CPDefinitionOptionRelId) {
-		_cpDefinitionOptionRel.setCPDefinitionOptionRelId(
-			CPDefinitionOptionRelId);
+		model.setCPDefinitionOptionRelId(CPDefinitionOptionRelId);
 	}
 
 	/**
@@ -736,7 +691,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public void setCPOptionId(long CPOptionId) {
-		_cpDefinitionOptionRel.setCPOptionId(CPOptionId);
+		model.setCPOptionId(CPOptionId);
 	}
 
 	/**
@@ -746,7 +701,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_cpDefinitionOptionRel.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -756,7 +711,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public void setDDMFormFieldTypeName(String DDMFormFieldTypeName) {
-		_cpDefinitionOptionRel.setDDMFormFieldTypeName(DDMFormFieldTypeName);
+		model.setDDMFormFieldTypeName(DDMFormFieldTypeName);
 	}
 
 	/**
@@ -766,7 +721,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public void setDescription(String description) {
-		_cpDefinitionOptionRel.setDescription(description);
+		model.setDescription(description);
 	}
 
 	/**
@@ -777,7 +732,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public void setDescription(String description, java.util.Locale locale) {
-		_cpDefinitionOptionRel.setDescription(description, locale);
+		model.setDescription(description, locale);
 	}
 
 	/**
@@ -792,13 +747,12 @@ public class CPDefinitionOptionRelWrapper
 		String description, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 
-		_cpDefinitionOptionRel.setDescription(
-			description, locale, defaultLocale);
+		model.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
 	public void setDescriptionCurrentLanguageId(String languageId) {
-		_cpDefinitionOptionRel.setDescriptionCurrentLanguageId(languageId);
+		model.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -810,7 +764,7 @@ public class CPDefinitionOptionRelWrapper
 	public void setDescriptionMap(
 		Map<java.util.Locale, String> descriptionMap) {
 
-		_cpDefinitionOptionRel.setDescriptionMap(descriptionMap);
+		model.setDescriptionMap(descriptionMap);
 	}
 
 	/**
@@ -824,24 +778,7 @@ public class CPDefinitionOptionRelWrapper
 		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
 
-		_cpDefinitionOptionRel.setDescriptionMap(descriptionMap, defaultLocale);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_cpDefinitionOptionRel.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_cpDefinitionOptionRel.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_cpDefinitionOptionRel.setExpandoBridgeAttributes(serviceContext);
+		model.setDescriptionMap(descriptionMap, defaultLocale);
 	}
 
 	/**
@@ -851,7 +788,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public void setFacetable(boolean facetable) {
-		_cpDefinitionOptionRel.setFacetable(facetable);
+		model.setFacetable(facetable);
 	}
 
 	/**
@@ -861,7 +798,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_cpDefinitionOptionRel.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -871,7 +808,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public void setKey(String key) {
-		_cpDefinitionOptionRel.setKey(key);
+		model.setKey(key);
 	}
 
 	/**
@@ -881,7 +818,17 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_cpDefinitionOptionRel.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this cp definition option rel.
+	 *
+	 * @param mvccVersion the mvcc version of this cp definition option rel
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -891,7 +838,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public void setName(String name) {
-		_cpDefinitionOptionRel.setName(name);
+		model.setName(name);
 	}
 
 	/**
@@ -902,7 +849,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public void setName(String name, java.util.Locale locale) {
-		_cpDefinitionOptionRel.setName(name, locale);
+		model.setName(name, locale);
 	}
 
 	/**
@@ -916,12 +863,12 @@ public class CPDefinitionOptionRelWrapper
 	public void setName(
 		String name, java.util.Locale locale, java.util.Locale defaultLocale) {
 
-		_cpDefinitionOptionRel.setName(name, locale, defaultLocale);
+		model.setName(name, locale, defaultLocale);
 	}
 
 	@Override
 	public void setNameCurrentLanguageId(String languageId) {
-		_cpDefinitionOptionRel.setNameCurrentLanguageId(languageId);
+		model.setNameCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -931,7 +878,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap) {
-		_cpDefinitionOptionRel.setNameMap(nameMap);
+		model.setNameMap(nameMap);
 	}
 
 	/**
@@ -944,12 +891,7 @@ public class CPDefinitionOptionRelWrapper
 	public void setNameMap(
 		Map<java.util.Locale, String> nameMap, java.util.Locale defaultLocale) {
 
-		_cpDefinitionOptionRel.setNameMap(nameMap, defaultLocale);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_cpDefinitionOptionRel.setNew(n);
+		model.setNameMap(nameMap, defaultLocale);
 	}
 
 	/**
@@ -959,7 +901,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public void setPriceType(String priceType) {
-		_cpDefinitionOptionRel.setPriceType(priceType);
+		model.setPriceType(priceType);
 	}
 
 	/**
@@ -969,12 +911,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_cpDefinitionOptionRel.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_cpDefinitionOptionRel.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -984,7 +921,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public void setPriority(double priority) {
-		_cpDefinitionOptionRel.setPriority(priority);
+		model.setPriority(priority);
 	}
 
 	/**
@@ -994,7 +931,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public void setRequired(boolean required) {
-		_cpDefinitionOptionRel.setRequired(required);
+		model.setRequired(required);
 	}
 
 	/**
@@ -1004,7 +941,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public void setSkuContributor(boolean skuContributor) {
-		_cpDefinitionOptionRel.setSkuContributor(skuContributor);
+		model.setSkuContributor(skuContributor);
 	}
 
 	/**
@@ -1014,7 +951,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_cpDefinitionOptionRel.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -1024,7 +961,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_cpDefinitionOptionRel.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -1034,7 +971,7 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_cpDefinitionOptionRel.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -1044,86 +981,19 @@ public class CPDefinitionOptionRelWrapper
 	 */
 	@Override
 	public void setUuid(String uuid) {
-		_cpDefinitionOptionRel.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CPDefinitionOptionRel>
-		toCacheModel() {
-
-		return _cpDefinitionOptionRel.toCacheModel();
-	}
-
-	@Override
-	public CPDefinitionOptionRel toEscapedModel() {
-		return new CPDefinitionOptionRelWrapper(
-			_cpDefinitionOptionRel.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _cpDefinitionOptionRel.toString();
-	}
-
-	@Override
-	public CPDefinitionOptionRel toUnescapedModel() {
-		return new CPDefinitionOptionRelWrapper(
-			_cpDefinitionOptionRel.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _cpDefinitionOptionRel.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CPDefinitionOptionRelWrapper)) {
-			return false;
-		}
-
-		CPDefinitionOptionRelWrapper cpDefinitionOptionRelWrapper =
-			(CPDefinitionOptionRelWrapper)object;
-
-		if (Objects.equals(
-				_cpDefinitionOptionRel,
-				cpDefinitionOptionRelWrapper._cpDefinitionOptionRel)) {
-
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _cpDefinitionOptionRel.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public CPDefinitionOptionRel getWrappedModel() {
-		return _cpDefinitionOptionRel;
-	}
+	protected CPDefinitionOptionRelWrapper wrap(
+		CPDefinitionOptionRel cpDefinitionOptionRel) {
 
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _cpDefinitionOptionRel.isEntityCacheEnabled();
+		return new CPDefinitionOptionRelWrapper(cpDefinitionOptionRel);
 	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _cpDefinitionOptionRel.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_cpDefinitionOptionRel.resetOriginalValues();
-	}
-
-	private final CPDefinitionOptionRel _cpDefinitionOptionRel;
 
 }

@@ -18,6 +18,7 @@ import com.liferay.commerce.wish.list.model.CommerceWishListItem;
 import com.liferay.commerce.wish.list.service.CommerceWishListItemLocalService;
 import com.liferay.commerce.wish.list.service.persistence.CommerceWishListItemPersistence;
 import com.liferay.commerce.wish.list.service.persistence.CommerceWishListPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -142,6 +143,11 @@ public abstract class CommerceWishListItemLocalServiceBaseImpl
 		CommerceWishListItem commerceWishListItem) {
 
 		return commerceWishListItemPersistence.remove(commerceWishListItem);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return commerceWishListItemPersistence.dslQuery(dslQuery);
 	}
 
 	@Override
@@ -302,6 +308,16 @@ public abstract class CommerceWishListItemLocalServiceBaseImpl
 
 		actionableDynamicQuery.setPrimaryKeyPropertyName(
 			"commerceWishListItemId");
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
+
+		return commerceWishListItemPersistence.create(
+			((Long)primaryKeyObj).longValue());
 	}
 
 	/**

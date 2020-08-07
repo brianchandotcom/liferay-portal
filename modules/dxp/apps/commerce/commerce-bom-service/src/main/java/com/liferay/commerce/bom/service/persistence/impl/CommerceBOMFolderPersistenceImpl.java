@@ -16,9 +16,11 @@ package com.liferay.commerce.bom.service.persistence.impl;
 
 import com.liferay.commerce.bom.exception.NoSuchBOMFolderException;
 import com.liferay.commerce.bom.model.CommerceBOMFolder;
+import com.liferay.commerce.bom.model.CommerceBOMFolderTable;
 import com.liferay.commerce.bom.model.impl.CommerceBOMFolderImpl;
 import com.liferay.commerce.bom.model.impl.CommerceBOMFolderModelImpl;
 import com.liferay.commerce.bom.service.persistence.CommerceBOMFolderPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -36,18 +38,13 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -240,10 +237,6 @@ public class CommerceBOMFolderPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -914,8 +907,6 @@ public class CommerceBOMFolderPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1154,10 +1145,6 @@ public class CommerceBOMFolderPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1878,8 +1865,6 @@ public class CommerceBOMFolderPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1953,6 +1938,11 @@ public class CommerceBOMFolderPersistenceImpl
 
 	public CommerceBOMFolderPersistenceImpl() {
 		setModelClass(CommerceBOMFolder.class);
+
+		setModelImplClass(CommerceBOMFolderImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CommerceBOMFolderTable.INSTANCE);
 	}
 
 	/**
@@ -1963,7 +1953,6 @@ public class CommerceBOMFolderPersistenceImpl
 	@Override
 	public void cacheResult(CommerceBOMFolder commerceBOMFolder) {
 		entityCache.putResult(
-			CommerceBOMFolderModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceBOMFolderImpl.class, commerceBOMFolder.getPrimaryKey(),
 			commerceBOMFolder);
 
@@ -1979,7 +1968,6 @@ public class CommerceBOMFolderPersistenceImpl
 	public void cacheResult(List<CommerceBOMFolder> commerceBOMFolders) {
 		for (CommerceBOMFolder commerceBOMFolder : commerceBOMFolders) {
 			if (entityCache.getResult(
-					CommerceBOMFolderModelImpl.ENTITY_CACHE_ENABLED,
 					CommerceBOMFolderImpl.class,
 					commerceBOMFolder.getPrimaryKey()) == null) {
 
@@ -2017,7 +2005,6 @@ public class CommerceBOMFolderPersistenceImpl
 	@Override
 	public void clearCache(CommerceBOMFolder commerceBOMFolder) {
 		entityCache.removeResult(
-			CommerceBOMFolderModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceBOMFolderImpl.class, commerceBOMFolder.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -2031,20 +2018,18 @@ public class CommerceBOMFolderPersistenceImpl
 
 		for (CommerceBOMFolder commerceBOMFolder : commerceBOMFolders) {
 			entityCache.removeResult(
-				CommerceBOMFolderModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceBOMFolderImpl.class, commerceBOMFolder.getPrimaryKey());
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceBOMFolderModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceBOMFolderImpl.class, primaryKey);
+			entityCache.removeResult(CommerceBOMFolderImpl.class, primaryKey);
 		}
 	}
 
@@ -2228,10 +2213,7 @@ public class CommerceBOMFolderPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CommerceBOMFolderModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				commerceBOMFolderModelImpl.getCompanyId()
 			};
@@ -2299,7 +2281,6 @@ public class CommerceBOMFolderPersistenceImpl
 		}
 
 		entityCache.putResult(
-			CommerceBOMFolderModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceBOMFolderImpl.class, commerceBOMFolder.getPrimaryKey(),
 			commerceBOMFolder, false);
 
@@ -2350,165 +2331,12 @@ public class CommerceBOMFolderPersistenceImpl
 	/**
 	 * Returns the commerce bom folder with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the commerce bom folder
-	 * @return the commerce bom folder, or <code>null</code> if a commerce bom folder with the primary key could not be found
-	 */
-	@Override
-	public CommerceBOMFolder fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(
-			CommerceBOMFolderModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceBOMFolderImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CommerceBOMFolder commerceBOMFolder = (CommerceBOMFolder)serializable;
-
-		if (commerceBOMFolder == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				commerceBOMFolder = (CommerceBOMFolder)session.get(
-					CommerceBOMFolderImpl.class, primaryKey);
-
-				if (commerceBOMFolder != null) {
-					cacheResult(commerceBOMFolder);
-				}
-				else {
-					entityCache.putResult(
-						CommerceBOMFolderModelImpl.ENTITY_CACHE_ENABLED,
-						CommerceBOMFolderImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CommerceBOMFolderModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceBOMFolderImpl.class, primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return commerceBOMFolder;
-	}
-
-	/**
-	 * Returns the commerce bom folder with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param commerceBOMFolderId the primary key of the commerce bom folder
 	 * @return the commerce bom folder, or <code>null</code> if a commerce bom folder with the primary key could not be found
 	 */
 	@Override
 	public CommerceBOMFolder fetchByPrimaryKey(long commerceBOMFolderId) {
 		return fetchByPrimaryKey((Serializable)commerceBOMFolderId);
-	}
-
-	@Override
-	public Map<Serializable, CommerceBOMFolder> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CommerceBOMFolder> map =
-			new HashMap<Serializable, CommerceBOMFolder>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CommerceBOMFolder commerceBOMFolder = fetchByPrimaryKey(primaryKey);
-
-			if (commerceBOMFolder != null) {
-				map.put(primaryKey, commerceBOMFolder);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CommerceBOMFolderModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceBOMFolderImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (CommerceBOMFolder)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(_SQL_SELECT_COMMERCEBOMFOLDER_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CommerceBOMFolder commerceBOMFolder :
-					(List<CommerceBOMFolder>)query.list()) {
-
-				map.put(
-					commerceBOMFolder.getPrimaryKeyObj(), commerceBOMFolder);
-
-				cacheResult(commerceBOMFolder);
-
-				uncachedPrimaryKeys.remove(
-					commerceBOMFolder.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CommerceBOMFolderModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceBOMFolderImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -2637,10 +2465,6 @@ public class CommerceBOMFolderPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2686,9 +2510,6 @@ public class CommerceBOMFolderPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2697,6 +2518,21 @@ public class CommerceBOMFolderPersistenceImpl
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "commerceBOMFolderId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_COMMERCEBOMFOLDER;
 	}
 
 	@Override
@@ -2709,27 +2545,19 @@ public class CommerceBOMFolderPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceBOMFolderModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceBOMFolderModelImpl.FINDER_CACHE_ENABLED,
 			CommerceBOMFolderImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceBOMFolderModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceBOMFolderModelImpl.FINDER_CACHE_ENABLED,
 			CommerceBOMFolderImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CommerceBOMFolderModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceBOMFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			CommerceBOMFolderModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceBOMFolderModelImpl.FINDER_CACHE_ENABLED,
 			CommerceBOMFolderImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByCompanyId",
 			new String[] {
@@ -2738,8 +2566,6 @@ public class CommerceBOMFolderPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			CommerceBOMFolderModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceBOMFolderModelImpl.FINDER_CACHE_ENABLED,
 			CommerceBOMFolderImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()},
@@ -2747,14 +2573,10 @@ public class CommerceBOMFolderPersistenceImpl
 			CommerceBOMFolderModelImpl.NAME_COLUMN_BITMASK);
 
 		_finderPathCountByCompanyId = new FinderPath(
-			CommerceBOMFolderModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceBOMFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCompanyId", new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByC_P = new FinderPath(
-			CommerceBOMFolderModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceBOMFolderModelImpl.FINDER_CACHE_ENABLED,
 			CommerceBOMFolderImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByC_P",
 			new String[] {
@@ -2764,8 +2586,6 @@ public class CommerceBOMFolderPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByC_P = new FinderPath(
-			CommerceBOMFolderModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceBOMFolderModelImpl.FINDER_CACHE_ENABLED,
 			CommerceBOMFolderImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_P",
 			new String[] {Long.class.getName(), Long.class.getName()},
@@ -2775,9 +2595,7 @@ public class CommerceBOMFolderPersistenceImpl
 			CommerceBOMFolderModelImpl.NAME_COLUMN_BITMASK);
 
 		_finderPathCountByC_P = new FinderPath(
-			CommerceBOMFolderModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceBOMFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P",
 			new String[] {Long.class.getName(), Long.class.getName()});
 	}
 
@@ -2796,9 +2614,6 @@ public class CommerceBOMFolderPersistenceImpl
 
 	private static final String _SQL_SELECT_COMMERCEBOMFOLDER =
 		"SELECT commerceBOMFolder FROM CommerceBOMFolder commerceBOMFolder";
-
-	private static final String _SQL_SELECT_COMMERCEBOMFOLDER_WHERE_PKS_IN =
-		"SELECT commerceBOMFolder FROM CommerceBOMFolder commerceBOMFolder WHERE commerceBOMFolderId IN (";
 
 	private static final String _SQL_SELECT_COMMERCEBOMFOLDER_WHERE =
 		"SELECT commerceBOMFolder FROM CommerceBOMFolder commerceBOMFolder WHERE ";

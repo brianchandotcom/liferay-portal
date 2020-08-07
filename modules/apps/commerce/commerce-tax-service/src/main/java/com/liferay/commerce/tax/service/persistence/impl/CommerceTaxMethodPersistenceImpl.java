@@ -16,9 +16,11 @@ package com.liferay.commerce.tax.service.persistence.impl;
 
 import com.liferay.commerce.tax.exception.NoSuchTaxMethodException;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
+import com.liferay.commerce.tax.model.CommerceTaxMethodTable;
 import com.liferay.commerce.tax.model.impl.CommerceTaxMethodImpl;
 import com.liferay.commerce.tax.model.impl.CommerceTaxMethodModelImpl;
 import com.liferay.commerce.tax.service.persistence.CommerceTaxMethodPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -35,19 +37,14 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -239,10 +236,6 @@ public class CommerceTaxMethodPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -574,8 +567,6 @@ public class CommerceTaxMethodPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -730,10 +721,6 @@ public class CommerceTaxMethodPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(_finderPathFetchByG_E, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -822,8 +809,6 @@ public class CommerceTaxMethodPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1010,10 +995,6 @@ public class CommerceTaxMethodPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1371,8 +1352,6 @@ public class CommerceTaxMethodPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1394,21 +1373,14 @@ public class CommerceTaxMethodPersistenceImpl
 
 		dbColumnNames.put("active", "active_");
 
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-				"_dbColumnNames");
-
-			field.setAccessible(true);
-
-			field.set(this, dbColumnNames);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
+		setDBColumnNames(dbColumnNames);
 
 		setModelClass(CommerceTaxMethod.class);
+
+		setModelImplClass(CommerceTaxMethodImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CommerceTaxMethodTable.INSTANCE);
 	}
 
 	/**
@@ -1419,7 +1391,6 @@ public class CommerceTaxMethodPersistenceImpl
 	@Override
 	public void cacheResult(CommerceTaxMethod commerceTaxMethod) {
 		entityCache.putResult(
-			CommerceTaxMethodModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceTaxMethodImpl.class, commerceTaxMethod.getPrimaryKey(),
 			commerceTaxMethod);
 
@@ -1442,7 +1413,6 @@ public class CommerceTaxMethodPersistenceImpl
 	public void cacheResult(List<CommerceTaxMethod> commerceTaxMethods) {
 		for (CommerceTaxMethod commerceTaxMethod : commerceTaxMethods) {
 			if (entityCache.getResult(
-					CommerceTaxMethodModelImpl.ENTITY_CACHE_ENABLED,
 					CommerceTaxMethodImpl.class,
 					commerceTaxMethod.getPrimaryKey()) == null) {
 
@@ -1480,7 +1450,6 @@ public class CommerceTaxMethodPersistenceImpl
 	@Override
 	public void clearCache(CommerceTaxMethod commerceTaxMethod) {
 		entityCache.removeResult(
-			CommerceTaxMethodModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceTaxMethodImpl.class, commerceTaxMethod.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1497,7 +1466,6 @@ public class CommerceTaxMethodPersistenceImpl
 
 		for (CommerceTaxMethod commerceTaxMethod : commerceTaxMethods) {
 			entityCache.removeResult(
-				CommerceTaxMethodModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceTaxMethodImpl.class, commerceTaxMethod.getPrimaryKey());
 
 			clearUniqueFindersCache(
@@ -1505,15 +1473,14 @@ public class CommerceTaxMethodPersistenceImpl
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceTaxMethodModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceTaxMethodImpl.class, primaryKey);
+			entityCache.removeResult(CommerceTaxMethodImpl.class, primaryKey);
 		}
 	}
 
@@ -1738,10 +1705,7 @@ public class CommerceTaxMethodPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CommerceTaxMethodModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				commerceTaxMethodModelImpl.getGroupId()
 			};
@@ -1808,7 +1772,6 @@ public class CommerceTaxMethodPersistenceImpl
 		}
 
 		entityCache.putResult(
-			CommerceTaxMethodModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceTaxMethodImpl.class, commerceTaxMethod.getPrimaryKey(),
 			commerceTaxMethod, false);
 
@@ -1862,165 +1825,12 @@ public class CommerceTaxMethodPersistenceImpl
 	/**
 	 * Returns the commerce tax method with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the commerce tax method
-	 * @return the commerce tax method, or <code>null</code> if a commerce tax method with the primary key could not be found
-	 */
-	@Override
-	public CommerceTaxMethod fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(
-			CommerceTaxMethodModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceTaxMethodImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CommerceTaxMethod commerceTaxMethod = (CommerceTaxMethod)serializable;
-
-		if (commerceTaxMethod == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				commerceTaxMethod = (CommerceTaxMethod)session.get(
-					CommerceTaxMethodImpl.class, primaryKey);
-
-				if (commerceTaxMethod != null) {
-					cacheResult(commerceTaxMethod);
-				}
-				else {
-					entityCache.putResult(
-						CommerceTaxMethodModelImpl.ENTITY_CACHE_ENABLED,
-						CommerceTaxMethodImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CommerceTaxMethodModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceTaxMethodImpl.class, primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return commerceTaxMethod;
-	}
-
-	/**
-	 * Returns the commerce tax method with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param commerceTaxMethodId the primary key of the commerce tax method
 	 * @return the commerce tax method, or <code>null</code> if a commerce tax method with the primary key could not be found
 	 */
 	@Override
 	public CommerceTaxMethod fetchByPrimaryKey(long commerceTaxMethodId) {
 		return fetchByPrimaryKey((Serializable)commerceTaxMethodId);
-	}
-
-	@Override
-	public Map<Serializable, CommerceTaxMethod> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CommerceTaxMethod> map =
-			new HashMap<Serializable, CommerceTaxMethod>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CommerceTaxMethod commerceTaxMethod = fetchByPrimaryKey(primaryKey);
-
-			if (commerceTaxMethod != null) {
-				map.put(primaryKey, commerceTaxMethod);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CommerceTaxMethodModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceTaxMethodImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (CommerceTaxMethod)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(_SQL_SELECT_COMMERCETAXMETHOD_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CommerceTaxMethod commerceTaxMethod :
-					(List<CommerceTaxMethod>)query.list()) {
-
-				map.put(
-					commerceTaxMethod.getPrimaryKeyObj(), commerceTaxMethod);
-
-				cacheResult(commerceTaxMethod);
-
-				uncachedPrimaryKeys.remove(
-					commerceTaxMethod.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CommerceTaxMethodModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceTaxMethodImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -2149,10 +1959,6 @@ public class CommerceTaxMethodPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2198,9 +2004,6 @@ public class CommerceTaxMethodPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2217,6 +2020,21 @@ public class CommerceTaxMethodPersistenceImpl
 	}
 
 	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "commerceTaxMethodId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_COMMERCETAXMETHOD;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CommerceTaxMethodModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2226,27 +2044,19 @@ public class CommerceTaxMethodPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceTaxMethodModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceTaxMethodModelImpl.FINDER_CACHE_ENABLED,
 			CommerceTaxMethodImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceTaxMethodModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceTaxMethodModelImpl.FINDER_CACHE_ENABLED,
 			CommerceTaxMethodImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CommerceTaxMethodModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceTaxMethodModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			CommerceTaxMethodModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceTaxMethodModelImpl.FINDER_CACHE_ENABLED,
 			CommerceTaxMethodImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByGroupId",
 			new String[] {
@@ -2255,8 +2065,6 @@ public class CommerceTaxMethodPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			CommerceTaxMethodModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceTaxMethodModelImpl.FINDER_CACHE_ENABLED,
 			CommerceTaxMethodImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] {Long.class.getName()},
@@ -2264,28 +2072,20 @@ public class CommerceTaxMethodPersistenceImpl
 			CommerceTaxMethodModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByGroupId = new FinderPath(
-			CommerceTaxMethodModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceTaxMethodModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByGroupId", new String[] {Long.class.getName()});
 
 		_finderPathFetchByG_E = new FinderPath(
-			CommerceTaxMethodModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceTaxMethodModelImpl.FINDER_CACHE_ENABLED,
 			CommerceTaxMethodImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_E",
 			new String[] {Long.class.getName(), String.class.getName()},
 			CommerceTaxMethodModelImpl.GROUPID_COLUMN_BITMASK |
 			CommerceTaxMethodModelImpl.ENGINEKEY_COLUMN_BITMASK);
 
 		_finderPathCountByG_E = new FinderPath(
-			CommerceTaxMethodModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceTaxMethodModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_E",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_E",
 			new String[] {Long.class.getName(), String.class.getName()});
 
 		_finderPathWithPaginationFindByG_A = new FinderPath(
-			CommerceTaxMethodModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceTaxMethodModelImpl.FINDER_CACHE_ENABLED,
 			CommerceTaxMethodImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByG_A",
 			new String[] {
@@ -2295,8 +2095,6 @@ public class CommerceTaxMethodPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByG_A = new FinderPath(
-			CommerceTaxMethodModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceTaxMethodModelImpl.FINDER_CACHE_ENABLED,
 			CommerceTaxMethodImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_A",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
@@ -2305,9 +2103,7 @@ public class CommerceTaxMethodPersistenceImpl
 			CommerceTaxMethodModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByG_A = new FinderPath(
-			CommerceTaxMethodModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceTaxMethodModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A",
 			new String[] {Long.class.getName(), Boolean.class.getName()});
 	}
 
@@ -2326,9 +2122,6 @@ public class CommerceTaxMethodPersistenceImpl
 
 	private static final String _SQL_SELECT_COMMERCETAXMETHOD =
 		"SELECT commerceTaxMethod FROM CommerceTaxMethod commerceTaxMethod";
-
-	private static final String _SQL_SELECT_COMMERCETAXMETHOD_WHERE_PKS_IN =
-		"SELECT commerceTaxMethod FROM CommerceTaxMethod commerceTaxMethod WHERE commerceTaxMethodId IN (";
 
 	private static final String _SQL_SELECT_COMMERCETAXMETHOD_WHERE =
 		"SELECT commerceTaxMethod FROM CommerceTaxMethod commerceTaxMethod WHERE ";

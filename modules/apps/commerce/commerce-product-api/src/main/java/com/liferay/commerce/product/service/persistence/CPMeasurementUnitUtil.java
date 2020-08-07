@@ -1343,10 +1343,6 @@ public class CPMeasurementUnitUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CPMeasurementUnitPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

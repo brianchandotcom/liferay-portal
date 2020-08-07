@@ -730,10 +730,6 @@ public class CommercePaymentMethodGroupRelUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CommercePaymentMethodGroupRelPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

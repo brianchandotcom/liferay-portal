@@ -20,6 +20,7 @@ import com.liferay.commerce.model.CommerceAvailabilityEstimateSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,7 +36,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -82,7 +82,7 @@ public class CommerceAvailabilityEstimateModelImpl
 	public static final String TABLE_NAME = "CommerceAvailabilityEstimate";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
 		{"commerceAvailabilityEstimateId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -94,6 +94,7 @@ public class CommerceAvailabilityEstimateModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceAvailabilityEstimateId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -107,7 +108,7 @@ public class CommerceAvailabilityEstimateModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceAvailabilityEstimate (uuid_ VARCHAR(75) null,commerceAvailabilityEstimateId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title STRING null,priority DOUBLE,lastPublishDate DATE null)";
+		"create table CommerceAvailabilityEstimate (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,commerceAvailabilityEstimateId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title STRING null,priority DOUBLE,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceAvailabilityEstimate";
@@ -124,20 +125,23 @@ public class CommerceAvailabilityEstimateModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.model.CommerceAvailabilityEstimate"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.model.CommerceAvailabilityEstimate"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.model.CommerceAvailabilityEstimate"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
@@ -161,6 +165,7 @@ public class CommerceAvailabilityEstimateModelImpl
 		CommerceAvailabilityEstimate model =
 			new CommerceAvailabilityEstimateImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCommerceAvailabilityEstimateId(
 			soapModel.getCommerceAvailabilityEstimateId());
@@ -256,9 +261,6 @@ public class CommerceAvailabilityEstimateModelImpl
 					(CommerceAvailabilityEstimate)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -339,269 +341,90 @@ public class CommerceAvailabilityEstimateModelImpl
 					<String, BiConsumer<CommerceAvailabilityEstimate, ?>>();
 
 		attributeGetterFunctions.put(
-			"uuid",
-			new Function<CommerceAvailabilityEstimate, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceAvailabilityEstimate commerceAvailabilityEstimate) {
-
-					return commerceAvailabilityEstimate.getUuid();
-				}
-
-			});
+			"mvccVersion", CommerceAvailabilityEstimate::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CommerceAvailabilityEstimate, Long>)
+				CommerceAvailabilityEstimate::setMvccVersion);
+		attributeGetterFunctions.put(
+			"uuid", CommerceAvailabilityEstimate::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
-			new BiConsumer<CommerceAvailabilityEstimate, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAvailabilityEstimate commerceAvailabilityEstimate,
-					Object uuidObject) {
-
-					commerceAvailabilityEstimate.setUuid((String)uuidObject);
-				}
-
-			});
+			(BiConsumer<CommerceAvailabilityEstimate, String>)
+				CommerceAvailabilityEstimate::setUuid);
 		attributeGetterFunctions.put(
 			"commerceAvailabilityEstimateId",
-			new Function<CommerceAvailabilityEstimate, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceAvailabilityEstimate commerceAvailabilityEstimate) {
-
-					return commerceAvailabilityEstimate.
-						getCommerceAvailabilityEstimateId();
-				}
-
-			});
+			CommerceAvailabilityEstimate::getCommerceAvailabilityEstimateId);
 		attributeSetterBiConsumers.put(
 			"commerceAvailabilityEstimateId",
-			new BiConsumer<CommerceAvailabilityEstimate, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAvailabilityEstimate commerceAvailabilityEstimate,
-					Object commerceAvailabilityEstimateIdObject) {
-
-					commerceAvailabilityEstimate.
-						setCommerceAvailabilityEstimateId(
-							(Long)commerceAvailabilityEstimateIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceAvailabilityEstimate, Long>)
+				CommerceAvailabilityEstimate::
+					setCommerceAvailabilityEstimateId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CommerceAvailabilityEstimate, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceAvailabilityEstimate commerceAvailabilityEstimate) {
-
-					return commerceAvailabilityEstimate.getCompanyId();
-				}
-
-			});
+			"companyId", CommerceAvailabilityEstimate::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CommerceAvailabilityEstimate, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAvailabilityEstimate commerceAvailabilityEstimate,
-					Object companyIdObject) {
-
-					commerceAvailabilityEstimate.setCompanyId(
-						(Long)companyIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceAvailabilityEstimate, Long>)
+				CommerceAvailabilityEstimate::setCompanyId);
 		attributeGetterFunctions.put(
-			"userId",
-			new Function<CommerceAvailabilityEstimate, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceAvailabilityEstimate commerceAvailabilityEstimate) {
-
-					return commerceAvailabilityEstimate.getUserId();
-				}
-
-			});
+			"userId", CommerceAvailabilityEstimate::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CommerceAvailabilityEstimate, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAvailabilityEstimate commerceAvailabilityEstimate,
-					Object userIdObject) {
-
-					commerceAvailabilityEstimate.setUserId((Long)userIdObject);
-				}
-
-			});
+			(BiConsumer<CommerceAvailabilityEstimate, Long>)
+				CommerceAvailabilityEstimate::setUserId);
 		attributeGetterFunctions.put(
-			"userName",
-			new Function<CommerceAvailabilityEstimate, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceAvailabilityEstimate commerceAvailabilityEstimate) {
-
-					return commerceAvailabilityEstimate.getUserName();
-				}
-
-			});
+			"userName", CommerceAvailabilityEstimate::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CommerceAvailabilityEstimate, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAvailabilityEstimate commerceAvailabilityEstimate,
-					Object userNameObject) {
-
-					commerceAvailabilityEstimate.setUserName(
-						(String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CommerceAvailabilityEstimate, String>)
+				CommerceAvailabilityEstimate::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CommerceAvailabilityEstimate, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceAvailabilityEstimate commerceAvailabilityEstimate) {
-
-					return commerceAvailabilityEstimate.getCreateDate();
-				}
-
-			});
+			"createDate", CommerceAvailabilityEstimate::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CommerceAvailabilityEstimate, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAvailabilityEstimate commerceAvailabilityEstimate,
-					Object createDateObject) {
-
-					commerceAvailabilityEstimate.setCreateDate(
-						(Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceAvailabilityEstimate, Date>)
+				CommerceAvailabilityEstimate::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CommerceAvailabilityEstimate, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceAvailabilityEstimate commerceAvailabilityEstimate) {
-
-					return commerceAvailabilityEstimate.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CommerceAvailabilityEstimate::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CommerceAvailabilityEstimate, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAvailabilityEstimate commerceAvailabilityEstimate,
-					Object modifiedDateObject) {
-
-					commerceAvailabilityEstimate.setModifiedDate(
-						(Date)modifiedDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceAvailabilityEstimate, Date>)
+				CommerceAvailabilityEstimate::setModifiedDate);
 		attributeGetterFunctions.put(
-			"title",
-			new Function<CommerceAvailabilityEstimate, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceAvailabilityEstimate commerceAvailabilityEstimate) {
-
-					return commerceAvailabilityEstimate.getTitle();
-				}
-
-			});
+			"title", CommerceAvailabilityEstimate::getTitle);
 		attributeSetterBiConsumers.put(
 			"title",
-			new BiConsumer<CommerceAvailabilityEstimate, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAvailabilityEstimate commerceAvailabilityEstimate,
-					Object titleObject) {
-
-					commerceAvailabilityEstimate.setTitle((String)titleObject);
-				}
-
-			});
+			(BiConsumer<CommerceAvailabilityEstimate, String>)
+				CommerceAvailabilityEstimate::setTitle);
 		attributeGetterFunctions.put(
-			"priority",
-			new Function<CommerceAvailabilityEstimate, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceAvailabilityEstimate commerceAvailabilityEstimate) {
-
-					return commerceAvailabilityEstimate.getPriority();
-				}
-
-			});
+			"priority", CommerceAvailabilityEstimate::getPriority);
 		attributeSetterBiConsumers.put(
 			"priority",
-			new BiConsumer<CommerceAvailabilityEstimate, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAvailabilityEstimate commerceAvailabilityEstimate,
-					Object priorityObject) {
-
-					commerceAvailabilityEstimate.setPriority(
-						(Double)priorityObject);
-				}
-
-			});
+			(BiConsumer<CommerceAvailabilityEstimate, Double>)
+				CommerceAvailabilityEstimate::setPriority);
 		attributeGetterFunctions.put(
 			"lastPublishDate",
-			new Function<CommerceAvailabilityEstimate, Object>() {
-
-				@Override
-				public Object apply(
-					CommerceAvailabilityEstimate commerceAvailabilityEstimate) {
-
-					return commerceAvailabilityEstimate.getLastPublishDate();
-				}
-
-			});
+			CommerceAvailabilityEstimate::getLastPublishDate);
 		attributeSetterBiConsumers.put(
 			"lastPublishDate",
-			new BiConsumer<CommerceAvailabilityEstimate, Object>() {
-
-				@Override
-				public void accept(
-					CommerceAvailabilityEstimate commerceAvailabilityEstimate,
-					Object lastPublishDateObject) {
-
-					commerceAvailabilityEstimate.setLastPublishDate(
-						(Date)lastPublishDateObject);
-				}
-
-			});
+			(BiConsumer<CommerceAvailabilityEstimate, Date>)
+				CommerceAvailabilityEstimate::setLastPublishDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -975,6 +798,7 @@ public class CommerceAvailabilityEstimateModelImpl
 		CommerceAvailabilityEstimateImpl commerceAvailabilityEstimateImpl =
 			new CommerceAvailabilityEstimateImpl();
 
+		commerceAvailabilityEstimateImpl.setMvccVersion(getMvccVersion());
 		commerceAvailabilityEstimateImpl.setUuid(getUuid());
 		commerceAvailabilityEstimateImpl.setCommerceAvailabilityEstimateId(
 			getCommerceAvailabilityEstimateId());
@@ -1036,11 +860,19 @@ public class CommerceAvailabilityEstimateModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -1064,6 +896,8 @@ public class CommerceAvailabilityEstimateModelImpl
 		CommerceAvailabilityEstimateCacheModel
 			commerceAvailabilityEstimateCacheModel =
 				new CommerceAvailabilityEstimateCacheModel();
+
+		commerceAvailabilityEstimateCacheModel.mvccVersion = getMvccVersion();
 
 		commerceAvailabilityEstimateCacheModel.uuid = getUuid();
 
@@ -1209,6 +1043,7 @@ public class CommerceAvailabilityEstimateModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _commerceAvailabilityEstimateId;

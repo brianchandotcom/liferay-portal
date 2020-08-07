@@ -16,9 +16,11 @@ package com.liferay.commerce.application.service.persistence.impl;
 
 import com.liferay.commerce.application.exception.NoSuchApplicationBrandException;
 import com.liferay.commerce.application.model.CommerceApplicationBrand;
+import com.liferay.commerce.application.model.CommerceApplicationBrandTable;
 import com.liferay.commerce.application.model.impl.CommerceApplicationBrandImpl;
 import com.liferay.commerce.application.model.impl.CommerceApplicationBrandModelImpl;
 import com.liferay.commerce.application.service.persistence.CommerceApplicationBrandPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -36,18 +38,13 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -240,10 +237,6 @@ public class CommerceApplicationBrandPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -922,8 +915,6 @@ public class CommerceApplicationBrandPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -987,6 +978,11 @@ public class CommerceApplicationBrandPersistenceImpl
 
 	public CommerceApplicationBrandPersistenceImpl() {
 		setModelClass(CommerceApplicationBrand.class);
+
+		setModelImplClass(CommerceApplicationBrandImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CommerceApplicationBrandTable.INSTANCE);
 	}
 
 	/**
@@ -997,7 +993,6 @@ public class CommerceApplicationBrandPersistenceImpl
 	@Override
 	public void cacheResult(CommerceApplicationBrand commerceApplicationBrand) {
 		entityCache.putResult(
-			CommerceApplicationBrandModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceApplicationBrandImpl.class,
 			commerceApplicationBrand.getPrimaryKey(), commerceApplicationBrand);
 
@@ -1017,7 +1012,6 @@ public class CommerceApplicationBrandPersistenceImpl
 				commerceApplicationBrands) {
 
 			if (entityCache.getResult(
-					CommerceApplicationBrandModelImpl.ENTITY_CACHE_ENABLED,
 					CommerceApplicationBrandImpl.class,
 					commerceApplicationBrand.getPrimaryKey()) == null) {
 
@@ -1055,7 +1049,6 @@ public class CommerceApplicationBrandPersistenceImpl
 	@Override
 	public void clearCache(CommerceApplicationBrand commerceApplicationBrand) {
 		entityCache.removeResult(
-			CommerceApplicationBrandModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceApplicationBrandImpl.class,
 			commerceApplicationBrand.getPrimaryKey());
 
@@ -1074,12 +1067,12 @@ public class CommerceApplicationBrandPersistenceImpl
 				commerceApplicationBrands) {
 
 			entityCache.removeResult(
-				CommerceApplicationBrandModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceApplicationBrandImpl.class,
 				commerceApplicationBrand.getPrimaryKey());
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1087,7 +1080,6 @@ public class CommerceApplicationBrandPersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(
-				CommerceApplicationBrandModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceApplicationBrandImpl.class, primaryKey);
 		}
 	}
@@ -1280,10 +1272,7 @@ public class CommerceApplicationBrandPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CommerceApplicationBrandModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				commerceApplicationBrandModelImpl.getCompanyId()
 			};
@@ -1320,7 +1309,6 @@ public class CommerceApplicationBrandPersistenceImpl
 		}
 
 		entityCache.putResult(
-			CommerceApplicationBrandModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceApplicationBrandImpl.class,
 			commerceApplicationBrand.getPrimaryKey(), commerceApplicationBrand,
 			false);
@@ -1374,60 +1362,6 @@ public class CommerceApplicationBrandPersistenceImpl
 	/**
 	 * Returns the commerce application brand with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the commerce application brand
-	 * @return the commerce application brand, or <code>null</code> if a commerce application brand with the primary key could not be found
-	 */
-	@Override
-	public CommerceApplicationBrand fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(
-			CommerceApplicationBrandModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceApplicationBrandImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CommerceApplicationBrand commerceApplicationBrand =
-			(CommerceApplicationBrand)serializable;
-
-		if (commerceApplicationBrand == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				commerceApplicationBrand =
-					(CommerceApplicationBrand)session.get(
-						CommerceApplicationBrandImpl.class, primaryKey);
-
-				if (commerceApplicationBrand != null) {
-					cacheResult(commerceApplicationBrand);
-				}
-				else {
-					entityCache.putResult(
-						CommerceApplicationBrandModelImpl.ENTITY_CACHE_ENABLED,
-						CommerceApplicationBrandImpl.class, primaryKey,
-						nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CommerceApplicationBrandModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceApplicationBrandImpl.class, primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return commerceApplicationBrand;
-	}
-
-	/**
-	 * Returns the commerce application brand with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param commerceApplicationBrandId the primary key of the commerce application brand
 	 * @return the commerce application brand, or <code>null</code> if a commerce application brand with the primary key could not be found
 	 */
@@ -1436,110 +1370,6 @@ public class CommerceApplicationBrandPersistenceImpl
 		long commerceApplicationBrandId) {
 
 		return fetchByPrimaryKey((Serializable)commerceApplicationBrandId);
-	}
-
-	@Override
-	public Map<Serializable, CommerceApplicationBrand> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CommerceApplicationBrand> map =
-			new HashMap<Serializable, CommerceApplicationBrand>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CommerceApplicationBrand commerceApplicationBrand =
-				fetchByPrimaryKey(primaryKey);
-
-			if (commerceApplicationBrand != null) {
-				map.put(primaryKey, commerceApplicationBrand);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CommerceApplicationBrandModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceApplicationBrandImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (CommerceApplicationBrand)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(_SQL_SELECT_COMMERCEAPPLICATIONBRAND_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CommerceApplicationBrand commerceApplicationBrand :
-					(List<CommerceApplicationBrand>)query.list()) {
-
-				map.put(
-					commerceApplicationBrand.getPrimaryKeyObj(),
-					commerceApplicationBrand);
-
-				cacheResult(commerceApplicationBrand);
-
-				uncachedPrimaryKeys.remove(
-					commerceApplicationBrand.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CommerceApplicationBrandModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceApplicationBrandImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -1669,10 +1499,6 @@ public class CommerceApplicationBrandPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1719,9 +1545,6 @@ public class CommerceApplicationBrandPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1730,6 +1553,21 @@ public class CommerceApplicationBrandPersistenceImpl
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "commerceApplicationBrandId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_COMMERCEAPPLICATIONBRAND;
 	}
 
 	@Override
@@ -1742,27 +1580,19 @@ public class CommerceApplicationBrandPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceApplicationBrandModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceApplicationBrandModelImpl.FINDER_CACHE_ENABLED,
 			CommerceApplicationBrandImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceApplicationBrandModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceApplicationBrandModelImpl.FINDER_CACHE_ENABLED,
 			CommerceApplicationBrandImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CommerceApplicationBrandModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceApplicationBrandModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			CommerceApplicationBrandModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceApplicationBrandModelImpl.FINDER_CACHE_ENABLED,
 			CommerceApplicationBrandImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -1771,8 +1601,6 @@ public class CommerceApplicationBrandPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			CommerceApplicationBrandModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceApplicationBrandModelImpl.FINDER_CACHE_ENABLED,
 			CommerceApplicationBrandImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()},
@@ -1780,10 +1608,8 @@ public class CommerceApplicationBrandPersistenceImpl
 			CommerceApplicationBrandModelImpl.NAME_COLUMN_BITMASK);
 
 		_finderPathCountByCompanyId = new FinderPath(
-			CommerceApplicationBrandModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceApplicationBrandModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCompanyId", new String[] {Long.class.getName()});
 	}
 
 	public void destroy() {
@@ -1801,10 +1627,6 @@ public class CommerceApplicationBrandPersistenceImpl
 
 	private static final String _SQL_SELECT_COMMERCEAPPLICATIONBRAND =
 		"SELECT commerceApplicationBrand FROM CommerceApplicationBrand commerceApplicationBrand";
-
-	private static final String
-		_SQL_SELECT_COMMERCEAPPLICATIONBRAND_WHERE_PKS_IN =
-			"SELECT commerceApplicationBrand FROM CommerceApplicationBrand commerceApplicationBrand WHERE commerceApplicationBrandId IN (";
 
 	private static final String _SQL_SELECT_COMMERCEAPPLICATIONBRAND_WHERE =
 		"SELECT commerceApplicationBrand FROM CommerceApplicationBrand commerceApplicationBrand WHERE ";

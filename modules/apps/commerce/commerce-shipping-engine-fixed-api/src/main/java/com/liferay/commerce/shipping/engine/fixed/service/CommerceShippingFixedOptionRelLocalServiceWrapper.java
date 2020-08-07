@@ -115,6 +115,18 @@ public class CommerceShippingFixedOptionRelLocalServiceWrapper
 	}
 
 	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShippingFixedOptionRelLocalService.createPersistedModel(
+			primaryKeyObj);
+	}
+
+	/**
 	 * Deletes the commerce shipping fixed option rel from the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -176,6 +188,11 @@ public class CommerceShippingFixedOptionRelLocalServiceWrapper
 
 		return _commerceShippingFixedOptionRelLocalService.deletePersistedModel(
 			persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _commerceShippingFixedOptionRelLocalService.dslQuery(dslQuery);
 	}
 
 	@Override

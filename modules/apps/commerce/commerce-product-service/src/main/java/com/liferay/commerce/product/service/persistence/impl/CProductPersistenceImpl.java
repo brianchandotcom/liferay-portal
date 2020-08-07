@@ -16,9 +16,11 @@ package com.liferay.commerce.product.service.persistence.impl;
 
 import com.liferay.commerce.product.exception.NoSuchCProductException;
 import com.liferay.commerce.product.model.CProduct;
+import com.liferay.commerce.product.model.CProductTable;
 import com.liferay.commerce.product.model.impl.CProductImpl;
 import com.liferay.commerce.product.model.impl.CProductModelImpl;
 import com.liferay.commerce.product.service.persistence.CProductPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -35,7 +37,6 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -43,14 +44,11 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -250,10 +248,6 @@ public class CProductPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -602,8 +596,6 @@ public class CProductPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -761,11 +753,6 @@ public class CProductPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByUUID_G, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -854,8 +841,6 @@ public class CProductPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1055,10 +1040,6 @@ public class CProductPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1437,8 +1418,6 @@ public class CProductPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1610,10 +1589,6 @@ public class CProductPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1937,8 +1912,6 @@ public class CProductPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2112,11 +2085,6 @@ public class CProductPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByC_ERC, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2205,8 +2173,6 @@ public class CProductPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2231,21 +2197,14 @@ public class CProductPersistenceImpl
 
 		dbColumnNames.put("uuid", "uuid_");
 
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-				"_dbColumnNames");
-
-			field.setAccessible(true);
-
-			field.set(this, dbColumnNames);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
+		setDBColumnNames(dbColumnNames);
 
 		setModelClass(CProduct.class);
+
+		setModelImplClass(CProductImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CProductTable.INSTANCE);
 	}
 
 	/**
@@ -2256,8 +2215,7 @@ public class CProductPersistenceImpl
 	@Override
 	public void cacheResult(CProduct cProduct) {
 		entityCache.putResult(
-			CProductModelImpl.ENTITY_CACHE_ENABLED, CProductImpl.class,
-			cProduct.getPrimaryKey(), cProduct);
+			CProductImpl.class, cProduct.getPrimaryKey(), cProduct);
 
 		finderCache.putResult(
 			_finderPathFetchByUUID_G,
@@ -2282,8 +2240,7 @@ public class CProductPersistenceImpl
 	public void cacheResult(List<CProduct> cProducts) {
 		for (CProduct cProduct : cProducts) {
 			if (entityCache.getResult(
-					CProductModelImpl.ENTITY_CACHE_ENABLED, CProductImpl.class,
-					cProduct.getPrimaryKey()) == null) {
+					CProductImpl.class, cProduct.getPrimaryKey()) == null) {
 
 				cacheResult(cProduct);
 			}
@@ -2318,9 +2275,7 @@ public class CProductPersistenceImpl
 	 */
 	@Override
 	public void clearCache(CProduct cProduct) {
-		entityCache.removeResult(
-			CProductModelImpl.ENTITY_CACHE_ENABLED, CProductImpl.class,
-			cProduct.getPrimaryKey());
+		entityCache.removeResult(CProductImpl.class, cProduct.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -2335,22 +2290,20 @@ public class CProductPersistenceImpl
 
 		for (CProduct cProduct : cProducts) {
 			entityCache.removeResult(
-				CProductModelImpl.ENTITY_CACHE_ENABLED, CProductImpl.class,
-				cProduct.getPrimaryKey());
+				CProductImpl.class, cProduct.getPrimaryKey());
 
 			clearUniqueFindersCache((CProductModelImpl)cProduct, true);
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CProductModelImpl.ENTITY_CACHE_ENABLED, CProductImpl.class,
-				primaryKey);
+			entityCache.removeResult(CProductImpl.class, primaryKey);
 		}
 	}
 
@@ -2603,10 +2556,7 @@ public class CProductPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CProductModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {cProductModelImpl.getUuid()};
 
 			finderCache.removeResult(_finderPathCountByUuid, args);
@@ -2695,8 +2645,7 @@ public class CProductPersistenceImpl
 		}
 
 		entityCache.putResult(
-			CProductModelImpl.ENTITY_CACHE_ENABLED, CProductImpl.class,
-			cProduct.getPrimaryKey(), cProduct, false);
+			CProductImpl.class, cProduct.getPrimaryKey(), cProduct, false);
 
 		clearUniqueFindersCache(cProductModelImpl, false);
 		cacheUniqueFindersCache(cProductModelImpl);
@@ -2748,160 +2697,12 @@ public class CProductPersistenceImpl
 	/**
 	 * Returns the c product with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the c product
-	 * @return the c product, or <code>null</code> if a c product with the primary key could not be found
-	 */
-	@Override
-	public CProduct fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(
-			CProductModelImpl.ENTITY_CACHE_ENABLED, CProductImpl.class,
-			primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CProduct cProduct = (CProduct)serializable;
-
-		if (cProduct == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				cProduct = (CProduct)session.get(
-					CProductImpl.class, primaryKey);
-
-				if (cProduct != null) {
-					cacheResult(cProduct);
-				}
-				else {
-					entityCache.putResult(
-						CProductModelImpl.ENTITY_CACHE_ENABLED,
-						CProductImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CProductModelImpl.ENTITY_CACHE_ENABLED, CProductImpl.class,
-					primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return cProduct;
-	}
-
-	/**
-	 * Returns the c product with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param CProductId the primary key of the c product
 	 * @return the c product, or <code>null</code> if a c product with the primary key could not be found
 	 */
 	@Override
 	public CProduct fetchByPrimaryKey(long CProductId) {
 		return fetchByPrimaryKey((Serializable)CProductId);
-	}
-
-	@Override
-	public Map<Serializable, CProduct> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CProduct> map = new HashMap<Serializable, CProduct>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CProduct cProduct = fetchByPrimaryKey(primaryKey);
-
-			if (cProduct != null) {
-				map.put(primaryKey, cProduct);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CProductModelImpl.ENTITY_CACHE_ENABLED, CProductImpl.class,
-				primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (CProduct)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(_SQL_SELECT_CPRODUCT_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CProduct cProduct : (List<CProduct>)query.list()) {
-				map.put(cProduct.getPrimaryKeyObj(), cProduct);
-
-				cacheResult(cProduct);
-
-				uncachedPrimaryKeys.remove(cProduct.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CProductModelImpl.ENTITY_CACHE_ENABLED, CProductImpl.class,
-					primaryKey, nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -3028,10 +2829,6 @@ public class CProductPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3077,9 +2874,6 @@ public class CProductPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3096,6 +2890,21 @@ public class CProductPersistenceImpl
 	}
 
 	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "CProductId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_CPRODUCT;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CProductModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3105,63 +2914,49 @@ public class CProductPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CProductModelImpl.ENTITY_CACHE_ENABLED,
-			CProductModelImpl.FINDER_CACHE_ENABLED, CProductImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+			CProductImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CProductModelImpl.ENTITY_CACHE_ENABLED,
-			CProductModelImpl.FINDER_CACHE_ENABLED, CProductImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-			new String[0]);
+			CProductImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findAll", new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CProductModelImpl.ENTITY_CACHE_ENABLED,
-			CProductModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByUuid = new FinderPath(
-			CProductModelImpl.ENTITY_CACHE_ENABLED,
-			CProductModelImpl.FINDER_CACHE_ENABLED, CProductImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+			CProductImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByUuid",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			});
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			CProductModelImpl.ENTITY_CACHE_ENABLED,
-			CProductModelImpl.FINDER_CACHE_ENABLED, CProductImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()},
+			CProductImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByUuid", new String[] {String.class.getName()},
 			CProductModelImpl.UUID_COLUMN_BITMASK |
 			CProductModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
-			CProductModelImpl.ENTITY_CACHE_ENABLED,
-			CProductModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUuid", new String[] {String.class.getName()});
 
 		_finderPathFetchByUUID_G = new FinderPath(
-			CProductModelImpl.ENTITY_CACHE_ENABLED,
-			CProductModelImpl.FINDER_CACHE_ENABLED, CProductImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+			CProductImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			CProductModelImpl.UUID_COLUMN_BITMASK |
 			CProductModelImpl.GROUPID_COLUMN_BITMASK);
 
 		_finderPathCountByUUID_G = new FinderPath(
-			CProductModelImpl.ENTITY_CACHE_ENABLED,
-			CProductModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			CProductModelImpl.ENTITY_CACHE_ENABLED,
-			CProductModelImpl.FINDER_CACHE_ENABLED, CProductImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+			CProductImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByUuid_C",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -3169,55 +2964,45 @@ public class CProductPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			CProductModelImpl.ENTITY_CACHE_ENABLED,
-			CProductModelImpl.FINDER_CACHE_ENABLED, CProductImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+			CProductImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			CProductModelImpl.UUID_COLUMN_BITMASK |
 			CProductModelImpl.COMPANYID_COLUMN_BITMASK |
 			CProductModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
-			CProductModelImpl.ENTITY_CACHE_ENABLED,
-			CProductModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			CProductModelImpl.ENTITY_CACHE_ENABLED,
-			CProductModelImpl.FINDER_CACHE_ENABLED, CProductImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+			CProductImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByGroupId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			});
 
 		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			CProductModelImpl.ENTITY_CACHE_ENABLED,
-			CProductModelImpl.FINDER_CACHE_ENABLED, CProductImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()},
+			CProductImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByGroupId", new String[] {Long.class.getName()},
 			CProductModelImpl.GROUPID_COLUMN_BITMASK |
 			CProductModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByGroupId = new FinderPath(
-			CProductModelImpl.ENTITY_CACHE_ENABLED,
-			CProductModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByGroupId", new String[] {Long.class.getName()});
 
 		_finderPathFetchByC_ERC = new FinderPath(
-			CProductModelImpl.ENTITY_CACHE_ENABLED,
-			CProductModelImpl.FINDER_CACHE_ENABLED, CProductImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_ERC",
+			CProductImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_ERC",
 			new String[] {Long.class.getName(), String.class.getName()},
 			CProductModelImpl.COMPANYID_COLUMN_BITMASK |
 			CProductModelImpl.EXTERNALREFERENCECODE_COLUMN_BITMASK);
 
 		_finderPathCountByC_ERC = new FinderPath(
-			CProductModelImpl.ENTITY_CACHE_ENABLED,
-			CProductModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ERC",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByC_ERC",
 			new String[] {Long.class.getName(), String.class.getName()});
 	}
 
@@ -3236,9 +3021,6 @@ public class CProductPersistenceImpl
 
 	private static final String _SQL_SELECT_CPRODUCT =
 		"SELECT cProduct FROM CProduct cProduct";
-
-	private static final String _SQL_SELECT_CPRODUCT_WHERE_PKS_IN =
-		"SELECT cProduct FROM CProduct cProduct WHERE CProductId IN (";
 
 	private static final String _SQL_SELECT_CPRODUCT_WHERE =
 		"SELECT cProduct FROM CProduct cProduct WHERE ";

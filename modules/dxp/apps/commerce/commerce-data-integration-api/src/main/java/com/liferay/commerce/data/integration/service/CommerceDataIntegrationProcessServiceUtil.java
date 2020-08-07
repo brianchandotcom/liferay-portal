@@ -42,11 +42,11 @@ public class CommerceDataIntegrationProcessServiceUtil {
 			CommerceDataIntegrationProcess addCommerceDataIntegrationProcess(
 					long userId, String name, String type,
 					com.liferay.portal.kernel.util.UnicodeProperties
-						typeSettingsProperties)
+						typeSettingsUnicodeProperties)
 				throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addCommerceDataIntegrationProcess(
-			userId, name, type, typeSettingsProperties);
+			userId, name, type, typeSettingsUnicodeProperties);
 	}
 
 	public static void deleteCommerceDataIntegrationProcess(
@@ -107,11 +107,12 @@ public class CommerceDataIntegrationProcessServiceUtil {
 			CommerceDataIntegrationProcess updateCommerceDataIntegrationProcess(
 					long commerceDataIntegrationProcessId, String name,
 					com.liferay.portal.kernel.util.UnicodeProperties
-						typeSettingsProperties)
+						typeSettingsUnicodeProperties)
 				throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateCommerceDataIntegrationProcess(
-			commerceDataIntegrationProcessId, name, typeSettingsProperties);
+			commerceDataIntegrationProcessId, name,
+			typeSettingsUnicodeProperties);
 	}
 
 	public static

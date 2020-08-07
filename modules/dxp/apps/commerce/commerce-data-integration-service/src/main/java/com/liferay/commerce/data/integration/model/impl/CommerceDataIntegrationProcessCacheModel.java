@@ -15,9 +15,10 @@
 package com.liferay.commerce.data.integration.model.impl;
 
 import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcess;
+import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,8 @@ import java.util.Date;
  * @generated
  */
 public class CommerceDataIntegrationProcessCacheModel
-	implements CacheModel<CommerceDataIntegrationProcess>, Externalizable {
+	implements CacheModel<CommerceDataIntegrationProcess>, Externalizable,
+			   MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -49,9 +51,11 @@ public class CommerceDataIntegrationProcessCacheModel
 			commerceDataIntegrationProcessCacheModel =
 				(CommerceDataIntegrationProcessCacheModel)object;
 
-		if (commerceDataIntegrationProcessId ==
+		if ((commerceDataIntegrationProcessId ==
 				commerceDataIntegrationProcessCacheModel.
-					commerceDataIntegrationProcessId) {
+					commerceDataIntegrationProcessId) &&
+			(mvccVersion ==
+				commerceDataIntegrationProcessCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -61,14 +65,28 @@ public class CommerceDataIntegrationProcessCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, commerceDataIntegrationProcessId);
+		int hashCode = HashUtil.hash(0, commerceDataIntegrationProcessId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
-		sb.append("{commerceDataIntegrationProcessId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", commerceDataIntegrationProcessId=");
 		sb.append(commerceDataIntegrationProcessId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -106,6 +124,7 @@ public class CommerceDataIntegrationProcessCacheModel
 		CommerceDataIntegrationProcessImpl commerceDataIntegrationProcessImpl =
 			new CommerceDataIntegrationProcessImpl();
 
+		commerceDataIntegrationProcessImpl.setMvccVersion(mvccVersion);
 		commerceDataIntegrationProcessImpl.setCommerceDataIntegrationProcessId(
 			commerceDataIntegrationProcessId);
 		commerceDataIntegrationProcessImpl.setCompanyId(companyId);
@@ -190,6 +209,8 @@ public class CommerceDataIntegrationProcessCacheModel
 	public void readExternal(ObjectInput objectInput)
 		throws ClassNotFoundException, IOException {
 
+		mvccVersion = objectInput.readLong();
+
 		commerceDataIntegrationProcessId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -212,6 +233,8 @@ public class CommerceDataIntegrationProcessCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(commerceDataIntegrationProcessId);
 
 		objectOutput.writeLong(companyId);
@@ -264,6 +287,7 @@ public class CommerceDataIntegrationProcessCacheModel
 		objectOutput.writeLong(endDate);
 	}
 
+	public long mvccVersion;
 	public long commerceDataIntegrationProcessId;
 	public long companyId;
 	public long userId;

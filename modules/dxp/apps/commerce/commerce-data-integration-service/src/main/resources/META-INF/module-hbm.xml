@@ -4,10 +4,11 @@
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcess" />
 	<import class="com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcessLog" />
-	<class name="com.liferay.commerce.data.integration.model.impl.CommerceDataIntegrationProcessImpl" table="CDataIntegrationProcess">
+	<class dynamic-update="true" name="com.liferay.commerce.data.integration.model.impl.CommerceDataIntegrationProcessImpl" table="CDataIntegrationProcess">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="CDataIntegrationProcessId" name="commerceDataIntegrationProcessId" type="long">
 			<generator class="assigned" />
 		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -22,10 +23,11 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="startDate" type="org.hibernate.type.TimestampType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="endDate" type="org.hibernate.type.TimestampType" />
 	</class>
-	<class name="com.liferay.commerce.data.integration.model.impl.CommerceDataIntegrationProcessLogImpl" table="CDataIntegrationProcessLog">
+	<class dynamic-update="true" name="com.liferay.commerce.data.integration.model.impl.CommerceDataIntegrationProcessLogImpl" table="CDataIntegrationProcessLog">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="CDataIntegrationProcessLogId" name="commerceDataIntegrationProcessLogId" type="long">
 			<generator class="assigned" />
 		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />

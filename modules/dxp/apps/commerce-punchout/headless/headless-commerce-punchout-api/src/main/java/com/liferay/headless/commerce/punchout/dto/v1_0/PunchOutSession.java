@@ -48,8 +48,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @JsonFilter("Liferay.Vulcan")
 @Schema(
 	requiredProperties = {
-		"buyerAccountReferenceCode", "buyerGroup", "punchOutReturnURL",
-		"punchOutSessionType", "buyerUser", "cart"
+		"buyerAccountReferenceCode", "buyerGroup", "buyerUser", "cart",
+		"punchOutReturnURL", "punchOutSessionType"
 	}
 )
 @XmlRootElement(name = "PunchOutSession")

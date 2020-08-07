@@ -14,16 +14,12 @@
 
 package com.liferay.commerce.bom.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,28 +31,20 @@ import java.util.Objects;
  * @generated
  */
 public class CommerceBOMDefinitionWrapper
+	extends BaseModelWrapper<CommerceBOMDefinition>
 	implements CommerceBOMDefinition, ModelWrapper<CommerceBOMDefinition> {
 
 	public CommerceBOMDefinitionWrapper(
 		CommerceBOMDefinition commerceBOMDefinition) {
 
-		_commerceBOMDefinition = commerceBOMDefinition;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CommerceBOMDefinition.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CommerceBOMDefinition.class.getName();
+		super(commerceBOMDefinition);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("commerceBOMDefinitionId", getCommerceBOMDefinitionId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -73,6 +61,12 @@ public class CommerceBOMDefinitionWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long commerceBOMDefinitionId = (Long)attributes.get(
 			"commerceBOMDefinitionId");
 
@@ -137,26 +131,15 @@ public class CommerceBOMDefinitionWrapper
 	}
 
 	@Override
-	public Object clone() {
-		return new CommerceBOMDefinitionWrapper(
-			(CommerceBOMDefinition)_commerceBOMDefinition.clone());
-	}
-
-	@Override
-	public int compareTo(CommerceBOMDefinition commerceBOMDefinition) {
-		return _commerceBOMDefinition.compareTo(commerceBOMDefinition);
-	}
-
-	@Override
 	public CommerceBOMFolder fetchCommerceBOMFolder() {
-		return _commerceBOMDefinition.fetchCommerceBOMFolder();
+		return model.fetchCommerceBOMFolder();
 	}
 
 	@Override
 	public com.liferay.commerce.product.model.CPAttachmentFileEntry
 		fetchCPAttachmentFileEntry() {
 
-		return _commerceBOMDefinition.fetchCPAttachmentFileEntry();
+		return model.fetchCPAttachmentFileEntry();
 	}
 
 	/**
@@ -166,7 +149,7 @@ public class CommerceBOMDefinitionWrapper
 	 */
 	@Override
 	public long getCommerceBOMDefinitionId() {
-		return _commerceBOMDefinition.getCommerceBOMDefinitionId();
+		return model.getCommerceBOMDefinitionId();
 	}
 
 	/**
@@ -176,7 +159,7 @@ public class CommerceBOMDefinitionWrapper
 	 */
 	@Override
 	public long getCommerceBOMFolderId() {
-		return _commerceBOMDefinition.getCommerceBOMFolderId();
+		return model.getCommerceBOMFolderId();
 	}
 
 	/**
@@ -186,7 +169,7 @@ public class CommerceBOMDefinitionWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _commerceBOMDefinition.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -196,7 +179,7 @@ public class CommerceBOMDefinitionWrapper
 	 */
 	@Override
 	public long getCPAttachmentFileEntryId() {
-		return _commerceBOMDefinition.getCPAttachmentFileEntryId();
+		return model.getCPAttachmentFileEntryId();
 	}
 
 	/**
@@ -206,12 +189,7 @@ public class CommerceBOMDefinitionWrapper
 	 */
 	@Override
 	public Date getCreateDate() {
-		return _commerceBOMDefinition.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceBOMDefinition.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -221,7 +199,7 @@ public class CommerceBOMDefinitionWrapper
 	 */
 	@Override
 	public String getFriendlyUrl() {
-		return _commerceBOMDefinition.getFriendlyUrl();
+		return model.getFriendlyUrl();
 	}
 
 	/**
@@ -231,7 +209,17 @@ public class CommerceBOMDefinitionWrapper
 	 */
 	@Override
 	public Date getModifiedDate() {
-		return _commerceBOMDefinition.getModifiedDate();
+		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce bom definition.
+	 *
+	 * @return the mvcc version of this commerce bom definition
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -241,7 +229,7 @@ public class CommerceBOMDefinitionWrapper
 	 */
 	@Override
 	public String getName() {
-		return _commerceBOMDefinition.getName();
+		return model.getName();
 	}
 
 	/**
@@ -251,12 +239,7 @@ public class CommerceBOMDefinitionWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _commerceBOMDefinition.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceBOMDefinition.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -266,7 +249,7 @@ public class CommerceBOMDefinitionWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _commerceBOMDefinition.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -276,7 +259,7 @@ public class CommerceBOMDefinitionWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _commerceBOMDefinition.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -286,37 +269,12 @@ public class CommerceBOMDefinitionWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _commerceBOMDefinition.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceBOMDefinition.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceBOMDefinition.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceBOMDefinition.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceBOMDefinition.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_commerceBOMDefinition.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_commerceBOMDefinition.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -326,8 +284,7 @@ public class CommerceBOMDefinitionWrapper
 	 */
 	@Override
 	public void setCommerceBOMDefinitionId(long commerceBOMDefinitionId) {
-		_commerceBOMDefinition.setCommerceBOMDefinitionId(
-			commerceBOMDefinitionId);
+		model.setCommerceBOMDefinitionId(commerceBOMDefinitionId);
 	}
 
 	/**
@@ -337,7 +294,7 @@ public class CommerceBOMDefinitionWrapper
 	 */
 	@Override
 	public void setCommerceBOMFolderId(long commerceBOMFolderId) {
-		_commerceBOMDefinition.setCommerceBOMFolderId(commerceBOMFolderId);
+		model.setCommerceBOMFolderId(commerceBOMFolderId);
 	}
 
 	/**
@@ -347,7 +304,7 @@ public class CommerceBOMDefinitionWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_commerceBOMDefinition.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -357,8 +314,7 @@ public class CommerceBOMDefinitionWrapper
 	 */
 	@Override
 	public void setCPAttachmentFileEntryId(long CPAttachmentFileEntryId) {
-		_commerceBOMDefinition.setCPAttachmentFileEntryId(
-			CPAttachmentFileEntryId);
+		model.setCPAttachmentFileEntryId(CPAttachmentFileEntryId);
 	}
 
 	/**
@@ -368,24 +324,7 @@ public class CommerceBOMDefinitionWrapper
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
-		_commerceBOMDefinition.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_commerceBOMDefinition.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceBOMDefinition.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_commerceBOMDefinition.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -395,7 +334,7 @@ public class CommerceBOMDefinitionWrapper
 	 */
 	@Override
 	public void setFriendlyUrl(String friendlyUrl) {
-		_commerceBOMDefinition.setFriendlyUrl(friendlyUrl);
+		model.setFriendlyUrl(friendlyUrl);
 	}
 
 	/**
@@ -405,7 +344,17 @@ public class CommerceBOMDefinitionWrapper
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_commerceBOMDefinition.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this commerce bom definition.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce bom definition
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -415,12 +364,7 @@ public class CommerceBOMDefinitionWrapper
 	 */
 	@Override
 	public void setName(String name) {
-		_commerceBOMDefinition.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_commerceBOMDefinition.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -430,12 +374,7 @@ public class CommerceBOMDefinitionWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_commerceBOMDefinition.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_commerceBOMDefinition.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -445,7 +384,7 @@ public class CommerceBOMDefinitionWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_commerceBOMDefinition.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -455,7 +394,7 @@ public class CommerceBOMDefinitionWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_commerceBOMDefinition.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -465,81 +404,14 @@ public class CommerceBOMDefinitionWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_commerceBOMDefinition.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceBOMDefinition>
-		toCacheModel() {
+	protected CommerceBOMDefinitionWrapper wrap(
+		CommerceBOMDefinition commerceBOMDefinition) {
 
-		return _commerceBOMDefinition.toCacheModel();
+		return new CommerceBOMDefinitionWrapper(commerceBOMDefinition);
 	}
-
-	@Override
-	public CommerceBOMDefinition toEscapedModel() {
-		return new CommerceBOMDefinitionWrapper(
-			_commerceBOMDefinition.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _commerceBOMDefinition.toString();
-	}
-
-	@Override
-	public CommerceBOMDefinition toUnescapedModel() {
-		return new CommerceBOMDefinitionWrapper(
-			_commerceBOMDefinition.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _commerceBOMDefinition.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof CommerceBOMDefinitionWrapper)) {
-			return false;
-		}
-
-		CommerceBOMDefinitionWrapper commerceBOMDefinitionWrapper =
-			(CommerceBOMDefinitionWrapper)object;
-
-		if (Objects.equals(
-				_commerceBOMDefinition,
-				commerceBOMDefinitionWrapper._commerceBOMDefinition)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CommerceBOMDefinition getWrappedModel() {
-		return _commerceBOMDefinition;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _commerceBOMDefinition.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _commerceBOMDefinition.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_commerceBOMDefinition.resetOriginalValues();
-	}
-
-	private final CommerceBOMDefinition _commerceBOMDefinition;
 
 }

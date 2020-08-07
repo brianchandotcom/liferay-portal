@@ -14,17 +14,13 @@
 
 package com.liferay.commerce.discount.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.discount.exception.NoSuchDiscountException;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
 import java.util.Date;
-import java.util.Map;
-import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the commerce discount service.
@@ -46,9 +42,6 @@ public interface CommerceDiscountPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceDiscountUtil} to access the commerce discount persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CommerceDiscount> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the commerce discounts where uuid = &#63;.
@@ -1596,8 +1589,5 @@ public interface CommerceDiscountPersistence
 	 * @return the number of commerce discounts
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

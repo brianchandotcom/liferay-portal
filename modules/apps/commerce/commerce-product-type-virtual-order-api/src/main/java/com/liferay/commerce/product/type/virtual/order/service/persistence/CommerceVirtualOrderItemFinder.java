@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.product.type.virtual.order.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Alessio Antonio Rendina

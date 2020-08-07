@@ -33,6 +33,7 @@ public class CommerceInventoryAuditSoap implements Serializable {
 
 		CommerceInventoryAuditSoap soapModel = new CommerceInventoryAuditSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCommerceInventoryAuditId(
 			model.getCommerceInventoryAuditId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -104,6 +105,14 @@ public class CommerceInventoryAuditSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceInventoryAuditId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getCommerceInventoryAuditId() {
@@ -186,6 +195,7 @@ public class CommerceInventoryAuditSoap implements Serializable {
 		_quantity = quantity;
 	}
 
+	private long _mvccVersion;
 	private long _commerceInventoryAuditId;
 	private long _companyId;
 	private long _userId;

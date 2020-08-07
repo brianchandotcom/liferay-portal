@@ -57,13 +57,13 @@ public class CommerceChannelLocalServiceWrapper
 			addCommerceChannel(
 				long siteGroupId, String name, String type,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					typeSettingsProperties,
+					typeSettingsUnicodeProperties,
 				String commerceCurrencyCode, String externalReferenceCode,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceChannelLocalService.addCommerceChannel(
-			siteGroupId, name, type, typeSettingsProperties,
+			siteGroupId, name, type, typeSettingsUnicodeProperties,
 			commerceCurrencyCode, externalReferenceCode, serviceContext);
 	}
 
@@ -79,6 +79,17 @@ public class CommerceChannelLocalServiceWrapper
 
 		return _commerceChannelLocalService.createCommerceChannel(
 			commerceChannelId);
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceChannelLocalService.createPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -140,6 +151,11 @@ public class CommerceChannelLocalServiceWrapper
 
 		return _commerceChannelLocalService.deletePersistedModel(
 			persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _commerceChannelLocalService.dslQuery(dslQuery);
 	}
 
 	@Override
@@ -449,13 +465,13 @@ public class CommerceChannelLocalServiceWrapper
 				long commerceChannelId, long siteGroupId, String name,
 				String type,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					typeSettingsProperties,
+					typeSettingsUnicodeProperties,
 				String commerceCurrencyCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceChannelLocalService.updateCommerceChannel(
-			commerceChannelId, siteGroupId, name, type, typeSettingsProperties,
-			commerceCurrencyCode);
+			commerceChannelId, siteGroupId, name, type,
+			typeSettingsUnicodeProperties, commerceCurrencyCode);
 	}
 
 	@Override
@@ -464,14 +480,15 @@ public class CommerceChannelLocalServiceWrapper
 				long commerceChannelId, long siteGroupId, String name,
 				String type,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					typeSettingsProperties,
+					typeSettingsUnicodeProperties,
 				String commerceCurrencyCode, String priceDisplayType,
 				boolean discountsTargetNetPrice)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceChannelLocalService.updateCommerceChannel(
-			commerceChannelId, siteGroupId, name, type, typeSettingsProperties,
-			commerceCurrencyCode, priceDisplayType, discountsTargetNetPrice);
+			commerceChannelId, siteGroupId, name, type,
+			typeSettingsUnicodeProperties, commerceCurrencyCode,
+			priceDisplayType, discountsTargetNetPrice);
 	}
 
 	@Override

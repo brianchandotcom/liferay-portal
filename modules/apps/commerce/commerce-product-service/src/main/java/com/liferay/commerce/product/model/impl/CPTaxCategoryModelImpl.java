@@ -19,6 +19,7 @@ import com.liferay.commerce.product.model.CPTaxCategoryModel;
 import com.liferay.commerce.product.model.CPTaxCategorySoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -34,7 +35,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -80,16 +80,18 @@ public class CPTaxCategoryModelImpl
 	public static final String TABLE_NAME = "CPTaxCategory";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"CPTaxCategoryId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"name", Types.VARCHAR}, {"description", Types.VARCHAR}
+		{"mvccVersion", Types.BIGINT}, {"CPTaxCategoryId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
+		{"description", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CPTaxCategoryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -101,7 +103,7 @@ public class CPTaxCategoryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPTaxCategory (CPTaxCategoryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null)";
+		"create table CPTaxCategory (mvccVersion LONG default 0 not null,CPTaxCategoryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CPTaxCategory";
 
@@ -117,20 +119,23 @@ public class CPTaxCategoryModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.commerce.product.model.CPTaxCategory"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.commerce.product.model.CPTaxCategory"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.product.model.CPTaxCategory"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
@@ -149,6 +154,7 @@ public class CPTaxCategoryModelImpl
 
 		CPTaxCategory model = new CPTaxCategoryImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCPTaxCategoryId(soapModel.getCPTaxCategoryId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
@@ -238,9 +244,6 @@ public class CPTaxCategoryModelImpl
 				attributeGetterFunction.apply((CPTaxCategory)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -314,187 +317,61 @@ public class CPTaxCategoryModelImpl
 			new LinkedHashMap<String, BiConsumer<CPTaxCategory, ?>>();
 
 		attributeGetterFunctions.put(
-			"CPTaxCategoryId",
-			new Function<CPTaxCategory, Object>() {
-
-				@Override
-				public Object apply(CPTaxCategory cpTaxCategory) {
-					return cpTaxCategory.getCPTaxCategoryId();
-				}
-
-			});
+			"mvccVersion", CPTaxCategory::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CPTaxCategory, Long>)CPTaxCategory::setMvccVersion);
+		attributeGetterFunctions.put(
+			"CPTaxCategoryId", CPTaxCategory::getCPTaxCategoryId);
 		attributeSetterBiConsumers.put(
 			"CPTaxCategoryId",
-			new BiConsumer<CPTaxCategory, Object>() {
-
-				@Override
-				public void accept(
-					CPTaxCategory cpTaxCategory, Object CPTaxCategoryIdObject) {
-
-					cpTaxCategory.setCPTaxCategoryId(
-						(Long)CPTaxCategoryIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"companyId",
-			new Function<CPTaxCategory, Object>() {
-
-				@Override
-				public Object apply(CPTaxCategory cpTaxCategory) {
-					return cpTaxCategory.getCompanyId();
-				}
-
-			});
+			(BiConsumer<CPTaxCategory, Long>)CPTaxCategory::setCPTaxCategoryId);
+		attributeGetterFunctions.put("companyId", CPTaxCategory::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<CPTaxCategory, Object>() {
-
-				@Override
-				public void accept(
-					CPTaxCategory cpTaxCategory, Object companyIdObject) {
-
-					cpTaxCategory.setCompanyId((Long)companyIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userId",
-			new Function<CPTaxCategory, Object>() {
-
-				@Override
-				public Object apply(CPTaxCategory cpTaxCategory) {
-					return cpTaxCategory.getUserId();
-				}
-
-			});
+			(BiConsumer<CPTaxCategory, Long>)CPTaxCategory::setCompanyId);
+		attributeGetterFunctions.put("userId", CPTaxCategory::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			new BiConsumer<CPTaxCategory, Object>() {
-
-				@Override
-				public void accept(
-					CPTaxCategory cpTaxCategory, Object userIdObject) {
-
-					cpTaxCategory.setUserId((Long)userIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userName",
-			new Function<CPTaxCategory, Object>() {
-
-				@Override
-				public Object apply(CPTaxCategory cpTaxCategory) {
-					return cpTaxCategory.getUserName();
-				}
-
-			});
+			(BiConsumer<CPTaxCategory, Long>)CPTaxCategory::setUserId);
+		attributeGetterFunctions.put("userName", CPTaxCategory::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			new BiConsumer<CPTaxCategory, Object>() {
-
-				@Override
-				public void accept(
-					CPTaxCategory cpTaxCategory, Object userNameObject) {
-
-					cpTaxCategory.setUserName((String)userNameObject);
-				}
-
-			});
+			(BiConsumer<CPTaxCategory, String>)CPTaxCategory::setUserName);
 		attributeGetterFunctions.put(
-			"createDate",
-			new Function<CPTaxCategory, Object>() {
-
-				@Override
-				public Object apply(CPTaxCategory cpTaxCategory) {
-					return cpTaxCategory.getCreateDate();
-				}
-
-			});
+			"createDate", CPTaxCategory::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			new BiConsumer<CPTaxCategory, Object>() {
-
-				@Override
-				public void accept(
-					CPTaxCategory cpTaxCategory, Object createDateObject) {
-
-					cpTaxCategory.setCreateDate((Date)createDateObject);
-				}
-
-			});
+			(BiConsumer<CPTaxCategory, Date>)CPTaxCategory::setCreateDate);
 		attributeGetterFunctions.put(
-			"modifiedDate",
-			new Function<CPTaxCategory, Object>() {
-
-				@Override
-				public Object apply(CPTaxCategory cpTaxCategory) {
-					return cpTaxCategory.getModifiedDate();
-				}
-
-			});
+			"modifiedDate", CPTaxCategory::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			new BiConsumer<CPTaxCategory, Object>() {
-
-				@Override
-				public void accept(
-					CPTaxCategory cpTaxCategory, Object modifiedDateObject) {
-
-					cpTaxCategory.setModifiedDate((Date)modifiedDateObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"name",
-			new Function<CPTaxCategory, Object>() {
-
-				@Override
-				public Object apply(CPTaxCategory cpTaxCategory) {
-					return cpTaxCategory.getName();
-				}
-
-			});
+			(BiConsumer<CPTaxCategory, Date>)CPTaxCategory::setModifiedDate);
+		attributeGetterFunctions.put("name", CPTaxCategory::getName);
 		attributeSetterBiConsumers.put(
-			"name",
-			new BiConsumer<CPTaxCategory, Object>() {
-
-				@Override
-				public void accept(
-					CPTaxCategory cpTaxCategory, Object nameObject) {
-
-					cpTaxCategory.setName((String)nameObject);
-				}
-
-			});
+			"name", (BiConsumer<CPTaxCategory, String>)CPTaxCategory::setName);
 		attributeGetterFunctions.put(
-			"description",
-			new Function<CPTaxCategory, Object>() {
-
-				@Override
-				public Object apply(CPTaxCategory cpTaxCategory) {
-					return cpTaxCategory.getDescription();
-				}
-
-			});
+			"description", CPTaxCategory::getDescription);
 		attributeSetterBiConsumers.put(
 			"description",
-			new BiConsumer<CPTaxCategory, Object>() {
-
-				@Override
-				public void accept(
-					CPTaxCategory cpTaxCategory, Object descriptionObject) {
-
-					cpTaxCategory.setDescription((String)descriptionObject);
-				}
-
-			});
+			(BiConsumer<CPTaxCategory, String>)CPTaxCategory::setDescription);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -937,6 +814,7 @@ public class CPTaxCategoryModelImpl
 	public Object clone() {
 		CPTaxCategoryImpl cpTaxCategoryImpl = new CPTaxCategoryImpl();
 
+		cpTaxCategoryImpl.setMvccVersion(getMvccVersion());
 		cpTaxCategoryImpl.setCPTaxCategoryId(getCPTaxCategoryId());
 		cpTaxCategoryImpl.setCompanyId(getCompanyId());
 		cpTaxCategoryImpl.setUserId(getUserId());
@@ -994,11 +872,19 @@ public class CPTaxCategoryModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -1019,6 +905,8 @@ public class CPTaxCategoryModelImpl
 	public CacheModel<CPTaxCategory> toCacheModel() {
 		CPTaxCategoryCacheModel cpTaxCategoryCacheModel =
 			new CPTaxCategoryCacheModel();
+
+		cpTaxCategoryCacheModel.mvccVersion = getMvccVersion();
 
 		cpTaxCategoryCacheModel.CPTaxCategoryId = getCPTaxCategoryId();
 
@@ -1141,6 +1029,7 @@ public class CPTaxCategoryModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _CPTaxCategoryId;
 	private long _companyId;
 	private long _originalCompanyId;

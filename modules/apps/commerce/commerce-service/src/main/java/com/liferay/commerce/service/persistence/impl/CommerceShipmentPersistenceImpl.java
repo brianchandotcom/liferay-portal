@@ -16,9 +16,11 @@ package com.liferay.commerce.service.persistence.impl;
 
 import com.liferay.commerce.exception.NoSuchShipmentException;
 import com.liferay.commerce.model.CommerceShipment;
+import com.liferay.commerce.model.CommerceShipmentTable;
 import com.liferay.commerce.model.impl.CommerceShipmentImpl;
 import com.liferay.commerce.model.impl.CommerceShipmentModelImpl;
 import com.liferay.commerce.service.persistence.CommerceShipmentPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -35,7 +37,6 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -43,12 +44,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -240,10 +236,6 @@ public class CommerceShipmentPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -599,9 +591,7 @@ public class CommerceShipmentPersistenceImpl
 			groupIds = new long[0];
 		}
 		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.unique(groupIds);
-
-			Arrays.sort(groupIds);
+			groupIds = ArrayUtil.sortedUnique(groupIds);
 		}
 
 		if (groupIds.length == 1) {
@@ -691,11 +681,6 @@ public class CommerceShipmentPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByGroupIds, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -760,8 +745,6 @@ public class CommerceShipmentPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -784,9 +767,7 @@ public class CommerceShipmentPersistenceImpl
 			groupIds = new long[0];
 		}
 		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.unique(groupIds);
-
-			Arrays.sort(groupIds);
+			groupIds = ArrayUtil.sortedUnique(groupIds);
 		}
 
 		Object[] finderArgs = new Object[] {StringUtil.merge(groupIds)};
@@ -830,9 +811,6 @@ public class CommerceShipmentPersistenceImpl
 					count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByGroupIds, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1022,10 +1000,6 @@ public class CommerceShipmentPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1411,9 +1385,7 @@ public class CommerceShipmentPersistenceImpl
 			groupIds = new long[0];
 		}
 		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.unique(groupIds);
-
-			Arrays.sort(groupIds);
+			groupIds = ArrayUtil.sortedUnique(groupIds);
 		}
 
 		if (groupIds.length == 1) {
@@ -1516,11 +1488,6 @@ public class CommerceShipmentPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByG_C, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1592,8 +1559,6 @@ public class CommerceShipmentPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1617,9 +1582,7 @@ public class CommerceShipmentPersistenceImpl
 			groupIds = new long[0];
 		}
 		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.unique(groupIds);
-
-			Arrays.sort(groupIds);
+			groupIds = ArrayUtil.sortedUnique(groupIds);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -1672,9 +1635,6 @@ public class CommerceShipmentPersistenceImpl
 					_finderPathWithPaginationCountByG_C, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByG_C, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1862,10 +1822,6 @@ public class CommerceShipmentPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2246,9 +2202,7 @@ public class CommerceShipmentPersistenceImpl
 			groupIds = new long[0];
 		}
 		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.unique(groupIds);
-
-			Arrays.sort(groupIds);
+			groupIds = ArrayUtil.sortedUnique(groupIds);
 		}
 
 		if (groupIds.length == 1) {
@@ -2348,11 +2302,6 @@ public class CommerceShipmentPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByG_S, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2424,8 +2373,6 @@ public class CommerceShipmentPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2449,9 +2396,7 @@ public class CommerceShipmentPersistenceImpl
 			groupIds = new long[0];
 		}
 		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.unique(groupIds);
-
-			Arrays.sort(groupIds);
+			groupIds = ArrayUtil.sortedUnique(groupIds);
 		}
 
 		Object[] finderArgs = new Object[] {StringUtil.merge(groupIds), status};
@@ -2502,9 +2447,6 @@ public class CommerceShipmentPersistenceImpl
 					_finderPathWithPaginationCountByG_S, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByG_S, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2526,6 +2468,11 @@ public class CommerceShipmentPersistenceImpl
 
 	public CommerceShipmentPersistenceImpl() {
 		setModelClass(CommerceShipment.class);
+
+		setModelImplClass(CommerceShipmentImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CommerceShipmentTable.INSTANCE);
 	}
 
 	/**
@@ -2536,7 +2483,6 @@ public class CommerceShipmentPersistenceImpl
 	@Override
 	public void cacheResult(CommerceShipment commerceShipment) {
 		entityCache.putResult(
-			CommerceShipmentModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceShipmentImpl.class, commerceShipment.getPrimaryKey(),
 			commerceShipment);
 
@@ -2552,7 +2498,6 @@ public class CommerceShipmentPersistenceImpl
 	public void cacheResult(List<CommerceShipment> commerceShipments) {
 		for (CommerceShipment commerceShipment : commerceShipments) {
 			if (entityCache.getResult(
-					CommerceShipmentModelImpl.ENTITY_CACHE_ENABLED,
 					CommerceShipmentImpl.class,
 					commerceShipment.getPrimaryKey()) == null) {
 
@@ -2590,7 +2535,6 @@ public class CommerceShipmentPersistenceImpl
 	@Override
 	public void clearCache(CommerceShipment commerceShipment) {
 		entityCache.removeResult(
-			CommerceShipmentModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceShipmentImpl.class, commerceShipment.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -2604,20 +2548,18 @@ public class CommerceShipmentPersistenceImpl
 
 		for (CommerceShipment commerceShipment : commerceShipments) {
 			entityCache.removeResult(
-				CommerceShipmentModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceShipmentImpl.class, commerceShipment.getPrimaryKey());
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceShipmentModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceShipmentImpl.class, primaryKey);
+			entityCache.removeResult(CommerceShipmentImpl.class, primaryKey);
 		}
 	}
 
@@ -2798,10 +2740,7 @@ public class CommerceShipmentPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CommerceShipmentModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				commerceShipmentModelImpl.getGroupId()
 			};
@@ -2900,7 +2839,6 @@ public class CommerceShipmentPersistenceImpl
 		}
 
 		entityCache.putResult(
-			CommerceShipmentModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceShipmentImpl.class, commerceShipment.getPrimaryKey(),
 			commerceShipment, false);
 
@@ -2951,163 +2889,12 @@ public class CommerceShipmentPersistenceImpl
 	/**
 	 * Returns the commerce shipment with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the commerce shipment
-	 * @return the commerce shipment, or <code>null</code> if a commerce shipment with the primary key could not be found
-	 */
-	@Override
-	public CommerceShipment fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(
-			CommerceShipmentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceShipmentImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CommerceShipment commerceShipment = (CommerceShipment)serializable;
-
-		if (commerceShipment == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				commerceShipment = (CommerceShipment)session.get(
-					CommerceShipmentImpl.class, primaryKey);
-
-				if (commerceShipment != null) {
-					cacheResult(commerceShipment);
-				}
-				else {
-					entityCache.putResult(
-						CommerceShipmentModelImpl.ENTITY_CACHE_ENABLED,
-						CommerceShipmentImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CommerceShipmentModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceShipmentImpl.class, primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return commerceShipment;
-	}
-
-	/**
-	 * Returns the commerce shipment with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param commerceShipmentId the primary key of the commerce shipment
 	 * @return the commerce shipment, or <code>null</code> if a commerce shipment with the primary key could not be found
 	 */
 	@Override
 	public CommerceShipment fetchByPrimaryKey(long commerceShipmentId) {
 		return fetchByPrimaryKey((Serializable)commerceShipmentId);
-	}
-
-	@Override
-	public Map<Serializable, CommerceShipment> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CommerceShipment> map =
-			new HashMap<Serializable, CommerceShipment>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CommerceShipment commerceShipment = fetchByPrimaryKey(primaryKey);
-
-			if (commerceShipment != null) {
-				map.put(primaryKey, commerceShipment);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CommerceShipmentModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceShipmentImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (CommerceShipment)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(_SQL_SELECT_COMMERCESHIPMENT_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CommerceShipment commerceShipment :
-					(List<CommerceShipment>)query.list()) {
-
-				map.put(commerceShipment.getPrimaryKeyObj(), commerceShipment);
-
-				cacheResult(commerceShipment);
-
-				uncachedPrimaryKeys.remove(commerceShipment.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CommerceShipmentModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceShipmentImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -3236,10 +3023,6 @@ public class CommerceShipmentPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3285,9 +3068,6 @@ public class CommerceShipmentPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3296,6 +3076,21 @@ public class CommerceShipmentPersistenceImpl
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "commerceShipmentId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_COMMERCESHIPMENT;
 	}
 
 	@Override
@@ -3308,27 +3103,19 @@ public class CommerceShipmentPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceShipmentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceShipmentModelImpl.FINDER_CACHE_ENABLED,
 			CommerceShipmentImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceShipmentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceShipmentModelImpl.FINDER_CACHE_ENABLED,
 			CommerceShipmentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CommerceShipmentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceShipmentModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByGroupIds = new FinderPath(
-			CommerceShipmentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceShipmentModelImpl.FINDER_CACHE_ENABLED,
 			CommerceShipmentImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByGroupIds",
 			new String[] {
@@ -3337,8 +3124,6 @@ public class CommerceShipmentPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByGroupIds = new FinderPath(
-			CommerceShipmentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceShipmentModelImpl.FINDER_CACHE_ENABLED,
 			CommerceShipmentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupIds",
 			new String[] {Long.class.getName()},
@@ -3346,20 +3131,14 @@ public class CommerceShipmentPersistenceImpl
 			CommerceShipmentModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByGroupIds = new FinderPath(
-			CommerceShipmentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceShipmentModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupIds",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByGroupIds", new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationCountByGroupIds = new FinderPath(
-			CommerceShipmentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceShipmentModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGroupIds",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"countByGroupIds", new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByG_C = new FinderPath(
-			CommerceShipmentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceShipmentModelImpl.FINDER_CACHE_ENABLED,
 			CommerceShipmentImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByG_C",
 			new String[] {
@@ -3369,8 +3148,6 @@ public class CommerceShipmentPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByG_C = new FinderPath(
-			CommerceShipmentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceShipmentModelImpl.FINDER_CACHE_ENABLED,
 			CommerceShipmentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
@@ -3379,20 +3156,14 @@ public class CommerceShipmentPersistenceImpl
 			CommerceShipmentModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByG_C = new FinderPath(
-			CommerceShipmentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceShipmentModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C",
 			new String[] {Long.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationCountByG_C = new FinderPath(
-			CommerceShipmentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceShipmentModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C",
+			Long.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C",
 			new String[] {Long.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByG_S = new FinderPath(
-			CommerceShipmentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceShipmentModelImpl.FINDER_CACHE_ENABLED,
 			CommerceShipmentImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByG_S",
 			new String[] {
@@ -3402,8 +3173,6 @@ public class CommerceShipmentPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByG_S = new FinderPath(
-			CommerceShipmentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceShipmentModelImpl.FINDER_CACHE_ENABLED,
 			CommerceShipmentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
@@ -3412,15 +3181,11 @@ public class CommerceShipmentPersistenceImpl
 			CommerceShipmentModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByG_S = new FinderPath(
-			CommerceShipmentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceShipmentModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
 			new String[] {Long.class.getName(), Integer.class.getName()});
 
 		_finderPathWithPaginationCountByG_S = new FinderPath(
-			CommerceShipmentModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceShipmentModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_S",
+			Long.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_S",
 			new String[] {Long.class.getName(), Integer.class.getName()});
 	}
 
@@ -3439,9 +3204,6 @@ public class CommerceShipmentPersistenceImpl
 
 	private static final String _SQL_SELECT_COMMERCESHIPMENT =
 		"SELECT commerceShipment FROM CommerceShipment commerceShipment";
-
-	private static final String _SQL_SELECT_COMMERCESHIPMENT_WHERE_PKS_IN =
-		"SELECT commerceShipment FROM CommerceShipment commerceShipment WHERE commerceShipmentId IN (";
 
 	private static final String _SQL_SELECT_COMMERCESHIPMENT_WHERE =
 		"SELECT commerceShipment FROM CommerceShipment commerceShipment WHERE ";

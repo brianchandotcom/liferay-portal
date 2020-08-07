@@ -37,6 +37,7 @@ import com.liferay.commerce.service.persistence.CommerceShipmentPersistence;
 import com.liferay.commerce.service.persistence.CommerceShippingMethodPersistence;
 import com.liferay.commerce.service.persistence.CommerceSubscriptionEntryFinder;
 import com.liferay.commerce.service.persistence.CommerceSubscriptionEntryPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -165,6 +166,11 @@ public abstract class CommerceAddressRestrictionLocalServiceBaseImpl
 
 		return commerceAddressRestrictionPersistence.remove(
 			commerceAddressRestriction);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return commerceAddressRestrictionPersistence.dslQuery(dslQuery);
 	}
 
 	@Override
@@ -325,6 +331,16 @@ public abstract class CommerceAddressRestrictionLocalServiceBaseImpl
 
 		actionableDynamicQuery.setPrimaryKeyPropertyName(
 			"commerceAddressRestrictionId");
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
+
+		return commerceAddressRestrictionPersistence.create(
+			((Long)primaryKeyObj).longValue());
 	}
 
 	/**

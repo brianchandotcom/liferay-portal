@@ -15,9 +15,10 @@
 package com.liferay.commerce.discount.model.impl;
 
 import com.liferay.commerce.discount.model.CommerceDiscountRule;
+import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class CommerceDiscountRuleCacheModel
-	implements CacheModel<CommerceDiscountRule>, Externalizable {
+	implements CacheModel<CommerceDiscountRule>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -48,8 +49,9 @@ public class CommerceDiscountRuleCacheModel
 		CommerceDiscountRuleCacheModel commerceDiscountRuleCacheModel =
 			(CommerceDiscountRuleCacheModel)object;
 
-		if (commerceDiscountRuleId ==
-				commerceDiscountRuleCacheModel.commerceDiscountRuleId) {
+		if ((commerceDiscountRuleId ==
+				commerceDiscountRuleCacheModel.commerceDiscountRuleId) &&
+			(mvccVersion == commerceDiscountRuleCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -59,14 +61,28 @@ public class CommerceDiscountRuleCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, commerceDiscountRuleId);
+		int hashCode = HashUtil.hash(0, commerceDiscountRuleId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
-		sb.append("{commerceDiscountRuleId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", commerceDiscountRuleId=");
 		sb.append(commerceDiscountRuleId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -96,6 +112,7 @@ public class CommerceDiscountRuleCacheModel
 		CommerceDiscountRuleImpl commerceDiscountRuleImpl =
 			new CommerceDiscountRuleImpl();
 
+		commerceDiscountRuleImpl.setMvccVersion(mvccVersion);
 		commerceDiscountRuleImpl.setCommerceDiscountRuleId(
 			commerceDiscountRuleId);
 		commerceDiscountRuleImpl.setCompanyId(companyId);
@@ -154,6 +171,8 @@ public class CommerceDiscountRuleCacheModel
 	public void readExternal(ObjectInput objectInput)
 		throws ClassNotFoundException, IOException {
 
+		mvccVersion = objectInput.readLong();
+
 		commerceDiscountRuleId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -171,6 +190,8 @@ public class CommerceDiscountRuleCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(commerceDiscountRuleId);
 
 		objectOutput.writeLong(companyId);
@@ -211,6 +232,7 @@ public class CommerceDiscountRuleCacheModel
 		}
 	}
 
+	public long mvccVersion;
 	public long commerceDiscountRuleId;
 	public long companyId;
 	public long userId;

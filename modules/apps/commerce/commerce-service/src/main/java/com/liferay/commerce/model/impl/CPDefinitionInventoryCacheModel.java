@@ -15,9 +15,10 @@
 package com.liferay.commerce.model.impl;
 
 import com.liferay.commerce.model.CPDefinitionInventory;
+import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class CPDefinitionInventoryCacheModel
-	implements CacheModel<CPDefinitionInventory>, Externalizable {
+	implements CacheModel<CPDefinitionInventory>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -48,8 +49,9 @@ public class CPDefinitionInventoryCacheModel
 		CPDefinitionInventoryCacheModel cpDefinitionInventoryCacheModel =
 			(CPDefinitionInventoryCacheModel)object;
 
-		if (CPDefinitionInventoryId ==
-				cpDefinitionInventoryCacheModel.CPDefinitionInventoryId) {
+		if ((CPDefinitionInventoryId ==
+				cpDefinitionInventoryCacheModel.CPDefinitionInventoryId) &&
+			(mvccVersion == cpDefinitionInventoryCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -59,14 +61,28 @@ public class CPDefinitionInventoryCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, CPDefinitionInventoryId);
+		int hashCode = HashUtil.hash(0, CPDefinitionInventoryId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", CPDefinitionInventoryId=");
 		sb.append(CPDefinitionInventoryId);
@@ -113,6 +129,8 @@ public class CPDefinitionInventoryCacheModel
 	public CPDefinitionInventory toEntityModel() {
 		CPDefinitionInventoryImpl cpDefinitionInventoryImpl =
 			new CPDefinitionInventoryImpl();
+
+		cpDefinitionInventoryImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			cpDefinitionInventoryImpl.setUuid("");
@@ -190,6 +208,7 @@ public class CPDefinitionInventoryCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		CPDefinitionInventoryId = objectInput.readLong();
@@ -225,6 +244,8 @@ public class CPDefinitionInventoryCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -288,6 +309,7 @@ public class CPDefinitionInventoryCacheModel
 		objectOutput.writeInt(multipleOrderQuantity);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long CPDefinitionInventoryId;
 	public long groupId;

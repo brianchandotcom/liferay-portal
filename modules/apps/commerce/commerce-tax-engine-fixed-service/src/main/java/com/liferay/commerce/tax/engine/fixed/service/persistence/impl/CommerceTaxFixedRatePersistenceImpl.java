@@ -16,9 +16,11 @@ package com.liferay.commerce.tax.engine.fixed.service.persistence.impl;
 
 import com.liferay.commerce.tax.engine.fixed.exception.NoSuchTaxFixedRateException;
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate;
+import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateTable;
 import com.liferay.commerce.tax.engine.fixed.model.impl.CommerceTaxFixedRateImpl;
 import com.liferay.commerce.tax.engine.fixed.model.impl.CommerceTaxFixedRateModelImpl;
 import com.liferay.commerce.tax.engine.fixed.service.persistence.CommerceTaxFixedRatePersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -34,18 +36,13 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -243,10 +240,6 @@ public class CommerceTaxFixedRatePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -584,8 +577,6 @@ public class CommerceTaxFixedRatePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -763,10 +754,6 @@ public class CommerceTaxFixedRatePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1106,8 +1093,6 @@ public class CommerceTaxFixedRatePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1258,10 +1243,6 @@ public class CommerceTaxFixedRatePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(_finderPathFetchByC_C, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1341,8 +1322,6 @@ public class CommerceTaxFixedRatePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1361,6 +1340,11 @@ public class CommerceTaxFixedRatePersistenceImpl
 
 	public CommerceTaxFixedRatePersistenceImpl() {
 		setModelClass(CommerceTaxFixedRate.class);
+
+		setModelImplClass(CommerceTaxFixedRateImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CommerceTaxFixedRateTable.INSTANCE);
 	}
 
 	/**
@@ -1371,7 +1355,6 @@ public class CommerceTaxFixedRatePersistenceImpl
 	@Override
 	public void cacheResult(CommerceTaxFixedRate commerceTaxFixedRate) {
 		entityCache.putResult(
-			CommerceTaxFixedRateModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceTaxFixedRateImpl.class,
 			commerceTaxFixedRate.getPrimaryKey(), commerceTaxFixedRate);
 
@@ -1397,7 +1380,6 @@ public class CommerceTaxFixedRatePersistenceImpl
 				commerceTaxFixedRates) {
 
 			if (entityCache.getResult(
-					CommerceTaxFixedRateModelImpl.ENTITY_CACHE_ENABLED,
 					CommerceTaxFixedRateImpl.class,
 					commerceTaxFixedRate.getPrimaryKey()) == null) {
 
@@ -1435,7 +1417,6 @@ public class CommerceTaxFixedRatePersistenceImpl
 	@Override
 	public void clearCache(CommerceTaxFixedRate commerceTaxFixedRate) {
 		entityCache.removeResult(
-			CommerceTaxFixedRateModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceTaxFixedRateImpl.class,
 			commerceTaxFixedRate.getPrimaryKey());
 
@@ -1455,7 +1436,6 @@ public class CommerceTaxFixedRatePersistenceImpl
 				commerceTaxFixedRates) {
 
 			entityCache.removeResult(
-				CommerceTaxFixedRateModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceTaxFixedRateImpl.class,
 				commerceTaxFixedRate.getPrimaryKey());
 
@@ -1464,6 +1444,7 @@ public class CommerceTaxFixedRatePersistenceImpl
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1471,7 +1452,6 @@ public class CommerceTaxFixedRatePersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(
-				CommerceTaxFixedRateModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceTaxFixedRateImpl.class, primaryKey);
 		}
 	}
@@ -1700,10 +1680,7 @@ public class CommerceTaxFixedRatePersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CommerceTaxFixedRateModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				commerceTaxFixedRateModelImpl.getCPTaxCategoryId()
 			};
@@ -1777,7 +1754,6 @@ public class CommerceTaxFixedRatePersistenceImpl
 		}
 
 		entityCache.putResult(
-			CommerceTaxFixedRateModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceTaxFixedRateImpl.class,
 			commerceTaxFixedRate.getPrimaryKey(), commerceTaxFixedRate, false);
 
@@ -1832,168 +1808,12 @@ public class CommerceTaxFixedRatePersistenceImpl
 	/**
 	 * Returns the commerce tax fixed rate with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the commerce tax fixed rate
-	 * @return the commerce tax fixed rate, or <code>null</code> if a commerce tax fixed rate with the primary key could not be found
-	 */
-	@Override
-	public CommerceTaxFixedRate fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(
-			CommerceTaxFixedRateModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceTaxFixedRateImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		CommerceTaxFixedRate commerceTaxFixedRate =
-			(CommerceTaxFixedRate)serializable;
-
-		if (commerceTaxFixedRate == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				commerceTaxFixedRate = (CommerceTaxFixedRate)session.get(
-					CommerceTaxFixedRateImpl.class, primaryKey);
-
-				if (commerceTaxFixedRate != null) {
-					cacheResult(commerceTaxFixedRate);
-				}
-				else {
-					entityCache.putResult(
-						CommerceTaxFixedRateModelImpl.ENTITY_CACHE_ENABLED,
-						CommerceTaxFixedRateImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					CommerceTaxFixedRateModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceTaxFixedRateImpl.class, primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return commerceTaxFixedRate;
-	}
-
-	/**
-	 * Returns the commerce tax fixed rate with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param commerceTaxFixedRateId the primary key of the commerce tax fixed rate
 	 * @return the commerce tax fixed rate, or <code>null</code> if a commerce tax fixed rate with the primary key could not be found
 	 */
 	@Override
 	public CommerceTaxFixedRate fetchByPrimaryKey(long commerceTaxFixedRateId) {
 		return fetchByPrimaryKey((Serializable)commerceTaxFixedRateId);
-	}
-
-	@Override
-	public Map<Serializable, CommerceTaxFixedRate> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CommerceTaxFixedRate> map =
-			new HashMap<Serializable, CommerceTaxFixedRate>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CommerceTaxFixedRate commerceTaxFixedRate = fetchByPrimaryKey(
-				primaryKey);
-
-			if (commerceTaxFixedRate != null) {
-				map.put(primaryKey, commerceTaxFixedRate);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				CommerceTaxFixedRateModelImpl.ENTITY_CACHE_ENABLED,
-				CommerceTaxFixedRateImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (CommerceTaxFixedRate)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		sb.append(_SQL_SELECT_COMMERCETAXFIXEDRATE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CommerceTaxFixedRate commerceTaxFixedRate :
-					(List<CommerceTaxFixedRate>)query.list()) {
-
-				map.put(
-					commerceTaxFixedRate.getPrimaryKeyObj(),
-					commerceTaxFixedRate);
-
-				cacheResult(commerceTaxFixedRate);
-
-				uncachedPrimaryKeys.remove(
-					commerceTaxFixedRate.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					CommerceTaxFixedRateModelImpl.ENTITY_CACHE_ENABLED,
-					CommerceTaxFixedRateImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -2122,10 +1942,6 @@ public class CommerceTaxFixedRatePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2172,9 +1988,6 @@ public class CommerceTaxFixedRatePersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2183,6 +1996,21 @@ public class CommerceTaxFixedRatePersistenceImpl
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "commerceTaxFixedRateId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_COMMERCETAXFIXEDRATE;
 	}
 
 	@Override
@@ -2195,27 +2023,19 @@ public class CommerceTaxFixedRatePersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceTaxFixedRateModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceTaxFixedRateModelImpl.FINDER_CACHE_ENABLED,
 			CommerceTaxFixedRateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceTaxFixedRateModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceTaxFixedRateModelImpl.FINDER_CACHE_ENABLED,
 			CommerceTaxFixedRateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			CommerceTaxFixedRateModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceTaxFixedRateModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByCPTaxCategoryId = new FinderPath(
-			CommerceTaxFixedRateModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceTaxFixedRateModelImpl.FINDER_CACHE_ENABLED,
 			CommerceTaxFixedRateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPTaxCategoryId",
 			new String[] {
@@ -2224,8 +2044,6 @@ public class CommerceTaxFixedRatePersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByCPTaxCategoryId = new FinderPath(
-			CommerceTaxFixedRateModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceTaxFixedRateModelImpl.FINDER_CACHE_ENABLED,
 			CommerceTaxFixedRateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPTaxCategoryId",
 			new String[] {Long.class.getName()},
@@ -2233,14 +2051,10 @@ public class CommerceTaxFixedRatePersistenceImpl
 			CommerceTaxFixedRateModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByCPTaxCategoryId = new FinderPath(
-			CommerceTaxFixedRateModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceTaxFixedRateModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPTaxCategoryId",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCPTaxCategoryId", new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByCommerceTaxMethodId = new FinderPath(
-			CommerceTaxFixedRateModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceTaxFixedRateModelImpl.FINDER_CACHE_ENABLED,
 			CommerceTaxFixedRateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceTaxMethodId",
 			new String[] {
@@ -2249,8 +2063,6 @@ public class CommerceTaxFixedRatePersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByCommerceTaxMethodId = new FinderPath(
-			CommerceTaxFixedRateModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceTaxFixedRateModelImpl.FINDER_CACHE_ENABLED,
 			CommerceTaxFixedRateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCommerceTaxMethodId", new String[] {Long.class.getName()},
@@ -2258,14 +2070,10 @@ public class CommerceTaxFixedRatePersistenceImpl
 			CommerceTaxFixedRateModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByCommerceTaxMethodId = new FinderPath(
-			CommerceTaxFixedRateModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceTaxFixedRateModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCommerceTaxMethodId", new String[] {Long.class.getName()});
 
 		_finderPathFetchByC_C = new FinderPath(
-			CommerceTaxFixedRateModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceTaxFixedRateModelImpl.FINDER_CACHE_ENABLED,
 			CommerceTaxFixedRateImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
@@ -2273,9 +2081,7 @@ public class CommerceTaxFixedRatePersistenceImpl
 			CommerceTaxFixedRateModelImpl.COMMERCETAXMETHODID_COLUMN_BITMASK);
 
 		_finderPathCountByC_C = new FinderPath(
-			CommerceTaxFixedRateModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceTaxFixedRateModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()});
 	}
 
@@ -2294,9 +2100,6 @@ public class CommerceTaxFixedRatePersistenceImpl
 
 	private static final String _SQL_SELECT_COMMERCETAXFIXEDRATE =
 		"SELECT commerceTaxFixedRate FROM CommerceTaxFixedRate commerceTaxFixedRate";
-
-	private static final String _SQL_SELECT_COMMERCETAXFIXEDRATE_WHERE_PKS_IN =
-		"SELECT commerceTaxFixedRate FROM CommerceTaxFixedRate commerceTaxFixedRate WHERE commerceTaxFixedRateId IN (";
 
 	private static final String _SQL_SELECT_COMMERCETAXFIXEDRATE_WHERE =
 		"SELECT commerceTaxFixedRate FROM CommerceTaxFixedRate commerceTaxFixedRate WHERE ";

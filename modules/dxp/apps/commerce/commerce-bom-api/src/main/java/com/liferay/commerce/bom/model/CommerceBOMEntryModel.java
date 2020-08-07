@@ -14,19 +14,15 @@
 
 package com.liferay.commerce.bom.model;
 
-import aQute.bnd.annotation.ProviderType;
-
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
 
 import java.util.Date;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The base model interface for the CommerceBOMEntry service. Represents a row in the &quot;CommerceBOMEntry&quot; database table, with each column mapped to a property of this class.
@@ -41,7 +37,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface CommerceBOMEntryModel
-	extends AuditedModel, BaseModel<CommerceBOMEntry>, ShardedModel {
+	extends AuditedModel, BaseModel<CommerceBOMEntry>, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -62,6 +58,22 @@ public interface CommerceBOMEntryModel
 	 * @param primaryKey the primary key of this commerce bom entry
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this commerce bom entry.
+	 *
+	 * @return the mvcc version of this commerce bom entry
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this commerce bom entry.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce bom entry
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the commerce bom entry ID of this commerce bom entry.
@@ -272,62 +284,5 @@ public interface CommerceBOMEntryModel
 	 * @param radius the radius of this commerce bom entry
 	 */
 	public void setRadius(double radius);
-
-	@Override
-	public boolean isNew();
-
-	@Override
-	public void setNew(boolean n);
-
-	@Override
-	public boolean isCachedModel();
-
-	@Override
-	public void setCachedModel(boolean cachedModel);
-
-	@Override
-	public boolean isEscapedModel();
-
-	@Override
-	public Serializable getPrimaryKeyObj();
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj);
-
-	@Override
-	public ExpandoBridge getExpandoBridge();
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel);
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge);
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
-
-	@Override
-	public Object clone();
-
-	@Override
-	public int compareTo(CommerceBOMEntry commerceBOMEntry);
-
-	@Override
-	public int hashCode();
-
-	@Override
-	public CacheModel<CommerceBOMEntry> toCacheModel();
-
-	@Override
-	public CommerceBOMEntry toEscapedModel();
-
-	@Override
-	public CommerceBOMEntry toUnescapedModel();
-
-	@Override
-	public String toString();
-
-	@Override
-	public String toXmlString();
 
 }

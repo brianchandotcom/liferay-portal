@@ -33,6 +33,7 @@ public class CommerceBOMDefinitionSoap implements Serializable {
 
 		CommerceBOMDefinitionSoap soapModel = new CommerceBOMDefinitionSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCommerceBOMDefinitionId(
 			model.getCommerceBOMDefinitionId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -105,6 +106,14 @@ public class CommerceBOMDefinitionSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceBOMDefinitionId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getCommerceBOMDefinitionId() {
@@ -187,6 +196,7 @@ public class CommerceBOMDefinitionSoap implements Serializable {
 		_friendlyUrl = friendlyUrl;
 	}
 
+	private long _mvccVersion;
 	private long _commerceBOMDefinitionId;
 	private long _companyId;
 	private long _userId;

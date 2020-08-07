@@ -1509,10 +1509,6 @@ public class CPDefinitionLinkUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CPDefinitionLinkPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

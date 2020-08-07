@@ -37,13 +37,13 @@ public class CommerceChannelServiceWrapper
 			addCommerceChannel(
 				long siteGroupId, String name, String type,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					typeSettingsProperties,
+					typeSettingsUnicodeProperties,
 				String commerceCurrencyCode, String externalReferenceCode,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceChannelService.addCommerceChannel(
-			siteGroupId, name, type, typeSettingsProperties,
+			siteGroupId, name, type, typeSettingsUnicodeProperties,
 			commerceCurrencyCode, externalReferenceCode, serviceContext);
 	}
 
@@ -149,13 +149,13 @@ public class CommerceChannelServiceWrapper
 				long commerceChannelId, long siteGroupId, String name,
 				String type,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					typeSettingsProperties,
+					typeSettingsUnicodeProperties,
 				String commerceCurrencyCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceChannelService.updateCommerceChannel(
-			commerceChannelId, siteGroupId, name, type, typeSettingsProperties,
-			commerceCurrencyCode);
+			commerceChannelId, siteGroupId, name, type,
+			typeSettingsUnicodeProperties, commerceCurrencyCode);
 	}
 
 	@Override
@@ -164,14 +164,15 @@ public class CommerceChannelServiceWrapper
 				long commerceChannelId, long siteGroupId, String name,
 				String type,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					typeSettingsProperties,
+					typeSettingsUnicodeProperties,
 				String commerceCurrencyCode, String priceDisplayType,
 				boolean discountsTargetNetPrice)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceChannelService.updateCommerceChannel(
-			commerceChannelId, siteGroupId, name, type, typeSettingsProperties,
-			commerceCurrencyCode, priceDisplayType, discountsTargetNetPrice);
+			commerceChannelId, siteGroupId, name, type,
+			typeSettingsUnicodeProperties, commerceCurrencyCode,
+			priceDisplayType, discountsTargetNetPrice);
 	}
 
 	@Override

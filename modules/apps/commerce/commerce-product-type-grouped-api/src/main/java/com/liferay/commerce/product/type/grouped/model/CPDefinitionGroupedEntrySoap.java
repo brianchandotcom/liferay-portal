@@ -34,6 +34,7 @@ public class CPDefinitionGroupedEntrySoap implements Serializable {
 		CPDefinitionGroupedEntrySoap soapModel =
 			new CPDefinitionGroupedEntrySoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setCPDefinitionGroupedEntryId(
 			model.getCPDefinitionGroupedEntryId());
@@ -108,6 +109,14 @@ public class CPDefinitionGroupedEntrySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCPDefinitionGroupedEntryId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -206,6 +215,7 @@ public class CPDefinitionGroupedEntrySoap implements Serializable {
 		_quantity = quantity;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _CPDefinitionGroupedEntryId;
 	private long _groupId;

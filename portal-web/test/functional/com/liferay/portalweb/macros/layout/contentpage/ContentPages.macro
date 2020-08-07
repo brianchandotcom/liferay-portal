@@ -125,6 +125,15 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "${tabName}");
 
+		if (isSet(menuItem)) {
+			ContentPages.addSelection(
+				collectionName = "${collectionName}",
+				menuItem = "${menuItem}",
+				selectedAsset = "${selectedAsset}");
+
+			Click(locator1 = "Icon#BACK");
+		}
+
 		LexiconCard.clickCardTitle(card = "${collectionName}");
 
 		if (isSet(masterLayoutName)) {
@@ -169,6 +178,26 @@ definition {
 		AssertElementPresent(
 			key_fragmentName = "Collection Display",
 			locator1 = "Fragment#FRAGMENT_HEADER");
+	}
+
+	macro addSelection {
+		LexiconEntry.gotoAddMenuItem(menuItem = "${menuItem}");
+
+		PortletEntry.inputText(
+			fieldLabel = "Title",
+			text = "${collectionName}");
+
+		Button.clickSave();
+
+		Select(
+			locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT",
+			value1 = "${selectedAsset}");
+
+		Pause(locator1 = "3000");
+
+		PortletEntry.save();
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro clickPencil {

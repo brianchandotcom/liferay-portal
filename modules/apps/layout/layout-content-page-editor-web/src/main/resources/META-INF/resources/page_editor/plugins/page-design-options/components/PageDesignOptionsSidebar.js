@@ -110,6 +110,7 @@ const OptionList = ({options = [], icon}) => {
 				) => (
 					<li key={index}>
 						<ClayCard
+							aria-label={name}
 							className={classNames({
 								'page-editor__sidebar__design-options__tab-card--active': isActive,
 							})}

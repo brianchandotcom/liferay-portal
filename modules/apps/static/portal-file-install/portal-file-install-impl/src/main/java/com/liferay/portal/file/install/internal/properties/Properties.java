@@ -242,12 +242,6 @@ public class Properties extends AbstractMap<String, String> {
 		_typed = typed;
 	}
 
-	public void substitute() {
-		for (Entry<String, String> entry : _storage.entrySet()) {
-			entry.setValue(InterpolationUtil.substVars(entry.getValue()));
-		}
-	}
-
 	public static class PropertiesReader extends BufferedReader {
 
 		public PropertiesReader(Reader reader) {
@@ -302,7 +296,7 @@ public class Properties extends AbstractMap<String, String> {
 
 			_propertyName = _unescapeJava(property[0]);
 
-			_propertyValue = property[1];
+			_propertyValue = InterpolationUtil.substVars(property[1]);
 
 			return true;
 		}

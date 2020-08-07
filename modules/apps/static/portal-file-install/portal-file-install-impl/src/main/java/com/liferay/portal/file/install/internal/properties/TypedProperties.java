@@ -65,8 +65,6 @@ public class TypedProperties extends AbstractMap<String, Object> {
 
 	public void load(Reader reader) throws IOException {
 		_storage.loadLayout(reader);
-
-		_storage.substitute();
 	}
 
 	@Override

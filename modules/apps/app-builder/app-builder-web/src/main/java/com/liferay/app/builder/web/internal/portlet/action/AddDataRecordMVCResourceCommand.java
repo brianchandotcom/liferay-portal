@@ -23,27 +23,17 @@ import com.liferay.data.engine.rest.dto.v2_0.DataRecord;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordResource;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
-import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
+import java.util.Optional;
 
-import javax.servlet.http.HttpServletResponse;
+import javax.portlet.ResourceRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -59,37 +49,12 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCResourceCommand.class
 )
-public class AddDataRecordMVCResourceCommand extends BaseMVCResourceCommand {
+public class AddDataRecordMVCResourceCommand
+	extends BaseAppBuilderMVCResourceCommand<DataRecord> {
 
 	@Override
-	protected void doServeResource(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws Exception {
-
-		try {
-			TransactionInvokerUtil.invoke(
-				_transactionConfig,
-				() -> {
-					DataRecord dataRecord = _addDataRecord(resourceRequest);
-
-					JSONPortletResponseUtil.writeJSON(
-						resourceRequest, resourceResponse,
-						JSONUtil.put("dataRecord", dataRecord.toString()));
-
-					return null;
-				});
-		}
-		catch (Throwable throwable) {
-			_log.error(throwable, throwable);
-
-			HttpServletResponse httpServletResponse =
-				_portal.getHttpServletResponse(resourceResponse);
-
-			httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-		}
-	}
-
-	private DataRecord _addDataRecord(ResourceRequest resourceRequest)
+	protected Optional<DataRecord> doTransactionalCommand(
+			ResourceRequest resourceRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
@@ -124,21 +89,7 @@ public class AddDataRecordMVCResourceCommand extends BaseMVCResourceCommand {
 			_ddlRecordLocalService.getDDLRecord(dataRecord.getId()),
 			new ServiceContext());
 
-		return dataRecord;
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AddDataRecordMVCResourceCommand.class);
-
-	private static final TransactionConfig _transactionConfig;
-
-	static {
-		TransactionConfig.Builder builder = new TransactionConfig.Builder();
-
-		builder.setPropagation(Propagation.REQUIRES_NEW);
-		builder.setRollbackForClasses(Exception.class);
-
-		_transactionConfig = builder.build();
+		return Optional.of(dataRecord);
 	}
 
 	@Reference
@@ -150,8 +101,5 @@ public class AddDataRecordMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private DDLRecordLocalService _ddlRecordLocalService;
-
-	@Reference
-	private Portal _portal;
 
 }

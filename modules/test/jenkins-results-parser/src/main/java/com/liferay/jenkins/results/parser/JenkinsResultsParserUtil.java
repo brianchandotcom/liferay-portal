@@ -530,15 +530,12 @@ public class JenkinsResultsParserUtil {
 					Process process = runtime.exec(
 						sb.toString(), envp, baseDir);
 
-					InputStream inputStream = process.getInputStream();
+					try (CountingInputStream countingInputStream =
+							new CountingInputStream(process.getInputStream());
+						InputStreamReader inputStreamReader =
+							new InputStreamReader(
+								countingInputStream, StandardCharsets.UTF_8)) {
 
-					CountingInputStream countingInputStream =
-						new CountingInputStream(inputStream);
-
-					InputStreamReader inputStreamReader = new InputStreamReader(
-						countingInputStream, StandardCharsets.UTF_8);
-
-					try {
 						int logCharInt;
 
 						while ((logCharInt = inputStreamReader.read()) != -1) {
@@ -547,19 +544,6 @@ public class JenkinsResultsParserUtil {
 							}
 
 							System.out.print((char)logCharInt);
-						}
-					}
-					finally {
-						try {
-							inputStreamReader.close();
-						}
-						finally {
-							try {
-								countingInputStream.close();
-							}
-							finally {
-								inputStream.close();
-							}
 						}
 					}
 

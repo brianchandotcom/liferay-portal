@@ -42,7 +42,7 @@ definition {
 			Button.click(button = "New");
 		}
 
-		Button.click(button = "Import");
+		DropdownMenuItem.click(menuItem = "Import");
 
 		Pause(locator1 = "3000");
 

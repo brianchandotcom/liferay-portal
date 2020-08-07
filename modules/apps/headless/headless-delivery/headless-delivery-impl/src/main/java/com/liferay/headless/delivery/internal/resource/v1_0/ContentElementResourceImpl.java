@@ -212,7 +212,10 @@ public class ContentElementResourceImpl extends BaseContentElementResourceImpl {
 
 						return dtoConverter.toDTO(
 							new DefaultDTOConverterContext(
-								_dtoConverterRegistry, assetEntry.getClassPK(),
+								contextAcceptLanguage.isAcceptAllLanguages(),
+								new HashMap<>(), _dtoConverterRegistry,
+								contextHttpServletRequest,
+								assetEntry.getClassPK(),
 								contextAcceptLanguage.getPreferredLocale(),
 								contextUriInfo, contextUser));
 					});

@@ -98,7 +98,11 @@ public class AccountSerDes {
 
 			sb.append("\"id\": ");
 
-			sb.append(account.getId());
+			sb.append("\"");
+
+			sb.append(_escape(account.getId()));
+
+			sb.append("\"");
 		}
 
 		if (account.getName() != null) {
@@ -142,7 +146,11 @@ public class AccountSerDes {
 
 			sb.append("\"parentAccountId\": ");
 
-			sb.append(account.getParentAccountId());
+			sb.append("\"");
+
+			sb.append(_escape(account.getParentAccountId()));
+
+			sb.append("\"");
 		}
 
 		if (account.getStatus() != null) {
@@ -259,7 +267,7 @@ public class AccountSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
-					account.setId(Long.valueOf((String)jsonParserFieldValue));
+					account.setId((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
@@ -275,8 +283,7 @@ public class AccountSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "parentAccountId")) {
 				if (jsonParserFieldValue != null) {
-					account.setParentAccountId(
-						Long.valueOf((String)jsonParserFieldValue));
+					account.setParentAccountId((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "status")) {

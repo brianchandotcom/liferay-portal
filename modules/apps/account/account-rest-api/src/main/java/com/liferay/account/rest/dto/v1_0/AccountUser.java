@@ -105,17 +105,19 @@ public class AccountUser {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String firstName;
 
-	@Schema
-	public Long getId() {
+	@Schema(
+		description = "The key of the account user. This can either be the internal primary key or the external reference code."
+	)
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
 		}
@@ -127,9 +129,11 @@ public class AccountUser {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long id;
+	@GraphQLField(
+		description = "The key of the account user. This can either be the internal primary key or the external reference code."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String id;
 
 	@Schema
 	public String getLastName() {
@@ -333,7 +337,11 @@ public class AccountUser {
 
 			sb.append("\"id\": ");
 
-			sb.append(id);
+			sb.append("\"");
+
+			sb.append(_escape(id));
+
+			sb.append("\"");
 		}
 
 		if (lastName != null) {

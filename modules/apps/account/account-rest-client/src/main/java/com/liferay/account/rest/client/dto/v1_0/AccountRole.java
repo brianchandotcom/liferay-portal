@@ -32,16 +32,16 @@ public class AccountRole implements Cloneable {
 		return AccountRoleSerDes.toDTO(json);
 	}
 
-	public Long getAccountId() {
+	public String getAccountId() {
 		return accountId;
 	}
 
-	public void setAccountId(Long accountId) {
+	public void setAccountId(String accountId) {
 		this.accountId = accountId;
 	}
 
 	public void setAccountId(
-		UnsafeSupplier<Long, Exception> accountIdUnsafeSupplier) {
+		UnsafeSupplier<String, Exception> accountIdUnsafeSupplier) {
 
 		try {
 			accountId = accountIdUnsafeSupplier.get();
@@ -51,7 +51,7 @@ public class AccountRole implements Cloneable {
 		}
 	}
 
-	protected Long accountId;
+	protected String accountId;
 
 	public String getDescription() {
 		return description;

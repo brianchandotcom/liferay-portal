@@ -94,7 +94,7 @@ public class Mutation {
 	}
 
 	@GraphQLField(description = "Deletes an account.")
-	public boolean deleteAccount(@GraphQLName("accountId") Long accountId)
+	public boolean deleteAccount(@GraphQLName("accountId") String accountId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -122,7 +122,7 @@ public class Mutation {
 		description = "Updates the account with information sent in the request body. Only the provided fields are updated."
 	)
 	public Account patchAccount(
-			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("accountId") String accountId,
 			@GraphQLName("account") Account account)
 		throws Exception {
 
@@ -137,7 +137,7 @@ public class Mutation {
 		description = "Replaces the account with information sent in the request body. Any missing fields are deleted unless they are required."
 	)
 	public Account updateAccount(
-			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("accountId") String accountId,
 			@GraphQLName("account") Account account)
 		throws Exception {
 
@@ -162,7 +162,7 @@ public class Mutation {
 
 	@GraphQLField(description = "Adds a role for the account")
 	public AccountRole createAccountRole(
-			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("accountId") String accountId,
 			@GraphQLName("accountRole") AccountRole accountRole)
 		throws Exception {
 
@@ -175,9 +175,9 @@ public class Mutation {
 
 	@GraphQLField(description = "Unassigns account users to the account role")
 	public boolean deleteAccountRoleUserAssociation(
-			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("accountId") String accountId,
 			@GraphQLName("accountRoleId") Long accountRoleId,
-			@GraphQLName("accountUserId") Long accountUserId)
+			@GraphQLName("accountUserId") String accountUserId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -192,9 +192,9 @@ public class Mutation {
 
 	@GraphQLField(description = "Assigns account users to the account role")
 	public boolean createAccountRoleUserAssociation(
-			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("accountId") String accountId,
 			@GraphQLName("accountRoleId") Long accountRoleId,
-			@GraphQLName("accountUserId") Long accountUserId)
+			@GraphQLName("accountUserId") String accountUserId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -211,7 +211,7 @@ public class Mutation {
 		description = "Creates a user and assigns them to the account"
 	)
 	public AccountUser createAccountUser(
-			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("accountId") String accountId,
 			@GraphQLName("accountUser") AccountUser accountUser)
 		throws Exception {
 

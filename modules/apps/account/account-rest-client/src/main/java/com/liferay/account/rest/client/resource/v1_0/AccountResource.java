@@ -62,9 +62,9 @@ public interface AccountResource {
 			String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteAccount(Long accountId) throws Exception;
+	public void deleteAccount(String accountId) throws Exception;
 
-	public HttpInvoker.HttpResponse deleteAccountHttpResponse(Long accountId)
+	public HttpInvoker.HttpResponse deleteAccountHttpResponse(String accountId)
 		throws Exception;
 
 	public void deleteAccountBatch(String callbackURL, Object object)
@@ -74,22 +74,23 @@ public interface AccountResource {
 			String callbackURL, Object object)
 		throws Exception;
 
-	public Account getAccount(Long accountId) throws Exception;
+	public Account getAccount(String accountId) throws Exception;
 
-	public HttpInvoker.HttpResponse getAccountHttpResponse(Long accountId)
+	public HttpInvoker.HttpResponse getAccountHttpResponse(String accountId)
 		throws Exception;
 
-	public Account patchAccount(Long accountId, Account account)
+	public Account patchAccount(String accountId, Account account)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse patchAccountHttpResponse(
-			Long accountId, Account account)
+			String accountId, Account account)
 		throws Exception;
 
-	public Account putAccount(Long accountId, Account account) throws Exception;
+	public Account putAccount(String accountId, Account account)
+		throws Exception;
 
 	public HttpInvoker.HttpResponse putAccountHttpResponse(
-			Long accountId, Account account)
+			String accountId, Account account)
 		throws Exception;
 
 	public void putAccountBatch(String callbackURL, Object object)
@@ -354,7 +355,7 @@ public interface AccountResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteAccount(Long accountId) throws Exception {
+		public void deleteAccount(String accountId) throws Exception {
 			HttpInvoker.HttpResponse httpResponse = deleteAccountHttpResponse(
 				accountId);
 
@@ -379,7 +380,7 @@ public interface AccountResource {
 		}
 
 		public HttpInvoker.HttpResponse deleteAccountHttpResponse(
-				Long accountId)
+				String accountId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -470,7 +471,7 @@ public interface AccountResource {
 			return httpInvoker.invoke();
 		}
 
-		public Account getAccount(Long accountId) throws Exception {
+		public Account getAccount(String accountId) throws Exception {
 			HttpInvoker.HttpResponse httpResponse = getAccountHttpResponse(
 				accountId);
 
@@ -494,7 +495,7 @@ public interface AccountResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getAccountHttpResponse(Long accountId)
+		public HttpInvoker.HttpResponse getAccountHttpResponse(String accountId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -530,7 +531,7 @@ public interface AccountResource {
 			return httpInvoker.invoke();
 		}
 
-		public Account patchAccount(Long accountId, Account account)
+		public Account patchAccount(String accountId, Account account)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = patchAccountHttpResponse(
@@ -557,7 +558,7 @@ public interface AccountResource {
 		}
 
 		public HttpInvoker.HttpResponse patchAccountHttpResponse(
-				Long accountId, Account account)
+				String accountId, Account account)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -595,7 +596,7 @@ public interface AccountResource {
 			return httpInvoker.invoke();
 		}
 
-		public Account putAccount(Long accountId, Account account)
+		public Account putAccount(String accountId, Account account)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = putAccountHttpResponse(
@@ -622,7 +623,7 @@ public interface AccountResource {
 		}
 
 		public HttpInvoker.HttpResponse putAccountHttpResponse(
-				Long accountId, Account account)
+				String accountId, Account account)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

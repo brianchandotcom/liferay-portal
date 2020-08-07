@@ -62,7 +62,11 @@ public class AccountRoleSerDes {
 
 			sb.append("\"accountId\": ");
 
-			sb.append(accountRole.getAccountId());
+			sb.append("\"");
+
+			sb.append(_escape(accountRole.getAccountId()));
+
+			sb.append("\"");
 		}
 
 		if (accountRole.getDescription() != null) {
@@ -213,8 +217,7 @@ public class AccountRoleSerDes {
 
 			if (Objects.equals(jsonParserFieldName, "accountId")) {
 				if (jsonParserFieldValue != null) {
-					accountRole.setAccountId(
-						Long.valueOf((String)jsonParserFieldValue));
+					accountRole.setAccountId((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "description")) {

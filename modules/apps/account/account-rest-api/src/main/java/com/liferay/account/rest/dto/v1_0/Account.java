@@ -109,17 +109,19 @@ public class Account {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] domains;
 
-	@Schema
-	public Long getId() {
+	@Schema(
+		description = "The key of the account. This can either be the internal primary key or the external reference code."
+	)
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
 		}
@@ -131,9 +133,11 @@ public class Account {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long id;
+	@GraphQLField(
+		description = "The key of the account. This can either be the internal primary key or the external reference code."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String id;
 
 	@Schema
 	public String getName() {
@@ -190,17 +194,17 @@ public class Account {
 	protected Long[] organizationIds;
 
 	@Schema
-	public Long getParentAccountId() {
+	public String getParentAccountId() {
 		return parentAccountId;
 	}
 
-	public void setParentAccountId(Long parentAccountId) {
+	public void setParentAccountId(String parentAccountId) {
 		this.parentAccountId = parentAccountId;
 	}
 
 	@JsonIgnore
 	public void setParentAccountId(
-		UnsafeSupplier<Long, Exception> parentAccountIdUnsafeSupplier) {
+		UnsafeSupplier<String, Exception> parentAccountIdUnsafeSupplier) {
 
 		try {
 			parentAccountId = parentAccountIdUnsafeSupplier.get();
@@ -215,7 +219,7 @@ public class Account {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long parentAccountId;
+	protected String parentAccountId;
 
 	@Schema
 	public Integer getStatus() {
@@ -317,7 +321,11 @@ public class Account {
 
 			sb.append("\"id\": ");
 
-			sb.append(id);
+			sb.append("\"");
+
+			sb.append(_escape(id));
+
+			sb.append("\"");
 		}
 
 		if (name != null) {
@@ -361,7 +369,11 @@ public class Account {
 
 			sb.append("\"parentAccountId\": ");
 
-			sb.append(parentAccountId);
+			sb.append("\"");
+
+			sb.append(_escape(parentAccountId));
+
+			sb.append("\"");
 		}
 
 		if (status != null) {

@@ -41,37 +41,38 @@ public interface AccountRoleResource {
 	}
 
 	public Page<AccountRole> getAccountRolesPage(
-			Long accountId, String keywords, Pagination pagination,
+			String accountId, String keywords, Pagination pagination,
 			String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getAccountRolesPageHttpResponse(
-			Long accountId, String keywords, Pagination pagination,
+			String accountId, String keywords, Pagination pagination,
 			String sortString)
 		throws Exception;
 
-	public AccountRole postAccountRole(Long accountId, AccountRole accountRole)
+	public AccountRole postAccountRole(
+			String accountId, AccountRole accountRole)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postAccountRoleHttpResponse(
-			Long accountId, AccountRole accountRole)
+			String accountId, AccountRole accountRole)
 		throws Exception;
 
 	public void deleteAccountRoleUserAssociation(
-			Long accountId, Long accountRoleId, Long accountUserId)
+			String accountId, Long accountRoleId, String accountUserId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			deleteAccountRoleUserAssociationHttpResponse(
-				Long accountId, Long accountRoleId, Long accountUserId)
+				String accountId, Long accountRoleId, String accountUserId)
 		throws Exception;
 
 	public void postAccountRoleUserAssociation(
-			Long accountId, Long accountRoleId, Long accountUserId)
+			String accountId, Long accountRoleId, String accountUserId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postAccountRoleUserAssociationHttpResponse(
-			Long accountId, Long accountRoleId, Long accountUserId)
+			String accountId, Long accountRoleId, String accountUserId)
 		throws Exception;
 
 	public static class Builder {
@@ -130,7 +131,7 @@ public interface AccountRoleResource {
 	public static class AccountRoleResourceImpl implements AccountRoleResource {
 
 		public Page<AccountRole> getAccountRolesPage(
-				Long accountId, String keywords, Pagination pagination,
+				String accountId, String keywords, Pagination pagination,
 				String sortString)
 			throws Exception {
 
@@ -159,7 +160,7 @@ public interface AccountRoleResource {
 		}
 
 		public HttpInvoker.HttpResponse getAccountRolesPageHttpResponse(
-				Long accountId, String keywords, Pagination pagination,
+				String accountId, String keywords, Pagination pagination,
 				String sortString)
 			throws Exception {
 
@@ -212,7 +213,7 @@ public interface AccountRoleResource {
 		}
 
 		public AccountRole postAccountRole(
-				Long accountId, AccountRole accountRole)
+				String accountId, AccountRole accountRole)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = postAccountRoleHttpResponse(
@@ -239,7 +240,7 @@ public interface AccountRoleResource {
 		}
 
 		public HttpInvoker.HttpResponse postAccountRoleHttpResponse(
-				Long accountId, AccountRole accountRole)
+				String accountId, AccountRole accountRole)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -278,7 +279,7 @@ public interface AccountRoleResource {
 		}
 
 		public void deleteAccountRoleUserAssociation(
-				Long accountId, Long accountRoleId, Long accountUserId)
+				String accountId, Long accountRoleId, String accountUserId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -307,7 +308,7 @@ public interface AccountRoleResource {
 
 		public HttpInvoker.HttpResponse
 				deleteAccountRoleUserAssociationHttpResponse(
-					Long accountId, Long accountRoleId, Long accountUserId)
+					String accountId, Long accountRoleId, String accountUserId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -344,7 +345,7 @@ public interface AccountRoleResource {
 		}
 
 		public void postAccountRoleUserAssociation(
-				Long accountId, Long accountRoleId, Long accountUserId)
+				String accountId, Long accountRoleId, String accountUserId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -373,7 +374,7 @@ public interface AccountRoleResource {
 
 		public HttpInvoker.HttpResponse
 				postAccountRoleUserAssociationHttpResponse(
-					Long accountId, Long accountRoleId, Long accountUserId)
+					String accountId, Long accountRoleId, String accountUserId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

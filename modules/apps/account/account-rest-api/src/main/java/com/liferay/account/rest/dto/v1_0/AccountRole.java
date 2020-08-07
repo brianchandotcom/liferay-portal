@@ -49,18 +49,20 @@ public class AccountRole {
 		return ObjectMapperUtil.readValue(AccountRole.class, json);
 	}
 
-	@Schema(description = "The primary key of the account that owns this role.")
-	public Long getAccountId() {
+	@Schema(
+		description = "The key of the account that owns this role. This can either be the internal primary key or the external reference code."
+	)
+	public String getAccountId() {
 		return accountId;
 	}
 
-	public void setAccountId(Long accountId) {
+	public void setAccountId(String accountId) {
 		this.accountId = accountId;
 	}
 
 	@JsonIgnore
 	public void setAccountId(
-		UnsafeSupplier<Long, Exception> accountIdUnsafeSupplier) {
+		UnsafeSupplier<String, Exception> accountIdUnsafeSupplier) {
 
 		try {
 			accountId = accountIdUnsafeSupplier.get();
@@ -74,10 +76,10 @@ public class AccountRole {
 	}
 
 	@GraphQLField(
-		description = "The primary key of the account that owns this role."
+		description = "The key of the account that owns this role. This can either be the internal primary key or the external reference code."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long accountId;
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String accountId;
 
 	@Schema
 	public String getDescription() {
@@ -251,7 +253,11 @@ public class AccountRole {
 
 			sb.append("\"accountId\": ");
 
-			sb.append(accountId);
+			sb.append("\"");
+
+			sb.append(_escape(accountId));
+
+			sb.append("\"");
 		}
 
 		if (description != null) {

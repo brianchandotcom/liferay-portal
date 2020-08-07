@@ -192,7 +192,9 @@ public abstract class BaseAccountResourceTestCase {
 		Account account = randomAccount();
 
 		account.setDescription(regex);
+		account.setId(regex);
 		account.setName(regex);
+		account.setParentAccountId(regex);
 
 		String json = AccountSerDes.toJSON(account);
 
@@ -201,7 +203,9 @@ public abstract class BaseAccountResourceTestCase {
 		account = AccountSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, account.getDescription());
+		Assert.assertEquals(regex, account.getId());
 		Assert.assertEquals(regex, account.getName());
+		Assert.assertEquals(regex, account.getParentAccountId());
 	}
 
 	@Test
@@ -494,7 +498,7 @@ public abstract class BaseAccountResourceTestCase {
 			404, accountResource.getAccountHttpResponse(account.getId()));
 
 		assertHttpResponseStatusCode(
-			404, accountResource.getAccountHttpResponse(0L));
+			404, accountResource.getAccountHttpResponse("-"));
 	}
 
 	protected Account testDeleteAccount_addAccount() throws Exception {
@@ -513,7 +517,7 @@ public abstract class BaseAccountResourceTestCase {
 						"deleteAccount",
 						new HashMap<String, Object>() {
 							{
-								put("accountId", account.getId());
+								put("accountId", "\"" + account.getId() + "\"");
 							}
 						})),
 				"JSONObject/data", "Object/deleteAccount"));
@@ -529,7 +533,7 @@ public abstract class BaseAccountResourceTestCase {
 						"account",
 						new HashMap<String, Object>() {
 							{
-								put("accountId", account.getId());
+								put("accountId", "\"" + account.getId() + "\"");
 							}
 						},
 						new GraphQLField("id"))),
@@ -568,7 +572,9 @@ public abstract class BaseAccountResourceTestCase {
 								"account",
 								new HashMap<String, Object>() {
 									{
-										put("accountId", account.getId());
+										put(
+											"accountId",
+											"\"" + account.getId() + "\"");
 									}
 								},
 								getGraphQLFields())),
@@ -577,7 +583,8 @@ public abstract class BaseAccountResourceTestCase {
 
 	@Test
 	public void testGraphQLGetAccountNotFound() throws Exception {
-		Long irrelevantAccountId = RandomTestUtil.randomLong();
+		String irrelevantAccountId =
+			"\"" + RandomTestUtil.randomString() + "\"";
 
 		Assert.assertEquals(
 			"Not Found",
@@ -1011,8 +1018,11 @@ public abstract class BaseAccountResourceTestCase {
 		}
 
 		if (entityFieldName.equals("id")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append("'");
+			sb.append(String.valueOf(account.getId()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("name")) {
@@ -1029,8 +1039,11 @@ public abstract class BaseAccountResourceTestCase {
 		}
 
 		if (entityFieldName.equals("parentAccountId")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append("'");
+			sb.append(String.valueOf(account.getParentAccountId()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("status")) {
@@ -1084,9 +1097,10 @@ public abstract class BaseAccountResourceTestCase {
 			{
 				description = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
-				id = RandomTestUtil.randomLong();
+				id = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				parentAccountId = RandomTestUtil.randomLong();
+				parentAccountId = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				status = RandomTestUtil.randomInt();
 			}
 		};

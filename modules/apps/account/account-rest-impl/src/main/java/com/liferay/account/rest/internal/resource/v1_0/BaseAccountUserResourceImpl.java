@@ -101,7 +101,7 @@ public abstract class BaseAccountUserResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountUser")})
 	public Page<AccountUser> getAccountUsersPage(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
+			@NotNull @Parameter(hidden = true) @PathParam("accountId") String
 				accountId,
 			@Parameter(hidden = true) @QueryParam("search") String search,
 			@Context Filter filter, @Context Pagination pagination,
@@ -114,7 +114,7 @@ public abstract class BaseAccountUserResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/account-rest/v1.0/accounts/{accountId}/account-users' -d $'{"emailAddress": ___, "firstName": ___, "lastName": ___, "middleName": ___, "prefix": ___, "screenName": ___, "suffix": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/account-rest/v1.0/accounts/{accountId}/account-users' -d $'{"emailAddress": ___, "firstName": ___, "id": ___, "lastName": ___, "middleName": ___, "prefix": ___, "screenName": ___, "suffix": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
@@ -125,7 +125,7 @@ public abstract class BaseAccountUserResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountUser")})
 	public AccountUser postAccountUser(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
+			@NotNull @Parameter(hidden = true) @PathParam("accountId") String
 				accountId,
 			AccountUser accountUser)
 		throws Exception {

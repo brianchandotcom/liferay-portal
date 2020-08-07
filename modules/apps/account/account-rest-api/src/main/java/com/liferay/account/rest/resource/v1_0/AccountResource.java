@@ -58,17 +58,18 @@ public interface AccountResource {
 	public Response postAccountBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteAccount(Long accountId) throws Exception;
+	public void deleteAccount(String accountId) throws Exception;
 
 	public Response deleteAccountBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public Account getAccount(Long accountId) throws Exception;
+	public Account getAccount(String accountId) throws Exception;
 
-	public Account patchAccount(Long accountId, Account account)
+	public Account patchAccount(String accountId, Account account)
 		throws Exception;
 
-	public Account putAccount(Long accountId, Account account) throws Exception;
+	public Account putAccount(String accountId, Account account)
+		throws Exception;
 
 	public Response putAccountBatch(String callbackURL, Object object)
 		throws Exception;

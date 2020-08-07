@@ -186,6 +186,7 @@ public abstract class BaseAccountRoleResourceTestCase {
 
 		AccountRole accountRole = randomAccountRole();
 
+		accountRole.setAccountId(regex);
 		accountRole.setDescription(regex);
 		accountRole.setDisplayName(regex);
 		accountRole.setName(regex);
@@ -196,6 +197,7 @@ public abstract class BaseAccountRoleResourceTestCase {
 
 		accountRole = AccountRoleSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, accountRole.getAccountId());
 		Assert.assertEquals(regex, accountRole.getDescription());
 		Assert.assertEquals(regex, accountRole.getDisplayName());
 		Assert.assertEquals(regex, accountRole.getName());
@@ -209,8 +211,8 @@ public abstract class BaseAccountRoleResourceTestCase {
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Long accountId = testGetAccountRolesPage_getAccountId();
-		Long irrelevantAccountId =
+		String accountId = testGetAccountRolesPage_getAccountId();
+		String irrelevantAccountId =
 			testGetAccountRolesPage_getIrrelevantAccountId();
 
 		if ((irrelevantAccountId != null)) {
@@ -248,7 +250,7 @@ public abstract class BaseAccountRoleResourceTestCase {
 
 	@Test
 	public void testGetAccountRolesPageWithPagination() throws Exception {
-		Long accountId = testGetAccountRolesPage_getAccountId();
+		String accountId = testGetAccountRolesPage_getAccountId();
 
 		AccountRole accountRole1 = testGetAccountRolesPage_addAccountRole(
 			accountId, randomAccountRole());
@@ -367,7 +369,7 @@ public abstract class BaseAccountRoleResourceTestCase {
 			return;
 		}
 
-		Long accountId = testGetAccountRolesPage_getAccountId();
+		String accountId = testGetAccountRolesPage_getAccountId();
 
 		AccountRole accountRole1 = randomAccountRole();
 		AccountRole accountRole2 = randomAccountRole();
@@ -403,19 +405,19 @@ public abstract class BaseAccountRoleResourceTestCase {
 	}
 
 	protected AccountRole testGetAccountRolesPage_addAccountRole(
-			Long accountId, AccountRole accountRole)
+			String accountId, AccountRole accountRole)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetAccountRolesPage_getAccountId() throws Exception {
+	protected String testGetAccountRolesPage_getAccountId() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetAccountRolesPage_getIrrelevantAccountId()
+	protected String testGetAccountRolesPage_getIrrelevantAccountId()
 		throws Exception {
 
 		return null;
@@ -423,7 +425,7 @@ public abstract class BaseAccountRoleResourceTestCase {
 
 	@Test
 	public void testGraphQLGetAccountRolesPage() throws Exception {
-		Long accountId = testGetAccountRolesPage_getAccountId();
+		String accountId = testGetAccountRolesPage_getAccountId();
 
 		GraphQLField graphQLField = new GraphQLField(
 			"accountRoles",
@@ -432,7 +434,7 @@ public abstract class BaseAccountRoleResourceTestCase {
 					put("page", 1);
 					put("pageSize", 2);
 
-					put("accountId", accountId);
+					put("accountId", "\"" + accountId + "\"");
 				}
 			},
 			new GraphQLField("items", getGraphQLFields()),
@@ -866,8 +868,11 @@ public abstract class BaseAccountRoleResourceTestCase {
 		sb.append(" ");
 
 		if (entityFieldName.equals("accountId")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append("'");
+			sb.append(String.valueOf(accountRole.getAccountId()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("description")) {
@@ -948,7 +953,8 @@ public abstract class BaseAccountRoleResourceTestCase {
 	protected AccountRole randomAccountRole() throws Exception {
 		return new AccountRole() {
 			{
-				accountId = RandomTestUtil.randomLong();
+				accountId = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				description = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				displayName = StringUtil.toLowerCase(

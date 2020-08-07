@@ -107,7 +107,7 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {account(accountId: ___){description, domains, id, name, organizationIds, parentAccountId, status}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "")
-	public Account account(@GraphQLName("accountId") Long accountId)
+	public Account account(@GraphQLName("accountId") String accountId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -123,7 +123,7 @@ public class Query {
 	 */
 	@GraphQLField(description = "Gets the account's roles")
 	public AccountRolePage accountRoles(
-			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("accountId") String accountId,
 			@GraphQLName("keywords") String keywords,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page,
@@ -146,7 +146,7 @@ public class Query {
 	 */
 	@GraphQLField(description = "Gets the users assigned to an account")
 	public AccountUserPage accountUsers(
-			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("accountId") String accountId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,

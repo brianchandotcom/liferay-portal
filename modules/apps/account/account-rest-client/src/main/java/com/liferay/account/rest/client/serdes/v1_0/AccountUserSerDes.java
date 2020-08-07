@@ -90,7 +90,11 @@ public class AccountUserSerDes {
 
 			sb.append("\"id\": ");
 
-			sb.append(accountUser.getId());
+			sb.append("\"");
+
+			sb.append(_escape(accountUser.getId()));
+
+			sb.append("\"");
 		}
 
 		if (accountUser.getLastName() != null) {
@@ -272,8 +276,7 @@ public class AccountUserSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
-					accountUser.setId(
-						Long.valueOf((String)jsonParserFieldValue));
+					accountUser.setId((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "lastName")) {

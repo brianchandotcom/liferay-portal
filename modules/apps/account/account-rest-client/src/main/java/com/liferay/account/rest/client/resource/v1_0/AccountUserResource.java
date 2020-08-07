@@ -41,20 +41,21 @@ public interface AccountUserResource {
 	}
 
 	public Page<AccountUser> getAccountUsersPage(
-			Long accountId, String search, String filterString,
+			String accountId, String search, String filterString,
 			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getAccountUsersPageHttpResponse(
-			Long accountId, String search, String filterString,
+			String accountId, String search, String filterString,
 			Pagination pagination, String sortString)
 		throws Exception;
 
-	public AccountUser postAccountUser(Long accountId, AccountUser accountUser)
+	public AccountUser postAccountUser(
+			String accountId, AccountUser accountUser)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postAccountUserHttpResponse(
-			Long accountId, AccountUser accountUser)
+			String accountId, AccountUser accountUser)
 		throws Exception;
 
 	public static class Builder {
@@ -113,7 +114,7 @@ public interface AccountUserResource {
 	public static class AccountUserResourceImpl implements AccountUserResource {
 
 		public Page<AccountUser> getAccountUsersPage(
-				Long accountId, String search, String filterString,
+				String accountId, String search, String filterString,
 				Pagination pagination, String sortString)
 			throws Exception {
 
@@ -142,7 +143,7 @@ public interface AccountUserResource {
 		}
 
 		public HttpInvoker.HttpResponse getAccountUsersPageHttpResponse(
-				Long accountId, String search, String filterString,
+				String accountId, String search, String filterString,
 				Pagination pagination, String sortString)
 			throws Exception {
 
@@ -199,7 +200,7 @@ public interface AccountUserResource {
 		}
 
 		public AccountUser postAccountUser(
-				Long accountId, AccountUser accountUser)
+				String accountId, AccountUser accountUser)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = postAccountUserHttpResponse(
@@ -226,7 +227,7 @@ public interface AccountUserResource {
 		}
 
 		public HttpInvoker.HttpResponse postAccountUserHttpResponse(
-				Long accountId, AccountUser accountUser)
+				String accountId, AccountUser accountUser)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

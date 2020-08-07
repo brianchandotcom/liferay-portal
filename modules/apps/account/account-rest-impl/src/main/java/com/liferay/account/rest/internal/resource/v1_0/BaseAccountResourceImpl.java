@@ -117,7 +117,7 @@ public abstract class BaseAccountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/account-rest/v1.0/accounts' -d $'{"description": ___, "domains": ___, "name": ___, "organizationIds": ___, "parentAccountId": ___, "status": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/account-rest/v1.0/accounts' -d $'{"description": ___, "domains": ___, "id": ___, "name": ___, "organizationIds": ___, "parentAccountId": ___, "status": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
@@ -179,7 +179,7 @@ public abstract class BaseAccountResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Account")})
 	public void deleteAccount(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
+			@NotNull @Parameter(hidden = true) @PathParam("accountId") String
 				accountId)
 		throws Exception {
 	}
@@ -233,7 +233,7 @@ public abstract class BaseAccountResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Account")})
 	public Account getAccount(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
+			@NotNull @Parameter(hidden = true) @PathParam("accountId") String
 				accountId)
 		throws Exception {
 
@@ -243,7 +243,7 @@ public abstract class BaseAccountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/account-rest/v1.0/accounts/{accountId}' -d $'{"description": ___, "domains": ___, "name": ___, "organizationIds": ___, "parentAccountId": ___, "status": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/account-rest/v1.0/accounts/{accountId}' -d $'{"description": ___, "domains": ___, "id": ___, "name": ___, "organizationIds": ___, "parentAccountId": ___, "status": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
@@ -256,7 +256,7 @@ public abstract class BaseAccountResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {})
 	public Account patchAccount(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
+			@NotNull @Parameter(hidden = true) @PathParam("accountId") String
 				accountId,
 			Account account)
 		throws Exception {
@@ -295,7 +295,7 @@ public abstract class BaseAccountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/account-rest/v1.0/accounts/{accountId}' -d $'{"description": ___, "domains": ___, "name": ___, "organizationIds": ___, "parentAccountId": ___, "status": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/account-rest/v1.0/accounts/{accountId}' -d $'{"description": ___, "domains": ___, "id": ___, "name": ___, "organizationIds": ___, "parentAccountId": ___, "status": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
@@ -308,7 +308,7 @@ public abstract class BaseAccountResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Account")})
 	public Account putAccount(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
+			@NotNull @Parameter(hidden = true) @PathParam("accountId") String
 				accountId,
 			Account account)
 		throws Exception {
@@ -431,7 +431,7 @@ public abstract class BaseAccountResourceImpl
 		for (Account account : accounts) {
 			putAccount(
 				account.getId() != null ? account.getId() :
-				(Long)parameters.get("accountId"),
+				(String)parameters.get("accountId"),
 				account);
 		}
 	}

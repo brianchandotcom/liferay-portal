@@ -74,15 +74,15 @@ public class Account implements Cloneable {
 
 	protected String[] domains;
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
 		}
@@ -91,7 +91,7 @@ public class Account implements Cloneable {
 		}
 	}
 
-	protected Long id;
+	protected String id;
 
 	public String getName() {
 		return name;
@@ -133,16 +133,16 @@ public class Account implements Cloneable {
 
 	protected Long[] organizationIds;
 
-	public Long getParentAccountId() {
+	public String getParentAccountId() {
 		return parentAccountId;
 	}
 
-	public void setParentAccountId(Long parentAccountId) {
+	public void setParentAccountId(String parentAccountId) {
 		this.parentAccountId = parentAccountId;
 	}
 
 	public void setParentAccountId(
-		UnsafeSupplier<Long, Exception> parentAccountIdUnsafeSupplier) {
+		UnsafeSupplier<String, Exception> parentAccountIdUnsafeSupplier) {
 
 		try {
 			parentAccountId = parentAccountIdUnsafeSupplier.get();
@@ -152,7 +152,7 @@ public class Account implements Cloneable {
 		}
 	}
 
-	protected Long parentAccountId;
+	protected String parentAccountId;
 
 	public Integer getStatus() {
 		return status;

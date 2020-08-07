@@ -49,11 +49,12 @@ public interface AccountUserResource {
 	}
 
 	public Page<AccountUser> getAccountUsersPage(
-			Long accountId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			String accountId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public AccountUser postAccountUser(Long accountId, AccountUser accountUser)
+	public AccountUser postAccountUser(
+			String accountId, AccountUser accountUser)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

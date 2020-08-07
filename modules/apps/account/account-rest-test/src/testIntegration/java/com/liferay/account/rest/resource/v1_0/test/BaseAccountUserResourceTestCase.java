@@ -189,6 +189,7 @@ public abstract class BaseAccountUserResourceTestCase {
 
 		accountUser.setEmailAddress(regex);
 		accountUser.setFirstName(regex);
+		accountUser.setId(regex);
 		accountUser.setLastName(regex);
 		accountUser.setMiddleName(regex);
 		accountUser.setPrefix(regex);
@@ -203,6 +204,7 @@ public abstract class BaseAccountUserResourceTestCase {
 
 		Assert.assertEquals(regex, accountUser.getEmailAddress());
 		Assert.assertEquals(regex, accountUser.getFirstName());
+		Assert.assertEquals(regex, accountUser.getId());
 		Assert.assertEquals(regex, accountUser.getLastName());
 		Assert.assertEquals(regex, accountUser.getMiddleName());
 		Assert.assertEquals(regex, accountUser.getPrefix());
@@ -218,8 +220,8 @@ public abstract class BaseAccountUserResourceTestCase {
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Long accountId = testGetAccountUsersPage_getAccountId();
-		Long irrelevantAccountId =
+		String accountId = testGetAccountUsersPage_getAccountId();
+		String irrelevantAccountId =
 			testGetAccountUsersPage_getIrrelevantAccountId();
 
 		if ((irrelevantAccountId != null)) {
@@ -266,7 +268,7 @@ public abstract class BaseAccountUserResourceTestCase {
 			return;
 		}
 
-		Long accountId = testGetAccountUsersPage_getAccountId();
+		String accountId = testGetAccountUsersPage_getAccountId();
 
 		AccountUser accountUser1 = randomAccountUser();
 
@@ -296,7 +298,7 @@ public abstract class BaseAccountUserResourceTestCase {
 			return;
 		}
 
-		Long accountId = testGetAccountUsersPage_getAccountId();
+		String accountId = testGetAccountUsersPage_getAccountId();
 
 		AccountUser accountUser1 = testGetAccountUsersPage_addAccountUser(
 			accountId, randomAccountUser());
@@ -319,7 +321,7 @@ public abstract class BaseAccountUserResourceTestCase {
 
 	@Test
 	public void testGetAccountUsersPageWithPagination() throws Exception {
-		Long accountId = testGetAccountUsersPage_getAccountId();
+		String accountId = testGetAccountUsersPage_getAccountId();
 
 		AccountUser accountUser1 = testGetAccountUsersPage_addAccountUser(
 			accountId, randomAccountUser());
@@ -438,7 +440,7 @@ public abstract class BaseAccountUserResourceTestCase {
 			return;
 		}
 
-		Long accountId = testGetAccountUsersPage_getAccountId();
+		String accountId = testGetAccountUsersPage_getAccountId();
 
 		AccountUser accountUser1 = randomAccountUser();
 		AccountUser accountUser2 = randomAccountUser();
@@ -474,19 +476,19 @@ public abstract class BaseAccountUserResourceTestCase {
 	}
 
 	protected AccountUser testGetAccountUsersPage_addAccountUser(
-			Long accountId, AccountUser accountUser)
+			String accountId, AccountUser accountUser)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetAccountUsersPage_getAccountId() throws Exception {
+	protected String testGetAccountUsersPage_getAccountId() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetAccountUsersPage_getIrrelevantAccountId()
+	protected String testGetAccountUsersPage_getIrrelevantAccountId()
 		throws Exception {
 
 		return null;
@@ -494,7 +496,7 @@ public abstract class BaseAccountUserResourceTestCase {
 
 	@Test
 	public void testGraphQLGetAccountUsersPage() throws Exception {
-		Long accountId = testGetAccountUsersPage_getAccountId();
+		String accountId = testGetAccountUsersPage_getAccountId();
 
 		GraphQLField graphQLField = new GraphQLField(
 			"accountUsers",
@@ -503,7 +505,7 @@ public abstract class BaseAccountUserResourceTestCase {
 					put("page", 1);
 					put("pageSize", 2);
 
-					put("accountId", accountId);
+					put("accountId", "\"" + accountId + "\"");
 				}
 			},
 			new GraphQLField("items", getGraphQLFields()),
@@ -951,8 +953,11 @@ public abstract class BaseAccountUserResourceTestCase {
 		}
 
 		if (entityFieldName.equals("id")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append("'");
+			sb.append(String.valueOf(accountUser.getId()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("lastName")) {
@@ -1044,7 +1049,7 @@ public abstract class BaseAccountUserResourceTestCase {
 						"@liferay.com";
 				firstName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
-				id = RandomTestUtil.randomLong();
+				id = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				lastName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				middleName = StringUtil.toLowerCase(

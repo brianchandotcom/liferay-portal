@@ -48,19 +48,20 @@ public interface AccountRoleResource {
 	}
 
 	public Page<AccountRole> getAccountRolesPage(
-			Long accountId, String keywords, Pagination pagination,
+			String accountId, String keywords, Pagination pagination,
 			Sort[] sorts)
 		throws Exception;
 
-	public AccountRole postAccountRole(Long accountId, AccountRole accountRole)
+	public AccountRole postAccountRole(
+			String accountId, AccountRole accountRole)
 		throws Exception;
 
 	public void deleteAccountRoleUserAssociation(
-			Long accountId, Long accountRoleId, Long accountUserId)
+			String accountId, Long accountRoleId, String accountUserId)
 		throws Exception;
 
 	public void postAccountRoleUserAssociation(
-			Long accountId, Long accountRoleId, Long accountUserId)
+			String accountId, Long accountRoleId, String accountUserId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

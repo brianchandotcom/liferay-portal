@@ -101,7 +101,7 @@ public abstract class BaseAccountRoleResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountRole")})
 	public Page<AccountRole> getAccountRolesPage(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
+			@NotNull @Parameter(hidden = true) @PathParam("accountId") String
 				accountId,
 			@Parameter(hidden = true) @QueryParam("keywords") String keywords,
 			@Context Pagination pagination, @Context Sort[] sorts)
@@ -113,7 +113,7 @@ public abstract class BaseAccountRoleResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/account-rest/v1.0/accounts/{accountId}/account-roles' -d $'{"description": ___, "displayName": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/account-rest/v1.0/accounts/{accountId}/account-roles' -d $'{"accountId": ___, "description": ___, "displayName": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
@@ -124,7 +124,7 @@ public abstract class BaseAccountRoleResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountRole")})
 	public AccountRole postAccountRole(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
+			@NotNull @Parameter(hidden = true) @PathParam("accountId") String
 				accountId,
 			AccountRole accountRole)
 		throws Exception {
@@ -153,12 +153,12 @@ public abstract class BaseAccountRoleResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountRole")})
 	public void deleteAccountRoleUserAssociation(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
+			@NotNull @Parameter(hidden = true) @PathParam("accountId") String
 				accountId,
 			@NotNull @Parameter(hidden = true) @PathParam("accountRoleId") Long
 				accountRoleId,
-			@NotNull @Parameter(hidden = true) @PathParam("accountUserId") Long
-				accountUserId)
+			@NotNull @Parameter(hidden = true) @PathParam("accountUserId")
+				String accountUserId)
 		throws Exception {
 	}
 
@@ -183,12 +183,12 @@ public abstract class BaseAccountRoleResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountRole")})
 	public void postAccountRoleUserAssociation(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
+			@NotNull @Parameter(hidden = true) @PathParam("accountId") String
 				accountId,
 			@NotNull @Parameter(hidden = true) @PathParam("accountRoleId") Long
 				accountRoleId,
-			@NotNull @Parameter(hidden = true) @PathParam("accountUserId") Long
-				accountUserId)
+			@NotNull @Parameter(hidden = true) @PathParam("accountUserId")
+				String accountUserId)
 		throws Exception {
 	}
 

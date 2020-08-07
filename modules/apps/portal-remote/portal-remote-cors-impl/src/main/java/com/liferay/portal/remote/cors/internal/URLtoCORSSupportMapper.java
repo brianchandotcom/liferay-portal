@@ -14,6 +14,8 @@
 
 package com.liferay.portal.remote.cors.internal;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -34,7 +36,17 @@ public class URLtoCORSSupportMapper {
 	}
 
 	public CORSSupport get(String urlPath) {
+		if (Validator.isNull(urlPath)) {
+			return null;
+		}
+
 		CORSSupport corsSupport = _exactURLPatternCORSSupports.get(urlPath);
+
+		if (corsSupport != null) {
+			return corsSupport;
+		}
+
+		corsSupport = _wildcardURLPatternCORSSupports.get(urlPath + "/*");
 
 		if (corsSupport != null) {
 			return corsSupport;
@@ -43,15 +55,19 @@ public class URLtoCORSSupportMapper {
 		int index = 0;
 
 		for (int i = urlPath.length(); i > 0; --i) {
+			if ((index < 1) && (urlPath.charAt(i - 1) == '.')) {
+				index = i - 1;
+			}
+
+			if (urlPath.charAt(i - 1) != '/') {
+				continue;
+			}
+
 			corsSupport = _wildcardURLPatternCORSSupports.get(
 				urlPath.substring(0, i) + "*");
 
 			if (corsSupport != null) {
 				return corsSupport;
-			}
-
-			if ((index < 1) && (urlPath.charAt(i - 1) == '.')) {
-				index = i - 1;
 			}
 		}
 

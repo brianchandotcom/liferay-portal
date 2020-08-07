@@ -194,6 +194,36 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-107775. Can add new collections when add a collection page from page tree panel."
+	@priority = "5"
+	test AddcollectionViaAddingCollectionPage {
+		ProductMenu.gotoSite(site = "Test Site Name 3");
+
+		PagesFinder.goToFindAPage();
+
+		PagesFinder.addPublicCollectionPage(
+			collectionName = "Manual Collection Name",
+			menuItem = "Manual Selection",
+			pageName = "Manual Collection Page Name",
+			selectedAsset = "All Types",
+			tabName = "Collections");
+
+		PageEditor.clickPublish();
+
+		PagesFinder.addPublicCollectionPage(
+			collectionName = "Dynamic Collection Name",
+			menuItem = "Dynamic Selection",
+			pageName = "Dynamic Collection Page Name",
+			selectedAsset = "All Types",
+			tabName = "Collections");
+
+		PageEditor.clickPublish();
+
+		PagesFinder.viewPageNameInPagesFinder(pageName = "Manual Collection Page Name");
+
+		PagesFinder.viewPageNameInPagesFinder(pageName = "Dynamic Collection Page Name");
+	}
+
 	@description = "This is the test for LPS-103104. Can add pages of different types via page tree panel."
 	@priority = "3"
 	test AddPagesOfDifferentTypesViaPageFinder {

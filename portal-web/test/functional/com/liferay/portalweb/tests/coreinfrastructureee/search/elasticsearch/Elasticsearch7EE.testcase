@@ -773,11 +773,59 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "alien");
 
-		if (IsTextEqual(locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC_ORDER", resultOrder = "1", value1 = "Alien³")) {
-			SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Alien³,Alien,Alien Nation");
+		var assetEntryTitleListNoLTR = "";
+		var iterator = "1";
+
+		while ("${iterator}" != "21" && (maxIterations = "20")) {
+			var assetEntryTitle = selenium.getText("//div[contains(@id,'SearchResultsPortlet')]//li[${iterator}]/div//a");
+
+			var assetEntryTitleListNoLTR = StringUtil.add("${assetEntryTitleListNoLTR}", "${assetEntryTitle}");
+
+			var iterator = MathUtil.sum("${iterator}", "1");
+		}
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Search",
+			configurationName = "Learning to Rank",
+			configurationScope = "System Scope");
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+
+		FormFields.editTextMultiline(
+			fieldName = "model",
+			fieldValue = "linearregression");
+
+		SystemSettings.saveConfiguration();
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "alien");
+
+		var assetEntryTitleListLTR = "";
+		var iterator = "1";
+
+		while ("${iterator}" != "21" && (maxIterations = "20")) {
+			var assetEntryTitle = selenium.getText("//div[contains(@id,'SearchResultsPortlet')]//li[${iterator}]/div//a");
+
+			var assetEntryTitleListLTR = StringUtil.add("${assetEntryTitleListLTR}", "${assetEntryTitle}");
+
+			var iterator = MathUtil.sum("${iterator}", "1");
+		}
+
+		if ("${assetEntryTitleListNoLTR}" != "${assetEntryTitleListLTR}") {
+			echo("Assertion succeeded: Search result rankings were different with and without LTR");
+
+			echo("Rankings without LTR: ${assetEntryTitleListNoLTR}");
+
+			echo("Rankings with LTR: ${assetEntryTitleListLTR}");
 		}
 		else {
-			SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Alien,Alien³,Alien Nation");
+			fail("Assertion failed: Search result rankings were the same with and without LTR");
 		}
 	}
 

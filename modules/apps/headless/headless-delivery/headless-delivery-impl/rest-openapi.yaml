@@ -539,6 +539,9 @@ components:
                 Represents the content structure that backs structured content. This defines which form fields are
                 available and the possible types and values.
             properties:
+                assetLibraryKey:
+                    readOnly: true
+                    type: string
                 availableLanguages:
                     description:
                         The list of languages the structure has a translation for.
@@ -705,6 +708,9 @@ components:
                         type: object
                     readOnly: true
                     type: object
+                assetLibraryKey:
+                    readOnly: true
+                    type: string
                 availableLanguages:
                     items:
                         type: string
@@ -955,6 +961,9 @@ components:
                     description:
                         The document's average rating.
                     readOnly: true
+                assetLibraryKey:
+                    readOnly: true
+                    type: string
                 contentUrl:
                     description:
                         The document's relative URL.
@@ -1099,6 +1108,9 @@ components:
                         type: object
                     readOnly: true
                     type: object
+                assetLibraryKey:
+                    readOnly: true
+                    type: string
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
@@ -2521,6 +2533,9 @@ components:
                     description:
                         The structured content's average rating.
                     readOnly: true
+                assetLibraryKey:
+                    readOnly: true
+                    type: string
                 availableLanguages:
                     description:
                         The list of languages the structured content has a translation for.
@@ -2697,6 +2712,9 @@ components:
                         type: object
                     readOnly: true
                     type: object
+                assetLibraryKey:
+                    readOnly: true
+                    type: string
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"

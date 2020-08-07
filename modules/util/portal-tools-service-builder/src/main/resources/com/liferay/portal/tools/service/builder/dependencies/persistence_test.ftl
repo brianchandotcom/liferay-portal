@@ -1067,7 +1067,7 @@ public class ${entity.name}PersistenceTest {
 						<#elseif entityColumn.isPrimitiveType()>
 							Assert.assertEquals(${serviceBuilder.getPrimitiveObj(entityColumn.type)}.valueOf(${entity.varName}.get${entityColumn.methodName}()), ReflectionTestUtil.<${serviceBuilder.getPrimitiveObj(entityColumn.type)}>invoke(${entity.varName}, "getOriginal${entityColumn.methodName}", new Class<?>[0]));
 						<#else>
-							Assert.assertTrue(Objects.equals(${entity.varName}.get${entityColumn.methodName}(), ReflectionTestUtil.invoke(${entity.varName}, "getOriginal${entityColumn.methodName}", new Class<?>[0])));
+							Assert.assertEquals(${entity.varName}.get${entityColumn.methodName}(), ReflectionTestUtil.invoke(${entity.varName}, "getOriginal${entityColumn.methodName}", new Class<?>[0]));
 						</#if>
 					</#if>
 				</#list>

@@ -22,6 +22,8 @@ const updateState = (props, state, properties) => {
 	const {fieldName: previousFocusedFieldName} = focusedField;
 	let newFocusedField;
 
+	const {defaultLanguageId} = props;
+
 	if (properties.length === 1) {
 		const [{name, value}] = properties;
 		newFocusedField = updateField(props, focusedField, name, value);
@@ -31,6 +33,19 @@ const updateState = (props, state, properties) => {
 			(initialField, {name, value}, index) => {
 				let useField = initialField;
 				if (index === 1) {
+					if (initialField.name === 'nestedFields') {
+						initialField.value = initialField.value.map(
+							(nestedField) => {
+								return updateField(
+									props,
+									nestedField,
+									'label',
+									nestedField.label[defaultLanguageId]
+								);
+							}
+						);
+					}
+
 					useField = updateField(
 						props,
 						focusedField,

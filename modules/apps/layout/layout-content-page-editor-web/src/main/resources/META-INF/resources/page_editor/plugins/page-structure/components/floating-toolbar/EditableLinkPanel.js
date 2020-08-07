@@ -15,18 +15,22 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {getEditableItemPropTypes} from '../../../prop-types/index';
-import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
-import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
-import selectEditableValue from '../../selectors/selectEditableValue';
-import selectEditableValues from '../../selectors/selectEditableValues';
-import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
-import {useDispatch, useSelector, useSelectorCallback} from '../../store/index';
-import updateEditableValues from '../../thunks/updateEditableValues';
-import {deepEqual} from '../../utils/checkDeepEqual';
 import LinkField, {
 	TARGET_OPTIONS,
-} from '../fragment-configuration-fields/LinkField';
+} from '../../../../app/components/fragment-configuration-fields/LinkField';
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../app/config/constants/editableFragmentEntryProcessor';
+import {EDITABLE_TYPES} from '../../../../app/config/constants/editableTypes';
+import selectEditableValue from '../../../../app/selectors/selectEditableValue';
+import selectEditableValues from '../../../../app/selectors/selectEditableValues';
+import selectSegmentsExperienceId from '../../../../app/selectors/selectSegmentsExperienceId';
+import {
+	useDispatch,
+	useSelector,
+	useSelectorCallback,
+} from '../../../../app/store/index';
+import updateEditableValues from '../../../../app/thunks/updateEditableValues';
+import {deepEqual} from '../../../../app/utils/checkDeepEqual';
+import {getEditableItemPropTypes} from '../../../../prop-types/index';
 
 export default function EditableLinkPanel({item}) {
 	const dispatch = useDispatch();

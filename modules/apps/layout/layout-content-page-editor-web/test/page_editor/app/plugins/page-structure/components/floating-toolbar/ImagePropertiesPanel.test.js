@@ -17,21 +17,21 @@ import {cleanup, fireEvent, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import {ImagePropertiesPanel} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/floating-toolbar/ImagePropertiesPanel';
-import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/backgroundImageFragmentEntryProcessor';
-import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
-import {EDITABLE_TYPES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableTypes';
-import {StoreAPIContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/store';
-import updateEditableValues from '../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateEditableValues';
-import {ImageSelector} from '../../../../../src/main/resources/META-INF/resources/page_editor/common/components/ImageSelector';
+import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/backgroundImageFragmentEntryProcessor';
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
+import {EDITABLE_TYPES} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableTypes';
+import {StoreAPIContextProvider} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
+import updateEditableValues from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateEditableValues';
+import {ImageSelector} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/common/components/ImageSelector';
+import {ImagePropertiesPanel} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page-structure/components/floating-toolbar/ImagePropertiesPanel';
 
 jest.mock(
-	'../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateEditableValues',
+	'../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateEditableValues',
 	() => jest.fn(() => () => {})
 );
 
 jest.mock(
-	'../../../../../src/main/resources/META-INF/resources/page_editor/common/components/ImageSelector',
+	'../../../../../../../src/main/resources/META-INF/resources/page_editor/common/components/ImageSelector',
 	() => ({
 		ImageSelector: jest.fn(({onClearButtonPressed, onImageSelected}) => (
 			<>
@@ -55,7 +55,7 @@ jest.mock(
 );
 
 jest.mock(
-	'../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	'../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
 	() => ({
 		config: {
 			defaultLanguageId: 'en',

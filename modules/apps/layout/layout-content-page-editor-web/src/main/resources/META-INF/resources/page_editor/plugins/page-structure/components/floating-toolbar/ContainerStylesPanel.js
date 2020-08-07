@@ -16,19 +16,19 @@ import ClayForm from '@clayui/form';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import FormRow from '../../../common/components/FormRow';
+import {ColorPaletteField} from '../../../../app/components/fragment-configuration-fields/ColorPaletteField';
+import {ImageSelectorField} from '../../../../app/components/fragment-configuration-fields/ImageSelectorField';
+import {SelectField} from '../../../../app/components/fragment-configuration-fields/SelectField';
+import {TextField} from '../../../../app/components/fragment-configuration-fields/TextField';
+import {config} from '../../../../app/config/index';
+import selectSegmentsExperienceId from '../../../../app/selectors/selectSegmentsExperienceId';
+import {useDispatch, useSelector} from '../../../../app/store/index';
+import updateItemConfig from '../../../../app/thunks/updateItemConfig';
+import FormRow from '../../../../common/components/FormRow';
 import {
 	BackgroundImagePropTypes,
 	getLayoutDataItemPropTypes,
-} from '../../../prop-types/index';
-import {config} from '../../config/index';
-import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
-import {useDispatch, useSelector} from '../../store/index';
-import updateItemConfig from '../../thunks/updateItemConfig';
-import {ColorPaletteField} from '../fragment-configuration-fields/ColorPaletteField';
-import {ImageSelectorField} from '../fragment-configuration-fields/ImageSelectorField';
-import {SelectField} from '../fragment-configuration-fields/SelectField';
-import {TextField} from '../fragment-configuration-fields/TextField';
+} from '../../../../prop-types/index';
 
 const MARGIN_AUTO_OPTION = {
 	label: Liferay.Language.get('auto'),

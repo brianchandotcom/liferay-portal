@@ -14,15 +14,15 @@
 
 import React from 'react';
 
-import MappingSelector from '../../../common/components/MappingSelector';
-import {getEditableItemPropTypes} from '../../../prop-types/index';
-import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/backgroundImageFragmentEntryProcessor';
-import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
-import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
-import selectEditableValue from '../../selectors/selectEditableValue';
-import {useDispatch, useSelector} from '../../store/index';
-import updateEditableValues from '../../thunks/updateEditableValues';
-import isMapped from '../fragment-content/isMapped';
+import isMapped from '../../../../app/components/fragment-content/isMapped';
+import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../app/config/constants/backgroundImageFragmentEntryProcessor';
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../app/config/constants/editableFragmentEntryProcessor';
+import {EDITABLE_TYPES} from '../../../../app/config/constants/editableTypes';
+import selectEditableValue from '../../../../app/selectors/selectEditableValue';
+import {useDispatch, useSelector} from '../../../../app/store/index';
+import updateEditableValues from '../../../../app/thunks/updateEditableValues';
+import MappingSelector from '../../../../common/components/MappingSelector';
+import {getEditableItemPropTypes} from '../../../../prop-types/index';
 
 export function MappingPanel({item}) {
 	const {editableId, fragmentEntryLinkId, type} = item;

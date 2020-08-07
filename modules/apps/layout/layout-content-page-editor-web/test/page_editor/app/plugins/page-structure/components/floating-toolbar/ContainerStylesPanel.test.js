@@ -17,9 +17,9 @@ import {cleanup, fireEvent, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import {ContainerStylesPanel} from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/floating-toolbar/ContainerStylesPanel';
-import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/store';
-import updateItemConfig from '../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig';
+import {StoreAPIContextProvider} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
+import updateItemConfig from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig';
+import {ContainerStylesPanel} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page-structure/components/floating-toolbar/ContainerStylesPanel';
 
 const renderComponent = ({itemConfig = {}, dispatch = () => {}} = {}) =>
 	render(
@@ -40,12 +40,12 @@ const renderComponent = ({itemConfig = {}, dispatch = () => {}} = {}) =>
 	);
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig',
+	'../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig',
 	() => jest.fn()
 );
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	'../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
 	() => ({
 		config: {
 			defaultSegmentsExperienceId: 0,

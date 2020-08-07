@@ -13,53 +13,30 @@
  */
 
 import ClayForm, {ClayCheckbox, ClaySelectWithOption} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
-import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
-import {config} from '../../config/index';
-import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
-import {useDispatch, useSelector} from '../../store/index';
-import updateItemConfig from '../../thunks/updateItemConfig';
-import updateRowColumns from '../../thunks/updateRowColumns';
-import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
-import {useId} from '../../utils/useId';
 import {
-	useCustomRowContext,
 	useSetCustomRowContext,
 	useSetUpdatedLayoutDataContext,
-} from '../ResizeContext';
+} from '../../../../app/components/ResizeContext';
+import {VIEWPORT_SIZES} from '../../../../app/config/constants/viewportSizes';
+import selectSegmentsExperienceId from '../../../../app/selectors/selectSegmentsExperienceId';
+import {useDispatch, useSelector} from '../../../../app/store/index';
+import updateItemConfig from '../../../../app/thunks/updateItemConfig';
+import updateRowColumns from '../../../../app/thunks/updateRowColumns';
+import {getResponsiveConfig} from '../../../../app/utils/getResponsiveConfig';
+import {useId} from '../../../../app/utils/useId';
+import {getLayoutDataItemPropTypes} from '../../../../prop-types/index';
 
-const CUSTOM_ROW = 'custom';
+const NUMBER_OF_COLUMNS_OPTIONS = ['1', '2', '3', '4', '5', '6'];
 
-const MODULES_PER_ROW_OPTIONS = [
-	[1],
-	[1, 2],
-	[1, 3],
-	[1, 2, 4],
-	[1, 2, 5],
-	[1, 2, 3, 6],
-];
-const MODULES_PER_ROW_OPTIONS_WITH_CUSTOM = MODULES_PER_ROW_OPTIONS.map(
-	(option) => [CUSTOM_ROW, ...option]
-);
-
-const VERTICAL_ALIGNMENT_OPTIONS = [
-	{label: Liferay.Language.get('top'), value: 'top'},
-	{label: Liferay.Language.get('middle'), value: 'middle'},
-	{label: Liferay.Language.get('bottom'), value: 'bottom'},
-];
-
-const ROW_STYLE_IDENTIFIERS = {
-	modulesPerRow: 'modulesPerRow',
-	reverseOrder: 'reverseOrder',
-	verticalAlignment: 'verticalAlignment',
+const ROW_CONFIGURATION_IDENTIFIERS = {
+	gutters: 'gutters',
+	numberOfColumns: 'numberOfColumns',
 };
 
-export const RowStylesPanel = ({item}) => {
-	const {availableViewportSizes} = config;
+export const RowConfigurationPanel = ({item}) => {
 	const dispatch = useDispatch();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const selectedViewportSize = useSelector(
@@ -67,7 +44,6 @@ export const RowStylesPanel = ({item}) => {
 	);
 	const setUpdatedLayoutData = useSetUpdatedLayoutDataContext();
 	const setCustomRow = useSetCustomRowContext();
-	const customRow = useCustomRowContext();
 
 	const handleConfigurationValueChanged = (identifier, value) => {
 		setCustomRow(false);
@@ -77,12 +53,12 @@ export const RowStylesPanel = ({item}) => {
 
 		if (
 			selectedViewportSize !== VIEWPORT_SIZES.desktop &&
-			identifier !== ROW_STYLE_IDENTIFIERS.gutters
+			identifier !== ROW_CONFIGURATION_IDENTIFIERS.gutters
 		) {
 			itemConfig = {[selectedViewportSize]: itemConfig};
 		}
 
-		if (identifier === ROW_STYLE_IDENTIFIERS.numberOfColumns) {
+		if (identifier === ROW_CONFIGURATION_IDENTIFIERS.numberOfColumns) {
 			const currentNumberOfColumns = rowConfig.numberOfColumns;
 			const newNumberOfColumns = value;
 
@@ -117,71 +93,36 @@ export const RowStylesPanel = ({item}) => {
 		);
 	};
 
-	const getModulesPerRowOptionLabel = (value) => {
-		return value > 1
-			? Liferay.Language.get('x-modules-per-row')
-			: Liferay.Language.get('x-module-per-row');
-	};
-
 	const rowConfig = getResponsiveConfig(item.config, selectedViewportSize);
-	const viewportSize = availableViewportSizes[selectedViewportSize];
-	const modulesPerRowOptions = customRow
-		? MODULES_PER_ROW_OPTIONS_WITH_CUSTOM
-		: MODULES_PER_ROW_OPTIONS;
 
 	return (
 		<>
-			<p className="page-editor__row-styles-panel__viewport-label">
-				{viewportSize.label}
-				<ClayIcon className="ml-1" symbol={viewportSize.icon} />
-			</p>
-
 			<Select
-				configurationKey="modulesPerRow"
+				configurationKey="numberOfColumns"
 				handleChange={handleConfigurationValueChanged}
-				label={Liferay.Language.get('layout')}
-				options={modulesPerRowOptions[
-					rowConfig.numberOfColumns - 1
-				].map((option) => ({
-					disabled: option === CUSTOM_ROW,
-					label:
-						option === CUSTOM_ROW
-							? Liferay.Language.get('custom')
-							: Liferay.Util.sub(
-									getModulesPerRowOptionLabel(option),
-									option
-							  ),
-					value: option,
+				label={Liferay.Language.get('number-of-modules')}
+				options={NUMBER_OF_COLUMNS_OPTIONS.map((option) => ({
+					label: option,
 				}))}
-				value={customRow ? CUSTOM_ROW : rowConfig.modulesPerRow}
+				value={rowConfig.numberOfColumns}
 			/>
 
-			{rowConfig.numberOfColumns === 2 &&
-				rowConfig.modulesPerRow === 1 && (
+			{rowConfig.numberOfColumns > 1 && (
+				<>
 					<ClayCheckbox
-						checked={rowConfig.reverseOrder}
-						label={Liferay.Language.get('inverse-order')}
+						checked={rowConfig.gutters}
+						label={Liferay.Language.get('show-gutter')}
 						onChange={({target: {checked}}) =>
-							handleConfigurationValueChanged(
-								'reverseOrder',
-								checked
-							)
+							handleConfigurationValueChanged('gutters', checked)
 						}
 					/>
-				)}
-
-			<Select
-				configurationKey="verticalAlignment"
-				handleChange={handleConfigurationValueChanged}
-				label={Liferay.Language.get('vertical-alignment')}
-				options={VERTICAL_ALIGNMENT_OPTIONS}
-				value={rowConfig.verticalAlignment}
-			/>
+				</>
+			)}
 		</>
 	);
 };
 
-RowStylesPanel.propTypes = {
+RowConfigurationPanel.propTypes = {
 	item: getLayoutDataItemPropTypes({
 		config: PropTypes.shape({numberOfColumns: PropTypes.number}),
 	}),

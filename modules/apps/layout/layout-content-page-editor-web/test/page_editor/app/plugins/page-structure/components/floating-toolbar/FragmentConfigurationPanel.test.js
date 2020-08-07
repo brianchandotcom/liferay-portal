@@ -14,31 +14,31 @@
 
 import React from 'react';
 
-import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
-import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/freemarkerFragmentEntryProcessor';
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
+import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/freemarkerFragmentEntryProcessor';
 
 import '@testing-library/jest-dom/extend-expect';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 
-import {FragmentConfigurationPanel} from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/floating-toolbar/FragmentConfigurationPanel';
-import {config} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config';
-import FragmentService from '../../../../src/main/resources/META-INF/resources/page_editor/app/services/FragmentService';
-import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/store';
+import {config} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
+import FragmentService from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/FragmentService';
+import {StoreAPIContextProvider} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
+import {FragmentConfigurationPanel} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page-structure/components/floating-toolbar/FragmentConfigurationPanel';
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	'../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
 	() => ({
 		config: {},
 	})
 );
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch',
+	'../../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch',
 	() => jest.fn(() => Promise.resolve({}))
 );
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/app/services/FragmentService',
+	'../../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/FragmentService',
 	() => ({
 		renderFragmentEntryLinkContent: jest.fn(() => Promise.resolve({})),
 		updateConfigurationValues: jest.fn(() => Promise.resolve({})),

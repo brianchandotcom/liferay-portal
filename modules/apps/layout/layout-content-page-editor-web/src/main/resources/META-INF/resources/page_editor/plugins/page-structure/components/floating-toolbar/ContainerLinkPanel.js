@@ -15,13 +15,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
-import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
-import {useDispatch, useSelector} from '../../store/index';
-import updateItemConfig from '../../thunks/updateItemConfig';
 import LinkField, {
 	TARGET_OPTIONS,
-} from '../fragment-configuration-fields/LinkField';
+} from '../../../../app/components/fragment-configuration-fields/LinkField';
+import selectSegmentsExperienceId from '../../../../app/selectors/selectSegmentsExperienceId';
+import {useDispatch, useSelector} from '../../../../app/store/index';
+import updateItemConfig from '../../../../app/thunks/updateItemConfig';
+import {getLayoutDataItemPropTypes} from '../../../../prop-types/index';
 
 export default function ContainerLinkPanel({item}) {
 	const dispatch = useDispatch();

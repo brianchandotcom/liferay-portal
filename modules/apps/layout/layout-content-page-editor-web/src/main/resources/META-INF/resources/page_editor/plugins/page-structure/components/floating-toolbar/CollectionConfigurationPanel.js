@@ -19,13 +19,13 @@ import ClayForm, {
 } from '@clayui/form';
 import React, {useEffect, useState} from 'react';
 
-import {config} from '../../../app/config/index';
-import CollectionSelector from '../../../common/components/CollectionSelector';
-import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
-import InfoItemService from '../../services/InfoItemService';
-import {useDispatch, useSelector} from '../../store/index';
-import updateItemConfig from '../../thunks/updateItemConfig';
-import {useId} from '../../utils/useId';
+import {config} from '../../../../app/config/index';
+import selectSegmentsExperienceId from '../../../../app/selectors/selectSegmentsExperienceId';
+import InfoItemService from '../../../../app/services/InfoItemService';
+import {useDispatch, useSelector} from '../../../../app/store/index';
+import updateItemConfig from '../../../../app/thunks/updateItemConfig';
+import {useId} from '../../../../app/utils/useId';
+import CollectionSelector from '../../../../common/components/CollectionSelector';
 
 const LAYOUT_OPTIONS = [
 	{label: Liferay.Language.get('full-width'), value: '1'},

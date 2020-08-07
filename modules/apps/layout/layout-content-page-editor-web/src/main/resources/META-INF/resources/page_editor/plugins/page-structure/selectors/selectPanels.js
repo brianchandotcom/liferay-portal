@@ -12,16 +12,6 @@
  * details.
  */
 
-import {CollectionConfigurationPanel} from '../../../app/components/floating-toolbar/CollectionConfigurationPanel';
-import ContainerLinkPanel from '../../../app/components/floating-toolbar/ContainerLinkPanel';
-import {ContainerStylesPanel} from '../../../app/components/floating-toolbar/ContainerStylesPanel';
-import EditableLinkPanel from '../../../app/components/floating-toolbar/EditableLinkPanel';
-import {FragmentConfigurationPanel} from '../../../app/components/floating-toolbar/FragmentConfigurationPanel';
-import {FragmentStylesPanel} from '../../../app/components/floating-toolbar/FragmentStylesPanel';
-import {ImagePropertiesPanel} from '../../../app/components/floating-toolbar/ImagePropertiesPanel';
-import {MappingPanel} from '../../../app/components/floating-toolbar/MappingPanel';
-import {RowConfigurationPanel} from '../../../app/components/floating-toolbar/RowConfigurationPanel';
-import {RowStylesPanel} from '../../../app/components/floating-toolbar/RowStylesPanel';
 import isMapped from '../../../app/components/fragment-content/isMapped';
 import {EDITABLE_TYPES} from '../../../app/config/constants/editableTypes';
 import {FRAGMENT_CONFIGURATION_ROLES} from '../../../app/config/constants/fragmentConfigurationRoles';
@@ -31,6 +21,16 @@ import {VIEWPORT_SIZES} from '../../../app/config/constants/viewportSizes';
 import selectCanUpdateEditables from '../../../app/selectors/selectCanUpdateEditables';
 import selectCanUpdateItemConfiguration from '../../../app/selectors/selectCanUpdateItemConfiguration';
 import selectEditableValue from '../../../app/selectors/selectEditableValue';
+import {CollectionConfigurationPanel} from '../components/floating-toolbar/CollectionConfigurationPanel';
+import ContainerLinkPanel from '../components/floating-toolbar/ContainerLinkPanel';
+import {ContainerStylesPanel} from '../components/floating-toolbar/ContainerStylesPanel';
+import EditableLinkPanel from '../components/floating-toolbar/EditableLinkPanel';
+import {FragmentConfigurationPanel} from '../components/floating-toolbar/FragmentConfigurationPanel';
+import {FragmentStylesPanel} from '../components/floating-toolbar/FragmentStylesPanel';
+import {ImagePropertiesPanel} from '../components/floating-toolbar/ImagePropertiesPanel';
+import {MappingPanel} from '../components/floating-toolbar/MappingPanel';
+import {RowConfigurationPanel} from '../components/floating-toolbar/RowConfigurationPanel';
+import {RowStylesPanel} from '../components/floating-toolbar/RowStylesPanel';
 
 export const PANEL_IDS = {
 	collectionConfiguration: 'collectionConfiguration',

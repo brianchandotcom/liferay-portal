@@ -16,12 +16,12 @@ import '@testing-library/jest-dom/extend-expect';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
-import {ResizeContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/ResizeContext';
-import {RowStylesPanel} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/floating-toolbar/RowStylesPanel';
-import {config} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config';
-import {StoreAPIContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/store';
-import updateItemConfig from '../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig';
-import updateRowColumns from '../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateRowColumns';
+import {ResizeContextProvider} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/components/ResizeContext';
+import {config} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
+import {StoreAPIContextProvider} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
+import updateItemConfig from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig';
+import updateRowColumns from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateRowColumns';
+import {RowStylesPanel} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page-structure/components/floating-toolbar/RowStylesPanel';
 
 const ITEM_CONFIG = {
 	gutters: true,
@@ -72,7 +72,7 @@ const renderComponent = ({
 	);
 
 jest.mock(
-	'../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	'../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
 	() => ({
 		config: {
 			availableViewportSizes: {
@@ -85,12 +85,12 @@ jest.mock(
 );
 
 jest.mock(
-	'../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig',
+	'../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig',
 	() => jest.fn()
 );
 
 jest.mock(
-	'../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateRowColumns',
+	'../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateRowColumns',
 	() => jest.fn()
 );
 

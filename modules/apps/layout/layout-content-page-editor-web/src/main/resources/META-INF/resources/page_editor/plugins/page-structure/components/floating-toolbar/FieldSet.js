@@ -15,8 +15,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
-import {FRAGMENT_CONFIGURATION_FIELDS} from '../fragment-configuration-fields/index';
+import {FRAGMENT_CONFIGURATION_FIELDS} from '../../../../app/components/fragment-configuration-fields/index';
+import {ConfigurationFieldPropTypes} from '../../../../prop-types/index';
 
 export const FieldSet = ({
 	configurationValues,

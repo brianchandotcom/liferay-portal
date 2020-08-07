@@ -15,15 +15,15 @@
 import {ClayInput} from '@clayui/form';
 import React, {useEffect, useState} from 'react';
 
-import {ImageSelector} from '../../../common/components/ImageSelector';
-import {getEditableItemPropTypes} from '../../../prop-types/index';
-import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/backgroundImageFragmentEntryProcessor';
-import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
-import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
-import selectEditableValueContent from '../../selectors/selectEditableValueContent';
-import {useDispatch, useSelector} from '../../store/index';
-import updateEditableValuesThunk from '../../thunks/updateEditableValues';
-import {useId} from '../../utils/useId';
+import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../app/config/constants/backgroundImageFragmentEntryProcessor';
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../app/config/constants/editableFragmentEntryProcessor';
+import {EDITABLE_TYPES} from '../../../../app/config/constants/editableTypes';
+import selectEditableValueContent from '../../../../app/selectors/selectEditableValueContent';
+import {useDispatch, useSelector} from '../../../../app/store/index';
+import updateEditableValuesThunk from '../../../../app/thunks/updateEditableValues';
+import {useId} from '../../../../app/utils/useId';
+import {ImageSelector} from '../../../../common/components/ImageSelector';
+import {getEditableItemPropTypes} from '../../../../prop-types/index';
 
 export function ImagePropertiesPanel({item}) {
 	const {editableId, fragmentEntryLinkId, type} = item;

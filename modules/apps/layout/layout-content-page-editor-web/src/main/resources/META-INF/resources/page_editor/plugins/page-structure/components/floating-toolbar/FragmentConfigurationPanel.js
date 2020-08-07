@@ -15,15 +15,19 @@
 import PropTypes from 'prop-types';
 import React, {useCallback} from 'react';
 
-import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
-import {FRAGMENT_CONFIGURATION_ROLES} from '../../config/constants/fragmentConfigurationRoles';
-import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/freemarkerFragmentEntryProcessor';
-import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
-import {useDispatch, useSelector, useSelectorCallback} from '../../store/index';
-import updateFragmentConfiguration from '../../thunks/updateFragmentConfiguration';
+import {FRAGMENT_CONFIGURATION_ROLES} from '../../../../app/config/constants/fragmentConfigurationRoles';
+import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../app/config/constants/freemarkerFragmentEntryProcessor';
+import selectSegmentsExperienceId from '../../../../app/selectors/selectSegmentsExperienceId';
+import {
+	useDispatch,
+	useSelector,
+	useSelectorCallback,
+} from '../../../../app/store/index';
+import updateFragmentConfiguration from '../../../../app/thunks/updateFragmentConfiguration';
+import {getLayoutDataItemPropTypes} from '../../../../prop-types/index';
 import {FieldSet} from './FieldSet';
 
-export const FragmentStylesPanel = ({item}) => {
+export const FragmentConfigurationPanel = ({item}) => {
 	const dispatch = useDispatch();
 
 	const fragmentEntryLink = useSelectorCallback(
@@ -35,7 +39,7 @@ export const FragmentStylesPanel = ({item}) => {
 
 	const fieldSets = fragmentEntryLink.configuration?.fieldSets.filter(
 		(fieldSet) =>
-			fieldSet.configurationRole === FRAGMENT_CONFIGURATION_ROLES.style
+			fieldSet.configurationRole !== FRAGMENT_CONFIGURATION_ROLES.style
 	);
 
 	const defaultConfigurationValues =
@@ -89,7 +93,7 @@ export const FragmentStylesPanel = ({item}) => {
 	);
 };
 
-FragmentStylesPanel.propTypes = {
+FragmentConfigurationPanel.propTypes = {
 	item: getLayoutDataItemPropTypes({
 		config: PropTypes.shape({
 			fragmentEntryLinkId: PropTypes.string.isRequired,

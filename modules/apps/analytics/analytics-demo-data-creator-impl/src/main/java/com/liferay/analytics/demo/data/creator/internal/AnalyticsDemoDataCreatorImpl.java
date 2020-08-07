@@ -116,6 +116,10 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 			_userLocalService.deleteUser(entry.getValue());
 		}
 
+		for (Map.Entry<String, Group> entry : _groups.entrySet()) {
+			_groupLocalService.deleteGroup(entry.getValue());
+		}
+
 		for (Map.Entry<String, Organization> entry :
 				_organizations.entrySet()) {
 
@@ -134,6 +138,7 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 			_userGroupLocalService.deleteUserGroup(entry.getValue());
 		}
 
+		_groups.clear();
 		_organizations.clear();
 		_roles.clear();
 		_teams.clear();

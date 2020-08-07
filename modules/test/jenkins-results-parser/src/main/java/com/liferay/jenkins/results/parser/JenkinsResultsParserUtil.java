@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import com.google.common.collect.Lists;
+import com.google.common.io.CountingInputStream;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -41,6 +42,7 @@ import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.net.UnknownHostException;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.FileVisitResult;
@@ -489,6 +491,90 @@ public class JenkinsResultsParserUtil {
 		return executeBashCommands(
 			true, new File("."), _MILLIS_BASH_COMMAND_TIMEOUT_DEFAULT,
 			commands);
+	}
+
+	public static void executeBashService(
+		final String command, final File baseDir,
+		final Map<String, String> environments, final int maxLogSize) {
+
+		Runnable runnable = new Runnable() {
+
+			public void run() {
+				StringBuilder sb = new StringBuilder();
+
+				try {
+					if (isWindows()) {
+						sb.append("C:\\Program Files\\Git\\bin\\sh.exe ");
+					}
+					else {
+						sb.append("/bin/sh ");
+					}
+
+					sb.append(command);
+
+					Runtime runtime = Runtime.getRuntime();
+
+					String[] envp = new String[environments.size()];
+
+					int i = 0;
+
+					for (Map.Entry<String, String> environment :
+							environments.entrySet()) {
+
+						envp[i] = combine(
+							environment.getKey(), "=", environment.getValue());
+
+						i++;
+					}
+
+					Process process = runtime.exec(
+						sb.toString(), envp, baseDir);
+
+					InputStream inputStream = process.getInputStream();
+
+					CountingInputStream countingInputStream =
+						new CountingInputStream(inputStream);
+
+					InputStreamReader inputStreamReader = new InputStreamReader(
+						countingInputStream, StandardCharsets.UTF_8);
+
+					try {
+						int logCharInt;
+
+						while ((logCharInt = inputStreamReader.read()) != -1) {
+							if (countingInputStream.getCount() > maxLogSize) {
+								continue;
+							}
+
+							System.out.print((char)logCharInt);
+						}
+					}
+					finally {
+						try {
+							inputStreamReader.close();
+						}
+						finally {
+							try {
+								countingInputStream.close();
+							}
+							finally {
+								inputStream.close();
+							}
+						}
+					}
+
+					process.waitFor();
+				}
+				catch (InterruptedException | IOException exception) {
+					throw new RuntimeException(exception);
+				}
+			}
+
+		};
+
+		Thread thread = new Thread(runnable);
+
+		thread.start();
 	}
 
 	public static void executeJenkinsScript(

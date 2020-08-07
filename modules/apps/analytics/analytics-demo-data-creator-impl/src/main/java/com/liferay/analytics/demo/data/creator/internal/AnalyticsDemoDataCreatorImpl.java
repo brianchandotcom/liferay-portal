@@ -196,14 +196,14 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 		else if (StringUtil.equalsIgnoreCase(header, "roles")) {
 			ids = _addRoles(values);
 		}
+		else if (StringUtil.equalsIgnoreCase(header, "sites")) {
+			ids = _addSites(values);
+		}
 		else if (StringUtil.equalsIgnoreCase(header, "teams")) {
 			ids = _addTeams(values);
 		}
 		else if (StringUtil.equalsIgnoreCase(header, "userGroups")) {
 			ids = _addUserGroups(values);
-		}
-		else if (StringUtil.equalsIgnoreCase(header, "sites")) {
-			ids = _addSites(values);
 		}
 
 		if (_log.isInfoEnabled()) {
@@ -366,16 +366,16 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 			_addEntries(csvRecord, "roles"),
 			_addEntries(csvRecord, "userGroups"), false, new ServiceContext());
 
-		long[] teamIds = _addEntries(csvRecord, "teams");
-
-		if (teamIds != null) {
-			_teamLocalService.addUserTeams(user.getPrimaryKey(), teamIds);
-		}
-
 		long[] siteIds = _addEntries(csvRecord, "sites");
 
 		if (siteIds != null) {
 			_groupLocalService.addUserGroups(user.getPrimaryKey(), siteIds);
+		}
+
+		long[] teamIds = _addEntries(csvRecord, "teams");
+
+		if (teamIds != null) {
+			_teamLocalService.addUserTeams(user.getPrimaryKey(), teamIds);
 		}
 
 		return user;

@@ -1394,10 +1394,10 @@ public class DataFactory {
 
 		// Auto generated fields
 
-		cpDefinitionLocalizationModel.setCpDefinitionLocalizationId(
-			_counter.get());
 		cpDefinitionLocalizationModel.setCompanyId(_companyId);
 		cpDefinitionLocalizationModel.setCPDefinitionId(cpDefinitionId);
+		cpDefinitionLocalizationModel.setCpDefinitionLocalizationId(
+			_counter.get());
 		cpDefinitionLocalizationModel.setLanguageId("en_US");
 
 		return cpDefinitionLocalizationModel;

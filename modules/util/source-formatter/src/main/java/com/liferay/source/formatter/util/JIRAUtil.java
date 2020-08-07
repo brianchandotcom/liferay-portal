@@ -52,6 +52,8 @@ public class JIRAUtil {
 		outerLoop:
 		for (String commitMessage : commitMessages) {
 			if (commitMessage.startsWith("Revert ") ||
+				commitMessage.startsWith("artifact:ignore") ||
+				commitMessage.startsWith("build.gradle auto SF") ||
 				commitMessage.endsWith("/ci-merge.")) {
 
 				continue;

@@ -21,6 +21,12 @@ definition {
 			locator1 = "StyleBookEditor#STYLE_BOOK_EDITOR_SIDEBAR_EXPANDED");
 	}
 
+	macro goToPageViaPagePreviewInfoBar {
+		Click(locator1 = "StyleBookEditor#PAGE_PREVIEW_INFO_BAR_TOGGLE");
+
+		MenuItem.click(menuItem = "${pageName}");
+	}
+
 	macro selectForm {
 		Click(locator1 = "StyleBookEditor#FORM_CONTROL_SELECT_BUTTON");
 

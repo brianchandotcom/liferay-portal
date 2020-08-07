@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EMPTY_STATE_MESSAGE</td>
+	<td>//div[contains(@class,'questions-container')]//div[contains(@class,'empty')]//span[contains(text(),'${key_emptyInfo}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ITEMS_PER_PAGE_SELECT</td>
 	<td>//div[contains(@class,'pagination-items-per-page')]/button[contains(@class,'toggle')]</td>
 	<td></td>

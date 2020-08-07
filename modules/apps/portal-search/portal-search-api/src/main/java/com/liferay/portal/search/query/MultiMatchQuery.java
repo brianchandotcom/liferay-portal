@@ -35,10 +35,6 @@ public interface MultiMatchQuery extends Query {
 	@Deprecated
 	public Set<String> getFields();
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), will be renamed to getFields()
-	 */
-	@Deprecated
 	public Map<String, Float> getFieldsBoosts();
 
 	public String getFuzziness();
@@ -63,12 +59,12 @@ public interface MultiMatchQuery extends Query {
 
 	public MatchQuery.ZeroTermsQuery getZeroTermsQuery();
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #isFieldsEmpty()}
-	 */
-	@Deprecated
 	public boolean isFieldBoostsEmpty();
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #isFieldBoostsEmpty()}
+	 */
+	@Deprecated
 	public boolean isFieldsEmpty();
 
 	public Boolean isLenient();

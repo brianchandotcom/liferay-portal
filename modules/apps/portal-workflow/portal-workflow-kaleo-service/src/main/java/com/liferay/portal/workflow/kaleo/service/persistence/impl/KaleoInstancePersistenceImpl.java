@@ -4352,8 +4352,6 @@ public class KaleoInstancePersistenceImpl
 				kaleoInstance.getCompanyId(), kaleoInstance.getUserId()
 			},
 			kaleoInstance);
-
-		kaleoInstance.resetOriginalValues();
 	}
 
 	/**
@@ -4369,9 +4367,6 @@ public class KaleoInstancePersistenceImpl
 						null) {
 
 				cacheResult(kaleoInstance);
-			}
-			else {
-				kaleoInstance.resetOriginalValues();
 			}
 		}
 	}

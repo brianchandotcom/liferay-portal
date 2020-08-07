@@ -5210,8 +5210,6 @@ public class FragmentCompositionPersistenceImpl
 				fragmentComposition.getFragmentCompositionKey()
 			},
 			fragmentComposition);
-
-		fragmentComposition.resetOriginalValues();
 	}
 
 	/**
@@ -5227,9 +5225,6 @@ public class FragmentCompositionPersistenceImpl
 					fragmentComposition.getPrimaryKey()) == null) {
 
 				cacheResult(fragmentComposition);
-			}
-			else {
-				fragmentComposition.resetOriginalValues();
 			}
 		}
 	}

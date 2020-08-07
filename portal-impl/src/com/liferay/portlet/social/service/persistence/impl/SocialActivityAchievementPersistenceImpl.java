@@ -3248,8 +3248,6 @@ public class SocialActivityAchievementPersistenceImpl
 		SocialActivityAchievement socialActivityAchievement) {
 
 		if (socialActivityAchievement.getCtCollectionId() != 0) {
-			socialActivityAchievement.resetOriginalValues();
-
 			return;
 		}
 
@@ -3266,8 +3264,6 @@ public class SocialActivityAchievementPersistenceImpl
 				socialActivityAchievement.getName()
 			},
 			socialActivityAchievement);
-
-		socialActivityAchievement.resetOriginalValues();
 	}
 
 	/**
@@ -3283,8 +3279,6 @@ public class SocialActivityAchievementPersistenceImpl
 				socialActivityAchievements) {
 
 			if (socialActivityAchievement.getCtCollectionId() != 0) {
-				socialActivityAchievement.resetOriginalValues();
-
 				continue;
 			}
 
@@ -3293,9 +3287,6 @@ public class SocialActivityAchievementPersistenceImpl
 					socialActivityAchievement.getPrimaryKey()) == null) {
 
 				cacheResult(socialActivityAchievement);
-			}
-			else {
-				socialActivityAchievement.resetOriginalValues();
 			}
 		}
 	}
@@ -3565,14 +3556,7 @@ public class SocialActivityAchievementPersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(socialActivityAchievement)) {
 				if (!isNew) {
-					SocialActivityAchievement oldSocialActivityAchievement =
-						(SocialActivityAchievement)session.get(
-							SocialActivityAchievementImpl.class,
-							socialActivityAchievement.getPrimaryKeyObj());
-
-					if (oldSocialActivityAchievement != null) {
-						session.evict(oldSocialActivityAchievement);
-					}
+					session.evict(socialActivityAchievement);
 				}
 
 				session.save(socialActivityAchievement);

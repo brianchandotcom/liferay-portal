@@ -1927,8 +1927,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 		FriendlyURLEntryLocalization friendlyURLEntryLocalization) {
 
 		if (friendlyURLEntryLocalization.getCtCollectionId() != 0) {
-			friendlyURLEntryLocalization.resetOriginalValues();
-
 			return;
 		}
 
@@ -1953,8 +1951,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 				friendlyURLEntryLocalization.getUrlTitle()
 			},
 			friendlyURLEntryLocalization);
-
-		friendlyURLEntryLocalization.resetOriginalValues();
 	}
 
 	/**
@@ -1970,8 +1966,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 				friendlyURLEntryLocalizations) {
 
 			if (friendlyURLEntryLocalization.getCtCollectionId() != 0) {
-				friendlyURLEntryLocalization.resetOriginalValues();
-
 				continue;
 			}
 
@@ -1980,9 +1974,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 					friendlyURLEntryLocalization.getPrimaryKey()) == null) {
 
 				cacheResult(friendlyURLEntryLocalization);
-			}
-			else {
-				friendlyURLEntryLocalization.resetOriginalValues();
 			}
 		}
 	}
@@ -2305,16 +2296,7 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(friendlyURLEntryLocalization)) {
 				if (!isNew) {
-					FriendlyURLEntryLocalization
-						oldFriendlyURLEntryLocalization =
-							(FriendlyURLEntryLocalization)session.get(
-								FriendlyURLEntryLocalizationImpl.class,
-								friendlyURLEntryLocalization.
-									getPrimaryKeyObj());
-
-					if (oldFriendlyURLEntryLocalization != null) {
-						session.evict(oldFriendlyURLEntryLocalization);
-					}
+					session.evict(friendlyURLEntryLocalization);
 				}
 
 				session.save(friendlyURLEntryLocalization);

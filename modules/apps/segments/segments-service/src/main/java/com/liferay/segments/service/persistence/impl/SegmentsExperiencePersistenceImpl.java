@@ -9589,8 +9589,6 @@ public class SegmentsExperiencePersistenceImpl
 	@Override
 	public void cacheResult(SegmentsExperience segmentsExperience) {
 		if (segmentsExperience.getCtCollectionId() != 0) {
-			segmentsExperience.resetOriginalValues();
-
 			return;
 		}
 
@@ -9622,8 +9620,6 @@ public class SegmentsExperiencePersistenceImpl
 				segmentsExperience.getPriority()
 			},
 			segmentsExperience);
-
-		segmentsExperience.resetOriginalValues();
 	}
 
 	/**
@@ -9635,8 +9631,6 @@ public class SegmentsExperiencePersistenceImpl
 	public void cacheResult(List<SegmentsExperience> segmentsExperiences) {
 		for (SegmentsExperience segmentsExperience : segmentsExperiences) {
 			if (segmentsExperience.getCtCollectionId() != 0) {
-				segmentsExperience.resetOriginalValues();
-
 				continue;
 			}
 
@@ -9645,9 +9639,6 @@ public class SegmentsExperiencePersistenceImpl
 					segmentsExperience.getPrimaryKey()) == null) {
 
 				cacheResult(segmentsExperience);
-			}
-			else {
-				segmentsExperience.resetOriginalValues();
 			}
 		}
 	}
@@ -10004,14 +9995,7 @@ public class SegmentsExperiencePersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(segmentsExperience)) {
 				if (!isNew) {
-					SegmentsExperience oldSegmentsExperience =
-						(SegmentsExperience)session.get(
-							SegmentsExperienceImpl.class,
-							segmentsExperience.getPrimaryKeyObj());
-
-					if (oldSegmentsExperience != null) {
-						session.evict(oldSegmentsExperience);
-					}
+					session.evict(segmentsExperience);
 				}
 
 				session.save(segmentsExperience);

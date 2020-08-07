@@ -1421,8 +1421,6 @@ public class DDLRecordSetVersionPersistenceImpl
 				ddlRecordSetVersion.getVersion()
 			},
 			ddlRecordSetVersion);
-
-		ddlRecordSetVersion.resetOriginalValues();
 	}
 
 	/**
@@ -1438,9 +1436,6 @@ public class DDLRecordSetVersionPersistenceImpl
 					ddlRecordSetVersion.getPrimaryKey()) == null) {
 
 				cacheResult(ddlRecordSetVersion);
-			}
-			else {
-				ddlRecordSetVersion.resetOriginalValues();
 			}
 		}
 	}

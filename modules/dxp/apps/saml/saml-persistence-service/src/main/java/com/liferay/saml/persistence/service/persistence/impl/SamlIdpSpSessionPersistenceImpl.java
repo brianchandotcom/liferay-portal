@@ -1445,8 +1445,6 @@ public class SamlIdpSpSessionPersistenceImpl
 				samlIdpSpSession.getSamlSpEntityId()
 			},
 			samlIdpSpSession);
-
-		samlIdpSpSession.resetOriginalValues();
 	}
 
 	/**
@@ -1462,9 +1460,6 @@ public class SamlIdpSpSessionPersistenceImpl
 					samlIdpSpSession.getPrimaryKey()) == null) {
 
 				cacheResult(samlIdpSpSession);
-			}
-			else {
-				samlIdpSpSession.resetOriginalValues();
 			}
 		}
 	}

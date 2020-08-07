@@ -5772,8 +5772,6 @@ public class SocialRelationPersistenceImpl
 	@Override
 	public void cacheResult(SocialRelation socialRelation) {
 		if (socialRelation.getCtCollectionId() != 0) {
-			socialRelation.resetOriginalValues();
-
 			return;
 		}
 
@@ -5788,8 +5786,6 @@ public class SocialRelationPersistenceImpl
 				socialRelation.getType()
 			},
 			socialRelation);
-
-		socialRelation.resetOriginalValues();
 	}
 
 	/**
@@ -5801,8 +5797,6 @@ public class SocialRelationPersistenceImpl
 	public void cacheResult(List<SocialRelation> socialRelations) {
 		for (SocialRelation socialRelation : socialRelations) {
 			if (socialRelation.getCtCollectionId() != 0) {
-				socialRelation.resetOriginalValues();
-
 				continue;
 			}
 
@@ -5811,9 +5805,6 @@ public class SocialRelationPersistenceImpl
 						null) {
 
 				cacheResult(socialRelation);
-			}
-			else {
-				socialRelation.resetOriginalValues();
 			}
 		}
 	}
@@ -6069,14 +6060,7 @@ public class SocialRelationPersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(socialRelation)) {
 				if (!isNew) {
-					SocialRelation oldSocialRelation =
-						(SocialRelation)session.get(
-							SocialRelationImpl.class,
-							socialRelation.getPrimaryKeyObj());
-
-					if (oldSocialRelation != null) {
-						session.evict(oldSocialRelation);
-					}
+					session.evict(socialRelation);
 				}
 
 				session.save(socialRelation);

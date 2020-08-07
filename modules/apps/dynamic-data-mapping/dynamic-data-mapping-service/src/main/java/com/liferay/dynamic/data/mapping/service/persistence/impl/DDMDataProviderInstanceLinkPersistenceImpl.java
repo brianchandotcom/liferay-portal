@@ -1428,8 +1428,6 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 		DDMDataProviderInstanceLink ddmDataProviderInstanceLink) {
 
 		if (ddmDataProviderInstanceLink.getCtCollectionId() != 0) {
-			ddmDataProviderInstanceLink.resetOriginalValues();
-
 			return;
 		}
 
@@ -1445,8 +1443,6 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 				ddmDataProviderInstanceLink.getStructureId()
 			},
 			ddmDataProviderInstanceLink);
-
-		ddmDataProviderInstanceLink.resetOriginalValues();
 	}
 
 	/**
@@ -1462,8 +1458,6 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 				ddmDataProviderInstanceLinks) {
 
 			if (ddmDataProviderInstanceLink.getCtCollectionId() != 0) {
-				ddmDataProviderInstanceLink.resetOriginalValues();
-
 				continue;
 			}
 
@@ -1472,9 +1466,6 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 					ddmDataProviderInstanceLink.getPrimaryKey()) == null) {
 
 				cacheResult(ddmDataProviderInstanceLink);
-			}
-			else {
-				ddmDataProviderInstanceLink.resetOriginalValues();
 			}
 		}
 	}
@@ -1750,14 +1741,7 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(ddmDataProviderInstanceLink)) {
 				if (!isNew) {
-					DDMDataProviderInstanceLink oldDDMDataProviderInstanceLink =
-						(DDMDataProviderInstanceLink)session.get(
-							DDMDataProviderInstanceLinkImpl.class,
-							ddmDataProviderInstanceLink.getPrimaryKeyObj());
-
-					if (oldDDMDataProviderInstanceLink != null) {
-						session.evict(oldDDMDataProviderInstanceLink);
-					}
+					session.evict(ddmDataProviderInstanceLink);
 				}
 
 				session.save(ddmDataProviderInstanceLink);

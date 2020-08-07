@@ -2578,8 +2578,6 @@ public class DEDataListViewPersistenceImpl
 				deDataListView.getUuid(), deDataListView.getGroupId()
 			},
 			deDataListView);
-
-		deDataListView.resetOriginalValues();
 	}
 
 	/**
@@ -2595,9 +2593,6 @@ public class DEDataListViewPersistenceImpl
 						null) {
 
 				cacheResult(deDataListView);
-			}
-			else {
-				deDataListView.resetOriginalValues();
 			}
 		}
 	}

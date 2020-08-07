@@ -1434,8 +1434,6 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel) {
 
 		if (assetEntryAssetCategoryRel.getCtCollectionId() != 0) {
-			assetEntryAssetCategoryRel.resetOriginalValues();
-
 			return;
 		}
 
@@ -1451,8 +1449,6 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 				assetEntryAssetCategoryRel.getAssetCategoryId()
 			},
 			assetEntryAssetCategoryRel);
-
-		assetEntryAssetCategoryRel.resetOriginalValues();
 	}
 
 	/**
@@ -1468,8 +1464,6 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 				assetEntryAssetCategoryRels) {
 
 			if (assetEntryAssetCategoryRel.getCtCollectionId() != 0) {
-				assetEntryAssetCategoryRel.resetOriginalValues();
-
 				continue;
 			}
 
@@ -1478,9 +1472,6 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 					assetEntryAssetCategoryRel.getPrimaryKey()) == null) {
 
 				cacheResult(assetEntryAssetCategoryRel);
-			}
-			else {
-				assetEntryAssetCategoryRel.resetOriginalValues();
 			}
 		}
 	}
@@ -1751,14 +1742,7 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(assetEntryAssetCategoryRel)) {
 				if (!isNew) {
-					AssetEntryAssetCategoryRel oldAssetEntryAssetCategoryRel =
-						(AssetEntryAssetCategoryRel)session.get(
-							AssetEntryAssetCategoryRelImpl.class,
-							assetEntryAssetCategoryRel.getPrimaryKeyObj());
-
-					if (oldAssetEntryAssetCategoryRel != null) {
-						session.evict(oldAssetEntryAssetCategoryRel);
-					}
+					session.evict(assetEntryAssetCategoryRel);
 				}
 
 				session.save(assetEntryAssetCategoryRel);

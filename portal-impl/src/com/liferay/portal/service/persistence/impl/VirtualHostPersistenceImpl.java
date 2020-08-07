@@ -1184,8 +1184,6 @@ public class VirtualHostPersistenceImpl
 	@Override
 	public void cacheResult(VirtualHost virtualHost) {
 		if (virtualHost.getCtCollectionId() != 0) {
-			virtualHost.resetOriginalValues();
-
 			return;
 		}
 
@@ -1203,8 +1201,6 @@ public class VirtualHostPersistenceImpl
 				virtualHost.isDefaultVirtualHost()
 			},
 			virtualHost);
-
-		virtualHost.resetOriginalValues();
 	}
 
 	/**
@@ -1216,8 +1212,6 @@ public class VirtualHostPersistenceImpl
 	public void cacheResult(List<VirtualHost> virtualHosts) {
 		for (VirtualHost virtualHost : virtualHosts) {
 			if (virtualHost.getCtCollectionId() != 0) {
-				virtualHost.resetOriginalValues();
-
 				continue;
 			}
 
@@ -1226,9 +1220,6 @@ public class VirtualHostPersistenceImpl
 						null) {
 
 				cacheResult(virtualHost);
-			}
-			else {
-				virtualHost.resetOriginalValues();
 			}
 		}
 	}
@@ -1496,12 +1487,7 @@ public class VirtualHostPersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(virtualHost)) {
 				if (!isNew) {
-					VirtualHost oldVirtualHost = (VirtualHost)session.get(
-						VirtualHostImpl.class, virtualHost.getPrimaryKeyObj());
-
-					if (oldVirtualHost != null) {
-						session.evict(oldVirtualHost);
-					}
+					session.evict(virtualHost);
 				}
 
 				session.save(virtualHost);

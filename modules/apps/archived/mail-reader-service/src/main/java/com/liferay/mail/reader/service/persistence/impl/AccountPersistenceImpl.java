@@ -870,8 +870,6 @@ public class AccountPersistenceImpl
 		finderCache.putResult(
 			_finderPathFetchByU_A,
 			new Object[] {account.getUserId(), account.getAddress()}, account);
-
-		account.resetOriginalValues();
 	}
 
 	/**
@@ -886,9 +884,6 @@ public class AccountPersistenceImpl
 					AccountImpl.class, account.getPrimaryKey()) == null) {
 
 				cacheResult(account);
-			}
-			else {
-				account.resetOriginalValues();
 			}
 		}
 	}

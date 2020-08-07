@@ -4368,8 +4368,6 @@ public class EntryPersistenceImpl
 	@Override
 	public void cacheResult(Entry entry) {
 		entityCache.putResult(EntryImpl.class, entry.getPrimaryKey(), entry);
-
-		entry.resetOriginalValues();
 	}
 
 	/**
@@ -4384,9 +4382,6 @@ public class EntryPersistenceImpl
 					null) {
 
 				cacheResult(entry);
-			}
-			else {
-				entry.resetOriginalValues();
 			}
 		}
 	}

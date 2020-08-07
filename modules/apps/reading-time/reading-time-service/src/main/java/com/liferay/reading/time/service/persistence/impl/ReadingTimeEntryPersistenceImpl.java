@@ -1743,8 +1743,6 @@ public class ReadingTimeEntryPersistenceImpl
 				readingTimeEntry.getClassNameId(), readingTimeEntry.getClassPK()
 			},
 			readingTimeEntry);
-
-		readingTimeEntry.resetOriginalValues();
 	}
 
 	/**
@@ -1760,9 +1758,6 @@ public class ReadingTimeEntryPersistenceImpl
 					readingTimeEntry.getPrimaryKey()) == null) {
 
 				cacheResult(readingTimeEntry);
-			}
-			else {
-				readingTimeEntry.resetOriginalValues();
 			}
 		}
 	}

@@ -1094,8 +1094,6 @@ public class CTProcessPersistenceImpl
 	public void cacheResult(CTProcess ctProcess) {
 		entityCache.putResult(
 			CTProcessImpl.class, ctProcess.getPrimaryKey(), ctProcess);
-
-		ctProcess.resetOriginalValues();
 	}
 
 	/**
@@ -1110,9 +1108,6 @@ public class CTProcessPersistenceImpl
 					CTProcessImpl.class, ctProcess.getPrimaryKey()) == null) {
 
 				cacheResult(ctProcess);
-			}
-			else {
-				ctProcess.resetOriginalValues();
 			}
 		}
 	}

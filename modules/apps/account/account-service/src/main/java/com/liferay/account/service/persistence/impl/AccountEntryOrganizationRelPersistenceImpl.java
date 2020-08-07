@@ -1395,8 +1395,6 @@ public class AccountEntryOrganizationRelPersistenceImpl
 				accountEntryOrganizationRel.getOrganizationId()
 			},
 			accountEntryOrganizationRel);
-
-		accountEntryOrganizationRel.resetOriginalValues();
 	}
 
 	/**
@@ -1416,9 +1414,6 @@ public class AccountEntryOrganizationRelPersistenceImpl
 					accountEntryOrganizationRel.getPrimaryKey()) == null) {
 
 				cacheResult(accountEntryOrganizationRel);
-			}
-			else {
-				accountEntryOrganizationRel.resetOriginalValues();
 			}
 		}
 	}

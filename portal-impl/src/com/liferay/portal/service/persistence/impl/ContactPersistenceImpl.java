@@ -1617,8 +1617,6 @@ public class ContactPersistenceImpl
 	public void cacheResult(Contact contact) {
 		EntityCacheUtil.putResult(
 			ContactImpl.class, contact.getPrimaryKey(), contact);
-
-		contact.resetOriginalValues();
 	}
 
 	/**
@@ -1633,9 +1631,6 @@ public class ContactPersistenceImpl
 					ContactImpl.class, contact.getPrimaryKey()) == null) {
 
 				cacheResult(contact);
-			}
-			else {
-				contact.resetOriginalValues();
 			}
 		}
 	}

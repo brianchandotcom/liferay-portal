@@ -2282,8 +2282,6 @@ public class LayoutSetPersistenceImpl
 	@Override
 	public void cacheResult(LayoutSet layoutSet) {
 		if (layoutSet.getCtCollectionId() != 0) {
-			layoutSet.resetOriginalValues();
-
 			return;
 		}
 
@@ -2299,8 +2297,6 @@ public class LayoutSetPersistenceImpl
 			_finderPathFetchByP_L,
 			new Object[] {layoutSet.isPrivateLayout(), layoutSet.getLogoId()},
 			layoutSet);
-
-		layoutSet.resetOriginalValues();
 	}
 
 	/**
@@ -2312,8 +2308,6 @@ public class LayoutSetPersistenceImpl
 	public void cacheResult(List<LayoutSet> layoutSets) {
 		for (LayoutSet layoutSet : layoutSets) {
 			if (layoutSet.getCtCollectionId() != 0) {
-				layoutSet.resetOriginalValues();
-
 				continue;
 			}
 
@@ -2321,9 +2315,6 @@ public class LayoutSetPersistenceImpl
 					LayoutSetImpl.class, layoutSet.getPrimaryKey()) == null) {
 
 				cacheResult(layoutSet);
-			}
-			else {
-				layoutSet.resetOriginalValues();
 			}
 		}
 	}
@@ -2614,12 +2605,7 @@ public class LayoutSetPersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(layoutSet)) {
 				if (!isNew) {
-					LayoutSet oldLayoutSet = (LayoutSet)session.get(
-						LayoutSetImpl.class, layoutSet.getPrimaryKeyObj());
-
-					if (oldLayoutSet != null) {
-						session.evict(oldLayoutSet);
-					}
+					session.evict(layoutSet);
 				}
 
 				session.save(layoutSet);

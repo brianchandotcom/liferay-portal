@@ -3843,8 +3843,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel) {
 
 		if (assetListEntryAssetEntryRel.getCtCollectionId() != 0) {
-			assetListEntryAssetEntryRel.resetOriginalValues();
-
 			return;
 		}
 
@@ -3869,8 +3867,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				assetListEntryAssetEntryRel.getPosition()
 			},
 			assetListEntryAssetEntryRel);
-
-		assetListEntryAssetEntryRel.resetOriginalValues();
 	}
 
 	/**
@@ -3886,8 +3882,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				assetListEntryAssetEntryRels) {
 
 			if (assetListEntryAssetEntryRel.getCtCollectionId() != 0) {
-				assetListEntryAssetEntryRel.resetOriginalValues();
-
 				continue;
 			}
 
@@ -3896,9 +3890,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 					assetListEntryAssetEntryRel.getPrimaryKey()) == null) {
 
 				cacheResult(assetListEntryAssetEntryRel);
-			}
-			else {
-				assetListEntryAssetEntryRel.resetOriginalValues();
 			}
 		}
 	}
@@ -4249,14 +4240,7 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(assetListEntryAssetEntryRel)) {
 				if (!isNew) {
-					AssetListEntryAssetEntryRel oldAssetListEntryAssetEntryRel =
-						(AssetListEntryAssetEntryRel)session.get(
-							AssetListEntryAssetEntryRelImpl.class,
-							assetListEntryAssetEntryRel.getPrimaryKeyObj());
-
-					if (oldAssetListEntryAssetEntryRel != null) {
-						session.evict(oldAssetListEntryAssetEntryRel);
-					}
+					session.evict(assetListEntryAssetEntryRel);
 				}
 
 				session.save(assetListEntryAssetEntryRel);

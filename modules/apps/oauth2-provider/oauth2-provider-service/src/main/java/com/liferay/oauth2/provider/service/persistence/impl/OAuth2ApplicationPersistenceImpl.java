@@ -1277,8 +1277,6 @@ public class OAuth2ApplicationPersistenceImpl
 				oAuth2Application.getClientId()
 			},
 			oAuth2Application);
-
-		oAuth2Application.resetOriginalValues();
 	}
 
 	/**
@@ -1294,9 +1292,6 @@ public class OAuth2ApplicationPersistenceImpl
 					oAuth2Application.getPrimaryKey()) == null) {
 
 				cacheResult(oAuth2Application);
-			}
-			else {
-				oAuth2Application.resetOriginalValues();
 			}
 		}
 	}

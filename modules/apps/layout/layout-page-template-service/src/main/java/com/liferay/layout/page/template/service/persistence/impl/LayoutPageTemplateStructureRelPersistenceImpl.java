@@ -2865,8 +2865,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 				layoutPageTemplateStructureRel.getSegmentsExperienceId()
 			},
 			layoutPageTemplateStructureRel);
-
-		layoutPageTemplateStructureRel.resetOriginalValues();
 	}
 
 	/**
@@ -2886,9 +2884,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 					layoutPageTemplateStructureRel.getPrimaryKey()) == null) {
 
 				cacheResult(layoutPageTemplateStructureRel);
-			}
-			else {
-				layoutPageTemplateStructureRel.resetOriginalValues();
 			}
 		}
 	}

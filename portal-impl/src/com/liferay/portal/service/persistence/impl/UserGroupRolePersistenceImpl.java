@@ -2988,8 +2988,6 @@ public class UserGroupRolePersistenceImpl
 	@Override
 	public void cacheResult(UserGroupRole userGroupRole) {
 		if (userGroupRole.getCtCollectionId() != 0) {
-			userGroupRole.resetOriginalValues();
-
 			return;
 		}
 
@@ -3004,8 +3002,6 @@ public class UserGroupRolePersistenceImpl
 				userGroupRole.getRoleId()
 			},
 			userGroupRole);
-
-		userGroupRole.resetOriginalValues();
 	}
 
 	/**
@@ -3017,8 +3013,6 @@ public class UserGroupRolePersistenceImpl
 	public void cacheResult(List<UserGroupRole> userGroupRoles) {
 		for (UserGroupRole userGroupRole : userGroupRoles) {
 			if (userGroupRole.getCtCollectionId() != 0) {
-				userGroupRole.resetOriginalValues();
-
 				continue;
 			}
 
@@ -3027,9 +3021,6 @@ public class UserGroupRolePersistenceImpl
 						null) {
 
 				cacheResult(userGroupRole);
-			}
-			else {
-				userGroupRole.resetOriginalValues();
 			}
 		}
 	}
@@ -3274,13 +3265,7 @@ public class UserGroupRolePersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(userGroupRole)) {
 				if (!isNew) {
-					UserGroupRole oldUserGroupRole = (UserGroupRole)session.get(
-						UserGroupRoleImpl.class,
-						userGroupRole.getPrimaryKeyObj());
-
-					if (oldUserGroupRole != null) {
-						session.evict(oldUserGroupRole);
-					}
+					session.evict(userGroupRole);
 				}
 
 				session.save(userGroupRole);

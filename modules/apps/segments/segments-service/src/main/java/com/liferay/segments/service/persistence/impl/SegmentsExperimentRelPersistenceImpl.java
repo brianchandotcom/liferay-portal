@@ -897,8 +897,6 @@ public class SegmentsExperimentRelPersistenceImpl
 	@Override
 	public void cacheResult(SegmentsExperimentRel segmentsExperimentRel) {
 		if (segmentsExperimentRel.getCtCollectionId() != 0) {
-			segmentsExperimentRel.resetOriginalValues();
-
 			return;
 		}
 
@@ -913,8 +911,6 @@ public class SegmentsExperimentRelPersistenceImpl
 				segmentsExperimentRel.getSegmentsExperienceId()
 			},
 			segmentsExperimentRel);
-
-		segmentsExperimentRel.resetOriginalValues();
 	}
 
 	/**
@@ -930,8 +926,6 @@ public class SegmentsExperimentRelPersistenceImpl
 				segmentsExperimentRels) {
 
 			if (segmentsExperimentRel.getCtCollectionId() != 0) {
-				segmentsExperimentRel.resetOriginalValues();
-
 				continue;
 			}
 
@@ -940,9 +934,6 @@ public class SegmentsExperimentRelPersistenceImpl
 					segmentsExperimentRel.getPrimaryKey()) == null) {
 
 				cacheResult(segmentsExperimentRel);
-			}
-			else {
-				segmentsExperimentRel.resetOriginalValues();
 			}
 		}
 	}
@@ -1226,14 +1217,7 @@ public class SegmentsExperimentRelPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(segmentsExperimentRel)) {
 				if (!isNew) {
-					SegmentsExperimentRel oldSegmentsExperimentRel =
-						(SegmentsExperimentRel)session.get(
-							SegmentsExperimentRelImpl.class,
-							segmentsExperimentRel.getPrimaryKeyObj());
-
-					if (oldSegmentsExperimentRel != null) {
-						session.evict(oldSegmentsExperimentRel);
-					}
+					session.evict(segmentsExperimentRel);
 				}
 
 				session.save(segmentsExperimentRel);

@@ -3446,8 +3446,6 @@ public class SubscriptionPersistenceImpl
 	@Override
 	public void cacheResult(Subscription subscription) {
 		if (subscription.getCtCollectionId() != 0) {
-			subscription.resetOriginalValues();
-
 			return;
 		}
 
@@ -3461,8 +3459,6 @@ public class SubscriptionPersistenceImpl
 				subscription.getClassNameId(), subscription.getClassPK()
 			},
 			subscription);
-
-		subscription.resetOriginalValues();
 	}
 
 	/**
@@ -3474,8 +3470,6 @@ public class SubscriptionPersistenceImpl
 	public void cacheResult(List<Subscription> subscriptions) {
 		for (Subscription subscription : subscriptions) {
 			if (subscription.getCtCollectionId() != 0) {
-				subscription.resetOriginalValues();
-
 				continue;
 			}
 
@@ -3484,9 +3478,6 @@ public class SubscriptionPersistenceImpl
 						null) {
 
 				cacheResult(subscription);
-			}
-			else {
-				subscription.resetOriginalValues();
 			}
 		}
 	}
@@ -3757,13 +3748,7 @@ public class SubscriptionPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(subscription)) {
 				if (!isNew) {
-					Subscription oldSubscription = (Subscription)session.get(
-						SubscriptionImpl.class,
-						subscription.getPrimaryKeyObj());
-
-					if (oldSubscription != null) {
-						session.evict(oldSubscription);
-					}
+					session.evict(subscription);
 				}
 
 				session.save(subscription);

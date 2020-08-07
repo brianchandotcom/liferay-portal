@@ -877,8 +877,6 @@ public class KaleoProcessLinkPersistenceImpl
 				kaleoProcessLink.getWorkflowTaskName()
 			},
 			kaleoProcessLink);
-
-		kaleoProcessLink.resetOriginalValues();
 	}
 
 	/**
@@ -894,9 +892,6 @@ public class KaleoProcessLinkPersistenceImpl
 					kaleoProcessLink.getPrimaryKey()) == null) {
 
 				cacheResult(kaleoProcessLink);
-			}
-			else {
-				kaleoProcessLink.resetOriginalValues();
 			}
 		}
 	}

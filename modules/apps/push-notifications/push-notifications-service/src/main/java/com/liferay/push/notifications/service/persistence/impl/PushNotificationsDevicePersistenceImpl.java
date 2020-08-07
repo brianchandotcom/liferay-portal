@@ -1232,8 +1232,6 @@ public class PushNotificationsDevicePersistenceImpl
 			_finderPathFetchByToken,
 			new Object[] {pushNotificationsDevice.getToken()},
 			pushNotificationsDevice);
-
-		pushNotificationsDevice.resetOriginalValues();
 	}
 
 	/**
@@ -1253,9 +1251,6 @@ public class PushNotificationsDevicePersistenceImpl
 					pushNotificationsDevice.getPrimaryKey()) == null) {
 
 				cacheResult(pushNotificationsDevice);
-			}
-			else {
-				pushNotificationsDevice.resetOriginalValues();
 			}
 		}
 	}

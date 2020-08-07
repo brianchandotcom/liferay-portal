@@ -2799,8 +2799,6 @@ public class ExportImportConfigurationPersistenceImpl
 			ExportImportConfigurationImpl.class,
 			exportImportConfiguration.getPrimaryKey(),
 			exportImportConfiguration);
-
-		exportImportConfiguration.resetOriginalValues();
 	}
 
 	/**
@@ -2820,9 +2818,6 @@ public class ExportImportConfigurationPersistenceImpl
 					exportImportConfiguration.getPrimaryKey()) == null) {
 
 				cacheResult(exportImportConfiguration);
-			}
-			else {
-				exportImportConfiguration.resetOriginalValues();
 			}
 		}
 	}

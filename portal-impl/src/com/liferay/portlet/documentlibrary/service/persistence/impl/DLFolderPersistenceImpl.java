@@ -12512,8 +12512,6 @@ public class DLFolderPersistenceImpl
 	@Override
 	public void cacheResult(DLFolder dlFolder) {
 		if (dlFolder.getCtCollectionId() != 0) {
-			dlFolder.resetOriginalValues();
-
 			return;
 		}
 
@@ -12536,8 +12534,6 @@ public class DLFolderPersistenceImpl
 				dlFolder.getName()
 			},
 			dlFolder);
-
-		dlFolder.resetOriginalValues();
 	}
 
 	/**
@@ -12549,8 +12545,6 @@ public class DLFolderPersistenceImpl
 	public void cacheResult(List<DLFolder> dlFolders) {
 		for (DLFolder dlFolder : dlFolders) {
 			if (dlFolder.getCtCollectionId() != 0) {
-				dlFolder.resetOriginalValues();
-
 				continue;
 			}
 
@@ -12558,9 +12552,6 @@ public class DLFolderPersistenceImpl
 					DLFolderImpl.class, dlFolder.getPrimaryKey()) == null) {
 
 				cacheResult(dlFolder);
-			}
-			else {
-				dlFolder.resetOriginalValues();
 			}
 		}
 	}
@@ -12897,12 +12888,7 @@ public class DLFolderPersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(dlFolder)) {
 				if (!isNew) {
-					DLFolder oldDLFolder = (DLFolder)session.get(
-						DLFolderImpl.class, dlFolder.getPrimaryKeyObj());
-
-					if (oldDLFolder != null) {
-						session.evict(oldDLFolder);
-					}
+					session.evict(dlFolder);
 				}
 
 				session.save(dlFolder);

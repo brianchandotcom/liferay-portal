@@ -3819,8 +3819,6 @@ public class DDLRecordSetPersistenceImpl
 				ddlRecordSet.getGroupId(), ddlRecordSet.getRecordSetKey()
 			},
 			ddlRecordSet);
-
-		ddlRecordSet.resetOriginalValues();
 	}
 
 	/**
@@ -3836,9 +3834,6 @@ public class DDLRecordSetPersistenceImpl
 						null) {
 
 				cacheResult(ddlRecordSet);
-			}
-			else {
-				ddlRecordSet.resetOriginalValues();
 			}
 		}
 	}

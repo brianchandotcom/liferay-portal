@@ -2358,8 +2358,6 @@ public class PollsQuestionPersistenceImpl
 			_finderPathFetchByUUID_G,
 			new Object[] {pollsQuestion.getUuid(), pollsQuestion.getGroupId()},
 			pollsQuestion);
-
-		pollsQuestion.resetOriginalValues();
 	}
 
 	/**
@@ -2375,9 +2373,6 @@ public class PollsQuestionPersistenceImpl
 						null) {
 
 				cacheResult(pollsQuestion);
-			}
-			else {
-				pollsQuestion.resetOriginalValues();
 			}
 		}
 	}

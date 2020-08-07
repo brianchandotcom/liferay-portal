@@ -2280,8 +2280,6 @@ public class DispatchTriggerPersistenceImpl
 				dispatchTrigger.getCompanyId(), dispatchTrigger.getName()
 			},
 			dispatchTrigger);
-
-		dispatchTrigger.resetOriginalValues();
 	}
 
 	/**
@@ -2297,9 +2295,6 @@ public class DispatchTriggerPersistenceImpl
 					dispatchTrigger.getPrimaryKey()) == null) {
 
 				cacheResult(dispatchTrigger);
-			}
-			else {
-				dispatchTrigger.resetOriginalValues();
 			}
 		}
 	}

@@ -2494,8 +2494,6 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 				kaleoTaskInstanceToken.getKaleoTaskId()
 			},
 			kaleoTaskInstanceToken);
-
-		kaleoTaskInstanceToken.resetOriginalValues();
 	}
 
 	/**
@@ -2515,9 +2513,6 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 					kaleoTaskInstanceToken.getPrimaryKey()) == null) {
 
 				cacheResult(kaleoTaskInstanceToken);
-			}
-			else {
-				kaleoTaskInstanceToken.resetOriginalValues();
 			}
 		}
 	}

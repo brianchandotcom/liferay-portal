@@ -1162,8 +1162,6 @@ public class DispatchLogPersistenceImpl
 	public void cacheResult(DispatchLog dispatchLog) {
 		entityCache.putResult(
 			DispatchLogImpl.class, dispatchLog.getPrimaryKey(), dispatchLog);
-
-		dispatchLog.resetOriginalValues();
 	}
 
 	/**
@@ -1179,9 +1177,6 @@ public class DispatchLogPersistenceImpl
 						null) {
 
 				cacheResult(dispatchLog);
-			}
-			else {
-				dispatchLog.resetOriginalValues();
 			}
 		}
 	}

@@ -5328,8 +5328,6 @@ public class LayoutFriendlyURLPersistenceImpl
 	@Override
 	public void cacheResult(LayoutFriendlyURL layoutFriendlyURL) {
 		if (layoutFriendlyURL.getCtCollectionId() != 0) {
-			layoutFriendlyURL.resetOriginalValues();
-
 			return;
 		}
 
@@ -5360,8 +5358,6 @@ public class LayoutFriendlyURLPersistenceImpl
 				layoutFriendlyURL.getLanguageId()
 			},
 			layoutFriendlyURL);
-
-		layoutFriendlyURL.resetOriginalValues();
 	}
 
 	/**
@@ -5373,8 +5369,6 @@ public class LayoutFriendlyURLPersistenceImpl
 	public void cacheResult(List<LayoutFriendlyURL> layoutFriendlyURLs) {
 		for (LayoutFriendlyURL layoutFriendlyURL : layoutFriendlyURLs) {
 			if (layoutFriendlyURL.getCtCollectionId() != 0) {
-				layoutFriendlyURL.resetOriginalValues();
-
 				continue;
 			}
 
@@ -5383,9 +5377,6 @@ public class LayoutFriendlyURLPersistenceImpl
 					layoutFriendlyURL.getPrimaryKey()) == null) {
 
 				cacheResult(layoutFriendlyURL);
-			}
-			else {
-				layoutFriendlyURL.resetOriginalValues();
 			}
 		}
 	}
@@ -5739,14 +5730,7 @@ public class LayoutFriendlyURLPersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(layoutFriendlyURL)) {
 				if (!isNew) {
-					LayoutFriendlyURL oldLayoutFriendlyURL =
-						(LayoutFriendlyURL)session.get(
-							LayoutFriendlyURLImpl.class,
-							layoutFriendlyURL.getPrimaryKeyObj());
-
-					if (oldLayoutFriendlyURL != null) {
-						session.evict(oldLayoutFriendlyURL);
-					}
+					session.evict(layoutFriendlyURL);
 				}
 
 				session.save(layoutFriendlyURL);

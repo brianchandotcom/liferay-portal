@@ -1337,8 +1337,6 @@ public class KaleoTaskPersistenceImpl
 		finderCache.putResult(
 			_finderPathFetchByKaleoNodeId,
 			new Object[] {kaleoTask.getKaleoNodeId()}, kaleoTask);
-
-		kaleoTask.resetOriginalValues();
 	}
 
 	/**
@@ -1353,9 +1351,6 @@ public class KaleoTaskPersistenceImpl
 					KaleoTaskImpl.class, kaleoTask.getPrimaryKey()) == null) {
 
 				cacheResult(kaleoTask);
-			}
-			else {
-				kaleoTask.resetOriginalValues();
 			}
 		}
 	}

@@ -3926,8 +3926,6 @@ public class LayoutPrototypePersistenceImpl
 		EntityCacheUtil.putResult(
 			LayoutPrototypeImpl.class, layoutPrototype.getPrimaryKey(),
 			layoutPrototype);
-
-		layoutPrototype.resetOriginalValues();
 	}
 
 	/**
@@ -3943,9 +3941,6 @@ public class LayoutPrototypePersistenceImpl
 					layoutPrototype.getPrimaryKey()) == null) {
 
 				cacheResult(layoutPrototype);
-			}
-			else {
-				layoutPrototype.resetOriginalValues();
 			}
 		}
 	}

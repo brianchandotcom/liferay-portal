@@ -33441,8 +33441,6 @@ public class KBArticlePersistenceImpl
 				kbArticle.getVersion()
 			},
 			kbArticle);
-
-		kbArticle.resetOriginalValues();
 	}
 
 	/**
@@ -33457,9 +33455,6 @@ public class KBArticlePersistenceImpl
 					KBArticleImpl.class, kbArticle.getPrimaryKey()) == null) {
 
 				cacheResult(kbArticle);
-			}
-			else {
-				kbArticle.resetOriginalValues();
 			}
 		}
 	}

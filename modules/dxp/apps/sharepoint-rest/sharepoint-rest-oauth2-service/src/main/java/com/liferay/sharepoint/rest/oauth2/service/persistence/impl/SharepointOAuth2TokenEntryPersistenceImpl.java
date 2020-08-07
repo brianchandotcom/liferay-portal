@@ -880,8 +880,6 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 				sharepointOAuth2TokenEntry.getConfigurationPid()
 			},
 			sharepointOAuth2TokenEntry);
-
-		sharepointOAuth2TokenEntry.resetOriginalValues();
 	}
 
 	/**
@@ -901,9 +899,6 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 					sharepointOAuth2TokenEntry.getPrimaryKey()) == null) {
 
 				cacheResult(sharepointOAuth2TokenEntry);
-			}
-			else {
-				sharepointOAuth2TokenEntry.resetOriginalValues();
 			}
 		}
 	}

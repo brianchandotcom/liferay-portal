@@ -5019,8 +5019,6 @@ public class KBCommentPersistenceImpl
 			_finderPathFetchByUUID_G,
 			new Object[] {kbComment.getUuid(), kbComment.getGroupId()},
 			kbComment);
-
-		kbComment.resetOriginalValues();
 	}
 
 	/**
@@ -5035,9 +5033,6 @@ public class KBCommentPersistenceImpl
 					KBCommentImpl.class, kbComment.getPrimaryKey()) == null) {
 
 				cacheResult(kbComment);
-			}
-			else {
-				kbComment.resetOriginalValues();
 			}
 		}
 	}

@@ -4540,8 +4540,6 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 			KaleoTaskAssignmentInstanceImpl.class,
 			kaleoTaskAssignmentInstance.getPrimaryKey(),
 			kaleoTaskAssignmentInstance);
-
-		kaleoTaskAssignmentInstance.resetOriginalValues();
 	}
 
 	/**
@@ -4561,9 +4559,6 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 					kaleoTaskAssignmentInstance.getPrimaryKey()) == null) {
 
 				cacheResult(kaleoTaskAssignmentInstance);
-			}
-			else {
-				kaleoTaskAssignmentInstance.resetOriginalValues();
 			}
 		}
 	}

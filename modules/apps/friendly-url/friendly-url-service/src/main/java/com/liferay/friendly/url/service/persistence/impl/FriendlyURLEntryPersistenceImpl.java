@@ -2126,8 +2126,6 @@ public class FriendlyURLEntryPersistenceImpl
 	@Override
 	public void cacheResult(FriendlyURLEntry friendlyURLEntry) {
 		if (friendlyURLEntry.getCtCollectionId() != 0) {
-			friendlyURLEntry.resetOriginalValues();
-
 			return;
 		}
 
@@ -2141,8 +2139,6 @@ public class FriendlyURLEntryPersistenceImpl
 				friendlyURLEntry.getUuid(), friendlyURLEntry.getGroupId()
 			},
 			friendlyURLEntry);
-
-		friendlyURLEntry.resetOriginalValues();
 	}
 
 	/**
@@ -2154,8 +2150,6 @@ public class FriendlyURLEntryPersistenceImpl
 	public void cacheResult(List<FriendlyURLEntry> friendlyURLEntries) {
 		for (FriendlyURLEntry friendlyURLEntry : friendlyURLEntries) {
 			if (friendlyURLEntry.getCtCollectionId() != 0) {
-				friendlyURLEntry.resetOriginalValues();
-
 				continue;
 			}
 
@@ -2164,9 +2158,6 @@ public class FriendlyURLEntryPersistenceImpl
 					friendlyURLEntry.getPrimaryKey()) == null) {
 
 				cacheResult(friendlyURLEntry);
-			}
-			else {
-				friendlyURLEntry.resetOriginalValues();
 			}
 		}
 	}
@@ -2446,14 +2437,7 @@ public class FriendlyURLEntryPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(friendlyURLEntry)) {
 				if (!isNew) {
-					FriendlyURLEntry oldFriendlyURLEntry =
-						(FriendlyURLEntry)session.get(
-							FriendlyURLEntryImpl.class,
-							friendlyURLEntry.getPrimaryKeyObj());
-
-					if (oldFriendlyURLEntry != null) {
-						session.evict(oldFriendlyURLEntry);
-					}
+					session.evict(friendlyURLEntry);
 				}
 
 				session.save(friendlyURLEntry);

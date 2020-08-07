@@ -4941,8 +4941,6 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 				workflowMetricsSLADefinition.isActive()
 			},
 			workflowMetricsSLADefinition);
-
-		workflowMetricsSLADefinition.resetOriginalValues();
 	}
 
 	/**
@@ -4962,9 +4960,6 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 					workflowMetricsSLADefinition.getPrimaryKey()) == null) {
 
 				cacheResult(workflowMetricsSLADefinition);
-			}
-			else {
-				workflowMetricsSLADefinition.resetOriginalValues();
 			}
 		}
 	}

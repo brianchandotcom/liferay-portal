@@ -684,8 +684,6 @@ public class PowwowServerPersistenceImpl
 	public void cacheResult(PowwowServer powwowServer) {
 		EntityCacheUtil.putResult(
 			PowwowServerImpl.class, powwowServer.getPrimaryKey(), powwowServer);
-
-		powwowServer.resetOriginalValues();
 	}
 
 	/**
@@ -701,9 +699,6 @@ public class PowwowServerPersistenceImpl
 						null) {
 
 				cacheResult(powwowServer);
-			}
-			else {
-				powwowServer.resetOriginalValues();
 			}
 		}
 	}

@@ -90,8 +90,6 @@ public class LocalizedEntryPersistenceImpl
 		entityCache.putResult(
 			LocalizedEntryImpl.class, localizedEntry.getPrimaryKey(),
 			localizedEntry);
-
-		localizedEntry.resetOriginalValues();
 	}
 
 	/**
@@ -107,9 +105,6 @@ public class LocalizedEntryPersistenceImpl
 						null) {
 
 				cacheResult(localizedEntry);
-			}
-			else {
-				localizedEntry.resetOriginalValues();
 			}
 		}
 	}

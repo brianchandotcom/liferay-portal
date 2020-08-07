@@ -2921,8 +2921,6 @@ public class AssetListEntryUsagePersistenceImpl
 	@Override
 	public void cacheResult(AssetListEntryUsage assetListEntryUsage) {
 		if (assetListEntryUsage.getCtCollectionId() != 0) {
-			assetListEntryUsage.resetOriginalValues();
-
 			return;
 		}
 
@@ -2945,8 +2943,6 @@ public class AssetListEntryUsagePersistenceImpl
 				assetListEntryUsage.getPortletId()
 			},
 			assetListEntryUsage);
-
-		assetListEntryUsage.resetOriginalValues();
 	}
 
 	/**
@@ -2958,8 +2954,6 @@ public class AssetListEntryUsagePersistenceImpl
 	public void cacheResult(List<AssetListEntryUsage> assetListEntryUsages) {
 		for (AssetListEntryUsage assetListEntryUsage : assetListEntryUsages) {
 			if (assetListEntryUsage.getCtCollectionId() != 0) {
-				assetListEntryUsage.resetOriginalValues();
-
 				continue;
 			}
 
@@ -2968,9 +2962,6 @@ public class AssetListEntryUsagePersistenceImpl
 					assetListEntryUsage.getPrimaryKey()) == null) {
 
 				cacheResult(assetListEntryUsage);
-			}
-			else {
-				assetListEntryUsage.resetOriginalValues();
 			}
 		}
 	}
@@ -3292,14 +3283,7 @@ public class AssetListEntryUsagePersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(assetListEntryUsage)) {
 				if (!isNew) {
-					AssetListEntryUsage oldAssetListEntryUsage =
-						(AssetListEntryUsage)session.get(
-							AssetListEntryUsageImpl.class,
-							assetListEntryUsage.getPrimaryKeyObj());
-
-					if (oldAssetListEntryUsage != null) {
-						session.evict(oldAssetListEntryUsage);
-					}
+					session.evict(assetListEntryUsage);
 				}
 
 				session.save(assetListEntryUsage);

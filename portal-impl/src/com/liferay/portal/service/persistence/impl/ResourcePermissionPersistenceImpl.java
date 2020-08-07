@@ -6637,8 +6637,6 @@ public class ResourcePermissionPersistenceImpl
 	@Override
 	public void cacheResult(ResourcePermission resourcePermission) {
 		if (resourcePermission.getCtCollectionId() != 0) {
-			resourcePermission.resetOriginalValues();
-
 			return;
 		}
 
@@ -6654,8 +6652,6 @@ public class ResourcePermissionPersistenceImpl
 				resourcePermission.getRoleId()
 			},
 			resourcePermission);
-
-		resourcePermission.resetOriginalValues();
 	}
 
 	/**
@@ -6667,8 +6663,6 @@ public class ResourcePermissionPersistenceImpl
 	public void cacheResult(List<ResourcePermission> resourcePermissions) {
 		for (ResourcePermission resourcePermission : resourcePermissions) {
 			if (resourcePermission.getCtCollectionId() != 0) {
-				resourcePermission.resetOriginalValues();
-
 				continue;
 			}
 
@@ -6677,9 +6671,6 @@ public class ResourcePermissionPersistenceImpl
 					resourcePermission.getPrimaryKey()) == null) {
 
 				cacheResult(resourcePermission);
-			}
-			else {
-				resourcePermission.resetOriginalValues();
 			}
 		}
 	}
@@ -6941,14 +6932,7 @@ public class ResourcePermissionPersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(resourcePermission)) {
 				if (!isNew) {
-					ResourcePermission oldResourcePermission =
-						(ResourcePermission)session.get(
-							ResourcePermissionImpl.class,
-							resourcePermission.getPrimaryKeyObj());
-
-					if (oldResourcePermission != null) {
-						session.evict(oldResourcePermission);
-					}
+					session.evict(resourcePermission);
 				}
 
 				session.save(resourcePermission);

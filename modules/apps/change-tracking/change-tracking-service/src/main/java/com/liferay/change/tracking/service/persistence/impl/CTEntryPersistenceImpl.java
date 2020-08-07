@@ -2285,8 +2285,6 @@ public class CTEntryPersistenceImpl
 				ctEntry.getModelClassPK()
 			},
 			ctEntry);
-
-		ctEntry.resetOriginalValues();
 	}
 
 	/**
@@ -2301,9 +2299,6 @@ public class CTEntryPersistenceImpl
 					CTEntryImpl.class, ctEntry.getPrimaryKey()) == null) {
 
 				cacheResult(ctEntry);
-			}
-			else {
-				ctEntry.resetOriginalValues();
 			}
 		}
 	}

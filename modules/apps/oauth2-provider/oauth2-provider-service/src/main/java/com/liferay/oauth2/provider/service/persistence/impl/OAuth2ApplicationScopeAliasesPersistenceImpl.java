@@ -1151,8 +1151,6 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 			OAuth2ApplicationScopeAliasesImpl.class,
 			oAuth2ApplicationScopeAliases.getPrimaryKey(),
 			oAuth2ApplicationScopeAliases);
-
-		oAuth2ApplicationScopeAliases.resetOriginalValues();
 	}
 
 	/**
@@ -1172,9 +1170,6 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 					oAuth2ApplicationScopeAliases.getPrimaryKey()) == null) {
 
 				cacheResult(oAuth2ApplicationScopeAliases);
-			}
-			else {
-				oAuth2ApplicationScopeAliases.resetOriginalValues();
 			}
 		}
 	}

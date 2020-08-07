@@ -4140,8 +4140,6 @@ public class SAPEntryPersistenceImpl
 			_finderPathFetchByC_N,
 			new Object[] {sapEntry.getCompanyId(), sapEntry.getName()},
 			sapEntry);
-
-		sapEntry.resetOriginalValues();
 	}
 
 	/**
@@ -4156,9 +4154,6 @@ public class SAPEntryPersistenceImpl
 					SAPEntryImpl.class, sapEntry.getPrimaryKey()) == null) {
 
 				cacheResult(sapEntry);
-			}
-			else {
-				sapEntry.resetOriginalValues();
 			}
 		}
 	}

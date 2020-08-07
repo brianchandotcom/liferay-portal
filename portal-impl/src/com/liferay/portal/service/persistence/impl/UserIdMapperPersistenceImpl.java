@@ -1131,8 +1131,6 @@ public class UserIdMapperPersistenceImpl
 				userIdMapper.getType(), userIdMapper.getExternalUserId()
 			},
 			userIdMapper);
-
-		userIdMapper.resetOriginalValues();
 	}
 
 	/**
@@ -1148,9 +1146,6 @@ public class UserIdMapperPersistenceImpl
 						null) {
 
 				cacheResult(userIdMapper);
-			}
-			else {
-				userIdMapper.resetOriginalValues();
 			}
 		}
 	}

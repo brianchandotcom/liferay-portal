@@ -1677,8 +1677,6 @@ public class PowwowParticipantPersistenceImpl
 				powwowParticipant.getEmailAddress()
 			},
 			powwowParticipant);
-
-		powwowParticipant.resetOriginalValues();
 	}
 
 	/**
@@ -1694,9 +1692,6 @@ public class PowwowParticipantPersistenceImpl
 					powwowParticipant.getPrimaryKey()) == null) {
 
 				cacheResult(powwowParticipant);
-			}
-			else {
-				powwowParticipant.resetOriginalValues();
 			}
 		}
 	}

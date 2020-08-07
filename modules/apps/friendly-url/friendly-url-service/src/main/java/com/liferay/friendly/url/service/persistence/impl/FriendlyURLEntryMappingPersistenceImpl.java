@@ -348,8 +348,6 @@ public class FriendlyURLEntryMappingPersistenceImpl
 	@Override
 	public void cacheResult(FriendlyURLEntryMapping friendlyURLEntryMapping) {
 		if (friendlyURLEntryMapping.getCtCollectionId() != 0) {
-			friendlyURLEntryMapping.resetOriginalValues();
-
 			return;
 		}
 
@@ -364,8 +362,6 @@ public class FriendlyURLEntryMappingPersistenceImpl
 				friendlyURLEntryMapping.getClassPK()
 			},
 			friendlyURLEntryMapping);
-
-		friendlyURLEntryMapping.resetOriginalValues();
 	}
 
 	/**
@@ -381,8 +377,6 @@ public class FriendlyURLEntryMappingPersistenceImpl
 				friendlyURLEntryMappings) {
 
 			if (friendlyURLEntryMapping.getCtCollectionId() != 0) {
-				friendlyURLEntryMapping.resetOriginalValues();
-
 				continue;
 			}
 
@@ -391,9 +385,6 @@ public class FriendlyURLEntryMappingPersistenceImpl
 					friendlyURLEntryMapping.getPrimaryKey()) == null) {
 
 				cacheResult(friendlyURLEntryMapping);
-			}
-			else {
-				friendlyURLEntryMapping.resetOriginalValues();
 			}
 		}
 	}
@@ -655,14 +646,7 @@ public class FriendlyURLEntryMappingPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(friendlyURLEntryMapping)) {
 				if (!isNew) {
-					FriendlyURLEntryMapping oldFriendlyURLEntryMapping =
-						(FriendlyURLEntryMapping)session.get(
-							FriendlyURLEntryMappingImpl.class,
-							friendlyURLEntryMapping.getPrimaryKeyObj());
-
-					if (oldFriendlyURLEntryMapping != null) {
-						session.evict(oldFriendlyURLEntryMapping);
-					}
+					session.evict(friendlyURLEntryMapping);
 				}
 
 				session.save(friendlyURLEntryMapping);

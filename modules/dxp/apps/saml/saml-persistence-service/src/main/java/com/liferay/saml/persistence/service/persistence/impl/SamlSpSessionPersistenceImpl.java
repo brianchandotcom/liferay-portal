@@ -1392,8 +1392,6 @@ public class SamlSpSessionPersistenceImpl
 		finderCache.putResult(
 			_finderPathFetchBySessionIndex,
 			new Object[] {samlSpSession.getSessionIndex()}, samlSpSession);
-
-		samlSpSession.resetOriginalValues();
 	}
 
 	/**
@@ -1409,9 +1407,6 @@ public class SamlSpSessionPersistenceImpl
 						null) {
 
 				cacheResult(samlSpSession);
-			}
-			else {
-				samlSpSession.resetOriginalValues();
 			}
 		}
 	}

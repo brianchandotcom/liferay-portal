@@ -2682,8 +2682,6 @@ public class SocialActivitySettingPersistenceImpl
 	@Override
 	public void cacheResult(SocialActivitySetting socialActivitySetting) {
 		if (socialActivitySetting.getCtCollectionId() != 0) {
-			socialActivitySetting.resetOriginalValues();
-
 			return;
 		}
 
@@ -2700,8 +2698,6 @@ public class SocialActivitySettingPersistenceImpl
 				socialActivitySetting.getName()
 			},
 			socialActivitySetting);
-
-		socialActivitySetting.resetOriginalValues();
 	}
 
 	/**
@@ -2717,8 +2713,6 @@ public class SocialActivitySettingPersistenceImpl
 				socialActivitySettings) {
 
 			if (socialActivitySetting.getCtCollectionId() != 0) {
-				socialActivitySetting.resetOriginalValues();
-
 				continue;
 			}
 
@@ -2727,9 +2721,6 @@ public class SocialActivitySettingPersistenceImpl
 					socialActivitySetting.getPrimaryKey()) == null) {
 
 				cacheResult(socialActivitySetting);
-			}
-			else {
-				socialActivitySetting.resetOriginalValues();
 			}
 		}
 	}
@@ -2994,14 +2985,7 @@ public class SocialActivitySettingPersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(socialActivitySetting)) {
 				if (!isNew) {
-					SocialActivitySetting oldSocialActivitySetting =
-						(SocialActivitySetting)session.get(
-							SocialActivitySettingImpl.class,
-							socialActivitySetting.getPrimaryKeyObj());
-
-					if (oldSocialActivitySetting != null) {
-						session.evict(oldSocialActivitySetting);
-					}
+					session.evict(socialActivitySetting);
 				}
 
 				session.save(socialActivitySetting);

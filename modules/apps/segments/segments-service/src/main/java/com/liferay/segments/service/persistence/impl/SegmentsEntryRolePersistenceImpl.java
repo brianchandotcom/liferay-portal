@@ -1386,8 +1386,6 @@ public class SegmentsEntryRolePersistenceImpl
 	@Override
 	public void cacheResult(SegmentsEntryRole segmentsEntryRole) {
 		if (segmentsEntryRole.getCtCollectionId() != 0) {
-			segmentsEntryRole.resetOriginalValues();
-
 			return;
 		}
 
@@ -1402,8 +1400,6 @@ public class SegmentsEntryRolePersistenceImpl
 				segmentsEntryRole.getRoleId()
 			},
 			segmentsEntryRole);
-
-		segmentsEntryRole.resetOriginalValues();
 	}
 
 	/**
@@ -1415,8 +1411,6 @@ public class SegmentsEntryRolePersistenceImpl
 	public void cacheResult(List<SegmentsEntryRole> segmentsEntryRoles) {
 		for (SegmentsEntryRole segmentsEntryRole : segmentsEntryRoles) {
 			if (segmentsEntryRole.getCtCollectionId() != 0) {
-				segmentsEntryRole.resetOriginalValues();
-
 				continue;
 			}
 
@@ -1425,9 +1419,6 @@ public class SegmentsEntryRolePersistenceImpl
 					segmentsEntryRole.getPrimaryKey()) == null) {
 
 				cacheResult(segmentsEntryRole);
-			}
-			else {
-				segmentsEntryRole.resetOriginalValues();
 			}
 		}
 	}
@@ -1700,14 +1691,7 @@ public class SegmentsEntryRolePersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(segmentsEntryRole)) {
 				if (!isNew) {
-					SegmentsEntryRole oldSegmentsEntryRole =
-						(SegmentsEntryRole)session.get(
-							SegmentsEntryRoleImpl.class,
-							segmentsEntryRole.getPrimaryKeyObj());
-
-					if (oldSegmentsEntryRole != null) {
-						session.evict(oldSegmentsEntryRole);
-					}
+					session.evict(segmentsEntryRole);
 				}
 
 				session.save(segmentsEntryRole);

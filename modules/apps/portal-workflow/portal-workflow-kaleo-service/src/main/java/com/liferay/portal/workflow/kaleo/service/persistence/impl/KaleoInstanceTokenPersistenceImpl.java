@@ -2857,8 +2857,6 @@ public class KaleoInstanceTokenPersistenceImpl
 		entityCache.putResult(
 			KaleoInstanceTokenImpl.class, kaleoInstanceToken.getPrimaryKey(),
 			kaleoInstanceToken);
-
-		kaleoInstanceToken.resetOriginalValues();
 	}
 
 	/**
@@ -2874,9 +2872,6 @@ public class KaleoInstanceTokenPersistenceImpl
 					kaleoInstanceToken.getPrimaryKey()) == null) {
 
 				cacheResult(kaleoInstanceToken);
-			}
-			else {
-				kaleoInstanceToken.resetOriginalValues();
 			}
 		}
 	}

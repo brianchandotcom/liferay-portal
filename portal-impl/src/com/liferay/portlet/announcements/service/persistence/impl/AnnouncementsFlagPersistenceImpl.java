@@ -1349,8 +1349,6 @@ public class AnnouncementsFlagPersistenceImpl
 				announcementsFlag.getValue()
 			},
 			announcementsFlag);
-
-		announcementsFlag.resetOriginalValues();
 	}
 
 	/**
@@ -1366,9 +1364,6 @@ public class AnnouncementsFlagPersistenceImpl
 					announcementsFlag.getPrimaryKey()) == null) {
 
 				cacheResult(announcementsFlag);
-			}
-			else {
-				announcementsFlag.resetOriginalValues();
 			}
 		}
 	}

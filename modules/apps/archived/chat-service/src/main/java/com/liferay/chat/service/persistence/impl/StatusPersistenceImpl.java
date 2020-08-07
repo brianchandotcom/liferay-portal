@@ -1823,8 +1823,6 @@ public class StatusPersistenceImpl
 		finderCache.putResult(
 			_finderPathFetchByUserId, new Object[] {status.getUserId()},
 			status);
-
-		status.resetOriginalValues();
 	}
 
 	/**
@@ -1839,9 +1837,6 @@ public class StatusPersistenceImpl
 					StatusImpl.class, status.getPrimaryKey()) == null) {
 
 				cacheResult(status);
-			}
-			else {
-				status.resetOriginalValues();
 			}
 		}
 	}

@@ -1799,8 +1799,6 @@ public class BatchEngineExportTaskPersistenceImpl
 		entityCache.putResult(
 			BatchEngineExportTaskImpl.class,
 			batchEngineExportTask.getPrimaryKey(), batchEngineExportTask);
-
-		batchEngineExportTask.resetOriginalValues();
 	}
 
 	/**
@@ -1820,9 +1818,6 @@ public class BatchEngineExportTaskPersistenceImpl
 					batchEngineExportTask.getPrimaryKey()) == null) {
 
 				cacheResult(batchEngineExportTask);
-			}
-			else {
-				batchEngineExportTask.resetOriginalValues();
 			}
 		}
 	}

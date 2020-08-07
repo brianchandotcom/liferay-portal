@@ -1682,8 +1682,6 @@ public class AppBuilderAppDataRecordLinkPersistenceImpl
 			_finderPathFetchByDDLRecordId,
 			new Object[] {appBuilderAppDataRecordLink.getDdlRecordId()},
 			appBuilderAppDataRecordLink);
-
-		appBuilderAppDataRecordLink.resetOriginalValues();
 	}
 
 	/**
@@ -1703,9 +1701,6 @@ public class AppBuilderAppDataRecordLinkPersistenceImpl
 					appBuilderAppDataRecordLink.getPrimaryKey()) == null) {
 
 				cacheResult(appBuilderAppDataRecordLink);
-			}
-			else {
-				appBuilderAppDataRecordLink.resetOriginalValues();
 			}
 		}
 	}

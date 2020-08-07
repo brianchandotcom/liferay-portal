@@ -2872,8 +2872,6 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	@Override
 	public void cacheResult(WorkflowDefinitionLink workflowDefinitionLink) {
 		if (workflowDefinitionLink.getCtCollectionId() != 0) {
-			workflowDefinitionLink.resetOriginalValues();
-
 			return;
 		}
 
@@ -2891,8 +2889,6 @@ public class WorkflowDefinitionLinkPersistenceImpl
 				workflowDefinitionLink.getTypePK()
 			},
 			workflowDefinitionLink);
-
-		workflowDefinitionLink.resetOriginalValues();
 	}
 
 	/**
@@ -2908,8 +2904,6 @@ public class WorkflowDefinitionLinkPersistenceImpl
 				workflowDefinitionLinks) {
 
 			if (workflowDefinitionLink.getCtCollectionId() != 0) {
-				workflowDefinitionLink.resetOriginalValues();
-
 				continue;
 			}
 
@@ -2918,9 +2912,6 @@ public class WorkflowDefinitionLinkPersistenceImpl
 					workflowDefinitionLink.getPrimaryKey()) == null) {
 
 				cacheResult(workflowDefinitionLink);
-			}
-			else {
-				workflowDefinitionLink.resetOriginalValues();
 			}
 		}
 	}
@@ -3215,14 +3206,7 @@ public class WorkflowDefinitionLinkPersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(workflowDefinitionLink)) {
 				if (!isNew) {
-					WorkflowDefinitionLink oldWorkflowDefinitionLink =
-						(WorkflowDefinitionLink)session.get(
-							WorkflowDefinitionLinkImpl.class,
-							workflowDefinitionLink.getPrimaryKeyObj());
-
-					if (oldWorkflowDefinitionLink != null) {
-						session.evict(oldWorkflowDefinitionLink);
-					}
+					session.evict(workflowDefinitionLink);
 				}
 
 				session.save(workflowDefinitionLink);

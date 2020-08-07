@@ -1970,8 +1970,6 @@ public class MBDiscussionPersistenceImpl
 	@Override
 	public void cacheResult(MBDiscussion mbDiscussion) {
 		if (mbDiscussion.getCtCollectionId() != 0) {
-			mbDiscussion.resetOriginalValues();
-
 			return;
 		}
 
@@ -1993,8 +1991,6 @@ public class MBDiscussionPersistenceImpl
 				mbDiscussion.getClassNameId(), mbDiscussion.getClassPK()
 			},
 			mbDiscussion);
-
-		mbDiscussion.resetOriginalValues();
 	}
 
 	/**
@@ -2006,8 +2002,6 @@ public class MBDiscussionPersistenceImpl
 	public void cacheResult(List<MBDiscussion> mbDiscussions) {
 		for (MBDiscussion mbDiscussion : mbDiscussions) {
 			if (mbDiscussion.getCtCollectionId() != 0) {
-				mbDiscussion.resetOriginalValues();
-
 				continue;
 			}
 
@@ -2016,9 +2010,6 @@ public class MBDiscussionPersistenceImpl
 						null) {
 
 				cacheResult(mbDiscussion);
-			}
-			else {
-				mbDiscussion.resetOriginalValues();
 			}
 		}
 	}
@@ -2349,13 +2340,7 @@ public class MBDiscussionPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(mbDiscussion)) {
 				if (!isNew) {
-					MBDiscussion oldMBDiscussion = (MBDiscussion)session.get(
-						MBDiscussionImpl.class,
-						mbDiscussion.getPrimaryKeyObj());
-
-					if (oldMBDiscussion != null) {
-						session.evict(oldMBDiscussion);
-					}
+					session.evict(mbDiscussion);
 				}
 
 				session.save(mbDiscussion);

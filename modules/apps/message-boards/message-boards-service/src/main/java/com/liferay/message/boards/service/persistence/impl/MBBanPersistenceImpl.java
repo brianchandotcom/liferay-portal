@@ -3259,8 +3259,6 @@ public class MBBanPersistenceImpl
 	@Override
 	public void cacheResult(MBBan mbBan) {
 		if (mbBan.getCtCollectionId() != 0) {
-			mbBan.resetOriginalValues();
-
 			return;
 		}
 
@@ -3273,8 +3271,6 @@ public class MBBanPersistenceImpl
 		finderCache.putResult(
 			_finderPathFetchByG_B,
 			new Object[] {mbBan.getGroupId(), mbBan.getBanUserId()}, mbBan);
-
-		mbBan.resetOriginalValues();
 	}
 
 	/**
@@ -3286,8 +3282,6 @@ public class MBBanPersistenceImpl
 	public void cacheResult(List<MBBan> mbBans) {
 		for (MBBan mbBan : mbBans) {
 			if (mbBan.getCtCollectionId() != 0) {
-				mbBan.resetOriginalValues();
-
 				continue;
 			}
 
@@ -3295,9 +3289,6 @@ public class MBBanPersistenceImpl
 					null) {
 
 				cacheResult(mbBan);
-			}
-			else {
-				mbBan.resetOriginalValues();
 			}
 		}
 	}
@@ -3588,12 +3579,7 @@ public class MBBanPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(mbBan)) {
 				if (!isNew) {
-					MBBan oldMBBan = (MBBan)session.get(
-						MBBanImpl.class, mbBan.getPrimaryKeyObj());
-
-					if (oldMBBan != null) {
-						session.evict(oldMBBan);
-					}
+					session.evict(mbBan);
 				}
 
 				session.save(mbBan);

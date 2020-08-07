@@ -2495,8 +2495,6 @@ public class ChangesetCollectionPersistenceImpl
 				changesetCollection.getGroupId(), changesetCollection.getName()
 			},
 			changesetCollection);
-
-		changesetCollection.resetOriginalValues();
 	}
 
 	/**
@@ -2512,9 +2510,6 @@ public class ChangesetCollectionPersistenceImpl
 					changesetCollection.getPrimaryKey()) == null) {
 
 				cacheResult(changesetCollection);
-			}
-			else {
-				changesetCollection.resetOriginalValues();
 			}
 		}
 	}

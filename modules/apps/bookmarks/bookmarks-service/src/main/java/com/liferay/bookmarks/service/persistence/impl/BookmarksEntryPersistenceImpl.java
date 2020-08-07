@@ -12483,8 +12483,6 @@ public class BookmarksEntryPersistenceImpl
 				bookmarksEntry.getUuid(), bookmarksEntry.getGroupId()
 			},
 			bookmarksEntry);
-
-		bookmarksEntry.resetOriginalValues();
 	}
 
 	/**
@@ -12500,9 +12498,6 @@ public class BookmarksEntryPersistenceImpl
 						null) {
 
 				cacheResult(bookmarksEntry);
-			}
-			else {
-				bookmarksEntry.resetOriginalValues();
 			}
 		}
 	}

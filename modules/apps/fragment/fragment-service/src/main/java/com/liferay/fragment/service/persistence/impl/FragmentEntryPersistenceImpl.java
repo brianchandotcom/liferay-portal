@@ -13960,8 +13960,6 @@ public class FragmentEntryPersistenceImpl
 		finderCache.putResult(
 			_finderPathFetchByHeadId, new Object[] {fragmentEntry.getHeadId()},
 			fragmentEntry);
-
-		fragmentEntry.resetOriginalValues();
 	}
 
 	/**
@@ -13977,9 +13975,6 @@ public class FragmentEntryPersistenceImpl
 						null) {
 
 				cacheResult(fragmentEntry);
-			}
-			else {
-				fragmentEntry.resetOriginalValues();
 			}
 		}
 	}

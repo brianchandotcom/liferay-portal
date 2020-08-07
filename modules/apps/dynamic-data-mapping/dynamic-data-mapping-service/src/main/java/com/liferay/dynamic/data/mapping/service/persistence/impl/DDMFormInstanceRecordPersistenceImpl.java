@@ -3762,8 +3762,6 @@ public class DDMFormInstanceRecordPersistenceImpl
 	@Override
 	public void cacheResult(DDMFormInstanceRecord ddmFormInstanceRecord) {
 		if (ddmFormInstanceRecord.getCtCollectionId() != 0) {
-			ddmFormInstanceRecord.resetOriginalValues();
-
 			return;
 		}
 
@@ -3778,8 +3776,6 @@ public class DDMFormInstanceRecordPersistenceImpl
 				ddmFormInstanceRecord.getGroupId()
 			},
 			ddmFormInstanceRecord);
-
-		ddmFormInstanceRecord.resetOriginalValues();
 	}
 
 	/**
@@ -3795,8 +3791,6 @@ public class DDMFormInstanceRecordPersistenceImpl
 				ddmFormInstanceRecords) {
 
 			if (ddmFormInstanceRecord.getCtCollectionId() != 0) {
-				ddmFormInstanceRecord.resetOriginalValues();
-
 				continue;
 			}
 
@@ -3805,9 +3799,6 @@ public class DDMFormInstanceRecordPersistenceImpl
 					ddmFormInstanceRecord.getPrimaryKey()) == null) {
 
 				cacheResult(ddmFormInstanceRecord);
-			}
-			else {
-				ddmFormInstanceRecord.resetOriginalValues();
 			}
 		}
 	}
@@ -4101,14 +4092,7 @@ public class DDMFormInstanceRecordPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(ddmFormInstanceRecord)) {
 				if (!isNew) {
-					DDMFormInstanceRecord oldDDMFormInstanceRecord =
-						(DDMFormInstanceRecord)session.get(
-							DDMFormInstanceRecordImpl.class,
-							ddmFormInstanceRecord.getPrimaryKeyObj());
-
-					if (oldDDMFormInstanceRecord != null) {
-						session.evict(oldDDMFormInstanceRecord);
-					}
+					session.evict(ddmFormInstanceRecord);
 				}
 
 				session.save(ddmFormInstanceRecord);

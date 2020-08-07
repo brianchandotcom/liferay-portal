@@ -1081,8 +1081,6 @@ public class OrgGroupRolePersistenceImpl
 	public void cacheResult(OrgGroupRole orgGroupRole) {
 		EntityCacheUtil.putResult(
 			OrgGroupRoleImpl.class, orgGroupRole.getPrimaryKey(), orgGroupRole);
-
-		orgGroupRole.resetOriginalValues();
 	}
 
 	/**
@@ -1098,9 +1096,6 @@ public class OrgGroupRolePersistenceImpl
 						null) {
 
 				cacheResult(orgGroupRole);
-			}
-			else {
-				orgGroupRole.resetOriginalValues();
 			}
 		}
 	}

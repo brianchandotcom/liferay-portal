@@ -90,8 +90,6 @@ public class UADPartialEntryPersistenceImpl
 		entityCache.putResult(
 			UADPartialEntryImpl.class, uadPartialEntry.getPrimaryKey(),
 			uadPartialEntry);
-
-		uadPartialEntry.resetOriginalValues();
 	}
 
 	/**
@@ -107,9 +105,6 @@ public class UADPartialEntryPersistenceImpl
 					uadPartialEntry.getPrimaryKey()) == null) {
 
 				cacheResult(uadPartialEntry);
-			}
-			else {
-				uadPartialEntry.resetOriginalValues();
 			}
 		}
 	}

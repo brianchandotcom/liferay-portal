@@ -1344,8 +1344,6 @@ public class KaleoConditionPersistenceImpl
 		finderCache.putResult(
 			_finderPathFetchByKaleoNodeId,
 			new Object[] {kaleoCondition.getKaleoNodeId()}, kaleoCondition);
-
-		kaleoCondition.resetOriginalValues();
 	}
 
 	/**
@@ -1361,9 +1359,6 @@ public class KaleoConditionPersistenceImpl
 						null) {
 
 				cacheResult(kaleoCondition);
-			}
-			else {
-				kaleoCondition.resetOriginalValues();
 			}
 		}
 	}

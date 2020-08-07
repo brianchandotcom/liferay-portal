@@ -911,8 +911,6 @@ public class AppBuilderAppDeploymentPersistenceImpl
 				appBuilderAppDeployment.getType()
 			},
 			appBuilderAppDeployment);
-
-		appBuilderAppDeployment.resetOriginalValues();
 	}
 
 	/**
@@ -932,9 +930,6 @@ public class AppBuilderAppDeploymentPersistenceImpl
 					appBuilderAppDeployment.getPrimaryKey()) == null) {
 
 				cacheResult(appBuilderAppDeployment);
-			}
-			else {
-				appBuilderAppDeployment.resetOriginalValues();
 			}
 		}
 	}

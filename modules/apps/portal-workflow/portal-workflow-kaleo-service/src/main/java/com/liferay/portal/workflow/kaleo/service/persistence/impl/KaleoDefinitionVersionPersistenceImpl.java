@@ -1508,8 +1508,6 @@ public class KaleoDefinitionVersionPersistenceImpl
 				kaleoDefinitionVersion.getVersion()
 			},
 			kaleoDefinitionVersion);
-
-		kaleoDefinitionVersion.resetOriginalValues();
 	}
 
 	/**
@@ -1529,9 +1527,6 @@ public class KaleoDefinitionVersionPersistenceImpl
 					kaleoDefinitionVersion.getPrimaryKey()) == null) {
 
 				cacheResult(kaleoDefinitionVersion);
-			}
-			else {
-				kaleoDefinitionVersion.resetOriginalValues();
 			}
 		}
 	}

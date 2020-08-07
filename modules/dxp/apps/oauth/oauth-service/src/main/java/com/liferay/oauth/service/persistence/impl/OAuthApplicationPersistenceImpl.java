@@ -4132,8 +4132,6 @@ public class OAuthApplicationPersistenceImpl
 		finderCache.putResult(
 			_finderPathFetchByConsumerKey,
 			new Object[] {oAuthApplication.getConsumerKey()}, oAuthApplication);
-
-		oAuthApplication.resetOriginalValues();
 	}
 
 	/**
@@ -4149,9 +4147,6 @@ public class OAuthApplicationPersistenceImpl
 					oAuthApplication.getPrimaryKey()) == null) {
 
 				cacheResult(oAuthApplication);
-			}
-			else {
-				oAuthApplication.resetOriginalValues();
 			}
 		}
 	}

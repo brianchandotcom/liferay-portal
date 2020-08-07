@@ -701,8 +701,6 @@ public class RatingsStatsPersistenceImpl
 	@Override
 	public void cacheResult(RatingsStats ratingsStats) {
 		if (ratingsStats.getCtCollectionId() != 0) {
-			ratingsStats.resetOriginalValues();
-
 			return;
 		}
 
@@ -715,8 +713,6 @@ public class RatingsStatsPersistenceImpl
 				ratingsStats.getClassNameId(), ratingsStats.getClassPK()
 			},
 			ratingsStats);
-
-		ratingsStats.resetOriginalValues();
 	}
 
 	/**
@@ -728,8 +724,6 @@ public class RatingsStatsPersistenceImpl
 	public void cacheResult(List<RatingsStats> ratingsStatses) {
 		for (RatingsStats ratingsStats : ratingsStatses) {
 			if (ratingsStats.getCtCollectionId() != 0) {
-				ratingsStats.resetOriginalValues();
-
 				continue;
 			}
 
@@ -738,9 +732,6 @@ public class RatingsStatsPersistenceImpl
 						null) {
 
 				cacheResult(ratingsStats);
-			}
-			else {
-				ratingsStats.resetOriginalValues();
 			}
 		}
 	}
@@ -1003,13 +994,7 @@ public class RatingsStatsPersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(ratingsStats)) {
 				if (!isNew) {
-					RatingsStats oldRatingsStats = (RatingsStats)session.get(
-						RatingsStatsImpl.class,
-						ratingsStats.getPrimaryKeyObj());
-
-					if (oldRatingsStats != null) {
-						session.evict(oldRatingsStats);
-					}
+					session.evict(ratingsStats);
 				}
 
 				session.save(ratingsStats);

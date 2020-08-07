@@ -2836,8 +2836,6 @@ public class DefinitionPersistenceImpl
 			_finderPathFetchByUUID_G,
 			new Object[] {definition.getUuid(), definition.getGroupId()},
 			definition);
-
-		definition.resetOriginalValues();
 	}
 
 	/**
@@ -2852,9 +2850,6 @@ public class DefinitionPersistenceImpl
 					DefinitionImpl.class, definition.getPrimaryKey()) == null) {
 
 				cacheResult(definition);
-			}
-			else {
-				definition.resetOriginalValues();
 			}
 		}
 	}

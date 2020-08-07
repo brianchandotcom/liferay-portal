@@ -4535,8 +4535,6 @@ public class WikiNodePersistenceImpl
 		finderCache.putResult(
 			_finderPathFetchByG_N,
 			new Object[] {wikiNode.getGroupId(), wikiNode.getName()}, wikiNode);
-
-		wikiNode.resetOriginalValues();
 	}
 
 	/**
@@ -4551,9 +4549,6 @@ public class WikiNodePersistenceImpl
 					WikiNodeImpl.class, wikiNode.getPrimaryKey()) == null) {
 
 				cacheResult(wikiNode);
-			}
-			else {
-				wikiNode.resetOriginalValues();
 			}
 		}
 	}

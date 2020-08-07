@@ -2266,8 +2266,6 @@ public class RepositoryPersistenceImpl
 				repository.getPortletId()
 			},
 			repository);
-
-		repository.resetOriginalValues();
 	}
 
 	/**
@@ -2282,9 +2280,6 @@ public class RepositoryPersistenceImpl
 					RepositoryImpl.class, repository.getPrimaryKey()) == null) {
 
 				cacheResult(repository);
-			}
-			else {
-				repository.resetOriginalValues();
 			}
 		}
 	}

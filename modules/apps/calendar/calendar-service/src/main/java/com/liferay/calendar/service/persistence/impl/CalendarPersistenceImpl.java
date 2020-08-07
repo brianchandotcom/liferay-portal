@@ -3422,8 +3422,6 @@ public class CalendarPersistenceImpl
 		finderCache.putResult(
 			_finderPathFetchByUUID_G,
 			new Object[] {calendar.getUuid(), calendar.getGroupId()}, calendar);
-
-		calendar.resetOriginalValues();
 	}
 
 	/**
@@ -3438,9 +3436,6 @@ public class CalendarPersistenceImpl
 					CalendarImpl.class, calendar.getPrimaryKey()) == null) {
 
 				cacheResult(calendar);
-			}
-			else {
-				calendar.resetOriginalValues();
 			}
 		}
 	}

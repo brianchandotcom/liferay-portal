@@ -1985,8 +1985,6 @@ public class MDRActionPersistenceImpl
 			_finderPathFetchByUUID_G,
 			new Object[] {mdrAction.getUuid(), mdrAction.getGroupId()},
 			mdrAction);
-
-		mdrAction.resetOriginalValues();
 	}
 
 	/**
@@ -2001,9 +1999,6 @@ public class MDRActionPersistenceImpl
 					MDRActionImpl.class, mdrAction.getPrimaryKey()) == null) {
 
 				cacheResult(mdrAction);
-			}
-			else {
-				mdrAction.resetOriginalValues();
 			}
 		}
 	}

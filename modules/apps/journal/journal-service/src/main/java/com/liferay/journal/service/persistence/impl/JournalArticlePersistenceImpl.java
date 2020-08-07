@@ -32629,8 +32629,6 @@ public class JournalArticlePersistenceImpl
 	@Override
 	public void cacheResult(JournalArticle journalArticle) {
 		if (journalArticle.getCtCollectionId() != 0) {
-			journalArticle.resetOriginalValues();
-
 			return;
 		}
 
@@ -32660,8 +32658,6 @@ public class JournalArticlePersistenceImpl
 				journalArticle.getVersion()
 			},
 			journalArticle);
-
-		journalArticle.resetOriginalValues();
 	}
 
 	/**
@@ -32673,8 +32669,6 @@ public class JournalArticlePersistenceImpl
 	public void cacheResult(List<JournalArticle> journalArticles) {
 		for (JournalArticle journalArticle : journalArticles) {
 			if (journalArticle.getCtCollectionId() != 0) {
-				journalArticle.resetOriginalValues();
-
 				continue;
 			}
 
@@ -32683,9 +32677,6 @@ public class JournalArticlePersistenceImpl
 						null) {
 
 				cacheResult(journalArticle);
-			}
-			else {
-				journalArticle.resetOriginalValues();
 			}
 		}
 	}
@@ -33030,14 +33021,7 @@ public class JournalArticlePersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(journalArticle)) {
 				if (!isNew) {
-					JournalArticle oldJournalArticle =
-						(JournalArticle)session.get(
-							JournalArticleImpl.class,
-							journalArticle.getPrimaryKeyObj());
-
-					if (oldJournalArticle != null) {
-						session.evict(oldJournalArticle);
-					}
+					session.evict(journalArticle);
 				}
 
 				session.save(journalArticle);

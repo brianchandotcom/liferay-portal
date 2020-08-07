@@ -2435,8 +2435,6 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 					getWorkflowMetricsSLADefinitionId()
 			},
 			workflowMetricsSLADefinitionVersion);
-
-		workflowMetricsSLADefinitionVersion.resetOriginalValues();
 	}
 
 	/**
@@ -2459,9 +2457,6 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 						null) {
 
 				cacheResult(workflowMetricsSLADefinitionVersion);
-			}
-			else {
-				workflowMetricsSLADefinitionVersion.resetOriginalValues();
 			}
 		}
 	}

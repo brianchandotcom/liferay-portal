@@ -19,9 +19,6 @@ package com.liferay.translation.constants;
  */
 public class TranslationConstants {
 
-	public static final String MODEL_CLASS_NAME =
-		"com.liferay.translation.model.TranslationEntry";
-
 	public static final String RESOURCE_NAME = "com.liferay.translation";
 
 }

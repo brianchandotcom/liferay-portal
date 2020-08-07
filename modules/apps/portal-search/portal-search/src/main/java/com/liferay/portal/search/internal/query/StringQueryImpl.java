@@ -21,7 +21,6 @@ import com.liferay.portal.search.query.StringQuery;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Provides support for parsing raw, human readable query syntax. No
@@ -41,19 +40,21 @@ public class StringQueryImpl extends BaseQueryImpl implements StringQuery {
 	public StringQueryImpl(String query) {
 		_query = query;
 	}
-	
+
 	@Override
 	public <T> T accept(QueryVisitor<T> queryVisitor) {
 		return queryVisitor.visit(this);
 	}
-	
+
+	@Override
 	public void addField(String field) {
-		_fieldsBoosts.put(field, null);
+		_fields.put(field, null);
 	}
 
-	public void addField(String field, float boost) {
-		_fieldsBoosts.put(field, boost);
-	}	
+	@Override
+	public void addField(String field, Float boost) {
+		_fields.put(field, boost);
+	}
 
 	@Override
 	public Boolean getAllowLeadingWildcard() {
@@ -89,17 +90,15 @@ public class StringQueryImpl extends BaseQueryImpl implements StringQuery {
 	public Boolean getEnablePositionIncrements() {
 		return _enablePositionIncrements;
 	}
-	
+
+	@Override
 	public Boolean getEscape() {
 		return _escape;
 	}
 
-	public Set<String> getFields() {
-		return _fieldsBoosts.keySet();
-	}
-
-	public Map<String, Float> getFieldsBoosts() {
-		return _fieldsBoosts;
+	@Override
+	public Map<String, Float> getFields() {
+		return _fields;
 	}
 
 	@Override
@@ -116,7 +115,8 @@ public class StringQueryImpl extends BaseQueryImpl implements StringQuery {
 	public Integer getFuzzyPrefixLength() {
 		return _fuzzyPrefixLength;
 	}
-	
+
+	@Override
 	public String getFuzzyRewrite() {
 		return _fuzzyRewrite;
 	}
@@ -141,6 +141,7 @@ public class StringQueryImpl extends BaseQueryImpl implements StringQuery {
 		return _minimumShouldMatch;
 	}
 
+	@Override
 	public Integer getPhraseSlop() {
 		return _phraseSlop;
 	}
@@ -165,10 +166,12 @@ public class StringQueryImpl extends BaseQueryImpl implements StringQuery {
 		return _rewrite;
 	}
 
+	@Override
 	public Float getTieBreaker() {
 		return _tieBreaker;
 	}
 
+	@Override
 	public String getTimeZone() {
 		return _timeZone;
 	}
@@ -209,7 +212,8 @@ public class StringQueryImpl extends BaseQueryImpl implements StringQuery {
 	public void setEnablePositionIncrements(Boolean enablePositionIncrements) {
 		_enablePositionIncrements = enablePositionIncrements;
 	}
-	
+
+	@Override
 	public void setEscape(boolean escape) {
 		_escape = escape;
 	}
@@ -229,10 +233,12 @@ public class StringQueryImpl extends BaseQueryImpl implements StringQuery {
 		_fuzzyPrefixLength = fuzzyPrefixLength;
 	}
 
+	@Override
 	public void setFuzzyRewrite(String fuzzyRewrite) {
 		_fuzzyRewrite = fuzzyRewrite;
 	}
 
+	@Override
 	public void setFuzzyTranspositions(Boolean fuzzyTranspositions) {
 		_fuzzyTranspositions = fuzzyTranspositions;
 	}
@@ -247,10 +253,12 @@ public class StringQueryImpl extends BaseQueryImpl implements StringQuery {
 		_maxDeterminedStates = maxDeterminedStates;
 	}
 
+	@Override
 	public void setMinimumShouldMatch(String minimumShouldMatch) {
 		_minimumShouldMatch = minimumShouldMatch;
 	}
-	
+
+	@Override
 	public void setPhraseSlop(Integer phraseSlop) {
 		_phraseSlop = phraseSlop;
 	}
@@ -269,10 +277,11 @@ public class StringQueryImpl extends BaseQueryImpl implements StringQuery {
 	public void setRewrite(String rewrite) {
 		_rewrite = rewrite;
 	}
-	
+
+	@Override
 	public void setTieBreaker(float tieBreaker) {
 		_tieBreaker = tieBreaker;
-	}	
+	}
 
 	@Override
 	public void setTimeZone(String timeZone) {
@@ -306,7 +315,7 @@ public class StringQueryImpl extends BaseQueryImpl implements StringQuery {
 	private Operator _defaultOperator;
 	private Boolean _enablePositionIncrements;
 	private Boolean _escape;
-	private Map<String, Float> _fieldsBoosts = new HashMap<String, Float>();
+	private Map<String, Float> _fields = new HashMap<>();
 	private Float _fuzziness;
 	private Integer _fuzzyMaxExpansions;
 	private Integer _fuzzyPrefixLength;
@@ -322,4 +331,5 @@ public class StringQueryImpl extends BaseQueryImpl implements StringQuery {
 	private String _rewrite;
 	private Float _tieBreaker;
 	private String _timeZone;
+
 }

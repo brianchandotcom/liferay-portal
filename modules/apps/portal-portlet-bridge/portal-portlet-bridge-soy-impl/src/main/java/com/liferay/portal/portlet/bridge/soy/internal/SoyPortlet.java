@@ -359,6 +359,8 @@ public class SoyPortlet extends MVCPortlet {
 			portletNamespace + "pjax", "true");
 
 		redirect = HttpUtil.setParameter(redirect, "p_p_lifecycle", "2");
+		redirect = HttpUtil.setParameter(
+			redirect, portletNamespace + "soy_route", true);
 
 		httpServletResponse.sendRedirect(redirect);
 	}
@@ -518,8 +520,7 @@ public class SoyPortlet extends MVCPortlet {
 	}
 
 	private boolean _isRoutedRequest(PortletRequest portletRequest) {
-		return Validator.isNotNull(
-			portletRequest.getParameter("original_p_p_lifecycle"));
+		return Validator.isNotNull(portletRequest.getParameter("soy_route"));
 	}
 
 	private void _prepareSessionMessages(

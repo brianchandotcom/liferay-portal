@@ -123,6 +123,9 @@ class SoyPortletRouter extends State {
 				const uri = new URL(redirect, window.location.origin);
 				uri.searchParams.delete('p_p_lifecycle');
 				uri.searchParams.delete(`${instance.portletNamespace}pjax`);
+				uri.searchParams.delete(
+					`${instance.portletNamespace}soy_route`
+				);
 
 				if (
 					uri.searchParams.has(
@@ -230,10 +233,11 @@ class SoyPortletRouter extends State {
 
 		uri.searchParams.set('p_p_lifecycle', '2');
 		uri.searchParams.set(`${this.portletNamespace}pjax`, true);
+		uri.searchParams.set(`${this.portletNamespace}soy_route`, true);
 
 		if (!uri.searchParams.has('p_p_id')) {
-			uri.searchParams.add('p_p_id', this.portletId);
-			uri.searchParams.add(`${this.portletNamespace}no_p_p_id`, true);
+			uri.searchParams.append('p_p_id', this.portletId);
+			uri.searchParams.append(`${this.portletNamespace}no_p_p_id`, true);
 		}
 
 		return uri.toString();

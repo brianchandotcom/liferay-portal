@@ -121,6 +121,26 @@ definition {
 		}
 	}
 
+	@description = "This is for LPS-116078. Can not preview style book when there are no pages in site."
+	@priority = "4"
+	test CannotPreviewStyleBookWhenSiteWithoutPage {
+		task ("Add a style book") {
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+
+			StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name");
+		}
+
+		task ("Assert can not preview style book") {
+			AssertElementNotPresent(locator1 = "StyleBookEditor#PAGE_PREVIEW_IFRAME");
+
+			AssertVisible(locator1 = "StyleBookEditor#NO_PAGE_MESSAGE");
+
+			AssertVisible(
+				key_text = "Publish",
+				locator1 = "Button#ANY");
+		}
+	}
+
 	@description = "This is for LPS-116078. Can preview the effect on page when edit the style book."
 	@priority = "5"
 	test PreviewTheEffectOnPageInStyleBookEditor {

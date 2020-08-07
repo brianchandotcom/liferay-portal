@@ -86,6 +86,28 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro addSelection {
+		Click(locator1 = "Button#NEW");
+
+		MenuItem.click(menuItem = "${menuItem}");
+
+		PortletEntry.inputText(
+			fieldLabel = "Title",
+			text = "${collectionName}");
+
+		Button.clickSave();
+
+		Select(
+			locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT",
+			value1 = "${selectedAsset}");
+
+		Pause(locator1 = "3000");
+
+		PortletEntry.save();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro addTagsFilter {
 		Panel.expandPanel(panel = "Filter");
 

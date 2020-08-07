@@ -126,7 +126,7 @@ definition {
 		Navigator.gotoNavTab(navTab = "${tabName}");
 
 		if (isSet(menuItem)) {
-			ContentPages.addSelection(
+			AssetListsAdmin.addSelection(
 				collectionName = "${collectionName}",
 				menuItem = "${menuItem}",
 				selectedAsset = "${selectedAsset}");
@@ -178,28 +178,6 @@ definition {
 		AssertElementPresent(
 			key_fragmentName = "Collection Display",
 			locator1 = "Fragment#FRAGMENT_HEADER");
-	}
-
-	macro addSelection {
-		Click(locator1 = "Button#NEW");
-
-		MenuItem.click(menuItem = "${menuItem}");
-
-		PortletEntry.inputText(
-			fieldLabel = "Title",
-			text = "${collectionName}");
-
-		Button.clickSave();
-
-		Select(
-			locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT",
-			value1 = "${selectedAsset}");
-
-		Pause(locator1 = "3000");
-
-		PortletEntry.save();
-
-		Alert.viewSuccessMessage();
 	}
 
 	macro clickPencil {

@@ -32,9 +32,11 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 
 import java.util.Collections;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -71,7 +73,7 @@ public class ProductMenuAppDeployer extends BaseAppDeployer {
 		String siteMenuLabel = portletName.concat("site");
 
 		if (scopeJSONArray.length() == 2) {
-			serviceRegistrationsMap.computeIfAbsent(
+			_serviceRegistrations.computeIfAbsent(
 				appId,
 				key -> ArrayUtil.append(
 					_deployPortlet(
@@ -105,7 +107,7 @@ public class ProductMenuAppDeployer extends BaseAppDeployer {
 				menuLabel = siteMenuLabel;
 			}
 
-			serviceRegistrationsMap.computeIfAbsent(
+			_serviceRegistrations.computeIfAbsent(
 				appId,
 				mapKey -> ArrayUtil.append(
 					_deployPortlet(appBuilderApp, appName, menuLabel),
@@ -116,6 +118,18 @@ public class ProductMenuAppDeployer extends BaseAppDeployer {
 		}
 
 		appBuilderAppLocalService.updateAppBuilderApp(appBuilderApp);
+	}
+
+	@Override
+	public void undeploy(long appId) throws Exception {
+		undeploy(appBuilderAppLocalService, appId, _serviceRegistrations);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		super.deactivate();
+
+		_serviceRegistrations.clear();
 	}
 
 	private ServiceRegistration<?> _deployPanelApp(
@@ -154,5 +168,8 @@ public class ProductMenuAppDeployer extends BaseAppDeployer {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	private final ConcurrentHashMap<Long, ServiceRegistration<?>[]>
+		_serviceRegistrations = new ConcurrentHashMap<>();
 
 }

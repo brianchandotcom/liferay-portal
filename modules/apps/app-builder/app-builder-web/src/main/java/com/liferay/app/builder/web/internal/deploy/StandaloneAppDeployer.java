@@ -41,11 +41,13 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.ServletContext;
 
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -64,7 +66,7 @@ public class StandaloneAppDeployer extends BaseAppDeployer {
 
 		appBuilderApp.setActive(true);
 
-		serviceRegistrationsMap.computeIfAbsent(
+		_serviceRegistrationsMap.computeIfAbsent(
 			appId,
 			key -> {
 				try {
@@ -92,7 +94,7 @@ public class StandaloneAppDeployer extends BaseAppDeployer {
 	@Override
 	public void undeploy(long appId) throws Exception {
 		if (!undeploy(
-				appBuilderAppLocalService, appId, serviceRegistrationsMap)) {
+				appBuilderAppLocalService, appId, _serviceRegistrationsMap)) {
 
 			return;
 		}
@@ -106,6 +108,13 @@ public class StandaloneAppDeployer extends BaseAppDeployer {
 		group.setActive(false);
 
 		_groupLocalService.updateGroup(group);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		super.deactivate();
+
+		_serviceRegistrationsMap.clear();
 	}
 
 	private Group _addGroup(long companyId, long appId) throws PortalException {
@@ -220,6 +229,9 @@ public class StandaloneAppDeployer extends BaseAppDeployer {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	private final ConcurrentHashMap<Long, ServiceRegistration<?>[]>
+		_serviceRegistrationsMap = new ConcurrentHashMap<>();
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.app.builder.web)")
 	private ServletContext _servletContext;

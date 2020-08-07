@@ -24,8 +24,11 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Gabriel Albuquerque
@@ -43,7 +46,7 @@ public class WidgetAppDeployer extends BaseAppDeployer {
 
 		appBuilderApp.setActive(true);
 
-		serviceRegistrationsMap.computeIfAbsent(
+		_serviceRegistrationsMap.computeIfAbsent(
 			appId,
 			key -> ArrayUtil.append(
 				_deployPortlet(
@@ -57,6 +60,18 @@ public class WidgetAppDeployer extends BaseAppDeployer {
 					_getPortletName(appId, "table_view"), false, true)));
 
 		appBuilderAppLocalService.updateAppBuilderApp(appBuilderApp);
+	}
+
+	@Override
+	public void undeploy(long appId) throws Exception {
+		undeploy(appBuilderAppLocalService, appId, _serviceRegistrationsMap);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		super.deactivate();
+
+		_serviceRegistrationsMap.clear();
 	}
 
 	private ServiceRegistration<?>[] _deployPortlet(
@@ -103,5 +118,8 @@ public class WidgetAppDeployer extends BaseAppDeployer {
 
 		return sb.toString();
 	}
+
+	private final ConcurrentHashMap<Long, ServiceRegistration<?>[]>
+		_serviceRegistrationsMap = new ConcurrentHashMap<>();
 
 }

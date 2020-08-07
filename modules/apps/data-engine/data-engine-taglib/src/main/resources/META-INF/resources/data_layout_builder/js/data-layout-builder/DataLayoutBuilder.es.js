@@ -307,7 +307,9 @@ class DataLayoutBuilder extends React.Component {
 		dataDefinition,
 		dataLayout = this.getDefaultDataLayout(dataDefinition)
 	) {
-		const {editingLanguageId = themeDisplay.getLanguageId()} = this.props;
+		const {
+			editingLanguageId = themeDisplay.getDefaultLanguageId(),
+		} = this.props;
 
 		return {
 			description: dataDefinition.description[editingLanguageId],
@@ -340,7 +342,9 @@ class DataLayoutBuilder extends React.Component {
 			dataDefinitionField.fieldType = 'rich_text';
 		}
 
-		const {editingLanguageId = themeDisplay.getLanguageId()} = this.props;
+		const {
+			editingLanguageId = themeDisplay.getDefaultLanguageId(),
+		} = this.props;
 		const settingsContext = this.getDDMFormFieldSettingsContext(
 			dataDefinitionField
 		);
@@ -380,7 +384,9 @@ class DataLayoutBuilder extends React.Component {
 	}
 
 	getDDMFormFieldSettingsContext(dataDefinitionField) {
-		const {editingLanguageId = themeDisplay.getLanguageId()} = this.props;
+		const {
+			editingLanguageId = themeDisplay.getDefaultLanguageId(),
+		} = this.props;
 		const fieldTypes = this.getFieldTypes();
 		const {settingsContext} = fieldTypes.find(({name}) => {
 			return name === dataDefinitionField.fieldType;
@@ -404,7 +410,8 @@ class DataLayoutBuilder extends React.Component {
 					Object.prototype.hasOwnProperty.call(
 						propertyValue,
 						editingLanguageId
-					)
+					) &&
+					fieldName !== 'label'
 				) {
 					value = propertyValue[editingLanguageId];
 				}

@@ -31,12 +31,12 @@ public class MultiMatchQueryImplTest {
 	public void testMultiMatchQueryConstructor1() {
 		Object value = null;
 
-		Map<String, Float> fields = new HashMap<>();
+		Map<String, Float> fieldsBoosts = new HashMap<>();
 
-		fields.put("test", null);
+		fieldsBoosts.put("test", null);
 
 		MultiMatchQueryImpl multiMatchQueryImpl = new MultiMatchQueryImpl(
-			value, fields);
+			value, fieldsBoosts);
 
 		Assert.assertNotNull(multiMatchQueryImpl);
 	}

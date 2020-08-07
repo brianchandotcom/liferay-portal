@@ -30,16 +30,16 @@ import java.util.Set;
 public class MultiMatchQueryImpl
 	extends BaseQueryImpl implements MultiMatchQuery {
 
-	public MultiMatchQueryImpl(Object value, Map<String, Float> fields) {
+	public MultiMatchQueryImpl(Object value, Map<String, Float> fieldsBoosts) {
 		_value = value;
-		_fields = fields;
+		_fieldsBoosts = fieldsBoosts;
 	}
 
 	public MultiMatchQueryImpl(Object value, Set<String> fields) {
 		_value = value;
 
 		for (String field : fields) {
-			_fields.put(field, null);
+			_fieldsBoosts.put(field, null);
 		}
 	}
 
@@ -47,7 +47,7 @@ public class MultiMatchQueryImpl
 		_value = value;
 
 		for (String field : fields) {
-			_fields.put(field, null);
+			_fieldsBoosts.put(field, null);
 		}
 	}
 
@@ -72,16 +72,12 @@ public class MultiMatchQueryImpl
 	@Deprecated
 	@Override
 	public Set<String> getFields() {
-		return _fields.keySet();
+		return _fieldsBoosts.keySet();
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), will be renamed to getFields()
-	 */
-	@Deprecated
 	@Override
 	public Map<String, Float> getFieldsBoosts() {
-		return _fields;
+		return _fieldsBoosts;
 	}
 
 	@Override
@@ -139,18 +135,18 @@ public class MultiMatchQueryImpl
 		return _zeroTermsQuery;
 	}
 
+	@Override
+	public boolean isFieldBoostsEmpty() {
+		return _fieldsBoosts.isEmpty();
+	}
+
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #isFieldsEmpty()}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #isFieldBoostsEmpty()}
 	 */
 	@Deprecated
 	@Override
-	public boolean isFieldBoostsEmpty() {
-		return _fields.isEmpty();
-	}
-
-	@Override
 	public boolean isFieldsEmpty() {
-		return _fields.isEmpty();
+		return _fieldsBoosts.isEmpty();
 	}
 
 	@Override
@@ -238,8 +234,8 @@ public class MultiMatchQueryImpl
 
 		sb.append(", cutOffFrequency=");
 		sb.append(_cutOffFrequency);
-		sb.append(", fields=");
-		sb.append(_fields);
+		sb.append(", _fieldsBoosts=");
+		sb.append(_fieldsBoosts);
 		sb.append(", fuzziness=");
 		sb.append(_fuzziness);
 		sb.append(", lenient=");
@@ -269,7 +265,7 @@ public class MultiMatchQueryImpl
 
 	private String _analyzer;
 	private Float _cutOffFrequency;
-	private Map<String, Float> _fields = new HashMap<>();
+	private Map<String, Float> _fieldsBoosts = new HashMap<>();
 	private String _fuzziness;
 	private MatchQuery.RewriteMethod _fuzzyRewriteMethod;
 	private Boolean _lenient;

@@ -79,6 +79,14 @@
 	z-index: $zindex-dropdown - 1;
 }
 
+.sidebar-body {
+	padding-top: 0;
+}
+
+.sidebar-body > .sidebar-section {
+	margin-bottom: 16px;
+}
+
 .sidebar-open {
 	.sidebar {
 		transform: translateX(-100%);

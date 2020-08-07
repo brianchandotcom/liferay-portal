@@ -10,6 +10,7 @@
 		"@clayui/loading-indicator": "3.1.0",
 		"@clayui/sticker": "3.2.0",
 		"@clayui/tabs": "3.2.3",
+		"@clayui/tooltip": "3.3.3",
 		"classnames": "2.2.6",
 		"frontend-js-web": "*",
 		"prop-types": "15.7.2",

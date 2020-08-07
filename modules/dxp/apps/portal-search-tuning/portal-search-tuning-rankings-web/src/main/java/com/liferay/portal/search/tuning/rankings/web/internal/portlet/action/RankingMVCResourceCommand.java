@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
-import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
@@ -133,8 +132,7 @@ public class RankingMVCResourceCommand implements MVCResourceCommand {
 		ResourceRequest resourceRequest) {
 
 		return rankingIndexNameBuilder.getRankingIndexName(
-			indexNameBuilder.getIndexName(
-				portal.getCompanyId(resourceRequest)));
+			portal.getCompanyId(resourceRequest));
 	}
 
 	protected JSONObject getSearchResults(
@@ -213,9 +211,6 @@ public class RankingMVCResourceCommand implements MVCResourceCommand {
 
 	@Reference
 	protected FastDateFormatFactory fastDateFormatFactory;
-
-	@Reference
-	protected IndexNameBuilder indexNameBuilder;
 
 	@Reference
 	protected Portal portal;

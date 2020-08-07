@@ -15,8 +15,10 @@
 package com.liferay.portal.search.tuning.rankings.web.internal.index.name;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.search.index.IndexNameBuilder;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Wade Cao
@@ -26,12 +28,18 @@ import org.osgi.service.component.annotations.Component;
 public class RankingIndexNameBuilderImpl implements RankingIndexNameBuilder {
 
 	@Override
-	public RankingIndexName getRankingIndexName(String companyIndexName) {
+	public RankingIndexName getRankingIndexName(long companyId) {
 		return new RankingIndexNameImpl(
-			companyIndexName + StringPool.MINUS + RANKINGS_INDEX_NAME);
+			_indexNameBuilder.getIndexName(companyId) + StringPool.DASH +
+				RANKINGS_INDEX_NAME_SUFFIX);
 	}
 
-	protected static final String RANKINGS_INDEX_NAME =
+	@Reference(unbind = "-")
+	protected void setIndexNameBuilder(IndexNameBuilder indexNameBuilder) {
+		_indexNameBuilder = indexNameBuilder;
+	}
+
+	protected static final String RANKINGS_INDEX_NAME_SUFFIX =
 		"search-tuning-rankings";
 
 	protected class RankingIndexNameImpl implements RankingIndexName {
@@ -48,5 +56,7 @@ public class RankingIndexNameBuilderImpl implements RankingIndexNameBuilder {
 		private final String _indexName;
 
 	}
+
+	private IndexNameBuilder _indexNameBuilder;
 
 }

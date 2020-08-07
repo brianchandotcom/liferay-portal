@@ -156,6 +156,10 @@ public class ValidateRankingMVCResourceCommand implements MVCResourceCommand {
 		);
 	}
 
+	private long _getCompanyId(ResourceRequest resourceRequest) {
+		return portal.getCompanyId(resourceRequest);
+	}
+
 	private List<String> _getDuplicateQueryStrings(
 		ResourceRequest resourceRequest,
 		ValidateRankingMVCResourceRequest validateRankingMVCResourceRequest) {
@@ -187,15 +191,14 @@ public class ValidateRankingMVCResourceCommand implements MVCResourceCommand {
 	}
 
 	private String _getIndexName(ResourceRequest resourceRequest) {
-		return indexNameBuilder.getIndexName(
-			portal.getCompanyId(resourceRequest));
+		return indexNameBuilder.getIndexName(_getCompanyId(resourceRequest));
 	}
 
 	private RankingIndexName _getRankingIndexName(
 		ResourceRequest resourceRequest) {
 
 		return rankingIndexNameBuilder.getRankingIndexName(
-			_getIndexName(resourceRequest));
+			_getCompanyId(resourceRequest));
 	}
 
 	private boolean _isUpdateSpecial(String string) {

@@ -1258,15 +1258,15 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			user.getPasswordUnencrypted(), user.getPasswordUnencrypted(),
 			user.isPasswordReset(), user.getReminderQueryQuestion(),
 			user.getReminderQueryAnswer(), screenName, emailAddress,
-			user.getFacebookId(), user.getOpenId(), !deleteLogo, portraitBytes,
-			user.getLanguageId(), user.getTimeZoneId(), user.getGreeting(),
-			comments, firstName, middleName, lastName, contact.getPrefixId(),
-			contact.getSuffixId(), user.isMale(), birthdayMonth, birthdayDay,
-			birthdayYear, smsSn, facebookSn, jabberSn, skypeSn, twitterSn,
-			jobTitle, user.getGroupIds(), user.getOrganizationIds(),
-			user.getRoleIds(), null, user.getUserGroupIds(),
-			user.getAddresses(), null, user.getPhones(), user.getWebsites(),
-			announcementsDeliveries, new ServiceContext());
+			!deleteLogo, portraitBytes, user.getLanguageId(),
+			user.getTimeZoneId(), user.getGreeting(), comments, firstName,
+			middleName, lastName, contact.getPrefixId(), contact.getSuffixId(),
+			user.isMale(), birthdayMonth, birthdayDay, birthdayYear, smsSn,
+			facebookSn, jabberSn, skypeSn, twitterSn, jobTitle,
+			user.getGroupIds(), user.getOrganizationIds(), user.getRoleIds(),
+			null, user.getUserGroupIds(), user.getAddresses(), null,
+			user.getPhones(), user.getWebsites(), announcementsDeliveries,
+			new ServiceContext());
 	}
 
 	protected void updateWebsites(ActionRequest actionRequest)

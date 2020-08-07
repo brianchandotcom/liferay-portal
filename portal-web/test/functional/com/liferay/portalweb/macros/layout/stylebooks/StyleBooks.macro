@@ -1,0 +1,36 @@
+definition {
+
+	macro clickPublish {
+		Button.clickNoError(button = "Publish");
+
+		AssertConfirm.assertConfirmationNoError(value1 = "Once published, these changes will affect all instances of the site using these properties. Do you want to publish now?");
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro expandSection {
+		if (IsElementPresent(locator1 = "StyleBookEditor#STYLE_BOOK_EDITOR_SIDEBAR_COLLAPSED", key_sectionName = "${sectionName}")) {
+			AssertClick(
+				key_sectionName = "${sectionName}",
+				locator1 = "StyleBookEditor#STYLE_BOOK_EDITOR_SIDEBAR_COLLAPSED",
+				value1 = "${sectionName}");
+		}
+
+		AssertElementPresent(
+			key_sectionName = "${sectionName}",
+			locator1 = "StyleBookEditor#STYLE_BOOK_EDITOR_SIDEBAR_EXPANDED");
+	}
+
+	macro selectForm {
+		Click(locator1 = "StyleBookEditor#FORM_CONTROL_SELECT_BUTTON");
+
+		MenuItem.click(menuItem = "${formName}");
+	}
+
+	macro waitForAutoSave {
+		Pause(locator1 = "1000");
+
+		AssertVisible(locator1 = "StyleBookEditor#DRAFT_SAVED_MESSAGE");
+	}
+
+}

@@ -49,9 +49,9 @@ public class MultiMatchQueryTranslatorImpl
 				multiMatchQuery.getCutOffFrequency());
 		}
 
-		Map<String, Float> fields = multiMatchQuery.getFieldsBoosts();
+		Map<String, Float> fieldsBoosts = multiMatchQuery.getFieldsBoosts();
 
-		for (Map.Entry<String, Float> entry : fields.entrySet()) {
+		for (Map.Entry<String, Float> entry : fieldsBoosts.entrySet()) {
 			Float boost = entry.getValue();
 			String field = entry.getKey();
 

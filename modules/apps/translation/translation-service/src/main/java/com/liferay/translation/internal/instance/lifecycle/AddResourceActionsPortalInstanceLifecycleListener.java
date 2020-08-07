@@ -44,7 +44,7 @@ public class AddResourceActionsPortalInstanceLifecycleListener
 				"/resource-actions/languages.xml");
 
 			xml = StringUtil.replace(
-				xml, "[$LANGUAGE$]", availableLocale.toString());
+				xml, "[$LANGUAGE$]", _language.getLanguageId(availableLocale));
 
 			Document document = SAXReaderUtil.read(xml);
 

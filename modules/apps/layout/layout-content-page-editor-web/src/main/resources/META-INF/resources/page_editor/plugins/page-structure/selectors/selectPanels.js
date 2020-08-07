@@ -21,16 +21,16 @@ import {VIEWPORT_SIZES} from '../../../app/config/constants/viewportSizes';
 import selectCanUpdateEditables from '../../../app/selectors/selectCanUpdateEditables';
 import selectCanUpdateItemConfiguration from '../../../app/selectors/selectCanUpdateItemConfiguration';
 import selectEditableValue from '../../../app/selectors/selectEditableValue';
-import {CollectionConfigurationPanel} from '../components/floating-toolbar/CollectionConfigurationPanel';
-import ContainerLinkPanel from '../components/floating-toolbar/ContainerLinkPanel';
-import {ContainerStylesPanel} from '../components/floating-toolbar/ContainerStylesPanel';
-import EditableLinkPanel from '../components/floating-toolbar/EditableLinkPanel';
-import {FragmentConfigurationPanel} from '../components/floating-toolbar/FragmentConfigurationPanel';
-import {FragmentStylesPanel} from '../components/floating-toolbar/FragmentStylesPanel';
-import {ImagePropertiesPanel} from '../components/floating-toolbar/ImagePropertiesPanel';
-import {MappingPanel} from '../components/floating-toolbar/MappingPanel';
-import {RowConfigurationPanel} from '../components/floating-toolbar/RowConfigurationPanel';
-import {RowStylesPanel} from '../components/floating-toolbar/RowStylesPanel';
+import {CollectionConfigurationPanel} from '../components/item-configuration-panels/CollectionConfigurationPanel';
+import ContainerLinkPanel from '../components/item-configuration-panels/ContainerLinkPanel';
+import {ContainerStylesPanel} from '../components/item-configuration-panels/ContainerStylesPanel';
+import EditableLinkPanel from '../components/item-configuration-panels/EditableLinkPanel';
+import {FragmentConfigurationPanel} from '../components/item-configuration-panels/FragmentConfigurationPanel';
+import {FragmentStylesPanel} from '../components/item-configuration-panels/FragmentStylesPanel';
+import {ImagePropertiesPanel} from '../components/item-configuration-panels/ImagePropertiesPanel';
+import {MappingPanel} from '../components/item-configuration-panels/MappingPanel';
+import {RowConfigurationPanel} from '../components/item-configuration-panels/RowConfigurationPanel';
+import {RowStylesPanel} from '../components/item-configuration-panels/RowStylesPanel';
 
 export const PANEL_IDS = {
 	collectionConfiguration: 'collectionConfiguration',

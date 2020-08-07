@@ -17,10 +17,11 @@ import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import {ResizeContextProvider} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/components/ResizeContext';
+import {config} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
 import {StoreAPIContextProvider} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
 import updateItemConfig from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig';
 import updateRowColumns from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateRowColumns';
-import {RowConfigurationPanel} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page-structure/components/floating-toolbar/RowConfigurationPanel';
+import {RowStylesPanel} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page-structure/components/item-configuration-panels/RowStylesPanel';
 
 const ITEM_CONFIG = {
 	gutters: true,
@@ -57,7 +58,7 @@ const renderComponent = ({
 			<ResizeContextProvider
 				value={{...RESIZE_CONTEXT_STATE, ...contextState}}
 			>
-				<RowConfigurationPanel
+				<RowStylesPanel
 					item={{
 						children: [],
 						config: {...ITEM_CONFIG, ...config},
@@ -78,6 +79,7 @@ jest.mock(
 				desktop: {label: 'Desktop'},
 				landscapeMobile: {label: 'landscapeMobile'},
 			},
+			responsiveEnabled: true,
 		},
 	})
 );
@@ -92,37 +94,102 @@ jest.mock(
 	() => jest.fn()
 );
 
-describe('RowConfigurationPanel', () => {
+describe('RowStylesPanel', () => {
 	afterEach(() => {
 		cleanup();
+		config.responsiveEnabled = true;
 		updateItemConfig.mockClear();
 		updateRowColumns.mockClear();
 	});
 
-	it('allows changing the number of modules of a grid', async () => {
+	it('allows changing the modules per row', async () => {
 		const {getByLabelText} = renderComponent({});
-		const input = getByLabelText('number-of-modules');
+		const input = getByLabelText('layout');
 
 		await fireEvent.change(input, {
-			target: {value: '6'},
+			target: {value: '2'},
 		});
 
-		expect(updateRowColumns).toHaveBeenCalledWith({
+		expect(updateItemConfig).toHaveBeenCalledWith({
+			itemConfig: {
+				modulesPerRow: 2,
+			},
 			itemId: '0',
-			numberOfColumns: 6,
 			segmentsExperienceId: '0',
-			viewportSizeId: 'desktop',
 		});
 	});
 
-	it('allows changing the gutter', async () => {
+	it('allows custom value in modules per row when row is customized', async () => {
+		const {getByLabelText} = renderComponent({
+			contextState: {customRow: true},
+		});
+		const input = getByLabelText('layout');
+
+		await fireEvent.change(input, {
+			target: {value: '0'},
+		});
+
+		expect(updateItemConfig).toHaveBeenCalledWith({
+			itemConfig: {
+				modulesPerRow: 'custom',
+			},
+			itemId: '0',
+			segmentsExperienceId: '0',
+		});
+	});
+
+	it('allows changing the vertical alignment', async () => {
 		const {getByLabelText} = renderComponent({});
-		const input = getByLabelText('show-gutter');
+		const input = getByLabelText('vertical-alignment');
+
+		await fireEvent.change(input, {
+			target: {value: 'middle'},
+		});
+
+		expect(updateItemConfig).toHaveBeenCalledWith({
+			itemConfig: {
+				verticalAlignment: 'middle',
+			},
+			itemId: '0',
+			segmentsExperienceId: '0',
+		});
+	});
+
+	it('allows inverse order when number of modules is 2 and modules per row is 1', async () => {
+		const {getByLabelText} = renderComponent({
+			config: {
+				modulesPerRow: 1,
+			},
+		});
+		const input = getByLabelText('inverse-order');
 
 		await fireEvent.click(input);
 
 		expect(updateItemConfig).toHaveBeenCalledWith({
-			itemConfig: {gutters: false},
+			itemConfig: {
+				reverseOrder: true,
+			},
+			itemId: '0',
+			segmentsExperienceId: '0',
+		});
+	});
+
+	it('allows changing configuration for a given viewport', async () => {
+		const {getByLabelText} = renderComponent({
+			state: {
+				selectedViewportSize: 'landscapeMobile',
+			},
+		});
+		const input = getByLabelText('layout');
+
+		await fireEvent.change(input, {
+			target: {value: '1'},
+		});
+
+		expect(updateItemConfig).toHaveBeenCalledWith({
+			itemConfig: {
+				landscapeMobile: {modulesPerRow: 1},
+			},
 			itemId: '0',
 			segmentsExperienceId: '0',
 		});

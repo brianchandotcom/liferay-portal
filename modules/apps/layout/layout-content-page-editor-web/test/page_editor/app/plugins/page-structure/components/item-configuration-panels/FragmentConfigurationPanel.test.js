@@ -23,7 +23,7 @@ import {cleanup, fireEvent, render} from '@testing-library/react';
 import {config} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
 import FragmentService from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/FragmentService';
 import {StoreAPIContextProvider} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
-import {FragmentConfigurationPanel} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page-structure/components/floating-toolbar/FragmentConfigurationPanel';
+import {FragmentConfigurationPanel} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page-structure/components/item-configuration-panels/FragmentConfigurationPanel';
 
 jest.mock(
 	'../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',

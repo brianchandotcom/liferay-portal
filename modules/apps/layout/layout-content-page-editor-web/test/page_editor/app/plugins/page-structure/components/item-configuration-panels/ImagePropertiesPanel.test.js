@@ -23,7 +23,7 @@ import {EDITABLE_TYPES} from '../../../../../../../src/main/resources/META-INF/r
 import {StoreAPIContextProvider} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
 import updateEditableValues from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateEditableValues';
 import {ImageSelector} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/common/components/ImageSelector';
-import {ImagePropertiesPanel} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page-structure/components/floating-toolbar/ImagePropertiesPanel';
+import {ImagePropertiesPanel} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page-structure/components/item-configuration-panels/ImagePropertiesPanel';
 
 jest.mock(
 	'../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateEditableValues',

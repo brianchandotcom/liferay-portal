@@ -28,7 +28,7 @@ import {EDITABLE_TYPES} from '../../../../../../../src/main/resources/META-INF/r
 import serviceFetch from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch';
 import {StoreAPIContextProvider} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
 import updateEditableValues from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateEditableValues';
-import EditableLinkPanel from '../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page-structure/components/floating-toolbar/EditableLinkPanel';
+import EditableLinkPanel from '../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page-structure/components/item-configuration-panels/EditableLinkPanel';
 
 jest.mock(
 	'../../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch',

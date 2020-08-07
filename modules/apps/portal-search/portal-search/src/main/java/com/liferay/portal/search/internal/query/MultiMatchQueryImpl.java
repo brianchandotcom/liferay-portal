@@ -20,9 +20,7 @@ import com.liferay.portal.search.query.MultiMatchQuery;
 import com.liferay.portal.search.query.Operator;
 import com.liferay.portal.search.query.QueryVisitor;
 
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -32,24 +30,27 @@ import java.util.Set;
 public class MultiMatchQueryImpl
 	extends BaseQueryImpl implements MultiMatchQuery {
 
-	public MultiMatchQueryImpl(Object value, Map<String, Float> fieldsBoosts) {
+	public MultiMatchQueryImpl(Object value, Map<String, Float> fields) {
 		_value = value;
-
-		_fieldsBoosts = new HashMap<String, Float>(fieldsBoosts);
+		_fields = fields;
 	}
 
 	public MultiMatchQueryImpl(Object value, Set<String> fields) {
 		_value = value;
 
-		_fieldsBoosts.keySet().addAll(fields);
+		for (String field : fields) {
+			_fields.put(field, null);
+		}
 	}
 
 	public MultiMatchQueryImpl(Object value, String... fields) {
 		_value = value;
 
-		Collections.addAll(_fieldsBoosts.keySet(), fields);
+		for (String field : fields) {
+			_fields.put(field, null);
+		}
 	}
-	
+
 	@Override
 	public <T> T accept(QueryVisitor<T> queryVisitor) {
 		return queryVisitor.visit(this);
@@ -65,14 +66,22 @@ public class MultiMatchQueryImpl
 		return _cutOffFrequency;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getFieldsBoosts()}
+	 */
+	@Deprecated
 	@Override
 	public Set<String> getFields() {
-		return _fieldsBoosts.keySet();
+		return _fields.keySet();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), will be renamed to getFields()
+	 */
+	@Deprecated
 	@Override
 	public Map<String, Float> getFieldsBoosts() {
-		return _fieldsBoosts;
+		return _fields;
 	}
 
 	@Override
@@ -130,14 +139,18 @@ public class MultiMatchQueryImpl
 		return _zeroTermsQuery;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #isFieldsEmpty()}
+	 */
+	@Deprecated
 	@Override
 	public boolean isFieldBoostsEmpty() {
-		return _fieldsBoosts.isEmpty();
+		return _fields.isEmpty();
 	}
 
 	@Override
 	public boolean isFieldsEmpty() {
-		return _fieldsBoosts.isEmpty();
+		return _fields.isEmpty();
 	}
 
 	@Override
@@ -225,8 +238,8 @@ public class MultiMatchQueryImpl
 
 		sb.append(", cutOffFrequency=");
 		sb.append(_cutOffFrequency);
-		sb.append(", fieldsBoosts=");
-		sb.append(_fieldsBoosts);
+		sb.append(", fields=");
+		sb.append(_fields);
 		sb.append(", fuzziness=");
 		sb.append(_fuzziness);
 		sb.append(", lenient=");
@@ -256,7 +269,7 @@ public class MultiMatchQueryImpl
 
 	private String _analyzer;
 	private Float _cutOffFrequency;
-	private Map<String, Float> _fieldsBoosts = new HashMap<String, Float>();
+	private Map<String, Float> _fields = new HashMap<>();
 	private String _fuzziness;
 	private MatchQuery.RewriteMethod _fuzzyRewriteMethod;
 	private Boolean _lenient;

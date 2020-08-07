@@ -292,6 +292,11 @@ public abstract class BaseDocumentFolderResourceImpl
 			existingDocumentFolder.setActions(documentFolder.getActions());
 		}
 
+		if (documentFolder.getAssetLibraryKey() != null) {
+			existingDocumentFolder.setAssetLibraryKey(
+				documentFolder.getAssetLibraryKey());
+		}
+
 		if (documentFolder.getDateCreated() != null) {
 			existingDocumentFolder.setDateCreated(
 				documentFolder.getDateCreated());

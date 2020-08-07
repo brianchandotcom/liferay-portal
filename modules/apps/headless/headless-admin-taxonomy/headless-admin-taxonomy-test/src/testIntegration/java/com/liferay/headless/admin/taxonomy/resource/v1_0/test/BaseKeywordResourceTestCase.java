@@ -207,6 +207,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 		Keyword keyword = randomKeyword();
 
+		keyword.setAssetLibraryKey(regex);
 		keyword.setName(regex);
 
 		String json = KeywordSerDes.toJSON(keyword);
@@ -215,6 +216,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 		keyword = KeywordSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, keyword.getAssetLibraryKey());
 		Assert.assertEquals(regex, keyword.getName());
 	}
 
@@ -1259,6 +1261,14 @@ public abstract class BaseKeywordResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("assetLibraryKey", additionalAssertFieldName)) {
+				if (keyword.getAssetLibraryKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("creator", additionalAssertFieldName)) {
 				if (keyword.getCreator() == null) {
 					valid = false;
@@ -1385,6 +1395,17 @@ public abstract class BaseKeywordResourceTestCase {
 				if (!equals(
 						(Map)keyword1.getActions(),
 						(Map)keyword2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("assetLibraryKey", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						keyword1.getAssetLibraryKey(),
+						keyword2.getAssetLibraryKey())) {
 
 					return false;
 				}
@@ -1541,6 +1562,14 @@ public abstract class BaseKeywordResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("assetLibraryKey")) {
+			sb.append("'");
+			sb.append(String.valueOf(keyword.getAssetLibraryKey()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("creator")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1675,6 +1704,8 @@ public abstract class BaseKeywordResourceTestCase {
 	protected Keyword randomKeyword() throws Exception {
 		return new Keyword() {
 			{
+				assetLibraryKey = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				id = RandomTestUtil.randomLong();

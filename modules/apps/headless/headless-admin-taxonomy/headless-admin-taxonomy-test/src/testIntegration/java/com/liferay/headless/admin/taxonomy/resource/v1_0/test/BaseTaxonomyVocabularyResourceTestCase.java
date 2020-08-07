@@ -209,6 +209,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		TaxonomyVocabulary taxonomyVocabulary = randomTaxonomyVocabulary();
 
+		taxonomyVocabulary.setAssetLibraryKey(regex);
 		taxonomyVocabulary.setDescription(regex);
 		taxonomyVocabulary.setName(regex);
 
@@ -218,6 +219,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		taxonomyVocabulary = TaxonomyVocabularySerDes.toDTO(json);
 
+		Assert.assertEquals(regex, taxonomyVocabulary.getAssetLibraryKey());
 		Assert.assertEquals(regex, taxonomyVocabulary.getDescription());
 		Assert.assertEquals(regex, taxonomyVocabulary.getName());
 	}
@@ -1396,6 +1398,14 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("assetLibraryKey", additionalAssertFieldName)) {
+				if (taxonomyVocabulary.getAssetLibraryKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("assetTypes", additionalAssertFieldName)) {
 				if (taxonomyVocabulary.getAssetTypes() == null) {
 					valid = false;
@@ -1581,6 +1591,17 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				if (!equals(
 						(Map)taxonomyVocabulary1.getActions(),
 						(Map)taxonomyVocabulary2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("assetLibraryKey", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						taxonomyVocabulary1.getAssetLibraryKey(),
+						taxonomyVocabulary2.getAssetLibraryKey())) {
 
 					return false;
 				}
@@ -1812,6 +1833,14 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("assetLibraryKey")) {
+			sb.append("'");
+			sb.append(String.valueOf(taxonomyVocabulary.getAssetLibraryKey()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("assetTypes")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1985,6 +2014,8 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 	protected TaxonomyVocabulary randomTaxonomyVocabulary() throws Exception {
 		return new TaxonomyVocabulary() {
 			{
+				assetLibraryKey = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(

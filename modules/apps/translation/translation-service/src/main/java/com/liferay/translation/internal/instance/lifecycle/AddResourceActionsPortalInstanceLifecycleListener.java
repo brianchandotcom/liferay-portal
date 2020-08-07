@@ -32,14 +32,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alicia Garcia
  */
 @Component(service = PortalInstanceLifecycleListener.class)
-public class TranslationLanguagePortalInstanceLifecycleListener
+public class AddResourceActionsPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		for (Locale availableLocale : _language.getAvailableLocales()) {
 			String xml = StringUtil.read(
-				TranslationLanguagePortalInstanceLifecycleListener.class.
+				AddResourceActionsPortalInstanceLifecycleListener.class.
 					getClassLoader(),
 				"/resource-actions/languages.xml");
 

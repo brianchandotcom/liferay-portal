@@ -24,6 +24,6 @@
 
 <div class="sheet-footer">
 	<button class="btn btn-danger" type="submit">
-		<liferay-ui:message key="remove-configured-timebased-otp" />
+		<liferay-ui:message key="button-remove-configured-timebased-otp" />
 	</button>
 </div>

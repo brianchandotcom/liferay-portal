@@ -220,9 +220,9 @@ definition {
 	macro changeSinglePageTheme {
 		ContentPages.clickPencil();
 
-		Click.clickNoMouseOver(
-			key_tabName = "${tabName}",
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
+		PageEditor.gotoTab(tabName = "Page Design Options");
+
+		Click(locator1 = "PageEditor#MORE_LINK");
 
 		Click(locator1 = "SitePagesEditPage#REGULAR_UNIQUE_LOOK_AND_FEEL");
 

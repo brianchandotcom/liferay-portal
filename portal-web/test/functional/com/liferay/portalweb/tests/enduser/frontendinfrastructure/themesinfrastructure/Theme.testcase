@@ -45,10 +45,7 @@ definition {
 
 		Navigator.openURL();
 
-		Page.changeSinglePageTheme(
-			pageName = "Home",
-			tabName = "Look and Feel",
-			themeName = "test-theme-7-3");
+		Page.changeSinglePageTheme(themeName = "test-theme-7-3");
 
 		Navigator.gotoBack();
 

@@ -429,6 +429,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NEW</td>
+	<td>//button[@*='New']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NEW_THREAD</td>
 	<td>//a[contains(.,'New Thread')]</td>
 	<td></td>

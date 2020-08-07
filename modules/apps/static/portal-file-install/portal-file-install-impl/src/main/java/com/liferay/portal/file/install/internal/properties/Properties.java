@@ -144,14 +144,12 @@ public class Properties extends AbstractMap<String, String> {
 
 		values = new ArrayList<>(values);
 
-		String escapedKey = _escapeKey(key);
-
 		StringBundler sb = new StringBundler();
 
 		if (values.isEmpty()) {
-			values.add(escapedKey + StringPool.EQUAL);
+			values.add(key + StringPool.EQUAL);
 
-			sb.append(escapedKey);
+			sb.append(key);
 			sb.append(StringPool.EQUAL);
 		}
 		else {
@@ -165,10 +163,10 @@ public class Properties extends AbstractMap<String, String> {
 
 			value = value.trim();
 
-			if (!value.startsWith(escapedKey)) {
-				values.set(0, escapedKey + " = " + realValue);
+			if (!value.startsWith(key)) {
+				values.set(0, key + " = " + realValue);
 
-				sb.append(escapedKey);
+				sb.append(key);
 				sb.append(" = ");
 				sb.append(realValue);
 			}
@@ -508,7 +506,7 @@ public class Properties extends AbstractMap<String, String> {
 		}
 
 		public void writeProperty(String key, String value) throws IOException {
-			write(_escapeKey(key));
+			write(key);
 			write(" = ");
 
 			if (_typed) {
@@ -670,27 +668,6 @@ public class Properties extends AbstractMap<String, String> {
 				else {
 					sb.append(c);
 				}
-			}
-		}
-
-		return sb.toString();
-	}
-
-	private static String _escapeKey(String key) {
-		StringBundler sb = new StringBundler();
-
-		for (int i = 0; i < key.length(); i++) {
-			char c = key.charAt(i);
-
-			if (_contains(_SEPARATORS, c) || _contains(_WHITE_SPACE, c)) {
-
-				// escape the separator
-
-				sb.append('\\');
-				sb.append(c);
-			}
-			else {
-				sb.append(c);
 			}
 		}
 

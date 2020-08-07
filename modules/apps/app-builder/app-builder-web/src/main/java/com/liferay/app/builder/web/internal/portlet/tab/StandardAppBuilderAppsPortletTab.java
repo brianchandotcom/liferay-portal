@@ -15,8 +15,10 @@
 package com.liferay.app.builder.web.internal.portlet.tab;
 
 import com.liferay.app.builder.portlet.tab.AppBuilderAppsPortletTab;
+import com.liferay.app.builder.rest.resource.v1_0.AppResource;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -33,6 +35,16 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class StandardAppBuilderAppsPortletTab
 	implements AppBuilderAppsPortletTab {
+
+	@Override
+	public void deleteApp(long appBuilderAppId, User user) throws Exception {
+		AppResource appResource = AppResource.builder(
+		).user(
+			user
+		).build();
+
+		appResource.deleteApp(appBuilderAppId);
+	}
 
 	@Override
 	public String getEditEntryPoint() {

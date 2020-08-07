@@ -26,7 +26,7 @@ import Answer from '../../components/Answer.es';
 import ArticleBodyRenderer from '../../components/ArticleBodyRenderer.es';
 import Breadcrumb from '../../components/Breadcrumb.es';
 import CreatorRow from '../../components/CreatorRow.es';
-import DeleteThread from '../../components/DeleteThread.es';
+import DeleteQuestion from '../../components/DeleteQuestion.es';
 import Link from '../../components/Link.es';
 import PaginatedList from '../../components/PaginatedList.es';
 import QuestionsEditor from '../../components/QuestionsEditor';
@@ -275,7 +275,7 @@ export default withRouter(
 
 											{question.actions.delete && (
 												<>
-													<DeleteThread
+													<DeleteQuestion
 														deleteModalVisibility={
 															showDeleteModalPanel
 														}

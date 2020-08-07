@@ -32,7 +32,7 @@ User selectedUser = PortalUtil.getSelectedUser(request);
 
 	<aui:input label="mfa-timebased-otp" name="mfaTimeBasedOTP" showRequiredLabel="yes" />
 
-	<aui:input disabled="<%= true %>" label="shared-secret" name="sharedSecret" type="text" value="<%= mfaTimeBasedOTPSharedSecret %>" />
+	<aui:input label="shared-secret" name="sharedSecret" readOnly="<%= true %>" type="text" value="<%= mfaTimeBasedOTPSharedSecret %>" />
 
 	<div class="qrcode-setup" id="<portlet:namespace/>qrcode"></div>
 </div>

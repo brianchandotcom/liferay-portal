@@ -1,0 +1,139 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Style Books";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is for LPS-116078. Can preview the effect on page when edit the style book."
+	@priority = "5"
+	test PreviewTheEffectOnPageInStyleBookEditor {
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Add a Banner Center to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				fragmentName = "Banner Center");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a style book") {
+			ProductMenu.gotoPortlet(
+				category = "Design",
+				portlet = "Style Books");
+
+			StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name");
+		}
+
+		task ("Assert the content page is shown in preview iframe") {
+			SelectFrame.selectFrameNoLoading(locator1 = "StyleBookEditor#PAGE_PREVIEW_IFRAME");
+
+			AssertVisible(
+				key_pageName = "Test Page Name",
+				locator1 = "Home#PAGE");
+
+			AssertVisible(
+				key_content = "Banner Title Example",
+				key_element = "h1",
+				key_id = "title",
+				key_type = "rich-text",
+				locator1 = "StyleBookEditor#CONTRIBUTED_FRAGMENT_INLINE_CONTENT");
+
+			SelectFrameTop();
+		}
+
+		task ("Select Color System in sidebar") {
+			StyleBooks.selectForm(formName = "Color System");
+		}
+
+		task ("Edit Primary in Theme Colors section") {
+			StyleBooks.expandSection(sectionName = "Theme Colors");
+
+			Type(
+				key_text = "Primary",
+				locator1 = "TextInput#ANY",
+				value1 = "#FF0000");
+
+			StyleBooks.waitForAutoSave();
+		}
+
+		task ("Select Typography in sidebar") {
+			StyleBooks.selectForm(formName = "Typography");
+		}
+
+		task ("Edit H1 Font Size in Headings section") {
+			StyleBooks.expandSection(sectionName = "Headings");
+
+			Type(
+				key_fieldLabel = "H1 Font Size",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "2rem");
+
+			StyleBooks.waitForAutoSave();
+		}
+
+		task ("Preview the effect in page preivew iframe") {
+			SelectFrame.selectFrameNoLoading(locator1 = "StyleBookEditor#PAGE_PREVIEW_IFRAME");
+
+			AssertCssValue(
+				key_content = "Go Somewhere",
+				key_element = "a",
+				key_id = "link",
+				key_type = "link",
+				locator1 = "StyleBookEditor#CONTRIBUTED_FRAGMENT_INLINE_CONTENT",
+				locator2 = "background-color",
+				value1 = "rgba(255, 0, 0, 1)");
+
+			AssertCssValue(
+				key_content = "Banner Title Example",
+				key_element = "h1",
+				key_id = "title",
+				key_type = "rich-text",
+				locator1 = "StyleBookEditor#CONTRIBUTED_FRAGMENT_INLINE_CONTENT",
+				locator2 = "font-size",
+				value1 = "32px");
+
+			SelectFrameTop();
+
+			StyleBooks.clickPublish();
+		}
+
+		task ("Assert the new style book in Style Books admin") {
+			StyleBooksAdmin.viewStyleBooksPresent(styleBookName = "Test Style Book Name");
+		}
+	}
+
+}

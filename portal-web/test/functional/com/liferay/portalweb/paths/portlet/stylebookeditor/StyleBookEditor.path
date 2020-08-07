@@ -19,6 +19,11 @@
 	<td>//iframe[contains(@class,'page-preview')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PAGE_PREVIEW_INFO_BAR_TOGGLE</td>
+	<td>//div[contains(@class,'page-preview-info-bar')]//button[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
 <!--SIDEBAR-->
 <tr>
 	<td>DRAFT_SAVED_MESSAGE</td>

@@ -749,8 +749,6 @@ definition {
 	@priority = "5"
 	test LearningToRankSmoke {
 		property osgi.app.includes = "portal-search-learning-to-rank";
-		property osgi.module.configuration.file.names = "com.liferay.portal.search.learning.to.rank.configuration.LearningToRankConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}model=&quot;linearregression&quot;";
 		property portal.upstream = "quarantine";
 		property remote.elasticsearch.enabled = "true";
 		property remote.elasticsearch.ltr.enabled = "true";

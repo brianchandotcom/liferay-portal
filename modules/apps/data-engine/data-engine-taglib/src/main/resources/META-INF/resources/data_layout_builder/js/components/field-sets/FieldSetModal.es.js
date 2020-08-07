@@ -50,8 +50,10 @@ const ModalContent = ({
 	const {
 		dataLayoutBuilder,
 		dispatch,
-		state: {config, dataLayout, editingLanguageId = defaultLanguageId},
+		state: {config, dataLayout},
 	} = childrenContext;
+
+	const editingLanguageId = defaultLanguageId;
 
 	const {contentType} = appProps;
 

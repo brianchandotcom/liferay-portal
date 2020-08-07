@@ -20,6 +20,7 @@ import {addField} from './fieldAddedHandler.es';
 
 const handleFieldSetAdded = (props, state, event) => {
 	const {
+		defaultLanguageId,
 		fieldSet,
 		indexes,
 		parentFieldName,
@@ -32,7 +33,14 @@ const handleFieldSetAdded = (props, state, event) => {
 	const nestedFields = [];
 
 	visitor.mapFields((nestedField) => {
-		nestedFields.push(nestedField);
+		nestedFields.push(
+			updateField(
+				props,
+				nestedField,
+				'label',
+				nestedField.label[defaultLanguageId]
+			)
+		);
 	});
 
 	let fieldSetField = createFieldSet(

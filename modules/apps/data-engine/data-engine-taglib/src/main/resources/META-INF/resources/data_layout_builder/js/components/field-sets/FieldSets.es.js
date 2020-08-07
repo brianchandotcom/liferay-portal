@@ -36,13 +36,15 @@ export default function FieldSets({keywords}) {
 		isVisible: false,
 	});
 
-	const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+	let defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 	const toggleFieldSet = (fieldSet, editingDataDefinition) => {
 		let childrenAppProps = {
+			availableLanguageIds: [defaultLanguageId],
 			context: {},
 			dataDefinitionId: null,
 			dataLayoutId: null,
+			editingLanguageId: defaultLanguageId,
 		};
 
 		if (fieldSet) {
@@ -55,7 +57,10 @@ export default function FieldSets({keywords}) {
 			const [{rows}] = ddmForm.pages;
 			delete ddmForm.pages;
 
+			defaultLanguageId = fieldSet.defaultLanguageId;
+
 			childrenAppProps = {
+				availableLanguageIds: fieldSet.availableLanguageIds,
 				context: {
 					...context,
 					pages: [
@@ -69,11 +74,13 @@ export default function FieldSets({keywords}) {
 				},
 				dataDefinitionId,
 				dataLayoutId: defaultDataLayout.id,
+				editingLanguageId: fieldSet.defaultLanguageId,
 			};
 		}
 
 		setState({
 			childrenAppProps,
+			defaultLanguageId,
 			editingDataDefinition,
 			fieldSet,
 			isVisible: !state.isVisible,

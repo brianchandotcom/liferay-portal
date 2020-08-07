@@ -385,6 +385,10 @@ definition {
 
 		Questions.viewNoSearchResults(questionsList = "Question2,Question3,Question4");
 
+		Questions.search(
+			noQuestionsResults = "true",
+			searchKey = "Questions5");
+
 		Questions.clearSearchResults();
 
 		for (var num : list "1,2,3,4") {

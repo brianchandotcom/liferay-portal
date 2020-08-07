@@ -23,7 +23,6 @@ import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {useContext, useEffect, useReducer, useState} from 'react';
 
 import '../../../../css/EditApp.scss';
-import AppStandaloneLink from './AppStandaloneLink.es';
 import ApplyAppChangesModal from './ApplyAppChangesModal.es';
 import DeployAppModal from './DeployAppModal.es';
 import EditAppToolbar from './EditAppToolbar.es';
@@ -212,6 +211,20 @@ export default ({
 		title = Liferay.Language.get('edit-workflow-powered-app');
 	}
 
+	const getStandaloneLink = ({appDeployments, id}) => {
+		const isStandalone = appDeployments.some(
+			({type}) => type === 'standalone'
+		);
+
+		return isStandalone
+			? ''
+			: `<a href="${getStandaloneURL(
+					id
+			  )}" target="_blank">${Liferay.Language.get(
+					'open-standalone-app'
+			  )}. ${Liferay.Util.getLexiconIconTpl('shortcut')}</a>`;
+	};
+
 	const onCancel = () => {
 		history.push(`/${scope}`);
 	};
@@ -260,19 +273,11 @@ export default ({
 		)
 			.then(parseResponse)
 			.then((app) => {
-				const message = deployed ? (
-					<>
-						{Liferay.Language.get(
+				const message = deployed
+					? `${Liferay.Language.get(
 							'the-app-was-deployed-successfully'
-						)}{' '}
-						<AppStandaloneLink
-							{...app}
-							href={getStandaloneURL(app.id)}
-						/>
-					</>
-				) : (
-					Liferay.Language.get('the-app-was-saved-successfully')
-				);
+					  )} ${getStandaloneLink(app)}`
+					: Liferay.Language.get('the-app-was-saved-successfully');
 
 				callback();
 				successToast(message);

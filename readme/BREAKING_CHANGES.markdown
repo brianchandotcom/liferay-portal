@@ -816,3 +816,29 @@ This change was made to avoid Elasticsearch "Limit of total fields has been exce
 For more information about this error, see [LPS-103224](https://issues.liferay.com/browse/LPS-103224).
 
 ---------------------------------------
+
+### Removed liferay-editor-image-uploader Plugin
+- **Date:** 2020-Mar-27
+- **JIRA Ticket:** [LPS-110734](https://issues.liferay.com/browse/LPS-110734)
+
+### What changed?
+
+`liferay-editor-image-uploader` AUI plugin was removed. Its code was merged
+into `addimages` CKEditor plugin, used by Alloy Editor and CKEditor.
+
+### Who is affected
+
+This affects custom solutions that use the plugin directly.
+
+### How should I update my code?
+
+There's no direct replacement for the `liferay-editor-image-uploader` plugin.
+If you have a component that relies on it, you can co-locate a copy of the old
+implementation and use it locally within your module.
+
+#### Why was this change made?
+
+This change was made to enable image drag and drop handling in CKEditor, and
+have a common solution for both Alloy Editor and CKEditor.
+
+---------------------------------------

@@ -289,21 +289,9 @@ definition {
 		Pause(locator1 = "3000");
 
 		if (IsElementPresent(locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT")) {
-			if (isSet(itemType)) {
-				Select(
-					locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT",
-					value1 = "${itemType}");
-			}
-
-			if (isSet(itemSubtype)) {
-				Select(
-					locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_SUBTYPE_SELECT",
-					value1 = "${itemSubtype}");
-			}
-
-			Pause(locator1 = "3000");
-
-			PortletEntry.save();
+			AssetListsAdmin.configureItemTypeInManualCollection(
+				itemSubtype = "${itemSubtype}",
+				itemType = "${itemType}");
 		}
 
 		Click(locator1 = "AssetLists#ASSET_LIST_SELECT_BUTTON");

@@ -104,6 +104,20 @@ public class DocumentSerDes {
 			sb.append(String.valueOf(document.getAggregateRating()));
 		}
 
+		if (document.getAssetLibraryKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"assetLibraryKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(document.getAssetLibraryKey()));
+
+			sb.append("\"");
+		}
+
 		if (document.getContentUrl() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -444,6 +458,15 @@ public class DocumentSerDes {
 				String.valueOf(document.getAggregateRating()));
 		}
 
+		if (document.getAssetLibraryKey() == null) {
+			map.put("assetLibraryKey", null);
+		}
+		else {
+			map.put(
+				"assetLibraryKey",
+				String.valueOf(document.getAssetLibraryKey()));
+		}
+
 		if (document.getContentUrl() == null) {
 			map.put("contentUrl", null);
 		}
@@ -644,6 +667,11 @@ public class DocumentSerDes {
 					document.setAggregateRating(
 						AggregateRatingSerDes.toDTO(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "assetLibraryKey")) {
+				if (jsonParserFieldValue != null) {
+					document.setAssetLibraryKey((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "contentUrl")) {

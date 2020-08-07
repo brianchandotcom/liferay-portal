@@ -212,6 +212,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		StructuredContent structuredContent = randomStructuredContent();
 
+		structuredContent.setAssetLibraryKey(regex);
 		structuredContent.setDescription(regex);
 		structuredContent.setFriendlyUrlPath(regex);
 		structuredContent.setKey(regex);
@@ -224,6 +225,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		structuredContent = StructuredContentSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, structuredContent.getAssetLibraryKey());
 		Assert.assertEquals(regex, structuredContent.getDescription());
 		Assert.assertEquals(regex, structuredContent.getFriendlyUrlPath());
 		Assert.assertEquals(regex, structuredContent.getKey());
@@ -2533,6 +2535,14 @@ public abstract class BaseStructuredContentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("assetLibraryKey", additionalAssertFieldName)) {
+				if (structuredContent.getAssetLibraryKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"availableLanguages", additionalAssertFieldName)) {
 
@@ -2907,6 +2917,17 @@ public abstract class BaseStructuredContentResourceTestCase {
 				if (!Objects.deepEquals(
 						structuredContent1.getAggregateRating(),
 						structuredContent2.getAggregateRating())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("assetLibraryKey", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						structuredContent1.getAssetLibraryKey(),
+						structuredContent2.getAssetLibraryKey())) {
 
 					return false;
 				}
@@ -3386,6 +3407,14 @@ public abstract class BaseStructuredContentResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("assetLibraryKey")) {
+			sb.append("'");
+			sb.append(String.valueOf(structuredContent.getAssetLibraryKey()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("availableLanguages")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -3662,6 +3691,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 	protected StructuredContent randomStructuredContent() throws Exception {
 		return new StructuredContent() {
 			{
+				assetLibraryKey = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				contentStructureId = RandomTestUtil.randomLong();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();

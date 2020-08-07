@@ -208,6 +208,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		DocumentFolder documentFolder = randomDocumentFolder();
 
+		documentFolder.setAssetLibraryKey(regex);
 		documentFolder.setDescription(regex);
 		documentFolder.setName(regex);
 
@@ -217,6 +218,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		documentFolder = DocumentFolderSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, documentFolder.getAssetLibraryKey());
 		Assert.assertEquals(regex, documentFolder.getDescription());
 		Assert.assertEquals(regex, documentFolder.getName());
 	}
@@ -1751,6 +1753,14 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("assetLibraryKey", additionalAssertFieldName)) {
+				if (documentFolder.getAssetLibraryKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("creator", additionalAssertFieldName)) {
 				if (documentFolder.getCreator() == null) {
 					valid = false;
@@ -1933,6 +1943,17 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				if (!equals(
 						(Map)documentFolder1.getActions(),
 						(Map)documentFolder2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("assetLibraryKey", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						documentFolder1.getAssetLibraryKey(),
+						documentFolder2.getAssetLibraryKey())) {
 
 					return false;
 				}
@@ -2164,6 +2185,14 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("assetLibraryKey")) {
+			sb.append("'");
+			sb.append(String.valueOf(documentFolder.getAssetLibraryKey()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("creator")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2335,6 +2364,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	protected DocumentFolder randomDocumentFolder() throws Exception {
 		return new DocumentFolder() {
 			{
+				assetLibraryKey = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(

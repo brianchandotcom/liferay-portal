@@ -685,6 +685,11 @@ public abstract class BaseStructuredContentResourceImpl
 				structuredContent.getActions());
 		}
 
+		if (structuredContent.getAssetLibraryKey() != null) {
+			existingStructuredContent.setAssetLibraryKey(
+				structuredContent.getAssetLibraryKey());
+		}
+
 		if (structuredContent.getAvailableLanguages() != null) {
 			existingStructuredContent.setAvailableLanguages(
 				structuredContent.getAvailableLanguages());

@@ -189,6 +189,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_INFO</td>
+	<td>//div[contains(@class,'questions-container')]//span[contains(.,'${key_resultsInfo}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_QUESTION_FIELD</td>
 	<td>//div[contains(@class,'questions')]//input[contains(@placeholder,'Search')]</td>
 	<td></td>

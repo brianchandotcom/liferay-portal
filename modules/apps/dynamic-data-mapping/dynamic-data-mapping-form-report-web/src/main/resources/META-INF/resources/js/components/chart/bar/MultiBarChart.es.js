@@ -25,6 +25,7 @@ import {
 } from 'recharts';
 
 import colors, {NAMED_COLORS} from '../../../utils/colors.es';
+import {getColumnLabel} from '../../../utils/data.es';
 import ellipsize from '../../../utils/ellipsize.es';
 import TooltipContent from '../TooltipContent.es';
 import CustomizedAxisTick from './CustomizedAxisTick.es';
@@ -34,10 +35,6 @@ const {blueDark, gray} = NAMED_COLORS;
 export default ({data, field, height, structure, width}) => {
 	const [activeIndex, setActiveIndex] = useState(null);
 
-	const getColumnLabel = (column) => {
-		return field.columns[column] ? field.columns[column].value : undefined;
-	};
-
 	const getRowLabel = (row) => {
 		return field.rows[row] ? field.rows[row].value : undefined;
 	};
@@ -45,7 +42,7 @@ export default ({data, field, height, structure, width}) => {
 	const processStructure = ({columns, rows}) => {
 		return {
 			columns: columns
-				.filter((column) => getColumnLabel(column))
+				.filter((column) => getColumnLabel(column, field))
 				.sort(
 					(column1, column2) =>
 						field.columns[column1].index -
@@ -76,12 +73,13 @@ export default ({data, field, height, structure, width}) => {
 		const processedData = [];
 
 		rows.map((row) => {
-			const newData = {name: getRowLabel(row)};
+			const newData = {
+				label: getRowLabel(row),
+				name: row,
+			};
 
 			columns.map((column) => {
-				newData[getColumnLabel(column)] = data[row][column]
-					? data[row][column]
-					: 0;
+				newData[column] = data[row][column] ? data[row][column] : 0;
 			});
 			processedData.push(newData);
 		});
@@ -96,18 +94,26 @@ export default ({data, field, height, structure, width}) => {
 
 		return (
 			<ul className="bar-legend">
-				{payload.map((entry, index) => (
-					<li key={`item-${index}`}>
-						<svg height="12" width="12">
-							<rect fill={entry.color} height="12" width="12" />
-						</svg>
-						<span>
-							{entry.value && entry.value.length > 44
-								? ellipsize(entry.value, 44)
-								: entry.value}
-						</span>
-					</li>
-				))}
+				{payload.map((entry, index) => {
+					const label = getColumnLabel(entry.value, field);
+
+					return (
+						<li key={`item-${index}`}>
+							<svg height="12" width="12">
+								<rect
+									fill={entry.color}
+									height="12"
+									width="12"
+								/>
+							</svg>
+							<span>
+								{label && label.length > 44
+									? ellipsize(label, 44)
+									: label}
+							</span>
+						</li>
+					);
+				})}
 			</ul>
 		);
 	};
@@ -126,7 +132,7 @@ export default ({data, field, height, structure, width}) => {
 			>
 				<XAxis
 					axisLine={{stroke: blueDark}}
-					dataKey="name"
+					dataKey="label"
 					interval={0}
 					tick={
 						<CustomizedAxisTick
@@ -143,14 +149,16 @@ export default ({data, field, height, structure, width}) => {
 				/>
 
 				<Tooltip
-					content={<TooltipContent roundBullet={false} />}
+					content={
+						<TooltipContent field={field} roundBullet={false} />
+					}
 					cursor={{fill: 'transparent'}}
 				/>
 
 				{columns.map((row, index) => {
 					return (
 						<Bar
-							dataKey={getColumnLabel(row)}
+							dataKey={row}
 							fill={colors(index)}
 							key={`bar-${index}`}
 							onMouseOut={handleOnMouseOut}

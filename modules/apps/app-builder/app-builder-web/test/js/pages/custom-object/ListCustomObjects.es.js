@@ -23,9 +23,21 @@ import * as toast from '../../../../src/main/resources/META-INF/resources/js/uti
 import AppContextProviderWrapper from '../../AppContextProviderWrapper.es';
 import {RESPONSES} from '../../constants.es';
 
+const mockFetch = fetch;
+
+jest.mock('frontend-js-web', () => ({
+	createResourceURL: jest.fn(() => 'http://resource_url?'),
+	debounce: jest.fn().mockResolvedValue(),
+	fetch: (...args) => mockFetch(...args),
+}));
+
 describe('ListCustomObjects', () => {
-	let spySuccessToast;
-	let spyFromNow;
+	const appContext = {
+		basePortletURL: 'portlet_url',
+		baseResourceURL: 'resource_url',
+		namespace: 'listCustomObjects',
+	};
+	let spySuccessToast, spyFromNow;
 
 	beforeEach(() => {
 		jest.useFakeTimers();
@@ -50,9 +62,11 @@ describe('ListCustomObjects', () => {
 	it('renders', async () => {
 		fetch.mockResponseOnce(JSON.stringify(RESPONSES.ONE_ITEM));
 
-		const {asFragment} = render(<ListCustomObjects />, {
-			wrapper: AppContextProviderWrapper,
-		});
+		const {asFragment} = render(
+			<AppContextProviderWrapper appContext={appContext}>
+				<ListCustomObjects />
+			</AppContextProviderWrapper>
+		);
 
 		await waitForElementToBeRemoved(() =>
 			document.querySelector('span.loading-animation')
@@ -117,9 +131,11 @@ describe('ListCustomObjects', () => {
 			.mockResponseOnce(JSON.stringify(RESPONSES.NO_ITEMS))
 			.mockResponseOnce(JSON.stringify({}));
 
-		const {container, queryAllByText} = render(<ListCustomObjects />, {
-			wrapper: AppContextProviderWrapper,
-		});
+		const {container, queryAllByText} = render(
+			<AppContextProviderWrapper appContext={appContext}>
+				<ListCustomObjects />
+			</AppContextProviderWrapper>
+		);
 
 		await waitForElementToBeRemoved(() =>
 			document.querySelector('span.loading-animation')
@@ -255,9 +271,11 @@ describe('ListCustomObjects', () => {
 			.mockResponseOnce(JSON.stringify(permissionResponse))
 			.mockResponse(JSON.stringify({}));
 
-		const {queryAllByText, queryByText} = render(<ListCustomObjects />, {
-			wrapper: AppContextProviderWrapper,
-		});
+		const {queryAllByText, queryByText} = render(
+			<AppContextProviderWrapper appContext={appContext}>
+				<ListCustomObjects />
+			</AppContextProviderWrapper>
+		);
 
 		await waitForElementToBeRemoved(() =>
 			document.querySelector('span.loading-animation')
@@ -310,11 +328,14 @@ describe('ListCustomObjects', () => {
 
 		const history = createMemoryHistory();
 
-		const {baseElement} = render(<ListCustomObjects />, {
-			wrapper: (props) => (
-				<AppContextProviderWrapper history={history} {...props} />
-			),
-		});
+		const {baseElement} = render(
+			<AppContextProviderWrapper
+				appContext={appContext}
+				history={history}
+			>
+				<ListCustomObjects />
+			</AppContextProviderWrapper>
+		);
 
 		expect(history.length).toBe(1);
 		expect(history.location.pathname).toBe('/');

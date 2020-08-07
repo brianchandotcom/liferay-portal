@@ -17,7 +17,6 @@ package com.liferay.portal.search.tuning.synonyms.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
 
@@ -42,7 +41,7 @@ public class SynonymsDisplayContext {
 		return _searchContainer;
 	}
 
-	public boolean isDisabledManagementBar() throws PortalException {
+	public boolean isDisabledManagementBar() {
 		return _disabledManagementBar;
 	}
 

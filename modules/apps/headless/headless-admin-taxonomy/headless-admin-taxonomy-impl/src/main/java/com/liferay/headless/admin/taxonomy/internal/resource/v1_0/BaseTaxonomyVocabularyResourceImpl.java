@@ -389,6 +389,11 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 				taxonomyVocabulary.getActions());
 		}
 
+		if (taxonomyVocabulary.getAssetLibraryKey() != null) {
+			existingTaxonomyVocabulary.setAssetLibraryKey(
+				taxonomyVocabulary.getAssetLibraryKey());
+		}
+
 		if (taxonomyVocabulary.getAvailableLanguages() != null) {
 			existingTaxonomyVocabulary.setAvailableLanguages(
 				taxonomyVocabulary.getAvailableLanguages());

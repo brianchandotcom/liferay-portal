@@ -486,6 +486,11 @@ public abstract class BaseStructuredContentFolderResourceImpl
 				structuredContentFolder.getActions());
 		}
 
+		if (structuredContentFolder.getAssetLibraryKey() != null) {
+			existingStructuredContentFolder.setAssetLibraryKey(
+				structuredContentFolder.getAssetLibraryKey());
+		}
+
 		if (structuredContentFolder.getDateCreated() != null) {
 			existingStructuredContentFolder.setDateCreated(
 				structuredContentFolder.getDateCreated());

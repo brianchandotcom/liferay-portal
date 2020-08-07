@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 
-import java.util.AbstractMap;
-import java.util.AbstractSet;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -41,9 +39,8 @@ import java.util.regex.Pattern;
  *
  * @author Matthew Tambara
  */
-public class Properties extends AbstractMap<String, String> {
+public class Properties {
 
-	@Override
 	public void clear() {
 		for (Layout layout : _layoutMap.values()) {
 			layout.clearValue();
@@ -52,21 +49,8 @@ public class Properties extends AbstractMap<String, String> {
 		_storage.clear();
 	}
 
-	@Override
-	public Set<Entry<String, String>> entrySet() {
-		return new AbstractSet<Entry<String, String>>() {
-
-			@Override
-			public Iterator<Entry<String, String>> iterator() {
-				return new KeyIterator();
-			}
-
-			@Override
-			public int size() {
-				return _storage.size();
-			}
-
-		};
+	public String get(String key) {
+		return _storage.get(key);
 	}
 
 	public List<String> getComments(String key) {
@@ -85,6 +69,10 @@ public class Properties extends AbstractMap<String, String> {
 
 	public boolean isTyped() {
 		return _typed;
+	}
+
+	public Set<String> keySet() {
+		return _storage.keySet();
 	}
 
 	public void loadLayout(Reader reader) throws IOException {
@@ -123,7 +111,7 @@ public class Properties extends AbstractMap<String, String> {
 		if ((typed == null) || !typed) {
 			_typed = false;
 
-			for (Entry<String, String> entry : _storage.entrySet()) {
+			for (Map.Entry<String, String> entry : _storage.entrySet()) {
 				entry.setValue(_unescapeJava(entry.getValue()));
 			}
 		}
@@ -202,7 +190,6 @@ public class Properties extends AbstractMap<String, String> {
 		return _storage.put(key, property[1]);
 	}
 
-	@Override
 	public String put(String key, String value) {
 		String old = _storage.put(key, value);
 
@@ -217,7 +204,6 @@ public class Properties extends AbstractMap<String, String> {
 		return old;
 	}
 
-	@Override
 	public String remove(Object key) {
 		Layout layout = _layoutMap.get(key);
 
@@ -238,6 +224,10 @@ public class Properties extends AbstractMap<String, String> {
 
 	public void setTyped(boolean typed) {
 		_typed = typed;
+	}
+
+	public int size() {
+		return _storage.size();
 	}
 
 	public static class PropertiesReader extends BufferedReader {
@@ -533,7 +523,7 @@ public class Properties extends AbstractMap<String, String> {
 				}
 			}
 
-			for (Entry<String, String> entry : _storage.entrySet()) {
+			for (Map.Entry<String, String> entry : _storage.entrySet()) {
 				String key = entry.getKey();
 
 				String value = entry.getValue();
@@ -873,10 +863,10 @@ public class Properties extends AbstractMap<String, String> {
 
 	}
 
-	private class KeyIterator implements Iterator<Entry<String, String>> {
+	private class KeyIterator implements Iterator<Map.Entry<String, String>> {
 
 		public KeyIterator() {
-			Set<Entry<String, String>> entries = _storage.entrySet();
+			Set<Map.Entry<String, String>> entries = _storage.entrySet();
 
 			_iterator = entries.iterator();
 		}
@@ -887,10 +877,10 @@ public class Properties extends AbstractMap<String, String> {
 		}
 
 		@Override
-		public Entry<String, String> next() {
-			final Entry<String, String> entry = _iterator.next();
+		public Map.Entry<String, String> next() {
+			final Map.Entry<String, String> entry = _iterator.next();
 
-			return new Entry<String, String>() {
+			return new Map.Entry<String, String>() {
 
 				@Override
 				public String getKey() {
@@ -925,7 +915,7 @@ public class Properties extends AbstractMap<String, String> {
 			_iterator.remove();
 		}
 
-		private final Iterator<Entry<String, String>> _iterator;
+		private final Iterator<Map.Entry<String, String>> _iterator;
 
 	}
 

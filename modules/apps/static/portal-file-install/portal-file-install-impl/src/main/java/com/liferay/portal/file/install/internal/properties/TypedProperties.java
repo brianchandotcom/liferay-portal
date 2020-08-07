@@ -18,42 +18,19 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 
-import java.util.AbstractMap;
-import java.util.AbstractSet;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 /**
  * @author Matthew Tambara
  */
-public class TypedProperties extends AbstractMap<String, Object> {
+public class TypedProperties {
 
-	@Override
 	public void clear() {
 		_storage.clear();
 	}
 
-	@Override
-	public Set<Entry<String, Object>> entrySet() {
-		return new AbstractSet<Entry<String, Object>>() {
-
-			@Override
-			public Iterator<Entry<String, Object>> iterator() {
-				return new KeyIterator();
-			}
-
-			@Override
-			public int size() {
-				return _storage.size();
-			}
-
-		};
-	}
-
-	@Override
-	public Object get(Object key) {
+	public Object get(String key) {
 		String value = _storage.get(key);
 
 		if ((value != null) && _storage.isTyped()) {
@@ -63,11 +40,14 @@ public class TypedProperties extends AbstractMap<String, Object> {
 		return value;
 	}
 
+	public Set<String> keySet() {
+		return _storage.keySet();
+	}
+
 	public void load(Reader reader) throws IOException {
 		_storage.loadLayout(reader);
 	}
 
-	@Override
 	public Object put(String key, Object value) {
 		if ((value instanceof String) && !_storage.isTyped()) {
 			return _storage.put(key, (String)value);
@@ -84,7 +64,6 @@ public class TypedProperties extends AbstractMap<String, Object> {
 		return _convertFromString(old);
 	}
 
-	@Override
 	public Object remove(Object key) {
 		return _storage.remove(key);
 	}
@@ -115,9 +94,7 @@ public class TypedProperties extends AbstractMap<String, Object> {
 		if (!_storage.isTyped()) {
 			_storage.setTyped(true);
 
-			Set<String> keys = new HashSet<>(_storage.keySet());
-
-			for (String key : keys) {
+			for (String key : _storage.keySet()) {
 				String string = _convertToString(_storage.get(key));
 
 				_storage.put(
@@ -128,51 +105,5 @@ public class TypedProperties extends AbstractMap<String, Object> {
 	}
 
 	private final Properties _storage = new Properties();
-
-	private class KeyIterator implements Iterator<Entry<String, Object>> {
-
-		public KeyIterator() {
-			Set<String> entries = _storage.keySet();
-
-			_iterator = entries.iterator();
-		}
-
-		@Override
-		public boolean hasNext() {
-			return _iterator.hasNext();
-		}
-
-		@Override
-		public Entry<String, Object> next() {
-			String key = _iterator.next();
-
-			return new Entry<String, Object>() {
-
-				@Override
-				public String getKey() {
-					return key;
-				}
-
-				@Override
-				public Object getValue() {
-					return TypedProperties.this.get(key);
-				}
-
-				@Override
-				public Object setValue(Object value) {
-					return TypedProperties.this.put(key, value);
-				}
-
-			};
-		}
-
-		@Override
-		public void remove() {
-			_iterator.remove();
-		}
-
-		private final Iterator<String> _iterator;
-
-	}
 
 }

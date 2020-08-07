@@ -21,9 +21,9 @@ CommerceAccountDisplayContext commerceAccountDisplayContext = (CommerceAccountDi
 
 CommerceAccount commerceAccount = commerceAccountDisplayContext.getCurrentCommerceAccount();
 
-Map<String, String> contextParams = new HashMap<>();
-
-contextParams.put("commerceAccountId", String.valueOf(commerceAccount.getCommerceAccountId()));
+Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+	"commerceAccountId", String.valueOf(commerceAccount.getCommerceAccountId())
+).build();
 %>
 
 <commerce-ui:dataset-display
@@ -31,7 +31,7 @@ contextParams.put("commerceAccountId", String.valueOf(commerceAccount.getCommerc
 	dataProviderKey="<%= CommerceAccountOrganizationClayDataSetDataSetDisplayView.NAME %>"
 	id="<%= CommerceAccountOrganizationClayDataSetDataSetDisplayView.NAME %>"
 	itemsPerPage="<%= 10 %>"
-	namespace="<%= renderResponse.getNamespace() %>"
+	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"
 	portletURL="<%= commerceAccountDisplayContext.getPortletURL() %>"
 	style="stacked"
@@ -39,7 +39,7 @@ contextParams.put("commerceAccountId", String.valueOf(commerceAccount.getCommerc
 
 <c:if test="<%= commerceAccountDisplayContext.hasCommerceAccountModelPermissions(CommerceAccountActionKeys.MANAGE_ORGANIZATIONS) %>">
 	<div class="commerce-cta is-visible">
-		<aui:button cssClass="btn-lg btn-primary js-invite-user" onClick='<%= renderResponse.getNamespace() + "openAddOrganizationsModal();" %>' value="add-organizations" />
+		<aui:button cssClass="btn-lg btn-primary js-invite-user" onClick='<%= liferayPortletResponse.getNamespace() + "openAddOrganizationsModal();" %>' value="add-organizations" />
 	</div>
 
 	<commerce-ui:add-organizations-modal

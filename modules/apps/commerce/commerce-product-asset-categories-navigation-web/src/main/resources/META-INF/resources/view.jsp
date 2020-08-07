@@ -41,7 +41,7 @@ if (assetVocabulary != null) {
 	<liferay-ui:panel-container
 		cssClass="taglib-asset-categories-navigation"
 		extended="<%= true %>"
-		id='<%= renderResponse.getNamespace() + "taglibAssetCategoriesNavigationPanel" %>'
+		id='<%= liferayPortletResponse.getNamespace() + "taglibAssetCategoriesNavigationPanel" %>'
 		persistState="<%= true %>"
 	>
 		<liferay-ui:panel

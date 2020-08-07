@@ -22,6 +22,7 @@ import com.liferay.commerce.discount.service.CommerceDiscountRelService;
 import com.liferay.commerce.discount.service.CommerceDiscountService;
 import com.liferay.commerce.discount.target.CommerceDiscountTargetRegistry;
 import com.liferay.commerce.discount.web.internal.display.context.CommerceDiscountRelDisplayContext;
+import com.liferay.commerce.discount.web.internal.servlet.taglib.ui.constants.CommerceDiscountScreenNavigationConstants;
 import com.liferay.commerce.percentage.PercentageFormatter;
 import com.liferay.commerce.pricing.service.CommercePricingClassService;
 import com.liferay.commerce.product.service.CPDefinitionService;

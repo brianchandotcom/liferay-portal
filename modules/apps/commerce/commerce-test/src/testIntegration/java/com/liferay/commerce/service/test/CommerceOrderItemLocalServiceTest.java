@@ -70,6 +70,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -1189,11 +1190,11 @@ public class CommerceOrderItemLocalServiceTest {
 				_commerceAccount.getCommerceAccountId(),
 				_commerceCurrency.getCommerceCurrencyId());
 
-		int nonBundleQuantity = 10;
+		int nonbundleQuantity = 10;
 
 		_commerceOrderItemLocalService.addCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), optionSKU1.getCPInstanceId(),
-			nonBundleQuantity, 0, null, _commerceContext, _serviceContext);
+			nonbundleQuantity, 0, null, _commerceContext, _serviceContext);
 
 		BigDecimal option1Price = new BigDecimal("100");
 		BigDecimal option2Price = new BigDecimal("200");
@@ -1271,7 +1272,7 @@ public class CommerceOrderItemLocalServiceTest {
 		Assert.assertEquals(
 			commerceOrderItems.toString(), 3, commerceOrderItems.size());
 
-		CommerceOrderItem nonBundleOrderItem = _getOrderItemByCPInstanceId(
+		CommerceOrderItem nonbundleOrderItem = _getOrderItemByCPInstanceId(
 			optionSKU1.getCPInstanceId(), false, commerceOrderItems);
 
 		CommerceOrderItem bundleOrderItem = _getOrderItemByCPInstanceId(
@@ -1289,7 +1290,7 @@ public class CommerceOrderItemLocalServiceTest {
 		Assert.assertEquals(option1Quantity, optionOrderItem.getQuantity());
 
 		Assert.assertEquals(
-			nonBundleQuantity, nonBundleOrderItem.getQuantity());
+			nonbundleQuantity, nonbundleOrderItem.getQuantity());
 
 		BigDecimal expectedOrderFinalPrice = option1Price;
 
@@ -1303,13 +1304,13 @@ public class CommerceOrderItemLocalServiceTest {
 		expectedOrderFinalPrice = expectedOrderFinalPrice.add(
 			bundleOrderItem.getFinalPrice());
 
-		BigDecimal nonBundleFinalPrice = optionSKU1.getPrice();
+		BigDecimal nonbundleFinalPrice = optionSKU1.getPrice();
 
-		nonBundleFinalPrice = nonBundleFinalPrice.multiply(
-			BigDecimal.valueOf(nonBundleQuantity));
+		nonbundleFinalPrice = nonbundleFinalPrice.multiply(
+			BigDecimal.valueOf(nonbundleQuantity));
 
 		expectedOrderFinalPrice = expectedOrderFinalPrice.add(
-			nonBundleFinalPrice);
+			nonbundleFinalPrice);
 
 		CommerceOrder retrievedOrder =
 			_commerceOrderLocalService.getCommerceOrder(
@@ -1415,7 +1416,9 @@ public class CommerceOrderItemLocalServiceTest {
 				String cpDefinitionOptionValueRelKey =
 					cpDefinitionOptionValueRel.getKey();
 
-				if (cpDefinitionOptionValueRelKey.equalsIgnoreCase(key)) {
+				if (StringUtil.equalsIgnoreCase(
+						cpDefinitionOptionValueRelKey, key)) {
+
 					cpInstance = bundleCPInstance;
 				}
 			}

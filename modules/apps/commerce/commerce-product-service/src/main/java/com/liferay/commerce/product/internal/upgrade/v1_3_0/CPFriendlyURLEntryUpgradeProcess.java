@@ -16,10 +16,10 @@ package com.liferay.commerce.product.internal.upgrade.v1_3_0;
 
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CProduct;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.petra.string.StringBundler;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -52,7 +52,7 @@ public class CPFriendlyURLEntryUpgradeProcess extends UpgradeProcess {
 			"select distinct classPK, CProductId from CPFriendlyURLEntry ",
 			"inner join CPDefinition on CPDefinition.CPDefinitionId = ",
 			"CPFriendlyURLEntry.classPK where classNameId = ",
-			String.valueOf(cpDefinitionClassNameId));
+			cpDefinitionClassNameId);
 
 		try (PreparedStatement ps =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(

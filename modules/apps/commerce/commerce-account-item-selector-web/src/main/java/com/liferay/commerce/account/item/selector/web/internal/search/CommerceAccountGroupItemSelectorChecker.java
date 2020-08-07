@@ -38,16 +38,17 @@ public class CommerceAccountGroupItemSelectorChecker
 	}
 
 	@Override
-	public boolean isChecked(Object obj) {
-		CommerceAccountGroup commerceAccountGroup = (CommerceAccountGroup)obj;
+	public boolean isChecked(Object object) {
+		CommerceAccountGroup commerceAccountGroup =
+			(CommerceAccountGroup)object;
 
 		return _checkedCommerceAccountGroupIds.contains(
 			commerceAccountGroup.getCommerceAccountGroupId());
 	}
 
 	@Override
-	public boolean isDisabled(Object obj) {
-		return isChecked(obj);
+	public boolean isDisabled(Object object) {
+		return isChecked(object);
 	}
 
 	private final Set<Long> _checkedCommerceAccountGroupIds;

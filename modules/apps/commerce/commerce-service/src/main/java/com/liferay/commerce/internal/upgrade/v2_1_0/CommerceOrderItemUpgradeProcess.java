@@ -21,7 +21,6 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -56,19 +55,12 @@ public class CommerceOrderItemUpgradeProcess
 
 		_addIndexes(CommerceOrderItemModelImpl.TABLE_NAME);
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		Statement s = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"update CommerceOrderItem set CProductId = ? where " +
 					"CPInstanceId = ?");
-
-			s = connection.createStatement();
-
-			rs = s.executeQuery(
-				"select distinct CPInstanceId from CommerceOrderItem");
+			Statement s = connection.createStatement();
+			ResultSet rs = s.executeQuery(
+				"select distinct CPInstanceId from CommerceOrderItem")) {
 
 			while (rs.next()) {
 				long cpInstanceId = rs.getLong("CPInstanceId");
@@ -86,10 +78,6 @@ public class CommerceOrderItemUpgradeProcess
 
 				ps.execute();
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps);
-			DataAccess.cleanUp(s, rs);
 		}
 	}
 
@@ -124,12 +112,10 @@ public class CommerceOrderItemUpgradeProcess
 	private boolean _tableHasIndex(String tableName, String indexName)
 		throws Exception {
 
-		ResultSet rs = null;
+		DatabaseMetaData metadata = connection.getMetaData();
 
-		try {
-			DatabaseMetaData metadata = connection.getMetaData();
-
-			rs = metadata.getIndexInfo(null, null, tableName, false, false);
+		try (ResultSet rs = metadata.getIndexInfo(
+				null, null, tableName, false, false)) {
 
 			while (rs.next()) {
 				String curIndexName = rs.getString("index_name");
@@ -138,9 +124,6 @@ public class CommerceOrderItemUpgradeProcess
 					return true;
 				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(rs);
 		}
 
 		return false;

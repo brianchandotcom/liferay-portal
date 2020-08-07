@@ -19,7 +19,7 @@
 <commerce-ui:modal-content
 	title='<%= LanguageUtil.get(request, "create-new-product") %>'
 >
-	<aui:form cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "apiSubmit();" %>'>
+	<aui:form cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "apiSubmit();" %>'>
 		<aui:input autoFocus="<%= true %>" name="name" required="<%= true %>" type="text" />
 
 		<label class="control-label" for="catalogId"><%= LanguageUtil.get(request, "catalog") %></label>
@@ -82,7 +82,7 @@
 		autocomplete.default('autocomplete', 'autocomplete-root', {
 			apiUrl: '/o/headless-commerce-admin-catalog/v1.0/catalogs',
 			inputId: '<portlet:namespace />catalogId',
-			inputName: '<%= renderResponse.getNamespace() %>catalogId',
+			inputName: '<%= liferayPortletResponse.getNamespace() %>catalogId',
 			itemsKey: 'id',
 			itemsLabel: 'name',
 			onValueUpdated: function(value, catalogData) {

@@ -70,7 +70,7 @@ portletDisplay.setURLBack(redirect);
 			formId="fm"
 			id="<%= CommerceShipmentDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_WAREHOUSE_ITEM %>"
 			itemsPerPage="<%= 10 %>"
-			namespace="<%= renderResponse.getNamespace() %>"
+			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"
 			portletURL="<%= currentURLObj %>"
 			showManagementBar="<%= false %>"

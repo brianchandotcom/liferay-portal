@@ -428,17 +428,17 @@ public class CommerceOrderEngineTest {
 		Assert.assertEquals(
 			_commerceOrder.getOrderStatus(), OpenCommerceOrderStatusImpl.KEY);
 
-		User nonAdminUser = UserTestUtil.addUser();
+		User nonadminUser = UserTestUtil.addUser();
 
-		PrincipalThreadLocal.setName(nonAdminUser.getUserId());
+		PrincipalThreadLocal.setName(nonadminUser.getUserId());
 
 		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(nonAdminUser);
+			PermissionCheckerFactoryUtil.create(nonadminUser);
 
 		PermissionThreadLocal.setPermissionChecker(permissionChecker);
 
 		_commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
-			_commerceOrder, nonAdminUser.getUserId());
+			_commerceOrder, nonadminUser.getUserId());
 	}
 
 	@Test(expected = CommerceOrderStatusException.class)

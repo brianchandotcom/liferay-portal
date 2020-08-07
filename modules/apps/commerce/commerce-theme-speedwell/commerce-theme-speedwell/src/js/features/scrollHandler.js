@@ -14,7 +14,7 @@
 
 Liferay.component(
 	'SpeedwellScrollHandler',
-	(function() {
+	(function () {
 		const SCROLL_EVENT = 'scroll',
 			callbackQueueOnScroll = {};
 
@@ -49,7 +49,7 @@ Liferay.component(
 				ticking = true;
 			}
 
-			Object.keys(callbackQueueOnScroll).forEach(callbackName => {
+			Object.keys(callbackQueueOnScroll).forEach((callbackName) => {
 				callbackQueueOnScroll[callbackName](scrollThreshold);
 			});
 		}
@@ -63,7 +63,7 @@ Liferay.component(
 
 			unregisterCallback(callback) {
 				delete callbackQueueOnScroll[callback.name];
-			}
+			},
 		};
 	})(),
 	{destroyOnNavigate: true}

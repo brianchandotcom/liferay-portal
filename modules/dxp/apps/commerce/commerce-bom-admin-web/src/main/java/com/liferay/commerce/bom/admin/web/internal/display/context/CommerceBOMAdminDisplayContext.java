@@ -16,10 +16,10 @@ package com.liferay.commerce.bom.admin.web.internal.display.context;
 
 import com.liferay.commerce.application.item.selector.criterion.CommerceApplicationModelItemSelectorCriterion;
 import com.liferay.commerce.bom.admin.web.internal.display.context.util.CommerceBOMAdminRequestHelper;
+import com.liferay.commerce.bom.constants.CommerceBOMFolderConstants;
 import com.liferay.commerce.bom.model.CommerceBOMDefinition;
 import com.liferay.commerce.bom.model.CommerceBOMFolder;
 import com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel;
-import com.liferay.commerce.bom.model.CommerceBOMFolderConstants;
 import com.liferay.commerce.bom.search.CommerceBOMSearcher;
 import com.liferay.commerce.bom.service.CommerceBOMDefinitionService;
 import com.liferay.commerce.bom.service.CommerceBOMFolderApplicationRelService;
@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -58,10 +59,8 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
@@ -115,16 +114,15 @@ public class CommerceBOMAdminDisplayContext {
 			String.valueOf(
 				CommerceBOMFolderConstants.DEFAULT_COMMERCE_BOM_FOLDER_ID));
 
-		Map<String, Object> homeData = new HashMap<>();
-
-		homeData.put(
-			"commerce-bom-folder-id",
-			CommerceBOMFolderConstants.DEFAULT_COMMERCE_BOM_FOLDER_ID);
-		homeData.put("direction-right", Boolean.TRUE.toString());
-
 		PortalUtil.addPortletBreadcrumbEntry(
 			_commerceBOMAdminRequestHelper.getRequest(),
-			themeDisplay.translate("home"), portletURL.toString(), homeData);
+			themeDisplay.translate("home"), portletURL.toString(),
+			HashMapBuilder.<String, Object>put(
+				"commerce-bom-folder-id",
+				CommerceBOMFolderConstants.DEFAULT_COMMERCE_BOM_FOLDER_ID
+			).put(
+				"direction-right", Boolean.TRUE.toString()
+			).build());
 
 		CommerceBOMFolder commerceBOMFolder = getCommerceBOMFolder();
 
@@ -145,17 +143,15 @@ public class CommerceBOMAdminDisplayContext {
 				String.valueOf(
 					ancestorCommerceBOMFolder.getCommerceBOMFolderId()));
 
-			Map<String, Object> data = new HashMap<>();
-
-			data.put(
-				"commerce-bom-folder-id",
-				ancestorCommerceBOMFolder.getCommerceBOMFolderId());
-			data.put("direction-right", Boolean.TRUE.toString());
-
 			PortalUtil.addPortletBreadcrumbEntry(
 				_commerceBOMAdminRequestHelper.getRequest(),
 				ancestorCommerceBOMFolder.getName(), portletURL.toString(),
-				data);
+				HashMapBuilder.<String, Object>put(
+					"commerce-bom-folder-id",
+					ancestorCommerceBOMFolder.getCommerceBOMFolderId()
+				).put(
+					"direction-right", Boolean.TRUE.toString()
+				).build());
 		}
 
 		portletURL.setParameter(
@@ -168,17 +164,15 @@ public class CommerceBOMAdminDisplayContext {
 			CommerceBOMFolder unescapedCommerceBOMFolder =
 				commerceBOMFolder.toUnescapedModel();
 
-			Map<String, Object> data = new HashMap<>();
-
-			data.put(
-				"commerce-bom-folder-id",
-				commerceBOMFolder.getCommerceBOMFolderId());
-			data.put("direction-right", Boolean.TRUE.toString());
-
 			PortalUtil.addPortletBreadcrumbEntry(
 				_commerceBOMAdminRequestHelper.getRequest(),
 				unescapedCommerceBOMFolder.getName(), portletURL.toString(),
-				data);
+				HashMapBuilder.<String, Object>put(
+					"commerce-bom-folder-id",
+					commerceBOMFolder.getCommerceBOMFolderId()
+				).put(
+					"direction-right", Boolean.TRUE.toString()
+				).build());
 		}
 	}
 
@@ -423,7 +417,7 @@ public class CommerceBOMAdminDisplayContext {
 		return portletURL;
 	}
 
-	public SearchContainer getSearchContainer() throws PortalException {
+	public SearchContainer<Object> getSearchContainer() throws PortalException {
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}
@@ -457,7 +451,7 @@ public class CommerceBOMAdminDisplayContext {
 
 		_searchContainer.setTotal(total);
 
-		List results = new ArrayList();
+		List<Object> results = new ArrayList<>();
 
 		Document[] documents = hits.getDocs();
 
@@ -521,14 +515,16 @@ public class CommerceBOMAdminDisplayContext {
 
 		SearchContext searchContext = new SearchContext();
 
-		Map<String, Serializable> attributes = new HashMap<>();
-
-		attributes.put(Field.NAME, keywords);
-		attributes.put("commerceBOMFolderId", getCommerceBOMFolderId());
-		attributes.put("params", params);
-		attributes.put("parentCommerceBOMFolderId", getCommerceBOMFolderId());
-
-		searchContext.setAttributes(attributes);
+		searchContext.setAttributes(
+			HashMapBuilder.<String, Serializable>put(
+				Field.NAME, keywords
+			).put(
+				"commerceBOMFolderId", getCommerceBOMFolderId()
+			).put(
+				"params", params
+			).put(
+				"parentCommerceBOMFolderId", getCommerceBOMFolderId()
+			).build());
 
 		searchContext.setCompanyId(companyId);
 		searchContext.setStart(start);
@@ -590,7 +586,7 @@ public class CommerceBOMAdminDisplayContext {
 	private final CommerceBOMFolderService _commerceBOMFolderService;
 	private final ItemSelector _itemSelector;
 	private String _keywords;
-	private SearchContainer _searchContainer;
+	private SearchContainer<Object> _searchContainer;
 	private final UserFileUploadsConfiguration _userFileUploadsConfiguration;
 
 }

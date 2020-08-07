@@ -102,15 +102,14 @@ public class CommerceDataSetDataProviderResource {
 			int totalItems = commerceDataProvider.countItems(
 				httpServletRequest, filterFactory.create(httpServletRequest));
 
-			String json = _clayDataSetDataJSONBuilder.build(
-				groupId, tableName, items, totalItems, httpServletRequest);
-
 			return Response.ok(
-				json, MediaType.APPLICATION_JSON
+				_clayDataSetDataJSONBuilder.build(
+					groupId, tableName, items, totalItems, httpServletRequest),
+				MediaType.APPLICATION_JSON
 			).build();
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return Response.status(

@@ -105,8 +105,8 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 				selectSite(actionRequest);
 			}
 		}
-		catch (PrincipalException pe) {
-			SessionErrors.add(actionRequest, pe.getClass());
+		catch (PrincipalException principalException) {
+			SessionErrors.add(actionRequest, principalException.getClass());
 
 			actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 		}

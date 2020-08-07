@@ -75,7 +75,7 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 				</div>
 
 				<div class="align-items-end col-auto d-flex">
-					<button class="btn btn-monospaced btn-secondary form-submitter" id="remove-sku-button" onclick="<%= renderResponse.getNamespace() + "removeSku();" %>" type="button">
+					<button class="btn btn-monospaced btn-secondary form-submitter" id="remove-sku-button" onclick="<%= liferayPortletResponse.getNamespace() + "removeSku();" %>" type="button">
 						<clay:icon
 							symbol="trash"
 						/>
@@ -99,7 +99,7 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 		<aui:script require="commerce-frontend-js/components/autocomplete/entry as autocomplete, commerce-frontend-js/utilities/eventsDefinitions as events">
 			var deleteButton = document.getElementById('remove-sku-button');
 			var quantityInput = document.getElementById(
-				'<%= renderResponse.getNamespace() %>quantity'
+				'<%= liferayPortletResponse.getNamespace() %>quantity'
 			);
 
 			if (!quantityInput.value || quantityInput.value === '0') {
@@ -112,7 +112,7 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 				initialLabel: '<%= cpInstanceLabel %>',
 				initialValue: '<%= cpInstanceId %>',
 				inputId: 'skuId',
-				inputName: '<%= renderResponse.getNamespace() %>cpInstanceId',
+				inputName: '<%= liferayPortletResponse.getNamespace() %>cpInstanceId',
 				itemsKey: 'id',
 				itemsLabel: 'sku',
 				onValueUpdated: function(value) {

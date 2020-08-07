@@ -12,7 +12,7 @@
  * details.
  */
 
-(function(w) {
+(function (w) {
 	var searchToggles = w.document.querySelectorAll('.js-toggle-search'),
 		HAS_SEARCH_CLASS = 'has-search',
 		IS_OPEN_CLASS = 'is-open',
@@ -26,8 +26,8 @@
 	if (searchBar) {
 		searchBarElement = w.document.querySelector(SEARCHBAR_SELECTOR);
 
-		searchBar.on('toggled', status => {
-			searchToggles.forEach(el => {
+		searchBar.on('toggled', (status) => {
+			searchToggles.forEach((el) => {
 				el.classList.toggle(IS_ACTIVE_CLASS, status);
 			});
 

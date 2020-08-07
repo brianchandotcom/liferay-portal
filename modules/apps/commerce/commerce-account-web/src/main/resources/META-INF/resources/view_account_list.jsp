@@ -29,7 +29,7 @@ request.setAttribute("view.jsp-filterPerAccount", false);
 		dataProviderKey="<%= CommerceAccountClayDataSetDataSetDisplayView.NAME %>"
 		id="<%= CommerceAccountClayDataSetDataSetDisplayView.NAME %>"
 		itemsPerPage="<%= 10 %>"
-		namespace="<%= renderResponse.getNamespace() %>"
+		namespace="<%= liferayPortletResponse.getNamespace() %>"
 		pageNumber="<%= 1 %>"
 		portletURL="<%= commerceAccountDisplayContext.getPortletURL() %>"
 		style="stacked"
@@ -38,7 +38,7 @@ request.setAttribute("view.jsp-filterPerAccount", false);
 
 <c:if test="<%= commerceAccountDisplayContext.hasAddAccountPermissions() %>">
 	<div class="commerce-cta is-visible">
-		<aui:button cssClass="btn-lg btn-primary js-invite-user" onClick='<%= renderResponse.getNamespace() + "openAddAccountModal();" %>' value="add-account" />
+		<aui:button cssClass="btn-lg btn-primary js-invite-user" onClick='<%= liferayPortletResponse.getNamespace() + "openAddAccountModal();" %>' value="add-account" />
 	</div>
 
 	<portlet:actionURL name="editCommerceAccount" var="editCommerceAccountActionURL" />

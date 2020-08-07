@@ -14,14 +14,11 @@
 
 package com.liferay.commerce.discount.target;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.List;
 
 /**
  * @author Alessio Antonio Rendina
  */
-@ProviderType
 public interface CommerceDiscountTargetRegistry {
 
 	public CommerceDiscountTarget getCommerceDiscountTarget(String key);

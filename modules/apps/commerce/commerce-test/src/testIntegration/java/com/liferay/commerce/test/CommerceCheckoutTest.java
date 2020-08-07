@@ -85,7 +85,8 @@ public class CommerceCheckoutTest {
 	@ClassRule
 	@Rule
 	public static AggregateTestRule aggregateTestRule = new AggregateTestRule(
-		new LiferayIntegrationTestRule(), PermissionCheckerMethodTestRule.INSTANCE);
+		new LiferayIntegrationTestRule(),
+		PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -311,7 +312,7 @@ public class CommerceCheckoutTest {
 		List<CommerceOrderItem> commerceOrderItems =
 			commerceOrder.getCommerceOrderItems();
 
-		BigDecimal expectedSubTotal = BigDecimal.ZERO;
+		BigDecimal expectedSubtotal = BigDecimal.ZERO;
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
 			CPInstance cpInstance = commerceOrderItem.fetchCPInstance();
@@ -327,16 +328,16 @@ public class CommerceCheckoutTest {
 			BigDecimal totalItemPrice = price.multiply(
 				BigDecimal.valueOf(quantity));
 
-			expectedSubTotal = expectedSubTotal.add(totalItemPrice);
+			expectedSubtotal = expectedSubtotal.add(totalItemPrice);
 		}
 
-		BigDecimal actualSubTotal = commerceOrder.getSubtotal();
+		BigDecimal actualSubtotal = commerceOrder.getSubtotal();
 
 		Assert.assertEquals(
-			expectedSubTotal.doubleValue(), actualSubTotal.doubleValue(),
+			expectedSubtotal.doubleValue(), actualSubtotal.doubleValue(),
 			0.0001);
 
-		BigDecimal expectedTotal = expectedSubTotal.add(
+		BigDecimal expectedTotal = expectedSubtotal.add(
 			commerceOrder.getShippingAmount());
 
 		BigDecimal actualTotal = commerceOrder.getTotal();

@@ -42,10 +42,10 @@ contextParams.put("commerceShipmentId", String.valueOf(commerceShipment.getComme
 			bulkActions="<%= commerceShipmentDisplayContext.getShipmentItemBulkActions() %>"
 			contextParams="<%= contextParams %>"
 			dataProviderKey="<%= CommerceShipmentDataSetConstants.COMMERCE_DATA_SET_KEY_SHIPPABLE_ORDER_ITEMS %>"
-			formId='<%= renderResponse.getNamespace() + "fm" %>'
+			formId='<%= liferayPortletResponse.getNamespace() + "fm" %>'
 			id="<%= CommerceShipmentDataSetConstants.COMMERCE_DATA_SET_KEY_SHIPPABLE_ORDER_ITEMS %>"
 			itemsPerPage="<%= 10 %>"
-			namespace="<%= renderResponse.getNamespace() %>"
+			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"
 			portletURL="<%= currentURLObj %>"
 			selectedItemsKey="orderItemId"

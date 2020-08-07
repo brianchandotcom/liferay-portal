@@ -99,7 +99,7 @@ public class FixCommerceHealthStatusIssueMVCActionCommand
 		hideDefaultSuccessMessage(actionRequest);
 	}
 
-	protected void writeJSON(ActionResponse actionResponse, Object jsonObj)
+	protected void writeJSON(ActionResponse actionResponse, Object object)
 		throws IOException {
 
 		HttpServletResponse httpServletResponse =
@@ -107,7 +107,7 @@ public class FixCommerceHealthStatusIssueMVCActionCommand
 
 		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
-		ServletResponseUtil.write(httpServletResponse, jsonObj.toString());
+		ServletResponseUtil.write(httpServletResponse, object.toString());
 
 		httpServletResponse.flushBuffer();
 	}

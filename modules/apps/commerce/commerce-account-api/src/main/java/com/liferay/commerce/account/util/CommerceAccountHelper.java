@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.account.util;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -25,7 +23,6 @@ import javax.servlet.http.HttpServletRequest;
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
-@ProviderType
 public interface CommerceAccountHelper {
 
 	public int countUserCommerceAccounts(long userId, long channelGroupId)

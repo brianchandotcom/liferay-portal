@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.catalog.web.internal.frontend;
 
+import com.liferay.commerce.catalog.web.internal.constants.CommerceCatalogDataSetConstants;
 import com.liferay.commerce.catalog.web.internal.model.Catalog;
 import com.liferay.commerce.frontend.ClayMenuActionItem;
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetAction;
@@ -106,8 +107,8 @@ public class CommerceCatalogDataSetActionProvider
 
 				clayDataSetActions.add(permissionsClayDataSetAction);
 			}
-			catch (Exception e) {
-				throw new PortalException(e);
+			catch (Exception exception) {
+				throw new PortalException(exception);
 			}
 		}
 
@@ -199,8 +200,8 @@ public class CommerceCatalogDataSetActionProvider
 		try {
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 		}
-		catch (WindowStateException wse) {
-			throw new PortalException(wse);
+		catch (WindowStateException windowStateException) {
+			throw new PortalException(windowStateException);
 		}
 
 		return portletURL;

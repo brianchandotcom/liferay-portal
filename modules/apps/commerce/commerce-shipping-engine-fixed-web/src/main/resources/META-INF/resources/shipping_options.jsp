@@ -30,7 +30,7 @@ contextParams.put("commerceShippingMethodId", String.valueOf(commerceShippingFix
 	dataProviderKey="<%= CommerceShippingFixedOptionClayTable.NAME %>"
 	id="<%= CommerceShippingFixedOptionClayTable.NAME %>"
 	itemsPerPage="<%= 10 %>"
-	namespace="<%= renderResponse.getNamespace() %>"
+	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"
 	portletURL="<%= commerceShippingFixedOptionsDisplayContext.getPortletURL() %>"
 	showManagementBar="<%= true %>"

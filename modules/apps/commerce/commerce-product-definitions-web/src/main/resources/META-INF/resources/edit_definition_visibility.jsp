@@ -40,7 +40,7 @@ contextParams.put("cpDefinitionId", String.valueOf(cpDefinitionId));
 		bodyClasses="p-0"
 		collapsed="<%= !cpDefinition.isChannelFilterEnabled() %>"
 		collapseLabel='<%= LanguageUtil.get(request, "filter") %>'
-		collapseSwitchName='<%= renderResponse.getNamespace() + "channelFilterEnabled" %>'
+		collapseSwitchName='<%= liferayPortletResponse.getNamespace() + "channelFilterEnabled" %>'
 		title='<%= LanguageUtil.get(request, "channels") %>'
 	>
 		<commerce-ui:dataset-display
@@ -50,7 +50,7 @@ contextParams.put("cpDefinitionId", String.valueOf(cpDefinitionId));
 			formId="fm"
 			id="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_CHANNELS %>"
 			itemsPerPage="<%= 10 %>"
-			namespace="<%= renderResponse.getNamespace() %>"
+			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"
 			portletURL="<%= currentURLObj %>"
 		/>
@@ -60,7 +60,7 @@ contextParams.put("cpDefinitionId", String.valueOf(cpDefinitionId));
 		bodyClasses="p-0"
 		collapsed="<%= !cpDefinition.isAccountGroupFilterEnabled() %>"
 		collapseLabel='<%= LanguageUtil.get(request, "filter") %>'
-		collapseSwitchName='<%= renderResponse.getNamespace() + "accountGroupFilterEnabled" %>'
+		collapseSwitchName='<%= liferayPortletResponse.getNamespace() + "accountGroupFilterEnabled" %>'
 		title='<%= LanguageUtil.get(request, "account-groups") %>'
 	>
 		<commerce-ui:dataset-display
@@ -70,7 +70,7 @@ contextParams.put("cpDefinitionId", String.valueOf(cpDefinitionId));
 			formId="fm"
 			id="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_ACCOUNT_GROUPS %>"
 			itemsPerPage="<%= 10 %>"
-			namespace="<%= renderResponse.getNamespace() %>"
+			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"
 			portletURL="<%= currentURLObj %>"
 		/>

@@ -35,7 +35,7 @@ contextParams.put("commerceSubscriptionEntryId", String.valueOf(commerceSubscrip
 				dataProviderKey="<%= CommerceSubscriptionDataSetConstants.COMMERCE_DATA_SET_KEY_SUBSCRIPTION_SHIPMENTS %>"
 				id="<%= CommerceSubscriptionDataSetConstants.COMMERCE_DATA_SET_KEY_SUBSCRIPTION_SHIPMENTS %>"
 				itemsPerPage="<%= 10 %>"
-				namespace="<%= renderResponse.getNamespace() %>"
+				namespace="<%= liferayPortletResponse.getNamespace() %>"
 				pageNumber="<%= 1 %>"
 				portletURL="<%= commerceSubscriptionEntryDisplayContext.getPortletURL() %>"
 				showManagementBar="<%= false %>"

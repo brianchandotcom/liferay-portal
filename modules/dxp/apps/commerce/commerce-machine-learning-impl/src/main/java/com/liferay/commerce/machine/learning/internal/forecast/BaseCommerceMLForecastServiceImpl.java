@@ -177,7 +177,7 @@ public abstract class BaseCommerceMLForecastServiceImpl
 			commerceMLForecast.setTimestamp(
 				document.getDate(CommerceMLForecastField.TIMESTAMP));
 		}
-		catch (ParseException pe) {
+		catch (ParseException parseException) {
 		}
 
 		return commerceMLForecast;

@@ -68,16 +68,16 @@ public class EditCommerceAddressMVCRenderCommand implements MVCRenderCommand {
 
 			setCommerceAddressRequestAttribute(renderRequest);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchAddressException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchAddressException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/error.jsp";
 			}
 
-			throw new PortletException(e);
+			throw new PortletException(exception);
 		}
 
 		return "/edit_address.jsp";

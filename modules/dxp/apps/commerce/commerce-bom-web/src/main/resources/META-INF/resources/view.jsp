@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String carPartsFinderRootElementId = renderResponse.getNamespace() + "-car-parts-finder";
+String carPartsFinderRootElementId = liferayPortletResponse.getNamespace() + "-car-parts-finder";
 
 NPMResolver npmResolver = NPMResolverProvider.getNPMResolver();
 %>

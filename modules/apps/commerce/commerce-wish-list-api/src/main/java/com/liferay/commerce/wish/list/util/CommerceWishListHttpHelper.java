@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.wish.list.util;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -27,7 +25,6 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Andrea Di Giorgi
  */
-@ProviderType
 public interface CommerceWishListHttpHelper {
 
 	public PortletURL getCommerceWishListPortletURL(

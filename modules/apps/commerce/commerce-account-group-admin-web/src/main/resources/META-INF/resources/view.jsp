@@ -72,7 +72,7 @@ CommerceAccountGroupAdminDisplayContext commerceAccountGroupAdminDisplayContext 
 
 		<liferay-frontend:management-bar-action-buttons>
 			<liferay-frontend:management-bar-button
-				href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceAccountGroups();" %>'
+				href='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deleteCommerceAccountGroups();" %>'
 				icon="times"
 				label="delete"
 			/>

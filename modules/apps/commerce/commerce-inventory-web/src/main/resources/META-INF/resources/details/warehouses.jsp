@@ -34,7 +34,7 @@ contextParams.put("sku", commerceInventoryDisplayContext.getSku());
 		dataProviderKey="<%= CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_WAREHOUSES %>"
 		id="<%= CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_WAREHOUSES %>"
 		itemsPerPage="<%= 10 %>"
-		namespace="<%= renderResponse.getNamespace() %>"
+		namespace="<%= liferayPortletResponse.getNamespace() %>"
 		pageNumber="<%= 1 %>"
 		portletURL="<%= commerceInventoryDisplayContext.getPortletURL() %>"
 		showSearch="<%= false %>"

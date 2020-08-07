@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.frontend.clay.timeline;
 
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetConstants;
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayView;
+import com.liferay.commerce.frontend.clay.data.set.constants.ClayDataSetConstants;
 
 /**
  * @author Marco Leo

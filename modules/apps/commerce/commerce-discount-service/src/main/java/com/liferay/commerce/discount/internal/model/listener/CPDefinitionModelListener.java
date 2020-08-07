@@ -38,9 +38,9 @@ public class CPDefinitionModelListener extends BaseModelListener<CPDefinition> {
 				cpDefinition.getModelClassName(),
 				cpDefinition.getCPDefinitionId());
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(pe, pe);
+				_log.warn(portalException, portalException);
 			}
 		}
 	}

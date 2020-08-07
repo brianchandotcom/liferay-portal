@@ -46,7 +46,7 @@ contextParams.put("commerceOrderId", String.valueOf(commerceOrder.getCommerceOrd
 			formId="fm"
 			id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PAYMENT_METHODS %>"
 			itemsPerPage="<%= 10 %>"
-			namespace="<%= renderResponse.getNamespace() %>"
+			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"
 			portletURL="<%= currentURLObj %>"
 			selectedItems="<%= Collections.singletonList(String.valueOf(commerceOrder.getCommercePaymentMethodKey())) %>"

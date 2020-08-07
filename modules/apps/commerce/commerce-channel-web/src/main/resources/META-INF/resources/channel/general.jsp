@@ -25,9 +25,9 @@ List<CommerceCurrency> commerceCurrencies = commerceChannelDisplayContext.getCom
 
 String commerceCurrencyCode = commerceChannel.getCommerceCurrencyCode();
 
-Map<String, String> contextParams = new HashMap<>();
-
-contextParams.put("commerceChannelId", String.valueOf(commerceChannel.getCommerceChannelId()));
+Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+	"commerceChannelId", String.valueOf(commerceChannel.getCommerceChannelId())
+).build();
 %>
 
 <portlet:actionURL name="editCommerceChannel" var="editCommerceChannelActionURL" />
@@ -151,7 +151,7 @@ contextParams.put("commerceChannelId", String.valueOf(commerceChannel.getCommerc
 					dataProviderKey="<%= CommerceChannelHealthCheckClayTable.NAME %>"
 					id="<%= CommerceChannelHealthCheckClayTable.NAME %>"
 					itemsPerPage="<%= 10 %>"
-					namespace="<%= renderResponse.getNamespace() %>"
+					namespace="<%= liferayPortletResponse.getNamespace() %>"
 					pageNumber="<%= 1 %>"
 					portletURL="<%= commerceChannelDisplayContext.getPortletURL() %>"
 					showManagementBar="<%= false %>"
@@ -172,7 +172,7 @@ contextParams.put("commerceChannelId", String.valueOf(commerceChannel.getCommerc
 				dataProviderKey="<%= CommercePaymentMethodClayTable.NAME %>"
 				id="<%= CommercePaymentMethodClayTable.NAME %>"
 				itemsPerPage="<%= 10 %>"
-				namespace="<%= renderResponse.getNamespace() %>"
+				namespace="<%= liferayPortletResponse.getNamespace() %>"
 				pageNumber="<%= 1 %>"
 				portletURL="<%= commerceChannelDisplayContext.getPortletURL() %>"
 				showManagementBar="<%= false %>"
@@ -192,7 +192,7 @@ contextParams.put("commerceChannelId", String.valueOf(commerceChannel.getCommerc
 				dataProviderKey="<%= CommerceShippingMethodClayTable.NAME %>"
 				id="<%= CommerceShippingMethodClayTable.NAME %>"
 				itemsPerPage="<%= 10 %>"
-				namespace="<%= renderResponse.getNamespace() %>"
+				namespace="<%= liferayPortletResponse.getNamespace() %>"
 				pageNumber="<%= 1 %>"
 				portletURL="<%= commerceChannelDisplayContext.getPortletURL() %>"
 				showManagementBar="<%= false %>"
@@ -212,7 +212,7 @@ contextParams.put("commerceChannelId", String.valueOf(commerceChannel.getCommerc
 				dataProviderKey="<%= CommerceTaxMethodClayTable.NAME %>"
 				id="<%= CommerceTaxMethodClayTable.NAME %>"
 				itemsPerPage="<%= 10 %>"
-				namespace="<%= renderResponse.getNamespace() %>"
+				namespace="<%= liferayPortletResponse.getNamespace() %>"
 				pageNumber="<%= 1 %>"
 				portletURL="<%= commerceChannelDisplayContext.getPortletURL() %>"
 				showManagementBar="<%= false %>"
@@ -240,7 +240,7 @@ if (shippingTaxCategory != null) {
 		initialValue: '<%= shippingTaxCategoryId %>',
 		inputId: 'shippingTaxCategoryId',
 		inputName:
-			'<%= renderResponse.getNamespace() %>shippingTaxSettings--taxCategoryId--',
+			'<%= liferayPortletResponse.getNamespace() %>shippingTaxSettings--taxCategoryId--',
 		itemsKey: 'id',
 		itemsLabel: ['name', 'LANG']
 	});

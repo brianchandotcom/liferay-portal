@@ -137,8 +137,8 @@ public class CommerceOrderResource {
 				json, MediaType.APPLICATION_JSON
 			).build();
 		}
-		catch (JsonProcessingException jpe) {
-			_log.error(jpe, jpe);
+		catch (JsonProcessingException jsonProcessingException) {
+			_log.error(jsonProcessingException, jsonProcessingException);
 		}
 
 		return Response.status(

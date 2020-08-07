@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.product.catalog;
 
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;

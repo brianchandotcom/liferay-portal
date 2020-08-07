@@ -35,7 +35,7 @@ public class CommerceDataIntegrationProcessServiceImpl
 	@Override
 	public CommerceDataIntegrationProcess addCommerceDataIntegrationProcess(
 			long userId, String name, String type,
-			UnicodeProperties typeSettingsProperties)
+			UnicodeProperties typeSettingsUnicodeProperties)
 		throws PortalException {
 
 		PortalPermissionUtil.check(
@@ -45,7 +45,7 @@ public class CommerceDataIntegrationProcessServiceImpl
 
 		return commerceDataIntegrationProcessLocalService.
 			addCommerceDataIntegrationProcess(
-				userId, name, type, typeSettingsProperties, false);
+				userId, name, type, typeSettingsUnicodeProperties, false);
 	}
 
 	@Override
@@ -115,7 +115,7 @@ public class CommerceDataIntegrationProcessServiceImpl
 	@Override
 	public CommerceDataIntegrationProcess updateCommerceDataIntegrationProcess(
 			long commerceDataIntegrationProcessId, String name,
-			UnicodeProperties typeSettingsProperties)
+			UnicodeProperties typeSettingsUnicodeProperties)
 		throws PortalException {
 
 		_commerceDataIntegrationProcessModelResourcePermission.check(
@@ -124,7 +124,8 @@ public class CommerceDataIntegrationProcessServiceImpl
 
 		return commerceDataIntegrationProcessLocalService.
 			updateCommerceDataIntegrationProcess(
-				commerceDataIntegrationProcessId, name, typeSettingsProperties);
+				commerceDataIntegrationProcessId, name,
+				typeSettingsUnicodeProperties);
 	}
 
 	@Override

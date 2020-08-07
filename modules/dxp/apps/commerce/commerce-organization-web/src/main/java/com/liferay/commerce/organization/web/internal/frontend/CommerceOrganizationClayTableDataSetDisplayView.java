@@ -103,18 +103,18 @@ public class CommerceOrganizationClayTableDataSetDisplayView
 
 			clayDataSetActions.add(viewClayDataSetAction);
 
-			String viewSubOrganizationsURL =
+			String viewSuborganizationsURL =
 				_getOrganizationViewSuborganizationsURL(
 					organization.getOrganizationId(), httpServletRequest);
 
-			ClayDataSetAction viewSubOrganizationsClayDataSetAction =
+			ClayDataSetAction viewSuborganizationsClayDataSetAction =
 				new ClayDataSetAction(
-					StringPool.BLANK, viewSubOrganizationsURL, StringPool.BLANK,
+					StringPool.BLANK, viewSuborganizationsURL, StringPool.BLANK,
 					LanguageUtil.get(
 						httpServletRequest, "view-suborganizations"),
 					null, false, false);
 
-			clayDataSetActions.add(viewSubOrganizationsClayDataSetAction);
+			clayDataSetActions.add(viewSuborganizationsClayDataSetAction);
 		}
 
 		if (OrganizationPermissionUtil.contains(

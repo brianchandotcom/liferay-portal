@@ -19,6 +19,7 @@ import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.soy.servlet.taglib.ComponentRendererTag;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 
 /**
@@ -49,8 +49,8 @@ public class AddressModalTag extends ComponentRendererTag {
 				StringBundler.concat(
 					PortalUtil.getPortalURL(request),
 					"/o/commerce-ui/address/countries-by-channel-id?channelId=",
-					String.valueOf(commerceContext.getCommerceChannelId()),
-					"&p_auth=", AuthTokenUtil.getToken(request)));
+					commerceContext.getCommerceChannelId(), "&p_auth=",
+					AuthTokenUtil.getToken(request)));
 		}
 		catch (PortalException pe) {
 			_log.error(pe, pe);

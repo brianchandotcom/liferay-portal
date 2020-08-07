@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.price;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.discount.CommerceDiscountValue;
 
@@ -23,7 +21,6 @@ import com.liferay.commerce.discount.CommerceDiscountValue;
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
-@ProviderType
 public interface CommerceOrderPrice {
 
 	public CommerceDiscountValue getShippingDiscountValue();

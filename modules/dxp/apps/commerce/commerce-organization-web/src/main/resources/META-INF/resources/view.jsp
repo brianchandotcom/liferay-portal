@@ -46,16 +46,16 @@ wrapperCssClass = viewMode + " " + wrapperCssClass;
 			cssClass = "active " + cssClass;
 		}
 
-		Map<String, Object> data = new HashMap<>();
-
-		data.put("title", LanguageUtil.get(request, curViewMode));
+		Map<String, Object> data = HashMapBuilder.<String, Object>put(
+			"title", LanguageUtil.get(request, curViewMode)
+		).build();
 
 		PortletURL portletURL = commerceOrganizationDisplayContext.getPortletURL();
 
 		portletURL.setParameter("viewMode", curViewMode);
 	%>
 
-		<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="<%= portletURL.toString() %>" id="<%= renderResponse.getNamespace() + curViewMode %>">
+		<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="<%= portletURL.toString() %>" id="<%= liferayPortletResponse.getNamespace() + curViewMode %>">
 			<c:if test="<%= Validator.isNotNull(icon) %>">
 				<aui:icon cssClass="icon-monospaced" image="<%= icon %>" markupView="lexicon" />
 			</c:if>
@@ -76,7 +76,7 @@ wrapperCssClass = viewMode + " " + wrapperCssClass;
 				dataProviderKey="<%= CommerceOrganizationClayTableDataSetDisplayView.NAME %>"
 				id="<%= CommerceOrganizationClayTableDataSetDisplayView.NAME %>"
 				itemsPerPage="<%= 10 %>"
-				namespace="<%= renderResponse.getNamespace() %>"
+				namespace="<%= liferayPortletResponse.getNamespace() %>"
 				pageNumber="<%= 1 %>"
 				portletURL="<%= commerceOrganizationDisplayContext.getPortletURL() %>"
 				showSearch="<%= false %>"
@@ -86,7 +86,7 @@ wrapperCssClass = viewMode + " " + wrapperCssClass;
 	<c:when test="<%= viewMode.equals(CommerceOrganizationConstants.CHART_VIEW_MODE) %>">
 
 		<%
-		String segmentEditRootElementId = renderResponse.getNamespace() + "-org-chart-root";
+		String segmentEditRootElementId = liferayPortletResponse.getNamespace() + "-org-chart-root";
 		%>
 
 		<div class="orgchart-module" id="<%= segmentEditRootElementId %>">

@@ -30,7 +30,7 @@ page import="com.liferay.commerce.organization.web.internal.frontend.CommerceOrg
 page import="com.liferay.commerce.organization.web.internal.frontend.CommerceOrganizationClayTableDataSetDisplayView" %><%@
 page import="com.liferay.commerce.organization.web.internal.frontend.CommerceOrganizationUserClayTableDataSetDisplayView" %><%@
 page import="com.liferay.commerce.organization.web.internal.js.loader.modules.extender.npm.NPMResolverProvider" %><%@
-page import="com.liferay.commerce.organization.web.internal.servlet.taglib.ui.CommerceOrganizationScreenNavigationConstants" %><%@
+page import="com.liferay.commerce.organization.web.internal.servlet.taglib.ui.constants.CommerceOrganizationScreenNavigationConstants" %><%@
 page import="com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver" %><%@
 page import="com.liferay.portal.kernel.exception.NoSuchOrganizationException" %><%@
 page import="com.liferay.portal.kernel.exception.NoSuchUserException" %><%@
@@ -41,6 +41,7 @@ page import="com.liferay.portal.kernel.portlet.PortletQName" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
@@ -49,8 +50,7 @@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.webserver.WebServerServletTokenUtil" %><%@
 page import="com.liferay.users.admin.configuration.UserFileUploadsConfiguration" %>
 
-<%@ page import="java.util.HashMap" %><%@
-page import="java.util.Map" %>
+<%@ page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

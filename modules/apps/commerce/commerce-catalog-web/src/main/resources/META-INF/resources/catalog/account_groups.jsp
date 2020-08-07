@@ -21,9 +21,9 @@ CommerceCatalogDisplayContext commerceCatalogDisplayContext = (CommerceCatalogDi
 
 CommerceCatalog commerceCatalog = commerceCatalogDisplayContext.getCommerceCatalog();
 
-Map<String, String> contextParams = new HashMap<>();
-
-contextParams.put("commerceCatalogId", String.valueOf(commerceCatalog.getCommerceCatalogId()));
+Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+	"commerceCatalogId", String.valueOf(commerceCatalog.getCommerceCatalogId())
+).build();
 %>
 
 <div class="row">
@@ -33,7 +33,7 @@ contextParams.put("commerceCatalogId", String.valueOf(commerceCatalog.getCommerc
 			dataProviderKey="<%= CommerceCatalogDataSetConstants.COMMERCE_DATA_SET_KEY_CATALOG_ACCOUNT_GROUPS %>"
 			id="<%= CommerceCatalogDataSetConstants.COMMERCE_DATA_SET_KEY_CATALOG_ACCOUNT_GROUPS %>"
 			itemsPerPage="<%= 10 %>"
-			namespace="<%= renderResponse.getNamespace() %>"
+			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"
 			portletURL="<%= commerceCatalogDisplayContext.getPortletURL() %>"
 			style="fluid"

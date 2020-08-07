@@ -44,7 +44,7 @@ CommerceDataIntegrationProcessLogDisplayContext commerceDataIntegrationProcessLo
 	<c:if test="<%= CommerceDataintegrationProcessPermission.contains(permissionChecker, commerceDataIntegrationProcessLogDisplayContext.getCommerceDataIntegrationProcess(), ActionKeys.UPDATE) %>">
 		<liferay-frontend:management-bar-action-buttons>
 			<liferay-frontend:management-bar-button
-				href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceDataIntegrationProcessLogs();" %>'
+				href='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deleteCommerceDataIntegrationProcessLogs();" %>'
 				icon="times"
 				label="delete"
 			/>

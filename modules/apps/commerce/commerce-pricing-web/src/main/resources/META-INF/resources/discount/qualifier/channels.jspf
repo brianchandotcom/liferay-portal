@@ -88,7 +88,7 @@
 					formId="fm"
 					id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_CHANNELS %>"
 					itemsPerPage="<%= 10 %>"
-					namespace="<%= renderResponse.getNamespace() %>"
+					namespace="<%= liferayPortletResponse.getNamespace() %>"
 					pageNumber="<%= 1 %>"
 					portletURL="<%= portletDiscountRuleURL %>"
 				/>

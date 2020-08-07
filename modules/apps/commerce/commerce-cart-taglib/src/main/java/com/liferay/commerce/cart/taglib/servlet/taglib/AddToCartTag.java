@@ -82,9 +82,9 @@ public class AddToCartTag extends ComponentRendererTag {
 
 			putValue("uri", _getURI());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 		}
 

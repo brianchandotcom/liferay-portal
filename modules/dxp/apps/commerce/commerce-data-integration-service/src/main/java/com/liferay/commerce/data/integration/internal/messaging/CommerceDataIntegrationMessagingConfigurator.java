@@ -27,7 +27,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -58,7 +57,7 @@ public class CommerceDataIntegrationMessagingConfigurator {
 		destinationConfiguration.setMaximumQueueSize(_MAXIMUM_QUEUE_SIZE);
 
 		RejectedExecutionHandler rejectedExecutionHandler =
-			new CallerRunsPolicy() {
+			new ThreadPoolExecutor.CallerRunsPolicy() {
 
 				@Override
 				public void rejectedExecution(

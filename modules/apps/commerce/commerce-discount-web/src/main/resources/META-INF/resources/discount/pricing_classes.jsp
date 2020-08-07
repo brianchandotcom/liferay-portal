@@ -68,7 +68,7 @@ SearchContainer<CommerceDiscountRel> commercePricingClassCommerceDiscountRelSear
 
 	<liferay-frontend:management-bar-action-buttons>
 		<liferay-frontend:management-bar-button
-			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceDiscountRels();" %>'
+			href='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deleteCommerceDiscountRels();" %>'
 			icon="times"
 			label="delete"
 		/>

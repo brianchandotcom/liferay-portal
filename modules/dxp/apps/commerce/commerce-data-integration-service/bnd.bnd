@@ -1,6 +1,10 @@
 Bundle-Name: Liferay Commerce Data Integration Service
 Bundle-SymbolicName: com.liferay.commerce.data.integration.service
+<<<<<<< HEAD
 Bundle-Version: 2.0.23
+=======
+Bundle-Version: 2.0.21
+>>>>>>> a5343879d... COMMERCE-4072 Fix SF part 1
 Liferay-Require-SchemaVersion: 2.0.0
 Liferay-Service: true
 Require-Capability:\

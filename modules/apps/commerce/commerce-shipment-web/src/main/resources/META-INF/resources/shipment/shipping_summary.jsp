@@ -201,7 +201,7 @@ Format dateFormat = FastDateFormatFactoryUtil.getDate(DateFormat.MEDIUM, locale,
 		dataProviderKey="<%= CommerceShipmentDataSetConstants.COMMERCE_DATA_SET_KEY_SHIPMENT_ITEMS %>"
 		id="<%= commerceShipmentDisplayContext.getDatasetView() %>"
 		itemsPerPage="<%= 10 %>"
-		namespace="<%= renderResponse.getNamespace() %>"
+		namespace="<%= liferayPortletResponse.getNamespace() %>"
 		pageNumber="<%= 1 %>"
 		portletURL="<%= currentURLObj %>"
 		showSearch="<%= false %>"

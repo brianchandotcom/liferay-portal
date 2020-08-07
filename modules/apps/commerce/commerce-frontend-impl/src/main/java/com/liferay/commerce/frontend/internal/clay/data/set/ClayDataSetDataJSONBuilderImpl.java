@@ -22,7 +22,6 @@ import com.liferay.commerce.frontend.clay.data.set.ClayDataSetAction;
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetActionProviderRegistry;
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDataJSONBuilder;
-import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +66,7 @@ public class ClayDataSetDataJSONBuilderImpl
 	private List<ClayDataSetDataRow> _getClayTableRows(
 			List<Object> items, String tableName,
 			HttpServletRequest httpServletRequest, long groupId)
-		throws PortalException {
+		throws Exception {
 
 		List<ClayDataSetDataRow> clayDataSetDataRows = new ArrayList<>();
 

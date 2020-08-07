@@ -56,9 +56,13 @@ public class ClayDataSetFilterSerializerImpl
 			String label = LanguageUtil.get(
 				resourceBundle, clayDataSetFilter.getLabel());
 
-			jsonObject.put("id", clayDataSetFilter.getId());
-			jsonObject.put("label", label);
-			jsonObject.put("type", clayDataSetFilter.getType());
+			jsonObject.put(
+				"id", clayDataSetFilter.getId()
+			).put(
+				"label", label
+			).put(
+				"type", clayDataSetFilter.getType()
+			);
 
 			List<ClayDataSetFilterContextContributor>
 				clayDataSetFilterContextContributors =

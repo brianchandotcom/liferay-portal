@@ -23,9 +23,9 @@ CommerceOrganizationDisplayContext commerceOrganizationDisplayContext = (Commerc
 <div class="commerce-organization-container" id="<portlet:namespace />entriesContainer">
 
 	<%
-	Map<String, String> contextParams = new HashMap<>();
-
-	contextParams.put("organizationId", String.valueOf(commerceOrganizationDisplayContext.getOrganizationId()));
+	Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+		"organizationId", String.valueOf(commerceOrganizationDisplayContext.getOrganizationId())
+	).build();
 	%>
 
 	<commerce-ui:dataset-display
@@ -33,7 +33,7 @@ CommerceOrganizationDisplayContext commerceOrganizationDisplayContext = (Commerc
 		dataProviderKey="<%= CommerceOrganizationAccountClayTableDataSetDisplayView.NAME %>"
 		id="<%= CommerceOrganizationAccountClayTableDataSetDisplayView.NAME %>"
 		itemsPerPage="<%= 10 %>"
-		namespace="<%= renderResponse.getNamespace() %>"
+		namespace="<%= liferayPortletResponse.getNamespace() %>"
 		pageNumber="<%= 1 %>"
 		portletURL="<%= commerceOrganizationDisplayContext.getPortletURL() %>"
 		showSearch="<%= false %>"

@@ -54,26 +54,29 @@ public abstract class BaseBatchCommerceMLScheduledTaskExecutorService {
 			CommerceDataIntegrationProcess commerceDataIntegrationProcess,
 			CommerceDataIntegrationProcessLog commerceDataIntegrationProcessLog,
 			BatchEngineTaskItemDelegateResourceMapper
-				batchEnginetaskItemDelegateResourceMapper)
+				batchEngineTaskItemDelegateResourceMapper)
 		throws Exception {
 
 		appendToLogOutput(
 			commerceDataIntegrationProcessLog,
 			"Start exporting: " +
-				batchEnginetaskItemDelegateResourceMapper.getResourceName());
+				batchEngineTaskItemDelegateResourceMapper.getResourceName());
 
 		BatchEngineExportTask batchEngineExportTask =
 			batchEngineExportTaskLocalService.addBatchEngineExportTask(
 				commerceDataIntegrationProcess.getCompanyId(),
 				commerceDataIntegrationProcess.getUserId(), null,
-				batchEnginetaskItemDelegateResourceMapper.getResourceName(),
+				batchEngineTaskItemDelegateResourceMapper.getResourceName(),
 				BatchEngineTaskContentType.JSONL.name(),
 				BatchEngineTaskExecuteStatus.INITIAL.name(), null,
 				new HashMap<>(),
-				batchEnginetaskItemDelegateResourceMapper.
+				batchEngineTaskItemDelegateResourceMapper.
 					getBatchEngineTaskItemDelegate());
 
 		batchEngineExportTaskExecutor.execute(batchEngineExportTask);
+
+		String resourceName =
+			batchEngineTaskItemDelegateResourceMapper.getResourceName();
 
 		BatchEngineTaskExecuteStatus batchEngineTaskExecuteStatus =
 			BatchEngineTaskExecuteStatus.valueOf(
@@ -90,9 +93,7 @@ public abstract class BaseBatchCommerceMLScheduledTaskExecutorService {
 
 			appendToLogOutput(
 				commerceDataIntegrationProcessLog,
-				"Start uploading: " +
-					batchEnginetaskItemDelegateResourceMapper.
-						getResourceName());
+				"Start uploading: " + resourceName);
 
 			uploadExport(batchEngineExportTask, commerceDataIntegrationProcess);
 
@@ -100,10 +101,7 @@ public abstract class BaseBatchCommerceMLScheduledTaskExecutorService {
 				batchEngineExportTask);
 		}
 		else {
-			throw new PortalException(
-				"Error exporting: " +
-					batchEnginetaskItemDelegateResourceMapper.
-						getResourceName());
+			throw new PortalException("Error exporting: " + resourceName);
 		}
 
 		return commerceDataIntegrationProcessLog;
@@ -113,29 +111,32 @@ public abstract class BaseBatchCommerceMLScheduledTaskExecutorService {
 			CommerceDataIntegrationProcess commerceDataIntegrationProcess,
 			CommerceDataIntegrationProcessLog commerceDataIntegrationProcessLog,
 			BatchEngineTaskItemDelegateResourceMapper
-				batchEnginetaskItemDelegateResourceMapper,
+				batchEngineTaskItemDelegateResourceMapper,
 			File resourceFile)
 		throws Exception {
 
 		appendToLogOutput(
 			commerceDataIntegrationProcessLog,
 			"Start import task: " +
-				batchEnginetaskItemDelegateResourceMapper.getResourceName());
+				batchEngineTaskItemDelegateResourceMapper.getResourceName());
 
 		BatchEngineImportTask batchEngineImportTask =
 			batchEngineImportTaskLocalService.addBatchEngineImportTask(
 				commerceDataIntegrationProcess.getCompanyId(),
 				commerceDataIntegrationProcess.getUserId(), 20, null,
-				batchEnginetaskItemDelegateResourceMapper.getResourceName(),
+				batchEngineTaskItemDelegateResourceMapper.getResourceName(),
 				Files.readAllBytes(resourceFile.toPath()),
 				BatchEngineTaskContentType.JSONL.name(),
 				BatchEngineTaskExecuteStatus.INITIAL.name(),
-				batchEnginetaskItemDelegateResourceMapper.getFieldMapping(),
+				batchEngineTaskItemDelegateResourceMapper.getFieldMapping(),
 				BatchEngineTaskOperation.CREATE.name(), null,
-				batchEnginetaskItemDelegateResourceMapper.
+				batchEngineTaskItemDelegateResourceMapper.
 					getBatchEngineTaskItemDelegate());
 
 		batchEngineImportTaskExecutor.execute(batchEngineImportTask);
+
+		String resourceName =
+			batchEngineTaskItemDelegateResourceMapper.getResourceName();
 
 		BatchEngineTaskExecuteStatus batchEngineTaskExecuteStatus =
 			BatchEngineTaskExecuteStatus.valueOf(
@@ -152,18 +153,13 @@ public abstract class BaseBatchCommerceMLScheduledTaskExecutorService {
 
 			batchEngineImportTaskLocalService.deleteBatchEngineImportTask(
 				batchEngineImportTask);
-
 			appendToLogOutput(
 				commerceDataIntegrationProcessLog,
-				"Completed import task: " +
-					batchEnginetaskItemDelegateResourceMapper.
-						getResourceName());
+				"Completed import task: " + resourceName);
 		}
 		else {
 			throw new PortalException(
-				"Error importing resource: " +
-					batchEnginetaskItemDelegateResourceMapper.
-						getResourceName());
+				"Error importing resource: " + resourceName);
 		}
 
 		return commerceDataIntegrationProcessLog;

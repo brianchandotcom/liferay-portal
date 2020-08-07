@@ -41,7 +41,8 @@ public class CommerceDiscountApplicationStrategyChainTest {
 	@ClassRule
 	@Rule
 	public static AggregateTestRule aggregateTestRule = new AggregateTestRule(
-		new LiferayIntegrationTestRule(), PermissionCheckerMethodTestRule.INSTANCE);
+		new LiferayIntegrationTestRule(),
+		PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
 	public void testApplyDiscountsChainMethod() throws Exception {

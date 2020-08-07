@@ -80,8 +80,8 @@ public class CommerceMLForecastAlertPortlet extends MVCPortlet {
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				commerceMLForecastAlertEntryListDisplayContext);
 		}
-		catch (Exception e) {
-			if (e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof PrincipalException) {
 				hideDefaultErrorMessage(renderRequest);
 
 				SessionErrors.add(renderRequest, "principalExceptionView");

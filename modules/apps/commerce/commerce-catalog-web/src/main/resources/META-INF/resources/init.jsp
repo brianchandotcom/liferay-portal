@@ -26,9 +26,9 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.commerce.catalog.web.internal.display.context.CommerceCatalogDisplayContext" %><%@
-page import="com.liferay.commerce.catalog.web.internal.frontend.CommerceCatalogDataSetConstants" %><%@
-page import="com.liferay.commerce.catalog.web.internal.servlet.taglib.ui.CommerceCatalogScreenNavigationConstants" %><%@
+<%@ page import="com.liferay.commerce.catalog.web.internal.constants.CommerceCatalogDataSetConstants" %><%@
+page import="com.liferay.commerce.catalog.web.internal.display.context.CommerceCatalogDisplayContext" %><%@
+page import="com.liferay.commerce.catalog.web.internal.servlet.taglib.ui.constants.CommerceCatalogScreenNavigationConstants" %><%@
 page import="com.liferay.commerce.currency.model.CommerceCurrency" %><%@
 page import="com.liferay.commerce.price.list.constants.CommercePriceListConstants" %><%@
 page import="com.liferay.commerce.price.list.exception.NoSuchPriceListException" %><%@
@@ -45,12 +45,12 @@ page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
-<%@ page import="java.util.HashMap" %><%@
-page import="java.util.List" %><%@
+<%@ page import="java.util.List" %><%@
 page import="java.util.Locale" %><%@
 page import="java.util.Map" %><%@
 page import="java.util.Set" %>

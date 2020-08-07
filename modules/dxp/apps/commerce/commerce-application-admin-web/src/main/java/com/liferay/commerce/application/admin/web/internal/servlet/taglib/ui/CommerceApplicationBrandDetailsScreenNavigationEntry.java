@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.application.admin.web.internal.servlet.taglib.ui;
 
+import com.liferay.commerce.application.admin.web.internal.servlet.taglib.ui.constants.CommerceApplicationBrandScreenNavigationConstants;
 import com.liferay.commerce.application.constants.CommerceApplicationActionKeys;
 import com.liferay.commerce.application.model.CommerceApplicationBrand;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
@@ -94,8 +95,8 @@ public class CommerceApplicationBrandDetailsScreenNavigationEntry
 			return _commerceApplicationBrandModelResourcePermission.contains(
 				permissionChecker, commerceApplicationBrand, ActionKeys.UPDATE);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		return false;

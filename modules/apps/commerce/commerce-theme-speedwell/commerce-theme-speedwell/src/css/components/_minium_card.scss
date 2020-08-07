@@ -194,7 +194,7 @@
 	}
 
 	&__price {
-		margin: 18px 0 15px 0;
+		margin: 18px 0 15px;
 
 		@media only screen and (max-width: $bp-small) {
 			bottom: calc(20px + 40px);
@@ -247,8 +247,8 @@
 		width: calc(100% + 20px);
 
 		.btn-add-to-cart {
-			border-top-left-radius: 0px;
-			border-top-right-radius: 0px;
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
 			display: flex;
 			margin-top: 12px;
 			width: 100%;

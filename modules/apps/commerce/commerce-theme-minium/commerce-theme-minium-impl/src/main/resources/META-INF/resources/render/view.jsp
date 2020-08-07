@@ -101,7 +101,7 @@ String addToCartId = PortalUtil.generateRandomKey(request, "add-to-cart");
 			<c:if test="<%= cpSku != null %>">
 				<liferay-commerce:tier-price
 					CPInstanceId="<%= cpSku.getCPInstanceId() %>"
-					taglibQuantityInputId='<%= renderResponse.getNamespace() + cpDefinitionId + "Quantity" %>'
+					taglibQuantityInputId='<%= liferayPortletResponse.getNamespace() + cpDefinitionId + "Quantity" %>'
 				/>
 			</c:if>
 

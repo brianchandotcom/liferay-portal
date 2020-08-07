@@ -83,13 +83,12 @@ public class ProductInteractionCommerceMLRecommendationCPDataSourceImpl
 			return new CPDataSourceResult(Collections.emptyList(), 0);
 		}
 
-		long companyId = portal.getCompanyId(httpServletRequest);
-
 		List<ProductInteractionCommerceMLRecommendation>
 			productInteractionCommerceMLRecommendations =
 				_productInteractionCommerceMLRecommendationService.
 					getProductInteractionCommerceMLRecommendations(
-						companyId, cpCatalogEntry.getCPDefinitionId());
+						portal.getCompanyId(httpServletRequest),
+						cpCatalogEntry.getCPDefinitionId());
 
 		if (productInteractionCommerceMLRecommendations.isEmpty()) {
 			return new CPDataSourceResult(Collections.emptyList(), 0);
@@ -134,9 +133,9 @@ public class ProductInteractionCommerceMLRecommendationCPDataSourceImpl
 
 				cpCatalogEntries.add(recommendedCPCatalogEntry);
 			}
-			catch (PortalException e) {
+			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
+					_log.debug(portalException, portalException);
 				}
 			}
 		}

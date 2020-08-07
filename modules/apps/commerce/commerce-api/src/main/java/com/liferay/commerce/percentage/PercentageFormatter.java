@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.percentage;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.math.BigDecimal;
 
 import java.util.Locale;
@@ -23,7 +21,6 @@ import java.util.Locale;
 /**
  * @author Alec Sloan
  */
-@ProviderType
 public interface PercentageFormatter {
 
 	public String getLocalizedPercentage(

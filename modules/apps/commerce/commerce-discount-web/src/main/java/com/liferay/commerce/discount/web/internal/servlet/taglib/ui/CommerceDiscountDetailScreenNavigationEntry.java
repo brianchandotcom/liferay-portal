@@ -15,6 +15,7 @@
 package com.liferay.commerce.discount.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.discount.model.CommerceDiscount;
+import com.liferay.commerce.discount.web.internal.servlet.taglib.ui.constants.CommerceDiscountScreenNavigationConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;

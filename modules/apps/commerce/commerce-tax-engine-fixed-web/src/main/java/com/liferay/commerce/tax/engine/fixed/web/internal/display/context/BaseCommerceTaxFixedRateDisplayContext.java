@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
@@ -144,8 +145,8 @@ public class BaseCommerceTaxFixedRateDisplayContext {
 			commerceCurrency.getMinFractionDigits(),
 			new BigDecimal(percentage));
 
-		return localizedPercentage.replace(
-			StringPool.PERCENT, StringPool.BLANK);
+		return StringUtil.removeSubstring(
+			localizedPercentage, StringPool.PERCENT);
 	}
 
 	public String getLocalizedRate(

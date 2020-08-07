@@ -63,7 +63,7 @@ CPTaxCategoryDisplayContext cpTaxCategoryDisplayContext = (CPTaxCategoryDisplayC
 
 		<liferay-frontend:management-bar-action-buttons>
 			<liferay-frontend:management-bar-button
-				href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCPTaxCategories();" %>'
+				href='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deleteCPTaxCategories();" %>'
 				icon="times"
 				label="delete"
 			/>

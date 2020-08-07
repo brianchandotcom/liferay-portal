@@ -23,7 +23,6 @@ import com.liferay.commerce.data.integration.talend.internal.configuration.Comme
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
@@ -99,45 +98,56 @@ public class TalendProcessTypeHelperImpl implements TalendProcessTypeHelper {
 	private FileEntry _addFileEntry(
 			long groupId, long userId, long commerceDataIntegrationProcessId,
 			String contentType, InputStream inputStream)
-		throws PortalException {
+		throws Exception {
 
-		Folder folder = _getFolder(groupId, userId);
+		try {
+			Folder folder = _getFolder(groupId, userId);
 
-		FileEntry fileEntry = PortletFileRepositoryUtil.fetchPortletFileEntry(
-			groupId, folder.getFolderId(),
-			String.valueOf(commerceDataIntegrationProcessId));
+			FileEntry fileEntry =
+				PortletFileRepositoryUtil.fetchPortletFileEntry(
+					groupId, folder.getFolderId(),
+					String.valueOf(commerceDataIntegrationProcessId));
 
-		if (fileEntry != null) {
-			PortletFileRepositoryUtil.deletePortletFileEntry(
-				fileEntry.getFileEntryId());
+			if (fileEntry != null) {
+				PortletFileRepositoryUtil.deletePortletFileEntry(
+					fileEntry.getFileEntryId());
+			}
+
+			return PortletFileRepositoryUtil.addPortletFileEntry(
+				groupId, userId, CommerceDataIntegrationProcess.class.getName(),
+				commerceDataIntegrationProcessId,
+				CommerceDataIntegrationPortletKeys.COMMERCE_DATA_INTEGRATION,
+				folder.getFolderId(), inputStream,
+				String.valueOf(commerceDataIntegrationProcessId), contentType,
+				false);
 		}
-
-		return PortletFileRepositoryUtil.addPortletFileEntry(
-			groupId, userId, CommerceDataIntegrationProcess.class.getName(),
-			commerceDataIntegrationProcessId,
-			CommerceDataIntegrationPortletKeys.COMMERCE_DATA_INTEGRATION,
-			folder.getFolderId(), inputStream,
-			String.valueOf(commerceDataIntegrationProcessId), contentType,
-			false);
+		catch (Exception exception) {
+			throw new Exception(exception);
+		}
 	}
 
-	private Folder _getFolder(long groupId, long userId)
-		throws PortalException {
+	private Folder _getFolder(long groupId, long userId) throws Exception {
+		try {
+			ServiceContext serviceContext = new ServiceContext();
 
-		ServiceContext serviceContext = new ServiceContext();
+			serviceContext.setAddGroupPermissions(true);
+			serviceContext.setAddGuestPermissions(true);
 
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
+			Repository repository =
+				PortletFileRepositoryUtil.addPortletRepository(
+					groupId,
+					CommerceDataIntegrationPortletKeys.
+						COMMERCE_DATA_INTEGRATION,
+					serviceContext);
 
-		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
-			groupId,
-			CommerceDataIntegrationPortletKeys.COMMERCE_DATA_INTEGRATION,
-			serviceContext);
-
-		return PortletFileRepositoryUtil.addPortletFolder(
-			userId, repository.getRepositoryId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, TalendProcessType.KEY,
-			serviceContext);
+			return PortletFileRepositoryUtil.addPortletFolder(
+				userId, repository.getRepositoryId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				TalendProcessType.KEY, serviceContext);
+		}
+		catch (Exception exception) {
+			throw new Exception(exception);
+		}
 	}
 
 	private void _validateFile(String fileName, long size) throws Exception {

@@ -78,9 +78,9 @@ public class ApplyCommerceDiscountCouponCodeMVCActionCommand
 					commerceContext);
 			}
 			catch (CommerceDiscountCouponCodeException |
-				   CommerceDiscountLimitationTimesException cde) {
+				   CommerceDiscountLimitationTimesException exception) {
 
-				SessionErrors.add(actionRequest, cde.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				return;
 			}

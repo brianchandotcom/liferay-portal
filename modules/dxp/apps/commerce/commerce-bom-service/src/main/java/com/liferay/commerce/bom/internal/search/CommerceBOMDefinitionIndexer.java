@@ -164,13 +164,15 @@ public class CommerceBOMDefinitionIndexer
 					indexableActionableDynamicQuery.addDocuments(
 						getDocument(commerceBOMDefinition));
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
+						long commerceBOMDefinitionId =
+							commerceBOMDefinition.getCommerceBOMDefinitionId();
+
 						_log.warn(
 							"Unable to index commerce BOM definition " +
-								commerceBOMDefinition.
-									getCommerceBOMDefinitionId(),
-							pe);
+								commerceBOMDefinitionId,
+							portalException);
 					}
 				}
 			});

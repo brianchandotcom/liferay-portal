@@ -86,10 +86,10 @@ if (deliveryMaxSubscriptionCycles > 0) {
 	<commerce-ui:panel
 		collapsed="<%= !subscriptionEnabled %>"
 		collapseLabel='<%= LanguageUtil.get(request, "enable") %>'
-		collapseSwitchName='<%= renderResponse.getNamespace() + "subscriptionEnabled" %>'
+		collapseSwitchName='<%= liferayPortletResponse.getNamespace() + "subscriptionEnabled" %>'
 		title='<%= LanguageUtil.get(request, "payment-subscription") %>'
 	>
-		<aui:select name="subscriptionType" onChange='<%= renderResponse.getNamespace() + "selectSubscriptionType();" %>'>
+		<aui:select name="subscriptionType" onChange='<%= liferayPortletResponse.getNamespace() + "selectSubscriptionType();" %>'>
 
 			<%
 			for (CPSubscriptionType curCPSubscriptionType : cpSubscriptionTypes) {
@@ -146,10 +146,10 @@ if (deliveryMaxSubscriptionCycles > 0) {
 	<commerce-ui:panel
 		collapsed="<%= !deliverySubscriptionEnabled %>"
 		collapseLabel='<%= LanguageUtil.get(request, "enable") %>'
-		collapseSwitchName='<%= renderResponse.getNamespace() + "deliverySubscriptionEnabled" %>'
+		collapseSwitchName='<%= liferayPortletResponse.getNamespace() + "deliverySubscriptionEnabled" %>'
 		title='<%= LanguageUtil.get(request, "delivery-subscription") %>'
 	>
-		<aui:select label="subscription-type" name="deliverySubscriptionType" onChange='<%= renderResponse.getNamespace() + "selectDeliverySubscriptionType();" %>'>
+		<aui:select label="subscription-type" name="deliverySubscriptionType" onChange='<%= liferayPortletResponse.getNamespace() + "selectDeliverySubscriptionType();" %>'>
 
 			<%
 			for (CPSubscriptionType curCPSubscriptionType : cpSubscriptionTypes) {

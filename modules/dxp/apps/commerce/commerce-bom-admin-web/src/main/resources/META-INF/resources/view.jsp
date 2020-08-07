@@ -189,26 +189,29 @@ CommerceBOMAdminDisplayContext commerceBOMAdminDisplayContext = (CommerceBOMAdmi
 		function handleAddBOMFolderButtonClick(event) {
 			event.preventDefault();
 
-			modalCommands.openSimpleInputModal(
-				{
-					dialogTitle: '<liferay-ui:message key="add-folder" />',
-					formSubmitURL: '<%= editCommerceBOMFolderActionURL %>',
-					mainFieldLabel: '<liferay-ui:message key="name" />',
-					mainFieldName: 'name',
-					mainFieldPlaceholder: '<liferay-ui:message key="name" />',
-					namespace: '<portlet:namespace />',
-					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
-				}
-			);
+			modalCommands.openSimpleInputModal({
+				dialogTitle: '<liferay-ui:message key="add-folder" />',
+				formSubmitURL: '<%= editCommerceBOMFolderActionURL %>',
+				mainFieldLabel: '<liferay-ui:message key="name" />',
+				mainFieldName: 'name',
+				mainFieldPlaceholder: '<liferay-ui:message key="name" />',
+				namespace: '<portlet:namespace />',
+				spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
+			});
 		}
 
-		function handleDestroyPortlet () {
-			addBOMFolderButton.removeEventListener('click', handleAddBOMFolderButtonClick);
+		function handleDestroyPortlet() {
+			addBOMFolderButton.removeEventListener(
+				'click',
+				handleAddBOMFolderButtonClick
+			);
 
 			Liferay.detach('destroyPortlet', handleDestroyPortlet);
 		}
 
-		var addBOMFolderButton = document.getElementById('<portlet:namespace />addBOMFolderButton');
+		var addBOMFolderButton = document.getElementById(
+			'<portlet:namespace />addBOMFolderButton'
+		);
 
 		addBOMFolderButton.addEventListener('click', handleAddBOMFolderButtonClick);
 

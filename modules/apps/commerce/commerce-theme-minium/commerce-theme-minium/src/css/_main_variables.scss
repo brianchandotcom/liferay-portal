@@ -17,7 +17,7 @@ $gsdc-btn-primary: map-merge(
 		active-bg: darken($gsdc-primary, 10),
 		active-border-color: transparent,
 		active-box-shadow: none,
-		disabled-bg: $gsdc-primary
+		disabled-bg: $gsdc-primary,
 	),
 	$gsdc-btn-primary
 );

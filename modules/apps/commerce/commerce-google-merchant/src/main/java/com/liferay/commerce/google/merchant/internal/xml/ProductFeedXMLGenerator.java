@@ -86,9 +86,8 @@ public class ProductFeedXMLGenerator {
 
 		feed.setTitle(commerceChannel.getName());
 
-		long siteGroupId = commerceChannel.getSiteGroupId();
-
-		Group group = _groupLocalService.getGroup(siteGroupId);
+		Group group = _groupLocalService.getGroup(
+			commerceChannel.getSiteGroupId());
 
 		String href = _portal.getLayoutSetDisplayURL(
 			group.getPublicLayoutSet(), false);

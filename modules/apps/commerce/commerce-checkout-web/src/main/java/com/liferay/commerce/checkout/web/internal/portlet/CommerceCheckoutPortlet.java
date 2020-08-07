@@ -93,8 +93,8 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 				CommerceCheckoutWebKeys.COMMERCE_ORDER,
 				getCommerceOrder(actionRequest));
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 
 		super.processAction(actionRequest, actionResponse);
@@ -143,8 +143,8 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 
 			super.render(renderRequest, renderResponse);
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
 

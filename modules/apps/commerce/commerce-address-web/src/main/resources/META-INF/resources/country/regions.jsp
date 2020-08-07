@@ -64,7 +64,7 @@ CommerceRegionsDisplayContext commerceRegionsDisplayContext = (CommerceRegionsDi
 
 		<liferay-frontend:management-bar-action-buttons>
 			<liferay-frontend:management-bar-button
-				href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceRegions();" %>'
+				href='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deleteCommerceRegions();" %>'
 				icon="times"
 				label="delete"
 			/>

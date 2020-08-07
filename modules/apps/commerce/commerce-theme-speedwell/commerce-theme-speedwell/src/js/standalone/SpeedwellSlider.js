@@ -21,13 +21,13 @@ function showNotification(message, type, closeable = true, duration = 500) {
 			closeable,
 			delay: {
 				hide: 5000,
-				show: 0
+				show: 0,
 			},
 			duration,
 			message,
 			render: true,
 			title: '',
-			type
+			type,
 		});
 	});
 }
@@ -39,16 +39,16 @@ const CURRENT = 'current',
 const STATES_MAP = {
 	[CURRENT]: {
 		backwards: NEXT,
-		forwards: WILL_BE_NEXT
+		forwards: WILL_BE_NEXT,
 	},
 	[NEXT]: {
 		backwards: WILL_BE_NEXT,
-		forwards: CURRENT
+		forwards: CURRENT,
 	},
 	[WILL_BE_NEXT]: {
 		backwards: CURRENT,
-		forwards: NEXT
-	}
+		forwards: NEXT,
+	},
 };
 
 const BACKWARDS = 'backwards',
@@ -67,7 +67,7 @@ function validateInterval(interval) {
 	}
 }
 
-const SpeedwellSlider = function(
+const SpeedwellSlider = function (
 	sliderContainer,
 	setupDOMSlideFn,
 	renderSlideContentFn,
@@ -80,14 +80,15 @@ const SpeedwellSlider = function(
 
 	if (this.sliderWrapper) {
 		this.init();
-	} else {
+	}
+	else {
 		throw new Error('Container not found.');
 	}
 };
 
 SpeedwellSlider.prototype = {
 	applyAnimation(direction, nextSlideContent) {
-		return new Promise(restoreInteraction => {
+		return new Promise((restoreInteraction) => {
 			const currentSlide = this.sliderWrapper.querySelector(
 				'[data-state="current"]'
 			);
@@ -103,7 +104,7 @@ SpeedwellSlider.prototype = {
 				{once: true}
 			);
 
-			this.slides.forEach(slide => {
+			this.slides.forEach((slide) => {
 				slide.classList.add(`is-sliding-${direction}`);
 			});
 		});
@@ -116,7 +117,7 @@ SpeedwellSlider.prototype = {
 			),
 			prevBtn: this.sliderWrapper.querySelector(
 				'button[class*=control--prev]'
-			)
+			),
 		};
 
 		this.controls.prevBtn.addEventListener(
@@ -145,7 +146,7 @@ SpeedwellSlider.prototype = {
 	constructor: SpeedwellSlider,
 	controls: {
 		nextBtn: null,
-		prevBtn: null
+		prevBtn: null,
 	},
 	dataset: [],
 	datasetSize: null,
@@ -176,13 +177,13 @@ SpeedwellSlider.prototype = {
 			: this.dataset[this.datasetSize - 1];
 	},
 	handleSlideChange(direction, restoreInteraction, nextSlideContent) {
-		this.slides.forEach(slide => this.setNextState(direction, slide));
+		this.slides.forEach((slide) => this.setNextState(direction, slide));
 
 		const $prepare = nextSlideContent
 			? this.didPrepare(nextSlideContent)
 			: this.prepareNow(direction);
 
-		$prepare.then(slideContent => {
+		$prepare.then((slideContent) => {
 			this.updateStateCycle(direction, slideContent);
 			if (restoreInteraction) {
 				restoreInteraction({isEnabled: true});
@@ -193,7 +194,7 @@ SpeedwellSlider.prototype = {
 		this.setupData()
 			.then(this.setupSliders.bind(this))
 			.then(this.attachListeners.bind(this))
-			.catch(e => {
+			.catch((e) => {
 				const errorMessage =
 					`Request code: ${e.statusCode.toString()}` || 'API error';
 
@@ -216,7 +217,7 @@ SpeedwellSlider.prototype = {
 	},
 
 	prepareNextSlide(direction) {
-		return new Promise(resolve => {
+		return new Promise((resolve) => {
 			const nextSlideContent = this.getNextSlideContent(direction);
 
 			this.renderSlideContent(this.sliderWrapper, nextSlideContent);
@@ -256,7 +257,8 @@ SpeedwellSlider.prototype = {
 
 				this.datasetSize = this.dataset.length;
 				resolve();
-			} catch (e) {
+			}
+			catch (e) {
 				reject(new Error(e));
 			}
 		});
@@ -303,17 +305,18 @@ SpeedwellSlider.prototype = {
 		this.toggleControls({isEnabled: false});
 
 		prepare(direction)
-			.then(nextSlideContent =>
+			.then((nextSlideContent) =>
 				this.applyAnimation(direction, nextSlideContent)
 			)
-			.then(restore => this.toggleControls(restore));
+			.then((restore) => this.toggleControls(restore));
 	},
 
 	toggleControls({isEnabled}) {
 		if (isEnabled) {
 			this.controls.prevBtn.removeAttribute('disabled');
 			this.controls.nextBtn.removeAttribute('disabled');
-		} else {
+		}
+		else {
 			this.controls.prevBtn.setAttribute('disabled', isEnabled);
 			this.controls.nextBtn.setAttribute('disabled', isEnabled);
 		}
@@ -329,7 +332,8 @@ SpeedwellSlider.prototype = {
 			this.stateCycleMap[CURRENT] = this.stateCycleMap[NEXT];
 			this.stateCycleMap[NEXT] = this.stateCycleMap[WILL_BE_NEXT];
 			this.stateCycleMap[WILL_BE_NEXT] = nextSlideContent;
-		} else {
+		}
+		else {
 			this.stateCycleMap[WILL_BE_NEXT] = this.stateCycleMap[NEXT];
 			this.stateCycleMap[NEXT] = this.stateCycleMap[CURRENT];
 			this.stateCycleMap[CURRENT] = nextSlideContent;
@@ -338,12 +342,12 @@ SpeedwellSlider.prototype = {
 
 	validateDataset(data) {
 		return data;
-	}
+	},
 };
 
 Liferay.component(
 	'SpeedwellSlider',
-	(function() {
+	(function () {
 		return {
 			initialize(setupDOMSlideFn, renderSlideContentFn, interval) {
 				const sliderContainer = window.document.querySelector(
@@ -351,13 +355,14 @@ Liferay.component(
 				);
 
 				sliderContainer.removeAttribute('data-will-load');
+
 				return new SpeedwellSlider(
 					sliderContainer,
 					setupDOMSlideFn,
 					renderSlideContentFn,
 					interval
 				);
-			}
+			},
 		};
 	})()
 );

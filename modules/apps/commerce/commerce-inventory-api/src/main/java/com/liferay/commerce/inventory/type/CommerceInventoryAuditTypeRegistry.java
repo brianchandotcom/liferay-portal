@@ -14,14 +14,11 @@
 
 package com.liferay.commerce.inventory.type;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.List;
 
 /**
  * @author Alessio Antonio Rendina
  */
-@ProviderType
 public interface CommerceInventoryAuditTypeRegistry {
 
 	public CommerceInventoryAuditType getCommerceInventoryAuditType(String key);

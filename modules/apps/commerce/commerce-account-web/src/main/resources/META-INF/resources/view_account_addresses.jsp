@@ -21,9 +21,9 @@ CommerceAccountDisplayContext commerceAccountDisplayContext = (CommerceAccountDi
 
 CommerceAccount commerceAccount = commerceAccountDisplayContext.getCurrentCommerceAccount();
 
-Map<String, String> contextParams = new HashMap<>();
-
-contextParams.put("commerceAccountId", String.valueOf(commerceAccount.getCommerceAccountId()));
+Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+	"commerceAccountId", String.valueOf(commerceAccount.getCommerceAccountId())
+).build();
 
 PortletURL portletURL = currentURLObj;
 
@@ -37,7 +37,7 @@ portletURL.setParameter(PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backUR
 	dataProviderKey="<%= CommerceAccountAddressClayDataSetDataSetDisplayView.NAME %>"
 	id="<%= CommerceAccountAddressClayDataSetDataSetDisplayView.NAME %>"
 	itemsPerPage="<%= 10 %>"
-	namespace="<%= renderResponse.getNamespace() %>"
+	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"
 	portletURL="<%= commerceAccountDisplayContext.getPortletURL() %>"
 	style="stacked"
@@ -45,7 +45,7 @@ portletURL.setParameter(PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backUR
 
 <c:if test="<%= commerceAccountDisplayContext.hasCommerceAccountModelPermissions(commerceAccount, ActionKeys.UPDATE) %>">
 	<div class="commerce-cta is-visible">
-		<aui:button cssClass="btn-lg btn-primary js-add-address" onClick='<%= renderResponse.getNamespace() + "openAddressModal();" %>' value="add-address" />
+		<aui:button cssClass="btn-lg btn-primary js-add-address" onClick='<%= liferayPortletResponse.getNamespace() + "openAddressModal();" %>' value="add-address" />
 	</div>
 
 	<commerce-ui:add-address-modal

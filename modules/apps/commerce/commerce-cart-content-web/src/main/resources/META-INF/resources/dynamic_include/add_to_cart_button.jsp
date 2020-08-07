@@ -28,8 +28,8 @@ if (cpInstance != null) {
 	cpInstanceId = cpInstance.getCPInstanceId();
 }
 
-String productContentId = renderResponse.getNamespace() + cpCatalogEntry.getCPDefinitionId() + "ProductContent";
-String quantityInputId = renderResponse.getNamespace() + cpCatalogEntry.getCPDefinitionId() + "Quantity";
+String productContentId = liferayPortletResponse.getNamespace() + cpCatalogEntry.getCPDefinitionId() + "ProductContent";
+String quantityInputId = liferayPortletResponse.getNamespace() + cpCatalogEntry.getCPDefinitionId() + "Quantity";
 %>
 
 <liferay-commerce:quantity-input CPDefinitionId="<%= cpCatalogEntry.getCPDefinitionId() %>" useSelect="<%= true %>" />

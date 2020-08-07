@@ -20,10 +20,10 @@ import com.liferay.commerce.frontend.clay.list.ClayListDataSetDisplayView;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -54,14 +54,13 @@ public class ClayListContextContributor
 	private Map<String, Object> _serialize(
 		ClayListDataSetDisplayView clayListDataSetDisplayView) {
 
-		Map<String, Object> context = new HashMap<>();
-
 		JSONObject schemaJSONObject = _jsonFactory.createJSONObject();
 
 		schemaJSONObject.put(
-			"description", clayListDataSetDisplayView.getDescription());
-		schemaJSONObject.put(
-			"thumbnail", clayListDataSetDisplayView.getThumbnail());
+			"description", clayListDataSetDisplayView.getDescription()
+		).put(
+			"thumbnail", clayListDataSetDisplayView.getThumbnail()
+		);
 
 		String title = clayListDataSetDisplayView.getTitle();
 
@@ -75,9 +74,9 @@ public class ClayListContextContributor
 
 		schemaJSONObject.put("title", title);
 
-		context.put("schema", schemaJSONObject);
-
-		return context;
+		return HashMapBuilder.<String, Object>put(
+			"schema", schemaJSONObject
+		).build();
 	}
 
 	@Reference

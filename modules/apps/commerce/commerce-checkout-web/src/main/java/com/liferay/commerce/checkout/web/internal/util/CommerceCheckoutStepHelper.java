@@ -100,9 +100,11 @@ public class CommerceCheckoutStepHelper {
 			(CommerceOrder)httpServletRequest.getAttribute(
 				CommerceCheckoutWebKeys.COMMERCE_ORDER);
 
-		if (_commercePaymentEngine.getCommercePaymentMethodGroupRelsCount(
-				commerceOrder.getGroupId()) < 1) {
+		long commercePaymentMethodGroupRelsCount =
+			_commercePaymentEngine.getCommercePaymentMethodGroupRelsCount(
+				commerceOrder.getGroupId());
 
+		if (commercePaymentMethodGroupRelsCount < 1) {
 			return false;
 		}
 
@@ -156,9 +158,11 @@ public class CommerceCheckoutStepHelper {
 			return false;
 		}
 
-		if (_commerceShippingMethodLocalService.getCommerceShippingMethodsCount(
-				commerceOrder.getGroupId(), true) > 0) {
+		long commerceGroupShippingMethodsCount =
+			_commerceShippingMethodLocalService.getCommerceShippingMethodsCount(
+				commerceOrder.getGroupId(), true);
 
+		if (commerceGroupShippingMethodsCount > 0) {
 			return true;
 		}
 

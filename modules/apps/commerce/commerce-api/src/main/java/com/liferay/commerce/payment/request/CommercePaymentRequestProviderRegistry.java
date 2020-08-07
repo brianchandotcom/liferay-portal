@@ -14,14 +14,11 @@
 
 package com.liferay.commerce.payment.request;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.Map;
 
 /**
  * @author Luca Pellizzon
  */
-@ProviderType
 public interface CommercePaymentRequestProviderRegistry {
 
 	public CommercePaymentRequestProvider getCommercePaymentRequestProvider(

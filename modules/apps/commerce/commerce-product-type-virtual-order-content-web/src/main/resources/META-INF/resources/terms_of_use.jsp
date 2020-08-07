@@ -36,9 +36,9 @@ String termsOfUseContent = ParamUtil.getString(request, "termsOfUseContent");
 	</c:choose>
 
 	<aui:button-row>
-		<aui:button name="agreeButton" onClick='<%= renderResponse.getNamespace() + "agreeTermsOfUse();" %>' primary="<%= true %>" value="i-agree" />
+		<aui:button name="agreeButton" onClick='<%= liferayPortletResponse.getNamespace() + "agreeTermsOfUse();" %>' primary="<%= true %>" value="i-agree" />
 
-		<aui:button name="disagreeButton" onClick='<%= renderResponse.getNamespace() + "closeDialog();" %>' value="i-disagree" />
+		<aui:button name="disagreeButton" onClick='<%= liferayPortletResponse.getNamespace() + "closeDialog();" %>' value="i-disagree" />
 	</aui:button-row>
 </div>
 

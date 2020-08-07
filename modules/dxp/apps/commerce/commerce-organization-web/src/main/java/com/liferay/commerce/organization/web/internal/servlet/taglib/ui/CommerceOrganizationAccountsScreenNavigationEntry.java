@@ -15,6 +15,7 @@
 package com.liferay.commerce.organization.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.organization.web.internal.display.context.CommerceOrganizationDisplayContext;
+import com.liferay.commerce.organization.web.internal.servlet.taglib.ui.constants.CommerceOrganizationScreenNavigationConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -88,8 +89,8 @@ public class CommerceOrganizationAccountsScreenNavigationEntry
 			return OrganizationPermissionUtil.contains(
 				permissionChecker, organization, ActionKeys.UPDATE);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		return false;

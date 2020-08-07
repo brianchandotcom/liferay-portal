@@ -302,8 +302,8 @@ public class CommercePriceListDisplayContext
 		}
 
 		HeaderActionModel saveAsDraftHeaderActionModel = new HeaderActionModel(
-			null, renderResponse.getNamespace() + "fm", actionURL.toString(),
-			null, saveButtonLabel);
+			null, liferayPortletResponse.getNamespace() + "fm",
+			actionURL.toString(), null, saveButtonLabel);
 
 		headerActionModels.add(saveAsDraftHeaderActionModel);
 
@@ -324,9 +324,9 @@ public class CommercePriceListDisplayContext
 		}
 
 		HeaderActionModel publishHeaderActionModel = new HeaderActionModel(
-			additionalClasses, renderResponse.getNamespace() + "fm",
+			additionalClasses, liferayPortletResponse.getNamespace() + "fm",
 			actionURL.toString(),
-			renderResponse.getNamespace() + "publishButton",
+			liferayPortletResponse.getNamespace() + "publishButton",
 			publishButtonLabel);
 
 		headerActionModels.add(publishHeaderActionModel);

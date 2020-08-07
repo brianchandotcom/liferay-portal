@@ -64,10 +64,11 @@ PortletURL portletURL = commerceApplicationModelItemSelectorViewDisplayContext.g
 		>
 
 			<%
-			Map<String, Object> data = new HashMap<>();
-
-			data.put("commerce-application-model-id", commerceApplicationModel.getCommerceApplicationModelId());
-			data.put("name", commerceApplicationModel.getName());
+			Map<String, Object> data = HashMapBuilder.<String, Object>put(
+				"commerce-application-model-id", commerceApplicationModel.getCommerceApplicationModelId()
+			).put(
+				"name", commerceApplicationModel.getName()
+			).build();
 
 			row.setData(data);
 			%>

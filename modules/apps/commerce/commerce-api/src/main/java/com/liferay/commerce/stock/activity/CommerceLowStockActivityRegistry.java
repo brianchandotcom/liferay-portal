@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.stock.activity;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.model.CPDefinitionInventory;
 
 import java.util.List;
@@ -23,7 +21,6 @@ import java.util.List;
 /**
  * @author Alessio Antonio Rendina
  */
-@ProviderType
 public interface CommerceLowStockActivityRegistry {
 
 	public List<CommerceLowStockActivity> getCommerceLowStockActivities();

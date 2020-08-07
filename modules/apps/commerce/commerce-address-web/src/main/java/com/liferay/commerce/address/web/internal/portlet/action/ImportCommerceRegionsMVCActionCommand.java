@@ -83,13 +83,16 @@ public class ImportCommerceRegionsMVCActionCommand
 				jsonObject.put("success", true);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			hideDefaultErrorMessage(actionRequest);
 
-			_log.error(e, e);
+			_log.error(exception, exception);
 
-			jsonObject.put("error", e.getMessage());
-			jsonObject.put("success", false);
+			jsonObject.put(
+				"error", exception.getMessage()
+			).put(
+				"success", false
+			);
 		}
 
 		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
@@ -99,7 +102,7 @@ public class ImportCommerceRegionsMVCActionCommand
 		hideDefaultSuccessMessage(actionRequest);
 	}
 
-	protected void writeJSON(ActionResponse actionResponse, Object jsonObj)
+	protected void writeJSON(ActionResponse actionResponse, Object object)
 		throws IOException {
 
 		HttpServletResponse httpServletResponse =
@@ -107,7 +110,7 @@ public class ImportCommerceRegionsMVCActionCommand
 
 		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
-		ServletResponseUtil.write(httpServletResponse, jsonObj.toString());
+		ServletResponseUtil.write(httpServletResponse, object.toString());
 
 		httpServletResponse.flushBuffer();
 	}

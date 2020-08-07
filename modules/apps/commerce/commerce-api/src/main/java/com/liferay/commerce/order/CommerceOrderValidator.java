@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.order;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.model.CPInstance;
@@ -26,7 +24,6 @@ import java.util.Locale;
 /**
  * @author Alessio Antonio Rendina
  */
-@ProviderType
 public interface CommerceOrderValidator {
 
 	public String getKey();

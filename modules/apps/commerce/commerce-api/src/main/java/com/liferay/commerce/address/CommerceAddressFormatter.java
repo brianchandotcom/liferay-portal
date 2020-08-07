@@ -14,15 +14,12 @@
 
 package com.liferay.commerce.address;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Alec Sloan
  */
-@ProviderType
 public interface CommerceAddressFormatter {
 
 	public String getBasicAddress(CommerceAddress commerceAddress)

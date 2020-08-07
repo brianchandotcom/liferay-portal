@@ -344,10 +344,10 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 					return true;
 				}
 
-				String decodedNonStaticPortletName =
+				String decodedNonstaticPortletName =
 					PortletIdCodec.decodePortletName(nonstaticPortletId);
 
-				if (decodedNonStaticPortletName.equals(portletId)) {
+				if (decodedNonstaticPortletName.equals(portletId)) {
 					return true;
 				}
 			}

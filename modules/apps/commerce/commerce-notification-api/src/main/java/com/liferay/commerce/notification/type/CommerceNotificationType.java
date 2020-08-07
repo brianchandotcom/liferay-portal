@@ -14,14 +14,11 @@
 
 package com.liferay.commerce.notification.type;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.Locale;
 
 /**
  * @author Alessio Antonio Rendina
  */
-@ProviderType
 public interface CommerceNotificationType {
 
 	public String getClassName(Object object);

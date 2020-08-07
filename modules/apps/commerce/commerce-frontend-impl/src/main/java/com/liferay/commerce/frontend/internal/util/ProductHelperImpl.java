@@ -229,10 +229,11 @@ public class ProductHelperImpl implements ProductHelper {
 		BigDecimal unitPromoPriceWithTaxAmount =
 			unitPromoPriceWithTaxAmountMoney.getPrice();
 
+		BigDecimal unitPriceWithTax = unitPriceWithTaxAmountMoney.getPrice();
+
 		if ((unitPromoPriceWithTaxAmount != null) &&
 			(unitPromoPriceWithTaxAmount.compareTo(BigDecimal.ZERO) > 0) &&
-			(unitPromoPriceWithTaxAmount.compareTo(
-				unitPriceWithTaxAmountMoney.getPrice()) < 0)) {
+			(unitPromoPriceWithTaxAmount.compareTo(unitPriceWithTax) < 0)) {
 
 			priceModel.setPromoPrice(
 				unitPromoPriceWithTaxAmountMoney.format(locale));

@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.catalog.web.internal.servlet.taglib.ui;
 
+import com.liferay.commerce.catalog.web.internal.servlet.taglib.ui.constants.CommerceCatalogScreenNavigationConstants;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;

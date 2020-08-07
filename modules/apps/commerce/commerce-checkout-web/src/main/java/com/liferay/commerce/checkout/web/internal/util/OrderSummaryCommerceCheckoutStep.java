@@ -174,15 +174,15 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 			return _commerceOrderValidatorRegistry.isValid(
 				themeDisplay.getLocale(), commerceOrder);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
 			return false;
 		}
 	}
 
 	private void _checkoutCommerceOrder(HttpServletRequest httpServletRequest)
-		throws PortalException {
+		throws Exception {
 
 		CommerceOrder commerceOrder =
 			(CommerceOrder)httpServletRequest.getAttribute(
@@ -196,7 +196,7 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 
 	private void _validateCommerceOrder(
 			ActionRequest actionRequest, String commerceOrderUuid)
-		throws PortalException {
+		throws Exception {
 
 		long groupId =
 			_commerceChannelLocalService.getCommerceChannelGroupIdBySiteGroupId(

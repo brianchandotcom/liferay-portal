@@ -14,14 +14,11 @@
 
 package com.liferay.commerce.notification.util;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Alessio Antonio Rendina
  */
-@ProviderType
 public interface CommerceNotificationHelper {
 
 	public void sendNotifications(

@@ -22,10 +22,10 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -58,8 +58,6 @@ public class ClayCheckBoxDataSetFilterContextContributor
 	private Map<String, Object> _serialize(
 		ClayCheckBoxDataSetFilter clayCheckBoxDataSetFilter, Locale locale) {
 
-		Map<String, Object> context = new HashMap<>();
-
 		List<ClayCheckBoxDataSetFilterItem> clayCheckBoxDataSetFilterItems =
 			clayCheckBoxDataSetFilter.getClayCheckBoxDataSetFilterItems(locale);
 
@@ -76,16 +74,18 @@ public class ClayCheckBoxDataSetFilterContextContributor
 			String label = LanguageUtil.get(
 				resourceBundle, clayCheckBoxDataSetFilterItem.getLabel());
 
-			jsonObject.put("label", label);
-
-			jsonObject.put("value", clayCheckBoxDataSetFilterItem.getValue());
+			jsonObject.put(
+				"label", label
+			).put(
+				"value", clayCheckBoxDataSetFilterItem.getValue()
+			);
 
 			jsonArray.put(jsonObject);
 		}
 
-		context.put("items", jsonArray);
-
-		return context;
+		return HashMapBuilder.<String, Object>put(
+			"items", jsonArray
+		).build();
 	}
 
 	@Reference

@@ -81,7 +81,7 @@ if ((commercePriceEntry != null) && (commercePriceEntry.getExpirationDate() != n
 						formId="fm"
 						id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_TIER_PRICE_ENTRIES %>"
 						itemsPerPage="<%= 10 %>"
-						namespace="<%= renderResponse.getNamespace() %>"
+						namespace="<%= liferayPortletResponse.getNamespace() %>"
 						pageNumber="<%= 1 %>"
 						portletURL="<%= currentURLObj %>"
 						showManagementBar="<%= true %>"

@@ -14,10 +14,12 @@
 
 package com.liferay.commerce.currency.web.internal.servlet.taglib.ui;
 
+import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.currency.util.ExchangeRateProviderRegistry;
 import com.liferay.commerce.currency.web.internal.display.context.CommerceCurrenciesDisplayContext;
+import com.liferay.commerce.currency.web.internal.servlet.taglib.ui.constants.CommerceCurrencyScreenNavigationConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -53,7 +55,8 @@ import org.osgi.service.component.annotations.Reference;
 	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
 public class CommerceCurrencyCurrenciesScreenNavigationEntry
-	implements ScreenNavigationCategory, ScreenNavigationEntry {
+	implements ScreenNavigationCategory,
+			   ScreenNavigationEntry<CommerceCurrency> {
 
 	@Override
 	public String getCategoryKey() {

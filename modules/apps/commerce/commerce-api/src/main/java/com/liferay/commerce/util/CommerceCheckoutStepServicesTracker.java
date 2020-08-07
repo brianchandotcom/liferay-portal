@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.util;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Marco Leo
  */
-@ProviderType
 public interface CommerceCheckoutStepServicesTracker {
 
 	public CommerceCheckoutStep getCommerceCheckoutStep(

@@ -44,7 +44,7 @@ public class CommerceDataIntegrationProcessLocalServiceImpl
 	@Override
 	public CommerceDataIntegrationProcess addCommerceDataIntegrationProcess(
 			long userId, String name, String type,
-			UnicodeProperties typeSettingsProperties, boolean system)
+			UnicodeProperties typeSettingsUnicodeProperties, boolean system)
 		throws PortalException {
 
 		// Commerce data integration process
@@ -65,7 +65,7 @@ public class CommerceDataIntegrationProcessLocalServiceImpl
 		commerceDataIntegrationProcess.setName(name);
 		commerceDataIntegrationProcess.setType(type);
 		commerceDataIntegrationProcess.setTypeSettingsProperties(
-			typeSettingsProperties);
+			typeSettingsUnicodeProperties);
 		commerceDataIntegrationProcess.setSystem(system);
 
 		commerceDataIntegrationProcess =
@@ -169,7 +169,7 @@ public class CommerceDataIntegrationProcessLocalServiceImpl
 	@Override
 	public CommerceDataIntegrationProcess updateCommerceDataIntegrationProcess(
 			long commerceDataIntegrationProcessId, String name,
-			UnicodeProperties typeSettingsProperties)
+			UnicodeProperties typeSettingsUnicodeProperties)
 		throws PortalException {
 
 		CommerceDataIntegrationProcess commerceDataIntegrationProcess =
@@ -182,7 +182,7 @@ public class CommerceDataIntegrationProcessLocalServiceImpl
 
 		commerceDataIntegrationProcess.setName(name);
 		commerceDataIntegrationProcess.setTypeSettingsProperties(
-			typeSettingsProperties);
+			typeSettingsUnicodeProperties);
 
 		return commerceDataIntegrationProcessPersistence.update(
 			commerceDataIntegrationProcess);
@@ -260,10 +260,13 @@ public class CommerceDataIntegrationProcessLocalServiceImpl
 			return;
 		}
 
+		long existingCommerceDataIntegrationProcessId =
+			commerceDataIntegrationProcess.
+				getCommerceDataIntegrationProcessId();
+
 		if ((commerceDataIntegrationProcessId > 0) &&
-			(commerceDataIntegrationProcess.
-				getCommerceDataIntegrationProcessId() ==
-					commerceDataIntegrationProcessId)) {
+			(existingCommerceDataIntegrationProcessId ==
+				commerceDataIntegrationProcessId)) {
 
 			return;
 		}

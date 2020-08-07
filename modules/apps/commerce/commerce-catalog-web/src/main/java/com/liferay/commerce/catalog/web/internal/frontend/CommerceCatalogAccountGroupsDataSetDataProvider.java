@@ -18,6 +18,7 @@ import com.liferay.commerce.account.model.CommerceAccountGroup;
 import com.liferay.commerce.account.model.CommerceAccountGroupRel;
 import com.liferay.commerce.account.service.CommerceAccountGroupRelService;
 import com.liferay.commerce.account.service.CommerceAccountGroupService;
+import com.liferay.commerce.catalog.web.internal.constants.CommerceCatalogDataSetConstants;
 import com.liferay.commerce.catalog.web.internal.model.AccountGroup;
 import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
 import com.liferay.commerce.frontend.Filter;
@@ -77,12 +78,9 @@ public class CommerceCatalogAccountGroupsDataSetDataProvider
 		for (CommerceAccountGroupRel commerceAccountGroupRel :
 				commerceAccountGroups) {
 
-			long commerceAccountGroupId =
-				commerceAccountGroupRel.getCommerceAccountGroupId();
-
 			CommerceAccountGroup commerceAccountGroup =
 				_commerceAccountGroupService.getCommerceAccountGroup(
-					commerceAccountGroupId);
+					commerceAccountGroupRel.getCommerceAccountGroupId());
 
 			accountGroups.add(new AccountGroup(commerceAccountGroup.getName()));
 		}

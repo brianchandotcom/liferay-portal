@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.payment.engine;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.payment.result.CommercePaymentResult;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Luca Pellizzon
  */
-@ProviderType
 public interface CommerceSubscriptionEngine {
 
 	public boolean activateRecurringDelivery(long commerceSubscriptionEntryId)

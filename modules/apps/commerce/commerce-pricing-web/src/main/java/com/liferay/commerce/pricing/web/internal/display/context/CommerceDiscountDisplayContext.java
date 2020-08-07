@@ -34,7 +34,7 @@ import com.liferay.commerce.frontend.model.HeaderActionModel;
 import com.liferay.commerce.percentage.PercentageFormatter;
 import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
 import com.liferay.commerce.pricing.model.CommercePricingClass;
-import com.liferay.commerce.pricing.web.servlet.taglib.ui.CommerceDiscountScreenNavigationConstants;
+import com.liferay.commerce.pricing.web.internal.servlet.taglib.ui.CommerceDiscountScreenNavigationConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.CustomAttributesUtil;
 
@@ -488,8 +489,8 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 			ActionRequest.ACTION_NAME, "editCommerceDiscount");
 
 		HeaderActionModel saveAsDraftHeaderActionModel = new HeaderActionModel(
-			null, renderResponse.getNamespace() + "fm", actionURL.toString(),
-			null, saveButtonLabel);
+			null, liferayPortletResponse.getNamespace() + "fm",
+			actionURL.toString(), null, saveButtonLabel);
 
 		headerActionModels.add(saveAsDraftHeaderActionModel);
 
@@ -510,9 +511,9 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 		}
 
 		HeaderActionModel publishHeaderActionModel = new HeaderActionModel(
-			additionalClasses, renderResponse.getNamespace() + "fm",
+			additionalClasses, liferayPortletResponse.getNamespace() + "fm",
 			actionURL.toString(),
-			renderResponse.getNamespace() + "publishButton",
+			liferayPortletResponse.getNamespace() + "publishButton",
 			publishButtonLabel);
 
 		headerActionModels.add(publishHeaderActionModel);
@@ -532,8 +533,8 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 				locale, commerceCurrency.getMaxFractionDigits(),
 				commerceCurrency.getMinFractionDigits(), percentage);
 
-		return localizedPercentage.replace(
-			StringPool.PERCENT, StringPool.BLANK);
+		return StringUtil.removeSubstring(
+			localizedPercentage, StringPool.PERCENT);
 	}
 
 	public PortletURL getPortletDiscountRuleURL() {

@@ -22,7 +22,7 @@ AUI().ready(() => {
 			'sliderCallbacks' in Speedwell.features &&
 			Speedwell.features.sliderCallbacks.length
 		) {
-			Speedwell.features.sliderCallbacks.forEach(cb => {
+			Speedwell.features.sliderCallbacks.forEach((cb) => {
 				const componentReady = Liferay.component('SpeedwellSlider');
 
 				if (componentReady) {

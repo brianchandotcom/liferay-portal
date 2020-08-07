@@ -565,21 +565,26 @@ public class CommerceAccountLocalServiceTest {
 			_user.getUserId(), parentOrganizationId, name, false);
 	}
 
-	private void _addOrganizationSet(String baseName) throws PortalException {
-		Organization liferayOrganization = _addOrganization(
-			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
-			baseName + "Liferay");
+	private void _addOrganizationSet(String baseName) throws Exception {
+		try {
+			Organization liferayOrganization = _addOrganization(
+				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+				baseName + "Liferay");
 
-		_addOrganization(
-			liferayOrganization.getOrganizationId(), baseName + "Italy");
+			_addOrganization(
+				liferayOrganization.getOrganizationId(), baseName + "Italy");
 
-		Organization usaOrganization = _addOrganization(
-			liferayOrganization.getOrganizationId(), baseName + "USA");
+			Organization usaOrganization = _addOrganization(
+				liferayOrganization.getOrganizationId(), baseName + "USA");
 
-		_addOrganization(
-			usaOrganization.getOrganizationId(), baseName + "Chicago");
-		_addOrganization(
-			usaOrganization.getOrganizationId(), baseName + "LosAngeles");
+			_addOrganization(
+				usaOrganization.getOrganizationId(), baseName + "Chicago");
+			_addOrganization(
+				usaOrganization.getOrganizationId(), baseName + "LosAngeles");
+		}
+		catch (Exception exception) {
+			throw new Exception(exception);
+		}
 	}
 
 	private List<String> _getExternalReferenceCodes(int count) {

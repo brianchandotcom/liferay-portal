@@ -105,7 +105,7 @@ if (CommercePriceListConstants.TYPE_PROMOTION.equals(commercePriceEntryDisplayCo
 					formId="fm"
 					id="<%= datasetId %>"
 					itemsPerPage="<%= 10 %>"
-					namespace="<%= renderResponse.getNamespace() %>"
+					namespace="<%= liferayPortletResponse.getNamespace() %>"
 					pageNumber="<%= 1 %>"
 					portletURL="<%= currentURLObj %>"
 				/>

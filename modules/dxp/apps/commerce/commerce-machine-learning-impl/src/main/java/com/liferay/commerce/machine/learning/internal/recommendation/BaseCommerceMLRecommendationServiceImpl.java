@@ -213,7 +213,7 @@ public abstract class BaseCommerceMLRecommendationServiceImpl
 		try {
 			return dateFormat.parse(dateString);
 		}
-		catch (ParseException e) {
+		catch (ParseException parseException) {
 		}
 
 		return null;

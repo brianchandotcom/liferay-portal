@@ -62,7 +62,7 @@ PortletURL portletURL = commerceAccountAddressAdminDisplayContext.getPortletURL(
 
 		<liferay-frontend:management-bar-action-buttons>
 			<liferay-frontend:management-bar-button
-				href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceAddresses();" %>'
+				href='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deleteCommerceAddresses();" %>'
 				icon="times"
 				label="delete"
 			/>

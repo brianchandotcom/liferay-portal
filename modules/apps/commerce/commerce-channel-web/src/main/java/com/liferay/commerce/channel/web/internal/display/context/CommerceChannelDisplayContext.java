@@ -344,9 +344,13 @@ public class CommerceChannelDisplayContext
 					commerceChannel.getGroupId(), CommerceOrder.class.getName(),
 					0, typePK, true);
 		}
-		catch (NoSuchWorkflowDefinitionLinkException nswdle) {
+		catch (NoSuchWorkflowDefinitionLinkException
+					noSuchWorkflowDefinitionLinkException) {
+
 			if (_log.isDebugEnabled()) {
-				_log.debug(nswdle, nswdle);
+				_log.debug(
+					noSuchWorkflowDefinitionLinkException,
+					noSuchWorkflowDefinitionLinkException);
 			}
 		}
 

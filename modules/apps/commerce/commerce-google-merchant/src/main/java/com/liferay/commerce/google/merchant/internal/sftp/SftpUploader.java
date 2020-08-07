@@ -43,12 +43,6 @@ import org.osgi.service.component.annotations.ConfigurationPolicy;
 )
 public class SftpUploader {
 
-	@Activate
-	public void activate(Map<String, Object> properties) {
-		_sftpConfiguration = ConfigurableUtil.createConfigurable(
-			SftpConfiguration.class, properties);
-	}
-
 	public void upload(String fileName, String fileContent) throws Exception {
 		ChannelSftp channelSftp = null;
 		Session jschSession = null;
@@ -59,15 +53,15 @@ public class SftpUploader {
 			int port = _sftpConfiguration.port();
 			String username = _sftpConfiguration.username();
 
-			JSch jsch = new JSch();
+			JSch jSch = new JSch();
 
 			FingerprintHostKeyRepository fingerprintHostKeyRepository =
 				new FingerprintHostKeyRepository(
-					jsch, _sftpConfiguration.fingerprint());
+					jSch, _sftpConfiguration.fingerprint());
 
-			jsch.setHostKeyRepository(fingerprintHostKeyRepository);
+			jSch.setHostKeyRepository(fingerprintHostKeyRepository);
 
-			jschSession = jsch.getSession(username, host);
+			jschSession = jSch.getSession(username, host);
 
 			jschSession.setPassword(password);
 			jschSession.setPort(port);
@@ -94,6 +88,12 @@ public class SftpUploader {
 				jschSession.disconnect();
 			}
 		}
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_sftpConfiguration = ConfigurableUtil.createConfigurable(
+			SftpConfiguration.class, properties);
 	}
 
 	private SftpConfiguration _sftpConfiguration;

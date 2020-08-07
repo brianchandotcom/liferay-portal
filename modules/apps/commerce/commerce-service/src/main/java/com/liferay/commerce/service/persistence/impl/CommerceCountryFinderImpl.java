@@ -17,7 +17,6 @@ package com.liferay.commerce.service.persistence.impl;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.impl.CommerceCountryImpl;
 import com.liferay.commerce.service.persistence.CommerceCountryFinder;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -56,7 +55,7 @@ public class CommerceCountryFinderImpl
 				getClass(), FIND_BY_COMMERCE_WAREHOUSES);
 
 			if (all) {
-				sql = StringUtil.replace(sql, _ALL_SQL, StringPool.BLANK);
+				sql = StringUtil.removeSubstring(sql, _ALL_SQL);
 			}
 			else {
 				sql = StringUtil.replace(sql, _ALL_SQL, _ACTIVE_SQL);
@@ -98,7 +97,7 @@ public class CommerceCountryFinderImpl
 					sql, _BILLING_SQL, _BILLING_ALLOWED_SQL);
 			}
 			else {
-				sql = StringUtil.replace(sql, _BILLING_SQL, StringPool.BLANK);
+				sql = StringUtil.removeSubstring(sql, _BILLING_SQL);
 			}
 
 			if (shippingAllowed) {
@@ -106,7 +105,7 @@ public class CommerceCountryFinderImpl
 					sql, _SHIPPING_SQL, _SHIPPING_ALLOWED_SQL);
 			}
 			else {
-				sql = StringUtil.replace(sql, _SHIPPING_SQL, StringPool.BLANK);
+				sql = StringUtil.removeSubstring(sql, _SHIPPING_SQL);
 			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);

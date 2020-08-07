@@ -42,12 +42,12 @@ public class CommerceAccountGroupAccountItemSelectorChecker
 	}
 
 	@Override
-	public boolean isChecked(Object obj) {
+	public boolean isChecked(Object object) {
 		if (_commerceAccountGroup == null) {
 			return false;
 		}
 
-		CommerceAccount commerceAccount = (CommerceAccount)obj;
+		CommerceAccount commerceAccount = (CommerceAccount)object;
 
 		CommerceAccountGroupCommerceAccountRel
 			commerceAccountGroupCommerceAccountRel =
@@ -64,8 +64,8 @@ public class CommerceAccountGroupAccountItemSelectorChecker
 	}
 
 	@Override
-	public boolean isDisabled(Object obj) {
-		return isChecked(obj);
+	public boolean isDisabled(Object object) {
+		return isChecked(object);
 	}
 
 	private final CommerceAccountGroup _commerceAccountGroup;

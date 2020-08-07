@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.payment.method;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.payment.request.CommercePaymentRequest;
 import com.liferay.commerce.payment.result.CommercePaymentResult;
 import com.liferay.commerce.payment.result.CommerceSubscriptionStatusResult;
@@ -25,7 +23,6 @@ import java.util.Locale;
 /**
  * @author Luca Pellizzon
  */
-@ProviderType
 public interface CommercePaymentMethod {
 
 	public default boolean activateRecurringPayment(

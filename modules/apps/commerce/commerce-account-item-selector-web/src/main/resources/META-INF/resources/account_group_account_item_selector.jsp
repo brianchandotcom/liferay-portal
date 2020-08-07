@@ -19,7 +19,7 @@
 <%
 CommerceAccountGroupAccountItemSelectorViewDisplayContext commerceAccountGroupAccountItemSelectorViewDisplayContext = (CommerceAccountGroupAccountItemSelectorViewDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-SearchContainer commerceAccountSearchContainer = commerceAccountGroupAccountItemSelectorViewDisplayContext.getSearchContainer();
+SearchContainer<CommerceAccount> commerceAccountSearchContainer = commerceAccountGroupAccountItemSelectorViewDisplayContext.getSearchContainer();
 String itemSelectedEventName = commerceAccountGroupAccountItemSelectorViewDisplayContext.getItemSelectedEventName();
 PortletURL portletURL = commerceAccountGroupAccountItemSelectorViewDisplayContext.getPortletURL();
 %>
@@ -71,10 +71,11 @@ PortletURL portletURL = commerceAccountGroupAccountItemSelectorViewDisplayContex
 		>
 
 			<%
-			Map<String, Object> data = new HashMap<>();
-
-			data.put("commerce-account-id", commerceAccount.getCommerceAccountId());
-			data.put("name", commerceAccount.getName());
+			Map<String, Object> data = HashMapBuilder.<String, Object>put(
+				"commerce-account-id", commerceAccount.getCommerceAccountId()
+			).put(
+				"name", commerceAccount.getName()
+			).build();
 
 			row.setData(data);
 			%>

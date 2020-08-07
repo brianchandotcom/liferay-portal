@@ -117,7 +117,7 @@ boolean hasPermission = commercePricingClassCPDefinitionDisplayContext.hasPermis
 					formId="fm"
 					id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICING_CLASSES_PRODUCT_DEFINITIONS %>"
 					itemsPerPage="<%= 10 %>"
-					namespace="<%= renderResponse.getNamespace() %>"
+					namespace="<%= liferayPortletResponse.getNamespace() %>"
 					pageNumber="<%= 1 %>"
 					portletURL="<%= currentURLObj %>"
 				/>

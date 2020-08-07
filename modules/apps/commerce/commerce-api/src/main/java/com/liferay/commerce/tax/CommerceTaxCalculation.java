@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.tax;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
@@ -29,7 +27,6 @@ import java.util.List;
 /**
  * @author Marco Leo
  */
-@ProviderType
 public interface CommerceTaxCalculation {
 
 	public List<CommerceTaxValue> getCommerceTaxValues(

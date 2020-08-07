@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String historyChartRootElementId = renderResponse.getNamespace() + "-history-chart";
+String historyChartRootElementId = liferayPortletResponse.getNamespace() + "-history-chart";
 
 CommerceContext commerceContext = (CommerceContext)request.getAttribute(CommerceWebKeys.COMMERCE_CONTEXT);
 
@@ -29,12 +29,12 @@ CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
 </div>
 
 <aui:script require="commerce-dashboard-web/js/history/index.es as chart">
-chart.default('<%= historyChartRootElementId %>', {
-	APIBaseUrl: `/o/----`,
-	accountIdParamName: '----',
-	commerceAccountId: '<%= commerceAccount.getCommerceAccountId() %>',
-	noAccountErrorMessage: Liferay.Language.get('no-account-selected'),
-	noDataErrorMessage: Liferay.Language.get('no-data-available'),
-	portletId: '<%= portletDisplay.getId() %>'
-});
+	chart.default('<%= historyChartRootElementId %>', {
+		APIBaseUrl: '/o/----',
+		accountIdParamName: '----',
+		commerceAccountId: '<%= commerceAccount.getCommerceAccountId() %>',
+		noAccountErrorMessage: Liferay.Language.get('no-account-selected'),
+		noDataErrorMessage: Liferay.Language.get('no-data-available'),
+		portletId: '<%= portletDisplay.getId() %>',
+	});
 </aui:script>

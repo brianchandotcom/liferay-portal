@@ -133,8 +133,8 @@ public class CommerceChannelClayTable
 
 				clayTableActions.add(permissionsClayDataSetAction);
 			}
-			catch (Exception e) {
-				throw new PortalException(e);
+			catch (Exception exception) {
+				throw new PortalException(exception);
 			}
 		}
 
@@ -245,8 +245,8 @@ public class CommerceChannelClayTable
 		try {
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 		}
-		catch (WindowStateException wse) {
-			throw new PortalException(wse);
+		catch (WindowStateException windowStateException) {
+			throw new PortalException(windowStateException);
 		}
 
 		return portletURL;

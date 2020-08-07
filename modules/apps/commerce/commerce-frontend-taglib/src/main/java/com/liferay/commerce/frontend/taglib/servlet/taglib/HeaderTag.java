@@ -46,6 +46,10 @@ public class HeaderTag extends IncludeTag {
 		return _bean;
 	}
 
+	public String getBeanIdLabel() {
+		return _beanIdLabel;
+	}
+
 	public String getBeanLabel() {
 		return _beanIdLabel;
 	}

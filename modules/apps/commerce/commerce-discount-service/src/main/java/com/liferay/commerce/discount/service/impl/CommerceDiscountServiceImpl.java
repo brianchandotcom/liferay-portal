@@ -434,7 +434,7 @@ public class CommerceDiscountServiceImpl
 					expirationDateHour, expirationDateMinute, neverExpire,
 					serviceContext);
 			}
-			catch (NoSuchDiscountException nsde) {
+			catch (NoSuchDiscountException noSuchDiscountException) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Unable to find discount with ID: " +

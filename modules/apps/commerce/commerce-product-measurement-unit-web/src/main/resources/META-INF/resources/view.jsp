@@ -69,7 +69,7 @@ CPMeasurementUnitsDisplayContext cpMeasurementUnitsDisplayContext = (CPMeasureme
 
 		<liferay-frontend:management-bar-action-buttons>
 			<liferay-frontend:management-bar-button
-				href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCPMeasurementUnits();" %>'
+				href='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deleteCPMeasurementUnits();" %>'
 				icon="times"
 				label="delete"
 			/>

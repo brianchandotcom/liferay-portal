@@ -110,32 +110,33 @@ public class BillingAddressCommerceCheckoutStep
 		throws Exception {
 
 		try {
-			AddressCommerceCheckoutStepUtil addressCommerceCheckoutStepUtil =
-				new AddressCommerceCheckoutStepUtil(
-					commerceAccountLocalService,
-					CommerceAddressConstants.ADDRESS_TYPE_BILLING,
-					commerceOrderService, commerceAddressService,
-					commerceOrderModelResourcePermission);
+			AddressCommerceCheckoutStepHelper
+				addressCommerceCheckoutStepHelper =
+					new AddressCommerceCheckoutStepHelper(
+						commerceAccountLocalService,
+						CommerceAddressConstants.ADDRESS_TYPE_BILLING,
+						commerceOrderService, commerceAddressService,
+						commerceOrderModelResourcePermission);
 
-			addressCommerceCheckoutStepUtil.updateCommerceOrderAddress(
+			addressCommerceCheckoutStepHelper.updateCommerceOrderAddress(
 				actionRequest,
 				CommerceCheckoutWebKeys.BILLING_ADDRESS_PARAM_NAME);
 		}
-		catch (Exception e) {
-			if (e instanceof CommerceAddressCityException ||
-				e instanceof CommerceAddressCountryException ||
-				e instanceof CommerceAddressNameException ||
-				e instanceof CommerceAddressStreetException ||
-				e instanceof CommerceAddressZipException ||
-				e instanceof CommerceOrderBillingAddressException ||
-				e instanceof CommerceOrderShippingAddressException) {
+		catch (Exception exception) {
+			if (exception instanceof CommerceAddressCityException ||
+				exception instanceof CommerceAddressCountryException ||
+				exception instanceof CommerceAddressNameException ||
+				exception instanceof CommerceAddressStreetException ||
+				exception instanceof CommerceAddressZipException ||
+				exception instanceof CommerceOrderBillingAddressException ||
+				exception instanceof CommerceOrderShippingAddressException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				return;
 			}
 
-			throw e;
+			throw exception;
 		}
 	}
 

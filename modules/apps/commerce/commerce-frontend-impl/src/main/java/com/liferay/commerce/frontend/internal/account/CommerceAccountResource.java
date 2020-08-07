@@ -154,10 +154,10 @@ public class CommerceAccountResource {
 				commerceContext.getCommerceSiteType(), queryString, page,
 				pageSize, themeDisplay.getPathImage());
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 			accountList = new AccountList(
-				StringUtil.split(e.getLocalizedMessage()));
+				StringUtil.split(exception.getLocalizedMessage()));
 		}
 
 		return getResponse(accountList);
@@ -182,9 +182,9 @@ public class CommerceAccountResource {
 			orderList = getOrderList(
 				groupId, accountId, page, pageSize, httpServletRequest);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			orderList = new OrderList(
-				StringUtil.split(e.getLocalizedMessage()));
+				StringUtil.split(exception.getLocalizedMessage()));
 		}
 
 		return getResponse(orderList);
@@ -215,9 +215,9 @@ public class CommerceAccountResource {
 				themeDisplay.getCompanyId(), queryString,
 				themeDisplay.getPathImage());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			accountOrganizationList = new AccountOrganizationList(
-				StringUtil.split(e.getLocalizedMessage()));
+				StringUtil.split(exception.getLocalizedMessage()));
 		}
 
 		return getResponse(accountOrganizationList);
@@ -237,9 +237,9 @@ public class CommerceAccountResource {
 				themeDisplay.getCompanyId(), queryString,
 				themeDisplay.getPathImage());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			accountUserList = new AccountUserList(
-				StringUtil.split(e.getLocalizedMessage()));
+				StringUtil.split(exception.getLocalizedMessage()));
 		}
 
 		return getResponse(accountUserList);
@@ -260,8 +260,8 @@ public class CommerceAccountResource {
 					getCommerceChannelGroupIdBySiteGroupId(groupId),
 				accountId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			Response.ResponseBuilder responseBuilder = Response.serverError();
 
@@ -379,8 +379,8 @@ public class CommerceAccountResource {
 				json, MediaType.APPLICATION_JSON
 			).build();
 		}
-		catch (JsonProcessingException jpe) {
-			_log.error(jpe, jpe);
+		catch (JsonProcessingException jsonProcessingException) {
+			_log.error(jsonProcessingException, jsonProcessingException);
 		}
 
 		return Response.status(

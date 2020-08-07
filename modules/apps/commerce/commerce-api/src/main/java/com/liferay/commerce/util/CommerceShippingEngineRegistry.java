@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.util;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.model.CommerceShippingEngine;
 
 import java.util.Map;
@@ -23,7 +21,6 @@ import java.util.Map;
 /**
  * @author Andrea Di Giorgi
  */
-@ProviderType
 public interface CommerceShippingEngineRegistry {
 
 	public CommerceShippingEngine getCommerceShippingEngine(String key);

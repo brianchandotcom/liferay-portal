@@ -14,14 +14,11 @@
 
 package com.liferay.commerce.order;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.List;
 
 /**
  * @author Luca Pellizzon
  */
-@ProviderType
 public interface CommerceDefinitionTermContributorRegistry {
 
 	public List<CommerceDefinitionTermContributor>

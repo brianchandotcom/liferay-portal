@@ -7,23 +7,19 @@
  * contacting Liferay, Inc. See the License for the specific language governing
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
- *
- *
- *
  */
 
 module.exports = {
 	env: {
 		browser: true,
 		jest: true,
-		node: true
+		node: true,
 	},
-	extends: ['liferay/react'],
 	globals: {
 		AUI: 'readonly',
-		Liferay: 'readonly'
+		Liferay: 'readonly',
 	},
 	parserOptions: {
-		ecmaVersion: 2018
-	}
+		ecmaVersion: 2018,
+	},
 };

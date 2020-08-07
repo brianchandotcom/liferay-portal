@@ -132,7 +132,7 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 					dataProviderKey="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_OPTION_VALUES %>"
 					id="<%= datasetDisplayId %>"
 					itemsPerPage="<%= 10 %>"
-					namespace="<%= renderResponse.getNamespace() %>"
+					namespace="<%= liferayPortletResponse.getNamespace() %>"
 					pageNumber="<%= 1 %>"
 					portletURL="<%= currentURLObj %>"
 				/>
@@ -141,21 +141,21 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 
 		<aui:script>
 			var allowedPriceContributorTypeNames =
-				'<%= String.join(StringPool.COMMA, CPConstants.PRODUCT_OPTION_PRICE_CONTRIBUTOR_FIELD_TYPES) %>';
+				'<%= StringUtil.merge(CPConstants.PRODUCT_OPTION_PRICE_CONTRIBUTOR_FIELD_TYPES, StringPool.COMMA) %>';
 			var allowedPriceContributorFieldTypeSelectOptions = allowedPriceContributorTypeNames.split(
-				','
+				StringPool.COMMA
 			);
 			var allowedSkuContributorTypeNames =
-				'<%= String.join(StringPool.COMMA, CPConstants.PRODUCT_OPTION_SKU_CONTRIBUTOR_FIELD_TYPES) %>';
+				'<%= StringUtil.merge(CPConstants.PRODUCT_OPTION_SKU_CONTRIBUTOR_FIELD_TYPES, StringPool.COMMA) %>';
 			var allowedSkuContributorFieldTypeSelectOptions = allowedSkuContributorTypeNames.split(
-				','
+				StringPool.COMMA
 			);
 			var availableTypeNames =
 				'<%= cpDefinitionOptionRelDisplayContext.getDDMFormFieldTypeNames() %>';
-			var availableFieldTypeSelectOptions = availableTypeNames.split(',');
+			var availableFieldTypeSelectOptions = availableTypeNames.split(StringPool.COMMA);
 			var multipleValuesTypeNames =
-				'<%= String.join(StringPool.COMMA, CPConstants.PRODUCT_OPTION_MULTIPLE_VALUES_FIELD_TYPES) %>';
-			var multipleValuesFieldTypeSelectOptions = multipleValuesTypeNames.split(',');
+				'<%= StringUtil.merge(CPConstants.PRODUCT_OPTION_MULTIPLE_VALUES_FIELD_TYPES, StringPool.COMMA) %>';
+			var multipleValuesFieldTypeSelectOptions = multipleValuesTypeNames.split(StringPool.COMMA);
 
 			var formFieldTypeSelect = document.getElementById(
 				'<portlet:namespace />DDMFormFieldTypeName'

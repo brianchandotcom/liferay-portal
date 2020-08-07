@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.discount.target;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -25,7 +23,6 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 /**
  * @author Marco Leo
  */
-@ProviderType
 public interface CommerceDiscountOrderTarget {
 
 	public void contributeDocument(

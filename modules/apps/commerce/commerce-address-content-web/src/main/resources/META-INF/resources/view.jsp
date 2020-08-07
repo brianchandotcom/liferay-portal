@@ -29,9 +29,9 @@ CommerceAddressDisplayContext commerceAddressDisplayContext = (CommerceAddressDi
 	<c:otherwise>
 
 		<%
-		Map<String, Object> contextObjects = new HashMap<>();
-
-		contextObjects.put("commerceAddressDisplayContext", commerceAddressDisplayContext);
+		Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
+			"commerceAddressDisplayContext", commerceAddressDisplayContext
+		).build();
 
 		SearchContainer<CommerceAddress> commerceAddressSearchContainer = commerceAddressDisplayContext.getSearchContainer();
 

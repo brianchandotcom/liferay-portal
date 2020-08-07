@@ -19,7 +19,6 @@ import com.liferay.commerce.model.impl.CPDAvailabilityEstimateModelImpl;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -52,19 +51,13 @@ public class CPDAvailabilityEstimateUpgradeProcess
 
 		_addIndexes(CPDAvailabilityEstimateModelImpl.TABLE_NAME);
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		Statement s = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"update CPDAvailabilityEstimate set CProductId = ? where " +
 					"CPDefinitionId = ?");
-
-			s = connection.createStatement();
-
-			rs = s.executeQuery(
-				"select distinct CPDefinitionId from CPDAvailabilityEstimate");
+			Statement s = connection.createStatement();
+			ResultSet rs = s.executeQuery(
+				"select distinct CPDefinitionId from " +
+					"CPDAvailabilityEstimate")) {
 
 			while (rs.next()) {
 				long cpDefinitionId = rs.getLong("CPDefinitionId");
@@ -78,10 +71,6 @@ public class CPDAvailabilityEstimateUpgradeProcess
 
 				ps.execute();
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps);
-			DataAccess.cleanUp(s, rs);
 		}
 
 		runSQL("drop index IX_86A2368F on CPDAvailabilityEstimate");
@@ -121,12 +110,10 @@ public class CPDAvailabilityEstimateUpgradeProcess
 	private boolean _tableHasIndex(String tableName, String indexName)
 		throws Exception {
 
-		ResultSet rs = null;
+		DatabaseMetaData metadata = connection.getMetaData();
 
-		try {
-			DatabaseMetaData metadata = connection.getMetaData();
-
-			rs = metadata.getIndexInfo(null, null, tableName, false, false);
+		try (ResultSet rs = metadata.getIndexInfo(
+				null, null, tableName, false, false)) {
 
 			while (rs.next()) {
 				String curIndexName = rs.getString("index_name");
@@ -135,9 +122,6 @@ public class CPDAvailabilityEstimateUpgradeProcess
 					return true;
 				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(rs);
 		}
 
 		return false;

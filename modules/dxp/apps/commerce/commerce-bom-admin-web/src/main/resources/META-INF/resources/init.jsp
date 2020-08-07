@@ -29,8 +29,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.commerce.bom.admin.web.internal.dao.search.CommerceBOMAdminResultRowSplitter" %><%@
 page import="com.liferay.commerce.bom.admin.web.internal.display.context.CommerceBOMAdminDisplayContext" %><%@
 page import="com.liferay.commerce.bom.admin.web.internal.js.loader.modules.extender.npm.NPMResolverProvider" %><%@
-page import="com.liferay.commerce.bom.admin.web.internal.servlet.taglib.ui.CommerceBOMDefinitionScreenNavigationConstants" %><%@
-page import="com.liferay.commerce.bom.admin.web.internal.servlet.taglib.ui.CommerceBOMFolderScreenNavigationConstants" %><%@
+page import="com.liferay.commerce.bom.admin.web.internal.servlet.taglib.ui.constants.CommerceBOMDefinitionScreenNavigationConstants" %><%@
+page import="com.liferay.commerce.bom.admin.web.internal.servlet.taglib.ui.constants.CommerceBOMFolderScreenNavigationConstants" %><%@
 page import="com.liferay.commerce.bom.constants.CommerceBOMActionKeys" %><%@
 page import="com.liferay.commerce.bom.exception.NoSuchBOMDefinitionException" %><%@
 page import="com.liferay.commerce.bom.exception.NoSuchBOMFolderApplicationRelException" %><%@

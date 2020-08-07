@@ -19,11 +19,11 @@ import com.liferay.commerce.data.integration.service.CommerceDataIntegrationProc
 import com.liferay.commerce.data.integration.service.ScheduledTaskExecutorService;
 import com.liferay.commerce.machine.learning.internal.data.integration.CommerceMLScheduledTaskExecutorService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.io.IOException;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Reference;
@@ -53,26 +53,22 @@ public abstract class BaseForecastScheduledTaskExecutorService
 	protected Map<String, String> getContextProperties(
 		CommerceDataIntegrationProcess commerceDataIntegrationProcess) {
 
-		Map<String, String> contextProperties = new HashMap<>();
-
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			commerceDataIntegrationProcess.getTypeSettingsProperties();
 
-		contextProperties.put(
+		return HashMapBuilder.put(
 			"COMMERCE_ML_FORECAST_PERIOD",
-			typeSettingsProperties.getProperty(
-				COMMERCE_ML_FORECAST_PERIOD, getPeriod()));
-
-		contextProperties.put("COMMERCE_ML_FORECAST_SCOPE", getScope());
-
-		contextProperties.put(
+			typeSettingsUnicodeProperties.getProperty(
+				COMMERCE_ML_FORECAST_PERIOD, getPeriod())
+		).put(
+			"COMMERCE_ML_FORECAST_SCOPE", getScope()
+		).put(
 			"COMMERCE_ML_FORECAST_TARGET",
-			typeSettingsProperties.getProperty(
-				COMMERCE_ML_FORECAST_TARGET, getTarget()));
-
-		contextProperties.put("COMMERCE_ML_PROCESS_TYPE", getName());
-
-		return contextProperties;
+			typeSettingsUnicodeProperties.getProperty(
+				COMMERCE_ML_FORECAST_TARGET, getTarget())
+		).put(
+			"COMMERCE_ML_PROCESS_TYPE", getName()
+		).build();
 	}
 
 	protected abstract String getPeriod();

@@ -14,14 +14,11 @@
 
 package com.liferay.commerce.payment.method;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.Map;
 
 /**
  * @author Luca Pellizzon
  */
-@ProviderType
 public interface CommercePaymentMethodRegistry {
 
 	public CommercePaymentMethod getCommercePaymentMethod(String key);

@@ -60,8 +60,8 @@ public class LiferayEventProcessorFilter implements ContainerRequestFilter {
 				PropsValues.SERVLET_SERVICE_EVENTS_PRE, _httpServletRequest,
 				_httpServletResponse);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 

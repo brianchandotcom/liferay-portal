@@ -121,7 +121,7 @@ public class CommerceDiscountRuleCPDefinitionDataSetDataProvider
 
 		String keywords = defaultFilterImpl.getKeywords();
 
-		String keywordsLowerCase = keywords.toLowerCase();
+		String keywordsLowerCase = StringUtil.toLowerCase(keywords);
 
 		for (long cpDefinitionId : cpDefinitionIds) {
 			CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
@@ -129,7 +129,8 @@ public class CommerceDiscountRuleCPDefinitionDataSetDataProvider
 
 			String cpDefinitionName = cpDefinition.getName(languageId);
 
-			String cpDefinitionNameLowerCase = cpDefinitionName.toLowerCase();
+			String cpDefinitionNameLowerCase = StringUtil.toLowerCase(
+				cpDefinitionName);
 
 			if (!cpDefinitionNameLowerCase.contains(keywordsLowerCase)) {
 				continue;

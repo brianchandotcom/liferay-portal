@@ -17,13 +17,12 @@ package com.liferay.commerce.frontend.internal.clay.data.set;
 import com.liferay.commerce.frontend.clay.data.set.ClayAutocompleteDataSetFilter;
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetFilter;
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetFilterContextContributor;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -52,29 +51,27 @@ public class ClayAutocompleteDataSetFilterContextContributor
 		ClayAutocompleteDataSetFilter clayAutocompleteDataSetFilter,
 		Locale locale) {
 
-		ResourceBundle resourceBundle =
-			clayAutocompleteDataSetFilter.getResourceBundle(locale);
-
-		Map<String, Object> context = new HashMap<>();
-
-		context.put("apiUrl", clayAutocompleteDataSetFilter.getApiURL());
-		context.put(
+		return HashMapBuilder.<String, Object>put(
 			"inputPlaceholder",
 			ResourceBundleUtil.getString(
-				resourceBundle,
-				clayAutocompleteDataSetFilter.getPlaceholder()));
-		context.put("itemKey", clayAutocompleteDataSetFilter.getItemKey());
-		context.put("itemLabel", clayAutocompleteDataSetFilter.getItemLabel());
+				clayAutocompleteDataSetFilter.getResourceBundle(locale),
+				clayAutocompleteDataSetFilter.getPlaceholder())
+		).put(
+			"itemKey", clayAutocompleteDataSetFilter.getItemKey()
+		).put(
+			"itemLabel", clayAutocompleteDataSetFilter.getItemLabel()
+		).put(
+			"userGroup",
+			() -> {
+				String selectionType = "single";
 
-		String selectionType = "single";
+				if (clayAutocompleteDataSetFilter.isMultipleSelection()) {
+					selectionType = "multiple";
+				}
 
-		if (clayAutocompleteDataSetFilter.isMultipleSelection()) {
-			selectionType = "multiple";
-		}
-
-		context.put("selectionType", selectionType);
-
-		return context;
+				return selectionType;
+			}
+		).build();
 	}
 
 }

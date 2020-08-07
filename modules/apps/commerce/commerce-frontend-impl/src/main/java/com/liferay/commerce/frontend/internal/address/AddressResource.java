@@ -74,8 +74,8 @@ public class AddressResource {
 				).build();
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return Response.status(
@@ -109,8 +109,8 @@ public class AddressResource {
 				json, MediaType.APPLICATION_JSON
 			).build();
 		}
-		catch (JsonProcessingException jpe) {
-			_log.error(jpe, jpe);
+		catch (JsonProcessingException jsonProcessingException) {
+			_log.error(jsonProcessingException, jsonProcessingException);
 		}
 
 		return Response.status(
@@ -129,11 +129,9 @@ public class AddressResource {
 		@QueryParam("companyId") long companyId,
 		@Context ThemeDisplay themeDisplay) {
 
-		List<CommerceCountry> commerceCountries =
-			_commerceCountryService.getCommerceCountries(companyId, true);
-
 		return _getCommerceCountries(
-			commerceCountries, themeDisplay.getLanguageId());
+			_commerceCountryService.getCommerceCountries(companyId, true),
+			themeDisplay.getLanguageId());
 	}
 
 	@GET
@@ -186,8 +184,8 @@ public class AddressResource {
 				json, MediaType.APPLICATION_JSON
 			).build();
 		}
-		catch (JsonProcessingException jpe) {
-			_log.error(jpe, jpe);
+		catch (JsonProcessingException jsonProcessingException) {
+			_log.error(jsonProcessingException, jsonProcessingException);
 		}
 
 		return Response.status(

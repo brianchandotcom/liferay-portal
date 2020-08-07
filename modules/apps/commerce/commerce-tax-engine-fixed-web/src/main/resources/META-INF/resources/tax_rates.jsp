@@ -33,7 +33,7 @@ contextParams.put("commerceTaxMethodId", String.valueOf(commerceTaxFixedRatesDis
 	dataProviderKey="<%= CommerceTaxRateClayTable.NAME %>"
 	id="<%= CommerceTaxRateClayTable.NAME %>"
 	itemsPerPage="<%= 10 %>"
-	namespace="<%= renderResponse.getNamespace() %>"
+	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"
 	portletURL="<%= commerceTaxFixedRatesDisplayContext.getPortletURL() %>"
 	showSearch="<%= false %>"

@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.account.util;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -23,7 +21,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
-@ProviderType
 public interface CommerceAccountRoleHelper {
 
 	public void checkCommerceAccountRoles(ServiceContext serviceContext)

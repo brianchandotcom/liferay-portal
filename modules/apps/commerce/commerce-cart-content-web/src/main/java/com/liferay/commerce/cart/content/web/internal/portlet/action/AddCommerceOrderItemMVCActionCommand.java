@@ -126,19 +126,24 @@ public class AddCommerceOrderItemMVCActionCommand extends BaseMVCActionCommand {
 
 			jsonObject.put(
 				"commerceOrderItemId",
-				commerceOrderItem.getCommerceOrderItemId());
-			jsonObject.put(
-				"commerceOrderItemsQuantity", commerceOrderItemsQuantity);
-			jsonObject.put("success", true);
-			jsonObject.put(
+				commerceOrderItem.getCommerceOrderItemId()
+			).put(
+				"commerceOrderItemsQuantity", commerceOrderItemsQuantity
+			).put(
+				"success", true
+			).put(
 				"successMessage",
 				LanguageUtil.get(
 					httpServletRequest,
-					"the-product-was-successfully-added-to-the-cart"));
+					"the-product-was-successfully-added-to-the-cart")
+			);
 		}
-		catch (CommerceOrderValidatorException cove) {
+		catch (CommerceOrderValidatorException
+					commerceOrderValidatorException) {
+
 			List<CommerceOrderValidatorResult> commerceOrderValidatorResults =
-				cove.getCommerceOrderValidatorResults();
+				commerceOrderValidatorException.
+					getCommerceOrderValidatorResults();
 
 			JSONArray errorArray = _jsonFactory.createJSONArray();
 
@@ -154,14 +159,20 @@ public class AddCommerceOrderItemMVCActionCommand extends BaseMVCActionCommand {
 				errorArray.put(errorObject);
 			}
 
-			jsonObject.put("success", false);
-			jsonObject.put("validatorErrors", errorArray);
+			jsonObject.put(
+				"success", false
+			).put(
+				"validatorErrors", errorArray
+			);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			jsonObject.put("error", e.getMessage());
-			jsonObject.put("success", false);
+			jsonObject.put(
+				"error", exception.getMessage()
+			).put(
+				"success", false
+			);
 		}
 
 		hideDefaultSuccessMessage(actionRequest);
@@ -171,7 +182,7 @@ public class AddCommerceOrderItemMVCActionCommand extends BaseMVCActionCommand {
 		writeJSON(actionResponse, jsonObject);
 	}
 
-	protected void writeJSON(ActionResponse actionResponse, Object jsonObj)
+	protected void writeJSON(ActionResponse actionResponse, Object object)
 		throws IOException {
 
 		HttpServletResponse httpServletResponse =
@@ -179,7 +190,7 @@ public class AddCommerceOrderItemMVCActionCommand extends BaseMVCActionCommand {
 
 		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
-		ServletResponseUtil.write(httpServletResponse, jsonObj.toString());
+		ServletResponseUtil.write(httpServletResponse, object.toString());
 
 		httpServletResponse.flushBuffer();
 	}

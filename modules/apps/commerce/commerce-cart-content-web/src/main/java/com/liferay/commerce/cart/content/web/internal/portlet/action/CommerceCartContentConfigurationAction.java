@@ -82,8 +82,8 @@ public class CommerceCartContentConfigurationAction
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				commerceCartContentDisplayContext);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		super.include(portletConfig, httpServletRequest, httpServletResponse);

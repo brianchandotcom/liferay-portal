@@ -73,17 +73,17 @@ public class CommerceMLScheduledTaskExecutorService {
 				updateCommerceDataIntegrationProcessLog(
 					commerceDataIntegrationProcessLog);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
 			_commerceDataIntegrationProcessLogLocalService.
 				updateCommerceDataIntegrationProcessLog(
 					commerceDataIntegrationProcessLog.
 						getCommerceDataIntegrationProcessLogId(),
-					e.getMessage(), null, BackgroundTaskConstants.STATUS_FAILED,
-					new Date());
+					exception.getMessage(), null,
+					BackgroundTaskConstants.STATUS_FAILED, new Date());
 		}
 	}
 
@@ -92,12 +92,12 @@ public class CommerceMLScheduledTaskExecutorService {
 			Map<String, String> additionalProcessContextProperties)
 		throws Exception {
 
-		UnicodeProperties contextProperties =
+		UnicodeProperties unicodeProperties =
 			commerceDataIntegrationProcess.getTypeSettingsProperties();
 
-		contextProperties.putAll(additionalProcessContextProperties);
+		unicodeProperties.putAll(additionalProcessContextProperties);
 
-		_commerceMLGatewayClient.startCommerceMLJob(contextProperties);
+		_commerceMLGatewayClient.startCommerceMLJob(unicodeProperties);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.order;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -27,7 +25,6 @@ import javax.servlet.http.HttpServletRequest;
  * @author Marco Leo
  * @author Andrea Di Giorgi
  */
-@ProviderType
 public interface CommerceOrderHttpHelper {
 
 	public CommerceOrder addCommerceOrder(HttpServletRequest httpServletRequest)

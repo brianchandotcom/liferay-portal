@@ -16,6 +16,7 @@ package com.liferay.commerce.account.internal.verify;
 
 import com.liferay.commerce.account.service.CommerceAccountGroupLocalService;
 import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.verify.VerifyProcess;
 
@@ -89,8 +89,8 @@ public class CommerceAccountServiceVerifyProcess extends VerifyProcess {
 		if (userIds.length == 0) {
 			throw new NoSuchUserException(
 				StringBundler.concat(
-					"No user exists in company ", String.valueOf(companyId),
-					" with role ", role.getName()));
+					"No user exists in company ", companyId, " with role ",
+					role.getName()));
 		}
 
 		return userIds[0];

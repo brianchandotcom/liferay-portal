@@ -73,9 +73,9 @@ public class ECBExchangeRateProvider implements ExchangeRateProvider {
 			try {
 				xml = _http.URLtoString(_getURL());
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				if (i++ >= 10) {
-					throw ioe;
+					throw ioException;
 				}
 			}
 

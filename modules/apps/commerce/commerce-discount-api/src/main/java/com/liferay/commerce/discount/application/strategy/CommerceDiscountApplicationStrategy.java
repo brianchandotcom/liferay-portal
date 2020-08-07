@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.discount.application.strategy;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.math.BigDecimal;
@@ -23,7 +21,6 @@ import java.math.BigDecimal;
 /**
  * @author Riccardo Alberti
  */
-@ProviderType
 public interface CommerceDiscountApplicationStrategy {
 
 	public BigDecimal applyCommerceDiscounts(

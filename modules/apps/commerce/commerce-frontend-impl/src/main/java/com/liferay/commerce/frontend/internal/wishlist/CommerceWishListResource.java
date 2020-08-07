@@ -104,11 +104,13 @@ public class CommerceWishListResource {
 				cpInstanceUuid = cpInstance.getCPInstanceUuid();
 			}
 
-			if (_commerceWishListItemService.
+			long commerceWishListItemCount =
+				_commerceWishListItemService.
 					getCommerceWishListItemByContainsCPInstanceCount(
 						commerceWishList.getCommerceWishListId(),
-						cpInstanceUuid) == 0) {
+						cpInstanceUuid);
 
+			if (commerceWishListItemCount == 0) {
 				_commerceWishListItemService.addCommerceWishListItem(
 					commerceAccountId, commerceWishList.getCommerceWishListId(),
 					cpCatalogEntry.getCProductId(), cpInstanceUuid, options,
@@ -128,10 +130,10 @@ public class CommerceWishListResource {
 				wishListItemUpdated.setSuccess(false);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			wishListItemUpdated.setSuccess(false);
 
-			_log.error(e, e);
+			_log.error(exception, exception);
 		}
 
 		return getResponse(wishListItemUpdated);
@@ -151,8 +153,8 @@ public class CommerceWishListResource {
 				json, MediaType.APPLICATION_JSON
 			).build();
 		}
-		catch (JsonProcessingException jpe) {
-			_log.error(jpe, jpe);
+		catch (JsonProcessingException jsonProcessingException) {
+			_log.error(jsonProcessingException, jsonProcessingException);
 		}
 
 		return Response.status(

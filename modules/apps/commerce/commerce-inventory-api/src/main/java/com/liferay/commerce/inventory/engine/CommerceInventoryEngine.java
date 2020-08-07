@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.inventory.engine;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
@@ -25,7 +23,6 @@ import java.util.Map;
  * @author Luca Pellizzon
  * @author Alessio Antonio Rendina
  */
-@ProviderType
 public interface CommerceInventoryEngine {
 
 	public void consumeQuantity(

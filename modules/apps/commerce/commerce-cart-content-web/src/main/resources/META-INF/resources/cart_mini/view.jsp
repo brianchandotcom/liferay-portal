@@ -19,9 +19,9 @@
 <%
 CommerceCartContentMiniDisplayContext commerceCartContentMiniDisplayContext = (CommerceCartContentMiniDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-Map<String, Object> contextObjects = new HashMap<>();
-
-contextObjects.put("commerceCartContentMiniDisplayContext", commerceCartContentMiniDisplayContext);
+Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
+	"commerceCartContentMiniDisplayContext", commerceCartContentMiniDisplayContext
+).build();
 
 CommerceMoney subtotal = null;
 CommerceDiscountValue subtotalDiscountValue = null;

@@ -158,17 +158,17 @@ public class EditCommerceDiscountRelMVCActionCommand
 				deleteCommerceDiscountRels(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchDiscountException ||
-				e instanceof NoSuchDiscountRelException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchDiscountException ||
+				exception instanceof NoSuchDiscountRelException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}
@@ -176,7 +176,7 @@ public class EditCommerceDiscountRelMVCActionCommand
 	private void _updateAssetCategoryCommerceDiscountRels(
 			long commerceDiscountId, String className, long[] addClassPKs,
 			ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		List<CommerceDiscountRel> commerceDiscountRels =
 			_commerceDiscountRelService.getCommerceDiscountRels(

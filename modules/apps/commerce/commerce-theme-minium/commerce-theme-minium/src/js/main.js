@@ -17,6 +17,7 @@ if (window.NodeList && !NodeList.prototype.forEach) {
 }
 
 AUI().ready(
+
 	/*
 	This function gets loaded when all the HTML, not including the portlets, is
 	loaded.
@@ -26,8 +27,8 @@ AUI().ready(
 		const searchBar = Liferay.component('search-bar');
 
 		if (searchBar) {
-			searchBar.on('toggled', status => {
-				document.querySelectorAll('.js-toggle-search').forEach(el => {
+			searchBar.on('toggled', (status) => {
+				document.querySelectorAll('.js-toggle-search').forEach((el) => {
 					el.classList.toggle('is-active', status);
 				});
 
@@ -39,11 +40,13 @@ AUI().ready(
 			// 	document.querySelectorAll(".js-toggle-search").forEach(el => {
 			// 		el.classList.toggle("is-active", searchBar.active);
 			// });
+
 		}
 	}
 );
 
 Liferay.Portlet.ready(
+
 	/*
 	This function gets loaded after each and every portlet on the page.
 
@@ -73,7 +76,7 @@ Liferay.on(
 		if ('IntersectionObserver' in window) {
 			if (jsScrollArea && miniumTop) {
 				new IntersectionObserver(
-					entries => {
+					(entries) => {
 						if (document.getElementById('minium')) {
 							document
 								.getElementById('minium')
@@ -84,9 +87,11 @@ Liferay.on(
 						}
 					},
 					{
+
 						// root: jsScrollArea,
+
 						rootMargin: '0px',
-						threshold: 1.0
+						threshold: 1.0,
 					}
 				).observe(miniumTop);
 			}

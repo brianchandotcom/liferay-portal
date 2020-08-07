@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.stock.activity;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -25,7 +23,6 @@ import java.util.Locale;
  * @author Alessio Antonio Rendina
  * @author Luca Pellizzon
  */
-@ProviderType
 public interface CommerceLowStockActivity {
 
 	public void execute(CPInstance cpInstance) throws PortalException;

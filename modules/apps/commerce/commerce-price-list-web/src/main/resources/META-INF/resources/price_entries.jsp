@@ -91,7 +91,7 @@ PortletURL portletURL = commercePriceEntryDisplayContext.getPortletURL();
 
 			<c:if test="<%= commercePriceEntryDisplayContext.hasPermission(commercePriceListId, ActionKeys.UPDATE) %>">
 				<liferay-frontend:management-bar-button
-					href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommercePriceEntries();" %>'
+					href='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deleteCommercePriceEntries();" %>'
 					icon="times"
 					label="delete"
 				/>

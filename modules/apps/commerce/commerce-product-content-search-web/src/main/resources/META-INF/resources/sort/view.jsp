@@ -53,17 +53,17 @@ String orderByCol = cpSearchResultsDisplayContext.getOrderByCol();
 				<clay:link
 					elementClasses="dropdown-item transition-link"
 					href="#"
-					id="<%= renderResponse.getNamespace() + sortOption %>"
+					id="<%= liferayPortletResponse.getNamespace() + sortOption %>"
 					label="<%= LanguageUtil.get(request, sortOption) %>"
 					style="secondary"
 				/>
 
 				<aui:script>
 					document
-						.querySelector('#<%= renderResponse.getNamespace() + sortOption %>')
+						.querySelector('#<%= liferayPortletResponse.getNamespace() + sortOption %>')
 						.addEventListener('click', function(e) {
 							e.preventDefault();
-							<%= renderResponse.getNamespace() + "changeOrderBy('" + sortOption + "');" %>;
+							<%= liferayPortletResponse.getNamespace() + "changeOrderBy('" + sortOption + "');" %>;
 						});
 				</aui:script>
 

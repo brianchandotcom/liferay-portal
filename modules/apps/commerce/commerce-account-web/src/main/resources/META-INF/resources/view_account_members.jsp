@@ -21,9 +21,9 @@ CommerceAccountDisplayContext commerceAccountDisplayContext = (CommerceAccountDi
 
 CommerceAccount commerceAccount = commerceAccountDisplayContext.getCurrentCommerceAccount();
 
-Map<String, String> contextParams = new HashMap<>();
-
-contextParams.put("commerceAccountId", String.valueOf(commerceAccount.getCommerceAccountId()));
+Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+	"commerceAccountId", String.valueOf(commerceAccount.getCommerceAccountId())
+).build();
 
 PortletURL portletURL = currentURLObj;
 
@@ -35,7 +35,7 @@ portletURL.setParameter(PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backUR
 	dataProviderKey="<%= CommerceAccountUserClayDataSetDataSetDisplayView.NAME %>"
 	id="<%= CommerceAccountUserClayDataSetDataSetDisplayView.NAME %>"
 	itemsPerPage="<%= 10 %>"
-	namespace="<%= renderResponse.getNamespace() %>"
+	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"
 	portletURL="<%= commerceAccountDisplayContext.getPortletURL() %>"
 	style="stacked"
@@ -43,7 +43,7 @@ portletURL.setParameter(PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backUR
 
 <c:if test="<%= commerceAccountDisplayContext.hasCommerceAccountModelPermissions(CommerceAccountActionKeys.MANAGE_MEMBERS) %>">
 	<div class="commerce-cta is-visible">
-		<aui:button cssClass="btn-lg btn-primary js-invite-user" onClick='<%= renderResponse.getNamespace() + "openUserInvitationModal();" %>' value="invite-user" />
+		<aui:button cssClass="btn-lg btn-primary js-invite-user" onClick='<%= liferayPortletResponse.getNamespace() + "openUserInvitationModal();" %>' value="invite-user" />
 	</div>
 
 	<commerce-ui:user-invitation-modal

@@ -26,7 +26,7 @@ CommerceOrderListDisplayContext commerceOrderListDisplayContext = (CommerceOrder
 	formId="fm"
 	id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_ALL_ORDERS %>"
 	itemsPerPage="<%= 20 %>"
-	namespace="<%= renderResponse.getNamespace() %>"
+	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"
 	portletURL="<%= commerceOrderListDisplayContext.getPortletURL() %>"
 	style="fluid"

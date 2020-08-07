@@ -112,8 +112,8 @@ public class CommercePaymentMethodClayTable
 
 			clayTableActions.add(clayDataSetAction);
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exception) {
+			exception.printStackTrace();
 		}
 
 		return clayTableActions;

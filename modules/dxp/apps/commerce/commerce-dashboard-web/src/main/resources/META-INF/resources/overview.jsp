@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String overviewChartRootElementId = renderResponse.getNamespace() + "-overview-chart";
+String overviewChartRootElementId = liferayPortletResponse.getNamespace() + "-overview-chart";
 
 CommerceContext commerceContext = (CommerceContext)request.getAttribute(CommerceWebKeys.COMMERCE_CONTEXT);
 
@@ -29,12 +29,12 @@ CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
 </div>
 
 <aui:script require="commerce-dashboard-web/js/overview/index.es as chart">
-chart.default('<%= overviewChartRootElementId %>', {
-	APIBaseUrl: `/o/----`,
-	accountIdParamName: '----',
-	commerceAccountId: '<%= commerceAccount.getCommerceAccountId() %>',
-	noAccountErrorMessage: Liferay.Language.get('no-account-selected'),
-	noDataErrorMessage: Liferay.Language.get('no-data-available'),
-	portletId: '<%= portletDisplay.getId() %>'
-});
+	chart.default('<%= overviewChartRootElementId %>', {
+		APIBaseUrl: '/o/----',
+		accountIdParamName: '----',
+		commerceAccountId: '<%= commerceAccount.getCommerceAccountId() %>',
+		noAccountErrorMessage: Liferay.Language.get('no-account-selected'),
+		noDataErrorMessage: Liferay.Language.get('no-data-available'),
+		portletId: '<%= portletDisplay.getId() %>',
+	});
 </aui:script>

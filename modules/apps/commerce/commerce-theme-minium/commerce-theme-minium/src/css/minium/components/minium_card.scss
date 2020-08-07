@@ -30,8 +30,8 @@ $card-spacer: 20px;
 		width: calc(100% + #{$card-spacer * 2});
 
 		.btn-add-to-cart {
-			border-top-left-radius: 0px;
-			border-top-right-radius: 0px;
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
 			display: flex;
 			font-size: 11px !important;
 			height: 50px !important;

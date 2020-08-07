@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.bom.admin.web.internal.servlet.taglib.ui;
 
+import com.liferay.commerce.bom.admin.web.internal.servlet.taglib.ui.constants.CommerceBOMFolderScreenNavigationConstants;
 import com.liferay.commerce.bom.constants.CommerceBOMActionKeys;
 import com.liferay.commerce.bom.model.CommerceBOMFolder;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
@@ -89,8 +90,8 @@ public class CommerceBOMFolderDetailsScreenNavigationEntry
 			return _commerceBOMFolderModelResourcePermission.contains(
 				permissionChecker, commerceBOMFolder, ActionKeys.UPDATE);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		return false;

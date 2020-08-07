@@ -87,14 +87,14 @@ public class PaymentMethodCommerceCheckoutStep
 		try {
 			updateCommerceOrderPaymentMethod(actionRequest);
 		}
-		catch (Exception e) {
-			if (e instanceof CommerceOrderPaymentMethodException) {
-				SessionErrors.add(actionRequest, e.getClass());
+		catch (Exception exception) {
+			if (exception instanceof CommerceOrderPaymentMethodException) {
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				return;
 			}
 
-			throw e;
+			throw exception;
 		}
 	}
 

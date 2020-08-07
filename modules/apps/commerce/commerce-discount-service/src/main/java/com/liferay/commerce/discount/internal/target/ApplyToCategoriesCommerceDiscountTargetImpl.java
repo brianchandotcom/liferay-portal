@@ -147,8 +147,8 @@ public class ApplyToCategoriesCommerceDiscountTargetImpl
 
 			return longStream.toArray();
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		return new long[0];

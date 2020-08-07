@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.util;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 
@@ -24,7 +22,6 @@ import java.util.List;
 /**
  * @author Alec Sloan
  */
-@ProviderType
 public interface CommerceWorkflowedModelHelper {
 
 	public List<ObjectValuePair<Long, String>> getWorkflowTransitions(

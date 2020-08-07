@@ -47,7 +47,7 @@ page import="com.liferay.commerce.discount.target.CommerceDiscountTarget" %><%@
 page import="com.liferay.commerce.discount.web.internal.display.context.CommerceDiscountDisplayContext" %><%@
 page import="com.liferay.commerce.discount.web.internal.display.context.CommerceDiscountRelDisplayContext" %><%@
 page import="com.liferay.commerce.discount.web.internal.display.context.CommerceDiscountRuleDisplayContext" %><%@
-page import="com.liferay.commerce.discount.web.internal.servlet.taglib.ui.CommerceDiscountScreenNavigationConstants" %><%@
+page import="com.liferay.commerce.discount.web.internal.servlet.taglib.ui.constants.CommerceDiscountScreenNavigationConstants" %><%@
 page import="com.liferay.commerce.pricing.model.CommercePricingClass" %><%@
 page import="com.liferay.commerce.pricing.util.PricingNavigationItemRegistryUtil" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
@@ -62,6 +62,7 @@ page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
@@ -72,8 +73,7 @@ page import="com.liferay.taglib.servlet.PipingServletResponse" %>
 
 <%@ page import="java.math.BigDecimal" %>
 
-<%@ page import="java.util.HashMap" %><%@
-page import="java.util.List" %><%@
+<%@ page import="java.util.List" %><%@
 page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletURL" %>

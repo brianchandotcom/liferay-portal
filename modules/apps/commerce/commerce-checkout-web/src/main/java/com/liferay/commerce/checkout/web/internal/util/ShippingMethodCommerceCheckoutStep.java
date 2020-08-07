@@ -115,14 +115,14 @@ public class ShippingMethodCommerceCheckoutStep
 		try {
 			updateCommerceOrderShippingMethod(actionRequest);
 		}
-		catch (Exception e) {
-			if (e instanceof CommerceOrderShippingMethodException) {
-				SessionErrors.add(actionRequest, e.getClass());
+		catch (Exception exception) {
+			if (exception instanceof CommerceOrderShippingMethodException) {
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				return;
 			}
 
-			throw e;
+			throw exception;
 		}
 	}
 

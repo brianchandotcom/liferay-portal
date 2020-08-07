@@ -94,16 +94,16 @@ public class EditCommerceApplicationModelMVCActionCommand
 				deleteCommerceApplicationModels(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchApplicationModelException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchApplicationModelException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else {
-				_log.error(e, e);
+				_log.error(exception, exception);
 			}
 		}
 

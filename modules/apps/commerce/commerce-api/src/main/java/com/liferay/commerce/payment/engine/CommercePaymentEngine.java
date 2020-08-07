@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.payment.engine;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.payment.method.CommercePaymentMethod;
 import com.liferay.commerce.payment.result.CommercePaymentResult;
@@ -30,7 +28,6 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Luca Pellizzon
  */
-@ProviderType
 public interface CommercePaymentEngine {
 
 	public CommercePaymentResult cancelPayment(

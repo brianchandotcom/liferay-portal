@@ -59,8 +59,8 @@ public class PortalInstanceLifecycleListenerImpl
 
 			_commerceCurrencyLocalService.importDefaultValues(serviceContext);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 	}
 

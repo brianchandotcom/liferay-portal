@@ -21,7 +21,6 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -61,19 +60,12 @@ public class CommercePriceEntryUpgradeProcess
 
 		_addIndexes(CommercePriceEntryModelImpl.TABLE_NAME);
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		Statement s = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"update CommercePriceEntry set CProductId = ?," +
 					"CPInstanceUuid = ? where CPInstanceId = ?");
-
-			s = connection.createStatement();
-
-			rs = s.executeQuery(
-				"select distinct CPInstanceId from CommercePriceEntry");
+			Statement s = connection.createStatement();
+			ResultSet rs = s.executeQuery(
+				"select distinct CPInstanceId from CommercePriceEntry")) {
 
 			while (rs.next()) {
 				long cpInstanceId = rs.getLong("CPInstanceId");
@@ -93,10 +85,6 @@ public class CommercePriceEntryUpgradeProcess
 
 				ps.execute();
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps);
-			DataAccess.cleanUp(s, rs);
 		}
 
 		runSQL("drop index IX_2083879C on CommercePriceEntry");
@@ -135,12 +123,10 @@ public class CommercePriceEntryUpgradeProcess
 	private boolean _tableHasIndex(String tableName, String indexName)
 		throws Exception {
 
-		ResultSet rs = null;
+		DatabaseMetaData metadata = connection.getMetaData();
 
-		try {
-			DatabaseMetaData metadata = connection.getMetaData();
-
-			rs = metadata.getIndexInfo(null, null, tableName, false, false);
+		try (ResultSet rs = metadata.getIndexInfo(
+				null, null, tableName, false, false)) {
 
 			while (rs.next()) {
 				String curIndexName = rs.getString("index_name");
@@ -150,8 +136,7 @@ public class CommercePriceEntryUpgradeProcess
 				}
 			}
 		}
-		finally {
-			DataAccess.cleanUp(rs);
+		catch (Exception exception) {
 		}
 
 		return false;

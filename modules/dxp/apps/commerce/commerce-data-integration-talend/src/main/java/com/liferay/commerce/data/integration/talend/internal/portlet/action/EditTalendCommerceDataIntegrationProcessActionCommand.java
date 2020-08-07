@@ -16,7 +16,6 @@ package com.liferay.commerce.data.integration.talend.internal.portlet.action;
 
 import com.liferay.commerce.data.integration.constants.CommerceDataIntegrationPortletKeys;
 import com.liferay.commerce.data.integration.talend.TalendProcessTypeHelper;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -48,7 +47,7 @@ public class EditTalendCommerceDataIntegrationProcessActionCommand
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortalException {
+		throws Exception {
 
 		try {
 			UploadPortletRequest uploadPortletRequest =
@@ -57,23 +56,19 @@ public class EditTalendCommerceDataIntegrationProcessActionCommand
 			long commerceDataIntegrationProcessId = ParamUtil.getLong(
 				uploadPortletRequest, "commerceDataIntegrationProcessId");
 
-			String contentType = uploadPortletRequest.getContentType(
-				"srcArchive");
-
-			String fileName = uploadPortletRequest.getFileName("srcArchive");
-
-			long size = uploadPortletRequest.getSize("srcArchive");
-
 			_talendProcessTypeHelper.addFileEntry(
 				_portal.getCompanyId(actionRequest),
 				_portal.getUserId(actionRequest),
-				commerceDataIntegrationProcessId, fileName, size, contentType,
+				commerceDataIntegrationProcessId,
+				uploadPortletRequest.getFileName("srcArchive"),
+				uploadPortletRequest.getSize("srcArchive"),
+				uploadPortletRequest.getContentType("srcArchive"),
 				uploadPortletRequest.getFileAsStream("srcArchive"));
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			SessionErrors.add(actionRequest, e.getClass());
+			SessionErrors.add(actionRequest, exception.getClass());
 		}
 	}
 

@@ -65,7 +65,7 @@ CommerceApplicationAdminDisplayContext commerceApplicationAdminDisplayContext = 
 
 	<liferay-frontend:management-bar-action-buttons>
 		<liferay-frontend:management-bar-button
-			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceApplicationBrands();" %>'
+			href='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deleteCommerceApplicationBrands();" %>'
 			icon="times"
 			label="delete"
 		/>

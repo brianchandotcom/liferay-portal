@@ -111,7 +111,7 @@ if ((commercePriceList != null) && (commercePriceList.getExpirationDate() != nul
 						initialValue:
 							'<%= (parentCommercePriceList == null) ? 0 : parentCommercePriceList.getCommercePriceListId() %>',
 						inputId: 'parentCommercePriceListId',
-						inputName: '<%= renderResponse.getNamespace() %>parentCommercePriceListId',
+						inputName: '<%= liferayPortletResponse.getNamespace() %>parentCommercePriceListId',
 						itemsKey: 'id',
 						itemsLabel: 'name',
 						onValueUpdated: function(value, priceListData) {

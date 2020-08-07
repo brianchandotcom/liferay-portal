@@ -19,9 +19,9 @@ import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.commerce.frontend.clay.table.selectable.ClaySelectableTableDataSetDisplayView;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -57,20 +57,19 @@ public class ClaySelectableTableContextContributor
 			claySelectableTableDataSetDisplayView,
 		Locale locale) {
 
-		Map<String, Object> context = new HashMap<>();
-
 		JSONObject schemaJSONObject = _jsonFactory.createJSONObject();
 
 		schemaJSONObject.put(
 			"firstColumnLabel",
-			claySelectableTableDataSetDisplayView.getFirstColumnLabel(locale));
-		schemaJSONObject.put(
+			claySelectableTableDataSetDisplayView.getFirstColumnLabel(locale)
+		).put(
 			"firstColumnName",
-			claySelectableTableDataSetDisplayView.getFirstColumnName());
+			claySelectableTableDataSetDisplayView.getFirstColumnName()
+		);
 
-		context.put("schema", schemaJSONObject);
-
-		return context;
+		return HashMapBuilder.<String, Object>put(
+			"schema", schemaJSONObject
+		).build();
 	}
 
 	@Reference

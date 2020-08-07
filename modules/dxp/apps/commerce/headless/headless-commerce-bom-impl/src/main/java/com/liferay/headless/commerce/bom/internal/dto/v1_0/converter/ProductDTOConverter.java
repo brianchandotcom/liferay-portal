@@ -57,11 +57,11 @@ public class ProductDTOConverter implements DTOConverter<CPInstance, Product> {
 				sku = cpInstance.getSku();
 				thumbnailUrl = _cpInstanceHelper.getCPInstanceThumbnailSrc(
 					cpInstance.getCPInstanceId());
-				url =
-					CPConstants.SEPARATOR_PRODUCT_URL +
-						cpDefinition.getURL(
-							LocaleUtil.toLanguageId(
-								dtoConverterContext.getLocale()));
+
+				String cpDefinitionURL = cpDefinition.getURL(
+					LocaleUtil.toLanguageId(dtoConverterContext.getLocale()));
+
+				url = CPConstants.SEPARATOR_PRODUCT_URL + cpDefinitionURL;
 			}
 		};
 	}

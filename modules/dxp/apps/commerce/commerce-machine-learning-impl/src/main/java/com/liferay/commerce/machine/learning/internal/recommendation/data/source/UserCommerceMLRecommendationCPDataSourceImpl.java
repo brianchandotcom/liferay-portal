@@ -91,13 +91,11 @@ public class UserCommerceMLRecommendationCPDataSourceImpl
 			categoryIds = assetEntry.getCategoryIds();
 		}
 
-		long companyId = portal.getCompanyId(httpServletRequest);
-
 		List<UserCommerceMLRecommendation> userCommerceMLRecommendations =
 			_userCommerceMLRecommendationService.
 				getUserCommerceMLRecommendations(
-					companyId, commerceAccount.getCommerceAccountId(),
-					categoryIds);
+					portal.getCompanyId(httpServletRequest),
+					commerceAccount.getCommerceAccountId(), categoryIds);
 
 		if (userCommerceMLRecommendations.isEmpty()) {
 			return new CPDataSourceResult(Collections.emptyList(), 0);
@@ -136,9 +134,9 @@ public class UserCommerceMLRecommendationCPDataSourceImpl
 
 				cpCatalogEntries.add(recommendedCPCatalogEntry);
 			}
-			catch (PortalException e) {
+			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
+					_log.debug(portalException, portalException);
 				}
 			}
 		}

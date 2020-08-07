@@ -24,11 +24,11 @@ import com.liferay.headless.commerce.admin.catalog.constants.v1_0.ProductBatchEn
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.machine.learning.dto.v1_0.ProductContentRecommendation;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -61,23 +61,26 @@ public class
 				getCommerceDataIntegrationProcess(
 					commerceDataIntegrationProcessId);
 
-		Map<String, String> productContentFieldMappings = new HashMap<>();
-
-		productContentFieldMappings.put("createDate", "createDate");
-		productContentFieldMappings.put("entryClassPK", "productId");
-		productContentFieldMappings.put("jobId", "jobId");
-		productContentFieldMappings.put("rank", "rank");
-		productContentFieldMappings.put(
-			"recommendedEntryClassPK", "recommendedProductId");
-		productContentFieldMappings.put("score", "score");
-
 		List<BatchEngineTaskItemDelegateResourceMapper> importResources =
 			new ArrayList<>();
 
 		importResources.add(
 			new BatchEngineTaskItemDelegateResourceMapper(
 				ProductContentRecommendation.class.getName(),
-				productContentFieldMappings, null));
+				HashMapBuilder.put(
+					"createDate", "createDate"
+				).put(
+					"entryClassPK", "productId"
+				).put(
+					"jobId", "jobId"
+				).put(
+					"rank", "rank"
+				).put(
+					"recommendedEntryClassPK", "recommendedProductId"
+				).put(
+					"score", "score"
+				).build(),
+				null));
 
 		_batchCommerceMLScheduledTaskExecutorService.executeScheduledTask(
 			commerceDataIntegrationProcessId, _EXPORT_RESOURCE_NAMES,
@@ -87,13 +90,11 @@ public class
 	}
 
 	protected Map<String, String> getContextProperties(long companyId) {
-		Map<String, String> contextProperties = new HashMap<>();
-
-		contextProperties.put("COMMERCE_ML_PROCESS_TYPE", getName());
-
-		contextProperties.put("LIFERAY_COMPANY_ID", String.valueOf(companyId));
-
-		return contextProperties;
+		return HashMapBuilder.put(
+			"COMMERCE_ML_PROCESS_TYPE", getName()
+		).put(
+			"LIFERAY_COMPANY_ID", String.valueOf(companyId)
+		).build();
 	}
 
 	private static final BatchEngineTaskItemDelegateResourceMapper[]

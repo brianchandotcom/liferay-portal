@@ -50,6 +50,10 @@ public class GalleryTag extends IncludeTag {
 		return super.doStartTag();
 	}
 
+	public long getCPDefinitionId() {
+		return _cpDefinitionId;
+	}
+
 	public void setCPDefinitionId(long cpDefinitionId) {
 		_cpDefinitionId = cpDefinitionId;
 	}

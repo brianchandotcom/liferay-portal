@@ -55,23 +55,23 @@ public class SalesforceTalendJobDeployer {
 
 				ZipFile zipFile = new ZipFile(tempFile);
 
-				Enumeration<? extends ZipEntry> entries = zipFile.entries();
+				Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
-				while (entries.hasMoreElements()) {
+				while (enumeration.hasMoreElements()) {
 					try {
-						ZipEntry zipEntry = entries.nextElement();
+						ZipEntry zipEntry = enumeration.nextElement();
 
 						long[] companyIds = _portal.getCompanyIds();
 
 						for (long companyId : companyIds) {
-							long userId = _userLocalService.getDefaultUserId(
-								companyId);
-
 							String fileName = zipEntry.getName();
 
 							if (!fileName.endsWith(".zip")) {
 								continue;
 							}
+
+							long userId = _userLocalService.getDefaultUserId(
+								companyId);
 
 							CommerceDataIntegrationProcess
 								commerceDataIntegrationProcess =
@@ -80,15 +80,17 @@ public class SalesforceTalendJobDeployer {
 											companyId, fileName);
 
 							if (commerceDataIntegrationProcess == null) {
-								UnicodeProperties typeSettingsProperties =
-									_getDefaultTypeSettingsProperties(
-										zipFile.getInputStream(zipEntry));
+								UnicodeProperties
+									typeSettingsUnicodeProperties =
+										_getDefaultTypeSettingsProperties(
+											zipFile.getInputStream(zipEntry));
 
 								commerceDataIntegrationProcess =
 									_commerceDataIntegrationProcessLocalService.
 										addCommerceDataIntegrationProcess(
 											userId, fileName, _TALEND,
-											typeSettingsProperties, false);
+											typeSettingsUnicodeProperties,
+											false);
 							}
 
 							String contentType = MimeTypesUtil.getContentType(
@@ -102,16 +104,16 @@ public class SalesforceTalendJobDeployer {
 								zipFile.getInputStream(zipEntry));
 						}
 					}
-					catch (Exception e) {
-						ZipEntry zipEntry = entries.nextElement();
+					catch (Exception exception) {
+						ZipEntry zipEntry = enumeration.nextElement();
 
 						_log.error(
 							"Failed to deploy job " + zipEntry.getName());
 					}
 				}
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 		}
 	}

@@ -82,13 +82,12 @@ public class ProductContentCommerceMLRecommendationCPDataSourceImpl
 			return new CPDataSourceResult(Collections.emptyList(), 0);
 		}
 
-		long companyId = portal.getCompanyId(httpServletRequest);
-
 		List<ProductContentCommerceMLRecommendation>
 			productContentCommerceMLRecommendations =
 				_productContentCommerceMLRecommendationService.
 					getProductContentCommerceMLRecommendations(
-						companyId, cpCatalogEntry.getCPDefinitionId());
+						portal.getCompanyId(httpServletRequest),
+						cpCatalogEntry.getCPDefinitionId());
 
 		if (productContentCommerceMLRecommendations.isEmpty()) {
 			return new CPDataSourceResult(Collections.emptyList(), 0);
@@ -103,11 +102,11 @@ public class ProductContentCommerceMLRecommendationCPDataSourceImpl
 				productContentCommerceMLRecommendations, start, end);
 
 		for (ProductContentCommerceMLRecommendation
-				prodcutContentCommerceMLRecommendation :
+				productContentCommerceMLRecommendation :
 					productContentCommerceMLRecommendationList) {
 
 			long recommendedEntryClassPK =
-				prodcutContentCommerceMLRecommendation.
+				productContentCommerceMLRecommendation.
 					getRecommendedEntryClassPK();
 
 			if (_log.isTraceEnabled()) {
@@ -116,9 +115,9 @@ public class ProductContentCommerceMLRecommendationCPDataSourceImpl
 				sb.append("Recommended item: ");
 				sb.append(recommendedEntryClassPK);
 				sb.append(" rank: ");
-				sb.append(prodcutContentCommerceMLRecommendation.getRank());
+				sb.append(productContentCommerceMLRecommendation.getRank());
 				sb.append(" score: ");
-				sb.append(prodcutContentCommerceMLRecommendation.getScore());
+				sb.append(productContentCommerceMLRecommendation.getScore());
 
 				_log.trace(sb.toString());
 			}
@@ -132,9 +131,9 @@ public class ProductContentCommerceMLRecommendationCPDataSourceImpl
 
 				cpCatalogEntries.add(recommendedCPCatalogEntry);
 			}
-			catch (PortalException e) {
+			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
+					_log.debug(portalException, portalException);
 				}
 			}
 		}

@@ -100,10 +100,11 @@ public class CommerceCartResource {
 
 			coupon = new Coupon(couponCode);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			coupon = new Coupon(StringUtil.split(e.getLocalizedMessage()));
+			coupon = new Coupon(
+				StringUtil.split(exception.getLocalizedMessage()));
 		}
 
 		return getResponse(coupon);
@@ -137,10 +138,11 @@ public class CommerceCartResource {
 
 			coupon = new Coupon(StringPool.BLANK);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			coupon = new Coupon(StringUtil.split(e.getLocalizedMessage()));
+			coupon = new Coupon(
+				StringUtil.split(exception.getLocalizedMessage()));
 		}
 
 		return getResponse(coupon);
@@ -210,19 +212,20 @@ public class CommerceCartResource {
 					commerceOrder.getCommerceOrderId(), cpInstanceId, quantity,
 					0, options, commerceContext, serviceContext);
 
-			cart = _commerceCartResourceUtil.getCart(
+			cart = _commerceCartResourceHelper.getCart(
 				commerceOrderItem.getCommerceOrderId(),
 				_getDetailsURL(commerceOrder, themeDisplay),
 				themeDisplay.getLocale(), commerceContext, true);
 		}
-		catch (Exception e) {
-			if (e instanceof CommerceOrderValidatorException) {
+		catch (Exception exception) {
+			if (exception instanceof CommerceOrderValidatorException) {
 				cart = new Cart(
 					_getCommerceOrderValidatorResultsMessages(
-						(CommerceOrderValidatorException)e));
+						(CommerceOrderValidatorException)exception));
 			}
 			else {
-				cart = new Cart(StringUtil.split(e.getLocalizedMessage()));
+				cart = new Cart(
+					StringUtil.split(exception.getLocalizedMessage()));
 			}
 		}
 
@@ -243,8 +246,8 @@ public class CommerceCartResource {
 				json, MediaType.APPLICATION_JSON
 			).build();
 		}
-		catch (JsonProcessingException jpe) {
-			_log.error(jpe, jpe);
+		catch (JsonProcessingException jsonProcessingException) {
+			_log.error(jsonProcessingException, jsonProcessingException);
 		}
 
 		return Response.status(
@@ -300,7 +303,7 @@ public class CommerceCartResource {
 		CommerceCartResource.class);
 
 	@Reference
-	private CommerceCartResourceUtil _commerceCartResourceUtil;
+	private CommerceCartResourceHelper _commerceCartResourceHelper;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

@@ -27,11 +27,11 @@ import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
 import com.liferay.headless.commerce.machine.learning.dto.v1_0.ProductInteractionRecommendation;
 import com.liferay.headless.commerce.machine.learning.dto.v1_0.UserRecommendation;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -66,36 +66,41 @@ public class BatchUserCommerceMLRecommendationScheduledTaskExecutorService
 		List<BatchEngineTaskItemDelegateResourceMapper> importResources =
 			new ArrayList<>();
 
-		Map<String, String> userRecommendationFieldMappings = new HashMap<>();
-
-		userRecommendationFieldMappings.put(
-			"assetCategoryIds", "assetCategoryIds");
-		userRecommendationFieldMappings.put("createDate", "createDate");
-		userRecommendationFieldMappings.put("entryClassPK", "productId");
-		userRecommendationFieldMappings.put("jobId", "jobId");
-		userRecommendationFieldMappings.put(
-			"recommendedEntryClassPK", "recommendedProductId");
-		userRecommendationFieldMappings.put("score", "score");
-
 		importResources.add(
 			new BatchEngineTaskItemDelegateResourceMapper(
 				UserRecommendation.class.getName(),
-				userRecommendationFieldMappings, null));
-
-		Map<String, String> productInteractionFieldMappings = new HashMap<>();
-
-		productInteractionFieldMappings.put("createDate", "createDate");
-		productInteractionFieldMappings.put("entryClassPK", "productId");
-		productInteractionFieldMappings.put("jobId", "jobId");
-		productInteractionFieldMappings.put("rank", "rank");
-		productInteractionFieldMappings.put(
-			"recommendedEntryClassPK", "recommendedProductId");
-		productInteractionFieldMappings.put("score", "score");
+				HashMapBuilder.put(
+					"assetCategoryIds", "assetCategoryIds"
+				).put(
+					"createDate", "createDate"
+				).put(
+					"entryClassPK", "productId"
+				).put(
+					"jobId", "jobId"
+				).put(
+					"recommendedEntryClassPK", "recommendedProductId"
+				).put(
+					"score", "score"
+				).build(),
+				null));
 
 		importResources.add(
 			new BatchEngineTaskItemDelegateResourceMapper(
 				ProductInteractionRecommendation.class.getName(),
-				productInteractionFieldMappings, null));
+				HashMapBuilder.put(
+					"createDate", "createDate"
+				).put(
+					"entryClassPK", "productId"
+				).put(
+					"jobId", "jobId"
+				).put(
+					"rank", "rank"
+				).put(
+					"recommendedEntryClassPK", "recommendedProductId"
+				).put(
+					"score", "score"
+				).build(),
+				null));
 
 		_batchCommerceMLScheduledTaskExecutorService.executeScheduledTask(
 			commerceDataIntegrationProcessId, _EXPORT_RESOURCE_NAMES,
@@ -105,13 +110,11 @@ public class BatchUserCommerceMLRecommendationScheduledTaskExecutorService
 	}
 
 	protected Map<String, String> getContextProperties(long companyId) {
-		Map<String, String> contextProperties = new HashMap<>();
-
-		contextProperties.put("COMMERCE_ML_PROCESS_TYPE", getName());
-
-		contextProperties.put("LIFERAY_COMPANY_ID", String.valueOf(companyId));
-
-		return contextProperties;
+		return HashMapBuilder.put(
+			"COMMERCE_ML_PROCESS_TYPE", getName()
+		).put(
+			"LIFERAY_COMPANY_ID", String.valueOf(companyId)
+		).build();
 	}
 
 	private static final BatchEngineTaskItemDelegateResourceMapper[]

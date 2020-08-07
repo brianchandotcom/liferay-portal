@@ -12,7 +12,7 @@
  * details.
  */
 
-(function(w) {
+(function (w) {
 	'use strict';
 
 	var TOPBAR_CLASS = 'speedwell-topbar',
@@ -25,7 +25,7 @@
 	var TOGGLES = {
 		ACCOUNT: {name: 'account'},
 		MAIN_MENU: {name: 'main-menu'},
-		SEARCH: {name: 'search'}
+		SEARCH: {name: 'search'},
 	};
 
 	var CONTAINER = window.document.getElementById('speedwell');
@@ -34,25 +34,27 @@
 		translucencyIsEnabled = false;
 
 	function hideFiltersButtonOnMenuOpen() {
-		Liferay.componentReady('SpeedwellMobileHelpers').then(mobileHelpers => {
-			const catalogFiltersButton = mobileHelpers.getFiltersButton();
+		Liferay.componentReady('SpeedwellMobileHelpers').then(
+			(mobileHelpers) => {
+				const catalogFiltersButton = mobileHelpers.getFiltersButton();
 
-			if (catalogFiltersButton) {
-				catalogFiltersButton.classList.toggle(
-					IS_BEHIND,
-					!isOpen(catalogFiltersButton)
-				);
+				if (catalogFiltersButton) {
+					catalogFiltersButton.classList.toggle(
+						IS_BEHIND,
+						!isOpen(catalogFiltersButton)
+					);
+				}
 			}
-		});
+		);
 	}
 
 	function attachListener(currentToggle) {
 		const toggleWrapper = TOGGLES[currentToggle].wrapper;
 
-		TOGGLES[currentToggle].buttons.forEach(button => {
-			button.addEventListener('click', _e => {
+		TOGGLES[currentToggle].buttons.forEach((button) => {
+			button.addEventListener('click', (_e) => {
 				Liferay.componentReady('SpeedwellCategoryMenu').then(
-					categoryMenu => {
+					(categoryMenu) => {
 						const categoryEl = categoryMenu.getElement();
 
 						button.focus();
@@ -76,7 +78,7 @@
 	}
 
 	function wipeToggles() {
-		Object.keys(TOGGLES).forEach(currentToggle => {
+		Object.keys(TOGGLES).forEach((currentToggle) => {
 			delete TOGGLES[currentToggle].buttons;
 			delete TOGGLES[currentToggle].wrapper;
 		});
@@ -85,7 +87,7 @@
 	function prepareToggles() {
 		wipeToggles();
 
-		Object.keys(TOGGLES).forEach(toggle => {
+		Object.keys(TOGGLES).forEach((toggle) => {
 			TOGGLES[toggle].buttons = Array.from(
 				TOPBAR.querySelectorAll(TOGGLE_PREFIX + TOGGLES[toggle].name)
 			);
@@ -122,8 +124,10 @@
 	isTranslucent();
 
 	if (translucencyIsEnabled) {
-		Liferay.componentReady('SpeedwellScrollHandler').then(scrollHandler => {
-			scrollHandler.registerCallback(toggleTranslucencyOnScroll);
-		});
+		Liferay.componentReady('SpeedwellScrollHandler').then(
+			(scrollHandler) => {
+				scrollHandler.registerCallback(toggleTranslucencyOnScroll);
+			}
+		);
 	}
 })(window);

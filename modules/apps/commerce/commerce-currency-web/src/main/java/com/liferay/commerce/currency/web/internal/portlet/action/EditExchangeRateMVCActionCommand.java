@@ -77,27 +77,27 @@ public class EditExchangeRateMVCActionCommand extends BaseMVCActionCommand {
 				updateExchangeRates(serviceContext);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchCurrencyException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchCurrencyException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (e instanceof CommerceCurrencyCodeException ||
-					 e instanceof CommerceCurrencyNameException) {
+			else if (exception instanceof CommerceCurrencyCodeException ||
+					 exception instanceof CommerceCurrencyNameException) {
 
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName", "editCommerceCurrency");
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

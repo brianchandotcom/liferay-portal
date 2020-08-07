@@ -23,7 +23,7 @@ CPAttachmentFileEntryService cpAttachmentFileEntryService = (CPAttachmentFileEnt
 
 PortletURL portletURL = currentURLObj;
 
-portletURL.setParameter("historyKey", renderResponse.getNamespace() + "images");
+portletURL.setParameter("historyKey", liferayPortletResponse.getNamespace() + "images");
 
 SearchContainer<CPAttachmentFileEntry> cpAttachmentFileEntrySearchContainer = new SearchContainer<>(liferayPortletRequest, portletURL, null, null);
 

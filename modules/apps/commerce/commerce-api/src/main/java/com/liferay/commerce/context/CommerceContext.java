@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.context;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.model.CommerceOrder;
@@ -27,7 +25,6 @@ import java.io.Serializable;
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
-@ProviderType
 public interface CommerceContext extends Serializable {
 
 	public CommerceAccount getCommerceAccount() throws PortalException;

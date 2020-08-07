@@ -23,7 +23,7 @@ import com.liferay.commerce.account.constants.CommerceAccountPortletKeys;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.permission.CommerceAccountPermission;
 import com.liferay.commerce.account.service.CommerceAccountService;
-import com.liferay.commerce.account.web.internal.servlet.taglib.ui.CommerceAccountScreenNavigationConstants;
+import com.liferay.commerce.account.web.internal.servlet.taglib.ui.constants.CommerceAccountScreenNavigationConstants;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
@@ -336,9 +336,7 @@ public class EditCommerceAccountUserMVCActionCommand
 
 			User user = _userLocalService.getUser(userId);
 
-			User currentUser = _userService.getCurrentUser();
-
-			if (Objects.equals(user, currentUser)) {
+			if (Objects.equals(user, _userService.getCurrentUser())) {
 				UserPermissionUtil.check(
 					getPermissionChecker(), userId, ActionKeys.UPDATE);
 			}
@@ -404,16 +402,17 @@ public class EditCommerceAccountUserMVCActionCommand
 
 			updatePassword(user, actionRequest, actionResponse);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchUserException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchUserException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (e instanceof UserPasswordException) {
-				SessionErrors.add(actionRequest, e.getClass(), e);
+			else if (exception instanceof UserPasswordException) {
+				SessionErrors.add(
+					actionRequest, exception.getClass(), exception);
 
 				String redirect = _portal.escapeRedirect(
 					ParamUtil.getString(actionRequest, "redirect"));
@@ -423,7 +422,7 @@ public class EditCommerceAccountUserMVCActionCommand
 				}
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

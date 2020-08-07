@@ -64,12 +64,12 @@ CommerceCurrenciesDisplayContext commerceCurrenciesDisplayContext = (CommerceCur
 		<liferay-frontend:management-bar-action-buttons>
 			<liferay-frontend:management-bar-button
 				cssClass="btn-update-exchange-rates"
-				href='<%= "javascript:" + renderResponse.getNamespace() + "updateExchangeRates();" %>'
+				href='<%= "javascript:" + liferayPortletResponse.getNamespace() + "updateExchangeRates();" %>'
 				label="update-exchange-rates"
 			/>
 
 			<liferay-frontend:management-bar-button
-				href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceCurrencies();" %>'
+				href='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deleteCommerceCurrencies();" %>'
 				icon="times"
 				label="delete"
 			/>

@@ -69,11 +69,10 @@ public class CPTaxCategoryFinderImpl
 				sql = _customSQL.replaceAndOperator(sql, false);
 			}
 			else {
-				sql = StringUtil.replace(
+				sql = StringUtil.removeSubstring(
 					sql,
 					" AND (LOWER(CPTaxCategory.name) LIKE ? " +
-						"[$AND_OR_NULL_CHECK$])",
-					StringPool.BLANK);
+						"[$AND_OR_NULL_CHECK$])");
 			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -129,11 +128,10 @@ public class CPTaxCategoryFinderImpl
 				sql = _customSQL.replaceAndOperator(sql, false);
 			}
 			else {
-				sql = StringUtil.replace(
+				sql = StringUtil.removeSubstring(
 					sql,
 					" AND (LOWER(CPTaxCategory.name) LIKE ? " +
-						"[$AND_OR_NULL_CHECK$])",
-					StringPool.BLANK);
+						"[$AND_OR_NULL_CHECK$])");
 			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);

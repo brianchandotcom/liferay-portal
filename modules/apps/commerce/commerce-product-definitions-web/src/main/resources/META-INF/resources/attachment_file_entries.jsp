@@ -43,7 +43,7 @@ contextParams.put("cpDefinitionId", String.valueOf(cpAttachmentFileEntriesDispla
 				formId="fm"
 				id="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_IMAGES %>"
 				itemsPerPage="<%= 10 %>"
-				namespace="<%= renderResponse.getNamespace() %>"
+				namespace="<%= liferayPortletResponse.getNamespace() %>"
 				pageNumber="<%= 1 %>"
 				portletURL="<%= portletURL %>"
 			/>
@@ -60,7 +60,7 @@ contextParams.put("cpDefinitionId", String.valueOf(cpAttachmentFileEntriesDispla
 				formId="fm"
 				id="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_ATTACHMENTS %>"
 				itemsPerPage="<%= 10 %>"
-				namespace="<%= renderResponse.getNamespace() %>"
+				namespace="<%= liferayPortletResponse.getNamespace() %>"
 				pageNumber="<%= 1 %>"
 				portletURL="<%= portletURL %>"
 			/>

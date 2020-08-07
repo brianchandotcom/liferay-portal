@@ -1,10 +1,10 @@
 {
 	"dependencies": {
-		"@clayui/charts": "3.0.4",
-		"@clayui/css": "3.6.0",
+		"@clayui/charts": "3.1.2",
+		"@clayui/css": "3.15.0",
 		"frontend-js-react-web": "*",
 		"frontend-js-web": "*",
-		"react": "16.8.6",
+		"react": "16.12.0",
 		"resize-observer-polyfill": "^1.5.1"
 	},
 	"name": "commerce-dashboard-web",
@@ -17,5 +17,10 @@
 		"watch": "liferay-npm-scripts webpack --watch"
 	},
 	"sideEffects": false,
+<<<<<<< HEAD
 	"version": "1.0.33"
 }
+=======
+	"version": "1.0.32"
+}
+>>>>>>> a5343879d... COMMERCE-4072 Fix SF part 1

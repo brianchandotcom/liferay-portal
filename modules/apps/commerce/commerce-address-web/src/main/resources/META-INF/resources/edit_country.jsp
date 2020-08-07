@@ -33,9 +33,9 @@ if (commerceCountry != null) {
 	title = LanguageUtil.format(request, "edit-x", commerceCountry.getName(locale), false);
 }
 
-Map<String, Object> data = new HashMap<>();
-
-data.put("direction-right", StringPool.TRUE);
+Map<String, Object> data = HashMapBuilder.<String, Object>put(
+	"direction-right", StringPool.TRUE
+).build();
 
 String selectedScreenNavigationCategoryKey = commerceCountriesDisplayContext.getSelectedScreenNavigationCategoryKey();
 

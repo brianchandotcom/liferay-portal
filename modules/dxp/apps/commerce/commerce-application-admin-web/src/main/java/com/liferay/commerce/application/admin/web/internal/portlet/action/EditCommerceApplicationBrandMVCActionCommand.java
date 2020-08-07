@@ -139,16 +139,16 @@ public class EditCommerceApplicationBrandMVCActionCommand
 				updateCommerceApplicationBrand(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchApplicationBrandException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchApplicationBrandException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else {
-				_log.error(e, e);
+				_log.error(exception, exception);
 			}
 		}
 

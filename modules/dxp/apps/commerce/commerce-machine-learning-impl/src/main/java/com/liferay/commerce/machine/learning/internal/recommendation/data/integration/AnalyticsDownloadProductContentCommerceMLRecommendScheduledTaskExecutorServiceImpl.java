@@ -20,11 +20,9 @@ import com.liferay.commerce.machine.learning.internal.data.integration.BatchEngi
 import com.liferay.commerce.machine.learning.internal.recommendation.data.integration.process.type.AnalyticsDownloadProductContentCommerceMLRecommendationProcessType;
 import com.liferay.headless.commerce.machine.learning.dto.v1_0.ProductContentRecommendation;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.io.IOException;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,21 +48,24 @@ public class
 	public void runProcess(long commerceDataIntegrationProcessId)
 		throws IOException, PortalException {
 
-		Map<String, String> productContentFieldMappings = new HashMap<>();
-
-		productContentFieldMappings.put("createDate", "createDate");
-		productContentFieldMappings.put("entryClassPK", "productId");
-		productContentFieldMappings.put("jobId", "jobId");
-		productContentFieldMappings.put("rank", "rank");
-		productContentFieldMappings.put(
-			"recommendedEntryClassPK", "recommendedProductId");
-		productContentFieldMappings.put("score", "score");
-
 		BatchEngineTaskItemDelegateResourceMapper
 			batchEngineTaskItemDelegateResourceMapper =
 				new BatchEngineTaskItemDelegateResourceMapper(
 					ProductContentRecommendation.class.getName(),
-					productContentFieldMappings, null);
+					HashMapBuilder.put(
+						"createDate", "createDate"
+					).put(
+						"entryClassPK", "productId"
+					).put(
+						"jobId", "jobId"
+					).put(
+						"rank", "rank"
+					).put(
+						"recommendedEntryClassPK", "recommendedProductId"
+					).put(
+						"score", "score"
+					).build(),
+					null);
 
 		_analyticsCommerceMLScheduledTaskExecutorService.downloadResources(
 			commerceDataIntegrationProcessId,

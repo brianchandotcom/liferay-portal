@@ -79,28 +79,28 @@ public class EditCommerceAddressMVCActionCommand extends BaseMVCActionCommand {
 				updateCommerceAddress(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchAddressException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchAddressException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (e instanceof CommerceAddressCityException ||
-					 e instanceof CommerceAddressCountryException ||
-					 e instanceof CommerceAddressStreetException) {
+			else if (exception instanceof CommerceAddressCityException ||
+					 exception instanceof CommerceAddressCountryException ||
+					 exception instanceof CommerceAddressStreetException) {
 
 				hideDefaultErrorMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				String redirect = _portal.getCurrentURL(actionRequest);
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 

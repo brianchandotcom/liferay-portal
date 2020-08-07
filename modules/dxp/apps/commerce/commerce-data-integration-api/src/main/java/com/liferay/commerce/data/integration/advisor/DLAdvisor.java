@@ -37,7 +37,7 @@ public class DLAdvisor {
 
 	public static DLFileEntry addOrUpdateFile(
 			long folderId, long fileEntryId, String fileName,
-			InputStream inStream, String mimeType)
+			InputStream inputStream, String mimeType)
 		throws PortalException {
 
 		ServiceContext serviceContext =
@@ -51,14 +51,14 @@ public class DLAdvisor {
 			fileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
 				serviceContext.getUserId(), groupId, groupId, folderId,
 				fileName, mimeType, fileName, fileName, null, 0, null, null,
-				inStream, 0, serviceContext);
+				inputStream, 0, serviceContext);
 		}
 		else {
 			fileEntry = DLFileEntryLocalServiceUtil.updateFileEntry(
 				serviceContext.getUserId(), fileEntryId, fileName, mimeType,
 				fileName, fileName, StringPool.BLANK,
 				DLVersionNumberIncrease.fromMajorVersion(true), 0L, null, null,
-				inStream, 0L, serviceContext);
+				inputStream, 0L, serviceContext);
 		}
 
 		return fileEntry;
@@ -108,9 +108,9 @@ public class DLAdvisor {
 			folder = DLAppLocalServiceUtil.getFolder(
 				repositoryId, parentFolderId, folderName);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
 			folder = null;

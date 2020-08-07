@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.order.status;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -24,7 +22,6 @@ import java.util.Locale;
 /**
  * @author Alec Sloan
  */
-@ProviderType
 public interface CommerceOrderStatus {
 
 	public CommerceOrder doTransition(CommerceOrder commerceOrder, long userId)

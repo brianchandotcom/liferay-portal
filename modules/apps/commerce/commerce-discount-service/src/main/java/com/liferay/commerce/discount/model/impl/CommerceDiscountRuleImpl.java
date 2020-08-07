@@ -31,37 +31,37 @@ public class CommerceDiscountRuleImpl extends CommerceDiscountRuleBaseImpl {
 
 	@Override
 	public UnicodeProperties getSettingsProperties() {
-		if (_settingsProperties == null) {
-			_settingsProperties = new UnicodeProperties(true);
+		if (_unicodeProperties == null) {
+			_unicodeProperties = new UnicodeProperties(true);
 
 			try {
-				_settingsProperties.load(super.getTypeSettings());
+				_unicodeProperties.load(super.getTypeSettings());
 			}
-			catch (IOException ioe) {
-				_log.error(ioe, ioe);
+			catch (IOException ioException) {
+				_log.error(ioException, ioException);
 			}
 		}
 
-		return _settingsProperties;
+		return _unicodeProperties;
 	}
 
 	@Override
 	public String getSettingsProperty(String key) {
-		UnicodeProperties settingsProperties = getSettingsProperties();
+		UnicodeProperties unicodeProperties = getSettingsProperties();
 
-		return settingsProperties.getProperty(key);
+		return unicodeProperties.getProperty(key);
 	}
 
 	@Override
-	public void setSettingsProperties(UnicodeProperties settingsProperties) {
-		_settingsProperties = settingsProperties;
+	public void setSettingsProperties(UnicodeProperties unicodeProperties) {
+		_unicodeProperties = unicodeProperties;
 
-		super.setTypeSettings(settingsProperties.toString());
+		super.setTypeSettings(unicodeProperties.toString());
 	}
 
 	@Override
 	public void setTypeSettings(String settings) {
-		_settingsProperties = null;
+		_unicodeProperties = null;
 
 		super.setTypeSettings(settings);
 	}
@@ -69,6 +69,6 @@ public class CommerceDiscountRuleImpl extends CommerceDiscountRuleBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceDiscountRuleImpl.class);
 
-	private UnicodeProperties _settingsProperties;
+	private UnicodeProperties _unicodeProperties;
 
 }

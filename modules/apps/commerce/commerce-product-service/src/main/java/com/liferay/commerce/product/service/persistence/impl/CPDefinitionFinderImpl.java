@@ -17,7 +17,6 @@ package com.liferay.commerce.product.service.persistence.impl;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.impl.CPDefinitionImpl;
 import com.liferay.commerce.product.service.persistence.CPDefinitionFinder;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -64,14 +63,13 @@ public class CPDefinitionFinderImpl
 				CPDefinitionImpl.TABLE_NAME);
 
 			if (groupId <= 0) {
-				sql = StringUtil.replace(
-					sql, "(CPDefinition.groupId = ?) AND", StringPool.BLANK);
+				sql = StringUtil.removeSubstring(
+					sql, "(CPDefinition.groupId = ?) AND");
 			}
 
 			if (Validator.isNull(productTypeName)) {
-				sql = StringUtil.replace(
-					sql, "(CPDefinition.productTypeName = ?) AND",
-					StringPool.BLANK);
+				sql = StringUtil.removeSubstring(
+					sql, "(CPDefinition.productTypeName = ?) AND");
 			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -167,14 +165,13 @@ public class CPDefinitionFinderImpl
 				sql, queryDefinition.getOrderByComparator());
 
 			if (groupId <= 0) {
-				sql = StringUtil.replace(
-					sql, "(CPDefinition.groupId = ?) AND", StringPool.BLANK);
+				sql = StringUtil.removeSubstring(
+					sql, "(CPDefinition.groupId = ?) AND");
 			}
 
 			if (Validator.isNull(productTypeName)) {
-				sql = StringUtil.replace(
-					sql, "(CPDefinition.productTypeName = ?) AND",
-					StringPool.BLANK);
+				sql = StringUtil.removeSubstring(
+					sql, "(CPDefinition.productTypeName = ?) AND");
 			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);

@@ -14,14 +14,13 @@
 
 package com.liferay.commerce.product.internal.upgrade.base;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.DatabaseMetaData;
@@ -147,12 +146,10 @@ public abstract class BaseCommerceProductServiceUpgradeProcess
 	protected boolean tableHasIndex(String tableName, String indexName)
 		throws Exception {
 
-		ResultSet rs = null;
+		DatabaseMetaData metadata = connection.getMetaData();
 
-		try {
-			DatabaseMetaData metadata = connection.getMetaData();
-
-			rs = metadata.getIndexInfo(null, null, tableName, false, false);
+		try (ResultSet rs = metadata.getIndexInfo(
+				null, null, tableName, false, false)) {
 
 			while (rs.next()) {
 				String curIndexName = rs.getString("index_name");
@@ -162,8 +159,7 @@ public abstract class BaseCommerceProductServiceUpgradeProcess
 				}
 			}
 		}
-		finally {
-			DataAccess.cleanUp(rs);
+		catch (Exception exception) {
 		}
 
 		return false;

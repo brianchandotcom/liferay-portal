@@ -156,12 +156,12 @@ public class CommerceBOMFolderIndexer extends BaseIndexer<CommerceBOMFolder> {
 					indexableActionableDynamicQuery.addDocuments(
 						getDocument(commerceBOMFolder));
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to index commerce BOM folder " +
 								commerceBOMFolder.getCommerceBOMFolderId(),
-							pe);
+							portalException);
 					}
 				}
 			});

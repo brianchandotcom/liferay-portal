@@ -25,8 +25,10 @@ import javax.portlet.RenderRequest;
 public class CommerceMLForecastAlertEntryRequestHelper
 	extends BaseRequestHelper {
 
-	public CommerceMLForecastAlertEntryRequestHelper(RenderRequest request) {
-		super(PortalUtil.getHttpServletRequest(request));
+	public CommerceMLForecastAlertEntryRequestHelper(
+		RenderRequest renderRequest) {
+
+		super(PortalUtil.getHttpServletRequest(renderRequest));
 	}
 
 }

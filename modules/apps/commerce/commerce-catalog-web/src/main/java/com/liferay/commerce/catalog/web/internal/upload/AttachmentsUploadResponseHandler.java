@@ -50,38 +50,43 @@ public class AttachmentsUploadResponseHandler implements UploadResponseHandler {
 
 	@Override
 	public JSONObject onFailure(
-			PortletRequest portletRequest, PortalException pe)
+			PortletRequest portletRequest, PortalException portalException)
 		throws PortalException {
 
 		JSONObject jsonObject = _itemSelectorUploadResponseHandler.onFailure(
-			portletRequest, pe);
+			portletRequest, portalException);
 
-		if (pe instanceof CPAttachmentFileEntryNameException ||
-			pe instanceof CPAttachmentFileEntrySizeException) {
+		if (portalException instanceof CPAttachmentFileEntryNameException ||
+			portalException instanceof CPAttachmentFileEntrySizeException) {
 
 			JSONObject errorJSONObject = _jsonFactory.createJSONObject();
 
 			String errorMessage = StringPool.BLANK;
 			int errorType = 0;
 
-			if (pe instanceof CPAttachmentFileEntryNameException) {
+			if (portalException instanceof CPAttachmentFileEntryNameException) {
 				errorMessage = StringUtil.merge(
 					_attachmentsConfiguration.imageExtensions());
 
 				errorType =
 					ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION;
 			}
-			else if (pe instanceof CPAttachmentFileEntrySizeException) {
+			else if (portalException instanceof
+						CPAttachmentFileEntrySizeException) {
+
 				errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
 			}
 
-			errorJSONObject.put("errorType", errorType);
-			errorJSONObject.put("message", errorMessage);
+			errorJSONObject.put(
+				"errorType", errorType
+			).put(
+				"message", errorMessage
+			);
 
 			jsonObject.put("error", errorJSONObject);
 		}
 		else {
-			throw pe;
+			throw portalException;
 		}
 
 		return jsonObject;

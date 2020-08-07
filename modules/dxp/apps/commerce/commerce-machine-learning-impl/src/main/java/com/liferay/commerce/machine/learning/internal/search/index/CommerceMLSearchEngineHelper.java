@@ -57,8 +57,8 @@ public class CommerceMLSearchEngineHelper {
 					"mappings", jsonObject
 				).toString());
 		}
-		catch (JSONException jsone) {
-			_log.error(jsone, jsone);
+		catch (JSONException jsonException) {
+			_log.error(jsonException, jsonException);
 		}
 
 		searchEngineAdapter.execute(createIndexRequest);

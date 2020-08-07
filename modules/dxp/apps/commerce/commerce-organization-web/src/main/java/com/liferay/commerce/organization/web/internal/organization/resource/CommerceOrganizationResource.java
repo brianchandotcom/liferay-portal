@@ -72,15 +72,15 @@ public class CommerceOrganizationResource {
 				companyId = curOrganization.getCompanyId();
 			}
 
-			organization = _commerceOrganizationResourceUtil.getOrganization(
+			organization = _commerceOrganizationResourceHelper.getOrganization(
 				_portal.getUserId(httpServletRequest), companyId,
 				curOrganization);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			organization = new Organization(
-				StringUtil.split(e.getLocalizedMessage()));
+				StringUtil.split(exception.getLocalizedMessage()));
 		}
 
 		return getResponse(organization);
@@ -97,14 +97,14 @@ public class CommerceOrganizationResource {
 		AccountList accountList = null;
 
 		try {
-			accountList = _commerceOrganizationResourceUtil.getAccountList(
+			accountList = _commerceOrganizationResourceHelper.getAccountList(
 				organizationId, pagination);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			accountList = new AccountList(
-				StringUtil.split(e.getLocalizedMessage()));
+				StringUtil.split(exception.getLocalizedMessage()));
 		}
 
 		return getResponse(accountList);
@@ -121,13 +121,14 @@ public class CommerceOrganizationResource {
 		UserList userList = null;
 
 		try {
-			userList = _commerceOrganizationResourceUtil.getUserList(
+			userList = _commerceOrganizationResourceHelper.getUserList(
 				organizationId, pagination);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			userList = new UserList(StringUtil.split(e.getLocalizedMessage()));
+			userList = new UserList(
+				StringUtil.split(exception.getLocalizedMessage()));
 		}
 
 		return getResponse(userList);
@@ -147,8 +148,8 @@ public class CommerceOrganizationResource {
 				json, MediaType.APPLICATION_JSON
 			).build();
 		}
-		catch (JsonProcessingException jpe) {
-			_log.error(jpe, jpe);
+		catch (JsonProcessingException jsonProcessingException) {
+			_log.error(jsonProcessingException, jsonProcessingException);
 		}
 
 		return Response.status(
@@ -167,7 +168,8 @@ public class CommerceOrganizationResource {
 		CommerceOrganizationResource.class);
 
 	@Reference
-	private CommerceOrganizationResourceUtil _commerceOrganizationResourceUtil;
+	private CommerceOrganizationResourceHelper
+		_commerceOrganizationResourceHelper;
 
 	@Reference
 	private OrganizationService _organizationService;

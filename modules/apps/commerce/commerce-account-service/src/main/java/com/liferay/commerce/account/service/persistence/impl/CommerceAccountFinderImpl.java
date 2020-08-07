@@ -75,8 +75,7 @@ public class CommerceAccountFinderImpl
 					_getParentCommerceAccountClause(parentCommerceAccountId));
 			}
 			else {
-				sql = StringUtil.replace(
-					sql, "[$PARENT_ACCOUNT_ID$]", StringPool.BLANK);
+				sql = StringUtil.removeSubstring(sql, "[$PARENT_ACCOUNT_ID$]");
 			}
 
 			String keywords = (String)queryDefinition.getAttribute("keywords");
@@ -91,11 +90,10 @@ public class CommerceAccountFinderImpl
 					names);
 			}
 			else {
-				sql = StringUtil.replace(
+				sql = StringUtil.removeSubstring(
 					sql,
 					"AND (LOWER(CommerceAccount.name) LIKE ? " +
-						"[$AND_OR_NULL_CHECK$])",
-					StringPool.BLANK);
+						"[$AND_OR_NULL_CHECK$])");
 			}
 
 			boolean b2b = (Boolean)queryDefinition.getAttribute("B2B");
@@ -125,26 +123,26 @@ public class CommerceAccountFinderImpl
 
 			sql = _customSQL.replaceAndOperator(sql, true);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
 			if (Validator.isNotNull(keywords)) {
-				qPos.add(names, 2);
+				queryPos.add(names, 2);
 			}
 
 			if (active != null) {
-				qPos.add(active);
+				queryPos.add(active);
 			}
 
-			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+			sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
 			int count = 0;
 
-			Iterator<Long> itr = q.iterate();
+			Iterator<Long> iterator = sqlQuery.iterate();
 
-			while (itr.hasNext()) {
-				Long l = itr.next();
+			while (iterator.hasNext()) {
+				Long l = iterator.next();
 
 				if (l != null) {
 					count += l.intValue();
@@ -153,8 +151,8 @@ public class CommerceAccountFinderImpl
 
 			return count;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -187,8 +185,7 @@ public class CommerceAccountFinderImpl
 					_getParentCommerceAccountClause(parentCommerceAccountId));
 			}
 			else {
-				sql = StringUtil.replace(
-					sql, "[$PARENT_ACCOUNT_ID$]", StringPool.BLANK);
+				sql = StringUtil.removeSubstring(sql, "[$PARENT_ACCOUNT_ID$]");
 			}
 
 			String keywords = (String)queryDefinition.getAttribute("keywords");
@@ -207,11 +204,10 @@ public class CommerceAccountFinderImpl
 					names);
 			}
 			else {
-				sql = StringUtil.replace(
+				sql = StringUtil.removeSubstring(
 					sql,
 					"AND (LOWER(CommerceAccount.name) LIKE ? " +
-						"[$AND_OR_NULL_CHECK$])",
-					StringPool.BLANK);
+						"[$AND_OR_NULL_CHECK$])");
 			}
 
 			boolean b2b = (Boolean)queryDefinition.getAttribute("B2B");
@@ -241,27 +237,27 @@ public class CommerceAccountFinderImpl
 
 			sql = _customSQL.replaceAndOperator(sql, true);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(
+			sqlQuery.addEntity(
 				CommerceAccountImpl.TABLE_NAME, CommerceAccountImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
 			if (Validator.isNotNull(keywords)) {
-				qPos.add(names, 2);
+				queryPos.add(names, 2);
 			}
 
 			if (active != null) {
-				qPos.add(active);
+				queryPos.add(active);
 			}
 
 			return (List<CommerceAccount>)QueryUtil.list(
-				q, getDialect(), queryDefinition.getStart(),
+				sqlQuery, getDialect(), queryDefinition.getStart(),
 				queryDefinition.getEnd());
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -284,17 +280,17 @@ public class CommerceAccountFinderImpl
 			sql = StringUtil.replace(
 				sql, "[$USER_ID$]", String.valueOf(userId));
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(
+			sqlQuery.addEntity(
 				CommerceAccountImpl.TABLE_NAME, CommerceAccountImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(commerceAccountId);
+			queryPos.add(commerceAccountId);
 
 			List<CommerceAccount> list = (List<CommerceAccount>)QueryUtil.list(
-				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				sqlQuery, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 			if (!list.isEmpty()) {
 				return list.get(0);
@@ -302,8 +298,8 @@ public class CommerceAccountFinderImpl
 
 			return null;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);

@@ -14,15 +14,12 @@
 
 package com.liferay.commerce.discount.rule.type;
 
-import aQute.bnd.annotation.ProviderType;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Alessio Antonio Rendina
  */
-@ProviderType
 public interface CommerceDiscountRuleTypeJSPContributor {
 
 	public void render(

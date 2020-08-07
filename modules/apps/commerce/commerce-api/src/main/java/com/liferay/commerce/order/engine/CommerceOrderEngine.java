@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.order.engine;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.status.CommerceOrderStatus;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -25,7 +23,6 @@ import java.util.List;
 /**
  * @author Alec Sloan
  */
-@ProviderType
 public interface CommerceOrderEngine {
 
 	public CommerceOrder checkCommerceOrderShipmentStatus(

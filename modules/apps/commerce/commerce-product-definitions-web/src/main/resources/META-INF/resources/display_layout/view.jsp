@@ -30,7 +30,7 @@ contextParams.put("commerceChannelId", String.valueOf(cpDefinitionDisplayLayoutD
 	dataProviderKey="<%= CommerceProductDisplayPageClayTable.NAME %>"
 	id="<%= CommerceProductDisplayPageClayTable.NAME %>"
 	itemsPerPage="<%= 10 %>"
-	namespace="<%= renderResponse.getNamespace() %>"
+	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"
 	portletURL="<%= currentURLObj %>"
 />

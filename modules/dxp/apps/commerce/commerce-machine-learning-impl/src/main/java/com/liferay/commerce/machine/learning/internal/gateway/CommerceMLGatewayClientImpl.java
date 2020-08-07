@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.io.File;
@@ -34,7 +35,6 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.http.HttpEntity;
@@ -96,8 +96,8 @@ public class CommerceMLGatewayClientImpl implements CommerceMLGatewayClient {
 				return FileUtil.createTempFile(httpEntity.getContent());
 			}
 		}
-		catch (Exception e) {
-			throw new PortalException(e);
+		catch (Exception exception) {
+			throw new PortalException(exception);
 		}
 
 		return null;
@@ -116,10 +116,10 @@ public class CommerceMLGatewayClientImpl implements CommerceMLGatewayClient {
 				CommerceMLJobState.class, _ML_STATE_URL_PATH, "applicationId",
 				applicationId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new PortalException(e);
+			throw new PortalException(exception);
 		}
 	}
 
@@ -137,10 +137,10 @@ public class CommerceMLGatewayClientImpl implements CommerceMLGatewayClient {
 
 			return _objectMapper.readValue(json, CommerceMLJobState.class);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new PortalException(e);
+			throw new PortalException(exception);
 		}
 	}
 
@@ -189,8 +189,8 @@ public class CommerceMLGatewayClientImpl implements CommerceMLGatewayClient {
 						statusLine.getStatusCode());
 			}
 		}
-		catch (IOException e) {
-			throw new PortalException(e);
+		catch (IOException ioException) {
+			throw new PortalException(ioException);
 		}
 	}
 
@@ -204,10 +204,10 @@ public class CommerceMLGatewayClientImpl implements CommerceMLGatewayClient {
 	}
 
 	protected String getCallbackURL(
-			UnicodeProperties contextProperties, String path)
+			UnicodeProperties unicodeProperties, String path)
 		throws MalformedURLException {
 
-		String baseURL = contextProperties.getProperty(
+		String baseURL = unicodeProperties.getProperty(
 			_COMMERCE_ML_BASE_URL,
 			_commerceMLConfiguration.commerceMLBaseURL());
 
@@ -217,7 +217,7 @@ public class CommerceMLGatewayClientImpl implements CommerceMLGatewayClient {
 	}
 
 	protected JSONWebServiceClient getJSONWebServiceClient(
-			UnicodeProperties contextProperties)
+			UnicodeProperties unicodeProperties)
 		throws Exception {
 
 		if (_jsonWebServiceClient != null) {
@@ -225,18 +225,19 @@ public class CommerceMLGatewayClientImpl implements CommerceMLGatewayClient {
 		}
 
 		URL url = new URL(
-			contextProperties.getProperty(
+			unicodeProperties.getProperty(
 				_COMMERCE_ML_BASE_URL,
 				_commerceMLConfiguration.commerceMLBaseURL()));
 
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("hostName", url.getHost());
-		properties.put("hostPort", String.valueOf(url.getPort()));
-		properties.put("protocol", url.getProtocol());
-
 		_jsonWebServiceClient = _jsonWebServiceClientFactory.getInstance(
-			properties, false);
+			HashMapBuilder.<String, Object>put(
+				"hostName", url.getHost()
+			).put(
+				"hostPort", String.valueOf(url.getPort())
+			).put(
+				"protocol", url.getProtocol()
+			).build(),
+			false);
 
 		return _jsonWebServiceClient;
 	}

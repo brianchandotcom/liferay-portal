@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.currency.model;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.currency.util.PriceFormat;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -24,7 +22,6 @@ import java.math.BigDecimal;
 /**
  * @author Marco Leo
  */
-@ProviderType
 public interface CommerceMoneyFactory {
 
 	public CommerceMoney create(

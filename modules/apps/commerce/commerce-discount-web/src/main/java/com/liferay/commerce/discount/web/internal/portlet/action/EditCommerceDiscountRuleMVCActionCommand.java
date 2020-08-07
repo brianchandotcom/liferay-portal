@@ -94,23 +94,23 @@ public class EditCommerceDiscountRuleMVCActionCommand
 				deleteCommerceDiscountRules(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchDiscountException ||
-				e instanceof NoSuchDiscountRuleException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchDiscountException ||
+				exception instanceof NoSuchDiscountRuleException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (e instanceof CommerceDiscountRuleTypeException) {
-				SessionErrors.add(actionRequest, e.getClass());
+			else if (exception instanceof CommerceDiscountRuleTypeException) {
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter(
 					"mvcPath", "/edit_discount_rule.jsp");
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

@@ -134,7 +134,7 @@ CPPriceRangeFacetsDisplayContext cpPriceRangeFacetsDisplayContext = (CPPriceRang
 						<aui:input cssClass="price-range-input" label="<%= StringPool.BLANK %>" name="maximum" prefix="<%= cpPriceRangeFacetsDisplayContext.getCurrentCommerceCurrencySymbol() %>" type="number" value="<%= max %>" wrapperCssClass="col-md-5 price-range-input-wrapper" />
 
 						<div class="col-md-3 ml-2 p-0">
-							<button class="btn btn-secondary price-range-btn" onclick="<%= renderResponse.getNamespace() + "submitPriceRange();" %>"><liferay-ui:message key="go" /></button>
+							<button class="btn btn-secondary price-range-btn" onclick="<%= liferayPortletResponse.getNamespace() + "submitPriceRange();" %>"><liferay-ui:message key="go" /></button>
 						</div>
 					</div>
 

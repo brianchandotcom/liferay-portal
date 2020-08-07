@@ -35,7 +35,7 @@ contextParams.put("commerceChannelId", String.valueOf(commerceNotificationQueueE
 	dataProviderKey="<%= CommerceNotificationEntryClayTable.NAME %>"
 	id="<%= CommerceNotificationEntryClayTable.NAME %>"
 	itemsPerPage="<%= 10 %>"
-	namespace="<%= renderResponse.getNamespace() %>"
+	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"
 	portletURL="<%= portletURL %>"
 	showManagementBar="<%= false %>"

@@ -40,7 +40,7 @@ long commerceChannelId = commercePaymentMethodGroupRelsDisplayContext.getCommerc
 		formId="fm"
 		id="<%= CommercePaymentRestrictionsPageClayTable.NAME %>"
 		itemsPerPage="<%= commercePaymentMethodGroupRelsDisplayContext.getCommerceCountriesCount() %>"
-		namespace="<%= renderResponse.getNamespace() %>"
+		namespace="<%= liferayPortletResponse.getNamespace() %>"
 		pageNumber="<%= 1 %>"
 		portletURL="<%= currentURLObj %>"
 		selectedItemsKey="commerceCountryId"

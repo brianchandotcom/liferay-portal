@@ -125,7 +125,7 @@ public class AnalyticsCommerceMLScheduledTaskExecutorService
 			long commerceDataIntegrationProcessId,
 			BatchEngineTaskItemDelegateResourceMapper[]
 				batchEngineTaskItemDelegateResourceMappers,
-			boolean isDownload)
+			boolean download)
 		throws PortalException {
 
 		CommerceDataIntegrationProcess commerceDataIntegrationProcess =
@@ -147,7 +147,7 @@ public class AnalyticsCommerceMLScheduledTaskExecutorService
 					batchEngineTaskItemDelegateResourceMapper :
 						batchEngineTaskItemDelegateResourceMappers) {
 
-				if (isDownload) {
+				if (download) {
 					_downloadResources(
 						commerceDataIntegrationProcess,
 						commerceDataIntegrationProcessLog,
@@ -170,12 +170,12 @@ public class AnalyticsCommerceMLScheduledTaskExecutorService
 				updateCommerceDataIntegrationProcess(
 					commerceDataIntegrationProcess);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
-			commerceDataIntegrationProcessLog.setError(e.getMessage());
+			commerceDataIntegrationProcessLog.setError(exception.getMessage());
 
 			commerceDataIntegrationProcessLog.setEndDate(new Date());
 

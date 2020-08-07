@@ -115,8 +115,8 @@ public class CommerceChannelHealthCheckClayTable
 						httpServletRequest, resourceBundle, "fix-issue"),
 					null, false, false));
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exception) {
+			exception.printStackTrace();
 		}
 
 		return clayTableActions;

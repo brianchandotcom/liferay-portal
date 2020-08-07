@@ -90,25 +90,25 @@ public class EditCommerceRegionMVCActionCommand extends BaseMVCActionCommand {
 				setActive(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchRegionException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchRegionException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (e instanceof CommerceRegionNameException) {
+			else if (exception instanceof CommerceRegionNameException) {
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName", "editCommerceCountry");
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

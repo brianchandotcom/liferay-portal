@@ -85,8 +85,8 @@ public class CommerceDataIntegrationPortlet extends MVCPortlet {
 							commerceDataIntegrationProcessId);
 			}
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		if (commerceDataIntegrationProcess != null) {

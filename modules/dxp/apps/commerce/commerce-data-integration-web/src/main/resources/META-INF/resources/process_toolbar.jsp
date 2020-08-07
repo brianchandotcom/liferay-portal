@@ -73,7 +73,7 @@ CommerceDataIntegrationProcessDisplayContext commerceDataIntegrationProcessDispl
 
 	<liferay-frontend:management-bar-action-buttons>
 		<liferay-frontend:management-bar-button
-			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceDataIntegrationProcesses();" %>'
+			href='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deleteCommerceDataIntegrationProcesses();" %>'
 			icon="times"
 			label="delete"
 		/>

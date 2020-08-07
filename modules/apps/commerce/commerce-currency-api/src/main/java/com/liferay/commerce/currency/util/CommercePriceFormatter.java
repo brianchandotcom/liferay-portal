@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.currency.util;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -27,7 +25,6 @@ import java.util.Locale;
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
-@ProviderType
 public interface CommercePriceFormatter {
 
 	public String format(BigDecimal price, Locale locale)

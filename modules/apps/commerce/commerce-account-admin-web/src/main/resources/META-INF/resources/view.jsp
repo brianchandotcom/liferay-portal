@@ -86,12 +86,12 @@ CommerceAccountAdminDisplayContext commerceAccountAdminDisplayContext = (Commerc
 			>
 				<liferay-ui:icon
 					message="activate"
-					url='<%= "javascript:" + renderResponse.getNamespace() + "activateCommerceAccounts();" %>'
+					url='<%= "javascript:" + liferayPortletResponse.getNamespace() + "activateCommerceAccounts();" %>'
 				/>
 
 				<liferay-ui:icon
 					message="deactivate"
-					url='<%= "javascript:" + renderResponse.getNamespace() + "deactivateCommerceAccounts();" %>'
+					url='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deactivateCommerceAccounts();" %>'
 				/>
 			</liferay-ui:icon-menu>
 		</liferay-frontend:management-bar-action-buttons>

@@ -188,7 +188,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 									<c:if test="<%= !assignedToCurrentUser %>">
 										<clay:button
 											elementClasses="dropdown-item transition-link"
-											id='<%= renderResponse.getNamespace() + "assign-to-me-modal-opener" %>'
+											id='<%= liferayPortletResponse.getNamespace() + "assign-to-me-modal-opener" %>'
 											label='<%= LanguageUtil.get(request, "assign-to-me") %>'
 											size="lg"
 											style="secondary"
@@ -225,7 +225,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 
 									<clay:button
 										elementClasses="dropdown-item transition-link"
-										id='<%= renderResponse.getNamespace() + "assign-to-modal-opener" %>'
+										id='<%= liferayPortletResponse.getNamespace() + "assign-to-modal-opener" %>'
 										label='<%= LanguageUtil.get(request, "assign-to-...") %>'
 										size="lg"
 										style="secondary"

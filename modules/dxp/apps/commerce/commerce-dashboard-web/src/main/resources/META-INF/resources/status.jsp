@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String statusChartRootElementId = renderResponse.getNamespace() + "-status-chart";
+String statusChartRootElementId = liferayPortletResponse.getNamespace() + "-status-chart";
 
 CommerceContext commerceContext = (CommerceContext)request.getAttribute(CommerceWebKeys.COMMERCE_CONTEXT);
 
@@ -29,12 +29,12 @@ CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
 </div>
 
 <aui:script require="commerce-dashboard-web/js/status/index.es as chart">
-chart.default('<%= statusChartRootElementId %>', {
-	APIBaseUrl: `/o/----`,
-	accountIdParamName: '----',
-	commerceAccountId: '<%= commerceAccount.getCommerceAccountId() %>',
-	noAccountErrorMessage: Liferay.Language.get('no-account-selected'),
-	noDataErrorMessage: Liferay.Language.get('no-data-available'),
-	portletId: '<%= portletDisplay.getId() %>'
-});
+	chart.default('<%= statusChartRootElementId %>', {
+		APIBaseUrl: '/o/----',
+		accountIdParamName: '----',
+		commerceAccountId: '<%= commerceAccount.getCommerceAccountId() %>',
+		noAccountErrorMessage: Liferay.Language.get('no-account-selected'),
+		noDataErrorMessage: Liferay.Language.get('no-data-available'),
+		portletId: '<%= portletDisplay.getId() %>',
+	});
 </aui:script>

@@ -72,12 +72,12 @@ public class CommerceDiscountRuleLocalServiceImpl
 		commerceDiscountRule.setCommerceDiscountId(commerceDiscountId);
 		commerceDiscountRule.setType(type);
 
-		UnicodeProperties settingsProperties =
+		UnicodeProperties settingsUnicodeProperties =
 			commerceDiscountRule.getSettingsProperties();
 
-		settingsProperties.put(type, typeSettings);
+		settingsUnicodeProperties.put(type, typeSettings);
 
-		commerceDiscountRule.setSettingsProperties(settingsProperties);
+		commerceDiscountRule.setSettingsProperties(settingsUnicodeProperties);
 
 		commerceDiscountRule = commerceDiscountRulePersistence.update(
 			commerceDiscountRule);
@@ -182,12 +182,12 @@ public class CommerceDiscountRuleLocalServiceImpl
 
 		commerceDiscountRule.setType(type);
 
-		UnicodeProperties settingsProperties =
+		UnicodeProperties unicodeProperties =
 			commerceDiscountRule.getSettingsProperties();
 
-		settingsProperties.put(type, typeSettings);
+		unicodeProperties.put(type, typeSettings);
 
-		commerceDiscountRule.setSettingsProperties(settingsProperties);
+		commerceDiscountRule.setSettingsProperties(unicodeProperties);
 
 		commerceDiscountRule = commerceDiscountRulePersistence.update(
 			commerceDiscountRule);
@@ -216,12 +216,12 @@ public class CommerceDiscountRuleLocalServiceImpl
 		commerceDiscountRule.setName(name);
 		commerceDiscountRule.setType(type);
 
-		UnicodeProperties settingsProperties =
+		UnicodeProperties unicodeProperties =
 			commerceDiscountRule.getSettingsProperties();
 
-		settingsProperties.put(type, typeSettings);
+		unicodeProperties.put(type, typeSettings);
 
-		commerceDiscountRule.setSettingsProperties(settingsProperties);
+		commerceDiscountRule.setSettingsProperties(unicodeProperties);
 
 		commerceDiscountRule = commerceDiscountRulePersistence.update(
 			commerceDiscountRule);

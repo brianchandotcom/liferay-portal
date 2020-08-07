@@ -21,9 +21,9 @@ CPPublisherConfigurationDisplayContext cpPublisherConfigurationDisplayContext = 
 %>
 
 <aui:fieldset markupView="lexicon">
-	<aui:input checked="<%= cpPublisherConfigurationDisplayContext.isRenderSelectionADT() %>" id="renderSelectionADT" label="use-adt" name="preferences--renderSelection--" onChange='<%= renderResponse.getNamespace() + "chooseRenderSelection();" %>' type="radio" value="adt" />
+	<aui:input checked="<%= cpPublisherConfigurationDisplayContext.isRenderSelectionADT() %>" id="renderSelectionADT" label="use-adt" name="preferences--renderSelection--" onChange='<%= liferayPortletResponse.getNamespace() + "chooseRenderSelection();" %>' type="radio" value="adt" />
 
-	<aui:input checked="<%= cpPublisherConfigurationDisplayContext.isRenderSelectionCustomRenderer() %>" id="renderSelectionCustomRenderer" label="use-custom-renderer" name="preferences--renderSelection--" onChange='<%= renderResponse.getNamespace() + "chooseRenderSelection();" %>' type="radio" value="custom" />
+	<aui:input checked="<%= cpPublisherConfigurationDisplayContext.isRenderSelectionCustomRenderer() %>" id="renderSelectionCustomRenderer" label="use-custom-renderer" name="preferences--renderSelection--" onChange='<%= liferayPortletResponse.getNamespace() + "chooseRenderSelection();" %>' type="radio" value="custom" />
 </aui:fieldset>
 
 <aui:script>

@@ -61,7 +61,7 @@ SearchContainer<CommerceDiscountRule> commerceDiscountRuleSearchContainer = comm
 
 	<liferay-frontend:management-bar-action-buttons>
 		<liferay-frontend:management-bar-button
-			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceDiscountRules();" %>'
+			href='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deleteCommerceDiscountRules();" %>'
 			icon="times"
 			label="delete"
 		/>

@@ -1,21 +1,20 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
  */
 
 /* eslint-disable require-jsdoc */
+import {fetch} from 'frontend-js-web';
+
 export const NULL_VALUE = 1.4e-45;
 const headers = {
-	'Content-Type': 'application/json'
+	'Content-Type': 'application/json',
 };
 
 function byDate(a, b) {
@@ -39,17 +38,17 @@ export function formatDataForChart(points = []) {
 	return {
 		axis: {
 			x: {
-				type: 'timeseries'
-			}
+				type: 'timeseries',
+			},
 		},
 		data: {
 			columns: formatPointsForChart(points, categories),
 			names: formatCategoriesForChart(categories),
 			type: 'predictive',
 			types: getLineTypesForChart(categories),
-			x: 'x'
+			x: 'x',
 		},
-		predictionDate: getPredictionDate(points)
+		predictionDate: getPredictionDate(points),
 	};
 }
 
@@ -59,7 +58,7 @@ export function formatPointForForecast(point) {
 		: {
 				high: point.forecastUpperBound,
 				low: point.forecastLowerBound,
-				mid: point.forecast
+				mid: point.forecast,
 		  };
 }
 
@@ -68,10 +67,10 @@ export function formatPointsForChart(points, categories) {
 		? []
 		: [
 				['x', ...getDates(points)],
-				...categories.map(c => [
+				...categories.map((c) => [
 					`${c.id}`,
-					...getValuesForCategory(points, c)
-				])
+					...getValuesForCategory(points, c),
+				]),
 		  ];
 }
 
@@ -83,11 +82,11 @@ export function getCategoriesArray(items = []) {
 
 				return a;
 			}, new Map())
-			.entries()
+			.entries(),
 	]
 		.map(([id, name]) => ({
 			id,
-			name
+			name,
 		}))
 		.sort(byName);
 }
@@ -95,7 +94,7 @@ export function getCategoriesArray(items = []) {
 export function getDates(points) {
 	return points
 		.filter(isPartOfCategory(points[0].category))
-		.map(d => getDateString(d.timestamp));
+		.map((d) => getDateString(d.timestamp));
 }
 
 export function getDateString(ts) {
@@ -120,7 +119,7 @@ export function getPredictionDate(points) {
 				points
 					.slice()
 					.reverse()
-					.find(d => d.actual !== NULL_VALUE).timestamp
+					.find((d) => d.actual !== NULL_VALUE).timestamp
 		  );
 }
 
@@ -143,7 +142,7 @@ export function loadData(url) {
 	return parseData(
 		fetch(`${url}&p_auth=${window.Liferay.authToken}`, {
 			credentials: 'include',
-			headers
+			headers,
 		}).then(responseToJson)
 	);
 }

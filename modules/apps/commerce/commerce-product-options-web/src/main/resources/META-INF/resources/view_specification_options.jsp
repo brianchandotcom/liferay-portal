@@ -102,7 +102,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 		</c:if>
 
 		<liferay-frontend:management-bar-button
-			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCPSpecificationOptions();" %>'
+			href='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deleteCPSpecificationOptions();" %>'
 			icon="times"
 			label="delete"
 		/>

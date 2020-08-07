@@ -129,32 +129,31 @@ public class CommerceDiscountFinderImpl
 				sql = _customSQL.replaceAndOperator(sql, false);
 			}
 			else {
-				sql = StringUtil.replace(
+				sql = StringUtil.removeSubstring(
 					sql,
 					" AND (LOWER(CommerceDiscount.title) LIKE ? " +
-						"[$AND_OR_NULL_CHECK$])",
-					StringPool.BLANK);
+						"[$AND_OR_NULL_CHECK$])");
 			}
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addScalar(_COUNT_VALUE, Type.LONG);
+			sqlQuery.addScalar(_COUNT_VALUE, Type.LONG);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(
+			queryPos.add(
 				PortalUtil.getClassNameId(
 					CommercePricingClass.class.getName()));
-			qPos.add(commercePricingClassId);
+			queryPos.add(commercePricingClassId);
 
 			if (Validator.isNotNull(title)) {
-				qPos.add(keywords, 2);
+				queryPos.add(keywords, 2);
 			}
 
-			Iterator<Long> itr = q.iterate();
+			Iterator<Long> iterator = sqlQuery.iterate();
 
-			if (itr.hasNext()) {
-				Long count = itr.next();
+			if (iterator.hasNext()) {
+				Long count = iterator.next();
 
 				if (count != null) {
 					return count.intValue();
@@ -163,8 +162,8 @@ public class CommerceDiscountFinderImpl
 
 			return 0;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -208,34 +207,33 @@ public class CommerceDiscountFinderImpl
 				sql = _customSQL.replaceAndOperator(sql, false);
 			}
 			else {
-				sql = StringUtil.replace(
+				sql = StringUtil.removeSubstring(
 					sql,
 					" AND (LOWER(CommerceDiscount.title) LIKE ? " +
-						"[$AND_OR_NULL_CHECK$])",
-					StringPool.BLANK);
+						"[$AND_OR_NULL_CHECK$])");
 			}
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(
+			sqlQuery.addEntity(
 				CommerceDiscountImpl.TABLE_NAME, CommerceDiscountImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(
+			queryPos.add(
 				PortalUtil.getClassNameId(
 					CommercePricingClass.class.getName()));
-			qPos.add(commercePricingClassId);
+			queryPos.add(commercePricingClassId);
 
 			if (Validator.isNotNull(title)) {
-				qPos.add(keywords, 2);
+				queryPos.add(keywords, 2);
 			}
 
 			return (List<CommerceDiscount>)QueryUtil.list(
-				q, getDialect(), start, end);
+				sqlQuery, getDialect(), start, end);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -405,25 +403,27 @@ public class CommerceDiscountFinderImpl
 					sql, "[$CLASS_PK_PRICING_CLASSES$]", new long[] {0});
 			}
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(
+			sqlQuery.addEntity(
 				CommerceDiscountImpl.TABLE_NAME, CommerceDiscountImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(cpDefinitionId);
-			qPos.add(PortalUtil.getClassNameId(CPDefinition.class.getName()));
-			qPos.add(PortalUtil.getClassNameId(AssetCategory.class.getName()));
-			qPos.add(
+			queryPos.add(cpDefinitionId);
+			queryPos.add(
+				PortalUtil.getClassNameId(CPDefinition.class.getName()));
+			queryPos.add(
+				PortalUtil.getClassNameId(AssetCategory.class.getName()));
+			queryPos.add(
 				PortalUtil.getClassNameId(
 					CommercePricingClass.class.getName()));
 
 			return (List<CommerceDiscount>)QueryUtil.list(
-				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				sqlQuery, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -469,24 +469,24 @@ public class CommerceDiscountFinderImpl
 					sql, "[$ACCOUNT_GROUP_IDS$]", new long[] {0});
 			}
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(
+			sqlQuery.addEntity(
 				CommerceDiscountImpl.TABLE_NAME, CommerceDiscountImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos = _setQueryPosDynamicParameters(
+			queryPos = _setQueryPosDynamicParameters(
 				companyId, commerceAccountId, commerceAccountGroupIds,
-				commerceChannelId, qPos);
+				commerceChannelId, queryPos);
 
-			qPos.add(commerceDiscountTargetType);
+			queryPos.add(commerceDiscountTargetType);
 
 			return (List<CommerceDiscount>)QueryUtil.list(
-				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				sqlQuery, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -538,32 +538,34 @@ public class CommerceDiscountFinderImpl
 					sql, "[$CLASS_PK_PRICING_CLASSES$]", new long[] {0});
 			}
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(
+			sqlQuery.addEntity(
 				CommerceDiscountImpl.TABLE_NAME, CommerceDiscountImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos = _setQueryPosDynamicParameters(
+			queryPos = _setQueryPosDynamicParameters(
 				companyId, commerceAccountId, commerceAccountGroupIds,
-				commerceChannelId, qPos);
+				commerceChannelId, queryPos);
 
-			qPos.add(CommerceDiscountConstants.TARGET_PRODUCTS);
-			qPos.add(cpDefinitionId);
-			qPos.add(PortalUtil.getClassNameId(CPDefinition.class.getName()));
-			qPos.add(CommerceDiscountConstants.TARGET_CATEGORIES);
-			qPos.add(PortalUtil.getClassNameId(AssetCategory.class.getName()));
-			qPos.add(CommerceDiscountConstants.TARGET_PRODUCT_GROUPS);
-			qPos.add(
+			queryPos.add(CommerceDiscountConstants.TARGET_PRODUCTS);
+			queryPos.add(cpDefinitionId);
+			queryPos.add(
+				PortalUtil.getClassNameId(CPDefinition.class.getName()));
+			queryPos.add(CommerceDiscountConstants.TARGET_CATEGORIES);
+			queryPos.add(
+				PortalUtil.getClassNameId(AssetCategory.class.getName()));
+			queryPos.add(CommerceDiscountConstants.TARGET_PRODUCT_GROUPS);
+			queryPos.add(
 				PortalUtil.getClassNameId(
 					CommercePricingClass.class.getName()));
 
 			return (List<CommerceDiscount>)QueryUtil.list(
-				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				sqlQuery, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -572,29 +574,29 @@ public class CommerceDiscountFinderImpl
 
 	private QueryPos _setQueryPosDynamicParameters(
 		Long companyId, Long commerceAccountId, long[] commerceAccountGroupIds,
-		Long commerceChannelId, QueryPos qPos) {
+		Long commerceChannelId, QueryPos queryPos) {
 
 		if ((commerceChannelId != null) ||
 			((commerceAccountId == null) && (commerceAccountGroupIds == null) &&
 			 (commerceChannelId == null))) {
 
-			qPos.add(
+			queryPos.add(
 				PortalUtil.getClassNameId(CommerceDiscount.class.getName()));
 		}
 
 		if (companyId != null) {
-			qPos.add(companyId);
+			queryPos.add(companyId);
 		}
 
 		if (commerceAccountId != null) {
-			qPos.add(commerceAccountId);
+			queryPos.add(commerceAccountId);
 		}
 
 		if (commerceChannelId != null) {
-			qPos.add(commerceChannelId);
+			queryPos.add(commerceChannelId);
 		}
 
-		return qPos;
+		return queryPos;
 	}
 
 	private static final String _COUNT_VALUE = "COUNT_VALUE";

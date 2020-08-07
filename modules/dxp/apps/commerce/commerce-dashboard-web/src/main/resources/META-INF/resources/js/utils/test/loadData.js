@@ -1,24 +1,22 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
  */
 
 import {
+	NULL_VALUE,
 	formatCategoriesForChart,
 	formatPointForForecast,
 	formatPointsForChart,
 	getCategoriesArray,
-	getDates,
 	getDateString,
+	getDates,
 	getLineTypesForChart,
 	getPoints,
 	getPredictionDate,
@@ -26,31 +24,30 @@ import {
 	hasNoActualNorForecastValue,
 	isPartOfCategory,
 	parseData,
-	NULL_VALUE
 } from '../loadData.es';
 import {input, output, simpleInput, simpleOutput} from '../mock/data';
 
 const categoriesSubset = getCategoriesArray(simpleInput.items);
 
-const loadData = data => new Promise(resolve => resolve(data));
+const loadData = (data) => new Promise((resolve) => resolve(data));
 
 describe('Chart loadData utils', () => {
 	it('Format categories for chart', () => {
 		expect(formatCategoriesForChart(categoriesSubset)).toEqual({
 			1: 'Cat 1',
-			2: 'Cat 2'
+			2: 'Cat 2',
 		});
 	});
 
 	it('Format point for forecast', () => {
-		const pastItem = simpleInput.items.find(i => i.actual !== 1.4e-45);
-		const futureItem = simpleInput.items.find(i => i.actual === 1.4e-45);
+		const pastItem = simpleInput.items.find((i) => i.actual !== 1.4e-45);
+		const futureItem = simpleInput.items.find((i) => i.actual === 1.4e-45);
 
 		expect(formatPointForForecast(pastItem)).toBe(pastItem.actual);
 		expect(formatPointForForecast(futureItem)).toEqual({
 			high: futureItem.forecastUpperBound,
 			low: futureItem.forecastLowerBound,
-			mid: futureItem.forecast
+			mid: futureItem.forecast,
 		});
 	});
 
@@ -65,8 +62,8 @@ describe('Chart loadData utils', () => {
 				{
 					high: 18,
 					low: 12,
-					mid: 16
-				}
+					mid: 16,
+				},
 			],
 			[
 				'2',
@@ -74,9 +71,9 @@ describe('Chart loadData utils', () => {
 				{
 					high: 28,
 					low: 22,
-					mid: 26
-				}
-			]
+					mid: 26,
+				},
+			],
 		]);
 		expect(formatPointsForChart([], [])).toEqual([]);
 	});
@@ -85,19 +82,19 @@ describe('Chart loadData utils', () => {
 		expect(getCategoriesArray(simpleInput.items)).toEqual([
 			{
 				id: 1,
-				name: 'Cat 1'
+				name: 'Cat 1',
 			},
 			{
 				id: 2,
-				name: 'Cat 2'
-			}
+				name: 'Cat 2',
+			},
 		]);
 	});
 
 	it('Get dates list', () => {
 		expect(getDates(simpleInput.items)).toEqual([
 			'2019-04-01',
-			'2019-05-01'
+			'2019-05-01',
 		]);
 	});
 
@@ -110,7 +107,7 @@ describe('Chart loadData utils', () => {
 	it('Get line types for chart', () => {
 		expect(getLineTypesForChart(categoriesSubset)).toEqual({
 			1: 'area-line-range',
-			2: 'area-line-range'
+			2: 'area-line-range',
 		});
 	});
 
@@ -129,8 +126,8 @@ describe('Chart loadData utils', () => {
 			{
 				high: 18,
 				low: 12,
-				mid: 16
-			}
+				mid: 16,
+			},
 		]);
 	});
 
@@ -143,11 +140,11 @@ describe('Chart loadData utils', () => {
 	it('Filters out points whose actual AND forecast values are NULL', () => {
 		const invalidSample = {
 				actual: NULL_VALUE,
-				forecast: NULL_VALUE
+				forecast: NULL_VALUE,
 			},
 			validSample = {
 				actual: 1232,
-				forecast: NULL_VALUE
+				forecast: NULL_VALUE,
 			};
 
 		const result = [invalidSample, validSample].filter(
@@ -158,13 +155,13 @@ describe('Chart loadData utils', () => {
 	});
 
 	it('Parse data', () => {
-		return parseData(loadData(input)).then(data => {
+		return parseData(loadData(input)).then((data) => {
 			expect(data).toEqual(output);
 		});
 	});
 
 	it('Parse simple data', () => {
-		return parseData(loadData(simpleInput)).then(data => {
+		return parseData(loadData(simpleInput)).then((data) => {
 			expect(data).toEqual(simpleOutput);
 		});
 	});

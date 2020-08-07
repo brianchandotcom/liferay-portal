@@ -19,12 +19,11 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.wish.list.model.impl.CommerceWishListItemModelImpl;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.petra.string.StringBundler;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -54,19 +53,12 @@ public class CommerceWishListItemUpgradeProcess extends UpgradeProcess {
 			CommerceWishListItemModelImpl.class,
 			CommerceWishListItemModelImpl.TABLE_NAME, "CProductId", "LONG");
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		Statement s = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"update CommerceWishListItem set CProductId = ?," +
 					"CPInstanceUuid = ? where CPInstanceId = ?");
-
-			s = connection.createStatement();
-
-			rs = s.executeQuery(
-				"select distinct CPInstanceId from CommerceWishListItem");
+			Statement s = connection.createStatement();
+			ResultSet rs = s.executeQuery(
+				"select distinct CPInstanceId from CommerceWishListItem")) {
 
 			while (rs.next()) {
 				long cpInstanceId = rs.getLong("CPInstanceId");
@@ -85,10 +77,6 @@ public class CommerceWishListItemUpgradeProcess extends UpgradeProcess {
 
 				ps.execute();
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps);
-			DataAccess.cleanUp(s, rs);
 		}
 
 		_dropColumn(CommerceWishListItemModelImpl.TABLE_NAME, "CPDefinitionId");

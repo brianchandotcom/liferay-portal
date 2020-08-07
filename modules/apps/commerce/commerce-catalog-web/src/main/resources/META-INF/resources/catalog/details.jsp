@@ -103,7 +103,7 @@ boolean isViewOnly = !commerceCatalogDisplayContext.hasPermission(commerceCatalo
 								initialValue:
 									'<%= (baseCommercePriceList == null) ? 0 : baseCommercePriceList.getCommercePriceListId() %>',
 								inputId: 'baseCommercePriceListId',
-								inputName: '<%= renderResponse.getNamespace() %>baseCommercePriceListId',
+								inputName: '<%= liferayPortletResponse.getNamespace() %>baseCommercePriceListId',
 								itemsKey: 'id',
 								itemsLabel: 'name',
 								onValueUpdated: function(value, priceListData) {
@@ -133,7 +133,7 @@ boolean isViewOnly = !commerceCatalogDisplayContext.hasPermission(commerceCatalo
 									'<%= (basePromotionCommercePriceList == null) ? 0 : basePromotionCommercePriceList.getCommercePriceListId() %>',
 								inputId: 'basePromotionCommercePriceListId',
 								inputName:
-									'<%= renderResponse.getNamespace() %>basePromotionCommercePriceListId',
+									'<%= liferayPortletResponse.getNamespace() %>basePromotionCommercePriceListId',
 								itemsKey: 'id',
 								itemsLabel: 'name',
 								onValueUpdated: function(value, priceListData) {

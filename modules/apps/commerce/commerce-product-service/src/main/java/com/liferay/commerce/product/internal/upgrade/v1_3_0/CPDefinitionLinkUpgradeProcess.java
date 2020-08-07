@@ -17,7 +17,6 @@ package com.liferay.commerce.product.internal.upgrade.v1_3_0;
 import com.liferay.commerce.product.internal.upgrade.base.BaseCommerceProductServiceUpgradeProcess;
 import com.liferay.commerce.product.model.impl.CPDefinitionLinkModelImpl;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -43,18 +42,11 @@ public class CPDefinitionLinkUpgradeProcess
 			CPDefinitionLinkModelImpl.TABLE_NAME, "CPDefinitionId1",
 			"CPDefinitionId LONG");
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		Statement s = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"update CPDefinitionLink set CProductId = ? where " +
 					"CPDefinitionId2 = ?");
-
-			s = connection.createStatement();
-
-			rs = s.executeQuery("select * from CPDefinitionLink");
+			Statement s = connection.createStatement();
+			ResultSet rs = s.executeQuery("select * from CPDefinitionLink")) {
 
 			while (rs.next()) {
 				long cpDefinitionId2 = rs.getLong("CPDefinitionId2");
@@ -68,31 +60,19 @@ public class CPDefinitionLinkUpgradeProcess
 				ps.execute();
 			}
 		}
-		finally {
-			DataAccess.cleanUp(ps);
-			DataAccess.cleanUp(s, rs);
-		}
 
 		dropColumn(CPDefinitionLinkModelImpl.TABLE_NAME, "CPDefinitionId2");
 	}
 
 	private long _getCProductId(long cpDefinitionId) throws Exception {
-		Statement s = null;
-		ResultSet rs = null;
-
-		try {
-			s = connection.createStatement();
-
-			rs = s.executeQuery(
+		try (Statement s = connection.createStatement();
+			ResultSet rs = s.executeQuery(
 				"select CProductId from CPDefinition where CPDefinitionId = " +
-					cpDefinitionId);
+					cpDefinitionId)) {
 
 			if (rs.next()) {
 				return rs.getLong("CProductId");
 			}
-		}
-		finally {
-			DataAccess.cleanUp(s, rs);
 		}
 
 		return 0;

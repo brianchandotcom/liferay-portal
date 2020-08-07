@@ -14,12 +14,9 @@
 
 package com.liferay.commerce.subscription;
 
-import aQute.bnd.annotation.ProviderType;
-
 /**
  * @author Alessio Antonio Rendina
  */
-@ProviderType
 public interface CommerceSubscriptionEntryActionHelper {
 
 	public void activateCommerceSubscriptionEntry(

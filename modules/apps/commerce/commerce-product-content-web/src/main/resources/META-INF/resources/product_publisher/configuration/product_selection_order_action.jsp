@@ -32,7 +32,7 @@ boolean last = productEntryOrder == (searchContainer.getTotal() - 1);
 	<c:when test="<%= (productEntryOrder > 0) && !last %>">
 
 		<%
-		String taglibDownURL = "javascript:" + renderResponse.getNamespace() + "moveSelectionDown('" + productEntryOrder + "')";
+		String taglibDownURL = "javascript:" + liferayPortletResponse.getNamespace() + "moveSelectionDown('" + productEntryOrder + "')";
 		%>
 
 		<liferay-ui:icon
@@ -43,7 +43,7 @@ boolean last = productEntryOrder == (searchContainer.getTotal() - 1);
 		/>
 
 		<%
-		String taglibUpURL = "javascript:" + renderResponse.getNamespace() + "moveSelectionUp('" + productEntryOrder + "')";
+		String taglibUpURL = "javascript:" + liferayPortletResponse.getNamespace() + "moveSelectionUp('" + productEntryOrder + "')";
 		%>
 
 		<liferay-ui:icon
@@ -56,7 +56,7 @@ boolean last = productEntryOrder == (searchContainer.getTotal() - 1);
 	<c:when test="<%= productEntryOrder == 0 %>">
 
 		<%
-		String taglibDownURL = "javascript:" + renderResponse.getNamespace() + "moveSelectionDown('" + productEntryOrder + "')";
+		String taglibDownURL = "javascript:" + liferayPortletResponse.getNamespace() + "moveSelectionDown('" + productEntryOrder + "')";
 		%>
 
 		<liferay-ui:icon
@@ -69,7 +69,7 @@ boolean last = productEntryOrder == (searchContainer.getTotal() - 1);
 	<c:when test="<%= last %>">
 
 		<%
-		String taglibUpURL = "javascript:" + renderResponse.getNamespace() + "moveSelectionUp('" + productEntryOrder + "')";
+		String taglibUpURL = "javascript:" + liferayPortletResponse.getNamespace() + "moveSelectionUp('" + productEntryOrder + "')";
 		%>
 
 		<liferay-ui:icon

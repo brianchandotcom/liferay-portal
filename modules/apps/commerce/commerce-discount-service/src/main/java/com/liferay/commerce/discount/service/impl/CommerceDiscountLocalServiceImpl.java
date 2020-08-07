@@ -57,6 +57,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -71,7 +73,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -903,7 +904,7 @@ public class CommerceDiscountLocalServiceImpl
 					expirationDateYear, expirationDateHour,
 					expirationDateMinute, neverExpire, serviceContext);
 			}
-			catch (NoSuchDiscountException nsde) {
+			catch (NoSuchDiscountException noSuchDiscountException) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Unable to find discount with ID: " +
@@ -974,7 +975,7 @@ public class CommerceDiscountLocalServiceImpl
 					expirationDateHour, expirationDateMinute, neverExpire,
 					serviceContext);
 			}
-			catch (NoSuchDiscountException nsde) {
+			catch (NoSuchDiscountException noSuchDiscountException) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Unable to find discount with ID: " +
@@ -1021,20 +1022,23 @@ public class CommerceDiscountLocalServiceImpl
 
 		SearchContext searchContext = new SearchContext();
 
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-		params.put("keywords", keywords);
-
-		Map<String, Serializable> attributes = new HashMap<>();
-
-		attributes.put(CommerceDiscountIndexer.FIELD_GROUP_IDS, groupIds);
-		attributes.put(Field.ENTRY_CLASS_PK, keywords);
-		attributes.put(Field.STATUS, status);
-		attributes.put(Field.TITLE, keywords);
-		attributes.put("params", params);
-		attributes.put("skipCommerceAccountGroupValidation", true);
-
-		searchContext.setAttributes(attributes);
+		searchContext.setAttributes(
+			HashMapBuilder.<String, Serializable>put(
+				CommerceDiscountIndexer.FIELD_GROUP_IDS, groupIds
+			).put(
+				Field.ENTRY_CLASS_PK, keywords
+			).put(
+				Field.STATUS, status
+			).put(
+				Field.TITLE, keywords
+			).put(
+				"params",
+				LinkedHashMapBuilder.<String, Object>put(
+					"keywords", keywords
+				).build()
+			).put(
+				"skipCommerceAccountGroupValidation", true
+			).build());
 
 		searchContext.setCompanyId(companyId);
 		searchContext.setStart(start);
@@ -1235,8 +1239,8 @@ public class CommerceDiscountLocalServiceImpl
 
 			return longStream.toArray();
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		return new long[0];

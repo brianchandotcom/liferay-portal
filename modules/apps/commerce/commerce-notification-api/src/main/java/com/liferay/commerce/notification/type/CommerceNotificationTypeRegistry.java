@@ -14,14 +14,11 @@
 
 package com.liferay.commerce.notification.type;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.List;
 
 /**
  * @author Alessio Antonio Rendina
  */
-@ProviderType
 public interface CommerceNotificationTypeRegistry {
 
 	public CommerceNotificationType getCommerceNotificationType(String key);

@@ -340,12 +340,6 @@
 			<type>java.util.List</type>
 		</attribute>
 		<attribute>
-			<name>contextParams</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>java.util.Map</type>
-		</attribute>
-		<attribute>
 			<name>deltaParam</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -712,11 +706,6 @@
 		<name>side-panel-content</name>
 		<tag-class>com.liferay.commerce.frontend.taglib.servlet.taglib.SidePanelContentTag</tag-class>
 		<body-content>JSP</body-content>
-		<attribute>
-			<name>menubarCssClass</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
 		<attribute>
 			<name>screenNavigatorKey</name>
 			<required>false</required>

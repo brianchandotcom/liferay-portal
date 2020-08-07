@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.discount.rule.type;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.discount.model.CommerceDiscountRule;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -26,7 +24,6 @@ import java.util.Locale;
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
-@ProviderType
 public interface CommerceDiscountRuleType {
 
 	public boolean evaluate(

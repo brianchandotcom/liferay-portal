@@ -40,17 +40,18 @@ public class CommerceAccountGroupRelLocalServiceImpl
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
-		if (commerceAccountGroupRelPersistence.fetchByC_C_C(
-				classNameId, classPK, commerceAccountGroupId) != null) {
+		CommerceAccountGroupRel commerceAccountGroupRel =
+			commerceAccountGroupRelPersistence.fetchByC_C_C(
+				classNameId, classPK, commerceAccountGroupId);
 
+		if (commerceAccountGroupRel != null) {
 			throw new DuplicateCommerceAccountGroupRelException();
 		}
 
 		long commerceAccountGroupRelId = counterLocalService.increment();
 
-		CommerceAccountGroupRel commerceAccountGroupRel =
-			commerceAccountGroupRelPersistence.create(
-				commerceAccountGroupRelId);
+		commerceAccountGroupRel = commerceAccountGroupRelPersistence.create(
+			commerceAccountGroupRelId);
 
 		commerceAccountGroupRel.setCompanyId(user.getCompanyId());
 		commerceAccountGroupRel.setUserId(user.getUserId());

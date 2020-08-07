@@ -15,12 +15,11 @@
 package com.liferay.commerce.product.type.grouped.internal.upgrade.v1_1_0;
 
 import com.liferay.commerce.product.type.grouped.model.impl.CPDefinitionGroupedEntryModelImpl;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.petra.string.StringBundler;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,18 +38,12 @@ public class CPDefinitionGroupedEntryUpgradeProcess extends UpgradeProcess {
 			CPDefinitionGroupedEntryModelImpl.TABLE_NAME, "entryCProductId",
 			"LONG");
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		Statement s = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"update CPDefinitionGroupedEntry set entryCProductId = ? " +
 					"where entryCPDefinitionId = ?");
-
-			s = connection.createStatement();
-
-			rs = s.executeQuery("select * from CPDefinitionGroupedEntry");
+			Statement s = connection.createStatement();
+			ResultSet rs = s.executeQuery(
+				"select * from CPDefinitionGroupedEntry")) {
 
 			while (rs.next()) {
 				long entryCPDefinitionId = rs.getLong("entryCPDefinitionId");
@@ -63,10 +56,6 @@ public class CPDefinitionGroupedEntryUpgradeProcess extends UpgradeProcess {
 
 				ps.execute();
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps);
-			DataAccess.cleanUp(s, rs);
 		}
 
 		_dropColumn(
@@ -126,22 +115,14 @@ public class CPDefinitionGroupedEntryUpgradeProcess extends UpgradeProcess {
 	}
 
 	private long _getCProductId(long cpDefinitionId) throws Exception {
-		Statement s = null;
-		ResultSet rs = null;
-
-		try {
-			s = connection.createStatement();
-
-			rs = s.executeQuery(
+		try (Statement s = connection.createStatement();
+			ResultSet rs = s.executeQuery(
 				"select CProductId from CPDefinition where CPDefinitionId = " +
-					cpDefinitionId);
+					cpDefinitionId)) {
 
 			if (rs.next()) {
 				return rs.getLong("CProductId");
 			}
-		}
-		finally {
-			DataAccess.cleanUp(s, rs);
 		}
 
 		return 0;

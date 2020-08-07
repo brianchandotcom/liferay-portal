@@ -14,14 +14,11 @@
 
 package com.liferay.commerce.context;
 
-import aQute.bnd.annotation.ProviderType;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marco Leo
  */
-@ProviderType
 public interface CommerceContextFactory {
 
 	public CommerceContext create(HttpServletRequest httpServletRequest);

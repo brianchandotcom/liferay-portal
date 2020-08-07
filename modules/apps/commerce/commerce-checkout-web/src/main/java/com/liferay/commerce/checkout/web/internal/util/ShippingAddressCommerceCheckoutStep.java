@@ -85,36 +85,37 @@ public class ShippingAddressCommerceCheckoutStep
 		throws Exception {
 
 		try {
-			AddressCommerceCheckoutStepUtil addressCommerceCheckoutStepUtil =
-				new AddressCommerceCheckoutStepUtil(
-					_commerceAccountLocalService,
-					CommerceAddressConstants.ADDRESS_TYPE_SHIPPING,
-					_commerceOrderService, _commerceAddressService,
-					_commerceOrderModelResourcePermission);
+			AddressCommerceCheckoutStepHelper
+				addressCommerceCheckoutStepHelper =
+					new AddressCommerceCheckoutStepHelper(
+						_commerceAccountLocalService,
+						CommerceAddressConstants.ADDRESS_TYPE_SHIPPING,
+						_commerceOrderService, _commerceAddressService,
+						_commerceOrderModelResourcePermission);
 
 			CommerceOrder commerceOrder =
-				addressCommerceCheckoutStepUtil.updateCommerceOrderAddress(
+				addressCommerceCheckoutStepHelper.updateCommerceOrderAddress(
 					actionRequest,
 					CommerceCheckoutWebKeys.SHIPPING_ADDRESS_PARAM_NAME);
 
 			actionRequest.setAttribute(
 				CommerceCheckoutWebKeys.COMMERCE_ORDER, commerceOrder);
 		}
-		catch (Exception e) {
-			if (e instanceof CommerceAddressCityException ||
-				e instanceof CommerceAddressCountryException ||
-				e instanceof CommerceAddressNameException ||
-				e instanceof CommerceAddressStreetException ||
-				e instanceof CommerceAddressZipException ||
-				e instanceof CommerceOrderBillingAddressException ||
-				e instanceof CommerceOrderShippingAddressException) {
+		catch (Exception exception) {
+			if (exception instanceof CommerceAddressCityException ||
+				exception instanceof CommerceAddressCountryException ||
+				exception instanceof CommerceAddressNameException ||
+				exception instanceof CommerceAddressStreetException ||
+				exception instanceof CommerceAddressZipException ||
+				exception instanceof CommerceOrderBillingAddressException ||
+				exception instanceof CommerceOrderShippingAddressException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				return;
 			}
 
-			throw e;
+			throw exception;
 		}
 	}
 

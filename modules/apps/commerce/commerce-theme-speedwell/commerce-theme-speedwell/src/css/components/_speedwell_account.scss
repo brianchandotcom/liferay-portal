@@ -68,7 +68,7 @@
 
 			&__avatar {
 				display: flex;
-				margin: 10px 20px 0 20px;
+				margin: 10px 20px 0;
 				padding: 4px;
 				position: relative;
 
@@ -156,7 +156,7 @@
 					letter-spacing: -14px;
 					margin-top: -7px;
 					position: absolute;
-					text-shadow: 0 0 0px #30cfa1;
+					text-shadow: 0 0 0 #30cfa1;
 					top: 50%;
 					transform: rotateZ(0deg) scale(0.4, 0.9);
 					width: 25px;

@@ -89,17 +89,17 @@ public class CommerceMLForecastAlertEntryScheduledTaskExecutorService
 				updateCommerceDataIntegrationProcessLog(
 					commerceDataIntegrationProcessLog);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
 			_commerceDataIntegrationProcessLogLocalService.
 				updateCommerceDataIntegrationProcessLog(
 					commerceDataIntegrationProcessLog.
 						getCommerceDataIntegrationProcessLogId(),
-					e.getMessage(), null, BackgroundTaskConstants.STATUS_FAILED,
-					new Date());
+					exception.getMessage(), null,
+					BackgroundTaskConstants.STATUS_FAILED, new Date());
 		}
 	}
 
@@ -107,11 +107,11 @@ public class CommerceMLForecastAlertEntryScheduledTaskExecutorService
 			CommerceDataIntegrationProcess commerceDataIntegrationProcess)
 		throws Exception {
 
-		UnicodeProperties contextProperties =
+		UnicodeProperties unicodeProperties =
 			commerceDataIntegrationProcess.getTypeSettingsProperties();
 
 		Date commerceMLForecastAlertEntryCheckDate = GetterUtil.getDate(
-			contextProperties.getProperty(
+			unicodeProperties.getProperty(
 				CommerceMLForecastAlertConstants.
 					COMMERCE_ML_FORECAST_ALERT_ENTRY_CHECK_DATE),
 			DateFormatFactoryUtil.getSimpleDateFormat(_DATE_FORMAT));
@@ -126,7 +126,7 @@ public class CommerceMLForecastAlertEntryScheduledTaskExecutorService
 		}
 
 		float commerceMLForecastAlertEntryThreshold = GetterUtil.getFloat(
-			contextProperties.get(
+			unicodeProperties.get(
 				CommerceMLForecastAlertConstants.
 					COMMERCE_ML_FORECAST_ALERT_ENTRY_THRESHOLD),
 			_DEFAULT_COMMERCE_ML_FORECAST_ALERT_ENTRY_THRESHOLD);

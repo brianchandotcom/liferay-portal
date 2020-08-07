@@ -106,29 +106,29 @@ public class EditCommerceAccountMVCActionCommand extends BaseMVCActionCommand {
 				setActive(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof CommerceAccountNameException) {
+		catch (Exception exception) {
+			if (exception instanceof CommerceAccountNameException) {
 				hideDefaultErrorMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName", "editCommerceAccount");
 			}
-			else if (e instanceof NoSuchAccountException ||
-					 e instanceof PrincipalException) {
+			else if (exception instanceof NoSuchAccountException ||
+					 exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (e instanceof CommerceAccountOrdersException) {
-				SessionErrors.add(actionRequest, e.getClass());
+			else if (exception instanceof CommerceAccountOrdersException) {
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				hideDefaultErrorMessage(actionRequest);
 			}
 			else {
-				_log.error(e, e);
+				_log.error(exception, exception);
 			}
 		}
 	}

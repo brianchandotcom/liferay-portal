@@ -43,15 +43,14 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -106,14 +105,16 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 
 		SearchContext searchContext = new SearchContext();
 
-		Map<String, Serializable> attributes = new HashMap<>();
-
-		attributes.put(Field.NAME, keywords);
-		attributes.put("commerceBOMFolderId", id);
-		attributes.put("params", params);
-		attributes.put("parentCommerceBOMFolderId", id);
-
-		searchContext.setAttributes(attributes);
+		searchContext.setAttributes(
+			HashMapBuilder.<String, Serializable>put(
+				Field.NAME, keywords
+			).put(
+				"commerceBOMFolderId", id
+			).put(
+				"params", params
+			).put(
+				"parentCommerceBOMFolderId", id
+			).build());
 
 		searchContext.setCompanyId(companyId);
 		searchContext.setStart(start);
@@ -133,38 +134,43 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 		return searchContext;
 	}
 
-	private Item[] _getItems(long folderId) throws PortalException {
-		List<Item> itemList = new ArrayList();
+	private Item[] _getItems(long folderId) throws Exception {
+		try {
+			List<Item> itemList = new ArrayList<>();
 
-		Indexer<?> indexer = CommerceBOMSearcher.getInstance();
+			Indexer<?> indexer = CommerceBOMSearcher.getInstance();
 
-		Hits hits = indexer.search(
-			buildSearchContext(
-				contextCompany.getCompanyId(), folderId, StringPool.BLANK,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null));
+			Hits hits = indexer.search(
+				buildSearchContext(
+					contextCompany.getCompanyId(), folderId, StringPool.BLANK,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null));
 
-		for (Document document : hits.getDocs()) {
-			String className = document.get(Field.ENTRY_CLASS_NAME);
-			long classPK = GetterUtil.getLong(
-				document.get(Field.ENTRY_CLASS_PK));
+			for (Document document : hits.getDocs()) {
+				String className = document.get(Field.ENTRY_CLASS_NAME);
+				long classPK = GetterUtil.getLong(
+					document.get(Field.ENTRY_CLASS_PK));
 
-			if (className.equals(CommerceBOMDefinition.class.getName())) {
-				itemList.add(
-					_toItem(
-						_commerceBOMDefinitionService.getCommerceBOMDefinition(
-							classPK)));
+				if (className.equals(CommerceBOMDefinition.class.getName())) {
+					itemList.add(
+						_toItem(
+							_commerceBOMDefinitionService.
+								getCommerceBOMDefinition(classPK)));
+				}
+				else if (className.equals(CommerceBOMFolder.class.getName())) {
+					itemList.add(
+						_toItem(
+							_commerceBOMFolderService.getCommerceBOMFolder(
+								classPK)));
+				}
 			}
-			else if (className.equals(CommerceBOMFolder.class.getName())) {
-				itemList.add(
-					_toItem(
-						_commerceBOMFolderService.getCommerceBOMFolder(
-							classPK)));
-			}
+
+			Item[] items = new Item[itemList.size()];
+
+			return itemList.toArray(items);
 		}
-
-		Item[] items = new Item[itemList.size()];
-
-		return itemList.toArray(items);
+		catch (PortalException portalException) {
+			throw new Exception(portalException);
+		}
 	}
 
 	private Item _toItem(CommerceBOMDefinition commerceBOMDefinition)

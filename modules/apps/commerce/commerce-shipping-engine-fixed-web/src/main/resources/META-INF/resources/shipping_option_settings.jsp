@@ -35,7 +35,7 @@ CommerceShippingFixedOptionRelsDisplayContext commerceShippingFixedOptionRelsDis
 			dataProviderKey="<%= CommerceShippingFixedOptionSettingClayTable.NAME %>"
 			id="<%= CommerceShippingFixedOptionSettingClayTable.NAME %>"
 			itemsPerPage="<%= 10 %>"
-			namespace="<%= renderResponse.getNamespace() %>"
+			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"
 			portletURL="<%= commerceShippingFixedOptionRelsDisplayContext.getPortletURL() %>"
 			showManagementBar="<%= true %>"

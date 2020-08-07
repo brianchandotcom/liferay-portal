@@ -16,17 +16,18 @@ package com.liferay.commerce.currency.service.impl;
 
 import com.liferay.commerce.currency.configuration.CommerceCurrencyConfiguration;
 import com.liferay.commerce.currency.configuration.RoundingTypeConfiguration;
+import com.liferay.commerce.currency.constants.CommerceCurrencyConstants;
 import com.liferay.commerce.currency.constants.CommerceCurrencyExchangeRateConstants;
 import com.liferay.commerce.currency.constants.RoundingTypeConstants;
 import com.liferay.commerce.currency.exception.CommerceCurrencyCodeException;
 import com.liferay.commerce.currency.exception.CommerceCurrencyNameException;
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.currency.model.CommerceCurrencyConstants;
 import com.liferay.commerce.currency.service.base.CommerceCurrencyLocalServiceBaseImpl;
 import com.liferay.commerce.currency.util.ExchangeRateProvider;
 import com.liferay.commerce.currency.util.ExchangeRateProviderRegistry;
 import com.liferay.commerce.currency.util.comparator.CommerceCurrencyPriorityComparator;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -42,9 +43,9 @@ import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -52,7 +53,6 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -220,7 +220,6 @@ public class CommerceCurrencyLocalServiceImpl
 					serviceContext.getCompanyId(), code);
 
 			if (commerceCurrency == null) {
-				String name = jsonObject.getString("name");
 				boolean primary = jsonObject.getBoolean("primary");
 				double priority = jsonObject.getDouble("priority");
 				String symbol = jsonObject.getString("symbol");
@@ -231,10 +230,9 @@ public class CommerceCurrencyLocalServiceImpl
 						new SystemSettingsLocator(
 							RoundingTypeConstants.SERVICE_NAME));
 
-				Map<Locale, String> nameMap = new HashMap<>();
-				Map<Locale, String> formatPatternMap = new HashMap<>();
-
-				nameMap.put(serviceContext.getLocale(), name);
+				Map<Locale, String> nameMap = HashMapBuilder.put(
+					serviceContext.getLocale(), jsonObject.getString("name")
+				).build();
 
 				StringBundler sb = new StringBundler(3);
 
@@ -242,7 +240,9 @@ public class CommerceCurrencyLocalServiceImpl
 				sb.append(StringPool.SPACE);
 				sb.append(CommerceCurrencyConstants.DEFAULT_FORMAT_PATTERN);
 
-				formatPatternMap.put(serviceContext.getLocale(), sb.toString());
+				Map<Locale, String> formatPatternMap = HashMapBuilder.put(
+					serviceContext.getLocale(), sb.toString()
+				).build();
 
 				RoundingMode roundingMode =
 					roundingTypeConfiguration.roundingMode();
@@ -390,9 +390,9 @@ public class CommerceCurrencyLocalServiceImpl
 			exchangeRate = exchangeRateProvider.getExchangeRate(
 				primaryCommerceCurrency, commerceCurrency);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
 			return;

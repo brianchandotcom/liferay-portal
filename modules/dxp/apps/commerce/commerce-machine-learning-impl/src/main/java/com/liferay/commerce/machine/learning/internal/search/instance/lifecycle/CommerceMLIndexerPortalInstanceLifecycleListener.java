@@ -49,10 +49,10 @@ public class CommerceMLIndexerPortalInstanceLifecycleListener
 				commerceMLIndexer.createIndex(company.getCompanyId());
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				"Unable to add commerce recommend index for company " + company,
-				e);
+				exception);
 		}
 	}
 
@@ -63,11 +63,11 @@ public class CommerceMLIndexerPortalInstanceLifecycleListener
 				commerceMLIndexer.dropIndex(company.getCompanyId());
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				"Unable to remove commerce recommend index for company " +
 					company,
-				e);
+				exception);
 		}
 	}
 

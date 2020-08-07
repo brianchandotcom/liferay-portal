@@ -22,7 +22,7 @@
 			bodyClasses="flex-fill"
 			collapsed="<%= !commerceDiscount.isUseCouponCode() %>"
 			collapseLabel='<%= LanguageUtil.get(request, "enabled") %>'
-			collapseSwitchName='<%= renderResponse.getNamespace() + "useCouponCode" %>'
+			collapseSwitchName='<%= liferayPortletResponse.getNamespace() + "useCouponCode" %>'
 			title='<%= LanguageUtil.get(request, "coupon-code") %>'
 		>
 			<div class="row">

@@ -247,8 +247,8 @@ public class CommerceAccountLocalServiceImpl
 		try {
 			commerceAccountPersistence.remove(commerceAccount);
 		}
-		catch (ModelListenerException mle) {
-			throw new CommerceAccountOrdersException(mle);
+		catch (ModelListenerException modelListenerException) {
+			throw new CommerceAccountOrdersException(modelListenerException);
 		}
 
 		// Resources

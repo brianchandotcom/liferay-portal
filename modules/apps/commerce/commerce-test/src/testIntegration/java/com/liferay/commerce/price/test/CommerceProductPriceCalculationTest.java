@@ -94,7 +94,8 @@ public class CommerceProductPriceCalculationTest {
 	@ClassRule
 	@Rule
 	public static AggregateTestRule aggregateTestRule = new AggregateTestRule(
-		new LiferayIntegrationTestRule(), PermissionCheckerMethodTestRule.INSTANCE);
+		new LiferayIntegrationTestRule(),
+		PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -1339,7 +1340,7 @@ public class CommerceProductPriceCalculationTest {
 	}
 
 	@Test
-	public void testGetCPDefinitionMinimumPriceWithNonRequiredOption()
+	public void testGetCPDefinitionMinimumPriceWithNonrequiredOption()
 		throws Exception {
 
 		frutillaRule.scenario(
@@ -1371,7 +1372,7 @@ public class CommerceProductPriceCalculationTest {
 			CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC,
 			BigDecimal.valueOf(50), 1, false, false, _serviceContext);
 
-		CPOption nonRequiredCPOption = CPTestUtil.addCPOption(
+		CPOption nonrequiredCPOption = CPTestUtil.addCPOption(
 			_commerceCatalog.getGroupId(),
 			CPTestUtil.getDefaultDDMFormFieldType(true), true);
 
@@ -1379,7 +1380,7 @@ public class CommerceProductPriceCalculationTest {
 			CPTestUtil.addCPDefinitionOptionValueRelWithPrice(
 				_commerceCatalog.getGroupId(),
 				bundleCPDefinition.getCPDefinitionId(), 0,
-				nonRequiredCPOption.getCPOptionId(),
+				nonrequiredCPOption.getCPOptionId(),
 				CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC,
 				BigDecimal.valueOf(100), 1, true, true, _serviceContext);
 

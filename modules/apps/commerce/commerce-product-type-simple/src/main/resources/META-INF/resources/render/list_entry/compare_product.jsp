@@ -98,7 +98,7 @@ CPSku cpSku = cpContentHelper.getDefaultCPSku(cpCatalogEntry);
 						CPDefinitionId="<%= cpCatalogEntry.getCPDefinitionId() %>"
 						CPInstanceId="<%= cpSku.getCPInstanceId() %>"
 						elementClasses="btn-block btn-primary text-truncate"
-						taglibQuantityInputId='<%= renderResponse.getNamespace() + quantityInputId %>'
+						taglibQuantityInputId='<%= liferayPortletResponse.getNamespace() + quantityInputId %>'
 					/>
 				</div>
 			</div>

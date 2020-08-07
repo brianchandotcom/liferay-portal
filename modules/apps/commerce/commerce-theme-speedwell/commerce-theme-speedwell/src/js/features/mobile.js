@@ -14,7 +14,7 @@
 
 Liferay.component(
 	'SpeedwellMobileHelpers',
-	(function() {
+	(function () {
 		let filtersButton,
 			filtersHeader,
 			addToCartInline,
@@ -98,7 +98,7 @@ Liferay.component(
 		return {
 			getFiltersButton() {
 				return filtersButton;
-			}
+			},
 		};
 	})(),
 	{destroyOnNavigate: true}

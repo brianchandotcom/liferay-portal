@@ -216,7 +216,7 @@ if (deliveryMaxSubscriptionCycles > 0) {
 		>
 			<div class="row">
 				<div class="col-6">
-					<aui:select name="subscriptionType" onChange='<%= renderResponse.getNamespace() + "selectSubscriptionType();" %>' showEmptyOption="<%= true %>">
+					<aui:select name="subscriptionType" onChange='<%= liferayPortletResponse.getNamespace() + "selectSubscriptionType();" %>' showEmptyOption="<%= true %>">
 
 						<%
 						for (CPSubscriptionType curCPSubscriptionType : cpSubscriptionTypes) {
@@ -339,7 +339,7 @@ if (deliveryMaxSubscriptionCycles > 0) {
 		>
 			<div class="row">
 				<div class="col-6">
-					<aui:select label="subscription-type" name="deliverySubscriptionType" onChange='<%= renderResponse.getNamespace() + "selectDeliverySubscriptionType();" %>' showEmptyOption="<%= true %>">
+					<aui:select label="subscription-type" name="deliverySubscriptionType" onChange='<%= liferayPortletResponse.getNamespace() + "selectDeliverySubscriptionType();" %>' showEmptyOption="<%= true %>">
 
 						<%
 						for (CPSubscriptionType curCPSubscriptionType : cpSubscriptionTypes) {
@@ -383,7 +383,7 @@ if (deliveryMaxSubscriptionCycles > 0) {
 	dataProviderKey="<%= CommerceSubscriptionDataSetConstants.COMMERCE_DATA_SET_KEY_SUBSCRIPTION_ORDER_ITEMS %>"
 	id="<%= CommerceSubscriptionDataSetConstants.COMMERCE_DATA_SET_KEY_SUBSCRIPTION_ORDER_ITEMS %>"
 	itemsPerPage="<%= 10 %>"
-	namespace="<%= renderResponse.getNamespace() %>"
+	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"
 	portletURL="<%= commerceSubscriptionEntryDisplayContext.getPortletURL() %>"
 	style="stacked"

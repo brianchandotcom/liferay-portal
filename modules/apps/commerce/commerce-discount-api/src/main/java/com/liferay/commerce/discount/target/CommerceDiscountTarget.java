@@ -14,15 +14,12 @@
 
 package com.liferay.commerce.discount.target;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.Locale;
 
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
-@ProviderType
 public interface CommerceDiscountTarget {
 
 	public String getKey();

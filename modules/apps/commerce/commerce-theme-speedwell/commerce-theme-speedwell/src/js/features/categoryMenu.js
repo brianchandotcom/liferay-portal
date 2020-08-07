@@ -14,7 +14,7 @@
 
 Liferay.component(
 	'SpeedwellCategoryMenu',
-	(function() {
+	(function () {
 		var MAIN_LINK_SELECTOR = '.main-link';
 		var CATEGORY_NAV_SELECTOR = '.speedwell-category-nav';
 		var IS_OPEN = 'is-open';
@@ -31,7 +31,8 @@ Liferay.component(
 			if (isCatalogLink) {
 				categoryNavigationElement.focus();
 				categoryNavigationElement.classList.add(IS_OPEN);
-			} else {
+			}
+			else {
 				categoryNavigationElement.classList.remove(IS_OPEN);
 			}
 		}
@@ -42,7 +43,7 @@ Liferay.component(
 
 		function attachListeners() {
 			if (!Liferay.Browser.isMobile) {
-				linkElements.forEach(link => {
+				linkElements.forEach((link) => {
 					link.addEventListener(
 						'mouseover',
 						showCategoryNavigationMenu
@@ -72,7 +73,7 @@ Liferay.component(
 		return {
 			getElement() {
 				return categoryNavigationElement;
-			}
+			},
 		};
 	})(),
 	{destroyOnNavigate: true}

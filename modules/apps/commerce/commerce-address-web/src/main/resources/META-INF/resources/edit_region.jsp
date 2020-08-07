@@ -45,9 +45,9 @@ else {
 	title = contextTitle + " - " + commerceRegion.getName();
 }
 
-Map<String, Object> data = new HashMap<>();
-
-data.put("direction-right", StringPool.TRUE);
+Map<String, Object> data = HashMapBuilder.<String, Object>put(
+	"direction-right", StringPool.TRUE
+).build();
 
 String screenNavigationCategoryKey = commerceRegionsDisplayContext.getScreenNavigationCategoryKey();
 
@@ -68,7 +68,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 
 <portlet:actionURL name="editCommerceRegion" var="editCommerceRegionActionURL" />
 
-<aui:form action="<%= editCommerceRegionActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCommerceRegion();" %>'>
+<aui:form action="<%= editCommerceRegionActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveCommerceRegion();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceRegion == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="commerceCountryId" type="hidden" value="<%= String.valueOf(commerceCountryId) %>" />

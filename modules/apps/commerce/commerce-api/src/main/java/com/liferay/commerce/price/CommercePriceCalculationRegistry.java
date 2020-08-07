@@ -14,14 +14,11 @@
 
 package com.liferay.commerce.price;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.Map;
 
 /**
  * @author Riccardo Alberti
  */
-@ProviderType
 public interface CommercePriceCalculationRegistry {
 
 	public CommerceOrderPriceCalculation getCommerceOrderPriceCalculation(

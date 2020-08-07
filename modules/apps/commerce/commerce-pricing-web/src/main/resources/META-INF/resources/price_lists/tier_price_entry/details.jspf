@@ -29,8 +29,8 @@ boolean discountDiscovery = BeanParamUtil.getBoolean(commerceTierPriceEntry, req
 </aui:input>
 
 <c:if test="<%= commercePriceEntry.isBulkPricing() %>">
-	<div class="<%= discountDiscovery ? "hide" : StringPool.BLANK %>" id="<%= renderResponse.getNamespace() %>discountLevels">
-		<label class="control-label" for="<%= renderResponse.getNamespace() %>discountLevel1"><%= LanguageUtil.get(request, "discount-levels") %></label>
+	<div class="<%= discountDiscovery ? "hide" : StringPool.BLANK %>" id="<%= liferayPortletResponse.getNamespace() %>discountLevels">
+		<label class="control-label" for="<%= liferayPortletResponse.getNamespace() %>discountLevel1"><%= LanguageUtil.get(request, "discount-levels") %></label>
 
 		<div class="d-flex">
 			<aui:input disabled="<%= discountDiscovery %>" ignoreRequestValue="<%= true %>" inlineField="<%= true %>" label="" name="discountLevel1" type="text" value="<%= (commerceTierPriceEntry == null) ? StringPool.BLANK : commerceTierPriceEntry.getDiscountLevel1() %>" wrapperCssClass="pr-2">

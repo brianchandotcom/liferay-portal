@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.price;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.discount.CommerceDiscountValue;
 
@@ -24,7 +22,6 @@ import java.math.BigDecimal;
 /**
  * @author Marco Leo
  */
-@ProviderType
 public interface CommerceProductPrice {
 
 	public long getCommercePriceListId();

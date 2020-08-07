@@ -350,12 +350,13 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 			commerceDiscountCommerceAccountGroupRelStream =
 				commerceDiscountCommerceAccountGroupRels.stream();
 
-		LongStream commerceAccountGroupIdStream =
+		LongStream commerceAccountGroupIdLongStream =
 			commerceDiscountCommerceAccountGroupRelStream.mapToLong(
 				CommerceDiscountCommerceAccountGroupRel::
 					getCommerceAccountGroupId);
 
-		long[] commerceAccountGroupIds = commerceAccountGroupIdStream.toArray();
+		long[] commerceAccountGroupIds =
+			commerceAccountGroupIdLongStream.toArray();
 
 		document.addNumber("commerceAccountGroupIds", commerceAccountGroupIds);
 		document.addNumber(
@@ -495,12 +496,12 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 					indexableActionableDynamicQuery.addDocuments(
 						getDocument(commerceDiscount));
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to index commerce discount " +
 								commerceDiscount.getCommerceDiscountId(),
-							pe);
+							portalException);
 					}
 				}
 			});

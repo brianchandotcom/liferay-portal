@@ -171,7 +171,7 @@ public class CommercePricingClassDisplayContext
 		if (hasPermission(ActionKeys.UPDATE)) {
 			headerActionModels.add(
 				new HeaderActionModel(
-					"btn-primary", renderResponse.getNamespace() + "fm",
+					"btn-primary", liferayPortletResponse.getNamespace() + "fm",
 					getEditCommercePricingClassActionURL(), null, "save"));
 		}
 

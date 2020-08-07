@@ -95,7 +95,7 @@ renderResponse.setTitle(cpDefinition.getName(themeDisplay.getLanguageId()));
 		</c:if>
 
 		<liferay-frontend:management-bar-button
-			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCPDefinitionGroupedEntries();" %>'
+			href='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deleteCPDefinitionGroupedEntries();" %>'
 			icon="times"
 			label="delete"
 		/>

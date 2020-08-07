@@ -38,16 +38,16 @@ public class CommerceAccountItemSelectorChecker extends EmptyOnClickRowChecker {
 	}
 
 	@Override
-	public boolean isChecked(Object obj) {
-		CommerceAccount commerceAccount = (CommerceAccount)obj;
+	public boolean isChecked(Object object) {
+		CommerceAccount commerceAccount = (CommerceAccount)object;
 
 		return _checkedCommerceAccountIds.contains(
 			commerceAccount.getCommerceAccountId());
 	}
 
 	@Override
-	public boolean isDisabled(Object obj) {
-		return isChecked(obj);
+	public boolean isDisabled(Object object) {
+		return isChecked(object);
 	}
 
 	private final Set<Long> _checkedCommerceAccountIds;

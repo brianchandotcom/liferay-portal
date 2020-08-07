@@ -67,7 +67,7 @@ PortletURL portletURL = commerceAccountOrganizationRelAdminDisplayContext.getPor
 
 		<liferay-frontend:management-bar-action-buttons>
 			<liferay-frontend:management-bar-button
-				href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceAccountOrganizationRels();" %>'
+				href='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deleteCommerceAccountOrganizationRels();" %>'
 				icon="times"
 				label="remove"
 			/>

@@ -23,9 +23,9 @@ PortletURL portletURL = currentURLObj;
 
 portletURL.setParameter(PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL", backURL);
 
-Map<String, String> contextParams = new HashMap<>();
-
-contextParams.put("organizationId", String.valueOf(commerceOrganizationDisplayContext.getOrganizationId()));
+Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+	"organizationId", String.valueOf(commerceOrganizationDisplayContext.getOrganizationId())
+).build();
 %>
 
 <commerce-ui:dataset-display
@@ -33,7 +33,7 @@ contextParams.put("organizationId", String.valueOf(commerceOrganizationDisplayCo
 	dataProviderKey="<%= CommerceOrganizationUserClayTableDataSetDisplayView.NAME %>"
 	id="<%= CommerceOrganizationUserClayTableDataSetDisplayView.NAME %>"
 	itemsPerPage="<%= 10 %>"
-	namespace="<%= renderResponse.getNamespace() %>"
+	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"
 	portletURL="<%= commerceOrganizationDisplayContext.getPortletURL() %>"
 	showSearch="<%= false %>"
@@ -41,7 +41,7 @@ contextParams.put("organizationId", String.valueOf(commerceOrganizationDisplayCo
 
 <c:if test="<%= OrganizationPermissionUtil.contains(permissionChecker, commerceOrganizationDisplayContext.getOrganizationId(), ActionKeys.ASSIGN_MEMBERS) %>">
 	<div class="commerce-cta is-visible">
-		<aui:button cssClass="btn-lg btn-primary js-invite-user" onClick='<%= renderResponse.getNamespace() + "openUserInvitationModal();" %>' value="invite-user" />
+		<aui:button cssClass="btn-lg btn-primary js-invite-user" onClick='<%= liferayPortletResponse.getNamespace() + "openUserInvitationModal();" %>' value="invite-user" />
 	</div>
 
 	<commerce-ui:user-invitation-modal

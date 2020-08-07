@@ -125,7 +125,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "price-lists"));
 
 			<c:if test="<%= commerceTierPriceEntryDisplayContext.hasPermission(commercePriceListId, ActionKeys.UPDATE) %>">
 				<liferay-frontend:management-bar-button
-					href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceTierPriceEntries();" %>'
+					href='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deleteCommerceTierPriceEntries();" %>'
 					icon="times"
 					label="delete"
 				/>

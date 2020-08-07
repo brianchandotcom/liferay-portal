@@ -233,7 +233,7 @@ public class CommerceDiscountCalculationV2Impl
 	private BigDecimal _getCommerceDiscountLevel(
 			BigDecimal currentDiscountLevel, BigDecimal commercePrice,
 			CommerceCurrency commerceCurrency, long commerceDiscountId,
-			BigDecimal commerceDiscountValue, boolean isUsePercentage)
+			BigDecimal commerceDiscountValue, boolean usePercentage)
 		throws PortalException {
 
 		if ((commerceDiscountValue == null) ||
@@ -248,7 +248,7 @@ public class CommerceDiscountCalculationV2Impl
 
 		BigDecimal discountAmount = BigDecimal.ZERO;
 
-		if (isUsePercentage) {
+		if (usePercentage) {
 			discountAmount = commercePrice.multiply(commerceDiscountValue);
 			discountAmount = discountAmount.divide(_ONE_HUNDRED);
 
@@ -280,7 +280,7 @@ public class CommerceDiscountCalculationV2Impl
 		if ((currentDiscountLevel == null) ||
 			(discountPercentage.compareTo(currentDiscountLevel) > 0)) {
 
-			if (isUsePercentage) {
+			if (usePercentage) {
 				return commerceDiscountValue;
 			}
 

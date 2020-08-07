@@ -27,7 +27,7 @@ CommerceInventoryDisplayContext commerceInventoryDisplayContext = (CommerceInven
 			dataProviderKey="<%= CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_ITEMS %>"
 			id="<%= CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_ITEMS %>"
 			itemsPerPage="<%= 10 %>"
-			namespace="<%= renderResponse.getNamespace() %>"
+			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"
 			portletURL="<%= commerceInventoryDisplayContext.getPortletURL() %>"
 			style="fluid"

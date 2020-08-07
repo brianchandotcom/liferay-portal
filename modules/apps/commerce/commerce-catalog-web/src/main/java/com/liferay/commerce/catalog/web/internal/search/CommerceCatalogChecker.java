@@ -29,8 +29,8 @@ public class CommerceCatalogChecker extends EmptyOnClickRowChecker {
 	}
 
 	@Override
-	public boolean isDisabled(Object obj) {
-		CommerceCatalog commerceCatalog = (CommerceCatalog)obj;
+	public boolean isDisabled(Object object) {
+		CommerceCatalog commerceCatalog = (CommerceCatalog)object;
 
 		return commerceCatalog.isSystem();
 	}

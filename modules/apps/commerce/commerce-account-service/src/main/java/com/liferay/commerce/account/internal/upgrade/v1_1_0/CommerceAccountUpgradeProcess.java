@@ -15,13 +15,12 @@
 package com.liferay.commerce.account.internal.upgrade.v1_1_0;
 
 import com.liferay.commerce.account.model.impl.CommerceAccountImpl;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.petra.string.StringBundler;
 
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -96,12 +95,10 @@ public class CommerceAccountUpgradeProcess extends UpgradeProcess {
 	private boolean _tableHasIndex(String tableName, String indexName)
 		throws Exception {
 
-		ResultSet rs = null;
+		DatabaseMetaData metadata = connection.getMetaData();
 
-		try {
-			DatabaseMetaData metadata = connection.getMetaData();
-
-			rs = metadata.getIndexInfo(null, null, tableName, false, false);
+		try (ResultSet rs = metadata.getIndexInfo(
+				null, null, tableName, false, false)) {
 
 			while (rs.next()) {
 				String curIndexName = rs.getString("index_name");
@@ -111,8 +108,7 @@ public class CommerceAccountUpgradeProcess extends UpgradeProcess {
 				}
 			}
 		}
-		finally {
-			DataAccess.cleanUp(rs);
+		catch (Exception exception) {
 		}
 
 		return false;

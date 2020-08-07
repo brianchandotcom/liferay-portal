@@ -25,7 +25,7 @@ CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 <commerce-ui:modal-content
 	title='<%= LanguageUtil.get(request, "duplicate-product") %>'
 >
-	<aui:form cssClass="container-fluid-1280 p-0" method="post" name="duplicatefm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "apiSubmit(this.form);" %>'>
+	<aui:form cssClass="container-fluid-1280 p-0" method="post" name="duplicatefm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "apiSubmit(this.form);" %>'>
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 		<aui:input name="name" required="<%= true %>" type="text" value='<%= LanguageUtil.format(locale, "copy-of-x", cpDefinition.getName(languageId)) %>' />
@@ -129,7 +129,7 @@ CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 		autocomplete.default('autocomplete', 'autocomplete-root', {
 			apiUrl: '/o/headless-commerce-admin-catalog/v1.0/catalogs',
 			inputId: '<portlet:namespace />catalogId',
-			inputName: '<%= renderResponse.getNamespace() %>catalogId',
+			inputName: '<%= liferayPortletResponse.getNamespace() %>catalogId',
 			itemsKey: 'id',
 			itemsLabel: 'name',
 			onValueUpdated: function(value, catalogData) {

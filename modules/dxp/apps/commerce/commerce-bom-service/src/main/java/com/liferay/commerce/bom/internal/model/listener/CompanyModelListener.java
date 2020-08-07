@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.bom.internal.model.listener;
 
-import com.liferay.commerce.bom.model.CommerceBOMFolderConstants;
+import com.liferay.commerce.bom.constants.CommerceBOMFolderConstants;
 import com.liferay.commerce.bom.service.CommerceBOMDefinitionLocalService;
 import com.liferay.commerce.bom.service.CommerceBOMFolderLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -42,9 +42,9 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 			_commerceBOMFolderLocalService.deleteCommerceBOMFolders(
 				company.getCompanyId());
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(pe, pe);
+				_log.warn(portalException, portalException);
 			}
 		}
 	}

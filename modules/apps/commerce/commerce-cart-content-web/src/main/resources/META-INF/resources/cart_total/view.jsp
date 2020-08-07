@@ -64,9 +64,9 @@ if (commerceOrderPrice != null) {
 	}
 }
 
-Map<String, Object> contextObjects = new HashMap<>();
-
-contextObjects.put("commerceCartContentTotalDisplayContext", commerceCartContentTotalDisplayContext);
+Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
+	"commerceCartContentTotalDisplayContext", commerceCartContentTotalDisplayContext
+).build();
 
 SearchContainer<CommerceOrderItem> commerceOrderItemSearchContainer = commerceCartContentTotalDisplayContext.getSearchContainer();
 %>

@@ -100,16 +100,16 @@ public class EditCommerceAvailabilityEstimateMVCActionCommand
 				updateCommerceAvailabilityEstimate(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchAvailabilityEstimateException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchAvailabilityEstimateException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

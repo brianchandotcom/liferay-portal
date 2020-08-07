@@ -19,7 +19,7 @@
 >
 	<portlet:actionURL name="editCPAttachmentFileEntry" var="editCPAttachmentFileEntryActionURL" />
 
-	<aui:form action="<%= editCPAttachmentFileEntryActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveAttachmentFileEntry();" %>'>
+	<aui:form action="<%= editCPAttachmentFileEntryActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveAttachmentFileEntry();" %>'>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpAttachmentFileEntry == null) ? Constants.ADD : Constants.UPDATE %>" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinitionId %>" />

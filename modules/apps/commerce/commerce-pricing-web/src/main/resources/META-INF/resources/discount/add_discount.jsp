@@ -30,7 +30,7 @@ CommerceDiscount commerceDiscount = commerceDiscountDisplayContext.getCommerceDi
 	title='<%= LanguageUtil.get(request, "add-discount") %>'
 >
 	<div class="col-12 lfr-form-content">
-		<aui:form cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "apiSubmit(this.form);" %>' useNamespace="<%= false %>">
+		<aui:form cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "apiSubmit(this.form);" %>' useNamespace="<%= false %>">
 			<aui:input bean="<%= commerceDiscount %>" label="name" model="<%= CommerceDiscount.class %>" name="title" required="<%= true %>" />
 
 			<aui:select label="type" name="commerceDiscountType" required="<%= true %>">

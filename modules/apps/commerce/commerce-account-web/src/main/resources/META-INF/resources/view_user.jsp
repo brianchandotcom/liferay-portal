@@ -23,10 +23,11 @@ CommerceAccount commerceAccount = commerceAccountDisplayContext.getCurrentCommer
 User selectedUser = commerceAccountDisplayContext.getSelectedUser();
 PortletURL portletURL = commerceAccountDisplayContext.getPortletURL();
 
-Map<String, String> contextParams = new HashMap<>();
-
-contextParams.put("commerceAccountId", String.valueOf(commerceAccountDisplayContext.getCurrentCommerceAccountId()));
-contextParams.put("userId", String.valueOf(selectedUser.getUserId()));
+Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+	"commerceAccountId", String.valueOf(commerceAccountDisplayContext.getCurrentCommerceAccountId())
+).put(
+	"userId", String.valueOf(selectedUser.getUserId())
+).build();
 
 portletURL.setParameter("mvcRenderCommandName", "viewCommerceAccountUser");
 portletURL.setParameter("userId", String.valueOf(selectedUser.getUserId()));
@@ -71,7 +72,7 @@ portletURL.setParameter("userId", String.valueOf(selectedUser.getUserId()));
 <c:if test="<%= commerceAccount != null %>">
 	<div class="commerce-cta is-visible">
 		<c:if test="<%= (selectedUser.getUserId() != user.getUserId()) && commerceAccountDisplayContext.hasCommerceAccountModelPermissions(commerceAccount.getCommerceAccountId(), CommerceAccountActionKeys.MANAGE_MEMBERS) %>">
-			<aui:button cssClass="btn-lg btn-primary js-invite-user" onClick='<%= renderResponse.getNamespace() + "openUserRolesModal();" %>' value="roles" />
+			<aui:button cssClass="btn-lg btn-primary js-invite-user" onClick='<%= liferayPortletResponse.getNamespace() + "openUserRolesModal();" %>' value="roles" />
 		</c:if>
 	</div>
 
@@ -81,7 +82,7 @@ portletURL.setParameter("userId", String.valueOf(selectedUser.getUserId()));
 			dataProviderKey="<%= CommerceAccountUserRolesClayTableDataSetDisplayView.NAME %>"
 			id="<%= CommerceAccountUserRolesClayTableDataSetDisplayView.NAME %>"
 			itemsPerPage="<%= 10 %>"
-			namespace="<%= renderResponse.getNamespace() %>"
+			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"
 			portletURL="<%= portletURL %>"
 			style="stacked"

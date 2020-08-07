@@ -86,8 +86,8 @@ public class CommerceAccountAdminPortlet extends MVCPortlet {
 
 			super.render(renderRequest, renderResponse);
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
 

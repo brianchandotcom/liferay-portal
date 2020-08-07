@@ -88,7 +88,7 @@ public class TalendScheduledTaskExecutorService
 				_commerceDataIntegrationProcessTriggerHelper.
 					getPreviousFireTime(commerceDataIntegrationProcessId);
 
-			UnicodeProperties typeSettingsProperties =
+			UnicodeProperties typeSettingsUnicodeProperties =
 				commerceDataIntegrationProcess.getTypeSettingsProperties();
 
 			FileEntry fileEntry = _talendProcessTypeHelper.getFileEntry(
@@ -135,8 +135,10 @@ public class TalendScheduledTaskExecutorService
 
 			params.add("--context_param jobWorkDirectory=" + rootDirectoryName);
 
-			if (typeSettingsProperties != null) {
-				for (Map.Entry propEntry : typeSettingsProperties.entrySet()) {
+			if (typeSettingsUnicodeProperties != null) {
+				for (Map.Entry<String, String> propEntry :
+						typeSettingsUnicodeProperties.entrySet()) {
+
 					StringBundler contextSB = new StringBundler(4);
 
 					contextSB.append("--context_param ");
@@ -173,15 +175,15 @@ public class TalendScheduledTaskExecutorService
 					FileUtil.read(error), FileUtil.read(log),
 					BackgroundTaskConstants.STATUS_SUCCESSFUL, new Date());
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			_commerceDataIntegrationProcessLogLocalService.
 				updateCommerceDataIntegrationProcessLog(
 					commerceDataIntegrationProcessLog.
 						getCommerceDataIntegrationProcessLogId(),
-					e.getMessage(), null, BackgroundTaskConstants.STATUS_FAILED,
-					new Date());
+					exception.getMessage(), null,
+					BackgroundTaskConstants.STATUS_FAILED, new Date());
 		}
 		finally {
 			FileUtil.deltree(rootDirectoryName);

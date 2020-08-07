@@ -31,19 +31,19 @@ public class CommerceSubscriptionTypeUtil {
 			return null;
 		}
 
-		UnicodeProperties subscriptionTypeSettingsProperties = null;
+		UnicodeProperties subscriptionTypeSettingsUnicodeProperties = null;
 
 		if (object instanceof CommerceSubscriptionEntry) {
 			CommerceSubscriptionEntry commerceSubscriptionEntry =
 				(CommerceSubscriptionEntry)object;
 
 			if (payment) {
-				subscriptionTypeSettingsProperties =
+				subscriptionTypeSettingsUnicodeProperties =
 					commerceSubscriptionEntry.
 						getSubscriptionTypeSettingsProperties();
 			}
 			else {
-				subscriptionTypeSettingsProperties =
+				subscriptionTypeSettingsUnicodeProperties =
 					commerceSubscriptionEntry.
 						getDeliverySubscriptionTypeSettingsProperties();
 			}
@@ -52,11 +52,11 @@ public class CommerceSubscriptionTypeUtil {
 			CPDefinition cpDefinition = (CPDefinition)object;
 
 			if (payment) {
-				subscriptionTypeSettingsProperties =
+				subscriptionTypeSettingsUnicodeProperties =
 					cpDefinition.getSubscriptionTypeSettingsProperties();
 			}
 			else {
-				subscriptionTypeSettingsProperties =
+				subscriptionTypeSettingsUnicodeProperties =
 					cpDefinition.
 						getDeliverySubscriptionTypeSettingsProperties();
 			}
@@ -65,16 +65,16 @@ public class CommerceSubscriptionTypeUtil {
 			CPInstance cpInstance = (CPInstance)object;
 
 			if (payment) {
-				subscriptionTypeSettingsProperties =
+				subscriptionTypeSettingsUnicodeProperties =
 					cpInstance.getSubscriptionTypeSettingsProperties();
 			}
 			else {
-				subscriptionTypeSettingsProperties =
+				subscriptionTypeSettingsUnicodeProperties =
 					cpInstance.getDeliverySubscriptionTypeSettingsProperties();
 			}
 		}
 
-		return subscriptionTypeSettingsProperties;
+		return subscriptionTypeSettingsUnicodeProperties;
 	}
 
 }

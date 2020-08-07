@@ -87,19 +87,23 @@ public class EditCommerceOrderItemMVCActionCommand
 					serviceContext);
 			}
 		}
-		catch (CommerceOrderValidatorException cove) {
+		catch (CommerceOrderValidatorException
+					commerceOrderValidatorException) {
+
 			hideDefaultErrorMessage(actionRequest);
 
-			SessionErrors.add(actionRequest, cove.getClass(), cove);
+			SessionErrors.add(
+				actionRequest, commerceOrderValidatorException.getClass(),
+				commerceOrderValidatorException);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchOrderItemException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchOrderItemException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

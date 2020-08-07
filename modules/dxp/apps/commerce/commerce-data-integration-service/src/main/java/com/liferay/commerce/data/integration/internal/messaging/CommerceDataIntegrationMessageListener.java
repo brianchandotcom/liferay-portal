@@ -55,10 +55,10 @@ public class CommerceDataIntegrationMessageListener implements MessageListener {
 		try {
 			payLoad = JSONFactoryUtil.createJSONObject(payLoadString);
 		}
-		catch (JSONException jsone) {
-			_log.error(jsone, jsone);
+		catch (JSONException jsonException) {
+			_log.error(jsonException, jsonException);
 
-			throw new MessageListenerException(jsone);
+			throw new MessageListenerException(jsonException);
 		}
 
 		long commerceDataIntegrationProcessId = payLoad.getLong(
@@ -70,9 +70,9 @@ public class CommerceDataIntegrationMessageListener implements MessageListener {
 			scheduledTaskExecutorService = getScheduledTaskExecutorService(
 				commerceDataIntegrationProcessId);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 
@@ -81,9 +81,9 @@ public class CommerceDataIntegrationMessageListener implements MessageListener {
 				scheduledTaskExecutorService.runProcess(
 					commerceDataIntegrationProcessId);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
+					_log.debug(exception, exception);
 				}
 			}
 		}

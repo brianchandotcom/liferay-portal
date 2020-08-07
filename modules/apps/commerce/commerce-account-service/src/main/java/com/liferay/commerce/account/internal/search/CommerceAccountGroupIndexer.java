@@ -145,13 +145,15 @@ public class CommerceAccountGroupIndexer
 					indexableActionableDynamicQuery.addDocuments(
 						getDocument(commerceAccountGroup));
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
+					long commerceAccountGroupId =
+						commerceAccountGroup.getCommerceAccountGroupId();
+
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to index commerce account group " +
-								commerceAccountGroup.
-									getCommerceAccountGroupId(),
-							pe);
+								commerceAccountGroupId,
+							portalException);
 					}
 				}
 			});

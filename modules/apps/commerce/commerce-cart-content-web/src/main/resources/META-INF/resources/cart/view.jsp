@@ -19,9 +19,9 @@
 <%
 CommerceCartContentDisplayContext commerceCartContentDisplayContext = (CommerceCartContentDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-Map<String, Object> contextObjects = new HashMap<>();
-
-contextObjects.put("commerceCartContentDisplayContext", commerceCartContentDisplayContext);
+Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
+	"commerceCartContentDisplayContext", commerceCartContentDisplayContext
+).build();
 
 SearchContainer<CommerceOrderItem> commerceOrderItemSearchContainer = commerceCartContentDisplayContext.getSearchContainer();
 

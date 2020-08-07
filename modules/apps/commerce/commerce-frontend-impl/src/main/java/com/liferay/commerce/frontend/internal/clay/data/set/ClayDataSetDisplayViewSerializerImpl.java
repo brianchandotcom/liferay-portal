@@ -60,11 +60,13 @@ public class ClayDataSetDisplayViewSerializerImpl
 				resourceBundle, clayDataSetDisplayView.getLabel());
 
 			jsonObject.put(
-				"contentRenderer", clayDataSetDisplayView.getContentRenderer());
-			jsonObject.put(
+				"contentRenderer", clayDataSetDisplayView.getContentRenderer()
+			).put(
 				"contentRendererModuleUrl",
-				clayDataSetDisplayView.getContentRendererModuleUrl());
-			jsonObject.put("label", label);
+				clayDataSetDisplayView.getContentRendererModuleUrl()
+			).put(
+				"label", label
+			);
 
 			List<ClayDataSetContentRendererContextContributor>
 				clayDataSetContentRendererContextContributors =

@@ -70,6 +70,88 @@ public class HeadlessDatasetDisplayTag extends IncludeTag {
 		return super.doStartTag();
 	}
 
+	public String getApiUrl() {
+		return _apiUrl;
+	}
+
+	public List<ClayMenuActionItem> getBulkActions() {
+		return _bulkActions;
+	}
+
+	public ClayCreationMenu getClayCreationMenu() {
+		return _clayCreationMenu;
+	}
+
+	public List<ClayHeadlessDataSetActionTemplate>
+		getClayHeadlessDataSetActionTemplates() {
+
+		return _clayHeadlessDataSetActionTemplates;
+	}
+
+	public String getDeltaParam() {
+		return _deltaParam;
+	}
+
+	public String getFormId() {
+		return _formId;
+	}
+
+	public String getId() {
+		return _id;
+	}
+
+	public int getItemsPerPage() {
+		return _itemsPerPage;
+	}
+
+	public String getNamespace() {
+		return _namespace;
+	}
+
+	public String getNestedItemsKey() {
+		return _nestedItemsKey;
+	}
+
+	public String getNestedItemsReferenceKey() {
+		return _nestedItemsReferenceKey;
+	}
+
+	public int getPageNumber() {
+		return _pageNumber;
+	}
+
+	public PortletURL getPortletURL() {
+		return _portletURL;
+	}
+
+	public List<String> getSelectedItems() {
+		return _selectedItems;
+	}
+
+	public String getSelectedItemsKey() {
+		return _selectedItemsKey;
+	}
+
+	public String getSelectionType() {
+		return _selectionType;
+	}
+
+	public String getStyle() {
+		return _style;
+	}
+
+	public boolean isShowManagementBar() {
+		return _showManagementBar;
+	}
+
+	public boolean isShowPagination() {
+		return _showPagination;
+	}
+
+	public boolean isShowSearch() {
+		return _showSearch;
+	}
+
 	public void setApiUrl(String apiUrl) {
 		_apiUrl = apiUrl;
 	}

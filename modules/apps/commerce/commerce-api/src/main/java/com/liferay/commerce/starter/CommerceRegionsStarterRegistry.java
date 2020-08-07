@@ -14,14 +14,11 @@
 
 package com.liferay.commerce.starter;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.List;
 
 /**
  * @author Marco Leo
  */
-@ProviderType
 public interface CommerceRegionsStarterRegistry {
 
 	public CommerceRegionsStarter getCommerceRegionsStarter(String key);

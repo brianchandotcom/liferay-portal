@@ -31,7 +31,7 @@ CommerceTaxFixedRateAddressRelsDisplayContext commerceTaxFixedRateAddressRelsDis
 	<commerce-ui:panel
 		title='<%= LanguageUtil.get(resourceBundle, "taxed-address") %>'
 	>
-		<aui:select name="applyTaxTo" onChange='<%= renderResponse.getNamespace() + "selectApplyTaxTo();" %>'>
+		<aui:select name="applyTaxTo" onChange='<%= liferayPortletResponse.getNamespace() + "selectApplyTaxTo();" %>'>
 			<aui:option label="shipping-address" selected="<%= commerceTaxFixedRateAddressRelsDisplayContext.isTaxAppliedToShippingAddress() %>" value="<%= true %>" />
 			<aui:option label="billing-address" selected="<%= !commerceTaxFixedRateAddressRelsDisplayContext.isTaxAppliedToShippingAddress() %>" value="<%= false %>" />
 		</aui:select>
@@ -50,7 +50,7 @@ CommerceTaxFixedRateAddressRelsDisplayContext commerceTaxFixedRateAddressRelsDis
 		dataProviderKey="<%= CommerceTaxRateSettingDataSetConstants.COMMERCE_DATA_SET_KEY_TAX_RATE_SETTING %>"
 		id="<%= commerceTaxFixedRateAddressRelsDisplayContext.getDatasetView() %>"
 		itemsPerPage="<%= 10 %>"
-		namespace="<%= renderResponse.getNamespace() %>"
+		namespace="<%= liferayPortletResponse.getNamespace() %>"
 		pageNumber="<%= 1 %>"
 		portletURL="<%= commerceTaxFixedRateAddressRelsDisplayContext.getPortletURL() %>"
 	/>

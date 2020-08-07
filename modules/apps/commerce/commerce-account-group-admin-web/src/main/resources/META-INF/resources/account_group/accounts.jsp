@@ -67,7 +67,7 @@ PortletURL portletURL = commerceAccountGroupAdminDisplayContext.getPortletURL();
 
 		<liferay-frontend:management-bar-action-buttons>
 			<liferay-frontend:management-bar-button
-				href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceAccountGroupCommerceAccountRels();" %>'
+				href='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deleteCommerceAccountGroupCommerceAccountRels();" %>'
 				icon="times"
 				label="remove"
 			/>

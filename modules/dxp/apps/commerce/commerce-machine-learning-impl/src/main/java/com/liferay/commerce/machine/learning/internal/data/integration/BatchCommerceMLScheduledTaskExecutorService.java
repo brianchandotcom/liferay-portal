@@ -19,11 +19,12 @@ import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProces
 import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcessLog;
 import com.liferay.commerce.machine.learning.internal.gateway.CommerceMLGatewayClient;
 import com.liferay.commerce.machine.learning.internal.gateway.CommerceMLJobState;
-import com.liferay.commerce.machine.learning.internal.gateway.CommerceMLJobStateConstants;
+import com.liferay.commerce.machine.learning.internal.gateway.constants.CommerceMLJobStateConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.io.File;
@@ -77,14 +78,14 @@ public class BatchCommerceMLScheduledTaskExecutorService
 					commerceDataIntegrationProcessLog, exportResourceName);
 			}
 
-			UnicodeProperties typeSettingsProperties =
+			UnicodeProperties typeSettingsUnicodeProperties =
 				commerceDataIntegrationProcess.getTypeSettingsProperties();
 
-			typeSettingsProperties.putAll(contextProperties);
+			typeSettingsUnicodeProperties.putAll(contextProperties);
 
 			CommerceMLJobState commerceMLJobState =
 				_commerceMLGatewayClient.startCommerceMLJob(
-					typeSettingsProperties);
+					typeSettingsUnicodeProperties);
 
 			commerceDataIntegrationProcessLog = appendToLogOutput(
 				commerceDataIntegrationProcessLog,
@@ -106,7 +107,7 @@ public class BatchCommerceMLScheduledTaskExecutorService
 						_commerceMLGatewayClient.downloadCommerceMLJobResult(
 							commerceMLJobState.getApplicationId(),
 							importResource.getResourceName(),
-							typeSettingsProperties);
+							typeSettingsUnicodeProperties);
 
 					commerceDataIntegrationProcessLog = runImportTask(
 						commerceDataIntegrationProcess,
@@ -120,12 +121,12 @@ public class BatchCommerceMLScheduledTaskExecutorService
 			commerceDataIntegrationProcessLog.setStatus(
 				BackgroundTaskConstants.STATUS_SUCCESSFUL);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
-			commerceDataIntegrationProcessLog.setError(e.getMessage());
+			commerceDataIntegrationProcessLog.setError(exception.getMessage());
 
 			commerceDataIntegrationProcessLog.setEndDate(new Date());
 
@@ -167,11 +168,13 @@ public class BatchCommerceMLScheduledTaskExecutorService
 
 			String state = commerceMLJobState.getState();
 
-			if (state.equalsIgnoreCase(CommerceMLJobStateConstants.COMPLETE)) {
+			if (StringUtil.equalsIgnoreCase(
+					state, CommerceMLJobStateConstants.COMPLETE)) {
+
 				return;
 			}
-			else if (state.equalsIgnoreCase(
-						CommerceMLJobStateConstants.ERROR)) {
+			else if (StringUtil.equalsIgnoreCase(
+						state, CommerceMLJobStateConstants.ERROR)) {
 
 				_log.error("Application failed");
 

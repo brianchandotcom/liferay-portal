@@ -37,7 +37,6 @@ import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.product.util.JsonHelper;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderException;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
@@ -51,11 +50,9 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.ReleaseInfo;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -145,8 +142,8 @@ public class CommerceProductInstanceOptionsValuesDataProvider
 				Map<String, Object> parameters =
 					ddmDataProviderRequest.getParameters();
 
-				String parameterValue = String.valueOf(parameters.get(
-					cpDefinitionOptionRel.getKey()));
+				String parameterValue = String.valueOf(
+					parameters.get(cpDefinitionOptionRel.getKey()));
 
 				// Collect filters and outputs
 
@@ -309,15 +306,15 @@ public class CommerceProductInstanceOptionsValuesDataProvider
 
 		Map<String, Object> parameters = ddmDataProviderRequest.getParameters();
 
-		List<CPDefinitionOptionRel> nonSKUContributingCPDefinitionOptionRels =
+		List<CPDefinitionOptionRel> nonskuContributingCPDefinitionOptionRels =
 			_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
 				cpDefinitionId, false);
 
-		for (CPDefinitionOptionRel nonSKUContributingDefinitionOptionRel :
-				nonSKUContributingCPDefinitionOptionRels) {
+		for (CPDefinitionOptionRel nonskuContributingDefinitionOptionRel :
+				nonskuContributingCPDefinitionOptionRels) {
 
-			String parameterValue = String.valueOf(parameters.get(
-				nonSKUContributingDefinitionOptionRel.getKey()));
+			String parameterValue = String.valueOf(
+				parameters.get(nonskuContributingDefinitionOptionRel.getKey()));
 
 			String optionValueKey = parameterValue;
 
@@ -329,12 +326,12 @@ public class CommerceProductInstanceOptionsValuesDataProvider
 			CPDefinitionOptionValueRel selectedCPDefinitionOptionValueRel =
 				_cpDefinitionOptionValueRelLocalService.
 					fetchCPDefinitionOptionValueRel(
-						nonSKUContributingDefinitionOptionRel.
+						nonskuContributingDefinitionOptionRel.
 							getCPDefinitionOptionRelId(),
 						optionValueKey);
 
 			selectedCPDefinitionOptionCPDefinitionOptionValues.put(
-				nonSKUContributingDefinitionOptionRel,
+				nonskuContributingDefinitionOptionRel,
 				selectedCPDefinitionOptionValueRel);
 		}
 
@@ -639,9 +636,6 @@ public class CommerceProductInstanceOptionsValuesDataProvider
 
 		return false;
 	}
-
-	private static final int _RELEASE_7_2_0_BUILD_NUMBER =
-		ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER + 100;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceProductInstanceOptionsValuesDataProvider.class);

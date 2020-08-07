@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.discount;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -25,7 +23,6 @@ import java.math.BigDecimal;
 /**
  * @author Marco Leo
  */
-@ProviderType
 public interface CommerceDiscountCalculation {
 
 	public CommerceDiscountValue getOrderShippingCommerceDiscountValue(

@@ -48,7 +48,7 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 
 <div class="form-group-autofit">
 	<c:if test="<%= !commerceOrder.isGuestOrder() %>">
-		<aui:select label="<%= selectLabel %>" name="commerceAddress" onChange='<%= renderResponse.getNamespace() + "selectAddress();" %>' wrapperCssClass="commerce-form-group-item-row form-group-item">
+		<aui:select label="<%= selectLabel %>" name="commerceAddress" onChange='<%= liferayPortletResponse.getNamespace() + "selectAddress();" %>' wrapperCssClass="commerce-form-group-item-row form-group-item">
 			<aui:option label="add-new-address" value="0" />
 
 			<%
@@ -105,7 +105,7 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 	</div>
 
 	<div class="add-street-link form-group-autofit">
-		<aui:a disabled="<%= commerceAddressId > 0 %>" href="javascript:;" label="+-add-address-line" onClick='<%= renderResponse.getNamespace() + "addStreetAddress();" %>' />
+		<aui:a disabled="<%= commerceAddressId > 0 %>" href="javascript:;" label="+-add-address-line" onClick='<%= liferayPortletResponse.getNamespace() + "addStreetAddress();" %>' />
 	</div>
 
 	<div class="add-street-fields form-group-autofit hide">
@@ -187,7 +187,7 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 
 			const commerceAddress = A.one('#<portlet:namespace />commerceAddress');
 			const commerceAddressParamName = A.one(
-				'#<%= renderResponse.getNamespace() + paramName %>'
+				'#<%= liferayPortletResponse.getNamespace() + paramName %>'
 			);
 			const newAddress = A.one('#<portlet:namespace />newAddress');
 

@@ -33,9 +33,9 @@ portletURL.setParameter("mvcRenderCommandName", "editCommerceDiscountRule");
 
 String title = LanguageUtil.get(request, (commerceDiscountRule == null) ? "add-discount-rule" : "edit-discount-rule");
 
-Map<String, Object> data = new HashMap<>();
-
-data.put("direction-right", StringPool.TRUE);
+Map<String, Object> data = HashMapBuilder.<String, Object>put(
+	"direction-right", StringPool.TRUE
+).build();
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "discount"), String.valueOf(renderResponse.createRenderURL()), data);
 PortalUtil.addPortletBreadcrumbEntry(request, commerceDiscount.getTitle(), redirect, data);
@@ -47,7 +47,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 
 <portlet:actionURL name="editCommerceDiscountRule" var="editCommerceDiscountRuleActionURL" />
 
-<aui:form action="<%= editCommerceDiscountRuleActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCommerceDiscountRule();" %>'>
+<aui:form action="<%= editCommerceDiscountRuleActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveCommerceDiscountRule();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceDiscountRule == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="addTypeSettings" type="hidden" />
@@ -62,7 +62,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-				<aui:select name="type" onChange='<%= renderResponse.getNamespace() + "selectType();" %>' showEmptyOption="<%= true %>">
+				<aui:select name="type" onChange='<%= liferayPortletResponse.getNamespace() + "selectType();" %>' showEmptyOption="<%= true %>">
 
 					<%
 					for (CommerceDiscountRuleType commerceDiscountRuleType : commerceDiscountRuleTypes) {

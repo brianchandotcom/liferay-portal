@@ -21,6 +21,7 @@ import com.liferay.commerce.account.exception.SystemCommerceAccountGroupExceptio
 import com.liferay.commerce.account.model.CommerceAccountGroup;
 import com.liferay.commerce.account.model.CommerceAccountGroupCommerceAccountRel;
 import com.liferay.commerce.account.service.base.CommerceAccountGroupLocalServiceBaseImpl;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -45,7 +46,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -123,8 +123,8 @@ public class CommerceAccountGroupLocalServiceImpl
 		if (userIds.length == 0) {
 			throw new NoSuchUserException(
 				StringBundler.concat(
-					"No user exists in company ", String.valueOf(companyId),
-					" with role ", role.getName()));
+					"No user exists in company ", companyId, " with role ",
+					role.getName()));
 		}
 
 		ServiceContext serviceContext = new ServiceContext();

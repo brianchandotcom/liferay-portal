@@ -195,7 +195,7 @@ if (commerceOrder != null) {
 		<aui:input name="commerceOrderId" type="hidden" value="<%= String.valueOf(commerceOrder.getCommerceOrderId()) %>" />
 	</aui:form>
 
-	<aui:button cssClass="btn btn-lg btn-secondary" onClick='<%= renderResponse.getNamespace() + "reorderCommerceOrder();" %>' value="reorder" />
+	<aui:button cssClass="btn btn-lg btn-secondary" onClick='<%= liferayPortletResponse.getNamespace() + "reorderCommerceOrder();" %>' value="reorder" />
 
 	<liferay-util:dynamic-include key="com.liferay.commerce.order.content.web#/place_order_detail_cta#" />
 </div>
@@ -214,7 +214,7 @@ if (commerceOrder != null) {
 			dataProviderKey="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PLACED_ORDER_ITEMS %>"
 			id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PLACED_ORDER_ITEMS %>"
 			itemsPerPage="<%= 10 %>"
-			namespace="<%= renderResponse.getNamespace() %>"
+			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			nestedItemsKey="orderItemId"
 			nestedItemsReferenceKey="orderItems"
 			pageNumber="<%= 1 %>"

@@ -75,7 +75,7 @@ boolean hasPermission = commerceDiscountDisplayContext.hasPermission(ActionKeys.
 
 				<div class="row">
 					<div class="col-6">
-						<aui:select label="type" name="usePercentage" onChange='<%= renderResponse.getNamespace() + "selectType();" %>' required="<%= true %>">
+						<aui:select label="type" name="usePercentage" onChange='<%= liferayPortletResponse.getNamespace() + "selectType();" %>' required="<%= true %>">
 
 							<%
 							for (String commerceDiscountType : CommerceDiscountConstants.TYPES) {
@@ -91,7 +91,7 @@ boolean hasPermission = commerceDiscountDisplayContext.hasPermission(ActionKeys.
 					</div>
 
 					<div class="col-6">
-						<aui:select label="apply-to" name="target" onChange='<%= renderResponse.getNamespace() + "selectTarget();" %>' required="<%= true %>">
+						<aui:select label="apply-to" name="target" onChange='<%= liferayPortletResponse.getNamespace() + "selectTarget();" %>' required="<%= true %>">
 
 							<%
 							for (CommerceDiscountTarget commerceDiscountTarget : commerceDiscountDisplayContext.getCommerceDiscountTargets()) {

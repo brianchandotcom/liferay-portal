@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.inventory.type;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.Locale;
 import java.util.Map;
 
@@ -23,7 +21,6 @@ import java.util.Map;
  * @author Alessio Antonio Rendina
  * @author Luca Pellizzon
  */
-@ProviderType
 public interface CommerceInventoryAuditType {
 
 	public String formatLog(long userId, String context, Locale locale)

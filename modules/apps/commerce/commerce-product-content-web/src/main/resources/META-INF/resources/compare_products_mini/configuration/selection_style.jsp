@@ -23,9 +23,9 @@ CPCompareContentMiniDisplayContext cpCompareContentMiniDisplayContext = (CPCompa
 <aui:fieldset markupView="lexicon">
 	<aui:input id="productsLimit" label="products-limit" name="preferences--productsLimit--" type="number" value="<%= cpCompareContentMiniDisplayContext.getProductsLimit() %>" />
 
-	<aui:input checked="<%= cpCompareContentMiniDisplayContext.isSelectionStyleADT() %>" id="selectionStyleADT" label="use-adt" name="preferences--selectionStyle--" onChange='<%= renderResponse.getNamespace() + "chooseSelectionStyle();" %>' type="radio" value="adt" />
+	<aui:input checked="<%= cpCompareContentMiniDisplayContext.isSelectionStyleADT() %>" id="selectionStyleADT" label="use-adt" name="preferences--selectionStyle--" onChange='<%= liferayPortletResponse.getNamespace() + "chooseSelectionStyle();" %>' type="radio" value="adt" />
 
-	<aui:input checked="<%= cpCompareContentMiniDisplayContext.isSelectionStyleCustomRenderer() %>" id="selectionStyleCustomRenderer" label="use-custom-renderer" name="preferences--selectionStyle--" onChange='<%= renderResponse.getNamespace() + "chooseSelectionStyle();" %>' type="radio" value="custom" />
+	<aui:input checked="<%= cpCompareContentMiniDisplayContext.isSelectionStyleCustomRenderer() %>" id="selectionStyleCustomRenderer" label="use-custom-renderer" name="preferences--selectionStyle--" onChange='<%= liferayPortletResponse.getNamespace() + "chooseSelectionStyle();" %>' type="radio" value="custom" />
 </aui:fieldset>
 
 <aui:script>

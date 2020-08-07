@@ -102,24 +102,24 @@ public class EditCommerceAccountGroupMVCActionCommand
 				deleteCommerceAccountGroups(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof CommerceAccountGroupNameException) {
+		catch (Exception exception) {
+			if (exception instanceof CommerceAccountGroupNameException) {
 				hideDefaultErrorMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName", "editCommerceAccountGroup");
 			}
-			else if (e instanceof NoSuchAccountGroupException ||
-					 e instanceof PrincipalException) {
+			else if (exception instanceof NoSuchAccountGroupException ||
+					 exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else {
-				_log.error(e, e);
+				_log.error(exception, exception);
 			}
 		}
 	}

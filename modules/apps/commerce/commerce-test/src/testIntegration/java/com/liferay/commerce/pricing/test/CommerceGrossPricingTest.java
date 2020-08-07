@@ -68,6 +68,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -96,7 +97,8 @@ public class CommerceGrossPricingTest {
 	@ClassRule
 	@Rule
 	public static AggregateTestRule aggregateTestRule = new AggregateTestRule(
-		new LiferayIntegrationTestRule(), PermissionCheckerMethodTestRule.INSTANCE);
+		new LiferayIntegrationTestRule(),
+		PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -587,10 +589,11 @@ public class CommerceGrossPricingTest {
 		throws Exception {
 
 		frutillaRule.scenario(
-			"If a price list does not contain the current price entry then " +
-				"the price modifiers configured on the price list are not " +
-					"applied on top of the base price if the priceType of " +
-						"the base and active pricelist is the same"
+			StringBundler.concat(
+				"If a price list does not contain the ",
+				"current price entry then the price modifiers configured on ",
+				"the price list are not applied on top of the base price if ",
+				"the priceType of the base and active pricelist is the same")
 		).given(
 			"A price list not containing the current product price entry and " +
 				"price modifiers targeting the product defined for the price " +

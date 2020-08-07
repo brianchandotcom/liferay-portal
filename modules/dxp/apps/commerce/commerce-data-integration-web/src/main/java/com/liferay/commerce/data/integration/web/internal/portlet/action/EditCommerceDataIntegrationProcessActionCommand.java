@@ -116,10 +116,10 @@ public class EditCommerceDataIntegrationProcessActionCommand
 				hideDefaultSuccessMessage(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			SessionErrors.add(actionRequest, e.getClass());
+			SessionErrors.add(actionRequest, exception.getClass());
 		}
 	}
 
@@ -134,13 +134,16 @@ public class EditCommerceDataIntegrationProcessActionCommand
 
 			Thread.sleep(2000);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			hideDefaultErrorMessage(actionRequest);
 
-			_log.error(e, e);
+			_log.error(exception, exception);
 
-			jsonObject.put("error", e.getMessage());
-			jsonObject.put("success", false);
+			jsonObject.put(
+				"error", exception.getMessage()
+			).put(
+				"success", false
+			);
 		}
 
 		jsonObject.put("success", true);
@@ -160,9 +163,10 @@ public class EditCommerceDataIntegrationProcessActionCommand
 
 		String processType = ParamUtil.getString(actionRequest, "processType");
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
+		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
+			true);
 
-		typeSettingsProperties.fastLoad(
+		typeSettingsUnicodeProperties.fastLoad(
 			ParamUtil.getString(actionRequest, "typeSettings"));
 
 		CommerceDataIntegrationProcess commerceDataIntegrationProcess = null;
@@ -172,20 +176,20 @@ public class EditCommerceDataIntegrationProcessActionCommand
 				_commerceDataIntegrationProcessService.
 					updateCommerceDataIntegrationProcess(
 						commerceDataIntegrationProcessId, name,
-						typeSettingsProperties);
+						typeSettingsUnicodeProperties);
 		}
 		else {
 			commerceDataIntegrationProcess =
 				_commerceDataIntegrationProcessService.
 					addCommerceDataIntegrationProcess(
 						_portal.getUserId(actionRequest), name, processType,
-						typeSettingsProperties);
+						typeSettingsUnicodeProperties);
 		}
 
 		return commerceDataIntegrationProcess;
 	}
 
-	protected void writeJSON(ActionResponse actionResponse, Object jsonObj)
+	protected void writeJSON(ActionResponse actionResponse, Object object)
 		throws IOException {
 
 		HttpServletResponse httpServletResponse =
@@ -193,7 +197,7 @@ public class EditCommerceDataIntegrationProcessActionCommand
 
 		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
-		ServletResponseUtil.write(httpServletResponse, jsonObj.toString());
+		ServletResponseUtil.write(httpServletResponse, object.toString());
 
 		httpServletResponse.flushBuffer();
 	}

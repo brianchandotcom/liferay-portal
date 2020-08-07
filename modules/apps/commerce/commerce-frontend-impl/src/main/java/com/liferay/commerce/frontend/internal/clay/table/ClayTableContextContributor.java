@@ -24,11 +24,11 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -61,8 +61,6 @@ public class ClayTableContextContributor
 		ClayTableDataSetDisplayView clayTableDataSetDisplayView,
 		Locale locale) {
 
-		Map<String, Object> context = new HashMap<>();
-
 		JSONObject schemaJSONObject = _jsonFactory.createJSONObject();
 
 		JSONArray fieldsJSONArray = _jsonFactory.createJSONArray();
@@ -88,13 +86,16 @@ public class ClayTableContextContributor
 
 			String name = clayTableSchemaField.getFieldName();
 
-			jsonObject.put("actionId", clayTableSchemaField.getActionId());
 			jsonObject.put(
-				"contentRenderer", clayTableSchemaField.getContentRenderer());
-			jsonObject.put(
+				"actionId", clayTableSchemaField.getActionId()
+			).put(
+				"contentRenderer", clayTableSchemaField.getContentRenderer()
+			).put(
 				"contentRendererModuleUrl",
-				clayTableSchemaField.getContentRendererModuleUrl());
-			jsonObject.put("expand", clayTableSchemaField.isExpand());
+				clayTableSchemaField.getContentRendererModuleUrl()
+			).put(
+				"expand", clayTableSchemaField.isExpand()
+			);
 
 			if (name.contains(StringPool.PERIOD)) {
 				jsonObject.put(
@@ -104,8 +105,11 @@ public class ClayTableContextContributor
 				jsonObject.put("fieldName", name);
 			}
 
-			jsonObject.put("label", label);
-			jsonObject.put("sortable", clayTableSchemaField.isSortable());
+			jsonObject.put(
+				"label", label
+			).put(
+				"sortable", clayTableSchemaField.isSortable()
+			);
 
 			ClayTableSchemaField.SortingOrder sortingOrder =
 				clayTableSchemaField.getSortingOrder();
@@ -121,9 +125,9 @@ public class ClayTableContextContributor
 
 		schemaJSONObject.put("fields", fieldsJSONArray);
 
-		context.put("schema", schemaJSONObject);
-
-		return context;
+		return HashMapBuilder.<String, Object>put(
+			"schema", schemaJSONObject
+		).build();
 	}
 
 	@Reference

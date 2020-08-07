@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.tax;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.exception.CommerceTaxEngineException;
 
 import java.util.Locale;
@@ -24,7 +22,6 @@ import java.util.Locale;
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
-@ProviderType
 public interface CommerceTaxEngine {
 
 	public CommerceTaxValue getCommerceTaxValue(

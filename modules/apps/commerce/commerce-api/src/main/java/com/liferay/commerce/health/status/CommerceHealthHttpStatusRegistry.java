@@ -14,14 +14,11 @@
 
 package com.liferay.commerce.health.status;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.List;
 
 /**
  * @author Marco Leo
  */
-@ProviderType
 public interface CommerceHealthHttpStatusRegistry {
 
 	public CommerceHealthHttpStatus getCommerceHealthStatus(String key);

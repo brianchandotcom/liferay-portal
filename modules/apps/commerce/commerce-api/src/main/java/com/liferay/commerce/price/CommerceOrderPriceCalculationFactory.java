@@ -14,12 +14,9 @@
 
 package com.liferay.commerce.price;
 
-import aQute.bnd.annotation.ProviderType;
-
 /**
  * @author Riccardo Alberti
  */
-@ProviderType
 public interface CommerceOrderPriceCalculationFactory {
 
 	public CommerceOrderPriceCalculation getCommerceOrderPriceCalculation();

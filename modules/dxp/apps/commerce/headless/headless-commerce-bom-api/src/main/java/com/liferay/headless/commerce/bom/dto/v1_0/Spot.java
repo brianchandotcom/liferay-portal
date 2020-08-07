@@ -70,8 +70,8 @@ public class Spot {
 		catch (RuntimeException re) {
 			throw re;
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -99,8 +99,8 @@ public class Spot {
 		catch (RuntimeException re) {
 			throw re;
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -128,8 +128,8 @@ public class Spot {
 		catch (RuntimeException re) {
 			throw re;
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -156,8 +156,8 @@ public class Spot {
 		catch (RuntimeException re) {
 			throw re;
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -182,8 +182,8 @@ public class Spot {
 		catch (RuntimeException re) {
 			throw re;
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 

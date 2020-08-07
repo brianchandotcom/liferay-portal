@@ -81,8 +81,7 @@ public class CommerceOrderFinderImpl
 					_getAccountIdClause(commerceAccountId));
 			}
 			else {
-				sql = StringUtil.replace(
-					sql, "[$ACCOUNT_ID$]", StringPool.BLANK);
+				sql = StringUtil.removeSubstring(sql, "[$ACCOUNT_ID$]");
 			}
 
 			Integer orderStatus = (Integer)queryDefinition.getAttribute(
@@ -97,8 +96,7 @@ public class CommerceOrderFinderImpl
 					_getOrderStatusClause(orderStatus, excludeOrderStatus));
 			}
 			else {
-				sql = StringUtil.replace(
-					sql, "[$ORDER_STATUS$]", StringPool.BLANK);
+				sql = StringUtil.removeSubstring(sql, "[$ORDER_STATUS$]");
 			}
 
 			String[] names = new String[0];
@@ -118,11 +116,10 @@ public class CommerceOrderFinderImpl
 				sql = _customSQL.replaceAndOperator(sql, true);
 			}
 			else {
-				sql = StringUtil.replace(
+				sql = StringUtil.removeSubstring(
 					sql,
 					"AND (LOWER(CommerceAccount.name) LIKE ? " +
-						"[$AND_OR_NULL_CHECK$])",
-					StringPool.BLANK);
+						"[$AND_OR_NULL_CHECK$])");
 			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -236,8 +233,7 @@ public class CommerceOrderFinderImpl
 					_getAccountIdClause(commerceAccountId));
 			}
 			else {
-				sql = StringUtil.replace(
-					sql, "[$ACCOUNT_ID$]", StringPool.BLANK);
+				sql = StringUtil.removeSubstring(sql, "[$ACCOUNT_ID$]");
 			}
 
 			Integer orderStatus = (Integer)queryDefinition.getAttribute(
@@ -252,8 +248,7 @@ public class CommerceOrderFinderImpl
 					_getOrderStatusClause(orderStatus, excludeOrderStatus));
 			}
 			else {
-				sql = StringUtil.replace(
-					sql, "[$ORDER_STATUS$]", StringPool.BLANK);
+				sql = StringUtil.removeSubstring(sql, "[$ORDER_STATUS$]");
 			}
 
 			String[] names = new String[0];
@@ -273,11 +268,10 @@ public class CommerceOrderFinderImpl
 				sql = _customSQL.replaceAndOperator(sql, true);
 			}
 			else {
-				sql = StringUtil.replace(
+				sql = StringUtil.removeSubstring(
 					sql,
 					"AND (LOWER(CommerceAccount.name) LIKE ? " +
-						"[$AND_OR_NULL_CHECK$])",
-					StringPool.BLANK);
+						"[$AND_OR_NULL_CHECK$])");
 			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);

@@ -37,8 +37,8 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 			_commerceAccountLocalService.deleteCommerceAccounts(
 				company.getCompanyId());
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 	}
 

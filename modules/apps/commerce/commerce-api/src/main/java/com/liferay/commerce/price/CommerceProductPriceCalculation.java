@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.price;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
@@ -25,7 +23,6 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
-@ProviderType
 public interface CommerceProductPriceCalculation {
 
 	public CommerceMoney getBasePrice(

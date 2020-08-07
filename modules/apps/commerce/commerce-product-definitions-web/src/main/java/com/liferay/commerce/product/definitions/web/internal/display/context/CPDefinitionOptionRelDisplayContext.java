@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.CustomAttributesUtil;
@@ -159,8 +160,8 @@ public class CPDefinitionOptionRelDisplayContext
 				CPOptionConfiguration.class,
 				new SystemSettingsLocator(CPConstants.CP_OPTION_SERVICE_NAME));
 
-		return String.join(
-			StringPool.COMMA, cpOptionConfiguration.ddmFormFieldTypesAllowed());
+		return StringUtil.merge(
+			cpOptionConfiguration.ddmFormFieldTypesAllowed(), StringPool.COMMA);
 	}
 
 	public List<DDMFormFieldType> getDDMFormFieldTypes()

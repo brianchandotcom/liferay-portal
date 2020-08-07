@@ -52,14 +52,14 @@ public class SalesforceTalendJobFileProvider implements TalendJobFileProvider {
 		Bundle bundle = _bundleContext.getBundle();
 
 		String talendJobFilePath =
-			_salesforceTalendjobConfiguration.salesforceTalendJobFilePath();
+			_salesforceTalendJobConfiguration.salesforceTalendJobFilePath();
 
-		Enumeration<URL> urls = bundle.findEntries(
+		Enumeration<URL> enumeration = bundle.findEntries(
 			talendJobFilePath, "*.zip", true);
 
-		if (urls != null) {
-			while (urls.hasMoreElements()) {
-				URL url = urls.nextElement();
+		if (enumeration != null) {
+			while (enumeration.hasMoreElements()) {
+				URL url = enumeration.nextElement();
 
 				inputStreams.add(url.openStream());
 			}
@@ -75,18 +75,18 @@ public class SalesforceTalendJobFileProvider implements TalendJobFileProvider {
 
 		_bundleContext = bundleContext;
 
-		_salesforceTalendjobConfiguration = ConfigurableUtil.createConfigurable(
+		_salesforceTalendJobConfiguration = ConfigurableUtil.createConfigurable(
 			SalesforceTalendJobConfiguration.class, properties);
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		_bundleContext = null;
-		_salesforceTalendjobConfiguration = null;
+		_salesforceTalendJobConfiguration = null;
 	}
 
 	private BundleContext _bundleContext;
 	private volatile SalesforceTalendJobConfiguration
-		_salesforceTalendjobConfiguration;
+		_salesforceTalendJobConfiguration;
 
 }

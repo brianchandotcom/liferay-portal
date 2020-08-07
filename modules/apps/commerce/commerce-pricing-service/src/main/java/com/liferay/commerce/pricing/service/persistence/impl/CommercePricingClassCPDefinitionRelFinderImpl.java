@@ -86,11 +86,10 @@ public class CommercePricingClassCPDefinitionRelFinderImpl
 				sql = _customSQL.replaceAndOperator(sql, false);
 			}
 			else {
-				sql = StringUtil.replace(
+				sql = StringUtil.removeSubstring(
 					sql,
 					" AND (LOWER(CPDefinitionLocalization.name) LIKE ? " +
-						"[$AND_OR_NULL_CHECK$])",
-					StringPool.BLANK);
+						"[$AND_OR_NULL_CHECK$])");
 			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -166,11 +165,10 @@ public class CommercePricingClassCPDefinitionRelFinderImpl
 				sql = _customSQL.replaceAndOperator(sql, false);
 			}
 			else {
-				sql = StringUtil.replace(
+				sql = StringUtil.removeSubstring(
 					sql,
 					" AND (LOWER(CPDefinitionLocalization.name) LIKE ? " +
-						"[$AND_OR_NULL_CHECK$])",
-					StringPool.BLANK);
+						"[$AND_OR_NULL_CHECK$])");
 			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);

@@ -15,6 +15,7 @@
 package com.liferay.commerce.bom.admin.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.bom.admin.web.internal.display.context.CommerceBOMAdminDisplayContext;
+import com.liferay.commerce.bom.admin.web.internal.servlet.taglib.ui.constants.CommerceBOMDefinitionScreenNavigationConstants;
 import com.liferay.commerce.bom.constants.CommerceBOMActionKeys;
 import com.liferay.commerce.bom.model.CommerceBOMDefinition;
 import com.liferay.commerce.bom.model.CommerceBOMFolder;
@@ -106,8 +107,8 @@ public class CommerceBOMDefinitionDetailsScreenNavigationEntry
 			return _commerceBOMDefinitionModelResourcePermission.contains(
 				permissionChecker, commerceBOMDefinition, ActionKeys.UPDATE);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		return false;

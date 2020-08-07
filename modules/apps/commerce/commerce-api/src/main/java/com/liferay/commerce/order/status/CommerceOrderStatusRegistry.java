@@ -14,14 +14,11 @@
 
 package com.liferay.commerce.order.status;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.List;
 
 /**
  * @author Alec Sloan
  */
-@ProviderType
 public interface CommerceOrderStatusRegistry {
 
 	public CommerceOrderStatus getCommerceOrderStatus(int key);

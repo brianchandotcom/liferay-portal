@@ -40,7 +40,7 @@
 
 			.action {
 				color: $color-theme;
-				font-size: .8em;
+				font-size: 0.8em;
 				font-weight: 500;
 				letter-spacing: normal;
 				text-transform: capitalize;
@@ -68,7 +68,7 @@
 		}
 
 		.price-value {
-			font-size: .9rem;
+			font-size: 0.9rem;
 
 			&-percentages::after {
 				color: $color-mood-bad;
@@ -76,7 +76,7 @@
 		}
 
 		&-delete {
-			font-size: .9rem;
+			font-size: 0.9rem;
 			margin: 25px 0;
 		}
 

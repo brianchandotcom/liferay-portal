@@ -14,14 +14,11 @@
 
 package com.liferay.commerce.discount.rule.type;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.List;
 
 /**
  * @author Alessio Antonio Rendina
  */
-@ProviderType
 public interface CommerceDiscountRuleTypeRegistry {
 
 	public CommerceDiscountRuleType getCommerceDiscountRuleType(String key);

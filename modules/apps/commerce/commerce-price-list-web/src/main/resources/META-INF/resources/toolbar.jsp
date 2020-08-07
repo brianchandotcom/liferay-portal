@@ -88,7 +88,7 @@ CommercePriceListDisplayContext commercePriceListDisplayContext = (CommercePrice
 		</c:if>
 
 		<liferay-frontend:management-bar-button
-			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommercePriceLists();" %>'
+			href='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deleteCommercePriceLists();" %>'
 			icon="times"
 			label="delete"
 		/>

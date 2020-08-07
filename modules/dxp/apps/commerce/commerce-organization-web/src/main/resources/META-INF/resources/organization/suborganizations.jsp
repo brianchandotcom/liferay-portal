@@ -21,9 +21,9 @@ CommerceOrganizationDisplayContext commerceOrganizationDisplayContext = (Commerc
 
 request.setAttribute("view.jsp-filterPerOrganization", false);
 
-Map<String, String> contextParams = new HashMap<>();
-
-contextParams.put("organizationId", String.valueOf(commerceOrganizationDisplayContext.getOrganizationId()));
+Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+	"organizationId", String.valueOf(commerceOrganizationDisplayContext.getOrganizationId())
+).build();
 %>
 
 <div class="commerce-organization-container" id="<portlet:namespace />entriesContainer">
@@ -32,7 +32,7 @@ contextParams.put("organizationId", String.valueOf(commerceOrganizationDisplayCo
 		dataProviderKey="<%= CommerceOrganizationClayTableDataSetDisplayView.NAME %>"
 		id="<%= CommerceOrganizationClayTableDataSetDisplayView.NAME %>"
 		itemsPerPage="<%= 10 %>"
-		namespace="<%= renderResponse.getNamespace() %>"
+		namespace="<%= liferayPortletResponse.getNamespace() %>"
 		pageNumber="<%= 1 %>"
 		portletURL="<%= commerceOrganizationDisplayContext.getPortletURL() %>"
 		showSearch="<%= false %>"

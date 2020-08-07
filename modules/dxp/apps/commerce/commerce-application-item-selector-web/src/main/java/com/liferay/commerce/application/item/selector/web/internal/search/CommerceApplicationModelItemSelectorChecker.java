@@ -39,17 +39,17 @@ public class CommerceApplicationModelItemSelectorChecker
 	}
 
 	@Override
-	public boolean isChecked(Object obj) {
+	public boolean isChecked(Object object) {
 		CommerceApplicationModel commerceApplicationModel =
-			(CommerceApplicationModel)obj;
+			(CommerceApplicationModel)object;
 
 		return _checkedCommerceApplicationModelIds.contains(
 			commerceApplicationModel.getCommerceApplicationModelId());
 	}
 
 	@Override
-	public boolean isDisabled(Object obj) {
-		return isChecked(obj);
+	public boolean isDisabled(Object object) {
+		return isChecked(object);
 	}
 
 	private final Set<Long> _checkedCommerceApplicationModelIds;

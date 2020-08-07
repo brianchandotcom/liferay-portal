@@ -30,7 +30,7 @@ PortletURL portletURL = commerceChannelDisplayContext.getPortletURL();
 			dataProviderKey="<%= CommerceChannelClayTable.NAME %>"
 			id="<%= CommerceChannelClayTable.NAME %>"
 			itemsPerPage="<%= 10 %>"
-			namespace="<%= renderResponse.getNamespace() %>"
+			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"
 			portletURL="<%= portletURL %>"
 			style="fluid"

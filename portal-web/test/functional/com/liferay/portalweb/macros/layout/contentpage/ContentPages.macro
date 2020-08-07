@@ -56,6 +56,21 @@ definition {
 		PageEditor.assertFragmentSidebarLoaded();
 	}
 
+	macro addCollectionItemInCollectionPage {
+		if (isSet(itemSubtype)) {
+			Click(
+				key_title = "${title}",
+				locator1 = "ControlMenu#NEW_COLLECTION_PAGE_ITEM_BUTTON");
+
+			MenuItem.click(menuItem = "${itemSubtype}");
+		}
+		else {
+			Click(
+				key_title = "${title}",
+				locator1 = "ControlMenu#NEW_COLLECTION_PAGE_ITEM_BUTTON");
+		}
+	}
+
 	macro addPage {
 		var key_breadcrumbName="Pages";
 

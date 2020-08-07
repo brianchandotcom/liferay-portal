@@ -48,12 +48,12 @@ public class StringQueryImpl extends BaseQueryImpl implements StringQuery {
 
 	@Override
 	public void addField(String field) {
-		_fields.put(field, null);
+		_fieldsBoosts.put(field, null);
 	}
 
 	@Override
 	public void addField(String field, Float boost) {
-		_fields.put(field, boost);
+		_fieldsBoosts.put(field, boost);
 	}
 
 	@Override
@@ -97,8 +97,8 @@ public class StringQueryImpl extends BaseQueryImpl implements StringQuery {
 	}
 
 	@Override
-	public Map<String, Float> getFields() {
-		return _fields;
+	public Map<String, Float> getFieldsBoosts() {
+		return _fieldsBoosts;
 	}
 
 	@Override
@@ -315,7 +315,7 @@ public class StringQueryImpl extends BaseQueryImpl implements StringQuery {
 	private Operator _defaultOperator;
 	private Boolean _enablePositionIncrements;
 	private Boolean _escape;
-	private Map<String, Float> _fields = new HashMap<>();
+	private Map<String, Float> _fieldsBoosts = new HashMap<>();
 	private Float _fuzziness;
 	private Integer _fuzzyMaxExpansions;
 	private Integer _fuzzyPrefixLength;

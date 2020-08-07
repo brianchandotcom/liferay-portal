@@ -60,62 +60,70 @@ export default (props) => {
 								path="/subscriptions/:creatorId"
 							/>
 
-							<Route
-								path="/questions/:sectionTitle"
-								render={({match: {path}}) => (
-									<>
-										<NavigationBar />
+							<Switch>
+								<Route
+									exact
+									path="/questions/tag/:tag"
+									render={(props) => (
+										<>
+											<NavigationBar {...props} />
+											<Questions {...props} />
+										</>
+									)}
+								/>
 
-										<Switch>
-											<Route
-												component={Questions}
-												exact
-												path={`/questions/tag/:tag`}
-											/>
-											<ProtectedRoute
-												component={EditAnswer}
-												exact
-												path={`${path}/:questionId/answers/:answerId/edit`}
-											/>
-											<Route
-												component={Questions}
-												exact
-												path={`${path}/creator/:creatorId`}
-											/>
-											<Route
-												component={Questions}
-												exact
-												path={`${path}/tag/:tag`}
-											/>
-											<ProtectedRoute
-												component={NewQuestion}
-												exact
-												path={`${path}/new`}
-											/>
-											<Route
-												component={Tags}
-												exact
-												path={`${path}/tags`}
-											/>
-											<Route
-												component={Question}
-												exact
-												path={`${path}/:questionId`}
-											/>
-											<ProtectedRoute
-												component={EditQuestion}
-												exact
-												path={`${path}/:questionId/edit`}
-											/>
-											<Route
-												component={Questions}
-												exact
-												path={`${path}/`}
-											/>
-										</Switch>
-									</>
-								)}
-							/>
+								<Route
+									path="/questions/:sectionTitle"
+									render={({match: {path}}) => (
+										<>
+											<NavigationBar />
+
+											<Switch>
+												<ProtectedRoute
+													component={EditAnswer}
+													exact
+													path={`${path}/:questionId/answers/:answerId/edit`}
+												/>
+												<Route
+													component={Questions}
+													exact
+													path={`${path}/creator/:creatorId`}
+												/>
+												<Route
+													component={Questions}
+													exact
+													path={`${path}/tag/:tag`}
+												/>
+												<ProtectedRoute
+													component={NewQuestion}
+													exact
+													path={`${path}/new`}
+												/>
+												<Route
+													component={Tags}
+													exact
+													path={`${path}/tags`}
+												/>
+												<Route
+													component={Question}
+													exact
+													path={`${path}/:questionId`}
+												/>
+												<ProtectedRoute
+													component={EditQuestion}
+													exact
+													path={`${path}/:questionId/edit`}
+												/>
+												<Route
+													component={Questions}
+													exact
+													path={`${path}/`}
+												/>
+											</Switch>
+										</>
+									)}
+								/>
+							</Switch>
 						</div>
 					</ErrorBoundary>
 				</Router>

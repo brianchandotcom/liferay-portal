@@ -112,7 +112,14 @@ export default withRouter(
 										}
 										onClick={() =>
 											historyPushParser(
-												`/subscriptions/${context.userId}?sectionTitle=${sectionTitle}`
+												`/subscriptions/${
+													context.userId
+												}${
+													sectionTitle
+														? '?sectionTitle=' +
+														  sectionTitle
+														: ''
+												}`
 											)
 										}
 									>
@@ -135,7 +142,12 @@ export default withRouter(
 										}
 										onClick={() =>
 											historyPushParser(
-												`/activity/${context.userId}?sectionTitle=${sectionTitle}`
+												`/activity/${context.userId}${
+													sectionTitle
+														? '?sectionTitle=' +
+														  sectionTitle
+														: ''
+												}`
 											)
 										}
 									>

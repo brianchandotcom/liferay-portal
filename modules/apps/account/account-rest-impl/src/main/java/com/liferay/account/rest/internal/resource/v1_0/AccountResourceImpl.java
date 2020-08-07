@@ -16,8 +16,8 @@ package com.liferay.account.rest.internal.resource.v1_0;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
-import com.liferay.account.model.AccountEntryOrganizationRel;
 import com.liferay.account.rest.dto.v1_0.Account;
+import com.liferay.account.rest.internal.dto.v1_0.converter.AccountResourceDTOConverter;
 import com.liferay.account.rest.internal.odata.entity.v1_0.AccountEntityModel;
 import com.liferay.account.rest.resource.v1_0.AccountResource;
 import com.liferay.account.service.AccountEntryLocalService;
@@ -27,15 +27,16 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.util.HashMap;
 import java.util.Optional;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -55,13 +56,15 @@ public class AccountResourceImpl
 	extends BaseAccountResourceImpl implements EntityModelResource {
 
 	@Override
-	public void deleteAccount(Long accountId) throws Exception {
-		_accountEntryLocalService.deleteAccountEntry(accountId);
+	public void deleteAccount(String accountId) throws Exception {
+		_accountEntryLocalService.deleteAccountEntry(
+			_accountResourceDTOConverter.getAccountEntryId(accountId));
 	}
 
 	@Override
-	public Account getAccount(Long accountId) throws Exception {
-		return _toAccount(_accountEntryLocalService.getAccountEntry(accountId));
+	public Account getAccount(String accountId) throws Exception {
+		return _accountResourceDTOConverter.toDTO(
+			_getDTOConverterContext(accountId));
 	}
 
 	@Override
@@ -107,6 +110,13 @@ public class AccountResourceImpl
 			null, null, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
 			_getStatus(account), null);
 
+		if (account.getId() != null) {
+			accountEntry.setExternalReferenceCode(account.getId());
+
+			accountEntry = _accountEntryLocalService.updateAccountEntry(
+				accountEntry);
+		}
+
 		_accountEntryOrganizationRelLocalService.
 			setAccountEntryOrganizationRels(
 				accountEntry.getAccountEntryId(), _getOrganizationIds(account));
@@ -115,16 +125,19 @@ public class AccountResourceImpl
 	}
 
 	@Override
-	public Account putAccount(Long accountId, Account account)
+	public Account putAccount(String accountId, Account account)
 		throws Exception {
+
+		long accountEntryId = _accountResourceDTOConverter.getAccountEntryId(
+			accountId);
 
 		_accountEntryOrganizationRelLocalService.
 			setAccountEntryOrganizationRels(
-				accountId, _getOrganizationIds(account));
+				accountEntryId, _getOrganizationIds(account));
 
 		return _toAccount(
 			_accountEntryLocalService.updateAccountEntry(
-				accountId, _getParentAccountId(account), account.getName(),
+				accountEntryId, _getParentAccountId(account), account.getName(),
 				account.getDescription(), false, _getDomains(account), null,
 				null, _getStatus(account), null));
 	}
@@ -135,6 +148,15 @@ public class AccountResourceImpl
 		).orElse(
 			new String[0]
 		);
+	}
+
+	private DefaultDTOConverterContext _getDTOConverterContext(String accountId)
+		throws Exception {
+
+		return new DefaultDTOConverterContext(
+			contextAcceptLanguage.isAcceptAllLanguages(), new HashMap<>(), null,
+			accountId, contextAcceptLanguage.getPreferredLocale(),
+			contextUriInfo, contextUser);
 	}
 
 	private long[] _getOrganizationIds(Account account) {
@@ -148,11 +170,13 @@ public class AccountResourceImpl
 	}
 
 	private long _getParentAccountId(Account account) {
-		return Optional.ofNullable(
-			account.getParentAccountId()
-		).orElse(
-			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT
-		);
+		try {
+			return _accountResourceDTOConverter.getAccountEntryId(
+				account.getParentAccountId());
+		}
+		catch (Exception exception) {
+			return AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT;
+		}
 	}
 
 	private int _getStatus(Account account) {
@@ -164,21 +188,10 @@ public class AccountResourceImpl
 	}
 
 	private Account _toAccount(AccountEntry accountEntry) throws Exception {
-		return new Account() {
-			{
-				description = accountEntry.getDescription();
-				domains = StringUtil.split(accountEntry.getDomains());
-				id = accountEntry.getAccountEntryId();
-				name = accountEntry.getName();
-				organizationIds = transformToArray(
-					_accountEntryOrganizationRelLocalService.
-						getAccountEntryOrganizationRels(
-							accountEntry.getAccountEntryId()),
-					AccountEntryOrganizationRel::getOrganizationId, Long.class);
-				parentAccountId = accountEntry.getParentAccountEntryId();
-				status = accountEntry.getStatus();
-			}
-		};
+		return _accountResourceDTOConverter.toDTO(
+			_getDTOConverterContext(
+				String.valueOf(accountEntry.getAccountEntryId())),
+			accountEntry);
 	}
 
 	@Reference
@@ -187,6 +200,9 @@ public class AccountResourceImpl
 	@Reference
 	private AccountEntryOrganizationRelLocalService
 		_accountEntryOrganizationRelLocalService;
+
+	@Reference
+	private AccountResourceDTOConverter _accountResourceDTOConverter;
 
 	private final EntityModel _entityModel = new AccountEntityModel();
 

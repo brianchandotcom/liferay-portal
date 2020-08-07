@@ -16,10 +16,11 @@ package com.liferay.account.rest.internal.resource.v1_0;
 
 import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.rest.dto.v1_0.AccountUser;
+import com.liferay.account.rest.internal.dto.v1_0.converter.AccountResourceDTOConverter;
+import com.liferay.account.rest.internal.dto.v1_0.converter.AccountUserResourceDTOConverter;
 import com.liferay.account.rest.internal.odata.entity.v1_0.AccountUserEntityModel;
 import com.liferay.account.rest.resource.v1_0.AccountUserResource;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
-import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.User;
@@ -33,12 +34,14 @@ import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Optional;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -59,9 +62,12 @@ public class AccountUserResourceImpl
 
 	@Override
 	public Page<AccountUser> getAccountUsersPage(
-			Long accountId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			String accountId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
+
+		long accountEntryId = _accountResourceDTOConverter.getAccountEntryId(
+			accountId);
 
 		return SearchUtil.search(
 			Collections.emptyMap(),
@@ -71,7 +77,7 @@ public class AccountUserResourceImpl
 
 				booleanFilter.add(
 					new TermFilter(
-						"accountEntryIds", String.valueOf(accountId)),
+						"accountEntryIds", String.valueOf(accountEntryId)),
 					BooleanClauseOccur.MUST);
 			},
 			filter, User.class, search, pagination,
@@ -93,20 +99,42 @@ public class AccountUserResourceImpl
 	}
 
 	@Override
-	public AccountUser postAccountUser(Long accountId, AccountUser accountUser)
+	public AccountUser postAccountUser(
+			String accountId, AccountUser accountUser)
 		throws Exception {
+
+		long accountEntryId = _accountResourceDTOConverter.getAccountEntryId(
+			accountId);
 
 		AccountEntryUserRel accountEntryUserRel =
 			_accountEntryUserRelLocalService.addAccountEntryUserRel(
-				accountId, contextUser.getUserId(), accountUser.getScreenName(),
-				accountUser.getEmailAddress(),
+				accountEntryId, contextUser.getUserId(),
+				accountUser.getScreenName(), accountUser.getEmailAddress(),
 				contextAcceptLanguage.getPreferredLocale(),
 				accountUser.getFirstName(), accountUser.getMiddleName(),
 				accountUser.getLastName(), _getPrefixId(accountUser),
 				_getSuffixId(accountUser));
 
-		return _toAccountUser(
-			_userLocalService.getUser(accountEntryUserRel.getAccountUserId()));
+		User user = _userLocalService.getUser(
+			accountEntryUserRel.getAccountUserId());
+
+		if (accountUser.getId() != null) {
+			user.setExternalReferenceCode(accountUser.getId());
+
+			user = _userLocalService.updateUser(user);
+		}
+
+		return _toAccountUser(user);
+	}
+
+	private DefaultDTOConverterContext _getDTOConverterContext(
+			String userAccountId)
+		throws Exception {
+
+		return new DefaultDTOConverterContext(
+			contextAcceptLanguage.isAcceptAllLanguages(), new HashMap<>(), null,
+			userAccountId, contextAcceptLanguage.getPreferredLocale(),
+			contextUriInfo, contextUser);
 	}
 
 	private long _getListTypeId(String value, String type) {
@@ -136,52 +164,21 @@ public class AccountUserResourceImpl
 	}
 
 	private AccountUser _toAccountUser(User user) throws Exception {
-		Contact contact = user.getContact();
-
-		return new AccountUser() {
-			{
-				emailAddress = user.getEmailAddress();
-				firstName = user.getFirstName();
-				id = user.getUserId();
-				lastName = user.getLastName();
-				middleName = user.getMiddleName();
-				screenName = user.getScreenName();
-
-				setPrefix(
-					() -> {
-						long prefixId = contact.getPrefixId();
-
-						if (prefixId <= 0) {
-							return null;
-						}
-
-						ListType prefixListType =
-							_listTypeLocalService.getListType(prefixId);
-
-						return prefixListType.getName();
-					});
-				setSuffix(
-					() -> {
-						long suffixId = contact.getSuffixId();
-
-						if (suffixId <= 0) {
-							return null;
-						}
-
-						ListType suffixListType =
-							_listTypeLocalService.getListType(suffixId);
-
-						return suffixListType.getName();
-					});
-			}
-		};
+		return _accountUserResourceDTOConverter.toDTO(
+			_getDTOConverterContext(String.valueOf(user.getUserId())), user);
 	}
 
 	@Reference
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
+	@Reference
+	private AccountResourceDTOConverter _accountResourceDTOConverter;
+
 	private final AccountUserEntityModel _accountUserEntityModel =
 		new AccountUserEntityModel();
+
+	@Reference
+	private AccountUserResourceDTOConverter _accountUserResourceDTOConverter;
 
 	@Reference
 	private ListTypeLocalService _listTypeLocalService;

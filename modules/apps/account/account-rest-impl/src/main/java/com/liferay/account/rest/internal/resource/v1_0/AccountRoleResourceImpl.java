@@ -15,6 +15,8 @@
 package com.liferay.account.rest.internal.resource.v1_0;
 
 import com.liferay.account.rest.dto.v1_0.AccountRole;
+import com.liferay.account.rest.internal.dto.v1_0.converter.AccountResourceDTOConverter;
+import com.liferay.account.rest.internal.dto.v1_0.converter.AccountUserResourceDTOConverter;
 import com.liferay.account.rest.resource.v1_0.AccountRoleResource;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.portal.kernel.model.Role;
@@ -49,22 +51,29 @@ public class AccountRoleResourceImpl
 
 	@Override
 	public void deleteAccountRoleUserAssociation(
-			Long accountId, Long accountRoleId, Long accountUserId)
+			String accountId, Long accountRoleId, String accountUserId)
 		throws Exception {
 
+		long accountEntryId = _accountResourceDTOConverter.getAccountEntryId(
+			accountId);
+
 		_accountRoleLocalService.unassociateUser(
-			accountId, accountRoleId, accountUserId);
+			accountEntryId, accountRoleId,
+			_accountUserResourceDTOConverter.getUserId(accountUserId));
 	}
 
 	@Override
 	public Page<AccountRole> getAccountRolesPage(
-			Long accountId, String keywords, Pagination pagination,
+			String accountId, String keywords, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {
 
+		long accountEntryId = _accountResourceDTOConverter.getAccountEntryId(
+			accountId);
+
 		BaseModelSearchResult<com.liferay.account.model.AccountRole>
 			baseModelSearchResult = _accountRoleLocalService.searchAccountRoles(
-				accountId, keywords, pagination.getStartPosition(),
+				accountEntryId, keywords, pagination.getStartPosition(),
 				pagination.getEndPosition(), _getOrderByComparator(sorts));
 
 		return Page.of(
@@ -81,12 +90,16 @@ public class AccountRoleResourceImpl
 	}
 
 	@Override
-	public AccountRole postAccountRole(Long accountId, AccountRole accountRole)
+	public AccountRole postAccountRole(
+			String accountId, AccountRole accountRole)
 		throws Exception {
+
+		long accountEntryId = _accountResourceDTOConverter.getAccountEntryId(
+			accountId);
 
 		return _toAccountRole(
 			_accountRoleLocalService.addAccountRole(
-				contextUser.getUserId(), accountId, accountRole.getName(),
+				contextUser.getUserId(), accountEntryId, accountRole.getName(),
 				Collections.singletonMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					accountRole.getDisplayName()),
@@ -97,11 +110,15 @@ public class AccountRoleResourceImpl
 
 	@Override
 	public void postAccountRoleUserAssociation(
-			Long accountId, Long accountRoleId, Long accountUserId)
+			String accountId, Long accountRoleId, String accountUserId)
 		throws Exception {
 
+		long accountEntryId = _accountResourceDTOConverter.getAccountEntryId(
+			accountId);
+
 		_accountRoleLocalService.associateUser(
-			accountId, accountRoleId, accountUserId);
+			accountEntryId, accountRoleId,
+			_accountUserResourceDTOConverter.getUserId(accountUserId));
 	}
 
 	private OrderByComparator<?> _getOrderByComparator(Sort[] sorts) {
@@ -129,7 +146,8 @@ public class AccountRoleResourceImpl
 
 		return new AccountRole() {
 			{
-				accountId = serviceBuilderAccountRole.getAccountEntryId();
+				accountId = String.valueOf(
+					serviceBuilderAccountRole.getAccountEntryId());
 				description = role.getDescription(
 					contextAcceptLanguage.getPreferredLocale());
 				displayName = role.getTitle(
@@ -145,7 +163,13 @@ public class AccountRoleResourceImpl
 		new RoleNameComparator();
 
 	@Reference
+	private AccountResourceDTOConverter _accountResourceDTOConverter;
+
+	@Reference
 	private AccountRoleLocalService _accountRoleLocalService;
+
+	@Reference
+	private AccountUserResourceDTOConverter _accountUserResourceDTOConverter;
 
 	private final EntityModel _entityModel = Collections::emptyMap;
 

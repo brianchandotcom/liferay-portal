@@ -52,15 +52,22 @@ export default {
 	/**
 	 * Get available collection mapping fields
 	 * @param {object} options
+	 * @param {string} options.fieldType Type of field to which we are mapping
 	 * @param {string} options.itemSubtype Collection itemSubtype
 	 * @param {string} options.itemType Collection itemType
 	 * @param {function} options.onNetworkStatus
 	 */
-	getCollectionMappingFields({itemSubtype, itemType, onNetworkStatus}) {
+	getCollectionMappingFields({
+		fieldType,
+		itemSubtype,
+		itemType,
+		onNetworkStatus,
+	}) {
 		return serviceFetch(
 			config.getCollectionMappingFieldsURL,
 			{
 				body: {
+					fieldType,
 					itemSubtype,
 					itemType,
 				},

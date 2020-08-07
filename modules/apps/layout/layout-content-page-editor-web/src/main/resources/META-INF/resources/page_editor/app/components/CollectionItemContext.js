@@ -23,7 +23,7 @@ const defaultFromControlsId = (itemId) => itemId;
 const defaultToControlsId = (controlId) => controlId;
 
 export const INITIAL_STATE = {
-	collectionFields: null,
+	collectionConfig: null,
 	collectionItem: null,
 	collectionItemIndex: null,
 	fromControlsId: defaultFromControlsId,
@@ -53,10 +53,10 @@ const useToControlsId = () => {
 	return context.toControlsId || defaultToControlsId;
 };
 
-const useCollectionFields = () => {
+const useCollectionConfig = () => {
 	const context = useContext(CollectionItemContext);
 
-	return context.collectionFields;
+	return context.collectionConfig;
 };
 
 const useGetContent = (fragmentEntryLink, segmentsExperienceId) => {
@@ -171,7 +171,7 @@ export {
 	CollectionItemContextProvider,
 	useRenderFragmentContent,
 	useGetContent,
-	useCollectionFields,
+	useCollectionConfig,
 	useCollectionItemIndex,
 	useFromControlsId,
 	useToControlsId,

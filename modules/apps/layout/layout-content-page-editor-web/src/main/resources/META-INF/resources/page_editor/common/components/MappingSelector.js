@@ -18,11 +18,12 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 import {addMappedInfoItem} from '../../app/actions/index';
-import {useCollectionFields} from '../../app/components/CollectionItemContext';
+import {useCollectionConfig} from '../../app/components/CollectionItemContext';
 import isMapped from '../../app/components/fragment-content/isMapped';
 import {EDITABLE_TYPES} from '../../app/config/constants/editableTypes';
 import {LAYOUT_TYPES} from '../../app/config/constants/layoutTypes';
 import {config} from '../../app/config/index';
+import CollectionService from '../../app/services/CollectionService';
 import InfoItemService from '../../app/services/InfoItemService';
 import {useDispatch, useSelector} from '../../app/store/index';
 import {useId} from '../../app/utils/useId';
@@ -82,9 +83,33 @@ function loadFields({
 }
 
 export default function ({fieldType, mappedItem, onMappingSelect}) {
-	const collectionFieldSets = useCollectionFields();
+	const collectionConfig = useCollectionConfig();
+	const [collectionFieldSets, setCollectionFieldSets] = useState([]);
 
-	return collectionFieldSets ? (
+	useEffect(() => {
+		if (!collectionConfig) {
+			setCollectionFieldSets([]);
+
+			return;
+		}
+
+		CollectionService.getCollectionMappingFields({
+			fieldType,
+			itemSubtype: collectionConfig.collection.itemSubtype || '',
+			itemType: collectionConfig.collection.itemType,
+			onNetworkStatus: () => {},
+		})
+			.then((response) => {
+				setCollectionFieldSets(response);
+			})
+			.catch((error) => {
+				if (process.env.NODE_ENV === 'development') {
+					console.error(error);
+				}
+			});
+	}, [collectionConfig, fieldType]);
+
+	return collectionConfig ? (
 		<MappingFieldSelect
 			fieldSets={collectionFieldSets}
 			fieldType={fieldType}

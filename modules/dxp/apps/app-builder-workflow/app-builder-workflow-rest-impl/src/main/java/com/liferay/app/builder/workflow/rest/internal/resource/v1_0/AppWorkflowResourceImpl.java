@@ -27,6 +27,7 @@ import com.liferay.app.builder.workflow.rest.internal.resource.v1_0.helper.AppWo
 import com.liferay.app.builder.workflow.rest.resource.v1_0.AppWorkflowResource;
 import com.liferay.app.builder.workflow.service.AppBuilderWorkflowTaskLinkLocalService;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
+import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
@@ -53,17 +54,23 @@ public class AppWorkflowResourceImpl extends BaseAppWorkflowResourceImpl {
 
 	@Override
 	public void deleteAppWorkflow(Long appId) throws Exception {
-		_appBuilderWorkflowTaskLinkLocalService.
-			deleteAppBuilderWorkflowTaskLinks(appId);
+		WorkflowDefinitionLink workflowDefinitionLink =
+			_workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(
+				contextCompany.getCompanyId(), 0,
+				ResourceActionsUtil.getCompositeModelName(
+					AppBuilderApp.class.getName(), DDLRecord.class.getName()),
+				appId, 0);
 
-		_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
-			contextCompany.getCompanyId(), 0,
-			ResourceActionsUtil.getCompositeModelName(
-				AppBuilderApp.class.getName(), DDLRecord.class.getName()),
-			appId, 0);
+		if (workflowDefinitionLink != null) {
+			_appBuilderWorkflowTaskLinkLocalService.
+				deleteAppBuilderWorkflowTaskLinks(appId);
 
-		_appWorkflowResourceHelper.undeployWorkflowDefinition(
-			appId, contextCompany.getCompanyId(), contextUser.getUserId());
+			_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
+				workflowDefinitionLink);
+
+			_appWorkflowResourceHelper.undeployWorkflowDefinition(
+				appId, contextCompany.getCompanyId(), contextUser.getUserId());
+		}
 	}
 
 	@Override

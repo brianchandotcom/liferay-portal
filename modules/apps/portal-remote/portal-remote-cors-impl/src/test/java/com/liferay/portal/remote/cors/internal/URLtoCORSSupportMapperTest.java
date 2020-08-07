@@ -52,13 +52,13 @@ public class URLtoCORSSupportMapperTest {
 				continue;
 			}
 
-			Map<String, String> headersMap = new HashMap<>();
+			Map<String, String> headers = new HashMap<>();
 
-			corsSupport.writeResponseHeaders(__ -> "origin", headersMap::put);
+			corsSupport.writeResponseHeaders(__ -> "origin", headers::put);
 
 			try {
 				Assert.assertEquals(
-					PATTERNS[MATCHED_PATTERNS[i]], headersMap.get("pattern"));
+					PATTERNS[MATCHED_PATTERNS[i]], headers.get("pattern"));
 			}
 			catch (ComparisonFailure comparisonFailure) {
 				throw new ComparisonFailure(

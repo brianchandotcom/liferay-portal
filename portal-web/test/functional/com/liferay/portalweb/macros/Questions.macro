@@ -258,7 +258,8 @@ definition {
 				value1 = "${searchKey}");
 
 			AssertTextEquals(
-				locator1 = "Search#SEARCH_INFO",
+				key_resultsInfo = '''${resultsInfo}''',
+				locator1 = "Questions#SEARCH_INFO",
 				value1 = "${resultsInfo}");
 
 			AssertVisible(locator1 = "Questions#SEARCH_RESULTS_CLEAR_BUTTON");

@@ -12,6 +12,8 @@
  * details.
  */
 
+import {getLocalizedValue} from './lang.es';
+
 export const containsFieldSet = (dataDefinition, dataDefinitionId) => {
 	let hasFieldSet = false;
 
@@ -89,10 +91,7 @@ export const getFieldLabel = (dataDefinition, fieldName) => {
 	const field = getDataDefinitionField(dataDefinition, fieldName);
 
 	if (field) {
-		return (
-			field.label[Liferay.ThemeDisplay.getLanguageId()] ||
-			field.label[dataDefinition.defaultLanguageId]
-		);
+		return getLocalizedValue(dataDefinition.defaultLanguageId, field.label);
 	}
 
 	return fieldName;

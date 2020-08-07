@@ -54,7 +54,7 @@ public interface StringQuery extends Query {
 
 	public Boolean getEscape();
 
-	public Map<String, Float> getFields();
+	public Map<String, Float> getFieldsBoosts();
 
 	public Float getFuzziness();
 

@@ -16,10 +16,14 @@ package com.liferay.translation.service.internal.instance.lifecycle;
 
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
+
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -33,7 +37,25 @@ public class TranslationLanguagePortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
+		for (Locale availableLocale : _language.getAvailableLocales()) {
+			String xml = StringUtil.read(
+				TranslationLanguagePortalInstanceLifecycleListener.class.
+					getClassLoader(),
+				"/resource-actions/languages.xml");
 
+			xml = StringUtil.replace(
+				xml, "[$LANGUAGE$]", availableLocale.toString());
+
+			Document document = SAXReaderUtil.read(xml);
+
+			_resourceActions.read(null, document, null);
+		}
 	}
+
+	@Reference
+	private Language _language;
+
+	@Reference
+	private ResourceActions _resourceActions;
 
 }

@@ -194,10 +194,7 @@ function TableHeadRow({
 	updateSorting,
 	visibleFields,
 }) {
-	const expandableColumns = visibleFields.reduce(
-		(expandable, field) => expandable || Boolean(field.expand),
-		false
-	);
+	const expandableColumns = visibleFields.some((field) => field.expand);
 
 	function handleCheckboxClick() {
 		if (selectedItemsValue.length === items.length) {

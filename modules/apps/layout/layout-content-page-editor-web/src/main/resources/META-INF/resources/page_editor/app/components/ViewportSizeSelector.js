@@ -15,7 +15,6 @@
 import {ClayButtonWithIcon, default as ClayButton} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -26,43 +25,29 @@ const SelectorButtonList = ({
 	dropdown,
 	onSelect,
 	selectedSize,
-	setActive,
-}) => {
-	const handleClick = (sizeId) => {
-		onSelect(sizeId);
-		setActive(false);
-	};
-
-	return Object.values(availableViewportSizes).map((viewportSize) => {
-		const {icon, label, sizeId} = viewportSize;
-		const active = selectedSize === sizeId;
-
-		return dropdown ? (
+}) =>
+	Object.values(availableViewportSizes).map(({icon, label, sizeId}) =>
+		dropdown ? (
 			<ClayDropDown.Item
 				key={label}
-				onClick={() => handleClick(sizeId)}
+				onClick={() => onSelect(sizeId)}
 				symbolLeft={icon}
 			>
-				{viewportSize.label}
+				{label}
 			</ClayDropDown.Item>
 		) : (
 			<ClayButtonWithIcon
 				aria-label={label}
-				aria-pressed={active}
-				className={classNames({
-					active,
-					'btn-monospaced': true,
-				})}
+				aria-pressed={selectedSize === sizeId}
 				displayType="secondary"
 				key={sizeId}
-				onClick={() => handleClick(sizeId)}
+				onClick={() => onSelect(sizeId)}
 				small
 				symbol={icon}
 				title={label}
 			/>
-		);
-	});
-};
+		)
+	);
 
 export default function ViewportSizeSelector({onSizeSelected, selectedSize}) {
 	const {availableViewportSizes} = config;
@@ -78,6 +63,7 @@ export default function ViewportSizeSelector({onSizeSelected, selectedSize}) {
 					setActive={setActive}
 				/>
 			</ClayButton.Group>
+
 			<ClayDropDown
 				active={active}
 				className="d-lg-none"
@@ -105,7 +91,6 @@ export default function ViewportSizeSelector({onSizeSelected, selectedSize}) {
 						dropdown
 						onSelect={onSizeSelected}
 						selectedSize={selectedSize}
-						setActive={setActive}
 					/>
 				</ClayDropDown.ItemList>
 			</ClayDropDown>

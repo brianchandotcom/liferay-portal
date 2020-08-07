@@ -728,6 +728,10 @@ definition {
 
 		Questions.configureFilter(filterBy = "Voted in the Last Week");
 
+		AssertElementPresent(
+			key_emptyInfo = "There are no results.",
+			locator1 = "Questions#EMPTY_STATE_MESSAGE");
+
 		for (var num : list "1 Edit,2") {
 			AssertElementNotPresent(
 				key_questionTitle = "Question ${num}",
@@ -735,6 +739,10 @@ definition {
 		}
 
 		Questions.configureFilter(filterBy = "Voted in the Last Month");
+
+		AssertElementPresent(
+			key_emptyInfo = "There are no results.",
+			locator1 = "Questions#EMPTY_STATE_MESSAGE");
 
 		for (var num : list "1 Edit,2") {
 			AssertElementNotPresent(

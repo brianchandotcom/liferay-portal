@@ -27,6 +27,18 @@ import {
 } from 'dynamic-data-mapping-form-renderer';
 import React, {useMemo} from 'react';
 
+const convertValueToString = (value) => {
+	if (value && typeof value === 'object') {
+		if (Object.keys(value).length === 0) {
+			return '';
+		}
+
+		return JSON.stringify(value);
+	}
+
+	return value;
+};
+
 const getDefaultRows = (nestedFields) => {
 	return nestedFields.map((nestedField) => {
 		return {
@@ -163,7 +175,7 @@ function FieldBase({
 							key={language.name}
 							name={language.name}
 							type="hidden"
-							value={language.value}
+							value={convertValueToString(language.value)}
 						/>
 					))}
 

@@ -319,9 +319,7 @@ public class JournalArticleInfoDisplayContributor
 		infoDisplayFields.addAll(
 			stream.map(
 				ddmTemplate -> new InfoDisplayField(
-					_getTemplateKey(ddmTemplate),
-					ddmTemplate.getName(locale) + StringPool.SPACE +
-						StringPool.STAR,
+					_getTemplateKey(ddmTemplate), ddmTemplate.getName(locale),
 					"text")
 			).collect(
 				Collectors.toList()

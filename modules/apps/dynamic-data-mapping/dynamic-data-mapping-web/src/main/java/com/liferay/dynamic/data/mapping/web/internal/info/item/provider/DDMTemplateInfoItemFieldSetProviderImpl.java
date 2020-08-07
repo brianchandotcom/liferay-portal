@@ -23,7 +23,6 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
@@ -69,9 +68,7 @@ public class DDMTemplateInfoItemFieldSetProviderImpl
 							_getTemplateFieldName(ddmTemplate)
 						).labelInfoLocalizedValue(
 							InfoLocalizedValue.localize(
-								getClass(),
-								ddmTemplate.getName(locale) + StringPool.SPACE +
-									StringPool.STAR)
+								getClass(), ddmTemplate.getName(locale))
 						).build()
 					).forEach(
 						consumer::accept

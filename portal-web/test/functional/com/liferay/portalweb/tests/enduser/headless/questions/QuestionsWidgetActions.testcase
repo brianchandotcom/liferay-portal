@@ -169,6 +169,14 @@ definition {
 
 		Questions.gotoCategory(categoryName = "Question AddQuestionWithTheMaximumTags");
 
+		AssertElementNotPresent(locator1 = "Questions#SEARCH_QUESTION_FIELD");
+
+		AssertElementNotPresent(locator1 = "Questions#QUESTIONS_SELECT_FILTER");
+
+		AssertElementPresent(
+			key_emptyInfo = "This topic is empty.",
+			locator1 = "Questions#EMPTY_STATE_MESSAGE");
+
 		Questions.askQuestionFillingTheMandatoryFields(
 			contentField = "Body AddQuestionWithTheMaximumTags",
 			titleField = "Title AddQuestionWithTheMaximumTags");
@@ -180,6 +188,10 @@ definition {
 		Questions.addTags(tagLocator = "Tag5");
 
 		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
+
+		AssertElementPresent(locator1 = "Questions#SEARCH_QUESTION_FIELD");
+
+		AssertElementPresent(locator1 = "Questions#QUESTIONS_SELECT_FILTER");
 
 		AssertElementPresent(
 			key_titleField = "Title AddQuestionWithTheMaximumTags",

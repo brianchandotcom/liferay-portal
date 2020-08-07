@@ -356,13 +356,13 @@ definition {
 		Pause(locator = "3000");
 
 		Questions.search(
-			resultsInfo = "4 Results for test",
+			resultsInfo = '''4 Results for "test"''',
 			searchKey = "Test");
 
 		Questions.viewSearchResults(questionsList = "Question1,Question2,Question3,Question4");
 
 		Questions.search(
-			resultsInfo = "1 Results for question4",
+			resultsInfo = '''1 Results for "question4"''',
 			searchKey = "Question4");
 
 		Questions.viewSearchResults(questionsList = "Question4");
@@ -370,7 +370,7 @@ definition {
 		Questions.viewNoSearchResults(questionsList = "Question1,Question2,Question3");
 
 		Questions.search(
-			resultsInfo = "1 Results for content2",
+			resultsInfo = '''1 Results for "content2"''',
 			searchKey = "Content2");
 
 		Questions.viewSearchResults(questionsList = "Question2");
@@ -378,7 +378,7 @@ definition {
 		Questions.viewNoSearchResults(questionsList = "Question1,Question3,Question4");
 
 		Questions.search(
-			resultsInfo = "1 Results for new",
+			resultsInfo = '''1 Results for "new"''',
 			searchKey = "New");
 
 		Questions.viewSearchResults(questionsList = "Question1");

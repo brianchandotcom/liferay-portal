@@ -377,13 +377,23 @@ export default withRouter(
 												/>
 											</button>
 										)}
-										{!loading && (
-											<ClayButtonWithIcon
-												displayType="unstyled"
-												symbol="search"
-												type="submit"
-											/>
-										)}
+										{!loading &&
+											((!!search && (
+												<ClayButtonWithIcon
+													displayType="unstyled"
+													onClick={() => {
+														debounceCallback('')
+													}}
+													symbol="times-circle"
+													type="submit"
+												/>
+											)) || (
+												<ClayButtonWithIcon
+													displayType="unstyled"
+													symbol="search"
+													type="search"
+												/>
+											))}
 									</ClayInput.GroupInsetItem>
 								</ClayInput.GroupItem>
 

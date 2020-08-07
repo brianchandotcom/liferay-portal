@@ -79,23 +79,6 @@ describe('undoReducer', () => {
 		expect(undoAction.itemId).toBe(ITEM_ID);
 	});
 
-	it('saves needed state for undo when dispatching ADD_FRAGMENT_ENTRY_LINKS action', () => {
-		const ITEM_ID = 'itemId';
-		const initialState = {...STATE};
-
-		const action = addFragmentEntryLinks({addedItemId: ITEM_ID});
-
-		const {undoHistory} = undoReducer(initialState, {
-			...action,
-			actionType: ADD_FRAGMENT_ENTRY_LINKS,
-			type: ADD_UNDO_ACTION,
-		});
-
-		const undoAction = undoHistory[0];
-
-		expect(undoAction.itemId).toBe(ITEM_ID);
-	});
-
 	it('saves needed state for undo when dispatching DUPLICATE_ITEM action', () => {
 		const ITEM_ID = 'itemId';
 		const initialState = {...STATE};
@@ -260,7 +243,7 @@ describe('undoReducer', () => {
 		expect(undoAction.itemId).toBe(ITEM_ID);
 	});
 
-	it('saves needed state for undo when dispatching MOVE_ITEN action', () => {
+	it('saves needed state for undo when dispatching MOVE_ITEM action', () => {
 		const ITEM_ID = 'itemId';
 
 		const LAYOUT_DATA = {

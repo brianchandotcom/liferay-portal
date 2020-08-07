@@ -306,9 +306,9 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 		User user = _userLocalService.addUser(
 			_defaultUserId, _companyId, false, csvRecord.get("password"),
 			csvRecord.get("password"), false, csvRecord.get("screenName"),
-			csvRecord.get("emailAddress"), 0, StringPool.BLANK,
-			LocaleUtil.getDefault(), csvRecord.get("firstName"),
-			csvRecord.get("middleName"), csvRecord.get("lastName"), 0, 0, male,
+			csvRecord.get("emailAddress"), LocaleUtil.getDefault(),
+			csvRecord.get("firstName"), csvRecord.get("middleName"),
+			csvRecord.get("lastName"), 0, 0, male,
 			GetterUtil.getInteger(csvRecord.get("birthdayMonth")) - 1,
 			GetterUtil.getInteger(csvRecord.get("birthdayDay")),
 			GetterUtil.getInteger(csvRecord.get("birthdayYear")),

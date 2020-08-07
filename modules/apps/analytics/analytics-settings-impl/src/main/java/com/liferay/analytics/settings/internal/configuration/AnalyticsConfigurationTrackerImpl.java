@@ -257,7 +257,7 @@ public class AnalyticsConfigurationTrackerImpl
 		user = _userLocalService.addUser(
 			0, companyId, true, null, null, false,
 			AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN,
-			"analytics.administrator@" + company.getMx(), 0, "",
+			"analytics.administrator@" + company.getMx(),
 			LocaleUtil.getDefault(), "Analytics", "", "Administrator", 0, 0,
 			true, 0, 1, 1970, "", null, null, new long[] {role.getRoleId()},
 			null, false, new ServiceContext());

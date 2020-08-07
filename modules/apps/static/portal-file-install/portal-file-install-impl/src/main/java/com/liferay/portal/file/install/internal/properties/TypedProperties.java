@@ -27,7 +27,6 @@ import java.io.Writer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,24 +57,6 @@ public class TypedProperties {
 		return value;
 	}
 
-	public List<String> getComments(String key) {
-		Layout layout = _layoutMap.get(key);
-
-		if (layout != null) {
-			List<String> comments = layout.getComments();
-
-			if (comments != null) {
-				return new ArrayList<>(comments);
-			}
-		}
-
-		return new ArrayList<>();
-	}
-
-	public boolean isTyped() {
-		return _typed;
-	}
-
 	public Set<String> keySet() {
 		return _storage.keySet();
 	}
@@ -99,7 +80,7 @@ public class TypedProperties {
 			int size = comments.size();
 
 			if (index < comments.size()) {
-				comments = comments.subList(index, size);
+				comments = new ArrayList<>(comments.subList(index, size));
 			}
 			else {
 				comments = null;
@@ -132,69 +113,6 @@ public class TypedProperties {
 		}
 	}
 
-	public String put(String key, List<String> comments, List<String> values) {
-		comments = new ArrayList<>(comments);
-
-		values = new ArrayList<>(values);
-
-		StringBundler sb = new StringBundler();
-
-		if (values.isEmpty()) {
-			values.add(key + StringPool.EQUAL);
-
-			sb.append(key);
-			sb.append(StringPool.EQUAL);
-		}
-		else {
-			String value = values.get(0);
-
-			String realValue = value;
-
-			if (!_typed) {
-				realValue = _escapeJava(value);
-			}
-
-			value = value.trim();
-
-			if (!value.startsWith(key)) {
-				values.set(0, key + " = " + realValue);
-
-				sb.append(key);
-				sb.append(" = ");
-				sb.append(realValue);
-			}
-			else {
-				values.set(0, realValue);
-				sb.append(realValue);
-			}
-		}
-
-		for (int i = 1; i < values.size(); i++) {
-			String value = values.get(i);
-
-			if (_typed) {
-				values.set(i, value);
-			}
-			else {
-				values.set(i, _escapeJava(value));
-			}
-
-			while ((value.length() > 0) &&
-				   Character.isWhitespace(value.charAt(0))) {
-
-				value = value.substring(1);
-			}
-
-			sb.append(value);
-		}
-
-		String[] property = PropertiesReader._parseProperty(sb.toString());
-
-		_layoutMap.put(key, new Layout(comments, values));
-
-		return _storage.put(key, property[1]);
-	}
-
 	public Object put(String key, Object value) {
 		if ((value instanceof String) && !_typed) {
 			return _put(key, (String)value);
@@ -222,19 +140,7 @@ public class TypedProperties {
 	}
 
 	public void save(Writer writer) throws IOException {
-		saveLayout(writer, _typed);
-	}
-
-	public void setHeader(List<String> headers) {
-		_headers = headers;
-	}
-
-	public void setTyped(boolean typed) {
-		_typed = typed;
-	}
-
-	public int size() {
-		return _storage.size();
+		_saveLayout(writer, _typed);
 	}
 
 	public static class PropertiesReader extends BufferedReader {
@@ -264,7 +170,7 @@ public class TypedProperties {
 		}
 
 		public boolean nextProperty() throws IOException {
-			String line = readProperty();
+			String line = _readProperty();
 
 			if (line == null) {
 				return false; // EOF
@@ -294,52 +200,6 @@ public class TypedProperties {
 			_propertyValue = InterpolationUtil.substVars(property[1]);
 
 			return true;
-		}
-
-		public String readProperty() throws IOException {
-			_comments.clear();
-			_values.clear();
-
-			StringBundler sb = new StringBundler();
-
-			while (true) {
-				String line = readLine();
-
-				if (line == null) {
-
-					// EOF
-
-					return null;
-				}
-
-				if (_isCommentLine(line)) {
-					_comments.add(line);
-
-					continue;
-				}
-
-				boolean combine = _checkCombineLines(line);
-
-				if (combine) {
-					line = line.substring(0, line.length() - 1);
-				}
-
-				_values.add(line);
-
-				while ((line.length() > 0) &&
-					   _contains(_WHITE_SPACE, line.charAt(0))) {
-
-					line = line.substring(1);
-				}
-
-				sb.append(line);
-
-				if (!combine) {
-					break;
-				}
-			}
-
-			return sb.toString();
 		}
 
 		private static boolean _checkCombineLines(String line) {
@@ -475,8 +335,54 @@ public class TypedProperties {
 			return result;
 		}
 
+		private String _readProperty() throws IOException {
+			_comments.clear();
+			_values.clear();
+
+			StringBundler sb = new StringBundler();
+
+			while (true) {
+				String line = readLine();
+
+				if (line == null) {
+
+					// EOF
+
+					return null;
+				}
+
+				if (_isCommentLine(line)) {
+					_comments.add(line);
+
+					continue;
+				}
+
+				boolean combine = _checkCombineLines(line);
+
+				if (combine) {
+					line = line.substring(0, line.length() - 1);
+				}
+
+				_values.add(line);
+
+				while ((line.length() > 0) &&
+					   _contains(_WHITE_SPACE, line.charAt(0))) {
+
+					line = line.substring(1);
+				}
+
+				sb.append(line);
+
+				if (!combine) {
+					break;
+				}
+			}
+
+			return sb.toString();
+		}
+
 		private final List<String> _comments = new ArrayList<>();
-		private Pattern _pattern = Pattern.compile(
+		private final Pattern _pattern = Pattern.compile(
 			"\\s*[TILFDXSCBilfdxscb]?(\\[[\\S\\s]*\\]|\\{[\\S\\s]*\\}|" +
 				"\"[\\S\\s]*\")\\s*");
 		private String _propertyName;
@@ -518,67 +424,6 @@ public class TypedProperties {
 
 		private boolean _typed;
 
-	}
-
-	protected void saveLayout(Writer writer, boolean typed) throws IOException {
-		try (PropertiesWriter propertiesWriter = new PropertiesWriter(
-				writer, typed)) {
-
-			if (_headers != null) {
-				for (String s : _headers) {
-					propertiesWriter.writeln(s);
-				}
-			}
-
-			for (Map.Entry<String, String> entry : _storage.entrySet()) {
-				String key = entry.getKey();
-
-				String value = entry.getValue();
-
-				Layout layout = _layoutMap.get(key);
-
-				if (layout == null) {
-					propertiesWriter.writeProperty(key, value);
-
-					continue;
-				}
-
-				List<String> comments = layout.getComments();
-
-				if (comments != null) {
-					for (String string : comments) {
-						propertiesWriter.writeln(string);
-					}
-				}
-
-				List<String> values = layout.getValues();
-
-				if (values == null) {
-					propertiesWriter.writeProperty(key, value);
-
-					continue;
-				}
-
-				int size = values.size();
-
-				for (int i = 0; i < size; i++) {
-					String string = values.get(i);
-
-					if (i < (size - 1)) {
-						propertiesWriter.writeln(string + "\\");
-					}
-					else {
-						propertiesWriter.writeln(string);
-					}
-				}
-			}
-
-			if (_footers != null) {
-				for (String string : _footers) {
-					propertiesWriter.writeln(string);
-				}
-			}
-		}
 	}
 
 	private static boolean _contains(char[] array, char valueToFind) {
@@ -837,7 +682,7 @@ public class TypedProperties {
 				index--;
 			}
 
-			setHeader(new ArrayList<>(comments.subList(0, index + 1)));
+			_setHeader(new ArrayList<>(comments.subList(0, index + 1)));
 
 			return index + 1;
 		}
@@ -852,9 +697,88 @@ public class TypedProperties {
 			for (String key : keySet()) {
 				String string = _convertToString(get(key));
 
-				put(key, getComments(key), Arrays.asList(string.split("\n")));
+				_put(key, _getComments(key), Arrays.asList(string.split("\n")));
 			}
 		}
+	}
+
+	private List<String> _getComments(String key) {
+		Layout layout = _layoutMap.get(key);
+
+		if (layout != null) {
+			List<String> comments = layout.getComments();
+
+			if (comments != null) {
+				return new ArrayList<>(comments);
+			}
+		}
+
+		return new ArrayList<>();
+	}
+
+	private String _put(
+		String key, List<String> comments, List<String> values) {
+
+		comments = new ArrayList<>(comments);
+
+		values = new ArrayList<>(values);
+
+		StringBundler sb = new StringBundler();
+
+		if (values.isEmpty()) {
+			values.add(key + StringPool.EQUAL);
+
+			sb.append(key);
+			sb.append(StringPool.EQUAL);
+		}
+		else {
+			String value = values.get(0);
+
+			String realValue = value;
+
+			if (!_typed) {
+				realValue = _escapeJava(value);
+			}
+
+			value = value.trim();
+
+			if (!value.startsWith(key)) {
+				values.set(0, key + " = " + realValue);
+
+				sb.append(key);
+				sb.append(" = ");
+				sb.append(realValue);
+			}
+			else {
+				values.set(0, realValue);
+				sb.append(realValue);
+			}
+		}
+
+		for (int i = 1; i < values.size(); i++) {
+			String value = values.get(i);
+
+			if (_typed) {
+				values.set(i, value);
+			}
+			else {
+				values.set(i, _escapeJava(value));
+			}
+
+			while ((value.length() > 0) &&
+				   Character.isWhitespace(value.charAt(0))) {
+
+				value = value.substring(1);
+			}
+
+			sb.append(value);
+		}
+
+		String[] property = PropertiesReader._parseProperty(sb.toString());
+
+		_layoutMap.put(key, new Layout(comments, values));
+
+		return _storage.put(key, property[1]);
 	}
 
 	private String _put(String key, String value) {
@@ -869,6 +793,71 @@ public class TypedProperties {
 		}
 
 		return old;
+	}
+
+	private void _saveLayout(Writer writer, boolean typed) throws IOException {
+		try (PropertiesWriter propertiesWriter = new PropertiesWriter(
+				writer, typed)) {
+
+			if (_headers != null) {
+				for (String s : _headers) {
+					propertiesWriter.writeln(s);
+				}
+			}
+
+			for (Map.Entry<String, String> entry : _storage.entrySet()) {
+				String key = entry.getKey();
+
+				String value = entry.getValue();
+
+				Layout layout = _layoutMap.get(key);
+
+				if (layout == null) {
+					propertiesWriter.writeProperty(key, value);
+
+					continue;
+				}
+
+				List<String> comments = layout.getComments();
+
+				if (comments != null) {
+					for (String string : comments) {
+						propertiesWriter.writeln(string);
+					}
+				}
+
+				List<String> values = layout.getValues();
+
+				if (values == null) {
+					propertiesWriter.writeProperty(key, value);
+
+					continue;
+				}
+
+				int size = values.size();
+
+				for (int i = 0; i < size; i++) {
+					String string = values.get(i);
+
+					if (i < (size - 1)) {
+						propertiesWriter.writeln(string + "\\");
+					}
+					else {
+						propertiesWriter.writeln(string);
+					}
+				}
+			}
+
+			if (_footers != null) {
+				for (String string : _footers) {
+					propertiesWriter.writeln(string);
+				}
+			}
+		}
+	}
+
+	private void _setHeader(List<String> headers) {
+		_headers = headers;
 	}
 
 	private static final String _COMMENT_CHARS = "#!";
@@ -911,62 +900,6 @@ public class TypedProperties {
 
 		private final List<String> _comments;
 		private List<String> _values;
-
-	}
-
-	private class KeyIterator implements Iterator<Map.Entry<String, String>> {
-
-		public KeyIterator() {
-			Set<Map.Entry<String, String>> entries = _storage.entrySet();
-
-			_iterator = entries.iterator();
-		}
-
-		@Override
-		public boolean hasNext() {
-			return _iterator.hasNext();
-		}
-
-		@Override
-		public Map.Entry<String, String> next() {
-			final Map.Entry<String, String> entry = _iterator.next();
-
-			return new Map.Entry<String, String>() {
-
-				@Override
-				public String getKey() {
-					return entry.getKey();
-				}
-
-				@Override
-				public String getValue() {
-					return entry.getValue();
-				}
-
-				@Override
-				public String setValue(String value) {
-					String old = entry.setValue(value);
-
-					if ((old == null) || !old.equals(value)) {
-						Layout layout = _layoutMap.get(entry.getKey());
-
-						if (layout != null) {
-							layout.clearValue();
-						}
-					}
-
-					return old;
-				}
-
-			};
-		}
-
-		@Override
-		public void remove() {
-			_iterator.remove();
-		}
-
-		private final Iterator<Map.Entry<String, String>> _iterator;
 
 	}
 

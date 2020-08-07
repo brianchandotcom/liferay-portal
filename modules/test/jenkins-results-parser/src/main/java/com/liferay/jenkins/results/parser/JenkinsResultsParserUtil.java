@@ -495,7 +495,7 @@ public class JenkinsResultsParserUtil {
 
 	public static void executeBashService(
 		final String command, final File baseDir,
-		final Map<String, String> environments, final int maxLogSize) {
+		final Map<String, String> environments, final long maxLogSize) {
 
 		Runnable runnable = new Runnable() {
 

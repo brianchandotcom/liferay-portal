@@ -20,6 +20,16 @@
 	<td>//button[contains(@class,'form-control-select')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>STYLE_BOOK_EDITOR_SIDEBAR_COLLAPSED</td>
+	<td>//*[contains(@class,'collapse-icon')][@aria-expanded='false'][normalize-space()='${key_sectionName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STYLE_BOOK_EDITOR_SIDEBAR_EXPANDED</td>
+	<td>//*[contains(@class,'collapse-icon')][@aria-expanded='true'][normalize-space()='${key_sectionName}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

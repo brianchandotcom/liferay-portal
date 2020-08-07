@@ -631,8 +631,16 @@ public class DataDefinitionResourceImpl
 
 				customProperties.put("rows", jsonArray.toString());
 
-				dataDefinitionField.setNestedDataDefinitionFields(
+				DataDefinitionField[] dataDefinitionFields = ArrayUtil.clone(
 					dataDefinition.getDataDefinitionFields());
+
+				_normalizeFields(
+					existingDataDefinition.getAvailableLanguageIds(),
+					dataDefinition.getDefaultLanguageId(),
+					dataDefinitionFields);
+
+				dataDefinitionField.setNestedDataDefinitionFields(
+					dataDefinitionFields);
 			}
 
 			putDataDefinition(
@@ -1074,6 +1082,65 @@ public class DataDefinitionResourceImpl
 			ResourceBundleUtil.getBundle(
 				"content.Language", locale, ddmFormFieldType.getClass()),
 			_portal.getResourceBundle(locale));
+	}
+
+	private void _normalizeFields(
+		String[] availableLanguageIds, String defaultLanguageId,
+		DataDefinitionField[] dataDefinitionFields) {
+
+		for (DataDefinitionField dataDefinitionField : dataDefinitionFields) {
+			Map<String, Object> customProperties =
+				dataDefinitionField.getCustomProperties();
+
+			if (MapUtil.isNotEmpty(customProperties)) {
+				_normalizeProperty(
+					availableLanguageIds, defaultLanguageId,
+					(Map)customProperties.get("options"));
+				_normalizeProperty(
+					availableLanguageIds, defaultLanguageId,
+					(Map)customProperties.get("placeholder"));
+				_normalizeProperty(
+					availableLanguageIds, defaultLanguageId,
+					(Map)customProperties.get("tooltip"));
+			}
+
+			_normalizeProperty(
+				availableLanguageIds, defaultLanguageId,
+				dataDefinitionField.getDefaultValue());
+			_normalizeProperty(
+				availableLanguageIds, defaultLanguageId,
+				dataDefinitionField.getLabel());
+
+			if (ArrayUtil.isNotEmpty(
+					dataDefinitionField.getNestedDataDefinitionFields())) {
+
+				_normalizeFields(
+					availableLanguageIds, defaultLanguageId,
+					dataDefinitionField.getNestedDataDefinitionFields());
+			}
+
+			_normalizeProperty(
+				availableLanguageIds, defaultLanguageId,
+				dataDefinitionField.getTip());
+		}
+	}
+
+	private void _normalizeProperty(
+		String[] availableLanguageIds, String defaultLanguageId,
+		Map<String, Object> property) {
+
+		if (MapUtil.isEmpty(property)) {
+			return;
+		}
+
+		for (String languageId : availableLanguageIds) {
+			property.putIfAbsent(languageId, property.get(defaultLanguageId));
+		}
+
+		Set<Map.Entry<String, Object>> entries = property.entrySet();
+
+		entries.removeIf(
+			entry -> !ArrayUtil.contains(availableLanguageIds, entry.getKey()));
 	}
 
 	private void _removeFieldsFromDataLayout(

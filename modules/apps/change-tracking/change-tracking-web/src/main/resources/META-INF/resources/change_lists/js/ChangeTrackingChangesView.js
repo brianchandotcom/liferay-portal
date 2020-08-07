@@ -654,6 +654,7 @@ class ChangeTrackingChangesView extends React.Component {
 		return (
 			<ClayManagementToolbar.Item expand>
 				<ClayDropDownWithItems
+					alignmentPosition={Align.BottomLeft}
 					items={items}
 					spritemap={this.spritemap}
 					trigger={

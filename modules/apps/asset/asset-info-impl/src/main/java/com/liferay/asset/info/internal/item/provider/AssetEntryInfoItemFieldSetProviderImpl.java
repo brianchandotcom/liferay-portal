@@ -224,6 +224,8 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 
 		return InfoFieldSet.builder(
 		).infoFieldSetEntry(
+			_categoriesInfoField
+		).infoFieldSetEntry(
 			consumer -> assetVocabularies.forEach(
 				assetVocabulary -> consumer.accept(
 					InfoField.builder(
@@ -237,8 +239,6 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 							assetVocabulary.getTitleMap()
 						).build()
 					).build()))
-		).infoFieldSetEntry(
-			_categoriesInfoField
 		).infoFieldSetEntry(
 			_tagsInfoField
 		).infoFieldSetEntry(

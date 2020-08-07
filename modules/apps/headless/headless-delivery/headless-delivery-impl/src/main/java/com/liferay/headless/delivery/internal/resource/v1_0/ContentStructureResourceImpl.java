@@ -101,11 +101,9 @@ public class ContentStructureResourceImpl
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
-	private ContentStructure _toContentStructure(DDMStructure ddmStructure)
-		throws Exception {
-
+	private ContentStructure _toContentStructure(DDMStructure ddmStructure) {
 		return ContentStructureUtil.toContentStructure(
-			contextAcceptLanguage.isAcceptAllLanguages(),
+			contextAcceptLanguage.isAcceptAllLanguages(), groupLocalService,
 			contextAcceptLanguage.getPreferredLocale(), _portal,
 			_userLocalService, ddmStructure);
 	}

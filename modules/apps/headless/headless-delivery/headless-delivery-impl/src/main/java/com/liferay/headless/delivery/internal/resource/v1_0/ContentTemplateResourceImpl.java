@@ -76,8 +76,8 @@ public class ContentTemplateResourceImpl
 			contentTemplateId);
 
 		return ContentTemplateUtil.toContentTemplate(
-			ddmTemplate, _getDtoConverterContext(ddmTemplate), _portal,
-			_userLocalService);
+			ddmTemplate, _getDtoConverterContext(ddmTemplate),
+			groupLocalService, _portal, _userLocalService);
 	}
 
 	@Override
@@ -119,8 +119,8 @@ public class ContentTemplateResourceImpl
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)));
 
 				return ContentTemplateUtil.toContentTemplate(
-					ddmTemplate, _getDtoConverterContext(ddmTemplate), _portal,
-					_userLocalService);
+					ddmTemplate, _getDtoConverterContext(ddmTemplate),
+					groupLocalService, _portal, _userLocalService);
 			});
 	}
 

@@ -1035,6 +1035,7 @@ definition {
 	@description = "This is a use case for LPS-54392 and LPS-88014."
 	@priority = "3"
 	test ExportImportSiteWithReferencedWebContent {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ExportImport#ExportImportSiteWithReferencedWebContent";
 
 		JSONGroup.addGroup(groupName = "Site Name A");
@@ -1239,6 +1240,7 @@ definition {
 	@description = "This is a use case for LPS-84204."
 	@priority = "4"
 	test ExportImportWCDReferenceWhenNotStagedWebContent {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ExportImport#ExportImportWCDReferenceWhenNotStagedWebContent";
 
 		JSONGroup.addGroup(groupName = "Site Name A");

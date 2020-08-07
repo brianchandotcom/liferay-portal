@@ -401,6 +401,8 @@ definition {
 
 	@priority = "4"
 	test EnableStagingWithWebContentReferencedFromDeletedSite {
+		property portal.upstream = "quarantine";
+
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
 			groupName = "Site Name",

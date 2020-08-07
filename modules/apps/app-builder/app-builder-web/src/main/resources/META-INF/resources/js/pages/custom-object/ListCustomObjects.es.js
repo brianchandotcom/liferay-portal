@@ -12,19 +12,20 @@
  * details.
  */
 
+import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 
 import {AppContext} from '../../AppContext.es';
 import Button from '../../components/button/Button.es';
 import {useKeyDown} from '../../hooks/index.es';
 import isClickOutside from '../../utils/clickOutside.es';
-import {addItem, confirmDelete} from '../../utils/client.es';
-import {errorToast} from '../../utils/toast.es';
+import {addItem, parseResponse} from '../../utils/client.es';
+import {errorToast, successToast} from '../../utils/toast.es';
 import ListObjects from '../object/ListObjects.es';
 import CustomObjectPopover from './CustomObjectPopover.es';
 
 export default ({history}) => {
-	const {basePortletURL} = useContext(AppContext);
+	const {basePortletURL, baseResourceURL, namespace} = useContext(AppContext);
 	const addButtonRef = useRef();
 	const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 	const emptyStateButtonRef = useRef();
@@ -32,6 +33,44 @@ export default ({history}) => {
 
 	const [alignElement, setAlignElement] = useState(addButtonRef.current);
 	const [isPopoverVisible, setPopoverVisible] = useState(false);
+
+	const confirmDelete = ({id: dataDefinitionId}) => {
+		return new Promise((resolve, reject) => {
+			const confirmed = confirm(
+				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
+			);
+
+			if (confirmed) {
+				fetch(
+					createResourceURL(baseResourceURL, {
+						p_p_resource_id: '/objects/delete_data_definition',
+					}),
+					{
+						body: new URLSearchParams(
+							Liferay.Util.ns(namespace, {dataDefinitionId})
+						),
+						method: 'POST',
+					}
+				)
+					.then(parseResponse)
+					.then(() => resolve(true))
+					.then(() =>
+						successToast(
+							Liferay.Language.get(
+								'the-item-was-deleted-successfully'
+							)
+						)
+					)
+					.catch(({errorMessage}) => {
+						errorToast(errorMessage);
+						reject(true);
+					});
+			}
+			else {
+				resolve(false);
+			}
+		});
+	};
 
 	const onClickAddButton = ({currentTarget}) => {
 		setAlignElement(currentTarget);
@@ -110,9 +149,7 @@ export default ({history}) => {
 				listViewProps={{
 					actions: [
 						{
-							action: confirmDelete(
-								'/o/data-engine/v2.0/data-definitions/'
-							),
+							action: confirmDelete,
 							name: Liferay.Language.get('delete'),
 						},
 					],

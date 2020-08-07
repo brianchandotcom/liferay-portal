@@ -144,6 +144,38 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-107775. Can add new collections when add a collection page from pages admin."
+	@priority = "5"
+	test AddcollectionViaAddingCollectionPage {
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPublicCollectionPage(
+			collectionName = "Manual Collection Name",
+			menuItem = "Manual Selection",
+			pageName = "Manual Collection Page Name",
+			selectedAsset = "All Types",
+			tabName = "Collections");
+
+		PageEditor.clickPublish();
+
+		ContentPages.addPublicCollectionPage(
+			collectionName = "Dynamic Collection Name",
+			menuItem = "Dynamic Selection",
+			pageName = "Dynamic Collection Page Name",
+			selectedAsset = "All Types",
+			tabName = "Collections");
+
+		PageEditor.clickPublish();
+
+		Page.view(
+			pageName = "Manual Collection Page Name",
+			privacy = "Public Pages");
+
+		Page.view(
+			pageName = "Dynamic Collection Page Name",
+			privacy = "Public Pages");
+	}
+
 	@description = "This is for LPS-110108. Add a Draft page and check label."
 	@priority = "4"
 	test AddDraftPageAndViewLabel {

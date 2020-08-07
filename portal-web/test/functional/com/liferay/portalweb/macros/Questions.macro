@@ -257,12 +257,19 @@ definition {
 				locator1 = "Questions#SEARCH_QUESTION_FIELD",
 				value1 = "${searchKey}");
 
-			AssertTextEquals(
-				key_resultsInfo = '''${resultsInfo}''',
-				locator1 = "Questions#SEARCH_INFO",
-				value1 = "${resultsInfo}");
+			if (isSet(noQuestionsResults)) {
+				AssertElementPresent(
+					key_emptyInfo = "There are no results.",
+					locator1 = "Questions#EMPTY_STATE_MESSAGE");
+			}
+			else {
+				AssertTextEquals(
+					key_resultsInfo = '''${resultsInfo}''',
+					locator1 = "Questions#SEARCH_INFO",
+					value1 = "${resultsInfo}");
 
-			AssertVisible(locator1 = "Questions#SEARCH_RESULTS_CLEAR_BUTTON");
+				AssertVisible(locator1 = "Questions#SEARCH_RESULTS_CLEAR_BUTTON");
+			}
 		}
 	}
 

@@ -15,6 +15,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CURSOR_NOT_ALLOWED</td>
+	<td>//div[contains(@style,'cursor: not-allowed')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_PREVIEW_IFRAME</td>
 	<td>//iframe[contains(@class,'page-preview')]</td>
 	<td></td>

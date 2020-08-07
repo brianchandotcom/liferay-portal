@@ -37,7 +37,7 @@ export default function FieldSets({keywords}) {
 		isVisible: false,
 	});
 
-	let defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+	let defaultLanguageId = themeDisplay.getDefaultLanguageId();
 
 	const toggleFieldSet = (fieldSet, editingDataDefinition) => {
 		let childrenAppProps = {
@@ -56,6 +56,7 @@ export default function FieldSets({keywords}) {
 				defaultDataLayout
 			);
 			const [{rows}] = ddmForm.pages;
+
 			delete ddmForm.pages;
 
 			defaultLanguageId = fieldSet.defaultLanguageId;
@@ -75,7 +76,7 @@ export default function FieldSets({keywords}) {
 				},
 				dataDefinitionId,
 				dataLayoutId: defaultDataLayout.id,
-				editingLanguageId: fieldSet.defaultLanguageId,
+				editingLanguageId: defaultLanguageId,
 			};
 		}
 
@@ -121,41 +122,37 @@ export default function FieldSets({keywords}) {
 	);
 
 	const filteredFieldSets = fieldSets
-		.filter(({defaultLanguageId: fieldSetDefaultLanguageId, name}) =>
+		.filter(({defaultLanguageId}) =>
 			new RegExp(keywords, 'ig').test(
-				getLocalizedValue(fieldSetDefaultLanguageId, name)
+				getLocalizedValue(defaultLanguageId, name)
 			)
 		)
-		.sort(
-			(
-				{
-					defaultLanguageId: fieldSetDefaultLanguageId1,
-					name: fieldsetName1,
-				},
-				{
-					defaultLanguageId: fieldSetDefaultLanguageId2,
-					name: fieldsetName2,
-				}
-			) =>
-				getLocalizedValue(
-					fieldSetDefaultLanguageId1,
-					fieldsetName1
-				).localeCompare(
-					getLocalizedValue(fieldSetDefaultLanguageId2, fieldsetName2)
-				)
-		);
+		.sort((a, b) => {
+			const localizedValueA = getLocalizedValue(
+				a.defaultLanguageId,
+				a.name
+			);
+			const localizedValueB = getLocalizedValue(
+				b.defaultLanguageId,
+				b.name
+			);
+
+			return localizedValueA.localeCompare(localizedValueB);
+		});
 
 	return (
 		<>
 			{filteredFieldSets.length ? (
 				<>
 					<AddButton />
+
 					<div className="mt-3">
 						{filteredFieldSets.map((fieldSet) => {
 							const fieldSetName = getLocalizedValue(
 								fieldSet.defaultLanguageId,
 								fieldSet.name
 							);
+
 							const dropDownActions = [
 								{
 									action: () => toggleFieldSet(fieldSet),
@@ -216,7 +213,7 @@ export default function FieldSets({keywords}) {
 					</div>
 				</>
 			) : (
-				<div className="mt--2">
+				<div className="mt-2">
 					<EmptyState
 						emptyState={{
 							button: AddButton,

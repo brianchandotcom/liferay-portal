@@ -53,12 +53,10 @@ const ModalContent = ({
 		state: {config, dataLayout},
 	} = childrenContext;
 
-	const editingLanguageId = defaultLanguageId;
-
 	const {contentType} = appProps;
 
 	const availableLanguageIds = [
-		...new Set([...Object.keys(name), editingLanguageId]),
+		...new Set([...Object.keys(name), defaultLanguageId]),
 	];
 
 	const changeZIndex = (zIndex) => {
@@ -96,12 +94,6 @@ const ModalContent = ({
 			setDataLayoutIsEmpty(isDataLayoutEmpty(dataLayoutPages));
 		}
 	}, [dataLayout]);
-
-	useEffect(() => {
-		if (dataLayoutBuilder) {
-			dataLayoutBuilder.onEditingLanguageIdChange({editingLanguageId});
-		}
-	}, [dataLayoutBuilder, editingLanguageId]);
 
 	useEffect(() => {
 		if (dataLayoutBuilder) {
@@ -193,13 +185,13 @@ const ModalContent = ({
 							autoFocus
 							className="form-control-inline"
 							onChange={({target: {value}}) =>
-								setName({...name, [editingLanguageId]: value})
+								setName({...name, [defaultLanguageId]: value})
 							}
 							placeholder={Liferay.Language.get(
 								'untitled-fieldset'
 							)}
 							type="text"
-							value={name[editingLanguageId]}
+							value={name[defaultLanguageId]}
 						/>
 					</ClayInput.GroupItem>
 				</ClayInput.Group>

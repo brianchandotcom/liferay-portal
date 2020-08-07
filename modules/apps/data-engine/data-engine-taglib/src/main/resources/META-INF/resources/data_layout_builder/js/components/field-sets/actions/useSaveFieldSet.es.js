@@ -79,8 +79,7 @@ export default ({availableLanguageIds, childrenContext, fieldSet}) => {
 
 					if (containsField(dataLayout.dataLayoutPages, fieldName)) {
 						dataLayoutBuilder.dispatch('fieldEditedProperties', {
-							defaultLanguageId:
-								normalizedFieldSet.defaultLanguageId,
+							defaultLanguageId: fieldSet.defaultLanguageId,
 							fieldName,
 							properties: [
 								{

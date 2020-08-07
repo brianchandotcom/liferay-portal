@@ -42,7 +42,9 @@ export default function LayoutPreview() {
 	}, [loadFrontendTokenValues, frontendTokensValues]);
 
 	useEffect(() => {
-		iframeRef.current.style['pointer-events'] = 'none';
+		if (iframeRef.current) {
+			iframeRef.current.style['pointer-events'] = 'none';
+		}
 	}, [previewLayout]);
 
 	return (

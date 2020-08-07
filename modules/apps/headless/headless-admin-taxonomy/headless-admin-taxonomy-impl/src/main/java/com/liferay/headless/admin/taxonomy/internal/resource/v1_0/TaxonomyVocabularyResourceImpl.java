@@ -29,6 +29,7 @@ import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResou
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
@@ -503,6 +504,9 @@ public class TaxonomyVocabularyResourceImpl
 	private TaxonomyVocabulary _toTaxonomyVocabulary(
 		AssetVocabulary assetVocabulary) {
 
+		Group group = groupLocalService.fetchGroup(
+			assetVocabulary.getGroupId());
+
 		return new TaxonomyVocabulary() {
 			{
 				actions = HashMapBuilder.put(
@@ -521,6 +525,9 @@ public class TaxonomyVocabularyResourceImpl
 					addAction(
 						"UPDATE", assetVocabulary, "patchTaxonomyVocabulary")
 				).build();
+				assetLibraryKey =
+					(group.getType() == GroupConstants.TYPE_DEPOT) ?
+						group.getGroupKey() : null;
 				assetTypes = _getAssetTypes(
 					new AssetVocabularySettingsHelper(
 						assetVocabulary.getSettings()),
@@ -550,8 +557,8 @@ public class TaxonomyVocabularyResourceImpl
 				).orElse(
 					0
 				);
-
-				siteId = assetVocabulary.getGroupId();
+				siteId = (group.getType() == GroupConstants.TYPE_DEPOT) ? null :
+					assetVocabulary.getGroupId();
 			}
 		};
 	}

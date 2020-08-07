@@ -52,8 +52,11 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryBriefUtil;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -101,6 +104,8 @@ public class DocumentDTOConverter
 		FileEntry fileEntry = _dlAppService.getFileEntry(
 			(Long)dtoConverterContext.getId());
 
+		Group group = _groupLocalService.fetchGroup(fileEntry.getGroupId());
+
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
 		return new Document() {
@@ -112,6 +117,9 @@ public class DocumentDTOConverter
 					_ratingsStatsLocalService.fetchStats(
 						DLFileEntry.class.getName(),
 						fileEntry.getFileEntryId()));
+				assetLibraryKey =
+					(group.getType() == GroupConstants.TYPE_DEPOT) ?
+						group.getGroupKey() : null;
 				contentUrl = _dlURLHelper.getPreviewURL(
 					fileEntry, fileVersion, null, "");
 				contentValue = ContentValueUtil.toContentValue(
@@ -343,6 +351,9 @@ public class DocumentDTOConverter
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private JournalArticleService _journalArticleService;

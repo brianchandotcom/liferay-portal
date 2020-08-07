@@ -105,7 +105,7 @@ public class ContentStructureResourceImpl
 		throws Exception {
 
 		return ContentStructureUtil.toContentStructure(
-			contextAcceptLanguage.isAcceptAllLanguages(),
+			contextAcceptLanguage.isAcceptAllLanguages(), groupLocalService,
 			contextAcceptLanguage.getPreferredLocale(), _portal,
 			_userLocalService, ddmStructure);
 	}

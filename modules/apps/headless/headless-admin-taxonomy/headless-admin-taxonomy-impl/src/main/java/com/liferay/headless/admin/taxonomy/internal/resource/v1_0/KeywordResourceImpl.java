@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionList;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Type;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Sort;
@@ -248,6 +250,8 @@ public class KeywordResourceImpl
 	}
 
 	private Keyword _toKeyword(AssetTag assetTag) {
+		Group group = groupLocalService.fetchGroup(assetTag.getGroupId());
+
 		return new Keyword() {
 			{
 				actions = HashMapBuilder.put(
@@ -269,11 +273,15 @@ public class KeywordResourceImpl
 						assetTag.getUserId(), "com.liferay.asset.tags",
 						assetTag.getGroupId())
 				).build();
+				assetLibraryKey =
+					(group.getType() == GroupConstants.TYPE_DEPOT) ?
+						group.getGroupKey() : null;
 				dateCreated = assetTag.getCreateDate();
 				dateModified = assetTag.getModifiedDate();
 				id = assetTag.getTagId();
 				name = assetTag.getName();
-				siteId = assetTag.getGroupId();
+				siteId = (group.getType() == GroupConstants.TYPE_DEPOT) ? null :
+					assetTag.getGroupId();
 
 				setCreator(
 					() -> {

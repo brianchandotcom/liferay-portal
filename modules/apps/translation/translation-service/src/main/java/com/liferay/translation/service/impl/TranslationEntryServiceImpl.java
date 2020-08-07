@@ -18,8 +18,7 @@ import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.translation.constants.TranslationActionKeys;
 import com.liferay.translation.constants.TranslationConstants;
@@ -27,9 +26,6 @@ import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.base.TranslationEntryServiceBaseImpl;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * The implementation of the translation entry remote service.
@@ -71,28 +67,16 @@ public class TranslationEntryServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_translationEntryModelResourcePermission.check(
-			getPermissionChecker(), groupId,
-			TranslationActionKeys.TRANSLATE + languageId.toUpperCase());
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		permissionChecker.hasPermission(
+			groupId, TranslationConstants.RESOURCE_NAME + "." + languageId,
+			TranslationConstants.RESOURCE_NAME + "." + languageId,
+			TranslationActionKeys.TRANSLATE);
 
 		return translationEntryLocalService.addOrUpdateTranslationEntry(
 			groupId, languageId, infoItemReference, infoItemFieldValues,
 			serviceContext);
 	}
-
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(resource.name=" + TranslationConstants.RESOURCE_NAME + ")"
-	)
-	private volatile PortletResourcePermission _portletResourcePermission;
-
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(model.class.name=" + TranslationConstants.MODEL_CLASS_NAME + ")"
-	)
-	private volatile ModelResourcePermission<TranslationEntry>
-		_translationEntryModelResourcePermission;
 
 }

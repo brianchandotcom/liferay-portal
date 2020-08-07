@@ -292,15 +292,13 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 				LocaleUtil.getDefault(), name
 			).build();
 
-			Map<Locale, String> descriptionMap = new HashMap<>();
-
 			Group group = null;
 
 			try {
 				group = _groupLocalService.addGroup(
 					_defaultUserId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
 					null, 0, GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap,
-					descriptionMap, GroupConstants.TYPE_SITE_OPEN, true,
+					new HashMap<>(), GroupConstants.TYPE_SITE_OPEN, true,
 					GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
 					StringPool.SLASH +
 						FriendlyURLNormalizerUtil.normalize(name),

@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import moment from 'moment';
 import React, {useContext} from 'react';
 
+import {removeEmptyValues} from '../../utils/data.es';
 import Color from '../color/Color.es';
 import {SidebarContext} from '../sidebar/SidebarContext.es';
 
@@ -38,6 +39,8 @@ export default ({data, field, summary, totalEntries, type}) => {
 
 		return moment(field).locale(locale).format('L');
 	};
+
+	data = removeEmptyValues(data);
 
 	return (
 		<div className="field-list">

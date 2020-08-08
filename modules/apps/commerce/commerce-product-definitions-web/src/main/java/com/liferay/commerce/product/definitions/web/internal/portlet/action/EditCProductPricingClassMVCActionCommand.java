@@ -82,8 +82,8 @@ public class EditCProductPricingClassMVCActionCommand
 				deleteCommercePricingClassCPDefinitionRel(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			SessionErrors.add(actionRequest, e.getClass());
+		catch (Exception exception) {
+			SessionErrors.add(actionRequest, exception.getClass());
 
 			actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 		}

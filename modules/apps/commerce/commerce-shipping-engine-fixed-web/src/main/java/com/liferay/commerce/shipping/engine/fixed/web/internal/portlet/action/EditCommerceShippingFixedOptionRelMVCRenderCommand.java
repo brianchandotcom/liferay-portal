@@ -88,17 +88,18 @@ public class EditCommerceShippingFixedOptionRelMVCRenderCommand
 				_portal.getHttpServletRequest(renderRequest),
 				_portal.getHttpServletResponse(renderResponse));
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchShippingFixedOptionRelException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchShippingFixedOptionRelException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/error.jsp";
 			}
 
 			throw new PortletException(
-				"Unable to include edit_shipping_option_setting.jsp", e);
+				"Unable to include edit_shipping_option_setting.jsp",
+				exception);
 		}
 
 		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;

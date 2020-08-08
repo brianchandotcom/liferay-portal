@@ -53,19 +53,19 @@ public class EditCommerceOrderExternalReferenceCodeMVCActionCommand
 		try {
 			updateCommerceOrderExternalReferenceCode(actionRequest);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchOrderException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchOrderException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (e instanceof CommerceOrderNoteContentException) {
-				SessionErrors.add(actionRequest, e.getClass());
+			else if (exception instanceof CommerceOrderNoteContentException) {
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

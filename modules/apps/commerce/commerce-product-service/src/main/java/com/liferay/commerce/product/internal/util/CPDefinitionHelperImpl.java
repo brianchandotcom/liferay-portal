@@ -194,7 +194,7 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
 					_portal.getClassNameId(CProduct.class), cProductId);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isInfoEnabled()) {
 				_log.info("No friendly URL found for " + cProductId);
 			}
@@ -216,9 +216,9 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 				layout = _layoutLocalService.getLayoutByUuidAndGroupId(
 					layoutUuid, group.getGroupId(), true);
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
+					_log.debug(portalException, portalException);
 				}
 			}
 
@@ -227,9 +227,9 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 					layout = _layoutLocalService.getLayoutByUuidAndGroupId(
 						layoutUuid, group.getGroupId(), false);
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(pe, pe);
+						_log.debug(portalException, portalException);
 					}
 				}
 			}

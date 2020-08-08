@@ -136,8 +136,8 @@ public class CommerceTaxRateClayTable
 
 			clayTableActions.add(deleteClayDataSetAction);
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exception) {
+			exception.printStackTrace();
 		}
 
 		return clayTableActions;
@@ -229,13 +229,13 @@ public class CommerceTaxRateClayTable
 	}
 
 	private String _getLocalizedRate(
-			CommerceCurrency commerceCurrency, boolean isPercentage,
+			CommerceCurrency commerceCurrency, boolean percentage,
 			double rate, Locale locale)
 		throws PortalException {
 
 		BigDecimal bigDecimalPercentage = new BigDecimal(rate);
 
-		if (isPercentage) {
+		if (percentage) {
 			return _percentageFormatter.getLocalizedPercentage(
 				locale, commerceCurrency.getMaxFractionDigits(),
 				commerceCurrency.getMinFractionDigits(), bigDecimalPercentage);

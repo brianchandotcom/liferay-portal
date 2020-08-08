@@ -155,7 +155,7 @@ public class JsonHelperTest {
 		try {
 			_jsonHelper.getFirstElementStringValue(failingExpression);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			actualException = e;
 		}
 

@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.product.content.search.web.internal.util;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 

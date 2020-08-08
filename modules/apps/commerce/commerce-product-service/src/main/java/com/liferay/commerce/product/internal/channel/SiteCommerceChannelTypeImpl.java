@@ -54,14 +54,14 @@ public class SiteCommerceChannelTypeImpl implements CommerceChannelType {
 	public UnicodeProperties getTypeSettingsProperties(
 		Map<String, String[]> parameterMap) {
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
+		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(true);
 
 		long[] groupIds = GetterUtil.getLongValues(
 			parameterMap.get("CommerceChannelSitesSearchContainerPrimaryKeys"));
 
-		typeSettingsProperties.put("groupIds", StringUtil.merge(groupIds));
+		typeSettingsUnicodeProperties.put("groupIds", StringUtil.merge(groupIds));
 
-		return typeSettingsProperties;
+		return typeSettingsUnicodeProperties;
 	}
 
 }

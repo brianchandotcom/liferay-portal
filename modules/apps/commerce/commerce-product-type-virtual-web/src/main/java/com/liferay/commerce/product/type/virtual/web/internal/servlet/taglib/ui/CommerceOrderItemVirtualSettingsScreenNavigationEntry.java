@@ -129,8 +129,8 @@ public class CommerceOrderItemVirtualSettingsScreenNavigationEntry
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				commerceVirtualOrderItemEditDisplayContext);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		_jspRenderer.renderJSP(

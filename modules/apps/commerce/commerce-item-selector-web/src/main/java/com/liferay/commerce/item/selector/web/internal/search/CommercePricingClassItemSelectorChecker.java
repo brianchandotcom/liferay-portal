@@ -38,16 +38,17 @@ public class CommercePricingClassItemSelectorChecker
 	}
 
 	@Override
-	public boolean isChecked(Object obj) {
-		CommercePricingClass commercePricingClass = (CommercePricingClass)obj;
+	public boolean isChecked(Object object) {
+		CommercePricingClass commercePricingClass =
+			(CommercePricingClass)object;
 
 		return _checkedCommercePricingClassIds.contains(
 			commercePricingClass.getCommercePricingClassId());
 	}
 
 	@Override
-	public boolean isDisabled(Object obj) {
-		return isChecked(obj);
+	public boolean isDisabled(Object object) {
+		return isChecked(object);
 	}
 
 	private final Set<Long> _checkedCommercePricingClassIds;

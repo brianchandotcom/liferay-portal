@@ -59,23 +59,23 @@ public class CPInstanceOptionValueRelFinderImpl
 				getClass(), FIND_BY_CP_DEFINITION_ID, queryDefinition,
 				CPInstanceOptionValueRelImpl.TABLE_NAME);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(
+			sqlQuery.addEntity(
 				CPInstanceOptionValueRelImpl.TABLE_NAME,
 				CPInstanceOptionValueRelImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(cpDefinitionId);
-			qPos.add(queryDefinition.getStatus());
+			queryPos.add(cpDefinitionId);
+			queryPos.add(queryDefinition.getStatus());
 
 			return (List<CPInstanceOptionValueRel>)QueryUtil.list(
-				q, getDialect(), queryDefinition.getStart(),
+				sqlQuery, getDialect(), queryDefinition.getStart(),
 				queryDefinition.getEnd());
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);

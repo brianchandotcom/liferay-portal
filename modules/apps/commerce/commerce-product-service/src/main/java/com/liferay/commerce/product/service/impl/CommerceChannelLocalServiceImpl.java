@@ -60,7 +60,7 @@ public class CommerceChannelLocalServiceImpl
 	@Override
 	public CommerceChannel addCommerceChannel(
 			long siteGroupId, String name, String type,
-			UnicodeProperties typeSettingsProperties,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			String commerceCurrencyCode, String externalReferenceCode,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -82,7 +82,7 @@ public class CommerceChannelLocalServiceImpl
 		commerceChannel.setSiteGroupId(siteGroupId);
 		commerceChannel.setName(name);
 		commerceChannel.setType(type);
-		commerceChannel.setTypeSettingsProperties(typeSettingsProperties);
+		commerceChannel.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 		commerceChannel.setCommerceCurrencyCode(commerceCurrencyCode);
 		commerceChannel.setPriceDisplayType(
 			CommercePricingConstants.TAX_EXCLUDED_FROM_PRICE);
@@ -272,7 +272,7 @@ public class CommerceChannelLocalServiceImpl
 	@Override
 	public CommerceChannel updateCommerceChannel(
 			long commerceChannelId, long siteGroupId, String name, String type,
-			UnicodeProperties typeSettingsProperties,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			String commerceCurrencyCode)
 		throws PortalException {
 
@@ -282,7 +282,7 @@ public class CommerceChannelLocalServiceImpl
 		commerceChannel.setSiteGroupId(siteGroupId);
 		commerceChannel.setName(name);
 		commerceChannel.setType(type);
-		commerceChannel.setTypeSettingsProperties(typeSettingsProperties);
+		commerceChannel.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 		commerceChannel.setCommerceCurrencyCode(commerceCurrencyCode);
 
 		return commerceChannelPersistence.update(commerceChannel);
@@ -292,7 +292,7 @@ public class CommerceChannelLocalServiceImpl
 	@Override
 	public CommerceChannel updateCommerceChannel(
 			long commerceChannelId, long siteGroupId, String name, String type,
-			UnicodeProperties typeSettingsProperties,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			String commerceCurrencyCode, String priceDisplayType,
 			boolean discountsTargetNetPrice)
 		throws PortalException {
@@ -303,7 +303,7 @@ public class CommerceChannelLocalServiceImpl
 		commerceChannel.setSiteGroupId(siteGroupId);
 		commerceChannel.setName(name);
 		commerceChannel.setType(type);
-		commerceChannel.setTypeSettingsProperties(typeSettingsProperties);
+		commerceChannel.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 		commerceChannel.setCommerceCurrencyCode(commerceCurrencyCode);
 		commerceChannel.setPriceDisplayType(priceDisplayType);
 		commerceChannel.setDiscountsTargetNetPrice(discountsTargetNetPrice);

@@ -210,13 +210,13 @@ public class CPDefinitionOptionValueRelIndexer
 					indexableActionableDynamicQuery.addDocuments(
 						getDocument(cpDefinitionOptionValueRel));
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to index definition option rel " +
 								cpDefinitionOptionValueRel.
 									getCPDefinitionOptionValueRelId(),
-							pe);
+							portalException);
 					}
 				}
 			});

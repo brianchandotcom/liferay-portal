@@ -206,12 +206,12 @@ public class CommerceOrderDefinitionTermContributor
 				addressSB.append(commerceCountry.getName(locale));
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"It was not possible to get either the country or region " +
 						"for this commerce address",
-					pe);
+					portalException);
 			}
 		}
 

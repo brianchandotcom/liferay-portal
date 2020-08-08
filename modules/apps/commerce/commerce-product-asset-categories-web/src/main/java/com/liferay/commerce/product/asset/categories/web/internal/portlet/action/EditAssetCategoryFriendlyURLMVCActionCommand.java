@@ -85,7 +85,7 @@ public class EditAssetCategoryFriendlyURLMVCActionCommand
 				friendlyURLEntry.getDefaultLanguageId(),
 				_getUniqueUrlTitles(assetCategory, urlTitleMap));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			Group companyGroup = _groupLocalService.getCompanyGroup(
 				_portal.getDefaultCompanyId());
 

@@ -92,25 +92,25 @@ public class EditCPTaxCategoryMVCActionCommand extends BaseMVCActionCommand {
 				updateCPTaxCategory(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchCPTaxCategoryException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchCPTaxCategoryException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (e instanceof CPTaxCategoryNameException) {
+			else if (exception instanceof CPTaxCategoryNameException) {
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName", "editCPTaxCategory");
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

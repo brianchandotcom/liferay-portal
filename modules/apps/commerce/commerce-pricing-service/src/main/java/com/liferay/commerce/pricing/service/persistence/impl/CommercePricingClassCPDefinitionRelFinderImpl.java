@@ -92,23 +92,23 @@ public class CommercePricingClassCPDefinitionRelFinderImpl
 						"[$AND_OR_NULL_CHECK$])");
 			}
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addScalar(_COUNT_VALUE, Type.LONG);
+			sqlQuery.addScalar(_COUNT_VALUE, Type.LONG);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(languageId);
-			qPos.add(commercePricingClassId);
+			queryPos.add(languageId);
+			queryPos.add(commercePricingClassId);
 
 			if (Validator.isNotNull(name)) {
-				qPos.add(keywords, 2);
+				queryPos.add(keywords, 2);
 			}
 
-			Iterator<Long> itr = q.iterate();
+			Iterator<Long> iterator = sqlQuery.iterate();
 
-			if (itr.hasNext()) {
-				Long count = itr.next();
+			if (iterator.hasNext()) {
+				Long count = iterator.next();
 
 				if (count != null) {
 					return count.intValue();
@@ -117,8 +117,8 @@ public class CommercePricingClassCPDefinitionRelFinderImpl
 
 			return 0;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -171,26 +171,26 @@ public class CommercePricingClassCPDefinitionRelFinderImpl
 						"[$AND_OR_NULL_CHECK$])");
 			}
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(
+			sqlQuery.addEntity(
 				CommercePricingClassCPDefinitionRelImpl.TABLE_NAME,
 				CommercePricingClassCPDefinitionRelImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(languageId);
-			qPos.add(commercePricingClassId);
+			queryPos.add(languageId);
+			queryPos.add(commercePricingClassId);
 
 			if (Validator.isNotNull(name)) {
-				qPos.add(keywords, 2);
+				queryPos.add(keywords, 2);
 			}
 
 			return (List<CommercePricingClassCPDefinitionRel>)QueryUtil.list(
-				q, getDialect(), start, end);
+				sqlQuery, getDialect(), start, end);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);

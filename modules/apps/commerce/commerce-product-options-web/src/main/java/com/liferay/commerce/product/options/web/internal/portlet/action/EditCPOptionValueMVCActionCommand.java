@@ -113,15 +113,15 @@ public class EditCPOptionValueMVCActionCommand extends BaseMVCActionCommand {
 
 			jsonObject.put("success", true);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			String message = LanguageUtil.get(
 				actionRequest.getLocale(), "your-request-failed-to-complete");
 
-			if (!Validator.isBlank(e.getMessage())) {
-				message = e.getMessage();
+			if (!Validator.isBlank(exception.getMessage())) {
+				message = exception.getMessage();
 			}
 			else {
-				_log.error(e, e);
+				_log.error(exception, exception);
 			}
 
 			jsonObject.put("message", message);
@@ -181,7 +181,7 @@ public class EditCPOptionValueMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void writeJSON(
 			PortletRequest portletRequest, ActionResponse actionResponse,
-			Object jsonObj)
+			Object object)
 		throws IOException {
 
 		HttpServletResponse httpServletResponse =
@@ -189,7 +189,7 @@ public class EditCPOptionValueMVCActionCommand extends BaseMVCActionCommand {
 
 		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
-		ServletResponseUtil.write(httpServletResponse, jsonObj.toString());
+		ServletResponseUtil.write(httpServletResponse, object.toString());
 
 		httpServletResponse.flushBuffer();
 	}

@@ -132,25 +132,25 @@ public class CommercePriceListFinderImpl
 						"[$AND_OR_NULL_CHECK$])");
 			}
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addScalar(_COUNT_VALUE, Type.LONG);
+			sqlQuery.addScalar(_COUNT_VALUE, Type.LONG);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(
+			queryPos.add(
 				PortalUtil.getClassNameId(
 					CommercePricingClass.class.getName()));
-			qPos.add(commercePricingClassId);
+			queryPos.add(commercePricingClassId);
 
 			if (Validator.isNotNull(name)) {
-				qPos.add(keywords, 2);
+				queryPos.add(keywords, 2);
 			}
 
-			Iterator<Long> itr = q.iterate();
+			Iterator<Long> iterator = sqlQuery.iterate();
 
-			if (itr.hasNext()) {
-				Long count = itr.next();
+			if (iterator.hasNext()) {
+				Long count = iterator.next();
 
 				if (count != null) {
 					return count.intValue();
@@ -159,8 +159,8 @@ public class CommercePriceListFinderImpl
 
 			return 0;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -190,18 +190,18 @@ public class CommercePriceListFinderImpl
 					new long[] {0}, null);
 			}
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addScalar(_COUNT_VALUE, Type.LONG);
+			sqlQuery.addScalar(_COUNT_VALUE, Type.LONG);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(cpInstanceUuid);
+			queryPos.add(cpInstanceUuid);
 
-			Iterator<Long> itr = q.iterate();
+			Iterator<Long> iterator = sqlQuery.iterate();
 
-			if (itr.hasNext()) {
-				Long count = itr.next();
+			if (iterator.hasNext()) {
+				Long count = iterator.next();
 
 				if (count != null) {
 					return count.intValue();
@@ -210,8 +210,8 @@ public class CommercePriceListFinderImpl
 
 			return 0;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -243,18 +243,18 @@ public class CommercePriceListFinderImpl
 					new long[] {0}, null);
 			}
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(
+			sqlQuery.addEntity(
 				CommercePriceEntryImpl.TABLE_NAME,
 				CommercePriceEntryImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(cpInstanceUuid);
-			qPos.add(priceListType);
+			queryPos.add(cpInstanceUuid);
+			queryPos.add(priceListType);
 
-			List<CommercePriceEntry> commercePriceEntries = q.list();
+			List<CommercePriceEntry> commercePriceEntries = sqlQuery.list();
 
 			if (!commercePriceEntries.isEmpty()) {
 				return commercePriceEntries.get(0);
@@ -262,8 +262,8 @@ public class CommercePriceListFinderImpl
 
 			return null;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -320,25 +320,25 @@ public class CommercePriceListFinderImpl
 
 			sql = replaceAccountGroupIds(sql, commerceAccountGroupIds);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(
+			sqlQuery.addEntity(
 				CommercePriceListImpl.TABLE_NAME, CommercePriceListImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
 			long groupId = (Long)queryDefinition.getAttribute("groupId");
 			String type = (String)queryDefinition.getAttribute("type");
 
-			qPos.add(groupId);
-			qPos.add(type);
+			queryPos.add(groupId);
+			queryPos.add(type);
 
 			return (List<CommercePriceList>)QueryUtil.list(
-				q, getDialect(), queryDefinition.getStart(),
+				sqlQuery, getDialect(), queryDefinition.getStart(),
 				queryDefinition.getEnd());
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -362,28 +362,28 @@ public class CommercePriceListFinderImpl
 
 			sql = replaceAccountGroupIds(sql, commerceAccountGroupIds);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(
+			sqlQuery.addEntity(
 				CommercePriceListImpl.TABLE_NAME, CommercePriceListImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
 			long commerceChannelId = (Long)queryDefinition.getAttribute(
 				"commerceChannelId");
 			long groupId = (Long)queryDefinition.getAttribute("groupId");
 			String type = (String)queryDefinition.getAttribute("type");
 
-			qPos.add(commerceChannelId);
-			qPos.add(groupId);
-			qPos.add(type);
+			queryPos.add(commerceChannelId);
+			queryPos.add(groupId);
+			queryPos.add(type);
 
 			return (List<CommercePriceList>)QueryUtil.list(
-				q, getDialect(), queryDefinition.getStart(),
+				sqlQuery, getDialect(), queryDefinition.getStart(),
 				queryDefinition.getEnd());
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -433,27 +433,27 @@ public class CommercePriceListFinderImpl
 						"[$AND_OR_NULL_CHECK$])");
 			}
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(
+			sqlQuery.addEntity(
 				CommercePriceListImpl.TABLE_NAME, CommercePriceListImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(
+			queryPos.add(
 				PortalUtil.getClassNameId(
 					CommercePricingClass.class.getName()));
-			qPos.add(commercePricingClassId);
+			queryPos.add(commercePricingClassId);
 
 			if (Validator.isNotNull(name)) {
-				qPos.add(keywords, 2);
+				queryPos.add(keywords, 2);
 			}
 
 			return (List<CommercePriceList>)QueryUtil.list(
-				q, getDialect(), start, end);
+				sqlQuery, getDialect(), start, end);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -485,21 +485,21 @@ public class CommercePriceListFinderImpl
 					new long[] {0}, null);
 			}
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(
+			sqlQuery.addEntity(
 				CommercePriceEntryImpl.TABLE_NAME,
 				CommercePriceEntryImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(cpInstanceUuid);
+			queryPos.add(cpInstanceUuid);
 
 			return (List<CommercePriceEntry>)QueryUtil.list(
-				q, getDialect(), start, end);
+				sqlQuery, getDialect(), start, end);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -529,25 +529,25 @@ public class CommercePriceListFinderImpl
 
 			String sql = _customSQL.get(getClass(), FIND_BY_UNQUALIFIED);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(
+			sqlQuery.addEntity(
 				CommercePriceListImpl.TABLE_NAME, CommercePriceListImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
 			long groupId = (Long)queryDefinition.getAttribute("groupId");
 			String type = (String)queryDefinition.getAttribute("type");
 
-			qPos.add(groupId);
-			qPos.add(type);
+			queryPos.add(groupId);
+			queryPos.add(type);
 
 			return (List<CommercePriceList>)QueryUtil.list(
-				q, getDialect(), queryDefinition.getStart(),
+				sqlQuery, getDialect(), queryDefinition.getStart(),
 				queryDefinition.getEnd());
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -570,13 +570,13 @@ public class CommercePriceListFinderImpl
 
 			sql = replaceAccountGroupIds(sql, commerceAccountGroupIds);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(
+			sqlQuery.addEntity(
 				CommercePriceEntryImpl.TABLE_NAME,
 				CommercePriceEntryImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
 			String cPInstanceUuid = (String)queryDefinition.getAttribute(
 				"cPInstanceUuid");
@@ -587,18 +587,18 @@ public class CommercePriceListFinderImpl
 			long commerceChannelId = (Long)queryDefinition.getAttribute(
 				"commerceChannelId");
 
-			qPos.add(cPInstanceUuid);
-			qPos.add(groupId);
-			qPos.add(type);
-			qPos.add(commerceAccountId);
-			qPos.add(commerceChannelId);
+			queryPos.add(cPInstanceUuid);
+			queryPos.add(groupId);
+			queryPos.add(type);
+			queryPos.add(commerceAccountId);
+			queryPos.add(commerceChannelId);
 
 			return (List<CommercePriceEntry>)QueryUtil.list(
-				q, getDialect(), queryDefinition.getStart(),
+				sqlQuery, getDialect(), queryDefinition.getStart(),
 				queryDefinition.getEnd());
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -618,25 +618,25 @@ public class CommercePriceListFinderImpl
 				getClass(), FIND_BY_EXPIRATION_DATE, queryDefinition,
 				CommercePriceListImpl.TABLE_NAME);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(
+			sqlQuery.addEntity(
 				CommercePriceListImpl.TABLE_NAME, CommercePriceListImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
 			if (expirationDate != null) {
-				qPos.add(expirationDate);
+				queryPos.add(expirationDate);
 			}
 
-			qPos.add(queryDefinition.getStatus());
+			queryPos.add(queryDefinition.getStatus());
 
 			return (List<CommercePriceList>)QueryUtil.list(
-				q, getDialect(), queryDefinition.getStart(),
+				sqlQuery, getDialect(), queryDefinition.getStart(),
 				queryDefinition.getEnd());
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -654,22 +654,22 @@ public class CommercePriceListFinderImpl
 
 			String sql = _customSQL.get(getClass(), queryName);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(
+			sqlQuery.addEntity(
 				CommercePriceListImpl.TABLE_NAME, CommercePriceListImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(classPK);
-			qPos.add(groupId);
-			qPos.add(type);
+			queryPos.add(classPK);
+			queryPos.add(groupId);
+			queryPos.add(type);
 
 			return (List<CommercePriceList>)QueryUtil.list(
-				q, getDialect(), start, end);
+				sqlQuery, getDialect(), start, end);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -687,23 +687,23 @@ public class CommercePriceListFinderImpl
 
 			String sql = _customSQL.get(getClass(), queryName);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(
+			sqlQuery.addEntity(
 				CommercePriceListImpl.TABLE_NAME, CommercePriceListImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(classPK1);
-			qPos.add(classPK2);
-			qPos.add(groupId);
-			qPos.add(type);
+			queryPos.add(classPK1);
+			queryPos.add(classPK2);
+			queryPos.add(groupId);
+			queryPos.add(type);
 
 			return (List<CommercePriceList>)QueryUtil.list(
-				q, getDialect(), start, end);
+				sqlQuery, getDialect(), start, end);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);

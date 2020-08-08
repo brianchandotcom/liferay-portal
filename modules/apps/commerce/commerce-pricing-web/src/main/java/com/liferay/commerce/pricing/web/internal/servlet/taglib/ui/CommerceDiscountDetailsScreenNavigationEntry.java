@@ -100,9 +100,9 @@ public class CommerceDiscountDetailsScreenNavigationEntry
 				PermissionThreadLocal.getPermissionChecker(),
 				commerceDiscount.getCommerceDiscountId(), ActionKeys.UPDATE);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 		}
 

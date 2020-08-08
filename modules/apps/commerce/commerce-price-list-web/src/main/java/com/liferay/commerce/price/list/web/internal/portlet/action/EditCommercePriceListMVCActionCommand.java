@@ -108,20 +108,20 @@ public class EditCommercePriceListMVCActionCommand
 				deleteCommercePriceLists(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchPriceListException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchPriceListException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (e instanceof CommercePriceListCurrencyException ||
-					 e instanceof
+			else if (exception instanceof CommercePriceListCurrencyException ||
+					 exception instanceof
 						 CommercePriceListParentPriceListGroupIdException ||
-					 e instanceof NoSuchCatalogException) {
+					 exception instanceof NoSuchCatalogException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				String redirect = ParamUtil.getString(
 					actionRequest, "redirect");
@@ -129,7 +129,7 @@ public class EditCommercePriceListMVCActionCommand
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

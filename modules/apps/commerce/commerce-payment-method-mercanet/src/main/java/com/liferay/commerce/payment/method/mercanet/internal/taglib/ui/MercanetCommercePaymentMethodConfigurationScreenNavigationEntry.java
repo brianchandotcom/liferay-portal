@@ -127,8 +127,8 @@ public class MercanetCommercePaymentMethodConfigurationScreenNavigationEntry
 				MercanetGroupServiceConfiguration.class.getName(),
 				mercanetGroupServiceConfiguration);
 		}
-		catch (Exception e) {
-			throw new IOException(e);
+		catch (Exception exception) {
+			throw new IOException(exception);
 		}
 
 		_jspRenderer.renderJSP(

@@ -112,14 +112,14 @@ public class EditCommerceShippingFixedOptionMVCActionCommand
 				deleteCommerceShippingFixedOptions(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchShippingFixedOptionException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchShippingFixedOptionException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

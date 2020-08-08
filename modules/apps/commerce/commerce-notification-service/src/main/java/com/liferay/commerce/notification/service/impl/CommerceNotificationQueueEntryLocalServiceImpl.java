@@ -281,7 +281,7 @@ public class CommerceNotificationQueueEntryLocalServiceImpl
 						getCommerceNotificationQueueEntryId(),
 					true);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 		}
 	}

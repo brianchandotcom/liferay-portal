@@ -36,15 +36,15 @@ public class CPInstanceItemSelectorChecker extends EmptyOnClickRowChecker {
 	}
 
 	@Override
-	public boolean isChecked(Object obj) {
-		CPInstance cpInstance = (CPInstance)obj;
+	public boolean isChecked(Object object) {
+		CPInstance cpInstance = (CPInstance)object;
 
 		return _checkedCPInstanceIds.contains(cpInstance.getCPInstanceId());
 	}
 
 	@Override
-	public boolean isDisabled(Object obj) {
-		return isChecked(obj);
+	public boolean isDisabled(Object object) {
+		return isChecked(object);
 	}
 
 	private final Set<Long> _checkedCPInstanceIds;

@@ -68,17 +68,19 @@ public class StepTrackerTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		if (Validator.isNull(_spritemap)) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			_spritemap = themeDisplay.getPathThemeImages() + "/clay/icons.svg";
 		}
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-commerce:step-tracker:spritemap", _spritemap);
-		request.setAttribute("liferay-commerce:step-tracker:steps", _steps);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:step-tracker:steps", _steps);
 	}
 
 	private static final String _PAGE = "/step_tracker/page.jsp";

@@ -48,19 +48,19 @@ public class CommerceShipmentItemFinderImpl
 			String sql = _customSQL.get(
 				getClass(), GET_COMMERCE_SHIPMENT_ORDER_ITEMS_QUANTITY);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addScalar("SUM_VALUE", Type.LONG);
+			sqlQuery.addScalar("SUM_VALUE", Type.LONG);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(commerceShipmentId);
-			qPos.add(commerceOrderItemId);
+			queryPos.add(commerceShipmentId);
+			queryPos.add(commerceOrderItemId);
 
-			Iterator<Long> itr = q.iterate();
+			Iterator<Long> iterator = sqlQuery.iterate();
 
-			if (itr.hasNext()) {
-				Long sum = itr.next();
+			if (iterator.hasNext()) {
+				Long sum = iterator.next();
 
 				if (sum != null) {
 					return sum.intValue();
@@ -69,8 +69,8 @@ public class CommerceShipmentItemFinderImpl
 
 			return 0;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);

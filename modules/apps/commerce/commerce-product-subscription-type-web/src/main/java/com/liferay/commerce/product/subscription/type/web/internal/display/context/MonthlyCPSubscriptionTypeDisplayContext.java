@@ -32,41 +32,42 @@ public class MonthlyCPSubscriptionTypeDisplayContext {
 	}
 
 	public int getMonthDay() {
-		UnicodeProperties subscriptionTypeSettingsProperties =
+		UnicodeProperties subscriptionTypeSettingsUnicodeProperties =
 			CommerceSubscriptionTypeUtil.getSubscriptionTypeSettingsProperties(
 				_object, _payment);
 
-		if ((subscriptionTypeSettingsProperties == null) ||
-			subscriptionTypeSettingsProperties.isEmpty()) {
+		if ((subscriptionTypeSettingsUnicodeProperties == null) ||
+			subscriptionTypeSettingsUnicodeProperties.isEmpty()) {
 
 			return 1;
 		}
 
 		if (isPayment()) {
 			return GetterUtil.getInteger(
-				subscriptionTypeSettingsProperties.get("monthDay"));
+				subscriptionTypeSettingsUnicodeProperties.get("monthDay"));
 		}
 
 		return GetterUtil.getInteger(
-			subscriptionTypeSettingsProperties.get("deliveryMonthDay"));
+			subscriptionTypeSettingsUnicodeProperties.get("deliveryMonthDay"));
 	}
 
 	public int getSelectedMonthlyMode() {
-		UnicodeProperties subscriptionTypeSettingsProperties =
+		UnicodeProperties subscriptionTypeSettingsUnicodeProperties =
 			CommerceSubscriptionTypeUtil.getSubscriptionTypeSettingsProperties(
 				_object, _payment);
 
-		if (subscriptionTypeSettingsProperties == null) {
+		if (subscriptionTypeSettingsUnicodeProperties == null) {
 			return CPSubscriptionTypeConstants.MODE_ORDER_DATE;
 		}
 
 		if (isPayment()) {
 			return GetterUtil.getInteger(
-				subscriptionTypeSettingsProperties.get("monthlyMode"));
+				subscriptionTypeSettingsUnicodeProperties.get("monthlyMode"));
 		}
 
 		return GetterUtil.getInteger(
-			subscriptionTypeSettingsProperties.get("deliveryMonthlyMode"));
+			subscriptionTypeSettingsUnicodeProperties.get(
+				"deliveryMonthlyMode"));
 	}
 
 	public boolean isPayment() {

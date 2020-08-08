@@ -23,21 +23,21 @@ public class CPSubscriptionInfo {
 
 	public CPSubscriptionInfo(
 		int subscriptionLength, String subscriptionType,
-		UnicodeProperties subscriptionTypeSettingsProperties,
+		UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 		long maxSubscriptionCycleNumber, int deliverySubscriptionLength,
 		String deliverySubscriptionType,
-		UnicodeProperties deliverySubscriptionTypeSettingsProperties,
+		UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
 		long deliveryMaxSubscriptionCycleNumber) {
 
 		_subscriptionLength = subscriptionLength;
 		_subscriptionType = subscriptionType;
-		_subscriptionTypeSettingsProperties =
-			subscriptionTypeSettingsProperties;
+		_subscriptionTypeSettingsUnicodeProperties =
+			subscriptionTypeSettingsUnicodeProperties;
 		_maxSubscriptionCycles = maxSubscriptionCycleNumber;
 		_deliverySubscriptionLength = deliverySubscriptionLength;
 		_deliverySubscriptionType = deliverySubscriptionType;
-		_deliverySubscriptionTypeSettingsProperties =
-			deliverySubscriptionTypeSettingsProperties;
+		_deliverySubscriptionTypeSettingsUnicodeProperties =
+			deliverySubscriptionTypeSettingsUnicodeProperties;
 		_deliveryMaxSubscriptionCycles = deliveryMaxSubscriptionCycleNumber;
 	}
 
@@ -54,7 +54,7 @@ public class CPSubscriptionInfo {
 	}
 
 	public UnicodeProperties getDeliverySubscriptionTypeSettingsProperties() {
-		return _deliverySubscriptionTypeSettingsProperties;
+		return _deliverySubscriptionTypeSettingsUnicodeProperties;
 	}
 
 	public long getMaxSubscriptionCycles() {
@@ -70,16 +70,17 @@ public class CPSubscriptionInfo {
 	}
 
 	public UnicodeProperties getSubscriptionTypeSettingsProperties() {
-		return _subscriptionTypeSettingsProperties;
+		return _subscriptionTypeSettingsUnicodeProperties;
 	}
 
 	private final long _deliveryMaxSubscriptionCycles;
 	private final int _deliverySubscriptionLength;
 	private final String _deliverySubscriptionType;
-	private final UnicodeProperties _deliverySubscriptionTypeSettingsProperties;
+	private final UnicodeProperties
+		_deliverySubscriptionTypeSettingsUnicodeProperties;
 	private final long _maxSubscriptionCycles;
 	private final int _subscriptionLength;
 	private final String _subscriptionType;
-	private final UnicodeProperties _subscriptionTypeSettingsProperties;
+	private final UnicodeProperties _subscriptionTypeSettingsUnicodeProperties;
 
 }

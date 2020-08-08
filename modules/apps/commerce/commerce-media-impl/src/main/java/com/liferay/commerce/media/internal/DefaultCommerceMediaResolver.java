@@ -247,8 +247,8 @@ public class DefaultCommerceMediaResolver implements CommerceMediaResolver {
 				fileEntry.getFileName(), getBytes(fileEntry),
 				fileEntry.getMimeType(), contentDisposition);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
 			httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
 		}
@@ -280,9 +280,9 @@ public class DefaultCommerceMediaResolver implements CommerceMediaResolver {
 		try {
 			return _dlAppLocalService.getFileEntry(fileEntryId);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
 			return null;
@@ -305,8 +305,8 @@ public class DefaultCommerceMediaResolver implements CommerceMediaResolver {
 					return company.getGroupId();
 				}
 			}
-			catch (PortalException pe) {
-				_log.error(pe, pe);
+			catch (PortalException portalException) {
+				_log.error(portalException, portalException);
 			}
 		}
 		else if (mediaType.equals("products")) {
@@ -355,8 +355,8 @@ public class DefaultCommerceMediaResolver implements CommerceMediaResolver {
 				fileEntry.getFileName(), getBytes(fileEntry),
 				fileEntry.getMimeType(), contentDisposition);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
 			httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
 		}

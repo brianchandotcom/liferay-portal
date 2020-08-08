@@ -99,10 +99,10 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			boolean neverExpire, boolean overrideSubscriptionInfo,
 			boolean subscriptionEnabled, int subscriptionLength,
 			String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
 			int deliverySubscriptionLength, String deliverySubscriptionType,
-			UnicodeProperties deliverySubscriptionTypeSettingsProperties,
+			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
 			long deliveryMaxSubscriptionCycles, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -115,10 +115,10 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			overrideSubscriptionInfo, subscriptionEnabled, subscriptionLength,
-			subscriptionType, subscriptionTypeSettingsProperties,
+			subscriptionType, subscriptionTypeSettingsUnicodeProperties,
 			maxSubscriptionCycles, deliverySubscriptionEnabled,
 			deliverySubscriptionLength, deliverySubscriptionType,
-			deliverySubscriptionTypeSettingsProperties,
+			deliverySubscriptionTypeSettingsUnicodeProperties,
 			deliveryMaxSubscriptionCycles, null, serviceContext);
 	}
 
@@ -139,10 +139,10 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			boolean neverExpire, boolean overrideSubscriptionInfo,
 			boolean subscriptionEnabled, int subscriptionLength,
 			String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
 			int deliverySubscriptionLength, String deliverySubscriptionType,
-			UnicodeProperties deliverySubscriptionTypeSettingsProperties,
+			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
 			long deliveryMaxSubscriptionCycles, String unspsc,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -209,13 +209,13 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstance.setSubscriptionLength(subscriptionLength);
 		cpInstance.setSubscriptionType(subscriptionType);
 		cpInstance.setSubscriptionTypeSettingsProperties(
-			subscriptionTypeSettingsProperties);
+			subscriptionTypeSettingsUnicodeProperties);
 		cpInstance.setMaxSubscriptionCycles(maxSubscriptionCycles);
 		cpInstance.setDeliverySubscriptionEnabled(deliverySubscriptionEnabled);
 		cpInstance.setDeliverySubscriptionLength(deliverySubscriptionLength);
 		cpInstance.setDeliverySubscriptionType(deliverySubscriptionType);
 		cpInstance.setDeliverySubscriptionTypeSettingsProperties(
-			deliverySubscriptionTypeSettingsProperties);
+			deliverySubscriptionTypeSettingsUnicodeProperties);
 		cpInstance.setDeliveryMaxSubscriptionCycles(
 			deliveryMaxSubscriptionCycles);
 
@@ -298,7 +298,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			boolean neverExpire, boolean overrideSubscriptionInfo,
 			boolean subscriptionEnabled, int subscriptionLength,
 			String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -311,7 +311,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			overrideSubscriptionInfo, subscriptionEnabled, subscriptionLength,
-			subscriptionType, subscriptionTypeSettingsProperties,
+			subscriptionType, subscriptionTypeSettingsUnicodeProperties,
 			maxSubscriptionCycles, null, serviceContext);
 	}
 
@@ -331,7 +331,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			boolean neverExpire, boolean overrideSubscriptionInfo,
 			boolean subscriptionEnabled, int subscriptionLength,
 			String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, String unspsc,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -345,7 +345,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			overrideSubscriptionInfo, subscriptionEnabled, subscriptionLength,
-			subscriptionType, subscriptionTypeSettingsProperties,
+			subscriptionType, subscriptionTypeSettingsUnicodeProperties,
 			maxSubscriptionCycles, false, 1, null, null, 0, unspsc,
 			serviceContext);
 	}
@@ -499,7 +499,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	 * @param      subscriptionEnabled
 	 * @param      subscriptionLength
 	 * @param      subscriptionType
-	 * @param      subscriptionTypeSettingsProperties
+	 * @param      subscriptionTypeSettingsUnicodeProperties
 	 * @param      maxSubscriptionCycles
 	 * @param      serviceContext
 	 * @return
@@ -527,7 +527,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			boolean neverExpire, boolean overrideSubscriptionInfo,
 			boolean subscriptionEnabled, int subscriptionLength,
 			String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -539,7 +539,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			overrideSubscriptionInfo, subscriptionEnabled, subscriptionLength,
-			subscriptionType, subscriptionTypeSettingsProperties,
+			subscriptionType, subscriptionTypeSettingsUnicodeProperties,
 			maxSubscriptionCycles, null, serviceContext);
 	}
 
@@ -575,7 +575,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	 * @param      subscriptionEnabled
 	 * @param      subscriptionLength
 	 * @param      subscriptionType
-	 * @param      subscriptionTypeSettingsProperties
+	 * @param      subscriptionTypeSettingsUnicodeProperties
 	 * @param      maxSubscriptionCycles
 	 * @param      unspsc
 	 * @param      serviceContext
@@ -604,7 +604,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			boolean neverExpire, boolean overrideSubscriptionInfo,
 			boolean subscriptionEnabled, int subscriptionLength,
 			String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, String unspsc,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -621,7 +621,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			overrideSubscriptionInfo, subscriptionEnabled, subscriptionLength,
-			subscriptionType, subscriptionTypeSettingsProperties,
+			subscriptionType, subscriptionTypeSettingsUnicodeProperties,
 			maxSubscriptionCycles, unspsc, serviceContext);
 	}
 
@@ -1139,8 +1139,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 			return indexer.search(searchContext);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -1541,10 +1541,10 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			long cpInstanceId, boolean overrideSubscriptionInfo,
 			boolean subscriptionEnabled, int subscriptionLength,
 			String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
 			int deliverySubscriptionLength, String deliverySubscriptionType,
-			UnicodeProperties deliverySubscriptionTypeSettingsProperties,
+			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
 			long deliveryMaxSubscriptionCycles)
 		throws PortalException {
 
@@ -1568,13 +1568,13 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstance.setSubscriptionLength(subscriptionLength);
 		cpInstance.setSubscriptionType(subscriptionType);
 		cpInstance.setSubscriptionTypeSettingsProperties(
-			subscriptionTypeSettingsProperties);
+			subscriptionTypeSettingsUnicodeProperties);
 		cpInstance.setMaxSubscriptionCycles(maxSubscriptionCycles);
 		cpInstance.setDeliverySubscriptionEnabled(deliverySubscriptionEnabled);
 		cpInstance.setDeliverySubscriptionLength(deliverySubscriptionLength);
 		cpInstance.setDeliverySubscriptionType(deliverySubscriptionType);
 		cpInstance.setDeliverySubscriptionTypeSettingsProperties(
-			deliverySubscriptionTypeSettingsProperties);
+			deliverySubscriptionTypeSettingsUnicodeProperties);
 		cpInstance.setDeliveryMaxSubscriptionCycles(
 			deliveryMaxSubscriptionCycles);
 
@@ -1590,14 +1590,14 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			long cpInstanceId, boolean overrideSubscriptionInfo,
 			boolean subscriptionEnabled, int subscriptionLength,
 			String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, ServiceContext serviceContext)
 		throws PortalException {
 
 		return cpInstanceLocalService.updateSubscriptionInfo(
 			cpInstanceId, overrideSubscriptionInfo, subscriptionEnabled,
 			subscriptionLength, subscriptionType,
-			subscriptionTypeSettingsProperties, maxSubscriptionCycles, false, 1,
+			subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles, false, 1,
 			null, null, 0);
 	}
 

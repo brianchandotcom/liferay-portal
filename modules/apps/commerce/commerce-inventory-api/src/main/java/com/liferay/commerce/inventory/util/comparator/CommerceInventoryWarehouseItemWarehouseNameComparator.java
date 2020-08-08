@@ -71,8 +71,8 @@ public class CommerceInventoryWarehouseItemWarehouseNameComparator
 
 			return Math.negateExact(value);
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 

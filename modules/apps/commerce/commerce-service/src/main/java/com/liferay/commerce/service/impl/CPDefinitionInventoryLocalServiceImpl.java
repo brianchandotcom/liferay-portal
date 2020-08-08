@@ -122,8 +122,8 @@ public class CPDefinitionInventoryLocalServiceImpl
 					cpDefinitionInventoryPersistence.findByCPDefinitionId(
 						newCPDefinition.getCPDefinitionId());
 			}
-			catch (PortalException pe) {
-				throw new SystemException(pe);
+			catch (PortalException portalException) {
+				throw new SystemException(portalException);
 			}
 		}
 

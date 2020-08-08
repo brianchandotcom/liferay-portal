@@ -189,12 +189,12 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 					indexableActionableDynamicQuery.addDocuments(
 						getDocument(cpOption));
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to index commerce product option " +
 								cpOption.getCPOptionId(),
-							pe);
+							portalException);
 					}
 				}
 			});

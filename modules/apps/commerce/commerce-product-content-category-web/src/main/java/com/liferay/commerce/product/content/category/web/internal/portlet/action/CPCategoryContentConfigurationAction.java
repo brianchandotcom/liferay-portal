@@ -56,8 +56,8 @@ public class CPCategoryContentConfigurationAction
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				cpCategoryContentDisplayContext);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return "/configuration.jsp";

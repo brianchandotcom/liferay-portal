@@ -47,8 +47,8 @@ public class PortalInstanceLifecycleListenerImpl
 					company.getCompanyId());
 			}
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 	}
 

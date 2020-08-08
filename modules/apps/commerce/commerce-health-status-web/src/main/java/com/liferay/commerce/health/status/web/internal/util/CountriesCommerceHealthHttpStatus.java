@@ -60,8 +60,8 @@ public class CountriesCommerceHealthHttpStatus
 		try {
 			_commerceCountryLocalService.importDefaultCountries(serviceContext);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 

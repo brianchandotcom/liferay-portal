@@ -83,14 +83,14 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 			long userId, long groupId, long commerceOrderItemId,
 			int subscriptionLength, String subscriptionType,
 			long maxSubscriptionCycles,
-			UnicodeProperties subscriptionTypeSettingsProperties)
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
 		throws PortalException {
 
 		return commerceSubscriptionEntryLocalService.
 			addCommerceSubscriptionEntry(
 				userId, groupId, commerceOrderItemId, subscriptionLength,
 				subscriptionType, maxSubscriptionCycles,
-				subscriptionTypeSettingsProperties, 0, null, 0, null);
+				subscriptionTypeSettingsUnicodeProperties, 0, null, 0, null);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -99,10 +99,10 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 			long userId, long groupId, long commerceOrderItemId,
 			int subscriptionLength, String subscriptionType,
 			long maxSubscriptionCycles,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			int deliverySubscriptionLength, String deliverySubscriptionType,
 			long deliveryMaxSubscriptionCycles,
-			UnicodeProperties deliverySubscriptionTypeSettingsProperties)
+			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
@@ -133,7 +133,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 		commerceSubscriptionEntry.setMaxSubscriptionCycles(
 			maxSubscriptionCycles);
 		commerceSubscriptionEntry.setSubscriptionTypeSettingsProperties(
-			subscriptionTypeSettingsProperties);
+			subscriptionTypeSettingsUnicodeProperties);
 		commerceSubscriptionEntry.setLastIterationDate(new Date());
 		commerceSubscriptionEntry.setDeliverySubscriptionLength(
 			deliverySubscriptionLength);
@@ -143,7 +143,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 		commerceSubscriptionEntry.setDeliveryMaxSubscriptionCycles(
 			deliveryMaxSubscriptionCycles);
 		commerceSubscriptionEntry.setDeliverySubscriptionTypeSettingsProperties(
-			deliverySubscriptionTypeSettingsProperties);
+			deliverySubscriptionTypeSettingsUnicodeProperties);
 		commerceSubscriptionEntry.setDeliveryLastIterationDate(new Date());
 
 		if (cpSubscriptionType != null) {
@@ -153,14 +153,14 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 			Date subscriptionNextIterationDate =
 				cpSubscriptionType.getSubscriptionNextIterationDate(
 					user.getTimeZone(), subscriptionLength,
-					subscriptionTypeSettingsProperties, null);
+					subscriptionTypeSettingsUnicodeProperties, null);
 
 			commerceSubscriptionEntry.setNextIterationDate(
 				subscriptionNextIterationDate);
 
 			Date subscriptionStartDate =
 				cpSubscriptionType.getSubscriptionStartDate(
-					user.getTimeZone(), subscriptionTypeSettingsProperties);
+					user.getTimeZone(), subscriptionTypeSettingsUnicodeProperties);
 
 			commerceSubscriptionEntry.setStartDate(subscriptionStartDate);
 		}
@@ -177,7 +177,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 			Date subscriptionNextIterationDate =
 				deliveryCPSubscriptionType.getSubscriptionNextIterationDate(
 					user.getTimeZone(), deliverySubscriptionLength,
-					deliverySubscriptionTypeSettingsProperties, null);
+					deliverySubscriptionTypeSettingsUnicodeProperties, null);
 
 			commerceSubscriptionEntry.setDeliveryNextIterationDate(
 				subscriptionNextIterationDate);
@@ -185,7 +185,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 			Date subscriptionStartDate =
 				deliveryCPSubscriptionType.getSubscriptionStartDate(
 					user.getTimeZone(),
-					deliverySubscriptionTypeSettingsProperties);
+					deliverySubscriptionTypeSettingsUnicodeProperties);
 
 			commerceSubscriptionEntry.setDeliveryStartDate(
 				subscriptionStartDate);
@@ -475,7 +475,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 	public CommerceSubscriptionEntry updateCommerceSubscriptionEntry(
 			long commerceSubscriptionEntryId, int subscriptionLength,
 			String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, int subscriptionStatus,
 			int nextIterationDateMonth, int nextIterationDateDay,
 			int nextIterationDateYear, int nextIterationDateHour,
@@ -485,7 +485,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 		return commerceSubscriptionEntryLocalService.
 			updateCommerceSubscriptionEntry(
 				commerceSubscriptionEntryId, subscriptionLength,
-				subscriptionType, subscriptionTypeSettingsProperties,
+				subscriptionType, subscriptionTypeSettingsUnicodeProperties,
 				maxSubscriptionCycles, subscriptionStatus,
 				nextIterationDateMonth, nextIterationDateDay,
 				nextIterationDateYear, nextIterationDateHour,
@@ -499,13 +499,13 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 	public CommerceSubscriptionEntry updateCommerceSubscriptionEntry(
 			long commerceSubscriptionEntryId, int subscriptionLength,
 			String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, int subscriptionStatus,
 			int nextIterationDateMonth, int nextIterationDateDay,
 			int nextIterationDateYear, int nextIterationDateHour,
 			int nextIterationDateMinute, int deliverySubscriptionLength,
 			String deliverySubscriptionType,
-			UnicodeProperties deliverySubscriptionTypeSettingsProperties,
+			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
 			long deliveryMaxSubscriptionCycles, int deliverySubscriptionStatus,
 			int deliveryNextIterationDateMonth,
 			int deliveryNextIterationDateDay, int deliveryNextIterationDateYear,
@@ -531,7 +531,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 		commerceSubscriptionEntry.setSubscriptionLength(subscriptionLength);
 		commerceSubscriptionEntry.setSubscriptionType(subscriptionType);
 		commerceSubscriptionEntry.setSubscriptionTypeSettingsProperties(
-			subscriptionTypeSettingsProperties);
+			subscriptionTypeSettingsUnicodeProperties);
 		commerceSubscriptionEntry.setMaxSubscriptionCycles(
 			maxSubscriptionCycles);
 		commerceSubscriptionEntry.setSubscriptionStatus(subscriptionStatus);
@@ -554,7 +554,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 		commerceSubscriptionEntry.setDeliverySubscriptionType(
 			deliverySubscriptionType);
 		commerceSubscriptionEntry.setDeliverySubscriptionTypeSettingsProperties(
-			deliverySubscriptionTypeSettingsProperties);
+			deliverySubscriptionTypeSettingsUnicodeProperties);
 		commerceSubscriptionEntry.setDeliveryMaxSubscriptionCycles(
 			deliveryMaxSubscriptionCycles);
 		commerceSubscriptionEntry.setDeliverySubscriptionStatus(

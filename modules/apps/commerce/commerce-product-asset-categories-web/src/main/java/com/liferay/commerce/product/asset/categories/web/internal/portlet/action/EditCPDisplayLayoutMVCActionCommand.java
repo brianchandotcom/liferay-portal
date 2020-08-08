@@ -97,19 +97,19 @@ public class EditCPDisplayLayoutMVCActionCommand extends BaseMVCActionCommand {
 				deleteCPDisplayLayouts(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchCategoryException ||
-				e instanceof NoSuchCPDisplayLayoutException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchCategoryException ||
+				exception instanceof NoSuchCPDisplayLayoutException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (e instanceof CPDisplayLayoutEntryException ||
-					 e instanceof CPDisplayLayoutLayoutUuidException) {
+			else if (exception instanceof CPDisplayLayoutEntryException ||
+					 exception instanceof CPDisplayLayoutLayoutUuidException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName", "editCategoryDisplayLayout");

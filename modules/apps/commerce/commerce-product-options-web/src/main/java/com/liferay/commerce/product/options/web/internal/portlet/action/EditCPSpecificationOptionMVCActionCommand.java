@@ -98,25 +98,25 @@ public class EditCPSpecificationOptionMVCActionCommand
 				updateCPSpecificationOption(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchCPSpecificationOptionException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchCPSpecificationOptionException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (e instanceof CPSpecificationOptionKeyException) {
+			else if (exception instanceof CPSpecificationOptionKeyException) {
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName", "editProductSpecificationOption");
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

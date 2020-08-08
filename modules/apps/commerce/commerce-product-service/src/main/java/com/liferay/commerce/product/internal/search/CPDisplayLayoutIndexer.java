@@ -220,12 +220,12 @@ public class CPDisplayLayoutIndexer extends BaseIndexer<CPDisplayLayout> {
 					indexableActionableDynamicQuery.addDocuments(
 						getDocument(cpDisplayLayout));
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to index commerce product display layout " +
 								cpDisplayLayout.getCPDisplayLayoutId(),
-							pe);
+							portalException);
 					}
 				}
 			});

@@ -117,8 +117,8 @@ public class CommerceOrderSearch extends SearchContainer<CommerceOrder> {
 			setOrderByCol(orderByCol);
 			setOrderByType(orderByType);
 		}
-		catch (Exception e) {
-			_log.error("Unable to initialize commerce order search", e);
+		catch (Exception exception) {
+			_log.error("Unable to initialize commerce order search", exception);
 		}
 	}
 

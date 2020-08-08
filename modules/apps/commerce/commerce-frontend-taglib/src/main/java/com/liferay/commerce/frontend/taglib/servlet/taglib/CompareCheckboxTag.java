@@ -78,8 +78,8 @@ public class CompareCheckboxTag extends ComponentRendererTag {
 
 			putValue("inCompare", cpDefinitionIds.contains(cpDefinitionId));
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		setTemplateNamespace("CompareCheckbox.render");

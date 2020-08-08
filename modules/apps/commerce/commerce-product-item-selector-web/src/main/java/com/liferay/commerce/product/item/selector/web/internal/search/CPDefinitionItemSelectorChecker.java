@@ -38,24 +38,24 @@ public class CPDefinitionItemSelectorChecker extends EmptyOnClickRowChecker {
 	}
 
 	@Override
-	public boolean isChecked(Object obj) {
-		CPDefinition cpDefinition = (CPDefinition)obj;
+	public boolean isChecked(Object object) {
+		CPDefinition cpDefinition = (CPDefinition)object;
 
 		return _checkedCPDefinitionIds.contains(
 			cpDefinition.getCPDefinitionId());
 	}
 
 	@Override
-	public boolean isDisabled(Object obj) {
-		CPDefinition cpDefinition = (CPDefinition)obj;
+	public boolean isDisabled(Object object) {
+		CPDefinition cpDefinition = (CPDefinition)object;
 
-		boolean isCPDefinitionDisabled = false;
+		boolean cpDefinitionDisabled = false;
 
 		if (_disabledCPDefinitionId == cpDefinition.getCPDefinitionId()) {
-			isCPDefinitionDisabled = true;
+			cpDefinitionDisabled = true;
 		}
 
-		if (isChecked(obj) || isCPDefinitionDisabled) {
+		if (isChecked(object) || cpDefinitionDisabled) {
 			return true;
 		}
 

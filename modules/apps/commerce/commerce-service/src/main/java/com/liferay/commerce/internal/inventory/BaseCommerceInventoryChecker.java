@@ -54,8 +54,9 @@ public abstract class BaseCommerceInventoryChecker<T>
 				return true;
 			}
 		}
-		catch (PortalException pe) {
-			_log.error("Unable to check is back order allowed", pe);
+		catch (PortalException portalException) {
+			_log.error(
+				"Unable to check is back order allowed", portalException);
 		}
 
 		return false;

@@ -122,26 +122,26 @@ public class CommerceOrderFinderImpl
 						"[$AND_OR_NULL_CHECK$])");
 			}
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
 			long groupId = (Long)queryDefinition.getAttribute("groupId");
 
-			qPos.add(groupId);
+			queryPos.add(groupId);
 
 			if (Validator.isNotNull(keywords)) {
-				qPos.add(names, 2);
+				queryPos.add(names, 2);
 			}
 
-			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+			sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
 			int count = 0;
 
-			Iterator<Long> itr = q.iterate();
+			Iterator<Long> iterator = sqlQuery.iterate();
 
-			while (itr.hasNext()) {
-				Long l = itr.next();
+			while (iterator.hasNext()) {
+				Long l = iterator.next();
 
 				if (l != null) {
 					count += l.intValue();
@@ -150,8 +150,8 @@ public class CommerceOrderFinderImpl
 
 			return count;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -169,19 +169,21 @@ public class CommerceOrderFinderImpl
 
 			String sql = _customSQL.get(getClass(), FIND_BY_G_U_C_O_S);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(CommerceOrderImpl.TABLE_NAME, CommerceOrderImpl.class);
+			sqlQuery.addEntity(
+				CommerceOrderImpl.TABLE_NAME, CommerceOrderImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(groupId);
-			qPos.add(commerceAccountId);
-			qPos.add(orderStatus);
-			qPos.add(userId);
+			queryPos.add(groupId);
+			queryPos.add(commerceAccountId);
+			queryPos.add(orderStatus);
+			queryPos.add(userId);
 
 			List<CommerceOrder> commerceOrders =
-				(List<CommerceOrder>)QueryUtil.list(q, getDialect(), 0, 1);
+				(List<CommerceOrder>)QueryUtil.list(
+					sqlQuery, getDialect(), 0, 1);
 
 			if (!commerceOrders.isEmpty()) {
 				return commerceOrders.get(0);
@@ -189,8 +191,8 @@ public class CommerceOrderFinderImpl
 
 			return null;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -274,26 +276,27 @@ public class CommerceOrderFinderImpl
 						"[$AND_OR_NULL_CHECK$])");
 			}
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(CommerceOrderImpl.TABLE_NAME, CommerceOrderImpl.class);
+			sqlQuery.addEntity(
+				CommerceOrderImpl.TABLE_NAME, CommerceOrderImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
 			long groupId = (Long)queryDefinition.getAttribute("groupId");
 
-			qPos.add(groupId);
+			queryPos.add(groupId);
 
 			if (Validator.isNotNull(keywords)) {
-				qPos.add(names, 2);
+				queryPos.add(names, 2);
 			}
 
 			return (List<CommerceOrder>)QueryUtil.list(
-				q, getDialect(), queryDefinition.getStart(),
+				sqlQuery, getDialect(), queryDefinition.getStart(),
 				queryDefinition.getEnd());
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -313,19 +316,19 @@ public class CommerceOrderFinderImpl
 				getClass(),
 				GET_SHIPPED_COMMERCE_ORDERS_BY_COMMERCE_SHIPMENT_ID);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity("CommerceOrder", CommerceOrderImpl.class);
+			sqlQuery.addEntity("CommerceOrder", CommerceOrderImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(shipmentId);
+			queryPos.add(shipmentId);
 
 			return (List<CommerceOrder>)QueryUtil.list(
-				q, getDialect(), start, end);
+				sqlQuery, getDialect(), start, end);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -344,19 +347,19 @@ public class CommerceOrderFinderImpl
 
 			sql = replaceOrderStatus(sql, orderStatuses);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity("CommerceOrder", CommerceOrderImpl.class);
+			sqlQuery.addEntity("CommerceOrder", CommerceOrderImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(groupId);
+			queryPos.add(groupId);
 
 			return (List<CommerceOrder>)QueryUtil.list(
-				q, getDialect(), start, end);
+				sqlQuery, getDialect(), start, end);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);

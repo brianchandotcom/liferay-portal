@@ -114,8 +114,8 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 							cpDefinitionSpecificationOptionValue.
 								getCPDefinitionSpecificationOptionValueId());
 			}
-			catch (PortalException pe) {
-				throw new SystemException(pe);
+			catch (PortalException portalException) {
+				throw new SystemException(portalException);
 			}
 		}
 
@@ -184,7 +184,7 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 
 		List<CPDefinitionSpecificationOptionValue>
 			cpDefinitionSpecificationOptionValues =
-				getCPSpecificationOptionDefinitionValues(
+				getCPDefinitionSpecificationOptionValues(
 					cpSpecificationOptionId);
 
 		// Commerce product definition specification option value
@@ -252,7 +252,7 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 
 	@Override
 	public List<CPDefinitionSpecificationOptionValue>
-		getCPSpecificationOptionDefinitionValues(long cpSpecificationOptionId) {
+		getCPDefinitionSpecificationOptionValues(long cpSpecificationOptionId) {
 
 		return cpDefinitionSpecificationOptionValuePersistence.
 			findByCPSpecificationOptionId(cpSpecificationOptionId);
@@ -260,7 +260,7 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 
 	@Override
 	public List<CPDefinitionSpecificationOptionValue>
-		getCPSpecificationOptionDefinitionValues(
+		getCPDefinitionSpecificationOptionValues(
 			long cpSpecificationOptionId, int start, int end) {
 
 		return cpDefinitionSpecificationOptionValuePersistence.

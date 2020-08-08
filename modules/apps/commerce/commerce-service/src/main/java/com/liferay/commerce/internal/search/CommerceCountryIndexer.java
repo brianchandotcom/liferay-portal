@@ -190,12 +190,12 @@ public class CommerceCountryIndexer extends BaseIndexer<CommerceCountry> {
 					indexableActionableDynamicQuery.addDocuments(
 						getDocument(commerceCountry));
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to index commerce country " +
 								commerceCountry.getCommerceCountryId(),
-							pe);
+							portalException);
 					}
 				}
 			});

@@ -55,14 +55,14 @@ public class YearlyCPSubscriptionTypeImpl implements CPSubscriptionType {
 	@Override
 	public Date getSubscriptionNextIterationDate(
 		TimeZone timeZone, int subscriptionLength,
-		UnicodeProperties subscriptionTypeSettingsProperties,
+		UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 		Date lastIterationDate) {
 
 		Calendar calendar = CalendarFactoryUtil.getCalendar(timeZone);
 
 		if (lastIterationDate == null) {
 			lastIterationDate = getSubscriptionStartDate(
-				timeZone, subscriptionTypeSettingsProperties);
+				timeZone, subscriptionTypeSettingsUnicodeProperties);
 		}
 
 		calendar.setTime(lastIterationDate);
@@ -70,9 +70,9 @@ public class YearlyCPSubscriptionTypeImpl implements CPSubscriptionType {
 		calendar.add(Calendar.YEAR, subscriptionLength);
 
 		int month = GetterUtil.getInteger(
-			subscriptionTypeSettingsProperties.get("month"));
+			subscriptionTypeSettingsUnicodeProperties.get("month"));
 		int monthDay = GetterUtil.getInteger(
-			subscriptionTypeSettingsProperties.get("monthDay"));
+			subscriptionTypeSettingsUnicodeProperties.get("monthDay"));
 
 		int dayOfYear = _getDayOfYear(calendar, month, monthDay);
 
@@ -84,18 +84,18 @@ public class YearlyCPSubscriptionTypeImpl implements CPSubscriptionType {
 	@Override
 	public Date getSubscriptionStartDate(
 		TimeZone timeZone,
-		UnicodeProperties subscriptionTypeSettingsProperties) {
+		UnicodeProperties subscriptionTypeSettingsUnicodeProperties) {
 
 		Date now = new Date();
 
-		if ((subscriptionTypeSettingsProperties == null) ||
-			subscriptionTypeSettingsProperties.isEmpty()) {
+		if ((subscriptionTypeSettingsUnicodeProperties == null) ||
+			subscriptionTypeSettingsUnicodeProperties.isEmpty()) {
 
 			return now;
 		}
 
 		int yearlyMode = GetterUtil.getInteger(
-			subscriptionTypeSettingsProperties.get("yearlyMode"));
+			subscriptionTypeSettingsUnicodeProperties.get("yearlyMode"));
 
 		if (yearlyMode == CPSubscriptionTypeConstants.MODE_EXACT_DAY_OF_YEAR) {
 			return now;
@@ -107,9 +107,9 @@ public class YearlyCPSubscriptionTypeImpl implements CPSubscriptionType {
 		int today = calendar.get(Calendar.DAY_OF_YEAR);
 
 		int month = GetterUtil.getInteger(
-			subscriptionTypeSettingsProperties.get("month"));
+			subscriptionTypeSettingsUnicodeProperties.get("month"));
 		int monthDay = GetterUtil.getInteger(
-			subscriptionTypeSettingsProperties.get("monthDay"));
+			subscriptionTypeSettingsUnicodeProperties.get("monthDay"));
 
 		int dayOfYear = _getDayOfYear(calendar, month, monthDay);
 

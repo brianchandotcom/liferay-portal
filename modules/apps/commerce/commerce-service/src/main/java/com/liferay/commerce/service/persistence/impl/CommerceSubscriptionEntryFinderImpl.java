@@ -58,23 +58,23 @@ public class CommerceSubscriptionEntryFinderImpl
 			String sql = _customSQL.get(
 				getClass(), FIND_BY_DELIVERY_NEXT_ITERATION_DATE);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(
+			sqlQuery.addEntity(
 				CommerceSubscriptionEntryImpl.TABLE_NAME,
 				CommerceSubscriptionEntryImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
 			if (nextIterationDate != null) {
-				qPos.add(nextIterationDate);
+				queryPos.add(nextIterationDate);
 			}
 
 			return (List<CommerceSubscriptionEntry>)QueryUtil.list(
-				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				sqlQuery, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -93,23 +93,23 @@ public class CommerceSubscriptionEntryFinderImpl
 			String sql = _customSQL.get(
 				getClass(), FIND_BY_NEXT_ITERATION_DATE);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(
+			sqlQuery.addEntity(
 				CommerceSubscriptionEntryImpl.TABLE_NAME,
 				CommerceSubscriptionEntryImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
 			if (nextIterationDate != null) {
-				qPos.add(nextIterationDate);
+				queryPos.add(nextIterationDate);
 			}
 
 			return (List<CommerceSubscriptionEntry>)QueryUtil.list(
-				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				sqlQuery, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -127,22 +127,22 @@ public class CommerceSubscriptionEntryFinderImpl
 
 			String sql = _customSQL.get(getClass(), FIND_BY_A_S);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(
+			sqlQuery.addEntity(
 				CommerceSubscriptionEntryImpl.TABLE_NAME,
 				CommerceSubscriptionEntryImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(commerceAccountId);
-			qPos.add(subscriptionStatus);
+			queryPos.add(commerceAccountId);
+			queryPos.add(subscriptionStatus);
 
 			return (List<CommerceSubscriptionEntry>)QueryUtil.list(
-				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				sqlQuery, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);

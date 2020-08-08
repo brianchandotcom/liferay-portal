@@ -120,8 +120,8 @@ public class CommerceNotificationEntryClayTable
 					LanguageUtil.get(httpServletRequest, "delete"), null, false,
 					false));
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exception) {
+			exception.printStackTrace();
 		}
 
 		return clayTableActions;

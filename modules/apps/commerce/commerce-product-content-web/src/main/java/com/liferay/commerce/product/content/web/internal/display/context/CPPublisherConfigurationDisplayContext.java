@@ -235,7 +235,7 @@ public class CPPublisherConfigurationDisplayContext
 
 			return portletURL.toString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;
@@ -349,7 +349,7 @@ public class CPPublisherConfigurationDisplayContext
 
 			return portletURL.toString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;

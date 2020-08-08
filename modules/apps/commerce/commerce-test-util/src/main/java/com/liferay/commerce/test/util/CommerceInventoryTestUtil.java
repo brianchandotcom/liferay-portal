@@ -197,7 +197,7 @@ public class CommerceInventoryTestUtil {
 			commerceRegion = CommerceRegionLocalServiceUtil.getCommerceRegion(
 				commerceCountry.getCommerceCountryId(), "ZZ");
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			commerceRegion = CommerceRegionLocalServiceUtil.addCommerceRegion(
 				commerceCountry.getCommerceCountryId(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),

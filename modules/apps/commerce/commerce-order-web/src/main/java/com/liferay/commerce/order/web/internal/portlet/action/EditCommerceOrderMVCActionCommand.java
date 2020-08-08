@@ -233,11 +233,11 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 				updateShippingAddress(actionRequest);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			hideDefaultErrorMessage(actionRequest);
 			hideDefaultSuccessMessage(actionRequest);
 
-			SessionErrors.add(actionRequest, e.getClass());
+			SessionErrors.add(actionRequest, exception.getClass());
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 

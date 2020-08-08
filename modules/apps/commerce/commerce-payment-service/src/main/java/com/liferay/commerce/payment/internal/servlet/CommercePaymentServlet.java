@@ -151,8 +151,8 @@ public class CommercePaymentServlet extends HttpServlet {
 				httpServletResponse.sendRedirect(_nextUrl);
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			// Payment Failed
 
@@ -164,8 +164,8 @@ public class CommercePaymentServlet extends HttpServlet {
 
 				httpServletResponse.sendRedirect(_nextUrl);
 			}
-			catch (PortalException pe) {
-				_log.error(pe, pe);
+			catch (PortalException portalException) {
+				_log.error(portalException, portalException);
 			}
 		}
 	}

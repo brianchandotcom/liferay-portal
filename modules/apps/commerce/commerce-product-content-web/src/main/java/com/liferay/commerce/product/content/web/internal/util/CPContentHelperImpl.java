@@ -199,8 +199,8 @@ public class CPContentHelperImpl implements CPContentHelper {
 					cProduct.getPublishedCPDefinitionId(),
 					_portal.getLocale(httpServletRequest));
 			}
-			catch (PortalException pe) {
-				_log.error(pe, pe);
+			catch (PortalException portalException) {
+				_log.error(portalException, portalException);
 			}
 		}
 

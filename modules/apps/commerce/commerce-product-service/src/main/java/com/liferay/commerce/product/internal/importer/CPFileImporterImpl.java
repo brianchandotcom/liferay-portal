@@ -239,10 +239,10 @@ public class CPFileImporterImpl implements CPFileImporter {
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 			serviceContext.getScopeGroupId(), privateLayout);
 
-		UnicodeProperties typeSettingProperties =
+		UnicodeProperties typeSettingUnicodeProperties =
 			layoutSet.getSettingsProperties();
 
-		setThemeSettingProperties(theme, typeSettingProperties);
+		setThemeSettingProperties(theme, typeSettingUnicodeProperties);
 
 		_layoutSetLocalService.updateLookAndFeel(
 			serviceContext.getScopeGroupId(), privateLayout, themeId,
@@ -485,11 +485,11 @@ public class CPFileImporterImpl implements CPFileImporter {
 	}
 
 	protected void deleteThemeSettingsProperties(
-		UnicodeProperties typeSettingsProperties, String device) {
+		UnicodeProperties typeSettingsUnicodeProperties, String device) {
 
 		String keyPrefix = ThemeSettingImpl.namespaceProperty(device);
 
-		Set<String> keys = typeSettingsProperties.keySet();
+		Set<String> keys = typeSettingsUnicodeProperties.keySet();
 
 		Iterator<String> iterator = keys.iterator();
 
@@ -594,9 +594,9 @@ public class CPFileImporterImpl implements CPFileImporter {
 				serviceContext.getScopeGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 		}
 
@@ -822,11 +822,11 @@ public class CPFileImporterImpl implements CPFileImporter {
 	}
 
 	protected void setThemeSettingProperties(
-		Theme theme, UnicodeProperties typeSettingProperties) {
+		Theme theme, UnicodeProperties typeSettingUnicodeProperties) {
 
 		String device = "regular";
 
-		deleteThemeSettingsProperties(typeSettingProperties, device);
+		deleteThemeSettingsProperties(typeSettingUnicodeProperties, device);
 
 		Map<String, ThemeSetting> themeSettings =
 			theme.getConfigurableSettings();
@@ -839,7 +839,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 			String value = themeSetting.getValue();
 
 			if (!value.equals(themeSetting.getValue())) {
-				typeSettingProperties.setProperty(
+				typeSettingUnicodeProperties.setProperty(
 					ThemeSettingImpl.namespaceProperty(device, key), value);
 			}
 		}
@@ -894,7 +894,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 	protected Layout updateLayoutLookAndFeel(
 		JSONObject jsonObject, Layout layout) {
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			layout.getTypeSettingsProperties();
 
 		Iterator<String> iterator = jsonObject.keys();
@@ -903,17 +903,17 @@ public class CPFileImporterImpl implements CPFileImporter {
 			String key = iterator.next();
 
 			Set<String> typeSettingPropertiesKeys =
-				typeSettingsProperties.keySet();
+				typeSettingsUnicodeProperties.keySet();
 
 			if (typeSettingPropertiesKeys.contains(key)) {
-				typeSettingsProperties.replace(key, jsonObject.getString(key));
+				typeSettingsUnicodeProperties.replace(key, jsonObject.getString(key));
 			}
 			else {
-				typeSettingsProperties.put(key, jsonObject.getString(key));
+				typeSettingsUnicodeProperties.put(key, jsonObject.getString(key));
 			}
 		}
 
-		layout.setTypeSettingsProperties(typeSettingsProperties);
+		layout.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 
 		return layout;
 	}

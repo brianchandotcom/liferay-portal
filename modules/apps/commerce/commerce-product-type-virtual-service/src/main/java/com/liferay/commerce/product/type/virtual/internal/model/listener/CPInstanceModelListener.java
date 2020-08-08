@@ -38,8 +38,8 @@ public class CPInstanceModelListener extends BaseModelListener<CPInstance> {
 					cpInstance.getModelClassName(),
 					cpInstance.getCPInstanceId());
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 

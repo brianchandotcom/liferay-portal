@@ -54,16 +54,16 @@ public class EditCPSpecificationOptionMVCRenderCommand
 		try {
 			setCPSpecificationOptionRequestAttribute(renderRequest);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchCPSpecificationOptionException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchCPSpecificationOptionException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/error.jsp";
 			}
 
-			throw new PortletException(e);
+			throw new PortletException(exception);
 		}
 
 		return "/edit_specification_option.jsp";

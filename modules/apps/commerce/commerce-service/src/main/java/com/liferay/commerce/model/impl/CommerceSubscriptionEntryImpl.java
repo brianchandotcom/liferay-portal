@@ -82,68 +82,71 @@ public class CommerceSubscriptionEntryImpl
 
 	@Override
 	public UnicodeProperties getDeliverySubscriptionTypeSettingsProperties() {
-		if (_deliverySubscriptionTypeSettingsProperties == null) {
-			_deliverySubscriptionTypeSettingsProperties = new UnicodeProperties(
-				true);
+		if (_deliverySubscriptionTypeSettingsUnicodeProperties == null) {
+			_deliverySubscriptionTypeSettingsUnicodeProperties =
+				new UnicodeProperties(true);
 
-			_deliverySubscriptionTypeSettingsProperties.fastLoad(
+			_deliverySubscriptionTypeSettingsUnicodeProperties.fastLoad(
 				getDeliverySubscriptionTypeSettings());
 		}
 
-		return _deliverySubscriptionTypeSettingsProperties;
+		return _deliverySubscriptionTypeSettingsUnicodeProperties;
 	}
 
 	@Override
 	public UnicodeProperties getSubscriptionTypeSettingsProperties() {
-		if (_subscriptionTypeSettingsProperties == null) {
-			_subscriptionTypeSettingsProperties = new UnicodeProperties(true);
+		if (_subscriptionTypeSettingsUnicodeProperties == null) {
+			_subscriptionTypeSettingsUnicodeProperties = new UnicodeProperties(
+				true);
 
-			_subscriptionTypeSettingsProperties.fastLoad(
+			_subscriptionTypeSettingsUnicodeProperties.fastLoad(
 				getSubscriptionTypeSettings());
 		}
 
-		return _subscriptionTypeSettingsProperties;
+		return _subscriptionTypeSettingsUnicodeProperties;
 	}
 
 	@Override
 	public void setDeliverySubscriptionTypeSettingsProperties(
-		UnicodeProperties deliverySubscriptionTypeSettingsProperties) {
+		UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties) {
 
-		_deliverySubscriptionTypeSettingsProperties =
-			deliverySubscriptionTypeSettingsProperties;
+		_deliverySubscriptionTypeSettingsUnicodeProperties =
+			deliverySubscriptionTypeSettingsUnicodeProperties;
 
-		if (_deliverySubscriptionTypeSettingsProperties == null) {
-			_deliverySubscriptionTypeSettingsProperties =
+		if (_deliverySubscriptionTypeSettingsUnicodeProperties == null) {
+			_deliverySubscriptionTypeSettingsUnicodeProperties =
 				new UnicodeProperties();
 		}
 
 		super.setSubscriptionTypeSettings(
-			_deliverySubscriptionTypeSettingsProperties.toString());
+			_deliverySubscriptionTypeSettingsUnicodeProperties.toString());
 	}
 
 	@Override
 	public void setSubscriptionTypeSettings(String subscriptionTypeSettings) {
 		super.setSubscriptionTypeSettings(subscriptionTypeSettings);
 
-		_subscriptionTypeSettingsProperties = null;
+		_subscriptionTypeSettingsUnicodeProperties = null;
 	}
 
 	@Override
 	public void setSubscriptionTypeSettingsProperties(
-		UnicodeProperties subscriptionTypeSettingsProperties) {
+		UnicodeProperties subscriptionTypeSettingsUnicodeProperties) {
 
-		_subscriptionTypeSettingsProperties =
-			subscriptionTypeSettingsProperties;
+		_subscriptionTypeSettingsUnicodeProperties =
+			subscriptionTypeSettingsUnicodeProperties;
 
-		if (_subscriptionTypeSettingsProperties == null) {
-			_subscriptionTypeSettingsProperties = new UnicodeProperties();
+		if (_subscriptionTypeSettingsUnicodeProperties == null) {
+			_subscriptionTypeSettingsUnicodeProperties =
+				new UnicodeProperties();
 		}
 
 		super.setSubscriptionTypeSettings(
-			_subscriptionTypeSettingsProperties.toString());
+			_subscriptionTypeSettingsUnicodeProperties.toString());
 	}
 
-	private UnicodeProperties _deliverySubscriptionTypeSettingsProperties;
-	private UnicodeProperties _subscriptionTypeSettingsProperties;
+	private UnicodeProperties
+		_deliverySubscriptionTypeSettingsUnicodeProperties;
+	private UnicodeProperties _subscriptionTypeSettingsUnicodeProperties;
 
 }

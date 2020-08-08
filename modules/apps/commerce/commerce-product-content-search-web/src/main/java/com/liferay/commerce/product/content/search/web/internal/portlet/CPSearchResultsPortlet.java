@@ -105,8 +105,8 @@ public class CPSearchResultsPortlet
 		try {
 			_contribute(portletSharedSearchSettings);
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 

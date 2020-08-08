@@ -536,20 +536,20 @@ public class CommerceTestUtil {
 			CPDefinition cpDefinition)
 		throws PortalException {
 
-		CPDefinitionInventory cpDefinitioninventory =
+		CPDefinitionInventory cpDefinitionInventory =
 			CPDefinitionInventoryLocalServiceUtil.
 				fetchCPDefinitionInventoryByCPDefinitionId(
 					cpDefinition.getCPDefinitionId());
 
-		if (cpDefinitioninventory != null) {
-			cpDefinitioninventory.setBackOrders(true);
+		if (cpDefinitionInventory != null) {
+			cpDefinitionInventory.setBackOrders(true);
 
-			cpDefinitioninventory =
+			cpDefinitionInventory =
 				CPDefinitionInventoryLocalServiceUtil.
-					updateCPDefinitionInventory(cpDefinitioninventory);
+					updateCPDefinitionInventory(cpDefinitionInventory);
 		}
 
-		return cpDefinitioninventory;
+		return cpDefinitionInventory;
 	}
 
 	private static CommerceCountry _setUpCountry(ServiceContext serviceContext)
@@ -580,7 +580,7 @@ public class CommerceTestUtil {
 			commerceRegion = CommerceRegionLocalServiceUtil.getCommerceRegion(
 				commerceCountry.getCommerceCountryId(), "ZZ");
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			commerceRegion = CommerceRegionLocalServiceUtil.addCommerceRegion(
 				commerceCountry.getCommerceCountryId(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),

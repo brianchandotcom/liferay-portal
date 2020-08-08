@@ -205,12 +205,12 @@ public class CommercePriceEntryIndexer extends BaseIndexer<CommercePriceEntry> {
 					indexableActionableDynamicQuery.addDocuments(
 						getDocument(commercePriceEntry));
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to index commerce price entry " +
 								commercePriceEntry.getCommercePriceEntryId(),
-							pe);
+							portalException);
 					}
 				}
 			});

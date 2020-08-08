@@ -104,8 +104,8 @@ public class CommerceInventoryAuditDataSetDataProvider
 						commerceInventoryAudit.getLogTypeSettings(),
 						_portal.getLocale(httpServletRequest)));
 			}
-			catch (Exception e) {
-				throw new PortalException(e.getMessage(), e);
+			catch (Exception exception) {
+				throw new PortalException(exception.getMessage(), exception);
 			}
 
 			timelineModels.add(

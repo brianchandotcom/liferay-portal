@@ -93,8 +93,8 @@ public class CategoryCPAttachmentScreenNavigationEntry
 		try {
 			assetCategory = _assetCategoryService.fetchCategory(categoryId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		httpServletRequest.setAttribute(WebKeys.ASSET_CATEGORY, assetCategory);

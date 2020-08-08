@@ -192,7 +192,7 @@ public class CPDefinitionsImporter {
 			String sku, String taxCategory, long width, long height, long depth,
 			long weight, boolean subscriptionEnabled, int subscriptionLength,
 			String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, long[] assetCategoryIds,
 			String[] assetTagNames, ServiceContext serviceContext)
 		throws PortalException {
@@ -252,7 +252,7 @@ public class CPDefinitionsImporter {
 			expirationDateDay, expirationDateYear, expirationDateHour,
 			expirationDateMinute, true, sku, subscriptionEnabled,
 			subscriptionLength, subscriptionType,
-			subscriptionTypeSettingsProperties, maxSubscriptionCycles,
+			subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles,
 			externalReferenceCode, serviceContext);
 	}
 
@@ -315,17 +315,17 @@ public class CPDefinitionsImporter {
 			return null;
 		}
 
-		String subscriptionTypeSettingsProperties = GetterUtil.getString(
+		String subscriptionTypeSettingsUnicodeProperties = GetterUtil.getString(
 			subscriptionInfoJSONObject.get(
-				"SubscriptionTypeSettingsProperties"));
+				"SubscriptionTypeSettingsUnicodeProperties"));
 
-		if (Validator.isNull(subscriptionTypeSettingsProperties)) {
+		if (Validator.isNull(subscriptionTypeSettingsUnicodeProperties)) {
 			return null;
 		}
 
 		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
 
-		unicodeProperties.fastLoad(subscriptionTypeSettingsProperties);
+		unicodeProperties.fastLoad(subscriptionTypeSettingsUnicodeProperties);
 
 		return unicodeProperties;
 	}

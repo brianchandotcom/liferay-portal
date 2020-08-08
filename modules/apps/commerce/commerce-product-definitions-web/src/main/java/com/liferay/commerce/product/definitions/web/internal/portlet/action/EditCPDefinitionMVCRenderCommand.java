@@ -70,16 +70,16 @@ public class EditCPDefinitionMVCRenderCommand implements MVCRenderCommand {
 
 			setCPDefinitionRequestAttribute(renderRequest);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchCPDefinitionException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchCPDefinitionException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/error.jsp";
 			}
 
-			throw new PortletException(e);
+			throw new PortletException(exception);
 		}
 
 		return "/edit_definition.jsp";

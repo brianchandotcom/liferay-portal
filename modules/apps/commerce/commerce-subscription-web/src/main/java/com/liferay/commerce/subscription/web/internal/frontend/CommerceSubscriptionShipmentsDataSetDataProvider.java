@@ -33,6 +33,7 @@ import com.liferay.commerce.subscription.web.internal.model.Label;
 import com.liferay.commerce.subscription.web.internal.model.Link;
 import com.liferay.commerce.subscription.web.internal.model.Shipment;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -41,7 +42,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.text.DateFormat;

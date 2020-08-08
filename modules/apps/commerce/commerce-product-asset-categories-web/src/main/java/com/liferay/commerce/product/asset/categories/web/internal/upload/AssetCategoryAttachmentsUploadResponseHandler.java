@@ -51,26 +51,28 @@ public class AssetCategoryAttachmentsUploadResponseHandler
 
 	@Override
 	public JSONObject onFailure(
-			PortletRequest portletRequest, PortalException pe)
+			PortletRequest portletRequest, PortalException portalException)
 		throws PortalException {
 
 		JSONObject jsonObject = _itemSelectorUploadResponseHandler.onFailure(
-			portletRequest, pe);
+			portletRequest, portalException);
 
-		if (pe instanceof CPAttachmentFileEntryNameException ||
-			pe instanceof CPAttachmentFileEntrySizeException) {
+		if (portalException instanceof CPAttachmentFileEntryNameException ||
+			portalException instanceof CPAttachmentFileEntrySizeException) {
 
 			String errorMessage = StringPool.BLANK;
 			int errorType = 0;
 
-			if (pe instanceof CPAttachmentFileEntryNameException) {
+			if (portalException instanceof CPAttachmentFileEntryNameException) {
 				errorType =
 					ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION;
 
 				errorMessage = StringUtil.merge(
 					_attachmentsConfiguration.imageExtensions());
 			}
-			else if (pe instanceof CPAttachmentFileEntrySizeException) {
+			else if (portalException instanceof
+						CPAttachmentFileEntrySizeException) {
+
 				errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
 			}
 
@@ -82,7 +84,7 @@ public class AssetCategoryAttachmentsUploadResponseHandler
 			jsonObject.put("error", errorJSONObject);
 		}
 		else {
-			throw pe;
+			throw portalException;
 		}
 
 		return jsonObject;

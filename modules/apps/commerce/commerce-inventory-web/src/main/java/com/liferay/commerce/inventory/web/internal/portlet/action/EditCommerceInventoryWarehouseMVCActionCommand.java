@@ -98,11 +98,12 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 				updateCommerceInventoryWarehouse(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof DuplicateCommerceInventoryWarehouseItemException ||
-				e instanceof MVCCException) {
+		catch (Exception exception) {
+			if (exception instanceof
+					DuplicateCommerceInventoryWarehouseItemException ||
+				exception instanceof MVCCException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
@@ -110,7 +111,7 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 				sendRedirect(actionRequest, actionResponse);
 			}
 			else {
-				_log.error(e, e);
+				_log.error(exception, exception);
 			}
 		}
 	}

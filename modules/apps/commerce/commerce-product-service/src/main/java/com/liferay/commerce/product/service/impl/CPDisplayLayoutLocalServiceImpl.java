@@ -93,8 +93,8 @@ public class CPDisplayLayoutLocalServiceImpl
 
 				classPK = newCPDefinition.getCPDefinitionId();
 			}
-			catch (PortalException pe) {
-				throw new SystemException(pe);
+			catch (PortalException portalException) {
+				throw new SystemException(portalException);
 			}
 
 			oldCPDisplayLayout = cpDisplayLayoutPersistence.fetchByC_C(
@@ -140,8 +140,8 @@ public class CPDisplayLayoutLocalServiceImpl
 					cpDisplayLayout = cpDisplayLayoutPersistence.findByC_C(
 						classNameId, newCPDefinition.getCPDefinitionId());
 				}
-				catch (PortalException pe) {
-					throw new SystemException(pe);
+				catch (PortalException portalException) {
+					throw new SystemException(portalException);
 				}
 			}
 

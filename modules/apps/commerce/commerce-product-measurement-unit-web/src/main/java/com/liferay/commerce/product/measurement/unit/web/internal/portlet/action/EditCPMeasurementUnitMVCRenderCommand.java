@@ -68,17 +68,17 @@ public class EditCPMeasurementUnitMVCRenderCommand implements MVCRenderCommand {
 				_portal.getHttpServletRequest(renderRequest),
 				_portal.getHttpServletResponse(renderResponse));
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchCPMeasurementUnitException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchCPMeasurementUnitException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/error.jsp";
 			}
 
 			throw new PortletException(
-				"Unable to include edit_measurement_unit.jsp", e);
+				"Unable to include edit_measurement_unit.jsp", exception);
 		}
 
 		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;

@@ -82,17 +82,17 @@ public class EditCPInstanceCommercePriceEntryMVCRenderCommand
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchPriceEntryException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchPriceEntryException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/error.jsp";
 			}
 
 			throw new PortletException(
-				"Unable to include edit_instance_price_entry.jsp", e);
+				"Unable to include edit_instance_price_entry.jsp", exception);
 		}
 
 		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;

@@ -37,7 +37,7 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 	@Override
 	public CommerceChannel addCommerceChannel(
 			long siteGroupId, String name, String type,
-			UnicodeProperties typeSettingsProperties,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			String commerceCurrencyCode, String externalReferenceCode,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -46,7 +46,7 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 			getPermissionChecker(), CPActionKeys.ADD_COMMERCE_CHANNEL);
 
 		return commerceChannelLocalService.addCommerceChannel(
-			siteGroupId, name, type, typeSettingsProperties,
+			siteGroupId, name, type, typeSettingsUnicodeProperties,
 			commerceCurrencyCode, externalReferenceCode, serviceContext);
 	}
 
@@ -175,7 +175,7 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 	@Override
 	public CommerceChannel updateCommerceChannel(
 			long commerceChannelId, long siteGroupId, String name, String type,
-			UnicodeProperties typeSettingsProperties,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			String commerceCurrencyCode)
 		throws PortalException {
 
@@ -183,14 +183,14 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 			getPermissionChecker(), commerceChannelId, ActionKeys.UPDATE);
 
 		return commerceChannelLocalService.updateCommerceChannel(
-			commerceChannelId, siteGroupId, name, type, typeSettingsProperties,
+			commerceChannelId, siteGroupId, name, type, typeSettingsUnicodeProperties,
 			commerceCurrencyCode);
 	}
 
 	@Override
 	public CommerceChannel updateCommerceChannel(
 			long commerceChannelId, long siteGroupId, String name, String type,
-			UnicodeProperties typeSettingsProperties,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			String commerceCurrencyCode, String priceDisplayType,
 			boolean discountsTargetNetPrice)
 		throws PortalException {
@@ -199,7 +199,7 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 			getPermissionChecker(), commerceChannelId, ActionKeys.UPDATE);
 
 		return commerceChannelLocalService.updateCommerceChannel(
-			commerceChannelId, siteGroupId, name, type, typeSettingsProperties,
+			commerceChannelId, siteGroupId, name, type, typeSettingsUnicodeProperties,
 			commerceCurrencyCode, priceDisplayType, discountsTargetNetPrice);
 	}
 

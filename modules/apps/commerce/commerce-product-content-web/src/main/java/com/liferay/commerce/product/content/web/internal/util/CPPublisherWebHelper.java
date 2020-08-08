@@ -152,10 +152,10 @@ public class CPPublisherWebHelper {
 		List<String> catalogEntryXmlsList = ListUtil.fromArray(
 			catalogEntryXmls);
 
-		Iterator<String> itr = catalogEntryXmlsList.iterator();
+		Iterator<String> iterator = catalogEntryXmlsList.iterator();
 
-		while (itr.hasNext()) {
-			String catalogEntryXml = itr.next();
+		while (iterator.hasNext()) {
+			String catalogEntryXml = iterator.next();
 
 			Document document = SAXReaderUtil.read(catalogEntryXml);
 
@@ -165,7 +165,7 @@ public class CPPublisherWebHelper {
 				rootElement.elementText("product-id"));
 
 			if (cpDefinitionIds.contains(cpDefinitionId)) {
-				itr.remove();
+				iterator.remove();
 			}
 		}
 

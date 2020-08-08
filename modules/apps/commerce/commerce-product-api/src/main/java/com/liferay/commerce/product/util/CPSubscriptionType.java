@@ -31,11 +31,11 @@ public interface CPSubscriptionType {
 
 	public Date getSubscriptionNextIterationDate(
 		TimeZone timeZone, int subscriptionLength,
-		UnicodeProperties subscriptionTypeSettingsProperties,
+		UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 		Date lastIterationDate);
 
 	public Date getSubscriptionStartDate(
 		TimeZone timeZone,
-		UnicodeProperties subscriptionTypeSettingsProperties);
+		UnicodeProperties subscriptionTypeSettingsUnicodeProperties);
 
 }

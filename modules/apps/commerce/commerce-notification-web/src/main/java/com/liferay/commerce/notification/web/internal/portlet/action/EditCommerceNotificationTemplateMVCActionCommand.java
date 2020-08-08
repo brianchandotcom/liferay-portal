@@ -107,28 +107,31 @@ public class EditCommerceNotificationTemplateMVCActionCommand
 				updateCommerceNotificationTemplate(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchNotificationTemplateException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchNotificationTemplateException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (e instanceof CommerceNotificationTemplateFromException ||
-					 e instanceof CommerceNotificationTemplateNameException ||
-					 e instanceof CommerceNotificationTemplateTypeException) {
+			else if (exception instanceof
+						CommerceNotificationTemplateFromException ||
+					 exception instanceof
+						 CommerceNotificationTemplateNameException ||
+					 exception instanceof
+						 CommerceNotificationTemplateTypeException) {
 
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName", "editCommerceNotificationTemplate");
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

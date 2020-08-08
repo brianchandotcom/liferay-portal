@@ -64,17 +64,17 @@ public class EditCPDefinitionSpecificationOptionValueMVCRenderCommand
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				cpDefinitionSpecificationOptionValueDisplayContext);
 		}
-		catch (Exception e) {
-			if (e instanceof
+		catch (Exception exception) {
+			if (exception instanceof
 					NoSuchCPDefinitionSpecificationOptionValueException ||
-				e instanceof PrincipalException) {
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/error.jsp";
 			}
 
-			throw new PortletException(e);
+			throw new PortletException(exception);
 		}
 
 		return "/edit_definition_specification_option_value.jsp";

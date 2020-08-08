@@ -68,16 +68,16 @@ public class ViewCommerceOrderDetailsMVCRenderCommand
 
 			return "/placed_orders/view_order_details.jsp";
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchOrderException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchOrderException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/error.jsp";
 			}
 
-			throw new PortletException(e);
+			throw new PortletException(exception);
 		}
 	}
 

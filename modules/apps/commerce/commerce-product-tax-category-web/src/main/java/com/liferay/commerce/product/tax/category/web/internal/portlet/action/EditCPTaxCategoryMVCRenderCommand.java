@@ -69,17 +69,17 @@ public class EditCPTaxCategoryMVCRenderCommand implements MVCRenderCommand {
 				_portal.getHttpServletRequest(renderRequest),
 				_portal.getHttpServletResponse(renderResponse));
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchCPTaxCategoryException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchCPTaxCategoryException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/error.jsp";
 			}
 
 			throw new PortletException(
-				"Unable to include edit_tax_category.jsp", e);
+				"Unable to include edit_tax_category.jsp", exception);
 		}
 
 		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;

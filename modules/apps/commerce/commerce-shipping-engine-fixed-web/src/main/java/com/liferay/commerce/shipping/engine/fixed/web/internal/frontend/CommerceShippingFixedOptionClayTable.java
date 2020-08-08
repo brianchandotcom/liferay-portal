@@ -112,8 +112,8 @@ public class CommerceShippingFixedOptionClayTable
 
 			clayTableActions.add(deleteClayDataSetAction);
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exception) {
+			exception.printStackTrace();
 		}
 
 		return clayTableActions;

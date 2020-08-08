@@ -80,8 +80,8 @@ public class CommerceMediaServlet extends HttpServlet {
 
 			PrincipalThreadLocal.setName(user.getUserId());
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
 

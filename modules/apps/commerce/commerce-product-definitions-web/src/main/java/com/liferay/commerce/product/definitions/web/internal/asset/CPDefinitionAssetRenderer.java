@@ -188,7 +188,7 @@ public class CPDefinitionAssetRenderer
 			return _cpDefinitionHelper.getFriendlyURL(
 				_cpDefinition.getCPDefinitionId(), themeDisplay);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return noSuchEntryRedirect;
 		}
 	}

@@ -77,8 +77,8 @@ public class DatabaseCPCatalogEntryImpl implements CPCatalogEntry {
 		try {
 			return _cpDefinition.getDefaultImageFileURL();
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 

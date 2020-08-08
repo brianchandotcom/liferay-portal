@@ -98,23 +98,23 @@ public class EditCommerceWishListMVCActionCommand extends BaseMVCActionCommand {
 				hideDefaultSuccessMessage(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchWishListException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchWishListException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
-			else if (e instanceof CommerceWishListNameException) {
+			else if (exception instanceof CommerceWishListNameException) {
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName", "editCommerceWishList");
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

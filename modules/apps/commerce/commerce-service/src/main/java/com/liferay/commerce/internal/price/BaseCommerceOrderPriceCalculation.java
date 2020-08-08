@@ -344,7 +344,7 @@ public abstract class BaseCommerceOrderPriceCalculation
 
 	private CommerceOrderItemPrice _getCommerceOrderItemPrice(
 			CommerceCurrency commerceCurrency,
-			CommerceOrderItem commerceOrderItem, boolean isUnit)
+			CommerceOrderItem commerceOrderItem, boolean unit)
 		throws PortalException {
 
 		int parentQuantity = commerceOrderItem.getQuantity();
@@ -452,7 +452,7 @@ public abstract class BaseCommerceOrderPriceCalculation
 			finalPrice = finalPrice.add(childFinalPrice);
 		}
 
-		if (isUnit) {
+		if (unit) {
 			finalPrice = finalPrice.divide(
 				BigDecimal.valueOf(parentQuantity),
 				RoundingMode.valueOf(commerceCurrency.getRoundingMode()));

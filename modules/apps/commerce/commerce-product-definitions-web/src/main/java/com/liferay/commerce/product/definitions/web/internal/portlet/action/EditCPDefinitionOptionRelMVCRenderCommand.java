@@ -66,16 +66,16 @@ public class EditCPDefinitionOptionRelMVCRenderCommand
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				cpDefinitionOptionRelDisplayContext);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchCPDefinitionOptionRelException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchCPDefinitionOptionRelException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/error.jsp";
 			}
 
-			throw new PortletException(e);
+			throw new PortletException(exception);
 		}
 
 		return "/edit_definition_option_rel.jsp";

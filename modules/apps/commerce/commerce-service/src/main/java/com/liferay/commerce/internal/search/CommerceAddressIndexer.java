@@ -191,12 +191,12 @@ public class CommerceAddressIndexer extends BaseIndexer<CommerceAddress> {
 					indexableActionableDynamicQuery.addDocuments(
 						getDocument(commerceAddress));
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to index commerce address " +
 								commerceAddress.getCommerceAddressId(),
-							pe);
+							portalException);
 					}
 				}
 			});

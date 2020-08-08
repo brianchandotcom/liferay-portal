@@ -61,19 +61,19 @@ public class CommerceCountryFinderImpl
 				sql = StringUtil.replace(sql, _ALL_SQL, _ACTIVE_SQL);
 			}
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity("CommerceCountry", CommerceCountryImpl.class);
+			sqlQuery.addEntity("CommerceCountry", CommerceCountryImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(companyId);
+			queryPos.add(companyId);
 
 			return (List<CommerceCountry>)QueryUtil.list(
-				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				sqlQuery, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -108,22 +108,22 @@ public class CommerceCountryFinderImpl
 				sql = StringUtil.removeSubstring(sql, _SHIPPING_SQL);
 			}
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity("CommerceCountry", CommerceCountryImpl.class);
+			sqlQuery.addEntity("CommerceCountry", CommerceCountryImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(
+			queryPos.add(
 				ClassNameLocalServiceUtil.getClassNameId(
 					CommerceCountry.class));
-			qPos.add(commerceChannelId);
+			queryPos.add(commerceChannelId);
 
 			return (List<CommerceCountry>)QueryUtil.list(
-				q, getDialect(), start, end);
+				sqlQuery, getDialect(), start, end);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);

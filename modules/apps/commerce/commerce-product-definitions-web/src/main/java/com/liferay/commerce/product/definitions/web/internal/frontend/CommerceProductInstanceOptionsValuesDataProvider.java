@@ -98,8 +98,8 @@ public class CommerceProductInstanceOptionsValuesDataProvider
 				return ddmDataProviderResponseBuilder.build();
 			}
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
 			return ddmDataProviderResponseBuilder.build();
 		}
@@ -254,8 +254,8 @@ public class CommerceProductInstanceOptionsValuesDataProvider
 
 			return Output.toDDMDataProviderResponse(outputs);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return ddmDataProviderResponseBuilder.build();

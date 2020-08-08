@@ -33,16 +33,16 @@ public class CPQueryRule {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPQueryRule)) {
+		if (!(object instanceof CPQueryRule)) {
 			return false;
 		}
 
-		CPQueryRule assetQueryRule = (CPQueryRule)obj;
+		CPQueryRule assetQueryRule = (CPQueryRule)object;
 
 		if ((_contains == assetQueryRule._contains) &&
 			(_andOperator == assetQueryRule._andOperator) &&

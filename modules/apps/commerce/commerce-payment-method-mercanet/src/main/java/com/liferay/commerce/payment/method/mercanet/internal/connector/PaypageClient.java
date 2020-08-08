@@ -116,8 +116,9 @@ public class PaypageClient {
 
 			return initializationResponse;
 		}
-		catch (JsonMappingException | JsonParseException e) {
-			throw new Exception("Exception while parsing PaymentRequest", e);
+		catch (JsonMappingException | JsonParseException exception) {
+			throw new Exception(
+				"Exception while parsing PaymentRequest", exception);
 		}
 		catch (IOException ioe) {
 			throw new Exception(

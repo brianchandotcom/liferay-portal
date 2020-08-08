@@ -94,8 +94,8 @@ public class CPPublisherConfigurationAction extends DefaultConfigurationAction {
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				cpPublisherConfigurationDisplayContext);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return "/product_publisher/configuration.jsp";
@@ -129,14 +129,15 @@ public class CPPublisherConfigurationAction extends DefaultConfigurationAction {
 				super.processAction(
 					portletConfig, actionRequest, actionResponse);
 			}
-			catch (Exception e) {
-				if (e instanceof AssetTagException ||
-					e instanceof DuplicateQueryRuleException) {
+			catch (Exception exception) {
+				if (exception instanceof AssetTagException ||
+					exception instanceof DuplicateQueryRuleException) {
 
-					SessionErrors.add(actionRequest, e.getClass(), e);
+					SessionErrors.add(
+						actionRequest, exception.getClass(), exception);
 				}
 				else {
-					throw e;
+					throw exception;
 				}
 			}
 		}

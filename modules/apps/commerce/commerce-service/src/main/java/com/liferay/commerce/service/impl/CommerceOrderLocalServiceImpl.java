@@ -642,8 +642,8 @@ public class CommerceOrderLocalServiceImpl
 				keywords, new int[] {CommerceOrderConstants.ORDER_STATUS_OPEN},
 				false, start, end);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		return Collections.emptyList();
@@ -666,8 +666,8 @@ public class CommerceOrderLocalServiceImpl
 				keywords, new int[] {CommerceOrderConstants.ORDER_STATUS_OPEN},
 				false);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		return 0;
@@ -2015,7 +2015,7 @@ public class CommerceOrderLocalServiceImpl
 
 	private void _setCommerceOrderShippingDiscountValue(
 		CommerceOrder commerceOrder,
-		CommerceDiscountValue commerceDiscountValue, boolean isWithTaxAmount) {
+		CommerceDiscountValue commerceDiscountValue, boolean withTaxAmount) {
 
 		BigDecimal discountAmount = BigDecimal.ZERO;
 		BigDecimal discountPercentageLevel1 = BigDecimal.ZERO;
@@ -2048,7 +2048,7 @@ public class CommerceOrderLocalServiceImpl
 			}
 		}
 
-		if (isWithTaxAmount) {
+		if (withTaxAmount) {
 			commerceOrder.setShippingDiscountWithTaxAmount(discountAmount);
 			commerceOrder.setShippingDiscountPercentageLevel1WithTaxAmount(
 				discountPercentageLevel1);
@@ -2074,7 +2074,7 @@ public class CommerceOrderLocalServiceImpl
 
 	private void _setCommerceOrderSubtotalDiscountValue(
 		CommerceOrder commerceOrder,
-		CommerceDiscountValue commerceDiscountValue, boolean isWithTaxAmount) {
+		CommerceDiscountValue commerceDiscountValue, boolean withTaxAmount) {
 
 		BigDecimal discountAmount = BigDecimal.ZERO;
 		BigDecimal discountPercentageLevel1 = BigDecimal.ZERO;
@@ -2107,7 +2107,7 @@ public class CommerceOrderLocalServiceImpl
 			}
 		}
 
-		if (isWithTaxAmount) {
+		if (withTaxAmount) {
 			commerceOrder.setSubtotalDiscountWithTaxAmount(discountAmount);
 			commerceOrder.setSubtotalDiscountPercentageLevel1WithTaxAmount(
 				discountPercentageLevel1);
@@ -2133,7 +2133,7 @@ public class CommerceOrderLocalServiceImpl
 
 	private void _setCommerceOrderTotalDiscountValue(
 		CommerceOrder commerceOrder,
-		CommerceDiscountValue commerceDiscountValue, boolean isWithTaxAmount) {
+		CommerceDiscountValue commerceDiscountValue, boolean withTaxAmount) {
 
 		BigDecimal discountAmount = BigDecimal.ZERO;
 		BigDecimal discountPercentageLevel1 = BigDecimal.ZERO;
@@ -2166,7 +2166,7 @@ public class CommerceOrderLocalServiceImpl
 			}
 		}
 
-		if (isWithTaxAmount) {
+		if (withTaxAmount) {
 			commerceOrder.setTotalDiscountWithTaxAmount(discountAmount);
 			commerceOrder.setTotalDiscountPercentageLevel1WithTaxAmount(
 				discountPercentageLevel1);

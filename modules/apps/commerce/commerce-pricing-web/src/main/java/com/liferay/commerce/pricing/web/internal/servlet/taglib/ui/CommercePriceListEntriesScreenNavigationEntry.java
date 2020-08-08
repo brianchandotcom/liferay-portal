@@ -92,9 +92,9 @@ public class CommercePriceListEntriesScreenNavigationEntry
 				PermissionThreadLocal.getPermissionChecker(),
 				commercePriceList.getCommercePriceListId(), ActionKeys.VIEW);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 		}
 
@@ -118,8 +118,8 @@ public class CommercePriceListEntriesScreenNavigationEntry
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				commercePriceEntryDisplayContext);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		_jspRenderer.renderJSP(

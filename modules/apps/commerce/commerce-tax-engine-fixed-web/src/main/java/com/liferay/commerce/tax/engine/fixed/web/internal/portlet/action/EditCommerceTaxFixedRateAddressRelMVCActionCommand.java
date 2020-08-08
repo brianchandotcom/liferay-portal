@@ -104,14 +104,14 @@ public class EditCommerceTaxFixedRateAddressRelMVCActionCommand
 				updateConfiguration(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchTaxFixedRateAddressRelException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchTaxFixedRateAddressRelException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

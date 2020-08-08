@@ -51,7 +51,7 @@ public class FingerprintHostKeyRepository implements HostKeyRepository {
 				return NOT_INCLUDED;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return NOT_INCLUDED;
 		}
 

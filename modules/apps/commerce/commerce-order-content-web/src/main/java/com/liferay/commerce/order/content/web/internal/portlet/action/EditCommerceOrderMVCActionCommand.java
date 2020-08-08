@@ -243,25 +243,25 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 				executeTransition(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchAccountException ||
-				e instanceof NoSuchOrderException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchAccountException ||
+				exception instanceof NoSuchOrderException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (e instanceof CommerceOrderValidatorException) {
+			else if (exception instanceof CommerceOrderValidatorException) {
 				CommerceOrderValidatorException cove =
-					(CommerceOrderValidatorException)e;
+					(CommerceOrderValidatorException)exception;
 
 				SessionErrors.add(actionRequest, cove.getClass(), cove);
 
 				hideDefaultErrorMessage(actionRequest);
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

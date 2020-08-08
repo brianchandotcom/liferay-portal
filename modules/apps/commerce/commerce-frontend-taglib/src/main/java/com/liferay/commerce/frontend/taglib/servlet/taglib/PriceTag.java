@@ -93,9 +93,9 @@ public class PriceTag extends ComponentRendererTag {
 
 			setTemplateNamespace("Price.render");
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
 			return SKIP_BODY;

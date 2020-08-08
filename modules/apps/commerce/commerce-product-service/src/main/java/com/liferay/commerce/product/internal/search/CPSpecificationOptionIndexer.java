@@ -239,14 +239,14 @@ public class CPSpecificationOptionIndexer
 					indexableActionableDynamicQuery.addDocuments(
 						getDocument(cpSpecificationOption));
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to index commerce product specification " +
 								"option " +
 									cpSpecificationOption.
 										getCPSpecificationOptionId(),
-							pe);
+							portalException);
 					}
 				}
 			});

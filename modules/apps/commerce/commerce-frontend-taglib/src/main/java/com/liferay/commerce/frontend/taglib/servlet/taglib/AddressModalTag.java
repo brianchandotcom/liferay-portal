@@ -52,8 +52,8 @@ public class AddressModalTag extends ComponentRendererTag {
 					commerceContext.getCommerceChannelId(), "&p_auth=",
 					AuthTokenUtil.getToken(request)));
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
 			putValue(
 				"countriesAPI",

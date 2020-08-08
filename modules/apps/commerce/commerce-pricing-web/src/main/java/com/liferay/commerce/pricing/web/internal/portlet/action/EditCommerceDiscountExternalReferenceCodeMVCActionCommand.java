@@ -54,16 +54,16 @@ public class EditCommerceDiscountExternalReferenceCodeMVCActionCommand
 		try {
 			updateCommerceDiscountExternalReferenceCode(actionRequest);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchDiscountException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchDiscountException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else {
-				_log.error(e, e);
+				_log.error(exception, exception);
 
 				String redirect = ParamUtil.getString(
 					actionRequest, "redirect");

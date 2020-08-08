@@ -75,18 +75,18 @@ public class CPTaxCategoryFinderImpl
 						"[$AND_OR_NULL_CHECK$])");
 			}
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
 			if (Validator.isNotNull(keyword)) {
-				QueryPos qPos = QueryPos.getInstance(q);
+				QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-				qPos.add(keywords, 2);
+				queryPos.add(keywords, 2);
 			}
 
-			Iterator<BigInteger> itr = q.iterate();
+			Iterator<BigInteger> iterator = sqlQuery.iterate();
 
-			if (itr.hasNext()) {
-				BigInteger count = itr.next();
+			if (iterator.hasNext()) {
+				BigInteger count = iterator.next();
 
 				if (count != null) {
 					return count.intValue();
@@ -95,8 +95,8 @@ public class CPTaxCategoryFinderImpl
 
 			return 0;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -134,21 +134,22 @@ public class CPTaxCategoryFinderImpl
 						"[$AND_OR_NULL_CHECK$])");
 			}
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(CPTaxCategoryImpl.TABLE_NAME, CPTaxCategoryImpl.class);
+			sqlQuery.addEntity(
+				CPTaxCategoryImpl.TABLE_NAME, CPTaxCategoryImpl.class);
 
 			if (Validator.isNotNull(keyword)) {
-				QueryPos qPos = QueryPos.getInstance(q);
+				QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-				qPos.add(keywords, 2);
+				queryPos.add(keywords, 2);
 			}
 
 			return (List<CPTaxCategory>)QueryUtil.list(
-				q, getDialect(), start, end);
+				sqlQuery, getDialect(), start, end);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);

@@ -68,11 +68,11 @@ public class CommerceOrderClayTableUtil {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		HttpServletRequest originalServletRequest =
+		HttpServletRequest originalHttpServletRequest =
 			PortalUtil.getOriginalServletRequest(httpServletRequest);
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			originalServletRequest, portletDisplay.getId(),
+			originalHttpServletRequest, portletDisplay.getId(),
 			themeDisplay.getPlid(), PortletRequest.ACTION_PHASE);
 
 		portletURL.setParameter(ActionRequest.ACTION_NAME, "editCommerceOrder");

@@ -36,7 +36,7 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 				maxFileSize="<%= cpAttachmentFileEntriesDisplayContext.getImageMaxSize() %>"
 				paramName="fileEntry"
 				uploadURL="<%= uploadCoverImageURL %>"
-				validExtensions='<%= StringUtil.merge(cpAttachmentFileEntriesDisplayContext.getImageExtensions(), StringPool.COMMA_AND_SPACE) %>'
+				validExtensions="<%= StringUtil.merge(cpAttachmentFileEntriesDisplayContext.getImageExtensions(), StringPool.COMMA_AND_SPACE) %>"
 			/>
 		</div>
 	</c:when>

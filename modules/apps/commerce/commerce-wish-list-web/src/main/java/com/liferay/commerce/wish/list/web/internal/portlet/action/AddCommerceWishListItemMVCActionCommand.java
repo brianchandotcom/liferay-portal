@@ -129,10 +129,10 @@ public class AddCommerceWishListItemMVCActionCommand
 				"commerceWishListItemsCount", commerceWishListItemsCount);
 			jsonObject.put("success", true);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			jsonObject.put("error", e.getMessage());
+			jsonObject.put("error", exception.getMessage());
 			jsonObject.put("success", false);
 		}
 

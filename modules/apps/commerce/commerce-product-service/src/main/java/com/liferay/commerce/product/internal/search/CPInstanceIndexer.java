@@ -289,12 +289,12 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 					indexableActionableDynamicQuery.addDocuments(
 						getDocument(cpInstance));
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to index commerce product definition " +
 								cpInstance.getCPInstanceId(),
-							pe);
+							portalException);
 					}
 				}
 			});

@@ -92,25 +92,25 @@ public class EditCPOptionCategoryMVCActionCommand extends BaseMVCActionCommand {
 				updateCPOptionCategory(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchCPOptionCategoryException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchCPOptionCategoryException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (e instanceof CPOptionCategoryKeyException) {
+			else if (exception instanceof CPOptionCategoryKeyException) {
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName", "editProductOptionCategory");
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

@@ -74,19 +74,19 @@ public class EditCommerceOrderNoteMVCActionCommand
 				updateCommerceOrderNote(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof CommerceOrderNoteContentException) {
-				SessionErrors.add(actionRequest, e.getClass());
+		catch (Exception exception) {
+			if (exception instanceof CommerceOrderNoteContentException) {
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
-			else if (e instanceof NoSuchOrderNoteException ||
-					 e instanceof PrincipalException) {
+			else if (exception instanceof NoSuchOrderNoteException ||
+					 exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

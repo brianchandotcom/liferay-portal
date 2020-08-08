@@ -174,12 +174,12 @@ public class CommerceChannelIndexer extends BaseIndexer<CommerceChannel> {
 					indexableActionableDynamicQuery.addDocuments(
 						getDocument(commerceChannel));
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to index commerce channel " +
 								commerceChannel.getCommerceChannelId(),
-							pe);
+							portalException);
 					}
 				}
 			});

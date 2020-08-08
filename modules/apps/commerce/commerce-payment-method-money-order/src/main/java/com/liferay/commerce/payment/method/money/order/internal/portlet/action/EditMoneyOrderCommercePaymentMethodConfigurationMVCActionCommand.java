@@ -80,10 +80,10 @@ public class EditMoneyOrderCommercePaymentMethodConfigurationMVCActionCommand
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();
 
-		UnicodeProperties parameterMap = PropertiesParamUtil.getProperties(
+		UnicodeProperties unicodeProperties = PropertiesParamUtil.getProperties(
 			actionRequest, "settings--");
 
-		for (Map.Entry<String, String> entry : parameterMap.entrySet()) {
+		for (Map.Entry<String, String> entry : unicodeProperties.entrySet()) {
 			modifiableSettings.setValue(entry.getKey(), entry.getValue());
 		}
 

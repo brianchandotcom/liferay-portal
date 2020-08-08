@@ -39,12 +39,12 @@ public class CommerceProductInstanceItemSelectorChecker
 	}
 
 	@Override
-	public boolean isChecked(Object obj) {
+	public boolean isChecked(Object object) {
 		if (_commercePriceList == null) {
 			return false;
 		}
 
-		CPInstance cpInstance = (CPInstance)obj;
+		CPInstance cpInstance = (CPInstance)object;
 
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
@@ -59,8 +59,8 @@ public class CommerceProductInstanceItemSelectorChecker
 	}
 
 	@Override
-	public boolean isDisabled(Object obj) {
-		return isChecked(obj);
+	public boolean isDisabled(Object object) {
+		return isChecked(object);
 	}
 
 	private final CommercePriceEntryLocalService

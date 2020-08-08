@@ -83,12 +83,12 @@ public class FixCommerceHealthStatusIssueMVCActionCommand
 						_portal.getScopeGroupId(httpServletRequest)));
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			hideDefaultErrorMessage(actionRequest);
 
-			_log.error(e, e);
+			_log.error(exception, exception);
 
-			jsonObject.put("error", e.getMessage());
+			jsonObject.put("error", exception.getMessage());
 			jsonObject.put("success", false);
 		}
 

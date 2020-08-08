@@ -37,9 +37,9 @@ public class UserModelListener extends BaseModelListener<User> {
 			_commerceAddressLocalService.deleteCommerceAddresses(
 				user.getModelClassName(), user.getUserId());
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(pe, pe);
+				_log.warn(portalException, portalException);
 			}
 		}
 	}

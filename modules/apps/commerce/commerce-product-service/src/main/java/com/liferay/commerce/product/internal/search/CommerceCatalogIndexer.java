@@ -172,12 +172,12 @@ public class CommerceCatalogIndexer extends BaseIndexer<CommerceCatalog> {
 					indexableActionableDynamicQuery.addDocuments(
 						getDocument(commerceCatalog));
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to index commerce catalog " +
 								commerceCatalog.getCommerceCatalogId(),
-							pe);
+							portalException);
 					}
 				}
 			});

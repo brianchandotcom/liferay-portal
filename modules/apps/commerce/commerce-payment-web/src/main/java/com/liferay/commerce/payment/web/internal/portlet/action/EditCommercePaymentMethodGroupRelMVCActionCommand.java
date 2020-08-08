@@ -91,26 +91,28 @@ public class EditCommercePaymentMethodGroupRelMVCActionCommand
 				updateCommercePaymentMethodGroupRel(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchPaymentMethodException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchPaymentMethodException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (e instanceof CommercePaymentMethodGroupRelNameException) {
+			else if (exception instanceof
+						CommercePaymentMethodGroupRelNameException) {
+
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName",
 					"editCommercePaymentMethodGroupRel");
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

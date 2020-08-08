@@ -95,16 +95,16 @@ public class EditCommerceTaxFixedRateMVCActionCommand
 				deleteCommerceTaxFixedRates(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof DuplicateCommerceTaxFixedRateException ||
-				e instanceof NoSuchCPTaxCategoryException ||
-				e instanceof NoSuchTaxFixedRateException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof DuplicateCommerceTaxFixedRateException ||
+				exception instanceof NoSuchCPTaxCategoryException ||
+				exception instanceof NoSuchTaxFixedRateException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

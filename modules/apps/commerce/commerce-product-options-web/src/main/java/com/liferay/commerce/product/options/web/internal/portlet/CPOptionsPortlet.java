@@ -76,8 +76,8 @@ public class CPOptionsPortlet extends MVCPortlet {
 
 			renderRequest.setAttribute("NPMResolver", _npmResolver);
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 
 		super.render(renderRequest, renderResponse);

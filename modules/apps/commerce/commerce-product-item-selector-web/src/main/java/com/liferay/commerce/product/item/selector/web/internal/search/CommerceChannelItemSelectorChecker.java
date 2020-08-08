@@ -52,16 +52,16 @@ public class CommerceChannelItemSelectorChecker extends EmptyOnClickRowChecker {
 	}
 
 	@Override
-	public boolean isChecked(Object obj) {
-		CommerceChannel commerceChannel = (CommerceChannel)obj;
+	public boolean isChecked(Object object) {
+		CommerceChannel commerceChannel = (CommerceChannel)object;
 
 		return _checkedCommerceChannelIds.contains(
 			commerceChannel.getCommerceChannelId());
 	}
 
 	@Override
-	public boolean isDisabled(Object obj) {
-		return isChecked(obj);
+	public boolean isDisabled(Object object) {
+		return isChecked(object);
 	}
 
 	private final Set<Long> _checkedCommerceChannelIds;

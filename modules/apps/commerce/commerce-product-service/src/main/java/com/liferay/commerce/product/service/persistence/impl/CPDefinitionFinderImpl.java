@@ -72,28 +72,28 @@ public class CPDefinitionFinderImpl
 					sql, "(CPDefinition.productTypeName = ?) AND");
 			}
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+			sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(languageId);
+			queryPos.add(languageId);
 
 			if (groupId > 0) {
-				qPos.add(groupId);
+				queryPos.add(groupId);
 			}
 
 			if (Validator.isNotNull(productTypeName)) {
-				qPos.add(productTypeName);
+				queryPos.add(productTypeName);
 			}
 
-			qPos.add(queryDefinition.getStatus());
+			queryPos.add(queryDefinition.getStatus());
 
-			Iterator<Long> itr = q.iterate();
+			Iterator<Long> iterator = sqlQuery.iterate();
 
-			if (itr.hasNext()) {
-				Long count = itr.next();
+			if (iterator.hasNext()) {
+				Long count = iterator.next();
 
 				if (count != null) {
 					return count.intValue();
@@ -102,8 +102,8 @@ public class CPDefinitionFinderImpl
 
 			return 0;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -123,24 +123,25 @@ public class CPDefinitionFinderImpl
 				getClass(), FIND_BY_EXPIRATION_DATE, queryDefinition,
 				CPDefinitionImpl.TABLE_NAME);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(CPDefinitionImpl.TABLE_NAME, CPDefinitionImpl.class);
+			sqlQuery.addEntity(
+				CPDefinitionImpl.TABLE_NAME, CPDefinitionImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
 			if (expirationDate != null) {
-				qPos.add(expirationDate);
+				queryPos.add(expirationDate);
 			}
 
-			qPos.add(queryDefinition.getStatus());
+			queryPos.add(queryDefinition.getStatus());
 
 			return (List<CPDefinition>)QueryUtil.list(
-				q, getDialect(), queryDefinition.getStart(),
+				sqlQuery, getDialect(), queryDefinition.getStart(),
 				queryDefinition.getEnd());
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -174,30 +175,31 @@ public class CPDefinitionFinderImpl
 					sql, "(CPDefinition.productTypeName = ?) AND");
 			}
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(CPDefinitionImpl.TABLE_NAME, CPDefinitionImpl.class);
+			sqlQuery.addEntity(
+				CPDefinitionImpl.TABLE_NAME, CPDefinitionImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(languageId);
+			queryPos.add(languageId);
 
 			if (groupId > 0) {
-				qPos.add(groupId);
+				queryPos.add(groupId);
 			}
 
 			if (Validator.isNotNull(productTypeName)) {
-				qPos.add(productTypeName);
+				queryPos.add(productTypeName);
 			}
 
-			qPos.add(queryDefinition.getStatus());
+			queryPos.add(queryDefinition.getStatus());
 
 			return (List<CPDefinition>)QueryUtil.list(
-				q, getDialect(), queryDefinition.getStart(),
+				sqlQuery, getDialect(), queryDefinition.getStart(),
 				queryDefinition.getEnd());
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);

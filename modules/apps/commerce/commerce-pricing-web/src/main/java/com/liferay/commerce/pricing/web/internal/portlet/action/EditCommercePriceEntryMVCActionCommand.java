@@ -134,21 +134,23 @@ public class EditCommercePriceEntryMVCActionCommand
 				updateCommercePriceEntry(commercePriceEntryId, actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchCPInstanceException ||
-				e instanceof NoSuchPriceEntryException ||
-				e instanceof NoSuchPriceListException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchCPInstanceException ||
+				exception instanceof NoSuchPriceEntryException ||
+				exception instanceof NoSuchPriceListException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (e instanceof DuplicateCommercePriceEntryException) {
+			else if (exception instanceof
+						DuplicateCommercePriceEntryException) {
+
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				String redirect = ParamUtil.getString(
 					actionRequest, "redirect");
@@ -156,7 +158,7 @@ public class EditCommercePriceEntryMVCActionCommand
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

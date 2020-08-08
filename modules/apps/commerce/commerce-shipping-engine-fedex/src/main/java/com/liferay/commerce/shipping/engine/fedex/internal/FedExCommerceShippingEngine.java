@@ -96,8 +96,8 @@ public class FedExCommerceShippingEngine implements CommerceShippingEngine {
 		catch (CommerceShippingEngineException csee) {
 			throw csee;
 		}
-		catch (Exception e) {
-			throw new CommerceShippingEngineException(e);
+		catch (Exception exception) {
+			throw new CommerceShippingEngineException(exception);
 		}
 	}
 

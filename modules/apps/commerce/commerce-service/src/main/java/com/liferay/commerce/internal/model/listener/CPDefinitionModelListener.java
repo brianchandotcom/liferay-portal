@@ -42,9 +42,9 @@ public class CPDefinitionModelListener extends BaseModelListener<CPDefinition> {
 				CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY, null,
 				CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_ORDER_QUANTITY);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(pe, pe);
+				_log.warn(portalException, portalException);
 			}
 		}
 	}

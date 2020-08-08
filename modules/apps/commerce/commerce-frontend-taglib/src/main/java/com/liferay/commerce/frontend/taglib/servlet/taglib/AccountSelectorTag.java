@@ -118,8 +118,8 @@ public class AccountSelectorTag extends ComponentRendererTag {
 			putValue(
 				"viewAllOrdersLink", _getViewCommerceOrdersURL(themeDisplay));
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		putValue("spritemap", themeDisplay.getPathThemeImages() + "/icons.svg");

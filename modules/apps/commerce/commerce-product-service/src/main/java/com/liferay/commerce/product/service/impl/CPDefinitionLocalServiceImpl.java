@@ -145,10 +145,10 @@ public class CPDefinitionLocalServiceImpl
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, String defaultSku, boolean subscriptionEnabled,
 			int subscriptionLength, String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
 			int deliverySubscriptionLength, String deliverySubscriptionType,
-			UnicodeProperties deliverySubscriptionTypeSettingsProperties,
+			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
 			long deliveryMaxSubscriptionCycles, String externalReferenceCode,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -214,14 +214,14 @@ public class CPDefinitionLocalServiceImpl
 		cpDefinition.setSubscriptionLength(subscriptionLength);
 		cpDefinition.setSubscriptionType(subscriptionType);
 		cpDefinition.setSubscriptionTypeSettingsProperties(
-			subscriptionTypeSettingsProperties);
+			subscriptionTypeSettingsUnicodeProperties);
 		cpDefinition.setMaxSubscriptionCycles(maxSubscriptionCycles);
 		cpDefinition.setDeliverySubscriptionEnabled(
 			deliverySubscriptionEnabled);
 		cpDefinition.setDeliverySubscriptionLength(deliverySubscriptionLength);
 		cpDefinition.setDeliverySubscriptionType(deliverySubscriptionType);
 		cpDefinition.setDeliverySubscriptionTypeSettingsProperties(
-			deliverySubscriptionTypeSettingsProperties);
+			deliverySubscriptionTypeSettingsUnicodeProperties);
 		cpDefinition.setDeliveryMaxSubscriptionCycles(
 			deliveryMaxSubscriptionCycles);
 		cpDefinition.setAccountGroupFilterEnabled(false);
@@ -322,7 +322,7 @@ public class CPDefinitionLocalServiceImpl
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, String defaultSku, boolean subscriptionEnabled,
 			int subscriptionLength, String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, String externalReferenceCode,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -338,7 +338,7 @@ public class CPDefinitionLocalServiceImpl
 			expirationDateDay, expirationDateYear, expirationDateHour,
 			expirationDateMinute, neverExpire, defaultSku, subscriptionEnabled,
 			subscriptionLength, subscriptionType,
-			subscriptionTypeSettingsProperties, maxSubscriptionCycles, false, 1,
+			subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles, false, 1,
 			null, null, 0, externalReferenceCode, serviceContext);
 	}
 
@@ -1196,7 +1196,7 @@ public class CPDefinitionLocalServiceImpl
 					friendlyURLEntryLocalization.getUrlTitle());
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return Collections.emptyMap();
 		}
 
@@ -1218,7 +1218,7 @@ public class CPDefinitionLocalServiceImpl
 
 			return friendlyURLEntry.getUrlTitleMapAsXML();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return StringPool.BLANK;
 		}
 	}
@@ -1319,8 +1319,8 @@ public class CPDefinitionLocalServiceImpl
 
 			threshold = cProductVersionConfiguration.versionThreshold();
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
 			return;
 		}
@@ -1519,7 +1519,7 @@ public class CPDefinitionLocalServiceImpl
 				friendlyURLEntry.getClassPK(),
 				friendlyURLEntry.getDefaultLanguageId(), newUrlTitleMap);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			Group companyGroup = _groupLocalService.getCompanyGroup(
 				PortalUtil.getDefaultCompanyId());
 
@@ -1780,10 +1780,10 @@ public class CPDefinitionLocalServiceImpl
 	public CPDefinition updateSubscriptionInfo(
 			long cpDefinitionId, boolean subscriptionEnabled,
 			int subscriptionLength, String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
 			int deliverySubscriptionLength, String deliverySubscriptionType,
-			UnicodeProperties deliverySubscriptionTypeSettingsProperties,
+			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
 			long deliveryMaxSubscriptionCycles)
 		throws PortalException {
 
@@ -1799,14 +1799,14 @@ public class CPDefinitionLocalServiceImpl
 		cpDefinition.setSubscriptionLength(subscriptionLength);
 		cpDefinition.setSubscriptionType(subscriptionType);
 		cpDefinition.setSubscriptionTypeSettingsProperties(
-			subscriptionTypeSettingsProperties);
+			subscriptionTypeSettingsUnicodeProperties);
 		cpDefinition.setMaxSubscriptionCycles(maxSubscriptionCycles);
 		cpDefinition.setDeliverySubscriptionEnabled(
 			deliverySubscriptionEnabled);
 		cpDefinition.setDeliverySubscriptionLength(deliverySubscriptionLength);
 		cpDefinition.setDeliverySubscriptionType(deliverySubscriptionType);
 		cpDefinition.setDeliverySubscriptionTypeSettingsProperties(
-			deliverySubscriptionTypeSettingsProperties);
+			deliverySubscriptionTypeSettingsUnicodeProperties);
 		cpDefinition.setDeliveryMaxSubscriptionCycles(
 			deliveryMaxSubscriptionCycles);
 
@@ -1821,13 +1821,13 @@ public class CPDefinitionLocalServiceImpl
 	public CPDefinition updateSubscriptionInfo(
 			long cpDefinitionId, boolean subscriptionEnabled,
 			int subscriptionLength, String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, ServiceContext serviceContext)
 		throws PortalException {
 
 		return cpDefinitionLocalService.updateSubscriptionInfo(
 			cpDefinitionId, subscriptionEnabled, subscriptionLength,
-			subscriptionType, subscriptionTypeSettingsProperties,
+			subscriptionType, subscriptionTypeSettingsUnicodeProperties,
 			maxSubscriptionCycles, false, 1, null, null, 0);
 	}
 
@@ -1872,10 +1872,10 @@ public class CPDefinitionLocalServiceImpl
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, String defaultSku, boolean subscriptionEnabled,
 			int subscriptionLength, String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
 			int deliverySubscriptionLength, String deliverySubscriptionType,
-			UnicodeProperties deliverySubscriptionTypeSettingsProperties,
+			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
 			long deliveryMaxSubscriptionCycles, String externalReferenceCode,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -1907,10 +1907,10 @@ public class CPDefinitionLocalServiceImpl
 				return cpDefinitionLocalService.updateSubscriptionInfo(
 					cpDefinition.getCPDefinitionId(), subscriptionEnabled,
 					subscriptionLength, subscriptionType,
-					subscriptionTypeSettingsProperties, maxSubscriptionCycles,
+					subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles,
 					deliverySubscriptionEnabled, deliverySubscriptionLength,
 					deliverySubscriptionType,
-					deliverySubscriptionTypeSettingsProperties,
+					deliverySubscriptionTypeSettingsUnicodeProperties,
 					deliveryMaxSubscriptionCycles);
 			}
 		}
@@ -1926,10 +1926,10 @@ public class CPDefinitionLocalServiceImpl
 			expirationDateDay, expirationDateYear, expirationDateHour,
 			expirationDateMinute, neverExpire, defaultSku, subscriptionEnabled,
 			subscriptionLength, subscriptionType,
-			subscriptionTypeSettingsProperties, maxSubscriptionCycles,
+			subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles,
 			deliverySubscriptionEnabled, deliverySubscriptionLength,
 			deliverySubscriptionType,
-			deliverySubscriptionTypeSettingsProperties,
+			deliverySubscriptionTypeSettingsUnicodeProperties,
 			deliveryMaxSubscriptionCycles, externalReferenceCode,
 			serviceContext);
 	}
@@ -1954,7 +1954,7 @@ public class CPDefinitionLocalServiceImpl
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, String defaultSku, boolean subscriptionEnabled,
 			int subscriptionLength, String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsProperties,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, String externalReferenceCode,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -1970,7 +1970,7 @@ public class CPDefinitionLocalServiceImpl
 			expirationDateDay, expirationDateYear, expirationDateHour,
 			expirationDateMinute, neverExpire, defaultSku, subscriptionEnabled,
 			subscriptionLength, subscriptionType,
-			subscriptionTypeSettingsProperties, maxSubscriptionCycles, false, 1,
+			subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles, false, 1,
 			null, null, 0, externalReferenceCode, serviceContext);
 	}
 
@@ -2437,8 +2437,8 @@ public class CPDefinitionLocalServiceImpl
 				return true;
 			}
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		return false;

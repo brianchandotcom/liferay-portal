@@ -130,7 +130,7 @@ public abstract class BaseCommercePriceListDisplayContext
 
 	protected List<ClayHeadlessDataSetActionTemplate>
 		getClayHeadlessDataSetActionTemplates(
-			String portletURL, boolean isSidePanel) {
+			String portletURL, boolean sidePanel) {
 
 		List<ClayHeadlessDataSetActionTemplate>
 			clayHeadlessDataSetActionTemplates = new ArrayList<>();
@@ -141,7 +141,7 @@ public abstract class BaseCommercePriceListDisplayContext
 				LanguageUtil.get(httpServletRequest, "edit"), "get", null,
 				null);
 
-		if (isSidePanel) {
+		if (sidePanel) {
 			clayHeadlessDataSetActionTemplate.setTarget(
 				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_SIDE_PANEL);
 		}

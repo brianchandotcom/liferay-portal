@@ -93,21 +93,22 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 				updatePreselected(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof CPDefinitionOptionValueRelCPInstanceException ||
-				e instanceof CPDefinitionOptionValueRelKeyException ||
-				e instanceof CPDefinitionOptionValueRelPriceException) {
+		catch (Exception exception) {
+			if (exception instanceof
+					CPDefinitionOptionValueRelCPInstanceException ||
+				exception instanceof CPDefinitionOptionValueRelKeyException ||
+				exception instanceof CPDefinitionOptionValueRelPriceException) {
 
 				hideDefaultErrorMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName",
 					"editProductDefinitionOptionValueRel");
 			}
 			else {
-				_log.error(e, e);
+				_log.error(exception, exception);
 			}
 		}
 	}

@@ -64,7 +64,7 @@ public class EditCommerceShippingMethodFedExConfigurationMVCActionCommand
 			CommerceChannel commerceChannel =
 				_commerceChannelService.getCommerceChannel(commerceChannelId);
 
-			UnicodeProperties engineParameterMap =
+			UnicodeProperties unicodeProperties =
 				PropertiesParamUtil.getProperties(actionRequest, "settings--");
 
 			Settings settings = _settingsFactory.getSettings(
@@ -76,21 +76,21 @@ public class EditCommerceShippingMethodFedExConfigurationMVCActionCommand
 				settings.getModifiableSettings();
 
 			for (Map.Entry<String, String> entry :
-					engineParameterMap.entrySet()) {
+					unicodeProperties.entrySet()) {
 
 				modifiableSettings.setValue(entry.getKey(), entry.getValue());
 			}
 
 			modifiableSettings.store();
 		}
-		catch (Exception e) {
-			if (e instanceof PrincipalException) {
-				SessionErrors.add(actionRequest, e.getClass());
+		catch (Exception exception) {
+			if (exception instanceof PrincipalException) {
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

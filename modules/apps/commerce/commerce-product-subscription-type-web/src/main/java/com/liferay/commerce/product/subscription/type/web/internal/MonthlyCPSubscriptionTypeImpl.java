@@ -55,14 +55,14 @@ public class MonthlyCPSubscriptionTypeImpl implements CPSubscriptionType {
 	@Override
 	public Date getSubscriptionNextIterationDate(
 		TimeZone timeZone, int subscriptionLength,
-		UnicodeProperties subscriptionTypeSettingsProperties,
+		UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 		Date lastIterationDate) {
 
 		Calendar calendar = CalendarFactoryUtil.getCalendar(timeZone);
 
 		if (lastIterationDate == null) {
 			lastIterationDate = getSubscriptionStartDate(
-				timeZone, subscriptionTypeSettingsProperties);
+				timeZone, subscriptionTypeSettingsUnicodeProperties);
 		}
 
 		calendar.setTime(lastIterationDate);
@@ -73,13 +73,13 @@ public class MonthlyCPSubscriptionTypeImpl implements CPSubscriptionType {
 			Calendar.DAY_OF_MONTH);
 
 		int monthlyMode = GetterUtil.getInteger(
-			subscriptionTypeSettingsProperties.get("monthlyMode"));
+			subscriptionTypeSettingsUnicodeProperties.get("monthlyMode"));
 
 		if (monthlyMode ==
 				CPSubscriptionTypeConstants.MODE_EXACT_DAY_OF_MONTH) {
 
 			int monthDay = GetterUtil.getInteger(
-				subscriptionTypeSettingsProperties.get("monthDay"));
+				subscriptionTypeSettingsUnicodeProperties.get("monthDay"));
 
 			if (monthDay > dayOfMonthActualMaximum) {
 				monthDay = dayOfMonthActualMaximum;
@@ -96,12 +96,12 @@ public class MonthlyCPSubscriptionTypeImpl implements CPSubscriptionType {
 	@Override
 	public Date getSubscriptionStartDate(
 		TimeZone timeZone,
-		UnicodeProperties subscriptionTypeSettingsProperties) {
+		UnicodeProperties subscriptionTypeSettingsUnicodeProperties) {
 
 		Date now = new Date();
 
-		if ((subscriptionTypeSettingsProperties == null) ||
-			subscriptionTypeSettingsProperties.isEmpty()) {
+		if ((subscriptionTypeSettingsUnicodeProperties == null) ||
+			subscriptionTypeSettingsUnicodeProperties.isEmpty()) {
 
 			return now;
 		}
@@ -115,13 +115,13 @@ public class MonthlyCPSubscriptionTypeImpl implements CPSubscriptionType {
 		int today = calendar.get(Calendar.DAY_OF_MONTH);
 
 		int monthlyMode = GetterUtil.getInteger(
-			subscriptionTypeSettingsProperties.get("monthlyMode"));
+			subscriptionTypeSettingsUnicodeProperties.get("monthlyMode"));
 
 		if (monthlyMode ==
 				CPSubscriptionTypeConstants.MODE_EXACT_DAY_OF_MONTH) {
 
 			int monthDay = GetterUtil.getInteger(
-				subscriptionTypeSettingsProperties.get("monthDay"));
+				subscriptionTypeSettingsUnicodeProperties.get("monthDay"));
 
 			if (monthDay > dayOfMonthActualMaximum) {
 				monthDay = dayOfMonthActualMaximum;

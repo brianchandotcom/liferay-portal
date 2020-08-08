@@ -82,17 +82,17 @@ public class EditAssetCategoryCPAttachmentFileEntryMVCActionCommand
 				deleteCPAttachmentFileEntry(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchFileEntryException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchFileEntryException) {
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
 			else {
-				_log.error(e, e);
+				_log.error(exception, exception);
 
-				throw e;
+				throw exception;
 			}
 		}
 	}

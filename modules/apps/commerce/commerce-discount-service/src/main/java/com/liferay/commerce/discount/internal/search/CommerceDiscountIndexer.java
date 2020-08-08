@@ -331,11 +331,11 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 		Stream<CommerceDiscountAccountRel> commerceDiscountAccountRelStream =
 			commerceDiscountAccountRels.stream();
 
-		LongStream commerceAccountIdStream =
+		LongStream commerceAccountIdLongStream =
 			commerceDiscountAccountRelStream.mapToLong(
 				CommerceDiscountAccountRel::getCommerceAccountId);
 
-		long[] commerceAccountIds = commerceAccountIdStream.toArray();
+		long[] commerceAccountIds = commerceAccountIdLongStream.toArray();
 
 		document.addNumber("commerceAccountId", commerceAccountIds);
 

@@ -118,7 +118,7 @@ public class RatingsImporter {
 				_userIdMapperLocalService.getUserIdMapperByExternalUserId(
 					externalSystemType, externalUserId);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Can not find an user Id mapping for: " + externalUserId);

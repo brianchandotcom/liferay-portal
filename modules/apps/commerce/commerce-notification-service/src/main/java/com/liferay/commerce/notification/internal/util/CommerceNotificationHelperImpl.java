@@ -192,8 +192,8 @@ public class CommerceNotificationHelperImpl
 					commerceNotificationTemplate, fromName, toUser, subject,
 					body, object);
 			}
-			catch (Exception e) {
-				if ((e instanceof NoSuchUserException) &&
+			catch (Exception exception) {
+				if ((exception instanceof NoSuchUserException) &&
 					emailAddressValidator.validate(
 						user.getCompanyId(), toUserId)) {
 
@@ -207,7 +207,7 @@ public class CommerceNotificationHelperImpl
 						userByEmailAddress, subject, body, object);
 				}
 				else {
-					throw e;
+					throw exception;
 				}
 			}
 		}

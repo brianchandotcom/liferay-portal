@@ -56,8 +56,8 @@ public class CPCompareContentConfigurationAction
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				cpCompareContentDisplayContext);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return "/compare_products/configuration.jsp";

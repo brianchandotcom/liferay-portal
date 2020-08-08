@@ -82,8 +82,9 @@ public class CompletePaymentAuthorizeNetServlet extends HttpServlet {
 
 			httpServletResponse.sendRedirect(redirect);
 		}
-		catch (Exception e) {
-			_portal.sendError(e, httpServletRequest, httpServletResponse);
+		catch (Exception exception) {
+			_portal.sendError(
+				exception, httpServletRequest, httpServletResponse);
 		}
 	}
 

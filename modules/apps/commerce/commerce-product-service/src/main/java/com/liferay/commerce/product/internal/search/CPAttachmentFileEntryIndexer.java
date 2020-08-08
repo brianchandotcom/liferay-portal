@@ -301,14 +301,14 @@ public class CPAttachmentFileEntryIndexer
 					indexableActionableDynamicQuery.addDocuments(
 						getDocument(cpAttachmentFileEntry));
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to index commerce product attachment" +
 								"file entry " +
 									cpAttachmentFileEntry.
 										getCPAttachmentFileEntryId(),
-							pe);
+							portalException);
 					}
 				}
 			});

@@ -259,12 +259,12 @@ public class CommerceOrderIndexer extends BaseIndexer<CommerceOrder> {
 					indexableActionableDynamicQuery.addDocuments(
 						getDocument(commerceOrder));
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to index commerce order item " +
 								commerceOrder.getCommerceOrderId(),
-							pe);
+							portalException);
 					}
 				}
 			});

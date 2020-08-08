@@ -105,9 +105,9 @@ public class ProductSubscriptionInfoTag extends IncludeTag {
 			_deliveryDurationPeriodKey = _getPeriodKey(
 				deliveryPeriod, _deliveryDuration != 1);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
 			return SKIP_BODY;
@@ -194,17 +194,17 @@ public class ProductSubscriptionInfoTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-commerce:subscription-info:deliveryDurationPeriod",
 			_deliveryDurationPeriod);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-commerce:subscription-info:deliverySubscriptionPeriod",
 			_deliverySubscriptionPeriod);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-commerce:subscription-info:durationPeriod",
 			_durationPeriod);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-commerce:subscription-info:subscriptionPeriod",
 			_subscriptionPeriod);
 	}

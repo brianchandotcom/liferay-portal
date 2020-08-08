@@ -76,8 +76,8 @@ public class ProductDefinitionMessageListener extends BaseMessageListener {
 				trigger = _triggerFactory.createTrigger(
 					className, className, null, null, cronExpression);
 			}
-			catch (RuntimeException re) {
-				_log.error(re, re);
+			catch (RuntimeException runtimeException) {
+				_log.error(runtimeException, runtimeException);
 			}
 		}
 

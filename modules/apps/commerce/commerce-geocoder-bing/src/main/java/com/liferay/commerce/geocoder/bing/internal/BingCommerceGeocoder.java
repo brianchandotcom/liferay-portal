@@ -74,8 +74,8 @@ public class BingCommerceGeocoder implements CommerceGeocoder {
 		catch (CommerceGeocoderException cge) {
 			throw cge;
 		}
-		catch (Exception e) {
-			throw new CommerceGeocoderException(e);
+		catch (Exception exception) {
+			throw new CommerceGeocoderException(exception);
 		}
 	}
 
@@ -92,8 +92,8 @@ public class BingCommerceGeocoder implements CommerceGeocoder {
 		catch (CommerceGeocoderException cge) {
 			throw cge;
 		}
-		catch (Exception e) {
-			throw new CommerceGeocoderException(e);
+		catch (Exception exception) {
+			throw new CommerceGeocoderException(exception);
 		}
 	}
 

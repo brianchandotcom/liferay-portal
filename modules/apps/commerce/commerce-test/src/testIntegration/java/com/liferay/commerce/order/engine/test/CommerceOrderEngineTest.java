@@ -132,7 +132,7 @@ public class CommerceOrderEngineTest {
 		_commerceOrder = CommerceTestUtil.addCheckoutDetailsToUserOrder(
 			_commerceOrder, _user.getUserId(), false);
 
-		_commerceShipment = _commerceShipmentLocalService.addCommerceShipment(
+		_commerceShipment1 = _commerceShipmentLocalService.addCommerceShipment(
 			_commerceOrder.getCommerceOrderId(), _serviceContext);
 		_commerceShipment2 = _commerceShipmentLocalService.addCommerceShipment(
 			_commerceOrder.getCommerceOrderId(), _serviceContext);
@@ -196,30 +196,30 @@ public class CommerceOrderEngineTest {
 			commerceInventoryWarehouses.get(0);
 
 		_commerceShipmentItemLocalService.addCommerceShipmentItem(
-			_commerceShipment.getCommerceShipmentId(),
+			_commerceShipment1.getCommerceShipmentId(),
 			commerceOrderItem.getCommerceOrderItemId(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 			commerceOrderItem.getQuantity(), _serviceContext);
 
-		_commerceShipment = _commerceShipmentLocalService.updateStatus(
-			_commerceShipment.getCommerceShipmentId(),
+		_commerceShipment1 = _commerceShipmentLocalService.updateStatus(
+			_commerceShipment1.getCommerceShipmentId(),
 			CommerceShipmentConstants.SHIPMENT_STATUS_SHIPPED);
 
 		Thread.sleep(1000);
 
 		Assert.assertEquals(
 			CommerceShipmentConstants.SHIPMENT_STATUS_SHIPPED,
-			_commerceShipment.getStatus());
+			_commerceShipment1.getStatus());
 
-		_commerceShipment = _commerceShipmentLocalService.updateStatus(
-			_commerceShipment.getCommerceShipmentId(),
+		_commerceShipment1 = _commerceShipmentLocalService.updateStatus(
+			_commerceShipment1.getCommerceShipmentId(),
 			CommerceShipmentConstants.SHIPMENT_STATUS_DELIVERED);
 
 		Thread.sleep(1000);
 
 		Assert.assertEquals(
 			CommerceShipmentConstants.SHIPMENT_STATUS_DELIVERED,
-			_commerceShipment.getStatus());
+			_commerceShipment1.getStatus());
 
 		Thread.sleep(1000);
 
@@ -283,18 +283,18 @@ public class CommerceOrderEngineTest {
 			commerceInventoryWarehouses.get(0);
 
 		_commerceShipmentItemLocalService.addCommerceShipmentItem(
-			_commerceShipment.getCommerceShipmentId(),
+			_commerceShipment1.getCommerceShipmentId(),
 			commerceOrderItem.getCommerceOrderItemId(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 			commerceOrderItem.getQuantity() / 2, _serviceContext);
 
-		_commerceShipment = _commerceShipmentLocalService.updateStatus(
-			_commerceShipment.getCommerceShipmentId(),
+		_commerceShipment1 = _commerceShipmentLocalService.updateStatus(
+			_commerceShipment1.getCommerceShipmentId(),
 			CommerceShipmentConstants.SHIPMENT_STATUS_SHIPPED);
 
 		Assert.assertEquals(
 			CommerceShipmentConstants.SHIPMENT_STATUS_SHIPPED,
-			_commerceShipment.getStatus());
+			_commerceShipment1.getStatus());
 
 		Thread.sleep(1000);
 
@@ -352,18 +352,18 @@ public class CommerceOrderEngineTest {
 			commerceInventoryWarehouses.get(0);
 
 		_commerceShipmentItemLocalService.addCommerceShipmentItem(
-			_commerceShipment.getCommerceShipmentId(),
+			_commerceShipment1.getCommerceShipmentId(),
 			commerceOrderItem.getCommerceOrderItemId(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 			commerceOrderItem.getQuantity(), _serviceContext);
 
-		_commerceShipment = _commerceShipmentLocalService.updateStatus(
-			_commerceShipment.getCommerceShipmentId(),
+		_commerceShipment1 = _commerceShipmentLocalService.updateStatus(
+			_commerceShipment1.getCommerceShipmentId(),
 			CommerceShipmentConstants.SHIPMENT_STATUS_SHIPPED);
 
 		Assert.assertEquals(
 			CommerceShipmentConstants.SHIPMENT_STATUS_SHIPPED,
-			_commerceShipment.getStatus());
+			_commerceShipment1.getStatus());
 
 		Thread.sleep(1000);
 
@@ -679,13 +679,13 @@ public class CommerceOrderEngineTest {
 			commerceInventoryWarehouses.get(0);
 
 		_commerceShipmentItemLocalService.addCommerceShipmentItem(
-			_commerceShipment.getCommerceShipmentId(),
+			_commerceShipment1.getCommerceShipmentId(),
 			commerceOrderItem.getCommerceOrderItemId(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 			commerceOrderItem.getQuantity() / 2, _serviceContext);
 
-		_commerceShipment = _commerceShipmentLocalService.updateStatus(
-			_commerceShipment.getCommerceShipmentId(),
+		_commerceShipment1 = _commerceShipmentLocalService.updateStatus(
+			_commerceShipment1.getCommerceShipmentId(),
 			CommerceShipmentConstants.SHIPMENT_STATUS_DELIVERED);
 
 		Thread.sleep(1000);
@@ -899,7 +899,7 @@ public class CommerceOrderEngineTest {
 	private CommerceOrderLocalService _commerceOrderLocalService;
 
 	@DeleteAfterTestRun
-	private CommerceShipment _commerceShipment;
+	private CommerceShipment _commerceShipment1;
 
 	@DeleteAfterTestRun
 	private CommerceShipment _commerceShipment2;

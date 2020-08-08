@@ -87,8 +87,8 @@ public class CPCompareContentMiniPortlet extends MVCPortlet {
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				cpCompareContentMiniDisplayContext);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		super.render(renderRequest, renderResponse);

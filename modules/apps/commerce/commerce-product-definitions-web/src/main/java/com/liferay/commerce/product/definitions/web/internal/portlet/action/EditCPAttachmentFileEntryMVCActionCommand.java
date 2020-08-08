@@ -108,28 +108,29 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 
 			sendRedirect(actionRequest, actionResponse, redirect);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchCPAttachmentFileEntryException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchCPAttachmentFileEntryException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (e instanceof
+			else if (exception instanceof
 						CPAttachmentFileEntryExpirationDateException ||
-					 e instanceof DuplicateCPAttachmentFileEntryException ||
-					 e instanceof NoSuchFileEntryException) {
+					 exception instanceof
+						 DuplicateCPAttachmentFileEntryException ||
+					 exception instanceof NoSuchFileEntryException) {
 
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

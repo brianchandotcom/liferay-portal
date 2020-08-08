@@ -107,8 +107,8 @@ public class CPInstanceWarehouseItemsScreenNavigationEntry
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				commerceInventoryWarehouseItemsDisplayContext);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		_jspRenderer.renderJSP(

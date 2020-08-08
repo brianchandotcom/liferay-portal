@@ -53,16 +53,16 @@ public class EditCPOptionValueMVCRenderCommand implements MVCRenderCommand {
 		try {
 			setCPOptionValueRequestAttribute(renderRequest);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchCPOptionValueException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchCPOptionValueException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/error.jsp";
 			}
 
-			throw new PortletException(e);
+			throw new PortletException(exception);
 		}
 
 		return "/edit_option_value.jsp";

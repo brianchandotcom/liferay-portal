@@ -58,9 +58,9 @@ public class AssetCategoryModelListener
 				assetCategory.getCategoryId(),
 				_getUniqueUrlTitles(assetCategory), new ServiceContext());
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(pe, pe);
+				_log.warn(portalException, portalException);
 			}
 		}
 	}
@@ -78,9 +78,9 @@ public class AssetCategoryModelListener
 				assetCategory.getGroupId(), AssetCategory.class,
 				assetCategory.getCategoryId());
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(pe, pe);
+				_log.warn(portalException, portalException);
 			}
 		}
 	}

@@ -102,9 +102,9 @@ public class CommerceWishListDisplayContext {
 					_commerceWishListService.getCommerceWishList(
 						commerceWishListId);
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
+					_log.debug(portalException, portalException);
 				}
 			}
 		}

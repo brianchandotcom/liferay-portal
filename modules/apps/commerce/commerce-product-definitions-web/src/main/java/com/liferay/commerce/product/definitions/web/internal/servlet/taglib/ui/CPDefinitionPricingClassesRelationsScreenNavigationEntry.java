@@ -102,8 +102,8 @@ public class CPDefinitionPricingClassesRelationsScreenNavigationEntry
 				permissionChecker, cpDefinition.getCommerceCatalog(),
 				ActionKeys.VIEW);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		return false;

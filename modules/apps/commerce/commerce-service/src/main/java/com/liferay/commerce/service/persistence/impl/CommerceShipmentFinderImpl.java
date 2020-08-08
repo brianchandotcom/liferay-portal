@@ -56,18 +56,18 @@ public class CommerceShipmentFinderImpl
 
 			String sql = _customSQL.get(getClass(), COUNT_BY_COMMERCE_ORDER_ID);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+			sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(commerceOrderId);
+			queryPos.add(commerceOrderId);
 
-			Iterator<Long> itr = q.iterate();
+			Iterator<Long> iterator = sqlQuery.iterate();
 
-			if (itr.hasNext()) {
-				Long count = itr.next();
+			if (iterator.hasNext()) {
+				Long count = iterator.next();
 
 				if (count != null) {
 					return count.intValue();
@@ -76,8 +76,8 @@ public class CommerceShipmentFinderImpl
 
 			return 0;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -95,19 +95,19 @@ public class CommerceShipmentFinderImpl
 
 			String sql = _customSQL.get(getClass(), FIND_BY_COMMERCE_ORDER_ID);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity("CommerceShipment", CommerceShipmentImpl.class);
+			sqlQuery.addEntity("CommerceShipment", CommerceShipmentImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(commerceOrderId);
+			queryPos.add(commerceOrderId);
 
 			return (List<CommerceShipment>)QueryUtil.list(
-				q, getDialect(), start, end);
+				sqlQuery, getDialect(), start, end);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -127,20 +127,21 @@ public class CommerceShipmentFinderImpl
 				getClass(),
 				FIND_COMMERCE_SHIPMENT_STATUSES_BY_COMMERCE_ORDER_ID);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(commerceOrderId);
+			queryPos.add(commerceOrderId);
 
 			List<Integer> commerceShipmentStatuses =
 				(List<Integer>)QueryUtil.list(
-					q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+					sqlQuery, getDialect(), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS);
 
 			return ArrayUtil.toIntArray(commerceShipmentStatuses);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);

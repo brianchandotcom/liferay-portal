@@ -98,9 +98,9 @@ public class CommercePriceModifierInfoScreenNavigationEntry
 				commercePriceModifier.getCommercePriceListId(),
 				ActionKeys.UPDATE);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 		}
 
@@ -125,8 +125,8 @@ public class CommercePriceModifierInfoScreenNavigationEntry
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				commercePriceListDisplayContext);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		_jspRenderer.renderJSP(

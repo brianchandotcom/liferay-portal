@@ -149,13 +149,13 @@ public class CommercePricingClassIndexer
 					indexableActionableDynamicQuery.addDocuments(
 						getDocument(commercePricingClass));
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to index commerce pricing class " +
 								commercePricingClass.
 									getCommercePricingClassId(),
-							pe);
+							portalException);
 					}
 				}
 			});

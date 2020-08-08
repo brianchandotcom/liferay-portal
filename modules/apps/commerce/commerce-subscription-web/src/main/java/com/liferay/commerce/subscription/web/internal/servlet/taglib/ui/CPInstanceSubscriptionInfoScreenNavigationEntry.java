@@ -102,8 +102,8 @@ public class CPInstanceSubscriptionInfoScreenNavigationEntry
 				permissionChecker, cpInstance.getCommerceCatalog(),
 				ActionKeys.VIEW);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		return false;
@@ -127,8 +127,8 @@ public class CPInstanceSubscriptionInfoScreenNavigationEntry
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				cpInstanceSubscriptionInfoDisplayContext);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		_jspRenderer.renderJSP(

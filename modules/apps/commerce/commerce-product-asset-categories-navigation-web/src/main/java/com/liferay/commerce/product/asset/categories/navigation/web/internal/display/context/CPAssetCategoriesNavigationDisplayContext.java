@@ -215,7 +215,7 @@ public class CPAssetCategoriesNavigationDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		String groupFriendlyUrl = _portal.getGroupFriendlyURL(
+		String groupFriendlyURL = _portal.getGroupFriendlyURL(
 			themeDisplay.getLayoutSet(), themeDisplay);
 
 		long classNameId = _portal.getClassNameId(AssetCategory.class);
@@ -227,14 +227,14 @@ public class CPAssetCategoriesNavigationDisplayContext {
 				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
 					classNameId, categoryId);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return StringPool.BLANK;
 		}
 
 		String languageId = LanguageUtil.getLanguageId(
 			themeDisplay.getLocale());
 
-		return groupFriendlyUrl + CPConstants.SEPARATOR_ASSET_CATEGORY_URL +
+		return groupFriendlyURL + CPConstants.SEPARATOR_ASSET_CATEGORY_URL +
 			friendlyURLEntry.getUrlTitle(languageId);
 	}
 

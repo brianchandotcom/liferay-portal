@@ -331,12 +331,12 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 					indexableActionableDynamicQuery.addDocuments(
 						getDocument(commercePriceList));
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to index commerce price list " +
 								commercePriceList.getCommercePriceListId(),
-							pe);
+							portalException);
 					}
 				}
 			});

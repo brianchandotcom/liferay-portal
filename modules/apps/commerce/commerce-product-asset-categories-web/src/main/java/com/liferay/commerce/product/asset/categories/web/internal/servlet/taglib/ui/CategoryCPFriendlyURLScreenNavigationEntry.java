@@ -111,8 +111,8 @@ public class CategoryCPFriendlyURLScreenNavigationEntry
 				titleMapAsXML = friendlyURLEntry.getUrlTitleMapAsXML();
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		httpServletRequest.setAttribute("assetCategory", assetCategory);

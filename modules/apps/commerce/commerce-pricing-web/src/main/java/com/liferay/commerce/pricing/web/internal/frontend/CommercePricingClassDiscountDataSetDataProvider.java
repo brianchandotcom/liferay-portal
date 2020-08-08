@@ -111,8 +111,8 @@ public class CommercePricingClassDiscountDataSetDataProvider
 		return priceClassDiscounts;
 	}
 
-	private String _getDiscountType(boolean isUsePercentage) {
-		if (isUsePercentage) {
+	private String _getDiscountType(boolean usePercentage) {
+		if (usePercentage) {
 			return "Percentage";
 		}
 

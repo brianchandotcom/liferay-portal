@@ -96,24 +96,24 @@ public class CommerceTaxFixedRateAddressRelFinderImpl
 
 			String sql = _customSQL.get(getClass(), FIND_BY_C_C_C_Z);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(
+			sqlQuery.addEntity(
 				"CommerceTaxFixedRateAddressRel",
 				CommerceTaxFixedRateAddressRelImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(commerceTaxMethodId);
-			qPos.add(commerceCountryId);
-			qPos.add(commerceRegionId);
-			qPos.add(zip);
+			queryPos.add(commerceTaxMethodId);
+			queryPos.add(commerceCountryId);
+			queryPos.add(commerceRegionId);
+			queryPos.add(zip);
 
 			return (List<CommerceTaxFixedRateAddressRel>)QueryUtil.list(
-				q, getDialect(), start, end);
+				sqlQuery, getDialect(), start, end);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -132,25 +132,25 @@ public class CommerceTaxFixedRateAddressRelFinderImpl
 
 			String sql = _customSQL.get(getClass(), FIND_BY_C_C_C_C_Z);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(
+			sqlQuery.addEntity(
 				"CommerceTaxFixedRateAddressRel",
 				CommerceTaxFixedRateAddressRelImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(commerceTaxMethodId);
-			qPos.add(cpTaxCategoryId);
-			qPos.add(commerceCountryId);
-			qPos.add(commerceRegionId);
-			qPos.add(zip);
+			queryPos.add(commerceTaxMethodId);
+			queryPos.add(cpTaxCategoryId);
+			queryPos.add(commerceCountryId);
+			queryPos.add(commerceRegionId);
+			queryPos.add(zip);
 
 			return (List<CommerceTaxFixedRateAddressRel>)QueryUtil.list(
-				q, getDialect(), start, end);
+				sqlQuery, getDialect(), start, end);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);

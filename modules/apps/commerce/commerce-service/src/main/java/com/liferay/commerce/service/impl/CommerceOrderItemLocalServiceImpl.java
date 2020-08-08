@@ -1216,19 +1216,19 @@ public class CommerceOrderItemLocalServiceImpl
 			CommerceOrder commerceOrder, CommerceCurrency commerceCurrency)
 		throws PortalException {
 
-		CommerceProductPriceImpl commerceProductPrice =
+		CommerceProductPriceImpl commerceProductPriceImpl =
 			new CommerceProductPriceImpl();
 
 		if (optionValuePrice == null) {
 			optionValuePrice = BigDecimal.ZERO;
 		}
 
-		commerceProductPrice.setUnitPrice(
+		commerceProductPriceImpl.setUnitPrice(
 			_commerceMoneyFactory.create(commerceCurrency, optionValuePrice));
 
-		commerceProductPrice.setUnitPromoPrice(
+		commerceProductPriceImpl.setUnitPromoPrice(
 			_commerceMoneyFactory.create(commerceCurrency, BigDecimal.ZERO));
-		commerceProductPrice.setUnitPromoPriceWithTaxAmount(
+		commerceProductPriceImpl.setUnitPromoPriceWithTaxAmount(
 			_commerceMoneyFactory.create(commerceCurrency, BigDecimal.ZERO));
 
 		BigDecimal unitPriceWithTaxAmount = optionValuePrice;
@@ -1246,21 +1246,21 @@ public class CommerceOrderItemLocalServiceImpl
 				cpInstanceId, optionValuePrice, commerceOrder);
 		}
 
-		commerceProductPrice.setUnitPriceWithTaxAmount(
+		commerceProductPriceImpl.setUnitPriceWithTaxAmount(
 			_commerceMoneyFactory.create(
 				commerceCurrency, unitPriceWithTaxAmount));
 
-		commerceProductPrice.setFinalPrice(
+		commerceProductPriceImpl.setFinalPrice(
 			_commerceMoneyFactory.create(commerceCurrency, optionValuePrice));
 
-		commerceProductPrice.setFinalPriceWithTaxAmount(
+		commerceProductPriceImpl.setFinalPriceWithTaxAmount(
 			_commerceMoneyFactory.create(
 				commerceCurrency, finalPriceWithTaxAmount));
 
-		commerceProductPrice.setCommerceDiscountValue(null);
-		commerceProductPrice.setQuantity(quantity);
+		commerceProductPriceImpl.setCommerceDiscountValue(null);
+		commerceProductPriceImpl.setQuantity(quantity);
 
-		return commerceProductPrice;
+		return commerceProductPriceImpl;
 	}
 
 	private List<CommerceOptionValue> _getStaticOptionValuesNotLinkedToSku(

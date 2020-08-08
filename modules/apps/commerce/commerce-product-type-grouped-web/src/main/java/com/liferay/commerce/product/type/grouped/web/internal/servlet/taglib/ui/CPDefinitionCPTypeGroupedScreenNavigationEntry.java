@@ -109,8 +109,8 @@ public class CPDefinitionCPTypeGroupedScreenNavigationEntry
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				cpDefinitionGroupedEntriesDisplayContext);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		_jspRenderer.renderJSP(

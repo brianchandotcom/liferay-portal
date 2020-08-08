@@ -61,26 +61,26 @@ public class CPAttachmentFileEntryFinderImpl
 				getClass(), FIND_BY_EXPIRATION_DATE, queryDefinition,
 				CPAttachmentFileEntryImpl.TABLE_NAME);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(
+			sqlQuery.addEntity(
 				CPAttachmentFileEntryImpl.TABLE_NAME,
 				CPAttachmentFileEntryImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
 			if (expirationDate != null) {
-				qPos.add(expirationDate);
+				queryPos.add(expirationDate);
 			}
 
-			qPos.add(queryDefinition.getStatus());
+			queryPos.add(queryDefinition.getStatus());
 
 			return (List<CPAttachmentFileEntry>)QueryUtil.list(
-				q, getDialect(), queryDefinition.getStart(),
+				sqlQuery, getDialect(), queryDefinition.getStart(),
 				queryDefinition.getEnd());
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);

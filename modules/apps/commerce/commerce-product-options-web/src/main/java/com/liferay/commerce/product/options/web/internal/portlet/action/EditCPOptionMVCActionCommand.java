@@ -108,19 +108,19 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 
 			jsonObject.put("success", true);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			String key = "your-request-failed-to-complete";
 
-			if (e instanceof CPOptionKeyException) {
+			if (exception instanceof CPOptionKeyException) {
 				key = "that-key-is-already-being-used";
 			}
-			else if (e instanceof CPOptionSKUContributorException) {
+			else if (exception instanceof CPOptionSKUContributorException) {
 				key =
 					"sku-contributor-cannot-be-set-as-true-for-the-selected-" +
 						"field-type";
 			}
 			else {
-				_log.error(e, e);
+				_log.error(exception, exception);
 			}
 
 			jsonObject.put(
@@ -176,7 +176,7 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 		return cpOption;
 	}
 
-	protected void writeJSON(ActionResponse actionResponse, Object jsonObj)
+	protected void writeJSON(ActionResponse actionResponse, Object object)
 		throws IOException {
 
 		HttpServletResponse httpServletResponse =
@@ -184,7 +184,7 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 
 		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
-		ServletResponseUtil.write(httpServletResponse, jsonObj.toString());
+		ServletResponseUtil.write(httpServletResponse, object.toString());
 
 		httpServletResponse.flushBuffer();
 	}

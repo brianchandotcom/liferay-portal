@@ -128,10 +128,10 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 					cpDefinitionOptionRelId, actionRequest);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			hideDefaultErrorMessage(actionRequest);
 
-			SessionErrors.add(actionRequest, e.getClass(), e);
+			SessionErrors.add(actionRequest, exception.getClass(), exception);
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 

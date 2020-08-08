@@ -110,9 +110,9 @@ public class EditCommerceInventoryReplenishmentItemMVCActionCommand
 				updateCommerceInventoryReplenishmentItem(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof MVCCException) {
-				SessionErrors.add(actionRequest, e.getClass());
+		catch (Exception exception) {
+			if (exception instanceof MVCCException) {
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
@@ -120,7 +120,7 @@ public class EditCommerceInventoryReplenishmentItemMVCActionCommand
 				sendRedirect(actionRequest, actionResponse);
 			}
 			else {
-				_log.error(e, e);
+				_log.error(exception, exception);
 			}
 		}
 	}

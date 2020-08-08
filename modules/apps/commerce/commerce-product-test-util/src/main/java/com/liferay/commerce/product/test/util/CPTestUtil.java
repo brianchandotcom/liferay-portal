@@ -754,16 +754,16 @@ public class CPTestUtil {
 				expirationDateMinute, false, sku, false, 0, null, null, 0L,
 				null, serviceContext);
 
-		CPDefinitionInventory cpDefinitioninventory =
+		CPDefinitionInventory cpDefinitionInventory =
 			CPDefinitionInventoryLocalServiceUtil.
 				fetchCPDefinitionInventoryByCPDefinitionId(
 					cpDefinition.getCPDefinitionId());
 
-		if (cpDefinitioninventory != null) {
-			cpDefinitioninventory.setBackOrders(false);
+		if (cpDefinitionInventory != null) {
+			cpDefinitionInventory.setBackOrders(false);
 
 			CPDefinitionInventoryLocalServiceUtil.updateCPDefinitionInventory(
-				cpDefinitioninventory);
+				cpDefinitionInventory);
 		}
 
 		return cpDefinition;

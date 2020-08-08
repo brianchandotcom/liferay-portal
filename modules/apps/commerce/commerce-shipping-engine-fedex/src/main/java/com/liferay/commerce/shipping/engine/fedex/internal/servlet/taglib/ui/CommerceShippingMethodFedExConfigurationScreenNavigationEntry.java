@@ -132,8 +132,8 @@ public class CommerceShippingMethodFedExConfigurationScreenNavigationEntry
 				_servletContext, httpServletRequest, httpServletResponse,
 				"/configuration.jsp");
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 

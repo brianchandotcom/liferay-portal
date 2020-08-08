@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
@@ -122,8 +123,8 @@ public class CPPriceRangeFacetsPortlet
 
 			portletSharedSearchSettings.addFacet(facet);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 
@@ -145,8 +146,8 @@ public class CPPriceRangeFacetsPortlet
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				cpPriceRangeFacetsDisplayContext);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		super.render(renderRequest, renderResponse);
@@ -225,10 +226,9 @@ public class CPPriceRangeFacetsPortlet
 			cpPriceRangeFacetsPortletInstanceConfiguration.
 				rangesJSONArrayString();
 
-		rangesJSONArrayString = rangesJSONArrayString.replace(
-			"\\,", StringPool.COMMA);
-		rangesJSONArrayString = rangesJSONArrayString.replace(
-			StringPool.STAR, String.valueOf(Double.MAX_VALUE));
+		rangesJSONArrayString = StringUtil.replace(
+			rangesJSONArrayString, new String[] {"\\,", StringPool.STAR},
+			new String[] {StringPool.COMMA, String.valueOf(Double.MAX_VALUE)});
 
 		jsonObject.put(
 			"ranges", JSONFactoryUtil.createJSONArray(rangesJSONArrayString));

@@ -62,8 +62,8 @@ public class CPPriceRangeFacetsConfigurationAction
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				cpPriceRangeFacetsDisplayContext);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return "/price_range_facets/configuration.jsp";

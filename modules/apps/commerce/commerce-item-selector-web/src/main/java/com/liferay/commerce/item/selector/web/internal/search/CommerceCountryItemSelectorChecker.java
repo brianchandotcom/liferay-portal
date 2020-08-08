@@ -37,16 +37,16 @@ public class CommerceCountryItemSelectorChecker extends EmptyOnClickRowChecker {
 	}
 
 	@Override
-	public boolean isChecked(Object obj) {
-		CommerceCountry commerceCountry = (CommerceCountry)obj;
+	public boolean isChecked(Object object) {
+		CommerceCountry commerceCountry = (CommerceCountry)object;
 
 		return _checkedCommerceCountryIds.contains(
 			commerceCountry.getCommerceCountryId());
 	}
 
 	@Override
-	public boolean isDisabled(Object obj) {
-		return isChecked(obj);
+	public boolean isDisabled(Object object) {
+		return isChecked(object);
 	}
 
 	private final Set<Long> _checkedCommerceCountryIds;

@@ -124,8 +124,8 @@ public class PayPalCommercePaymentMethodConfigurationScreenNavigationEntry
 				PayPalGroupServiceConfiguration.class.getName(),
 				payPalGroupServiceConfiguration);
 		}
-		catch (Exception e) {
-			throw new IOException(e);
+		catch (Exception exception) {
+			throw new IOException(exception);
 		}
 
 		_jspRenderer.renderJSP(

@@ -275,7 +275,9 @@ public class CPSearchResultsDisplayContext {
 		return false;
 	}
 
-	protected static String getCompleteOriginalURL(HttpServletRequest request) {
+	protected static String getCompleteOriginalURL(
+		HttpServletRequest httpServletRequest) {
+
 		StringBuffer sb = new StringBuffer();
 
 		String requestURL = null;
@@ -283,7 +285,7 @@ public class CPSearchResultsDisplayContext {
 
 		boolean forwarded = false;
 
-		if (request.getAttribute(
+		if (httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_SERVLET_FORWARD_REQUEST_URI) != null) {
 
 			forwarded = true;
@@ -291,17 +293,17 @@ public class CPSearchResultsDisplayContext {
 
 		if (forwarded) {
 			requestURL = PortalUtil.getAbsoluteURL(
-				request,
-				(String)request.getAttribute(
+				httpServletRequest,
+				(String)httpServletRequest.getAttribute(
 					JavaConstants.JAVAX_SERVLET_FORWARD_REQUEST_URI));
 
-			queryString = (String)request.getAttribute(
+			queryString = (String)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_SERVLET_FORWARD_QUERY_STRING);
 		}
 		else {
-			requestURL = String.valueOf(request.getRequestURL());
+			requestURL = String.valueOf(httpServletRequest.getRequestURL());
 
-			queryString = request.getQueryString();
+			queryString = httpServletRequest.getQueryString();
 		}
 
 		sb.append(requestURL);
@@ -325,8 +327,8 @@ public class CPSearchResultsDisplayContext {
 
 		String completeURL = sb.toString();
 
-		if (request.isRequestedSessionIdFromURL()) {
-			HttpSession session = request.getSession();
+		if (httpServletRequest.isRequestedSessionIdFromURL()) {
+			HttpSession session = httpServletRequest.getSession();
 
 			String sessionId = session.getId();
 

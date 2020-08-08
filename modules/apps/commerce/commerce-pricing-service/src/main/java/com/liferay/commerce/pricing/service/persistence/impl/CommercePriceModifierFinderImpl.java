@@ -79,28 +79,30 @@ public class CommercePriceModifierFinderImpl
 					sql, "[$CLASS_PK_PRICING_CLASSES$]", new long[] {0});
 			}
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(
+			sqlQuery.addEntity(
 				CommercePriceModifierImpl.TABLE_NAME,
 				CommercePriceModifierImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(commercePriceListId);
-			qPos.add(cpDefinitionId);
-			qPos.add(PortalUtil.getClassNameId(CPDefinition.class.getName()));
-			qPos.add(PortalUtil.getClassNameId(AssetCategory.class.getName()));
-			qPos.add(
+			queryPos.add(commercePriceListId);
+			queryPos.add(cpDefinitionId);
+			queryPos.add(
+				PortalUtil.getClassNameId(CPDefinition.class.getName()));
+			queryPos.add(
+				PortalUtil.getClassNameId(AssetCategory.class.getName()));
+			queryPos.add(
 				PortalUtil.getClassNameId(
 					CommercePricingClass.class.getName()));
-			qPos.add(CommercePriceModifierConstants.TARGET_CATALOG);
+			queryPos.add(CommercePriceModifierConstants.TARGET_CATALOG);
 
 			return (List<CommercePriceModifier>)QueryUtil.list(
-				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				sqlQuery, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);

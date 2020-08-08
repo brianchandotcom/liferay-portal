@@ -108,8 +108,8 @@ public class EditCommerceShipmentItemMVCActionCommand
 				updateCommerceShipmentItem(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			SessionErrors.add(actionRequest, e.getClass());
+		catch (Exception exception) {
+			SessionErrors.add(actionRequest, exception.getClass());
 
 			String redirect = getSaveAndContinueRedirect(actionRequest);
 

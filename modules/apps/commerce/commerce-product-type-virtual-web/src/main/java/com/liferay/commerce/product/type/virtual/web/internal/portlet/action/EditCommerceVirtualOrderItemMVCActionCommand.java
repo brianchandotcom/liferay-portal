@@ -60,29 +60,30 @@ public class EditCommerceVirtualOrderItemMVCActionCommand
 				updateCommerceVirtualOrderItem(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof CommerceVirtualOrderItemException ||
-				e instanceof CommerceVirtualOrderItemFileEntryIdException) {
+		catch (Exception exception) {
+			if (exception instanceof CommerceVirtualOrderItemException ||
+				exception instanceof
+					CommerceVirtualOrderItemFileEntryIdException) {
 
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				String redirect = ParamUtil.getString(
 					actionRequest, "redirect");
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
-			else if (e instanceof NoSuchVirtualOrderItemException ||
-					 e instanceof PrincipalException) {
+			else if (exception instanceof NoSuchVirtualOrderItemException ||
+					 exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

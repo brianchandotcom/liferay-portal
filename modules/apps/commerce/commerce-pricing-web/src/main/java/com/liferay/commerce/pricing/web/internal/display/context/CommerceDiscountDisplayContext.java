@@ -625,7 +625,7 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 
 	protected List<ClayHeadlessDataSetActionTemplate>
 		getClayHeadlessDataSetActionTemplates(
-			String portletURL, boolean isSidePanel) {
+			String portletURL, boolean sidePanel) {
 
 		List<ClayHeadlessDataSetActionTemplate>
 			clayHeadlessDataSetActionTemplates = new ArrayList<>();
@@ -636,7 +636,7 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 				LanguageUtil.get(httpServletRequest, "edit"), "get", null,
 				null);
 
-		if (isSidePanel) {
+		if (sidePanel) {
 			clayHeadlessDataSetActionTemplate.setTarget("sidePanel");
 		}
 
@@ -654,7 +654,7 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 	}
 
 	private String _getCommerceDiscountAmountFormatted(
-			boolean isUsePercentage, BigDecimal commerceDiscountAmount,
+			boolean usePercentage, BigDecimal commerceDiscountAmount,
 			Locale locale)
 		throws PortalException {
 
@@ -662,7 +662,7 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 			commerceDiscountAmount = BigDecimal.ZERO;
 		}
 
-		if (isUsePercentage) {
+		if (usePercentage) {
 			return getLocalizedPercentage(commerceDiscountAmount, locale);
 		}
 

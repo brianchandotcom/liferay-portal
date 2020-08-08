@@ -250,13 +250,13 @@ public class CommerceInventoryWarehouseIndexer
 					indexableActionableDynamicQuery.addDocuments(
 						getDocument(commerceInventoryWarehouse));
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to index commerce inventory warehouse " +
 								commerceInventoryWarehouse.
 									getCommerceInventoryWarehouseId(),
-							pe);
+							portalException);
 					}
 				}
 			});

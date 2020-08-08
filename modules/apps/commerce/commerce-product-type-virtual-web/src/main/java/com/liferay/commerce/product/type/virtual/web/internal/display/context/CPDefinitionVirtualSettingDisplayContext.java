@@ -236,8 +236,8 @@ public class CPDefinitionVirtualSettingDisplayContext
 		try {
 			cpType = getCPType();
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		if (cpType != null) {

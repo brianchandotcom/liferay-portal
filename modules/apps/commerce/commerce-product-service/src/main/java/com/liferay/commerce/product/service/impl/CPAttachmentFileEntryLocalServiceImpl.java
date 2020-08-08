@@ -429,17 +429,17 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			JSONArray valuesJSONArray = _jsonHelper.getValueAsJSONArray(
+			JSONArray valueAsJSONArray = _jsonHelper.getValueAsJSONArray(
 				"value", jsonObject);
 
-			String[] values = new String[valuesJSONArray.length()];
+			String[] values = new String[valueAsJSONArray.length()];
 
 			if (values.length == 0) {
 				continue;
 			}
 
-			for (int j = 0; j < valuesJSONArray.length(); j++) {
-				values[j] = valuesJSONArray.getString(j);
+			for (int j = 0; j < valueAsJSONArray.length(); j++) {
+				values[j] = valueAsJSONArray.getString(j);
 			}
 
 			String key = jsonObject.getString("key");

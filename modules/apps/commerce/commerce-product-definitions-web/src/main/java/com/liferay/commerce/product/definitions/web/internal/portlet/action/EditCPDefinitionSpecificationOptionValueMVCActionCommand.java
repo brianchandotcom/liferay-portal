@@ -145,17 +145,17 @@ public class EditCPDefinitionSpecificationOptionValueMVCActionCommand
 				updateCPDefinitionSpecificationOptionValue(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof
+		catch (Exception exception) {
+			if (exception instanceof
 					NoSuchCPDefinitionSpecificationOptionValueException ||
-				e instanceof PrincipalException) {
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

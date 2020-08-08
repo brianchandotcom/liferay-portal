@@ -57,24 +57,24 @@ public class CPInstanceFinderImpl
 				getClass(), FIND_BY_EXPIRATION_DATE, queryDefinition,
 				CPInstanceImpl.TABLE_NAME);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(CPInstanceImpl.TABLE_NAME, CPInstanceImpl.class);
+			sqlQuery.addEntity(CPInstanceImpl.TABLE_NAME, CPInstanceImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
 			if (expirationDate != null) {
-				qPos.add(expirationDate);
+				queryPos.add(expirationDate);
 			}
 
-			qPos.add(queryDefinition.getStatus());
+			queryPos.add(queryDefinition.getStatus());
 
 			return (List<CPInstance>)QueryUtil.list(
-				q, getDialect(), queryDefinition.getStart(),
+				sqlQuery, getDialect(), queryDefinition.getStart(),
 				queryDefinition.getEnd());
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);

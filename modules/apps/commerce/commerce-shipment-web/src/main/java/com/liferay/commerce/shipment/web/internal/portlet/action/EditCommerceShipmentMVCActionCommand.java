@@ -156,17 +156,17 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 				updateStatus(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof CommerceShipmentItemQuantityException ||
-				e instanceof CommerceShipmentShippingDateException ||
-				e instanceof CommerceShipmentStatusException ||
-				e instanceof NoSuchShipmentException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof CommerceShipmentItemQuantityException ||
+				exception instanceof CommerceShipmentShippingDateException ||
+				exception instanceof CommerceShipmentStatusException ||
+				exception instanceof NoSuchShipmentException ||
+				exception instanceof PrincipalException) {
 
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				String redirect = ParamUtil.getString(
 					actionRequest, "redirect");
@@ -174,7 +174,7 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

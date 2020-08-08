@@ -345,9 +345,9 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 			languageIdToUrlTitleMap =
 				friendlyURLEntry.getLanguageIdToUrlTitleMap();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 		}
 
@@ -816,12 +816,12 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 					indexableActionableDynamicQuery.addDocuments(
 						getDocument(cpDefinition));
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to index commerce product definition " +
 								cpDefinition.getCPDefinitionId(),
-							pe);
+							portalException);
 					}
 				}
 			});

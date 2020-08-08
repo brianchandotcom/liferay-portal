@@ -118,15 +118,15 @@ public class EditCommerceOrderItemMVCActionCommand
 
 			SessionErrors.add(actionRequest, cove.getClass(), cove);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchOrderException ||
-				e instanceof NoSuchOrderItemException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchOrderException ||
+				exception instanceof NoSuchOrderItemException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

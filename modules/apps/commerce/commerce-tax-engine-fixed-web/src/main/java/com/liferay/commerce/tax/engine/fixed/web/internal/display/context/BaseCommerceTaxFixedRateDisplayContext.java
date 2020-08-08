@@ -150,10 +150,10 @@ public class BaseCommerceTaxFixedRateDisplayContext {
 	}
 
 	public String getLocalizedRate(
-			boolean isPercentage, double rate, Locale locale)
+			boolean percentage, double rate, Locale locale)
 		throws PortalException {
 
-		if (isPercentage) {
+		if (percentage) {
 			return getLocalizedPercentage(rate, locale);
 		}
 

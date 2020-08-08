@@ -52,22 +52,22 @@ public class CommerceInventoryWarehouseFinderImpl
 
 			String sql = _customSQL.get(getClass(), FIND_BY_G_S);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(
+			sqlQuery.addEntity(
 				CommerceInventoryWarehouseImpl.TABLE_NAME,
 				CommerceInventoryWarehouseImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(groupId);
-			qPos.add(sku);
+			queryPos.add(groupId);
+			queryPos.add(sku);
 
 			return (List<CommerceInventoryWarehouse>)QueryUtil.list(
-				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				sqlQuery, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -85,23 +85,23 @@ public class CommerceInventoryWarehouseFinderImpl
 
 			String sql = _customSQL.get(getClass(), FIND_BY_C_G_A);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(
+			sqlQuery.addEntity(
 				CommerceInventoryWarehouseImpl.TABLE_NAME,
 				CommerceInventoryWarehouseImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(companyId);
-			qPos.add(groupId);
-			qPos.add(active);
+			queryPos.add(companyId);
+			queryPos.add(groupId);
+			queryPos.add(active);
 
 			return (List<CommerceInventoryWarehouse>)QueryUtil.list(
-				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				sqlQuery, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);

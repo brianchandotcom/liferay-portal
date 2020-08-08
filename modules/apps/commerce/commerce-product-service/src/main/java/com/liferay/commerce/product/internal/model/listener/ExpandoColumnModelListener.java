@@ -46,8 +46,8 @@ public class ExpandoColumnModelListener
 				_removeCPDefinitionOptionValueRelExpandoColumn(expandoColumn);
 			}
 		}
-		catch (PortalException pe) {
-			throw new ModelListenerException(pe);
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
 		}
 	}
 
@@ -59,8 +59,8 @@ public class ExpandoColumnModelListener
 				_copyToCPDefinitionOptionValueRelExpandoColumn(expandoColumn);
 			}
 		}
-		catch (PortalException pe) {
-			throw new ModelListenerException(pe);
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
 		}
 	}
 

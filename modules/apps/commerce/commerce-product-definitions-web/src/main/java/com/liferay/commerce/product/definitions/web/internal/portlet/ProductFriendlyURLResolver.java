@@ -241,12 +241,12 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 		try {
 			return _layoutLocalService.getLayout(plid);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
-			throw pe;
+			throw portalException;
 		}
 	}
 
@@ -321,9 +321,9 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 				}
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 

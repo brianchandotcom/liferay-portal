@@ -43,8 +43,8 @@ public class GalleryTag extends IncludeTag {
 		try {
 			_images = _cpContentHelper.getImages(_cpDefinitionId, themeDisplay);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		return super.doStartTag();

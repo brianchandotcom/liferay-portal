@@ -50,8 +50,8 @@ public class SearchResultsTag extends ComponentRendererTag {
 					commerceAccount.getCommerceAccountId());
 			}
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		putValue(

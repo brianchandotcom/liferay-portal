@@ -162,8 +162,8 @@ public class CommerceAccountsImporter {
 
 				commerceRegionId = commerceRegion.getCommerceRegionId();
 			}
-			catch (PortalException pe) {
-				_log.error(pe, pe);
+			catch (PortalException portalException) {
+				_log.error(portalException, portalException);
 			}
 		}
 

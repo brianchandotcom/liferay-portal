@@ -73,26 +73,31 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 				updateCPDefinitionVirtualSetting(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof CPDefinitionVirtualSettingException ||
-				e instanceof CPDefinitionVirtualSettingFileEntryIdException ||
-				e instanceof CPDefinitionVirtualSettingSampleException ||
-				e instanceof
+		catch (Exception exception) {
+			if (exception instanceof CPDefinitionVirtualSettingException ||
+				exception instanceof
+					CPDefinitionVirtualSettingFileEntryIdException ||
+				exception instanceof
+					CPDefinitionVirtualSettingSampleException ||
+				exception instanceof
 					CPDefinitionVirtualSettingSampleFileEntryIdException ||
-				e instanceof CPDefinitionVirtualSettingSampleUrlException ||
-				e instanceof
+				exception instanceof
+					CPDefinitionVirtualSettingSampleUrlException ||
+				exception instanceof
 					CPDefinitionVirtualSettingTermsOfUseArticleResourcePKException ||
-				e instanceof
+				exception instanceof
 					CPDefinitionVirtualSettingTermsOfUseContentException ||
-				e instanceof CPDefinitionVirtualSettingTermsOfUseException ||
-				e instanceof CPDefinitionVirtualSettingUrlException ||
-				e instanceof NoSuchCPDefinitionVirtualSettingException ||
-				e instanceof PrincipalException) {
+				exception instanceof
+					CPDefinitionVirtualSettingTermsOfUseException ||
+				exception instanceof CPDefinitionVirtualSettingUrlException ||
+				exception instanceof
+					NoSuchCPDefinitionVirtualSettingException ||
+				exception instanceof PrincipalException) {
 
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				String redirect = ParamUtil.getString(
 					actionRequest, "redirect");
@@ -100,7 +105,7 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

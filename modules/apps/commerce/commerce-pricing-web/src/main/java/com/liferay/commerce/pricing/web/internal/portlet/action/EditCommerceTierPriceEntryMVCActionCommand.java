@@ -113,19 +113,21 @@ public class EditCommerceTierPriceEntryMVCActionCommand
 					commerceTierPriceEntryId, actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchTierPriceEntryException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchTierPriceEntryException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (e instanceof DuplicateCommerceTierPriceEntryException) {
+			else if (exception instanceof
+						DuplicateCommerceTierPriceEntryException) {
+
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				String redirect = getSaveAndContinueRedirect(
 					actionRequest, commerceTierPriceEntryId);
@@ -133,7 +135,7 @@ public class EditCommerceTierPriceEntryMVCActionCommand
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

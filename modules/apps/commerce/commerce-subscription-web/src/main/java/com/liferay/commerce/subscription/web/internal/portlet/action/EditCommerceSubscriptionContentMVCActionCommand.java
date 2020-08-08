@@ -73,27 +73,27 @@ public class EditCommerceSubscriptionContentMVCActionCommand
 						commerceSubscriptionEntryId);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof
+		catch (Exception exception) {
+			if (exception instanceof
 					CommerceSubscriptionEntrySubscriptionStatusException ||
-				e instanceof CommerceSubscriptionTypeException) {
+				exception instanceof CommerceSubscriptionTypeException) {
 
 				hideDefaultErrorMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName", "editCommerceSubscriptionEntry");
 			}
-			else if (e instanceof NoSuchSubscriptionEntryException ||
-					 e instanceof PrincipalException) {
+			else if (exception instanceof NoSuchSubscriptionEntryException ||
+					 exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

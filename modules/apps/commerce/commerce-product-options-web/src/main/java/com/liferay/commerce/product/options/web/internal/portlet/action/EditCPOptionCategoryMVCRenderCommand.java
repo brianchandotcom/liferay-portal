@@ -65,16 +65,16 @@ public class EditCPOptionCategoryMVCRenderCommand implements MVCRenderCommand {
 
 			setCPOptionCategoryRequestAttribute(renderRequest);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchCPOptionCategoryException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchCPOptionCategoryException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/error.jsp";
 			}
 
-			throw new PortletException(e);
+			throw new PortletException(exception);
 		}
 
 		return "/edit_option_category.jsp";

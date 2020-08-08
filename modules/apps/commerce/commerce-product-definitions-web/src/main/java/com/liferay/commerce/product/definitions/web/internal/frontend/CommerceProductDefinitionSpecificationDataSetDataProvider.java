@@ -128,9 +128,9 @@ public class CommerceProductDefinitionSpecificationDataSetDataProvider
 
 			return cpOptionCategory.getTitle(languageId);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 

@@ -84,8 +84,8 @@ public class MiniCartTag extends IncludeTag {
 				_checkoutURL = String.valueOf(commerceCheckoutPortletURL);
 			}
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
 			_checkoutURL = StringPool.BLANK;
 			_orderDetailURL = StringPool.BLANK;
@@ -131,19 +131,22 @@ public class MiniCartTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-commerce:cart:checkoutURL", _checkoutURL);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-commerce:cart:checkoutURL", _checkoutURL);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-commerce:cart:displayDiscountLevels",
 			_isDisplayDiscountLevels());
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-commerce:cart:orderDetailURL", _orderDetailURL);
 
-		request.setAttribute("liferay-commerce:cart:orderId", _orderId);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:cart:orderId", _orderId);
 
-		request.setAttribute("liferay-commerce:cart:spritemap", _spritemap);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:cart:spritemap", _spritemap);
 	}
 
 	private boolean _isDisplayDiscountLevels() {
@@ -156,8 +159,8 @@ public class MiniCartTag extends IncludeTag {
 
 			return commercePriceConfiguration.displayDiscountLevels();
 		}
-		catch (ConfigurationException e) {
-			_log.error(e, e);
+		catch (ConfigurationException exception) {
+			_log.error(exception, exception);
 
 			return false;
 		}

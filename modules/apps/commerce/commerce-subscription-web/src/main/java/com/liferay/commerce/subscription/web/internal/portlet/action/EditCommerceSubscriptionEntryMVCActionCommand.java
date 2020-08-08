@@ -103,29 +103,29 @@ public class EditCommerceSubscriptionEntryMVCActionCommand
 					commerceSubscriptionEntryId, actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof
+		catch (Exception exception) {
+			if (exception instanceof
 					CommerceSubscriptionEntryNextIterationDateException ||
-				e instanceof
+				exception instanceof
 					CommerceSubscriptionEntrySubscriptionStatusException ||
-				e instanceof CommerceSubscriptionTypeException) {
+				exception instanceof CommerceSubscriptionTypeException) {
 
 				hideDefaultErrorMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName", "editCommerceSubscriptionEntry");
 			}
-			else if (e instanceof NoSuchSubscriptionEntryException ||
-					 e instanceof PrincipalException) {
+			else if (exception instanceof NoSuchSubscriptionEntryException ||
+					 exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}
@@ -138,7 +138,7 @@ public class EditCommerceSubscriptionEntryMVCActionCommand
 			actionRequest, "subscriptionLength");
 		String subscriptionType = ParamUtil.getString(
 			actionRequest, "subscriptionType");
-		UnicodeProperties subscriptionTypeSettingsProperties =
+		UnicodeProperties subscriptionTypeSettingsUnicodeProperties =
 			PropertiesParamUtil.getProperties(
 				actionRequest, "subscriptionTypeSettings--");
 		long maxSubscriptionCycles = ParamUtil.getLong(
@@ -167,7 +167,7 @@ public class EditCommerceSubscriptionEntryMVCActionCommand
 			actionRequest, "deliverySubscriptionLength");
 		String deliverySubscriptionType = ParamUtil.getString(
 			actionRequest, "deliverySubscriptionType");
-		UnicodeProperties deliverySubscriptionTypeSettingsProperties =
+		UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties =
 			PropertiesParamUtil.getProperties(
 				actionRequest, "deliverySubscriptionTypeSettings--");
 		long deliveryMaxSubscriptionCycles = ParamUtil.getLong(
@@ -205,13 +205,13 @@ public class EditCommerceSubscriptionEntryMVCActionCommand
 		return _commerceSubscriptionEntryService.
 			updateCommerceSubscriptionEntry(
 				commerceSubscriptionEntryId, subscriptionLength,
-				subscriptionType, subscriptionTypeSettingsProperties,
+				subscriptionType, subscriptionTypeSettingsUnicodeProperties,
 				maxSubscriptionCycles, subscriptionStatus,
 				nextIterationDateMonth, nextIterationDateDay,
 				nextIterationDateYear, nextIterationDateHour,
 				nextIterationDateMinute, deliverySubscriptionLength,
 				deliverySubscriptionType,
-				deliverySubscriptionTypeSettingsProperties,
+				deliverySubscriptionTypeSettingsUnicodeProperties,
 				deliveryMaxSubscriptionCycles, deliverySubscriptionStatus,
 				deliveryNextIterationDateMonth, deliveryNextIterationDateDay,
 				deliveryNextIterationDateYear, deliveryNextIterationDateHour,
@@ -254,8 +254,9 @@ public class EditCommerceSubscriptionEntryMVCActionCommand
 				}
 			}
 		}
-		catch (Exception e) {
-			throw new CommerceSubscriptionEntrySubscriptionStatusException(e);
+		catch (Exception exception) {
+			throw new CommerceSubscriptionEntrySubscriptionStatusException(
+				exception);
 		}
 	}
 
@@ -325,8 +326,9 @@ public class EditCommerceSubscriptionEntryMVCActionCommand
 				}
 			}
 		}
-		catch (Exception e) {
-			throw new CommerceSubscriptionEntrySubscriptionStatusException(e);
+		catch (Exception exception) {
+			throw new CommerceSubscriptionEntrySubscriptionStatusException(
+				exception);
 		}
 	}
 

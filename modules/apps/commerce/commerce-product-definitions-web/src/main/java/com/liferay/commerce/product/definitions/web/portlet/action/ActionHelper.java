@@ -461,7 +461,7 @@ public class ActionHelper {
 
 	public void writeJSON(
 			PortletRequest portletRequest, ActionResponse actionResponse,
-			Object jsonObj)
+			Object object)
 		throws IOException {
 
 		HttpServletResponse httpServletResponse =
@@ -469,7 +469,7 @@ public class ActionHelper {
 
 		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
-		ServletResponseUtil.write(httpServletResponse, jsonObj.toString());
+		ServletResponseUtil.write(httpServletResponse, object.toString());
 
 		httpServletResponse.flushBuffer();
 	}

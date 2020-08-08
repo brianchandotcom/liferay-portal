@@ -79,17 +79,18 @@ public class EditCPInstanceCommerceTierPriceEntryMVCRenderCommand
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchTierPriceEntryException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchTierPriceEntryException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/error.jsp";
 			}
 
 			throw new PortletException(
-				"Unable to include edit_instance_tier_price_entry.jsp", e);
+				"Unable to include edit_instance_tier_price_entry.jsp",
+				exception);
 		}
 
 		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;

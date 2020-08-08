@@ -497,7 +497,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "subscriptionLength");
 		String subscriptionType = ParamUtil.getString(
 			actionRequest, "subscriptionType");
-		UnicodeProperties subscriptionTypeSettingsProperties =
+		UnicodeProperties subscriptionTypeSettingsUnicodeProperties =
 			PropertiesParamUtil.getProperties(
 				actionRequest, "subscriptionTypeSettings--");
 		long maxSubscriptionCycles = ParamUtil.getLong(
@@ -508,7 +508,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "deliverySubscriptionLength");
 		String deliverySubscriptionType = ParamUtil.getString(
 			actionRequest, "deliverySubscriptionType");
-		UnicodeProperties deliverySubscriptionTypeSettingsProperties =
+		UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties =
 			PropertiesParamUtil.getProperties(
 				actionRequest, "deliverySubscriptionTypeSettings--");
 		long deliveryMaxSubscriptionCycles = ParamUtil.getLong(
@@ -516,10 +516,10 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 		_cpDefinitionService.updateSubscriptionInfo(
 			cpDefinitionId, subscriptionEnabled, subscriptionLength,
-			subscriptionType, subscriptionTypeSettingsProperties,
+			subscriptionType, subscriptionTypeSettingsUnicodeProperties,
 			maxSubscriptionCycles, deliverySubscriptionEnabled,
 			deliverySubscriptionLength, deliverySubscriptionType,
-			deliverySubscriptionTypeSettingsProperties,
+			deliverySubscriptionTypeSettingsUnicodeProperties,
 			deliveryMaxSubscriptionCycles);
 	}
 

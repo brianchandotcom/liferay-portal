@@ -41,18 +41,18 @@ public class CommerceInventoryWarehouseChecker extends EmptyOnClickRowChecker {
 	}
 
 	@Override
-	public boolean isChecked(Object obj) {
+	public boolean isChecked(Object object) {
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			(CommerceInventoryWarehouse)obj;
+			(CommerceInventoryWarehouse)object;
 
 		return _checkedCommerceInventoryWarehouseIds.contains(
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId());
 	}
 
 	@Override
-	public boolean isDisabled(Object obj) {
+	public boolean isDisabled(Object object) {
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			(CommerceInventoryWarehouse)obj;
+			(CommerceInventoryWarehouse)object;
 
 		return _disabledCommerceInventoryWarehouseIds.contains(
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId());

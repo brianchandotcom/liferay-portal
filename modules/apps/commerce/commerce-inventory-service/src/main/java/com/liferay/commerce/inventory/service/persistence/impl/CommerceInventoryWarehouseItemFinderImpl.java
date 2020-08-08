@@ -89,22 +89,22 @@ public class CommerceInventoryWarehouseItemFinderImpl
 						"[$AND_OR_NULL_CHECK$])");
 			}
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addScalar(_COUNT_VALUE, Type.LONG);
+			sqlQuery.addScalar(_COUNT_VALUE, Type.LONG);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(companyId);
+			queryPos.add(companyId);
 
 			if (Validator.isNotNull(sku)) {
-				qPos.add(keywords, 2);
+				queryPos.add(keywords, 2);
 			}
 
-			Iterator<Long> itr = q.iterate();
+			Iterator<Long> iterator = sqlQuery.iterate();
 
-			if (itr.hasNext()) {
-				Long count = itr.next();
+			if (iterator.hasNext()) {
+				Long count = iterator.next();
 
 				if (count != null) {
 					return count.intValue();
@@ -113,8 +113,8 @@ public class CommerceInventoryWarehouseItemFinderImpl
 
 			return 0;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -131,19 +131,19 @@ public class CommerceInventoryWarehouseItemFinderImpl
 			String sql = _customSQL.get(
 				getClass(), COUNT_STOCK_QUANTITY_BY_C_S);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addScalar(_SUM_VALUE, Type.INTEGER);
+			sqlQuery.addScalar(_SUM_VALUE, Type.INTEGER);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(companyId);
-			qPos.add(sku);
+			queryPos.add(companyId);
+			queryPos.add(sku);
 
-			Iterator<Integer> itr = q.iterate();
+			Iterator<Integer> iterator = sqlQuery.iterate();
 
-			if (itr.hasNext()) {
-				Integer sum = itr.next();
+			if (iterator.hasNext()) {
+				Integer sum = iterator.next();
 
 				if (sum != null) {
 					return sum.intValue();
@@ -152,8 +152,8 @@ public class CommerceInventoryWarehouseItemFinderImpl
 
 			return 0;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -172,20 +172,20 @@ public class CommerceInventoryWarehouseItemFinderImpl
 			String sql = _customSQL.get(
 				getClass(), COUNT_STOCK_QUANTITY_BY_C_G_S);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addScalar(_SUM_VALUE, Type.INTEGER);
+			sqlQuery.addScalar(_SUM_VALUE, Type.INTEGER);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(companyId);
-			qPos.add(channelGroupId);
-			qPos.add(sku);
+			queryPos.add(companyId);
+			queryPos.add(channelGroupId);
+			queryPos.add(sku);
 
-			Iterator<Integer> itr = q.iterate();
+			Iterator<Integer> iterator = sqlQuery.iterate();
 
-			if (itr.hasNext()) {
-				Integer sum = itr.next();
+			if (iterator.hasNext()) {
+				Integer sum = iterator.next();
 
 				if (sum != null) {
 					return sum.intValue();
@@ -194,8 +194,8 @@ public class CommerceInventoryWarehouseItemFinderImpl
 
 			return 0;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -213,22 +213,22 @@ public class CommerceInventoryWarehouseItemFinderImpl
 
 			String sql = _customSQL.get(getClass(), COUNT_UPDATED_ITEMS_BY_C_M);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(companyId);
-			qPos.add(startDate);
-			qPos.add(endDate);
+			queryPos.add(companyId);
+			queryPos.add(startDate);
+			queryPos.add(endDate);
 
-			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+			sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
 			int count = 0;
 
-			Iterator<Long> itr = q.iterate();
+			Iterator<Long> iterator = sqlQuery.iterate();
 
-			while (itr.hasNext()) {
-				Long l = itr.next();
+			while (iterator.hasNext()) {
+				Long l = iterator.next();
 
 				if (l != null) {
 					count += l.intValue();
@@ -237,8 +237,8 @@ public class CommerceInventoryWarehouseItemFinderImpl
 
 			return count;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -275,23 +275,24 @@ public class CommerceInventoryWarehouseItemFinderImpl
 						"[$AND_OR_NULL_CHECK$])");
 			}
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addScalar(_SKU, Type.STRING);
-			q.addScalar(_SUM_STOCK, Type.INTEGER);
-			q.addScalar(_SUM_BOOKED, Type.INTEGER);
-			q.addScalar(_SUM_AWAITING, Type.INTEGER);
+			sqlQuery.addScalar(_SKU, Type.STRING);
+			sqlQuery.addScalar(_SUM_STOCK, Type.INTEGER);
+			sqlQuery.addScalar(_SUM_BOOKED, Type.INTEGER);
+			sqlQuery.addScalar(_SUM_AWAITING, Type.INTEGER);
 
 			if (Validator.isNotNull(sku)) {
-				QueryPos qPos = QueryPos.getInstance(q);
+				QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-				qPos.add(keywords, 2);
+				queryPos.add(keywords, 2);
 			}
 
-			return (List<Object[]>)QueryUtil.list(q, getDialect(), start, end);
+			return (List<Object[]>)QueryUtil.list(
+				sqlQuery, getDialect(), start, end);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -309,23 +310,23 @@ public class CommerceInventoryWarehouseItemFinderImpl
 
 			String sql = _customSQL.get(getClass(), FIND_UPDATED_ITEMS_BY_C_M);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity(
+			sqlQuery.addEntity(
 				CommerceInventoryWarehouseItemImpl.TABLE_NAME,
 				CommerceInventoryWarehouseItemImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(companyId);
-			qPos.add(startDate);
-			qPos.add(endDate);
+			queryPos.add(companyId);
+			queryPos.add(startDate);
+			queryPos.add(endDate);
 
 			return (List<CommerceInventoryWarehouseItem>)QueryUtil.list(
-				q, getDialect(), start, end);
+				sqlQuery, getDialect(), start, end);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);

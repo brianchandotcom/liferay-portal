@@ -84,17 +84,18 @@ public class EditCPDisplayLayoutMVCRenderCommand implements MVCRenderCommand {
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchCPDisplayLayoutException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchCPDisplayLayoutException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/error.jsp";
 			}
 
 			throw new PortletException(
-				"Unable to include edit_definition_display_page.jsp", e);
+				"Unable to include edit_definition_display_page.jsp",
+				exception);
 		}
 
 		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;

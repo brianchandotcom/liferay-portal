@@ -37,8 +37,8 @@ public class CommerceChannelImpl extends CommerceChannelBaseImpl {
 				return CommerceChannelLocalServiceUtil.getCommerceChannelGroup(
 					getCommerceChannelId());
 			}
-			catch (Exception e) {
-				_log.error("Unable to get commerce channel group", e);
+			catch (Exception exception) {
+				_log.error("Unable to get commerce channel group", exception);
 			}
 		}
 
@@ -54,38 +54,38 @@ public class CommerceChannelImpl extends CommerceChannelBaseImpl {
 
 	@Override
 	public UnicodeProperties getTypeSettingsProperties() {
-		if (_typeSettingsProperties == null) {
-			_typeSettingsProperties = new UnicodeProperties(true);
+		if (_typeSettingsUnicodeProperties == null) {
+			_typeSettingsUnicodeProperties = new UnicodeProperties(true);
 
-			_typeSettingsProperties.fastLoad(getTypeSettings());
+			_typeSettingsUnicodeProperties.fastLoad(getTypeSettings());
 		}
 
-		return _typeSettingsProperties;
+		return _typeSettingsUnicodeProperties;
 	}
 
 	@Override
 	public void setTypeSettings(String typeSettings) {
 		super.setTypeSettings(typeSettings);
 
-		_typeSettingsProperties = null;
+		_typeSettingsUnicodeProperties = null;
 	}
 
 	@Override
 	public void setTypeSettingsProperties(
-		UnicodeProperties typeSettingsProperties) {
+		UnicodeProperties typeSettingsUnicodeProperties) {
 
-		_typeSettingsProperties = typeSettingsProperties;
+		_typeSettingsUnicodeProperties = typeSettingsUnicodeProperties;
 
-		if (_typeSettingsProperties == null) {
-			_typeSettingsProperties = new UnicodeProperties();
+		if (_typeSettingsUnicodeProperties == null) {
+			_typeSettingsUnicodeProperties = new UnicodeProperties();
 		}
 
-		super.setTypeSettings(_typeSettingsProperties.toString());
+		super.setTypeSettings(_typeSettingsUnicodeProperties.toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceChannelImpl.class);
 
-	private UnicodeProperties _typeSettingsProperties;
+	private UnicodeProperties _typeSettingsUnicodeProperties;
 
 }

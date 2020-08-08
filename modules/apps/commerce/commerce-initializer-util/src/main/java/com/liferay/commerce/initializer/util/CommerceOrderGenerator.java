@@ -282,8 +282,8 @@ public class CommerceOrderGenerator {
 					cpInstance.getCPInstanceId(), quantity, 0, null,
 					commerceContext, serviceContext);
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 		}
 	}
@@ -363,9 +363,9 @@ public class CommerceOrderGenerator {
 
 				retryNumber = 0;
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				if (_log.isInfoEnabled()) {
-					_log.info(pe, pe);
+					_log.info(portalException, portalException);
 				}
 
 				// Order not generated, retry
@@ -375,7 +375,7 @@ public class CommerceOrderGenerator {
 					retryNumber++;
 				}
 				else {
-					_log.error(pe.getMessage(), pe);
+					_log.error(portalException.getMessage(), portalException);
 				}
 			}
 		}

@@ -63,23 +63,23 @@ public class WeeklyCPSubscriptionTypeDisplayContext {
 	}
 
 	public int getSelectedWeekDay() {
-		UnicodeProperties subscriptionTypeSettingsProperties =
+		UnicodeProperties subscriptionTypeSettingsUnicodeProperties =
 			CommerceSubscriptionTypeUtil.getSubscriptionTypeSettingsProperties(
 				_object, _payment);
 
-		if ((subscriptionTypeSettingsProperties == null) ||
-			subscriptionTypeSettingsProperties.isEmpty()) {
+		if ((subscriptionTypeSettingsUnicodeProperties == null) ||
+			subscriptionTypeSettingsUnicodeProperties.isEmpty()) {
 
 			return 0;
 		}
 
 		if (isPayment()) {
 			return GetterUtil.getInteger(
-				subscriptionTypeSettingsProperties.get("weekDay"));
+				subscriptionTypeSettingsUnicodeProperties.get("weekDay"));
 		}
 
 		return GetterUtil.getInteger(
-			subscriptionTypeSettingsProperties.get("deliveryWeekDay"));
+			subscriptionTypeSettingsUnicodeProperties.get("deliveryWeekDay"));
 	}
 
 	public String getWeekDayDisplayName(int weekDay) {

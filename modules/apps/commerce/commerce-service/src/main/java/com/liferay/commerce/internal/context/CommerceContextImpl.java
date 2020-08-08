@@ -70,8 +70,8 @@ public class CommerceContextImpl implements CommerceContext {
 							CommerceAccountConstants.SERVICE_NAME));
 			}
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 	}
 

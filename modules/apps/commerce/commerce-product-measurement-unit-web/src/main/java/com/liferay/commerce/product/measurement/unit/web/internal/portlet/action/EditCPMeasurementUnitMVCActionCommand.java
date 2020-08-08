@@ -96,25 +96,25 @@ public class EditCPMeasurementUnitMVCActionCommand
 				setPrimary(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchCPMeasurementUnitException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchCPMeasurementUnitException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (e instanceof CPMeasurementUnitKeyException) {
+			else if (exception instanceof CPMeasurementUnitKeyException) {
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName", "editCPMeasurementUnit");
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

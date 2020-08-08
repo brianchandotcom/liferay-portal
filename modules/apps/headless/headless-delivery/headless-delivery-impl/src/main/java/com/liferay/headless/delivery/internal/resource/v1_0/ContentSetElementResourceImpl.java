@@ -35,6 +35,7 @@ import java.time.LocalDate;
 import java.time.ZonedDateTime;
 
 import java.util.Enumeration;
+import java.util.HashMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -182,7 +183,10 @@ public class ContentSetElementResourceImpl
 
 						return dtoConverter.toDTO(
 							new DefaultDTOConverterContext(
-								_dtoConverterRegistry, assetEntry.getClassPK(),
+								contextAcceptLanguage.isAcceptAllLanguages(),
+								new HashMap<>(), _dtoConverterRegistry,
+								contextHttpServletRequest,
+								assetEntry.getClassPK(),
 								contextAcceptLanguage.getPreferredLocale(),
 								contextUriInfo, contextUser));
 					});

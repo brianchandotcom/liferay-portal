@@ -14,11 +14,6 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.param.converter.provider;
 
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -43,11 +38,7 @@ import javax.ws.rs.ext.Provider;
 public class SiteParamConverterProvider
 	implements ParamConverter<Long>, ParamConverterProvider {
 
-	public SiteParamConverterProvider(
-		DepotEntryLocalService depotEntryLocalService,
-		GroupLocalService groupLocalService) {
-
-		_depotEntryLocalService = depotEntryLocalService;
+	public SiteParamConverterProvider(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
 	}
 
@@ -92,7 +83,13 @@ public class SiteParamConverterProvider
 			return null;
 		}
 
-		return _getDepotGroupId(assetLibraryId, companyId);
+		Group group = _groupLocalService.fetchGroup(companyId, assetLibraryId);
+
+		if (_checkGroup(group)) {
+			return group.getGroupId();
+		}
+
+		return null;
 	}
 
 	public Long getGroupId(long companyId, String siteId) {
@@ -116,32 +113,6 @@ public class SiteParamConverterProvider
 		}
 
 		return false;
-	}
-
-	private Long _getDepotGroupId(String assetLibraryId, long companyId) {
-		Group group = _groupLocalService.fetchGroup(companyId, assetLibraryId);
-
-		if (group == null) {
-			try {
-				DepotEntry depotEntry = _depotEntryLocalService.fetchDepotEntry(
-					GetterUtil.getLong(assetLibraryId));
-
-				group = depotEntry.getGroup();
-			}
-			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(portalException, portalException);
-				}
-
-				return null;
-			}
-		}
-
-		if (_checkGroup(group)) {
-			return group.getGroupId();
-		}
-
-		return null;
 	}
 
 	private Long _getGroupId(long companyId, String groupKey) {
@@ -182,13 +153,9 @@ public class SiteParamConverterProvider
 		return false;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		SiteParamConverterProvider.class);
-
 	@Context
 	private Company _company;
 
-	private final DepotEntryLocalService _depotEntryLocalService;
 	private final GroupLocalService _groupLocalService;
 
 	@Context

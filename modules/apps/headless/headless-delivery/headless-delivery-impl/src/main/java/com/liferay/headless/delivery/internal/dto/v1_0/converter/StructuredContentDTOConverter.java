@@ -44,6 +44,8 @@ import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -98,6 +100,9 @@ public class StructuredContentDTOConverter
 
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
 
+		Group group = _groupLocalService.fetchGroup(
+			journalArticle.getGroupId());
+
 		return new StructuredContent() {
 			{
 				actions = dtoConverterContext.getActions();
@@ -105,6 +110,9 @@ public class StructuredContentDTOConverter
 					_ratingsStatsLocalService.fetchStats(
 						JournalArticle.class.getName(),
 						journalArticle.getResourcePrimKey()));
+				assetLibraryKey =
+					(GroupConstants.TYPE_DEPOT == group.getType()) ?
+						group.getGroupKey() : null;
 				availableLanguages = LocaleUtil.toW3cLanguageIds(
 					journalArticle.getAvailableLanguageIds());
 				contentFields = _toContentFields(
@@ -155,7 +163,8 @@ public class StructuredContentDTOConverter
 					dtoConverterContext.getHttpServletRequest(), journalArticle,
 					dtoConverterContext.getLocale(),
 					dtoConverterContext.getUriInfoOptional());
-				siteId = journalArticle.getGroupId();
+				siteId = (group.getType() == GroupConstants.TYPE_DEPOT) ? null :
+					journalArticle.getGroupId();
 				subscribed = _subscriptionLocalService.isSubscribed(
 					journalArticle.getCompanyId(),
 					dtoConverterContext.getUserId(),

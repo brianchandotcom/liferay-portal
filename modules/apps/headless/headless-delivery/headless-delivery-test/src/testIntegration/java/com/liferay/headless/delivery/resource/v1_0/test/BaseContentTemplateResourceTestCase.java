@@ -203,6 +203,7 @@ public abstract class BaseContentTemplateResourceTestCase {
 
 		ContentTemplate contentTemplate = randomContentTemplate();
 
+		contentTemplate.setAssetLibraryKey(regex);
 		contentTemplate.setDescription(regex);
 		contentTemplate.setId(regex);
 		contentTemplate.setName(regex);
@@ -215,6 +216,7 @@ public abstract class BaseContentTemplateResourceTestCase {
 
 		contentTemplate = ContentTemplateSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, contentTemplate.getAssetLibraryKey());
 		Assert.assertEquals(regex, contentTemplate.getDescription());
 		Assert.assertEquals(regex, contentTemplate.getId());
 		Assert.assertEquals(regex, contentTemplate.getName());
@@ -1074,6 +1076,14 @@ public abstract class BaseContentTemplateResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("assetLibraryKey", additionalAssertFieldName)) {
+				if (contentTemplate.getAssetLibraryKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"availableLanguages", additionalAssertFieldName)) {
 
@@ -1257,6 +1267,17 @@ public abstract class BaseContentTemplateResourceTestCase {
 				if (!equals(
 						(Map)contentTemplate1.getActions(),
 						(Map)contentTemplate2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("assetLibraryKey", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						contentTemplate1.getAssetLibraryKey(),
+						contentTemplate2.getAssetLibraryKey())) {
 
 					return false;
 				}
@@ -1489,6 +1510,14 @@ public abstract class BaseContentTemplateResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("assetLibraryKey")) {
+			sb.append("'");
+			sb.append(String.valueOf(contentTemplate.getAssetLibraryKey()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("availableLanguages")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1670,6 +1699,8 @@ public abstract class BaseContentTemplateResourceTestCase {
 	protected ContentTemplate randomContentTemplate() throws Exception {
 		return new ContentTemplate() {
 			{
+				assetLibraryKey = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				contentStructureId = RandomTestUtil.randomLong();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();

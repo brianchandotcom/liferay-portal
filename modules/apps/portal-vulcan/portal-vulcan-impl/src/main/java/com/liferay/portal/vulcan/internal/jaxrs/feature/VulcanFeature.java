@@ -17,7 +17,6 @@ package com.liferay.portal.vulcan.internal.jaxrs.feature;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.fasterxml.jackson.jaxrs.xml.JacksonXMLProvider;
 
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -156,8 +155,7 @@ public class VulcanFeature implements Feature {
 		featureContext.register(_nestedFieldsWriterInterceptor);
 
 		featureContext.register(
-			new SiteParamConverterProvider(
-				_depotEntryLocalService, _groupLocalService));
+			new SiteParamConverterProvider(_groupLocalService));
 
 		featureContext.register(
 			new SortContextProvider(_language, _portal, _sortParserProvider));
@@ -194,9 +192,6 @@ public class VulcanFeature implements Feature {
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
-
-	@Reference
-	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
 	private DLValidator _dlValidator;

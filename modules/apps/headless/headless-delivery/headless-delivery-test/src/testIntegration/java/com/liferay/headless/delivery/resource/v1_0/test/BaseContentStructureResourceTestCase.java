@@ -203,6 +203,7 @@ public abstract class BaseContentStructureResourceTestCase {
 
 		ContentStructure contentStructure = randomContentStructure();
 
+		contentStructure.setAssetLibraryKey(regex);
 		contentStructure.setDescription(regex);
 		contentStructure.setName(regex);
 
@@ -212,6 +213,7 @@ public abstract class BaseContentStructureResourceTestCase {
 
 		contentStructure = ContentStructureSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, contentStructure.getAssetLibraryKey());
 		Assert.assertEquals(regex, contentStructure.getDescription());
 		Assert.assertEquals(regex, contentStructure.getName());
 	}
@@ -1060,6 +1062,14 @@ public abstract class BaseContentStructureResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("assetLibraryKey", additionalAssertFieldName)) {
+				if (contentStructure.getAssetLibraryKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"availableLanguages", additionalAssertFieldName)) {
 
@@ -1221,6 +1231,17 @@ public abstract class BaseContentStructureResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("assetLibraryKey", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						contentStructure1.getAssetLibraryKey(),
+						contentStructure2.getAssetLibraryKey())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals(
 					"availableLanguages", additionalAssertFieldName)) {
@@ -1418,6 +1439,14 @@ public abstract class BaseContentStructureResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("assetLibraryKey")) {
+			sb.append("'");
+			sb.append(String.valueOf(contentStructure.getAssetLibraryKey()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("availableLanguages")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1581,6 +1610,8 @@ public abstract class BaseContentStructureResourceTestCase {
 	protected ContentStructure randomContentStructure() throws Exception {
 		return new ContentStructure() {
 			{
+				assetLibraryKey = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(

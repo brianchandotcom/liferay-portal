@@ -6206,7 +6206,7 @@ ${output.content}</echo>
 
 				<exec executable="git">
 					<arg value="add" />
-					<arg value="--all" />
+					<arg value="&#45;&#45;all" />
 				</exec>
 
 				<record action="start" name="${project.dir}/build.rest.output.txt" />
@@ -6258,7 +6258,7 @@ ${output.content}</echo>
 					<then>
 						<exec executable="git" output="${project.dir}/build.rest.diff.txt">
 							<arg value="diff" />
-							<arg value="--" />
+							<arg value="&#45;&#45;" />
 							<arg value="." />
 							<arg value=":!*/packageinfo" />
 						</exec>

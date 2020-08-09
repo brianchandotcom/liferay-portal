@@ -122,14 +122,11 @@ const openSelectionModal = ({
 			eventHandlers.splice(0, eventHandlers.length);
 		},
 		onOpen: ({container, processClose}) => {
-			const selectEventHandler = Liferay.on(
-				selectEventName,
-				(selectedItem) => {
-					onSelect(selectedItem);
+			const selectEventHandler = Liferay.on(selectEventName, (event) => {
+				onSelect(event.data || event);
 
-					processClose();
-				}
-			);
+				processClose();
+			});
 
 			eventHandlers.push(selectEventHandler);
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {DefaultEventHandler, ItemSelectorDialog} from 'frontend-js-web';
+import {DefaultEventHandler, openSelectionModal} from 'frontend-js-web';
 import {Config} from 'metal-state';
 
 class AccountGroupAccountEntriesManagementToolbarDefaultEventHandler extends DefaultEventHandler {
@@ -39,31 +39,27 @@ class AccountGroupAccountEntriesManagementToolbarDefaultEventHandler extends Def
 	}
 
 	selectAccountGroupAccountEntries() {
-		const itemSelectorDialog = new ItemSelectorDialog({
+		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('assign'),
-			eventName: this.ns('selectAccountEntries'),
+			multiple: true,
+			onSelect: (selectedItem) => {
+				if (selectedItem) {
+					const form = this.one('#fm');
+
+					Liferay.Util.postForm(form, {
+						data: {
+							accountEntryIds: selectedItem.value,
+						},
+						url: this.assignAccountGroupAccountEntriesURL,
+					});
+				}
+			},
+			selectEventName: this.ns('selectAccountEntries'),
 			title: Liferay.Util.sub(
 				Liferay.Language.get('assign-accounts-to-x'),
 				this.accountGroupName
 			),
 			url: this.selectAccountGroupAccountEntriesURL,
-		});
-
-		itemSelectorDialog.open();
-
-		itemSelectorDialog.on('selectedItemChange', (event) => {
-			const selectedItem = event.selectedItem;
-
-			if (selectedItem) {
-				const form = this.one('#fm');
-
-				Liferay.Util.postForm(form, {
-					data: {
-						accountEntryIds: selectedItem.value,
-					},
-					url: this.assignAccountGroupAccountEntriesURL,
-				});
-			}
 		});
 	}
 }

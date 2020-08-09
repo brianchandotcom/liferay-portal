@@ -14,8 +14,8 @@
 
 import {
 	DefaultEventHandler,
-	ItemSelectorDialog,
 	openModal,
+	openSelectionModal,
 } from 'frontend-js-web';
 import {Config} from 'metal-state';
 
@@ -23,7 +23,6 @@ import {Config} from 'metal-state';
  * @class FragmentCollectionsViewDefaultEventHandler
  */
 class FragmentCollectionsViewDefaultEventHandler extends DefaultEventHandler {
-
 	/**
 	 * Opens an item selector to remove selected collections
 	 * @private
@@ -104,20 +103,18 @@ class FragmentCollectionsViewDefaultEventHandler extends DefaultEventHandler {
 		dialogURL,
 		callback
 	) {
-		const itemSelectorDialog = new ItemSelectorDialog({
+		openSelectionModal({
 			buttonAddLabel: dialogButtonLabel,
-			eventName: this.ns('selectCollections'),
+			multiple: true,
+			onSelect(selectedItem) {
+				if (selectedItem) {
+					callback(selectedItem);
+				}
+			},
+			selectedEventName: this.ns('selectCollections'),
 			title: dialogTitle,
 			url: dialogURL,
 		});
-
-		itemSelectorDialog.on('selectedItemChange', (event) => {
-			if (event.selectedItem) {
-				callback(event.selectedItem);
-			}
-		});
-
-		itemSelectorDialog.open();
 	}
 
 	/**
@@ -149,7 +146,6 @@ class FragmentCollectionsViewDefaultEventHandler extends DefaultEventHandler {
 }
 
 FragmentCollectionsViewDefaultEventHandler.STATE = {
-
 	/**
 	 * @default undefined
 	 * @instance

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {ItemSelectorDialog} from 'frontend-js-web';
+import {openSelectionModal} from 'frontend-js-web';
 
 const ACTIONS = {
 	deleteCollections({
@@ -26,39 +26,35 @@ const ACTIONS = {
 
 		layoutPageTemplateCollectionsForm.setAttribute('method', 'post');
 
-		const itemSelectorDialog = new ItemSelectorDialog({
+		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('delete'),
-			eventName: `${portletNamespace}selectCollections`,
+			multiple: true,
+			onSelect(selectedItems) {
+				if (selectedItems) {
+					if (
+						confirm(
+							Liferay.Language.get(
+								'are-you-sure-you-want-to-delete-the-selected-entries'
+							)
+						)
+					) {
+						selectedItems.forEach((item) => {
+							layoutPageTemplateCollectionsForm.appendChild(
+								item.cloneNode(true)
+							);
+						});
+
+						submitForm(
+							layoutPageTemplateCollectionsForm,
+							deleteLayoutPageTemplateCollectionURL
+						);
+					}
+				}
+			},
+			selectEventName: `${portletNamespace}selectCollections`,
 			title: Liferay.Language.get('delete-collection'),
 			url: viewLayoutPageTemplateCollectionURL,
 		});
-
-		itemSelectorDialog.on('selectedItemChange', (event) => {
-			var selectedItems = event.selectedItem;
-
-			if (selectedItems) {
-				if (
-					confirm(
-						Liferay.Language.get(
-							'are-you-sure-you-want-to-delete-the-selected-entries'
-						)
-					)
-				) {
-					selectedItems.forEach((item) => {
-						layoutPageTemplateCollectionsForm.appendChild(
-							item.cloneNode(true)
-						);
-					});
-
-					submitForm(
-						layoutPageTemplateCollectionsForm,
-						deleteLayoutPageTemplateCollectionURL
-					);
-				}
-			}
-		});
-
-		itemSelectorDialog.open();
 	},
 };
 

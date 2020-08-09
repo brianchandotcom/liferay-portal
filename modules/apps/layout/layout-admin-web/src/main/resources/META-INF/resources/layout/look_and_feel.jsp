@@ -222,7 +222,7 @@ else {
 </c:if>
 
 <c:if test="<%= editableMasterLayout %>">
-	<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
+	<aui:script sandbox="<%= true %>">
 		var changeMasterLayoutButton = document.getElementById(
 			'<portlet:namespace />changeMasterLayoutButton'
 		);
@@ -244,45 +244,41 @@ else {
 		var changeMasterLayoutButtonEventListener = changeMasterLayoutButton.addEventListener(
 			'click',
 			function (event) {
-				var itemSelectorDialog = new ItemSelectorDialog.default({
+				Liferay.Util.openSelectionModal({
 					buttonAddLabel: '<liferay-ui:message key="done" />',
-					eventName: '<portlet:namespace />selectMasterLayout',
+					multiple: true,
+					onSelect: function(selectedItem) {
+						if (selectedItem) {
+							var masterLayoutName = document.getElementById(
+								'<portlet:namespace />masterLayoutName'
+							);
+
+							masterLayoutName.innerHTML = selectedItem.name;
+
+							masterLayoutPlid.value = selectedItem.plid;
+
+							if (masterLayoutPlid.value == 0) {
+								themeContainer.classList.remove('hide');
+							}
+							else {
+								themeContainer.classList.add('hide');
+							}
+
+							if (
+								masterLayoutPlid.value == oldMasterLayoutPlid &&
+								masterLayoutPlid.value != 0
+							) {
+								editMasterLayoutButton.classList.remove('hide');
+							}
+							else {
+								editMasterLayoutButton.classList.add('hide');
+							}
+						}
+					},
+					selectEventName: '<portlet:namespace />selectMasterLayout',
 					title: '<liferay-ui:message key="select-master" />',
 					url:
 						'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_master_layout.jsp" /></portlet:renderURL>',
-				});
-
-				itemSelectorDialog.open();
-
-				itemSelectorDialog.on('selectedItemChange', function (event) {
-					var selectedItem = event.selectedItem;
-
-					if (selectedItem) {
-						var masterLayoutName = document.getElementById(
-							'<portlet:namespace />masterLayoutName'
-						);
-
-						masterLayoutName.innerHTML = selectedItem.name;
-
-						masterLayoutPlid.value = selectedItem.plid;
-
-						if (masterLayoutPlid.value == 0) {
-							themeContainer.classList.remove('hide');
-						}
-						else {
-							themeContainer.classList.add('hide');
-						}
-
-						if (
-							masterLayoutPlid.value == oldMasterLayoutPlid &&
-							masterLayoutPlid.value != 0
-						) {
-							editMasterLayoutButton.classList.remove('hide');
-						}
-						else {
-							editMasterLayoutButton.classList.add('hide');
-						}
-					}
 				});
 			}
 		);
@@ -308,7 +304,7 @@ else {
 	</aui:script>
 </c:if>
 
-<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
+<aui:script sandbox="<%= true %>">
 	var changeStyleBookButton = document.getElementById(
 		'<portlet:namespace />changeStyleBookButton'
 	);
@@ -316,32 +312,28 @@ else {
 	var changeStyleBookButtonEventListener = changeStyleBookButton.addEventListener(
 		'click',
 		function (event) {
-			var itemSelectorDialog = new ItemSelectorDialog.default({
+			Liferay.Util.openSelectionModal({
 				buttonAddLabel: '<liferay-ui:message key="done" />',
-				eventName: '<portlet:namespace />selectStyleBook',
+				multiple: true,
+				onSelect: function(selectedItem) {
+					if (selectedItem) {
+						var styleBookName = document.getElementById(
+							'<portlet:namespace />styleBookName'
+						);
+
+						styleBookName.innerHTML = selectedItem.name;
+
+						var styleBookEntryId = document.getElementById(
+							'<portlet:namespace />styleBookEntryId'
+						);
+
+						styleBookEntryId.value = selectedItem.stylebookentryid;
+					}
+				},
+				selectEventName: '<portlet:namespace />selectStyleBook',
 				title: '<liferay-ui:message key="select-style-book" />',
 				url:
 					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_style_book.jsp" /><portlet:param name="selPlid" value="<%= String.valueOf(selLayout.getPlid()) %>" /><portlet:param name="editableMasterLayout" value="<%= String.valueOf(editableMasterLayout) %>" /></portlet:renderURL>',
-			});
-
-			itemSelectorDialog.open();
-
-			itemSelectorDialog.on('selectedItemChange', function (event) {
-				var selectedItem = event.selectedItem;
-
-				if (selectedItem) {
-					var styleBookName = document.getElementById(
-						'<portlet:namespace />styleBookName'
-					);
-
-					styleBookName.innerHTML = selectedItem.name;
-
-					var styleBookEntryId = document.getElementById(
-						'<portlet:namespace />styleBookEntryId'
-					);
-
-					styleBookEntryId.value = selectedItem.stylebookentryid;
-				}
 			});
 		}
 	);

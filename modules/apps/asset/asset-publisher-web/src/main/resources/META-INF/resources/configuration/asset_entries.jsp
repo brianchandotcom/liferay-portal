@@ -227,7 +227,7 @@ for (long groupId : groupIds) {
 	}
 </script>
 
-<aui:script require="metal-dom/src/dom as dom, frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
+<aui:script require="metal-dom/src/dom as dom">
 	function selectAssets(assetEntryList) {
 		var assetClassName = '';
 		var assetEntryIds = [];
@@ -257,20 +257,16 @@ for (long groupId : groupIds) {
 
 			var delegateTarget = event.delegateTarget;
 
-			var itemSelectorDialog = new ItemSelectorDialog.default({
-				eventName: '<%= eventName %>',
+			Liferay.Util.openSelectionModal({
+				multiple: true,
+				onSelect: function(selectedItems) {
+					if (selectedItems) {
+						selectAssets(selectedItems);
+					}
+				},
+				selectEventName: '<%= eventName %>',
 				title: delegateTarget.dataset.title,
 				url: delegateTarget.dataset.href,
-			});
-
-			itemSelectorDialog.open();
-
-			itemSelectorDialog.on('selectedItemChange', function (event) {
-				var selectedItems = event.selectedItem;
-
-				if (selectedItems) {
-					selectAssets(selectedItems);
-				}
 			});
 		}
 	);

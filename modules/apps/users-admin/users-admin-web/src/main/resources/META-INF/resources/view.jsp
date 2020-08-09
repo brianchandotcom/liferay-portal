@@ -307,53 +307,44 @@ else {
 			}
 		);
 
-		Liferay.Loader.require(
-			'frontend-js-web/liferay/ItemSelectorDialog.es',
-			function (ItemSelectorDialog) {
-				var itemSelectorDialog = new ItemSelectorDialog.default({
-					buttonAddLabel: '<liferay-ui:message key="done" />',
-					eventName: '<portlet:namespace />selectUsers',
-					title: '<liferay-ui:message key="assign-users" />',
-					url: selectUsersURL.toString(),
-				});
+		Liferay.Util.openSelectionModal({
+			buttonAddLabel: '<liferay-ui:message key="done" />',
+			multiple: true,
+			onSelect: function(data) {
+				if (data) {
+					<portlet:renderURL var="assignmentsURL">
+						<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
+						<portlet:param name="toolbarItem" value="view-all-organizations" />
+						<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" />
+					</portlet:renderURL>
 
-				itemSelectorDialog.on('selectedItemChange', function (event) {
-					var data = event.selectedItem;
-
-					if (data) {
-						<portlet:renderURL var="assignmentsURL">
-							<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
-							<portlet:param name="toolbarItem" value="view-all-organizations" />
-							<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" />
-						</portlet:renderURL>
-
-						var assignmentsRedirectURL = Liferay.Util.PortletURL.createPortletURL(
-							'<%= assignmentsURL.toString() %>',
-							{
-								organizationId: organizationId,
-							}
-						);
-
-						var editAssignmentParameters = {
-							addUserIds: data.value,
-							assignmentsRedirect: assignmentsRedirectURL.toString(),
+					var assignmentsRedirectURL = Liferay.Util.PortletURL.createPortletURL(
+						'<%= assignmentsURL.toString() %>',
+						{
 							organizationId: organizationId,
-						};
+						}
+					);
 
-						var editAssignmentURL = Liferay.Util.PortletURL.createPortletURL(
-							'<portlet:actionURL name="/users_admin/edit_organization_assignments" />',
-							editAssignmentParameters
-						);
+					var editAssignmentParameters = {
+						addUserIds: data.value,
+						assignmentsRedirect: assignmentsRedirectURL.toString(),
+						organizationId: organizationId,
+					};
 
-						submitForm(
-							document.<portlet:namespace />fm,
-							editAssignmentURL.toString()
-						);
-					}
-				});
+					var editAssignmentURL = Liferay.Util.PortletURL.createPortletURL(
+						'<portlet:actionURL name="/users_admin/edit_organization_assignments" />',
+						editAssignmentParameters
+					);
 
-				itemSelectorDialog.open();
-			}
-		);
+					submitForm(
+						document.<portlet:namespace />fm,
+						editAssignmentURL.toString()
+					);
+				}
+			},
+			selectEventName: '<portlet:namespace />selectUsers',
+			title: '<liferay-ui:message key="assign-users" />',
+			url: selectUsersURL.toString(),
+		});
 	};
 </aui:script>

@@ -211,7 +211,7 @@ AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 	</c:otherwise>
 </c:choose>
 
-<aui:script require="metal-dom/src/dom as dom, frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
+<aui:script require="metal-dom/src/dom as dom">
 	var delegateHandler = dom.delegate(
 		document.body,
 		'click',
@@ -221,32 +221,28 @@ AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 
 			var delegateTarget = event.delegateTarget;
 
-			var itemSelectorDialog = new ItemSelectorDialog.default({
-				eventName: '<portlet:namespace />selectAsset',
+			Liferay.Util.openSelectionModal({
+				multiple: true,
+				onSelect: function(selectedItems) {
+					if (selectedItems) {
+						var assetEntryIds = [];
+
+						Array.prototype.forEach.call(selectedItems, function (
+							assetEntry
+						) {
+							assetEntryIds.push(assetEntry.entityid);
+						});
+
+						Liferay.Util.postForm(document.<portlet:namespace />fm, {
+							data: {
+								assetEntryIds: assetEntryIds.join(','),
+							},
+						});
+					}
+				},
+				selectEventName: '<portlet:namespace />selectAsset',
 				title: delegateTarget.dataset.title,
 				url: delegateTarget.dataset.href,
-			});
-
-			itemSelectorDialog.open();
-
-			itemSelectorDialog.on('selectedItemChange', function (event) {
-				var selectedItems = event.selectedItem;
-
-				if (selectedItems) {
-					var assetEntryIds = [];
-
-					Array.prototype.forEach.call(selectedItems, function (
-						assetEntry
-					) {
-						assetEntryIds.push(assetEntry.entityid);
-					});
-
-					Liferay.Util.postForm(document.<portlet:namespace />fm, {
-						data: {
-							assetEntryIds: assetEntryIds.join(','),
-						},
-					});
-				}
 			});
 		}
 	);

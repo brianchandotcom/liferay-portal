@@ -65,7 +65,7 @@ renderResponse.setTitle(dlEditFileShortcutDisplayContext.getTitle());
 	</aui:form>
 </clay:container-fluid>
 
-<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
+<aui:script sandbox="<%= true %>">
 	var selectToFileEntryButton = document.getElementById(
 		'<portlet:namespace />selectToFileEntryButton'
 	);

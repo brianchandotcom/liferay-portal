@@ -172,7 +172,7 @@ request.setAttribute("view.jsp-eventName", eventName);
 	<aui:input name="siteRoleIds" type="hidden" />
 </aui:form>
 
-<aui:script require="metal-dom/src/all/dom as dom, frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
+<aui:script require="metal-dom/src/all/dom as dom">
 	var form = document.getElementById(
 		'<portlet:namespace/>updateSegmentsEntrySiteRolesFm'
 	);
@@ -183,25 +183,21 @@ request.setAttribute("view.jsp-eventName", eventName);
 		var itemSelectorURL = link.dataset.itemselectorurl;
 		var segmentsEntryId = link.dataset.segmentsentryid;
 
-		var itemSelectorDialog = new ItemSelectorDialog.default({
+		Liferay.Util.openSelectionModal({
 			eventName: '<%= eventName %>',
+			multiple: true,
+			onSelect: function(selectedItem) {
+				if (selectedItem) {
+					var data = {
+						segmentsEntryId: segmentsEntryId,
+						siteRoleIds: selectedItem.value,
+					};
+
+					Liferay.Util.postForm(form, {data: data});
+				}
+			},
 			title: '<liferay-ui:message key="assign-site-roles" />',
 			url: itemSelectorURL,
 		});
-
-		itemSelectorDialog.on('selectedItemChange', function (event) {
-			var selectedItem = event.selectedItem;
-
-			if (selectedItem) {
-				var data = {
-					segmentsEntryId: segmentsEntryId,
-					siteRoleIds: selectedItem.value,
-				};
-
-				Liferay.Util.postForm(form, {data: data});
-			}
-		});
-
-		itemSelectorDialog.open();
 	});
 </aui:script>

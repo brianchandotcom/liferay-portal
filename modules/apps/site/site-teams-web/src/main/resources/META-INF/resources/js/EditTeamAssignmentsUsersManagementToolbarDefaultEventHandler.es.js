@@ -12,32 +12,28 @@
  * details.
  */
 
-import {DefaultEventHandler, ItemSelectorDialog} from 'frontend-js-web';
+import {DefaultEventHandler, openSelectionModal} from 'frontend-js-web';
 import dom from 'metal-dom';
 
 class EditTeamAssignmentsUsersManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	selectUser(itemData) {
-		const itemSelectorDialog = new ItemSelectorDialog({
-			eventName: this.ns('selectUser'),
+		openSelectionModal({
+			multiple: true,
+			onSelect: (selectedItem) => {
+				if (selectedItem) {
+					const addTeamUsersFm = this.one('#addTeamUsersFm');
+
+					selectedItem.forEach((item) => {
+						dom.append(addTeamUsersFm, item);
+					});
+
+					submitForm(addTeamUsersFm);
+				}
+			},
+			selectEventName: this.ns('selectUser'),
 			title: itemData.title,
 			url: itemData.selectUserURL,
 		});
-
-		itemSelectorDialog.on('selectedItemChange', (event) => {
-			const selectedItem = event.selectedItem;
-
-			if (selectedItem) {
-				const addTeamUsersFm = this.one('#addTeamUsersFm');
-
-				selectedItem.forEach((item) => {
-					dom.append(addTeamUsersFm, item);
-				});
-
-				submitForm(addTeamUsersFm);
-			}
-		});
-
-		itemSelectorDialog.open();
 	}
 
 	deleteUsers() {

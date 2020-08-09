@@ -14,7 +14,6 @@
 
 import {
 	DefaultEventHandler,
-	ItemSelectorDialog,
 	createPortletURL,
 	navigate,
 	openSelectionModal,
@@ -95,20 +94,18 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 		accountEntrySelectorURL,
 		callback
 	) {
-		const itemSelectorDialog = new ItemSelectorDialog({
+		openSelectionModal({
 			buttonAddLabel: dialogButtonLabel,
-			eventName: dialogEventName,
+			multiple: true,
+			onSelect(selectedItem) {
+				if (selectedItem) {
+					callback(selectedItem);
+				}
+			},
+			selectEventName: dialogEventName,
 			title: dialogTitle,
 			url: accountEntrySelectorURL,
 		});
-
-		itemSelectorDialog.on('selectedItemChange', (event) => {
-			if (event.selectedItem) {
-				callback(event.selectedItem);
-			}
-		});
-
-		itemSelectorDialog.open();
 	}
 
 	_updateAccountUsers(url) {

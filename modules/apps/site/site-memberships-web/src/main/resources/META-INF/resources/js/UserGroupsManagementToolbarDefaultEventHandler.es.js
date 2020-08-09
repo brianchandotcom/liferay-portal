@@ -14,8 +14,8 @@
 
 import {
 	DefaultEventHandler,
-	ItemSelectorDialog,
 	addParams,
+	openSelectionModal,
 } from 'frontend-js-web';
 import dom from 'metal-dom';
 
@@ -58,56 +58,50 @@ class UserGroupsManagementToolbarDefaultEventHandler extends DefaultEventHandler
 	}
 
 	selectRole(itemData) {
-		const itemSelectorDialog = new ItemSelectorDialog({
+		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('done'),
-			eventName: this.ns('selectRole'),
+			multiple: true,
+			onSelect: (selectedItem) => {
+				if (selectedItem) {
+					const fm = this.one('#fm');
+
+					selectedItem.forEach((item) => {
+						dom.append(fm, item);
+					});
+
+					submitForm(fm, itemData.editUserGroupsRolesURL);
+				}
+			},
+			selectEventName: this.ns('selectRole'),
 			title: Liferay.Language.get('assign-roles'),
 			url: itemData.selectRoleURL,
 		});
-
-		itemSelectorDialog.on('selectedItemChange', (event) => {
-			const selectedItem = event.selectedItem;
-
-			if (selectedItem) {
-				const fm = this.one('#fm');
-
-				selectedItem.forEach((item) => {
-					dom.append(fm, item);
-				});
-
-				submitForm(fm, itemData.editUserGroupsRolesURL);
-			}
-		});
-
-		itemSelectorDialog.open();
 	}
 
 	selectUserGroups(itemData) {
-		const itemSelectorDialog = new ItemSelectorDialog({
+		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('done'),
-			eventName: this.ns('selectUserGroups'),
+			multiple: true,
+			onSelect: (selectedItem) => {
+				if (selectedItem) {
+					const addGroupUserGroupsFm = this.one(
+						'#addGroupUserGroupsFm'
+					);
+
+					selectedItem.forEach((item) => {
+						dom.append(addGroupUserGroupsFm, item);
+					});
+
+					submitForm(addGroupUserGroupsFm);
+				}
+			},
+			selectEventName: this.ns('selectUserGroups'),
 			title: Liferay.Util.sub(
 				Liferay.Language.get('assign-user-groups-to-this-x'),
 				itemData.groupTypeLabel
 			),
 			url: itemData.selectUserGroupsURL,
 		});
-
-		itemSelectorDialog.on('selectedItemChange', (event) => {
-			const selectedItem = event.selectedItem;
-
-			if (selectedItem) {
-				const addGroupUserGroupsFm = this.one('#addGroupUserGroupsFm');
-
-				selectedItem.forEach((item) => {
-					dom.append(addGroupUserGroupsFm, item);
-				});
-
-				submitForm(addGroupUserGroupsFm);
-			}
-		});
-
-		itemSelectorDialog.open();
 	}
 }
 

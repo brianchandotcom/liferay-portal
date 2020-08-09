@@ -74,7 +74,7 @@
 	</div>
 </div>
 
-<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
+<aui:script sandbox="<%= true %>">
 	var assetDisplayPageIdInput = document.getElementById(
 		'<portlet:namespace />assetDisplayPageIdInput'
 	);

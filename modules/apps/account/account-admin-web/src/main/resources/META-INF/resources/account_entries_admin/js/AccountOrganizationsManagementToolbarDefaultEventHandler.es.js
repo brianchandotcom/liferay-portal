@@ -12,7 +12,7 @@
  * details.
  */
 
-import {DefaultEventHandler, ItemSelectorDialog} from 'frontend-js-web';
+import {DefaultEventHandler, openSelectionModal} from 'frontend-js-web';
 
 class AccountOrganizationsManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	removeOrganizations(itemData) {
@@ -38,31 +38,27 @@ class AccountOrganizationsManagementToolbarDefaultEventHandler extends DefaultEv
 	}
 
 	selectAccountOrganizations(itemData) {
-		const itemSelectorDialog = new ItemSelectorDialog({
+		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('assign'),
-			eventName: this.ns('assignAccountOrganizations'),
+			multiple: true,
+			onSelect: (selectedItem) => {
+				if (selectedItem) {
+					const form = this.one('#fm');
+
+					Liferay.Util.postForm(form, {
+						data: {
+							accountOrganizationIds: selectedItem.value,
+						},
+						url: itemData.assignAccountOrganizationsURL,
+					});
+				}
+			},
+			selectEventName: this.ns('assignAccountOrganizations'),
 			title: Liferay.Util.sub(
 				Liferay.Language.get('assign-organizations-to-x'),
 				itemData.accountEntryName
 			),
 			url: itemData.selectAccountOrganizationsURL,
-		});
-
-		itemSelectorDialog.open();
-
-		itemSelectorDialog.on('selectedItemChange', (event) => {
-			const selectedItem = event.selectedItem;
-
-			if (selectedItem) {
-				const form = this.one('#fm');
-
-				Liferay.Util.postForm(form, {
-					data: {
-						accountOrganizationIds: selectedItem.value,
-					},
-					url: itemData.assignAccountOrganizationsURL,
-				});
-			}
 		});
 	}
 }

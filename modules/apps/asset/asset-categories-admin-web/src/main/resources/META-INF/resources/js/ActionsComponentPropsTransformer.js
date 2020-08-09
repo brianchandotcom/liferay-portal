@@ -12,7 +12,7 @@
  * details.
  */
 
-import {ItemSelectorDialog} from 'frontend-js-web';
+import {openSelectionModal} from 'frontend-js-web';
 
 const ACTIONS = {
 	deleteVocabularies({
@@ -24,34 +24,30 @@ const ACTIONS = {
 
 		vocabulariesForm.setAttribute('method', 'post');
 
-		const itemSelectorDialog = new ItemSelectorDialog({
+		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('delete'),
-			eventName: `${portletNamespace}selectVocabularies`,
+			multiple: true,
+			onSelect(selectedItems) {
+				if (selectedItems) {
+					if (
+						confirm(
+							Liferay.Language.get(
+								'are-you-sure-you-want-to-delete-the-selected-entries'
+							)
+						)
+					) {
+						selectedItems.forEach((item) => {
+							vocabulariesForm.appendChild(item.cloneNode(true));
+						});
+
+						submitForm(vocabulariesForm, deleteVocabulariesURL);
+					}
+				}
+			},
+			selectEventName: `${portletNamespace}selectVocabularies`,
 			title: Liferay.Language.get('delete-vocabulary'),
 			url: viewVocabulariesURL,
 		});
-
-		itemSelectorDialog.on('selectedItemChange', (event) => {
-			const selectedItems = event.selectedItem;
-
-			if (selectedItems) {
-				if (
-					confirm(
-						Liferay.Language.get(
-							'are-you-sure-you-want-to-delete-the-selected-entries'
-						)
-					)
-				) {
-					selectedItems.forEach((item) => {
-						vocabulariesForm.appendChild(item.cloneNode(true));
-					});
-
-					submitForm(vocabulariesForm, deleteVocabulariesURL);
-				}
-			}
-		});
-
-		itemSelectorDialog.open();
 	},
 };
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {DefaultEventHandler, ItemSelectorDialog} from 'frontend-js-web';
+import {DefaultEventHandler, openSelectionModal} from 'frontend-js-web';
 import {Config} from 'metal-state';
 
 import {MODAL_STATE_ACCOUNT_USERS} from './SessionStorageKeys.es';
@@ -51,31 +51,27 @@ class AccountUsersManagementToolbarDefaultEventHandler extends DefaultEventHandl
 	}
 
 	selectAccountUsers() {
-		const itemSelectorDialog = new ItemSelectorDialog({
+		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('assign'),
-			eventName: this.ns('assignAccountUsers'),
+			multiple: true,
+			onSelect: (selectedItem) => {
+				if (selectedItem) {
+					const form = this.one('#fm');
+
+					Liferay.Util.postForm(form, {
+						data: {
+							accountUserIds: selectedItem.value,
+						},
+						url: this.assignAccountUsersURL,
+					});
+				}
+			},
+			selectEventName: this.ns('assignAccountUsers'),
 			title: Liferay.Util.sub(
 				Liferay.Language.get('assign-users-to-x'),
 				this.accountEntryName
 			),
 			url: this.selectAccountUsersURL,
-		});
-
-		itemSelectorDialog.open();
-
-		itemSelectorDialog.on('selectedItemChange', (event) => {
-			const selectedItem = event.selectedItem;
-
-			if (selectedItem) {
-				const form = this.one('#fm');
-
-				Liferay.Util.postForm(form, {
-					data: {
-						accountUserIds: selectedItem.value,
-					},
-					url: this.assignAccountUsersURL,
-				});
-			}
 		});
 	}
 }

@@ -14,8 +14,8 @@
 
 import {
 	DefaultEventHandler,
-	ItemSelectorDialog,
 	addParams,
+	openSelectionModal,
 } from 'frontend-js-web';
 
 class AssetCategoriesManagementToolbarDefaultEventHandler extends DefaultEventHandler {
@@ -32,28 +32,22 @@ class AssetCategoriesManagementToolbarDefaultEventHandler extends DefaultEventHa
 	selectCategory(itemData) {
 		const namespace = this.namespace;
 
-		const itemSelectorDialog = new ItemSelectorDialog({
-			eventName: this.ns('selectCategory'),
-			singleSelect: true,
+		openSelectionModal({
+			onSelect(selectedItem) {
+				const category = selectedItem
+					? selectedItem[Object.keys(selectedItem)[0]]
+					: null;
+
+				if (category) {
+					location.href = addParams(
+						namespace + 'categoryId=' + category.categoryId,
+						itemData.viewCategoriesURL
+					);
+				}
+			},
+			selectEventName: this.ns('selectCategory'),
 			title: Liferay.Language.get('select-category'),
 			url: itemData.categoriesSelectorURL,
-		});
-
-		itemSelectorDialog.open();
-
-		itemSelectorDialog.on('selectedItemChange', (event) => {
-			const selectedItem = event.selectedItem;
-
-			const category = selectedItem
-				? selectedItem[Object.keys(selectedItem)[0]]
-				: null;
-
-			if (category) {
-				location.href = addParams(
-					namespace + 'categoryId=' + category.categoryId,
-					itemData.viewCategoriesURL
-				);
-			}
 		});
 	}
 }

@@ -13,7 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import {ItemSelectorDialog} from 'frontend-js-web';
+import {openSelectionModal} from 'frontend-js-web';
 import propTypes from 'prop-types';
 import React from 'react';
 
@@ -43,9 +43,20 @@ class SelectEntityInput extends React.Component {
 		} = this.props;
 
 		if (multiple) {
-			const itemSelectorDialog = new ItemSelectorDialog({
+			openSelectionModal({
 				buttonAddLabel: Liferay.Language.get('select'),
-				eventName: id,
+				multiple: true,
+				onSelect(selectedItems) {
+					if (selectedItems) {
+						const selectedValues = selectedItems.map((item) => ({
+							displayValue: item.name,
+							value: item.id,
+						}));
+
+						onChange(selectedValues);
+					}
+				},
+				selectEventName: id,
 				title,
 				url: uri,
 			});
@@ -64,8 +75,7 @@ class SelectEntityInput extends React.Component {
 					onChange(selectedValues);
 				}
 			});
-		}
-		else {
+		} else {
 			Liferay.Util.selectEntity(
 				{
 					dialog: {

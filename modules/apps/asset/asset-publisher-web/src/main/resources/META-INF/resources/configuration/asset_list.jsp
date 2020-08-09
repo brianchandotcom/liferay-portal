@@ -39,7 +39,7 @@ AssetListEntry assetListEntry = assetPublisherDisplayContext.fetchAssetListEntry
 	<aui:button name="clearAssetListButton" value="clear" />
 </div>
 
-<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
+<aui:script sandbox="<%= true %>">
 	var assetListEntryId = document.getElementById(
 		'<portlet:namespace />assetListEntryId'
 	);

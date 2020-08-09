@@ -89,35 +89,26 @@ if (selLayout != null) {
 	var privateLayout = A.one('#<portlet:namespace />privateLayout');
 
 	A.one('#<portlet:namespace />chooseLayout').on('click', function (event) {
-		Liferay.Loader.require(
-			'frontend-js-web/liferay/ItemSelectorDialog.es',
-			function (ItemSelectorDialog) {
-				var itemSelectorDialog = new ItemSelectorDialog.default({
-					eventName: '<%= eventName %>',
-					title: '<liferay-ui:message key="select-layout" />',
-					url: '<%= itemSelectorURL.toString() %>',
-				});
+		Liferay.Util.openSelectionModal({
+			onSelect: function(selectedItem) {
+				if (selectedItem) {
+					groupId.val(selectedItem.groupId);
 
-				itemSelectorDialog.on('selectedItemChange', function (event) {
-					var selectedItem = event.selectedItem;
+					layoutUuid.val(selectedItem.id);
 
-					if (selectedItem) {
-						groupId.val(selectedItem.groupId);
+					privateLayout.val(selectedItem.privateLayout);
 
-						layoutUuid.val(selectedItem.id);
+					layoutNameInput.html(selectedItem.name);
+					layoutNameInput.simulate('change');
 
-						privateLayout.val(selectedItem.privateLayout);
-
-						layoutNameInput.html(selectedItem.name);
-						layoutNameInput.simulate('change');
-
-						layoutItemRemove.removeClass('hide');
-					}
-				});
-
-				itemSelectorDialog.open();
-			}
-		);
+					layoutItemRemove.removeClass('hide');
+				}
+			},
+			multiple: true,
+			selectEventName: '<%= eventName %>',
+			title: '<liferay-ui:message key="select-layout" />',
+			url: '<%= itemSelectorURL.toString() %>',
+		});
 	});
 
 	layoutItemRemove.on('click', function (event) {

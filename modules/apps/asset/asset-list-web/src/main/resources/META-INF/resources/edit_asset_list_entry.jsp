@@ -188,14 +188,14 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 			String className = assetListDisplayContext.getClassName(assetRendererFactory);
 		%>
 
-			Liferay.Util.setFormValues(form, {
-				classTypeIds<%= className %>: Liferay.Util.listSelect(
-					Liferay.Util.getFormElement(
-						form,
-						'<%= className %>currentClassTypeIds'
-					)
-				),
-			});
+				Liferay.Util.setFormValues(form, {
+					classTypeIds<%= className %>: Liferay.Util.listSelect(
+						Liferay.Util.getFormElement(
+							form,
+							'<%= className %>currentClassTypeIds'
+						)
+					),
+				});
 
 		<%
 		}

@@ -14,7 +14,6 @@
 
 import {
 	DefaultEventHandler,
-	ItemSelectorDialog,
 	addParams,
 	openModal,
 	openSelectionModal,
@@ -166,20 +165,18 @@ class ElementsDefaultEventHandler extends DefaultEventHandler {
 		selectArticleTranslationsURL,
 		callback
 	) {
-		const itemSelectorDialog = new ItemSelectorDialog({
+		openSelectionModal({
 			buttonAddLabel: dialogButtonLabel,
-			eventName: this.ns('selectTranslations'),
+			multiple: true,
+			onSelect(selectedItem) {
+				if (selectedItem) {
+					callback(selectedItem);
+				}
+			},
+			selectEventName: this.ns('selectTranslations'),
 			title: dialogTitle,
 			url: selectArticleTranslationsURL,
 		});
-
-		itemSelectorDialog.on('selectedItemChange', (event) => {
-			if (event.selectedItem) {
-				callback(event.selectedItem);
-			}
-		});
-
-		itemSelectorDialog.open();
 	}
 
 	_send(url) {

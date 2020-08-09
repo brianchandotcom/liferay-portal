@@ -54,7 +54,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<aui:script require="metal-dom/src/all/dom as dom, frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
+<aui:script require="metal-dom/src/all/dom as dom">
 	var articlePreview = document.getElementById(
 		'<portlet:namespace />articlePreview'
 	);
@@ -62,28 +62,21 @@ String redirect = ParamUtil.getString(request, "redirect");
 		'<portlet:namespace />assetEntryId'
 	);
 
-	var itemSelectorDialog = new ItemSelectorDialog.default({
-		eventName: '<portlet:namespace />selectedItem',
-		singleSelect: true,
-		title: '<liferay-ui:message key="select-web-content" />',
-		url: '<%= journalContentDisplayContext.getItemSelectorURL() %>',
-	});
-
-	itemSelectorDialog.on('selectedItemChange', function (event) {
-		var selectedItem = event.selectedItem;
-
-		if (!selectedItem) {
-			return;
-		}
-
-		retrieveWebContent(selectedItem.assetclasspk);
-	});
-
 	dom.delegate(articlePreview, 'click', '.web-content-selector', function (
 		event
 	) {
 		event.preventDefault();
-		itemSelectorDialog.open();
+
+		Liferay.Util.openSelectionModal({
+			onSelect: function (selectedItem) {
+				if (selectedItem) {
+					retrieveWebContent(selectedItem.assetclasspk);
+				}
+			},
+			selectEventName: '<portlet:namespace />selectedItem',
+			title: '<liferay-ui:message key="select-web-content" />',
+			url: '<%= journalContentDisplayContext.getItemSelectorURL() %>',
+		});
 	});
 
 	dom.delegate(articlePreview, 'click', '.selector-button', function (event) {

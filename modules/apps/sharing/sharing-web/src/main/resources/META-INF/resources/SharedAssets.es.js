@@ -12,7 +12,12 @@
  * details.
  */
 
-import {ItemSelectorDialog, PortletBase, addParams} from 'frontend-js-web';
+import {
+	PortletBase,
+	addParams,
+	navigate,
+	openSelectionModal,
+} from 'frontend-js-web';
 
 class SharedAssets extends PortletBase {
 	constructor(config, ...args) {
@@ -33,29 +38,23 @@ class SharedAssets extends PortletBase {
 		const namespace = this.namespace;
 		const viewAssetTypeURL = this._viewAssetTypeURL;
 
-		if (itemData.action === 'openAssetTypesSelector') {
-			const itemSelectorDialog = new ItemSelectorDialog({
-				eventName: namespace + 'selectAssetType',
-				singleSelect: true,
+		if (itemData && itemData.action === 'openAssetTypesSelector') {
+			openSelectionModal({
+				onSelect(selectedItem) {
+					if (selectedItem) {
+						let uri = viewAssetTypeURL;
+
+						uri = addParams(
+							namespace + 'className=' + selectedItem.value,
+							uri
+						);
+
+						navigate(uri);
+					}
+				},
+				selectEventName: namespace + 'selectAssetType',
 				title: Liferay.Language.get('select-asset-type'),
 				url: this._selectAssetTypeURL,
-			});
-
-			itemSelectorDialog.open();
-
-			itemSelectorDialog.on('selectedItemChange', (event) => {
-				const selectedItem = event.selectedItem;
-
-				if (selectedItem) {
-					let uri = viewAssetTypeURL;
-
-					uri = addParams(
-						namespace + 'className=' + selectedItem.value,
-						uri
-					);
-
-					location.href = uri;
-				}
 			});
 		}
 	}

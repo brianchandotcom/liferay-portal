@@ -250,7 +250,7 @@ else {
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<aui:script require="metal-dom/src/dom as dom, frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
+<aui:script require="metal-dom/src/dom as dom">
 	var form = document.<portlet:namespace />fm;
 
 	form.addEventListener('change', <portlet:namespace/>resetPreview);
@@ -356,29 +356,23 @@ else {
 				uri
 			);
 
-			var itemSelectorDialog = new ItemSelectorDialog.default({
-				eventName:
+			Liferay.Util.openSelectionModal({
+				onSelect: function (selectedItem) {
+					if (selectedItem) {
+						rootMenuItemIdInput.value =
+							selectedItem.selectSiteNavigationMenuItemId;
+						rootMenuItemNameSpan.innerText =
+							selectedItem.selectSiteNavigationMenuItemName;
+
+						<portlet:namespace/>resetPreview();
+					}
+				},
+				selectEventName:
 					'<%= siteNavigationMenuDisplayContext.getRootMenuItemEventName() %>',
-				singleSelect: true,
 				title:
 					'<liferay-ui:message key="select-site-navigation-menu-item" />',
 				url: uri,
 			});
-
-			itemSelectorDialog.on('selectedItemChange', function (event) {
-				var selectedItem = event.selectedItem;
-
-				if (selectedItem) {
-					rootMenuItemIdInput.value =
-						selectedItem.selectSiteNavigationMenuItemId;
-					rootMenuItemNameSpan.innerText =
-						selectedItem.selectSiteNavigationMenuItemName;
-
-					<portlet:namespace/>resetPreview();
-				}
-			});
-
-			itemSelectorDialog.open();
 		});
 	}
 
@@ -401,22 +395,9 @@ else {
 		siteNavigationMenuIdInput
 	) {
 		chooseSiteNavigationMenuButton.addEventListener('click', function (event) {
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						destroyOnHide: true,
-						modal: true,
-					},
-					eventName:
-						'<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuEventName() %>',
-					id: '<portlet:namespace />selectSiteNavigationMenu',
-					title:
-						'<liferay-ui:message key="select-site-navigation-menu" />',
-					uri:
-						'<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuItemSelectorURL() %>',
-				},
-				function (selectedItem) {
+			Liferay.Util.openSelectionModal({
+				id: '<portlet:namespace />selectSiteNavigationMenu',
+				onSelect: function(selectedItem) {
 					if (selectedItem) {
 						navigationMenuName.innerText = selectedItem.name;
 						rootMenuItemIdInput.value = '0';
@@ -427,8 +408,14 @@ else {
 
 						<portlet:namespace/>resetPreview();
 					}
-				}
-			);
+				},
+				selectEventName:
+					'<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuEventName() %>',
+				title:
+					'<liferay-ui:message key="select-site-navigation-menu" />',
+				url:
+					'<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuItemSelectorURL() %>',
+			});
 		});
 	}
 

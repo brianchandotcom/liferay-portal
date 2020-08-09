@@ -14,7 +14,6 @@
 
 import {
 	DefaultEventHandler,
-	ItemSelectorDialog,
 	openSelectionModal,
 	openSimpleInputModal,
 } from 'frontend-js-web';
@@ -105,26 +104,21 @@ class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	updateFragmentEntryPreview(itemData) {
-		const itemSelectorDialog = new ItemSelectorDialog({
-			eventName: this.ns('changePreview'),
-			singleSelect: true,
+		openSelectionModal({
+			onSelect: (selectedItem) => {
+				if (selectedItem) {
+					const itemValue = JSON.parse(selectedItem.value);
+
+					this.one('#fragmentEntryId').value =
+						itemData.fragmentEntryId;
+					this.one('#fileEntryId').value = itemValue.fileEntryId;
+
+					submitForm(this.one('#fragmentEntryPreviewFm'));
+				}
+			},
+			selectEventName: this.ns('changePreview'),
 			title: Liferay.Language.get('fragment-thumbnail'),
 			url: itemData.itemSelectorURL,
-		});
-
-		itemSelectorDialog.open();
-
-		itemSelectorDialog.on('selectedItemChange', (event) => {
-			const selectedItem = event.selectedItem;
-
-			if (selectedItem) {
-				const itemValue = JSON.parse(selectedItem.value);
-
-				this.one('#fragmentEntryId').value = itemData.fragmentEntryId;
-				this.one('#fileEntryId').value = itemValue.fileEntryId;
-
-				submitForm(this.one('#fragmentEntryPreviewFm'));
-			}
 		});
 	}
 

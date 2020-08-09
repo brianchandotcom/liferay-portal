@@ -12,7 +12,7 @@
  * details.
  */
 
-import {ItemSelectorDialog, PortletBase} from 'frontend-js-web';
+import {PortletBase, openSelectionModal} from 'frontend-js-web';
 import {Config} from 'metal-state';
 
 /**
@@ -66,32 +66,26 @@ class MoveEntries extends PortletBase {
 	 * @review
 	 */
 	_handleSelectFolderButtonClick() {
-		const itemSelectorDialog = new ItemSelectorDialog({
-			eventName: this.ns('selectFolder'),
-			singleSelect: true,
+		openSelectionModal({
+			onSelect(selectedItem) {
+				if (selectedItem) {
+					var folderData = {
+						idString: 'newFolderId',
+						idValue: selectedItem.folderId,
+						nameString: 'folderName',
+						nameValue: selectedItem.folderName,
+					};
+
+					Liferay.Util.selectFolder(
+						folderData,
+						this.namespace || this.portletNamespace
+					);
+				}
+			},
+			selectEventName: this.ns('selectFolder'),
 			title: Liferay.Language.get('select-folder'),
 			url: this.selectFolderURL,
 		});
-
-		itemSelectorDialog.on('selectedItemChange', (event) => {
-			const selectedItem = event.selectedItem;
-
-			if (selectedItem) {
-				var folderData = {
-					idString: 'newFolderId',
-					idValue: selectedItem.folderId,
-					nameString: 'folderName',
-					nameValue: selectedItem.folderName,
-				};
-
-				Liferay.Util.selectFolder(
-					folderData,
-					this.namespace || this.portletNamespace
-				);
-			}
-		});
-
-		itemSelectorDialog.open();
 	}
 }
 

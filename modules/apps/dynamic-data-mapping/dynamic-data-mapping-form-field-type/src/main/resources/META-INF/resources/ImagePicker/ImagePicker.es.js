@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
-import {ItemSelectorDialog} from 'frontend-js-web';
+import {openSelectionModal} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
@@ -86,15 +86,12 @@ const ImagePicker = ({
 	const handleItemSelectorTriggerClick = (event) => {
 		event.preventDefault();
 
-		const itemSelectorDialog = new ItemSelectorDialog({
-			eventName: `${portletNamespace}selectDocumentLibrary`,
-			singleSelect: true,
+		openSelectionModal({
+			onSelect: handleFieldChanged,
+			selectEventName: `${portletNamespace}selectDocumentLibrary`,
+			title: Liferay.Language.get('select-file'),
 			url: itemSelectorURL,
 		});
-
-		itemSelectorDialog.on('selectedItemChange', handleFieldChanged);
-
-		itemSelectorDialog.open();
 	};
 
 	const placeholder = readOnly

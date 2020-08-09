@@ -400,49 +400,26 @@ AUI.add(
 					var itemData = event.data.item.data;
 
 					if (itemData.action === 'openDocumentTypesSelector') {
-						Liferay.Loader.require(
-							'frontend-js-web/liferay/ItemSelectorDialog.es',
-							(ItemSelectorDialog) => {
-								var itemSelectorDialog = new ItemSelectorDialog.default(
-									{
-										eventName: instance.ns(
-											'selectFileEntryType'
-										),
-										singleSelect: true,
-										title: Liferay.Language.get(
-											'select-document-type'
-										),
-										url: instance.get(
-											'selectFileEntryTypeURL'
-										),
-									}
-								);
+						Liferay.Util.openSelectionModal({
+							onSelect: (selectedItem) => {
+								if (selectedItem) {
+									var uri = instance.get(
+										'viewFileEntryTypeURL'
+									);
 
-								itemSelectorDialog.open();
+									uri = Liferay.Util.addParams(
+										instance.ns('fileEntryTypeId=') +
+											selectedItem.value,
+										uri
+									);
 
-								itemSelectorDialog.on(
-									'selectedItemChange',
-									(event) => {
-										var selectedItem = event.selectedItem;
-
-										if (selectedItem) {
-											var uri = instance.get(
-												'viewFileEntryTypeURL'
-											);
-
-											uri = Liferay.Util.addParams(
-												instance.ns(
-													'fileEntryTypeId='
-												) + selectedItem.value,
-												uri
-											);
-
-											location.href = uri;
-										}
-									}
-								);
-							}
-						);
+									Liferay.Util.navigate(uri);
+								}
+							},
+							selectEventName: instance.ns('selectFileEntryType'),
+							title: Liferay.Language.get('select-document-type'),
+							url: instance.get('selectFileEntryTypeURL'),
+						});
 					}
 				},
 

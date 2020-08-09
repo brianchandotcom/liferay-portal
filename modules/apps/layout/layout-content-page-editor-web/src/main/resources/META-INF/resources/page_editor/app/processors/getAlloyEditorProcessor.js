@@ -12,7 +12,7 @@
  * details.
  */
 
-import {ItemSelectorDialog, debounce} from 'frontend-js-web';
+import {debounce, openSelectionModal} from 'frontend-js-web';
 
 import {config} from '../config/index';
 
@@ -83,21 +83,15 @@ export default function getAlloyEditorProcessor(
 					url,
 					changeLinkCallback
 				) => {
-					const itemSelectorDialog = new ItemSelectorDialog({
-						eventName: editor.title + 'selectItem',
-						singleSelect: true,
+					openSelectionModal({
+						onSelect(selectedItem) {
+							if (selectedItem) {
+								changeLinkCallback(selectedItem);
+							}
+						},
+						selectEventName: editor.title + 'selectItem',
 						title: Liferay.Language.get('select-item'),
 						url,
-					});
-
-					itemSelectorDialog.open();
-
-					itemSelectorDialog.on('selectedItemChange', (event) => {
-						const selectedItem = event.selectedItem;
-
-						if (selectedItem) {
-							changeLinkCallback(selectedItem);
-						}
 					});
 				},
 

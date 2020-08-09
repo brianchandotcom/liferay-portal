@@ -149,34 +149,14 @@ renderResponse.setTitle(title);
 
 						<aui:button name="selectFolderButton" value="select" />
 
-						<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
+						<aui:script sandbox="<%= true %>">
 							var selectFolderButton = document.getElementById(
 								'<portlet:namespace />selectFolderButton'
 							);
 
-							if (selectFolderButton) {
-								selectFolderButton.addEventListener('click', function (event) {
-									event.preventDefault();
-
-									var itemSelectorDialog = new ItemSelectorDialog.default({
-										eventName: '<portlet:namespace />selectFolder',
-										singleSelect: true,
-										title: '<liferay-ui:message arguments="folder" key="select-x" />',
-
-										<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-											<portlet:param name="mvcPath" value="/select_folder.jsp" />
-											<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-											<portlet:param name="parentFolderId" value="<%= String.valueOf(parentFolderId) %>" />
-										</portlet:renderURL>
-
-										url: '<%= selectFolderURL.toString() %>',
-									});
-
-									itemSelectorDialog.open();
-
-									itemSelectorDialog.on('selectedItemChange', function (event) {
-										var selectedItem = event.selectedItem;
-
+							selectFolderButton.addEventListener('click', function (event) {
+								Liferay.Util.openSelectionModal({
+									onSelect: function (selectedItem) {
 										if (selectedItem) {
 											var folderData = {
 												idString: 'parentFolderId',
@@ -187,9 +167,19 @@ renderResponse.setTitle(title);
 
 											Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
 										}
-									});
+									},
+									selectEventName: '<portlet:namespace />selectFolder',
+									title: '<liferay-ui:message arguments="folder" key="select-x" />',
+
+									<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+										<portlet:param name="mvcPath" value="/select_folder.jsp" />
+										<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+										<portlet:param name="parentFolderId" value="<%= String.valueOf(parentFolderId) %>" />
+									</portlet:renderURL>
+
+									url: '<%= selectFolderURL.toString() %>',
 								});
-							}
+							});
 						</aui:script>
 
 						<%

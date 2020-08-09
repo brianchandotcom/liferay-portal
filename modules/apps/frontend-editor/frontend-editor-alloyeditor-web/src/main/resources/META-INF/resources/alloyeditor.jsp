@@ -145,27 +145,16 @@ name = HtmlUtil.escapeJS(name);
 	var alloyEditor;
 
 	var documentBrowseLinkCallback = function (editor, linkHref, callback) {
-		Liferay.Loader.require(
-			'frontend-js-web/liferay/ItemSelectorDialog.es',
-			function (ItemSelectorDialog) {
-				var itemSelectorDialog = new ItemSelectorDialog.default({
-					eventName: editor.name + 'selectDocument',
-					singleSelect: true,
-					title: '<liferay-ui:message key="select-item" />',
-					url: linkHref,
-				});
-
-				itemSelectorDialog.open();
-
-				itemSelectorDialog.on('selectedItemChange', function (event) {
-					var selectedItem = event.selectedItem;
-
-					if (selectedItem) {
-						callback(selectedItem);
-					}
-				});
-			}
-		);
+		Liferay.Util.openSelectionModal({
+			onSelect: function (selectedItem) {
+				if (selectedItem) {
+					callback(selectedItem);
+				}
+			},
+			selectEventName: editor.name + 'selectDocument',
+			title: '<liferay-ui:message key="select-item" />',
+			url: linkHref,
+		});
 	};
 
 	var getInitialContent = function () {

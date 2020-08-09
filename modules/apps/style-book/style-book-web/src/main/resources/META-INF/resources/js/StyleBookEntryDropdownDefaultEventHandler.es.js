@@ -14,7 +14,7 @@
 
 import {
 	DefaultEventHandler,
-	ItemSelectorDialog,
+	openSelectionModal,
 	openSimpleInputModal,
 } from 'frontend-js-web';
 import {Config} from 'metal-state';
@@ -75,27 +75,22 @@ class StyleBookEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	updateStyleBookEntryPreview(itemData) {
-		const itemSelectorDialog = new ItemSelectorDialog({
-			eventName: this.ns('changePreview'),
-			singleSelect: true,
+		openSelectionModal({
+			onSelect: (selectedItem) => {
+				if (selectedItem) {
+					const itemValue = JSON.parse(selectedItem.value);
+
+					this.one('#styleBookEntryId').value =
+						itemData.styleBookEntryId;
+					this.one('#fileEntryId').value = itemValue.fileEntryId;
+
+					submitForm(this.one('#styleBookEntryPreviewFm'));
+				}
+			},
+			selectEventName: this.ns('changePreview'),
 			title: Liferay.Language.get('style-book-thumbnail'),
 			url: itemData.itemSelectorURL,
 		});
-
-		itemSelectorDialog.on('selectedItemChange', (event) => {
-			const selectedItem = event.selectedItem;
-
-			if (selectedItem) {
-				const itemValue = JSON.parse(selectedItem.value);
-
-				this.one('#styleBookEntryId').value = itemData.styleBookEntryId;
-				this.one('#fileEntryId').value = itemValue.fileEntryId;
-
-				submitForm(this.one('#styleBookEntryPreviewFm'));
-			}
-		});
-
-		itemSelectorDialog.open();
 	}
 
 	_send(url) {

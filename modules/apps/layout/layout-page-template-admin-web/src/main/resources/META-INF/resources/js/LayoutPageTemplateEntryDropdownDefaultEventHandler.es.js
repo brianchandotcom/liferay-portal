@@ -14,8 +14,8 @@
 
 import {
 	DefaultEventHandler,
-	ItemSelectorDialog,
 	openModal,
+	openSelectionModal,
 	openSimpleInputModal,
 } from 'frontend-js-web';
 import {Config} from 'metal-state';
@@ -70,28 +70,22 @@ class LayoutPageTemplateEntryDropdownDefaultEventHandler extends DefaultEventHan
 	}
 
 	updateLayoutPageTemplateEntryPreview(itemData) {
-		const itemSelectorDialog = new ItemSelectorDialog({
-			eventName: this.ns('changePreview'),
-			singleSelect: true,
+		openSelectionModal({
+			onSelect: (selectedItem) => {
+				if (selectedItem) {
+					const itemValue = JSON.parse(selectedItem.value);
+
+					this.one('#layoutPageTemplateEntryId').value =
+						itemData.layoutPageTemplateEntryId;
+					this.one('#fileEntryId').value = itemValue.fileEntryId;
+
+					submitForm(this.one('#layoutPageTemplateEntryPreviewFm'));
+				}
+			},
+			selectEventName: this.ns('changePreview'),
 			title: Liferay.Language.get('page-template-thumbnail'),
 			url: itemData.itemSelectorURL,
 		});
-
-		itemSelectorDialog.on('selectedItemChange', (event) => {
-			const selectedItem = event.selectedItem;
-
-			if (selectedItem) {
-				const itemValue = JSON.parse(selectedItem.value);
-
-				this.one('#layoutPageTemplateEntryId').value =
-					itemData.layoutPageTemplateEntryId;
-				this.one('#fileEntryId').value = itemValue.fileEntryId;
-
-				submitForm(this.one('#layoutPageTemplateEntryPreviewFm'));
-			}
-		});
-
-		itemSelectorDialog.open();
 	}
 
 	_send(url) {

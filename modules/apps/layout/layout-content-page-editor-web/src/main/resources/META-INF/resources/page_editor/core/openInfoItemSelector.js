@@ -12,7 +12,7 @@
  * details.
  */
 
-import {ItemSelectorDialog} from 'frontend-js-web';
+import {openSelectionModal} from 'frontend-js-web';
 
 export function openInfoItemSelector(
 	callback,
@@ -20,35 +20,20 @@ export function openInfoItemSelector(
 	itemSelectorURL,
 	destroyedCallback = null
 ) {
-	const itemSelectorDialog = new ItemSelectorDialog({
-		eventName,
-		singleSelect: true,
+	openSelectionModal({
+		onClose: destroyedCallback,
+		onSelect(selectedItem) {
+			if (selectedItem && selectedItem.value) {
+				const infoItem = {
+					...JSON.parse(selectedItem.value),
+					type: selectedItem.returnType,
+				};
+
+				callback(infoItem);
+			}
+		},
+		selectEventName: eventName,
 		title: Liferay.Language.get('select'),
 		url: itemSelectorURL,
 	});
-
-	itemSelectorDialog.on('selectedItemChange', (event) => {
-		const selectedItem = event.selectedItem;
-
-		if (selectedItem && selectedItem.value) {
-			const infoItem = {
-				...JSON.parse(selectedItem.value),
-				type: selectedItem.returnType,
-			};
-
-			callback(infoItem);
-		}
-	});
-
-	itemSelectorDialog.on('visibleChange', (event) => {
-		if (
-			!event.newVal &&
-			destroyedCallback &&
-			typeof destroyedCallback === 'function'
-		) {
-			destroyedCallback();
-		}
-	});
-
-	itemSelectorDialog.open();
 }

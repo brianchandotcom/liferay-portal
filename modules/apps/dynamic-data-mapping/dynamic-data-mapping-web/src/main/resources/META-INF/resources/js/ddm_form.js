@@ -1440,43 +1440,25 @@ AUI.add(
 
 					var portletNamespace = instance.get('portletNamespace');
 
-					Liferay.Loader.require(
-						'frontend-js-web/liferay/ItemSelectorDialog.es',
-						(ItemSelectorDialog) => {
-							var itemSelectorDialog = new ItemSelectorDialog.default(
-								{
-									eventName:
-										portletNamespace +
-										'selectDocumentLibrary',
-									singleSelect: true,
-									url: instance.getDocumentLibrarySelectorURL(),
-								}
-							);
+					Liferay.Util.openSelectionModal({
+						onSelect(selectedItem) {
+							if (selectedItem) {
+								var itemValue = JSON.parse(selectedItem.value);
 
-							itemSelectorDialog.on(
-								'selectedItemChange',
-								(event) => {
-									var selectedItem = event.selectedItem;
-
-									if (selectedItem) {
-										var itemValue = JSON.parse(
-											selectedItem.value
-										);
-
-										instance.setValue({
-											classPK: itemValue.fileEntryId,
-											groupId: itemValue.groupId,
-											title: itemValue.title,
-											type: itemValue.type,
-											uuid: itemValue.uuid,
-										});
-									}
-								}
-							);
-
-							itemSelectorDialog.open();
-						}
-					);
+								instance.setValue({
+									classPK: itemValue.fileEntryId,
+									groupId: itemValue.groupId,
+									title: itemValue.title,
+									type: itemValue.type,
+									uuid: itemValue.uuid,
+								});
+							}
+						},
+						selectEventName:
+							portletNamespace + 'selectDocumentLibrary',
+						title: Liferay.Language.get('select-file'),
+						url: instance.getDocumentLibrarySelectorURL(),
+					});
 				},
 
 				_validateField(fieldNode) {
@@ -1756,45 +1738,24 @@ AUI.add(
 
 					var portletNamespace = instance.get('portletNamespace');
 
-					Liferay.Loader.require(
-						'frontend-js-web/liferay/ItemSelectorDialog.es',
-						(ItemSelectorDialog) => {
-							var itemSelectorDialog = new ItemSelectorDialog.default(
-								{
-									eventName:
-										portletNamespace + 'selectWebContent',
-									singleSelect: true,
-									title: Liferay.Language.get(
-										'journal-article'
-									),
-									url: instance._getWebContentSelectorURL(),
-								}
-							);
+					Liferay.Util.openSelectionModal({
+						onSelect(selectedItem) {
+							if (selectedItem) {
+								var itemValue = JSON.parse(selectedItem.value);
 
-							itemSelectorDialog.on(
-								'selectedItemChange',
-								(event) => {
-									var selectedItem = event.selectedItem;
+								instance.setValue({
+									className: itemValue.className,
+									classPK: itemValue.classPK,
+									title: itemValue.title || '',
+								});
 
-									if (selectedItem) {
-										var itemValue = JSON.parse(
-											selectedItem.value
-										);
-
-										instance.setValue({
-											className: itemValue.className,
-											classPK: itemValue.classPK,
-											title: itemValue.title || '',
-										});
-
-										instance._hideMessage();
-									}
-								}
-							);
-
-							itemSelectorDialog.open();
-						}
-					);
+								instance._hideMessage();
+							}
+						},
+						selectEventName: portletNamespace + 'selectWebContent',
+						title: Liferay.Language.get('journal-article'),
+						url: instance._getWebContentSelectorURL(),
+					});
 				},
 
 				_hideMessage() {

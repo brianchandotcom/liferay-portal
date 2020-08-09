@@ -12,29 +12,23 @@
  * details.
  */
 
-import {DefaultEventHandler, ItemSelectorDialog} from 'frontend-js-web';
+import {DefaultEventHandler, openSelectionModal} from 'frontend-js-web';
 
 class FragmentCollectionResourcesManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	addFragmentCollectionResource(itemData) {
-		const itemSelectorDialog = new ItemSelectorDialog({
-			eventName: this.ns('uploadFragmentCollectionResource'),
-			singleSelect: true,
+		openSelectionModal({
+			onSelect: (selectedItem) => {
+				if (selectedItem) {
+					const itemValue = JSON.parse(selectedItem.value);
+
+					this.one('#fileEntryId').value = itemValue.fileEntryId;
+
+					submitForm(this.one('#fragmentCollectionResourceFm'));
+				}
+			},
+			selectEventName: this.ns('uploadFragmentCollectionResource'),
 			title: Liferay.Language.get('upload-fragment-collection-resource'),
 			url: itemData.itemSelectorURL,
-		});
-
-		itemSelectorDialog.open();
-
-		itemSelectorDialog.on('selectedItemChange', (event) => {
-			const selectedItem = event.selectedItem;
-
-			if (selectedItem) {
-				const itemValue = JSON.parse(selectedItem.value);
-
-				this.one('#fileEntryId').value = itemValue.fileEntryId;
-
-				submitForm(this.one('#fragmentCollectionResourceFm'));
-			}
 		});
 	}
 

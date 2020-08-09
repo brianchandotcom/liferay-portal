@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import {ReactFieldBase} from 'dynamic-data-mapping-form-field-type';
-import {ItemSelectorDialog} from 'frontend-js-web';
+import {openSelectionModal} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 const JournalArticleSelector = ({
@@ -51,16 +51,12 @@ const JournalArticleSelector = ({
 	const handleItemSelectorTriggerClick = (event) => {
 		event.preventDefault();
 
-		const itemSelectorDialog = new ItemSelectorDialog({
-			eventName: `${portletNamespace}selectJournalArticle`,
-			singleSelect: true,
+		openSelectionModal({
+			onSelect: handleFieldChanged,
+			selectEventName: `${portletNamespace}selectJournalArticle`,
 			title: Liferay.Language.get('journal-article'),
 			url: itemSelectorURL,
 		});
-
-		itemSelectorDialog.on('selectedItemChange', handleFieldChanged);
-
-		itemSelectorDialog.open();
 	};
 
 	return (

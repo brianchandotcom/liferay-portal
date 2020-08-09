@@ -250,6 +250,15 @@ Liferay.Util.openModal = (...args) => {
 	);
 };
 
+Liferay.Util.openSelectionModal = (...args) => {
+	Liferay.Loader.require(
+		'frontend-js-web/liferay/modal/Modal',
+		(commands) => {
+			commands.openSelectionModal(...args);
+		}
+	);
+};
+
 Liferay.Util.openToast = (...args) => {
 	Liferay.Loader.require(
 		'frontend-js-web/liferay/toast/commands/OpenToast.es',

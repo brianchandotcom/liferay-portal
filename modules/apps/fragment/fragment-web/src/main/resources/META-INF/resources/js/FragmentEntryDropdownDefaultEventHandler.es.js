@@ -15,6 +15,7 @@
 import {
 	DefaultEventHandler,
 	ItemSelectorDialog,
+	openSelectionModal,
 	openSimpleInputModal,
 } from 'frontend-js-web';
 import {Config} from 'metal-state';
@@ -28,7 +29,7 @@ class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	copyToContributedFragmentEntry(itemData) {
-		Liferay.Util.openModal({
+		openSelectionModal({
 			id: this.ns('selectFragmentCollection'),
 			onSelect: (selectedItem) => {
 				if (selectedItem) {
@@ -132,7 +133,7 @@ class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 		selectFragmentCollectionURL,
 		targetFragmentEntryURL
 	) {
-		Liferay.Util.openModal({
+		openSelectionModal({
 			id: this.ns('selectFragmentCollection'),
 			onSelect: (selectedItem) => {
 				if (selectedItem) {

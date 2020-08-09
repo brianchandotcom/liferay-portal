@@ -137,7 +137,7 @@ PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 		selectManageableGroupIcon.addEventListener('click', function (event) {
 			event.preventDefault();
 
-			Liferay.Util.openModal({
+			Liferay.Util.openSelectionModal({
 				id: '<%= editAssetListDisplayContext.getSelectGroupEventName() %>',
 				onSelect: function (selectedItem) {
 					var entityId = selectedItem.groupid;

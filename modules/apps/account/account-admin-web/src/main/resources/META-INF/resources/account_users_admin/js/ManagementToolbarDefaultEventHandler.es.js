@@ -17,7 +17,7 @@ import {
 	ItemSelectorDialog,
 	createPortletURL,
 	navigate,
-	openModal,
+	openSelectionModal,
 } from 'frontend-js-web';
 
 class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
@@ -70,7 +70,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	addAccountUser(itemData) {
-		openModal({
+		openSelectionModal({
 			id: this.ns('addAccountUser'),
 			onSelect: (selectedItem) => {
 				var addAccountUserURL = createPortletURL(

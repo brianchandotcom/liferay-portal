@@ -125,7 +125,7 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 					url
 				);
 
-				Liferay.Util.openModal({
+				Liferay.Util.openSelectionModal({
 					onSelect: function (selectedItem) {
 						changeDDMTemplate(selectedItem);
 					},
@@ -195,7 +195,7 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 
 	if (selectDDMTemplateButton) {
 		selectDDMTemplateButton.addEventListener('click', function (event) {
-			Liferay.Util.openModal({
+			Liferay.Util.openSelectionModal({
 				onSelect: function (selectedItem) {
 					changeDDMTemplate(selectedItem);
 				},

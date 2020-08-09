@@ -59,7 +59,7 @@ else {
 	A.one('#<portlet:namespace />changeTheme').on('click', function (event) {
 		event.preventDefault();
 
-		Util.openModal({
+		Util.openSelectionModal({
 			onSelect: function (selectedItem) {
 				var themeId = selectedItem.themeid;
 

@@ -72,7 +72,7 @@ DLFileEntryAdditionalMetadataSetsDisplayContext dlFileEntryAdditionalMetadataSet
 
 <aui:script>
 	function <portlet:namespace />openDDMStructureSelector() {
-		Liferay.Util.openModal({
+		Liferay.Util.openSelectionModal({
 			id: '<portlet:namespace />selectDDMStructure',
 			onSelect: function (selectedItem) {
 				var searchContainer = Liferay.SearchContainer.get(

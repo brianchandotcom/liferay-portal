@@ -16,7 +16,7 @@ import {
 	DefaultEventHandler,
 	addParams,
 	navigate,
-	openModal,
+	openSelectionModal,
 } from 'frontend-js-web';
 import {Config} from 'metal-state';
 
@@ -50,7 +50,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	handleCreationMenuMoreButtonClicked(event) {
 		event.preventDefault();
 
-		openModal({
+		openSelectionModal({
 			onSelect: (selectedItem) => {
 				navigate(
 					addParams(
@@ -91,7 +91,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	openDDMStructuresSelector() {
-		openModal({
+		openSelectionModal({
 			onSelect: (selectedItem) => {
 				Liferay.Util.navigate(
 					addParams(

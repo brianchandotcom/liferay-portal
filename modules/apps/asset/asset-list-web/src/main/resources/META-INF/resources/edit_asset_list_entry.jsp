@@ -153,7 +153,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 	</portlet:actionURL>
 
 	function <portlet:namespace />openSelectSegmentsEntryDialog() {
-		Liferay.Util.openModal({
+		Liferay.Util.openSelectionModal({
 			id: '<portlet:namespace />selectEntity',
 			onSelect: function (selectedItem) {
 				Liferay.Util.postForm(document.<portlet:namespace />fm, {

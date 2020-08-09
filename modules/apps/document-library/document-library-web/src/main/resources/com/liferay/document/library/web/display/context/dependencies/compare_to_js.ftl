@@ -1,5 +1,5 @@
 function ${jsNamespace}compareVersionDialog(eventUri) {
-	Liferay.Util.openModal({
+	Liferay.Util.openSelectionModal({
 		id: '${jsNamespace}compareFileVersions',
 		onSelect: function(selectedItem) {
 			var uri = '${compareVersionURL}';

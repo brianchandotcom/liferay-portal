@@ -533,7 +533,7 @@ AUI.add(
 						);
 					}
 
-					Liferay.Util.openModal({
+					Liferay.Util.openSelectionModal({
 						id: namespace + 'selectFolder',
 						onSelect: (selectedItem) => {
 							if (parameterName && parameterValue) {

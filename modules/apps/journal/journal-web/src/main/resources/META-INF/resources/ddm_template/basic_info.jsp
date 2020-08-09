@@ -91,7 +91,7 @@ DDMStructure ddmStructure = journalEditDDMTemplateDisplayContext.getDDMStructure
 
 		if (selectDDMStructure) {
 			selectDDMStructure.addEventListener('click', function (event) {
-				Liferay.Util.openModal({
+				Liferay.Util.openSelectionModal({
 					onSelect: function (selectedItem) {
 						if (
 							document.<portlet:namespace />fm

@@ -88,7 +88,7 @@ String groupId = String.valueOf(group.getGroupId());
 			}
 		);
 
-		Liferay.Util.openModal({
+		Liferay.Util.openSelectionModal({
 			id: '<portlet:namespace />editDefaultFilePermissionsDialog',
 			onSelect: function (selectedItem) {
 				Liferay.Util.fetch(selectedItem.uri, {method: 'POST'})

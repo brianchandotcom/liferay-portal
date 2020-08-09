@@ -22,7 +22,7 @@ import '../css/ApplicationsMenu.scss';
 import ClayLabel from '@clayui/label';
 import ClaySticker from '@clayui/sticker';
 import ClayTabs from '@clayui/tabs';
-import {fetch} from 'frontend-js-web';
+import {fetch, navigate, openSelectionModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useRef, useState} from 'react';
 
@@ -89,10 +89,10 @@ const SitesPanel = ({mySites, portletNamespace, recentSites, viewAllURL}) => {
 						className="applications-menu-btn btn-unstyled c-mb-0 c-mt-3"
 						displayType="link"
 						onClick={() => {
-							Liferay.Util.openModal({
+							openSelectionModal({
 								id: `${portletNamespace}selectSite`,
 								onSelect: (selectedItem) => {
-									Liferay.Util.navigate(selectedItem.url);
+									navigate(selectedItem.url);
 								},
 								selectEventName: `${portletNamespace}selectSite`,
 								title: Liferay.Language.get(

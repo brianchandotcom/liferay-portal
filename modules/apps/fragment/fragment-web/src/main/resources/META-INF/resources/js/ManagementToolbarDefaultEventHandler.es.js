@@ -12,7 +12,11 @@
  * details.
  */
 
-import {DefaultEventHandler, openSimpleInputModal} from 'frontend-js-web';
+import {
+	DefaultEventHandler,
+	openSelectionModal,
+	openSimpleInputModal,
+} from 'frontend-js-web';
 import {Config} from 'metal-state';
 
 class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
@@ -50,7 +54,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 			this.ns('allRowIds')
 		);
 
-		Liferay.Util.openModal({
+		openSelectionModal({
 			id: this.ns('selectFragmentCollection'),
 			onSelect: (selectedItem) => {
 				if (selectedItem) {
@@ -108,7 +112,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 			this.ns('rowIdsFragmentEntry')
 		);
 
-		Liferay.Util.openModal({
+		openSelectionModal({
 			id: this.ns('selectFragmentCollection'),
 			onSelect: (selectedItem) => {
 				if (selectedItem) {

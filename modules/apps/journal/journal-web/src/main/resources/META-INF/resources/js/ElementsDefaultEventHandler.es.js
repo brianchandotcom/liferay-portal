@@ -17,6 +17,7 @@ import {
 	ItemSelectorDialog,
 	addParams,
 	openModal,
+	openSelectionModal,
 } from 'frontend-js-web';
 import {Config} from 'metal-state';
 
@@ -24,7 +25,7 @@ class ElementsDefaultEventHandler extends DefaultEventHandler {
 	compareVersions(itemData) {
 		const namespace = this.namespace;
 
-		openModal({
+		openSelectionModal({
 			onSelect: (selectedItem) => {
 				let url = itemData.redirectURL;
 

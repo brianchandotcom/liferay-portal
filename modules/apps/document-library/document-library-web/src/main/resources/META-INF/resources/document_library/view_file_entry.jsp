@@ -249,7 +249,7 @@ if (portletTitleBasedNavigation) {
 	) {
 		var namespace = '<portlet:namespace />';
 
-		Liferay.Util.openModal({
+		Liferay.Util.openSelectionModal({
 			id: namespace + 'selectFolder',
 			onSelect: function (selectedItem) {
 				var form = document.getElementById(namespace + 'fm');

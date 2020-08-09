@@ -341,7 +341,7 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 
 <aui:script>
 	function <portlet:namespace />openDDMStructureSelector() {
-		Liferay.Util.openModal({
+		Liferay.Util.openSelectionModal({
 			onSelect: function (selectedItem) {
 				if (
 					document.<portlet:namespace />fm

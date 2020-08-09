@@ -87,7 +87,7 @@ public class MySitesPersonalMenuEntry implements PersonalMenuEntry {
 
 		StringBuilder sb = new StringBuilder(11);
 
-		sb.append("javascript:Liferay.Util.openModal({id: '");
+		sb.append("javascript:Liferay.Util.openSelectionModal({id: '");
 		sb.append(namespace);
 		sb.append("selectSite', onSelect: function(selectedItem) ");
 		sb.append("{Liferay.Util.navigate(selectedItem.url);}");

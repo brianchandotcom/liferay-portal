@@ -282,7 +282,7 @@ renderResponse.setTitle(headerTitle);
 
 								if (selectFolderButton) {
 									selectFolderButton.addEventListener('click', function (event) {
-										Liferay.Util.openModal({
+										Liferay.Util.openSelectionModal({
 											id: '<portlet:namespace />selectFolder',
 											onSelect: function (selectedItem) {
 												var folderData = {

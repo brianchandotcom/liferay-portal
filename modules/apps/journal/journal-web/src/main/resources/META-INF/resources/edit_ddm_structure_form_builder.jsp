@@ -195,7 +195,7 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 
 <aui:script>
 	function <portlet:namespace />openParentDDMStructureSelector() {
-		Liferay.Util.openModal({
+		Liferay.Util.openSelectionModal({
 			onSelect: function (selectedItem) {
 				var form = document.<portlet:namespace />fm;
 

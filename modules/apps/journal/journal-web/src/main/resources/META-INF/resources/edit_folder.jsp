@@ -393,7 +393,7 @@ renderResponse.setTitle(title);
 
 	if (selectDDMStructureButton) {
 		selectDDMStructureButton.addEventListener('click', function (event) {
-			Liferay.Util.openModal({
+			Liferay.Util.openSelectionModal({
 				onSelect: function (selectedItem) {
 					var ddmStructureLink =
 						'<a class="modify-link" data-rowId="' +

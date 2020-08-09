@@ -100,7 +100,7 @@ AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRende
 
 			var instance = this;
 
-			Liferay.Util.openModal({
+			Liferay.Util.openSelectionModal({
 				onSelect: function (selectedItem) {
 					templateKeyInput.setAttribute(
 						'value',

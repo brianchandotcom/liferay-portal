@@ -17,7 +17,7 @@ import {
 	ItemSelectorDialog,
 	addParams,
 	navigate,
-	openModal,
+	openSelectionModal,
 } from 'frontend-js-web';
 
 class ContentDashboardManagementToolbarDefaultEventHandler extends DefaultEventHandler {
@@ -144,7 +144,7 @@ class ContentDashboardManagementToolbarDefaultEventHandler extends DefaultEventH
 	}
 
 	selectScope(itemData) {
-		openModal({
+		openSelectionModal({
 			id: this.ns('selectedScopeIdItem'),
 			onSelect: (selectedItem) => {
 				navigate(

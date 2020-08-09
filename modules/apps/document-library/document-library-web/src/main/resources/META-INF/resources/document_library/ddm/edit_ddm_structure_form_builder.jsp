@@ -195,7 +195,7 @@ renderResponse.setTitle(title);
 
 <aui:script>
 	function <portlet:namespace />openParentDDMStructureSelector() {
-		Liferay.Util.openModal({
+		Liferay.Util.openSelectionModal({
 			id: '<portlet:namespace />selectDDMStructure',
 			onSelect: function (selectedItem) {
 				var form = document.<portlet:namespace />fm;

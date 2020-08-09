@@ -134,7 +134,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 				if (selectFolderButton) {
 					selectFolderButton.addEventListener('click', function (event) {
-						Liferay.Util.getOpener().Liferay.Util.openModal({
+						Liferay.Util.getOpener().Liferay.Util.openSelectionModal({
 							id:
 								'_<%= HtmlUtil.escapeJS(dlRequestHelper.getPortletResource()) %>_selectFolder',
 							onSelect: function (selectedItem) {

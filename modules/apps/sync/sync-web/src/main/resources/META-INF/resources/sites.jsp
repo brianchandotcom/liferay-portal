@@ -263,7 +263,7 @@ portletURL.setParameter("delta", String.valueOf(delta));
 					}
 				);
 
-				Liferay.Util.openModal({
+				Liferay.Util.openSelectionModal({
 					id: '<portlet:namespace />editDefaultFilePermissionsDialog',
 					onSelect: function (selectedItem) {
 						Liferay.Util.fetch(selectedItem.uri, {method: 'POST'})

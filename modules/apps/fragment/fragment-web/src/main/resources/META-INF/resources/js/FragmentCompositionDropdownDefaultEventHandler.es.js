@@ -15,6 +15,7 @@
 import {
 	DefaultEventHandler,
 	ItemSelectorDialog,
+	openSelectionModal,
 	openSimpleInputModal,
 } from 'frontend-js-web';
 
@@ -87,7 +88,7 @@ class FragmentCompositionDropdownDefaultEventHandler extends DefaultEventHandler
 		selectFragmentCollectionURL,
 		targetFragmentCompositionURL
 	) {
-		Liferay.Util.openModal({
+		openSelectionModal({
 			id: this.ns('selectFragmentCollection'),
 			onSelect: (selectedItem) => {
 				if (selectedItem) {

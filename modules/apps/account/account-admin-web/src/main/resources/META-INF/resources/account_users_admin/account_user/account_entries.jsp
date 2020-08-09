@@ -199,7 +199,7 @@ portletDisplay.setURLBack(backURL);
 				searchContainerData = searchContainerData.split(',');
 			}
 
-			Util.openModal({
+			Util.openSelectionModal({
 				id: '<portlet:namespace />selectAccountEntry',
 				onSelect: function (selectedItem) {
 					var entityId = selectedItem.entityid;

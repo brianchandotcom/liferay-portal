@@ -160,7 +160,7 @@ itemSelectorURL.setParameter("portletResource", assetPublisherDisplayContext.get
 
 			var opener = Liferay.Util.getOpener();
 
-			opener.Liferay.Util.openModal({
+			opener.Liferay.Util.openSelectionModal({
 				id: '<%= eventName %>' + event.currentTarget.id,
 				onSelect: function (event) {
 					Liferay.Util.postForm(form, {

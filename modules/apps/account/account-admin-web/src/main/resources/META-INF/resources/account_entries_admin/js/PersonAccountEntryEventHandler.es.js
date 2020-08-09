@@ -12,7 +12,7 @@
  * details.
  */
 
-import {PortletBase, openModal} from 'frontend-js-web';
+import {PortletBase, openSelectionModal} from 'frontend-js-web';
 import * as dom from 'metal-dom';
 import {EventHandler} from 'metal-events';
 import {Config} from 'metal-state';
@@ -71,7 +71,7 @@ class PersonAccountEntryEventHandler extends PortletBase {
 	}
 
 	_selectAccountUser() {
-		openModal({
+		openSelectionModal({
 			id: this.ns(this.selectUserEventName),
 			onSelect: this._handleOnSelect.bind(this),
 			selectEventName: this.ns(this.selectUserEventName),

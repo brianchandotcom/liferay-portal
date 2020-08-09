@@ -463,7 +463,7 @@ renderResponse.setTitle(headerTitle);
 				searchContainerData = searchContainerData.split(',');
 			}
 
-			Liferay.Util.openModal({
+			Liferay.Util.openSelectionModal({
 				id: '<portlet:namespace />fileEntryTypeSelector',
 				onSelect: function (selectedItem) {
 					selectFileEntryType(

@@ -127,6 +127,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STYLE_BOOK_NAME</td>
+	<td>//div[@class='sheet-section']//span[contains(@id,'styleBookName')][contains(.,'${key_styleBookName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEW_THEME</td>
 	<td>//div[contains(@class, 'main-content-card')]//h4[contains(.,'Name')]/following-sibling::p[1]</td>
 	<td></td>

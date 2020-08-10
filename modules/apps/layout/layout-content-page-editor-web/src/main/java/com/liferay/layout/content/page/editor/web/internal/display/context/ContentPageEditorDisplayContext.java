@@ -15,6 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
@@ -1899,8 +1900,9 @@ public class ContentPageEditorDisplayContext {
 
 		List<StyleBookEntry> styleBookEntries =
 			StyleBookEntryLocalServiceUtil.getStyleBookEntries(
-				themeDisplay.getScopeGroupId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, new StyleBookEntryNameComparator(true));
+				StagingUtil.getLiveGroupId(themeDisplay.getScopeGroupId()),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new StyleBookEntryNameComparator(true));
 
 		for (StyleBookEntry styleBookEntry : styleBookEntries) {
 			styleBooks.add(

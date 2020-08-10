@@ -14,6 +14,7 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
+import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.layout.admin.web.internal.util.LayoutPageTemplatePortletUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -140,7 +141,7 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 		if (styleBookEntry == null) {
 			styleBookEntry =
 				StyleBookEntryLocalServiceUtil.fetchDefaultStyleBookEntry(
-					layout.getGroupId());
+					StagingUtil.getLiveGroupId(layout.getGroupId()));
 		}
 
 		return styleBookEntry;

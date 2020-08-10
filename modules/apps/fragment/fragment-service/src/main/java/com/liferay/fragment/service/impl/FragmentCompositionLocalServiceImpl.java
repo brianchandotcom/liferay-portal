@@ -281,9 +281,9 @@ public class FragmentCompositionLocalServiceImpl
 
 	@Override
 	public FragmentComposition updateFragmentComposition(
-			long userId, long fragmentCompositionId, String name,
-			String description, String data, long previewFileEntryId,
-			int status)
+			long userId, long fragmentCompositionId, long fragmentCollectionId,
+			String name, String description, String data,
+			long previewFileEntryId, int status)
 		throws PortalException {
 
 		FragmentComposition fragmentComposition =
@@ -295,6 +295,7 @@ public class FragmentCompositionLocalServiceImpl
 		User user = userLocalService.getUser(userId);
 
 		fragmentComposition.setModifiedDate(new Date());
+		fragmentComposition.setFragmentCollectionId(fragmentCollectionId);
 		fragmentComposition.setName(name);
 		fragmentComposition.setDescription(description);
 		fragmentComposition.setData(data);
@@ -305,6 +306,23 @@ public class FragmentCompositionLocalServiceImpl
 		fragmentComposition.setStatusDate(new Date());
 
 		return fragmentCompositionPersistence.update(fragmentComposition);
+	}
+
+	@Override
+	public FragmentComposition updateFragmentComposition(
+			long userId, long fragmentCompositionId, String name,
+			String description, String data, long previewFileEntryId,
+			int status)
+		throws PortalException {
+
+		FragmentComposition fragmentComposition =
+			fragmentCompositionPersistence.findByPrimaryKey(
+				fragmentCompositionId);
+
+		return updateFragmentComposition(
+			userId, fragmentCompositionId,
+			fragmentComposition.getFragmentCollectionId(), name, description,
+			data, previewFileEntryId, status);
 	}
 
 	@Override

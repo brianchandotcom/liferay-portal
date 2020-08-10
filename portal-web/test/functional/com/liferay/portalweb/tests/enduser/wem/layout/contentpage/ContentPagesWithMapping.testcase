@@ -534,6 +534,47 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-116975. Map single tag from asset entry to editable field."
+	@priority = "5"
+	test MapTagToEditableField {
+		JSONAssettag.addTag(
+			groupName = "Test Site Name",
+			tagName = "tagname1");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+
+		Blogs.addEntryWithTag(
+			entryContent = "Entry Content",
+			entryTitle = "Entry Title",
+			tagName = "tagname1");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			contributed = "true",
+			fragmentName = "Heading",
+			id = "text");
+
+		PageEditorMapping.mapEditableFieldToAsset(
+			entryTitle = "Entry Title",
+			navItem = "Blogs");
+
+		Select(
+			locator1 = "PageEditorEditableLink#FIELD",
+			value1 = "Tags");
+
+		PageEditor.viewFragmentEditableText(
+			editableText = "tagname1",
+			fragmentName = "Heading",
+			id = "element-text");
+	}
+
 	@description = "This is a test for LPS-96794. Mapped Web Contents' state will appear in the sidebar in a Page Editor's edit mode."
 	@priority = "4"
 	test MapWebContentsToBannerFragment {

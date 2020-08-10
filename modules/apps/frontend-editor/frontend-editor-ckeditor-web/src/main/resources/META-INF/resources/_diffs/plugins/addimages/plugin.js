@@ -44,6 +44,9 @@
 	 */
 
 	CKEDITOR.plugins.add('addimages', {
+		_fetchBlob(url) {
+			return Liferay.Util.fetch(url).then((response) => response.blob());
+		},
 
 		/**
 		 * Accepts an array of dropped files to the editor. Then, it filters the images and sends them for further
@@ -85,6 +88,11 @@
 
 			return false;
 		},
+
+		/**
+		 * A list of src attributes used to store base64 images
+		 */
+		_imageSrcToReplace: [],
 
 		/**
 		 * Handles drag drop event. The function will create a selection from the current
@@ -142,7 +150,51 @@
 		},
 
 		/**
-		 * Checks if the pasted data is image and passes it to
+		 * Handler for when images are uploaded
+		 *
+		 * @instance
+		 * @memberof CKEDITOR.plugins.addimages
+		 * @method _onImageUploaded
+		 * @param {Object} event Event data
+		 * @protected
+		 */
+		_onImageUploaded(event) {
+			if (event.data && event.data.el) {
+				const instance = this;
+
+				const editor = event.editor;
+				const fragment = CKEDITOR.htmlParser.fragment.fromHtml(
+					editor.getData()
+				);
+
+				const filter = new CKEDITOR.htmlParser.filter({
+					elements: {
+						img(element) {
+							const index = instance._imageSrcToReplace.indexOf(
+								element.attributes.src
+							);
+							if (index !== -1) {
+								instance._imageSrcToReplace.splice(index, 1);
+
+								element.attributes.src = event.data.el.src;
+							}
+						},
+					},
+				});
+
+				const writer = new CKEDITOR.htmlParser.basicWriter();
+
+				fragment.writeChildrenHtml(writer, filter);
+
+				editor.setData(writer.getHtml(), () => {
+					editor.updateElement();
+				});
+			}
+		},
+
+		/**
+		 * Checks if the pasted data is image or html.
+		 * In the case of images, it passes it to
 		 * {{#crossLink "CKEDITOR.plugins.addimages/_processFile:method"}}{{/crossLink}} for processing.
 		 *
 		 * @instance
@@ -166,6 +218,58 @@
 
 					this._processFile(imageFile, event.editor);
 				}
+			}
+			else if (event.data && event.data.type === 'html') {
+				const editor = event.editor;
+				const fragment = CKEDITOR.htmlParser.fragment.fromHtml(
+					event.data.dataValue
+				);
+
+				fragment.forEach((element) => {
+					if (
+						element.type === CKEDITOR.NODE_ELEMENT &&
+						element.name === 'img'
+					) {
+						const base64Regex = /^data:image\/(.*);base64,/;
+						const match = element.attributes.src.match(base64Regex);
+
+						if (element.attributes.src && match) {
+							const src = element.attributes.src;
+							const extension = match[1];
+							const name = `${Date.now().toString()}.${extension}`;
+
+							// Mark this "src" attribute as something we want to replace
+
+							this._imageSrcToReplace.push(src);
+
+							this._fetchBlob(src)
+								.then((blob) => {
+									const file = new File([blob], name, {
+										type: blob.type,
+									});
+
+									const el = CKEDITOR.dom.element.createFromHtml(
+										`<img src="${src}">`
+									);
+
+									const imageData = {
+										el,
+										file,
+									};
+
+									editor.fire('imageAdd', imageData);
+								})
+								.catch(() => {
+									Liferay.Util.openToast({
+										message: Liferay.Language.get(
+											'an-unexpected-error-occurred-while-uploading-your-file'
+										),
+										type: 'danger',
+									});
+								});
+						}
+					}
+				});
 			}
 		},
 
@@ -234,6 +338,7 @@
 				editor.on('dragover', this._onDragOver.bind(this));
 				editor.on('drop', this._onDragDrop.bind(this));
 				editor.on('paste', this._onPaste.bind(this));
+				editor.on('imageUploaded', this._onImageUploaded.bind(this));
 			});
 
 			AUI().use('aui-progressbar,uploader', (A) => {

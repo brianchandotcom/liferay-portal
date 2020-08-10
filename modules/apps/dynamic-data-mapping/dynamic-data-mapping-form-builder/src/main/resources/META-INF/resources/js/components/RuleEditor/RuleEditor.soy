@@ -97,6 +97,7 @@
 				dataType: string,
 				type: string,
 				label: string,
+				optionValue: string,
 				value: string
 			]>,
 			operator: string,
@@ -211,6 +212,7 @@
 					{param roles: $roles /}
 					{param secondOperandDataType: isNonnull($condition.operands[1]) ? $condition.operands[1].dataType : '' /}
 					{param secondOperandFieldName: '' /}
+					{param secondOperandOptionValue: isNonnull($condition.operands[1]) ? $condition.operands[1].optionValue : '' /}
 					{param secondOperandType: isNonnull($condition.operands[1]) ? $condition.operands[1].type : '' /}
 					{param secondOperandValue: isNonnull($condition.operands[1]) ? $condition.operands[1].value : '' /}
 					{param selectedOperator: $condition.operator /}
@@ -640,6 +642,7 @@
 	]>}
 	{@param? secondOperandDataType: string}
 	{@param? secondOperandFieldName: string}
+	{@param? secondOperandOptionValue: any}
 	{@param? secondOperandType: string}
 	{@param? secondOperandValue: any}
 	{@param? selectedOperator: string}
@@ -695,9 +698,9 @@
 								{/call}
 
 								{let $fieldHasOptions:
-									($secondOperandType == 'select' or
-									$secondOperandType == 'checkbox_multiple' or
-									$secondOperandType == 'radio')
+									($secondOperandType == 'checkbox_multiple' or
+									$secondOperandType == 'radio' or
+									$secondOperandType == 'select')
 								/}
 
 								<div class="condition-type-value form-group-item" condition-type-value-index="{$index}">
@@ -715,7 +718,7 @@
 											{param readOnly: $readOnly /}
 											{param ref: 'secondOperand' + $index /}
 											{param spritemap: $spritemap /}
-											{param value: [$secondOperandValue] /}
+											{param value: [$secondOperandOptionValue] /}
 										{/call}
 									{elseif $secondOperandType == 'field'}
 										{call ReactFieldAdapter.render}

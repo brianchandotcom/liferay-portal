@@ -36,7 +36,7 @@ definition {
 
 	@priority = "5"
 	test ConflictingChangesAutomaticallyResolved {
-		property test.name.skip.portal.instance = "PublishChangeList#ConflictingChangesAutomaticallyResolved";
+		property test.name.skip.portal.instance = "ChangeList#ConflictingChangesAutomaticallyResolved";
 
 		Navigator.openURL();
 
@@ -111,7 +111,7 @@ definition {
 
 	@priority = "4"
 	test ConflictingChangesNeedManualResolution {
-		property test.name.skip.portal.instance = "PublishChangeList#ConflictingChangesNeedManualResolution";
+		property test.name.skip.portal.instance = "ChangeList#ConflictingChangesNeedManualResolution";
 
 		Navigator.openURL();
 
@@ -186,7 +186,7 @@ definition {
 
 	@priority = "5"
 	test PublishAndRevertPublication {
-		property test.name.skip.portal.instance = "PublishChangeList#PublishAndRevertPublication";
+		property test.name.skip.portal.instance = "ChangeList#PublishAndRevertPublication";
 
 		ChangeList.createNewPublication(publicationName = "Publication Name");
 
@@ -249,7 +249,7 @@ definition {
 
 	@priority = "5"
 	test PublishParallelPublications {
-		property test.name.skip.portal.instance = "PublishChangeList#PublishParallelPublications";
+		property test.name.skip.portal.instance = "ChangeList#PublishParallelPublications";
 
 		Navigator.openURL();
 
@@ -332,7 +332,7 @@ definition {
 
 	@priority = "5"
 	test SearchPublishedPublications {
-		property test.name.skip.portal.instance = "PublishChangeList#SearchPublishedPublications";
+		property test.name.skip.portal.instance = "ChangeList#SearchPublishedPublications";
 
 		ChangeList.createNewPublication(publicationName = "Apple");
 

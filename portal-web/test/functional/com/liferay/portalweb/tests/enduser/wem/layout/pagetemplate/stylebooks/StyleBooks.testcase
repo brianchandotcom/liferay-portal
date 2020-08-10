@@ -141,6 +141,199 @@ definition {
 		}
 	}
 
+	@description = "This is for LPS-116106. Page Creator can change style book of content page via Look and Feel settings."
+	@priority = "4"
+	test ChangeStyleBookOfContentPageViaLookAndFeel {
+		task ("Add a style book") {
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+
+			StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name");
+		}
+
+		task ("Edit the style book and Publish it") {
+			StyleBooks.selectForm(formName = "Color System");
+
+			StyleBooks.expandSection(sectionName = "Theme Colors");
+
+			Type(
+				key_text = "Primary",
+				locator1 = "TextInput#ANY",
+				value1 = "#00FF00");
+
+			StyleBooks.waitForAutoSave();
+
+			StyleBooks.selectForm(formName = "Typography");
+
+			StyleBooks.expandSection(sectionName = "Headings");
+
+			Type(
+				key_fieldLabel = "H1 Font Size",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "2rem");
+
+			StyleBooks.waitForAutoSave();
+
+			StyleBooks.clickPublish();
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Add a Banner Center fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				fragmentName = "Banner Center");
+		}
+
+		task ("Change to the new style book via Look and Feel") {
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			AssertTextEquals(
+				key_styleBookName = "Inherited",
+				locator1 = "SitePagesEditPage#STYLE_BOOK_NAME",
+				value1 = "Inherited");
+
+			AssertClick(
+				key_text = "Change Style Book",
+				locator1 = "Button#ANY",
+				value1 = "Change Style Book");
+
+			StyleBooks.selectStyleBook(styleBookName = "Test Style Book Name");
+
+			AssertTextEquals(
+				key_styleBookName = "Test Style Book Name",
+				locator1 = "SitePagesEditPage#STYLE_BOOK_NAME",
+				value1 = "Test Style Book Name");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			Navigator.gotoBack();
+
+			AssertCssValue(
+				id = "link",
+				key_fragmentName = "Banner Center",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				locator2 = "background-color",
+				value1 = "rgba(0, 255, 0, 1)");
+
+			AssertCssValue(
+				id = "title",
+				key_fragmentName = "Banner Center",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				locator2 = "font-size",
+				value1 = "32px");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert the new style book is applied to content page in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertCssValue(
+				key_content = "Go Somewhere",
+				key_element = "a",
+				key_id = "link",
+				key_type = "link",
+				locator1 = "StyleBookEditor#CONTRIBUTED_FRAGMENT_INLINE_CONTENT",
+				locator2 = "background-color",
+				value1 = "rgba(0, 255, 0, 1)");
+
+			AssertCssValue(
+				key_content = "Banner Title Example",
+				key_element = "h1",
+				key_id = "title",
+				key_type = "rich-text",
+				locator1 = "StyleBookEditor#CONTRIBUTED_FRAGMENT_INLINE_CONTENT",
+				locator2 = "font-size",
+				value1 = "32px");
+		}
+
+		task ("Change to default style book via Look and Feel") {
+			ContentPages.clickPencil();
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			AssertTextEquals(
+				key_styleBookName = "Test Style Book Name",
+				locator1 = "SitePagesEditPage#STYLE_BOOK_NAME",
+				value1 = "Test Style Book Name");
+
+			AssertClick(
+				key_text = "Change Style Book",
+				locator1 = "Button#ANY",
+				value1 = "Change Style Book");
+
+			StyleBooks.selectStyleBook(styleBookName = "Inherited from Master");
+
+			AssertTextEquals(
+				key_styleBookName = "Inherited from Master",
+				locator1 = "SitePagesEditPage#STYLE_BOOK_NAME",
+				value1 = "Inherited from Master");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			Navigator.gotoBack();
+
+			AssertCssValue(
+				id = "link",
+				key_fragmentName = "Banner Center",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				locator2 = "background-color",
+				value1 = "rgba(11, 95, 255, 1)");
+
+			AssertCssValue(
+				id = "title",
+				key_fragmentName = "Banner Center",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				locator2 = "font-size",
+				value1 = "26px");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert the default style book is applied to content page in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertCssValue(
+				key_content = "Go Somewhere",
+				key_element = "a",
+				key_id = "link",
+				key_type = "link",
+				locator1 = "StyleBookEditor#CONTRIBUTED_FRAGMENT_INLINE_CONTENT",
+				locator2 = "background-color",
+				value1 = "rgba(11, 95, 255, 1)");
+
+			AssertCssValue(
+				key_content = "Banner Title Example",
+				key_element = "h1",
+				key_id = "title",
+				key_type = "rich-text",
+				locator1 = "StyleBookEditor#CONTRIBUTED_FRAGMENT_INLINE_CONTENT",
+				locator2 = "font-size",
+				value1 = "26px");
+		}
+	}
+
 	@description = "This is for LPS-116078. Can preview the effect on page when edit the style book."
 	@priority = "5"
 	test PreviewTheEffectOnPageInStyleBookEditor {

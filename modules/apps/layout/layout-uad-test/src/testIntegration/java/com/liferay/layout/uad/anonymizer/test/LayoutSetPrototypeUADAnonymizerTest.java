@@ -17,6 +17,7 @@ package com.liferay.layout.uad.anonymizer.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -31,6 +32,8 @@ import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -46,6 +49,21 @@ public class LayoutSetPrototypeUADAnonymizerTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(user.getUserId());
+	}
+
+	@After
+	public void tearDown() {
+		PrincipalThreadLocal.setName(_originalName);
+	}
 
 	@Override
 	protected LayoutSetPrototype addBaseModel(long userId) throws Exception {
@@ -114,6 +132,8 @@ public class LayoutSetPrototypeUADAnonymizerTest
 	@DeleteAfterTestRun
 	private final List<LayoutSetPrototype> _layoutSetPrototypes =
 		new ArrayList<>();
+
+	private String _originalName;
 
 	@Inject(filter = "component.name=*.LayoutSetPrototypeUADAnonymizer")
 	private UADAnonymizer<LayoutSetPrototype> _uadAnonymizer;

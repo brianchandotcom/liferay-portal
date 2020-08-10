@@ -426,7 +426,8 @@ public class ViewChangesDisplayContext {
 			String typeName = _ctDisplayRendererRegistry.getTypeName(
 				_themeDisplay.getLocale(), entry.getKey());
 
-			contextViewJSONObject.put(typeName, entry.getValue());
+			contextViewJSONObject.put(
+				typeName, JSONUtil.put("children", entry.getValue()));
 		}
 
 		return contextViewJSONObject;
@@ -485,7 +486,13 @@ public class ViewChangesDisplayContext {
 						modelClassNameId, classPKs);
 				}
 
+				T model = baseModelMap.get(classPK);
+
 				modelInfo._jsonObject = JSONUtil.put(
+					"hideable",
+					_ctDisplayRendererRegistry.isHideable(
+						model, modelClassNameId)
+				).put(
 					"modelClassNameId", modelClassNameId
 				).put(
 					"modelClassPK", classPK
@@ -496,8 +503,7 @@ public class ViewChangesDisplayContext {
 					_ctDisplayRendererRegistry.getTitle(
 						CTConstants.CT_COLLECTION_ID_PRODUCTION,
 						CTSQLModeThreadLocal.CTSQLMode.DEFAULT,
-						_themeDisplay.getLocale(), baseModelMap.get(classPK),
-						modelClassNameId)
+						_themeDisplay.getLocale(), model, modelClassNameId)
 				);
 			}
 			else {
@@ -522,6 +528,10 @@ public class ViewChangesDisplayContext {
 					"description",
 					_ctDisplayRendererRegistry.getEntryDescription(
 						_httpServletRequest, ctEntry)
+				).put(
+					"hideable",
+					_ctDisplayRendererRegistry.isHideable(
+						model, modelClassNameId)
 				).put(
 					"modelClassNameId", ctEntry.getModelClassNameId()
 				).put(

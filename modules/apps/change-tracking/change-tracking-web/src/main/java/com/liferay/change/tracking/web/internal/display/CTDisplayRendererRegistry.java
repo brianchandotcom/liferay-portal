@@ -353,6 +353,15 @@ public class CTDisplayRendererRegistry {
 			portletURL.toString(), "'});");
 	}
 
+	public <T extends BaseModel<T>> boolean isHideable(
+		T model, long modelClassNameId) {
+
+		CTDisplayRenderer<T> ctDisplayRenderer = getCTDisplayRenderer(
+			modelClassNameId);
+
+		return ctDisplayRenderer.isHideable(model);
+	}
+
 	public <T extends BaseModel<T>> void renderCTEntry(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, long ctCollectionId,

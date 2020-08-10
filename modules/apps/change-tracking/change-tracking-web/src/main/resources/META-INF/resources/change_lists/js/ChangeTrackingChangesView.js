@@ -16,7 +16,7 @@ import ClayAlert from '@clayui/alert';
 import ClayBreadcrumb from '@clayui/breadcrumb';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
-import {ClayRadio, ClayRadioGroup} from '@clayui/form';
+import {ClayRadio, ClayRadioGroup, ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
@@ -64,6 +64,26 @@ class ChangeTrackingChangesView extends React.Component {
 			}
 		}
 
+		for (let i = 0; i < this.rootDisplayClasses.length; i++) {
+			const rootDisplayClassInfo = this.contextView[
+				this.rootDisplayClasses[i]
+			];
+
+			let hideable = true;
+
+			for (let i = 0; i < rootDisplayClassInfo.children.length; i++) {
+				const model = this.models[
+					rootDisplayClassInfo.children[i].modelKey.toString()
+				];
+
+				if (!model.hideable) {
+					hideable = false;
+				}
+			}
+
+			rootDisplayClassInfo.hideable = hideable;
+		}
+
 		const node = this._getNode('everything', 0, 'changes');
 
 		this.state = {
@@ -74,6 +94,7 @@ class ChangeTrackingChangesView extends React.Component {
 				0,
 				'changes'
 			),
+			children: this._filterHideableNodes(node.children, false),
 			column: 'title',
 			delta: 20,
 			dropdown: '',
@@ -81,6 +102,7 @@ class ChangeTrackingChangesView extends React.Component {
 			node,
 			page: 1,
 			renderInnerHTML: null,
+			showHideable: false,
 			sortDirectionClass: 'order-arrow-down-active',
 			viewType: 'changes',
 		};
@@ -198,6 +220,24 @@ class ChangeTrackingChangesView extends React.Component {
 		}
 
 		return nodes;
+	}
+
+	_filterHideableNodes(nodes, showHideable) {
+		if (!nodes || showHideable) {
+			return nodes;
+		}
+
+		const filterNodes = [];
+
+		for (let i = 0; i < nodes.length; i++) {
+			const node = nodes[i];
+
+			if (!node.hideable) {
+				filterNodes.push(node);
+			}
+		}
+
+		return filterNodes;
 	}
 
 	_getBreadcrumbItems(node, filterClass, nodeId, viewType) {
@@ -366,7 +406,11 @@ class ChangeTrackingChangesView extends React.Component {
 			return this._clone(this.models[nodeId.toString()]);
 		}
 		else if (filterClass !== 'everything' && nodeId === 0) {
-			return {children: this._getModels(this.contextView[filterClass])};
+			return {
+				children: this._getModels(
+					this.contextView[filterClass].children
+				),
+			};
 		}
 
 		const rootNode = this.contextView.everything;
@@ -459,6 +503,13 @@ class ChangeTrackingChangesView extends React.Component {
 
 		for (let i = 0; i < this.rootDisplayClasses.length; i++) {
 			const className = this.rootDisplayClasses[i];
+
+			if (
+				!this.state.showHideable &&
+				this.contextView[className].hideable
+			) {
+				continue;
+			}
 
 			let label = className;
 
@@ -693,6 +744,12 @@ class ChangeTrackingChangesView extends React.Component {
 
 		const nodeId = json.nodeId;
 
+		let showHideable = this.state.showHideable;
+
+		if (Object.prototype.hasOwnProperty.call(json, 'showHideable')) {
+			showHideable = json.showHideable;
+		}
+
 		let viewType = json.viewType;
 
 		if (!viewType) {
@@ -717,11 +774,13 @@ class ChangeTrackingChangesView extends React.Component {
 				nodeId,
 				viewType
 			),
+			children: this._filterHideableNodes(node.children, showHideable),
 			dropdown: '',
 			filterClass,
 			node,
 			page: 1,
 			renderInnerHTML: null,
+			showHideable,
 			viewType,
 		});
 
@@ -745,6 +804,39 @@ class ChangeTrackingChangesView extends React.Component {
 	_handlePageChange(page) {
 		this.setState({
 			page,
+		});
+	}
+
+	_handleShowHideableToggle(showHideable) {
+		if (!showHideable) {
+			if (
+				this.state.viewType === 'context' &&
+				this.contextView[this.state.filterClass].hideable
+			) {
+				this._handleNavigationUpdate({
+					filterClass: 'everything',
+					nodeId: 0,
+					showHideable,
+				});
+
+				return;
+			}
+			else if (this.state.node.hideable) {
+				this._handleNavigationUpdate({
+					nodeId: 0,
+					showHideable,
+				});
+
+				return;
+			}
+		}
+
+		this.setState({
+			children: this._filterHideableNodes(
+				this.state.node.children,
+				showHideable
+			),
+			showHideable,
 		});
 	}
 
@@ -873,6 +965,16 @@ class ChangeTrackingChangesView extends React.Component {
 
 					<ClayManagementToolbar.Item className="nav-item-expand" />
 
+					<ClayManagementToolbar.Item>
+						<ClayToggle
+							label={Liferay.Language.get('show-all-items')}
+							onToggle={(showHideable) =>
+								this._handleShowHideableToggle(showHideable)
+							}
+							toggled={this.state.showHideable}
+						/>
+					</ClayManagementToolbar.Item>
+
 					{this._getViewTypes()}
 				</ClayManagementToolbar.ItemList>
 			</ClayManagementToolbar>
@@ -880,7 +982,7 @@ class ChangeTrackingChangesView extends React.Component {
 	}
 
 	_renderPagination() {
-		if (this.state.node.children.length <= 5) {
+		if (this.state.children.length <= 5) {
 			return '';
 		}
 
@@ -894,7 +996,7 @@ class ChangeTrackingChangesView extends React.Component {
 				ellipsisBuffer={3}
 				onDeltaChange={(delta) => this._handleDeltaChange(delta)}
 				onPageChange={(page) => this._handlePageChange(page)}
-				totalItems={this.state.node.children.length}
+				totalItems={this.state.children.length}
 			/>
 		);
 	}
@@ -926,10 +1028,24 @@ class ChangeTrackingChangesView extends React.Component {
 	}
 
 	_renderTable() {
-		if (
-			!this.state.node.children ||
-			this.state.node.children.length === 0
-		) {
+		if (!this.state.children || this.state.children.length === 0) {
+			if (
+				this.state.node.children &&
+				this.state.node.children.length > 0 &&
+				this.state.viewType === 'changes'
+			) {
+				return (
+					<div className="sheet taglib-empty-result-message">
+						<div className="taglib-empty-result-message-header" />
+						<div className="sheet-text text-center">
+							{Liferay.Language.get(
+								'no-changes-to-display-in-this-view'
+							)}
+						</div>
+					</div>
+				);
+			}
+
 			return '';
 		}
 
@@ -940,7 +1056,7 @@ class ChangeTrackingChangesView extends React.Component {
 
 					<ClayTable.Body>
 						{this._getTableRows(
-							this._filterDisplayNodes(this.state.node.children)
+							this._filterDisplayNodes(this.state.children)
 						)}
 					</ClayTable.Body>
 				</ClayTable>

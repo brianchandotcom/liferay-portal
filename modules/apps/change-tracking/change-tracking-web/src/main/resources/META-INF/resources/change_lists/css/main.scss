@@ -85,7 +85,13 @@
 		margin-top: 20px;
 
 		.panel-body {
-			margin-top: 16px;
+			margin-top: 1rem;
+			padding-bottom: 0;
+			padding-top: 0;
+
+			.custom-control:only-child {
+				margin-bottom: 1rem;
+			}
 		}
 
 		.sheet {
@@ -96,6 +102,10 @@
 			button:hover {
 				cursor: pointer;
 			}
+		}
+
+		.taglib-empty-result-message {
+			margin-top: 0;
 		}
 	}
 

@@ -28,7 +28,7 @@ public class FormFieldProjectTemplatesArgs implements ProjectTemplatesArgsExt {
 		return "form-field";
 	}
 
-	public boolean isReactTemplate() {
+	public boolean getReactTemplate() {
 		return _reactTemplate;
 	}
 

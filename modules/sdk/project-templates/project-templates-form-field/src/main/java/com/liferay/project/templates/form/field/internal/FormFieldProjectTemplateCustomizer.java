@@ -78,7 +78,7 @@ public class FormFieldProjectTemplateCustomizer
 					projectTemplatesArgs.getProjectTemplatesArgsExt();
 
 			if (liferayVersion.startsWith("7.3") &&
-				formFieldProjectTemplatesArgs.isReactTemplate()) {
+				formFieldProjectTemplatesArgs.getReactTemplate()) {
 
 				fileNames.add(
 					"src/main/resources/META-INF/resources/" + name + ".soy");
@@ -118,7 +118,7 @@ public class FormFieldProjectTemplateCustomizer
 
 		setProperty(
 			properties, "reactTemplate",
-			String.valueOf(formFieldProjectTemplatesArgs.isReactTemplate()));
+			String.valueOf(formFieldProjectTemplatesArgs.getReactTemplate()));
 	}
 
 }

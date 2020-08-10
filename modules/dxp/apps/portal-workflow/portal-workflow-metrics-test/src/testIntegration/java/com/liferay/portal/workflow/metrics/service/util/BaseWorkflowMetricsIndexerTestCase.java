@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.workflow.kaleo.definition.Node;
 import com.liferay.portal.workflow.kaleo.definition.Task;
@@ -63,8 +61,6 @@ import java.util.Map;
 import java.util.Stack;
 import java.util.stream.Stream;
 
-import org.apache.log4j.Level;
-
 import org.junit.Before;
 
 /**
@@ -89,19 +85,14 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 	}
 
 	protected BlogsEntry addBlogsEntry() throws PortalException {
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"com.liferay.petra.mail.MailEngine", Level.OFF)) {
+		BlogsEntry blogsEntry = _blogsEntryLocalService.addEntry(
+			TestPropsValues.getUserId(), StringUtil.randomString(),
+			StringUtil.randomString(), new Date(),
+			ServiceContextTestUtil.getServiceContext());
 
-			BlogsEntry blogsEntry = _blogsEntryLocalService.addEntry(
-				TestPropsValues.getUserId(), StringUtil.randomString(),
-				StringUtil.randomString(), new Date(),
-				ServiceContextTestUtil.getServiceContext());
+		_blogsEntries.add(blogsEntry);
 
-			_blogsEntries.add(blogsEntry);
-
-			return blogsEntry;
-		}
+		return blogsEntry;
 	}
 
 	protected KaleoInstance addKaleoInstance() throws Exception {

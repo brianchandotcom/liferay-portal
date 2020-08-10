@@ -19,16 +19,13 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
-import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,11 +37,6 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class KaleoTaskInstanceTokenServiceTest
 	extends BaseKaleoLocalServiceTestCase {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
 
 	@Test
 	public void testSearchCount() throws Exception {

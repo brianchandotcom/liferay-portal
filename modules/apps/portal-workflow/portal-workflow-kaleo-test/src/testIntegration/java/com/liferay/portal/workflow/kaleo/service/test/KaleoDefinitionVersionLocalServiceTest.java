@@ -16,18 +16,14 @@ package com.liferay.portal.workflow.kaleo.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionVersionException;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 
 import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -38,11 +34,6 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class KaleoDefinitionVersionLocalServiceTest
 	extends BaseKaleoLocalServiceTestCase {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
 
 	@Test
 	public void testAddKaleoDefinitionShouldCreateVersion() throws Exception {

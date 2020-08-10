@@ -35,7 +35,6 @@ import com.liferay.calendar.util.JCalendarUtil;
 import com.liferay.calendar.util.RecurrenceUtil;
 import com.liferay.calendar.workflow.constants.CalendarBookingWorkflowConstants;
 import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.petra.mail.MailEngine;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -63,8 +62,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.mail.MailMessage;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -79,8 +76,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
-
-import org.apache.log4j.Level;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -3357,27 +3352,21 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	private void _completeWorkflow(Group group) throws Exception {
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					MailEngine.class.getName(), Level.OFF)) {
+		for (WorkflowTask workflowTask : _getWorkflowTasks()) {
+			workflowTask = _workflowTaskManager.assignWorkflowTaskToUser(
+				group.getCompanyId(), TestPropsValues.getUserId(),
+				workflowTask.getWorkflowTaskId(), TestPropsValues.getUserId(),
+				StringPool.BLANK, null, null);
 
-			for (WorkflowTask workflowTask : _getWorkflowTasks()) {
-				workflowTask = _workflowTaskManager.assignWorkflowTaskToUser(
-					group.getCompanyId(), TestPropsValues.getUserId(),
-					workflowTask.getWorkflowTaskId(),
-					TestPropsValues.getUserId(), StringPool.BLANK, null, null);
+			Assert.assertEquals(
+				TestPropsValues.getUserId(), workflowTask.getAssigneeUserId());
 
-				Assert.assertEquals(
-					TestPropsValues.getUserId(),
-					workflowTask.getAssigneeUserId());
+			workflowTask = _workflowTaskManager.completeWorkflowTask(
+				group.getCompanyId(), TestPropsValues.getUserId(),
+				workflowTask.getWorkflowTaskId(), Constants.APPROVE,
+				StringPool.BLANK, null);
 
-				workflowTask = _workflowTaskManager.completeWorkflowTask(
-					group.getCompanyId(), TestPropsValues.getUserId(),
-					workflowTask.getWorkflowTaskId(), Constants.APPROVE,
-					StringPool.BLANK, null);
-
-				Assert.assertEquals(true, workflowTask.isCompleted());
-			}
+			Assert.assertEquals(true, workflowTask.isCompleted());
 		}
 	}
 

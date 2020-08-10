@@ -15,7 +15,10 @@
 package com.liferay.portal.search.internal.spi.model.index.contributor;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -37,7 +40,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Michael C. Han
+ * @author Rubén Pulido
  */
 @Component(immediate = true, service = DocumentContributor.class)
 public class AssetPublicCategoryDocumentContributor
@@ -47,19 +50,41 @@ public class AssetPublicCategoryDocumentContributor
 	public void contribute(
 		Document document, BaseModel<AssetCategory> baseModel) {
 
+		List<AssetCategory> publicAssetCategories = new ArrayList<>();
+
 		String className = document.get(Field.ENTRY_CLASS_NAME);
 		long classPK = GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK));
 
 		List<AssetCategory> assetCategories =
 			assetCategoryLocalService.getCategories(className, classPK);
 
-		long[] assetCategoryIds = ListUtil.toLongArray(
-			assetCategories, AssetCategory.CATEGORY_ID_ACCESSOR);
+		Map<Long, AssetVocabulary> assetVocabulariesMap = new HashMap<>();
 
-		document.addKeyword(Field.ASSET_CATEGORY_IDS, assetCategoryIds);
+		for (AssetCategory assetCategory : assetCategories) {
+			AssetVocabulary assetVocabulary =
+				assetVocabulariesMap.computeIfAbsent(
+					assetCategory.getVocabularyId(),
+					vocabularyId ->
+						assetVocabularyLocalService.fetchAssetVocabulary(
+							vocabularyId));
+
+			if ((assetVocabulary != null) &&
+				(assetVocabulary.getVisibilityType() ==
+					AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC)) {
+
+				publicAssetCategories.add(assetCategory);
+			}
+		}
+
+		long[] publicAssetCategoryIds = ListUtil.toLongArray(
+			publicAssetCategories, AssetCategory.CATEGORY_ID_ACCESSOR);
+
+		document.addKeyword(
+			Field.ASSET_PUBLIC_CATEGORY_IDS, publicAssetCategoryIds);
 
 		addAssetCategoryTitles(
-			document, Field.ASSET_CATEGORY_TITLES, assetCategories);
+			document, Field.ASSET_PUBLIC_CATEGORY_TITLES,
+			publicAssetCategories);
 	}
 
 	protected void addAssetCategoryTitles(
@@ -104,5 +129,8 @@ public class AssetPublicCategoryDocumentContributor
 
 	@Reference
 	protected AssetCategoryLocalService assetCategoryLocalService;
+
+	@Reference
+	protected AssetVocabularyLocalService assetVocabularyLocalService;
 
 }

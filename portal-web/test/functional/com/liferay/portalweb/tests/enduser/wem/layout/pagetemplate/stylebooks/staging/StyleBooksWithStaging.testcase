@@ -513,4 +513,84 @@ definition {
 		}
 	}
 
+	@description = "This is for LPS-116078. Can preview the effect on page when edit the style book in Staging site."
+	@priority = "4"
+	test PreviewTheEffectOnPageInStyleBookEditorInStagingSite {
+		task ("Edit the style book and Publish it") {
+			StyleBooks.selectForm(formName = "Color System");
+
+			StyleBooks.expandSection(sectionName = "Theme Colors");
+
+			Type(
+				key_text = "Primary",
+				locator1 = "TextInput#ANY",
+				value1 = "#FF0000");
+
+			StyleBooks.waitForAutoSave();
+
+			StyleBooks.selectForm(formName = "Typography");
+
+			StyleBooks.expandSection(sectionName = "Headings");
+
+			Type(
+				key_fieldLabel = "H1 Font Size",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "2rem");
+
+			StyleBooks.waitForAutoSave();
+
+			StyleBooks.clickPublish();
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name-staging",
+				layoutName = "Test Page Name",
+				site = "false",
+				type = "content");
+		}
+
+		task ("Add a Banner Center to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				fragmentName = "Banner Center");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Preview style book effect on page in page preview iframe") {
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name-staging");
+
+			StyleBooksAdmin.gotoStyleBook(styleBookName = "Test Style Book Name");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "StyleBookEditor#PAGE_PREVIEW_IFRAME");
+
+			AssertVisible(
+				key_pageName = "Test Page Name",
+				locator1 = "Home#PAGE");
+
+			AssertCssValue(
+				key_content = "Go Somewhere",
+				key_element = "a",
+				key_id = "link",
+				key_type = "link",
+				locator1 = "StyleBookEditor#CONTRIBUTED_FRAGMENT_INLINE_CONTENT",
+				locator2 = "background-color",
+				value1 = "rgba(255, 0, 0, 1)");
+
+			AssertCssValue(
+				key_content = "Banner Title Example",
+				key_element = "h1",
+				key_id = "title",
+				key_type = "rich-text",
+				locator1 = "StyleBookEditor#CONTRIBUTED_FRAGMENT_INLINE_CONTENT",
+				locator2 = "font-size",
+				value1 = "32px");
+		}
+	}
+
 }

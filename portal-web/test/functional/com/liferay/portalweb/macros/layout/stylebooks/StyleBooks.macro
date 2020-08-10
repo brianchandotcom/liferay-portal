@@ -33,6 +33,20 @@ definition {
 		MenuItem.click(menuItem = "${formName}");
 	}
 
+	macro selectStyleBook {
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		LexiconCard.clickCardTitle(card = "${styleBookName}");
+
+		AssertElementPresent(
+			key_card = "${styleBookName}",
+			locator1 = "LexiconCard#CARD_SELECTED");
+
+		SelectFrameTop();
+
+		Button.clickDone();
+	}
+
 	macro waitForAutoSave {
 		Pause(locator1 = "1000");
 

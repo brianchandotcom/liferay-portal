@@ -112,7 +112,7 @@ public class StyleBookScopedCSSVariablesProvider
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Group group = themeDisplay.getScopeGroup();
+		Group group = themeDisplay.getSiteGroup();
 
 		if (group.isControlPanel()) {
 			return StringPool.BLANK;

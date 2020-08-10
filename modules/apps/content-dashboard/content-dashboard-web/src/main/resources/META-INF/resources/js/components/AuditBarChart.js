@@ -21,6 +21,7 @@ import {
 	Bar,
 	BarChart,
 	CartesianGrid,
+	Cell,
 	Legend,
 	Text,
 	Tooltip,
@@ -254,7 +255,6 @@ export default function AuditBarChart({rtl, vocabularies}) {
 											: 0
 									}
 									dataKey={bar.dataKey}
-									fill={colors[bar.dataKey]}
 									hide={checkboxes[bar.dataKey] !== true}
 									key={index}
 									legendType="square"
@@ -262,24 +262,61 @@ export default function AuditBarChart({rtl, vocabularies}) {
 									onMouseOut={() => {
 										setTooltip(null);
 									}}
-									onMouseOver={() => {
-										setTooltip(bar.dataKey);
+									onMouseOver={(props) => {
+										setTooltip({
+											dataKey: bar.dataKey,
+											name: props.name,
+										});
 									}}
-								/>
+								>
+									{data.map((entry, index) => (
+										<Cell
+											fill={colors[bar.dataKey]}
+											key={`cell-${index}`}
+											opacity={
+												!tooltip
+													? 1
+													: tooltip.dataKey ===
+															bar.dataKey &&
+													  entry.name ===
+															tooltip.name
+													? 1
+													: 0.4
+											}
+										/>
+									))}
+								</Bar>
 							);
 						})}
 					{!bars.length && (
 						<Bar
 							barSize={BAR_CHART.barHeight}
 							dataKey="value"
-							fill={COLORS[0]}
 							onMouseOut={() => {
 								setTooltip(null);
 							}}
-							onMouseOver={() => {
-								setTooltip('value');
+							onMouseOver={(props) => {
+								setTooltip({
+									dataKey: 'value',
+									name: props.name,
+								});
 							}}
-						/>
+						>
+							{data.map((entry, index) => (
+								<Cell
+									fill={COLORS[0]}
+									key={`cell-${index}`}
+									opacity={
+										!tooltip
+											? 1
+											: tooltip.dataKey === 'value' &&
+											  entry.name === tooltip.name
+											? 1
+											: 0.4
+									}
+								/>
+							))}
+						</Bar>
 					)}
 				</BarChart>
 			</div>
@@ -295,7 +332,7 @@ function CustomTooltip(props) {
 	}
 
 	for (var i = 0; i <= payload.length; i++) {
-		if (payload[i].dataKey === tooltip) {
+		if (payload[i].dataKey === tooltip.dataKey) {
 			return (
 				<ClayLayout.ContentRow
 					className="bg-white custom-tooltip p-1 rounded small text-secondary"

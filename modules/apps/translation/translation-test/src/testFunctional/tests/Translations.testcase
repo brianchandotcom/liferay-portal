@@ -619,6 +619,9 @@ definition {
 	@description = "This ensures that the user can see translation options after move all available languages to current."
 	@priority = "4"
 	test ViewOptionsWithAllLanguages {
+		property osgi.module.configuration.file.names = "com.liferay.translation.internal.configuration.FFTranslationWorkflowConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		NavItem.gotoStructures();
@@ -681,6 +684,9 @@ definition {
 	@description = "This ensures that the user can see translation options after move one more available language to current."
 	@priority = "5"
 	test ViewOptionsWithOneMoreLanguage {
+		property osgi.module.configuration.file.names = "com.liferay.translation.internal.configuration.FFTranslationWorkflowConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",
 			groupName = "Guest",

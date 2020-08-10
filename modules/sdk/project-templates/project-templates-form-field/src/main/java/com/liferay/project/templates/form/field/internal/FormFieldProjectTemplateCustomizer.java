@@ -23,6 +23,7 @@ import java.nio.file.Path;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import org.apache.maven.archetype.ArchetypeGenerationRequest;
 import org.apache.maven.archetype.ArchetypeGenerationResult;
@@ -71,6 +72,21 @@ public class FormFieldProjectTemplateCustomizer
 			fileNames.add(
 				"src/main/java/" + packageName.replaceAll("[.]", "/") +
 					"/form/field/" + className + "DDMFormFieldRenderer.java");
+
+			FormFieldProjectTemplatesArgs formFieldProjectTemplatesArgs =
+				(FormFieldProjectTemplatesArgs)
+					projectTemplatesArgs.getProjectTemplatesArgsExt();
+
+			if (liferayVersion.startsWith("7.3") &&
+				formFieldProjectTemplatesArgs.isReactTemplate()) {
+
+				fileNames.add(
+					"src/main/resources/META-INF/resources/" + name + ".soy");
+
+				fileNames.add(
+					"src/main/resources/META-INF/resources/" + name +
+						"Register.soy");
+			}
 		}
 		else {
 			fileNames.add(
@@ -93,6 +109,16 @@ public class FormFieldProjectTemplateCustomizer
 			ProjectTemplatesArgs projectTemplatesArgs,
 			ArchetypeGenerationRequest archetypeGenerationRequest)
 		throws Exception {
+
+		Properties properties = archetypeGenerationRequest.getProperties();
+
+		FormFieldProjectTemplatesArgs formFieldProjectTemplatesArgs =
+			(FormFieldProjectTemplatesArgs)
+				projectTemplatesArgs.getProjectTemplatesArgsExt();
+
+		setProperty(
+			properties, "reactTemplate",
+			String.valueOf(formFieldProjectTemplatesArgs.isReactTemplate()));
 	}
 
 }

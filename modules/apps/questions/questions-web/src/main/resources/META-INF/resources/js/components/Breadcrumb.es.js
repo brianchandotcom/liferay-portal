@@ -91,7 +91,11 @@ export default ({section}) => {
 					<AllBreadcrumb />
 				)}
 			</ol>
-			<NewTopic currentSectionId={section && section.id} />
+			{section &&
+				section.actions &&
+				section.actions['add-subcategory'] && (
+					<NewTopic currentSectionId={section && section.id} />
+				)}
 		</section>
 	);
 

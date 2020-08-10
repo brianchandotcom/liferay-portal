@@ -161,8 +161,8 @@ public class EntityModelFieldMapper {
 
 			return _getComplexFields(
 				entityModel.getName(), entityField.getName(),
-				complexEntityField.getEntityFieldsMap(), portletRequest,
-				resourceBundle, locale);
+				complexEntityField.getEntityFieldsMap(), locale, portletRequest,
+				resourceBundle);
 		}
 
 		Optional<SegmentsFieldCustomizer> segmentsFieldCustomizerOptional =
@@ -210,8 +210,8 @@ public class EntityModelFieldMapper {
 
 	private List<Field> _getComplexFields(
 		String entityModelName, String complexEntityFieldName,
-		Map<String, EntityField> entityFieldsMap, PortletRequest portletRequest,
-		ResourceBundle resourceBundle, Locale locale) {
+		Map<String, EntityField> entityFieldsMap, Locale locale,
+		PortletRequest portletRequest, ResourceBundle resourceBundle) {
 
 		if (complexEntityFieldName.equals("customField")) {
 			return _getCustomFields(entityFieldsMap, locale);

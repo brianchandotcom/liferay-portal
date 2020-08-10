@@ -15,6 +15,7 @@
 package com.liferay.info.type;
 
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -29,6 +30,14 @@ public class WebImage {
 
 	public WebImage(String url) {
 		_url = url;
+	}
+
+	public String getAlt() {
+		if (_altInfoLocalizedValue != null) {
+			return _altInfoLocalizedValue.getValue(LocaleUtil.getDefault());
+		}
+
+		return StringPool.BLANK;
 	}
 
 	public Optional<InfoLocalizedValue<String>>

@@ -9,13 +9,18 @@
 </thead>
 <tbody>
 <tr>
+	<td>ACTIVE_CONNECTION_COUNT</td>
+	<td>//div[contains(@class,'container-fluid')]//span[contains(@class,'badge-item')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CLIENT_VERSION</td>
 	<td>//div[contains(@class,'value')][preceding-sibling::div[contains(.,'Client Version')]]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CLUSTER_NAME</td>
-	<td>//div[contains(@class,'connection-info-item')][.//*[contains(@class,'connection-id') and contains(.,'${key_connectionID}')]]//span[contains(@class,'cluster-name')]</td>
+	<td>//div[contains(@class,'connection-info') and contains(.,'${key_connectionID}')]//span[contains(@class,'cluster-name')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -41,27 +46,6 @@
 <tr>
 	<td>SERVER_VERSION</td>
 	<td>//td[contains(@class,'lfr-version-column')]</td>
-	<td></td>
-</tr>
-<!--SIDECAR-->
-<tr>
-	<td>ACTIVE_CONNECTION_COUNT</td>
-	<td>//div[contains(@class,'container-fluid')]//span[contains(@class,'badge-item')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SIDECAR_CLUSTER_NAME</td>
-	<td>//div[contains(@class,'connection-info') and contains(.,'EMBEDDED')]//span[contains(@class,'cluster-name')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SIDECAR_HEALTH</td>
-	<td>//div[contains(@class,'connection-info') and contains(.,'EMBEDDED')]//div[contains(@class,'connection-health-indicator-text')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SIDECAR_NODES</td>
-	<td>//div[contains(@class,'connection-info') and contains(.,'EMBEDDED')]//tr[contains(.,'${key_nodeName}')]</td>
 	<td></td>
 </tr>
 </tbody>

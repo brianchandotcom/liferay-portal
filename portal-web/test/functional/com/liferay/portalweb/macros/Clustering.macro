@@ -99,25 +99,6 @@ definition {
 		echo("transport Address of ${nodePort} is ${transportAddress}");
 	}
 
-	@description = "Get cluster Sidecar Node Name in console"
-	macro getClusterSidecarNodeName {
-		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
-		var bundleIndex = ${leadingPortNumber} - 8;
-
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "copy-cluster-log -Dapp.server.bundle.index=${bundleIndex}");
-
-		var liferayHome = PropsUtil.get("liferay.home.dir.name");
-		var fileContent = FileUtil.read("${liferayHome}/cluster${bundleIndex}.log");
-
-		var nodeName = StringUtil.extractLast("${fileContent}", "node.name=");
-		var nodeName = StringUtil.extractFirst("${nodeName}", ",");
-		return "${nodeName}";
-
-		echo("Sidecar Node Name of ${nodePort} is ${nodeName}");
-	}
-
 	@description = "This will get the log content for a specific clustered server bundle"
 	macro getLogFileSpecificServer {
 		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
@@ -216,12 +197,6 @@ definition {
 		var countNotPresent = 1 + ${count};
 
 		Clustering._viewNoLiveSession(count = "${countNotPresent}");
-	}
-
-	macro viewSidecarInfoViaSidecarURL {
-		Navigator.openSpecificURL(url = "${url}");
-
-		AssertElementPresent(locator1 = "//body[contains(.,'${sidecarInfo}')]");
 	}
 
 	@description = "This will view the text not shows at a specific bundle at ${base_branch}-bundles-${bundle_index}/logs."

@@ -39,6 +39,8 @@ import com.liferay.subscription.service.SubscriptionLocalService;
 import com.liferay.wiki.service.WikiNodeService;
 import com.liferay.wiki.service.WikiPageService;
 
+import java.util.Optional;
+
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -157,7 +159,8 @@ public class WikiNodeResourceImpl
 					addAction("SUBSCRIBE", wikiNode, "putWikiNodeUnsubscribe")
 				).build();
 				creator = CreatorUtil.toCreator(
-					_portal, _userLocalService.fetchUser(wikiNode.getUserId()));
+					_portal, Optional.of(contextUriInfo),
+					_userLocalService.fetchUser(wikiNode.getUserId()));
 				dateCreated = wikiNode.getCreateDate();
 				dateModified = wikiNode.getModifiedDate();
 				description = wikiNode.getDescription();

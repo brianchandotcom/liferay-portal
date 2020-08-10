@@ -357,7 +357,8 @@ public class WikiPageResourceImpl
 						wikiPage.getResourcePrimKey()));
 				content = wikiPage.getContent();
 				creator = CreatorUtil.toCreator(
-					_portal, _userLocalService.fetchUser(wikiPage.getUserId()));
+					_portal, Optional.of(contextUriInfo),
+					_userLocalService.fetchUser(wikiPage.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
 					contextAcceptLanguage.isAcceptAllLanguages(),
 					com.liferay.wiki.model.WikiPage.class.getName(),

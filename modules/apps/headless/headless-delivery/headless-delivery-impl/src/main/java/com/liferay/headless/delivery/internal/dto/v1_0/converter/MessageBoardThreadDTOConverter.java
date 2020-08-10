@@ -94,7 +94,8 @@ public class MessageBoardThreadDTOConverter
 						MBMessage.class.getName(), mbMessage.getMessageId()));
 				articleBody = mbMessage.getBody();
 				creator = CreatorUtil.toCreator(
-					_portal, _userLocalService.fetchUser(mbThread.getUserId()));
+					_portal, dtoConverterContext.getUriInfoOptional(),
+					_userLocalService.fetchUser(mbThread.getUserId()));
 				creatorStatistics = CreatorStatisticsUtil.toCreatorStatistics(
 					mbMessage.getGroupId(), languageId,
 					_mbStatsUserLocalService, uriInfoOptional.get(),

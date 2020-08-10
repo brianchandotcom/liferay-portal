@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.ratings.kernel.model.RatingsEntry;
 
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author Javier Gamarra
@@ -27,15 +28,14 @@ import java.util.Map;
 public class RatingUtil {
 
 	public static Rating toRating(
-			Map<String, Map<String, String>> actions, Portal portal,
-			RatingsEntry ratingsEntry, UserLocalService userLocalService)
-		throws Exception {
+		Map<String, Map<String, String>> actions, Portal portal,
+		RatingsEntry ratingsEntry, UserLocalService userLocalService) {
 
 		Rating rating = new Rating() {
 			{
 				bestRating = 1D;
 				creator = CreatorUtil.toCreator(
-					portal,
+					portal, Optional.empty(),
 					userLocalService.fetchUser(ratingsEntry.getUserId()));
 				dateCreated = ratingsEntry.getCreateDate();
 				dateModified = ratingsEntry.getModifiedDate();

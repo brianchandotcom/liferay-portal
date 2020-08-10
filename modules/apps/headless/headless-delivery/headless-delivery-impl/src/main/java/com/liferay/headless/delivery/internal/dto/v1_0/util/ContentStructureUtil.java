@@ -40,9 +40,8 @@ import java.util.stream.Stream;
 public class ContentStructureUtil {
 
 	public static ContentStructure toContentStructure(
-			boolean acceptAllLanguages, Locale locale, Portal portal,
-			UserLocalService userLocalService, DDMStructure ddmStructure)
-		throws Exception {
+		boolean acceptAllLanguages, Locale locale, Portal portal,
+		UserLocalService userLocalService, DDMStructure ddmStructure) {
 
 		if (ddmStructure == null) {
 			return null;
@@ -59,7 +58,7 @@ public class ContentStructureUtil {
 						ddmStructure.getDDMFormField(fieldName), locale),
 					ContentStructureField.class);
 				creator = CreatorUtil.toCreator(
-					portal,
+					portal, Optional.empty(),
 					userLocalService.fetchUser(ddmStructure.getUserId()));
 				dateCreated = ddmStructure.getCreateDate();
 				dateModified = ddmStructure.getModifiedDate();

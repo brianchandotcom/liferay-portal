@@ -55,7 +55,7 @@ public class MessageBoardSectionDTOConverter
 			{
 				actions = dtoConverterContext.getActions();
 				creator = CreatorUtil.toCreator(
-					_portal,
+					_portal, dtoConverterContext.getUriInfoOptional(),
 					_userLocalService.fetchUser(mbCategory.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
 					dtoConverterContext.isAcceptAllLanguages(),

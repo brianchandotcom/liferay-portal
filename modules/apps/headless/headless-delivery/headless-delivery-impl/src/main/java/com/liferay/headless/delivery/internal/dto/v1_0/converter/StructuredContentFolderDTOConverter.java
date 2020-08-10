@@ -59,7 +59,7 @@ public class StructuredContentFolderDTOConverter
 			{
 				actions = dtoConverterContext.getActions();
 				creator = CreatorUtil.toCreator(
-					_portal,
+					_portal, dtoConverterContext.getUriInfoOptional(),
 					_userLocalService.fetchUser(journalFolder.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
 					dtoConverterContext.isAcceptAllLanguages(),

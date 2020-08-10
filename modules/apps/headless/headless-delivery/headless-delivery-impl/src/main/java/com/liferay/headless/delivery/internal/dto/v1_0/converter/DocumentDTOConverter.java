@@ -118,7 +118,7 @@ public class DocumentDTOConverter
 					"contentValue", fileEntry::getContentStream,
 					dtoConverterContext.getUriInfoOptional());
 				creator = CreatorUtil.toCreator(
-					_portal,
+					_portal, dtoConverterContext.getUriInfoOptional(),
 					_userLocalService.fetchUser(fileEntry.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
 					dtoConverterContext.isAcceptAllLanguages(),

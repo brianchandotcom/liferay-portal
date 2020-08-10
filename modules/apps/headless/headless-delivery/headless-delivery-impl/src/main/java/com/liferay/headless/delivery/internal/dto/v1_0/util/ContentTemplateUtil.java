@@ -38,7 +38,7 @@ public class ContentTemplateUtil {
 					ddmTemplate.getAvailableLanguageIds());
 				contentStructureId = ddmTemplate.getClassPK();
 				creator = CreatorUtil.toCreator(
-					portal,
+					portal, dtoConverterContext.getUriInfoOptional(),
 					userLocalService.fetchUser(ddmTemplate.getUserId()));
 				dateCreated = ddmTemplate.getCreateDate();
 				dateModified = ddmTemplate.getModifiedDate();

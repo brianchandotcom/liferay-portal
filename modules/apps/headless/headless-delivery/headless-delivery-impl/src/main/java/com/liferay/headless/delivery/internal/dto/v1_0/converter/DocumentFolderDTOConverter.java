@@ -55,7 +55,8 @@ public class DocumentFolderDTOConverter
 			{
 				actions = dtoConverterContext.getActions();
 				creator = CreatorUtil.toCreator(
-					_portal, _userLocalService.fetchUser(folder.getUserId()));
+					_portal, dtoConverterContext.getUriInfoOptional(),
+					_userLocalService.fetchUser(folder.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
 					dtoConverterContext.isAcceptAllLanguages(),
 					DLFolder.class.getName(), folder.getFolderId(),

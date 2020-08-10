@@ -396,7 +396,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 		return new NavigationMenu() {
 			{
 				creator = CreatorUtil.toCreator(
-					_portal,
+					_portal, Optional.of(contextUriInfo),
 					_userLocalService.fetchUser(
 						siteNavigationMenu.getUserId()));
 				dateCreated = siteNavigationMenu.getCreateDate();
@@ -450,7 +450,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 		return new NavigationMenuItem() {
 			{
 				creator = CreatorUtil.toCreator(
-					_portal,
+					_portal, Optional.of(contextUriInfo),
 					_userLocalService.fetchUser(
 						siteNavigationMenuItem.getUserId()));
 				dateCreated = siteNavigationMenuItem.getCreateDate();

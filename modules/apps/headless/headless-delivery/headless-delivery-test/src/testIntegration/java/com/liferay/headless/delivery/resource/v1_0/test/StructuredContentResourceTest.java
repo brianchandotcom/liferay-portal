@@ -87,12 +87,13 @@ public class StructuredContentResourceTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		testGroup = testDepotEntry.getGroup();
-
 		_ddmLocalizedStructure = _addDDMStructure(
 			testGroup, "test-localized-structured-content-structure.json");
 		_ddmStructure = _addDDMStructure(
 			testGroup, "test-structured-content-structure.json");
+		_depotDDMStructure = _addDDMStructure(
+			testDepotEntry.getGroup(),
+			"test-structured-content-structure.json");
 
 		_irrelevantDDMStructure = _addDDMStructure(
 			irrelevantGroup, "test-structured-content-structure.json");
@@ -387,7 +388,8 @@ public class StructuredContentResourceTest
 				Long assetLibraryId, StructuredContent structuredContent)
 		throws Exception {
 
-		structuredContent.setContentStructureId(_ddmStructure.getStructureId());
+		structuredContent.setContentStructureId(
+			_depotDDMStructure.getStructureId());
 
 		return structuredContentResource.postAssetLibraryStructuredContent(
 			assetLibraryId, structuredContent);
@@ -431,6 +433,19 @@ public class StructuredContentResourceTest
 
 		return testPostSiteStructuredContent_addStructuredContent(
 			randomStructuredContent());
+	}
+
+	@Override
+	protected StructuredContent
+			testPostAssetLibraryStructuredContent_addStructuredContent(
+				StructuredContent structuredContent)
+		throws Exception {
+
+		structuredContent.setContentStructureId(
+			_depotDDMStructure.getStructureId());
+
+		return super.testPostAssetLibraryStructuredContent_addStructuredContent(
+			structuredContent);
 	}
 
 	private DDMStructure _addDDMStructure(Group group, String fileName)
@@ -522,6 +537,7 @@ public class StructuredContentResourceTest
 	private DDMStructure _ddmLocalizedStructure;
 	private DDMStructure _ddmStructure;
 	private DDMTemplate _ddmTemplate;
+	private DDMStructure _depotDDMStructure;
 	private DDMStructure _irrelevantDDMStructure;
 	private JournalFolder _irrelevantJournalFolder;
 	private JournalFolder _journalFolder;

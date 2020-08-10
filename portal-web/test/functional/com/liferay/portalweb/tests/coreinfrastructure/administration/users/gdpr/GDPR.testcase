@@ -329,7 +329,7 @@ definition {
 			applications = "All Applications",
 			itemsCount = "4");
 
-		GDPR.deleteEntryCP();
+		GDPR.deleteEntryCP(anonymizeData = "true");
 
 		GDPR.viewNoEntryInApplicationCP(applications = "All Applications");
 	}

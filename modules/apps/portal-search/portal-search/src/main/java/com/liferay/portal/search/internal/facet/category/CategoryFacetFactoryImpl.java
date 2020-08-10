@@ -38,7 +38,11 @@ public class CategoryFacetFactoryImpl implements CategoryFacetFactory {
 
 	@Override
 	public Facet newInstance(SearchContext searchContext) {
-		return new FacetImpl(Field.ASSET_CATEGORY_IDS, searchContext);
+		if (searchContext.isIncludeInternalAssetCategories()) {
+			return new FacetImpl(Field.ASSET_CATEGORY_IDS, searchContext);
+		}
+
+		return new FacetImpl(Field.ASSET_PUBLIC_CATEGORY_IDS, searchContext);
 	}
 
 }

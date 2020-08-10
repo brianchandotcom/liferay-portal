@@ -25,12 +25,7 @@
 </tr>
 <tr>
 	<td>ITEM_TEXT</td>
-	<td>//ul[contains(@class,'list-group')]//span[@class='list-group-card-item-text' and normalize-space(./text())='${key_itemName}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INDEPENDENT_MODULES_LINK</td>
-	<td>//ul[contains(@class,'list-group')]/*[contains(@data-qa-id,'row')]//h2/a[contains(.,'Independent Modules')]</td>
+	<td>//ul[contains(@class,'list-group')]//*[@class='list-group-card-item-text' and normalize-space(./text())='${key_itemName}']</td>
 	<td></td>
 </tr>
 </tbody>

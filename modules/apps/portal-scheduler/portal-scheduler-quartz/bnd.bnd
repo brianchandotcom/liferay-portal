@@ -4,10 +4,6 @@ Bundle-Version: 6.0.10
 Import-Package:\
 	!com.mchange.v2.c3p0.*,\
 	\
-	!com.zaxxer.hikari.*,\
-	\
-	!commonj.work.*,\
-	\
 	!javax.ejb.*,\
 	\
 	!javax.jms.*,\
@@ -15,17 +11,5 @@ Import-Package:\
 	!javax.mail.*,\
 	\
 	!javax.transaction.*,\
-	\
-	!oracle.sql.*,\
-	\
-	!org.jboss.naming.*,\
-	!org.jboss.system.*,\
-	\
-	!org.quartz.jobs.*,\
-	\
-	!org.terracotta.toolkit.*,\
-	\
-	!weblogic.jdbc.jts.*,\
-	!weblogic.jdbc.vendor.oracle.*,\
 	\
 	*

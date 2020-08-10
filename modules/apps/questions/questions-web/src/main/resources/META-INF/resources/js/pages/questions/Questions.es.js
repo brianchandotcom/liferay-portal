@@ -382,7 +382,10 @@ export default withRouter(
 												<ClayButtonWithIcon
 													displayType="unstyled"
 													onClick={() => {
-														debounceCallback('')
+														setLoading(true);
+														historyPushParser(
+															buildURL('', 1, 20)
+														);
 													}}
 													symbol="times-circle"
 													type="submit"

@@ -186,7 +186,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 			'<%= ddmFormAdminDisplayContext.getRestrictedFormURL() %>',
 		sharedFormURL: '<%= ddmFormAdminDisplayContext.getSharedFormURL() %>',
 		showPagination: true,
-		spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
+		spritemap: '<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg',
 	};
 
 	Liferay.Forms.App = {

@@ -62,7 +62,7 @@ public class ATag extends BaseATag {
 				jspWriter.write("lexicon-icon-shortcut\" focusable=\"false\" ");
 				jspWriter.write("role=\"img\"><use href=\"");
 				jspWriter.write(themeDisplay.getPathThemeImages());
-				jspWriter.write("/lexicon/icons.svg#shortcut\" /><span ");
+				jspWriter.write("/clay/icons.svg#shortcut\" /><span ");
 				jspWriter.write("class=\"sr-only\">");
 
 				String opensNewWindowLabel = LanguageUtil.get(

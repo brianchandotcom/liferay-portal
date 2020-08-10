@@ -19,7 +19,7 @@ export const spritemap =
 	window.location.protocol +
 	'//' +
 	window.location.host +
-	'/o/classic-theme/images/lexicon/icons.svg';
+	'/o/classic-theme/images/clay/icons.svg';
 
 const Icon = (props) => {
 	const {symbol, ...otherProps} = props;

@@ -46,7 +46,7 @@
 		'<svg class="lexicon-icon lexicon-icon-{0} {1}" focusable="false" role="image">' +
 		'<use href="' +
 		themeDisplay.getPathThemeImages() +
-		'/lexicon/icons.svg#{0}" />' +
+		'/clay/icons.svg#{0}" />' +
 		'</svg>';
 
 	var Window = {

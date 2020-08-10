@@ -36,7 +36,7 @@ String rowBreak = (String)request.getAttribute("liferay-ui:error:rowBreak");
 
 			<span class="alert-indicator">
 				<svg aria-hidden="true" class="lexicon-icon lexicon-icon-<%= alertIcon %>">
-					<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#<%= alertIcon %>"></use>
+					<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#<%= alertIcon %>"></use>
 				</svg>
 			</span>
 

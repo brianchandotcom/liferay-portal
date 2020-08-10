@@ -76,7 +76,7 @@ sb.append("/js/modal/openDisplayPageModal.es as openDisplayPageModal");
 				),
 				namespace: '<portlet:namespace />',
 				spritemap:
-					'<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
+					'<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg',
 				title: '<liferay-ui:message key="add-display-page-template" />',
 			});
 		}

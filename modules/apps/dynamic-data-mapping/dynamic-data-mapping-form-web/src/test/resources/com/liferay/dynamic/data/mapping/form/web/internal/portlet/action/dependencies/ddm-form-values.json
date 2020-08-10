@@ -128,7 +128,7 @@
 	"portletNamespace": "_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet_",
 	"readOnly": false,
 	"requiredFieldsWarningMessageHTML": {
-		"content": "<label class=\"required-warning\">Todos os campos marcados com <svg aria-hidden=\"true\" class=\"lexicon-icon lexicon-icon-asterisk reference-mark\"><use xlink:href=\"http://localhost:8080/o/classic-theme/images/lexicon/icons.svg#asterisk\" /></svg> são obrigatórios.</label>",
+		"content": "<label class=\"required-warning\">Todos os campos marcados com <svg aria-hidden=\"true\" class=\"lexicon-icon lexicon-icon-asterisk reference-mark\"><use xlink:href=\"http://localhost:8080/o/classic-theme/images/clay/icons.svg#asterisk\" /></svg> são obrigatórios.</label>",
 		"contentDirection": null,
 		"contentKind": "HTML"
 	},

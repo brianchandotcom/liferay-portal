@@ -110,11 +110,11 @@ if (!inTrash) {
 
 							<span class="rating-element <%= (i <= averageIndex) ? "icon-star-on" : "icon-star-off" %>" title="<%= message %>">
 								<svg aria-hidden="true" class="lexicon-icon lexicon-icon-star" role="img">
-									<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#star" />
+									<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#star" />
 								</svg>
 
 								<svg aria-hidden="true" class="lexicon-icon lexicon-icon-star-o" role="img">
-									<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#star-o" />
+									<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#star-o" />
 								</svg>
 							</span>
 
@@ -144,11 +144,11 @@ if (!inTrash) {
 
 								<a class="btn btn-unstyled rating-element <%= (i <= yourScoreStars) ? "icon-star-on" : "icon-star-off" %>" href="javascript:;">
 									<svg aria-hidden="true" class="lexicon-icon lexicon-icon-star" role="img">
-										<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#star" />
+										<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#star" />
 									</svg>
 
 									<svg aria-hidden="true" class="lexicon-icon lexicon-icon-star-o" role="img">
-										<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#star-o" />
+										<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#star-o" />
 									</svg>
 								</a>
 
@@ -184,11 +184,11 @@ if (!inTrash) {
 
 								<a class="btn btn-unstyled rating-element <%= (i <= yourScoreStars) ? "icon-star-on" : "icon-star-off" %>" href="javascript:;">
 									<svg aria-hidden="true" class="lexicon-icon lexicon-icon-star" role="img">
-										<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#star" />
+										<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#star" />
 									</svg>
 
 									<svg aria-hidden="true" class="lexicon-icon lexicon-icon-star-o" role="img">
-										<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#star-o" />
+										<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#star-o" />
 									</svg>
 								</a>
 
@@ -234,11 +234,11 @@ if (!inTrash) {
 
 							<span class="rating-element <%= (i <= averageIndex) ? "icon-star-on" : "icon-star-off" %>" title="<%= message %>">
 								<svg aria-hidden="true" class="lexicon-icon lexicon-icon-star" role="img">
-									<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#star" />
+									<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#star" />
 								</svg>
 
 								<svg aria-hidden="true" class="lexicon-icon lexicon-icon-star-o" role="img">
-									<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#star-o" />
+									<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#star-o" />
 								</svg>
 							</span>
 
@@ -290,7 +290,7 @@ if (!inTrash) {
 								<span class="btn-sm rating-element rating-thumb-up rating-<%= thumbUp ? "on" : "off" %>" title="<%= thumbsTitle %>">
 									<span class="inline-item inline-item-before">
 										<svg aria-hidden="true" class="lexicon-icon lexicon-icon-thumbs-up" role="img">
-											<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#thumbs-up" />
+											<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#thumbs-up" />
 										</svg>
 									</span>
 
@@ -301,7 +301,7 @@ if (!inTrash) {
 									<span class="btn-sm rating-element rating-thumb-down rating-<%= thumbDown ? "on" : "off" %>" title="<%= thumbsTitle %>">
 										<span class="inline-item inline-item-before">
 											<svg aria-hidden="true" class="lexicon-icon lexicon-icon-thumbs-down" role="img">
-												<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#thumbs-down" />
+												<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#thumbs-down" />
 											</svg>
 										</span>
 
@@ -325,7 +325,7 @@ if (!inTrash) {
 								<a class="btn btn-outline-borderless btn-outline-secondary btn-sm rating-element rating-thumb-up rating-<%= thumbUp ? "on" : "off" %>" href="javascript:;" title="<liferay-ui:message key="<%= positiveRatingMessage %>" />">
 									<span class="inline-item inline-item-before">
 										<svg aria-hidden="true" class="lexicon-icon lexicon-icon-thumbs-up" role="img">
-											<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#thumbs-up" />
+											<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#thumbs-up" />
 										</svg>
 									</span>
 									<span class="votes"><%= positiveVotes %></span>
@@ -335,7 +335,7 @@ if (!inTrash) {
 									<a class="btn btn-outline-borderless btn-outline-secondary btn-sm rating-element rating-thumb-down rating-<%= thumbDown ? "on" : "off" %>" href="javascript:;" title="<liferay-ui:message key='<%= thumbDown ? "you-have-rated-this-as-bad" : "rate-this-as-bad" %>' />">
 										<span class="inline-item inline-item-before">
 											<svg aria-hidden="true" class="lexicon-icon lexicon-icon-thumbs-down" role="img">
-												<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#thumbs-down" />
+												<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#thumbs-down" />
 											</svg>
 										</span>
 										<span class="votes"><%= negativeVotes %></span>

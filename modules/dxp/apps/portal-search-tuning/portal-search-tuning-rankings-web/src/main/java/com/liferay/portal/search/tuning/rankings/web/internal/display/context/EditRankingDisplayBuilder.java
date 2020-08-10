@@ -89,8 +89,7 @@ public class EditRankingDisplayBuilder {
 		).put(
 			"namespace", _renderResponse.getNamespace()
 		).put(
-			"spritemap",
-			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
+			"spritemap", _themeDisplay.getPathThemeImages() + "/clay/icons.svg"
 		).build();
 	}
 

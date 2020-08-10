@@ -121,8 +121,7 @@ public class ViewDiscardDisplayContext {
 				return renderURL.toString();
 			}
 		).put(
-			"spritemap",
-			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
+			"spritemap", _themeDisplay.getPathThemeImages() + "/clay/icons.svg"
 		).put(
 			"typeNames",
 			DisplayContextUtil.getTypeNamesJSONObject(

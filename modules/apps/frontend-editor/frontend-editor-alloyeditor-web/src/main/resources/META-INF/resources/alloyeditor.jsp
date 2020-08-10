@@ -225,7 +225,7 @@ name = HtmlUtil.escapeJS(name);
 			{
 				documentBrowseLinkCallback: documentBrowseLinkCallback,
 				htmlEncodeOutput: true,
-				spritemap: themeDisplay.getPathThemeImages() + '/lexicon/icons.svg',
+				spritemap: themeDisplay.getPathThemeImages() + '/clay/icons.svg',
 				title: false,
 				uiNode: uiNode,
 			},

@@ -211,7 +211,7 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 					"namespace", portletDisplay.getNamespace()
 				).put(
 					"spritemap",
-					themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
+					themeDisplay.getPathThemeImages() + "/clay/icons.svg"
 				).build()));
 
 		String containerId = getContainerId();

@@ -78,7 +78,7 @@ const initialState = {
 	hoveredField: {},
 	sidebarOpen: true,
 	sidebarPanelId: 'fields',
-	spritemap: `${Liferay.ThemeDisplay.getPathThemeImages()}/lexicon/icons.svg`,
+	spritemap: `${Liferay.ThemeDisplay.getPathThemeImages()}/clay/icons.svg`,
 };
 
 const addCustomObjectField = ({

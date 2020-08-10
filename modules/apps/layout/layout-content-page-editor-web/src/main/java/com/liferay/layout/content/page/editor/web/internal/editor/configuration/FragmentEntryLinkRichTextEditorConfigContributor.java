@@ -101,8 +101,7 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 		).put(
 			"skin", "moono-lisa"
 		).put(
-			"spritemap",
-			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
+			"spritemap", themeDisplay.getPathThemeImages() + "/clay/icons.svg"
 		).put(
 			"toolbars", getToolbarsJSONObject(themeDisplay.getLocale())
 		);

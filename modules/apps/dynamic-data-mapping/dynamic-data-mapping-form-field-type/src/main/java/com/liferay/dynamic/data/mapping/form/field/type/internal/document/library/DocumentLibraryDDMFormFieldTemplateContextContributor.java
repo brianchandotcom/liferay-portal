@@ -217,7 +217,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 		StringBundler sb = new StringBundler(3);
 
 		sb.append(themeDisplay.getPathThemeImages());
-		sb.append("/lexicon/icons.svg");
+		sb.append("/clay/icons.svg");
 		sb.append(StringPool.POUND);
 
 		return sb.toString();

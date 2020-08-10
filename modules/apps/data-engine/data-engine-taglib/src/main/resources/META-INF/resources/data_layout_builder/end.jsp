@@ -48,7 +48,7 @@ Map<String, Object> props = HashMapBuilder.<String, Object>put(
 ).put(
 	"sidebarPanels", sidebarPanels
 ).put(
-	"spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
+	"spritemap", themeDisplay.getPathThemeImages() + "/clay/icons.svg"
 ).build();
 %>
 

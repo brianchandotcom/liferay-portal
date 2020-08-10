@@ -149,7 +149,7 @@
 
 							<div class="divider">
 								<svg aria-hidden="true" class="lexicon-icon lexicon-icon-<%= sectionIcon %>">
-									<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#<%= sectionIcon %>"></use>
+									<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#<%= sectionIcon %>"></use>
 								</svg>
 							</div>
 

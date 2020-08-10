@@ -128,7 +128,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 	Liferay.namespace('DDM').FormSettings = {
 		portletNamespace: '<portlet:namespace />',
 		showPagination: false,
-		spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
+		spritemap: '<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg',
 	};
 
 	Liferay.Forms.App = {

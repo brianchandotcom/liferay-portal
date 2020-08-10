@@ -16,7 +16,7 @@ Liferay.DDM = {
 	FormSettings: {
 		restrictedFormURL: 'http://localhost:8080/group/forms/shared/-/form/',
 		sharedFormURL: 'http://localhost:8080/web/forms/shared/-/form/',
-		spritemap: '/lexicon/icons.svg',
+		spritemap: '/clay/icons.svg',
 	},
 };
 

@@ -141,9 +141,7 @@ public class IconTag extends BaseIconTag {
 						(ThemeDisplay)httpServletRequest.getAttribute(
 							WebKeys.THEME_DISPLAY);
 
-					src =
-						themeDisplay.getPathThemeImages() +
-							"/lexicon/icons.svg";
+					src = themeDisplay.getPathThemeImages() + "/clay/icons.svg";
 				}
 
 				jspWriter.write(src);

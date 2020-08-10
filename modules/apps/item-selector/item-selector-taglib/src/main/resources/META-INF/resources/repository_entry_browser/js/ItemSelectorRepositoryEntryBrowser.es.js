@@ -414,7 +414,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 				message,
 				spritemap:
 					Liferay.ThemeDisplay.getPathThemeImages() +
-					'/lexicon/icons.svg',
+					'/clay/icons.svg',
 				style: 'danger',
 				title: '',
 				visible: true,

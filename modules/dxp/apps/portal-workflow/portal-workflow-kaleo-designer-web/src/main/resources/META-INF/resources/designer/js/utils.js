@@ -201,7 +201,7 @@ AUI.add(
 								labelHTML:
 									'<svg class="lexicon-icon" focusable="false"><use href="' +
 									Liferay.ThemeDisplay.getPathThemeImages() +
-									'/lexicon/icons.svg#times" /><title>' +
+									'/clay/icons.svg#times" /><title>' +
 									Liferay.Language.get('close') +
 									'</title></svg>',
 								on: {

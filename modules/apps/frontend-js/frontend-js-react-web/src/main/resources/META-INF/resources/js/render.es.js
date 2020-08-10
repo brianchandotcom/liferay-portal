@@ -39,7 +39,7 @@ export default function render(renderable, renderData, container) {
 	if (!Liferay.SPA || Liferay.SPA.app) {
 		const {portletId} = renderData;
 		const spritemap =
-			Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg';
+			Liferay.ThemeDisplay.getPathThemeImages() + '/clay/icons.svg';
 
 		let {componentId} = renderData;
 

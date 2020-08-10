@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>ANY_BUTTON</td>
-	<td>//div[contains(@class,'modal')]//button[contains(.,'${key_text}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>HEADER</td>
 	<td>//div[contains(@class,'modal-dialog')]//div[contains(@*,'modal-title')]</td>
 	<td></td>

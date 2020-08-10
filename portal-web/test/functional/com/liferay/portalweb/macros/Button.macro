@@ -42,6 +42,10 @@ definition {
 		Button.click(button = "Edit");
 	}
 
+	macro clickImport {
+		Button.click(button = "Import");
+	}
+
 	macro clickInstall {
 		Button.click(button = "Install");
 	}

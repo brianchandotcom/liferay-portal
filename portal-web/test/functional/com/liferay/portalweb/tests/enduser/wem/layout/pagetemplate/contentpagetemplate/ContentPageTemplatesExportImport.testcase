@@ -747,7 +747,7 @@ definition {
 				locator1 = "TextInput#FILE",
 				value1 = "${pageTemplateZipFileName}");
 
-			Click(locator1 = "Button#IMPORT");
+			Button.clickImport();
 
 			Alert.viewSuccessMessage();
 		}
@@ -982,7 +982,7 @@ definition {
 				locator1 = "TextInput#FILE",
 				value1 = "${pageTemplateZipFileName}");
 
-			Click(locator1 = "Button#IMPORT");
+			Button.clickImport();
 
 			Alert.viewSuccessMessage();
 		}

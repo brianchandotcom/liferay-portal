@@ -175,7 +175,7 @@ definition {
 
 		Click(locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_KEYSTORE_ALIAS_RADIO");
 
-		Click(locator1 = "Button#IMPORT");
+		Button.clickImport();
 
 		if ("${certificateUsage}" == "SIGNING") {
 			AssertElementPresent(

@@ -248,7 +248,8 @@ definition {
 			AssertVisible(locator1 = "Link#BACK");
 
 			AssertClickNoError(
-				locator1 = "Button#IMPORT",
+				key_text = "Import",
+				locator1 = "Button#ANY",
 				value1 = "Import");
 
 			if (isSet(failureExpected)) {

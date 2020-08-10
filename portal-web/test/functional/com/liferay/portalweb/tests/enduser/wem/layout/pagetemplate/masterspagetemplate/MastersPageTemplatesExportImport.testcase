@@ -705,7 +705,7 @@ definition {
 				checkboxName = "Overwrite Existing Page Templates",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 
-			Click(locator1 = "Button#IMPORT");
+			Button.clickImport();
 
 			Alert.viewSuccessMessage();
 
@@ -735,7 +735,7 @@ definition {
 				locator1 = "TextInput#FILE",
 				value1 = "master-page-invalid-value.zip");
 
-			Click(locator1 = "Button#IMPORT");
+			Button.clickImport();
 		}
 
 		task ("Assert the specific error message is shown on Import popup") {

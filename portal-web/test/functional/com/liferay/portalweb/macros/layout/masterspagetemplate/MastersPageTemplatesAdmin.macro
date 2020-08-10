@@ -43,7 +43,7 @@ definition {
 			locator1 = "TextInput#FILE",
 			value1 = "${mastersZipFileName}");
 
-		Click(locator1 = "Button#IMPORT");
+		Button.clickImport();
 
 		Alert.viewSuccessMessage();
 

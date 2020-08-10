@@ -1113,9 +1113,7 @@ definition {
 
 			SelectFrameTop();
 
-			Click.mouseDownMouseUp(
-				key_text = "Import",
-				locator1 = "Modal#ANY_BUTTON");
+			Button.clickImport();
 		}
 
 		task ("Assert the zip imported properly") {
@@ -1182,9 +1180,7 @@ definition {
 
 			SelectFrameTop();
 
-			Click.mouseDownMouseUp(
-				key_text = "Import",
-				locator1 = "Modal#ANY_BUTTON");
+			Button.clickImport();
 		}
 
 		task ("Assert the zip imported properly") {
@@ -1230,9 +1226,7 @@ definition {
 
 			SelectFrameTop();
 
-			Click.mouseDownMouseUp(
-				key_text = "Import",
-				locator1 = "Modal#ANY_BUTTON");
+			Button.clickImport();
 		}
 
 		task ("Assert the zip imported properly") {

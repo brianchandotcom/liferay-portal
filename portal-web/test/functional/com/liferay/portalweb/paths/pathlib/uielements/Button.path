@@ -337,11 +337,6 @@
 	<td>IGNORE_REDIRECT_URLS</td>
 	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-hidden')]]</td>
 	<td></td>
-</tr>s
-<tr>
-	<td>IMPORT</td>
-	<td>//div[contains(@class,'footer')]//button[contains(.,'Import')]</td>
-	<td></td>
 </tr>
 <tr>
 	<td>INFO</td>

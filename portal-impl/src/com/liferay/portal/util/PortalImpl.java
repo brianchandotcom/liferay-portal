@@ -8219,11 +8219,12 @@ public class PortalImpl implements Portal {
 					alternateURLs.put(locale, canonicalURL);
 				}
 				else {
-					String i18nPath = _buildI18NPath(
-						locale, themeDisplay.getSiteGroup());
-
 					alternateURLs.put(
-						locale, canonicalURL + i18nPath + StringPool.SLASH);
+						locale,
+						StringBundler.concat(
+							canonicalURL,
+							_buildI18NPath(locale, themeDisplay.getSiteGroup()),
+							StringPool.SLASH));
 				}
 			}
 

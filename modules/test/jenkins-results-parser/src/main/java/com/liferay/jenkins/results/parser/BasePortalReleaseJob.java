@@ -25,15 +25,19 @@ import java.util.TreeSet;
  * @author Michael Hashimoto
  */
 public abstract class BasePortalReleaseJob
-	extends BaseJob implements BatchDependentJob, PortalTestClassJob {
+	extends BaseJob
+	implements BatchDependentJob, PortalTestClassJob, TestSuiteJob {
 
 	public BasePortalReleaseJob(
-		String jobName, String portalBranchName, BuildProfile buildProfile) {
+		String jobName, String portalBranchName, BuildProfile buildProfile,
+		String testSuiteName) {
 
 		super(jobName);
 
 		_portalBranchName = portalBranchName;
 		this.buildProfile = buildProfile;
+
+		_testSuiteName = testSuiteName;
 
 		if (buildProfile == null) {
 			this.buildProfile = BuildProfile.PORTAL;
@@ -50,6 +54,8 @@ public abstract class BasePortalReleaseJob
 			new File(
 				_portalGitWorkingDirectory.getWorkingDirectory(),
 				"test.properties"));
+
+		readJobProperties();
 	}
 
 	@Override
@@ -61,13 +67,13 @@ public abstract class BasePortalReleaseJob
 		batchNames.addAll(
 			getSetFromString(
 				JenkinsResultsParserUtil.getProperty(
-					jobProperties, "test.batch.names", false,
-					_portalBranchName)));
+					jobProperties, "test.batch.names", false, _portalBranchName,
+					getTestSuiteName())));
 		batchNames.addAll(
 			getSetFromString(
 				JenkinsResultsParserUtil.getProperty(
 					jobProperties, "test.batch.names", false, _portalBranchName,
-					buildProfile.toString())));
+					buildProfile.toString(), getTestSuiteName())));
 
 		return batchNames;
 	}
@@ -82,12 +88,13 @@ public abstract class BasePortalReleaseJob
 			getSetFromString(
 				JenkinsResultsParserUtil.getProperty(
 					jobProperties, "test.batch.names.smoke", false,
-					_portalBranchName)));
+					_portalBranchName, getTestSuiteName())));
 		batchNames.addAll(
 			getSetFromString(
 				JenkinsResultsParserUtil.getProperty(
 					jobProperties, "test.batch.names.smoke", false,
-					_portalBranchName, buildProfile.toString())));
+					_portalBranchName, buildProfile.toString(),
+					getTestSuiteName())));
 
 		return batchNames;
 	}
@@ -100,6 +107,11 @@ public abstract class BasePortalReleaseJob
 	@Override
 	public PortalGitWorkingDirectory getPortalGitWorkingDirectory() {
 		return _portalGitWorkingDirectory;
+	}
+
+	@Override
+	public String getTestSuiteName() {
+		return _testSuiteName;
 	}
 
 	public static enum BuildProfile {
@@ -136,5 +148,6 @@ public abstract class BasePortalReleaseJob
 	private final GitWorkingDirectory _jenkinsGitWorkingDirectory;
 	private final String _portalBranchName;
 	private final PortalGitWorkingDirectory _portalGitWorkingDirectory;
+	private final String _testSuiteName;
 
 }

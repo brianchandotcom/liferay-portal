@@ -14,8 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.File;
-
 import java.util.Collections;
 import java.util.Properties;
 import java.util.Set;
@@ -27,19 +25,10 @@ import java.util.TreeSet;
 public class PortalReleaseJob extends BasePortalReleaseJob {
 
 	public PortalReleaseJob(
-		String jobName, String portalBranchName, BuildProfile buildProfile) {
+		String jobName, String portalBranchName, BuildProfile buildProfile,
+		String testSuiteName) {
 
-		super(jobName, portalBranchName, buildProfile);
-
-		GitWorkingDirectory jenkinsGitWorkingDirectory =
-			getJenkinsGitWorkingDirectory();
-
-		jobPropertiesFiles.add(
-			new File(
-				jenkinsGitWorkingDirectory.getWorkingDirectory(),
-				"commands/dependencies/test-portal-release.properties"));
-
-		readJobProperties();
+		super(jobName, portalBranchName, buildProfile, testSuiteName);
 	}
 
 	@Override

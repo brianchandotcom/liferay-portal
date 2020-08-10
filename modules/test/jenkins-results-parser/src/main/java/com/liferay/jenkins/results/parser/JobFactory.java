@@ -179,7 +179,7 @@ public class JobFactory {
 			_jobs.put(
 				jobKey,
 				new PortalFixpackReleaseJob(
-					jobName, portalBranchName, buildProfile));
+					jobName, portalBranchName, buildProfile, testSuiteName));
 
 			return _jobs.get(jobKey);
 		}
@@ -188,7 +188,7 @@ public class JobFactory {
 			_jobs.put(
 				jobKey,
 				new PortalHotfixReleaseJob(
-					jobName, portalBranchName, buildProfile));
+					jobName, portalBranchName, buildProfile, testSuiteName));
 
 			return _jobs.get(jobKey);
 		}
@@ -196,7 +196,8 @@ public class JobFactory {
 		if (jobName.equals("test-portal-release")) {
 			_jobs.put(
 				jobKey,
-				new PortalReleaseJob(jobName, portalBranchName, buildProfile));
+				new PortalReleaseJob(
+					jobName, portalBranchName, buildProfile, testSuiteName));
 
 			return _jobs.get(jobKey);
 		}

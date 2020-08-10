@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.style.book.web.internal.display.context;
+package com.liferay.style.book.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;

@@ -63,6 +63,7 @@ definition {
 		AssetListsAdmin.viewAssetTypeList(
 			assetListName = "Depot Manual Asset List",
 			assetType = "Web Content Folder,Basic Document,Basic Web Content,Documents Folder,DM Document Type Name 1,DM Document Type Name 2",
+			itemType = "All Types",
 			manualSelection = "true");
 
 		for (var i : list "1,2") {

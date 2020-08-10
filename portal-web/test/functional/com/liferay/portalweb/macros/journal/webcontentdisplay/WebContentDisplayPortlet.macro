@@ -335,15 +335,11 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
 		AssertClick(
 			locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_BUTTON",
 			value1 = "Select");
 
 		SelectFrame(value1 = "relative=top");
-
-		WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -364,6 +360,8 @@ definition {
 
 			Click(locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 
+			SelectFrame(value1 = "relative=top");
+
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			AssertTextEquals.assertPartialText(
@@ -383,6 +381,8 @@ definition {
 					locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK",
 					value1 = "${webContentTitle}");
 			}
+
+			SelectFrame(value1 = "relative=top");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

@@ -195,7 +195,11 @@ class RuleList extends Component {
 		else if (operand.type !== 'field') {
 			const fieldType = this._getFieldType(operands[0].value);
 
-			if (fieldType == 'select' || fieldType === 'radio') {
+			if (
+				fieldType === 'checkbox_multiple' ||
+				fieldType === 'radio' ||
+				fieldType === 'select'
+			) {
 				label = this._getOptionLabel(operands[0].value, operand.value);
 			}
 			else {
@@ -236,7 +240,7 @@ class RuleList extends Component {
 			});
 		}
 
-		return fieldLabel;
+		return fieldLabel ? fieldLabel : optionValue;
 	}
 
 	_getRulesCardOptions(rule) {

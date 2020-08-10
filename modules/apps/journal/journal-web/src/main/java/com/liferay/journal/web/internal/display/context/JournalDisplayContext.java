@@ -1173,6 +1173,7 @@ public class JournalDisplayContext {
 		searchContext.setEnd(end);
 		searchContext.setFolderIds(_getFolderIds());
 		searchContext.setGroupIds(new long[] {_themeDisplay.getScopeGroupId()});
+		searchContext.setIncludeInternalAssetCategories(true);
 		searchContext.setKeywords(getKeywords());
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();

@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Michael C. Han
+ * @author Rubén Pulido
  */
 @Component(immediate = true, service = KeywordQueryContributor.class)
 public class AssetPublicCategoryTitlesKeywordQueryContributor
@@ -47,7 +47,7 @@ public class AssetPublicCategoryTitlesKeywordQueryContributor
 		queryHelper.addSearchTerm(
 			booleanQuery, searchContext,
 			localization.getLocalizedName(
-				Field.ASSET_TAG_NAMES,
+				Field.ASSET_PUBLIC_CATEGORY_TITLES,
 				LocaleUtil.toLanguageId(searchContext.getLocale())),
 			false);
 	}

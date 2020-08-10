@@ -294,7 +294,7 @@ public abstract class BaseRoleResourceTestCase {
 		}
 	}
 
-	protected void assertValid(Role role) {
+	protected void assertValid(Role role) throws Exception {
 		boolean valid = true;
 
 		if (role.getId() == null) {

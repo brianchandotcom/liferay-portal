@@ -15,6 +15,8 @@
 package com.liferay.headless.form.resource.v1_0;
 
 import com.liferay.headless.form.dto.v1_0.FormDocument;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import java.util.Locale;
@@ -72,6 +74,10 @@ public interface FormDocumentResource {
 
 	public void setContextUser(
 		com.liferay.portal.kernel.model.User contextUser);
+
+	public void setGroupLocalService(GroupLocalService groupLocalService);
+
+	public void setRoleLocalService(RoleLocalService roleLocalService);
 
 	public static class FactoryHolder {
 

@@ -1237,7 +1237,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		}
 	}
 
-	protected void assertValid(WorkflowTask workflowTask) {
+	protected void assertValid(WorkflowTask workflowTask) throws Exception {
 		boolean valid = true;
 
 		if (workflowTask.getDateCreated() == null) {

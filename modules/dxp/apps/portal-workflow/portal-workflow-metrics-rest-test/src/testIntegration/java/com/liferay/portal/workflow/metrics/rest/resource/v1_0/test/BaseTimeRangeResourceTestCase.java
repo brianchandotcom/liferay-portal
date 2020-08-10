@@ -282,7 +282,7 @@ public abstract class BaseTimeRangeResourceTestCase {
 		}
 	}
 
-	protected void assertValid(TimeRange timeRange) {
+	protected void assertValid(TimeRange timeRange) throws Exception {
 		boolean valid = true;
 
 		if (timeRange.getId() == null) {

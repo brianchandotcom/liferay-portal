@@ -23,6 +23,8 @@ import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResou
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
@@ -491,6 +493,8 @@ public class Mutation {
 		keywordResource.setContextHttpServletResponse(_httpServletResponse);
 		keywordResource.setContextUriInfo(_uriInfo);
 		keywordResource.setContextUser(_user);
+		keywordResource.setGroupLocalService(groupLocalService);
+		keywordResource.setRoleLocalService(roleLocalService);
 	}
 
 	private void _populateResourceContext(
@@ -505,6 +509,8 @@ public class Mutation {
 			_httpServletResponse);
 		taxonomyCategoryResource.setContextUriInfo(_uriInfo);
 		taxonomyCategoryResource.setContextUser(_user);
+		taxonomyCategoryResource.setGroupLocalService(groupLocalService);
+		taxonomyCategoryResource.setRoleLocalService(roleLocalService);
 	}
 
 	private void _populateResourceContext(
@@ -519,6 +525,8 @@ public class Mutation {
 			_httpServletResponse);
 		taxonomyVocabularyResource.setContextUriInfo(_uriInfo);
 		taxonomyVocabularyResource.setContextUser(_user);
+		taxonomyVocabularyResource.setGroupLocalService(groupLocalService);
+		taxonomyVocabularyResource.setRoleLocalService(roleLocalService);
 	}
 
 	private static ComponentServiceObjects<KeywordResource>
@@ -530,10 +538,12 @@ public class Mutation {
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;
+	private GroupLocalService groupLocalService;
 	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private com.liferay.portal.kernel.model.User _user;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
+	private RoleLocalService roleLocalService;
 	private UriInfo _uriInfo;
 
 }

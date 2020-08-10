@@ -1311,7 +1311,9 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		}
 	}
 
-	protected void assertValid(TaxonomyCategory taxonomyCategory) {
+	protected void assertValid(TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
 		boolean valid = true;
 
 		if (taxonomyCategory.getDateCreated() == null) {

@@ -1022,7 +1022,9 @@ public abstract class BaseContentSetElementResourceTestCase {
 		}
 	}
 
-	protected void assertValid(ContentSetElement contentSetElement) {
+	protected void assertValid(ContentSetElement contentSetElement)
+		throws Exception {
+
 		boolean valid = true;
 
 		if (contentSetElement.getId() == null) {

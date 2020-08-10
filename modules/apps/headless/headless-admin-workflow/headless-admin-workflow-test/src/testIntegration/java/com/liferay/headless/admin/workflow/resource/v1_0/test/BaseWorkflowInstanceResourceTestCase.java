@@ -565,7 +565,9 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 		}
 	}
 
-	protected void assertValid(WorkflowInstance workflowInstance) {
+	protected void assertValid(WorkflowInstance workflowInstance)
+		throws Exception {
+
 		boolean valid = true;
 
 		if (workflowInstance.getDateCreated() == null) {

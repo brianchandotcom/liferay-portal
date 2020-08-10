@@ -465,7 +465,7 @@ public abstract class BaseSegmentResourceTestCase {
 		}
 	}
 
-	protected void assertValid(Segment segment) {
+	protected void assertValid(Segment segment) throws Exception {
 		boolean valid = true;
 
 		if (segment.getDateCreated() == null) {

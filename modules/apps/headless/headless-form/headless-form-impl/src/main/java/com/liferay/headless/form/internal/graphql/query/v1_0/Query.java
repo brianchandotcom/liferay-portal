@@ -27,6 +27,8 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
@@ -423,6 +425,8 @@ public class Query {
 		formResource.setContextHttpServletResponse(_httpServletResponse);
 		formResource.setContextUriInfo(_uriInfo);
 		formResource.setContextUser(_user);
+		formResource.setGroupLocalService(groupLocalService);
+		formResource.setRoleLocalService(roleLocalService);
 	}
 
 	private void _populateResourceContext(
@@ -436,6 +440,8 @@ public class Query {
 			_httpServletResponse);
 		formDocumentResource.setContextUriInfo(_uriInfo);
 		formDocumentResource.setContextUser(_user);
+		formDocumentResource.setGroupLocalService(groupLocalService);
+		formDocumentResource.setRoleLocalService(roleLocalService);
 	}
 
 	private void _populateResourceContext(FormRecordResource formRecordResource)
@@ -447,6 +453,8 @@ public class Query {
 		formRecordResource.setContextHttpServletResponse(_httpServletResponse);
 		formRecordResource.setContextUriInfo(_uriInfo);
 		formRecordResource.setContextUser(_user);
+		formRecordResource.setGroupLocalService(groupLocalService);
+		formRecordResource.setRoleLocalService(roleLocalService);
 	}
 
 	private void _populateResourceContext(
@@ -460,6 +468,8 @@ public class Query {
 			_httpServletResponse);
 		formStructureResource.setContextUriInfo(_uriInfo);
 		formStructureResource.setContextUser(_user);
+		formStructureResource.setGroupLocalService(groupLocalService);
+		formStructureResource.setRoleLocalService(roleLocalService);
 	}
 
 	private static ComponentServiceObjects<FormResource>
@@ -475,9 +485,11 @@ public class Query {
 	private BiFunction<Object, String, Filter> _filterBiFunction;
 	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private com.liferay.portal.kernel.model.Company _company;
+	private GroupLocalService groupLocalService;
 	private com.liferay.portal.kernel.model.User _user;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
+	private RoleLocalService roleLocalService;
 	private UriInfo _uriInfo;
 
 }

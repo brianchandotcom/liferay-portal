@@ -382,7 +382,7 @@ public abstract class BaseExperimentResourceTestCase {
 		}
 	}
 
-	protected void assertValid(Experiment experiment) {
+	protected void assertValid(Experiment experiment) throws Exception {
 		boolean valid = true;
 
 		if (experiment.getDateCreated() == null) {

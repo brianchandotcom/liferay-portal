@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Headless Admin Content API
 Bundle-SymbolicName: com.liferay.headless.admin.content.api
-Bundle-Version: 1.0.6
+Bundle-Version: 1.1.0
 Export-Package: com.liferay.headless.admin.content.resource.v1_0

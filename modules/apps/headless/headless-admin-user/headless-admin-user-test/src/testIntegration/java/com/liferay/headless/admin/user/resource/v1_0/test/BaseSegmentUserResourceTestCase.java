@@ -362,7 +362,7 @@ public abstract class BaseSegmentUserResourceTestCase {
 		}
 	}
 
-	protected void assertValid(SegmentUser segmentUser) {
+	protected void assertValid(SegmentUser segmentUser) throws Exception {
 		boolean valid = true;
 
 		if (segmentUser.getId() == null) {

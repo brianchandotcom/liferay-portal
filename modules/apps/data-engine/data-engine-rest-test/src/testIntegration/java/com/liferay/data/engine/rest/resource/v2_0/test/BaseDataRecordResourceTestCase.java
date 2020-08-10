@@ -942,7 +942,7 @@ public abstract class BaseDataRecordResourceTestCase {
 		}
 	}
 
-	protected void assertValid(DataRecord dataRecord) {
+	protected void assertValid(DataRecord dataRecord) throws Exception {
 		boolean valid = true;
 
 		if (dataRecord.getId() == null) {

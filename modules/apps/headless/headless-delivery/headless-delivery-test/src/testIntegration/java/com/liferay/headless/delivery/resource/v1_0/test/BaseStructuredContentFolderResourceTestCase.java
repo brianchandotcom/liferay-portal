@@ -1892,8 +1892,8 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		}
 	}
 
-	protected void assertValid(
-		StructuredContentFolder structuredContentFolder) {
+	protected void assertValid(StructuredContentFolder structuredContentFolder)
+		throws Exception {
 
 		boolean valid = true;
 
@@ -1909,8 +1909,13 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			valid = false;
 		}
 
+		Group group = testDepotEntry.getGroup();
+
 		if (!Objects.equals(
-				structuredContentFolder.getSiteId(), testGroup.getGroupId())) {
+				structuredContentFolder.getSiteId(), testGroup.getGroupId()) &&
+			!Objects.equals(
+				structuredContentFolder.getAssetLibraryKey(),
+				group.getGroupKey())) {
 
 			valid = false;
 		}
@@ -2113,13 +2118,6 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			return true;
 		}
 
-		if (!Objects.equals(
-				structuredContentFolder1.getSiteId(),
-				structuredContentFolder2.getSiteId())) {
-
-			return false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -2127,17 +2125,6 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				if (!equals(
 						(Map)structuredContentFolder1.getActions(),
 						(Map)structuredContentFolder2.getActions())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("assetLibraryKey", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						structuredContentFolder1.getAssetLibraryKey(),
-						structuredContentFolder2.getAssetLibraryKey())) {
 
 					return false;
 				}

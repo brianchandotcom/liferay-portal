@@ -1859,7 +1859,9 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		}
 	}
 
-	protected void assertValid(MessageBoardMessage messageBoardMessage) {
+	protected void assertValid(MessageBoardMessage messageBoardMessage)
+		throws Exception {
+
 		boolean valid = true;
 
 		if (messageBoardMessage.getDateCreated() == null) {

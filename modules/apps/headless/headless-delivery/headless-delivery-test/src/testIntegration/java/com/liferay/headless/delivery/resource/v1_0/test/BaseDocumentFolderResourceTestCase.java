@@ -1721,7 +1721,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		}
 	}
 
-	protected void assertValid(DocumentFolder documentFolder) {
+	protected void assertValid(DocumentFolder documentFolder) throws Exception {
 		boolean valid = true;
 
 		if (documentFolder.getDateCreated() == null) {
@@ -1736,8 +1736,12 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			valid = false;
 		}
 
+		Group group = testDepotEntry.getGroup();
+
 		if (!Objects.equals(
-				documentFolder.getSiteId(), testGroup.getGroupId())) {
+				documentFolder.getSiteId(), testGroup.getGroupId()) &&
+			!Objects.equals(
+				documentFolder.getAssetLibraryKey(), group.getGroupKey())) {
 
 			valid = false;
 		}
@@ -1930,12 +1934,6 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			return true;
 		}
 
-		if (!Objects.equals(
-				documentFolder1.getSiteId(), documentFolder2.getSiteId())) {
-
-			return false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -1943,17 +1941,6 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				if (!equals(
 						(Map)documentFolder1.getActions(),
 						(Map)documentFolder2.getActions())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("assetLibraryKey", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						documentFolder1.getAssetLibraryKey(),
-						documentFolder2.getAssetLibraryKey())) {
 
 					return false;
 				}

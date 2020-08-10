@@ -24,6 +24,8 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
@@ -392,6 +394,8 @@ public class Query {
 		accountResource.setContextHttpServletResponse(_httpServletResponse);
 		accountResource.setContextUriInfo(_uriInfo);
 		accountResource.setContextUser(_user);
+		accountResource.setGroupLocalService(groupLocalService);
+		accountResource.setRoleLocalService(roleLocalService);
 	}
 
 	private void _populateResourceContext(
@@ -404,6 +408,8 @@ public class Query {
 		accountRoleResource.setContextHttpServletResponse(_httpServletResponse);
 		accountRoleResource.setContextUriInfo(_uriInfo);
 		accountRoleResource.setContextUser(_user);
+		accountRoleResource.setGroupLocalService(groupLocalService);
+		accountRoleResource.setRoleLocalService(roleLocalService);
 	}
 
 	private void _populateResourceContext(
@@ -416,6 +422,8 @@ public class Query {
 		accountUserResource.setContextHttpServletResponse(_httpServletResponse);
 		accountUserResource.setContextUriInfo(_uriInfo);
 		accountUserResource.setContextUser(_user);
+		accountUserResource.setGroupLocalService(groupLocalService);
+		accountUserResource.setRoleLocalService(roleLocalService);
 	}
 
 	private static ComponentServiceObjects<AccountResource>
@@ -429,9 +437,11 @@ public class Query {
 	private BiFunction<Object, String, Filter> _filterBiFunction;
 	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private com.liferay.portal.kernel.model.Company _company;
+	private GroupLocalService groupLocalService;
 	private com.liferay.portal.kernel.model.User _user;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
+	private RoleLocalService roleLocalService;
 	private UriInfo _uriInfo;
 
 }

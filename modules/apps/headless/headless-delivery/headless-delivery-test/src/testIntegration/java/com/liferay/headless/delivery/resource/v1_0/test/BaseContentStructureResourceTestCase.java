@@ -1038,7 +1038,9 @@ public abstract class BaseContentStructureResourceTestCase {
 		}
 	}
 
-	protected void assertValid(ContentStructure contentStructure) {
+	protected void assertValid(ContentStructure contentStructure)
+		throws Exception {
+
 		boolean valid = true;
 
 		if (contentStructure.getDateCreated() == null) {
@@ -1053,8 +1055,12 @@ public abstract class BaseContentStructureResourceTestCase {
 			valid = false;
 		}
 
+		Group group = testDepotEntry.getGroup();
+
 		if (!Objects.equals(
-				contentStructure.getSiteId(), testGroup.getGroupId())) {
+				contentStructure.getSiteId(), testGroup.getGroupId()) &&
+			!Objects.equals(
+				contentStructure.getAssetLibraryKey(), group.getGroupKey())) {
 
 			valid = false;
 		}
@@ -1223,25 +1229,8 @@ public abstract class BaseContentStructureResourceTestCase {
 			return true;
 		}
 
-		if (!Objects.equals(
-				contentStructure1.getSiteId(), contentStructure2.getSiteId())) {
-
-			return false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
-
-			if (Objects.equals("assetLibraryKey", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						contentStructure1.getAssetLibraryKey(),
-						contentStructure2.getAssetLibraryKey())) {
-
-					return false;
-				}
-
-				continue;
-			}
 
 			if (Objects.equals(
 					"availableLanguages", additionalAssertFieldName)) {

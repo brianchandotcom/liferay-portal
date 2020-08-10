@@ -1231,7 +1231,7 @@ public abstract class BaseKeywordResourceTestCase {
 		}
 	}
 
-	protected void assertValid(Keyword keyword) {
+	protected void assertValid(Keyword keyword) throws Exception {
 		boolean valid = true;
 
 		if (keyword.getDateCreated() == null) {
@@ -1246,7 +1246,12 @@ public abstract class BaseKeywordResourceTestCase {
 			valid = false;
 		}
 
-		if (!Objects.equals(keyword.getSiteId(), testGroup.getGroupId())) {
+		Group group = testDepotEntry.getGroup();
+
+		if (!Objects.equals(keyword.getSiteId(), testGroup.getGroupId()) &&
+			!Objects.equals(
+				keyword.getAssetLibraryKey(), group.getGroupKey())) {
+
 			valid = false;
 		}
 
@@ -1384,10 +1389,6 @@ public abstract class BaseKeywordResourceTestCase {
 			return true;
 		}
 
-		if (!Objects.equals(keyword1.getSiteId(), keyword2.getSiteId())) {
-			return false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -1395,17 +1396,6 @@ public abstract class BaseKeywordResourceTestCase {
 				if (!equals(
 						(Map)keyword1.getActions(),
 						(Map)keyword2.getActions())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("assetLibraryKey", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						keyword1.getAssetLibraryKey(),
-						keyword2.getAssetLibraryKey())) {
 
 					return false;
 				}

@@ -604,6 +604,12 @@ class RuleEditor extends Component {
 		return fields;
 	}
 
+	_getFieldType(fieldName) {
+		const pages = this.pages;
+
+		return getFieldProperty(pages, fieldName, 'type');
+	}
+
 	_getFieldTypeByFieldName(fieldName) {
 		let dataType = '';
 		let repeatable = false;
@@ -652,6 +658,36 @@ class RuleEditor extends Component {
 				value: metadata.name,
 			};
 		});
+	}
+
+	_getOptionValue(fieldName, optionLabel) {
+		const pages = this.pages;
+
+		let optionValue = null;
+
+		if (pages && optionLabel) {
+			const visitor = new PagesVisitor(pages);
+
+			visitor.findField((field) => {
+				let found = false;
+
+				if (field.fieldName === fieldName && field.options) {
+					field.options.some((option) => {
+						if (option.label == optionLabel) {
+							optionValue = option.value;
+
+							found = true;
+						}
+
+						return found;
+					});
+				}
+
+				return found;
+			});
+		}
+
+		return optionValue ? optionValue : optionLabel;
 	}
 
 	_handleActionAdded() {
@@ -1078,7 +1114,21 @@ class RuleEditor extends Component {
 	_handleSecondOperandValueEdited({fieldInstance, value}) {
 		const {conditions} = this;
 		const index = this._getIndex(fieldInstance, '.condition-type-value');
-		const secondOperandValue = Array.isArray(value) ? value[0] : value;
+
+		let secondOperandValue = Array.isArray(value) ? value[0] : value;
+		let secondOperandOptionValue = secondOperandValue;
+
+		if (
+			conditions[index].operands[1].type !== 'field' &&
+			fieldInstance.type === 'select'
+		) {
+			fieldInstance.options.map((option) => {
+				if (option.value === secondOperandValue) {
+					secondOperandOptionValue = option.value;
+					secondOperandValue = option.label;
+				}
+			});
+		}
 
 		this.setState({
 			conditions: conditions.map((condition, conditionIndex) => {
@@ -1087,6 +1137,7 @@ class RuleEditor extends Component {
 				if (index == conditionIndex) {
 					operands[1] = {
 						...operands[1],
+						optionValue: secondOperandOptionValue,
 						value: secondOperandValue,
 					};
 				}
@@ -1163,13 +1214,36 @@ class RuleEditor extends Component {
 			return newAction;
 		});
 
+		const newConditions = rule.conditions.map((condition) => {
+			const newCondition = {...condition};
+			const {operands} = newCondition;
+
+			if (operands[1].type !== 'field') {
+				const fieldType = this._getFieldType(operands[0].value);
+
+				if (
+					fieldType === 'checkbox_multiple' ||
+					fieldType === 'radio' ||
+					fieldType === 'select'
+				) {
+					operands[1].optionValue = this._getOptionValue(
+						operands[0].value,
+						operands[1].value
+					);
+				}
+			}
+
+			return newCondition;
+		});
+
 		newActions = this._syncActions(newActions);
 
 		newRule.actions = newActions;
+		newRule.conditions = newConditions;
 
 		this.setState({
 			actions: newActions,
-			conditions: rule.conditions,
+			conditions: newConditions,
 			logicalOperator: rule['logical-operator'].toLowerCase(),
 			rule: newRule,
 		});

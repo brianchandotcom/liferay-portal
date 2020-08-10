@@ -34,6 +34,11 @@ export function ImageSelector({
 				<label htmlFor={imageTitleId}>{label}</label>
 				<ClayInput
 					id={imageTitleId}
+					onClick={() =>
+						openImageSelector((image) => {
+							onImageSelected(image);
+						})
+					}
 					placeholder={Liferay.Language.get('none')}
 					readOnly
 					sizing="sm"

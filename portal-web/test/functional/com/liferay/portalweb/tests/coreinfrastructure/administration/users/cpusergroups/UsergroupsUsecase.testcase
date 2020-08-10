@@ -214,13 +214,15 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		Role.definePermissionCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_BOOKMARKS_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX",
-			permissionDefinitionValue = "Access in Site and Asset Library Administration",
-			permissionNavigationKey = "SITE_ADMIN_CONTENT_BOOKMARKS",
-			permissionNavigationValue = "Bookmarks",
-			roleTitle = "Test UserGroup Role",
-			roleUser = "Test UserGroup Role");
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_bookmarks_web_portlet_BookmarksAdminPortlet",
+			roleTitle = "Test UserGroup Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.bookmarks",
+			roleTitle = "Test UserGroup Role");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

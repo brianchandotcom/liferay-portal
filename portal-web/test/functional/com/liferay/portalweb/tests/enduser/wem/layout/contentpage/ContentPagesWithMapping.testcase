@@ -534,6 +534,57 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-116975. Map multiple tags from asset entry to editable field."
+	@priority = "5"
+	test MapTagsToEditableField {
+		JSONAssettag.addTag(
+			groupName = "Test Site Name",
+			tagName = "tagname1");
+
+		JSONAssettag.addTag(
+			groupName = "Test Site Name",
+			tagName = "tagname2");
+
+		JSONAssettag.addTag(
+			groupName = "Test Site Name",
+			tagName = "tagname3");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithTagCP(
+			tagNameList = "tagname1,tagname2,tagname3",
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Paragraph");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			contributed = "true",
+			fragmentName = "Paragraph",
+			id = "text");
+
+		PageEditorMapping.mapEditableFieldToAsset(
+			entryTitle = "Web Content Title",
+			navItem = "Web Content");
+
+		Select(
+			locator1 = "PageEditorEditableLink#FIELD",
+			value1 = "Tags");
+
+		PageEditor.viewFragmentEditableText(
+			editableText = "tagname1, tagname2, tagname3",
+			fragmentName = "Paragraph",
+			id = "element-text");
+	}
+
 	@description = "This is a use case for LPS-116975. Map single tag from asset entry to editable field."
 	@priority = "5"
 	test MapTagToEditableField {

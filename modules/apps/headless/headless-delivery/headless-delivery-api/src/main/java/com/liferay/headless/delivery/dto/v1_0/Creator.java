@@ -243,7 +243,9 @@ public class Creator {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
-	@Schema(description = "A relative URL to the author's user profile.")
+	@Schema(
+		description = "A relative URL to the author's user profile. Optional field, can be embedded with nestedFields"
+	)
 	public String getProfileURL() {
 		return profileURL;
 	}
@@ -267,7 +269,9 @@ public class Creator {
 		}
 	}
 
-	@GraphQLField(description = "A relative URL to the author's user profile.")
+	@GraphQLField(
+		description = "A relative URL to the author's user profile. Optional field, can be embedded with nestedFields"
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String profileURL;
 

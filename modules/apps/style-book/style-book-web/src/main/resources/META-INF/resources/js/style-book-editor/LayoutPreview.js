@@ -26,14 +26,20 @@ export default function LayoutPreview() {
 
 	const loadFrontendTokenValues = useCallback(() => {
 		if (iframeRef.current) {
-			Object.values(frontendTokensValues).forEach(
-				({cssVariableMapping, value}) => {
-					iframeRef.current.contentDocument.body.style.setProperty(
-						`--${cssVariableMapping}`,
-						value
-					);
-				}
+			const wrapper = iframeRef.current.contentDocument.querySelector(
+				'#wrapper'
 			);
+
+			if (wrapper) {
+				Object.values(frontendTokensValues).forEach(
+					({cssVariableMapping, value}) => {
+						wrapper.style.setProperty(
+							`--${cssVariableMapping}`,
+							value
+						);
+					}
+				);
+			}
 		}
 	}, [frontendTokensValues]);
 

@@ -25,16 +25,16 @@
 </liferay-util:buffer>
 
 <%
-Group siteGroup = themeDisplay.getSiteGroup();
+Group group = StagingUtil.getStagingGroup(themeDisplay.getSiteGroupId());
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 %>
 
 <liferay-layout:layouts-tree
 	draggableTree="<%= false %>"
-	groupId="<%= siteGroup.getGroupId() %>"
+	groupId="<%= group.getGroupId() %>"
 	linkTemplate="<%= linkTemplate %>"
 	privateLayout="<%= privateLayout %>"
 	rootLinkTemplate='<span class="{cssClass}" id="{id}" title="{title}">{label}</span>'
-	rootNodeName="<%= siteGroup.getLayoutRootNodeName(privateLayout, locale) %>"
+	rootNodeName="<%= group.getLayoutRootNodeName(privateLayout, locale) %>"
 	treeId="layoutsTree"
 />

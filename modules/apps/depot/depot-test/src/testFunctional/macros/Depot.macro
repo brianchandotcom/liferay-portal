@@ -226,6 +226,16 @@ definition {
 				key_tableEntryText = "${tableEntryText}",
 				locator1 = "LexiconTable#TABLE_ENTRY_TEXT_2",
 				value1 = "${tableEntryText}");
+
+			if (isSet(disconnectDisabled)) {
+				Click.waitForMenuToggleJSClick(
+					key_tableEntry = "${siteName}",
+					locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+
+				AssertElementPresent(
+					key_menuItem = "Disconnect",
+					locator1 = "MenuItem#DISABLED_MENU_ITEM_2");
+			}
 		}
 	}
 

@@ -48,5 +48,9 @@ window.Liferay = {
 		getDefaultLanguageId: () => 'en_US',
 		getLanguageId: () => 'en_US',
 	},
+	Util: {
+		...window.Liferay.Util,
+		getLexiconIconTpl: (icon) => icon,
+	},
 	component: () => {},
 };

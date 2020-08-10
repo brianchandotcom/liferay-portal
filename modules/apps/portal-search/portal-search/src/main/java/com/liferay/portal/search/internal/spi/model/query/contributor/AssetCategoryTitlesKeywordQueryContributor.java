@@ -42,14 +42,16 @@ public class AssetCategoryTitlesKeywordQueryContributor
 		SearchContext searchContext =
 			keywordQueryContributorHelper.getSearchContext();
 
-		Localization localization = getLocalization();
+		if (searchContext.isIncludeInternalAssetCategories()) {
+			Localization localization = getLocalization();
 
-		queryHelper.addSearchTerm(
-			booleanQuery, searchContext,
-			localization.getLocalizedName(
-				Field.ASSET_CATEGORY_TITLES,
-				LocaleUtil.toLanguageId(searchContext.getLocale())),
-			false);
+			queryHelper.addSearchTerm(
+				booleanQuery, searchContext,
+				localization.getLocalizedName(
+					Field.ASSET_CATEGORY_TITLES,
+					LocaleUtil.toLanguageId(searchContext.getLocale())),
+				false);
+		}
 	}
 
 	protected Localization getLocalization() {

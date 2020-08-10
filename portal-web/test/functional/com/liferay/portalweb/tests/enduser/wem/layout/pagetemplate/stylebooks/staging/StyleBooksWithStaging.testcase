@@ -1,0 +1,195 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Style Books";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Activate local live staging") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name");
+
+			Staging.activateStagingCP(siteName = "Test Site Name");
+		}
+
+		task ("Add a style book") {
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name-staging");
+
+			StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is for LPS-116106. Page Creator can quickly change style book via Page Design Options panel in Staging site."
+	@priority = "4"
+	test ChangeStyleBookOfContentPageViaPageDesignOptionsPanelInStagingSite {
+		task ("Edit the style book and Publish it") {
+			StyleBooks.selectForm(formName = "Color System");
+
+			StyleBooks.expandSection(sectionName = "Theme Colors");
+
+			Type(
+				key_text = "Primary",
+				locator1 = "TextInput#ANY",
+				value1 = "#00FF00");
+
+			StyleBooks.waitForAutoSave();
+
+			StyleBooks.selectForm(formName = "Typography");
+
+			StyleBooks.expandSection(sectionName = "Headings");
+
+			Type(
+				key_fieldLabel = "H1 Font Size",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "2rem");
+
+			StyleBooks.waitForAutoSave();
+
+			StyleBooks.clickPublish();
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name-staging",
+				layoutName = "Test Page Name",
+				site = "false",
+				type = "content");
+		}
+
+		task ("Change to the new style book via Page Design Options panel") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				fragmentName = "Banner Center");
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Navigator.gotoNavTab(navTab = "Style Book");
+
+			AssertElementPresent(
+				key_card = "Inherited from Master",
+				locator1 = "LexiconCard#CARD_SELECTED");
+
+			StyleBooks.selectStyleBookViaPageDesignOptions(styleBookName = "Test Style Book Name");
+
+			AssertCssValue(
+				id = "link",
+				key_fragmentName = "Banner Center",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				locator2 = "background-color",
+				value1 = "rgba(0, 255, 0, 1)");
+
+			AssertCssValue(
+				id = "title",
+				key_fragmentName = "Banner Center",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				locator2 = "font-size",
+				value1 = "32px");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert the new style book is applied to content page in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			AssertCssValue(
+				key_content = "Go Somewhere",
+				key_element = "a",
+				key_id = "link",
+				key_type = "link",
+				locator1 = "StyleBookEditor#CONTRIBUTED_FRAGMENT_INLINE_CONTENT",
+				locator2 = "background-color",
+				value1 = "rgba(0, 255, 0, 1)");
+
+			AssertCssValue(
+				key_content = "Banner Title Example",
+				key_element = "h1",
+				key_id = "title",
+				key_type = "rich-text",
+				locator1 = "StyleBookEditor#CONTRIBUTED_FRAGMENT_INLINE_CONTENT",
+				locator2 = "font-size",
+				value1 = "32px");
+		}
+
+		task ("Change to the default style book via Page Design Options panel") {
+			ContentPages.clickPencil();
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Navigator.gotoNavTab(navTab = "Style Book");
+
+			AssertElementPresent(
+				key_card = "Test Style Book Name",
+				locator1 = "LexiconCard#CARD_SELECTED");
+
+			StyleBooks.selectStyleBookViaPageDesignOptions(styleBookName = "Inherited from Master");
+
+			AssertCssValue(
+				id = "link",
+				key_fragmentName = "Banner Center",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				locator2 = "background-color",
+				value1 = "rgba(11, 95, 255, 1)");
+
+			AssertCssValue(
+				id = "title",
+				key_fragmentName = "Banner Center",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				locator2 = "font-size",
+				value1 = "26px");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert the new style book is applied to content page in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			AssertCssValue(
+				key_content = "Go Somewhere",
+				key_element = "a",
+				key_id = "link",
+				key_type = "link",
+				locator1 = "StyleBookEditor#CONTRIBUTED_FRAGMENT_INLINE_CONTENT",
+				locator2 = "background-color",
+				value1 = "rgba(11, 95, 255, 1)");
+
+			AssertCssValue(
+				key_content = "Banner Title Example",
+				key_element = "h1",
+				key_id = "title",
+				key_type = "rich-text",
+				locator1 = "StyleBookEditor#CONTRIBUTED_FRAGMENT_INLINE_CONTENT",
+				locator2 = "font-size",
+				value1 = "26px");
+		}
+	}
+
+}

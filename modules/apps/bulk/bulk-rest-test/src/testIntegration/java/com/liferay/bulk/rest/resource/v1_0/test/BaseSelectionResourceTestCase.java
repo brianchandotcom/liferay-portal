@@ -251,7 +251,7 @@ public abstract class BaseSelectionResourceTestCase {
 		}
 	}
 
-	protected void assertValid(Selection selection) {
+	protected void assertValid(Selection selection) throws Exception {
 		boolean valid = true;
 
 		for (String additionalAssertFieldName :

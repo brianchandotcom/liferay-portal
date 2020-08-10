@@ -1636,7 +1636,7 @@ public abstract class BaseCommentResourceTestCase {
 		}
 	}
 
-	protected void assertValid(Comment comment) {
+	protected void assertValid(Comment comment) throws Exception {
 		boolean valid = true;
 
 		if (comment.getDateCreated() == null) {

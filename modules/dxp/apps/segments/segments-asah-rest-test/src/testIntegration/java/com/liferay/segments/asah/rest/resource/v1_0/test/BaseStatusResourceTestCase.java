@@ -253,7 +253,7 @@ public abstract class BaseStatusResourceTestCase {
 		}
 	}
 
-	protected void assertValid(Status status) {
+	protected void assertValid(Status status) throws Exception {
 		boolean valid = true;
 
 		for (String additionalAssertFieldName :

@@ -1826,7 +1826,9 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		}
 	}
 
-	protected void assertValid(MessageBoardThread messageBoardThread) {
+	protected void assertValid(MessageBoardThread messageBoardThread)
+		throws Exception {
+
 		boolean valid = true;
 
 		if (messageBoardThread.getDateCreated() == null) {

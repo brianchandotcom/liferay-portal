@@ -422,7 +422,7 @@ public abstract class BaseWebUrlResourceTestCase {
 		}
 	}
 
-	protected void assertValid(WebUrl webUrl) {
+	protected void assertValid(WebUrl webUrl) throws Exception {
 		boolean valid = true;
 
 		if (webUrl.getId() == null) {

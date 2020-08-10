@@ -472,7 +472,7 @@ public abstract class BaseFormStructureResourceTestCase {
 		}
 	}
 
-	protected void assertValid(FormStructure formStructure) {
+	protected void assertValid(FormStructure formStructure) throws Exception {
 		boolean valid = true;
 
 		if (formStructure.getDateCreated() == null) {

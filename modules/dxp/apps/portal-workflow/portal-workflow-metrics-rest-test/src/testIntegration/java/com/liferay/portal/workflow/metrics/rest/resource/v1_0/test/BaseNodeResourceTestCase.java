@@ -331,7 +331,7 @@ public abstract class BaseNodeResourceTestCase {
 		}
 	}
 
-	protected void assertValid(Node node) {
+	protected void assertValid(Node node) throws Exception {
 		boolean valid = true;
 
 		if (node.getDateCreated() == null) {

@@ -2495,7 +2495,9 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 	}
 
-	protected void assertValid(StructuredContent structuredContent) {
+	protected void assertValid(StructuredContent structuredContent)
+		throws Exception {
+
 		boolean valid = true;
 
 		if (structuredContent.getDateCreated() == null) {
@@ -2510,8 +2512,12 @@ public abstract class BaseStructuredContentResourceTestCase {
 			valid = false;
 		}
 
+		Group group = testDepotEntry.getGroup();
+
 		if (!Objects.equals(
-				structuredContent.getSiteId(), testGroup.getGroupId())) {
+				structuredContent.getSiteId(), testGroup.getGroupId()) &&
+			!Objects.equals(
+				structuredContent.getAssetLibraryKey(), group.getGroupKey())) {
 
 			valid = false;
 		}
@@ -2892,13 +2898,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 			return true;
 		}
 
-		if (!Objects.equals(
-				structuredContent1.getSiteId(),
-				structuredContent2.getSiteId())) {
-
-			return false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -2917,17 +2916,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 				if (!Objects.deepEquals(
 						structuredContent1.getAggregateRating(),
 						structuredContent2.getAggregateRating())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("assetLibraryKey", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						structuredContent1.getAssetLibraryKey(),
-						structuredContent2.getAssetLibraryKey())) {
 
 					return false;
 				}

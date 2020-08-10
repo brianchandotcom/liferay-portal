@@ -289,7 +289,8 @@ public abstract class BaseWorkflowTaskAssignableUsersResourceTestCase {
 	}
 
 	protected void assertValid(
-		WorkflowTaskAssignableUsers workflowTaskAssignableUsers) {
+			WorkflowTaskAssignableUsers workflowTaskAssignableUsers)
+		throws Exception {
 
 		boolean valid = true;
 

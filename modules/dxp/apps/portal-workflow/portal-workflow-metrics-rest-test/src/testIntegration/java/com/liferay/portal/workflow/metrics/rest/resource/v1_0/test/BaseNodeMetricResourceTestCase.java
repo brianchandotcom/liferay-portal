@@ -472,7 +472,7 @@ public abstract class BaseNodeMetricResourceTestCase {
 		}
 	}
 
-	protected void assertValid(NodeMetric nodeMetric) {
+	protected void assertValid(NodeMetric nodeMetric) throws Exception {
 		boolean valid = true;
 
 		for (String additionalAssertFieldName :

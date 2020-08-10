@@ -248,7 +248,7 @@ public abstract class BaseReindexStatusResourceTestCase {
 		}
 	}
 
-	protected void assertValid(ReindexStatus reindexStatus) {
+	protected void assertValid(ReindexStatus reindexStatus) throws Exception {
 		boolean valid = true;
 
 		for (String additionalAssertFieldName :

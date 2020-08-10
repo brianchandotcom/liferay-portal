@@ -859,6 +859,8 @@ public class LayoutStagedModelDataHandler
 			importedLayout.setIconImageId(0);
 		}
 
+		importedLayout.setStyleBookEntryId(layout.getStyleBookEntryId());
+
 		if (existingLayout == null) {
 			try {
 				int priority = layout.getPriority();

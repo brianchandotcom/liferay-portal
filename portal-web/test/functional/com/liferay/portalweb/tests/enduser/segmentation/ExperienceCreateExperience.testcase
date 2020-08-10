@@ -74,4 +74,44 @@ definition {
 			value1 = "Banner Title Example");
 	}
 
+	@description = "Validate inline text changes between experiences"
+	@priority = "5"
+	test EditInlineTextExperience {
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		ContentPages.clickPencil();
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.addExperience(experienceName = "exp1");
+
+		Refresh();
+
+		PageEditor.changeExperience(newExperience = "exp1");
+
+		AssertTextEquals(
+			locator1 = "Experience#FRAGMENT_HEADING",
+			value1 = "Heading Example");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "Edited Inline Text");
+
+		AssertTextEquals(
+			locator1 = "Experience#FRAGMENT_HEADING",
+			value1 = "Edited Inline Text");
+
+		PageEditor.changeExperience(newExperience = "Default");
+
+		AssertTextEquals(
+			locator1 = "Experience#FRAGMENT_HEADING",
+			value1 = "Heading Example");
+
+		Button.clickPublish();
+	}
+
 }

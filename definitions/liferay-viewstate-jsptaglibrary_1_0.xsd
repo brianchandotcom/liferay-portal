@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+
+<xsd:schema
+	attributeFormDefault="unqualified"
+	elementFormDefault="qualified"
+	targetNamespace="http://docs.liferay.com/xml/ns/viewstate"
+	version="1.0"
+	xmlns:javaee="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+>
+	<xsd:annotation>
+		<xsd:documentation>
+			@(#)liferay-viewstate-jsptaglibrary_1_0.xsds 1.1
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>
+			Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+
+			This library is free software; you can redistribute it and/or modify
+			it under the terms of the GNU Lesser General Public License as
+			published by the Free Software Foundation; either version 2.1 of the
+			License, or (at your option) any later version.
+
+			This library is distributed in the hope that it will be useful, but
+			WITHOUT ANY WARRANTY; without even the implied warranty of
+			MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+			Lesser General Public License for more details.
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:import
+		namespace="http://java.sun.com/xml/ns/javaee"
+		schemaLocation="web-jsptaglibrary_2_1.xsd"
+	/>
+	<xsd:complexType name="java-typeType">
+		<xsd:annotation>
+			<xsd:documentation>Extension for view state</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="javaee:extensibleType">
+				<xsd:sequence>
+					<xsd:element name="javaType" type="javaee:java-typeType" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>

@@ -517,8 +517,6 @@ definition {
 			PageEditorEditableLink.updateURL(url = "https://liferay.com");
 
 			PageEditor.clickPublish();
-
-			Alert.viewSuccessMessage();
 		}
 
 		task ("Assert mapped URL work in view mode") {

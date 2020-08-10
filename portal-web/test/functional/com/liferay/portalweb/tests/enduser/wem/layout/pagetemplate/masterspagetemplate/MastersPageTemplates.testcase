@@ -317,8 +317,6 @@ definition {
 				locator1 = "PageEditor#FOOTERS");
 
 			PageEditor.clickPublish();
-
-			Alert.viewSuccessMessage();
 		}
 
 		task ("Add a content page based on custom master") {
@@ -477,8 +475,6 @@ definition {
 				locator1 = "PageEditor#FOOTERS");
 
 			PageEditor.clickPublish();
-
-			Alert.viewSuccessMessage();
 		}
 
 		task ("Add a content page template based on custom master") {
@@ -629,8 +625,6 @@ definition {
 				locator1 = "PageEditor#FOOTERS");
 
 			PageEditor.clickPublish();
-
-			Alert.viewSuccessMessage();
 		}
 
 		task ("Add a display page template based on custom masters") {

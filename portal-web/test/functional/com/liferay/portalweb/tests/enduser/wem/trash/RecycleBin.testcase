@@ -698,8 +698,8 @@ definition {
 	@description = "This is a use case for LPS-109555. Automatically rename documents when bulk restore them from recycle bin if document names already exist in the destination."
 	@priority = "5"
 	test RenameBulkRestoreDocumentsAutomaticallyWhenDocumentNamesAlreadyExistInTheDestination {
-		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
 
 		task ("Add multiple document entries") {
 			JSONDocument.addFileWithUploadedFile(
@@ -759,8 +759,8 @@ definition {
 
 	@priority = "5"
 	test RestoreDMDocumentFromFolderCP {
-		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
 
 		JSONDocument.addFolder(
 			dmFolderName = "DM Folder Name",

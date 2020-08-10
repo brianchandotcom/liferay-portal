@@ -25,7 +25,7 @@ definition {
 
 	@priority = "5"
 	test AddChildSite {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
 		JSONGroup.addGroup(groupName = "Site Name");

@@ -261,7 +261,7 @@ definition {
 
 	@priority = "5"
 	test ADTCategoriesNavigation {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property testray.component.names = "Categories,Content and Application Templates";
 
 		JSONCategory.addVocabulary(

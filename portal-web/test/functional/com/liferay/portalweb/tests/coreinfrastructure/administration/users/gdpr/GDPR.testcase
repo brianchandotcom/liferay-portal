@@ -265,8 +265,6 @@ definition {
 
 		GDPR.deleteEntryCP();
 
-		GDPR.viewNoEntryInApplicationCP(applications = "All Applications");
-
 		Navigator.gotoPage(pageName = "Announcements Page");
 
 		AnnouncementsEntry.viewNoPG(entryTitle = "Announcement Entry Title");

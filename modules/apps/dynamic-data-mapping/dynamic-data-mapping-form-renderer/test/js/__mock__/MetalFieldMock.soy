@@ -1,0 +1,34 @@
+{namespace MetalFieldMock}
+
+{template .render}
+	{@param? _handleDuplicateClick: any}
+	{@param? _handleInputBlur: any}
+	{@param? _handleInputChange: any}
+	{@param? _handleInputFocus: any}
+	{@param? _handleRemoveClick: any}
+	{@param? value: string}
+
+	<div>
+		<button
+			class="btn btn-danger"
+			data-onclick="{$_handleRemoveClick}"
+			type="button"
+		>
+			Remove
+		</button>
+		<button
+			class="btn btn-primary"
+			data-onclick="{$_handleDuplicateClick}"
+			type="button"
+		>
+			Duplicate
+		</button>
+		<input
+			class="form-control"
+			data-onblur="{$_handleInputBlur}"
+			data-onfocus="{$_handleInputFocus}"
+			data-oninput="{$_handleInputChange}"
+			value="{$value}"
+		/>
+	</div>
+{/template}

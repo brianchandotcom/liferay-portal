@@ -1687,7 +1687,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 		}
 	}
 
-	protected void assertValid(${configYAML.apiPackagePath}.client.dto.${escapedVersion}.${schemaName} ${schemaVarName}) {
+	protected void assertValid(${configYAML.apiPackagePath}.client.dto.${escapedVersion}.${schemaName} ${schemaVarName}) throws Exception {
 		boolean valid = true;
 
 		<#if properties?keys?seq_contains("dateCreated")>
@@ -1709,9 +1709,17 @@ public abstract class Base${schemaName}ResourceTestCase {
 		</#if>
 
 		<#if properties?keys?seq_contains("siteId")>
-			if (!Objects.equals(${schemaVarName}.getSiteId(), testGroup.getGroupId())) {
-				valid = false;
-			}
+			<#if generateDepotEntry>
+				Group group = testDepotEntry.getGroup();
+
+				if (!Objects.equals(${schemaVarName}.getSiteId(), testGroup.getGroupId()) && !Objects.equals(${schemaVarName}.getAssetLibraryKey(), group.getGroupKey())) {
+					valid = false;
+				}
+			<#else>
+				if (!Objects.equals(${schemaVarName}.getSiteId(), testGroup.getGroupId())) {
+					valid = false;
+				}
+			</#if>
 		</#if>
 
 		for (String additionalAssertFieldName : getAdditionalAssertFieldNames()) {
@@ -1891,7 +1899,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			return true;
 		}
 
-		<#if properties?keys?seq_contains("siteId")>
+		<#if !properties?keys?seq_contains("assetLibraryKey") && properties?keys?seq_contains("siteId")>
 			if (!Objects.equals(${schemaVarName}1.getSiteId(), ${schemaVarName}2.getSiteId())) {
 				return false;
 			}
@@ -1899,7 +1907,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 		for (String additionalAssertFieldName : getAdditionalAssertFieldNames()) {
 			<#list properties?keys as propertyName>
-				<#if stringUtil.equals(propertyName, "siteId")>
+				<#if stringUtil.equals(propertyName, "assetLibraryKey") || stringUtil.equals(propertyName, "siteId")>
 					 <#continue>
 				</#if>
 

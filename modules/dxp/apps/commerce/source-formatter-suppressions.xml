@@ -3,5 +3,8 @@
 <suppressions>
 	<source-check>
 		<suppress checks="CopyrightCheck" files="\.*" />
+		<suppress checks="JSONPackageJSONCheck" files="commerce-bom-admin-web/package\.json" />
+		<suppress checks="JSONPackageJSONCheck" files="commerce-bom-web/package\.json" />
+		<suppress checks="JSONPackageJSONCheck" files="commerce-organization-web/package\.json" />
 	</source-check>
 </suppressions>

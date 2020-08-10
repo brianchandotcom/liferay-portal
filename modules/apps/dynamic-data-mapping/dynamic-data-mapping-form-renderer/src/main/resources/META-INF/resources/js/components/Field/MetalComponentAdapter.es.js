@@ -57,12 +57,12 @@ export const MetalComponentAdapter = ({
 					onRemoved: (_, event) =>
 						dispatch({
 							payload: event,
-							type: EVENT_TYPES.REMOVED,
+							type: EVENT_TYPES.FIELD_REMOVED,
 						}),
 					onRepeated: (_, event) =>
 						dispatch({
 							payload: event,
-							type: EVENT_TYPES.REPEATED,
+							type: EVENT_TYPES.FIELD_REPEATED,
 						}),
 					pageIndex,
 					spritemap,

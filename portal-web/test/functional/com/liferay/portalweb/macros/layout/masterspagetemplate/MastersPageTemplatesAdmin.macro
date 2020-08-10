@@ -8,8 +8,6 @@ definition {
 		Button.clickSave();
 
 		PageEditor.assertFragmentSidebarLoaded();
-
-		Button.click(button = "Publish Master");
 	}
 
 	macro deleteMasters {

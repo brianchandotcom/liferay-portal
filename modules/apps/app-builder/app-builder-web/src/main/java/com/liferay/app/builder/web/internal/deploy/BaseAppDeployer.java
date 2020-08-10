@@ -91,14 +91,12 @@ public abstract class BaseAppDeployer implements AppDeployer {
 			PanelApp.class, panelApp, properties);
 	}
 
-	protected ServiceRegistration<?>[] deployPortlet(
+	protected ServiceRegistration<?> deployPortlet(
 		AppPortlet appPortlet, Map<String, Object> customProperties) {
 
-		return new ServiceRegistration<?>[] {
-			_bundleContext.registerService(
-				Portlet.class, appPortlet,
-				appPortlet.getProperties(customProperties))
-		};
+		return _bundleContext.registerService(
+			Portlet.class, appPortlet,
+			appPortlet.getProperties(customProperties));
 	}
 
 	@Reference

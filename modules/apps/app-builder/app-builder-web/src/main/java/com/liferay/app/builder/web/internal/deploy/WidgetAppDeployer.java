@@ -20,7 +20,6 @@ import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.web.internal.portlet.AppPortlet;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 
@@ -48,7 +47,7 @@ public class WidgetAppDeployer extends BaseAppDeployer {
 
 		_serviceRegistrationsMap.computeIfAbsent(
 			appId,
-			key -> ArrayUtil.append(
+			key -> new ServiceRegistration<?>[] {
 				_deployPortlet(
 					appBuilderApp, _getAppName(appBuilderApp, null),
 					_getPortletName(appId, null), true, true),
@@ -57,7 +56,8 @@ public class WidgetAppDeployer extends BaseAppDeployer {
 					_getPortletName(appId, "form_view"), true, false),
 				_deployPortlet(
 					appBuilderApp, _getAppName(appBuilderApp, "Table View"),
-					_getPortletName(appId, "table_view"), false, true)));
+					_getPortletName(appId, "table_view"), false, true)
+			});
 
 		appBuilderAppLocalService.updateAppBuilderApp(appBuilderApp);
 	}
@@ -74,7 +74,7 @@ public class WidgetAppDeployer extends BaseAppDeployer {
 		_serviceRegistrationsMap.clear();
 	}
 
-	private ServiceRegistration<?>[] _deployPortlet(
+	private ServiceRegistration<?> _deployPortlet(
 		AppBuilderApp appBuilderApp, String appName, String portletName,
 		boolean showFormView, boolean showTableView) {
 

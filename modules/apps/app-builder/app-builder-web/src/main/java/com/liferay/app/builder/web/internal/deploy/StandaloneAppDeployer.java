@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -74,14 +73,23 @@ public class StandaloneAppDeployer extends BaseAppDeployer {
 						LocaleThreadLocal.getThemeDisplayLocale());
 					String portletName = _getPortletName(appId);
 
-					return ArrayUtil.append(
-						_deployPortlet(appBuilderApp, appName, portletName),
-						new ServiceRegistration<?>[] {
-							_deployLayoutTypeController(
-								appBuilderApp.getCompanyId(), appId, appName,
+					return new ServiceRegistration<?>[] {
+						deployPortlet(
+							new AppPortlet(
+								appBuilderApp,
+								appBuilderAppPortletTabServiceTrackerMap,
+								"standalone", appName,
+								appPortletMVCResourceCommandServiceTrackerMap,
 								portletName),
-							_deployLayoutTypeAccessPolicy(portletName)
-						});
+							HashMapBuilder.<String, Object>put(
+								"com.liferay.portlet.application-type",
+								"full-page-application"
+							).build()),
+						_deployLayoutTypeController(
+							appBuilderApp.getCompanyId(), appId, appName,
+							portletName),
+						_deployLayoutTypeAccessPolicy(portletName)
+					};
 				}
 				catch (PortalException portalException) {
 					throw new IllegalStateException(portalException);
@@ -197,19 +205,6 @@ public class StandaloneAppDeployer extends BaseAppDeployer {
 					put("layout.type", portletName);
 				}
 			});
-	}
-
-	private ServiceRegistration<?>[] _deployPortlet(
-		AppBuilderApp appBuilderApp, String appName, String portletName) {
-
-		return deployPortlet(
-			new AppPortlet(
-				appBuilderApp, appBuilderAppPortletTabServiceTrackerMap,
-				"standalone", appName,
-				appPortletMVCResourceCommandServiceTrackerMap, portletName),
-			HashMapBuilder.<String, Object>put(
-				"com.liferay.portlet.application-type", "full-page-application"
-			).build());
 	}
 
 	private String _getGroupFriendlyURL(long appId) {

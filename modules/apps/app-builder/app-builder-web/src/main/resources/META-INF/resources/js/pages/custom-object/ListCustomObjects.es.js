@@ -87,7 +87,7 @@ export default ({history}) => {
 	const onSubmit = ({isAddFormView, name}) => {
 		const addURL = `/o/data-engine/v2.0/data-definitions/by-content-type/app-builder`;
 
-		addItem(addURL, {
+		return addItem(addURL, {
 			availableLanguageIds: [defaultLanguageId],
 			dataDefinitionFields: [],
 			defaultLanguageId,
@@ -114,6 +114,8 @@ export default ({history}) => {
 			})
 			.catch((error) => {
 				errorToast(error.message);
+
+				return Promise.reject();
 			});
 	};
 

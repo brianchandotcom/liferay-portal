@@ -30,12 +30,16 @@ const CustomObjectPopover = ({
 	const nameInputRef = useRef();
 	const [isAddFormView, setAddFormView] = useState(true);
 	const [hasError, setHasError] = useState(false);
+	const [isLoading, setLoading] = useState(false);
 
 	const handleSubmit = () => {
 		const name = nameInputRef.current.value;
 
 		if (validate(name)) {
-			onSubmit({isAddFormView, name});
+			setLoading(true);
+			onSubmit({isAddFormView, name}).catch(() => {
+				setLoading(false);
+			});
 		}
 		else {
 			nameInputRef.current.focus();
@@ -146,7 +150,11 @@ const CustomObjectPopover = ({
 							{Liferay.Language.get('cancel')}
 						</Button>
 
-						<Button onClick={() => handleSubmit()} small>
+						<Button
+							disabled={isLoading}
+							onClick={() => handleSubmit()}
+							small
+						>
 							{Liferay.Language.get('continue')}
 						</Button>
 					</div>

@@ -501,6 +501,17 @@ public class ViewChangesDisplayContext {
 				);
 			}
 			else {
+				long ctCollectionId =
+					_ctDisplayRendererRegistry.getCtCollectionId(
+						_ctCollection, ctEntry);
+
+				CTSQLModeThreadLocal.CTSQLMode ctSQLMode =
+					_ctDisplayRendererRegistry.getCTSQLMode(
+						ctCollectionId, ctEntry);
+
+				T model = _ctDisplayRendererRegistry.fetchCTModel(
+					ctCollectionId, ctSQLMode, modelClassNameId, classPK);
+
 				Date modifiedDate = ctEntry.getModifiedDate();
 
 				modelInfo._ctEntry = true;
@@ -534,7 +545,8 @@ public class ViewChangesDisplayContext {
 				).put(
 					"title",
 					_ctDisplayRendererRegistry.getTitle(
-						_ctCollection, ctEntry, _themeDisplay.getLocale())
+						ctCollectionId, ctSQLMode, _themeDisplay.getLocale(),
+						model, modelClassNameId)
 				).put(
 					"userId", ctEntry.getUserId()
 				);
@@ -549,7 +561,7 @@ public class ViewChangesDisplayContext {
 							CTConstants.CT_CHANGE_TYPE_DELETION) {
 
 						String editURL = _ctDisplayRendererRegistry.getEditURL(
-							_httpServletRequest, ctEntry);
+							_httpServletRequest, model, modelClassNameId);
 
 						if (Validator.isNotNull(editURL)) {
 							dropdownItemsJSONArray.put(

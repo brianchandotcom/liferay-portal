@@ -99,6 +99,21 @@ public class CTDisplayRendererRegistry {
 			modelClassPK);
 	}
 
+	public long getCtCollectionId(CTCollection ctCollection, CTEntry ctEntry)
+		throws PortalException {
+
+		if (ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			return _ctEntryLocalService.getCTRowCTCollectionId(ctEntry);
+		}
+		else if (ctEntry.getChangeType() ==
+					CTConstants.CT_CHANGE_TYPE_DELETION) {
+
+			return CTConstants.CT_COLLECTION_ID_PRODUCTION;
+		}
+
+		return ctCollection.getCtCollectionId();
+	}
+
 	@SuppressWarnings("unchecked")
 	public <T extends BaseModel<T>> CTDisplayRenderer<T> getCTDisplayRenderer(
 		long modelClassNameId) {
@@ -143,30 +158,33 @@ public class CTDisplayRendererRegistry {
 		return CTSQLModeThreadLocal.CTSQLMode.DEFAULT;
 	}
 
-	public <T extends CTModel<T>> String getEditURL(
+	public <T extends BaseModel<T>> String getEditURL(
 		HttpServletRequest httpServletRequest, CTEntry ctEntry) {
+
+		T model = fetchCTModel(
+			ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
+
+		if (model == null) {
+			return null;
+		}
+
+		return getEditURL(
+			httpServletRequest, model, ctEntry.getModelClassNameId());
+	}
+
+	public <T extends BaseModel<T>> String getEditURL(
+		HttpServletRequest httpServletRequest, T model, long modelClassNameId) {
 
 		CTDisplayRenderer<T> ctDisplayRenderer =
 			(CTDisplayRenderer<T>)_ctDisplayServiceTrackerMap.getService(
-				ctEntry.getModelClassNameId());
+				modelClassNameId);
 
 		if (ctDisplayRenderer == null) {
 			return null;
 		}
 
-		T ctModel = fetchCTModel(
-			ctEntry.getCtCollectionId(), CTSQLModeThreadLocal.CTSQLMode.DEFAULT,
-			ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
-
-		if (ctModel == null) {
-			return null;
-		}
-
-		try (SafeClosable safeClosable =
-				CTCollectionThreadLocal.setCTCollectionId(
-					ctEntry.getCtCollectionId())) {
-
-			return ctDisplayRenderer.getEditURL(httpServletRequest, ctModel);
+		try {
+			return ctDisplayRenderer.getEditURL(httpServletRequest, model);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -204,25 +222,6 @@ public class CTDisplayRendererRegistry {
 					true)
 			},
 			false);
-	}
-
-	public String getTitle(
-			CTCollection ctCollection, CTEntry ctEntry, Locale locale)
-		throws PortalException {
-
-		long ctCollectionId = ctCollection.getCtCollectionId();
-
-		if (ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-			ctCollectionId = _ctEntryLocalService.getCTRowCTCollectionId(
-				ctEntry);
-		}
-		else if (ctEntry.getChangeType() ==
-					CTConstants.CT_CHANGE_TYPE_DELETION) {
-
-			ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
-		}
-
-		return getTitle(ctCollectionId, ctEntry, locale);
 	}
 
 	public <T extends BaseModel<T>> String getTitle(

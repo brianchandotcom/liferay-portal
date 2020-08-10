@@ -47,6 +47,22 @@ definition {
 		Button.clickDone();
 	}
 
+	macro selectStyleBookViaPageDesignOptions {
+		Navigator.gotoNavTab(navTab = "Style Book");
+
+		LexiconCard.clickCardTitle(card = "${styleBookName}");
+
+		Pause(locator1 = "3000");
+
+		PageEditor.gotoTab(tabName = "Page Design Options");
+
+		Navigator.gotoNavTab(navTab = "Style Book");
+
+		AssertElementPresent(
+			key_card = "${styleBookName}",
+			locator1 = "LexiconCard#CARD_SELECTED");
+	}
+
 	macro waitForAutoSave {
 		Pause(locator1 = "1000");
 

@@ -1,0 +1,560 @@
+@component-name = "core-infrastructure"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Liferay Faces";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
+
+	@priority = "5"
+	test ButtonSmoke {
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/button/general");
+
+		JSFShowcase.clickButton();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/button/navigation/foo/1234");
+
+		JSFShowcase.clickButtonNavigationParam(
+			navigation1 = "To Param page",
+			navigation2 = "Back to Navigation with foo=1234",
+			parameterValue1 = "foo=",
+			parameterValue3 = "foo=1234");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/button/various-styles");
+
+		JSFShowcase.viewVariousStylesButton();
+	}
+
+	@priority = "5"
+	test CommandButtonSmoke {
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/commandbutton/general");
+
+		JSFShowcase.clickButton();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/commandbutton/navigation");
+
+		JSFShowcase.clickButtonNavigationParam(
+			navigation1 = "To Param page",
+			navigation2 = "Back to Navigation with foo=1234",
+			parameterValue1 = "foo=",
+			parameterValue3 = "foo=1234");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/commandbutton/navigation");
+
+		JSFShowcase.clickButtonNavigationParam(
+			commandButton = "true",
+			navigation1 = "To Param page",
+			navigation2 = "Back to Navigation with foo=1234",
+			parameterValue1 = "foo=",
+			parameterValue3 = "foo=1234");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/commandbutton/various-styles");
+
+		JSFShowcase.viewVariousStylesButton();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/commandbutton/immediate");
+
+		JSFShowcase.clickButtonLinkImmediate(
+			message1 = "APPLY_REQUEST_VALUES",
+			message2 = "INVOKE_APPLICATION");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/commandbutton/value-attribute");
+
+		JSFShowcase.clickButtonValueAttribute(attribute = "John Adams");
+
+		JSFShowcase.clickButtonValueAttribute(attribute = "Carter Braxton");
+	}
+
+	@priority = "5"
+	test CommandLinkSmoke {
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/commandlink/general");
+
+		JSFShowcase.clickButton(link = "true");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/commandlink/navigation");
+
+		JSFShowcase.clickButtonNavigationParam(
+			navigation1 = "To Param page",
+			navigation2 = "Back to Navigation with foo=1234",
+			parameterValue1 = "foo=",
+			parameterValue3 = "foo=1234");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/commandlink/immediate");
+
+		JSFShowcase.clickButtonLinkImmediate(
+			message1 = "APPLY_REQUEST_VALUES",
+			message2 = "INVOKE_APPLICATION");
+	}
+
+	@priority = "5"
+	test DataTableSmoke {
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/datatable/general");
+
+		JSFShowcase.viewDataTable();
+	}
+
+	@priority = "5"
+	test FormSmoke {
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/form/general");
+
+		JSFShowcase.viewFromButtonResult(message = "The form was submitted via Ajax and re-rendered with updates to the DOM.");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/form/non-ajax");
+
+		JSFShowcase.viewFromButtonResult(message = "The form was submitted as a full page postback and the entire page was re-rendered.");
+	}
+
+	@priority = "5"
+	test ImageSmoke {
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/graphicimage/general");
+
+		JSFShowcase.viewImages();
+
+		for (var link : list "JSR 362,JSR 378") {
+			JSFShowcase.viewLink(
+				link = "${link}",
+				linkURL = "jcp.org");
+		}
+	}
+
+	@priority = "5"
+	test InputFileSmoke {
+
+		// BridgeInputFileGeneral
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/bridge/inputfile/general");
+
+		JSFShowcase.validateRequiredCheckbox();
+
+		JSFShowcase.uploadAndDeleteFile(fileName = "Document_2.jpeg");
+
+		// BridgeInputFileInstantAjax
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/bridge/inputfile/instant-ajax");
+
+		JSFShowcase.uploadAndDeleteFile(
+			fileName = "Document_2.jpeg",
+			instantAjax = "true");
+
+		// BridgeInputFileMultiple
+		// Poshi limitations: can not upload multiple files, so this test only tests uploading a single file.
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/bridge/inputfile/multiple");
+
+		JSFShowcase.uploadAndDeleteFile(fileName = "Document_2.jpeg");
+
+		// InputFileGeneral
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/inputfile/general");
+
+		JSFShowcase.validateRequiredCheckbox();
+
+		JSFShowcase.uploadAndDeleteFile(fileName = "Document_2.jpeg");
+
+		// BridgeInputFileInstantAjax
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/inputfile/instant-ajax");
+
+		JSFShowcase.uploadAndDeleteFile(
+			fileName = "Document_2.jpeg",
+			instantAjax = "true");
+	}
+
+	@priority = "5"
+	test InputHiddenSmoke {
+
+		// InputHiddenConversion
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/inputhidden/conversion");
+
+		JSFShowcase.submitHiddenValue(
+			message1 = "Apr 5, 0033",
+			message2 = "04/05/0033");
+
+		JSFShowcase.clearHiddenValue(
+			message1 = "Apr 5, 0033",
+			message2 = "04/05/0033");
+
+		// InputHiddenGeneral
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/inputhidden/general");
+
+		JSFShowcase.submitHiddenValue(message1 = "1234");
+
+		JSFShowcase.clearHiddenValue(message1 = "1234");
+
+		JSFShowcase.validateRequiredCheckbox();
+
+		JSFShowcase.submitHiddenValue(message1 = "1234");
+
+		AssertElementNotPresent(locator1 = "JSFShowcase#REQUIRED_ERROR_MESSAGE");
+
+		// InputHiddenImmediate
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/inputhidden/immediate");
+
+		JSFShowcase.submitHiddenValue(
+			immediate = "true",
+			message1 = "1234",
+			messageImmediate1 = "APPLY_REQUEST_VALUES");
+
+		JSFShowcase.clearHiddenValue(message1 = "1234");
+
+		JSFShowcase.submitHiddenValue(
+			immediate = "true",
+			message2 = "1234",
+			messageImmediate2 = "PROCESS_VALIDATIONS");
+
+		JSFShowcase.clearHiddenValue(message2 = "1234");
+
+		// InputHiddenValidation
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/inputhidden/validation");
+
+		JSFShowcase.submitHiddenValue(
+			invalid = "true",
+			message1 = "Invalid E-Mail Address");
+
+		JSFShowcase.submitHiddenValue(message1 = "test@liferay.com");
+
+		JSFShowcase.clearHiddenValue(
+			invalid = "true",
+			message1 = "test@liferay.com",
+			messageinvalid1 = "Invalid E-Mail Address");
+
+		JSFShowcase.submitHiddenValue(
+			invalid = "true",
+			message2 = "Invalid E-Mail Address");
+
+		JSFShowcase.submitHiddenValue(message2 = "test@liferay.com");
+
+		JSFShowcase.clearHiddenValue(
+			invalid = "true",
+			message2 = "test@liferay.com",
+			messageinvalid2 = "Invalid E-Mail Address");
+	}
+
+	@priority = "5"
+	test InputSecretSmoke {
+
+		// InputSecretGeneral
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/inputsecret/general");
+
+		JSFShowcase.validateRequiredCheckbox();
+
+		JSFShowcase.submitText(
+			password = "Hello World!",
+			text = "Password",
+			textValue = "Hello World!");
+	}
+
+	@priority = "5"
+	test InputTextareaSmoke {
+
+		// InputTextareaGeneral
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/inputtextarea/general");
+
+		JSFShowcase.validateRequiredCheckbox();
+
+		JSFShowcase.submitText(
+			text = "extarea",
+			textArea = "true",
+			textValue = "Hello World!");
+	}
+
+	@priority = "5"
+	test InputTextSmoke {
+
+		// InputTextGeneral
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/inputtext/general");
+
+		JSFShowcase.validateRequiredCheckbox();
+
+		JSFShowcase.submitText(
+			password = "Hello World!",
+			text = "Text Field",
+			textValue = "Hello World!");
+	}
+
+	@priority = "5"
+	test LinkSmoke {
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/link/general");
+
+		JSFShowcase.clickButton(link = "true");
+	}
+
+	@priority = "5"
+	test MessageSmoke {
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/message/general");
+
+		JSFShowcase.submitMessage(
+			message = "You typed 5 characters.",
+			text = "Text Field",
+			textValue = "hello");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/messages/general");
+
+		JSFShowcase.submitMessage(
+			message = "You typed 5 characters.",
+			message2 = "You typed 6 characters.",
+			message3 = "Your request processed successfully.",
+			text = "Text Field",
+			textValue = "hello",
+			textValue2 = "hello2",
+			textValue3 = "Hello World");
+	}
+
+	@priority = "5"
+	test OutputSmoke {
+		// OutputFormatGeneral
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/outputformat/general");
+
+		AssertTextEquals(
+			locator1 = "JSFShowcase#EXAMPLE_TEXT",
+			value1 = "First: Alpha, Last: Omega");
+
+		// OutputLabelGeneral
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/outputlabel/general");
+
+		JSFShowcase.validateRequired();
+
+		JSFShowcase.submitText(
+			password = "Philip",
+			text = "First Name",
+			textValue = "Philip");
+
+		// OutputLinkGeneral
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/outputlink/general");
+
+		JSFShowcase.viewLink(
+			image = "false",
+			link = "liferay-projects/liferay-faces",
+			linkURL = "liferay-projects/liferay-faces");
+
+		for (var link : list "liferay-projects/liferay-faces,liferay+faces") {
+			JSFShowcase.viewLink(
+				link = "${link}",
+				linkURL = "${link}");
+		}
+
+		// OutputScriptGeneral
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/outputscript/general");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "JSFShowcase#EXAMPLE_TEXT",
+			value1 = "is rendered inline");
+
+		// OutputStylesheetGeneral
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/outputstylesheet/general");
+
+		JSFShowcase.viewStylesheet();
+
+		// OutputTextGeneralTester
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/outputtext/general");
+
+		AssertTextEquals(
+			locator1 = "JSFShowcase#EXAMPLE_TEXT",
+			value1 = "This is text from a model bean property.");
+	}
+
+	@priority = "5"
+	test PanelSmoke {
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/panelgrid/general");
+
+		JSFShowcase.viewGridTable();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/panelgroup/general");
+
+		AssertTextEquals(
+			locator1 = "JSFShowcase#EXAMPLE_TEXT",
+			value1 = "This text is inside a <span> HTML tag");
+
+		AssertTextEquals(
+			locator1 = "JSFShowcase#EXAMPLE_TEXT_2",
+			value1 = "This text is inside a <div> HTML tag");
+	}
+
+	@priority = "5"
+	test PortletSmoke {
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/portlet/actionurl/general");
+
+		JSFShowcase.clickButtonNavigationParam(
+			navigation1 = "Submit Non-Faces Postback",
+			navigation2 = "Return to portlet:actionURL in the Liferay Faces Showcase",
+			parameterValue2 = "foo=1234");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/portlet/namespace/general");
+
+		AssertTextEquals(
+			locator1 = "JSFShowcase#EXAMPLE_TEXT",
+			value1 = "portletNamespace=_1_WAR_comliferayfacesdemojsfshowcaseportlet_");
+
+		AssertTextEquals(
+			locator1 = "JSFShowcase#EXAMPLE_TEXT_2",
+			value1 = "portletNamespace=_1_WAR_comliferayfacesdemojsfshowcaseportlet_");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/portlet/renderurl/general");
+
+		JSFShowcase.viewLink(
+			image = "false",
+			link = "web/guest/jsf-showcase",
+			linkURL = "web/guest/jsf-showcase",
+			newTab = "false");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/portlet/resourceurl/general");
+
+		AssertElementPresent(locator1 = "JSFShowcase#EXAMPLE_TEXT");
+	}
+
+	@priority = "5"
+	test SelectBooleanCheckboxSmoke {
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/selectbooleancheckbox/general");
+
+		JSFShowcase.selectCheckbox(textValue = "false");
+
+		JSFShowcase.selectCheckbox(
+			checkboxName = "Agree",
+			textValue = "true");
+	}
+
+	@priority = "5"
+	test SelectManyCheckboxSmoke {
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/selectmanycheckbox/general");
+
+		JSFShowcase.validateRequiredCheckbox();
+
+		JSFShowcase.selectCheckbox(
+			checkboxNameList = "Compatible,Powerful Integration,Lightweight",
+			textValue = "1,3,4");
+
+		JSFShowcase.selectCheckbox(
+			textValue = "3,4",
+			uncheckboxNameList = "Compatible");
+
+		AssertElementNotPresent(
+			key_attribute = "1",
+			locator1 = "JSFShowcase#MODEL_VALUE");
+	}
+
+	@priority = "5"
+	test SelectManyListboxSmoke {
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/selectmanylistbox/general");
+
+		JSFShowcase.validateRequiredCheckbox(selectManyListbox = "true");
+
+		JSFShowcase.select(
+			listboxNameList = "Select,Compatible,Powerful Integration,Lightweight",
+			textValue = "1,3,4");
+
+		JSFShowcase.select(
+			listboxNameList = "Compatible",
+			textValue = "3,4");
+
+		AssertElementNotPresent(
+			key_attribute = "1",
+			locator1 = "JSFShowcase#MODEL_VALUE");
+	}
+
+	@priority = "5"
+	test SelectManyMenuSmoke {
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/selectmanymenu/general");
+
+		JSFShowcase.validateRequiredCheckbox(selectManyMenu = "true");
+
+		JSFShowcase.select(
+			listboxNameList = "Select,Compatible,Powerful Integration,Lightweight",
+			textValue = "1,3,4");
+
+		JSFShowcase.select(
+			listboxNameList = "Compatible",
+			textValue = "3,4");
+
+		AssertElementNotPresent(
+			key_attribute = "1",
+			locator1 = "JSFShowcase#MODEL_VALUE");
+	}
+
+	@priority = "5"
+	test SelectOneListboxSmoke {
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/selectonelistbox/general");
+
+		JSFShowcase.validateRequiredCheckbox();
+
+		JSFShowcase.select(
+			listboxNameList = "Select,Powerful Integration",
+			textValue = "3");
+
+		JSFShowcase.select(
+			listboxNameList = "Compatible",
+			textValue = "1");
+
+		AssertElementNotPresent(
+			key_attribute = "3",
+			locator1 = "JSFShowcase#MODEL_VALUE");
+	}
+
+	@priority = "5"
+	test SelectOneMenuSmoke {
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/selectonemenu/general");
+
+		JSFShowcase.validateRequiredCheckbox();
+
+		JSFShowcase.select(
+			listboxNameList = "Select,Powerful Integration",
+			textValue = "3");
+
+		JSFShowcase.select(
+			listboxNameList = "Select,Compatible",
+			textValue = "1");
+
+		AssertElementNotPresent(
+			key_attribute = "3",
+			locator1 = "JSFShowcase#MODEL_VALUE");
+	}
+
+	@priority = "5"
+	test SelectOneRadioSmoke {
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/selectoneradio/general");
+
+		JSFShowcase.validateRequiredCheckbox();
+
+		JSFShowcase.selectCheckbox(
+			checkboxNameList = "Powerful Integration",
+			textValue = "3");
+
+		JSFShowcase.selectCheckbox(
+			checkboxNameList = "Compatible",
+			textValue = "1");
+
+		AssertElementNotPresent(
+			key_attribute = "3",
+			locator1 = "JSFShowcase#MODEL_VALUE");
+	}
+
+}

@@ -41,6 +41,112 @@ definition {
 		}
 	}
 
+	@description = "This is for LPS-116106. Page Creator can quickly change master page via Page Design Options panel in Staging site."
+	@priority = "4"
+	test ChangeMasterOfContentPageViaPageDesignOptionsPanelInStagingSite {
+		task ("Add a header and footer fragment to master page") {
+			PageEditor.addFragment(
+				collectionName = "Navigation Bars",
+				dropTarget = "Header",
+				fragmentName = "Header Dark",
+				scope = "Master");
+
+			PageEditor.addFragment(
+				collectionName = "Footers",
+				dropTarget = "Footer",
+				fragmentName = "Footer Nav Dark",
+				scope = "Master");
+
+			Button.click(button = "Publish Master");
+		}
+
+		task ("Add a content page based on Blank") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name-staging",
+				layoutName = "Test Page Name",
+				site = "false",
+				type = "content");
+		}
+
+		task ("Change to custom master of content page via Page Design Options panel") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Navigator.gotoNavTab(navTab = "Master");
+
+			AssertElementPresent(
+				key_card = "Blank",
+				locator1 = "LexiconCard#CARD_SELECTED");
+
+			MastersPageTemplates.selectMasterViaPageDesignOptions(masterLayoutName = "Custom Masters Page Template");
+
+			AssertVisible(
+				key_type = "dark",
+				locator1 = "PageEditor#NAVIGATION_BARS");
+
+			AssertVisible(
+				key_type = "dark",
+				locator1 = "PageEditor#FOOTERS");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert the Custom Masters Page Template is applied to content page in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			AssertVisible(
+				key_type = "dark",
+				locator1 = "PageEditor#NAVIGATION_BARS");
+
+			AssertVisible(
+				key_type = "dark",
+				locator1 = "PageEditor#FOOTERS");
+		}
+
+		task ("Change to Blank of content page via Page Design Options panel") {
+			ContentPages.clickPencil();
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Navigator.gotoNavTab(navTab = "Master");
+
+			AssertElementPresent(
+				key_card = "Custom Masters Page Template",
+				locator1 = "LexiconCard#CARD_SELECTED");
+
+			MastersPageTemplates.selectMasterViaPageDesignOptions(masterLayoutName = "Blank");
+
+			AssertElementNotPresent(
+				key_type = "dark",
+				locator1 = "PageEditor#NAVIGATION_BARS");
+
+			AssertElementNotPresent(
+				key_type = "dark",
+				locator1 = "PageEditor#FOOTERS");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert the Blank is applied to content page in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			AssertElementNotPresent(
+				key_type = "dark",
+				locator1 = "PageEditor#NAVIGATION_BARS");
+
+			AssertElementNotPresent(
+				key_type = "dark",
+				locator1 = "PageEditor#FOOTERS");
+		}
+	}
+
 	@description = "This is a test for LPS-111549. Redo can make the master page editor rollback the previous undo state up to X that is the number of undo interactions in Staging site."
 	@priority = "4"
 	test UndoMasterPageChangesInStagingSite {

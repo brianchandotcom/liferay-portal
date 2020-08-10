@@ -206,8 +206,9 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 
 	public List<StyleBookEntry> getStyleBookEntries() {
 		return StyleBookEntryLocalServiceUtil.getStyleBookEntries(
-			_themeDisplay.getScopeGroupId(), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, new StyleBookEntryNameComparator(true));
+			StagingUtil.getLiveGroupId(_themeDisplay.getScopeGroupId()),
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new StyleBookEntryNameComparator(true));
 	}
 
 	public List<String> getTypes() {

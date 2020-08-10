@@ -29,6 +29,101 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-116975. Map all categories from asset entry to editable field."
+	@priority = "4"
+	test MapAllCategoriesToEditableField {
+		JSONCategory.addVocabulary(
+			groupName = "Test Site Name",
+			title = "Vocabulary Name 1");
+
+		JSONCategory.addVocabulary(
+			groupName = "Test Site Name",
+			title = "Vocabulary Name 2");
+
+		JSONCategory.addVocabulary(
+			groupName = "Test Site Name",
+			title = "Vocabulary Name 3");
+
+		JSONCategory.addCategory(
+			groupName = "Test Site Name",
+			title = "Category Name 1",
+			vocabularyName = "Vocabulary Name 1");
+
+		JSONCategory.addCategory(
+			groupName = "Test Site Name",
+			title = "Category Name 2",
+			vocabularyName = "Vocabulary Name 2");
+
+		JSONCategory.addSubcategory(
+			groupName = "Test Site Name",
+			parentCategoryName = "Category Name 2",
+			title = "Subcategory Name 2",
+			vocabularyName = "Vocabulary Name 2");
+
+		JSONCategory.addCategory(
+			groupName = "Test Site Name",
+			title = "Category Name 3-1",
+			vocabularyName = "Vocabulary Name 3");
+
+		JSONCategory.addCategory(
+			groupName = "Test Site Name",
+			title = "Category Name 3-2",
+			vocabularyName = "Vocabulary Name 3");
+
+		JSONCategory.addCategory(
+			groupName = "Test Site Name",
+			title = "Category Name 3-3",
+			vocabularyName = "Vocabulary Name 3");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		AssetCategorization.addCategory(
+			categoryName = "Category Name 1",
+			vocabularyName = "Vocabulary Name 1");
+
+		AssetCategorization.addCategory(
+			categoryName = "Subcategory Name 2",
+			vocabularyName = "Vocabulary Name 2");
+
+		AssetCategorization.addMultipleCategories(
+			categoryNameList = "Category Name 3-1,Category Name 3-2,Category Name 3-3",
+			vocabularyName = "Vocabulary Name 3");
+
+		PortletEntry.publish();
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			contributed = "true",
+			fragmentName = "Heading",
+			id = "text");
+
+		PageEditorMapping.mapEditableFieldToAsset(
+			entryTitle = "WebContent Title",
+			navItem = "Web Content");
+
+		Select(
+			locator1 = "PageEditorEditableLink#FIELD",
+			value1 = "All Categories");
+
+		PageEditor.viewFragmentEditableText(
+			editableText = "Category Name 3-1, Category Name 3-2, Category Name 3-3, Category Name 1, Subcategory Name 2",
+			fragmentName = "Heading",
+			id = "element-text");
+	}
+
 	@description = "This is a test for LPS-116034. The custom ddmfields of content are available for mapping in editable field."
 	@priority = "4"
 	test MapCustomDDMFieldToFragment {

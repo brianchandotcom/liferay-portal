@@ -6193,7 +6193,7 @@ ${output.content}</echo>
 	</target>
 
 	<target name="rest-builder-jdk8">
-		<!--<run-batch-test>
+		<run-batch-test>
 			<test-action>
 				<if>
 					<available file="modules/util/portal-tools-rest-builder" />
@@ -6290,7 +6290,7 @@ information. Make sure to commit in all build REST results.
 			<test-set-up>
 				<setup-test-environment />
 			</test-set-up>
-		</run-batch-test>-->
+		</run-batch-test>
 	</target>
 
 	<target name="ruby-sass-compiler-jdk8">

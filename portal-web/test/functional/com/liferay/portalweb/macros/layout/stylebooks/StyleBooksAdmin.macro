@@ -8,6 +8,10 @@ definition {
 		Button.clickSave();
 	}
 
+	macro gotoStyleBook {
+		LexiconCard.clickCardTitle(card = "${styleBookName}");
+	}
+
 	macro openStyleBooksAdmin {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_style_book_web_internal_portlet_StyleBookPortlet");
 	}

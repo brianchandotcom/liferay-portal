@@ -445,6 +445,10 @@ definition {
 			panel = "Control Panel",
 			portlet = "Search");
 
+		AssertTextEquals(
+			locator1 = "SearchAdmin#ACTIVE_CONNECTION_COUNT",
+			value1 = "2");
+
 		AssertTextEquals.assertPartialText(
 			key_connectionID = "__REMOTE__",
 			locator1 = "SearchAdmin#CLUSTER_NAME",

@@ -149,10 +149,7 @@ definition {
 
 		Click(locator1 = "Dropdown#TRIGGER");
 
-		AssertClick(
-			key_option = "${assetType}",
-			locator1 = "Dropdown#RESULT",
-			value1 = "${assetType}");
+		DropdownMenuItem.click(menuItem = "${assetType}");
 
 		if (IsElementPresent(locator1 = "Button#UPDATE")) {
 			PortletEntry.update();

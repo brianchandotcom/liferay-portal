@@ -26,19 +26,13 @@ definition {
 	macro mapEditableFieldToAsset {
 		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_ASSET_SELECT_POPUP_BUTTON");
 
-		if (IsElementPresent(key_option = "Select Content",locator1 = "Dropdown#RESULT")) {
+		if (IsElementPresent(key_menuItem = "Select Content",locator1 = "MenuItem#ANY_MENU_ITEM")) {
 
 			if (isSet(contentItem)) {
-				AssertClick(
-					key_option = "${contentItem}",
-					locator1 = "Dropdown#RESULT",
-					value1 = "${contentItem}");
+				DropdownMenuItem.click(menuItem = "${contentItem}");
 			}
 			else {
-				AssertClick(
-					key_option = "Select Content",
-					locator1 = "Dropdown#RESULT",
-					value1 = "Select Content...");
+				DropdownMenuItem.click(menuItem = "Select Content");
 			}
 		}
 

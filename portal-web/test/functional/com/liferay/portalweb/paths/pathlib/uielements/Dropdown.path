@@ -29,11 +29,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RESULT</td>
-	<td>//div[contains(@class,'dropdown-menu')]//ul//li/button[text()='${key_option}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SELECTED_VALUE</td>
 	<td>//div[@class='option-selected']</td>
 	<td></td>

@@ -13,10 +13,7 @@ definition {
 	macro configureDisplayStyle {
 		Click(locator1 = "Dropdown#TRIGGER");
 
-		AssertClick(
-			key_option = "${displayStyle}",
-			locator1 = "Dropdown#RESULT",
-			value1 = "${displayStyle}");
+		DropdownMenuItem.click(menuItem = "${displayStyle}");
 
 		AssertTextEquals(
 			locator1 = "Dropdown#SELECTED_VALUE",

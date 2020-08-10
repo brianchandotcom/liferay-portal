@@ -14,6 +14,7 @@
 
 package com.liferay.style.book.internal.frontend.css.variables;
 
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.frontend.css.variables.ScopedCSSVariables;
 import com.liferay.frontend.css.variables.ScopedCSSVariablesProvider;
 import com.liferay.petra.string.StringPool;
@@ -137,7 +138,7 @@ public class StyleBookScopedCSSVariablesProvider
 		if (styleBookEntry == null) {
 			styleBookEntry =
 				_styleBookEntryLocalService.fetchDefaultStyleBookEntry(
-					layout.getGroupId());
+					_staging.getLiveGroupId(layout.getGroupId()));
 		}
 
 		if (styleBookEntry == null) {
@@ -152,6 +153,9 @@ public class StyleBookScopedCSSVariablesProvider
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Staging _staging;
 
 	@Reference
 	private StyleBookEntryLocalService _styleBookEntryLocalService;

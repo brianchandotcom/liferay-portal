@@ -14,11 +14,13 @@
 
 package com.liferay.style.book.web.internal.display.context;
 
+import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -127,13 +129,16 @@ public class EditStyleBookEntryDisplayContext {
 	}
 
 	private JSONObject _getInitialPreviewLayoutJSONObject() throws Exception {
+		Group group = StagingUtil.getStagingGroup(
+			_themeDisplay.getScopeGroupId());
+
 		Layout layout = LayoutLocalServiceUtil.fetchFirstLayout(
-			_themeDisplay.getScopeGroupId(), false,
+			group.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 		if (layout == null) {
 			layout = LayoutLocalServiceUtil.fetchFirstLayout(
-				_themeDisplay.getScopeGroupId(), true,
+				group.getGroupId(), true,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 			if (layout == null) {

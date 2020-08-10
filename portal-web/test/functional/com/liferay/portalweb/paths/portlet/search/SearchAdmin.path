@@ -24,6 +24,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NODE_COUNT</td>
+	<td>//div[contains(@class,'connection-info') and contains(.,'${key_connectionID}')]//a[contains(@aria-controls,'SearchAdminPortlet_Nodes')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NODE_NAME</td>
+	<td>//div[contains(@class,'connection-info') and contains(.,'${key_connectionID}')]//tr[contains(@data-qa-id, 'row') and contains(.,'${key_nodeName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_ENGINE_VENDOR</td>
 	<td>//div[contains(@class,'value')][preceding-sibling::div[contains(.,'Search Engine Vendor')]]</td>
 	<td></td>

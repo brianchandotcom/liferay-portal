@@ -6,9 +6,9 @@ definition {
 			value1 = "${clusterStatus}");
 	}
 
-	@description = "Elasticsearch provides a Cluster Health API (http://localhost:9200/_cluster/health?pretty=true) to easily view the current status of the cluster."
+	@description = "Elasticsearch provides a Cluster Health API (http://localhost:${nodePort}/_cluster/health?pretty=true) to easily view the current status of the cluster."
 	macro viewClusterStatusViaClusterHealthAPI {
-		Navigator.openSpecificURL(url = "http://localhost:9200/_cluster/health?level=indices&amp;pretty");
+		Navigator.openSpecificURL(url = "http://localhost:${nodePort}/_cluster/health?level=indices&amp;pretty");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "//body",

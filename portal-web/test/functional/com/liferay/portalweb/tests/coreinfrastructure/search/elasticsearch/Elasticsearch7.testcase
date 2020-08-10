@@ -241,6 +241,107 @@ definition {
 			searchAssetType = "Web Content Article");
 	}
 
+	test AssertSidecarDoesNotCluster {
+		property app.server.bundles.size = "1";
+		property cluster.enabled = "true";
+		property test.assert.warning.exceptions = "true";
+		property test.name.skip.portal.instance = "Elasticsearch7#AssertSidecarDoesNotCluster";
+
+		Clustering.viewClusterStatusInConsole();
+
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "Sidecar Elasticsearch liferay is at 127.0.0.1:9201",
+			nodePort = "8080");
+
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "Sidecar Elasticsearch liferay is at 127.0.0.1:9202",
+			nodePort = "9080");
+
+		Elasticsearch.viewClusterStatusViaClusterHealthAPI(
+			nodePort = "9201",
+			numberOfNodes = "1");
+
+		Elasticsearch.viewClusterStatusViaClusterHealthAPI(
+			nodePort = "9202",
+			numberOfNodes = "1");
+
+		Navigator.openURL();
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "SearchAdmin#SEARCH_ENGINE_VENDOR",
+			value1 = "Elasticsearch (Sidecar)");
+
+		AssertTextEquals(
+			locator1 = "SearchAdmin#ACTIVE_CONNECTION_COUNT",
+			value1 = "1");
+
+		AssertTextEquals.assertPartialText(
+			key_connectionID = "__SIDECAR__",
+			locator1 = "SearchAdmin#NODE_COUNT",
+			value1 = "NODES (1)");
+
+		AssertElementPresent(
+			key_connectionID = "__SIDECAR__",
+			key_nodeName = "liferay",
+			locator1 = "SearchAdmin#NODE_NAME");
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "WC WebContent Title");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "WC WebContent Title",
+			searchAssetType = "Web Content Article");
+
+		User.logoutPG();
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "SearchAdmin#SEARCH_ENGINE_VENDOR",
+			value1 = "Elasticsearch (Sidecar)");
+
+		AssertTextEquals(
+			locator1 = "SearchAdmin#ACTIVE_CONNECTION_COUNT",
+			value1 = "1");
+
+		AssertTextEquals.assertPartialText(
+			key_connectionID = "__SIDECAR__",
+			locator1 = "SearchAdmin#NODE_COUNT",
+			value1 = "NODES (1)");
+
+		AssertElementPresent(
+			key_connectionID = "__SIDECAR__",
+			key_nodeName = "liferay",
+			locator1 = "SearchAdmin#NODE_NAME");
+
+		Navigator.openSpecificURL(url = "http://localhost:9080");
+
+		SearchPortlets.searchEmbedded(searchTerm = "WC WebContent Title");
+
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "WC WebContent Title",
+			searchAssetType = "Web Content Article");
+	}
+
 	@ignore = "true"
 	@priority = "3"
 	test AssertSystemSettingsPropogateToModule {
@@ -278,7 +379,9 @@ definition {
 		property remote.elasticsearch.enabled = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7#ElasticsearchRemoteClusterSmokeTest";
 
-		Elasticsearch.viewClusterStatusViaClusterHealthAPI(numberOfNodes = "2");
+		Elasticsearch.viewClusterStatusViaClusterHealthAPI(
+			nodePort = "9200",
+			numberOfNodes = "2");
 
 		Navigator.openURL();
 

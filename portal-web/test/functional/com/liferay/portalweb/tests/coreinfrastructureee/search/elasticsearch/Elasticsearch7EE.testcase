@@ -791,7 +791,9 @@ definition {
 		property remote.elasticsearch.enabled = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7EE#PortalClusterSmokeTest";
 
-		Elasticsearch.viewClusterStatusViaClusterHealthAPI(numberOfNodes = "1");
+		Elasticsearch.viewClusterStatusViaClusterHealthAPI(
+			nodePort = "9200",
+			numberOfNodes = "1");
 
 		Navigator.openURL();
 

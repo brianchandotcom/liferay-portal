@@ -805,8 +805,10 @@ components:
                     readOnly: true
                     type: string
                 profileURL:
+                    # @review
                     description:
-                        A relative URL to the author's user profile.
+                        "A relative URL to the author's user profile.
+                        Optional field, can be embedded with nestedFields"
                     format: uri
                     readOnly: true
                     type: string

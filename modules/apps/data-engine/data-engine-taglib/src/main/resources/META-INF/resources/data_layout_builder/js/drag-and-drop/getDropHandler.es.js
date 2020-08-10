@@ -35,6 +35,7 @@ export const getDropHandler = ({dataDefinition, dataLayoutBuilder}) => {
 		switch (type) {
 			case DRAG_FIELD_TYPE: {
 				if (
+					parentField &&
 					parentField.nestedFields &&
 					parentField.type !== 'fieldset'
 				) {

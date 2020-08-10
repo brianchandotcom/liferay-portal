@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISABLED_MENU_ITEM_2</td>
+	<td>//button[contains(@class,'dropdown-item')][contains(@class,'disabled')][normalize-space(text())='${key_menuItem}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DROPDOWN_MENU_ITEM</td>
 	<td>xpath=(//div | //li)[(contains(@class,'open') or contains(@class,'show')) and (contains(@class,'dropdown') or contains(.//*/@class,'dropdown'))]//*[self::a or self::span or self::button][normalize-space(text())='${key_menuItem}']</td>
 	<td></td>

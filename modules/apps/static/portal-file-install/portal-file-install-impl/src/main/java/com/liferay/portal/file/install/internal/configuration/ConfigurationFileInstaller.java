@@ -58,8 +58,13 @@ public class ConfigurationFileInstaller implements FileInstaller {
 	public boolean canTransformURL(File file) {
 		String name = file.getName();
 
-		if (name.endsWith(".cfg") || name.endsWith(".config")) {
+		if (name.endsWith(".config")) {
 			return true;
+		}
+		else if (name.endsWith(".cfg") && _log.isWarnEnabled()) {
+			_log.warn(
+				"Unable to install .cfg file " + file +
+					", please use .config file instead.");
 		}
 
 		return false;
@@ -122,7 +127,7 @@ public class ConfigurationFileInstaller implements FileInstaller {
 					_log.info(
 						StringBundler.concat(
 							"Creating configuration from ", pid[0], logString,
-							".cfg"));
+							".config"));
 				}
 			}
 			else {
@@ -130,7 +135,7 @@ public class ConfigurationFileInstaller implements FileInstaller {
 					_log.info(
 						StringBundler.concat(
 							"Updating configuration from ", pid[0], logString,
-							".cfg"));
+							".config"));
 				}
 			}
 
@@ -153,7 +158,8 @@ public class ConfigurationFileInstaller implements FileInstaller {
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				StringBundler.concat(
-					"Deleting configuration from ", pid[0], logString, ".cfg"));
+					"Deleting configuration from ", pid[0], logString,
+					".config"));
 		}
 
 		Configuration configuration = _getConfiguration(

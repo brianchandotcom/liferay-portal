@@ -1400,7 +1400,7 @@ public abstract class BaseUserAccountResourceTestCase {
 		}
 	}
 
-	protected void assertValid(UserAccount userAccount) {
+	protected void assertValid(UserAccount userAccount) throws Exception {
 		boolean valid = true;
 
 		if (userAccount.getDateCreated() == null) {

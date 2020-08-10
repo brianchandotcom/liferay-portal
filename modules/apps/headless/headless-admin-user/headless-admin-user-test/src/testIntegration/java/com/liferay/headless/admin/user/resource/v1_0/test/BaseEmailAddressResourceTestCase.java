@@ -454,7 +454,7 @@ public abstract class BaseEmailAddressResourceTestCase {
 		}
 	}
 
-	protected void assertValid(EmailAddress emailAddress) {
+	protected void assertValid(EmailAddress emailAddress) throws Exception {
 		boolean valid = true;
 
 		if (emailAddress.getId() == null) {

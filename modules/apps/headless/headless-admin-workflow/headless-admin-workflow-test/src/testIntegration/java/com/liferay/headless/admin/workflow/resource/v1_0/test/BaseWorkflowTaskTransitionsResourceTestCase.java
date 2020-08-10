@@ -277,8 +277,8 @@ public abstract class BaseWorkflowTaskTransitionsResourceTestCase {
 		}
 	}
 
-	protected void assertValid(
-		WorkflowTaskTransitions workflowTaskTransitions) {
+	protected void assertValid(WorkflowTaskTransitions workflowTaskTransitions)
+		throws Exception {
 
 		boolean valid = true;
 

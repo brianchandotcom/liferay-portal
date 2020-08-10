@@ -950,7 +950,9 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		}
 	}
 
-	protected void assertValid(KnowledgeBaseFolder knowledgeBaseFolder) {
+	protected void assertValid(KnowledgeBaseFolder knowledgeBaseFolder)
+		throws Exception {
+
 		boolean valid = true;
 
 		if (knowledgeBaseFolder.getDateCreated() == null) {

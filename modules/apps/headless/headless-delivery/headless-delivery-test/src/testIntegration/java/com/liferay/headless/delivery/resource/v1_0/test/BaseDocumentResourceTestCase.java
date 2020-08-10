@@ -1638,7 +1638,7 @@ public abstract class BaseDocumentResourceTestCase {
 		}
 	}
 
-	protected void assertValid(Document document) {
+	protected void assertValid(Document document) throws Exception {
 		boolean valid = true;
 
 		if (document.getDateCreated() == null) {
@@ -2021,17 +2021,6 @@ public abstract class BaseDocumentResourceTestCase {
 				if (!Objects.deepEquals(
 						document1.getAggregateRating(),
 						document2.getAggregateRating())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("assetLibraryKey", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						document1.getAssetLibraryKey(),
-						document2.getAssetLibraryKey())) {
 
 					return false;
 				}

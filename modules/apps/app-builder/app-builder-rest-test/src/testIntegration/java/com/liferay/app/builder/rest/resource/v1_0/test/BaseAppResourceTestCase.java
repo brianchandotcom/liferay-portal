@@ -1047,7 +1047,7 @@ public abstract class BaseAppResourceTestCase {
 		}
 	}
 
-	protected void assertValid(App app) {
+	protected void assertValid(App app) throws Exception {
 		boolean valid = true;
 
 		if (app.getDateCreated() == null) {

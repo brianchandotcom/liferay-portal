@@ -289,7 +289,7 @@ public abstract class BaseAppWorkflowResourceTestCase {
 		}
 	}
 
-	protected void assertValid(AppWorkflow appWorkflow) {
+	protected void assertValid(AppWorkflow appWorkflow) throws Exception {
 		boolean valid = true;
 
 		for (String additionalAssertFieldName :

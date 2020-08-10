@@ -1044,7 +1044,9 @@ public abstract class BaseContentTemplateResourceTestCase {
 		}
 	}
 
-	protected void assertValid(ContentTemplate contentTemplate) {
+	protected void assertValid(ContentTemplate contentTemplate)
+		throws Exception {
+
 		boolean valid = true;
 
 		if (contentTemplate.getDateCreated() == null) {
@@ -1059,8 +1061,12 @@ public abstract class BaseContentTemplateResourceTestCase {
 			valid = false;
 		}
 
+		Group group = testDepotEntry.getGroup();
+
 		if (!Objects.equals(
-				contentTemplate.getSiteId(), testGroup.getGroupId())) {
+				contentTemplate.getSiteId(), testGroup.getGroupId()) &&
+			!Objects.equals(
+				contentTemplate.getAssetLibraryKey(), group.getGroupKey())) {
 
 			valid = false;
 		}
@@ -1254,12 +1260,6 @@ public abstract class BaseContentTemplateResourceTestCase {
 			return true;
 		}
 
-		if (!Objects.equals(
-				contentTemplate1.getSiteId(), contentTemplate2.getSiteId())) {
-
-			return false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -1267,17 +1267,6 @@ public abstract class BaseContentTemplateResourceTestCase {
 				if (!equals(
 						(Map)contentTemplate1.getActions(),
 						(Map)contentTemplate2.getActions())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("assetLibraryKey", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						contentTemplate1.getAssetLibraryKey(),
-						contentTemplate2.getAssetLibraryKey())) {
 
 					return false;
 				}

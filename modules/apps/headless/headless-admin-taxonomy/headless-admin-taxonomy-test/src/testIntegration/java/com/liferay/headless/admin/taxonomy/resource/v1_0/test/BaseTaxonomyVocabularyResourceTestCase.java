@@ -1366,7 +1366,9 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		}
 	}
 
-	protected void assertValid(TaxonomyVocabulary taxonomyVocabulary) {
+	protected void assertValid(TaxonomyVocabulary taxonomyVocabulary)
+		throws Exception {
+
 		boolean valid = true;
 
 		if (taxonomyVocabulary.getDateCreated() == null) {
@@ -1381,8 +1383,12 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			valid = false;
 		}
 
+		Group group = testDepotEntry.getGroup();
+
 		if (!Objects.equals(
-				taxonomyVocabulary.getSiteId(), testGroup.getGroupId())) {
+				taxonomyVocabulary.getSiteId(), testGroup.getGroupId()) &&
+			!Objects.equals(
+				taxonomyVocabulary.getAssetLibraryKey(), group.getGroupKey())) {
 
 			valid = false;
 		}
@@ -1577,13 +1583,6 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			return true;
 		}
 
-		if (!Objects.equals(
-				taxonomyVocabulary1.getSiteId(),
-				taxonomyVocabulary2.getSiteId())) {
-
-			return false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -1591,17 +1590,6 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				if (!equals(
 						(Map)taxonomyVocabulary1.getActions(),
 						(Map)taxonomyVocabulary2.getActions())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("assetLibraryKey", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						taxonomyVocabulary1.getAssetLibraryKey(),
-						taxonomyVocabulary2.getAssetLibraryKey())) {
 
 					return false;
 				}

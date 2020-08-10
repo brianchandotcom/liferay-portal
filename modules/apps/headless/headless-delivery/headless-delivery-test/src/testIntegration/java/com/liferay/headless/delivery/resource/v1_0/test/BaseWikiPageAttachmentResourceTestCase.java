@@ -519,7 +519,9 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 		}
 	}
 
-	protected void assertValid(WikiPageAttachment wikiPageAttachment) {
+	protected void assertValid(WikiPageAttachment wikiPageAttachment)
+		throws Exception {
+
 		boolean valid = true;
 
 		if (wikiPageAttachment.getId() == null) {

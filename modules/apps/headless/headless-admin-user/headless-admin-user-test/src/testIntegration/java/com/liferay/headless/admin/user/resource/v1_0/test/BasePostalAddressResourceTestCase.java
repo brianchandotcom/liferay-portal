@@ -471,7 +471,7 @@ public abstract class BasePostalAddressResourceTestCase {
 		}
 	}
 
-	protected void assertValid(PostalAddress postalAddress) {
+	protected void assertValid(PostalAddress postalAddress) throws Exception {
 		boolean valid = true;
 
 		if (postalAddress.getId() == null) {

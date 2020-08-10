@@ -1083,7 +1083,7 @@ public abstract class BaseOrganizationResourceTestCase {
 		}
 	}
 
-	protected void assertValid(Organization organization) {
+	protected void assertValid(Organization organization) throws Exception {
 		boolean valid = true;
 
 		if (organization.getDateCreated() == null) {

@@ -262,7 +262,7 @@ public abstract class BaseExperimentRunResourceTestCase {
 		}
 	}
 
-	protected void assertValid(ExperimentRun experimentRun) {
+	protected void assertValid(ExperimentRun experimentRun) throws Exception {
 		boolean valid = true;
 
 		for (String additionalAssertFieldName :

@@ -6228,6 +6228,7 @@ ${output.content}</echo>
 								<echo>Executing Gradle tasks: @{modules.build.rest.task}</echo>
 
 								<gradle-execute dir="modules" forcedcacheenabled="false" task="@{modules.build.rest.task}">
+									<arg value="-DbuildREST.forceClientVersionDescription=false" />
 									<arg value="-DbuildREST.skipReadOnly=${build.rest.skip.read.only}" />
 									<arg value="-Pcom.liferay.portal.tools.rest.builder.ignore.local=false" />
 								</gradle-execute>
@@ -6238,6 +6239,7 @@ ${output.content}</echo>
 						<echo>Executing Gradle tasks: @{modules.build.rest.task}</echo>
 
 						<gradle-execute dir="modules" forcedcacheenabled="false" task="buildREST">
+							<arg value="-DbuildREST.forceClientVersionDescription=false" />
 							<arg value="-DbuildREST.skipReadOnly=${build.rest.skip.read.only}" />
 							<arg value="-Pcom.liferay.portal.tools.rest.builder.ignore.local=false" />
 						</gradle-execute>

@@ -1,0 +1,15 @@
+[
+	{
+		"Facetable": true,
+		"Key": "package-quantity",
+		"Required": true,
+		"SkuContributor": true,
+		"Values": [
+			"6",
+			"12",
+			"24",
+			"48",
+			"112"
+		]
+	}
+]

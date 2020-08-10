@@ -1,0 +1,685 @@
+[
+	{
+		"ddmFormSettings": {
+			"availableLanguageIds": [
+				"en_US"
+			],
+			"defaultLanguageId": "en_US",
+			"fieldValues": [
+				{
+					"instanceId": "",
+					"name": "requireAuthentication",
+					"value": "false"
+				},
+				{
+					"instanceId": "",
+					"name": "requireCaptcha",
+					"value": "false"
+				},
+				{
+					"instanceId": "",
+					"name": "autosaveEnabled",
+					"value": "true"
+				},
+				{
+					"instanceId": "",
+					"name": "redirectURL",
+					"value": ""
+				},
+				{
+					"instanceId": "",
+					"name": "storageType",
+					"value": "[\"json\"]"
+				},
+				{
+					"instanceId": "",
+					"name": "workflowDefinition",
+					"value": "[\"no-workflow\"]"
+				},
+				{
+					"instanceId": "",
+					"name": "sendEmailNotification",
+					"value": "false"
+				},
+				{
+					"instanceId": "",
+					"name": "emailFromName",
+					"value": ""
+				},
+				{
+					"instanceId": "",
+					"name": "emailFromAddress",
+					"value": ""
+				},
+				{
+					"instanceId": "",
+					"name": "emailToAddress",
+					"value": ""
+				},
+				{
+					"instanceId": "",
+					"name": "emailSubject",
+					"value": ""
+				},
+				{
+					"instanceId": "",
+					"name": "published",
+					"value": "true"
+				}
+			]
+		},
+		"ddmStructure": {
+			"availableLanguageIds": [
+				"en_US"
+			],
+			"defaultLanguageId": "en_US",
+			"fields": [
+				{
+					"autocomplete": false,
+					"dataSourceType": "",
+					"dataType": "string",
+					"ddmDataProviderInstanceId": "[]",
+					"ddmDataProviderInstanceOutput": "[]",
+					"displayStyle": "singleline",
+					"fieldNamespace": "",
+					"indexType": "keyword",
+					"label": {
+						"en_US": "Name"
+					},
+					"localizable": true,
+					"name": "Name",
+					"options": [
+						{
+							"label": {
+								"en_US": "Option"
+							},
+							"value": "Option"
+						}
+					],
+					"placeholder": {
+						"en_US": ""
+					},
+					"predefinedValue": {
+						"en_US": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					},
+					"tooltip": {
+						"en_US": ""
+					},
+					"type": "text",
+					"validation": {
+						"errorMessage": "",
+						"expression": ""
+					},
+					"visibilityExpression": ""
+				},
+				{
+					"dataSourceType": "manual",
+					"dataType": "string",
+					"ddmDataProviderInstanceId": "[]",
+					"ddmDataProviderInstanceOutput": "[]",
+					"fieldNamespace": "",
+					"indexType": "keyword",
+					"label": {
+						"en_US": "Company"
+					},
+					"localizable": true,
+					"multiple": false,
+					"name": "Company",
+					"options": [
+						{
+							"label": {
+								"en_US": "S Auto Service, Southern California"
+							},
+							"value": "SAutoServiceSouthernCalifornia"
+						},
+						{
+							"label": {
+								"en_US": "S Auto Service, N America HQ"
+							},
+							"value": "SAutoServiceNAmericaHQ"
+						},
+						{
+							"label": {
+								"en_US": "S Auto Service, Northern California"
+							},
+							"value": "SAutoServiceNorthernCalifornia"
+						}
+					],
+					"predefinedValue": {
+						"en_US": "[]"
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					},
+					"type": "select",
+					"validation": {
+						"errorMessage": "",
+						"expression": ""
+					},
+					"visibilityExpression": ""
+				},
+				{
+					"dataType": "integer",
+					"fieldNamespace": "",
+					"indexType": "keyword",
+					"label": {
+						"en_US": "Phone Number"
+					},
+					"localizable": true,
+					"name": "PhoneNumber",
+					"placeholder": {
+						"en_US": ""
+					},
+					"predefinedValue": {
+						"en_US": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					},
+					"tooltip": {
+						"en_US": ""
+					},
+					"type": "numeric",
+					"validation": {
+						"errorMessage": "",
+						"expression": ""
+					},
+					"visibilityExpression": ""
+				},
+				{
+					"autocomplete": false,
+					"dataSourceType": "",
+					"dataType": "string",
+					"ddmDataProviderInstanceId": "[]",
+					"ddmDataProviderInstanceOutput": "[]",
+					"displayStyle": "singleline",
+					"fieldNamespace": "",
+					"indexType": "keyword",
+					"label": {
+						"en_US": "Email"
+					},
+					"localizable": true,
+					"name": "Email",
+					"options": [
+						{
+							"label": {
+								"en_US": "Option"
+							},
+							"value": "Option"
+						}
+					],
+					"placeholder": {
+						"en_US": ""
+					},
+					"predefinedValue": {
+						"en_US": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					},
+					"tooltip": {
+						"en_US": ""
+					},
+					"type": "text",
+					"validation": {
+						"errorMessage": "",
+						"expression": ""
+					},
+					"visibilityExpression": ""
+				},
+				{
+					"autocomplete": false,
+					"dataSourceType": "",
+					"dataType": "string",
+					"ddmDataProviderInstanceId": "[]",
+					"ddmDataProviderInstanceOutput": "[]",
+					"displayStyle": "singleline",
+					"fieldNamespace": "",
+					"indexType": "keyword",
+					"label": {
+						"en_US": "Product Name"
+					},
+					"localizable": true,
+					"name": "ProductName",
+					"options": [
+						{
+							"label": {
+								"en_US": "Option"
+							},
+							"value": "Option"
+						}
+					],
+					"placeholder": {
+						"en_US": ""
+					},
+					"predefinedValue": {
+						"en_US": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					},
+					"tooltip": {
+						"en_US": ""
+					},
+					"type": "text",
+					"validation": {
+						"errorMessage": "",
+						"expression": ""
+					},
+					"visibilityExpression": ""
+				},
+				{
+					"autocomplete": false,
+					"dataSourceType": "",
+					"dataType": "string",
+					"ddmDataProviderInstanceId": "[]",
+					"ddmDataProviderInstanceOutput": "[]",
+					"displayStyle": "singleline",
+					"fieldNamespace": "",
+					"indexType": "keyword",
+					"label": {
+						"en_US": "Batch No."
+					},
+					"localizable": true,
+					"name": "BatchNo",
+					"options": [
+						{
+							"label": {
+								"en_US": "Option"
+							},
+							"value": "Option"
+						}
+					],
+					"placeholder": {
+						"en_US": ""
+					},
+					"predefinedValue": {
+						"en_US": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					},
+					"tooltip": {
+						"en_US": ""
+					},
+					"type": "text",
+					"validation": {
+						"errorMessage": "",
+						"expression": ""
+					},
+					"visibilityExpression": ""
+				},
+				{
+					"dataType": "string",
+					"fieldNamespace": "",
+					"indexType": "keyword",
+					"label": {
+						"en_US": "Date Purchased"
+					},
+					"localizable": true,
+					"name": "DatePurchased",
+					"predefinedValue": {
+						"en_US": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					},
+					"type": "date",
+					"validation": {
+						"errorMessage": "",
+						"expression": ""
+					},
+					"visibilityExpression": ""
+				},
+				{
+					"dataType": "integer",
+					"fieldNamespace": "",
+					"indexType": "keyword",
+					"label": {
+						"en_US": "Number of Faulty Units"
+					},
+					"localizable": true,
+					"name": "NumberOfFaultyUnits",
+					"placeholder": {
+						"en_US": ""
+					},
+					"predefinedValue": {
+						"en_US": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					},
+					"tooltip": {
+						"en_US": ""
+					},
+					"type": "numeric",
+					"validation": {
+						"errorMessage": "",
+						"expression": ""
+					},
+					"visibilityExpression": ""
+				},
+				{
+					"dataType": "integer",
+					"fieldNamespace": "",
+					"indexType": "keyword",
+					"label": {
+						"en_US": "Total Number Of Units"
+					},
+					"localizable": true,
+					"name": "TotalNumberOfUnits",
+					"placeholder": {
+						"en_US": ""
+					},
+					"predefinedValue": {
+						"en_US": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					},
+					"tooltip": {
+						"en_US": ""
+					},
+					"type": "numeric",
+					"validation": {
+						"errorMessage": "",
+						"expression": ""
+					},
+					"visibilityExpression": ""
+				},
+				{
+					"dataType": "string",
+					"fieldNamespace": "",
+					"indexType": "keyword",
+					"label": {
+						"en_US": "Please insert any photos of the product that you think may be partially or totally defective"
+					},
+					"localizable": true,
+					"name": "PleaseInsertAnyPhotosOfTheProductThatYouThinkMayBePartiallyOrTotallyDefective",
+					"predefinedValue": {
+						"en_US": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					},
+					"type": "document_library",
+					"validation": {
+						"errorMessage": "",
+						"expression": ""
+					},
+					"visibilityExpression": ""
+				},
+				{
+					"autocomplete": false,
+					"dataSourceType": "",
+					"dataType": "string",
+					"ddmDataProviderInstanceId": "[]",
+					"ddmDataProviderInstanceOutput": "[]",
+					"displayStyle": "multiline",
+					"fieldNamespace": "",
+					"indexType": "keyword",
+					"label": {
+						"en_US": "Details of the defect observed"
+					},
+					"localizable": true,
+					"name": "DetailsOfTheDefectObserved",
+					"options": [
+						{
+							"label": {
+								"en_US": "Option"
+							},
+							"value": "Option"
+						}
+					],
+					"placeholder": {
+						"en_US": "Please be as descriptive as possible."
+					},
+					"predefinedValue": {
+						"en_US": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					},
+					"tooltip": {
+						"en_US": ""
+					},
+					"type": "text",
+					"validation": {
+						"errorMessage": "",
+						"expression": ""
+					},
+					"visibilityExpression": ""
+				},
+				{
+					"autocomplete": false,
+					"dataSourceType": "",
+					"dataType": "string",
+					"ddmDataProviderInstanceId": "[]",
+					"ddmDataProviderInstanceOutput": "[]",
+					"displayStyle": "multiline",
+					"fieldNamespace": "",
+					"indexType": "keyword",
+					"label": {
+						"en_US": "Any additional message or comments?"
+					},
+					"localizable": true,
+					"name": "AnyAdditionalMessageOrComments",
+					"options": [
+						{
+							"label": {
+								"en_US": "Option"
+							},
+							"value": "Option"
+						}
+					],
+					"placeholder": {
+						"en_US": "Please be as descriptive as possible."
+					},
+					"predefinedValue": {
+						"en_US": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					},
+					"tooltip": {
+						"en_US": ""
+					},
+					"type": "text",
+					"validation": {
+						"errorMessage": "",
+						"expression": ""
+					},
+					"visibilityExpression": ""
+				}
+			],
+			"successPage": {
+				"body": {
+					"en_US": "We’ve successfully received your report and will get back to you shortly."
+				},
+				"enabled": true,
+				"title": {
+					"en_US": "Your report has been submitted!"
+				}
+			}
+		},
+		"ddmStructureLayout": {
+			"defaultLanguageId": "en_US",
+			"pages": [
+				{
+					"description": {
+						"en_US": ""
+					},
+					"rows": [
+						{
+							"columns": [
+								{
+									"fieldNames": [
+										"Name"
+									],
+									"size": 6
+								},
+								{
+									"fieldNames": [
+										"Company"
+									],
+									"size": 6
+								}
+							]
+						},
+						{
+							"columns": [
+								{
+									"fieldNames": [
+										"PhoneNumber"
+									],
+									"size": 6
+								},
+								{
+									"fieldNames": [
+										"Email"
+									],
+									"size": 6
+								}
+							]
+						}
+					],
+					"title": {
+						"en_US": "Contact Information"
+					}
+				},
+				{
+					"description": {
+						"en_US": ""
+					},
+					"rows": [
+						{
+							"columns": [
+								{
+									"fieldNames": [
+										"ProductName"
+									],
+									"size": 6
+								},
+								{
+									"fieldNames": [
+										"BatchNo"
+									],
+									"size": 6
+								}
+							]
+						},
+						{
+							"columns": [
+								{
+									"fieldNames": [
+										"DatePurchased"
+									],
+									"size": 6
+								},
+								{
+									"fieldNames": [
+										"NumberOfFaultyUnits"
+									],
+									"size": 6
+								}
+							]
+						},
+						{
+							"columns": [
+								{
+									"fieldNames": [
+										"TotalNumberOfUnits"
+									],
+									"size": 6
+								},
+								{
+									"fieldNames": [
+										"PleaseInsertAnyPhotosOfTheProductThatYouThinkMayBePartiallyOrTotallyDefective"
+									],
+									"size": 6
+								}
+							]
+						},
+						{
+							"columns": [
+								{
+									"fieldNames": [
+										"DetailsOfTheDefectObserved"
+									],
+									"size": 12
+								}
+							]
+						},
+						{
+							"columns": [
+								{
+									"fieldNames": [
+										"AnyAdditionalMessageOrComments"
+									],
+									"size": 12
+								}
+							]
+						}
+					],
+					"title": {
+						"en_US": "Product Details"
+					}
+				}
+			],
+			"paginationMode": "wizard"
+		},
+		"description": "To report a product defect, please provide the following information.",
+		"name": "Product Defect Report"
+	}
+]

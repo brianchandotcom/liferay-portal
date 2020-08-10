@@ -1,0 +1,7 @@
+baseline {
+	enabled = false
+}
+
+dependencies {
+	compileOnly group: "com.liferay.portal", name: "release.portal.api", version: "7.1.1"
+}

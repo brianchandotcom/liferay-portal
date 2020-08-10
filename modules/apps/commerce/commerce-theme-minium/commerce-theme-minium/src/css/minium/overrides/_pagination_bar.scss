@@ -1,0 +1,45 @@
+#minium .commerce-catalog {
+	.pagination-results {
+		display: none;
+	}
+
+	.pagination {
+		left: 50%;
+		position: absolute;
+		transform: translateX(-50%);
+
+		li {
+			box-sizing: border-box;
+			margin: 0 5px;
+			padding: 5px 10px;
+
+			&:first-child,
+			&:last-child {
+				display: none;
+			}
+
+			a {
+				color: $color-fg-alt;
+			}
+
+			&:hover,
+			&.active {
+				border-bottom: 3px solid $color-theme;
+
+				a {
+					color: $color-theme;
+				}
+			}
+		}
+	}
+}
+
+.btn.commerce-order-by.dropdown-toggle {
+	background-color: #fff;
+	border: 2px solid $color-border;
+	font-size: 14px;
+	font-weight: normal;
+	letter-spacing: normal;
+	line-height: 18px;
+	text-transform: none;
+}

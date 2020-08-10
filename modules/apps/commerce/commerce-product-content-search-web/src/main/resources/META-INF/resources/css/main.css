@@ -1,0 +1,30 @@
+.price-range-btn {
+	height: 40px;
+	margin-bottom: 1.5rem;
+	width: inherit;
+}
+
+input.price-range-input {
+	font-size: 14px;
+	padding: 2px;
+}
+
+.price-range-input-wrapper {
+	max-width: 96px;
+	padding: 0;
+}
+
+.price-range-input::-webkit-outer-spin-button,
+.price-range-input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+.price-range-input[type=number] {
+	-moz-appearance:textfield;
+}
+
+.price-range-seperator {
+	margin-bottom: 2rem;
+	width: 4%
+}

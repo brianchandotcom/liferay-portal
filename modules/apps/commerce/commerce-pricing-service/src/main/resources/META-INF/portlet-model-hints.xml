@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.commerce.pricing.model.CommercePriceModifier">
+		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
+		<field name="commercePriceModifierId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="commercePriceListId" type="long" />
+		<field name="title" type="String" />
+		<field name="target" type="String" />
+		<field name="modifierAmount" type="BigDecimal" />
+		<field name="modifierType" type="String" />
+		<field name="priority" type="double" />
+		<field name="active" type="boolean" />
+		<field name="displayDate" type="Date" />
+		<field name="expirationDate" type="Date" />
+		<field name="lastPublishDate" type="Date" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.commerce.pricing.model.CommercePriceModifierRel">
+		<field name="commercePriceModifierRelId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="commercePriceModifierId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+	</model>
+	<model name="com.liferay.commerce.pricing.model.CommercePricingClass">
+		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
+		<field name="commercePricingClassId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field localized="true" name="title" type="String" />
+		<field localized="true" name="description" type="String" />
+		<field name="lastPublishDate" type="Date" />
+	</model>
+	<model name="com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel">
+		<field name="CommercePricingClassCPDefinitionRelId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="commercePricingClassId" type="long" />
+		<field name="CPDefinitionId" type="long" />
+	</model>
+</model-hints>

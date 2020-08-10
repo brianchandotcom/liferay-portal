@@ -1,0 +1,19 @@
+.order-notes-submit-actions {
+	align-items: center;
+	display: flex;
+	justify-content: flex-end;
+
+	.form-inline.form-group {
+		grid-auto-columns: 1fr;
+		grid-template-areas: initial;
+		margin-bottom: 0;
+
+		.field {
+			margin-right: 5px;
+		}
+	}
+
+	.button-holder {
+		margin: 0 0 0 20px;
+	}
+}

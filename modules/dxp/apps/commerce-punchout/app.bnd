@@ -1,0 +1,15 @@
+Liferay-Releng-App-Description: PunchOut2Go is a global B2B integration company specializing in connecting commerce business platforms to eProcurement spend management and enterprise resource planning applications, allowing companies around the world to streamline purchasing processes and transact electronically. Harnessing the power of the cloud, PunchOut2Go's iPaaS technology seamlessly links business applications to automate the flow of purchasing data for PunchOut catalogs, electronic purchase orders, eInvoices and other B2B sales order automation documents. The PunchOut2Go connector allows companies to enable PunchOut catalog functionality within Liferay Commerce in order to do business with any customer on any procurement system such as SAP Ariba, Coupa, Jaggaer, and many others.
+Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Commerce Connector to PunchOut2Go
+Liferay-Releng-Bundle: false
+Liferay-Releng-Category: Utility
+Liferay-Releng-Demo-Url:
+Liferay-Releng-Deprecated: false
+Liferay-Releng-Fix-Delivery-Method:
+Liferay-Releng-Labs: false
+Liferay-Releng-Marketplace: true
+Liferay-Releng-Portal-Required: false
+Liferay-Releng-Public: ${liferay.releng.public}
+Liferay-Releng-Restart-Required: true
+Liferay-Releng-Suite:
+Liferay-Releng-Support-Url: http://www.liferay.com
+Liferay-Releng-Supported: ${liferay.releng.supported}

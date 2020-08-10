@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+	<bean class="com.liferay.commerce.shipping.engine.fixed.service.impl.CommerceShippingFixedOptionLocalServiceImpl" id="com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionLocalService" />
+	<bean class="com.liferay.commerce.shipping.engine.fixed.service.impl.CommerceShippingFixedOptionServiceImpl" id="com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService" />
+	<bean class="com.liferay.commerce.shipping.engine.fixed.service.persistence.impl.CommerceShippingFixedOptionPersistenceImpl" id="com.liferay.commerce.shipping.engine.fixed.service.persistence.CommerceShippingFixedOptionPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.shipping.engine.fixed.service.impl.CommerceShippingFixedOptionRelLocalServiceImpl" id="com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionRelLocalService" />
+	<bean class="com.liferay.commerce.shipping.engine.fixed.service.impl.CommerceShippingFixedOptionRelServiceImpl" id="com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionRelService" />
+	<bean class="com.liferay.commerce.shipping.engine.fixed.service.persistence.impl.CommerceShippingFixedOptionRelPersistenceImpl" id="com.liferay.commerce.shipping.engine.fixed.service.persistence.CommerceShippingFixedOptionRelPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.shipping.engine.fixed.service.persistence.impl.CommerceShippingFixedOptionRelFinderImpl" id="com.liferay.commerce.shipping.engine.fixed.service.persistence.CommerceShippingFixedOptionRelFinder" parent="basePersistence" />
+</beans>

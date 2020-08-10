@@ -1,0 +1,130 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+CommerceCurrency commerceCurrency = commercePriceList.getCommerceCurrency();
+
+String priceInputLabel = "price-list-price";
+
+if (CommercePriceListConstants.TYPE_PROMOTION.equals(commercePriceEntryDisplayContext.getCommercePriceListType(portletName))) {
+	priceInputLabel = "promotion-price";
+}
+
+boolean discountDiscovery = BeanParamUtil.getBoolean(commercePriceEntry, request, "discountDiscovery", true);
+%>
+
+<commerce-ui:panel
+	title='<%= LanguageUtil.get(request, "details") %>'
+>
+	<div class="row">
+		<div class="col-4">
+			<label class="control-label" for="entryBasePrice"><%= LanguageUtil.get(request, "base-price") %></label>
+
+			<p id="entryBasePrice"><%= HtmlUtil.escape(commercePriceEntryDisplayContext.getBasePrice()) %></p>
+		</div>
+
+		<div class="col-4">
+			<aui:input label="<%= priceInputLabel %>" name="price" suffix="<%= HtmlUtil.escape(commerceCurrency.getCode()) %>" type="text" value="<%= commerceCurrency.round(commercePriceEntry.getPrice()) %>">
+				<aui:validator name="min">0</aui:validator>
+				<aui:validator name="number" />
+			</aui:input>
+		</div>
+
+		<div class="col-4">
+			<div class="<%= discountDiscovery ? "hide" : StringPool.BLANK %>" id="<%= renderResponse.getNamespace() %>discountLevels">
+				<label class="control-label" for="<%= renderResponse.getNamespace() %>discountLevel1"><%= LanguageUtil.get(request, "discount-levels") %></label>
+
+				<div class="d-flex">
+					<aui:input disabled="<%= discountDiscovery %>" ignoreRequestValue="<%= true %>" inlineField="<%= true %>" label="" name="discountLevel1" type="text" value="<%= commercePriceEntry.getDiscountLevel1() %>" wrapperCssClass="pr-2">
+						<aui:validator name="min">0</aui:validator>
+						<aui:validator name="number" />
+					</aui:input>
+
+					<aui:input disabled="<%= discountDiscovery %>" ignoreRequestValue="<%= true %>" inlineField="<%= true %>" label="" name="discountLevel2" type="text" value="<%= commercePriceEntry.getDiscountLevel2() %>" wrapperCssClass="pr-2">
+						<aui:validator name="min">0</aui:validator>
+						<aui:validator name="number" />
+					</aui:input>
+
+					<aui:input disabled="<%= discountDiscovery %>" ignoreRequestValue="<%= true %>" inlineField="<%= true %>" label="" name="discountLevel3" type="text" value="<%= commercePriceEntry.getDiscountLevel3() %>" wrapperCssClass="pr-2">
+						<aui:validator name="min">0</aui:validator>
+						<aui:validator name="number" />
+					</aui:input>
+
+					<aui:input disabled="<%= discountDiscovery %>" ignoreRequestValue="<%= true %>" inlineField="<%= true %>" label="" name="discountLevel4" type="text" value="<%= commercePriceEntry.getDiscountLevel4() %>">
+						<aui:validator name="min">0</aui:validator>
+						<aui:validator name="number" />
+					</aui:input>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-4">
+			<aui:input cssClass="mb-2" formName="fm" label="publish-date" name="displayDate" />
+		</div>
+
+		<div class="col-4">
+			<liferay-ui:error exception="<%= CommercePriceListExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />
+
+			<aui:fieldset>
+				<aui:input cssClass="mb-2" dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" formName="fm" name="expirationDate" />
+			</aui:fieldset>
+		</div>
+
+		<div class="col-4">
+			<div class="row">
+				<div class="col-12">
+					<aui:input helpMessage="override-discount-help" ignoreRequestValue="<%= true %>" label='<%= LanguageUtil.get(request, "override-discount") %>' name="overrideDiscount" type="toggle-switch" value="<%= !discountDiscovery %>" />
+				</div>
+			</div>
+		</div>
+	</div>
+</commerce-ui:panel>
+
+<aui:script use="aui-base">
+	A.one('#<portlet:namespace />overrideDiscount').on('change', function(event) {
+		if (this.attr('checked')) {
+			A.one('#<portlet:namespace />discountLevels').show();
+
+			A.one('#<portlet:namespace />discountLevel1').attr('disabled', false);
+			A.one('#<portlet:namespace />discountLevel1').removeClass('disabled');
+
+			A.one('#<portlet:namespace />discountLevel2').attr('disabled', false);
+			A.one('#<portlet:namespace />discountLevel2').removeClass('disabled');
+
+			A.one('#<portlet:namespace />discountLevel3').attr('disabled', false);
+			A.one('#<portlet:namespace />discountLevel3').removeClass('disabled');
+
+			A.one('#<portlet:namespace />discountLevel4').attr('disabled', false);
+			A.one('#<portlet:namespace />discountLevel4').removeClass('disabled');
+		} else {
+			A.one('#<portlet:namespace />discountLevels').hide();
+
+			A.one('#<portlet:namespace />discountLevel1').attr('disabled', true);
+			A.one('#<portlet:namespace />discountLevel1').addClass('disabled');
+
+			A.one('#<portlet:namespace />discountLevel2').attr('disabled', true);
+			A.one('#<portlet:namespace />discountLevel2').addClass('disabled');
+
+			A.one('#<portlet:namespace />discountLevel3').attr('disabled', true);
+			A.one('#<portlet:namespace />discountLevel3').addClass('disabled');
+
+			A.one('#<portlet:namespace />discountLevel4').attr('disabled', true);
+			A.one('#<portlet:namespace />discountLevel4').addClass('disabled');
+		}
+	});
+</aui:script>

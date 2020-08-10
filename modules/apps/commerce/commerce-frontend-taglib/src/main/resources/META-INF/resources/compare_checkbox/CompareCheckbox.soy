@@ -1,0 +1,55 @@
+{namespace CompareCheckbox}
+
+{template .render}
+	{@param productId: number|string }
+	{@param? checkboxVisible: bool }
+	{@param? compareAvailable: bool }
+	{@param? inCompare: bool }
+	{@param? labelVisible: bool }
+	{@param? _handleCompareCheckbox: any }
+
+	{let $checkboxId kind="text"}
+		product-{$productId}-compare-checkbox
+	{/let}
+
+	{let $disabled: (isNonnull($compareAvailable) and $compareAvailable == false) ? true : false /}
+
+	{let $compareAttributes kind="attributes"}
+		id="{$checkboxId}"
+		class="product-compare-checkbox__input"
+		type="checkbox"
+		{if isNonnull($inCompare) and $inCompare == true}
+			{sp}checked
+		{else}
+			{if $disabled}
+				{sp}disabled
+			{/if}
+		{/if}
+	{/let}
+
+	{let $containerClasses kind="text"}
+		product-compare-checkbox
+		{if isNonnull($inCompare) and $inCompare == true}
+			{sp}product-compare-checkbox__checked
+		{else}
+			{if $disabled}
+				{sp}product-compare-checkbox__disabled
+			{/if}
+		{/if}
+	{/let}
+
+	<label class="{$containerClasses}">
+		{if isNonnull($checkboxVisible) and $checkboxVisible == true }
+			<input
+				{$compareAttributes}
+				data-onchange="{$_handleCompareCheckbox}"
+			/>
+			{if isNonnull($labelVisible) and $labelVisible == true}
+				<span class="product-compare-checkbox__label">
+					{msg desc="Compare"}compare{/msg}
+				</span>
+			{/if}
+		{/if}
+	</label>
+
+{/template}

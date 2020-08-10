@@ -1,0 +1,98 @@
+{namespace QuantitySelector}
+
+{template .render}
+	{@param quantity: int|null}
+	{@param? disabled: bool}
+	{@param? allowedQuantities: list<number>}
+	{@param? quantitySelectorAdditionalClasses: string}
+	{@param? _prevAvailable: bool}
+	{@param? _nextAvailable: bool}
+	{@param? _handleFormSubmit: any}
+	{@param? _handleInputKeyUp: any}
+	{@param? _handleArrowKeys: any}
+	{@param? _handlePrevQuantityButtonPressed: any}
+	{@param? _handleNextQuantityButtonPressed: any}
+	{@param? _handleSelectOption: any}
+
+	{let $quantitySelectorClasses kind="text"}
+		quantity-selector
+
+		{if $quantitySelectorAdditionalClasses}
+			{sp}{$quantitySelectorAdditionalClasses}
+		{/if}
+
+		{if $disabled}
+			{sp}quantity-selector--disabled
+		{/if}
+	{/let}
+
+	<form class="{$quantitySelectorClasses}" data-onsubmit="{$_handleFormSubmit}">
+		{if isNonnull($allowedQuantities)}
+			{let $selectAttributes kind="attributes"}
+				class="form-control"
+				data-onchange="{$_handleSelectOption}"
+				{if $disabled}
+					disabled
+				{/if}
+			{/let}
+
+			<select	{$selectAttributes}>
+				{foreach $option in $allowedQuantities}
+					{let $optionAttributes kind="attributes"}
+						value="{$option}"
+						{if $option == $quantity}
+							selected="selected"
+						{/if}
+					{/let}
+					<option {$optionAttributes}>{$option}</option>
+				{/foreach}
+			</select>
+		{else}
+			<div class="input-group justify-content-center">
+				<div class="input-group-item input-group-item-shrink input-group-prepend">
+					<button
+						class="btn btn-monospaced btn-secondary h-100"
+						type="submit"
+						data-onclick="{$_handlePrevQuantityButtonPressed}"
+						{if $_prevAvailable == false}
+							{sp}disabled
+						{/if}
+					>
+						&ndash;
+					</button>
+				</div>
+
+				<div class="input-group-item input-group-item-shrink input-group-prepend">
+					<input
+						name="quantity"
+						type="text"
+						class="form-control text-center"
+						data-onkeyup="{$_handleInputKeyUp}"
+						data-onkeydown="{$_handleArrowKeys}"
+						{if $quantity}
+							value="{$quantity}"
+						{else}
+							value="1"
+						{/if}
+						{if $disabled}
+							{sp}disabled
+						{/if}
+					/>
+				</div>
+
+				<div class="input-group-append input-group-item input-group-item-shrink">
+					<button
+						class="btn btn-monospaced btn-secondary h-100"
+						type="submit"
+						data-onclick="{$_handleNextQuantityButtonPressed}"
+						{if $_nextAvailable == false}
+							{sp}disabled
+						{/if}
+					>
+						+
+					</button>
+				</div>
+			</div>
+		{/if}
+	</form>
+{/template}

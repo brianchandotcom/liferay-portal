@@ -1,0 +1,10 @@
+apiDir: "../headless-commerce-admin-site-setting-api/src/main/java"
+apiPackagePath: "com.liferay.headless.commerce.admin.site.setting"
+application:
+    baseURI: "/headless-commerce-admin-site-setting"
+    className: "HeadlessCommerceAdminSiteSettingApplication"
+    name: "Liferay.Headless.Commerce.Admin.Site.Setting"
+author: "Zoltán Takács"
+clientDir: "../headless-commerce-admin-site-setting-client/src/main/java"
+forcePredictableSchemaPropertyName: false
+testDir: "../headless-commerce-admin-site-setting-test/src/testIntegration/java"

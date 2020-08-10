@@ -1,0 +1,9 @@
+[
+	{
+		"accountGroups": [
+			"user"
+		],
+		"name": "All Products",
+		"type": "all-products"
+	}
+]

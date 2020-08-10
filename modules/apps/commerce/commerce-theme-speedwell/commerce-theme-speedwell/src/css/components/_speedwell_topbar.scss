@@ -1,0 +1,172 @@
+.speedwell-topbar {
+	align-items: center;
+	background-color: $color-bg;
+	display: grid;
+	grid-template-columns: 1fr 200px 1fr;
+	left: 0;
+	padding-right: $topbar-height;
+	position: fixed;
+	right: 0;
+	top: $liferay-topbar-height;
+	transition: background-color 0.2s $easeOutQuart, margin 500ms ease;
+	z-index: 988;
+
+	@media screen and (max-width: $bp-xsmall) {
+		top: $liferay-topbar-height-small;
+	}
+
+	body.open & {
+		margin-left: $liferay-sidebars-width;
+	}
+
+	body.open-admin-panel & {
+		margin-right: $liferay-sidebars-width;
+	}
+
+	body.open-admin-panel.lfr-has-simulation-panel & {
+		display: none;
+	}
+
+	&__button {
+		align-items: center;
+		background-color: #fff;
+		border: 0;
+		color: currentColor;
+		cursor: pointer;
+		display: flex;
+		flex-shrink: 0;
+		font-size: 1rem;
+		height: 80px;
+		justify-content: center;
+		margin: 0;
+		padding: 0;
+		position: relative;
+		transition: all ease 150ms;
+		width: 80px;
+		z-index: 0;
+
+		@media screen and (min-width: $bp-xxsmall) and (max-width: $bp-small) {
+			background-color: $color-bg;
+		}
+
+		@media screen and (max-width: $bp-small) {
+			height: 70px;
+			width: 60px;
+		}
+
+		@media screen and (max-width: 375px) {
+			height: 60px;
+			width: 45px;
+		}
+
+		& > svg {
+			z-index: 1;
+		}
+
+		@include speedwellButtonEffect($color-bg, $stroke);
+
+		&[disabled],
+		&.is-disabled,
+		&[data-badge-count='0'] svg {
+			opacity: 0.5;
+		}
+
+		&:not(.has-badge)::after {
+			display: none;
+		}
+
+		&.has-badge::after {
+			align-items: center;
+			background-color: $color-theme;
+			border-radius: 50%;
+			color: white;
+			content: attr(data-badge-count);
+			display: flex;
+			font-size: 10px;
+			font-weight: bold;
+			height: 18px;
+			justify-content: center;
+			left: 50%;
+			line-height: 1;
+			margin-left: -9px;
+			margin-top: -9px;
+			position: absolute;
+			top: 50%;
+			transform: translate(17px, -7px);
+			transition: all ease 200ms;
+			width: 18px;
+
+			@media screen and (max-width: 450px) {
+				margin: 0;
+				transform: translate(0, -23px);
+			}
+		}
+
+		&:not(.has-badge)::after {
+			opacity: 0;
+			transform: scale(0.1) translate(17px, -7px);
+		}
+	}
+
+	&__icon {
+		&--active {
+			display: none;
+		}
+	}
+
+	&--translucent {
+		@media screen and (min-width: 768px) {
+			background-color: transparent;
+			background-image: linear-gradient(
+				180deg,
+				rgba(0, 0, 0, 0.3) 30%,
+				transparent
+			);
+
+			.speedwell-topbar__button {
+				background-color: transparent;
+				color: $color-bg;
+
+				@include speedwellButtonEffect($color-bg, $stroke);
+			}
+
+			.speedwell-logo svg path:nth-child(1) {
+				fill: white;
+				stroke: transparent;
+			}
+
+			.is-open {
+				.speedwell-topbar__button {
+					background-color: $stroke;
+					color: $color-bg;
+				}
+			}
+		}
+	}
+
+	&__menu {
+		justify-content: left;
+
+		&.is-open ~ .speedwell-frame .mobile-filters-button {
+			display: none;
+		}
+	}
+
+	&__logo {
+		justify-content: center;
+		overflow: hidden;
+		text-align: center;
+	}
+
+	&__actions {
+		display: inline-grid;
+		grid-auto-flow: column;
+		justify-content: right;
+
+		@media screen and (max-width: $bp-small) {
+			.speedwell-account {
+				display: none;
+			}
+		}
+	}
+}

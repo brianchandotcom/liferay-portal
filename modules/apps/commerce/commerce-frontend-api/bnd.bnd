@@ -1,0 +1,13 @@
+Bundle-Name: Liferay Commerce Frontend API
+Bundle-SymbolicName: com.liferay.commerce.frontend.api
+Bundle-Version: 8.4.2
+Export-Package:\
+	com.liferay.commerce.frontend,\
+	com.liferay.commerce.frontend.clay.data.set,\
+	com.liferay.commerce.frontend.clay.list,\
+	com.liferay.commerce.frontend.clay.table,\
+	com.liferay.commerce.frontend.clay.table.selectable,\
+	com.liferay.commerce.frontend.clay.timeline,\
+	com.liferay.commerce.frontend.model,\
+	com.liferay.commerce.frontend.template.soy.renderer,\
+	com.liferay.commerce.frontend.util

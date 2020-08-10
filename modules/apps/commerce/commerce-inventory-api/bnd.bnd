@@ -1,0 +1,17 @@
+Bundle-Name: Liferay Commerce Inventory API
+Bundle-SymbolicName: com.liferay.commerce.inventory.api
+Bundle-Version: 6.2.7
+Export-Package:\
+	com.liferay.commerce.inventory.constants,\
+	com.liferay.commerce.inventory.engine,\
+	com.liferay.commerce.inventory.exception,\
+	com.liferay.commerce.inventory.model,\
+	com.liferay.commerce.inventory.permission,\
+	com.liferay.commerce.inventory.service,\
+	com.liferay.commerce.inventory.service.persistence,\
+	com.liferay.commerce.inventory.type,\
+	com.liferay.commerce.inventory.util.comparator
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang)";\
+		resource.bundle.base.name="content.Language"

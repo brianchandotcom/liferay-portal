@@ -1,0 +1,17 @@
+[
+	{
+		"articleId": "LOGIN_SPLASH",
+		"ddmStructureKey": "login-splash-structure",
+		"ddmTemplateKey": "LOGIN_SPLASH",
+		"permissions": [
+			{
+				"actionIds": [
+					"VIEW"
+				],
+				"roleName": "Guest",
+				"scope": 4
+			}
+		],
+		"title": "LOGIN_SPLASH"
+	}
+]

@@ -1,0 +1,417 @@
+[
+	{
+		"code": "AD",
+		"name": "Adygeya, Respublika",
+		"priority": 1
+	},
+	{
+		"code": "AL",
+		"name": "Altay, Respublika",
+		"priority": 2
+	},
+	{
+		"code": "ALT",
+		"name": "Altayskiy kray",
+		"priority": 3
+	},
+	{
+		"code": "AMU",
+		"name": "Amurskaya oblast'",
+		"priority": 4
+	},
+	{
+		"code": "ARK",
+		"name": "Arkhangel'skaya oblast'",
+		"priority": 5
+	},
+	{
+		"code": "AST",
+		"name": "Astrakhanskaya oblast'",
+		"priority": 6
+	},
+	{
+		"code": "BA",
+		"name": "Bashkortostan, Respublika",
+		"priority": 7
+	},
+	{
+		"code": "BEL",
+		"name": "Belgorodskaya oblast'",
+		"priority": 8
+	},
+	{
+		"code": "BRY",
+		"name": "Bryanskaya oblast'",
+		"priority": 9
+	},
+	{
+		"code": "BU",
+		"name": "Buryatiya, Respublika",
+		"priority": 10
+	},
+	{
+		"code": "CE",
+		"name": "Chechenskaya Respublika",
+		"priority": 11
+	},
+	{
+		"code": "CHE",
+		"name": "Chelyabinskaya oblast'",
+		"priority": 12
+	},
+	{
+		"code": "CHU",
+		"name": "Chukotskiy avtonomnyy okrug",
+		"priority": 13
+	},
+	{
+		"code": "CU",
+		"name": "Chuvashskaya Respublika",
+		"priority": 14
+	},
+	{
+		"code": "DA",
+		"name": "Dagestan, Respublika",
+		"priority": 15
+	},
+	{
+		"code": "IN",
+		"name": "Ingushetiya, Respublika",
+		"priority": 16
+	},
+	{
+		"code": "IRK",
+		"name": "Irkutskaya oblast'",
+		"priority": 17
+	},
+	{
+		"code": "IVA",
+		"name": "Ivanovskaya oblast'",
+		"priority": 18
+	},
+	{
+		"code": "KB",
+		"name": "Kabardino-Balkarskaya Respublika",
+		"priority": 19
+	},
+	{
+		"code": "KGD",
+		"name": "Kaliningradskaya oblast'",
+		"priority": 20
+	},
+	{
+		"code": "KL",
+		"name": "Kalmykiya, Respublika",
+		"priority": 21
+	},
+	{
+		"code": "KLU",
+		"name": "Kaluzhskaya oblast'",
+		"priority": 22
+	},
+	{
+		"code": "KAM",
+		"name": "Kamchatskiy kray",
+		"priority": 23
+	},
+	{
+		"code": "KC",
+		"name": "Karachayevo-Cherkesskaya Respublika",
+		"priority": 24
+	},
+	{
+		"code": "KR",
+		"name": "Kareliya, Respublika",
+		"priority": 25
+	},
+	{
+		"code": "KEM",
+		"name": "Kemerovskaya oblast'",
+		"priority": 26
+	},
+	{
+		"code": "KHA",
+		"name": "Khabarovskiy kray",
+		"priority": 27
+	},
+	{
+		"code": "KK",
+		"name": "Khakasiya, Respublika",
+		"priority": 28
+	},
+	{
+		"code": "KHM",
+		"name": "Khanty-Mansiyskiy avtonomnyy okrug",
+		"priority": 29
+	},
+	{
+		"code": "KIR",
+		"name": "Kirovskaya oblast'",
+		"priority": 30
+	},
+	{
+		"code": "KO",
+		"name": "Komi, Respublika",
+		"priority": 31
+	},
+	{
+		"code": "KOS",
+		"name": "Kostromskaya oblast'",
+		"priority": 32
+	},
+	{
+		"code": "KDA",
+		"name": "Krasnodarskiy kray",
+		"priority": 33
+	},
+	{
+		"code": "KYA",
+		"name": "Krasnoyarskiy kray",
+		"priority": 34
+	},
+	{
+		"code": "KGN",
+		"name": "Kurganskaya oblast'",
+		"priority": 35
+	},
+	{
+		"code": "KRS",
+		"name": "Kurskaya oblast'",
+		"priority": 36
+	},
+	{
+		"code": "LEN",
+		"name": "Leningradskaya oblast'",
+		"priority": 37
+	},
+	{
+		"code": "LIP",
+		"name": "Lipetskaya oblast'",
+		"priority": 38
+	},
+	{
+		"code": "MAG",
+		"name": "Magadanskaya oblast'",
+		"priority": 39
+	},
+	{
+		"code": "ME",
+		"name": "Mariy El, Respublika",
+		"priority": 40
+	},
+	{
+		"code": "MO",
+		"name": "Mordoviya, Respublika",
+		"priority": 41
+	},
+	{
+		"code": "MOS",
+		"name": "Moskovskaya oblast'",
+		"priority": 42
+	},
+	{
+		"code": "MOW",
+		"name": "Moskva",
+		"priority": 43
+	},
+	{
+		"code": "MUR",
+		"name": "Murmanskaya oblast'",
+		"priority": 44
+	},
+	{
+		"code": "NEN",
+		"name": "Nenetskiy avtonomnyy okrug",
+		"priority": 45
+	},
+	{
+		"code": "NIZ",
+		"name": "Nizhegorodskaya oblast'",
+		"priority": 46
+	},
+	{
+		"code": "NGR",
+		"name": "Novgorodskaya oblast'",
+		"priority": 47
+	},
+	{
+		"code": "NVS",
+		"name": "Novosibirskaya oblast'",
+		"priority": 48
+	},
+	{
+		"code": "OMS",
+		"name": "Omskaya oblast'",
+		"priority": 49
+	},
+	{
+		"code": "ORE",
+		"name": "Orenburgskaya oblast'",
+		"priority": 50
+	},
+	{
+		"code": "ORL",
+		"name": "Orlovskaya oblast'",
+		"priority": 51
+	},
+	{
+		"code": "PNZ",
+		"name": "Penzenskaya oblast'",
+		"priority": 52
+	},
+	{
+		"code": "PER",
+		"name": "Permskiy kray",
+		"priority": 53
+	},
+	{
+		"code": "PRI",
+		"name": "Primorskiy kray",
+		"priority": 54
+	},
+	{
+		"code": "PSK",
+		"name": "Pskovskaya oblast'",
+		"priority": 55
+	},
+	{
+		"code": "ROS",
+		"name": "Rostovskaya oblast'",
+		"priority": 56
+	},
+	{
+		"code": "RYA",
+		"name": "Ryazanskaya oblast'",
+		"priority": 57
+	},
+	{
+		"code": "SA",
+		"name": "Saha, Respublika",
+		"priority": 58
+	},
+	{
+		"code": "SAK",
+		"name": "Sakhalinskaya oblast'",
+		"priority": 59
+	},
+	{
+		"code": "SAM",
+		"name": "Samarskaya oblast'",
+		"priority": 60
+	},
+	{
+		"code": "SPE",
+		"name": "Sankt-Peterburg",
+		"priority": 61
+	},
+	{
+		"code": "SAR",
+		"name": "Saratovskaya oblast'",
+		"priority": 62
+	},
+	{
+		"code": "SE",
+		"name": "Severnaya Osetiya, Respublika",
+		"priority": 63
+	},
+	{
+		"code": "SMO",
+		"name": "Smolenskaya oblast'",
+		"priority": 64
+	},
+	{
+		"code": "STA",
+		"name": "Stavropol'skiy kray",
+		"priority": 65
+	},
+	{
+		"code": "SVE",
+		"name": "Sverdlovskaya oblast'",
+		"priority": 66
+	},
+	{
+		"code": "TAM",
+		"name": "Tambovskaya oblast'",
+		"priority": 67
+	},
+	{
+		"code": "TA",
+		"name": "Tatarstan, Respublika",
+		"priority": 68
+	},
+	{
+		"code": "TOM",
+		"name": "Tomskaya oblast'",
+		"priority": 69
+	},
+	{
+		"code": "TUL",
+		"name": "Tul'skaya oblast'",
+		"priority": 70
+	},
+	{
+		"code": "TVE",
+		"name": "Tverskaya oblast'",
+		"priority": 71
+	},
+	{
+		"code": "TYU",
+		"name": "Tyumenskaya oblast'",
+		"priority": 72
+	},
+	{
+		"code": "TY",
+		"name": "Tyva, Respublika",
+		"priority": 73
+	},
+	{
+		"code": "UD",
+		"name": "Udmurtskaya Respublika",
+		"priority": 74
+	},
+	{
+		"code": "ULY",
+		"name": "Ul'yanovskaya oblast'",
+		"priority": 75
+	},
+	{
+		"code": "VLA",
+		"name": "Vladimirskaya oblast'",
+		"priority": 76
+	},
+	{
+		"code": "VGG",
+		"name": "Volgogradskaya oblast'",
+		"priority": 77
+	},
+	{
+		"code": "VLG",
+		"name": "Vologodskaya oblast'",
+		"priority": 78
+	},
+	{
+		"code": "VOR",
+		"name": "Voronezhskaya oblast'",
+		"priority": 79
+	},
+	{
+		"code": "YAN",
+		"name": "Yamalo-Nenetskiy avtonomnyy okrug",
+		"priority": 80
+	},
+	{
+		"code": "YAR",
+		"name": "Yaroslavskaya oblast'",
+		"priority": 81
+	},
+	{
+		"code": "YEV",
+		"name": "Yevreyskaya avtonomnaya oblast'",
+		"priority": 82
+	},
+	{
+		"code": "ZAB",
+		"name": "Zabaykal'skiy kray",
+		"priority": 83
+	}
+]

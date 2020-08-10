@@ -1,0 +1,31 @@
+Bundle-Name: Liferay Commerce BOM API
+Bundle-SymbolicName: com.liferay.commerce.bom.api
+Bundle-Version: 2.0.12
+Export-Package:\
+	com.liferay.commerce.bom.constants,\
+	com.liferay.commerce.bom.exception,\
+	com.liferay.commerce.bom.model,\
+	com.liferay.commerce.bom.permission,\
+	com.liferay.commerce.bom.search,\
+	com.liferay.commerce.bom.service,\
+	com.liferay.commerce.bom.service.persistence
+Import-Package:\
+	com.liferay.expando.kernel.model;version="[1.1.0,3.0.0)",\
+	com.liferay.portal.kernel.dao.orm;version="[7.3.0,9.0.0)",\
+	com.liferay.portal.kernel.exception;version="[7.5.0,9.0.0)",\
+	com.liferay.portal.kernel.json;version="[7.7.0,9.0.0)",\
+	com.liferay.portal.kernel.model;version="[2.0.0,4.0.0)",\
+	com.liferay.portal.kernel.model.impl;version="[1.1.0,3.0.0)",\
+	com.liferay.portal.kernel.portlet;version="[8.1.0,10.0.0)",\
+	com.liferay.portal.kernel.search;version="[7.7.0,9.0.0)",\
+	com.liferay.portal.kernel.security.auth;version="[1.2.0,3.0.0)",\
+	com.liferay.portal.kernel.security.permission;version="[1.8.0,3.0.0)",\
+	com.liferay.portal.kernel.service;version="[1.43.0,3.0.0)",\
+	com.liferay.portal.kernel.service.persistence;version="[1.24.0,3.0.0)",\
+	com.liferay.portal.kernel.service.persistence.impl;version="[1.5.0,3.0.0)",\
+	com.liferay.portal.kernel.settings;version="[1.3.0,3.0.0)",\
+	com.liferay.portal.kernel.template;version="[7.2.0,9.0.0)",\
+	com.liferay.portal.kernel.util;version="[8.20.0,10.0.0)",\
+	com.liferay.portal.kernel.workflow;version="[7.4.0,9.0.0)",\
+	\
+	*

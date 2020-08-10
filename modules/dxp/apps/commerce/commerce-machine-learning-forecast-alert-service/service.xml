@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.1.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_1_0.dtd">
+
+<service-builder auto-namespace-tables="false" package-path="com.liferay.commerce.machine.learning.forecast.alert">
+	<author>Riccardo Ferrari</author>
+	<namespace>Commerce</namespace>
+	<entity local-service="true" name="CommerceMLForecastAlertEntry" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceMLForecastAlertEntryId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceAccountId" type="long" />
+		<column name="actual" type="double" />
+		<column name="forecast" type="double" />
+		<column name="timestamp" type="Date" />
+		<column name="relativeChange" type="double" />
+		<column name="status" type="int" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="timestamp" />
+		</order>
+
+		<!-- Finder -->
+
+		<finder name="C_C_T" return-type="CommerceMLForecastAlertEntry">
+			<finder-column name="companyId" />
+			<finder-column name="commerceAccountId" />
+			<finder-column name="timestamp" />
+		</finder>
+		<finder name="C_C_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column arrayable-operator="OR" name="commerceAccountId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="C_C_GtRc_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column arrayable-operator="OR" name="commerceAccountId" />
+			<finder-column comparator="&gt;" name="relativeChange" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="C_C_LtRc_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column arrayable-operator="OR" name="commerceAccountId" />
+			<finder-column comparator="&lt;" name="relativeChange" />
+			<finder-column name="status" />
+		</finder>
+	</entity>
+</service-builder>

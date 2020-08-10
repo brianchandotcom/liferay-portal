@@ -1,0 +1,40 @@
+definition {
+
+	macro assignAllRelationsToProductsEntry {
+		Click(locator1 = "CommerceEntry#ADD_BUTTON");
+
+		WaitForSPARefresh();
+
+		CommerceItemSelector.selectAlleEntries();
+
+		Click(
+			locator1 = "ItemSelector#ADD_BUTTON",
+			value1 = "Add");
+	}
+
+	macro assignMultipleRelationToProductsEntry {
+		Click(locator1 = "CommerceEntry#ADD_BUTTON");
+
+		WaitForSPARefresh();
+
+		for (var entriesNames : list "${entriesList}") {
+			CommerceItemSelector.selectEntry(entryName = "${entriesNames}");
+		}
+
+		Click(
+			locator1 = "ItemSelector#ADD_BUTTON",
+			value1 = "Add");
+	}
+
+	macro assignSingleRelationToProductsEntry {
+		Type(
+			key_title = "${title}",
+			locator1 = "CommerceEntry#ADD_RELATION_FIELD",
+			value1 = "${entryName}");
+
+		ClickNoError(
+			key_title = "${title}",
+			locator1 = "CommerceEntry#ADD_RELATION_FIELD_SELECT");
+	}
+
+}

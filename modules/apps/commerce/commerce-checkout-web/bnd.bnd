@@ -1,0 +1,12 @@
+Bundle-Name: Liferay Commerce Checkout Web
+Bundle-SymbolicName: com.liferay.commerce.checkout.web
+Bundle-Version: 2.0.33
+Import-Package:\
+	com.liferay.taglib.util;version="[7.4.0,9.0.0)",\
+	\
+	*
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang)";\
+		resource.bundle.base.name="content.Language"
+-dsannotations-options: inherit

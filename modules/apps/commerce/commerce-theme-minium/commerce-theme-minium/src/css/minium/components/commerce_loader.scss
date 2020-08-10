@@ -1,0 +1,58 @@
+.commerce-loader {
+	display: inline-block;
+	min-height: 8px;
+	position: relative;
+
+	&__dots-wrapper {
+		&--inverted {
+			.commerce-loader__dot {
+				background: var(--light);
+			}
+		}
+	}
+
+	&__dot {
+		animation: scale-dot 0.8s ease-out infinite;
+		background: $color-fg;
+		border-radius: 50%;
+		display: inline-block;
+		height: 6px;
+		margin: 2px;
+		transform: scale(0.5);
+		width: 6px;
+
+		&:nth-of-type(2) {
+			animation-delay: 0.2s;
+		}
+
+		&:nth-of-type(3) {
+			animation-delay: 0.3s;
+		}
+
+		&:nth-of-type(4) {
+			animation-delay: 0.4s;
+		}
+
+		&:nth-of-type(5) {
+			animation-delay: 0.5s;
+		}
+	}
+}
+
+@keyframes scale-dot {
+	0% {
+		transform: scale(0.5);
+	}
+
+	25% {
+		transform: scale(1);
+	}
+
+	75% {
+		transform: scale(0.5);
+	}
+
+	100% {
+		transform: scale(0.5);
+	}
+}

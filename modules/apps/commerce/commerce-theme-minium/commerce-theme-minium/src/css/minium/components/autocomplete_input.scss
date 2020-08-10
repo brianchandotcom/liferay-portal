@@ -1,0 +1,50 @@
+.autocomplete-input {
+	border: 2px solid $color-shadow;
+	border-radius: 10px;
+	color: $color-fg;
+	display: flex;
+	overflow: hidden;
+	padding: 10px;
+	width: 100%;
+
+	form {
+		display: inline;
+		flex-grow: 1;
+	}
+
+	input:focus {
+		outline: none;
+	}
+
+	&__box {
+		background: transparent;
+		border: none;
+		margin-bottom: 4px;
+		margin-left: 15px;
+		width: calc(100% - 18px);
+	}
+
+	&__content {
+		display: flex;
+		flex-wrap: wrap;
+		margin-bottom: -3px;
+		max-height: 76px;
+		overflow: auto;
+	}
+
+	&__delete {
+		display: inline-block;
+		margin-left: 10px;
+	}
+
+	&__icon {
+		align-self: start;
+		flex-grow: 0;
+		text-align: center;
+	}
+
+	&__wrapper {
+		flex-grow: 1;
+		overflow: auto;
+	}
+}

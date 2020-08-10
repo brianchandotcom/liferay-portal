@@ -1,0 +1,77 @@
+@component-name = "portal-commerce"
+definition {
+
+	property osgi.app.includes = "commerce";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Commerce";
+
+	setUp {
+		Portlet.shutdownServer();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "deploy-commerce-license-li");
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Commerce",
+				panel = "Control Panel",
+				portlet = "Price Lists");
+
+			if (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
+				CommerceProducts.deleteEntries(deleteMessage = "Are you sure you want to delete the selected price lists?");
+			}
+		}
+	}
+
+	@ignore = "true"
+	test CreateNewPriceList {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CPCommercePriceLists#CreateNewPriceList";
+
+		ProductMenu.gotoPortlet(
+			category = "Commerce",
+			panel = "Control Panel",
+			portlet = "Price Lists");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewPriceListsEntry(
+			currencyCode = "USD",
+			entryName = "New Price List");
+
+		Button.clickPublish();
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		ProductMenu.gotoPortlet(
+			category = "Commerce",
+			panel = "Control Panel",
+			portlet = "Price Lists");
+
+		Click(
+			key_entry = "New Price List",
+			locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+
+		CommerceEntry.viewPriceListEntry(
+			currencyCode = "USD",
+			entryName = "New Price List");
+	}
+
+}

@@ -1,0 +1,94 @@
+{
+	"CommerceMLForecastDocumentType": {
+		"dynamic_templates": [
+			{
+				"template_long_sortable": {
+					"mapping": {
+						"store": true,
+						"type": "long"
+					},
+					"match": "*_sortable",
+					"match_mapping_type": "long"
+				}
+			}
+		],
+		"properties": {
+			"actual": {
+				"index": false,
+				"store": true,
+				"type": "float"
+			},
+			"assetCategoryId": {
+				"index": true,
+				"store": true,
+				"type": "long"
+			},
+			"commerceAccountId": {
+				"index": true,
+				"store": true,
+				"type": "integer"
+			},
+			"companyId": {
+				"index": true,
+				"store": true,
+				"type": "long"
+			},
+			"forecast": {
+				"index": false,
+				"store": true,
+				"type": "float"
+			},
+			"forecastId": {
+				"index": true,
+				"store": true,
+				"type": "long"
+			},
+			"forecastLowerBound": {
+				"index": false,
+				"store": true,
+				"type": "float"
+			},
+			"forecastUpperBound": {
+				"index": false,
+				"store": true,
+				"type": "float"
+			},
+			"jobId": {
+				"index": false,
+				"store": true,
+				"type": "keyword"
+			},
+			"period": {
+				"index": true,
+				"store": true,
+				"type": "keyword"
+			},
+			"scope": {
+				"index": true,
+				"store": true,
+				"type": "keyword"
+			},
+			"sku": {
+				"index": true,
+				"store": true,
+				"type": "keyword"
+			},
+			"target": {
+				"index": true,
+				"store": true,
+				"type": "keyword"
+			},
+			"timestamp": {
+				"format": "yyyyMMddHHmmss",
+				"index": true,
+				"store": true,
+				"type": "date"
+			},
+			"timestamp_sortable": {
+				"index": true,
+				"store": true,
+				"type": "long"
+			}
+		}
+	}
+}

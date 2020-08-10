@@ -1,0 +1,41 @@
+{
+	"ProductCommerceMLRecommendationDocumentType": {
+		"properties": {
+			"companyId": {
+				"index": true,
+				"store": true,
+				"type": "long"
+			},
+			"createDate": {
+				"index": false,
+				"store": true,
+				"type": "date"
+			},
+			"entryClassPK": {
+				"index": true,
+				"store": true,
+				"type": "long"
+			},
+			"jobId": {
+				"index": false,
+				"store": true,
+				"type": "keyword"
+			},
+			"rank": {
+				"index": false,
+				"store": true,
+				"type": "integer"
+			},
+			"recommendedEntryClassPK": {
+				"index": false,
+				"store": true,
+				"type": "long"
+			},
+			"score": {
+				"index": false,
+				"store": true,
+				"type": "float"
+			}
+		}
+	}
+}

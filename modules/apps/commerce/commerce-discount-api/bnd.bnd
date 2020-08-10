@@ -1,0 +1,14 @@
+Bundle-Name: Liferay Commerce Discount API
+Bundle-SymbolicName: com.liferay.commerce.discount.api
+Bundle-Version: 4.3.2
+Export-Package:\
+	com.liferay.commerce.discount.application.strategy,\
+	com.liferay.commerce.discount.constants,\
+	com.liferay.commerce.discount.exception,\
+	com.liferay.commerce.discount.model,\
+	com.liferay.commerce.discount.permission,\
+	com.liferay.commerce.discount.rule.type,\
+	com.liferay.commerce.discount.service,\
+	com.liferay.commerce.discount.service.persistence,\
+	com.liferay.commerce.discount.target,\
+	com.liferay.commerce.discount.util.comparator

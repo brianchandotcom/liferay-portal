@@ -1,0 +1,29 @@
+// .commerce-topbar-button:focus {
+//	 .commerce-account-selector__image,
+//	 .commerce-account-selector__info {
+//		 display: none;
+//	 }
+
+// }
+
+// .minium-main-navigation {
+
+//	 &__submenu {
+//		 .minium-sidebar:not(:hover) &,
+//		 .main-link:not(:focus) + & {
+//			 display: none;
+//		 }
+//	 }
+
+// }
+
+// a:focus + .commerce-cart {
+
+//	 & {
+//		 &:not(.is-open) {
+//			 box-shadow: -20px 0 40px $color-shadow;
+//			 transform: translateX(0);
+//		 }
+//	 }
+
+// }

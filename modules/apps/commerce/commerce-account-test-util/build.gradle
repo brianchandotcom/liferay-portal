@@ -1,0 +1,9 @@
+dependencies {
+	compileOnly group: "com.liferay.portal", name: "release.portal.api", version: "7.1.1"
+	compileOnly group: "junit", name: "junit", version: "4.12"
+	compileOnly project(":apps:commerce:commerce-account-api")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/test")
+}

@@ -1,0 +1,12 @@
+Bundle-Name: Liferay Commerce Product Measurement Unit Web
+Bundle-SymbolicName: com.liferay.commerce.product.measurement.unit.web
+Bundle-Version: 1.0.32
+Import-Package:\
+	com.liferay.frontend.taglib.clay.servlet.taglib.util;version="[1.0.0,3.0.0)",\
+	\
+	*
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang)";\
+		resource.bundle.base.name="content.Language"
+Web-ContextPath: /commerce-product-measurement-unit-web

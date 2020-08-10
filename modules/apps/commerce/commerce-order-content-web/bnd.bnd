@@ -1,0 +1,12 @@
+Bundle-Name: Liferay Commerce Order Content Web
+Bundle-SymbolicName: com.liferay.commerce.order.content.web
+Bundle-Version: 1.0.51
+Import-Package:\
+	com.liferay.frontend.taglib.clay.servlet.taglib.util;version="[1.0.0,3.0.0)",\
+	\
+	*
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang)";\
+		resource.bundle.base.name="content.Language"
+Web-ContextPath: /commerce-order-content-web

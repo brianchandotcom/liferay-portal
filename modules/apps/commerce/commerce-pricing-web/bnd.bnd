@@ -1,0 +1,13 @@
+Bundle-Name: Liferay Commerce Pricing Web
+Bundle-SymbolicName: com.liferay.commerce.pricing.web
+Bundle-Version: 1.0.11
+Import-Package:\
+	com.liferay.frontend.taglib.clay.servlet.taglib.util;version="[1.0.0,3.0.0)",\
+	com.liferay.taglib.util;version="[7.4.0,9.0.0)",\
+	\
+	*
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang)";\
+		resource.bundle.base.name="content.Language"
+Web-ContextPath: /commerce-pricing-web

@@ -1,0 +1,16 @@
+baseline {
+	enabled = false
+}
+
+buildService {
+	apiDir = "../commerce-application-api/src/main/java"
+}
+
+dependencies {
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	compileOnly group: "com.liferay.portal", name: "release.portal.api", version: "7.1.1"
+	compileOnly group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compileOnly project(":apps:commerce:commerce-product-api")
+	compileOnly project(":apps:portal:portal-spring-extender-api")
+	compileOnly project(":dxp:apps:commerce:commerce-application-api")
+}

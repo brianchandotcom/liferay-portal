@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Commerce Shipping Origin Locator
+Bundle-SymbolicName: com.liferay.commerce.shipping.origin.locator
+Bundle-Version: 1.0.20
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang)";\
+		resource.bundle.base.name="content.Language"

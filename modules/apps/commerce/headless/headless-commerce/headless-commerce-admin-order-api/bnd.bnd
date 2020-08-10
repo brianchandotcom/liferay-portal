@@ -1,0 +1,13 @@
+Bundle-Name: Liferay Headless Commerce Admin Order API
+Bundle-SymbolicName: com.liferay.headless.commerce.admin.order.api
+Bundle-Version: 6.1.0
+Export-Package:\
+	com.liferay.headless.commerce.admin.order.dto.v1_0,\
+	com.liferay.headless.commerce.admin.order.resource.v1_0
+Import-Package:\
+	com.liferay.portal.vulcan.accept.language;version="[1.0.0,2.0.0)",\
+	com.liferay.portal.vulcan.graphql.annotation;version="[1.0.0,2.0.0)",\
+	com.liferay.portal.vulcan.pagination;version="[1.0.0,2.0.0)",\
+	com.liferay.portal.vulcan.util;version="[2.3.0,3.0.0)",\
+	\
+	*

@@ -1,0 +1,42 @@
+[
+	{
+		"code": "ACT",
+		"name": "Australian Capital Territory",
+		"priority": 1
+	},
+	{
+		"code": "NSW",
+		"name": "New South Wales",
+		"priority": 2
+	},
+	{
+		"code": "NT",
+		"name": "Northern Territory",
+		"priority": 3
+	},
+	{
+		"code": "QLD",
+		"name": "Queensland",
+		"priority": 4
+	},
+	{
+		"code": "SA",
+		"name": "South Australia",
+		"priority": 5
+	},
+	{
+		"code": "TAS",
+		"name": "Tasmania",
+		"priority": 6
+	},
+	{
+		"code": "VIC",
+		"name": "Victoria",
+		"priority": 7
+	},
+	{
+		"code": "WA",
+		"name": "Western Australia",
+		"priority": 8
+	}
+]

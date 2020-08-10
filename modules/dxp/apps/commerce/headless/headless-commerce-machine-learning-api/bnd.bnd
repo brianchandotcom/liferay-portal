@@ -1,0 +1,15 @@
+Bundle-Name: Liferay Headless Commerce Machine Learning API
+Bundle-SymbolicName: com.liferay.headless.commerce.machine.learning.api
+Bundle-Version: 2.0.15
+Export-Package:\
+	com.liferay.headless.commerce.machine.learning.dto.v1_0,\
+	com.liferay.headless.commerce.machine.learning.resource.v1_0
+Import-Package:\
+	com.fasterxml.jackson.annotation; version="[2.9.0,3.0.0)",\
+	\
+	com.liferay.portal.vulcan.accept.language;version="[1.0.0,2.0.0)",\
+	com.liferay.portal.vulcan.graphql.annotation;version="[1.0.0,2.0.0)",\
+	com.liferay.portal.vulcan.pagination;version="[1.0.0,2.0.0)",\
+	com.liferay.portal.vulcan.util;version="[2.3.0,3.0.0)",\
+	\
+	*

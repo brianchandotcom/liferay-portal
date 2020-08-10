@@ -1,0 +1,97 @@
+[
+	{
+		"code": "01",
+		"name": "Ahvenanmaan maakunta",
+		"priority": 1
+	},
+	{
+		"code": "02",
+		"name": "Etelä-Karjala",
+		"priority": 2
+	},
+	{
+		"code": "03",
+		"name": "Etelä-Pohjanmaa",
+		"priority": 3
+	},
+	{
+		"code": "04",
+		"name": "Etelä-Savo",
+		"priority": 4
+	},
+	{
+		"code": "05",
+		"name": "Kainuu",
+		"priority": 5
+	},
+	{
+		"code": "06",
+		"name": "Kanta-Häme",
+		"priority": 6
+	},
+	{
+		"code": "07",
+		"name": "Keski-Pohjanmaa",
+		"priority": 7
+	},
+	{
+		"code": "08",
+		"name": "Keski-Suomi",
+		"priority": 8
+	},
+	{
+		"code": "09",
+		"name": "Kymenlaakso",
+		"priority": 9
+	},
+	{
+		"code": "10",
+		"name": "Lappi",
+		"priority": 10
+	},
+	{
+		"code": "11",
+		"name": "Pirkanmaa",
+		"priority": 11
+	},
+	{
+		"code": "12",
+		"name": "Pohjanmaa",
+		"priority": 12
+	},
+	{
+		"code": "13",
+		"name": "Pohjois-Karjala",
+		"priority": 13
+	},
+	{
+		"code": "14",
+		"name": "Pohjois-Pohjanmaa",
+		"priority": 14
+	},
+	{
+		"code": "15",
+		"name": "Pohjois-Savo",
+		"priority": 15
+	},
+	{
+		"code": "16",
+		"name": "Päijät-Häme",
+		"priority": 16
+	},
+	{
+		"code": "17",
+		"name": "Satakunta",
+		"priority": 17
+	},
+	{
+		"code": "18",
+		"name": "Uusimaa",
+		"priority": 18
+	},
+	{
+		"code": "19",
+		"name": "Varsinais-Suomi",
+		"priority": 19
+	}
+]

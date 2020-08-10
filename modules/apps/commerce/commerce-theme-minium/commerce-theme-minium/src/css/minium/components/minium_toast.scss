@@ -1,0 +1,56 @@
+.minium-toast {
+	animation: toast-enter 500ms forwards 500ms;
+	background-color: $color-bg;
+	border: 2px solid $color-theme;
+	border-radius: 8px;
+	box-shadow: $shadow;
+	display: grid;
+	font-size: 12px;
+	grid-template-columns: 60px 270px;
+	min-height: 64px;
+	opacity: 0;
+	transform: translateX(50%);
+
+	& + & {
+		margin-top: 10px;
+	}
+
+	&--success {
+		border-color: $color-mood-good;
+	}
+
+	&--fail {
+		border-color: $color-mood-bad;
+	}
+
+	&__icon {
+		align-items: center;
+		background-color: $color-theme;
+		color: $color-bg;
+		display: flex;
+		font-size: 21px;
+		justify-content: center;
+		width: 60px;
+	}
+
+	&--success &__icon {
+		background-color: $color-mood-good;
+	}
+
+	&--fail &__icon {
+		background-color: $color-mood-bad;
+	}
+
+	&__content {
+		align-self: center;
+		line-height: 16px;
+		padding: 10px 15px;
+	}
+}
+
+@keyframes toast-enter {
+	100% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}

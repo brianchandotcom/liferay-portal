@@ -1,0 +1,828 @@
+definition {
+
+	macro addFullDescriptionViaAlloyEditor {
+		AlloyEditor.typeEditor(
+			content = "${entryFullDescription}",
+			editor = "description");
+	}
+
+	macro addNewAccountGroupsEntry {
+		Type(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "${entryName}");
+	}
+
+	macro addNewAccountsEntry {
+		Type(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "${entryName}");
+
+		Select(
+			locator1 = "Select#TYPE",
+			value1 = "${criteriaType}");
+
+		Button.clickSave();
+
+		CommerceEntry.gotoNestedMenu(nestedMenu = "Users");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceItemSelector.selectEntry(entryName = "${user}");
+
+		AssertClick(
+			locator1 = "ItemSelector#ADD_BUTTON",
+			value1 = "Add");
+	}
+
+	macro addNewAvailabilityEstimatesEntry {
+		Type(
+			locator1 = "CommerceEntry#TITLE_FIELD",
+			value1 = "${entryName}");
+	}
+
+	macro addNewCatalogsEntry {
+		IFrame.selectModalFrame();
+
+		Type(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "${catalogName}");
+
+		Select(
+			key_title = "Default Catalog Language",
+			locator1 = "CommerceEntry#CATALOGS_FORM",
+			value1 = "${catalogLanguage}");
+
+		Select(
+			key_title = "Currency",
+			locator1 = "CommerceEntry#CATALOGS_FORM",
+			value1 = "${catalogCurrency}");
+	}
+
+	macro addNewChannelsEntry {
+		IFrame.selectModalFrame();
+
+		Pause(locator1 = "3000");
+
+		Type(
+			locator1 = "TextInput#NAME",
+			value1 = "${channelName}");
+
+		Select(
+			key_fieldLabel = "Currency",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${channelCurrency}");
+
+		Select(
+			locator1 = "Select#TYPE",
+			value1 = "${channelType}");
+
+		Click(locator1 = "Button#ADD");
+
+		if (isSet(siteName)) {
+
+			Click(
+				key_menuTab = "Type",
+				locator1 = "CommerceEntry#MENU_TAB");
+
+			AssertClick(
+				locator1 = "Button#SELECT",
+				value1 = "Select Site");
+
+			IFrame.selectModalFrame();
+
+			Click(
+				key_siteName = "${siteName}",
+				locator1 = "CommerceNavigation#CHOOSE_SITE_BUTTON");
+
+			SelectFrameTop(value1 = "relative=top");
+
+			Button.clickSave();
+		}
+
+		Pause(locator1 = "5000");
+	}
+
+	macro addNewCountriesEntry {
+		Type(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "${entryName}");
+
+		Check.checkToggleSwitch(locator1 = "CommerceEntry#BILLING_ALLOWED_CHECKBOX");
+
+		Check.checkToggleSwitch(locator1 = "CommerceEntry#SHIPPING_ALLOWED_CHECKBOX");
+
+		Type(
+			locator1 = "CommerceEntry#TWO_LETTERS_ISO_CODE_FIELD",
+			value1 = "NC");
+
+		Type(
+			locator1 = "CommerceEntry#THREE_LETTERS_ISO_CODE_FIELD",
+			value1 = "NCO");
+
+		Type(
+			locator1 = "CommerceEntry#NUMERIC_ISO_CODE_FIELD",
+			value1 = "001");
+
+		Check.checkToggleSwitch(locator1 = "CommerceEntry#SUBJECT_TO_VAT_CHECKBOX");
+
+		Check.checkToggleSwitch(locator1 = "CommerceEntry#ACTIVE_CHECKBOX");
+	}
+
+	macro addNewCurrenciesEntry {
+		Type(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "${entryName}");
+
+		Type(
+			locator1 = "CommerceEntry#CODE_FIELD",
+			value1 = "${code}");
+
+		Check.checkToggleSwitch(locator1 = "CommerceEntry#PRIMARY_CHECKBOX");
+
+		Check.checkToggleSwitch(locator1 = "CommerceEntry#ACTIVE_CHECKBOX");
+	}
+
+	macro addNewDimensionUnit {
+		Type(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "${entryName}");
+
+		Type(
+			locator1 = "CommerceEntry#KEY_FIELD",
+			value1 = "${entryName}");
+
+		Check.checkToggleSwitch(locator1 = "CommerceEntry#PRIMARY_CHECKBOX");
+	}
+
+	macro addNewDiscountsEntry {
+		Type(
+			locator1 = "CommerceEntry#TITLE_FIELD",
+			value1 = "${entryTitle}");
+
+		Select(
+			locator1 = "CommerceEntry#DISCOUNT_TARGET_SELECT",
+			value1 = "${discountTarget}");
+
+		Check.checkToggleSwitch(
+			checkboxName = "${channelsEntryName}",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		if (isSet(accountGroup)) {
+			AssertClick(
+				locator1 = "Button#SELECT",
+				value1 = "Select");
+
+			CommerceItemSelector.selectEntry(entryName = "${accountGroup}");
+
+			Click(
+				locator1 = "ItemSelector#ADD_BUTTON",
+				value1 = "Add");
+		}
+
+		Type(
+			locator1 = "CommerceEntry#MAXIMUM_DISCOUNT_AMOUNT_FIELD",
+			value1 = "${maximumDiscountAmount}");
+
+		Type(
+			locator1 = "CommerceEntry#DISCOUNT_LEVEL_1_FIELD",
+			value1 = "${discountLevel}");
+
+		Check.checkToggleSwitch(locator1 = "CommerceEntry#ACTIVE_CHECKBOX");
+	}
+
+	macro addNewNotificationTemplate {
+		Type(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "${entryName}");
+
+		Type(
+			locator1 = "TextArea#DESCRIPTION",
+			value1 = "${entryName} Description");
+
+		Click(locator1 = "Button#SELECT");
+
+		CommerceItemSelector.selectEntry(entryName = "${accountGroup}");
+
+		Click(
+			locator1 = "ItemSelector#ADD_BUTTON",
+			value1 = "Add");
+
+		Type(
+			locator1 = "CommerceEntry#NOTIFICATION_TEMPLATE_FROM_ADDRESS_FIELD",
+			value1 = "${fromAddress}");
+
+		Type(
+			locator1 = "CommerceEntry#NOTIFICATION_TEMPLATE_FROM_NAME_FIELD",
+			value1 = "${fromName}");
+
+		Select(
+			locator1 = "Select#TYPE",
+			value1 = "${notificationType}");
+	}
+
+	macro addNewPriceListsEntry {
+		Type(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "${entryName}");
+
+		Select(
+			locator1 = "CommerceEntry#CURRENCY_SELECT",
+			value1 = "${currencyCode}");
+	}
+
+	macro addNewRegionsEntry {
+		Type(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "${entryName}");
+
+		Type(
+			locator1 = "CommerceEntry#CODE_FIELD",
+			value1 = "${code}");
+
+		Check.checkToggleSwitch(locator1 = "CommerceEntry#ACTIVE_CHECKBOX");
+	}
+
+	macro addNewWeightUnit {
+		Type(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "${entryName}");
+
+		Type(
+			locator1 = "CommerceEntry#KEY_FIELD",
+			value1 = "${entryName}");
+
+		Check.checkToggleSwitch(locator1 = "CommerceEntry#PRIMARY_CHECKBOX");
+	}
+
+	macro addOptionsEntry {
+		Type(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "${optionName}");
+
+		Type(
+			locator1 = "CommerceEntry#DESCRIPTION_FIELD",
+			value1 = "${optionDescription}");
+
+		Select(
+			locator1 = "CommerceEntry#FIELD_TYPE_SELECT",
+			value1 = "${optionFieldType}");
+
+		Check.checkToggleSwitch(locator1 = "CommerceEntry#FACETABLE_CHECKBOX");
+
+		Check.checkToggleSwitch(locator1 = "CommerceEntry#REQUIRED_CHECKBOX");
+
+		Check.checkToggleSwitch(locator1 = "CommerceEntry#SKU_CONTRIBUTOR_CHECKBOX");
+	}
+
+	macro addOptionValue {
+		Type(
+			locator1 = "CommerceEntry#MODAL_NAME_FIELD",
+			value1 = "${valueName}");
+
+		Type(
+			locator1 = "CommerceEntry#PRIORITY_FIELD",
+			value1 = "${valuePriority}");
+	}
+
+	macro addPricingEntry {
+		Type(
+			locator1 = "CommerceEntry#PRICE_FIELD",
+			value1 = "${price}");
+	}
+
+	macro addProductsEntry {
+		IFrame.selectModalFrame();
+
+		Type(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "${productName}");
+
+		Type(
+			locator1 = "CommerceEntry#CREATE_NEW_PRODUCT_CATALOG_FIELD",
+			value1 = "${productCatalog}");
+
+		Click(
+			key_menuItem = "${productCatalog}",
+			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+
+		Click(locator1 = "Button#SUBMIT");
+
+		Refresh();
+
+		AssertSelectedLabel(
+			key_fieldLabel = "Catalog",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${productCatalog}");
+
+		AssertTextEquals(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "${productName}");
+
+		Type(
+			locator1 = "CommerceEntry#SHORT_DESCRIPTION_FIELD",
+			value1 = "${productShortDescription}");
+
+		CommerceEntry.addFullDescriptionViaAlloyEditor(entryFullDescription = "${productFullDescription}");
+	}
+
+	macro addSKUsEntry {
+		Type(
+			locator1 = "CommerceEntry#SKU_FIELD",
+			value1 = "${productSKU}");
+
+		CommerceEntry.selectAssociatedOptionsValue(optionValue = "${optionValue}");
+	}
+
+	macro clickNoError {
+		ClickNoError(
+			key_menuItem = "${menuItem}",
+			locator1 = "CommerceEntry#ANY_MENU_ITEM");
+	}
+
+	macro createNewAccountGroup {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewAccountsEntry(
+			criteriaType = "${accountCriteriaType}",
+			entryName = "${accountsEntryName}",
+			user = "${user}");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Account Groups");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewAccountGroupsEntry(entryName = "${accountGroupsEntryName}");
+
+		Button.clickSave();
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		CommerceEntry.gotoNestedMenu(nestedMenu = "Accounts");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceItemSelector.selectEntry(entryName = "${accountsEntryName}");
+
+		Click(
+			locator1 = "ItemSelector#ADD_BUTTON",
+			value1 = "Add");
+	}
+
+	macro createNewCurrenciesEntry {
+		ProductMenu.gotoPortlet(
+			category = "Commerce",
+			panel = "Control Panel",
+			portlet = "Settings");
+
+		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Currencies");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewCurrenciesEntry(
+			code = "${code}",
+			entryName = "${entryName}");
+
+		Button.clickSave();
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+	}
+
+	macro createNewSpecificationGroups {
+		Click(locator1 = "Button#PLUS");
+
+		Type(
+			key_fieldLabel = "Title",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${specificationTitle}");
+
+		Type(
+			key_fieldLabel = "Description",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${specificationDescription}");
+
+		ClickNoError(locator1 = "CommerceEntry#SAVE_BUTTON");
+	}
+
+	macro createNewSpecificationLabels {
+		Click(locator1 = "Button#PLUS");
+
+		Type(
+			key_fieldLabel = "Label",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${specificationTitle}");
+
+		Type(
+			locator1 = "CommerceEntry#DESCRIPTION_FIELD",
+			value1 = "${specificationDescription}");
+
+		Button.clickSave();
+	}
+
+	macro deleteCommerceEntry {
+		ClickNoError(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		CommerceEntry.clickNoError(menuItem = "Delete");
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	macro editEntryFullDescription {
+		CommerceEntry.addFullDescriptionViaAlloyEditor(entryFullDescription = "${newEntryFullDescription}");
+	}
+
+	macro editEntryName {
+		Type(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "${newEntryName}");
+	}
+
+	macro editEntryShortDescription {
+		Type(
+			locator1 = "CommerceEntry#SHORT_DESCRIPTION_FIELD",
+			value1 = "${newEntryShortDescription}");
+	}
+
+	macro gotoBreadcrumb {
+		Click(
+			key_breadcrumb = "${breadcrumb}",
+			locator1 = "CommerceEntry#BREADCRUMBS",
+			value1 = "${breadcrumb}");
+	}
+
+	macro gotoMenuTab {
+		AssertClick(
+			key_menuTab = "${menuTab}",
+			locator1 = "CommerceEntry#MENU_TAB",
+			value1 = "${menuTab}");
+	}
+
+	macro gotoNestedMenu {
+		AssertClick(
+			key_nestedMenu = "${nestedMenu}",
+			locator1 = "CommerceEntry#NESTED_MENU",
+			value1 = "${nestedMenu}");
+	}
+
+	macro publishEntry {
+		Button.clickPublish();
+
+		if (IsElementPresent(locator1 = "Message#SUCCESS")) {
+			AssertElementPresent(locator1 = "Message#SUCCESS");
+		}
+		else {
+			AssertTextEquals(
+				key_status = "${status}",
+				locator1 = "CommerceEntry#WORKFLOW_STATUS",
+				value1 = "${status}");
+		}
+
+		Pause(locator1 = "3000");
+	}
+
+	macro publishProductImage {
+		SelectFrameTop(value1 = "relative=top");
+
+		//SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+		SelectFrame(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.clickPublish();
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		Pause(locator1 = "3000");
+	}
+
+	macro saveEntry {
+		Button.clickSave();
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		Pause(locator1 = "3000");
+	}
+
+	macro saveEntryAsDraft {
+		Button.clickSaveAsDraft();
+
+		if (IsElementPresent(locator1 = "Message#SUCCESS")) {
+			AssertElementPresent(locator1 = "Message#SUCCESS");
+		}
+		else {
+			AssertTextEquals(
+				key_status = "${status}",
+				locator1 = "CommerceEntry#WORKFLOW_STATUS",
+				value1 = "${status}");
+		}
+
+		Pause(locator1 = "3000");
+	}
+
+	macro selectAssociatedOptionsValue {
+		if (IsElementPresent(locator1 = "CommerceEntry#OPTION_SELECT")) {
+			Click(locator1 = "CommerceEntry#OPTION_SELECT");
+
+			Click(
+				key_selectValue = "${optionValue}",
+				locator1 = "CommerceEntry#OPTIONS_SELECT_LIST");
+		}
+
+		if (IsElementPresent(locator1 = "CommerceEntry#OPTION_VALUE", key_optionType = "checkbox_multiple", key_optionValue = "${optionValue}")) {
+			Click(
+				key_optionType = "checkbox_multiple",
+				key_optionValue = "${optionValue}",
+				locator1 = "CommerceEntry#OPTION_VALUE");
+		}
+
+		if (IsElementPresent(locator1 = "CommerceEntry#OPTION_VALUE", key_optionType = "radio", key_optionValue = "${optionValue}")) {
+			Click(
+				key_optionType = "radio",
+				key_optionValue = "${optionValue}",
+				locator1 = "CommerceEntry#OPTION_VALUE");
+		}
+	}
+
+	macro uploadCatalogEntrySingleImage {
+		AssertClick(
+			locator1 = "CommerceEntry#PRODUCT_IMAGE_SELECT_FILE",
+			value1 = "Select File");
+
+		CommerceItemSelector.uploadSingleFile(uploadFileName = "${uploadFileName}");
+	}
+
+	macro viewAccountsEntry {
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "${accountName}");
+
+		AssertTextEquals(
+			locator1 = "TextInput#EMAIL",
+			value1 = "${accountEmail}");
+
+		AssertSelectedLabel(
+			locator1 = "Select#TYPE",
+			value1 = "${accountType}");
+
+		if (isSet(accountVATNumber)) {
+			AssertTextEquals(
+				key_fieldLabel = "VAT Number",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${accountVATNumber}");
+		}
+
+		if (isSet(accountDefaultBilling)) {
+			AssertSelectedLabel(
+				key_fieldLabel = "Default Billing",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${accountDefaultBilling}");
+		}
+
+		if (isSet(accountDefaultShipping)) {
+			AssertSelectedLabel(
+				key_fieldLabel = "Default Shipping",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${accountDefaultShipping}");
+		}
+
+		if ("${isAccountActive}" == "true") {
+			AssertChecked(locator1 = "Checkbox#ACTIVE");
+		}
+		else {
+			AssertNotChecked(locator1 = "Checkbox#ACTIVE");
+		}
+	}
+
+	macro viewCatalogsEntry {
+		AssertTextEquals(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "${catalogName}");
+
+		AssertSelectedLabel(
+			key_title = "Default Catalog Language",
+			locator1 = "CommerceEntry#CATALOGS_FORM",
+			value1 = "${catalogLanguage}");
+
+		AssertSelectedLabel(
+			key_title = "Currency",
+			locator1 = "CommerceEntry#CATALOGS_FORM",
+			value1 = "${catalogCurrency}");
+	}
+
+	macro viewChannelsEntry {
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "${channelName}");
+
+		AssertSelectedLabel(
+			key_fieldLabel = "Currency",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${channelCurrency}");
+
+		if (isSet(commerceSiteType)) {
+			AssertSelectedLabel(
+				key_fieldLabel = "Commerce Site Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${commerceSiteType}");
+		}
+
+		Click(
+			key_menuTab = "Type",
+			locator1 = "CommerceEntry#MENU_TAB");
+
+		AssertTextEquals(
+			locator1 = "CommerceEntry#CHANNEL_TYPE_VALUE",
+			value1 = "${channelType}");
+
+		if (isSet(channelSiteName)) {
+			AssertElementPresent(
+				key_rowEntry = "${channelSiteName}",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+		}
+	}
+
+	macro viewDiscountsEntry {
+		AssertTextEquals(
+			locator1 = "CommerceEntry#TITLE_FIELD",
+			value1 = "${entryTitle}");
+
+		AssertSelectedLabel(
+			locator1 = "CommerceEntry#DISCOUNT_TARGET_SELECT",
+			value1 = "${discountTarget}");
+
+		AssertChecked(
+			checkboxName = "${channelsEntryName}",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		AssertValue(
+			locator1 = "CommerceEntry#MAXIMUM_DISCOUNT_AMOUNT_FIELD",
+			value1 = "${maximumDiscountAmount}");
+
+		AssertValue(
+			locator1 = "CommerceEntry#DISCOUNT_LEVEL_1_FIELD",
+			value1 = "${discountLevel}");
+	}
+
+	macro viewOptionsEntry {
+		AssertTextEquals(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "${optionName}");
+
+		if (isSet(optionDescription)) {
+			AssertTextEquals(
+				locator1 = "CommerceEntry#DESCRIPTION_FIELD",
+				value1 = "${optionDescription}");
+		}
+	}
+
+	macro viewPaginationResults {
+		AssertTextEquals(
+			locator1 = "CommerceEntry#PAGINATION_RESULTS",
+			value1 = "${results}");
+	}
+
+	macro viewPriceListEntry {
+		AssertTextEquals(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "${entryName}");
+
+		AssertSelectedLabel(
+			locator1 = "CommerceEntry#CURRENCY_SELECT",
+			value1 = "${currencyCode}");
+	}
+
+	macro viewProductOptions {
+		Click(locator1 = "CommerceEntry#PRODUCT_DETAIL_VIEW_OPTION");
+
+		SelectFrame(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		AssertTextEquals(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "${optionName}");
+
+		AssertChecked.assertCheckedNotVisible(
+			key_toggleSwitchLabel = "Use in Faceted Navigation",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		AssertChecked.assertCheckedNotVisible(
+			key_toggleSwitchLabel = "Required",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		AssertChecked.assertCheckedNotVisible(
+			key_toggleSwitchLabel = "SKU Contributor",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		for (var optionList : list "${optionList}") {
+
+			IsElementPresent(
+				key_entryName = "${optionList}",
+				locator1 = "CommerceNavigation#ENTRY_NAME");
+		}
+
+		Click(locator1 = "Icon#CLOSE");
+
+		Refresh();
+	}
+
+	macro viewProductsEntry {
+		AssertTextEquals(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "${productName}");
+
+		AssertTextEquals(
+			locator1 = "CommerceEntry#SHORT_DESCRIPTION_FIELD",
+			value1 = "${productShortDescription}");
+	}
+
+	macro viewProductSkus {
+		for (var skusList : list "${skusList}") {
+			var sku = StringUtil.extractFirst("${skusList}", ":");
+			var price = StringUtil.extractLast("${skusList}", ":");
+
+			Refresh();
+
+			Click(
+				key_entryName = "${sku}",
+				locator1 = "CommerceNavigation#ENTRY_NAME");
+
+			SelectFrame(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			AssertTextEquals(
+				locator1 = "CommerceEntry#SKU_FIELD",
+				value1 = "${sku}");
+
+			AssertTextEquals(
+				locator1 = "CommerceEntry#INPUT_PRICE",
+				value1 = "${price}");
+
+			Click(locator1 = "Icon#CLOSE");
+
+		}
+	}
+
+	macro viewSpecificationGroups {
+		Click(
+			key_entry = "${specificationTitle}",
+			locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+
+		AssertTextEquals(
+			key_fieldLabel = "Title",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${specificationTitle}");
+
+		AssertTextEquals(
+			key_fieldLabel = "Description",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${specificationDescription}");
+
+		AssertTextEquals(
+			key_fieldLabel = "Key",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${specificationTitle}");
+	}
+
+	macro viewSpecificationGroupsEntries {
+		for (var specificationGroupsEntry : list "${specificationGroupsEntries}") {
+			AssertElementPresent(
+				key_rowEntry = "${specificationGroupsEntry}",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK");
+		}
+	}
+
+	macro viewSpecificationLabels {
+		Click(
+			key_entry = "${specificationTitle}",
+			locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+
+		AssertTextEquals(
+			key_fieldLabel = "Label",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${specificationTitle}");
+
+		AssertTextEquals(
+			locator1 = "CommerceEntry#DESCRIPTION_FIELD",
+			value1 = "${specificationDescription}");
+
+		AssertTextEquals(
+			key_fieldLabel = "Key",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${specificationTitle}");
+	}
+
+	macro viewSpecificationLabelsEntries {
+		for (var specificationLabelsEntry : list "${specificationLabelsEntries}") {
+			AssertElementPresent(
+				key_rowEntry = "${specificationLabelsEntry}",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK");
+		}
+	}
+
+}

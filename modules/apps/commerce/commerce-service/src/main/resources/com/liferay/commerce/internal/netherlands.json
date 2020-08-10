@@ -1,0 +1,62 @@
+[
+	{
+		"code": "DR",
+		"name": "Drenthe",
+		"priority": 1
+	},
+	{
+		"code": "FL",
+		"name": "Flevoland",
+		"priority": 2
+	},
+	{
+		"code": "FR",
+		"name": "Fryslan",
+		"priority": 3
+	},
+	{
+		"code": "GE",
+		"name": "Gelderland",
+		"priority": 4
+	},
+	{
+		"code": "GR",
+		"name": "Groningen",
+		"priority": 5
+	},
+	{
+		"code": "LI",
+		"name": "Limburg",
+		"priority": 6
+	},
+	{
+		"code": "NB",
+		"name": "Noord-Brabant",
+		"priority": 7
+	},
+	{
+		"code": "NH",
+		"name": "Noord-Holland",
+		"priority": 8
+	},
+	{
+		"code": "OV",
+		"name": "Overijssel",
+		"priority": 9
+	},
+	{
+		"code": "UT",
+		"name": "Utrecht",
+		"priority": 10
+	},
+	{
+		"code": "ZE",
+		"name": "Zeeland",
+		"priority": 11
+	},
+	{
+		"code": "ZH",
+		"name": "Zuid-Holland",
+		"priority": 12
+	}
+]

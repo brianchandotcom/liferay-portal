@@ -1,0 +1,12 @@
+Bundle-Name: Liferay Commerce Machine Learning Forecast Alert Service
+Bundle-SymbolicName: com.liferay.commerce.machine.learning.forecast.alert.service
+Bundle-Version: 2.0.22
+Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Service: true
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang),(bundle.symbolic.name=com.liferay.commerce.machine.learning.forecast.alert.lang)";\
+		resource.bundle.base.name="content.Language"
+Require-Capability:\
+	liferay.extender;\
+		filter:="(&(liferay.extender=spring.extender)(version>=2.0)(!(version>=4.0)))"

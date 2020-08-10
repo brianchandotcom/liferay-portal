@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Commerce Punch Out Service
+Bundle-SymbolicName: com.liferay.commerce.punchout.service
+Bundle-Version: 1.0.9
+Import-Package:\
+	com.liferay.portal.kernel.exception;version="[7.5.0,9.0.0)",\
+	com.liferay.portal.kernel.model;version="[2.0.0,4.0.0)",\
+	com.liferay.portal.kernel.service;version="[1.43.0,3.0.0)",\
+	\
+	*

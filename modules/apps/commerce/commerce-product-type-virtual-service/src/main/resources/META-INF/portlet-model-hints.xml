@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting">
+		<field name="uuid" type="String" />
+		<field name="CPDefinitionVirtualSettingId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="fileEntryId" type="long" />
+		<field name="url" type="String">
+			<validator name="url" />
+		</field>
+		<field name="activationStatus" type="int" />
+		<field name="duration" type="long" />
+		<field name="maxUsages" type="int">
+			<validator name="number" />
+		</field>
+		<field name="useSample" type="boolean" />
+		<field name="sampleFileEntryId" type="long" />
+		<field name="sampleUrl" type="String">
+			<validator name="url" />
+		</field>
+		<field name="termsOfUseRequired" type="boolean" />
+		<field localized="true" name="termsOfUseContent" type="String" />
+		<field name="termsOfUseJournalArticleResourcePrimKey" type="long" />
+		<field name="override" type="boolean" />
+		<field name="lastPublishDate" type="Date" />
+	</model>
+</model-hints>

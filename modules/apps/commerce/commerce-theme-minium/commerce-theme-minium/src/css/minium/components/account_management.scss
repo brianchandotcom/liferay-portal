@@ -1,0 +1,76 @@
+.account-management {
+	&__thumbnail {
+		margin: 10px 0;
+	}
+
+	&__main-data {
+		display: grid;
+		grid-auto-columns: auto 1fr;
+		grid-gap: 0 20px;
+		margin-right: 20px;
+	}
+
+	&__info-wrapper {
+		align-items: baseline;
+		align-self: center;
+		display: flex;
+		justify-items: center;
+		margin-right: 20px;
+
+		&:last-of-type {
+			margin-right: 0;
+		}
+	}
+
+	&__action {
+		align-items: center;
+		display: flex;
+		justify-items: center;
+	}
+
+	&__name {
+		color: $color-fg;
+		font-size: 22px;
+	}
+
+	&__email {
+		color: $color-fg;
+		font-size: 14px;
+	}
+
+	&__nav {
+		height: 60px;
+		justify-content: center;
+		padding: 0 30px;
+	}
+
+	&__label {
+		color: $color-fg-alt;
+		font-size: 11px;
+		letter-spacing: 1.1px;
+		line-height: 21px;
+		margin-right: 10px;
+		text-transform: uppercase;
+		vertical-align: baseline;
+	}
+
+	&__value {
+		color: $color-fg;
+		font-size: 14px;
+		line-height: 21px;
+		vertical-align: baseline;
+	}
+
+	&__input {
+		flex-grow: 1;
+	}
+
+	&__thumbnail-container {
+		align-items: center;
+		display: flex;
+	}
+}
+
+.commerce-account-container .image-name-cell__image {
+	border-radius: 50%;
+}

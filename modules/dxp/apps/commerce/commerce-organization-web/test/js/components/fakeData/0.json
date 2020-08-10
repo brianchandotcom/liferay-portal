@@ -1,0 +1,26 @@
+{
+	"accountsTotal": 0,
+	"errorMessages": null,
+	"lastLevel": false,
+	"name": "Root",
+	"organizationId": 0,
+	"organizations": [
+		{
+			"accountsTotal": 0,
+			"errorMessages": null,
+			"lastLevel": false,
+			"name": "Organization 1",
+			"organizationId": 37180,
+			"organizations": [
+			],
+			"organizationsTotal": 3,
+			"success": true,
+			"total": 0,
+			"usersTotal": 0
+		}
+	],
+	"organizationsTotal": 5,
+	"success": true,
+	"total": 0,
+	"usersTotal": 0
+}

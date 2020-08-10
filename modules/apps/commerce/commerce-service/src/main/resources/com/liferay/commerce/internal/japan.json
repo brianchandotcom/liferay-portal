@@ -1,0 +1,237 @@
+[
+	{
+		"code": "23",
+		"name": "Aichi",
+		"priority": 1
+	},
+	{
+		"code": "05",
+		"name": "Akita",
+		"priority": 2
+	},
+	{
+		"code": "02",
+		"name": "Aomori",
+		"priority": 3
+	},
+	{
+		"code": "12",
+		"name": "Chiba",
+		"priority": 4
+	},
+	{
+		"code": "38",
+		"name": "Ehime",
+		"priority": 5
+	},
+	{
+		"code": "18",
+		"name": "Fukui",
+		"priority": 6
+	},
+	{
+		"code": "40",
+		"name": "Fukuoka",
+		"priority": 7
+	},
+	{
+		"code": "07",
+		"name": "Fukushima",
+		"priority": 8
+	},
+	{
+		"code": "21",
+		"name": "Gifu",
+		"priority": 9
+	},
+	{
+		"code": "10",
+		"name": "Gunma",
+		"priority": 10
+	},
+	{
+		"code": "34",
+		"name": "Hiroshima",
+		"priority": 11
+	},
+	{
+		"code": "01",
+		"name": "Hokkaido",
+		"priority": 12
+	},
+	{
+		"code": "28",
+		"name": "Hyogo",
+		"priority": 13
+	},
+	{
+		"code": "08",
+		"name": "Ibaraki",
+		"priority": 14
+	},
+	{
+		"code": "17",
+		"name": "Ishikawa",
+		"priority": 15
+	},
+	{
+		"code": "03",
+		"name": "Iwate",
+		"priority": 16
+	},
+	{
+		"code": "37",
+		"name": "Kagawa",
+		"priority": 17
+	},
+	{
+		"code": "46",
+		"name": "Kagoshima",
+		"priority": 18
+	},
+	{
+		"code": "14",
+		"name": "Kanagawa",
+		"priority": 19
+	},
+	{
+		"code": "39",
+		"name": "Kochi",
+		"priority": 20
+	},
+	{
+		"code": "43",
+		"name": "Kumamoto",
+		"priority": 21
+	},
+	{
+		"code": "26",
+		"name": "Kyoto",
+		"priority": 22
+	},
+	{
+		"code": "24",
+		"name": "Mie",
+		"priority": 23
+	},
+	{
+		"code": "04",
+		"name": "Miyagi",
+		"priority": 24
+	},
+	{
+		"code": "45",
+		"name": "Miyazaki",
+		"priority": 25
+	},
+	{
+		"code": "20",
+		"name": "Nagano",
+		"priority": 26
+	},
+	{
+		"code": "42",
+		"name": "Nagasaki",
+		"priority": 27
+	},
+	{
+		"code": "29",
+		"name": "Nara",
+		"priority": 28
+	},
+	{
+		"code": "15",
+		"name": "Niigata",
+		"priority": 29
+	},
+	{
+		"code": "44",
+		"name": "Oita",
+		"priority": 30
+	},
+	{
+		"code": "33",
+		"name": "Okayama",
+		"priority": 31
+	},
+	{
+		"code": "47",
+		"name": "Okinawa",
+		"priority": 32
+	},
+	{
+		"code": "27",
+		"name": "Osaka",
+		"priority": 33
+	},
+	{
+		"code": "41",
+		"name": "Saga",
+		"priority": 34
+	},
+	{
+		"code": "11",
+		"name": "Saitama",
+		"priority": 35
+	},
+	{
+		"code": "25",
+		"name": "Shiga",
+		"priority": 36
+	},
+	{
+		"code": "32",
+		"name": "Shimane",
+		"priority": 37
+	},
+	{
+		"code": "22",
+		"name": "Shizuoka",
+		"priority": 38
+	},
+	{
+		"code": "09",
+		"name": "Tochigi",
+		"priority": 39
+	},
+	{
+		"code": "36",
+		"name": "Tokushima",
+		"priority": 40
+	},
+	{
+		"code": "13",
+		"name": "Tokyo",
+		"priority": 41
+	},
+	{
+		"code": "31",
+		"name": "Tottori",
+		"priority": 42
+	},
+	{
+		"code": "16",
+		"name": "Toyama",
+		"priority": 43
+	},
+	{
+		"code": "30",
+		"name": "Wakayama",
+		"priority": 44
+	},
+	{
+		"code": "06",
+		"name": "Yamagata",
+		"priority": 45
+	},
+	{
+		"code": "35",
+		"name": "Yamaguchi",
+		"priority": 46
+	},
+	{
+		"code": "19",
+		"name": "Yamanashi",
+		"priority": 47
+	}
+]

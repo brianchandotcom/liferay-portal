@@ -1,0 +1,552 @@
+[
+	{
+		"code": "01",
+		"name": "Ain",
+		"priority": 1
+	},
+	{
+		"code": "02",
+		"name": "Aisne",
+		"priority": 2
+	},
+	{
+		"code": "03",
+		"name": "Allier",
+		"priority": 3
+	},
+	{
+		"code": "04",
+		"name": "Alpes-de-Haute-Provence",
+		"priority": 4
+	},
+	{
+		"code": "06",
+		"name": "Alpes-Maritimes",
+		"priority": 5
+	},
+	{
+		"code": "08",
+		"name": "Ardennes",
+		"priority": 6
+	},
+	{
+		"code": "07",
+		"name": "Ardèche",
+		"priority": 7
+	},
+	{
+		"code": "09",
+		"name": "Ariège",
+		"priority": 8
+	},
+	{
+		"code": "10",
+		"name": "Aube",
+		"priority": 9
+	},
+	{
+		"code": "11",
+		"name": "Aude",
+		"priority": 10
+	},
+	{
+		"code": "ARA",
+		"name": "Auvergne-Rhône-Alpes",
+		"priority": 11
+	},
+	{
+		"code": "12",
+		"name": "Aveyron",
+		"priority": 12
+	},
+	{
+		"code": "67",
+		"name": "Bas-Rhin",
+		"priority": 13
+	},
+	{
+		"code": "13",
+		"name": "Bouches-du-Rhône",
+		"priority": 14
+	},
+	{
+		"code": "BFC",
+		"name": "Bourgogne-Franche-Comté",
+		"priority": 15
+	},
+	{
+		"code": "BRE",
+		"name": "Bretagne",
+		"priority": 16
+	},
+	{
+		"code": "14",
+		"name": "Calvados",
+		"priority": 17
+	},
+	{
+		"code": "15",
+		"name": "Cantal",
+		"priority": 18
+	},
+	{
+		"code": "CVL",
+		"name": "Centre-Val de Loire",
+		"priority": 19
+	},
+	{
+		"code": "16",
+		"name": "Charente",
+		"priority": 20
+	},
+	{
+		"code": "17",
+		"name": "Charente-Maritime",
+		"priority": 21
+	},
+	{
+		"code": "18",
+		"name": "Cher",
+		"priority": 22
+	},
+	{
+		"code": "CP",
+		"name": "Clipperton",
+		"priority": 23
+	},
+	{
+		"code": "19",
+		"name": "Corrèze",
+		"priority": 24
+	},
+	{
+		"code": "COR",
+		"name": "Corse",
+		"priority": 25
+	},
+	{
+		"code": "2A",
+		"name": "Corse-du-Sud",
+		"priority": 26
+	},
+	{
+		"code": "23",
+		"name": "Creuse",
+		"priority": 27
+	},
+	{
+		"code": "21",
+		"name": "Côte-d'Or",
+		"priority": 28
+	},
+	{
+		"code": "22",
+		"name": "Côtes-d'Armor",
+		"priority": 29
+	},
+	{
+		"code": "79",
+		"name": "Deux-Sèvres",
+		"priority": 30
+	},
+	{
+		"code": "24",
+		"name": "Dordogne",
+		"priority": 31
+	},
+	{
+		"code": "25",
+		"name": "Doubs",
+		"priority": 32
+	},
+	{
+		"code": "26",
+		"name": "Drôme",
+		"priority": 33
+	},
+	{
+		"code": "91",
+		"name": "Essonne",
+		"priority": 34
+	},
+	{
+		"code": "27",
+		"name": "Eure",
+		"priority": 35
+	},
+	{
+		"code": "28",
+		"name": "Eure-et-Loir",
+		"priority": 36
+	},
+	{
+		"code": "29",
+		"name": "Finistère",
+		"priority": 37
+	},
+	{
+		"code": "30",
+		"name": "Gard",
+		"priority": 38
+	},
+	{
+		"code": "32",
+		"name": "Gers",
+		"priority": 39
+	},
+	{
+		"code": "33",
+		"name": "Gironde",
+		"priority": 40
+	},
+	{
+		"code": "GES",
+		"name": "Grand-Est",
+		"priority": 41
+	},
+	{
+		"code": "68",
+		"name": "Haut-Rhin",
+		"priority": 42
+	},
+	{
+		"code": "2B",
+		"name": "Haute-Corse",
+		"priority": 43
+	},
+	{
+		"code": "31",
+		"name": "Haute-Garonne",
+		"priority": 44
+	},
+	{
+		"code": "43",
+		"name": "Haute-Loire",
+		"priority": 45
+	},
+	{
+		"code": "52",
+		"name": "Haute-Marne",
+		"priority": 46
+	},
+	{
+		"code": "74",
+		"name": "Haute-Savoie",
+		"priority": 47
+	},
+	{
+		"code": "70",
+		"name": "Haute-Saône",
+		"priority": 48
+	},
+	{
+		"code": "87",
+		"name": "Haute-Vienne",
+		"priority": 49
+	},
+	{
+		"code": "05",
+		"name": "Hautes-Alpes",
+		"priority": 50
+	},
+	{
+		"code": "65",
+		"name": "Hautes-Pyrénées",
+		"priority": 51
+	},
+	{
+		"code": "HDF",
+		"name": "Hauts-de-France",
+		"priority": 52
+	},
+	{
+		"code": "92",
+		"name": "Hauts-de-Seine",
+		"priority": 53
+	},
+	{
+		"code": "34",
+		"name": "Hérault",
+		"priority": 54
+	},
+	{
+		"code": "35",
+		"name": "Ille-et-Vilaine",
+		"priority": 55
+	},
+	{
+		"code": "36",
+		"name": "Indre",
+		"priority": 56
+	},
+	{
+		"code": "37",
+		"name": "Indre-et-Loire",
+		"priority": 57
+	},
+	{
+		"code": "38",
+		"name": "Isère",
+		"priority": 58
+	},
+	{
+		"code": "39",
+		"name": "Jura",
+		"priority": 59
+	},
+	{
+		"code": "40",
+		"name": "Landes",
+		"priority": 60
+	},
+	{
+		"code": "41",
+		"name": "Loir-et-Cher",
+		"priority": 61
+	},
+	{
+		"code": "42",
+		"name": "Loire",
+		"priority": 62
+	},
+	{
+		"code": "44",
+		"name": "Loire-Atlantique",
+		"priority": 63
+	},
+	{
+		"code": "45",
+		"name": "Loiret",
+		"priority": 64
+	},
+	{
+		"code": "46",
+		"name": "Lot",
+		"priority": 65
+	},
+	{
+		"code": "47",
+		"name": "Lot-et-Garonne",
+		"priority": 66
+	},
+	{
+		"code": "48",
+		"name": "Lozère",
+		"priority": 67
+	},
+	{
+		"code": "49",
+		"name": "Maine-et-Loire",
+		"priority": 68
+	},
+	{
+		"code": "50",
+		"name": "Manche",
+		"priority": 69
+	},
+	{
+		"code": "51",
+		"name": "Marne",
+		"priority": 70
+	},
+	{
+		"code": "53",
+		"name": "Mayenne",
+		"priority": 71
+	},
+	{
+		"code": "54",
+		"name": "Meurthe-et-Moselle",
+		"priority": 72
+	},
+	{
+		"code": "55",
+		"name": "Meuse",
+		"priority": 73
+	},
+	{
+		"code": "56",
+		"name": "Morbihan",
+		"priority": 74
+	},
+	{
+		"code": "57",
+		"name": "Moselle",
+		"priority": 75
+	},
+	{
+		"code": "58",
+		"name": "Nièvre",
+		"priority": 76
+	},
+	{
+		"code": "59",
+		"name": "Nord",
+		"priority": 77
+	},
+	{
+		"code": "NOR",
+		"name": "Normandie",
+		"priority": 78
+	},
+	{
+		"code": "NAQ",
+		"name": "Nouvelle-Aquitaine",
+		"priority": 79
+	},
+	{
+		"code": "OCC",
+		"name": "Occitanie",
+		"priority": 80
+	},
+	{
+		"code": "60",
+		"name": "Oise",
+		"priority": 81
+	},
+	{
+		"code": "61",
+		"name": "Orne",
+		"priority": 82
+	},
+	{
+		"code": "75",
+		"name": "Paris",
+		"priority": 83
+	},
+	{
+		"code": "62",
+		"name": "Pas-de-Calais",
+		"priority": 84
+	},
+	{
+		"code": "PDL",
+		"name": "Pays-de-la-Loire",
+		"priority": 85
+	},
+	{
+		"code": "PAC",
+		"name": "Provence-Alpes-Côte-d’Azur",
+		"priority": 86
+	},
+	{
+		"code": "63",
+		"name": "Puy-de-Dôme",
+		"priority": 87
+	},
+	{
+		"code": "64",
+		"name": "Pyrénées-Atlantiques",
+		"priority": 88
+	},
+	{
+		"code": "66",
+		"name": "Pyrénées-Orientales",
+		"priority": 89
+	},
+	{
+		"code": "69",
+		"name": "Rhône",
+		"priority": 90
+	},
+	{
+		"code": "72",
+		"name": "Sarthe",
+		"priority": 91
+	},
+	{
+		"code": "73",
+		"name": "Savoie",
+		"priority": 92
+	},
+	{
+		"code": "71",
+		"name": "Saône-et-Loire",
+		"priority": 93
+	},
+	{
+		"code": "76",
+		"name": "Seine-Maritime",
+		"priority": 94
+	},
+	{
+		"code": "93",
+		"name": "Seine-Saint-Denis",
+		"priority": 95
+	},
+	{
+		"code": "77",
+		"name": "Seine-et-Marne",
+		"priority": 96
+	},
+	{
+		"code": "80",
+		"name": "Somme",
+		"priority": 97
+	},
+	{
+		"code": "81",
+		"name": "Tarn",
+		"priority": 98
+	},
+	{
+		"code": "82",
+		"name": "Tarn-et-Garonne",
+		"priority": 99
+	},
+	{
+		"code": "90",
+		"name": "Territoire de Belfort",
+		"priority": 100
+	},
+	{
+		"code": "95",
+		"name": "Val-d'Oise",
+		"priority": 101
+	},
+	{
+		"code": "94",
+		"name": "Val-de-Marne",
+		"priority": 102
+	},
+	{
+		"code": "83",
+		"name": "Var",
+		"priority": 103
+	},
+	{
+		"code": "84",
+		"name": "Vaucluse",
+		"priority": 104
+	},
+	{
+		"code": "85",
+		"name": "Vendée",
+		"priority": 105
+	},
+	{
+		"code": "86",
+		"name": "Vienne",
+		"priority": 106
+	},
+	{
+		"code": "88",
+		"name": "Vosges",
+		"priority": 107
+	},
+	{
+		"code": "89",
+		"name": "Yonne",
+		"priority": 108
+	},
+	{
+		"code": "78",
+		"name": "Yvelines",
+		"priority": 109
+	},
+	{
+		"code": "IDF",
+		"name": "Île-de-France",
+		"priority": 110
+	}
+]

@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Commerce Account Item Selector Web
+Bundle-SymbolicName: com.liferay.commerce.account.item.selector.web
+Bundle-Version: 1.0.18
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang)";\
+		resource.bundle.base.name="content.Language"
+Web-ContextPath: /commerce-account-item-selector-web

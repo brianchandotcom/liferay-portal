@@ -1,0 +1,60 @@
+[
+	{
+		"instanceId": "siteNavigationMenuPortlet_main",
+		"portletName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet",
+		"portletPreferences": {
+			"displayDepth": "0",
+			"displayStyle": {
+				"FileName": "SPEEDWELL_SITE_NAVIGATION.ftl",
+				"Name": "Speedwell Site Navigation",
+				"PortletClassName": "com.liferay.portal.kernel.theme.NavItem"
+			},
+			"displayStyleGroupId": "",
+			"includedLayouts": "auto",
+			"portletSetupCss": "",
+			"portletSetupPortletDecoratorId": "barebone",
+			"portletSetupUseCustomTitle": "false",
+			"rootMenuItemLevel": "0",
+			"rootMenuItemType": "select"
+		}
+	},
+	{
+		"instanceId": "siteNavigationMenuPortlet_sub_navigation",
+		"portletName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet",
+		"portletPreferences": {
+			"displayDepth": "0",
+			"displayStyle": {
+				"FileName": "SPEEDWELL_SUB_SITE_NAVIGATION.ftl",
+				"Name": "Speedwell Sub Site Navigation",
+				"PortletClassName": "com.liferay.portal.kernel.theme.NavItem"
+			},
+			"displayStyleGroupId": "",
+			"includedLayouts": "auto",
+			"portletSetupCss": "",
+			"portletSetupPortletDecoratorId": "barebone",
+			"portletSetupUseCustomTitle": "false",
+			"rootMenuItemLevel": "1",
+			"rootMenuItemType": "relative"
+		}
+	},
+	{
+		"instanceId": "cpAssetCategoriesNavigationPortlet_navigation_menu",
+		"portletName": "com_liferay_commerce_product_asset_categories_navigation_web_internal_portlet_CPAssetCategoriesNavigationPortlet",
+		"portletPreferences": {
+			"assetVocabularyId": "",
+			"displayDepth": "0",
+			"displayStyle": {
+				"FileName": "SPEEDWELL_CATEGORY_NAVIGATION.ftl",
+				"Name": "Speedwell Category Navigation",
+				"PortletClassName": "com.liferay.commerce.product.asset.categories.navigation.web.internal.portlet.CPAssetCategoriesNavigationPortlet"
+			},
+			"displayStyleGroupId": "",
+			"includedLayouts": "auto",
+			"portletSetupCss": "",
+			"portletSetupPortletDecoratorId": "barebone",
+			"portletSetupUseCustomTitle": "false",
+			"rootMenuItemLevel": "0",
+			"rootMenuItemType": "relative"
+		}
+	}
+]

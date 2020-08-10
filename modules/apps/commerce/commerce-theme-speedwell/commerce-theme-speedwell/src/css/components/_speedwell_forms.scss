@@ -1,0 +1,29 @@
+.form-group {
+	font-size: 12px;
+
+	.control-label {
+		font-weight: bold;
+		margin: 0;
+		padding-left: 10px;
+	}
+
+	.form-control {
+		background-color: rgba(0, 0, 0, 0.05);
+		border: 0;
+		color: $stroke-variant;
+		font-size: 14px;
+		height: 50px;
+
+		&.price-range-input {
+			height: auto;
+		}
+	}
+
+	.reference-mark {
+		font-size: 0.35rem !important;
+
+		&.text-warning {
+			color: $stroke-variant !important;
+		}
+	}
+}

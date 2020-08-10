@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Headless Commerce Core API
+Bundle-SymbolicName: com.liferay.headless.commerce.core.api
+Bundle-Version: 1.1.9
+Export-Package:\
+	com.liferay.headless.commerce.core.dto.v1_0.converter,\
+	com.liferay.headless.commerce.core.exception.mapper,\
+	com.liferay.headless.commerce.core.util

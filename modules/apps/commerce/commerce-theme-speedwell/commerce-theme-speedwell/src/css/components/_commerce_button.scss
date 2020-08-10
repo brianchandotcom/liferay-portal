@@ -1,0 +1,19 @@
+.commerce-button {
+	align-items: center;
+	background-color: $color-theme;
+	border: 0;
+	border-radius: 4px;
+	color: #fff;
+	display: flex;
+	font-size: 14px;
+	font-weight: 600;
+	height: 50px;
+	justify-content: center;
+	min-width: 180px;
+
+	@media only screen and (max-width: $bp-small) {
+		height: 40px;
+		line-height: 40px;
+		min-width: 135px;
+	}
+}

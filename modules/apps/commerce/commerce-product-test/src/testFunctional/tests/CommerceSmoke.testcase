@@ -1,0 +1,130 @@
+@component-name = "portal-commerce"
+definition {
+
+	property osgi.app.includes = "commerce";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Commerce";
+
+	setUp {
+		Portlet.shutdownServer();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "deploy-commerce-license-li");
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		Pause(locator1 = "5000");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			CommerceConfiguration.commerceAdminTearDown();
+
+			CommerceConfiguration.commerceInitializersTearDown();
+
+			ProductMenu.gotoPortlet(
+				category = "Commerce",
+				panel = "Control Panel",
+				portlet = "Products");
+
+			CommerceNavigator.gotoCommercePortletNavItem(navItem = "Specifications");
+
+			while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
+				PortletEntry.deleteViaMenuItem(rowEntry = "");
+			}
+
+			CommerceNavigator.gotoCommercePortletNavItem(navItem = "Specification Groups");
+
+			while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
+				PortletEntry.deleteViaMenuItem(rowEntry = "");
+			}
+
+			User.logoutPG();
+		}
+	}
+
+	test CreateNewSpecificationOptions {
+		property environment.acceptance = "true";
+		property portal.acceptance = "true";
+
+		ProductMenu.gotoPortlet(
+			category = "Commerce",
+			panel = "Control Panel",
+			portlet = "Products");
+
+		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Specifications");
+
+		CommerceEntry.createNewSpecificationLabels(
+			specificationDescription = "Specification-1 Description",
+			specificationTitle = "specification-1");
+
+		CommerceEntry.viewSpecificationLabels(
+			specificationDescription = "Specification-1 Description",
+			specificationTitle = "specification-1");
+
+		ProductMenu.gotoPortlet(
+			category = "Commerce",
+			panel = "Control Panel",
+			portlet = "Products");
+
+		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Specifications");
+
+		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Specification Groups");
+
+		CommerceEntry.createNewSpecificationGroups(
+			specificationDescription = "Specification-1 Description",
+			specificationTitle = "specification-1");
+
+		CommerceEntry.viewSpecificationGroups(
+			specificationDescription = "Specification-1 Description",
+			specificationTitle = "specification-1");
+	}
+
+	test PublishSimpleProduct {
+		property environment.acceptance = "true";
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CommerceSmoke#PublishSimpleProduct";
+
+		ProductMenu.gotoPortlet(
+			category = "Commerce",
+			panel = "Control Panel",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productName = "Simple T-Shirt",
+			productType = "Simple");
+
+		ProductMenu.gotoPortlet(
+			category = "Commerce",
+			panel = "Control Panel",
+			portlet = "Products");
+
+		CommerceNavigator.gotoEntry(entryName = "Simple T-Shirt");
+
+		CommerceEntry.viewProductsEntry(
+			productFullDescription = "Simple T-Shirt Full Description",
+			productName = "Simple T-Shirt",
+			productShortDescription = "Simple T-Shirt Short Description");
+	}
+
+}

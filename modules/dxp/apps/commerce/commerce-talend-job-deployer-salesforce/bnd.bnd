@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Commerce Talend Job Deployer Salesforce
+Bundle-SymbolicName: com.liferay.commerce.talend.job.deployer.salesforce
+Bundle-Version: 1.0.7
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang),(bundle.symbolic.name=com.liferay.commerce.talend.job.deployer.lang)";\
+		resource.bundle.base.name="content.Language"
+Web-ContextPath: /commerce-talend-job-deployer-salesforce

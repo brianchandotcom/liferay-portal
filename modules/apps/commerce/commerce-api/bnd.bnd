@@ -1,0 +1,34 @@
+Bundle-Name: Liferay Commerce API
+Bundle-SymbolicName: com.liferay.commerce.api
+Bundle-Version: 19.8.2
+Export-Package:\
+	com.liferay.commerce.address,\
+	com.liferay.commerce.constants,\
+	com.liferay.commerce.context,\
+	com.liferay.commerce.discount,\
+	com.liferay.commerce.exception,\
+	com.liferay.commerce.health.status,\
+	com.liferay.commerce.inventory,\
+	com.liferay.commerce.model,\
+	com.liferay.commerce.order,\
+	com.liferay.commerce.order.engine,\
+	com.liferay.commerce.order.status,\
+	com.liferay.commerce.payment.engine,\
+	com.liferay.commerce.payment.method,\
+	com.liferay.commerce.payment.request,\
+	com.liferay.commerce.payment.result,\
+	com.liferay.commerce.percentage,\
+	com.liferay.commerce.price,\
+	com.liferay.commerce.search.facet,\
+	com.liferay.commerce.service,\
+	com.liferay.commerce.service.persistence,\
+	com.liferay.commerce.starter,\
+	com.liferay.commerce.stock.activity,\
+	com.liferay.commerce.subscription,\
+	com.liferay.commerce.tax,\
+	com.liferay.commerce.util,\
+	com.liferay.commerce.util.comparator
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang)";\
+		resource.bundle.base.name="content.Language"

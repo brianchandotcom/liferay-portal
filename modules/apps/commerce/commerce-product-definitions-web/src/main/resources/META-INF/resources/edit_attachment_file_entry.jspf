@@ -1,0 +1,178 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<commerce-ui:side-panel-content
+	title="<%= title %>"
+>
+	<portlet:actionURL name="editCPAttachmentFileEntry" var="editCPAttachmentFileEntryActionURL" />
+
+	<aui:form action="<%= editCPAttachmentFileEntryActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveAttachmentFileEntry();" %>'>
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpAttachmentFileEntry == null) ? Constants.ADD : Constants.UPDATE %>" />
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinitionId %>" />
+		<aui:input name="cpAttachmentFileEntryId" type="hidden" value="<%= cpAttachmentFileEntryId %>" />
+		<aui:input name="type" type="hidden" value="<%= type %>" />
+		<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
+
+		<commerce-ui:panel>
+			<%@ include file="/attachment_file_entry/image_selector.jspf" %>
+		</commerce-ui:panel>
+
+		<commerce-ui:panel
+			title='<%= LanguageUtil.get(request, "details") %>'
+		>
+			<%@ include file="/attachment_file_entry/details.jspf" %>
+		</commerce-ui:panel>
+
+		<commerce-ui:panel
+			title='<%= LanguageUtil.get(request, "options") %>'
+		>
+			<%@ include file="/attachment_file_entry/options.jspf" %>
+		</commerce-ui:panel>
+
+		<commerce-ui:panel
+			title='<%= LanguageUtil.get(request, "schedule") %>'
+		>
+			<%@ include file="/attachment_file_entry/schedule.jspf" %>
+		</commerce-ui:panel>
+
+		<c:if test="<%= cpAttachmentFileEntriesDisplayContext.hasCustomAttributes() %>">
+			<commerce-ui:panel
+				title='<%= LanguageUtil.get(request, "custom-attribute") %>'
+			>
+				<%@ include file="/attachment_file_entry/custom_fields.jspf" %>
+			</commerce-ui:panel>
+		</c:if>
+
+		<%
+		boolean pending = false;
+
+		if (cpAttachmentFileEntry != null) {
+			pending = cpAttachmentFileEntry.isPending();
+		}
+		%>
+
+		<c:if test="<%= pending %>">
+			<div class="alert alert-info">
+				<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
+			</div>
+		</c:if>
+
+		<aui:button-row cssClass="product-definition-button-row">
+
+			<%
+			String saveButtonLabel = "save";
+
+			if ((cpAttachmentFileEntry == null) || cpAttachmentFileEntry.isDraft() || cpAttachmentFileEntry.isApproved() || cpAttachmentFileEntry.isExpired() || cpAttachmentFileEntry.isScheduled()) {
+				saveButtonLabel = "save-as-draft";
+			}
+
+			String publishButtonLabel = "publish";
+
+			if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, CPAttachmentFileEntry.class.getName())) {
+				publishButtonLabel = "submit-for-publication";
+			}
+			%>
+
+			<aui:button cssClass="btn-lg" disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
+
+			<aui:button cssClass="btn-lg" name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
+
+			<aui:button cssClass="btn-lg" type="cancel" />
+		</aui:button-row>
+	</aui:form>
+</commerce-ui:side-panel-content>
+
+<aui:script>
+	function getMetalJsFormData(metalJsForm) {
+		if (!metalJsForm) {
+			return [];
+		}
+
+		var renderer = Object.values(metalJsForm.refs)[0];
+
+		return Object.values(renderer.refs).map(function(option) {
+			return {
+				key: option.fieldName,
+				value: option.value
+			};
+		});
+	}
+
+	Liferay.componentReady('ProductOptions<%= cpDefinitionId %>').then(function(
+		ddmForm
+	) {
+		if (!ddmForm.on) {
+			return;
+		}
+		ddmForm.on('fieldEdited', function() {
+			var fieldValues = getMetalJsFormData(ddmForm);
+
+			var form = AUI.$(document.<portlet:namespace />fm);
+			form.fm('ddmFormValues').val(JSON.stringify(fieldValues));
+		});
+	});
+
+	function <portlet:namespace />saveAttachmentFileEntry(forceDisable) {
+		var form = AUI.$(document.<portlet:namespace />fm);
+
+		var ddmForm = Liferay.component(
+			'ProductOptions<%= cpDefinitionId %>DDMForm'
+		);
+
+		if (ddmForm) {
+			var fields = ddmForm.getImmediateFields();
+
+			var fieldValues = [];
+
+			fields.forEach(function(field) {
+				var fieldValue = {};
+
+				fieldValue.key = field.get('fieldName');
+
+				var value = field.getValue();
+
+				var arrValue = [];
+
+				if (Array.isArray(value)) {
+					arrValue = value;
+				} else {
+					arrValue.push(value);
+				}
+
+				fieldValue.value = arrValue;
+
+				fieldValues.push(fieldValue);
+			});
+
+			form.fm('ddmFormValues').val(JSON.stringify(fieldValues));
+		}
+
+		submitForm(form);
+	}
+</aui:script>
+
+<aui:script use="aui-base,event-input">
+	var publishButton = A.one('#<portlet:namespace />publishButton');
+
+	publishButton.on('click', function() {
+		var workflowActionInput = A.one('#<portlet:namespace />workflowAction');
+
+		if (workflowActionInput) {
+			workflowActionInput.val('<%= WorkflowConstants.ACTION_PUBLISH %>');
+		}
+	});
+</aui:script>

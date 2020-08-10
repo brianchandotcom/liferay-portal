@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Commerce Data Integration Talend API
+Bundle-SymbolicName: com.liferay.commerce.data.integration.talend.api
+Bundle-Version: 2.0.7
+Export-Package: com.liferay.commerce.data.integration.talend

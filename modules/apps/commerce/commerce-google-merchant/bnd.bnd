@@ -1,0 +1,19 @@
+Bundle-Name: Liferay Commerce Google Merchant
+Bundle-SymbolicName: com.liferay.commerce.google.merchant
+Bundle-Version: 1.0.10
+Import-Package:\
+	!com.mchange.v2.c3p0.*,\
+	\
+	!javax.ejb.*,\
+	\
+	!javax.jms.*,\
+	\
+	!javax.mail.*,\
+	\
+	!javax.transaction.*,\
+	\
+	*
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang)";\
+		resource.bundle.base.name="content.Language"

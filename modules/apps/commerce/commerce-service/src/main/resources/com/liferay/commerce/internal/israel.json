@@ -1,0 +1,32 @@
+[
+	{
+		"code": "D",
+		"name": "HaDarom",
+		"priority": 1
+	},
+	{
+		"code": "M",
+		"name": "HaMerkaz",
+		"priority": 2
+	},
+	{
+		"code": "Z",
+		"name": "HaTsafon",
+		"priority": 3
+	},
+	{
+		"code": "HA",
+		"name": "H̱efa",
+		"priority": 4
+	},
+	{
+		"code": "TA",
+		"name": "Tel-Aviv",
+		"priority": 5
+	},
+	{
+		"code": "JM",
+		"name": "Yerushalayim",
+		"priority": 6
+	}
+]

@@ -1,0 +1,83 @@
+definition {
+
+	macro addOptionValues {
+		var optionValuesList = "${optionValuesList}";
+
+		CommerceNavigator.gotoOptionValues(optionEntryName = "${optionEntryName}");
+
+		for (var optionValues : list "${optionValuesList}") {
+			if (IsElementPresent(locator1 = "CommerceEntry#MODAL_DELETE")) {
+				Click(locator1 = "CommerceEntry#MODAL_PLUS");
+			}
+
+			CommerceEntry.addOptionValue(
+				valueName = "${optionValues}",
+				valuePriority = "${valuePriority}");
+
+			Click(locator1 = "CommerceEntry#MODAL_SAVE");
+		}
+
+		Click(locator1 = "CommerceEntry#MODAL_CLOSE");
+	}
+
+	macro moveProductsEntriesToRecycleBin {
+		Click(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX");
+
+		Click(locator1 = "Button#RECYCLE_BIN");
+	}
+
+	macro moveProductsToRecycleBinViaCheckbox {
+		Click(
+			key_entryName = "${productName}",
+			locator1 = "CommerceNavigation#SINGLE_ENTRY_CHECKBOX");
+
+		Click(locator1 = "Button#RECYCLE_BIN");
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+
+		AssertElementPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
+	}
+
+	macro newOptionsEntry {
+		if (IsElementPresent(locator1 = "Button#DELETE")) {
+			Click(locator1 = "CommerceEntry#ADD_BUTTON");
+		}
+
+		CommerceOptions.addEntry(
+			optionDescription = "${optionDescription}",
+			optionFieldType = "${optionFieldType}",
+			optionName = "${optionName}");
+
+		Button.clickSave();
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		CommerceEntry.viewOptionsEntry(
+			optionDescription = "${optionDescription}",
+			optionFieldType = "${optionFieldType}",
+			optionName = "${optionName}");
+
+		if (("${optionFieldType}" == "checkbox-multiple") || ("${optionFieldType}" == "Select from List") || ("${optionFieldType}" == "Radio")) {
+			CPCommerceCatalog.addOptionValues(
+				optionEntryName = "${optionName}",
+				optionValues = "${optionValues}",
+				optionValuesList = "${optionValuesList}",
+				valuePriority = "${valuePriority}");
+		}
+	}
+
+	macro newProductsEntry {
+		CommerceProducts.addEntry(
+			productFullDescription = "${productName} Full Description",
+			productName = "${productName}",
+			productShortDescription = "${productName} Short Description",
+			productType = "${productType}");
+
+		Pause(locator1 = "3000");
+
+		CommerceEntry.publishEntry(status = "Approved");
+	}
+
+}

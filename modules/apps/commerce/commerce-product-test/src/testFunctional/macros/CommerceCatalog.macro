@@ -1,0 +1,37 @@
+definition {
+
+	macro addEntry {
+		Click(locator1 = "Button#PLUS");
+
+		AssertClick(
+			key_plusMenu = "${plusMenu}",
+			locator1 = "CommerceEntry#PLUS_MENU",
+			value1 = "${plusMenu}");
+
+		CommerceEntry.addProductsEntry(
+			productFullDescription = "${productFullDescription}",
+			productShortDescription = "${productShortDescription}",
+			productTitle = "${productTitle}");
+	}
+
+	macro moveCatalogEntriesToRecycleBin {
+		Click(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX");
+
+		Click(locator1 = "Button#RECYCLE_BIN");
+	}
+
+	macro moveCatalogEntryToRecycleBinViaCheckbox {
+		Click(
+			key_entryTitle = "${productTitle}",
+			locator1 = "CommerceNavigation#SINGLE_ENTRY_CHECKBOX");
+
+		Click(locator1 = "Button#RECYCLE_BIN");
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+
+		AssertElementPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
+	}
+
+}

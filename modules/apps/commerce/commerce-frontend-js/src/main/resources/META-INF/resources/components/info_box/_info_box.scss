@@ -1,0 +1,29 @@
+.info-box {
+	font-size: 14px;
+
+	.action {
+		line-height: 1;
+		margin-right: -4px;
+		margin-top: -4px;
+		padding: 4px;
+	}
+
+	.header {
+		align-items: baseline;
+		display: flex;
+		justify-content: space-between;
+		padding-bottom: 15px;
+	}
+
+	.item {
+		padding-bottom: 14px;
+
+		&:last-child {
+			padding-bottom: 0;
+		}
+
+		.title {
+			padding-right: 10px;
+		}
+	}
+}

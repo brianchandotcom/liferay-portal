@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Commerce Tax Engine Fixed Web
+Bundle-SymbolicName: com.liferay.commerce.tax.engine.fixed.web
+Bundle-Version: 1.0.38
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang)";\
+		resource.bundle.base.name="content.Language"
+Web-ContextPath: /commerce-tax-engine-fixed-web

@@ -1,0 +1,121 @@
+@import './variables';
+
+@import '../components/add_to_cart/add_to_cart';
+@import '../components/dataset_display/dataset_display';
+@import '../components/gallery/gallery';
+@import '../components/info_box/info_box';
+@import '../components/item_finder/item_finder';
+@import '../components/mini_cart/mini_cart';
+@import '../components/modal/modal';
+@import '../components/price/price';
+@import '../components/quantity_selector/quantity_selector';
+@import '../components/side_panel/side_panel';
+@import '../components/summary/summary';
+@import '../components/step_tracker/step_tracker';
+@import '../components/data_renderers/data_renderers';
+
+.cell-comment {
+	cursor: pointer;
+
+	svg {
+		pointer-events: none;
+	}
+}
+
+.commerce-admin-header {
+	position: sticky;
+	z-index: 989;
+
+	.has-control-menu & {
+		top: 56px;
+	}
+
+	.ie11 & {
+		position: static;
+	}
+}
+
+.commerce-header-title {
+	max-width: 300px;
+}
+
+.commerce-header {
+	position: sticky;
+	top: 0;
+	z-index: 900;
+
+	.has-control-menu & {
+		top: 48px;
+
+		@media screen and (min-width: 576px) {
+			top: 56px;
+		}
+	}
+}
+
+.filter-panel-head {
+	&.active .panel-header-link {
+		background-color: $info-bc;
+	}
+}
+
+.list-group-no-bordered .list-group-item {
+	border-width: 0 0 1px 0;
+	margin-bottom: 0;
+
+	&:last-child {
+		border-width: 0;
+	}
+}
+
+.modal-lg,
+.modal-xl {
+	max-width: 800px;
+}
+
+@media (min-width: 576px) {
+	.modal {
+		.modal-dialog {
+			display: block;
+		}
+	}
+}
+
+.row.vertically-divided {
+	overflow: hidden;
+
+	& > [class*='col'] {
+		&::after {
+			border-right: 1px solid #e6e7ed;
+			bottom: 0;
+			content: '';
+			position: absolute;
+			right: -2px;
+			top: 0;
+			z-index: 0;
+		}
+
+		&:last-child::after {
+			border-color: transparent;
+		}
+	}
+}
+
+.sorting-icons-wrapper {
+	.sorting-icon {
+		&:nth-child(2) {
+			left: -6px;
+			position: relative;
+		}
+
+		&:not(.active) {
+			opacity: 0.5;
+		}
+	}
+}
+
+.sticky-header-menu {
+	border-bottom: 1px solid $border-color;
+	position: sticky;
+	z-index: 899;
+}

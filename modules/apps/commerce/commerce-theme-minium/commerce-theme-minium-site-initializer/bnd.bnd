@@ -1,0 +1,18 @@
+Bundle-Name: Liferay Commerce Theme Minium Site Initializer
+Bundle-SymbolicName: com.liferay.commerce.theme.minium.site.initializer
+Bundle-Version: 2.0.34
+Import-Package:\
+	com.liferay.portal.kernel.exception;version="[7.2.0,9.0.0)",\
+	com.liferay.portal.kernel.json;version="[7.0.0,9.0.0)",\
+	com.liferay.portal.kernel.model;version="[2.0.0,4.0.0)",\
+	com.liferay.portal.kernel.security.auth;version="[1.1.0,3.0.0)",\
+	com.liferay.portal.kernel.service;version="[1.30.0,3.0.0)",\
+	com.liferay.portal.kernel.settings;version="[1.3.0,3.0.0)",\
+	com.liferay.portal.kernel.util;version="[8.0.0,10.0.0)",\
+	\
+	*
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang)";\
+		resource.bundle.base.name="content.Language"
+Web-ContextPath: /commerce-theme-minium-site-initializer

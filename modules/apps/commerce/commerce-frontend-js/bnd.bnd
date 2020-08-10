@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Commerce Frontend JS
+Bundle-SymbolicName: com.liferay.commerce.frontend.js
+Bundle-Version: 1.0.42
+Liferay-JS-Submodules-Bridge: commerce-frontend-js
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang)";\
+		resource.bundle.base.name="content.Language"
+Web-ContextPath: /commerce-frontend-js

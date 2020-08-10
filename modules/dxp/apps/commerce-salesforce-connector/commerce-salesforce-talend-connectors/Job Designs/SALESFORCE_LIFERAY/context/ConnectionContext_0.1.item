@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<talendfile:ContextType xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:talendfile="platform:/resource/org.talend.model/model/TalendFile.xsd" xmi:id="_DJ6wQM00Eei37JyP0R7oaA" confirmationNeeded="false" name="Default">
+  <contextParameter xmi:id="_DJ7XUM00Eei37JyP0R7oaA" comment="" name="salesforce_user" prompt="salesforce_user?" promptNeeded="false" type="id_String" value="rodrigo.guedes@liferay.com"/>
+  <contextParameter xmi:id="_DJ7XUc00Eei37JyP0R7oaA" comment="" name="salesforce_password" prompt="salesforce_password?" promptNeeded="true" type="id_Password" value=""/>
+  <contextParameter xmi:id="_DJ7XUs00Eei37JyP0R7oaA" comment="" name="salesforce_token" prompt="salesforce_token?" promptNeeded="false" type="id_String" value="KiwWNoeTVeOy3KZAf6yRgDInB"/>
+  <contextParameter xmi:id="_DJ7XU800Eei37JyP0R7oaA" comment="" name="liferay_user" prompt="liferay_user?" promptNeeded="false" type="id_String" value="test@liferay.com"/>
+  <contextParameter xmi:id="_DJ7XVM00Eei37JyP0R7oaA" comment="" name="liferay_password" prompt="liferay_password?" promptNeeded="true" type="id_Password" value=""/>
+  <contextParameter xmi:id="_DJ7XVc00Eei37JyP0R7oaA" comment="" name="salesforce_api" prompt="salesforce_api?" promptNeeded="false" type="id_String" value="https://login.salesforce.com/services/Soap/u/42.0"/>
+  <contextParameter xmi:id="_DJ7XVs00Eei37JyP0R7oaA" comment="" name="liferay_api" prompt="liferay_api?" promptNeeded="false" type="id_String" value="http://localhost:8080/o/api"/>
+  <contextParameter xmi:id="_AyBMMNFPEeiTJZPYloIKsw" comment="" name="webSiteId" prompt="webSiteId?" promptNeeded="false" type="id_String" value="48304"/>
+</talendfile:ContextType>

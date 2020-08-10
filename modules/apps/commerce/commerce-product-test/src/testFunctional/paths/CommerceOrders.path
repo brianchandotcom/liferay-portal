@@ -1,0 +1,64 @@
+<html>
+<head>
+<title>CommerceOrders</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CommerceOrders</td></tr>
+</thead>
+<tbody>
+<tr>
+    <td>ORDER_DETAILS_BILLING_ADDRESS</td>
+    <td>//h5[contains(.,'Billing Address')]/../../div</td>
+    <td></td>
+</tr>
+<tr>
+    <td>ORDER_DETAILS_PAYMENT_METHOD_NAME</td>
+    <td>//span[contains(@class,'payment-name')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>ORDER_DETAILS_PRODUCT_DISCOUNT</td>
+    <td>//tbody//td[8]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>ORDER_DETAILS_PRODUCT_NAME</td>
+    <td>//tbody//td[3]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>ORDER_DETAILS_PRODUCT_PRICE</td>
+    <td>//tbody//td[10]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>ORDER_DETAILS_PRODUCT_QUANTITY</td>
+    <td>//tbody//td[9]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>ORDER_DETAILS_PRODUCT_SKU</td>
+    <td>//div[@class='table-list-title']/button</td>
+    <td></td>
+</tr>
+<tr>
+    <td>ORDER_DETAILS_PRODUCT_UNIT_PRICE</td>
+    <td>//tbody//td[7]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>ORDER_DETAILS_SHIPPING_ADDRESS</td>
+    <td>//h5[contains(.,'Shipping Address')]/../../div[contains(.,'${key_addressInfo}')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>ORDER_ITEMS_PRODUCT_DETAILS</td>
+    <td>//tbody//td[2][contains(.,'${key_productSKU}')]/..//div[@class='table-list-title']/button</td>
+    <td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Headless Commerce Delivery Cart Client
+Bundle-SymbolicName: com.liferay.headless.commerce.delivery.cart.client
+Bundle-Version: 1.0.18

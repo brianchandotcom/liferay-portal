@@ -1,0 +1,78 @@
+{
+	"availableLanguageIds": [
+		"[£LOCALE£]"
+	],
+	"defaultLanguageId": "[£LOCALE£]",
+	"fields": [
+		{
+			"dataType": "image",
+			"fieldNamespace": "ddm",
+			"indexType": "text",
+			"label": {
+				"[£LOCALE£]": "Content Image"
+			},
+			"localizable": true,
+			"name": "ContentImage",
+			"predefinedValue": {
+				"[£LOCALE£]": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"style": {
+				"[£LOCALE£]": ""
+			},
+			"tip": {
+				"[£LOCALE£]": ""
+			},
+			"type": "ddm-image"
+		},
+		{
+			"dataType": "string",
+			"indexType": "keyword",
+			"label": {
+				"[£LOCALE£]": "Sub Heading"
+			},
+			"localizable": true,
+			"name": "SubHeading",
+			"predefinedValue": {
+				"[£LOCALE£]": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"style": {
+				"[£LOCALE£]": ""
+			},
+			"tip": {
+				"[£LOCALE£]": ""
+			},
+			"type": "text"
+		},
+		{
+			"dataType": "string",
+			"indexType": "keyword",
+			"label": {
+				"[£LOCALE£]": "Link URL"
+			},
+			"localizable": true,
+			"name": "CTA",
+			"predefinedValue": {
+				"[£LOCALE£]": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": true,
+			"showLabel": true,
+			"style": {
+				"[£LOCALE£]": ""
+			},
+			"tip": {
+				"[£LOCALE£]": ""
+			},
+			"type": "text"
+		}
+	]
+}

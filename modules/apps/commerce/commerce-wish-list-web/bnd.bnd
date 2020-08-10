@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Commerce Wish List Web
+Bundle-SymbolicName: com.liferay.commerce.wish.list.web
+Bundle-Version: 1.0.39
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang)";\
+		resource.bundle.base.name="content.Language"
+-dsannotations-options: inherit

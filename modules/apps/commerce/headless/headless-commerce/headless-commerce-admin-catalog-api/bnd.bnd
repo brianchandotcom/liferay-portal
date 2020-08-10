@@ -1,0 +1,13 @@
+Bundle-Name: Liferay Headless Commerce Admin Catalog API
+Bundle-SymbolicName: com.liferay.headless.commerce.admin.catalog.api
+Bundle-Version: 11.3.0
+Export-Package:\
+	com.liferay.headless.commerce.admin.catalog.dto.v1_0,\
+	com.liferay.headless.commerce.admin.catalog.resource.v1_0
+Import-Package:\
+	com.liferay.portal.vulcan.accept.language;version="[1.0.0,2.0.0)",\
+	com.liferay.portal.vulcan.graphql.annotation;version="[1.0.0,2.0.0)",\
+	com.liferay.portal.vulcan.pagination;version="[1.0.0,2.0.0)",\
+	com.liferay.portal.vulcan.util;version="[2.3.0,3.0.0)",\
+	\
+	*

@@ -1,0 +1,31 @@
+Bundle-Name: Liferay Commerce Theme Minium Implementation
+Bundle-SymbolicName: com.liferay.commerce.theme.minium.impl
+Bundle-Version: 2.0.39
+Import-Package:\
+	com.liferay.application.list;version="[1.1.0,3.0.0)",\
+	com.liferay.expando.kernel.model;version="[1.1.0,3.0.0)",\
+	com.liferay.frontend.js.loader.modules.extender.npm;version="[2.0.0,4.0.0)",\
+	com.liferay.portal.kernel.exception;version="[7.2.0,9.0.0)",\
+	com.liferay.portal.kernel.json;version="[7.0.0,9.0.0)",\
+	com.liferay.portal.kernel.model;version="[2.0.0,4.0.0)",\
+	com.liferay.portal.kernel.portlet;version="[8.0.0,10.0.0)",\
+	com.liferay.portal.kernel.security.permission;version="[1.8.0,3.0.0)",\
+	com.liferay.portal.kernel.template;version="[7.2.0,9.0.0)",\
+	com.liferay.portal.kernel.theme;version="[1.6.0,3.0.0)",\
+	com.liferay.portal.kernel.upload;version="[6.4.0,8.0.0)",\
+	com.liferay.portal.kernel.util;version="[8.0.0,10.0.0)",\
+	\
+	*
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang)";\
+		resource.bundle.base.name="content.Language",\
+	soy;\
+		type="commerce-theme-minium-impl";\
+		version:Version="${Bundle-Version}"
+Require-Capability:\
+	osgi.extender;\
+		filter:="(&(osgi.extender=liferay.js)(version>=2.0)(!(version>=4.0)))",\
+	soy;\
+		filter:="(type=commerce-frontend-taglib)"
+Web-ContextPath: /commerce-theme-minium-impl

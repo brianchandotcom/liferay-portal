@@ -1,0 +1,90 @@
+[
+	{
+		"AccountGroups": [
+			"Gold Accounts",
+			"North American Accounts"
+		],
+		"AccountType": "Business",
+		"City": "Los Angeles",
+		"CompanyLogo": "minium_logos_9.png",
+		"Country": "US",
+		"Name": "S Auto Service",
+		"PriceLists": [
+			"Gold Accounts Pricing"
+		],
+		"Region": "CA",
+		"RelatedOrganization": "United States",
+		"Street1": "3200 Front Avenue",
+		"Zip": "90023"
+	},
+	{
+		"AccountGroups": [
+			"European Accounts"
+		],
+		"AccountType": "Business",
+		"City": "Milan",
+		"CompanyLogo": "minium_logos_10.png",
+		"Country": "IT",
+		"Name": "Leo Auto Parts Distributor",
+		"Region": "MI",
+		"RelatedOrganization": "Italy",
+		"Street1": "6 Via Varesina",
+		"TaxId": "12345678901",
+		"Zip": "20156"
+	},
+	{
+		"AccountGroups": [
+			"Gold Accounts",
+			"North American Accounts"
+		],
+		"AccountType": "Business",
+		"City": "Oxnard",
+		"CompanyLogo": "minium_logos_4.png",
+		"Country": "US",
+		"Name": "CC West",
+		"Region": "CA",
+		"RelatedOrganization": "United States",
+		"Street1": "1300 W 256th Street",
+		"Zip": "93030"
+	},
+	{
+		"AccountGroups": [
+			"North American Accounts"
+		],
+		"AccountType": "Business",
+		"City": "Chicago",
+		"CompanyLogo": "minium_logos_8.png",
+		"Country": "US",
+		"Name": "Connolly Repair",
+		"Region": "IL",
+		"RelatedOrganization": "United States",
+		"Street1": "205 W Wacker Drive",
+		"Zip": "60606"
+	},
+	{
+		"AccountGroups": [
+			"North American Accounts"
+		],
+		"AccountType": "Business",
+		"City": "Toronto",
+		"CompanyLogo": "minium_logos_7.png",
+		"Country": "CA",
+		"Name": "Joe's Complete Auto Care",
+		"RelatedOrganization": "Canada",
+		"Street1": "1 Richmond Street",
+		"Zip": "M4C 1M5"
+	},
+	{
+		"AccountGroups": [
+			"North American Accounts"
+		],
+		"AccountType": "Business",
+		"City": "Edmonton",
+		"CompanyLogo": "minium_logos_3.png",
+		"Country": "CA",
+		"Name": "Honest Auto Repair Centre",
+		"RelatedOrganization": "Canada",
+		"Street1": "163 Spadina Avenue",
+		"Zip": "T5A 0A1"
+	}
+]

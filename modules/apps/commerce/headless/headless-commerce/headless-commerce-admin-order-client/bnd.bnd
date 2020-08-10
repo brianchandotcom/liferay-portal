@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Headless Commerce Admin Order Client
+Bundle-SymbolicName: com.liferay.headless.commerce.admin.order.client
+Bundle-Version: 1.0.15

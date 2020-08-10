@@ -1,0 +1,155 @@
+package routines;
+
+import java.math.BigDecimal;
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Map;
+
+import routines.system.JSONArray;
+import routines.system.JSONObject;
+
+/*
+ * user specification: the function's comment should contain keys as follows: 1. write about the function's comment.but
+ * it must be before the "{talendTypes}" key.
+ * 
+ * 2. {talendTypes} 's value must be talend Type, it is required . its value should be one of: String, char | Character,
+ * long | Long, int | Integer, boolean | Boolean, byte | Byte, Date, double | Double, float | Float, Object, short |
+ * Short
+ * 
+ * 3. {Category} define a category for the Function. it is required. its value is user-defined .
+ * 
+ * 4. {param} 's format is: {param} <type>[(<default value or closed list values>)] <name>[ : <comment>]
+ * 
+ * <type> 's value should be one of: string, int, list, double, object, boolean, long, char, date. <name>'s value is the
+ * Function's parameter name. the {param} is optional. so if you the Function without the parameters. the {param} don't
+ * added. you can have many parameters for the Function.
+ * 
+ * 5. {example} gives a example for the Function. it is optional.
+ */
+public class LiferayAPIsUtil {
+
+    /**
+     * helloExample: not return value, only print "hello" + message.
+     * 
+     * 
+     * {talendTypes} String
+     * 
+     * {Category} User Defined
+     * 
+     * {param} string("world") input: The string need to be printed.
+     * 
+     * {example} helloExemple("world") # hello world !.
+     */
+    public static String getLocalizedField(String locale, String message) {
+       
+		JSONObject jsonObject= new JSONObject();
+		
+		jsonObject.put(locale, message);
+		
+		return jsonObject.toString();
+    	
+    }
+    
+    
+    public static BigDecimal getPrice(BigDecimal unitPrice, BigDecimal promoPrice){
+    	BigDecimal finalPrice = unitPrice;
+
+		if ((promoPrice != null) &&
+			(promoPrice.compareTo(BigDecimal.ZERO) > 0) &&
+			(promoPrice.compareTo(unitPrice) <= 0)) {
+
+			finalPrice = promoPrice;
+		}
+		
+		return finalPrice;
+    }
+    
+    public static String getFieldFromLocalized(String locale, String json) {
+        
+		JSONObject jsonObject= new JSONObject(json);
+		
+		return jsonObject.getString(locale);
+
+    	
+    }
+    
+    public static String getSku(String externalReferenceCode, String sku, Boolean published, Boolean purchasable) {
+        JSONObject jsonObject= new JSONObject();
+		
+		jsonObject.put("externalReferenceCode", externalReferenceCode);
+		jsonObject.put("sku", sku);
+		jsonObject.put("price", 0);
+		jsonObject.put("cost", 0);
+		jsonObject.put("promoPrice", 0);
+		jsonObject.put("published", published);
+		jsonObject.put("purchasable", purchasable);
+		jsonObject.put("published", published);
+		
+		JSONArray jsonArray = new JSONArray();
+		
+		jsonArray.put(jsonObject);
+		
+		return jsonArray.toString();
+    }
+    
+    public static JSONObject getAddress(
+    		String name, String description, String street1, String street2, String street3,
+    		String city, String zip, String region, String country, String phoneNumber, Boolean defaultBilling, Boolean defaultShipping) {
+        JSONObject jsonObject= new JSONObject();
+		
+        if((country == null) || (street1 == null)){
+        	return null;
+        }
+        
+		jsonObject.put("name", name);
+		jsonObject.put("description", description);
+		jsonObject.put("street1", street1);
+		jsonObject.put("street2", street2);
+		jsonObject.put("street3", street3);
+		jsonObject.put("city", city);
+		jsonObject.put("zip", zip);
+		jsonObject.put("regionISOCode", region);
+		jsonObject.put("countryISOCode", country);
+		jsonObject.put("phoneNumber", phoneNumber);
+		jsonObject.put("defaultBilling", defaultBilling);
+		jsonObject.put("defaultShipping", defaultShipping);
+			
+		
+		return jsonObject;
+    }
+    
+    public static String getAddressString(JSONObject address1, JSONObject address2){
+		JSONArray jsonArray = new JSONArray();
+		
+		if(address1 != null){
+			jsonArray.put(address1);	
+		}
+		
+		if(address2 != null){
+			jsonArray.put(address2);	
+		}
+		
+		return jsonArray.toString();
+    }
+    
+    
+    public static Integer convertToInt(String value){
+    	
+    	if(value == null){
+    		return null;
+    	}
+    	
+    	return Integer.valueOf(value);
+    }
+    
+    public static Boolean convertToBoolean(String value){
+    	
+    	if(value == null){
+    		return null;
+    	}
+    	
+    	return Boolean.valueOf(value);
+    }
+    
+}

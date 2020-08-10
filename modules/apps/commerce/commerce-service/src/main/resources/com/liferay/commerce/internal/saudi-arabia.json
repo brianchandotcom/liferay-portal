@@ -1,0 +1,67 @@
+[
+	{
+		"code": "14",
+		"name": "'Asir",
+		"priority": 1
+	},
+	{
+		"code": "11",
+		"name": "Al Bāḩah",
+		"priority": 2
+	},
+	{
+		"code": "12",
+		"name": "Al Jawf",
+		"priority": 3
+	},
+	{
+		"code": "03",
+		"name": "Al Madīnah al Munawwarah",
+		"priority": 4
+	},
+	{
+		"code": "05",
+		"name": "Al Qaşīm",
+		"priority": 5
+	},
+	{
+		"code": "08",
+		"name": "Al Ḩudūd ash Shamālīyah",
+		"priority": 6
+	},
+	{
+		"code": "01",
+		"name": "Ar Riyāḑ",
+		"priority": 7
+	},
+	{
+		"code": "04",
+		"name": "Ash Sharqīyah",
+		"priority": 8
+	},
+	{
+		"code": "09",
+		"name": "Jāzān",
+		"priority": 9
+	},
+	{
+		"code": "02",
+		"name": "Makkah al Mukarramah",
+		"priority": 10
+	},
+	{
+		"code": "10",
+		"name": "Najrān",
+		"priority": 11
+	},
+	{
+		"code": "07",
+		"name": "Tabūk",
+		"priority": 12
+	},
+	{
+		"code": "06",
+		"name": "Ḩā'il",
+		"priority": 13
+	}
+]

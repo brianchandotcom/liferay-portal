@@ -1,0 +1,40 @@
+.commerce-dot-navigation {
+	display: flex;
+	justify-content: center;
+	margin-top: 25px;
+
+	&__dot {
+		background: transparent;
+		border: 2px solid $color-theme;
+		border-radius: 50%;
+		cursor: pointer;
+		display: block;
+		height: 15px;
+		margin-right: 16px;
+		padding: 0;
+		transition: all 0.1s ease-in;
+		width: 15px;
+
+		&:last-child {
+			margin-right: 0;
+		}
+
+		&:hover {
+			background: $color-theme;
+		}
+
+		&--disabled {
+			border: 2px solid #9d9e9e;
+
+			&:hover {
+				background: transparent;
+			}
+		}
+
+		&--active {
+			background: $color-theme;
+			cursor: inherit;
+			transform: scale(1.4);
+		}
+	}
+}

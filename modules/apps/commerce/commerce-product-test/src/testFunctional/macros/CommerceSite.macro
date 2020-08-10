@@ -1,0 +1,34 @@
+definition {
+
+	macro deleteCP {
+		var key_siteName = "${siteName}";
+
+		Type(
+			locator1 = "NavBar#BASIC_SEARCH_FIELD",
+			value1 = "Commerce Site");
+
+		Click(locator1 = "Icon#BASIC_SEARCH");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Sites#SITE_TABLE_NAME",
+			value1 = "${siteName}");
+
+		Click.waitForMenuToggleJSClick(locator1 = "Sites#SITE_TABLE_ACTIONS");
+
+		AssertClickNoError(
+			key_menuItem = "Delete",
+			locator1 = "MenuItem#ANY_MENU_ITEM",
+			value1 = "Delete");
+
+		Confirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+		Alert.viewSuccessMessage();
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No sites were found.");
+
+		AssertTextNotPresent(value1 = "${siteName}");
+	}
+
+}

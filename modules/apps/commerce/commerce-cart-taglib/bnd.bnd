@@ -1,0 +1,23 @@
+Bundle-Name: Liferay Commerce Cart Taglib
+Bundle-SymbolicName: com.liferay.commerce.cart.taglib
+Bundle-Version: 2.1.24
+Export-Package: com.liferay.commerce.cart.taglib.servlet.taglib
+Import-Package:\
+	com.liferay.taglib.util;version="[7.4.0,9.0.0)",\
+	\
+	*
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang)";\
+		resource.bundle.base.name="content.Language",\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/commerce-cart";\
+		version:Version="${Bundle-Version}",\
+	soy;\
+		type="commerce-cart-taglib";\
+		version:Version="${Bundle-Version}"
+Require-Capability:\
+	osgi.extender;\
+		filter:="(&(osgi.extender=liferay.js)(version>=2.0)(!(version>=5.0)))"
+Web-ContextPath: /commerce-cart-taglib

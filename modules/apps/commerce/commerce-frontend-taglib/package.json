@@ -1,0 +1,20 @@
+{
+	"dependencies": {
+		"clay-icon": "^2.2.0",
+		"clay-modal": "^2.5.0",
+		"clay-pagination-bar": "^2.4.1",
+		"clay-table": "^2.4.1",
+		"metal": "^2.13.2",
+		"metal-component": "^2.13.2",
+		"metal-debounce": "^2.0.0",
+		"metal-soy": "^2.13.2",
+		"metal-state": "^2.13.2"
+	},
+	"name": "commerce-frontend-taglib",
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix"
+	},
+	"version": "8.1.4"
+}

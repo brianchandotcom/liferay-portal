@@ -1,0 +1,59 @@
+.minium-sidebar {
+	background-color: $color-bg;
+	box-shadow: 0 0 0 $color-shadow;
+	color: $color-fg-alt;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	justify-content: space-between;
+	overflow: hidden;
+	transition: box-shadow $transition, width $transition;
+	width: $frame-size;
+
+	&:hover {
+		box-shadow: 20px 0 40px $color-shadow;
+		width: $sidebar-width;
+	}
+
+	@media screen and (hover: none) {
+		flex-direction: row;
+		height: $frame-size;
+		overflow: initial;
+		width: 100%;
+
+		&:hover {
+			box-shadow: 0;
+			width: 100%;
+		}
+	}
+
+	@media screen and (hover: none) and (max-width: $bp-small) {
+		height: $frame-size-small;
+	}
+
+	&__start {
+		flex: 1 0 $frame-size;
+	}
+
+	&__middle {
+		overflow-x: hidden;
+		overflow-y: auto;
+		padding: 40px 0;
+
+		@media screen and (hover: none) {
+			padding: 0;
+		}
+	}
+
+	&__end {
+		align-items: flex-end;
+		display: flex;
+		flex: 1 0 $frame-size;
+
+		@media screen and (hover: none) {
+			align-items: initial;
+			flex-direction: row-reverse;
+			position: relative;
+		}
+	}
+}

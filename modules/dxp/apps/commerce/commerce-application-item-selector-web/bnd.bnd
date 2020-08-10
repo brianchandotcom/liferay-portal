@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Commerce Application Item Selector Web
+Bundle-SymbolicName: com.liferay.commerce.application.item.selector.web
+Bundle-Version: 2.0.7
+Web-ContextPath: /commerce-application-item-selector-web

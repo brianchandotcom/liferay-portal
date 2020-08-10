@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Commerce Product DDM Implementation
+Bundle-SymbolicName: com.liferay.commerce.product.ddm.impl
+Bundle-Version: 1.0.9
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang)";\
+		resource.bundle.base.name="content.Language"

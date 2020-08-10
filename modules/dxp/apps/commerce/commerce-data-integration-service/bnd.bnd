@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Commerce Data Integration Service
+Bundle-SymbolicName: com.liferay.commerce.data.integration.service
+Bundle-Version: 2.0.23
+Liferay-Require-SchemaVersion: 2.0.0
+Liferay-Service: true
+Require-Capability:\
+	liferay.extender;\
+		filter:="(&(liferay.extender=spring.extender)(version>=2.0)(!(version>=4.0)))"

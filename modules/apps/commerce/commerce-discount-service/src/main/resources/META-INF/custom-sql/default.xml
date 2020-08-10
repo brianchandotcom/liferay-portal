@@ -1,0 +1,612 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountAccountRelFinder.countByCommerceDiscountId">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT CommerceDiscountAccountRel.commerceDiscountAccountRelId) AS COUNT_VALUE
+			FROM
+				CommerceDiscountAccountRel
+			JOIN
+				CommerceDiscount ON
+					CommerceDiscountAccountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			JOIN
+				CommerceAccount ON
+					CommerceDiscountAccountRel.commerceAccountId = CommerceAccount.commerceAccountId
+			WHERE
+				(CommerceDiscount.commerceDiscountId = ?) AND
+				(LOWER(CommerceAccount.name) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountAccountRelFinder.findByCommerceDiscountId">
+		<![CDATA[
+			SELECT
+				DISTINCT CommerceDiscountAccountRel.*
+			FROM
+				CommerceDiscountAccountRel
+			JOIN
+				CommerceDiscount ON
+					CommerceDiscountAccountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			JOIN
+				CommerceAccount ON
+					CommerceDiscountAccountRel.commerceAccountId = CommerceAccount.commerceAccountId
+			WHERE
+				(CommerceDiscount.commerceDiscountId = ?) AND
+				(LOWER(CommerceAccount.name) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountCommerceAccountGroupRelFinder.countByCommerceDiscountId">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT CDiscountCAccountGroupRel.CDiscountCAccountGroupRelId) AS COUNT_VALUE
+			FROM
+				CDiscountCAccountGroupRel
+			JOIN
+				CommerceDiscount ON
+					CDiscountCAccountGroupRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			JOIN
+				CommerceAccountGroup ON
+					CDiscountCAccountGroupRel.commerceAccountGroupId = CommerceAccountGroup.commerceAccountGroupId
+			WHERE
+				(CommerceDiscount.commerceDiscountId = ?) AND
+				(LOWER(CommerceAccountGroup.name) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountCommerceAccountGroupRelFinder.findByCommerceDiscountId">
+		<![CDATA[
+			SELECT
+				DISTINCT CDiscountCAccountGroupRel.*
+			FROM
+				CDiscountCAccountGroupRel
+			JOIN
+				CommerceDiscount ON
+					CDiscountCAccountGroupRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			JOIN
+				CommerceAccountGroup ON
+					CDiscountCAccountGroupRel.commerceAccountGroupId = CommerceAccountGroup.commerceAccountGroupId
+			WHERE
+				(CommerceDiscount.commerceDiscountId = ?) AND
+				(LOWER(CommerceAccountGroup.name) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountFinder.countByCommercePricingClassId">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT CommerceDiscount.commerceDiscountId) AS COUNT_VALUE
+			FROM
+				CommerceDiscount
+			INNER JOIN
+				CommerceDiscountRel ON
+					CommerceDiscountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			WHERE
+				(CommerceDiscountRel.classNameId = ?) AND
+				(CommerceDiscountRel.classPK = ?) AND
+				(LOWER(CommerceDiscount.title) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountFinder.findByCommercePricingClassId">
+		<![CDATA[
+			SELECT
+				DISTINCT CommerceDiscount.*
+			FROM
+				CommerceDiscount
+			INNER JOIN
+				CommerceDiscountRel ON
+					CommerceDiscountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			WHERE
+				(CommerceDiscountRel.classNameId = ?) AND
+				(CommerceDiscountRel.classPK = ?) AND
+				(LOWER(CommerceDiscount.title) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountFinder.findByUnqualifiedProduct">
+		<![CDATA[
+			SELECT
+				DISTINCT CommerceDiscount.*
+			FROM
+				CommerceDiscount
+			INNER JOIN
+				CommerceDiscountRel ON
+					CommerceDiscountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			LEFT JOIN
+				CommerceDiscountAccountRel ON
+					CommerceDiscountAccountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			LEFT JOIN
+				CDiscountCAccountGroupRel ON
+					CDiscountCAccountGroupRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			LEFT JOIN
+				CommerceChannelRel ON
+					(CommerceChannelRel.classPK = CommerceDiscount.commerceDiscountId) AND
+					(CommerceChannelRel.classNameId = ?)
+			WHERE
+				(CommerceDiscount.companyId = ?) AND
+				(CommerceDiscount.active_ = [$TRUE$]) AND
+				(CommerceDiscountAccountRel.commerceDiscountAccountRelId IS NULL) AND
+				(CDiscountCAccountGroupRel.cDiscountCAccountGroupRelId IS NULL) AND
+				(CommerceChannelRel.commerceChannelRelId IS NULL) AND
+				(
+					(
+						(CommerceDiscount.target = ?) AND
+						(CommerceDiscountRel.classPK = ?) AND
+						(CommerceDiscountRel.classNameId = ?)
+					) OR
+					(
+						(CommerceDiscount.target = ?) AND
+						(CommerceDiscountRel.classPK IN ([$CLASS_PK_CATEGORIES$])) AND
+						(CommerceDiscountRel.classNameId = ?)
+					) OR
+					(
+						(CommerceDiscount.target = ?) AND
+						(CommerceDiscountRel.classPK IN ([$CLASS_PK_PRICING_CLASSES$])) AND
+						(CommerceDiscountRel.classNameId = ?)
+					)
+				)
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountFinder.findByUnqualifiedOrder">
+		<![CDATA[
+			SELECT
+				DISTINCT CommerceDiscount.*
+			FROM
+				CommerceDiscount
+			LEFT JOIN
+				CommerceDiscountAccountRel ON
+					CommerceDiscountAccountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			LEFT JOIN
+				CDiscountCAccountGroupRel ON
+					CDiscountCAccountGroupRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			LEFT JOIN
+				CommerceChannelRel ON
+					(CommerceChannelRel.classPK = CommerceDiscount.commerceDiscountId) AND
+					(CommerceChannelRel.classNameId = ?)
+			WHERE
+				(CommerceDiscount.companyId = ?) AND
+				(CommerceDiscount.active_ = [$TRUE$]) AND
+				(CommerceDiscountAccountRel.commerceDiscountAccountRelId IS NULL) AND
+				(CDiscountCAccountGroupRel.cDiscountCAccountGroupRelId IS NULL) AND
+				(CommerceChannelRel.commerceChannelRelId IS NULL) AND
+				(CommerceDiscount.target = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountFinder.findByA_C_C_Product">
+		<![CDATA[
+			SELECT
+				DISTINCT CommerceDiscount.*
+			FROM
+				CommerceDiscount
+			INNER JOIN
+				CommerceDiscountAccountRel ON
+					CommerceDiscountAccountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			INNER JOIN
+				CommerceDiscountRel ON
+					CommerceDiscountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			WHERE
+				(CommerceDiscount.active_ = [$TRUE$]) AND
+				(CommerceDiscountAccountRel.commerceAccountId = ?) AND
+				(
+					(
+						(CommerceDiscount.target = ?) AND
+						(CommerceDiscountRel.classPK = ?) AND
+						(CommerceDiscountRel.classNameId = ?)
+					) OR
+					(
+						(CommerceDiscount.target = ?) AND
+						(CommerceDiscountRel.classPK IN ([$CLASS_PK_CATEGORIES$])) AND
+						(CommerceDiscountRel.classNameId = ?)
+					) OR
+					(
+						(CommerceDiscount.target = ?) AND
+						(CommerceDiscountRel.classPK IN ([$CLASS_PK_PRICING_CLASSES$])) AND
+						(CommerceDiscountRel.classNameId = ?)
+					)
+				)
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountFinder.findByA_C_C_Order">
+		<![CDATA[
+			SELECT
+				DISTINCT CommerceDiscount.*
+			FROM
+				CommerceDiscount
+			INNER JOIN
+				CommerceDiscountAccountRel ON
+					CommerceDiscountAccountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			WHERE
+				(CommerceDiscount.active_ = [$TRUE$]) AND
+				(CommerceDiscountAccountRel.commerceAccountId = ?) AND
+				(CommerceDiscount.target = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountFinder.findByAG_C_C_Product">
+		<![CDATA[
+			SELECT
+				DISTINCT CommerceDiscount.*
+			FROM
+				CommerceDiscount
+			INNER JOIN
+				CDiscountCAccountGroupRel ON
+					CDiscountCAccountGroupRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			INNER JOIN
+				CommerceDiscountRel ON
+					CommerceDiscountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			WHERE
+				(CommerceDiscount.active_ = [$TRUE$]) AND
+				(CDiscountCAccountGroupRel.commerceAccountGroupId IN ([$ACCOUNT_GROUP_IDS$])) AND
+				(
+					(
+						(CommerceDiscount.target = ?) AND
+						(CommerceDiscountRel.classPK = ?) AND
+						(CommerceDiscountRel.classNameId = ?)
+					) OR
+					(
+						(CommerceDiscount.target = ?) AND
+						(CommerceDiscountRel.classPK IN ([$CLASS_PK_CATEGORIES$])) AND
+						(CommerceDiscountRel.classNameId = ?)
+					) OR
+					(
+						(CommerceDiscount.target = ?) AND
+						(CommerceDiscountRel.classPK IN ([$CLASS_PK_PRICING_CLASSES$])) AND
+						(CommerceDiscountRel.classNameId = ?)
+					)
+				)
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountFinder.findByAG_C_C_Order">
+		<![CDATA[
+			SELECT
+				DISTINCT CommerceDiscount.*
+			FROM
+				CommerceDiscount
+			INNER JOIN
+				CDiscountCAccountGroupRel ON
+					CDiscountCAccountGroupRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			WHERE
+				(CommerceDiscount.active_ = [$TRUE$]) AND
+				(CDiscountCAccountGroupRel.commerceAccountGroupId IN ([$ACCOUNT_GROUP_IDS$])) AND
+				(CommerceDiscount.target = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountFinder.findByC_C_C_Product">
+		<![CDATA[
+			SELECT
+				DISTINCT CommerceDiscount.*
+			FROM
+				CommerceDiscount
+			INNER JOIN
+				CommerceChannelRel ON
+					(CommerceChannelRel.classPK = CommerceDiscount.commerceDiscountId) AND
+					(CommerceChannelRel.classNameId = ?)
+			INNER JOIN
+				CommerceDiscountRel ON
+					CommerceDiscountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			WHERE
+				(CommerceDiscount.active_ = [$TRUE$]) AND
+				(CommerceChannelRel.commerceChannelId = ?) AND
+				(
+					(
+						(CommerceDiscount.target = ?) AND
+						(CommerceDiscountRel.classPK = ?) AND
+						(CommerceDiscountRel.classNameId = ?)
+					) OR
+					(
+						(CommerceDiscount.target = ?) AND
+						(CommerceDiscountRel.classPK IN ([$CLASS_PK_CATEGORIES$])) AND
+						(CommerceDiscountRel.classNameId = ?)
+					) OR
+					(
+						(CommerceDiscount.target = ?) AND
+						(CommerceDiscountRel.classPK IN ([$CLASS_PK_PRICING_CLASSES$])) AND
+						(CommerceDiscountRel.classNameId = ?)
+					)
+				)
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountFinder.findByC_C_C_Order">
+		<![CDATA[
+			SELECT
+				DISTINCT CommerceDiscount.*
+			FROM
+				CommerceDiscount
+			INNER JOIN
+				CommerceChannelRel ON
+					(CommerceChannelRel.classPK = CommerceDiscount.commerceDiscountId) AND
+					(CommerceChannelRel.classNameId = ?)
+			WHERE
+				(CommerceDiscount.active_ = [$TRUE$]) AND
+				(CommerceChannelRel.commerceChannelId = ?) AND
+				(CommerceDiscount.target = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountFinder.findByA_C_C_C_Product">
+		<![CDATA[
+			SELECT
+				DISTINCT CommerceDiscount.*
+			FROM
+				CommerceDiscount
+			INNER JOIN
+				CommerceDiscountAccountRel ON
+					CommerceDiscountAccountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			INNER JOIN
+				CommerceChannelRel ON
+					(CommerceChannelRel.classPK = CommerceDiscount.commerceDiscountId) AND
+					(CommerceChannelRel.classNameId = ?)
+			INNER JOIN
+				CommerceDiscountRel ON
+					CommerceDiscountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			WHERE
+				(CommerceDiscount.active_ = [$TRUE$]) AND
+				(CommerceDiscountAccountRel.commerceAccountId = ?) AND
+				(CommerceChannelRel.commerceChannelId = ?) AND
+				(
+					(
+						(CommerceDiscount.target = ?) AND
+						(CommerceDiscountRel.classPK = ?) AND
+						(CommerceDiscountRel.classNameId = ?)
+					) OR
+					(
+						(CommerceDiscount.target = ?) AND
+						(CommerceDiscountRel.classPK IN ([$CLASS_PK_CATEGORIES$])) AND
+						(CommerceDiscountRel.classNameId = ?)
+					) OR
+					(
+						(CommerceDiscount.target = ?) AND
+						(CommerceDiscountRel.classPK IN ([$CLASS_PK_PRICING_CLASSES$])) AND
+						(CommerceDiscountRel.classNameId = ?)
+					)
+				)
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountFinder.findByA_C_C_C_Order">
+		<![CDATA[
+			SELECT
+				DISTINCT CommerceDiscount.*
+			FROM
+				CommerceDiscount
+			INNER JOIN
+				CommerceDiscountAccountRel ON
+					CommerceDiscountAccountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			INNER JOIN
+				CommerceChannelRel ON
+					(CommerceChannelRel.classPK = CommerceDiscount.commerceDiscountId) AND
+					(CommerceChannelRel.classNameId = ?)
+			WHERE
+				(CommerceDiscount.active_ = [$TRUE$]) AND
+				(CommerceDiscountAccountRel.commerceAccountId = ?) AND
+				(CommerceChannelRel.commerceChannelId = ?) AND
+				(CommerceDiscount.target = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountFinder.findByAG_C_C_C_Product">
+		<![CDATA[
+			SELECT
+				DISTINCT CommerceDiscount.*
+			FROM
+				CommerceDiscount
+			INNER JOIN
+				CDiscountCAccountGroupRel ON
+					CDiscountCAccountGroupRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			INNER JOIN
+				CommerceChannelRel ON
+					(CommerceChannelRel.classPK = CommerceDiscount.commerceDiscountId) AND
+					(CommerceChannelRel.classNameId = ?)
+			INNER JOIN
+				CommerceDiscountRel ON
+					CommerceDiscountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			WHERE
+				(CommerceDiscount.active_ = [$TRUE$]) AND
+				(CDiscountCAccountGroupRel.commerceAccountGroupId IN ([$ACCOUNT_GROUP_IDS$])) AND
+				(CommerceChannelRel.commerceChannelId = ?) AND
+				(
+					(
+						(CommerceDiscount.target = ?) AND
+						(CommerceDiscountRel.classPK = ?) AND
+						(CommerceDiscountRel.classNameId = ?)
+					) OR
+					(
+						(CommerceDiscount.target = ?) AND
+						(CommerceDiscountRel.classPK IN ([$CLASS_PK_CATEGORIES$])) AND
+						(CommerceDiscountRel.classNameId = ?)
+					) OR
+					(
+						(CommerceDiscount.target = ?) AND
+						(CommerceDiscountRel.classPK IN ([$CLASS_PK_PRICING_CLASSES$])) AND
+						(CommerceDiscountRel.classNameId = ?)
+					)
+				)
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountFinder.findByAG_C_C_C_Order">
+		<![CDATA[
+			SELECT
+				DISTINCT CommerceDiscount.*
+			FROM
+				CommerceDiscount
+			INNER JOIN
+				CDiscountCAccountGroupRel ON
+					CDiscountCAccountGroupRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			INNER JOIN
+				CommerceChannelRel ON
+					(CommerceChannelRel.classPK = CommerceDiscount.commerceDiscountId) AND
+					(CommerceChannelRel.classNameId = ?)
+			WHERE
+				(CommerceDiscount.active_ = [$TRUE$]) AND
+				(CDiscountCAccountGroupRel.commerceAccountGroupId IN ([$ACCOUNT_GROUP_IDS$])) AND
+				(CommerceChannelRel.commerceChannelId = ?) AND
+				(CommerceDiscount.target = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountFinder.findPriceListDiscountProduct">
+		<![CDATA[
+			SELECT
+				DISTINCT CommerceDiscount.*
+			FROM
+				CommerceDiscount
+			INNER JOIN
+				CommercePriceListDiscountRel ON
+					CommercePriceListDiscountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			INNER JOIN
+				CommerceDiscountRel ON
+					CommerceDiscountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			WHERE
+				(CommerceDiscount.active_ = [$TRUE$]) AND
+				(CommercePriceListDiscountRel.commerceDiscountId IN ([$DISCOUNT_IDS$])) AND
+				(
+					(
+						(CommerceDiscount.target = ?) AND
+						(CommerceDiscountRel.classPK = ?) AND
+						(CommerceDiscountRel.classNameId = ?)
+					) OR
+					(
+						(CommerceDiscount.target = ?) AND
+						(CommerceDiscountRel.classPK IN ([$CLASS_PK_CATEGORIES$])) AND
+						(CommerceDiscountRel.classNameId = ?)
+					) OR
+					(
+						(CommerceDiscount.target = ?) AND
+						(CommerceDiscountRel.classPK IN ([$CLASS_PK_PRICING_CLASSES$])) AND
+						(CommerceDiscountRel.classNameId = ?)
+					)
+				)
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountRelFinder.countCategoriesByCommerceDiscountId">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT CommerceDiscountRel.commerceDiscountRelId) AS COUNT_VALUE
+			FROM
+				CommerceDiscountRel
+			JOIN
+				CommerceDiscount ON
+					CommerceDiscountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			JOIN
+				AssetCategory ON
+					CommerceDiscountRel.classPK = AssetCategory.categoryId
+			WHERE
+				(CommerceDiscount.commerceDiscountId = ?) AND
+				(CommerceDiscountRel.classNameId = ?) AND
+				(LOWER(AssetCategory.name) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountRelFinder.countCPDefinitionsByCommerceDiscountId">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT CommerceDiscountRel.commerceDiscountRelId) AS COUNT_VALUE
+			FROM
+				CommerceDiscountRel
+			JOIN
+				CommerceDiscount ON
+					CommerceDiscountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			INNER JOIN
+				CPDefinition ON
+					CPDefinition.CPDefinitionId = CommerceDiscountRel.classPK
+			LEFT JOIN
+				CPDefinitionLocalization
+			ON
+				(CPDefinition.CPDefinitionId = CPDefinitionLocalization.CPDefinitionId) AND
+				(CPDefinitionLocalization.languageId = ?)
+			WHERE
+				(CommerceDiscount.commerceDiscountId = ?) AND
+				(CommerceDiscountRel.classNameId = ?) AND
+				(LOWER(CPDefinitionLocalization.name) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountRelFinder.countPricingClassesByCommerceDiscountId">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT CommerceDiscountRel.commerceDiscountRelId) AS COUNT_VALUE
+			FROM
+				CommerceDiscountRel
+			JOIN
+				CommerceDiscount ON
+					CommerceDiscountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			JOIN
+				CommercePricingClass ON
+					CommerceDiscountRel.classPK = CommercePricingClass.commercePricingClassId
+			WHERE
+				(CommerceDiscount.commerceDiscountId = ?) AND
+				(CommerceDiscountRel.classNameId = ?) AND
+				(LOWER(CommercePricingClass.title) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountRelFinder.findCategoriesByCommerceDiscountId">
+		<![CDATA[
+			SELECT
+				DISTINCT CommerceDiscountRel.*
+			FROM
+				CommerceDiscountRel
+			JOIN
+				CommerceDiscount ON
+					CommerceDiscountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			JOIN
+				AssetCategory ON
+					CommerceDiscountRel.classPK = AssetCategory.categoryId
+			WHERE
+				(CommerceDiscount.commerceDiscountId = ?) AND
+				(CommerceDiscountRel.classNameId = ?) AND
+				(LOWER(AssetCategory.name) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountRelFinder.findCPDefinitionsByCommerceDiscountId">
+		<![CDATA[
+			SELECT
+				DISTINCT CommerceDiscountRel.*
+			FROM
+				CommerceDiscountRel
+			JOIN
+				CommerceDiscount ON
+					CommerceDiscountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			INNER JOIN
+				CPDefinition ON
+					CPDefinition.CPDefinitionId = CommerceDiscountRel.classPK
+			LEFT JOIN
+				CPDefinitionLocalization
+			ON
+				(CPDefinition.CPDefinitionId = CPDefinitionLocalization.CPDefinitionId) AND
+				(CPDefinitionLocalization.languageId = ?)
+			WHERE
+				(CommerceDiscount.commerceDiscountId = ?) AND
+				(CommerceDiscountRel.classNameId = ?) AND
+				(LOWER(CPDefinitionLocalization.name) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountRelFinder.findPricingClassesByCommerceDiscountId">
+		<![CDATA[
+			SELECT
+				DISTINCT CommerceDiscountRel.*
+			FROM
+				CommerceDiscountRel
+			JOIN
+				CommerceDiscount ON
+					CommerceDiscountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			JOIN
+				CommercePricingClass ON
+					CommerceDiscountRel.classPK = CommercePricingClass.commercePricingClassId
+			WHERE
+				(CommerceDiscount.commerceDiscountId = ?) AND
+				(CommerceDiscountRel.classNameId = ?) AND
+				(LOWER(CommercePricingClass.title) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountRuleFinder.countByCommerceDiscountId">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT CommerceDiscountRule.commerceDiscountRuleId) AS COUNT_VALUE
+			FROM
+				CommerceDiscountRule
+			WHERE
+				(CommerceDiscountRule.commerceDiscountId = ?) AND
+				(LOWER(CommerceDiscountRule.name) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountRuleFinder.findByCommerceDiscountId">
+		<![CDATA[
+			SELECT
+				DISTINCT CommerceDiscountRule.*
+			FROM
+				CommerceDiscountRule
+			WHERE
+				(CommerceDiscountRule.commerceDiscountId = ?) AND
+				(LOWER(CommerceDiscountRule.name) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+</custom-sql>

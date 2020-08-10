@@ -1,0 +1,16 @@
+.product-header {
+	margin: $lg-gutter 0 $gutter;
+
+	&-tagline,
+	&-subtitle {
+		font-size: 14px;
+		font-weight: normal;
+		margin: 10px 0;
+	}
+
+	&-title {
+		font-size: 26px;
+		font-weight: normal;
+		margin: 10px 0;
+	}
+}

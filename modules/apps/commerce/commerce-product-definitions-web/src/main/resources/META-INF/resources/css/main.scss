@@ -1,0 +1,95 @@
+.portlet-commerce-product-definitions {
+	textarea.form-control {
+		height: 70px;
+	}
+
+	.main-content-nav > li.active {
+		font-weight: bold;
+	}
+
+	.commerce-product-option-editor {
+		margin-top: 20px;
+
+		.section-header {
+			font-size: 1.2rem;
+
+			.btn-primary {
+				float: right;
+			}
+		}
+	}
+
+	.product-definition-option-rel-button-row {
+		.btn {
+			margin-right: 5px;
+		}
+	}
+
+	.sku-options-panel {
+		.panel-title {
+			padding: 0.75rem 1.25rem;
+		}
+	}
+
+	.product-detail-header {
+		background-color: #fff;
+	}
+}
+
+.definition-toolbar-filter {
+	background-color: #fff;
+	margin-top: -1.25rem;
+
+	.label {
+		display: inline;
+		margin-right: 10px;
+	}
+
+	.filter-selector {
+		padding-bottom: 1rem;
+		padding-top: 1rem;
+
+		&.form-inline {
+			margin-bottom: 0;
+		}
+
+		label {
+			font-weight: normal;
+		}
+
+		select {
+			margin-left: 1rem;
+		}
+
+		.filter-selector-select {
+			margin-right: 1rem;
+		}
+
+		.filter-select {
+			margin-right: 1rem;
+		}
+
+		.categoriesselector {
+			display: inline-block;
+			vertical-align: middle;
+
+			.categoriesselector-content {
+				ul {
+					margin-bottom: 0;
+				}
+			}
+		}
+	}
+
+	.filter-list {
+		border-color: #f1f2f5;
+		border-style: solid;
+		border-width: 1px 0 0;
+		padding-bottom: 1rem;
+		padding-top: 1rem;
+
+		p {
+			margin-bottom: 0;
+		}
+	}
+}

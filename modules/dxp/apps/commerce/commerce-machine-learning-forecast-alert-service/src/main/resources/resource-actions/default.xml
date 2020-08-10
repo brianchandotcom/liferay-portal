@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE resource-action-mapping PUBLIC "-//Liferay//DTD Resource Action Mapping 7.1.0//EN" "http://www.liferay.com/dtd/liferay-resource-action-mapping_7_1_0.dtd">
+
+<resource-action-mapping>
+	<model-resource>
+		<model-name>com.liferay.commerce.machine.learning.forecast.alert</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_commerce_machine_learning_forecast_alert_web_internal_portlet_CommerceMLForecastAlertPortlet</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<weight>1</weight>
+		<permissions>
+			<supports>
+				<action-key>MANAGE_ALERT_STATUS</action-key>
+				<action-key>VIEW_ALERTS</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>MANAGE_ALERT_STATUS</action-key>
+				<action-key>VIEW_ALERTS</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+</resource-action-mapping>

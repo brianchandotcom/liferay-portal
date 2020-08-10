@@ -1,0 +1,21 @@
+.minium-frame {
+	&__cta {
+		bottom: 0;
+		display: flex;
+		justify-content: center;
+		left: 0;
+		padding: 20px;
+		position: fixed;
+		right: 0;
+		transition: bottom ease 500ms, transform ease 500ms, left ease 500ms;
+		z-index: 100;
+
+		&:empty {
+			display: none;
+		}
+
+		&:not(.is-visible) {
+			transform: translateY(200%);
+		}
+	}
+}

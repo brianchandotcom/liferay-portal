@@ -1,0 +1,14 @@
+$portlet-content-border-radius: 0 0 8px 8px;
+
+$portlet-header-margin-bottom: map-get($spacers, 5);
+
+$portlet-topper-bg: #f1f5ff;
+$portlet-topper-border: #d7e5ff;
+$portlet-topper-border-radius: 4px 4px 0 0;
+$portlet-topper-color: map-get($theme-colors, primary);
+$portlet-topper-link-color: map-get($theme-colors, primary);
+$portlet-topper-link-hover-color: map-get($theme-colors, primary);
+
+$widget-resume-line-clamp: 10;
+$widget-resume-line-clamp-image: 3;
+$widget-resume-line-height: 1.35rem;

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+	<bean class="com.liferay.commerce.account.service.impl.CommerceAccountLocalServiceImpl" id="com.liferay.commerce.account.service.CommerceAccountLocalService" />
+	<bean class="com.liferay.commerce.account.service.impl.CommerceAccountServiceImpl" id="com.liferay.commerce.account.service.CommerceAccountService" />
+	<bean class="com.liferay.commerce.account.service.persistence.impl.CommerceAccountPersistenceImpl" id="com.liferay.commerce.account.service.persistence.CommerceAccountPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.account.service.persistence.impl.CommerceAccountFinderImpl" id="com.liferay.commerce.account.service.persistence.CommerceAccountFinder" parent="basePersistence" />
+	<bean class="com.liferay.commerce.account.service.impl.CommerceAccountGroupLocalServiceImpl" id="com.liferay.commerce.account.service.CommerceAccountGroupLocalService" />
+	<bean class="com.liferay.commerce.account.service.impl.CommerceAccountGroupServiceImpl" id="com.liferay.commerce.account.service.CommerceAccountGroupService" />
+	<bean class="com.liferay.commerce.account.service.persistence.impl.CommerceAccountGroupPersistenceImpl" id="com.liferay.commerce.account.service.persistence.CommerceAccountGroupPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.account.service.persistence.impl.CommerceAccountGroupFinderImpl" id="com.liferay.commerce.account.service.persistence.CommerceAccountGroupFinder" parent="basePersistence" />
+	<bean class="com.liferay.commerce.account.service.impl.CommerceAccountGroupCommerceAccountRelLocalServiceImpl" id="com.liferay.commerce.account.service.CommerceAccountGroupCommerceAccountRelLocalService" />
+	<bean class="com.liferay.commerce.account.service.impl.CommerceAccountGroupCommerceAccountRelServiceImpl" id="com.liferay.commerce.account.service.CommerceAccountGroupCommerceAccountRelService" />
+	<bean class="com.liferay.commerce.account.service.persistence.impl.CommerceAccountGroupCommerceAccountRelPersistenceImpl" id="com.liferay.commerce.account.service.persistence.CommerceAccountGroupCommerceAccountRelPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.account.service.impl.CommerceAccountGroupRelLocalServiceImpl" id="com.liferay.commerce.account.service.CommerceAccountGroupRelLocalService" />
+	<bean class="com.liferay.commerce.account.service.impl.CommerceAccountGroupRelServiceImpl" id="com.liferay.commerce.account.service.CommerceAccountGroupRelService" />
+	<bean class="com.liferay.commerce.account.service.persistence.impl.CommerceAccountGroupRelPersistenceImpl" id="com.liferay.commerce.account.service.persistence.CommerceAccountGroupRelPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.account.service.impl.CommerceAccountOrganizationRelLocalServiceImpl" id="com.liferay.commerce.account.service.CommerceAccountOrganizationRelLocalService" />
+	<bean class="com.liferay.commerce.account.service.impl.CommerceAccountOrganizationRelServiceImpl" id="com.liferay.commerce.account.service.CommerceAccountOrganizationRelService" />
+	<bean class="com.liferay.commerce.account.service.persistence.impl.CommerceAccountOrganizationRelPersistenceImpl" id="com.liferay.commerce.account.service.persistence.CommerceAccountOrganizationRelPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.account.service.impl.CommerceAccountUserRelLocalServiceImpl" id="com.liferay.commerce.account.service.CommerceAccountUserRelLocalService" />
+	<bean class="com.liferay.commerce.account.service.impl.CommerceAccountUserRelServiceImpl" id="com.liferay.commerce.account.service.CommerceAccountUserRelService" />
+	<bean class="com.liferay.commerce.account.service.persistence.impl.CommerceAccountUserRelPersistenceImpl" id="com.liferay.commerce.account.service.persistence.CommerceAccountUserRelPersistence" parent="basePersistence" />
+</beans>

@@ -1,0 +1,19 @@
+Bundle-Name: Liferay Commerce Pricing API
+Bundle-SymbolicName: com.liferay.commerce.pricing.api
+Bundle-Version: 4.1.2
+Export-Package:\
+	com.liferay.commerce.pricing.configuration,\
+	com.liferay.commerce.pricing.constants,\
+	com.liferay.commerce.pricing.exception,\
+	com.liferay.commerce.pricing.model,\
+	com.liferay.commerce.pricing.modifier,\
+	com.liferay.commerce.pricing.permission,\
+	com.liferay.commerce.pricing.service,\
+	com.liferay.commerce.pricing.service.persistence,\
+	com.liferay.commerce.pricing.type,\
+	com.liferay.commerce.pricing.util,\
+	com.liferay.commerce.pricing.util.comparator
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang)";\
+		resource.bundle.base.name="content.Language"

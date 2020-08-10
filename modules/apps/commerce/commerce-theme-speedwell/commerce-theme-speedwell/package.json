@@ -1,0 +1,20 @@
+{
+	"keywords": [
+		"liferay-theme"
+	],
+	"liferayTheme": {
+		"baseTheme": "styled",
+		"rubySass": false,
+		"screenshot": "",
+		"templateLanguage": "ftl",
+		"version": "7.1"
+	},
+	"main": "package.json",
+	"name": "speedwell-theme",
+	"scripts": {
+		"build": "liferay-npm-scripts theme build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix"
+	},
+	"version": "1.0.43"
+}

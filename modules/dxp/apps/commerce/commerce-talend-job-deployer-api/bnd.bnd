@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Commerce Talend Job Deployer API
+Bundle-SymbolicName: com.liferay.commerce.talend.job.deployer.api
+Bundle-Version: 1.0.5
+Export-Package: com.liferay.commerce.talend.job.deployer
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang)";\
+		resource.bundle.base.name="content.Language"

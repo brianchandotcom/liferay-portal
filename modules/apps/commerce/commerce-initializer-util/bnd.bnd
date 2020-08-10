@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Commerce Initializer Utilities
+Bundle-SymbolicName: com.liferay.commerce.initializer.util
+Bundle-Version: 4.2.2
+Export-Package: com.liferay.commerce.initializer.util
+Import-Package:\
+	com.liferay.dynamic.data.mapping.model;version="[1.6.0,3.0.0)",\
+	com.liferay.dynamic.data.mapping.service;version="[1.2.0,3.0.0)",\
+	com.liferay.friendly.url.model; version="[1.0.0,3.0.0)",\
+	\
+	*

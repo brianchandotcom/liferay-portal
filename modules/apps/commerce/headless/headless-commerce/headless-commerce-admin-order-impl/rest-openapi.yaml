@@ -1,0 +1,3444 @@
+components:
+    schemas:
+        Account:
+            properties:
+                customFields:
+                    additionalProperties: true
+                    type: object
+                emailAddress:
+                    format: email
+                    type: string
+                externalReferenceCode:
+                    example: AB-34098-789-N
+                    type: string
+                id:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    type: integer
+                logoId:
+                    example: 20078
+                    format: int64
+                    minimum: 0
+                    type: integer
+                name:
+                    example: Account Name
+                    type: string
+                root:
+                    example: true
+                    type: boolean
+                taxId:
+                    example: Abcd1234
+                    type: string
+                type:
+                    example: 1
+                    format: int32
+                    maximum: 2
+                    minimum: 0
+                    type: integer
+        BillingAddress:
+            properties:
+                city:
+                    example: Diamond Bar
+                    type: string
+                countryISOCode:
+                    example: US
+                    type: string
+                description:
+                    example: right stairs, first room on the left
+                    type: string
+                externalReferenceCode:
+                    example: "AB-34098-789-N"
+                    readOnly: true
+                    type: string
+                id:
+                    example: 31130
+                    format: int64
+                    minimum: 0
+                    type: integer
+                latitude:
+                    example: 33.9976884
+                    format: double
+                    type: number
+                longitude:
+                    example: -117.8144595
+                    format: double
+                    type: number
+                name:
+                    example: Alessio Antonio Rendina
+                    type: string
+                phoneNumber:
+                    example: (123) 456 7890
+                    type: string
+                regionISOCode:
+                    example: CA
+                    type: string
+                street1:
+                    example: 1400 Montefino Ave
+                    type: string
+                street2:
+                    example: 1st floor
+                    type: string
+                street3:
+                    example: suite 200
+                    type: string
+                vatNumber:
+                    example: "353246836565"
+                    type: string
+                zip:
+                    example: "91765"
+                    type: string
+            required:
+                - city
+                - countryISOCode
+                - name
+                - street1
+            type: object
+        Channel:
+            properties:
+                currencyCode:
+                    example: USD
+                    type: string
+                externalReferenceCode:
+                    example: AB-34098-789-N
+                    type: string
+                id:
+                    example: 31130
+                    format: int64
+                    minimum: 0
+                    type: integer
+                name:
+                    example: Alessio Antonio Rendina
+                    type: string
+                type:
+                    type: string
+            type: object
+        Error:
+            properties:
+                errorCode:
+                    description:
+                        Internal error code mapping
+                    example: 996
+                    readOnly: true
+                    type: integer
+                errorDescription:
+                    example: Unable to find currency. Currency code should be expressed with
+                        3-letter ISO 4217 format.
+                    readOnly: true
+                    type: string
+                message:
+                    example: No CommerceCurrency exists with the key {groupId=41811, code=US
+                        Dollar}
+                    readOnly: true
+                    type: string
+                status:
+                    description:
+                        HTTP Status code
+                    example: 404
+                    readOnly: true
+                    type: integer
+            required:
+                - errorCode
+                - errorDescription
+                - message
+                - status
+            type: object
+        Order:
+            properties:
+                account:
+                    $ref: "#/components/schemas/Account"
+                    readOnly: true
+                accountExternalReferenceCode:
+                    example: AAB-34098-789-N
+                    type: string
+                accountId:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    type: integer
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
+                advanceStatus:
+                    example: trasmitted
+                    type: string
+                billingAddress:
+                    $ref: "#/components/schemas/BillingAddress"
+                billingAddressId:
+                    example: 31130
+                    format: int64
+                    minimum: 0
+                    type: integer
+                channel:
+                    $ref: "#/components/schemas/Channel"
+                    readOnly: true
+                channelExternalReferenceCode:
+                    example: AAB-34098-789-N
+                    type: string
+                channelId:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    type: integer
+                couponCode:
+                    example: save20
+                    type: string
+                createDate:
+                    example: 2017-07-21
+                    format: date
+                    type: string
+                currencyCode:
+                    example: USD
+                    type: string
+                customFields:
+                    additionalProperties: true
+                    type: object
+                externalReferenceCode:
+                    example: AB-34098-789-N
+                    type: string
+                id:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    type: integer
+                lastPriceUpdateDate:
+                    example: 2017-07-21
+                    format: date
+                    type: string
+                modifiedDate:
+                    example: 2017-08-21
+                    format: date
+                    type: string
+                orderDate:
+                    example: 2017-07-21
+                    format: date
+                    type: string
+                orderItems:
+                    items:
+                        $ref: "#/components/schemas/OrderItem"
+                    type: array
+                orderStatus:
+                    example: 0
+                    format: int32
+                    minimum: 0
+                    type: integer
+                orderStatusInfo:
+                    $ref: "#/components/schemas/Status"
+                    readOnly: true
+                paymentMethod:
+                    example: paypal
+                    type: string
+                paymentStatus:
+                    example: 0
+                    format: int32
+                    minimum: 0
+                    type: integer
+                paymentStatusInfo:
+                    $ref: "#/components/schemas/Status"
+                    readOnly: true
+                printedNote:
+                    example: Order printed note
+                    type: string
+                purchaseOrderNumber:
+                    example: Abcd1234
+                    type: string
+                requestedDeliveryDate:
+                    example: 2017-07-21
+                    format: date
+                    type: string
+                shippingAddress:
+                    $ref: "#/components/schemas/ShippingAddress"
+                shippingAddressId:
+                    example: 31130
+                    format: int64
+                    minimum: 0
+                    type: integer
+                shippingAmount:
+                    example: 12
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                shippingAmountFormatted:
+                    type: string
+                shippingAmountValue:
+                    example: 12
+                    format: double
+                    minimum: 0
+                    type: number
+                shippingDiscountAmount:
+                    format: double
+                    type: number
+                shippingDiscountAmountFormatted:
+                    type: string
+                shippingDiscountPercentageLevel1:
+                    example: 20
+                    format: double
+                    minimum: 0
+                    type: number
+                shippingDiscountPercentageLevel1WithTaxAmount:
+                    example: 20
+                    format: double
+                    minimum: 0
+                    type: number
+                shippingDiscountPercentageLevel2:
+                    example: 0
+                    format: double
+                    minimum: 0
+                    type: number
+                shippingDiscountPercentageLevel2WithTaxAmount:
+                    example: 0
+                    format: double
+                    minimum: 0
+                    type: number
+                shippingDiscountPercentageLevel3:
+                    example: 0
+                    format: double
+                    minimum: 0
+                    type: number
+                shippingDiscountPercentageLevel3WithTaxAmount:
+                    example: 0
+                    format: double
+                    minimum: 0
+                    type: number
+                shippingDiscountPercentageLevel4:
+                    example: 0
+                    format: double
+                    minimum: 0
+                    type: number
+                shippingDiscountPercentageLevel4WithTaxAmount:
+                    example: 0
+                    format: double
+                    minimum: 0
+                    type: number
+                shippingDiscountWithTaxAmount:
+                    format: double
+                    type: number
+                shippingDiscountWithTaxAmountFormatted:
+                    type: string
+                shippingMethod:
+                    example: fixed
+                    type: string
+                shippingOption:
+                    example: by Air
+                    type: string
+                shippingWithTaxAmount:
+                    example: 12
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                shippingWithTaxAmountFormatted:
+                    type: string
+                shippingWithTaxAmountValue:
+                    example: 12
+                    format: double
+                    minimum: 0
+                    type: number
+                subtotal:
+                    format: bigdecimal
+                    type: number
+                subtotalAmount:
+                    format: double
+                    readOnly: true
+                    type: number
+                subtotalDiscountAmount:
+                    format: double
+                    type: number
+                subtotalDiscountAmountFormatted:
+                    type: string
+                subtotalDiscountPercentageLevel1:
+                    example: 20
+                    format: double
+                    minimum: 0
+                    type: number
+                subtotalDiscountPercentageLevel1WithTaxAmount:
+                    example: 20
+                    format: double
+                    minimum: 0
+                    type: number
+                subtotalDiscountPercentageLevel2:
+                    example: 0
+                    format: double
+                    minimum: 0
+                    type: number
+                subtotalDiscountPercentageLevel2WithTaxAmount:
+                    example: 0
+                    format: double
+                    minimum: 0
+                    type: number
+                subtotalDiscountPercentageLevel3:
+                    example: 0
+                    format: double
+                    minimum: 0
+                    type: number
+                subtotalDiscountPercentageLevel3WithTaxAmount:
+                    example: 0
+                    format: double
+                    minimum: 0
+                    type: number
+                subtotalDiscountPercentageLevel4:
+                    example: 0
+                    format: double
+                    minimum: 0
+                    type: number
+                subtotalDiscountPercentageLevel4WithTaxAmount:
+                    example: 0
+                    format: double
+                    minimum: 0
+                    type: number
+                subtotalDiscountWithTaxAmount:
+                    format: double
+                    type: number
+                subtotalDiscountWithTaxAmountFormatted:
+                    type: string
+                subtotalFormatted:
+                    type: string
+                subtotalWithTaxAmount:
+                    format: bigdecimal
+                    type: number
+                subtotalWithTaxAmountFormatted:
+                    type: string
+                subtotalWithTaxAmountValue:
+                    format: double
+                    readOnly: true
+                    type: number
+                taxAmount:
+                    example: 11
+                    format: double
+                    minimum: 0
+                    type: number
+                taxAmountFormatted:
+                    type: string
+                total:
+                    example: 113
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                totalAmount:
+                    example: 113
+                    format: double
+                    minimum: 0
+                    readOnly: true
+                    type: number
+                totalDiscountAmount:
+                    example: 11
+                    format: double
+                    minimum: 0
+                    type: number
+                totalDiscountAmountFormatted:
+                    type: string
+                totalDiscountPercentageLevel1:
+                    example: 20
+                    format: double
+                    minimum: 0
+                    type: number
+                totalDiscountPercentageLevel1WithTaxAmount:
+                    example: 20
+                    format: double
+                    minimum: 0
+                    type: number
+                totalDiscountPercentageLevel2:
+                    example: 0
+                    format: double
+                    minimum: 0
+                    type: number
+                totalDiscountPercentageLevel2WithTaxAmount:
+                    example: 0
+                    format: double
+                    minimum: 0
+                    type: number
+                totalDiscountPercentageLevel3:
+                    example: 0
+                    format: double
+                    minimum: 0
+                    type: number
+                totalDiscountPercentageLevel3WithTaxAmount:
+                    example: 0
+                    format: double
+                    minimum: 0
+                    type: number
+                totalDiscountPercentageLevel4:
+                    example: 0
+                    format: double
+                    minimum: 0
+                    type: number
+                totalDiscountPercentageLevel4WithTaxAmount:
+                    example: 0
+                    format: double
+                    minimum: 0
+                    type: number
+                totalDiscountWithTaxAmount:
+                    example: 11
+                    format: double
+                    minimum: 0
+                    type: number
+                totalDiscountWithTaxAmountFormatted:
+                    type: string
+                totalFormatted:
+                    type: string
+                totalWithTaxAmount:
+                    example: 113
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                totalWithTaxAmountFormatted:
+                    type: string
+                totalWithTaxAmountValue:
+                    example: 113
+                    format: double
+                    minimum: 0
+                    readOnly: true
+                    type: number
+                transactionId:
+                    type: string
+                workflowStatusInfo:
+                    $ref: "#/components/schemas/Status"
+                    readOnly: true
+            required:
+                - channelId
+                - currencyCode
+            type: object
+        OrderItem:
+            properties:
+                bookedQuantityId:
+                    example: 32144
+                    format: int64
+                    minimum: 0
+                    type: integer
+                customFields:
+                    additionalProperties: true
+                    type: object
+                deliveryGroup:
+                    example: separate package
+                    type: string
+                discountAmount:
+                    example: 2
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                discountPercentageLevel1:
+                    example: 20
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                discountPercentageLevel1WithTaxAmount:
+                    example: 20
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                discountPercentageLevel2:
+                    example: 0
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                discountPercentageLevel2WithTaxAmount:
+                    example: 0
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                discountPercentageLevel3:
+                    example: 0
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                discountPercentageLevel3WithTaxAmount:
+                    example: 0
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                discountPercentageLevel4:
+                    example: 0
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                discountPercentageLevel4WithTaxAmount:
+                    example: 0
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                discountWithTaxAmount:
+                    example: 2
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                externalReferenceCode:
+                    example: AB-34098-789-N
+                    type: string
+                finalPrice:
+                    example: 200
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                finalPriceWithTaxAmount:
+                    example: 200
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                id:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    type: integer
+                name:
+                    additionalProperties:
+                        type: string
+                    example:
+                        en_US: Hand Saw
+                        hr_HR: Product Name HR
+                        hu_HU: Product Name HU
+                    type: object
+                orderExternalReferenceCode:
+                    example: CAB-34098-789-N
+                    type: string
+                orderId:
+                    example: 30128
+                    format: int64
+                    minimum: 0
+                    type: integer
+                printedNote:
+                    example: Order item printed note
+                    type: string
+                promoPrice:
+                    example: 101
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                promoPriceWithTaxAmount:
+                    example: 101
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                quantity:
+                    example: 2
+                    format: int32
+                    minimum: 0
+                    type: integer
+                requestedDeliveryDate:
+                    example: 2017-07-21
+                    format: date
+                    type: string
+                shippedQuantity:
+                    example: 1
+                    format: int32
+                    minimum: 0
+                    type: integer
+                shippingAddress:
+                    $ref: "#/components/schemas/ShippingAddress"
+                shippingAddressId:
+                    example: 31130
+                    format: int64
+                    minimum: 0
+                    type: integer
+                sku:
+                    example: "12341234"
+                    type: string
+                skuExternalReferenceCode:
+                    example: CAB-34098-789-N
+                    type: string
+                skuId:
+                    example: 30128
+                    format: int64
+                    minimum: 0
+                    type: integer
+                subscription:
+                    example: true
+                    type: boolean
+                unitPrice:
+                    example: 101
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                unitPriceWithTaxAmount:
+                    example: 101
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+            type: object
+        OrderNote:
+            properties:
+                author:
+                    example: Alessio Antonio Rendina
+                    type: string
+                content:
+                    example: This order will be shipped separately
+                    type: string
+                externalReferenceCode:
+                    example: AB-34098-789-N
+                    type: string
+                id:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    type: integer
+                orderExternalReferenceCode:
+                    example: CAB-34098-789-N
+                    type: string
+                orderId:
+                    example: 30128
+                    format: int64
+                    minimum: 0
+                    type: integer
+                restricted:
+                    example: true
+                    type: boolean
+            type: object
+        ShippingAddress:
+            properties:
+                city:
+                    example: Diamond Bar
+                    type: string
+                countryISOCode:
+                    example: US
+                    type: string
+                description:
+                    example: right stairs, first room on the left
+                    type: string
+                externalReferenceCode:
+                    example: "AB-34098-789-N"
+                    readOnly: true
+                    type: string
+                id:
+                    example: 31130
+                    format: int64
+                    minimum: 0
+                    type: integer
+                latitude:
+                    example: 33.9976884
+                    format: double
+                    type: number
+                longitude:
+                    example: -117.8144595
+                    format: double
+                    type: number
+                name:
+                    example: Alessio Antonio Rendina
+                    type: string
+                phoneNumber:
+                    example: (123) 456 7890
+                    type: string
+                regionISOCode:
+                    example: CA
+                    type: string
+                street1:
+                    example: 1400 Montefino Ave
+                    type: string
+                street2:
+                    example: 1st floor
+                    type: string
+                street3:
+                    example: suite 200
+                    type: string
+                zip:
+                    example: "91765"
+                    type: string
+            required:
+                - city
+                - countryISOCode
+                - name
+                - street1
+            type: object
+        Status:
+            properties:
+                code:
+                    format: int32
+                    readOnly: true
+                    type: integer
+                label:
+                    example: black
+                    type: string
+                label_i18n:
+                    example: black
+                    type: string
+            type: object
+    securitySchemes:
+        BasicAuth:
+            scheme: basic
+            type: http
+        BearerAuth:
+            scheme: bearer
+            type: http
+        OAuth2:
+            flows:
+                authorizationCode:
+                    authorizationUrl: /oauth/authorize
+                    scopes:
+                        CommerceOpenApiAdmin.admin: Grants access to admin operations
+                        CommerceOpenApiAdmin.read: Grants read access
+                        CommerceOpenApiAdmin.write: Grants write access
+                    tokenUrl: /oauth/token
+            type: oauth2
+info:
+    contact:
+        email: team-commerce@liferay.com
+        name: Commerce Team
+    description:
+        "Liferay Commerce Admin Order API. A Java client JAR is available for use with the group ID 'com.liferay',
+        artifact ID 'com.liferay.headless.commerce.admin.order.client', and version '1.0.15'."
+    license:
+        name: "Apache 2.0"
+        url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+    title: Liferay Commerce Admin Order API
+    version: v1.0
+openapi: 3.0.0
+paths:
+    /orderItems/by-externalReferenceCode/{externalReferenceCode}:
+        delete:
+            operationId: deleteOrderItemByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+            responses:
+                204:
+                    description:
+                        No content
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: Deletes an Order Item by external reference code.
+            tags:
+                - OrderItem
+        get:
+            operationId: getOrderItemByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OrderItem"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OrderItem"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: Gets an Order Item by external reference code.
+            tags:
+                - OrderItem
+        patch:
+            operationId: patchOrderItemByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/OrderItem"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/OrderItem"
+                required: true
+            responses:
+                202:
+                    description:
+                        Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: Updates an Order Item by external reference code.
+            tags:
+                - OrderItem
+    /orderItems/{id}:
+        delete:
+            operationId: deleteOrderItem
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+            responses:
+                204:
+                    description:
+                        No content
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: Deletes an Order Item by ID.
+            tags:
+                - OrderItem
+        get:
+            operationId: getOrderItem
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OrderItem"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OrderItem"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: Gets an Order Item by ID.
+            tags:
+                - OrderItem
+        patch:
+            operationId: patchOrderItem
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/OrderItem"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/OrderItem"
+                required: true
+            responses:
+                202:
+                    description:
+                        Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: Updates an Order Item by ID.
+            tags:
+                - OrderItem
+    /orderNotes/by-externalReferenceCode/{externalReferenceCode}:
+        delete:
+            operationId: deleteOrderNoteByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+            responses:
+                204:
+                    description:
+                        No content
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: Deletes an Order Note by external reference code.
+            tags:
+                - OrderNote
+        get:
+            operationId: getOrderNoteByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OrderNote"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OrderNote"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: Gets an Order Note by external reference code.
+            tags:
+                - OrderNote
+        patch:
+            operationId: patchOrderNoteByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/OrderNote"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/OrderNote"
+                required: true
+            responses:
+                202:
+                    description:
+                        Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: Updates an Order Note by external reference code.
+            tags:
+                - OrderNote
+    /orderNotes/{id}:
+        delete:
+            operationId: deleteOrderNote
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+            responses:
+                204:
+                    description:
+                        No content
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: Deletes an Order Note by ID.
+            tags:
+                - OrderNote
+        get:
+            operationId: getOrderNote
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OrderNote"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OrderNote"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: Gets an Order Note by ID.
+            tags:
+                - OrderNote
+        patch:
+            operationId: patchOrderNote
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/OrderNote"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/OrderNote"
+                required: true
+            responses:
+                202:
+                    description:
+                        Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: Updates an Order Note by ID.
+            tags:
+                - OrderNote
+    /orders:
+        get:
+            operationId: getOrdersPage
+            parameters:
+                - in: query
+                  name: filter
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  required: false
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Order"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Order"
+                                type: array
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: Gets a List of Orders.
+            tags:
+                - Order
+        post:
+            operationId: postOrder
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Order"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Order"
+                required: true
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Order"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Order"
+                    description:
+                        Created
+                202:
+                    description:
+                        Accepted - Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: Creates or updates a Order.
+            tags:
+                - Order
+    /orders/by-externalReferenceCode/{externalReferenceCode}:
+        delete:
+            operationId: deleteOrderByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+            responses:
+                204:
+                    description:
+                        No content
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: Deletes an Order by external reference code.
+            tags:
+                - Order
+        get:
+            operationId: getOrderByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Order"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Order"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: Gets an Order by external reference code.
+            tags:
+                - Order
+        patch:
+            operationId: patchOrderByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Order"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Order"
+                required: true
+            responses:
+                202:
+                    description:
+                        Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: Updates an Order by external reference code.
+            tags:
+                - Order
+    /orders/by-externalReferenceCode/{externalReferenceCode}/account:
+        get:
+            operationId: getOrderByExternalReferenceCodeAccount
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Account"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Account"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: Gets a billing Address related to an Order.
+            tags:
+                - Account
+    /orders/by-externalReferenceCode/{externalReferenceCode}/billingAddress:
+        get:
+            operationId: getOrderByExternalReferenceCodeBillingAddress
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/BillingAddress"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/BillingAddress"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: Gets a billing Address related to an Order.
+            tags:
+                - BillingAddress
+        patch:
+            operationId: patchOrderByExternalReferenceCodeBillingAddress
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/BillingAddress"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/BillingAddress"
+                required: true
+            responses:
+                202:
+                    description:
+                        Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: Updates a billing Address related to an Order.
+            tags:
+                - BillingAddress
+    /orders/by-externalReferenceCode/{externalReferenceCode}/channel:
+        get:
+            operationId: getOrderByExternalReferenceCodeChannel
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Channel"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Channel"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: Gets a channel related to an Order.
+            tags:
+                - Channel
+    /orders/by-externalReferenceCode/{externalReferenceCode}/orderItems:
+        get:
+            operationId: getOrderByExternalReferenceCodeOrderItemsPage
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OrderItem"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OrderItem"
+                                type: array
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: Gets a list of Order Items related to an Order.
+            tags:
+                - OrderItem
+        post:
+            operationId: postOrderByExternalReferenceCodeOrderItem
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/OrderItem"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/OrderItem"
+                required: true
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OrderItem"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OrderItem"
+                    description:
+                        Created
+                202:
+                    description:
+                        Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: Creates or updates an Order Item.
+            tags:
+                - OrderItem
+    /orders/by-externalReferenceCode/{externalReferenceCode}/orderNotes:
+        get:
+            operationId: getOrderByExternalReferenceCodeOrderNotesPage
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OrderNote"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OrderNote"
+                                type: array
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: Gets a list of Order Notes related to an Order.
+            tags:
+                - OrderNote
+        post:
+            operationId: postOrderByExternalReferenceCodeOrderNote
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/OrderNote"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/OrderNote"
+                required: true
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OrderNote"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OrderNote"
+                    description:
+                        Created
+                202:
+                    description:
+                        Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: Creates or updates an Order Note.
+            tags:
+                - OrderNote
+    /orders/by-externalReferenceCode/{externalReferenceCode}/shippingAddress:
+        get:
+            operationId: getOrderByExternalReferenceCodeShippingAddress
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ShippingAddress"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ShippingAddress"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: Gets a shipping Address related to an Order.
+            tags:
+                - ShippingAddress
+        patch:
+            operationId: patchOrderByExternalReferenceCodeShippingAddress
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ShippingAddress"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ShippingAddress"
+                required: true
+            responses:
+                202:
+                    description:
+                        Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: Updates a shipping Address related to an Order.
+            tags:
+                - ShippingAddress
+    /orders/{id}:
+        delete:
+            operationId: deleteOrder
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+            responses:
+                204:
+                    description:
+                        No content
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: Deletes an Order by ID.
+            tags:
+                - Order
+        get:
+            operationId: getOrder
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Order"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Order"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: Gets an Order by ID.
+            tags:
+                - Order
+        patch:
+            operationId: patchOrder
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Order"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Order"
+                required: true
+            responses:
+                202:
+                    description:
+                        Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: Updates an Order by ID.
+            tags:
+                - Order
+    /orders/{id}/account:
+        get:
+            operationId: getOrderIdAccount
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Account"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Account"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: Gets a billing Address related to an Order.
+            tags:
+                - Account
+    /orders/{id}/billingAddress:
+        get:
+            operationId: getOrderIdBillingAddress
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/BillingAddress"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/BillingAddress"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: Gets a billing Address related to an Order.
+            tags:
+                - BillingAddress
+        patch:
+            operationId: patchOrderIdBillingAddress
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/BillingAddress"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/BillingAddress"
+                required: true
+            responses:
+                202:
+                    description:
+                        Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: Updates a billing Address related to an Order.
+            tags:
+                - BillingAddress
+    /orders/{id}/channel:
+        get:
+            operationId: getOrderIdChannel
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Channel"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Channel"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: Gets a channel related to an Order.
+            tags:
+                - Channel
+    /orders/{id}/orderItems:
+        get:
+            operationId: getOrderIdOrderItemsPage
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OrderItem"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OrderItem"
+                                type: array
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: Gets a list of Order Items related to an Order.
+            tags:
+                - OrderItem
+        post:
+            operationId: postOrderIdOrderItem
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/OrderItem"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/OrderItem"
+                required: true
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OrderItem"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OrderItem"
+                    description:
+                        Created
+                202:
+                    description:
+                        Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: Creates or updates an Order Item.
+            tags:
+                - OrderItem
+    /orders/{id}/orderNotes:
+        get:
+            operationId: getOrderIdOrderNotesPage
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OrderNote"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OrderNote"
+                                type: array
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: Gets a list of Order Notes related to an Order.
+            tags:
+                - OrderNote
+        post:
+            operationId: postOrderIdOrderNote
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/OrderNote"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/OrderNote"
+                required: true
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OrderNote"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OrderNote"
+                    description:
+                        Created
+                202:
+                    description:
+                        Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: Creates or updates an Order Note.
+            tags:
+                - OrderNote
+    /orders/{id}/shippingAddress:
+        get:
+            operationId: getOrderIdShippingAddress
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ShippingAddress"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ShippingAddress"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: Gets a shipping Address related to an Order.
+            tags:
+                - ShippingAddress
+        patch:
+            operationId: patchOrderIdShippingAddress
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ShippingAddress"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ShippingAddress"
+                required: true
+            responses:
+                202:
+                    description:
+                        Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: Updates a shipping Address related to an Order.
+            tags:
+                - ShippingAddress
+servers:
+    - description:
+          Liferay Commerce API server
+      url: https://commerce.{environment}.liferay.com/commerce-admin-order/{basePath}
+      variables:
+          basePath:
+              default: v1.0
+          environment:
+              default: api
+              enum:
+                  - api
+                  - api.dev
+                  - api.uat
+    - description:
+          Liferay Commerce Local Development (Hosts file)
+      url: "{protocol}://{host}:{port}/o/commerce-admin-order/{basePath}"
+      variables:
+          basePath:
+              default: v1.0
+          host:
+              default: test.dev
+          port:
+              default: "8080"
+              enum:
+                  - "443"
+                  - "8080"
+                  - "8443"
+          protocol:
+              default: http
+              enum:
+                  - http
+                  - https
+    - description:
+          Liferay Commerce Local Development with Ngrok
+      url: "{protocol}://{host}.ngrok.io/o/commerce-admin-order/{basePath}"
+      variables:
+          basePath:
+              default: v1.0
+          host:
+              default: commerce
+          protocol:
+              default: http
+              enum:
+                  - http
+                  - https
+    - description:
+          SwaggerHub API Auto Mocking
+      url:
+          https://virtserver.swaggerhub.com/liferayinc/commerce-admin-order/v1.0

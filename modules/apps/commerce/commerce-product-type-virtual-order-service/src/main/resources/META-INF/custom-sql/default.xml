@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.commerce.product.type.virtual.order.service.persistence.CommerceVirtualOrderItemFinder.countByG_C_A">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT CommerceVirtualOrderItem.commerceVirtualOrderItemId) AS COUNT_VALUE
+			FROM
+				CommerceVirtualOrderItem
+			INNER JOIN
+				CommerceOrderItem ON
+					CommerceOrderItem.commerceOrderItemId = CommerceVirtualOrderItem.commerceOrderItemId
+			INNER JOIN
+				CommerceOrder ON
+					CommerceOrder.commerceOrderId = CommerceOrderItem.commerceOrderId
+			WHERE
+				(CommerceOrder.groupId = ?) AND
+				(CommerceOrder.commerceAccountId = ?) AND
+				(CommerceVirtualOrderItem.active_ = [$TRUE$])
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.product.type.virtual.order.service.persistence.CommerceVirtualOrderItemFinder.findByEndDate">
+		<![CDATA[
+			SELECT
+				CommerceVirtualOrderItem.*
+			FROM
+				CommerceVirtualOrderItem
+			WHERE
+				(CommerceVirtualOrderItem.active_ = [$TRUE$]) AND
+				(CommerceVirtualOrderItem.endDate < ?) AND
+				(CommerceVirtualOrderItem.endDate IS NOT NULL)
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.product.type.virtual.order.service.persistence.CommerceVirtualOrderItemFinder.findByG_C_A">
+		<![CDATA[
+			SELECT
+				CommerceVirtualOrderItem.*
+			FROM
+				CommerceVirtualOrderItem
+			INNER JOIN
+				CommerceOrderItem ON
+					CommerceOrderItem.commerceOrderItemId = CommerceVirtualOrderItem.commerceOrderItemId
+			INNER JOIN
+				CommerceOrder ON
+					CommerceOrder.commerceOrderId = CommerceOrderItem.commerceOrderId
+			WHERE
+				(CommerceOrder.groupId = ?) AND
+				(CommerceOrder.commerceAccountId = ?) AND
+				(CommerceVirtualOrderItem.active_ = [$TRUE$])
+			ORDER BY
+				CommerceVirtualOrderItem.createDate
+		]]>
+	</sql>
+</custom-sql>

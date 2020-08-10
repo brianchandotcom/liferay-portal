@@ -1,0 +1,38 @@
+Bundle-Name: Liferay Commerce Data Integration API
+Bundle-SymbolicName: com.liferay.commerce.data.integration.api
+Bundle-Version: 2.0.13
+Export-Package:\
+	com.liferay.commerce.data.integration.advisor,\
+	com.liferay.commerce.data.integration.constants,\
+	com.liferay.commerce.data.integration.exception,\
+	com.liferay.commerce.data.integration.model,\
+	com.liferay.commerce.data.integration.permission,\
+	com.liferay.commerce.data.integration.process.type,\
+	com.liferay.commerce.data.integration.service,\
+	com.liferay.commerce.data.integration.service.persistence,\
+	com.liferay.commerce.data.integration.trigger
+Import-Package:\
+	com.liferay.document.library.kernel.model;version="[1.0.0,3.0.0)",\
+	com.liferay.document.library.kernel.service;version="[1.7.0,3.0.0)",\
+	com.liferay.document.library.kernel.service.persistence;version="[1.4.0,3.0.0)",\
+	com.liferay.expando.kernel.model;version="[1.1.0,3.0.0)",\
+	com.liferay.portal.kernel.dao.orm;version="[7.3.0,9.0.0)",\
+	com.liferay.portal.kernel.exception;version="[7.5.0,9.0.0)",\
+	com.liferay.portal.kernel.json;version="[7.7.0,9.0.0)",\
+	com.liferay.portal.kernel.model;version="[2.0.0,4.0.0)",\
+	com.liferay.portal.kernel.model.impl;version="[1.1.0,3.0.0)",\
+	com.liferay.portal.kernel.portlet;version="[8.1.0,10.0.0)",\
+	com.liferay.portal.kernel.scheduler;version="[7.4.0,9.0.0)",\
+	com.liferay.portal.kernel.scheduler.messaging;version="[7.0.0,9.0.0)",\
+	com.liferay.portal.kernel.search;version="[7.7.0,9.0.0)",\
+	com.liferay.portal.kernel.security.auth;version="[1.2.0,3.0.0)",\
+	com.liferay.portal.kernel.security.permission;version="[1.8.0,3.0.0)",\
+	com.liferay.portal.kernel.service;version="[1.43.0,3.0.0)",\
+	com.liferay.portal.kernel.service.persistence;version="[1.24.0,3.0.0)",\
+	com.liferay.portal.kernel.service.persistence.impl;version="[1.5.0,3.0.0)",\
+	com.liferay.portal.kernel.settings;version="[1.3.0,3.0.0)",\
+	com.liferay.portal.kernel.template;version="[7.2.0,9.0.0)",\
+	com.liferay.portal.kernel.util;version="[8.20.0,10.0.0)",\
+	com.liferay.portal.kernel.workflow;version="[7.4.0,9.0.0)",\
+	\
+	*

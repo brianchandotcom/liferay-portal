@@ -1,0 +1,56 @@
+.commerce-collapse {
+	&__header {
+		align-items: center;
+		color: inherit;
+		display: flex;
+		justify-content: space-between;
+		padding: 0;
+		width: 100%;
+
+		.collapse-title {
+			font-weight: bold;
+		}
+
+		.collapse-icon-closed,
+		.collapse-icon-open {
+			line-height: 0;
+			position: static;
+		}
+
+		&--collapsing,
+		&--collapsed {
+			.collapse-icon-closed {
+				display: block;
+			}
+			.collapse-icon-open {
+				display: none;
+			}
+		}
+
+		&--expanding,
+		&--expanded {
+			.collapse-icon-closed {
+				display: none;
+			}
+			.collapse-icon-open {
+				display: block;
+			}
+		}
+	}
+
+	&__content {
+		overflow: hidden;
+		padding-top: 10px;
+		transition: max-height 0.2s ease-in;
+
+		&--collapsed {
+			display: none;
+		}
+
+		&--collapsing,
+		&--expanding,
+		&--expanded {
+			display: block;
+		}
+	}
+}

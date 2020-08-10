@@ -1,0 +1,60 @@
+.commerce-compare-table {
+	border: 1px solid #e7e7e7;
+	border-collapse: collapse;
+	line-height: 1.1;
+	width: 100%;
+
+	tbody td {
+		border-right: 1px solid #e7e7e7;
+		padding: 15px;
+		vertical-align: baseline;
+	}
+
+	tbody tr {
+		height: auto;
+	}
+
+	.commerce-compare-table__title {
+		width: 150px;
+	}
+
+	tbody tr:not(.commerce-compare-table__separator) {
+		background: white;
+		overflow: hidden;
+	}
+
+	&__separator {
+		border: 1px solid #e7e7e7;
+		font-weight: 800;
+	}
+
+	&__title {
+		font-size: 12px;
+		letter-spacing: 1.2px;
+		line-height: 16px;
+		text-transform: uppercase;
+	}
+
+	&__value {
+		font-size: 14px;
+		line-height: 32px;
+		text-align: center;
+	}
+
+	&__card {
+		border: 1px solid #e7e7e7;
+
+		& + & {
+			// border-left: 0;
+		}
+	}
+
+	td {
+		padding: 0;
+		width: 20%;
+
+		&:first-of-type {
+			width: 10%;
+		}
+	}
+}

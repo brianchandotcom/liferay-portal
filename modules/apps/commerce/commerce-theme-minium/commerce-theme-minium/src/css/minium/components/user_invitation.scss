@@ -1,0 +1,20 @@
+.user-invitation {
+	display: flex;
+	flex-direction: column;
+	height: 360px;
+
+	&__input {
+		flex-shrink: 0;
+	}
+
+	&__list {
+		flex-grow: 1;
+		margin-top: 40px;
+		overflow: auto;
+	}
+
+	&__invite {
+		margin-top: 40px;
+		text-align: center;
+	}
+}

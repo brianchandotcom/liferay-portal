@@ -1,0 +1,172 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.commerce.shipping.engine.fixed.web.internal.portlet.action;
+
+import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.service.CommerceShippingMethodService;
+import com.liferay.commerce.shipping.engine.fixed.exception.NoSuchShippingFixedOptionRelException;
+import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionRelService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.math.BigDecimal;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Alessio Antonio Rendina
+ */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_SHIPPING_METHODS,
+		"mvc.command.name=editCommerceShippingFixedOptionRel"
+	},
+	service = MVCActionCommand.class
+)
+public class EditCommerceShippingFixedOptionRelMVCActionCommand
+	extends BaseMVCActionCommand {
+
+	protected void deleteCommerceShippingFixedOptionRels(
+			ActionRequest actionRequest)
+		throws PortalException {
+
+		long[] deleteCommerceShippingFixedOptionRelIds = null;
+
+		long commerceShippingFixedOptionRelId = ParamUtil.getLong(
+			actionRequest, "commerceShippingFixedOptionRelId");
+
+		if (commerceShippingFixedOptionRelId > 0) {
+			deleteCommerceShippingFixedOptionRelIds = new long[] {
+				commerceShippingFixedOptionRelId
+			};
+		}
+		else {
+			deleteCommerceShippingFixedOptionRelIds = StringUtil.split(
+				ParamUtil.getString(
+					actionRequest, "deleteCommerceShippingFixedOptionRelIds"),
+				0L);
+		}
+
+		for (long deleteCommerceShippingFixedOptionRelId :
+				deleteCommerceShippingFixedOptionRelIds) {
+
+			_commerceShippingFixedOptionRelService.
+				deleteCommerceShippingFixedOptionRel(
+					deleteCommerceShippingFixedOptionRelId);
+		}
+	}
+
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		try {
+			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+				updateCommerceShippingFixedOptionRel(actionRequest);
+			}
+			else if (cmd.equals(Constants.DELETE)) {
+				deleteCommerceShippingFixedOptionRels(actionRequest);
+			}
+		}
+		catch (Exception e) {
+			if (e instanceof NoSuchShippingFixedOptionRelException ||
+				e instanceof PrincipalException) {
+
+				SessionErrors.add(actionRequest, e.getClass());
+			}
+			else {
+				throw e;
+			}
+		}
+	}
+
+	protected void updateCommerceShippingFixedOptionRel(
+			ActionRequest actionRequest)
+		throws PortalException {
+
+		long commerceShippingFixedOptionRelId = ParamUtil.getLong(
+			actionRequest, "commerceShippingFixedOptionRelId");
+
+		long commerceShippingMethodId = ParamUtil.getLong(
+			actionRequest, "commerceShippingMethodId");
+		long commerceShippingFixedOptionId = ParamUtil.getLong(
+			actionRequest, "commerceShippingFixedOptionId");
+		long commerceInventoryWarehouseId = ParamUtil.getLong(
+			actionRequest, "commerceInventoryWarehouseId");
+		long commerceCountryId = ParamUtil.getLong(
+			actionRequest, "commerceCountryId");
+		long commerceRegionId = ParamUtil.getLong(
+			actionRequest, "commerceRegionId");
+		String zip = ParamUtil.getString(actionRequest, "zip");
+		double weightFrom = ParamUtil.getDouble(actionRequest, "weightFrom");
+		double weightTo = ParamUtil.getDouble(actionRequest, "weightTo");
+		BigDecimal fixedPrice = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "fixedPrice", BigDecimal.ZERO);
+		BigDecimal rateUnitWeightPrice = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "rateUnitWeightPrice", BigDecimal.ZERO);
+		double ratePercentage = ParamUtil.getDouble(
+			actionRequest, "ratePercentage");
+
+		if (commerceShippingFixedOptionRelId > 0) {
+			_commerceShippingFixedOptionRelService.
+				updateCommerceShippingFixedOptionRel(
+					commerceShippingFixedOptionRelId,
+					commerceInventoryWarehouseId, commerceCountryId,
+					commerceRegionId, zip, weightFrom, weightTo, fixedPrice,
+					rateUnitWeightPrice, ratePercentage);
+		}
+		else {
+			CommerceShippingMethod commerceShippingMethod =
+				_commerceShippingMethodService.getCommerceShippingMethod(
+					commerceShippingMethodId);
+
+			_commerceShippingFixedOptionRelService.
+				addCommerceShippingFixedOptionRel(
+					_portal.getUserId(actionRequest),
+					commerceShippingMethod.getGroupId(),
+					commerceShippingMethod.getCommerceShippingMethodId(),
+					commerceShippingFixedOptionId, commerceInventoryWarehouseId,
+					commerceCountryId, commerceRegionId, zip, weightFrom,
+					weightTo, fixedPrice, rateUnitWeightPrice, ratePercentage);
+		}
+	}
+
+	@Reference
+	private CommerceShippingFixedOptionRelService
+		_commerceShippingFixedOptionRelService;
+
+	@Reference
+	private CommerceShippingMethodService _commerceShippingMethodService;
+
+	@Reference
+	private Portal _portal;
+
+}

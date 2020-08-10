@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Commerce BOM Admin Web
+Bundle-SymbolicName: com.liferay.commerce.bom.admin.web
+Bundle-Version: 2.0.15
+Import-Package:\
+	com.liferay.frontend.js.loader.modules.extender.npm;version="[2.0.0,4.0.0)",\
+	com.liferay.frontend.taglib.clay.servlet.taglib.util;version="[1.0.0,3.0.0)",\
+	\
+	*
+Web-ContextPath: /commerce-bom-admin-web

@@ -1,0 +1,14 @@
+[
+	{
+		"articleId": "SUMMER_SALES",
+		"ddmStructureKey": "MINIUM_PROMO",
+		"ddmTemplateKey": "MINIUM_PROMO",
+		"title": "Summer Sales"
+	},
+	{
+		"articleId": "UPDATED_PRICE_BOOKS",
+		"ddmStructureKey": "MINIUM_PROMO",
+		"ddmTemplateKey": "MINIUM_PROMO",
+		"title": "Updated Price Books"
+	}
+]

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<talendfile:ContextType xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:talendfile="platform:/resource/org.talend.model/model/TalendFile.xsd" xmi:id="_oOJ5kJKVEemlEu0eFgvOVg" confirmationNeeded="false" name="Default">
+  <contextParameter xmi:id="_uKCCIJKVEemlEu0eFgvOVg" comment="" name="LiferayServerURL" prompt="LiferayServerURL?" promptNeeded="false" type="id_String" value="http://localhost:8080"/>
+  <contextParameter xmi:id="_YR7Q8JKWEemlEu0eFgvOVg" comment="" name="LiferayUser" prompt="LiferayUser?" promptNeeded="false" type="id_String" value="test@liferay.com"/>
+  <contextParameter xmi:id="_YR7Q8ZKWEemlEu0eFgvOVg" comment="" name="LiferayPassword" prompt="LiferayPassword?" promptNeeded="false" type="id_String" value="test"/>
+  <contextParameter xmi:id="_YR7Q8pKWEemlEu0eFgvOVg" comment="" name="SalesForceURL" prompt="SalesForceURL?" promptNeeded="false" type="id_String" value=""/>
+  <contextParameter xmi:id="_YR7Q85KWEemlEu0eFgvOVg" comment="" name="SalesForceUser" prompt="SalesForceUser?" promptNeeded="false" type="id_String" value=""/>
+  <contextParameter xmi:id="_YR7Q9JKWEemlEu0eFgvOVg" comment="" name="SalesForcePassword" prompt="SalesForcePassword?" promptNeeded="false" type="id_String" value=""/>
+  <contextParameter xmi:id="_YR7Q9ZKWEemlEu0eFgvOVg" comment="" name="SalesforceToken" prompt="SalesforceToken?" promptNeeded="false" type="id_String" value=""/>
+  <contextParameter xmi:id="_lz94sKVlEemFTtGzLnWqUw" comment="" name="CatalogExternalReferenceCode" prompt="CatalogExternalReferenceCode?" promptNeeded="false" type="id_String" value="SALESFORCE"/>
+</talendfile:ContextType>

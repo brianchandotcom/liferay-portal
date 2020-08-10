@@ -1,0 +1,235 @@
+.minium-frame .btn:not(.btn-unstyled) {
+	align-content: center;
+	align-items: center;
+	background: transparent;
+	border: 2px solid transparent;
+	border-radius: 8px;
+	display: inline-flex;
+	font-size: 10px;
+	font-weight: 900;
+	justify-content: center;
+	letter-spacing: 1px;
+	line-height: 1.25;
+	overflow: hidden;
+	padding: 10px 20px;
+	position: relative;
+	text-decoration: none;
+	text-transform: uppercase;
+	white-space: nowrap;
+	z-index: 2;
+
+	&::before {
+		bottom: 0;
+		content: '';
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+		transition: background-color 0.3s ease-in;
+		z-index: -2;
+	}
+
+	&:active,
+	&:focus,
+	&:focus-within {
+		box-shadow: none !important;
+		outline: none !important;
+	}
+
+	&[disabled],
+	.disabled {
+		cursor: not-allowed;
+	}
+
+	&:not([disabled]):not(.disabled):not(.btn-link) {
+		&::after {
+			border-radius: 50%;
+			content: '';
+			display: block;
+			height: 60px;
+			left: 50%;
+			margin-left: -30px;
+			margin-top: -30px;
+			opacity: 0;
+			padding: 0;
+			pointer-events: none;
+			position: absolute;
+			top: 50%;
+			transform: scale(0, 0);
+			transition: all ease-in-out 0.3s;
+			width: 60px;
+			z-index: -1;
+		}
+
+		&:hover::after {
+			opacity: 1;
+			transform: scale(5, 5);
+		}
+	}
+
+	&.btn-primary {
+		background: transparent;
+		border-color: $color-theme;
+		color: $color-bg;
+
+		&:not([disabled]):not(.disabled) {
+			&::before {
+				background-color: $color-theme;
+			}
+
+			&:hover::before {
+				background-color: $color-theme-dark;
+			}
+
+			&::after {
+				background-color: $color-theme-dark;
+			}
+		}
+
+		&[disabled] {
+			border-color: $color-disabled;
+
+			&::before {
+				background-color: $color-disabled;
+			}
+		}
+	}
+
+	&.btn-secondary {
+		background: transparent;
+		border-color: $color-theme;
+		color: $color-theme;
+
+		&::before {
+			background-color: $color-bg;
+		}
+
+		&:not([disabled]):not(.disabled) {
+			&:hover::before {
+				background-color: $color-border;
+			}
+
+			&::after {
+				background-color: $color-border;
+			}
+		}
+
+		&[disabled] {
+			border-color: $color-disabled;
+			color: $color-disabled;
+
+			&::before {
+				background-color: $color-bg;
+			}
+		}
+	}
+
+	&.btn-success {
+		background: transparent;
+		border-color: $color-mood-good;
+		color: $color-bg;
+
+		&:not([disabled]):not(.disabled) {
+			&::before {
+				background-color: $color-mood-good;
+			}
+
+			&:hover::before {
+				background-color: darken($color-mood-good, 10%);
+			}
+
+			&::after {
+				background-color: darken($color-mood-good, 10%);
+			}
+		}
+
+		&[disabled] {
+			border-color: lighten($color-mood-good, 20%);
+
+			&::before {
+				background-color: lighten($color-mood-good, 20%);
+			}
+		}
+	}
+
+	&.btn-danger {
+		background: transparent;
+		border-color: $color-mood-bad;
+		color: $color-bg;
+
+		&:not([disabled]):not(.disabled) {
+			&::before {
+				background-color: $color-mood-bad;
+			}
+
+			&:hover::before {
+				background-color: darken($color-mood-bad, 10%);
+			}
+
+			&::after {
+				background-color: darken($color-mood-bad, 10%);
+			}
+		}
+
+		&[disabled] {
+			border-color: lighten($color-mood-bad, 20%);
+
+			&::before {
+				background-color: lighten($color-mood-bad, 20%);
+			}
+		}
+	}
+
+	&.btn-warning {
+		background: transparent;
+		border-color: $color-mood-neutral;
+		color: $color-bg;
+
+		&:not([disabled]):not(.disabled) {
+			&::before {
+				background-color: $color-mood-neutral;
+			}
+
+			&:hover::before {
+				background-color: darken($color-mood-neutral, 10%);
+			}
+
+			&::after {
+				background-color: darken($color-mood-neutral, 10%);
+			}
+		}
+
+		&[disabled] {
+			border-color: lighten($color-mood-neutral, 20%);
+
+			&::before {
+				background-color: lighten($color-mood-neutral, 20%);
+			}
+		}
+	}
+
+	&.btn-monospaced {
+		border-radius: 8px;
+	}
+
+	&.btn-sm {
+		height: 44px;
+
+		&.btn-monospaced {
+			width: 44px;
+		}
+	}
+
+	&.btn-lg {
+		font-size: 12px;
+		height: 64px;
+
+		&.btn-monospaced {
+			width: 64px;
+		}
+	}
+
+	&.btn-fixed {
+		min-width: 170px;
+	}
+}

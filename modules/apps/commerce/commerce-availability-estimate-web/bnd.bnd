@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Commerce Availability Estimate Web
+Bundle-SymbolicName: com.liferay.commerce.availability.estimate.web
+Bundle-Version: 1.0.26
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang)";\
+		resource.bundle.base.name="content.Language"
+Web-ContextPath: /commerce-availability-estimate-web

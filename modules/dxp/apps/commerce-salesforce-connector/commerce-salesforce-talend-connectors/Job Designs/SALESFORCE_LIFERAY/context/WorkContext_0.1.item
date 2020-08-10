@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<talendfile:ContextType xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:talendfile="platform:/resource/org.talend.model/model/TalendFile.xsd" xmi:id="_DKCFAM00Eei37JyP0R7oaA" confirmationNeeded="false" name="Default">
+  <contextParameter xmi:id="_DKCFAc00Eei37JyP0R7oaA" comment="" name="api_lastImport" prompt="api_lastImport?" promptNeeded="false" type="id_String" value="2018-05-01T18:08:26.000Z"/>
+  <contextParameter xmi:id="_DKCFB800Eei37JyP0R7oaA" comment="" name="currency_default" prompt="currency_default?" promptNeeded="false" type="id_String" value="USD"/>
+  <contextParameter xmi:id="_DKCFCs00Eei37JyP0R7oaA" comment="" name="salesforce_user_integration" prompt="salesforce_user_integration?" promptNeeded="false" type="id_String" value="005f4000002voOVAAY"/>
+  <contextParameter xmi:id="_DKCFEM00Eei37JyP0R7oaA" comment="" name="default_jobTitle" prompt="default_jobTitle?" promptNeeded="false" type="id_String" value="Developer"/>
+</talendfile:ContextType>

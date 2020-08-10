@@ -1,0 +1,157 @@
+[
+	{
+		"code": "AH",
+		"name": "Anhui Sheng",
+		"priority": 1
+	},
+	{
+		"code": "BJ",
+		"name": "Beijing Shi",
+		"priority": 2
+	},
+	{
+		"code": "CQ",
+		"name": "Chongqing Shi",
+		"priority": 3
+	},
+	{
+		"code": "FJ",
+		"name": "Fujian Sheng",
+		"priority": 4
+	},
+	{
+		"code": "GS",
+		"name": "Gansu Sheng",
+		"priority": 5
+	},
+	{
+		"code": "GD",
+		"name": "Guangdong Sheng",
+		"priority": 6
+	},
+	{
+		"code": "GX",
+		"name": "Guangxi Zhuangzu Zizhiqu",
+		"priority": 7
+	},
+	{
+		"code": "GZ",
+		"name": "Guizhou Sheng",
+		"priority": 8
+	},
+	{
+		"code": "HI",
+		"name": "Hainan Sheng",
+		"priority": 9
+	},
+	{
+		"code": "HE",
+		"name": "Hebei Sheng",
+		"priority": 10
+	},
+	{
+		"code": "HL",
+		"name": "Heilongjiang Sheng",
+		"priority": 11
+	},
+	{
+		"code": "HA",
+		"name": "Henan Sheng",
+		"priority": 12
+	},
+	{
+		"code": "HK",
+		"name": "Hong Kong",
+		"priority": 13
+	},
+	{
+		"code": "HB",
+		"name": "Hubei Sheng",
+		"priority": 14
+	},
+	{
+		"code": "HN",
+		"name": "Hunan Sheng",
+		"priority": 15
+	},
+	{
+		"code": "JS",
+		"name": "Jiangsu Sheng",
+		"priority": 16
+	},
+	{
+		"code": "JX",
+		"name": "Jiangxi Sheng",
+		"priority": 17
+	},
+	{
+		"code": "JL",
+		"name": "Jilin Sheng",
+		"priority": 18
+	},
+	{
+		"code": "LN",
+		"name": "Liaoning Sheng",
+		"priority": 19
+	},
+	{
+		"code": "NM",
+		"name": "Nei Mongol Zizhiqu",
+		"priority": 20
+	},
+	{
+		"code": "NX",
+		"name": "Ningxia Sheng",
+		"priority": 21
+	},
+	{
+		"code": "SN",
+		"name": "Shaanxi Sheng",
+		"priority": 22
+	},
+	{
+		"code": "SD",
+		"name": "Shandong Sheng",
+		"priority": 23
+	},
+	{
+		"code": "SH",
+		"name": "Shanghai Sheng",
+		"priority": 24
+	},
+	{
+		"code": "SX",
+		"name": "Shanxi Sheng",
+		"priority": 25
+	},
+	{
+		"code": "SC",
+		"name": "Sichuan Sheng",
+		"priority": 26
+	},
+	{
+		"code": "TJ",
+		"name": "Tianjin Shi",
+		"priority": 27
+	},
+	{
+		"code": "XJ",
+		"name": "Xinjiang Uygur Zizhiqu",
+		"priority": 28
+	},
+	{
+		"code": "XZ",
+		"name": "Xizang Zizhiqu",
+		"priority": 29
+	},
+	{
+		"code": "YN",
+		"name": "Yunnan Sheng",
+		"priority": 30
+	},
+	{
+		"code": "ZJ",
+		"name": "Zhejiang Sheng",
+		"priority": 31
+	}
+]

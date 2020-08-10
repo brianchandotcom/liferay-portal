@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Commerce Tax Web
+Bundle-SymbolicName: com.liferay.commerce.tax.web
+Bundle-Version: 1.0.28
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang)";\
+		resource.bundle.base.name="content.Language"
+Web-ContextPath: /commerce-tax-web

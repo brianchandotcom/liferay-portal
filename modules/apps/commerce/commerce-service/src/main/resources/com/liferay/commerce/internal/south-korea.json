@@ -1,0 +1,87 @@
+[
+	{
+		"code": "26",
+		"name": "Busan-gwangyeoksi",
+		"priority": 1
+	},
+	{
+		"code": "43",
+		"name": "Chungcheongbuk-do",
+		"priority": 2
+	},
+	{
+		"code": "44",
+		"name": "Chungcheongnam-do",
+		"priority": 3
+	},
+	{
+		"code": "27",
+		"name": "Daegu-gwangyeoksi",
+		"priority": 4
+	},
+	{
+		"code": "30",
+		"name": "Daejeon-gwangyeoksi",
+		"priority": 5
+	},
+	{
+		"code": "42",
+		"name": "Gangwon-do",
+		"priority": 6
+	},
+	{
+		"code": "29",
+		"name": "Gwangju-gwangyeoksi",
+		"priority": 7
+	},
+	{
+		"code": "41",
+		"name": "Gyeonggi-do",
+		"priority": 8
+	},
+	{
+		"code": "47",
+		"name": "Gyeongsangbuk-do",
+		"priority": 9
+	},
+	{
+		"code": "48",
+		"name": "Gyeongsangnam-do",
+		"priority": 10
+	},
+	{
+		"code": "28",
+		"name": "Incheon-gwangyeoksi",
+		"priority": 11
+	},
+	{
+		"code": "49",
+		"name": "Jeju-teukbyeoljachido",
+		"priority": 12
+	},
+	{
+		"code": "45",
+		"name": "Jeollabuk-do",
+		"priority": 13
+	},
+	{
+		"code": "46",
+		"name": "Jeollanam-do",
+		"priority": 14
+	},
+	{
+		"code": "50",
+		"name": "Sejong",
+		"priority": 15
+	},
+	{
+		"code": "11",
+		"name": "Seoul-teukbyeolsi",
+		"priority": 16
+	},
+	{
+		"code": "31",
+		"name": "Ulsan-gwangyeoksi",
+		"priority": 17
+	}
+]

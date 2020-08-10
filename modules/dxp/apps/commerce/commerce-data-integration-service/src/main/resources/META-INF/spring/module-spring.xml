@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+	<bean class="com.liferay.commerce.data.integration.service.impl.CommerceDataIntegrationProcessLocalServiceImpl" id="com.liferay.commerce.data.integration.service.CommerceDataIntegrationProcessLocalService" />
+	<bean class="com.liferay.commerce.data.integration.service.impl.CommerceDataIntegrationProcessServiceImpl" id="com.liferay.commerce.data.integration.service.CommerceDataIntegrationProcessService" />
+	<bean class="com.liferay.commerce.data.integration.service.persistence.impl.CommerceDataIntegrationProcessPersistenceImpl" id="com.liferay.commerce.data.integration.service.persistence.CommerceDataIntegrationProcessPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.data.integration.service.impl.CommerceDataIntegrationProcessLogLocalServiceImpl" id="com.liferay.commerce.data.integration.service.CommerceDataIntegrationProcessLogLocalService" />
+	<bean class="com.liferay.commerce.data.integration.service.impl.CommerceDataIntegrationProcessLogServiceImpl" id="com.liferay.commerce.data.integration.service.CommerceDataIntegrationProcessLogService" />
+	<bean class="com.liferay.commerce.data.integration.service.persistence.impl.CommerceDataIntegrationProcessLogPersistenceImpl" id="com.liferay.commerce.data.integration.service.persistence.CommerceDataIntegrationProcessLogPersistence" parent="basePersistence" />
+</beans>

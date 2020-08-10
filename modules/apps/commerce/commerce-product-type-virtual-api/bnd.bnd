@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Commerce Product Type Virtual API
+Bundle-SymbolicName: com.liferay.commerce.product.type.virtual.api
+Bundle-Version: 2.0.29
+Export-Package:\
+	com.liferay.commerce.product.type.virtual.constants,\
+	com.liferay.commerce.product.type.virtual.exception,\
+	com.liferay.commerce.product.type.virtual.model,\
+	com.liferay.commerce.product.type.virtual.service,\
+	com.liferay.commerce.product.type.virtual.service.persistence,\
+	com.liferay.commerce.product.type.virtual.util

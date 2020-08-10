@@ -1,0 +1,269 @@
+.speedwell-frame .btn {
+	align-content: center;
+	align-items: center;
+	background: transparent;
+	border: 2px solid transparent;
+	border-radius: 8px;
+	display: inline-flex;
+	font-size: 10px;
+	font-weight: 900;
+	justify-content: center;
+	letter-spacing: 1px;
+	line-height: 1.25;
+	overflow: hidden;
+	padding: 10px 20px;
+	position: relative;
+	text-decoration: none;
+	text-transform: uppercase;
+	transition: border 0.2s ease-in;
+	white-space: nowrap;
+	z-index: 2;
+
+	&::before {
+		bottom: 0;
+		content: '';
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: -2;
+	}
+
+	&::after {
+		transition: all ease-in-out 0.3s;
+	}
+
+	&:active,
+	&:focus,
+	&:focus-within {
+		box-shadow: none !important;
+		outline: none !important;
+	}
+
+	&[disabled],
+	.disabled {
+		cursor: not-allowed;
+	}
+
+	&:not([disabled]):not(.disabled):not(.btn-unstyled):not(.btn-link) {
+		&::after {
+			content: '';
+			display: block;
+			height: 100%;
+			left: 0;
+			opacity: 0;
+			pointer-events: none;
+			position: absolute;
+			top: 0;
+			transform: scaleX(0);
+			transform-origin: left;
+			transition: all ease-in-out 0.3s;
+			width: 100%;
+			z-index: -1;
+		}
+
+		&:hover::after {
+			opacity: 1;
+			transform: scaleX(1);
+		}
+	}
+
+	&.btn-unstyled {
+		border: none;
+		border-radius: 0;
+		display: inline-block;
+		font-size: inherit;
+		font-weight: inherit;
+		letter-spacing: normal;
+		line-height: inherit;
+		padding: 0;
+		text-transform: none;
+
+		&:focus,
+		&:focus-within {
+			box-shadow: none;
+		}
+	}
+
+	&.btn-primary {
+		background: transparent;
+		border-color: $color-theme;
+		color: $color-bg;
+
+		&:not([disabled]):not(.disabled) {
+			border-color: $color-theme;
+
+			&::before {
+				background-color: $color-theme;
+			}
+
+			&::after {
+				background-color: $color-theme-dark;
+			}
+
+			&:hover,
+			&:focus {
+				border-color: $color-theme-dark;
+			}
+		}
+
+		&[disabled] {
+			border-color: $color-disabled;
+
+			&::before {
+				background-color: $color-disabled;
+			}
+		}
+	}
+
+	&.btn-secondary {
+		background: transparent;
+		border-color: $color-theme;
+		color: $color-theme;
+
+		&::before {
+			background-color: $color-bg;
+		}
+
+		&:not([disabled]):not(.disabled) {
+			border-color: $color-theme;
+
+			&::after {
+				background-color: $color-border;
+			}
+		}
+
+		&[disabled] {
+			border-color: $color-disabled;
+			color: $color-disabled;
+
+			&::before {
+				background-color: $color-bg;
+			}
+		}
+	}
+
+	&.btn-success {
+		background: transparent;
+		border-color: $color-mood-good;
+		color: $color-bg;
+
+		&:not([disabled]):not(.disabled) {
+			border-color: $color-mood-good;
+
+			&::before {
+				background-color: $color-mood-good;
+			}
+
+			&::after {
+				background-color: darken($color-mood-good, 10%);
+			}
+
+			&:hover,
+			&:focus {
+				border-color: darken($color-mood-good, 10%);
+			}
+		}
+
+		&[disabled] {
+			border-color: lighten($color-mood-good, 20%);
+
+			&::before {
+				background-color: lighten($color-mood-good, 20%);
+			}
+		}
+	}
+
+	&.btn-danger {
+		background: transparent;
+		border-color: $color-mood-bad;
+		color: $color-bg;
+
+		&:not([disabled]):not(.disabled) {
+			border-color: $color-mood-bad;
+
+			&::before {
+				background-color: $color-mood-bad;
+			}
+
+			&::after {
+				background-color: darken($color-mood-bad, 10%);
+			}
+
+			&:hover,
+			&:focus {
+				border-color: darken($color-mood-bad, 10%);
+			}
+		}
+
+		&[disabled] {
+			border-color: lighten($color-mood-bad, 20%);
+
+			&::before {
+				background-color: lighten($color-mood-bad, 20%);
+			}
+		}
+	}
+
+	&.btn-warning {
+		background: transparent;
+		border-color: $color-mood-neutral;
+		color: $color-bg;
+
+		&:not([disabled]):not(.disabled) {
+			border-color: $color-mood-neutral;
+
+			&::before {
+				background-color: $color-mood-neutral;
+			}
+
+			&::after {
+				background-color: darken($color-mood-neutral, 10%);
+			}
+
+			&:hover,
+			&:focus {
+				border-color: darken($color-mood-neutral, 10%);
+			}
+		}
+
+		&[disabled] {
+			border-color: lighten($color-mood-neutral, 20%);
+
+			&::before {
+				background-color: lighten($color-mood-neutral, 20%);
+			}
+		}
+	}
+
+	&.btn-monospaced {
+		border-radius: 8px;
+	}
+
+	&.btn-sm {
+		height: 44px;
+
+		&.btn-monospaced {
+			width: 44px;
+		}
+	}
+
+	&.btn-lg {
+		font-size: 12px;
+		height: 64px;
+
+		&.btn-monospaced {
+			width: 64px;
+		}
+	}
+
+	&.btn-fixed {
+		min-width: 170px;
+	}
+}
+
+.speedwell-frame .minium-card__actions .btn.btn-add-to-cart {
+	border-radius: 8px;
+	margin: 30px auto;
+	max-width: 180px;
+}

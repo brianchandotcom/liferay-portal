@@ -1,0 +1,15 @@
+Bundle-Name: Liferay Commerce Cart Content Web
+Bundle-SymbolicName: com.liferay.commerce.cart.content.web
+Bundle-Version: 1.0.38
+Import-Package:\
+	com.liferay.taglib.util;version="[7.4.0,9.0.0)",\
+	\
+	*
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang)";\
+		resource.bundle.base.name="content.Language"
+Require-Capability:\
+	soy;\
+		filter:="(type=commerce-cart-taglib)"
+Web-ContextPath: /commerce-cart-content-web

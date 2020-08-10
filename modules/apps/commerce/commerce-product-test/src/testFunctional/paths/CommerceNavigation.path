@@ -1,0 +1,84 @@
+<html>
+<head>
+<title>CommerceNavigation</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CommerceNavigation</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>CPOPTIONS_STATUS</td>
+	<td>//table[contains (@data-searchcontainerid,'cpOptions')]/tbody//td[contains (@class,'${key_cpOption}') and contains (.,'${key_cpOptionStatus}')] | //table[contains (@data-searchcontainerid,'cpInstances')]/tbody//td[contains (@class,'${key_cpOption}') and contains (.,'${key_cpOptionStatus}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMPTY_SEARCH_CONTAINER</td>
+	<td>//div[contains (@class,'empty-result-message-header')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTION_VALUES_LINK</td>
+	<td>//td[contains(.,'${key_optionEntryName}')]/../td/button[@type='button' and contains(.,'Values')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_NAME</td>
+	<td>//div[@class='dataset-display-wrapper' or @class='searchcontainer-content']//a[contains(.,'${key_entryName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_NAME_N</td>
+	<td>xpath=(//div[@class='dataset-display-wrapper' or @class='searchcontainer-content']//a)[${key_rowNumber}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONS_ENTRY_NAME</td>
+	<td>//div[@class='form-container']//td[contains(.,'${key_OptionEntryName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[contains(@class,'main-input-search')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_ALL_CHECKBOX</td>
+	<td>//input[contains (@id,'allRowIds') and (@type='checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SINGLE_ENTRY_CHECKBOX</td>
+	<td>//*[@data-qa-id='row']//*[text()='${key_entryName}']//..//input[@type='checkbox'] | //tr[@data-name='${key_entryName}']//input[@type="checkbox"] | //*[@data-qa-id='row' and contains(.,'${key_entryName}')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECTABLE_CHECKBOX</td>
+	<td>//tr[@data-selectable="true"]//..//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATIONS_TABLE_CHECKBOX</td>
+	<td>//tr[@data-name="${key_orgName}"]//input[@type="checkbox"]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APPLY_BUTTON</td>
+	<td>//span[normalize-space()='${key_text}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHOOSE_SITE_BUTTON</td>
+	<td>//tr/td[contains(.,'${key_siteName}')]//..//button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANY_ENTRY_NAME</td>
+	<td>//a[contains(.,'${key_entry}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

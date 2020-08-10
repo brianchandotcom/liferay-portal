@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Commerce Product Type Virtual Order Test
+Bundle-SymbolicName: com.liferay.commerce.product.type.virtual.order.test
+Bundle-Version: 1.0.0
+-includeresource:\
+	test-classes/integration,\
+	@lib/frutilla.jar

@@ -1,0 +1,29 @@
+.minium-topbar {
+	background-color: $color-bg;
+	color: $color-fg-alt;
+	display: flex;
+	flex-wrap: wrap;
+	position: relative;
+
+	&__start,
+	&__end {
+		display: flex;
+		flex: 1 1 auto;
+	}
+
+	&__end {
+		justify-content: flex-end;
+	}
+
+	&__search {
+		background-color: $color-bg-alt;
+		flex: 1 1 100%;
+		max-height: $frame-size;
+		overflow: hidden;
+		transition: max-height $transition;
+
+		.minium-frame:not(.has-search) & {
+			max-height: 0;
+		}
+	}
+}

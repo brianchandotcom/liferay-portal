@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.1.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_1_0.dtd">
+
+<service-builder auto-namespace-tables="false" package-path="com.liferay.commerce.payment">
+	<author>Luca Pellizzon</author>
+	<namespace>Commerce</namespace>
+	<entity local-service="true" name="CommercePaymentMethodGroupRel" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column db-name="CPaymentMethodGroupRelId" name="commercePaymentMethodGroupRelId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column localized="true" name="name" type="String" />
+		<column localized="true" name="description" type="String" />
+		<column name="imageId" type="long" />
+		<column name="engineKey" type="String" />
+		<column name="priority" type="double" />
+		<column name="active" type="boolean" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="priority" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="G_E" return-type="CommercePaymentMethodGroupRel" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="engineKey" />
+		</finder>
+		<finder name="G_A" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="active" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="Image" package-path="com.liferay.portal" />
+	</entity>
+	<exceptions>
+		<exception>CommercePaymentMethodGroupRelEngineKey</exception>
+		<exception>CommercePaymentMethodGroupRelName</exception>
+	</exceptions>
+</service-builder>

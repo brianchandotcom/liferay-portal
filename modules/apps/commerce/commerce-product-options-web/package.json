@@ -1,0 +1,15 @@
+{
+	"dependencies": {
+		"metal": "^2.13.2",
+		"metal-component": "^2.13.2",
+		"metal-promise": "^2.0.0",
+		"metal-soy": "^2.13.2",
+		"metal-state": "^2.13.2"
+	},
+	"name": "commerce-product-options-web",
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check"
+	},
+	"version": "1.0.44"
+}

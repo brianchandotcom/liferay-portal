@@ -1,0 +1,63 @@
+label[class*='-checkbox'],
+label[for*='rememberMe'] {
+	cursor: pointer;
+	display: block;
+	position: relative;
+	user-select: none;
+
+	input[type='checkbox'] {
+		cursor: pointer;
+		height: 16px;
+		margin-right: 10px;
+		width: 16px;
+
+		&::before {
+			background-color: $color-bg;
+			border: 1px solid #d7d7d7;
+			border-radius: 4px;
+			content: '';
+			font-weight: bold;
+			height: 16px;
+			position: absolute;
+			transition: background-color 0.1s ease-out;
+			width: 16px;
+		}
+
+		&:checked::before {
+			border: 1px solid $color-theme;
+		}
+
+		&:hover::before {
+			background-color: $color-theme;
+			border: 1px solid $color-theme;
+			transition: background-color 0.1s ease-in;
+		}
+
+		&:hover::after,
+		&:checked::after {
+			color: $color-theme;
+			content: '˩';
+			font-size: 15px;
+			font-weight: bold;
+			height: 16px;
+			left: 6px;
+			position: absolute;
+			top: -1px;
+			transform: rotateZ(45deg);
+			width: 16px;
+		}
+
+		&:hover::after {
+			color: white;
+			font-weight: bold;
+		}
+	}
+
+	input[class*='compare-checkbox'] {
+		&:hover::after,
+		&:checked::after {
+			left: 3px;
+			top: 2px;
+		}
+	}
+}

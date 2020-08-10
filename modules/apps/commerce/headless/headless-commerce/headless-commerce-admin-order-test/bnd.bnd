@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Headless Commerce Admin Order Test
+Bundle-SymbolicName: com.liferay.headless.commerce.admin.order.test
+Bundle-Version: 1.0.0
+-includeresource: com.liferay.headless.commerce.admin.order.client.jar=com.liferay.headless.admin.order.client-[0-9.]*.jar;lib:=true

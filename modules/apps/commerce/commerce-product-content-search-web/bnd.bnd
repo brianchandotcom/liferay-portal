@@ -1,0 +1,12 @@
+Bundle-Name: Liferay Commerce Product Content Search Web
+Bundle-SymbolicName: com.liferay.commerce.product.content.search.web
+Bundle-Version: 1.0.48
+Import-Package:\
+	com.liferay.portal.search.web.portlet.shared.search;version="[2.1.0,4.0.0)",\
+	\
+	*
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang)";\
+		resource.bundle.base.name="content.Language"
+Web-ContextPath: /commerce-product-content-search-web

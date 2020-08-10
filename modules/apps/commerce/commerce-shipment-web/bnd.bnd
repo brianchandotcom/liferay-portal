@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Commerce Shipment Web
+Bundle-SymbolicName: com.liferay.commerce.shipment.web
+Bundle-Version: 1.0.43
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang)";\
+		resource.bundle.base.name="content.Language"

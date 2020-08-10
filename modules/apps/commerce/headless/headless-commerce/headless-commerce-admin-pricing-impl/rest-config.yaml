@@ -1,0 +1,10 @@
+apiDir: "../headless-commerce-admin-pricing-api/src/main/java"
+apiPackagePath: "com.liferay.headless.commerce.admin.pricing"
+application:
+    baseURI: "/headless-commerce-admin-pricing"
+    className: "HeadlessCommerceAdminPricingApplication"
+    name: "Liferay.Headless.Commerce.Admin.Pricing"
+author: "Zoltán Takács"
+clientDir: "../headless-commerce-admin-pricing-client/src/main/java"
+forcePredictableSchemaPropertyName: false
+testDir: "../headless-commerce-admin-pricing-test/src/testIntegration/java"

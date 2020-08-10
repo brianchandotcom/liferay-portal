@@ -1,0 +1,9 @@
+{
+	"compilerOptions": {
+		"baseUrl": "./src/main/resources/META-INF/resources/js/",
+		"paths": {
+			"components": "components",
+			"utils": "utils"
+		}
+	}
+}

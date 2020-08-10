@@ -1,0 +1,82 @@
+[
+	{
+		"code": "BW",
+		"name": "Baden-Württemberg",
+		"priority": 1
+	},
+	{
+		"code": "BY",
+		"name": "Bayern",
+		"priority": 2
+	},
+	{
+		"code": "BE",
+		"name": "Berlin",
+		"priority": 3
+	},
+	{
+		"code": "BB",
+		"name": "Brandenburg",
+		"priority": 4
+	},
+	{
+		"code": "HB",
+		"name": "Bremen",
+		"priority": 5
+	},
+	{
+		"code": "HH",
+		"name": "Hamburg",
+		"priority": 6
+	},
+	{
+		"code": "HE",
+		"name": "Hessen",
+		"priority": 7
+	},
+	{
+		"code": "MV",
+		"name": "Mecklenburg-Vorpommern",
+		"priority": 8
+	},
+	{
+		"code": "NI",
+		"name": "Niedersachsen",
+		"priority": 9
+	},
+	{
+		"code": "NW",
+		"name": "Nordrhein-Westfalen",
+		"priority": 10
+	},
+	{
+		"code": "RP",
+		"name": "Rheinland-Pfalz",
+		"priority": 11
+	},
+	{
+		"code": "SL",
+		"name": "Saarland",
+		"priority": 12
+	},
+	{
+		"code": "SN",
+		"name": "Sachsen",
+		"priority": 13
+	},
+	{
+		"code": "ST",
+		"name": "Sachsen-Anhalt",
+		"priority": 14
+	},
+	{
+		"code": "SH",
+		"name": "Schleswig-Holstein",
+		"priority": 15
+	},
+	{
+		"code": "TH",
+		"name": "Thüringen",
+		"priority": 16
+	}
+]

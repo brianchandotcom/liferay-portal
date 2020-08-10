@@ -1,0 +1,11 @@
+.quantity-selector {
+	.simple {
+		&.input-group {
+			flex-wrap: nowrap;
+		}
+
+		input {
+			min-width: 75px;
+		}
+	}
+}

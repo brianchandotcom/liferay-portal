@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>CommerceFrontStore</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CommerceFrontStore</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>FS_PRODUCT_PRICE</td>
+	<td>//div[@class='product-detail-header']//div/div/div[contains(.,'${key_FSProductPrice}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FS_PRODUCT_SKU</td>
+	<td>//div[@class='product-detail-header']//..//div/h4[contains (.,'${key_FSProductSKU}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FS_PRODUCT_NAME</td>
+	<td>//div[@class='product-detail-header']//..//div/h1[contains (.,'${key_FSProductName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FS_PRODUCT_OPTIONS_SELECT</td>
+	<td>//div[contains (@class,'select-field-trigger')]//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FS_PRODUCT_OPTION</td>
+	<td>//div[@class='drop-chosen']/div/ul//li/a[contains (@title,'${key_optionValue}') and contains (.,'${key_optionValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FS_PRODUCT_IMAGE_THUMBNAIL</td>
+	<td>//div[@class='product-detail-header']//..//div[contains (@class,'thumb')]/img[contains (@src,'${key_FSProductImageThumb}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FS_PRODUCT_FULL_IMAGE</td>
+	<td>//div[@class='product-detail-header']//..//div[contains (@class,'full-image')]/img[contains (@src,'${key_FSProductImage}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

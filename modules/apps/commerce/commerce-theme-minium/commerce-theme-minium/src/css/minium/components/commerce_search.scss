@@ -1,0 +1,47 @@
+.commerce-search {
+	display: flex;
+
+	&__input {
+		flex-grow: 1;
+		padding: 20px;
+
+		input {
+			background-color: transparent;
+			border: 0;
+			caret-color: $color-theme;
+			font-size: 14px;
+			height: 100%;
+			width: 100%;
+
+			&:focus {
+				outline: none;
+			}
+
+			&::placeholder {
+				color: $color-fg;
+				font-weight: bold;
+				opacity: 0.35;
+			}
+		}
+	}
+
+	&__button {
+		align-items: center;
+		color: currentColor;
+		display: flex;
+		font-size: 21px;
+		height: $frame-size;
+		justify-content: center;
+		width: $frame-size;
+
+		&:hover {
+			color: currentColor;
+		}
+
+		&.is-ninja {
+			opacity: 0;
+			pointer-events: none;
+			visibility: hidden;
+		}
+	}
+}

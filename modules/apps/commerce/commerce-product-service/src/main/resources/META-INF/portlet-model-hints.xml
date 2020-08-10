@@ -1,0 +1,501 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.commerce.product.model.CommerceCatalog">
+		<field name="externalReferenceCode" type="String" />
+		<field name="commerceCatalogId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String" />
+		<field name="commerceCurrencyCode" type="String" />
+		<field name="catalogDefaultLanguageId" type="String" />
+		<field name="system" type="boolean" />
+	</model>
+	<model name="com.liferay.commerce.product.model.CommerceChannel">
+		<field name="externalReferenceCode" type="String" />
+		<field name="commerceChannelId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="siteGroupId" type="long" />
+		<field name="name" type="String">
+			<validator name="required" />
+		</field>
+		<field name="type" type="String">
+			<validator name="required" />
+		</field>
+		<field name="typeSettings" type="String" />
+		<field name="commerceCurrencyCode" type="String">
+			<validator name="required" />
+		</field>
+		<field name="priceDisplayType" type="String" />
+		<field name="discountsTargetNetPrice" type="boolean" />
+	</model>
+	<model name="com.liferay.commerce.product.model.CommerceChannelRel">
+		<field name="commerceChannelRelId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="commerceChannelId" type="long" />
+	</model>
+	<model name="com.liferay.commerce.product.model.CPAttachmentFileEntry">
+		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
+		<field name="CPAttachmentFileEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="fileEntryId" type="long" />
+		<field name="displayDate" type="Date" />
+		<field name="expirationDate" type="Date" />
+		<field localized="true" name="title" type="String" />
+		<field name="json" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="priority" type="double">
+			<validator name="number" />
+		</field>
+		<field name="type" type="int" />
+		<field name="lastPublishDate" type="Date" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.commerce.product.model.CPDefinition">
+		<field name="uuid" type="String" />
+		<field name="defaultLanguageId" type="String" />
+		<field name="CPDefinitionId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="CProductId" type="long" />
+		<field name="CPTaxCategoryId" type="long" />
+		<field name="productTypeName" type="String" />
+		<field name="availableIndividually" type="boolean" />
+		<field name="ignoreSKUCombinations" type="boolean" />
+		<field name="shippable" type="boolean" />
+		<field name="freeShipping" type="boolean" />
+		<field name="shipSeparately" type="boolean" />
+		<field name="shippingExtraPrice" type="double" />
+		<field name="width" type="double">
+			<validator name="number" />
+		</field>
+		<field name="height" type="double">
+			<validator name="number" />
+		</field>
+		<field name="depth" type="double">
+			<validator name="number" />
+		</field>
+		<field name="weight" type="double">
+			<validator name="number" />
+		</field>
+		<field name="taxExempt" type="boolean" />
+		<field name="telcoOrElectronics" type="boolean" />
+		<field name="DDMStructureKey" type="String" />
+		<field name="published" type="boolean">
+			<hint name="default-value">true</hint>
+		</field>
+		<field name="displayDate" type="Date" />
+		<field name="expirationDate" type="Date" />
+		<field name="lastPublishDate" type="Date" />
+		<field name="subscriptionEnabled" type="boolean" />
+		<field name="subscriptionLength" type="int">
+			<hint name="default-value">1</hint>
+		</field>
+		<field name="subscriptionType" type="String" />
+		<field name="subscriptionTypeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="maxSubscriptionCycles" type="long" />
+		<field name="deliverySubscriptionEnabled" type="boolean" />
+		<field name="deliverySubscriptionLength" type="int" />
+		<field name="deliverySubscriptionType" type="String" />
+		<field name="deliverySubscriptionTypeSettings" type="String" />
+		<field name="deliveryMaxSubscriptionCycles" type="long" />
+		<field name="accountGroupFilterEnabled" type="boolean" />
+		<field name="channelFilterEnabled" type="boolean" />
+		<field name="version" type="int" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.commerce.product.model.CPDefinitionLink">
+		<field name="uuid" type="String" />
+		<field name="CPDefinitionLinkId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="CPDefinitionId" type="long" />
+		<field name="CProductId" type="long" />
+		<field name="priority" type="double">
+			<validator name="number" />
+		</field>
+		<field name="type" type="String" />
+	</model>
+	<model name="com.liferay.commerce.product.model.CPDefinitionLocalization">
+		<field name="mvccVersion" type="long" />
+		<field name="cpDefinitionLocalizationId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="CPDefinitionId" type="long" />
+		<field name="languageId" type="String" />
+		<field name="name" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="shortDescription" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="metaTitle" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="metaDescription" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="metaKeywords" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+	</model>
+	<model name="com.liferay.commerce.product.model.CPDefinitionOptionRel">
+		<field name="uuid" type="String" />
+		<field name="CPDefinitionOptionRelId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="CPDefinitionId" type="long" />
+		<field name="CPOptionId" type="long" />
+		<field localized="true" name="name" type="String">
+			<validator name="required" />
+		</field>
+		<field localized="true" name="description" type="String" />
+		<field name="DDMFormFieldTypeName" type="String">
+			<validator name="required" />
+		</field>
+		<field name="priority" type="double">
+			<validator name="number" />
+		</field>
+		<field name="facetable" type="boolean" />
+		<field name="required" type="boolean" />
+		<field name="skuContributor" type="boolean" />
+		<field name="key" type="String">
+			<validator name="required" />
+		</field>
+		<field name="priceType" type="String" />
+	</model>
+	<model name="com.liferay.commerce.product.model.CPDefinitionOptionValueRel">
+		<field name="uuid" type="String" />
+		<field name="CPDefinitionOptionValueRelId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="CPDefinitionOptionRelId" type="long" />
+		<field name="CPInstanceUuid" type="String" />
+		<field name="CProductId" type="long" />
+		<field localized="true" name="name" type="String">
+			<validator name="required" />
+		</field>
+		<field name="priority" type="double">
+			<validator name="number" />
+		</field>
+		<field name="key" type="String">
+			<validator name="required" />
+		</field>
+		<field name="quantity" type="int" />
+		<field name="preselected" type="boolean" />
+		<field name="price" type="BigDecimal" />
+	</model>
+	<model name="com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue">
+		<field name="uuid" type="String" />
+		<field name="CPDefinitionSpecificationOptionValueId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="CPDefinitionId" type="long" />
+		<field name="CPSpecificationOptionId" type="long" />
+		<field name="CPOptionCategoryId" type="long" />
+		<field localized="true" name="value" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="priority" type="double">
+			<validator name="number" />
+		</field>
+		<field name="lastPublishDate" type="Date" />
+	</model>
+	<model name="com.liferay.commerce.product.model.CPDisplayLayout">
+		<field name="uuid" type="String" />
+		<field name="CPDisplayLayoutId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="layoutUuid" type="String">
+			<validator name="required" />
+		</field>
+	</model>
+	<model name="com.liferay.commerce.product.model.CPFriendlyURLEntry">
+		<field name="uuid" type="String" />
+		<field name="CPFriendlyURLEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="languageId" type="String" />
+		<field name="urlTitle" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="main" type="boolean" />
+	</model>
+	<model name="com.liferay.commerce.product.model.CPInstance">
+		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
+		<field name="CPInstanceId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="CPDefinitionId" type="long" />
+		<field name="CPInstanceUuid" type="String" />
+		<field name="sku" type="String">
+			<validator name="required" />
+		</field>
+		<field name="gtin" type="String" />
+		<field name="manufacturerPartNumber" type="String" />
+		<field name="purchasable" type="boolean">
+			<hint name="default-value">true</hint>
+		</field>
+		<field name="width" type="double">
+			<validator name="number" />
+		</field>
+		<field name="height" type="double">
+			<validator name="number" />
+		</field>
+		<field name="depth" type="double">
+			<validator name="number" />
+		</field>
+		<field name="weight" type="double">
+			<validator name="number" />
+		</field>
+		<field name="price" type="BigDecimal">
+			<validator name="number" />
+		</field>
+		<field name="promoPrice" type="BigDecimal" />
+		<field name="cost" type="BigDecimal">
+			<validator name="number" />
+		</field>
+		<field name="published" type="boolean">
+			<hint name="default-value">true</hint>
+		</field>
+		<field name="displayDate" type="Date" />
+		<field name="expirationDate" type="Date" />
+		<field name="lastPublishDate" type="Date" />
+		<field name="overrideSubscriptionInfo" type="boolean" />
+		<field name="subscriptionEnabled" type="boolean" />
+		<field name="subscriptionLength" type="int">
+			<hint name="default-value">1</hint>
+		</field>
+		<field name="subscriptionType" type="String" />
+		<field name="subscriptionTypeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="maxSubscriptionCycles" type="long" />
+		<field name="deliverySubscriptionEnabled" type="boolean" />
+		<field name="deliverySubscriptionLength" type="int" />
+		<field name="deliverySubscriptionType" type="String" />
+		<field name="deliverySubscriptionTypeSettings" type="String" />
+		<field name="deliveryMaxSubscriptionCycles" type="long" />
+		<field name="unspsc" type="String" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.commerce.product.model.CPInstanceOptionValueRel">
+		<field name="uuid" type="String" />
+		<field name="CPInstanceOptionValueRelId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="CPDefinitionOptionRelId" type="long" />
+		<field name="CPDefinitionOptionValueRelId" type="long" />
+		<field name="CPInstanceId" type="long" />
+	</model>
+	<model name="com.liferay.commerce.product.model.CPMeasurementUnit">
+		<field name="uuid" type="String" />
+		<field name="CPMeasurementUnitId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field localized="true" name="name" type="String">
+			<validator name="required" />
+		</field>
+		<field name="key" type="String">
+			<validator name="required" />
+		</field>
+		<field name="rate" type="double" />
+		<field name="primary" type="boolean" />
+		<field name="priority" type="double">
+			<validator name="number" />
+		</field>
+		<field name="type" type="int" />
+		<field name="lastPublishDate" type="Date" />
+	</model>
+	<model name="com.liferay.commerce.product.model.CPOption">
+		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
+		<field name="CPOptionId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field localized="true" name="name" type="String">
+			<validator name="required" />
+		</field>
+		<field localized="true" name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="DDMFormFieldTypeName" type="String">
+			<validator name="required" />
+		</field>
+		<field name="facetable" type="boolean" />
+		<field name="required" type="boolean" />
+		<field name="skuContributor" type="boolean" />
+		<field name="key" type="String">
+			<validator name="required" />
+		</field>
+		<field name="lastPublishDate" type="Date" />
+	</model>
+	<model name="com.liferay.commerce.product.model.CPOptionCategory">
+		<field name="uuid" type="String" />
+		<field name="CPOptionCategoryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field localized="true" name="title" type="String">
+			<validator name="required" />
+		</field>
+		<field localized="true" name="description" type="String" />
+		<field name="priority" type="double">
+			<validator name="number" />
+		</field>
+		<field name="key" type="String">
+			<validator name="required" />
+		</field>
+		<field name="lastPublishDate" type="Date" />
+	</model>
+	<model name="com.liferay.commerce.product.model.CPOptionValue">
+		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
+		<field name="CPOptionValueId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="CPOptionId" type="long" />
+		<field localized="true" name="name" type="String">
+			<validator name="required" />
+		</field>
+		<field name="priority" type="double">
+			<validator name="number" />
+		</field>
+		<field name="key" type="String">
+			<validator name="required" />
+		</field>
+		<field name="lastPublishDate" type="Date" />
+	</model>
+	<model name="com.liferay.commerce.product.model.CProduct">
+		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
+		<field name="CProductId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="publishedCPDefinitionId" type="long" />
+		<field name="latestVersion" type="int" />
+	</model>
+	<model name="com.liferay.commerce.product.model.CPSpecificationOption">
+		<field name="uuid" type="String" />
+		<field name="CPSpecificationOptionId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="CPOptionCategoryId" type="long" />
+		<field localized="true" name="title" type="String">
+			<validator name="required" />
+		</field>
+		<field localized="true" name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="facetable" type="boolean" />
+		<field name="key" type="String">
+			<validator name="required" />
+		</field>
+		<field name="lastPublishDate" type="Date" />
+	</model>
+	<model name="com.liferay.commerce.product.model.CPTaxCategory">
+		<field name="CPTaxCategoryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field localized="true" name="name" type="String" />
+		<field localized="true" name="description" type="String" />
+	</model>
+</model-hints>

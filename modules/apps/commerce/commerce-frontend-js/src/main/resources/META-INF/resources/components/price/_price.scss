@@ -1,0 +1,41 @@
+.price-value {
+	font-weight: bold;
+	margin-right: $spacer;
+
+	&:last-of-type {
+		margin-right: 0;
+	}
+
+	&-big {
+		font-size: 18px;
+	}
+
+	&-discount,
+	&-final {
+		color: $danger-primary;
+	}
+
+	&-inactive {
+		color: $gray-600;
+		font-weight: normal;
+		text-decoration: line-through;
+	}
+
+	&-percentages {
+		font-size: 10px;
+		white-space: nowrap;
+
+		&::after {
+			color: $gray-600;
+			content: ' | ';
+		}
+
+		&:last-child::after {
+			content: '';
+		}
+	}
+
+	&-promo {
+		color: $danger-primary;
+	}
+}

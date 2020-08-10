@@ -1,0 +1,22 @@
+dependencies {
+	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.10.3"
+	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.10.3"
+	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.10.3"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.19"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.portal.odata.api", version: "default"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.portal.vulcan.api", version: "default"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.petra.function", version: "default"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.petra.string", version: "default"
+	testIntegrationCompile group: "javax.validation", name: "validation-api", version: "2.0.1.Final"
+	testIntegrationCompile group: "commons-beanutils", name: "commons-beanutils", version: "default"
+	testIntegrationCompile group: "commons-lang", name: "commons-lang", version: "default"
+	testIntegrationCompile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "default"
+	testIntegrationCompile group: "junit", name: "junit", version: "default"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.test", version: "default"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.test.integration", version: "default"
+
+	testIntegrationCompile project(":apps:portal-search:portal-search-test-util")
+	testIntegrationCompile project(":apps:commerce:headless:headless-commerce:headless-commerce-admin-catalog-client")
+	testIntegrationCompile project(":apps:commerce:headless:headless-commerce:headless-commerce-admin-catalog-api")
+}

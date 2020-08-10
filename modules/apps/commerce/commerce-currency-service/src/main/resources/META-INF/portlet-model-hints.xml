@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.commerce.currency.model.CommerceCurrency">
+		<field name="uuid" type="String" />
+		<field name="commerceCurrencyId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="code" type="String">
+			<validator name="required" />
+		</field>
+		<field localized="true" name="name" type="String">
+			<validator name="required" />
+		</field>
+		<field name="symbol" type="String" />
+		<field name="rate" type="BigDecimal">
+			<validator name="min">[0]</validator>
+			<validator name="number" />
+		</field>
+		<field localized="true" name="formatPattern" type="String" />
+		<field name="maxFractionDigits" type="int" />
+		<field name="minFractionDigits" type="int" />
+		<field name="roundingMode" type="String" />
+		<field name="primary" type="boolean" />
+		<field name="priority" type="double">
+			<validator name="number" />
+		</field>
+		<field name="active" type="boolean" />
+		<field name="lastPublishDate" type="Date" />
+	</model>
+</model-hints>

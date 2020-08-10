@@ -1,0 +1,21 @@
+dependencies {
+	compileOnly group: "com.liferay.commerce", name: "com.liferay.commerce.account.api", version: "3.6.0"
+	compileOnly group: "com.liferay.commerce", name: "com.liferay.commerce.price.list.api", version: "4.0.0"
+	compileOnly group: "com.liferay.commerce", name: "com.liferay.commerce.shipping.engine.fixed.api", version: "2.0.0"
+	compileOnly group: "com.liferay.portal", name: "release.portal.api", version: "7.1.1"
+	compileOnly group: "junit", name: "junit", version: "4.12"
+	compileOnly project(":apps:commerce:commerce-api")
+	compileOnly project(":apps:commerce:commerce-currency-api")
+	compileOnly project(":apps:commerce:commerce-currency-test-util")
+	compileOnly project(":apps:commerce:commerce-inventory-api")
+	compileOnly project(":apps:commerce:commerce-payment-api")
+	compileOnly project(":apps:commerce:commerce-payment-test-util")
+	compileOnly project(":apps:commerce:commerce-product-api")
+	compileOnly project(":apps:commerce:commerce-product-test-util")
+	compileOnly project(":apps:commerce:commerce-tax-api")
+	compileOnly project(":apps:commerce:commerce-tax-engine-fixed-api")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/test")
+}

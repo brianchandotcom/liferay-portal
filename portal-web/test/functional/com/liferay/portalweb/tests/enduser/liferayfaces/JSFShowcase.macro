@@ -1,0 +1,505 @@
+definition {
+
+	macro clearHiddenValue {
+		if (isSet(message1)) {
+			Click(
+				key_text = "Clear",
+				locator1 = "JSFShowcase#COPY_CLEAR_BUTTON");
+
+			Click(locator1 = "JSFShowcase#GENERAL_BUTTON");
+
+			AssertElementNotPresent(
+				key_message = "${message1}",
+				locator1 = "JSFShowcase#RESULT_MESSAGE");
+
+			if ("${invalid}" == "true") {
+				AssertElementPresent(
+					key_message = "${messageinvalid1}",
+					locator1 = "JSFShowcase#RESULT_MESSAGE");
+			}
+		}
+
+		if (isSet(message2)) {
+			Click(
+				key_text = "Clear",
+				locator1 = "JSFShowcase#COPY_CLEAR_BUTTON_2");
+
+			Click(locator1 = "JSFShowcase#GENERAL_BUTTON_2");
+
+			AssertElementNotPresent(
+				key_message = "${message2}",
+				locator1 = "JSFShowcase#RESULT_MESSAGE");
+
+			if ("${invalid}" == "true") {
+				AssertElementPresent(
+					key_message = "${messageinvalid2}",
+					locator1 = "JSFShowcase#RESULT_MESSAGE");
+			}
+		}
+	}
+
+	macro clickButton {
+		if ("${link}" == "true") {
+			AssertElementPresent(locator1 = "JSFShowcase#GENERAL_IMAGE_LINK");
+
+			Click(locator1 = "JSFShowcase#GENERAL_IMAGE_LINK");
+
+			AssertElementPresent(locator1 = "JSFShowcase#GENERAL_LINK");
+
+			Click(locator1 = "JSFShowcase#GENERAL_LINK");
+		}
+		else {
+			AssertElementPresent(locator1 = "JSFShowcase#GENERAL_IMAGE_BUTTON");
+
+			Click(locator1 = "JSFShowcase#GENERAL_IMAGE_BUTTON");
+
+			AssertElementPresent(locator1 = "JSFShowcase#GENERAL_BUTTON");
+
+			Click(locator1 = "JSFShowcase#GENERAL_BUTTON");
+		}
+	}
+
+	macro clickButtonLinkImmediate {
+		Click(locator1 = "JSFShowcase#GENERAL_BUTTON");
+
+		AssertElementPresent(
+			key_message = "${message1}",
+			locator1 = "JSFShowcase#RESULT_MESSAGE");
+
+		Click(locator1 = "JSFShowcase#GENERAL_BUTTON_2");
+
+		AssertElementPresent(
+			key_message = "${message2}",
+			locator1 = "JSFShowcase#RESULT_MESSAGE");
+	}
+
+	macro clickButtonNavigationParam {
+		if (isSet(parameterValue1)) {
+			AssertElementPresent(
+				key_parameterValue = "${parameterValue1}",
+				locator1 = "JSFShowcase#PARAMETER_VALUE");
+		}
+
+		if ("${commandButton}" == "true") {
+			Check(
+				checkboxName = "",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		Click(
+			key_navigation = "${navigation1}",
+			locator1 = "JSFShowcase#NAVIGATION_BUTTON");
+
+		AssertElementPresent(
+			key_navigation = "${navigation2}",
+			locator1 = "JSFShowcase#NAVIGATION_BUTTON");
+
+		if (isSet(parameterValue2)) {
+			AssertElementPresent(
+				key_parameterValue = "${parameterValue2}",
+				locator1 = "JSFShowcase#PARAMETER_VALUE");
+		}
+
+		if ("${commandButton}" == "true") {
+			Check(
+				checkboxName = "",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		Click(
+			key_navigation = "${navigation2}",
+			locator1 = "JSFShowcase#NAVIGATION_BUTTON");
+
+		AssertElementPresent(
+			key_navigation = "${navigation1}",
+			locator1 = "JSFShowcase#NAVIGATION_BUTTON");
+
+		if (isSet(parameterValue3)) {
+			AssertElementPresent(
+				key_parameterValue = "${parameterValue3}",
+				locator1 = "JSFShowcase#PARAMETER_VALUE");
+		}
+	}
+
+	macro clickButtonValueAttribute {
+		Click(
+			key_attribute = "${attribute}",
+			locator1 = "JSFShowcase#ATTRIBUTE_BUTTON");
+
+		AssertElementPresent(
+			key_attribute = "${attribute}",
+			locator1 = "JSFShowcase#MODEL_VALUE");
+	}
+
+	macro select {
+		if (isSet(listboxNameList)) {
+			for (var listboxNameList : list "${listboxNameList}") {
+				Click(
+					key_opt = "${listboxNameList}",
+					locator1 = "JSFShowcase#GENERAL_SELECT");
+			}
+		}
+
+		Click(locator1 = "JSFShowcase#GENERAL_BUTTON");
+
+		for (var textValue : list "${textValue}") {
+			AssertElementPresent(
+				key_attribute = "${textValue}",
+				locator1 = "JSFShowcase#MODEL_VALUE");
+		}
+
+		AssertElementNotPresent(locator1 = "JSFShowcase#REQUIRED_ERROR_MESSAGE");
+	}
+
+	macro selectCheckbox {
+		if (isSet(checkboxName)) {
+			Check(
+				checkboxName = "${checkboxName}",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		if (isSet(checkboxNameList)) {
+			for (var checkboxNameList : list "${checkboxNameList}") {
+				Check(
+					key_opt = "${checkboxNameList}",
+					locator1 = "JSFShowcase#GENERAL_CHECKBOX");
+			}
+		}
+
+		if (isSet(uncheckboxNameList)) {
+			for (var uncheckboxNameList : list "${uncheckboxNameList}") {
+				Uncheck(
+					key_opt = "${uncheckboxNameList}",
+					locator1 = "JSFShowcase#GENERAL_CHECKBOX");
+			}
+		}
+
+		Click(locator1 = "JSFShowcase#GENERAL_BUTTON");
+
+		if (isSet(textValue)) {
+			for (var textValue : list "${textValue}") {
+				AssertElementPresent(
+					key_attribute = "${textValue}",
+					locator1 = "JSFShowcase#MODEL_VALUE");
+			}
+		}
+
+		else {
+			AssertElementPresent(
+				key_attribute = "${textValue}",
+				locator1 = "JSFShowcase#MODEL_VALUE");
+		}
+
+		AssertElementNotPresent(locator1 = "JSFShowcase#REQUIRED_ERROR_MESSAGE");
+	}
+
+	macro submitHiddenValue {
+		if (isSet(message1)) {
+			if ("${invalid}" == "true") {
+				Click(
+					key_text = "Copy an invalid",
+					locator1 = "JSFShowcase#COPY_CLEAR_BUTTON");
+			}
+			else {
+				Click(
+					key_text = "Copy a valid",
+					locator1 = "JSFShowcase#COPY_CLEAR_BUTTON");
+			}
+
+			Click(locator1 = "JSFShowcase#GENERAL_BUTTON");
+
+			AssertElementPresent(
+				key_message = "${message1}",
+				locator1 = "JSFShowcase#RESULT_MESSAGE");
+
+			if ("${immediate}" == "true") {
+				AssertElementPresent(
+					key_message = "${messageImmediate1}",
+					locator1 = "JSFShowcase#RESULT_MESSAGE");
+			}
+		}
+
+		if (isSet(message2)) {
+			if ("${invalid}" == "true") {
+				Click(
+					key_text = "Copy an invalid",
+					locator1 = "JSFShowcase#COPY_CLEAR_BUTTON_2");
+			}
+			else {
+				Click(
+					key_text = "Copy a valid",
+					locator1 = "JSFShowcase#COPY_CLEAR_BUTTON_2");
+			}
+
+			Click(locator1 = "JSFShowcase#GENERAL_BUTTON_2");
+
+			AssertElementPresent(
+				key_message = "${message2}",
+				locator1 = "JSFShowcase#RESULT_MESSAGE");
+
+			if ("${immediate}" == "true") {
+				AssertElementPresent(
+					key_message = "${messageImmediate2}",
+					locator1 = "JSFShowcase#RESULT_MESSAGE");
+			}
+		}
+	}
+
+	macro submitMessage {
+		Type(
+			key_text = "${text}",
+			locator1 = "TextInput#ANY",
+			value1 = "${textValue}");
+
+		Click(locator1 = "JSFShowcase#GENERAL_BUTTON");
+
+		AssertTextEquals(
+			key_text = "${text}",
+			locator1 = "TextInput#ANY",
+			value1 = "${textValue}");
+
+		AssertTextEquals(
+			key_message = "${message}",
+			locator1 = "JSFShowcase#RESULT_MESSAGE",
+			value1 = "${message}");
+
+		if (isSet(message2)) {
+			Type(
+				key_text = "${text}",
+				locator1 = "JSFShowcase#GENERAL_TEXT_INPUT_2",
+				value1 = "${textValue2}");
+
+			Click(locator1 = "JSFShowcase#GENERAL_BUTTON_2");
+
+			AssertTextEquals(
+				key_text = "${text}",
+				locator1 = "JSFShowcase#GENERAL_TEXT_INPUT_2",
+				value1 = "${textValue2}");
+
+			AssertTextEquals(
+				key_message = "${message2}",
+				locator1 = "JSFShowcase#RESULT_MESSAGE",
+				value1 = "${message2}");
+
+			AssertTextEquals(
+				key_message = "${message3}",
+				locator1 = "JSFShowcase#RESULT_MESSAGE",
+				value1 = "${message3}");
+		}
+
+		if (isSet(message3)) {
+			Type(
+				key_text = "${text}",
+				locator1 = "JSFShowcase#GENERAL_TEXT_INPUT_3",
+				value1 = "${textValue3}");
+
+			Click(locator1 = "JSFShowcase#GENERAL_BUTTON_3");
+
+			AssertTextEquals(
+				key_text = "${text}",
+				locator1 = "JSFShowcase#GENERAL_TEXT_INPUT_3",
+				value1 = "${textValue3}");
+
+			AssertTextEquals(
+				key_message = "${message3}",
+				locator1 = "JSFShowcase#RESULT_MESSAGE",
+				value1 = "${message3}");
+
+		}
+	}
+
+	macro submitMessages {
+
+		Type(
+			key_text = "${text}",
+			locator1 = "TextInput#GENERAL_TEXT_INPUT_${messageNum}",
+			value1 = "${textValue${messageNum}}");
+
+		Click(locator1 = "JSFShowcase#GENERAL_BUTTON_${messageNum}");
+
+		AssertTextEquals(
+			key_text = "${text}",
+			locator1 = "TextInput#GENERAL_TEXT_INPUT_${messageNum}",
+			value1 = "${textValue${messageNum}}");
+
+		AssertTextEquals(
+			key_message = "${message${messageNum}}",
+			locator1 = "JSFShowcase#RESULT_MESSAGE",
+			value1 = "${message${messageNum}}");
+	}
+
+	macro submitText {
+		if ("${textArea}" == "true") {
+			Type(
+				key_text = "${text}",
+				locator1 = "TextArea#ANY",
+				value1 = "${textValue}");
+		}
+		else {
+			Type(
+				key_text = "${text}",
+				locator1 = "TextInput#ANY",
+				value1 = "${textValue}");
+		}
+
+		Click(locator1 = "JSFShowcase#GENERAL_BUTTON");
+
+		AssertElementPresent(
+			key_attribute = "${textValue}",
+			locator1 = "JSFShowcase#MODEL_VALUE");
+
+		AssertElementNotPresent(locator1 = "JSFShowcase#REQUIRED_ERROR_MESSAGE");
+	}
+
+	macro uploadAndDeleteFile {
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			locator1 = "TextInput#FILE",
+			value1 = "${fileName}");
+
+		if (!("${instantAjax}" == "true")) {
+			Click(locator1 = "BridgeDemos#SUBMIT_BUTTON");
+		}
+
+		AssertTextEquals(
+			key_fileName = "${fileName}",
+			locator1 = "JSFShowcase#FILE_NAME_TABLE",
+			value1 = "${fileName}");
+
+		ClickNoError(locator1 = "JSFShowcase#UPLOADED_FILE_DELETE");
+
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+		AssertElementNotPresent(
+			key_fileName = "${fileName}",
+			locator1 = "JSFShowcase#FILE_NAME_TABLE");
+	}
+
+	macro validateRequired {
+		Click(locator1 = "JSFShowcase#GENERAL_BUTTON");
+
+		AssertElementPresent(locator1 = "JSFShowcase#REQUIRED_ERROR_MESSAGE");
+	}
+
+	macro validateRequiredCheckbox {
+		Click(locator1 = "BridgeDemos#SUBMIT_BUTTON");
+
+		AssertElementNotPresent(locator1 = "JSFShowcase#REQUIRED_ERROR_MESSAGE");
+
+		Check(
+			checkboxName = "Required",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Click(locator1 = "BridgeDemos#SUBMIT_BUTTON");
+
+		if ("${selectManyMenu}" == "true" || "${selectManyList}" == "true") {
+			AssertElementPresent(locator1 = "JSFShowcase#VALID_ERROR_MESSAGE");
+		}
+		else {
+			AssertElementPresent(locator1 = "JSFShowcase#REQUIRED_ERROR_MESSAGE");
+		}
+	}
+
+	macro viewDataTable {
+		for (var item : list "Customers,First Name,Last Name,Date of Birth,Country,Elbridge,Braxton,Oct 19, 1737,United States,Footer") {
+			AssertElementPresent(
+				key_item = "${item}",
+				locator1 = "JSFShowcase#DATA_TABLE_ITEM");
+		}
+	}
+
+	macro viewFromButtonResult {
+		Click(locator1 = "JSFShowcase#GENERAL_BUTTON");
+
+		AssertElementPresent(
+			key_message = "${message}",
+			locator1 = "JSFShowcase#RESULT_MESSAGE");
+	}
+
+	macro viewGridTable {
+		for (var column : list "1,2,3") {
+			AssertElementPresent(
+				key_column = "${column}",
+				key_row = "1",
+				locator1 = "JSFShowcase#GRID_TABLE_ITEM");
+		}
+
+		for (var column : list "1,2,3") {
+			AssertElementPresent(
+				key_column = "${column}",
+				key_row = "2",
+				locator1 = "JSFShowcase#GRID_TABLE_ITEM");
+		}
+
+		AssertElementPresent(
+			key_column = "1",
+			key_row = "3",
+			locator1 = "JSFShowcase#GRID_TABLE_ITEM");
+	}
+
+	macro viewImages {
+		for (var imageName : list "Context-relative,#{resource},name,usemap") {
+			AssertElementPresent(
+				key_imageName = "${imageName}",
+				locator1 = "JSFShowcase#GRAPH_IMAGE");
+		}
+	}
+
+	macro viewLink {
+		if ("${image}" == "false") {
+			Click(
+				key_link = "${link}",
+				locator1 = "JSFShowcase#TEXT_LINK");
+		}
+		else {
+			Click(
+				key_link = "${link}",
+				locator1 = "JSFShowcase#GRAPH_IMAGE_LINK");
+		}
+
+		SelectWindow.selectPopUp(locator1 = "null");
+
+		AssertLocation.assertPartialLocation(value1 = "${linkURL}");
+
+		if (!("${newTab}" == "false")) {
+			Navigator.closeWindow();
+		}
+	}
+
+	macro viewStylesheet {
+		AssertElementPresent(
+			key_text = "Button",
+			locator1 = "Button#ANY");
+
+		AssertCssValue(
+			key_text = "Button",
+			locator1 = "Button#ANY",
+			locator2 = "opacity",
+			value1 = "0.65");
+
+		AssertElementPresent(locator1 = "xpath=(//button[normalize-space(text())='Button'])[2]");
+
+		AssertCssValue(
+			locator1 = "xpath=(//button[normalize-space(text())='Button'])[2]",
+			locator2 = "display",
+			value1 = "block");
+	}
+
+	macro viewVariousStylesButton {
+		for (var buttonName : list "Primary,Large,Default,Small,Mini,Disabled,Block") {
+			AssertElementPresent(
+				key_buttonName = "${buttonName}",
+				locator1 = "JSFShowcase#PRIMARY_STYLES_BUTTON");
+		}
+
+		for (var buttonName : list "Info,Success,Warning, Danger,Link,Large,Default,Small,Mini,Disabled,Block") {
+			AssertElementPresent(
+				key_buttonName = "${buttonName}",
+				locator1 = "JSFShowcase#NOT_PRIMARY_STYLES_BUTTON");
+		}
+
+		Click(
+			key_buttonName = "Primary",
+			locator1 = "JSFShowcase#PRIMARY_STYLES_BUTTON");
+	}
+
+}

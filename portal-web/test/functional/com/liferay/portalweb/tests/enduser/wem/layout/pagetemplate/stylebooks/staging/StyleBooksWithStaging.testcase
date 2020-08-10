@@ -380,4 +380,137 @@ definition {
 		}
 	}
 
+	@description = "This is for LPS-116106. Page Creator can change style book of widget page via Look and Feel settings in Staging site."
+	@priority = "3"
+	test ChangeStyleBookOfWidgetPageViaLookAndFeelInStagingSite {
+		task ("Edit the style book and Publish it") {
+			StyleBooks.selectForm(formName = "Color System");
+
+			StyleBooks.expandSection(sectionName = "Theme Colors");
+
+			Type(
+				key_text = "Primary",
+				locator1 = "TextInput#ANY",
+				value1 = "#00FF00");
+
+			StyleBooks.waitForAutoSave();
+
+			Pause(locator1 = "3000");
+
+			Type(
+				key_text = "Secondary",
+				locator1 = "TextInput#ANY",
+				value1 = "#FF0000");
+
+			StyleBooks.waitForAutoSave();
+
+			StyleBooks.clickPublish();
+		}
+
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name-staging",
+				layoutName = "Test Page Name",
+				site = "false");
+		}
+
+		task ("Add a Blogs portlet to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name-staging",
+				layoutName = "Test Page Name",
+				site = "false",
+				widgetName = "Blogs");
+		}
+
+		task ("Change to the new style book via Look and Feel") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			Click(locator1 = "ControlMenu#EDIT_COG");
+
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			AssertTextEquals(
+				key_styleBookName = "Inherited",
+				locator1 = "SitePagesEditPage#STYLE_BOOK_NAME",
+				value1 = "Inherited");
+
+			AssertClick(
+				key_text = "Change Style Book",
+				locator1 = "Button#ANY",
+				value1 = "Change Style Book");
+
+			StyleBooks.selectStyleBook(styleBookName = "Test Style Book Name");
+
+			AssertTextEquals(
+				key_styleBookName = "Test Style Book Name",
+				locator1 = "SitePagesEditPage#STYLE_BOOK_NAME",
+				value1 = "Test Style Book Name");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			Navigator.gotoBack();
+
+			AssertCssValue(
+				key_text = "New Entry",
+				locator1 = "Button#ANY",
+				locator2 = "background-color",
+				value1 = "rgba(0, 255, 0, 1)");
+
+			for (var buttonName : list "RSS,Subscribe") {
+				AssertCssValue(
+					key_text = "${buttonName}",
+					locator1 = "Button#ANY",
+					locator2 = "color",
+					value1 = "rgba(255, 0, 0, 1)");
+			}
+		}
+
+		task ("Change to default style book via Look and Feel") {
+			Click(locator1 = "ControlMenu#EDIT_COG");
+
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			AssertTextEquals(
+				key_styleBookName = "Test Style Book Name",
+				locator1 = "SitePagesEditPage#STYLE_BOOK_NAME",
+				value1 = "Test Style Book Name");
+
+			AssertClick(
+				key_text = "Change Style Book",
+				locator1 = "Button#ANY",
+				value1 = "Change Style Book");
+
+			StyleBooks.selectStyleBook(styleBookName = "Inherited from Master");
+
+			AssertTextEquals(
+				key_styleBookName = "Inherited from Master",
+				locator1 = "SitePagesEditPage#STYLE_BOOK_NAME",
+				value1 = "Inherited from Master");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			Navigator.gotoBack();
+
+			AssertCssValue(
+				key_text = "New Entry",
+				locator1 = "Button#ANY",
+				locator2 = "background-color",
+				value1 = "rgba(11, 95, 255, 1)");
+
+			for (var buttonName : list "RSS,Subscribe") {
+				AssertCssValue(
+					key_text = "${buttonName}",
+					locator1 = "Button#ANY",
+					locator2 = "color",
+					value1 = "rgba(107, 108, 126, 1)");
+			}
+		}
+	}
+
 }

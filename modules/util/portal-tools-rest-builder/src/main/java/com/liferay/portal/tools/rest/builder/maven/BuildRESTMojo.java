@@ -52,6 +52,16 @@ public class BuildRESTMojo extends AbstractMojo {
 	/**
 	 * @parameter
 	 */
+	public void setForceClientVersionDescription(
+		Boolean forceClientVersionDescription) {
+
+		_restBuilderArgs.setForceClientVersionDescription(
+			forceClientVersionDescription);
+	}
+
+	/**
+	 * @parameter
+	 */
 	public void setRESTConfigDir(File restConfigDir) {
 		_restBuilderArgs.setRESTConfigDir(restConfigDir);
 	}

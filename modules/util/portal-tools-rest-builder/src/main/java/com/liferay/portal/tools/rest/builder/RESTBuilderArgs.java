@@ -43,6 +43,12 @@ public class RESTBuilderArgs {
 		_copyrightFile = copyrightFile;
 	}
 
+	public void setForceClientVersionDescription(
+		Boolean forceClientVersionDescription) {
+
+		_forceClientVersionDescription = forceClientVersionDescription;
+	}
+
 	public void setRESTConfigDir(File restConfigDir) {
 		_restConfigDir = restConfigDir;
 	}

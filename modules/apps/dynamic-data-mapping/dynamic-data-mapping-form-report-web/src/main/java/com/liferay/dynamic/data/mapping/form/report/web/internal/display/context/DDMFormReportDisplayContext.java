@@ -83,7 +83,7 @@ public class DDMFormReportDisplayContext {
 		Stream<String> stream = keySet.stream();
 
 		stream.map(
-			fieldName -> ddmFormFieldsMap.get(fieldName)
+			ddmFormFieldName -> ddmFormFieldsMap.get(ddmFormFieldName)
 		).filter(
 			ddmFormField -> !StringUtil.equals(
 				ddmFormField.getType(), "fieldset")

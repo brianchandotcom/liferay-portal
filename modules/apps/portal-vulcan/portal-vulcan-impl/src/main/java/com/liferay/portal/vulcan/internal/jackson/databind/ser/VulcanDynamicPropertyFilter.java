@@ -35,12 +35,12 @@ public class VulcanDynamicPropertyFilter
 		return new VulcanDynamicPropertyFilter(propertyFilter);
 	}
 
-	public void addPropertyFilters(Set<String> propertyFilters) {
-		_propertyFilters.addAll(propertyFilters);
+	public void addFilteredPropertyKeys(Set<String> filteredPropertyKeys) {
+		_filteredPropertyKeys.addAll(filteredPropertyKeys);
 	}
 
-	public void clearPropertyFilters() {
-		_propertyFilters.clear();
+	public void clearFilteredPropertyKeys() {
+		_filteredPropertyKeys.clear();
 	}
 
 	@Override
@@ -54,20 +54,20 @@ public class VulcanDynamicPropertyFilter
 			return;
 		}
 
-		_vulcanPropertyFilter.serializeAsField(
+		_propertyFilter.serializeAsField(
 			object, jsonGenerator, serializerProvider, propertyWriter);
 	}
 
 	@Override
 	protected boolean include(PropertyWriter propertyWriter) {
-		return !_propertyFilters.contains(propertyWriter.getName());
+		return !_filteredPropertyKeys.contains(propertyWriter.getName());
 	}
 
-	private VulcanDynamicPropertyFilter(PropertyFilter vulcanPropertyFilter) {
-		_vulcanPropertyFilter = vulcanPropertyFilter;
+	private VulcanDynamicPropertyFilter(PropertyFilter propertyFilter) {
+		_propertyFilter = propertyFilter;
 	}
 
-	private final Set<String> _propertyFilters = new HashSet<>();
-	private final PropertyFilter _vulcanPropertyFilter;
+	private final Set<String> _filteredPropertyKeys = new HashSet<>();
+	private final PropertyFilter _propertyFilter;
 
 }

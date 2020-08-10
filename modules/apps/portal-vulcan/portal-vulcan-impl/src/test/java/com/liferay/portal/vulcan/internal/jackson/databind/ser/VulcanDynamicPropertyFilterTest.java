@@ -47,7 +47,7 @@ public class VulcanDynamicPropertyFilterTest {
 	public void testSerializeAsField() throws Exception {
 		Object object = new Object();
 
-		_vulcanDynamicPropertyFilter.addPropertyFilters(
+		_vulcanDynamicPropertyFilter.addFilteredPropertyKeys(
 			Collections.singleton("filtered"));
 
 		Mockito.when(
@@ -61,7 +61,7 @@ public class VulcanDynamicPropertyFilterTest {
 
 		Mockito.verifyZeroInteractions(_propertyFilter);
 
-		_vulcanDynamicPropertyFilter.clearPropertyFilters();
+		_vulcanDynamicPropertyFilter.clearFilteredPropertyKeys();
 
 		_vulcanDynamicPropertyFilter.serializeAsField(
 			object, _jsonGenerator, _serializerProvider, _propertyWriter);

@@ -23,8 +23,8 @@ import java.util.Set;
  */
 public interface DynamicPropertyFilter extends PropertyFilter {
 
-	public void addPropertyFilters(Set<String> propertyFilters);
+	public void addFilteredPropertyKeys(Set<String> filteredPropertyKeys);
 
-	public void clearPropertyFilters();
+	public void clearFilteredPropertyKeys();
 
 }

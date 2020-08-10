@@ -61,7 +61,7 @@ public class ExtendedEntityPropertyFilterTest {
 
 		Mockito.verify(
 			_dynamicPropertyFilter, Mockito.never()
-		).addPropertyFilters(
+		).addFilteredPropertyKeys(
 			any()
 		);
 		Mockito.verify(
@@ -72,7 +72,7 @@ public class ExtendedEntityPropertyFilterTest {
 		);
 		Mockito.verify(
 			_dynamicPropertyFilter
-		).clearPropertyFilters();
+		).clearFilteredPropertyKeys();
 	}
 
 	@Test
@@ -90,7 +90,7 @@ public class ExtendedEntityPropertyFilterTest {
 
 		Mockito.verify(
 			_dynamicPropertyFilter
-		).addPropertyFilters(
+		).addFilteredPropertyKeys(
 			eq(filteredPropertyKeys)
 		);
 		Mockito.verify(
@@ -101,7 +101,7 @@ public class ExtendedEntityPropertyFilterTest {
 		);
 		Mockito.verify(
 			_dynamicPropertyFilter
-		).clearPropertyFilters();
+		).clearFilteredPropertyKeys();
 	}
 
 	@Test
@@ -117,7 +117,7 @@ public class ExtendedEntityPropertyFilterTest {
 
 		Mockito.verify(
 			_dynamicPropertyFilter, Mockito.never()
-		).addPropertyFilters(
+		).addFilteredPropertyKeys(
 			any()
 		);
 		Mockito.verify(
@@ -128,7 +128,7 @@ public class ExtendedEntityPropertyFilterTest {
 		);
 		Mockito.verify(
 			_dynamicPropertyFilter
-		).clearPropertyFilters();
+		).clearFilteredPropertyKeys();
 	}
 
 	private DynamicPropertyFilter _dynamicPropertyFilter;

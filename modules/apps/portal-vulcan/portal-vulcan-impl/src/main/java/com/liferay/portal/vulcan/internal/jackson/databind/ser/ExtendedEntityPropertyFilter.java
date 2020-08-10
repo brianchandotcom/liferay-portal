@@ -51,14 +51,14 @@ public class ExtendedEntityPropertyFilter
 			).filter(
 				filteredPropertyKeys -> !filteredPropertyKeys.isEmpty()
 			).ifPresent(
-				_dynamicPropertyFilter::addPropertyFilters
+				_dynamicPropertyFilter::addFilteredPropertyKeys
 			);
 
 			_dynamicPropertyFilter.serializeAsField(
 				object, jsonGenerator, serializerProvider, propertyWriter);
 		}
 		finally {
-			_dynamicPropertyFilter.clearPropertyFilters();
+			_dynamicPropertyFilter.clearFilteredPropertyKeys();
 		}
 	}
 

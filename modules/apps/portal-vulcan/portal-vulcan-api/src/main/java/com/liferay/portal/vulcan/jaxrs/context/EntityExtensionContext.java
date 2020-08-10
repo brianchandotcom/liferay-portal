@@ -28,19 +28,15 @@ public abstract class EntityExtensionContext<T> implements ExtensionContext {
 
 	@Override
 	public Map<String, Object> getExtendedProperties(Object object) {
-		T entity = _parseObjectToEntity(object);
-
-		return getEntityExtendedProperties(entity);
+		return getEntityExtendedProperties(_toEntity(object));
 	}
 
 	@Override
 	public Set<String> getFilteredPropertyKeys(Object object) {
-		T entity = _parseObjectToEntity(object);
-
-		return getEntityFilteredPropertyKeys(entity);
+		return getEntityFilteredPropertyKeys(_toEntity(object));
 	}
 
-	private T _parseObjectToEntity(Object object) {
+	private T _toEntity(Object object) {
 		try {
 			T entity = (T)object;
 

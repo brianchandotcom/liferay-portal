@@ -363,8 +363,6 @@ public class ExpandoSearchTest {
 		boolean autoScreenName = false;
 		String screenName = RandomTestUtil.randomString();
 		String emailAddress = RandomTestUtil.randomString() + "@liferay.com";
-		long facebookId = 0;
-		String openId = null;
 		Locale locale = LocaleUtil.getDefault();
 		String firstName = RandomTestUtil.randomString();
 		String middleName = RandomTestUtil.randomString();
@@ -385,10 +383,9 @@ public class ExpandoSearchTest {
 		User user = _userLocalService.addUser(
 			creatorUserId, TestPropsValues.getCompanyId(), autoPassword,
 			password1, password2, autoScreenName, screenName, emailAddress,
-			facebookId, openId, locale, firstName, middleName, lastName,
-			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
-			jobTitle, groupIds, organizationIds, roleIds, userGroupIds,
-			sendMail, serviceContext);
+			locale, firstName, middleName, lastName, prefixId, suffixId, male,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			organizationIds, roleIds, userGroupIds, sendMail, serviceContext);
 
 		_users.add(user);
 

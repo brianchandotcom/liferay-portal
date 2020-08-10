@@ -54,13 +54,13 @@ export default withRouter(
 		const historyPushParser = historyPushWithSlug(history.push);
 
 		return (
-			<section className="border-bottom questions-section questions-section-nav">
+			<section className="questions-section questions-section-nav">
 				<div className="questions-container">
 					<div className="row">
 						{location.pathname !== '/' && (
 							<div className="align-items-center col d-flex justify-content-between">
 								<ClayNavigationBar
-									className="navigation-bar"
+									className="border-0 navigation-bar"
 									triggerLabel={label()}
 								>
 									<ClayNavigationBar.Item

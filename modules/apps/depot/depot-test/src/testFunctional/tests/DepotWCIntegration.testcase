@@ -129,6 +129,7 @@ definition {
 
 		Depot.configureDDMStructures(
 			depotName = "Test Depot Name",
+			disconnectDisabled = "true",
 			siteName = "Site Name",
 			tableEntryText = "Yes");
 

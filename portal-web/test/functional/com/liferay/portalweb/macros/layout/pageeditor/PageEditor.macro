@@ -1604,13 +1604,23 @@ definition {
 			key_nodeName = "${fragmentName}",
 			locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_ACTIVE");
 
+		var style1 = selenium.getElementHeight("PageEditor#CONFIGURATION_PANEL_CONFIGURATION");
+
+		echo("${style1}");
+
 		DragAndDrop.DragAndDropObject(
 			locator1 = "PageEditor#CONFIGURATION_PANEL_HANDLE",
 			position = "${position}");
 
-		AssertElementPresent(
-			key_style = "${style}",
-			locator1 = "PageEditor#CONFIGURATION_PANEL_RESIZER");
+		var style2 = selenium.getElementHeight("PageEditor#CONFIGURATION_PANEL_CONFIGURATION");
+
+		echo("${style2}");
+
+		var style = MathUtil.difference("${style2}","${style1}");
+
+		TestUtils.assertEquals(
+			actual = "${style}",
+			expected = "${value}");
 	}
 
 	macro resolveComment {

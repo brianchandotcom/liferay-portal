@@ -47,7 +47,7 @@ public class ClassLoaderPool {
 			if (classLoader == null) {
 				int index = contextName.lastIndexOf("_");
 
-				if ((index > 0) && (index != (contextName.length() - 1))) {
+				if (index > 0) {
 					ConcurrentNavigableMap<Version, ClassLoader> classLoaders =
 						_fallbackClassLoaders.get(
 							contextName.substring(0, index));

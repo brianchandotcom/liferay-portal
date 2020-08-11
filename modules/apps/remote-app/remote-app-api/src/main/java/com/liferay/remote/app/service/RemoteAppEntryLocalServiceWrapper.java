@@ -33,6 +33,17 @@ public class RemoteAppEntryLocalServiceWrapper
 		_remoteAppEntryLocalService = remoteAppEntryLocalService;
 	}
 
+	@Override
+	public com.liferay.remote.app.model.RemoteAppEntry addRemoteAppEntry(
+			long userId, java.util.Map<java.util.Locale, String> nameMap,
+			String url,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _remoteAppEntryLocalService.addRemoteAppEntry(
+			userId, nameMap, url, serviceContext);
+	}
+
 	/**
 	 * Adds the remote app entry to the database. Also notifies the appropriate model listeners.
 	 *
@@ -342,6 +353,17 @@ public class RemoteAppEntryLocalServiceWrapper
 
 		return _remoteAppEntryLocalService.getRemoteAppEntryByUuidAndCompanyId(
 			uuid, companyId);
+	}
+
+	@Override
+	public com.liferay.remote.app.model.RemoteAppEntry updateRemoteAppEntry(
+			long remoteAppEntryId,
+			java.util.Map<java.util.Locale, String> nameMap, String url,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _remoteAppEntryLocalService.updateRemoteAppEntry(
+			remoteAppEntryId, nameMap, url, serviceContext);
 	}
 
 	/**

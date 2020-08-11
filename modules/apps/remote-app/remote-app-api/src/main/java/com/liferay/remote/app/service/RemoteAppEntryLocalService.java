@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -37,6 +38,8 @@ import com.liferay.remote.app.model.RemoteAppEntry;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -63,6 +66,11 @@ public interface RemoteAppEntryLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.remote.app.service.impl.RemoteAppEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the remote app entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link RemoteAppEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	@Indexable(type = IndexableType.REINDEX)
+	public RemoteAppEntry addRemoteAppEntry(
+			long userId, Map<Locale, String> nameMap, String url,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Adds the remote app entry to the database. Also notifies the appropriate model listeners.
@@ -279,6 +287,11 @@ public interface RemoteAppEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public RemoteAppEntry getRemoteAppEntryByUuidAndCompanyId(
 			String uuid, long companyId)
+		throws PortalException;
+
+	public RemoteAppEntry updateRemoteAppEntry(
+			long remoteAppEntryId, Map<Locale, String> nameMap, String url,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

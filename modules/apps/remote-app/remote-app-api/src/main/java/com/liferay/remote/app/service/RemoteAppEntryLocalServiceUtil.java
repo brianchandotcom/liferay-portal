@@ -37,6 +37,15 @@ public class RemoteAppEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.remote.app.service.impl.RemoteAppEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.remote.app.model.RemoteAppEntry addRemoteAppEntry(
+			long userId, java.util.Map<java.util.Locale, String> nameMap,
+			String url,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addRemoteAppEntry(
+			userId, nameMap, url, serviceContext);
+	}
 
 	/**
 	 * Adds the remote app entry to the database. Also notifies the appropriate model listeners.
@@ -327,6 +336,17 @@ public class RemoteAppEntryLocalServiceUtil {
 
 		return getService().getRemoteAppEntryByUuidAndCompanyId(
 			uuid, companyId);
+	}
+
+	public static com.liferay.remote.app.model.RemoteAppEntry
+			updateRemoteAppEntry(
+				long remoteAppEntryId,
+				java.util.Map<java.util.Locale, String> nameMap, String url,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateRemoteAppEntry(
+			remoteAppEntryId, nameMap, url, serviceContext);
 	}
 
 	/**

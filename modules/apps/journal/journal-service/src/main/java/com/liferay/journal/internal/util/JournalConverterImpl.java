@@ -630,6 +630,8 @@ public class JournalConverterImpl implements JournalConverter {
 								"the-selected-document-was-moved-to-the-" +
 									"recycle-bin"));
 					}
+
+					jsonObject.put("title", fileEntry.getTitle());
 				}
 			}
 			catch (Exception exception) {

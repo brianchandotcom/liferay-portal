@@ -127,7 +127,7 @@ public class JenkinsCohort {
 		}
 
 		List<Callable<Void>> callables = new ArrayList<>();
-		final List<String> jobURLs = Collections.synchronizedList(
+		final List<String> buildURLs = Collections.synchronizedList(
 			new ArrayList<String>());
 
 		for (final JenkinsMaster jenkinsMaster : _jenkinsMastersMap.values()) {
@@ -137,8 +137,8 @@ public class JenkinsCohort {
 				public Void call() {
 					jenkinsMaster.update();
 
-					jobURLs.addAll(jenkinsMaster.getBuildURLs());
-					jobURLs.addAll(jenkinsMaster.getQueuedBuildURLs());
+					buildURLs.addAll(jenkinsMaster.getBuildURLs());
+					buildURLs.addAll(jenkinsMaster.getQueuedBuildURLs());
 
 					return null;
 				}
@@ -157,8 +157,8 @@ public class JenkinsCohort {
 
 		parallelExecutor.execute();
 
-		for (String jobURL : jobURLs) {
-			_loadJobURL(jobURL);
+		for (String buildURL : buildURLs) {
+			_loadBuildURL(buildURL);
 		}
 	}
 
@@ -251,8 +251,8 @@ public class JenkinsCohort {
 		return buildCount + " (" + buildPercentage + ")";
 	}
 
-	private void _loadJobURL(String jobURL) {
-		Matcher jobNameMatcher = _jobNamePattern.matcher(jobURL);
+	private void _loadBuildURL(String buildURL) {
+		Matcher jobNameMatcher = _jobNamePattern.matcher(buildURL);
 
 		jobNameMatcher.find();
 
@@ -272,7 +272,7 @@ public class JenkinsCohort {
 
 		JenkinsCohortJob jenkinsCohortJob = _jenkinsCohortJobsMap.get(jobName);
 
-		Matcher buildNumberMatcher = _buildNumberPattern.matcher(jobURL);
+		Matcher buildNumberMatcher = _buildNumberPattern.matcher(buildURL);
 
 		if (buildNumberMatcher.find()) {
 			jenkinsCohortJob.incrementRunningJobCount();
@@ -282,7 +282,7 @@ public class JenkinsCohort {
 		}
 
 		if (batchJobName == null) {
-			jenkinsCohortJob.addTopLevelBuildURL(jobURL);
+			jenkinsCohortJob.addTopLevelBuildURL(buildURL);
 		}
 	}
 

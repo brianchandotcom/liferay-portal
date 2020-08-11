@@ -93,6 +93,84 @@ definition {
 			searchTerm = "Apple");
 	}
 
+	test CreateBlogsEntryWithNewWorkflow {
+		property test.name.skip.portal.instance = "CrossClusterReplicationES7#CreateBlogsEntryWithNewWorkflow";
+
+		OSGiConfig.deployOSGiConfigs(
+			OSGiConfigFileName = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config",
+			OSGiConfigs = "operationMode=&quot;REMOTE&quot;,logExceptionsOnly=&quot;true&quot;");
+
+		OSGiConfig.deployOSGiConfigs(
+			OSGiConfigFileName = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-default_ccr.config",
+			OSGiConfigs = "active=&quot;true&quot;,connectionId=&quot;ccr&quot;,networkHostAddresses=[&quot;http://localhost:9202&quot;]");
+
+		AntCommand(
+			locator1 = "build-test-elasticsearch7.xml",
+			value1 = "create-follower-indices");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Search",
+			configurationName = "Cross-Cluster Replication",
+			configurationScope = "System Scope");
+
+		SystemSettings.configureCrossClusterReplication(ccrLocalClusterConnectionID = "ccr");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Workflow.duplicateSingleApproverWorkflow(workflowName = "CCR Single Approver");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "CCR Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Blogs");
+
+		Blogs.addWithWorkflow(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Subtitle",
+			entryTitle = "Blogs Entry Title");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "Blogs");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Blogs Entry Title",
+			searchAssetType = "Blogs Entry",
+			searchTerm = "Blogs");
+	}
+
 	test HotDeployApp {
 		property hot.deploy.osgi.app.includes = "portal-search-elasticsearch-cross-cluster-replication";
 		property test.assert.warning.exceptions = "true";

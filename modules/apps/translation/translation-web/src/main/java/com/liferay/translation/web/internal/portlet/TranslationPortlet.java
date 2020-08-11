@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.instanceable=false",
 		"com.liferay.portlet.use-default-template=true",
-		"javax.portlet.display-name=Redirect",
+		"javax.portlet.display-name=Translation",
 		"javax.portlet.init-param.always-send-redirect=true",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",

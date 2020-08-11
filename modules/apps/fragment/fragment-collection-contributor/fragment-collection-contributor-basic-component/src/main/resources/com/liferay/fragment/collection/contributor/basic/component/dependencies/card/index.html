@@ -1,24 +1,15 @@
-[#assign borderRadius = "0" /] [#if configuration.borderRadius == "sm"] [#assign
-borderRadius = "0.1875rem" /] [#elseif configuration.borderRadius == "lg"]
-[#assign borderRadius = "0.375rem" /] [/#if]
-
-<div class="component-card mb-${configuration.marginBottom} text-${configuration.contentAlign} text-break">
-	<div class="card m-0 overflow-hidden shadow-${configuration.boxShadow}" style="border-radius: ${borderRadius}">
+<div class="component-card text-break">
+	<div class="card m-0 overflow-hidden">
 		<img
 			alt="Responsive Image"
 			class="${configuration.imageSize}"
 			data-lfr-editable-id="01-img"
 			data-lfr-editable-type="image"
 			src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII="
-			style="border-top-left-radius: ${borderRadius}; border-top-right-radius: ${borderRadius}"
 		/>
 
 		<div class="card-body py-4">
-			<h2
-				class="clearfix"
-				data-lfr-editable-id="02-title"
-				data-lfr-editable-type="rich-text"
-			>
+			<h2 class="clearfix" data-lfr-editable-id="02-title" data-lfr-editable-type="rich-text">
 				Card Title example
 			</h2>
 

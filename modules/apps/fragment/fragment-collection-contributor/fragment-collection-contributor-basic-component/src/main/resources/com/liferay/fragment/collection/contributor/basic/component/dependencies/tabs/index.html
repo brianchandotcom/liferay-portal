@@ -1,7 +1,5 @@
-<div class="component-tabs mb-${configuration.marginBottom}">
-	<nav
-		class="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-light"
-	>
+<div class="component-tabs">
+	<nav class="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-light">
 		<button
 			aria-controls="navigationBarCollapse"
 			aria-expanded="false"
@@ -41,9 +39,9 @@
 
 	<div class="tab-panel">
 		[#list 0..configuration.numberOfTabs-1 as i]
-			<div aria-labelledby="tab${i+1}" class="tab-panel-item d-none" id="tabPanel${i+1}" role="tabpanel" tabindex="0">
-				<lfr-drop-zone></lfr-drop-zone>
-			</div>
+		<div aria-labelledby="tab${i+1}" class="tab-panel-item d-none" id="tabPanel${i+1}" role="tabpanel" tabindex="0">
+			<lfr-drop-zone></lfr-drop-zone>
+		</div>
 		[/#list]
 	</div>
 </div>

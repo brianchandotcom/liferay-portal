@@ -48,58 +48,6 @@
 					"label": "Height",
 					"name": "height",
 					"type": "text"
-				},
-				{
-					"dataType": "string",
-					"defaultValue": "flex-start",
-					"label": "Align",
-					"name": "align",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"label": "left",
-								"value": "flex-start"
-							},
-							{
-								"label": "center",
-								"value": "center"
-							},
-							{
-								"label": "right",
-								"value": "flex-end"
-							}
-						]
-					}
-				},
-				{
-					"dataType": "string",
-					"defaultValue": "3",
-					"label": "margin-bottom",
-					"name": "marginBottom",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"value": "0"
-							},
-							{
-								"value": "1"
-							},
-							{
-								"value": "2"
-							},
-							{
-								"value": "3"
-							},
-							{
-								"value": "4"
-							},
-							{
-								"value": "5"
-							}
-						]
-					}
 				}
 			]
 		}

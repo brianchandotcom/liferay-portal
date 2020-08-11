@@ -28,12 +28,6 @@
 							}
 						]
 					}
-				},
-				{
-					"dataType": "object",
-					"label": "border-color",
-					"name": "borderColor",
-					"type": "colorPalette"
 				}
 			]
 		}

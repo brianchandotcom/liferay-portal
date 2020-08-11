@@ -16,35 +16,6 @@
 							"type": "number"
 						}
 					}
-				},
-				{
-					"dataType": "string",
-					"defaultValue": "3",
-					"label": "margin-bottom",
-					"name": "marginBottom",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"value": "0"
-							},
-							{
-								"value": "1"
-							},
-							{
-								"value": "2"
-							},
-							{
-								"value": "3"
-							},
-							{
-								"value": "4"
-							},
-							{
-								"value": "5"
-							}
-						]
-					}
 				}
 			]
 		}

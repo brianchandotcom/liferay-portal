@@ -207,8 +207,8 @@ public class JournalArticleModelValidator
 
 		if (!validSmallImageExtension) {
 			throw new ArticleSmallImageNameException(
-				"Extension " + FileUtil.getExtension(smallImageName) +
-					" is not an allowed file upload type.");
+				"Invalid image extension " +
+					FileUtil.getExtension(smallImageName));
 		}
 
 		long smallImageMaxSize =

@@ -26,6 +26,7 @@ export default ({children, dataLayoutBuilder}) => {
 		{
 			config: {allowNestedFields},
 			editingLanguageId,
+			hoveredField,
 		},
 		dispatch,
 	] = useContext(FormViewContext);
@@ -43,12 +44,6 @@ export default ({children, dataLayoutBuilder}) => {
 	}, [dataLayoutBuilder, editingLanguageId]);
 
 	useEffect(() => {
-		const provider = dataLayoutBuilder.getLayoutProvider();
-
-		const {fieldHovered} = provider.state;
-
-		let fieldActions = [];
-
 		const duplicateAction = {
 			action: (event) =>
 				dataLayoutBuilder.dispatch('fieldDuplicated', event),
@@ -75,7 +70,7 @@ export default ({children, dataLayoutBuilder}) => {
 			style: 'danger',
 		};
 
-		fieldActions = [
+		let fieldActions = [
 			duplicateAction,
 			{
 				...removeAction,
@@ -86,9 +81,9 @@ export default ({children, dataLayoutBuilder}) => {
 
 		if (
 			allowNestedFields &&
-			Object.keys(fieldHovered).length &&
-			fieldHovered.type === 'fieldset' &&
-			!fieldHovered.ddmStructureId
+			Object.keys(hoveredField).length &&
+			hoveredField.type === 'fieldset' &&
+			!hoveredField.ddmStructureId
 		) {
 			fieldActions = [
 				duplicateAction,
@@ -102,16 +97,23 @@ export default ({children, dataLayoutBuilder}) => {
 			];
 		}
 
+		if (hoveredField.type === 'fieldset') {
+			fieldActions.splice(fieldActions.indexOf(duplicateAction), 1);
+		}
+
+		const provider = dataLayoutBuilder.getLayoutProvider();
+
 		provider.props = {
 			...provider.props,
 			fieldActions,
 		};
 
-		provider.getEvents().fieldHovered(fieldHovered);
+		provider.getEvents().fieldHovered(hoveredField);
 	}, [
 		allowNestedFields,
 		dataLayoutBuilder,
 		dispatch,
+		hoveredField,
 		onDeleteDefinitionField,
 		saveAsFieldset,
 	]);

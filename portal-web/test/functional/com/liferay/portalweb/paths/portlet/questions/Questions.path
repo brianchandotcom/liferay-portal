@@ -205,7 +205,7 @@
 </tr>
 <tr>
 	<td>SEARCH_RESULTS_CLEAR_BUTTON</td>
-	<td>//button[contains(.,'Clear')]</td>
+	<td>//div[contains(@class,'input-group-item')]//button[contains(@class,'btn-monospaced')]//*[name()='svg'][contains(@class,'times-circle')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -227,45 +227,47 @@
 
 				fragment.forEach((element) => {
 					if (
-						element.type === CKEDITOR.NODE_ELEMENT &&
-						element.name === 'img'
+						element.type !== CKEDITOR.NODE_ELEMENT ||
+						element.name !== 'img'
 					) {
-						const base64Regex = /^data:image\/(.*);base64,/;
-						const match = element.attributes.src.match(base64Regex);
+						return;
+					}
 
-						if (element.attributes.src && match) {
-							const src = element.attributes.src;
-							const extension = match[1];
-							const name = `${Date.now().toString()}.${extension}`;
+					const base64Regex = /^data:image\/(.*);base64,/;
+					const match = element.attributes.src.match(base64Regex);
 
-							// Mark this "src" attribute as something we want to replace
+					if (element.attributes.src && match) {
+						const src = element.attributes.src;
+						const extension = match[1];
+						const name = `${Date.now().toString()}.${extension}`;
 
-							this._imageSrcToReplace.push(src);
+						// Mark this "src" attribute as something we want to replace
 
-							this._fetchBlob(src)
-								.then((blob) => {
-									const file = new File([blob], name, {
-										type: blob.type,
-									});
+						this._imageSrcToReplace.push(src);
 
-									const element = CKEDITOR.dom.element.createFromHtml(
-										`<img src="${src}">`
-									);
-
-									editor.fire('imageAdd', {
-										el: element,
-										file,
-									});
-								})
-								.catch(() => {
-									Liferay.Util.openToast({
-										message: Liferay.Language.get(
-											'an-unexpected-error-occurred-while-uploading-your-file'
-										),
-										type: 'danger',
-									});
+						this._fetchBlob(src)
+							.then((blob) => {
+								const file = new File([blob], name, {
+									type: blob.type,
 								});
-						}
+
+								const element = CKEDITOR.dom.element.createFromHtml(
+									`<img src="${src}">`
+								);
+
+								editor.fire('imageAdd', {
+									el: element,
+									file,
+								});
+							})
+							.catch(() => {
+								Liferay.Util.openToast({
+									message: Liferay.Language.get(
+										'an-unexpected-error-occurred-while-uploading-your-file'
+									),
+									type: 'danger',
+								});
+							});
 					}
 				});
 			}

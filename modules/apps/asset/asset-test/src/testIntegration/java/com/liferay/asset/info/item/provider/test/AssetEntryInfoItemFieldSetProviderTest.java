@@ -75,7 +75,7 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 	}
 
 	@Test
-	public void testGetInfoFieldSetInternalEmptyVocabulary() throws Exception {
+	public void testGetInfoFieldSetInternalAssetEntryEmptyVocabulary() throws Exception {
 		Map<Locale, String> titleMap = HashMapBuilder.put(
 			LocaleUtil.US, RandomTestUtil.randomString()
 		).build();
@@ -99,7 +99,7 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 	}
 
 	@Test
-	public void testGetInfoFieldSetJournalArticlePublicEmptyVocabulary()
+	public void testGetInfoFieldSetJournalArticleClassPublicEmptyVocabulary()
 		throws Exception {
 
 		long classNameId = PortalUtil.getClassNameId(
@@ -128,7 +128,7 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 	}
 
 	@Test
-	public void testGetInfoFieldSetPublicEmptyVocabulary() throws Exception {
+	public void testGetInfoFieldSetAssetEntryPublicEmptyVocabulary() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
@@ -150,7 +150,7 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 	}
 
 	@Test
-	public void testGetInfoFieldSetPublicVocabularyWithCategory()
+	public void testGetInfoFieldSetAssetEntryPublicVocabularyWithCategory()
 		throws Exception {
 
 		ServiceContext serviceContext =

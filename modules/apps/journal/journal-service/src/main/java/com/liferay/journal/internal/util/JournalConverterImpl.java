@@ -598,14 +598,25 @@ public class JournalConverterImpl implements JournalConverter {
 		Serializable serializable = null;
 
 		if (Objects.equals(DDMFormFieldType.DOCUMENT_LIBRARY, type)) {
+			JSONObject jsonObject = null;
+
 			try {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				jsonObject = JSONFactoryUtil.createJSONObject(
 					dynamicContentElement.getText());
+			}
+			catch (JSONException jsonException) {
+				return StringPool.BLANK;
+			}
 
+			if (jsonObject == null) {
+				return StringPool.BLANK;
+			}
+
+			String uuid = jsonObject.getString("uuid");
+			long groupId = jsonObject.getLong("groupId");
+
+			try {
 				if (!ExportImportThreadLocal.isImportInProcess()) {
-					String uuid = jsonObject.getString("uuid");
-					long groupId = jsonObject.getLong("groupId");
-
 					_dlAppLocalService.getFileEntryByUuidAndGroupId(
 						uuid, groupId);
 				}
@@ -613,6 +624,13 @@ public class JournalConverterImpl implements JournalConverter {
 				serializable = dynamicContentElement.getText();
 			}
 			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Unable to get file entry for uuid ", uuid,
+							" and group id ", groupId));
+				}
+
 				return StringPool.BLANK;
 			}
 		}
@@ -648,6 +666,10 @@ public class JournalConverterImpl implements JournalConverter {
 						);
 					}
 					else {
+						if (_log.isWarnEnabled()) {
+							_log.warn("Unable to get article for  " + classPK);
+						}
+
 						jsonObject.put(
 							"message",
 							LanguageUtil.get(

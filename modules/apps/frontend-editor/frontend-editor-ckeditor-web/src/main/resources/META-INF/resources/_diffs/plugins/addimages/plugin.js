@@ -252,12 +252,10 @@
 										`<img src="${src}">`
 									);
 
-									const imageData = {
+									editor.fire('imageAdd', {
 										el: element,
 										file,
-									};
-
-									editor.fire('imageAdd', imageData);
+									});
 								})
 								.catch(() => {
 									Liferay.Util.openToast({

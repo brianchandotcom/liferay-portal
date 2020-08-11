@@ -1,6 +1,6 @@
 buildService {
 	apiDir = "../remote-app-api/src/main/java"
-	//testDir = "../remote-app-test/src/testIntegration/java"
+	testDir = "../remote-app-test/src/testIntegration/java"
 }
 
 dependencies {

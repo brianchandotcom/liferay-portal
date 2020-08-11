@@ -15,6 +15,7 @@ dependencies {
 	testIntegrationCompile project(":apps:bookmarks:bookmarks-api")
 	testIntegrationCompile project(":apps:bookmarks:bookmarks-test-util")
 	testIntegrationCompile project(":apps:document-library:document-library-test-util")
+	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 	testIntegrationCompile project(":apps:export-import:export-import-test-util")
 	testIntegrationCompile project(":apps:info:info-api")

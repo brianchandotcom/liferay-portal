@@ -198,9 +198,7 @@ public class ClassLoaderPool {
 			return null;
 		}
 
-		for (int i = 0; i < qualifier.length(); i++) {
-			char c = qualifier.charAt(i);
-
+		for (char c : qualifier.toCharArray()) {
 			if ((c < 128) && _VALID_QUALIFIER_CHARS[c]) {
 				continue;
 			}

@@ -14,6 +14,7 @@
 
 package com.liferay.petra.lang;
 
+import java.util.AbstractMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.concurrent.ConcurrentHashMap;
@@ -103,26 +104,20 @@ public class ClassLoaderPool {
 		_classLoaders.put(contextName, classLoader);
 		_contextNames.put(classLoader, contextName);
 
-		int index = contextName.lastIndexOf("_");
+		Map.Entry<String, Version> entry = _parseContextName(contextName);
 
-		if ((index == -1) || (index == (contextName.length() - 1))) {
-			return;
-		}
-
-		Version version = _parseVersion(contextName.substring(index + 1));
-
-		if (version == null) {
+		if (entry == null) {
 			return;
 		}
 
 		_fallbackClassLoaders.compute(
-			contextName.substring(0, index),
+			entry.getKey(),
 			(key, classLoaders) -> {
 				if (classLoaders == null) {
 					classLoaders = new ConcurrentSkipListMap<>();
 				}
 
-				classLoaders.put(version, classLoader);
+				classLoaders.put(entry.getValue(), classLoader);
 
 				return classLoaders;
 			});
@@ -146,6 +141,23 @@ public class ClassLoaderPool {
 
 			_unregisterFallback(contextName);
 		}
+	}
+
+	private static Map.Entry<String, Version> _parseContextName(
+		String contextName) {
+
+		int index = contextName.lastIndexOf("_");
+
+		if ((index > 0) && (index < (contextName.length() - 1))) {
+			Version version = _parseVersion(contextName.substring(index + 1));
+
+			if (version != null) {
+				return new AbstractMap.SimpleEntry<>(
+					contextName.substring(0, index), version);
+			}
+		}
+
+		return null;
 	}
 
 	private static Version _parseVersion(String version) {
@@ -200,22 +212,16 @@ public class ClassLoaderPool {
 	}
 
 	private static void _unregisterFallback(String contextName) {
-		int index = contextName.lastIndexOf("_");
+		Map.Entry<String, Version> entry = _parseContextName(contextName);
 
-		if ((index == -1) || (index == (contextName.length() - 1))) {
-			return;
-		}
-
-		Version version = _parseVersion(contextName.substring(index + 1));
-
-		if (version == null) {
+		if (entry == null) {
 			return;
 		}
 
 		_fallbackClassLoaders.computeIfPresent(
-			contextName.substring(0, index),
+			entry.getKey(),
 			(key, classLoaders) -> {
-				classLoaders.remove(version);
+				classLoaders.remove(entry.getValue());
 
 				if (classLoaders.isEmpty()) {
 					return null;

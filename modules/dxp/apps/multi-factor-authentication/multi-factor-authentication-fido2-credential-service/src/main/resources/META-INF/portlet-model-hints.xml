@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.multi.factor.authentication.fido2.credential.model.MFAFIDO2CredentialEntry">
+		<field name="mvccVersion" type="long" />
+		<field name="mfaFIDO2CredentialEntryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="credentialId" type="String">
+			<hint name="max-length">128</hint>
+		</field>
+		<field name="credentialType" type="int" />
+		<field name="publicKeyCose" type="String">
+			<hint name="max-length">128</hint>
+		</field>
+		<field name="signatureCount" type="long" />
+		<field name="failedAttempts" type="int" />
+	</model>
+</model-hints>

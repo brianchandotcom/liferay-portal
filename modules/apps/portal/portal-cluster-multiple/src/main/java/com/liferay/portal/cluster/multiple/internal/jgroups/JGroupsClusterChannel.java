@@ -20,9 +20,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.cluster.multiple.configuration.ClusterExecutorConfiguration;
 import com.liferay.portal.cluster.multiple.internal.BaseClusterChannel;
 import com.liferay.portal.cluster.multiple.internal.ClusterReceiver;
-import com.liferay.portal.cluster.multiple.internal.io.ClusterSerializationUtil;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.io.Serializer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -32,6 +32,8 @@ import java.io.Serializable;
 import java.lang.reflect.Method;
 
 import java.net.InetAddress;
+
+import java.nio.ByteBuffer;
 
 import java.util.List;
 import java.util.Map;
@@ -171,9 +173,16 @@ public class JGroupsClusterChannel extends BaseClusterChannel {
 			jgroupsAddress = (org.jgroups.Address)address.getRealAddress();
 		}
 
+		Serializer serializer = new Serializer();
+
+		serializer.writeObject(message);
+
+		ByteBuffer byteBuffer = serializer.toByteBuffer();
+
 		try {
 			_jChannel.send(
-				jgroupsAddress, ClusterSerializationUtil.writeObject(message));
+				jgroupsAddress, byteBuffer.array(), byteBuffer.position(),
+				byteBuffer.remaining());
 
 			if (_log.isDebugEnabled()) {
 				if (address == null) {

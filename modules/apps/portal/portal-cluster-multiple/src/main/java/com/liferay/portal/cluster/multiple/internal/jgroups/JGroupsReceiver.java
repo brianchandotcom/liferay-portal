@@ -15,11 +15,13 @@
 package com.liferay.portal.cluster.multiple.internal.jgroups;
 
 import com.liferay.portal.cluster.multiple.internal.ClusterReceiver;
-import com.liferay.portal.cluster.multiple.internal.io.ClusterSerializationUtil;
 import com.liferay.portal.kernel.cluster.Address;
+import com.liferay.portal.kernel.io.Deserializer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
+
+import java.nio.ByteBuffer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +60,11 @@ public class JGroupsReceiver extends ReceiverAdapter {
 			return;
 		}
 
+		ByteBuffer byteBuffer = ByteBuffer.wrap(
+			rawBuffer, message.getOffset(), message.getLength());
+
+		Deserializer deserializer = new Deserializer(byteBuffer.slice());
+
 		Thread currentThread = Thread.currentThread();
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
@@ -71,9 +78,7 @@ public class JGroupsReceiver extends ReceiverAdapter {
 
 		try {
 			_clusterReceiver.receive(
-				ClusterSerializationUtil.readObject(
-					rawBuffer, message.getOffset(), message.getLength()),
-				new AddressImpl(message.getSrc()));
+				deserializer.readObject(), new AddressImpl(message.getSrc()));
 		}
 		catch (ClassNotFoundException classNotFoundException) {
 			if (_log.isWarnEnabled()) {

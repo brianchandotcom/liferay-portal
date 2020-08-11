@@ -1,0 +1,79 @@
+<html>
+<head>
+<title>AlloyShowcase</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">AlloyShowcase</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>DATA_LIST_UNORDERED</td>
+	<td>xpath=(//div[@class='showcase-example']//ul//li)[${key_item}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATA_LIST_ORDERED</td>
+	<td>xpath=(//div[@class='showcase-example']//ol//li)[${key_item}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATA_LIST_DESCRIPTIOND</td>
+	<td>xpath=(//div[@class='showcase-example']//ol//li)[${key_item}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIRST_NAME_CELL</td>
+	<td>//tbody//td[1]//span[contains(@class,'alloy-output-text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GENERAL_BUTTON_1</td>
+	<td>//button[contains(.,'Button')]//img[contains(@src,'liferay-faces-logo-small.png')]/..</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GENERAL_BUTTON_2</td>
+	<td>//button[not(contains(.,'Button'))]//img[contains(@src,'liferay-faces-logo-small.png')]/..</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GENERAL_BUTTON_3</td>
+	<td>//label[contains(.,'Example')][contains(.,'value')]/ancestor::div[@class='showcase-example']//button[@type='button' or @value='1234']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_BUTTON_ACTIVE</td>
+	<td>//div[contains(@class,'alloy-paginator')]//*[contains(@class,'pagination')]//*[contains(.,'${key_pageNum}')]/parent::li[@class='active']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_BUTTON_DISABLE</td>
+	<td>//div[contains(@class,'alloy-paginator')]//*[contains(@class,'pagination')]//li[contains(.,'${key_pageNum}')][contains(@class,'disabled')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_NUMBER_BUTTON</td>
+	<td>//div[contains(@class,'alloy-paginator')]//*[contains(@class,'pagination')]//li/*[contains(.,'${key_pageNum}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATOR_BUTTON</td>
+	<td>//div[contains(@class,'alloy-paginator')]//*[contains(@class,'pagination')]//li//*[contains(@onclick,'${key_buttonLabel}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATOR_DROP_DOWN_LIST</td>
+	<td>//label[contains(.,'Rows Per Page')]/following-sibling::select/option[@value='${key_opt}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATOR_DROP_DOWN_SELECTED</td>
+	<td>//select/option[@value='100'][(@selected='selected')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

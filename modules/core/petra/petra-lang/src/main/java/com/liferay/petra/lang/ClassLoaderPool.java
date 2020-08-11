@@ -172,37 +172,45 @@ public class ClassLoaderPool {
 
 			major = Integer.parseInt(stringTokenizer.nextToken());
 
+			if (major < 0) {
+				return null;
+			}
+
 			if (stringTokenizer.hasMoreTokens()) {
 				stringTokenizer.nextToken();
 
 				minor = Integer.parseInt(stringTokenizer.nextToken());
+
+				if (minor < 0) {
+					return null;
+				}
 
 				if (stringTokenizer.hasMoreTokens()) {
 					stringTokenizer.nextToken();
 
 					micro = Integer.parseInt(stringTokenizer.nextToken());
 
+					if (micro < 0) {
+						return null;
+					}
+
 					if (stringTokenizer.hasMoreTokens()) {
 						stringTokenizer.nextToken();
 
 						qualifier = stringTokenizer.nextToken("");
+
+						for (char c : qualifier.toCharArray()) {
+							if ((c < 128) && _VALID_QUALIFIER_CHARS[c]) {
+								continue;
+							}
+
+							return null;
+						}
 					}
 				}
 			}
 		}
 		catch (Exception exception) {
-			return null;
-		}
-
-		if ((major < 0) || (minor < 0) || (micro < 0)) {
-			return null;
-		}
-
-		for (char c : qualifier.toCharArray()) {
-			if ((c < 128) && _VALID_QUALIFIER_CHARS[c]) {
-				continue;
-			}
-
 			return null;
 		}
 

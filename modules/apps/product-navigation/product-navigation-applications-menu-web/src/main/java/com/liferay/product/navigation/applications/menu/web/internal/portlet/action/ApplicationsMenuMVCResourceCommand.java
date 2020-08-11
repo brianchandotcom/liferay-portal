@@ -217,12 +217,6 @@ public class ApplicationsMenuMVCResourceCommand extends BaseMVCResourceCommand {
 				_getChildPanelCategoriesJSONArray(
 					httpServletRequest, panelCategory.getKey(), themeDisplay);
 
-			if ((childPanelCategoriesJSONArray == null) ||
-				(childPanelCategoriesJSONArray.length() <= 0)) {
-
-				continue;
-			}
-
 			panelCategoriesJSONArray.put(
 				JSONUtil.put(
 					"childCategories", childPanelCategoriesJSONArray

@@ -23,23 +23,23 @@ import com.liferay.project.templates.extensions.ProjectTemplatesArgsExt;
  */
 public class FormFieldProjectTemplatesArgs implements ProjectTemplatesArgsExt {
 
+	public String getJSFramework() {
+		return _jsFramework;
+	}
+
 	@Override
 	public String getTemplateName() {
 		return "form-field";
 	}
 
-	public boolean getReactTemplate() {
-		return _reactTemplate;
-	}
-
-	public void setReactTemplate(boolean reactTemplate) {
-		_reactTemplate = reactTemplate;
+	public void setJSFramework(String jsFramework) {
+		_jsFramework = jsFramework;
 	}
 
 	@Parameter(
-		description = "Specify if the form field front end template is written in React.",
-		names = "--react-template"
+		description = "Specify the javascript framework which will be used in the generated project. (metaljs)|(react)",
+		names = "--js-framework"
 	)
-	private boolean _reactTemplate;
+	private String _jsFramework;
 
 }

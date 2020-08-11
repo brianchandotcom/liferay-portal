@@ -377,16 +377,16 @@ public class JournalArticleModelValidator
 			if (image != null) {
 				smallImageBytes = image.getTextObj();
 
-				try {
-					if (smallImageBytes != null) {
+				if (smallImageBytes != null) {
+					try {
 						smallImageFile = FileUtil.createTempFile(
 							image.getType());
 
 						FileUtil.write(smallImageFile, smallImageBytes, false);
 					}
-				}
-				catch (IOException ioException) {
-					smallImageBytes = null;
+					catch (IOException ioException) {
+						smallImageBytes = null;
+					}
 				}
 			}
 		}

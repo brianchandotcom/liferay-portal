@@ -144,6 +144,11 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getFilterNavigationDropdownItemsLabel() {
+		return LanguageUtil.get(request, "filter-by-status");
+	}
+
+	@Override
 	public PortletURL getPortletURL() {
 		try {
 			return PortletURLUtil.clone(currentURLObj, liferayPortletResponse);

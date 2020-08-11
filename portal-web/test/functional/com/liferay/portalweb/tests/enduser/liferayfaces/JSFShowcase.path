@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>FILE_NAME_TABLE</td>
-	<td>//table[contains(@id,'modelValue')]//td[contains(.,'${key_fileName}')]</td>
+	<td>//table//td[contains(.,'${key_fileName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -75,7 +75,7 @@
 </tr>
 <tr>
 	<td>GENERAL_IMAGE_LINK</td>
-	<td>//img[contains(@src,'jsf-logo-small.png')]/parent::a[contains(text(),'Text for a link')]</td>
+	<td>//img[contains(@src,'-logo-small.png')]/parent::a[contains(.,'Text for a link')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -150,7 +150,7 @@
 </tr>
 <tr>
 	<td>UPLOADED_FILE_DELETE</td>
-	<td>//input[contains(@src,'icon-delete.png')]|//button[contains(@class,'trash')]</td>
+	<td>//input[contains(@src,'icon-delete.png')]|//button[contains(@class,'trash')] | //button//span[contains(@class,'trash')] </td>
 	<td></td>
 </tr>
 <tr>

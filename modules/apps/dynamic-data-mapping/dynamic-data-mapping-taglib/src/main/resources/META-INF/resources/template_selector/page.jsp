@@ -34,7 +34,7 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 	>
 		<aui:input id="displayStyleGroupId" name="preferences--displayStyleGroupId--" type="hidden" value="<%= String.valueOf(displayStyleGroupId) %>" />
 
-		<aui:select id="displayStyle" inlineField="<%= true %>" label="<%= HtmlUtil.escape(label) %>" name="preferences--displayStyle--">
+		<aui:select id="displayStyle" label="<%= HtmlUtil.escape(label) %>" name="preferences--displayStyle--" wrapperCssClass="c-mb-4">
 			<c:if test="<%= showEmptyOption %>">
 				<aui:option label="default" selected="<%= Validator.isNull(displayStyle) %>" />
 			</c:if>

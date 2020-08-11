@@ -1872,7 +1872,9 @@ definition {
 		PageEditor.resizeConfigurationPanel(
 			fragmentName = "Button",
 			position = "0,-100",
-			value = "105");
+			value = "239");
+
+		// Modify the value to 105 in local run
 
 		PageEditor.gotoTab(tabName = "Fragments and Widgets");
 

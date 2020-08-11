@@ -77,6 +77,15 @@ public class AppBuilderAppWorkflowHandler
 	}
 
 	@Override
+	public String getURLEditWorkflowTask(
+			long workflowTaskId, ServiceContext serviceContext)
+		throws PortalException {
+
+		return String.valueOf(
+			serviceContext.getAttribute(WorkflowConstants.CONTEXT_URL));
+	}
+
+	@Override
 	public WorkflowDefinitionLink getWorkflowDefinitionLink(
 			long companyId, long groupId, long classPK)
 		throws PortalException {

@@ -160,7 +160,7 @@
 </tr>
 <tr>
 	<td>CLOSE_MODAL</td>
-	<td>//h3[contains(@class,'modal-title') and contains(.,'${key_modalTitle}')]/../div/button[contains(@class,'close')] | //button[contains(@class,'close')]</td>
+	<td>//h3[contains(@class,'modal-title') and contains(.,'${key_modalTitle}')]/../div/button[contains(@class,'close')]</td>
 	<td></td>
 </tr>
 <tr>

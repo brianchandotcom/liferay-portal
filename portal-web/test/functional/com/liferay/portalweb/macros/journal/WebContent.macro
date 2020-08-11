@@ -924,7 +924,7 @@ definition {
 			locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECT",
 			value1 = "Specific Display Page Template");
 
-		Click(locator1 = "WCEditWebContent#DISPLAY_PAGE_CHOOSE_BUTTON");
+		Click.javaScriptClick(locator1 = "WCEditWebContent#DISPLAY_PAGE_CHOOSE_BUTTON");
 
 		Pause(locator1 = "5000");
 

@@ -401,8 +401,6 @@ definition {
 
 	@priority = "4"
 	test EnableStagingWithWebContentReferencedFromDeletedSite {
-		property portal.upstream = "quarantine";
-
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
 			groupName = "Site Name",
@@ -1704,8 +1702,6 @@ definition {
 	@description = "This test covers LPS-92578. It ensures that DM succeeds to publish to live when file exists in the recycle bin."
 	@priority = "4"
 	test SinglePublicationAfterDeleteDocument {
-		property portal.upstream = "quarantine";
-
 		Staging.openStagingAdmin(siteURLKey = "site-name");
 
 		Staging.activateStagingCP(siteName = "Site Name");
@@ -2698,7 +2694,6 @@ definition {
 		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property databases.size = "1";
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Staging#StagingRemoteLiveWebContentWithManualChosenID";
 
 		Staging.remoteStagingSetUp(
@@ -4101,8 +4096,6 @@ definition {
 	@description = "This is a use case for LPS-77935."
 	@priority = "4"
 	test ViewSimplePublicationAfterDeleteDocumentInGlobal {
-		property portal.upstream = "quarantine";
-
 		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "global");
 
 		ProductMenu.gotoPortlet(

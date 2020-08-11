@@ -388,8 +388,6 @@ definition {
 
 	@priority = "4"
 	test DeleteDMDocument {
-		property portal.upstream = "quarantine";
-
 		Navigator.gotoSitePage(
 			pageName = "Staging Test Page",
 			siteName = "Site Name");

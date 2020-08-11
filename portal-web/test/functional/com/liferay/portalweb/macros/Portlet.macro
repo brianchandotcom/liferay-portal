@@ -1,9 +1,18 @@
 definition {
 
 	macro _clickAddPortlet {
-		Click.clickNoWaitForVisible(
-			key_portletName = "${portletName}",
-			locator1 = "ControlMenuAddPanel#ADD_PORTLET_LINK");
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "internetexplorer") {
+			Click.javaScriptClick(
+				key_portletName = "${portletName}",
+				locator1 = "ControlMenuAddPanel#ADD_PORTLET_LINK");
+		}
+		else {
+			Click.clickNoWaitForVisible(
+				key_portletName = "${portletName}",
+				locator1 = "ControlMenuAddPanel#ADD_PORTLET_LINK");
+		}
 	}
 
 	macro addDuplicatePG {

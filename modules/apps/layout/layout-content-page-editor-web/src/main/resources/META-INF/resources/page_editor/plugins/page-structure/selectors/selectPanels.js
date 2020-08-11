@@ -164,13 +164,7 @@ export const selectPanels = (activeItemId, activeItemType, state) => {
 				?.configuration?.fieldSets ?? [];
 
 		panelsIds = {
-			[PANEL_IDS.fragmentStyles]:
-				canUpdateItemConfiguration &&
-				fieldSets.some(
-					(fieldSet) =>
-						fieldSet.configurationRole ===
-						FRAGMENT_CONFIGURATION_ROLES.style
-				),
+			[PANEL_IDS.fragmentStyles]: canUpdateItemConfiguration,
 			[PANEL_IDS.fragmentConfiguration]:
 				canUpdateItemConfiguration &&
 				fieldSets.some(

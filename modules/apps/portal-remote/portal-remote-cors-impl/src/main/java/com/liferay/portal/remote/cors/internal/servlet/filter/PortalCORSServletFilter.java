@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration;
 import com.liferay.portal.remote.cors.internal.CORSSupport;
 import com.liferay.portal.remote.cors.internal.URLToCORSSupportMapper;
+import com.liferay.portal.remote.cors.internal.URLToCORSSupportMapperFactory;
 import com.liferay.portal.remote.cors.internal.configuration.persistence.listener.PortalCORSConfigurationModelListener;
 
 import java.util.Collections;
@@ -195,10 +196,10 @@ public class PortalCORSServletFilter
 			return;
 		}
 
-		URLToCORSSupportMapper urlPatternMatcher = _getURLToCORSSupportMapper(
-			companyId);
+		URLToCORSSupportMapper urlToCORSSupportMapper =
+			_getURLToCORSSupportMapper(companyId);
 
-		CORSSupport corsSupport = urlPatternMatcher.get(
+		CORSSupport corsSupport = urlToCORSSupportMapper.get(
 			_getURI(httpServletRequest));
 
 		if (corsSupport != null) {
@@ -258,7 +259,7 @@ public class PortalCORSServletFilter
 			ConfigurableUtil.createConfigurable(
 				PortalCORSConfiguration.class, new HashMapDictionary<>()));
 
-		return new URLToCORSSupportMapper(corsSupports);
+		return URLToCORSSupportMapperFactory.create(corsSupports);
 	}
 
 	private String _getURI(HttpServletRequest httpServletRequest) {
@@ -329,7 +330,8 @@ public class PortalCORSServletFilter
 		_mergeCORSConfiguration(corsSupports, CompanyConstants.SYSTEM);
 
 		_urlToCORSSupportMappers.put(
-			CompanyConstants.SYSTEM, new URLToCORSSupportMapper(corsSupports));
+			CompanyConstants.SYSTEM,
+			URLToCORSSupportMapperFactory.create(corsSupports));
 
 		for (long companyId : _urlToCORSSupportMappers.keySet()) {
 			if (companyId != CompanyConstants.SYSTEM) {
@@ -352,7 +354,7 @@ public class PortalCORSServletFilter
 		_mergeCORSConfiguration(corsSupports, CompanyConstants.SYSTEM);
 
 		_urlToCORSSupportMappers.put(
-			companyId, new URLToCORSSupportMapper(corsSupports));
+			companyId, URLToCORSSupportMapperFactory.create(corsSupports));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

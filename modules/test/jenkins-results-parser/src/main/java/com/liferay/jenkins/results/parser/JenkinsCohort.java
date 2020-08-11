@@ -31,7 +31,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 /**
  * @author Kenji Heigel
@@ -180,42 +179,69 @@ public class JenkinsCohort {
 
 		sb.append(";\nvar buildLoadData = ");
 
-		JSONArray buildLoadDataJSONArray = new JSONArray();
+		JSONArray buildLoadDataTableJSONArray = new JSONArray();
+
+		buildLoadDataTableJSONArray.put(
+			Arrays.asList(
+				"Name", "Total Builds", "Current Builds", "Queued Builds",
+				"Top Level Builds"));
 
 		for (JenkinsCohortJob jenkinsCohortJob :
 				_jenkinsCohortJobsMap.values()) {
 
-			JSONObject jsonObject = new JSONObject();
-
-			jsonObject.put("Name", jenkinsCohortJob.getJobName());
-
-			DecimalFormat decimalFormat = new DecimalFormat("###.###%");
-
-			jsonObject.put(
-				"Load %",
-				decimalFormat.format(jenkinsCohortJob.getLoadPercentage()));
-
-			jsonObject.put(
-				"Current Builds", jenkinsCohortJob.getRunningBuildCount());
-			jsonObject.put(
-				"Queued Builds", jenkinsCohortJob.getQueuedBuildCount());
-			jsonObject.put(
-				"Total Builds", jenkinsCohortJob.getTotalBuildCount());
-
 			List<String> topLevelBuildURLs =
 				jenkinsCohortJob.getTopLevelBuildURLs();
 
-			jsonObject.put("Top Level Builds", topLevelBuildURLs.size());
-
-			buildLoadDataJSONArray.put(jsonObject);
+			buildLoadDataTableJSONArray.put(
+				Arrays.asList(
+					jenkinsCohortJob.getJobName(),
+					_createJSONArray(
+						jenkinsCohortJob.getTotalBuildCount(),
+						_formatBuildCountText(
+							jenkinsCohortJob.getTotalBuildCount(),
+							jenkinsCohortJob.getTotalBuildPercentage())),
+					_createJSONArray(
+						jenkinsCohortJob.getRunningBuildCount(),
+						_formatBuildCountText(
+							jenkinsCohortJob.getRunningBuildCount(),
+							jenkinsCohortJob.getRunningBuildPercentage())),
+					_createJSONArray(
+						jenkinsCohortJob.getQueuedBuildCount(),
+						_formatBuildCountText(
+							jenkinsCohortJob.getQueuedBuildCount(),
+							jenkinsCohortJob.getQueuedBuildPercentage())),
+					topLevelBuildURLs.size()));
 		}
 
-		sb.append(buildLoadDataJSONArray.toString());
+		sb.append(buildLoadDataTableJSONArray.toString());
 
 		sb.append(";");
 
-		JenkinsResultsParserUtil.write(
-			filePath + "/ci-system-status-data.js", sb.toString());
+		JenkinsResultsParserUtil.write(filePath + "/data.js", sb.toString());
+	}
+
+	private static JSONArray _createJSONArray(Object... items) {
+		JSONArray jsonArray = new JSONArray();
+
+		for (Object item : items) {
+			jsonArray.put(item);
+		}
+
+		return jsonArray;
+	}
+
+	private static String _getPercentage(Integer dividend, Integer divisor) {
+		double quotient = (double)dividend / (double)divisor;
+
+		DecimalFormat decimalFormat = new DecimalFormat("###.##%");
+
+		return decimalFormat.format(quotient);
+	}
+
+	private String _formatBuildCountText(
+		int buildCount, String buildPercentage) {
+
+		return buildCount + " (" + buildPercentage + ")";
 	}
 
 	private void _loadJobURL(String jobURL) {
@@ -276,18 +302,22 @@ public class JenkinsCohort {
 			return _jenkinsCohortJobName;
 		}
 
-		public double getLoadPercentage() {
-			return (double)getTotalBuildCount() /
-				(double)(JenkinsCohort.this.getRunningBuildCount() +
-					JenkinsCohort.this.getQueuedBuildCount());
-		}
-
 		public int getQueuedBuildCount() {
 			return _queuedBuildCount;
 		}
 
+		public String getQueuedBuildPercentage() {
+			return _getPercentage(
+				_queuedBuildCount, JenkinsCohort.this.getQueuedBuildCount());
+		}
+
 		public int getRunningBuildCount() {
 			return _runningBuildCount;
+		}
+
+		public String getRunningBuildPercentage() {
+			return _getPercentage(
+				_runningBuildCount, JenkinsCohort.this.getRunningBuildCount());
 		}
 
 		public List<String> getTopLevelBuildURLs() {
@@ -296,6 +326,13 @@ public class JenkinsCohort {
 
 		public int getTotalBuildCount() {
 			return _queuedBuildCount + _runningBuildCount;
+		}
+
+		public String getTotalBuildPercentage() {
+			return _getPercentage(
+				getTotalBuildCount(),
+				JenkinsCohort.this.getRunningBuildCount() +
+					JenkinsCohort.this.getQueuedBuildCount());
 		}
 
 		public void incrementQueuedJobCount() {

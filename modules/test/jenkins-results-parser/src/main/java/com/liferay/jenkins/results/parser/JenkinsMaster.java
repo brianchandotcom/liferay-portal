@@ -110,7 +110,8 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	}
 
 	public int getAvailableSlavesCount() {
-		return getIdleSlavesCount() - _queueCount - _getRecentBatchSizesTotal();
+		return getIdleJenkinsSlavesCount() - _queueCount -
+			_getRecentBatchSizesTotal();
 	}
 
 	public float getAverageQueueLength() {
@@ -118,7 +119,11 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 			getOnlineJenkinsSlavesCount();
 	}
 
-	public int getIdleSlavesCount() {
+	public List<String> getBuildURLs() {
+		return _buildURLs;
+	}
+
+	public int getIdleJenkinsSlavesCount() {
 		int idleSlavesCount = 0;
 
 		for (JenkinsSlave jenkinsSlave : _jenkinsSlavesMap.values()) {
@@ -188,12 +193,8 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		return onlineJenkinsSlavesCount;
 	}
 
-	public List<String> getQueuedJobURLs() {
-		return _queuedJobURLs;
-	}
-
-	public List<String> getRunningJobURLs() {
-		return _runningJobURLs;
+	public List<String> getQueuedBuildURLs() {
+		return _queuedBuildURLs;
 	}
 
 	public Integer getSlaveRAM() {
@@ -290,7 +291,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 								"currentExecutable");
 
 						if (currentExecutableJSONObject.has("url")) {
-							_runningJobURLs.add(
+							_buildURLs.add(
 								currentExecutableJSONObject.getString("url"));
 						}
 					}
@@ -309,14 +310,13 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		for (int i = 0; i < itemsJSONArray.length(); i++) {
 			JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
 
+			JSONObject taskJSONObject = null;
+
 			if (itemJSONObject.has("task")) {
-				JSONObject taskJSONObject = itemJSONObject.getJSONObject(
-					"task");
+				taskJSONObject = itemJSONObject.getJSONObject("task");
+			}
 
-				if (taskJSONObject.has("url")) {
-					_queuedJobURLs.add(taskJSONObject.getString("url"));
-				}
-
+			if (taskJSONObject != null) {
 				String taskName = taskJSONObject.getString("name");
 
 				if (taskName.equals("verification-node")) {
@@ -332,6 +332,10 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 					why.endsWith("is offline")) {
 
 					continue;
+				}
+
+				if ((taskJSONObject != null) && taskJSONObject.has("url")) {
+					_queuedBuildURLs.add(taskJSONObject.getString("url"));
 				}
 			}
 
@@ -368,13 +372,13 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 
 	private boolean _available;
 	private final Map<Long, Integer> _batchSizes = new TreeMap<>();
+	private List<String> _buildURLs = new ArrayList<>();
 	private final Map<String, JenkinsSlave> _jenkinsSlavesMap = new HashMap<>();
 	private final String _masterName;
 	private final String _masterURL;
 	private int _queueCount;
-	private List<String> _queuedJobURLs = new ArrayList<>();
+	private List<String> _queuedBuildURLs = new ArrayList<>();
 	private int _reportedAvailableSlavesCount;
-	private List<String> _runningJobURLs = new ArrayList<>();
 	private final Integer _slaveRAM;
 
 }

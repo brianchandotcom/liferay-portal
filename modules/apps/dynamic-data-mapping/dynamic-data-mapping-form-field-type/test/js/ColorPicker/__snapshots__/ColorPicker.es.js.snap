@@ -11,9 +11,9 @@ exports[`Field Color Picker renders field disabled 1`] = `
     >
       <input
         name="colorPicker"
-        style="display: none;"
+        style="height: 0px; margin: 0px; padding: 0px; visibility: hidden; width: 0px;"
         type="text"
-        value="000000"
+        value="#000000"
       />
       <div
         class="input-group clay-color"
@@ -67,9 +67,9 @@ exports[`Field Color Picker renders field with helptext 1`] = `
     >
       <input
         name="colorPicker"
-        style="display: none;"
+        style="height: 0px; margin: 0px; padding: 0px; visibility: hidden; width: 0px;"
         type="text"
-        value="000000"
+        value="#000000"
       />
       <div
         class="input-group clay-color"
@@ -131,9 +131,9 @@ exports[`Field Color Picker renders field with label 1`] = `
     >
       <input
         name="colorPicker"
-        style="display: none;"
+        style="height: 0px; margin: 0px; padding: 0px; visibility: hidden; width: 0px;"
         type="text"
-        value="000000"
+        value="#000000"
       />
       <div
         class="input-group clay-color"

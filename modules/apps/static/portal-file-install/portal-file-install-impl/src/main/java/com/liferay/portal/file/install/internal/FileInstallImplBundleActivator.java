@@ -18,14 +18,11 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.file.install.FileInstaller;
 import com.liferay.portal.file.install.internal.configuration.ConfigurationFileInstaller;
 import com.liferay.portal.file.install.internal.configuration.FileSyncConfigurationListener;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -105,47 +102,28 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 
 		_serviceTracker.open();
 
-		Set<String> dirs = new HashSet<>(
-			Arrays.asList(
-				StringUtil.split(
-					bundleContext.getProperty(DirectoryWatcher.DIR))));
+		_directoryWatcher = new DirectoryWatcher(_bundleContext);
 
-		for (String dir : dirs) {
-			_directoryWatchers.add(new DirectoryWatcher(dir, _bundleContext));
-		}
-
-		for (DirectoryWatcher directoryWatcher : _directoryWatchers) {
-			directoryWatcher.start();
-		}
+		_directoryWatcher.start();
 	}
 
 	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
-		for (DirectoryWatcher directoryWatcher : _directoryWatchers) {
-			try {
-				directoryWatcher.close();
-			}
-			catch (Exception exception) {
-			}
-		}
+		_directoryWatcher.close();
 
 		_serviceTracker.close();
-
-		_directoryWatchers.clear();
 
 		_jarFileInstallerServiceRegistration.unregister();
 	}
 
 	public void updateChecksum(File file) {
-		for (DirectoryWatcher directoryWatcher : _directoryWatchers) {
-			Scanner scanner = directoryWatcher.getScanner();
+		Scanner scanner = _directoryWatcher.getScanner();
 
-			scanner.updateChecksum(file);
-		}
+		scanner.updateChecksum(file);
 	}
 
 	private BundleContext _bundleContext;
-	private final Set<DirectoryWatcher> _directoryWatchers = new HashSet<>();
+	private DirectoryWatcher _directoryWatcher;
 	private ServiceRegistration<FileInstaller>
 		_jarFileInstallerServiceRegistration;
 	private ServiceTracker<ConfigurationAdmin, List<ServiceRegistration<?>>>

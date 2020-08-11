@@ -18,8 +18,11 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -35,9 +38,9 @@ public class Scanner {
 	public static final String SUBDIR_MODE_RECURSE = "recurse";
 
 	public Scanner(
-		File directory, final String filterString, String subdirMode) {
+		List<File> dirs, final String filterString, String subdirMode) {
 
-		_watchedDirectory = _canon(directory);
+		_watchedDirs = _canon(dirs);
 
 		if ((filterString != null) && (filterString.length() > 0)) {
 			_filenameFilter = new FilenameFilter() {
@@ -75,9 +78,7 @@ public class Scanner {
 	}
 
 	public Set<File> scan(boolean reportImmediately) {
-		File[] list = _watchedDirectory.listFiles(_filenameFilter);
-
-		Set<File> files = _processFiles(reportImmediately, list);
+		Set<File> files = _processFiles(reportImmediately, _list());
 
 		return new TreeSet<>(files);
 	}
@@ -90,13 +91,19 @@ public class Scanner {
 		}
 	}
 
-	private static File _canon(File file) {
-		try {
-			return file.getCanonicalFile();
+	private static List<File> _canon(List<File> files) {
+		List<File> canonicalFiles = new ArrayList<>(files.size());
+
+		for (File file : files) {
+			try {
+				canonicalFiles.add(file.getCanonicalFile());
+			}
+			catch (IOException ioException) {
+				canonicalFiles.add(file);
+			}
 		}
-		catch (IOException ioException) {
-			return file;
-		}
+
+		return canonicalFiles;
 	}
 
 	private static long _checksum(File file) {
@@ -133,6 +140,20 @@ public class Scanner {
 
 			l >>= 8;
 		}
+	}
+
+	private File[] _list() {
+		List<File> files = new ArrayList<>();
+
+		for (File dir : _watchedDirs) {
+			File[] list = dir.listFiles(_filenameFilter);
+
+			if (list != null) {
+				Collections.addAll(files, list);
+			}
+		}
+
+		return files.toArray(new File[0]);
 	}
 
 	private Set<File> _processFiles(boolean reportImmediately, File[] list) {
@@ -204,6 +225,6 @@ public class Scanner {
 	private final Map<File, Long> _lastChecksums = new HashMap<>();
 	private final boolean _recurseSubdir;
 	private final Map<File, Long> _storedChecksums = new HashMap<>();
-	private final File _watchedDirectory;
+	private final List<File> _watchedDirs;
 
 }

@@ -27,17 +27,15 @@ import com.liferay.portal.file.install.internal.manifest.Parser;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-
-import java.nio.file.Files;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -122,8 +120,8 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 	public static final String WEB_START_LEVEL = "file.install.web.start.level";
 
-	public DirectoryWatcher(String dirName, BundleContext bundleContext) {
-		super("fileinstall-" + dirName);
+	public DirectoryWatcher(BundleContext bundleContext) {
+		super("fileinstall-directory-watcher");
 
 		setDaemon(true);
 
@@ -148,27 +146,15 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		_useStartTransient = GetterUtil.getBoolean(
 			bundleContext.getProperty(USE_START_TRANSIENT));
 
-		_watchedDirectory = new File(dirName);
+		Set<String> dirs = new LinkedHashSet<>(
+			Arrays.asList(
+				StringUtil.split(
+					bundleContext.getProperty(DirectoryWatcher.DIR))));
 
-		if (!_watchedDirectory.exists()) {
-			if (_log.isInfoEnabled()) {
-				_log.info("Creating watched directory " + _watchedDirectory);
-			}
+		_watchedDirs = new ArrayList<>(dirs.size());
 
-			try {
-				Files.createDirectories(_watchedDirectory.toPath());
-			}
-			catch (IOException ioException) {
-				_log.error(
-					"Unable to create watched directory " + _watchedDirectory,
-					ioException);
-			}
-		}
-		else if (!_watchedDirectory.isDirectory()) {
-			throw new RuntimeException(
-				StringBundler.concat(
-					"File Install cannot monitor ", _watchedDirectory,
-					" because it is not a directory"));
+		for (String dir : dirs) {
+			_watchedDirs.add(new File(dir));
 		}
 
 		_webStartLevel = GetterUtil.getInteger(
@@ -214,7 +200,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			});
 
 		_scanner = new Scanner(
-			_watchedDirectory, _filter, bundleContext.getProperty(SUBDIR_MODE));
+			_watchedDirs, _filter, bundleContext.getProperty(SUBDIR_MODE));
 
 		_bundleContext.addBundleListener(this);
 	}
@@ -556,6 +542,16 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		}
 	}
 
+	private boolean _contains(String path, List<String> dirPaths) {
+		for (String dirPath : dirPaths) {
+			if (path.contains(dirPath)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private FileInstaller _findFileInstaller(
 		File file, Iterable<FileInstaller> iterable) {
 
@@ -580,14 +576,22 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		}
 	}
 
+	private List<String> _getWatchedDirPaths() {
+		List<String> watchedDirPaths = new ArrayList<>();
+
+		for (File watchedDir : _watchedDirs) {
+			URI uri = watchedDir.toURI();
+
+			uri = uri.normalize();
+
+			watchedDirPaths.add(uri.getPath());
+		}
+
+		return watchedDirPaths;
+	}
+
 	private void _initializeCurrentManagedBundles() {
 		Bundle[] bundles = _bundleContext.getBundles();
-
-		URI uri = _watchedDirectory.toURI();
-
-		uri = uri.normalize();
-
-		String watchedDirPath = uri.getPath();
 
 		Map<File, Long> checksums = new HashMap<>();
 
@@ -597,10 +601,12 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			filePattern = Pattern.compile(_filter);
 		}
 
+		List<String> watchedDirPaths = _getWatchedDirPaths();
+
 		for (Bundle bundle : bundles) {
 			String location = bundle.getLocation();
 
-			uri = null;
+			URI uri = null;
 
 			try {
 				uri = new URI(location);
@@ -622,7 +628,9 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 			String path = null;
 
-			if ((location != null) && locationPath.contains(watchedDirPath)) {
+			if ((location != null) &&
+				_contains(locationPath, watchedDirPaths)) {
+
 				String schemeSpecificPart = uri.getSchemeSpecificPart();
 
 				if (uri.isOpaque() && (schemeSpecificPart != null)) {
@@ -659,7 +667,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 			int index = path.lastIndexOf(CharPool.SLASH);
 
-			if ((index != -1) && path.startsWith(watchedDirPath)) {
+			if ((index != -1) && _startWith(path, watchedDirPaths)) {
 				String fileName = path.substring(index + 1);
 
 				if (filePattern != null) {
@@ -1125,6 +1133,16 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		}
 	}
 
+	private boolean _startWith(String path, List<String> dirPaths) {
+		for (String dirPath : dirPaths) {
+			if (path.startsWith(dirPath)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private void _stopTransient(Bundle bundle) throws BundleException {
 		if (_startBundles && !_isFragment(bundle)) {
 			bundle.stop(Bundle.STOP_TRANSIENT);
@@ -1311,7 +1329,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	private final Bundle _systemBundle;
 	private final boolean _useStartActivationPolicy;
 	private final boolean _useStartTransient;
-	private final File _watchedDirectory;
+	private final List<File> _watchedDirs;
 	private final int _webStartLevel;
 
 }

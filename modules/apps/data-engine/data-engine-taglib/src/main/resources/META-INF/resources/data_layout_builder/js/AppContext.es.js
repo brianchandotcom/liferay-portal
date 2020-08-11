@@ -35,6 +35,7 @@ import {
 	UPDATE_FIELD_TYPES,
 	UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD,
 	UPDATE_FOCUSED_FIELD,
+	UPDATE_HOVERED_FIELD,
 	UPDATE_IDS,
 	UPDATE_PAGES,
 } from './actions.es';
@@ -75,6 +76,7 @@ const initialState = {
 	fieldTypes: [],
 	focusedCustomObjectField: {},
 	focusedField: {},
+	hoveredField: {},
 	sidebarOpen: true,
 	sidebarPanelId: 'fields',
 	spritemap: `${Liferay.ThemeDisplay.getPathThemeImages()}/lexicon/icons.svg`,
@@ -510,6 +512,14 @@ const createReducer = (dataLayoutBuilder) => {
 					...state,
 					focusedCustomObjectField: {},
 					focusedField: {},
+				};
+			}
+			case UPDATE_HOVERED_FIELD: {
+				const {hoveredField} = action.payload;
+
+				return {
+					...state,
+					hoveredField: hoveredField || state.hoveredField,
 				};
 			}
 			case UPDATE_CONFIG: {

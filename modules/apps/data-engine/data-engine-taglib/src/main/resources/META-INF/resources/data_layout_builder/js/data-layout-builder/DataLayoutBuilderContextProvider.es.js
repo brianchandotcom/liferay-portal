@@ -22,6 +22,7 @@ import {
 	UPDATE_EDITING_LANGUAGE_ID,
 	UPDATE_FIELD_TYPES,
 	UPDATE_FOCUSED_FIELD,
+	UPDATE_HOVERED_FIELD,
 	UPDATE_PAGES,
 } from '../actions.es';
 import {getDropHandler} from '../drag-and-drop/getDropHandler.es';
@@ -56,6 +57,19 @@ export default ({children, dataLayoutBuilder}) => {
 			dispatch({
 				payload: {focusedField: newVal},
 				type: UPDATE_FOCUSED_FIELD,
+			});
+		});
+
+		return () => eventHandler.removeListener();
+	}, [dataLayoutBuilder, dispatch]);
+
+	useEffect(() => {
+		const provider = dataLayoutBuilder.getLayoutProvider();
+
+		const eventHandler = provider.on('fieldHovered', (newVal) => {
+			dispatch({
+				payload: {hoveredField: newVal},
+				type: UPDATE_HOVERED_FIELD,
 			});
 		});
 

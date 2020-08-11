@@ -231,14 +231,11 @@ definition {
 
 		Click(locator1 = "StagingPublishToLive#DATE_SCHEDULE_RADIO");
 
-		if (isSet(endOnDate)) {
-			Click(locator1 = "StagingPublishToLive#DATE_SCHEDULE_END_DATE_END_BY_RADIO");
-		}
-		else {
+		if (isSet(startOnTomorrow)) {
 			Staging.setStartDateTomorrow();
-
-			Check(locator1 = "StagingPublishToLive#DATE_SCHEDULE_END_DATE_NO_END_DATE_RADIO");
 		}
+
+		Check(locator1 = "StagingPublishToLive#DATE_SCHEDULE_END_DATE_NO_END_DATE_RADIO");
 
 		Select(
 			locator1 = "StagingPublishToLive#DATE_SCHEDULE_REPEAT_DROPDOWN",
@@ -257,7 +254,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
-				value1 = "A wrong end date was specified, the scheduled process will never run.");
+				value1 = "A wrong start date was specified, the scheduled process cannot start in the past.");
 		}
 		else {
 			Alert.viewSuccessMessage();

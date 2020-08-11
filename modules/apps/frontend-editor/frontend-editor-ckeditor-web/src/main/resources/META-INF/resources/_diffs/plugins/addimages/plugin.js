@@ -150,13 +150,12 @@
 		 * @instance
 		 * @memberof CKEDITOR.plugins.addimages
 		 * @method _onImageUploaded
-		 * @param {Object} event Event data
+		 * @param {Image} image The image that was uploaded
+		 * @param {CKEDITOR.editor} editor The current editor instance
 		 * @protected
 		 */
-		_onImageUploaded(event) {
+		_onImageUploaded(image, editor) {
 			const instance = this;
-
-			const {editor, el} = event;
 
 			const fragment = CKEDITOR.htmlParser.fragment.fromHtml(
 				editor.getData()
@@ -165,8 +164,8 @@
 			const filter = new CKEDITOR.htmlParser.filter({
 				elements: {
 					img(element) {
-						if (el.src === instance._tempImage.src) {
-							element.attributes.src = el.src;
+						if (image.src === instance._tempImage.src) {
+							element.attributes.src = image.src;
 						}
 					},
 				},
@@ -429,16 +428,32 @@
 
 							imageContainer.remove();
 
-							const eventInfo = {
+							editor.fire('imageUploaded', {
 								editor,
 								el: image,
 								fileEntryId: data.file.fileEntryId,
 								uploadImageReturnType: '',
-							};
+							});
 
-							editor.fire('imageUploaded', eventInfo);
+							const fragment = CKEDITOR.htmlParser.fragment.fromHtml(
+								editor.getData()
+							);
 
-							this._onImageUploaded(eventInfo);
+							let imageFound = false;
+
+							fragment.forEach((element) => {
+								if (
+									element.type === CKEDITOR.NODE_ELEMENT &&
+									element.attributes['data-image-id'] ===
+										image.dataset.imageId
+								) {
+									imageFound = true;
+								}
+							});
+
+							if (!imageFound) {
+								this._onImageUploaded(image, editor);
+							}
 						}
 					}
 					else {

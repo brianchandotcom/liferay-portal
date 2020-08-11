@@ -197,8 +197,6 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 						String alt = mappedValueConfigJSONObject.getString(
 							"alt", StringPool.BLANK);
 
-						mappedValueConfigJSONObject.put("altTemplate", alt);
-
 						alt = _fragmentEntryProcessorHelper.processTemplate(
 							alt, fragmentEntryProcessorContext);
 

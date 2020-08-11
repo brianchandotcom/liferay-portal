@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -89,11 +88,7 @@ public class ImageEditableElementParser implements EditableElementParser {
 			}
 		}
 
-		return JSONUtil.put(
-			"alt", alt
-		).put(
-			"altTemplate", _TMPL_IMAGE_FIELD_ALT_TEMPLATE
-		);
+		return JSONUtil.put("alt", alt);
 	}
 
 	@Override
@@ -180,11 +175,8 @@ public class ImageEditableElementParser implements EditableElementParser {
 		}
 
 		String alt = configJSONObject.getString("alt");
-		String altTemplate = configJSONObject.getString("altTemplate");
 
-		if (Validator.isNotNull(alt) &&
-			!Objects.equals(altTemplate, _TMPL_IMAGE_FIELD_ALT_TEMPLATE)) {
-
+		if (Validator.isNotNull(alt)) {
 			replaceableElement.attr(
 				"alt", StringUtil.trim(_html.unescape(alt)));
 		}

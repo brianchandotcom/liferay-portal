@@ -26,6 +26,7 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 %>
 
 <clay:content-row
+	floatElements=""
 	verticalAlign="center"
 >
 	<clay:content-col

@@ -90,10 +90,6 @@ public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 
 	@Override
 	public void configurationEvent(ConfigurationEvent configurationEvent) {
-		if (!_shouldSaveConfig()) {
-			return;
-		}
-
 		int type = configurationEvent.getType();
 
 		if (type == ConfigurationEvent.CM_UPDATED) {
@@ -443,22 +439,6 @@ public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 		}
 
 		return false;
-	}
-
-	private boolean _shouldSaveConfig() {
-		String string = _bundleContext.getProperty(
-			DirectoryWatcher.ENABLE_CONFIG_SAVE);
-
-		if (string == null) {
-			string = _bundleContext.getProperty(
-				DirectoryWatcher.DISABLE_CONFIG_SAVE);
-		}
-
-		if (string != null) {
-			return Boolean.valueOf(string);
-		}
-
-		return true;
 	}
 
 	private String _toConfigKey(File file) {

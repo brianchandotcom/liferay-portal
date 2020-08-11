@@ -87,12 +87,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 	public static final String DIR = "file.install.dir";
 
-	public static final String DISABLE_CONFIG_SAVE =
-		"file.install.disableConfigSave";
-
-	public static final String ENABLE_CONFIG_SAVE =
-		"file.install.enableConfigSave";
-
 	public static final String FILENAME = "felix.fileinstall.filename";
 
 	public static final String FILTER = "file.install.filter";

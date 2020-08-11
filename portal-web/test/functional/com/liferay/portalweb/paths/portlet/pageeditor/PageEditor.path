@@ -620,13 +620,18 @@
 </tr>
 <!--PAGE_STRUCTURE_ITEM_CONFIGURATION-->
 <tr>
-	<td>CONFIGURATION_PANEL_HANDLE</td>
-	<td>//div[contains(@class,'page-editor__page-structure__section__resize-handler')]</td>
+	<td>CONFIGURATION_PANEL_CONFIGURATION</td>
+	<td>//div[contains(@class,'item-configuration')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CONFIGURATION_PANEL_RESIZER</td>
-	<td>//div[contains(@class,'page-editor__page-structure__section resized')][contains(@style,'${key_style}')]</td>
+	<td>CONFIGURATION_PANEL_HANDLE</td>
+	<td>//div[contains(@class,'resize-handler')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_PANEL_RESIZE</td>
+	<td>//div[contains(@class,'section resized')]</td>
 	<td></td>
 </tr>
 <tr>

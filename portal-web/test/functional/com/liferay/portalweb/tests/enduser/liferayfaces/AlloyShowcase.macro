@@ -1,0 +1,171 @@
+definition {
+
+	macro clickButton {
+		if ("${buttonRow}" == "true") {
+			AssertElementPresent(locator1 = "Button#SAVE");
+
+			Button.clickSave();
+
+			AssertElementPresent(locator1 = "Button#CANCEL");
+
+			Button.clickCancel();
+		}
+		else {
+			for (var buttonNum : list "${buttonNum}") {
+				AssertElementPresent(locator1 = "AlloyShowcase#GENERAL_BUTTON_${buttonNum}");
+
+				Click(locator1 = "AlloyShowcase#GENERAL_BUTTON_${buttonNum}");
+			}
+		}
+	}
+
+	macro selectRowsPerPage {
+		Click(
+			key_opt = "100",
+			locator1 = "AlloyShowcase#PAGINATOR_DROP_DOWN_LIST");
+
+		AssertElementPresent(
+			key_pageNum = "«",
+			locator1 = "AlloyShowcase#PAGINATOR_DROP_DOWN_SELECTED");
+	}
+
+	macro viewDataList {
+		var dataListItem1 = "Liferay lets you reuse the enterprise software and skills you already have in-house.";
+		var dataListItem2 = "Liferay is designed for scalability, reliability, and high performance both on-premise and in the cloud.";
+		var dataListItem3 = "Liferay is designed for integrating with both enterprise systems and web-based resources.";
+		var dataListItem4 = "With Liferay, projects are completed faster and with smaller budgets so you can see immediate results.";
+		var dataListItem5 = "Our open source community fosters innovation, increase security, and improves quality of the software.";
+
+		AssertTextEquals(
+			key_item = "1",
+			locator1 = "AlloyShowcase#DATA_LIST_UNORDERED",
+			value1 = "${dataListItem1}");
+		AssertTextEquals(
+			key_item = "2",
+			locator1 = "AlloyShowcase#DATA_LIST_UNORDERED",
+			value1 = "${dataListItem2}");
+		AssertTextEquals(
+			key_item = "3",
+			locator1 = "AlloyShowcase#DATA_LIST_UNORDERED",
+			value1 = "${dataListItem3}");
+		AssertTextEquals(
+			key_item = "4",
+			locator1 = "AlloyShowcase#DATA_LIST_UNORDERED",
+			value1 = "${dataListItem4}");
+		AssertTextEquals(
+			key_item = "5",
+			locator1 = "AlloyShowcase#DATA_LIST_UNORDERED",
+			value1 = "${dataListItem5}");
+
+		AssertTextEquals(
+			key_item = "1",
+			locator1 = "AlloyShowcase#DATA_LIST_ORDERED",
+			value1 = "${dataListItem1}");
+		AssertTextEquals(
+			key_item = "2",
+			locator1 = "AlloyShowcase#DATA_LIST_ORDERED",
+			value1 = "${dataListItem2}");
+		AssertTextEquals(
+			key_item = "3",
+			locator1 = "AlloyShowcase#DATA_LIST_ORDERED",
+			value1 = "${dataListItem3}");
+		AssertTextEquals(
+			key_item = "4",
+			locator1 = "AlloyShowcase#DATA_LIST_ORDERED",
+			value1 = "${dataListItem4}");
+		AssertTextEquals(
+			key_item = "5",
+			locator1 = "AlloyShowcase#DATA_LIST_ORDERED",
+			value1 = "${dataListItem5}");
+
+		AssertTextEquals(
+			key_item = "1",
+			locator1 = "AlloyShowcase#DATA_LIST_DESCRIPTIOND",
+			value1 = "${dataListItem1}");
+		AssertTextEquals(
+			key_item = "2",
+			locator1 = "AlloyShowcase#DATA_LIST_DESCRIPTIOND",
+			value1 = "${dataListItem2}");
+		AssertTextEquals(
+			key_item = "3",
+			locator1 = "AlloyShowcase#DATA_LIST_DESCRIPTIOND",
+			value1 = "${dataListItem3}");
+		AssertTextEquals(
+			key_item = "4",
+			locator1 = "AlloyShowcase#DATA_LIST_DESCRIPTIOND",
+			value1 = "${dataListItem4}");
+		AssertTextEquals(
+			key_item = "5",
+			locator1 = "AlloyShowcase#DATA_LIST_DESCRIPTIOND",
+			value1 = "${dataListItem5}");
+	}
+
+	macro viewPaginator {
+		Click(
+			key_buttonLabel = "nextPage",
+			locator1 = "AlloyShowcase#PAGINATOR_BUTTON");
+
+		AssertElementPresent(
+			key_pageNum = "2",
+			locator1 = "AlloyShowcase#PAGE_BUTTON_ACTIVE");
+
+		AssertTextEquals(
+			locator1 = "AlloyShowcase#FIRST_NAME_CELL",
+			value1 = "Philip");
+
+		Click(
+			key_pageNum = "3",
+			locator1 = "AlloyShowcase#PAGE_NUMBER_BUTTON");
+
+		AssertElementPresent(
+			key_pageNum = "3",
+			locator1 = "AlloyShowcase#PAGE_BUTTON_ACTIVE");
+
+		AssertTextEquals(
+			locator1 = "AlloyShowcase#FIRST_NAME_CELL",
+			value1 = "George");
+
+		Click(
+			key_buttonLabel = "previousPage",
+			locator1 = "AlloyShowcase#PAGINATOR_BUTTON");
+
+		AssertElementPresent(
+			key_pageNum = "2",
+			locator1 = "AlloyShowcase#PAGE_BUTTON_ACTIVE");
+
+		AssertTextEquals(
+			locator1 = "AlloyShowcase#FIRST_NAME_CELL",
+			value1 = "Philip");
+
+		Click(
+			key_buttonLabel = "lastPage",
+			locator1 = "AlloyShowcase#PAGINATOR_BUTTON");
+
+		AssertElementPresent(
+			key_pageNum = "»",
+			locator1 = "AlloyShowcase#PAGE_BUTTON_DISABLE");
+		AssertElementPresent(
+			key_pageNum = "›",
+			locator1 = "AlloyShowcase#PAGE_BUTTON_DISABLE");
+
+		AssertTextEquals(
+			locator1 = "AlloyShowcase#FIRST_NAME_CELL",
+			value1 = "William");
+
+		Click(
+			key_buttonLabel = "firstPage",
+			locator1 = "AlloyShowcase#PAGINATOR_BUTTON");
+
+		AssertElementPresent(
+			key_pageNum = "«",
+			locator1 = "AlloyShowcase#PAGE_BUTTON_DISABLE");
+		AssertElementPresent(
+			key_pageNum = "‹",
+			locator1 = "AlloyShowcase#PAGE_BUTTON_DISABLE");
+
+		AssertTextEquals(
+			locator1 = "AlloyShowcase#FIRST_NAME_CELL",
+			value1 = "John");
+	}
+
+}

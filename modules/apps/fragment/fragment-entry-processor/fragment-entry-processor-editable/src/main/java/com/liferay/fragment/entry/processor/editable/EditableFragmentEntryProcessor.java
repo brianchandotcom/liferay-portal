@@ -193,12 +193,8 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 							value, fragmentEntryProcessorContext.getLocale(),
 							null);
 
-					JSONObject configJSONObject = JSONUtil.merge(
-						editableValueJSONObject.getJSONObject("config"),
-						mappedValueConfigJSONObject);
-
-					if (configJSONObject.has("alt")) {
-						String alt = configJSONObject.getString(
+					if (mappedValueConfigJSONObject.has("alt")) {
+						String alt = mappedValueConfigJSONObject.getString(
 							"alt", StringPool.BLANK);
 
 						mappedValueConfigJSONObject.put("altTemplate", alt);

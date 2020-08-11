@@ -46,7 +46,7 @@ public class ClassLoaderPool {
 			classLoader = _classLoaders.get(contextName);
 
 			if (classLoader == null) {
-				int index = contextName.lastIndexOf("_");
+				int index = contextName.lastIndexOf('_');
 
 				if (index > 0) {
 					ConcurrentNavigableMap<Version, ClassLoader> classLoaders =
@@ -146,7 +146,7 @@ public class ClassLoaderPool {
 	private static Map.Entry<String, Version> _parseContextName(
 		String contextName) {
 
-		int index = contextName.lastIndexOf("_");
+		int index = contextName.lastIndexOf('_');
 
 		if ((index > 0) && (index < (contextName.length() - 1))) {
 			Version version = _parseVersion(contextName.substring(index + 1));

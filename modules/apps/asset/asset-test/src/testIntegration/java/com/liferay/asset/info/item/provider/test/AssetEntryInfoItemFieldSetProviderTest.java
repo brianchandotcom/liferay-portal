@@ -16,9 +16,11 @@ package com.liferay.asset.info.item.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.info.item.provider.AssetEntryInfoItemFieldSetProvider;
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.info.field.InfoFieldSet;
@@ -61,7 +63,7 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 	}
 
 	@Test
-	public void testVocabularyWithCategoryIsAvailableInInfoFieldSet()
+	public void testGetInfoFieldSetPublicVocabularyWithCategory()
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -72,27 +74,32 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 				TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 				RandomTestUtil.randomString(), serviceContext);
 
-		AssetCategoryLocalServiceUtil.addCategory(
+		AssetCategory category = AssetCategoryLocalServiceUtil.addCategory(
 			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-			"Category 1", vocabulary.getVocabularyId(), serviceContext);
+			RandomTestUtil.randomString(), vocabulary.getVocabularyId(),
+			serviceContext);
 
 		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
 			_group.getGroupId());
 
+		_assetEntryLocalService.addAssetCategoryAssetEntry(
+			category.getCategoryId(), assetEntry);
+
 		InfoFieldSet infoFieldSet =
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(assetEntry);
-
-		Assert.assertNotNull(infoFieldSet);
 
 		InfoFieldSetEntry infoFieldSetEntry = infoFieldSet.getInfoFieldSetEntry(
 			vocabulary.getName());
 
-		Assert.assertNotNull(infoFieldSetEntry);
+		Assert.assertEquals(vocabulary.getName(), infoFieldSetEntry.getName());
 	}
 
 	@Inject
 	private AssetEntryInfoItemFieldSetProvider
 		_assetEntryInfoItemFieldSetProvider;
+
+	@Inject
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

@@ -207,6 +207,7 @@ public class DLFileEntryTypeLocalServiceImpl
 		dlFileEntryType.setCompanyId(user.getCompanyId());
 		dlFileEntryType.setUserId(user.getUserId());
 		dlFileEntryType.setUserName(user.getFullName());
+		dlFileEntryType.setDataDefinitionId(ddmStructureIds[0]);
 		dlFileEntryType.setFileEntryTypeKey(fileEntryTypeKey);
 		dlFileEntryType.setNameMap(nameMap);
 		dlFileEntryType.setDescriptionMap(descriptionMap);

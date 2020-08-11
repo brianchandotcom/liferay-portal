@@ -1872,7 +1872,7 @@ definition {
 		PageEditor.resizeConfigurationPanel(
 			fragmentName = "Button",
 			position = "0,-100",
-			style = "415.638px");
+			value = "105");
 
 		PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
@@ -1880,9 +1880,7 @@ definition {
 
 		AssertElementPresent(locator1 = "PageEditor#CONFIGURATION_PANEL_HANDLE");
 
-		AssertElementNotPresent(
-			key_style = "415.638px",
-			locator1 = "PageEditor#CONFIGURATION_PANEL_RESIZER");
+		AssertElementNotPresent(locator1 = "PageEditor#CONFIGURATION_PANEL_RESIZE");
 	}
 
 	@description = "This is a test for LPS-101248. Can select any custom web content template as a "Template" for web content selected in content fragment."

@@ -34,6 +34,10 @@
 			<finder-column name="companyId" />
 			<finder-column name="url" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<exceptions>
 		<exception>DuplicateRemoteAppEntryURL</exception>

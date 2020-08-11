@@ -1,11 +1,11 @@
 {
 	"dependencies": {
-		"@clayui/alert": "3.4.0",
+		"@clayui/alert": "3.4.1",
 		"@clayui/form": "3.10.0",
 		"@clayui/icon": "3.0.5",
-		"@clayui/modal": "3.6.4",
+		"@clayui/modal": "3.6.5",
 		"clay": "2.18.1",
-		"clay-alert": "2.21.3",
+		"clay-alert": "2.21.4",
 		"liferay-amd-loader": "4.3.0",
 		"lodash.escape": "4.0.1",
 		"lodash.groupby": "4.6.0",

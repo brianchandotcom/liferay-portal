@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/alert": "3.4.0",
+		"@clayui/alert": "3.4.1",
 		"@clayui/icon": "3.0.5",
 		"react": "16.12.0",
 		"react-dom": "16.12.0"

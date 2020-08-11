@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/layout": "3.1.1",
+		"@clayui/layout": "3.2.0",
 		"frontend-js-react-web": "*",
 		"frontend-js-web": "*",
 		"moment": "^2.22.2",

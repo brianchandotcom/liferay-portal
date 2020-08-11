@@ -1,12 +1,12 @@
 {
 	"dependencies": {
 		"@clayui/button": "3.4.0",
-		"@clayui/drop-down": "3.5.0",
+		"@clayui/drop-down": "3.6.0",
 		"@clayui/form": "3.10.0",
 		"@clayui/icon": "3.0.5",
 		"@clayui/label": "3.3.1",
-		"clay-dropdown": "2.21.3",
-		"clay-label": "2.21.3",
+		"clay-dropdown": "2.21.4",
+		"clay-label": "2.21.4",
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
 		"metal-dom": "2.16.8",

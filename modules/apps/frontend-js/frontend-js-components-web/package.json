@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/card": "3.3.0",
+		"@clayui/card": "3.3.1",
 		"@clayui/icon": "3.0.5",
 		"@clayui/sticker": "3.2.0",
 		"classnames": "2.2.6",

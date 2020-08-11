@@ -67,7 +67,75 @@ public class ConfigurationFileInstaller implements FileInstaller {
 
 	@Override
 	public URL transformURL(File file) throws Exception {
-		_setConfig(file);
+		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
+
+		try (InputStream inputStream = new FileInputStream(file);
+			Reader reader = new InputStreamReader(inputStream, _encoding)) {
+
+			TypedProperties typedProperties = new TypedProperties();
+
+			typedProperties.load(reader);
+
+			for (String key : typedProperties.keySet()) {
+				dictionary.put(key, typedProperties.get(key));
+			}
+		}
+
+		String[] pid = _parsePid(file.getName());
+
+		Configuration configuration = _getConfiguration(
+			_toConfigKey(file), pid[0], pid[1]);
+
+		Dictionary<String, Object> properties = configuration.getProperties();
+
+		Dictionary<String, Object> old = null;
+
+		if (properties != null) {
+			old = new HashMapDictionary<>();
+
+			Enumeration<String> enumeration = properties.keys();
+
+			while (enumeration.hasMoreElements()) {
+				String key = enumeration.nextElement();
+
+				old.put(key, properties.get(key));
+			}
+		}
+
+		if (old != null) {
+			old.remove(DirectoryWatcher.FILENAME);
+			old.remove(Constants.SERVICE_PID);
+			old.remove(ConfigurationAdmin.SERVICE_FACTORYPID);
+		}
+
+		if (!_equals(dictionary, old)) {
+			dictionary.put(DirectoryWatcher.FILENAME, _toConfigKey(file));
+
+			String logString = StringPool.BLANK;
+
+			if (pid[1] != null) {
+				logString = StringPool.DASH + pid[1];
+			}
+
+			if (old == null) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						StringBundler.concat(
+							"Creating configuration from ", pid[0], logString,
+							".cfg"));
+				}
+			}
+			else {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						StringBundler.concat(
+							"Updating configuration from ", pid[0], logString,
+							".cfg"));
+				}
+			}
+
+			configuration.update(dictionary);
+		}
 
 		return null;
 	}
@@ -185,82 +253,6 @@ public class ConfigurationFileInstaller implements FileInstaller {
 		}
 
 		return new String[] {pid, null};
-	}
-
-	private boolean _setConfig(File file) throws Exception {
-		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
-
-		try (InputStream inputStream = new FileInputStream(file);
-			Reader reader = new InputStreamReader(inputStream, _encoding)) {
-
-			TypedProperties typedProperties = new TypedProperties();
-
-			typedProperties.load(reader);
-
-			for (String key : typedProperties.keySet()) {
-				dictionary.put(key, typedProperties.get(key));
-			}
-		}
-
-		String[] pid = _parsePid(file.getName());
-
-		Configuration configuration = _getConfiguration(
-			_toConfigKey(file), pid[0], pid[1]);
-
-		Dictionary<String, Object> properties = configuration.getProperties();
-
-		Dictionary<String, Object> old = null;
-
-		if (properties != null) {
-			old = new HashMapDictionary<>();
-
-			Enumeration<String> enumeration = properties.keys();
-
-			while (enumeration.hasMoreElements()) {
-				String key = enumeration.nextElement();
-
-				old.put(key, properties.get(key));
-			}
-		}
-
-		if (old != null) {
-			old.remove(DirectoryWatcher.FILENAME);
-			old.remove(Constants.SERVICE_PID);
-			old.remove(ConfigurationAdmin.SERVICE_FACTORYPID);
-		}
-
-		if (!_equals(dictionary, old)) {
-			dictionary.put(DirectoryWatcher.FILENAME, _toConfigKey(file));
-
-			String logString = StringPool.BLANK;
-
-			if (pid[1] != null) {
-				logString = StringPool.DASH + pid[1];
-			}
-
-			if (old == null) {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						StringBundler.concat(
-							"Creating configuration from ", pid[0], logString,
-							".cfg"));
-				}
-			}
-			else {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						StringBundler.concat(
-							"Updating configuration from ", pid[0], logString,
-							".cfg"));
-				}
-			}
-
-			configuration.update(dictionary);
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private String _toConfigKey(File file) {

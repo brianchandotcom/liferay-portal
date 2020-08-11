@@ -3,7 +3,7 @@
 .page-editor__page-structure__tree-node {
 	align-items: center;
 	display: flex;
-	font-size: 14px;
+	font-size: 12px;
 	height: 28px;
 	justify-content: space-between;
 	line-height: 28px;
@@ -27,6 +27,10 @@
 		border-radius: 4px;
 	}
 
+	&--bold {
+		font-weight: 600;
+	}
+
 	&__remove-button {
 		color: $secondary;
 		font-size: 12px;
@@ -43,12 +47,8 @@
 
 	&__name {
 		color: $dark;
-		font-size: 13px;
+		font-size: 12px;
 		line-height: 20px;
-
-		&--active {
-			font-weight: 600;
-		}
 
 		&--disabled {
 			color: $gray-900;
@@ -58,6 +58,7 @@
 
 		.lexicon-icon {
 			margin-right: 8px;
+			margin-top: -1px;
 		}
 	}
 }

@@ -14,13 +14,17 @@
 
 package com.liferay.portal.file.install.internal;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.file.install.FileInstaller;
+import com.liferay.portal.file.install.internal.configuration.ConfigurationFileInstaller;
+import com.liferay.portal.file.install.internal.configuration.FileSyncConfigurationListener;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.osgi.framework.BundleActivator;
@@ -28,6 +32,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.service.cm.ConfigurationListener;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -46,36 +51,52 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 		_serviceTracker = new ServiceTracker<>(
 			bundleContext, ConfigurationAdmin.class.getName(),
 			new ServiceTrackerCustomizer
-				<ConfigurationAdmin, ConfigInstaller>() {
+				<ConfigurationAdmin, List<ServiceRegistration<?>>>() {
 
 				@Override
-				public ConfigInstaller addingService(
+				public List<ServiceRegistration<?>> addingService(
 					ServiceReference<ConfigurationAdmin> serviceReference) {
 
 					ConfigurationAdmin configurationAdmin =
 						bundleContext.getService(serviceReference);
 
-					ConfigInstaller configInstaller = new ConfigInstaller(
-						bundleContext, configurationAdmin,
-						FileInstallImplBundleActivator.this);
+					String encoding = bundleContext.getProperty(
+						DirectoryWatcher.CONFIG_ENCODING);
 
-					configInstaller.init();
+					if (encoding == null) {
+						encoding = StringPool.UTF8;
+					}
 
-					return configInstaller;
+					return Arrays.asList(
+						_bundleContext.registerService(
+							FileInstaller.class.getName(),
+							new ConfigurationFileInstaller(
+								configurationAdmin, encoding),
+							null),
+						_bundleContext.registerService(
+							ConfigurationListener.class.getName(),
+							new FileSyncConfigurationListener(
+								configurationAdmin,
+								FileInstallImplBundleActivator.this, encoding),
+							null));
 				}
 
 				@Override
 				public void modifiedService(
 					ServiceReference<ConfigurationAdmin> serviceReference,
-					ConfigInstaller configInstaller) {
+					List<ServiceRegistration<?>> serviceRegistrations) {
 				}
 
 				@Override
 				public void removedService(
 					ServiceReference<ConfigurationAdmin> serviceReference,
-					ConfigInstaller configInstaller) {
+					List<ServiceRegistration<?>> serviceRegistrations) {
 
-					configInstaller.destroy();
+					for (ServiceRegistration<?> serviceRegistration :
+							serviceRegistrations) {
+
+						serviceRegistration.unregister();
+					}
 
 					bundleContext.ungetService(serviceReference);
 				}
@@ -127,6 +148,7 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 	private final Set<DirectoryWatcher> _directoryWatchers = new HashSet<>();
 	private ServiceRegistration<FileInstaller>
 		_jarFileInstallerServiceRegistration;
-	private ServiceTracker<ConfigurationAdmin, ConfigInstaller> _serviceTracker;
+	private ServiceTracker<ConfigurationAdmin, List<ServiceRegistration<?>>>
+		_serviceTracker;
 
 }

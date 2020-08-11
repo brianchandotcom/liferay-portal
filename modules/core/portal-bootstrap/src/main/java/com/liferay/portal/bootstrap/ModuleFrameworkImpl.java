@@ -1253,35 +1253,39 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	private void _installConfigs(ClassLoader classLoader) throws Exception {
 		BundleContext bundleContext = _framework.getBundleContext();
 
-		Class<?> configInstallerClass = classLoader.loadClass(
-			"com.liferay.portal.file.install.internal.ConfigInstaller");
+		Class<?> configurationFileInstallerClass = classLoader.loadClass(
+			"com.liferay.portal.file.install.internal.configuration." +
+				"ConfigurationFileInstaller");
 
-		Method method = configInstallerClass.getDeclaredMethod(
+		Method method = configurationFileInstallerClass.getDeclaredMethod(
 			"transformURL", File.class);
 
 		Constructor<?> constructor =
-			configInstallerClass.getDeclaredConstructor(
-				BundleContext.class,
+			configurationFileInstallerClass.getDeclaredConstructor(
 				classLoader.loadClass("org.osgi.service.cm.ConfigurationAdmin"),
-				classLoader.loadClass(
-					"com.liferay.portal.file.install.internal." +
-						"FileInstallImplBundleActivator"));
+				String.class);
 
 		constructor.setAccessible(true);
 
-		Object configInstaller = constructor.newInstance(
-			bundleContext,
+		String encoding = bundleContext.getProperty(
+			"file.install.configEncoding");
+
+		if (encoding == null) {
+			encoding = StringPool.UTF8;
+		}
+
+		Object configurationFileInstaller = constructor.newInstance(
 			bundleContext.getService(
 				bundleContext.getServiceReference(
 					"org.osgi.service.cm.ConfigurationAdmin")),
-			null);
+			encoding);
 
 		File dir = new File(PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR);
 
 		dir = dir.getCanonicalFile();
 
 		for (File file : _listConfigs(dir)) {
-			method.invoke(configInstaller, file);
+			method.invoke(configurationFileInstaller, file);
 		}
 	}
 

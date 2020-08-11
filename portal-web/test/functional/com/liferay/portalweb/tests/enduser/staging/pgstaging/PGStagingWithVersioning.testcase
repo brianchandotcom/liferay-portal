@@ -41,7 +41,8 @@ definition {
 		Staging.addRepeatEvent(
 			frequency = "Daily",
 			scheduleTitleName = "Event Daily Name",
-			siteName = "Site Name");
+			siteName = "Site Name",
+			startOnTomorrow = "true");
 
 		Staging.viewRepeatingEventDetails(
 			endDate = "No End Date",

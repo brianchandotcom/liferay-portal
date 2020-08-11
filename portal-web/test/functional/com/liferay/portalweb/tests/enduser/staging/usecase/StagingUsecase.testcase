@@ -939,7 +939,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-84418."
+	@description = "This is a use case for LPS-84418 and LPS-117578."
 	@priority = "5"
 	test PublishWithImpossibleDateRange {
 		property portal.upstream = "quarantine";
@@ -947,7 +947,6 @@ definition {
 		Navigator.openStagingSiteURL(siteName = "Site Name");
 
 		Staging.addRepeatEvent(
-			endOnDate = "true",
 			failureExpected = "true",
 			frequency = "Monthly",
 			scheduleTitleName = "Event Monthly Name");

@@ -51,8 +51,7 @@ export default function DropdownMenu({
 					<ClayButton className={cssClass} {...otherProps}>
 						{icon && (
 							<span
-								className={classNames({
-									'inline-item': label,
+								className={classNames('inline-item', {
 									'inline-item-before': label,
 								})}
 							>

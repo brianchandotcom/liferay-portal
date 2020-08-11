@@ -47,8 +47,7 @@ definition {
 
 	@priority = "4"
 	test AddSiteTemplateApplySiteTemplateChangesToSite {
-		property portal.acceptance = "quarantine";
-		property portal.release = "quarantine";
+		property portal.acceptance = "true";
 
 		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 

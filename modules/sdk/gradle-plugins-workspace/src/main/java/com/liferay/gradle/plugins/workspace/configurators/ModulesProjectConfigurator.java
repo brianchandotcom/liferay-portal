@@ -508,14 +508,10 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 		Map<String, Object> packageJsonMap = _getPackageJsonMap(
 			packageJsonPath.toFile());
 
-		Map<String, Object> portlet = (Map<String, Object>)packageJsonMap.get(
-			"portlet");
-
 		Map<String, Object> scripts = (Map<String, Object>)packageJsonMap.get(
 			"scripts");
 
-		if ((portlet != null) && (scripts != null) &&
-			(scripts.get("build") != null)) {
+		if (scripts.get("build") != null) {
 
 			return true;
 		}

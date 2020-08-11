@@ -206,11 +206,8 @@ public class JournalArticleModelValidator
 		}
 
 		if (!validSmallImageExtension) {
-			String smallImageExtension = smallImageName.substring(
-				smallImageName.indexOf(".") + 1);
-
 			throw new ArticleSmallImageNameException(
-				"Extension " + smallImageExtension +
+				"Extension " + FileUtil.getExtension(smallImageName) +
 					" is not an allowed file upload type.");
 		}
 

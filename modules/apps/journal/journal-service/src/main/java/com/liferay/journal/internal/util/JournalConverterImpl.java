@@ -616,6 +616,10 @@ public class JournalConverterImpl implements JournalConverter {
 			String uuid = jsonObject.getString("uuid");
 			long groupId = jsonObject.getLong("groupId");
 
+			if (Validator.isNull(uuid) || (groupId <= 0)) {
+				return StringPool.BLANK;
+			}
+
 			try {
 				if (!ExportImportThreadLocal.isImportInProcess()) {
 					FileEntry fileEntry =

@@ -5,7 +5,6 @@
 </#if>
 
 <#assign
-	assetTitle = ""
 	fieldRawValue = paramUtil.getString(request, "${namespacedFieldName}", fieldRawValue)
 	message = ""
 />
@@ -14,13 +13,9 @@
 	<#assign
 		fieldJournalJSONObject = jsonFactoryUtil.createJSONObject(fieldRawValue)
 
-		journalArticle = fetchLatestArticle(fieldJournalJSONObject)
 		message = fieldJournalJSONObject.getString("message")
+		title = fieldJournalJSONObject.getString("title")
 	/>
-
-	<#if validator.isNotNull(journalArticle)>
-		<#assign selectedAssetTitle = journalArticle.getTitle(requestedLocale) />
-	</#if>
 </#if>
 
 <#assign assetBrowserAuthToken = authTokenUtil.getToken(request, themeDisplay.getPlid(), "com_liferay_asset_browser_web_portlet_AssetBrowserPortlet") />
@@ -45,7 +40,7 @@
 			readonly="readonly"
 			required=required
 			type="text"
-			value=selectedAssetTitle
+			value=title
 		/>
 
 		<@liferay_aui.input

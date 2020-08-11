@@ -83,11 +83,11 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		AssetCategorization.addCategory(
+		WebContent.selectCategory(
 			categoryName = "Category Name 1",
 			vocabularyName = "Vocabulary Name 1");
 
-		AssetCategorization.addCategory(
+		WebContent.selectCategory(
 			categoryName = "Subcategory Name 2",
 			vocabularyName = "Vocabulary Name 2");
 
@@ -118,10 +118,23 @@ definition {
 			locator1 = "PageEditorEditableLink#FIELD",
 			value1 = "All Categories");
 
-		PageEditor.viewFragmentEditableText(
-			editableText = "Category Name 3-1, Category Name 3-2, Category Name 3-3, Category Name 1, Subcategory Name 2",
-			fragmentName = "Heading",
-			id = "element-text");
+		AssertTextEquals.assertPartialText(
+			id = "element-text",
+			key_fragmentName = "Heading",
+			locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+			value1 = "Category Name 3-1, Category Name 3-2, Category Name 3-3");
+
+		AssertTextEquals.assertPartialText(
+			id = "element-text",
+			key_fragmentName = "Heading",
+			locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+			value1 = "Subcategory Name 2");
+
+		AssertTextEquals.assertPartialText(
+			id = "element-text",
+			key_fragmentName = "Heading",
+			locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+			value1 = "Category Name 1");
 	}
 
 	@description = "This is a test for LPS-116034. The custom ddmfields of content are available for mapping in editable field."

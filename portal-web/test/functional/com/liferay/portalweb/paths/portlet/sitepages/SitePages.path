@@ -36,7 +36,7 @@
 </tr>
 <tr>
 	<td>LIST_GROUP_ITEM_ELLIPSIS_ICON_IE</td>
-	<td>//li[contains(.,'${key_pageName}')]//button[contains(@class,'dropdown-toggle')]</td>
+	<td>xpath=(//li[contains(.,'${key_pageName}')]//button[contains(@class,'dropdown-toggle')])[2]</td>
 	<td></td>
 </tr>
 <tr>

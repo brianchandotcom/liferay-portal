@@ -79,7 +79,6 @@ definition {
 	test EditInlineTextExperience {
 		property portal.acceptance = "true";
 
-
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
 		ContentPages.clickPencil();

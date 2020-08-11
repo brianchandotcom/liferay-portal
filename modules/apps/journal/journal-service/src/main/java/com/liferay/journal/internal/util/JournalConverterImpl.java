@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
+import com.liferay.trash.TrashHelper;
 
 import java.io.Serializable;
 
@@ -626,7 +627,12 @@ public class JournalConverterImpl implements JournalConverter {
 						_dlAppLocalService.getFileEntryByUuidAndGroupId(
 							uuid, groupId);
 
+					String title = fileEntry.getTitle();
+
 					if (fileEntry.isInTrash()) {
+						title = _trashHelper.getOriginalTitle(
+							fileEntry.getTitle());
+
 						jsonObject.put(
 							"message",
 							LanguageUtil.get(
@@ -635,7 +641,7 @@ public class JournalConverterImpl implements JournalConverter {
 									"recycle-bin"));
 					}
 
-					jsonObject.put("title", fileEntry.getTitle());
+					jsonObject.put("title", title);
 				}
 			}
 			catch (Exception exception) {
@@ -1276,5 +1282,8 @@ public class JournalConverterImpl implements JournalConverter {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

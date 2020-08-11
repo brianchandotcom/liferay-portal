@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import java.util.Locale;
@@ -37,18 +36,19 @@ public class AddResourceActionsPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
+		String xml = StringUtil.read(
+			AddResourceActionsPortalInstanceLifecycleListener.class.
+				getClassLoader(),
+			"/resource-actions/languages.xml");
+
 		for (Locale availableLocale : _language.getAvailableLocales()) {
-			String xml = StringUtil.read(
-				AddResourceActionsPortalInstanceLifecycleListener.class.
-					getClassLoader(),
-				"/resource-actions/languages.xml");
-
-			xml = StringUtil.replace(
-				xml, "[$LANGUAGE$]", _language.getLanguageId(availableLocale));
-
-			Document document = SAXReaderUtil.read(xml);
-
-			_resourceActions.read(null, document, null);
+			_resourceActions.read(
+				null,
+				SAXReaderUtil.read(
+					StringUtil.replace(
+						xml, "[$LANGUAGE$]",
+						_language.getLanguageId(availableLocale))),
+				null);
 		}
 	}
 

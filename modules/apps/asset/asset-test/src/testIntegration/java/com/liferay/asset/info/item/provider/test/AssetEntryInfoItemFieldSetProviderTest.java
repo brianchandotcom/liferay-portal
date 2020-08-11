@@ -75,60 +75,9 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 	}
 
 	@Test
-	public void testGetInfoFieldSetInternalAssetEntryEmptyVocabulary() throws Exception {
-		Map<Locale, String> titleMap = HashMapBuilder.put(
-			LocaleUtil.US, RandomTestUtil.randomString()
-		).build();
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		AssetVocabulary vocabulary = _assetVocabularyLocalService.addVocabulary(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			RandomTestUtil.randomString(), titleMap, null, null,
-			AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL, serviceContext);
-
-		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
-			_group.getGroupId());
-
-		InfoFieldSet infoFieldSet =
-			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(assetEntry);
-
-		Assert.assertNull(
-			infoFieldSet.getInfoFieldSetEntry(vocabulary.getName()));
-	}
-
-	@Test
-	public void testGetInfoFieldSetJournalArticleClassPublicEmptyVocabulary()
+	public void testGetInfoFieldSetAssetEntryPublicEmptyVocabulary()
 		throws Exception {
 
-		long classNameId = PortalUtil.getClassNameId(
-			"com.liferay.journal.model.JournalArticle");
-
-		Group group = GroupLocalServiceUtil.getCompanyGroup(
-			TestPropsValues.getCompanyId());
-
-		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-			group.getGroupId(), classNameId, "BASIC-WEB-CONTENT");
-
-		long classTypeId = ddmStructure.getStructureId();
-
-		AssetVocabulary vocabulary = AssetTestUtil.addVocabulary(
-			_group.getGroupId(), classNameId, classTypeId, false);
-
-		InfoFieldSet infoFieldSet =
-			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
-				JournalArticle.class.getName(), classTypeId,
-				_group.getGroupId());
-
-		InfoFieldSetEntry infoFieldSetEntry = infoFieldSet.getInfoFieldSetEntry(
-			vocabulary.getName());
-
-		Assert.assertEquals(vocabulary.getName(), infoFieldSetEntry.getName());
-	}
-
-	@Test
-	public void testGetInfoFieldSetAssetEntryPublicEmptyVocabulary() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
@@ -174,6 +123,61 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 
 		InfoFieldSet infoFieldSet =
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(assetEntry);
+
+		InfoFieldSetEntry infoFieldSetEntry = infoFieldSet.getInfoFieldSetEntry(
+			vocabulary.getName());
+
+		Assert.assertEquals(vocabulary.getName(), infoFieldSetEntry.getName());
+	}
+
+	@Test
+	public void testGetInfoFieldSetInternalAssetEntryEmptyVocabulary()
+		throws Exception {
+
+		Map<Locale, String> titleMap = HashMapBuilder.put(
+			LocaleUtil.US, RandomTestUtil.randomString()
+		).build();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		AssetVocabulary vocabulary = _assetVocabularyLocalService.addVocabulary(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), titleMap, null, null,
+			AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL, serviceContext);
+
+		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
+			_group.getGroupId());
+
+		InfoFieldSet infoFieldSet =
+			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(assetEntry);
+
+		Assert.assertNull(
+			infoFieldSet.getInfoFieldSetEntry(vocabulary.getName()));
+	}
+
+	@Test
+	public void testGetInfoFieldSetJournalArticleClassPublicEmptyVocabulary()
+		throws Exception {
+
+		long classNameId = PortalUtil.getClassNameId(
+			"com.liferay.journal.model.JournalArticle");
+
+		Group group = GroupLocalServiceUtil.getCompanyGroup(
+			TestPropsValues.getCompanyId());
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			group.getGroupId(), classNameId, "BASIC-WEB-CONTENT");
+
+		long classTypeId = ddmStructure.getStructureId();
+
+		AssetVocabulary vocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId(), classNameId, classTypeId, false);
+
+		InfoFieldSet infoFieldSet =
+			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
+				JournalArticle.class.getName(), classTypeId,
+				_group.getGroupId());
 
 		InfoFieldSetEntry infoFieldSetEntry = infoFieldSet.getInfoFieldSetEntry(
 			vocabulary.getName());

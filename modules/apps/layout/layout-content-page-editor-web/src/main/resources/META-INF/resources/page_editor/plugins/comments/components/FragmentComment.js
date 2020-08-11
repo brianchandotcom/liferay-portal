@@ -128,11 +128,10 @@ export default function FragmentComment({
 		);
 
 		if (highlightMessageId === commentId) {
+			window.sessionStorage.removeItem(HIGHLIGHTED_COMMENT_ID_KEY);
+
 			setHighlighted(true);
 		}
-
-		return () =>
-			window.sessionStorage.removeItem(HIGHLIGHTED_COMMENT_ID_KEY);
 	}, [commentId]);
 
 	return (

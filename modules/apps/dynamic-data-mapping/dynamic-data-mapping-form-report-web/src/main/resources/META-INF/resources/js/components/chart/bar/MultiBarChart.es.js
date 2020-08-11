@@ -32,6 +32,8 @@ import CustomizedAxisTick from './CustomizedAxisTick.es';
 
 const {blueDark, gray} = NAMED_COLORS;
 
+const MAX_LABEL_SIZE = 44;
+
 export default ({data, field, height, structure, width}) => {
 	const [activeIndex, setActiveIndex] = useState(null);
 
@@ -92,6 +94,7 @@ export default ({data, field, height, structure, width}) => {
 	const renderLegend = (props) => {
 		const {payload} = props;
 
+
 		return (
 			<ul className="bar-legend">
 				{payload.map((entry, index) => {
@@ -107,8 +110,8 @@ export default ({data, field, height, structure, width}) => {
 								/>
 							</svg>
 							<span>
-								{label && label.length > 44
-									? ellipsize(label, 44)
+								{label && label.length > MAX_LABEL_SIZE
+									? ellipsize(label, MAX_LABEL_SIZE)
 									: label}
 							</span>
 						</li>

@@ -90,11 +90,6 @@
 		},
 
 		/**
-		 * A list of src attributes used to store base64 images
-		 */
-		_imageSrcToReplace: [],
-
-		/**
 		 * Handles drag drop event. The function will create a selection from the current
 		 * point and will send a list of files to be processed to
 		 * {{#crossLink "CKEDITOR.plugins.addimages/_handleFiles:method"}}{{/crossLink}} method.
@@ -159,37 +154,31 @@
 		 * @protected
 		 */
 		_onImageUploaded(event) {
-			if (event.data && event.data.el) {
-				const instance = this;
+			const instance = this;
 
-				const editor = event.editor;
-				const fragment = CKEDITOR.htmlParser.fragment.fromHtml(
-					editor.getData()
-				);
+			const {editor, el} = event;
 
-				const filter = new CKEDITOR.htmlParser.filter({
-					elements: {
-						img(element) {
-							const index = instance._imageSrcToReplace.indexOf(
-								element.attributes.src
-							);
-							if (index !== -1) {
-								instance._imageSrcToReplace.splice(index, 1);
+			const fragment = CKEDITOR.htmlParser.fragment.fromHtml(
+				editor.getData()
+			);
 
-								element.attributes.src = event.data.el.src;
-							}
-						},
+			const filter = new CKEDITOR.htmlParser.filter({
+				elements: {
+					img(element) {
+						if (el.src === instance._tempImage.src) {
+							element.attributes.src = el.src;
+						}
 					},
-				});
+				},
+			});
 
-				const writer = new CKEDITOR.htmlParser.basicWriter();
+			const writer = new CKEDITOR.htmlParser.basicWriter();
 
-				fragment.writeChildrenHtml(writer, filter);
+			fragment.writeChildrenHtml(writer, filter);
 
-				editor.setData(writer.getHtml(), () => {
-					editor.updateElement();
-				});
-			}
+			editor.setData(writer.getHtml(), () => {
+				editor.updateElement();
+			});
 		},
 
 		/**
@@ -240,10 +229,6 @@
 						const src = element.attributes.src;
 						const extension = match[1];
 						const name = `${Date.now().toString()}.${extension}`;
-
-						// Mark this "src" attribute as something we want to replace
-
-						this._imageSrcToReplace.push(src);
 
 						this._fetchBlob(src)
 							.then((blob) => {
@@ -337,7 +322,6 @@
 				editor.on('dragenter', this._onDragEnter.bind(this));
 				editor.on('dragover', this._onDragOver.bind(this));
 				editor.on('drop', this._onDragDrop.bind(this));
-				editor.on('imageUploaded', this._onImageUploaded.bind(this));
 				editor.on('paste', this._onPaste.bind(this));
 			});
 
@@ -444,11 +428,16 @@
 
 							imageContainer.remove();
 
-							editor.fire('imageUploaded', {
+							const eventInfo = {
+								editor,
 								el: image,
 								fileEntryId: data.file.fileEntryId,
 								uploadImageReturnType: '',
-							});
+							};
+
+							editor.fire('imageUploaded', eventInfo);
+
+							this._onImageUploaded(eventInfo);
 						}
 					}
 					else {

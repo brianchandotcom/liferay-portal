@@ -193,7 +193,7 @@ definition {
 
 		AssertElementPresent(locator1 = "Questions#QUESTIONS_SELECT_FILTER");
 
-		Questions.viewList(listedQuestions = "Title AddQuestionWithTheMaximumTag");
+		Questions.viewList(listedQuestions = "Title AddQuestionWithTheMaximumTags");
 	}
 
 	@description = "Validate if the user can view the topic selector and category label."

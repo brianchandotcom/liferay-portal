@@ -197,11 +197,12 @@ const setDataDefinitionFields = (
 	);
 };
 
-const setDataLayout = (dataLayoutBuilder) => {
-	const {pages, rules} = dataLayoutBuilder.getStore();
+const setDataLayout = (dataLayout, dataLayoutBuilder) => {
+	const {dataRules} = dataLayout;
+	const {pages} = dataLayoutBuilder.getStore();
 	const {layout} = dataLayoutBuilder.getDataDefinitionAndDataLayout(
 		pages,
-		rules || []
+		dataRules || []
 	);
 
 	return layout;
@@ -544,7 +545,7 @@ const createReducer = (dataLayoutBuilder) => {
 					},
 					dataLayout: {
 						...dataLayout,
-						...setDataLayout(dataLayoutBuilder),
+						...setDataLayout(dataLayout, dataLayoutBuilder),
 					},
 				};
 			}

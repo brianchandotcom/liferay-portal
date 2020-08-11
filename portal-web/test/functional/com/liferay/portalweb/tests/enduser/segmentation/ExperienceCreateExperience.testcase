@@ -77,6 +77,8 @@ definition {
 	@description = "Validate inline text changes between experiences"
 	@priority = "5"
 	test EditInlineTextExperience {
+		property portal.acceptance = "true";
+
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 

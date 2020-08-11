@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.4.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_4_0.dtd">
+
+<service-builder auto-import-default-references="false" auto-namespace-tables="false" mvcc-enabled="true" package-path="com.liferay.multi.factor.authentication.fido2.credential">
+	<author>Arthur Chan</author>
+	<namespace>MFAFIDOTwoCredential</namespace>
+	<entity local-service="true" name="MFAFIDO2CredentialEntry" remote-service="false" variable-name="mfaFIDO2CredentialEntry">
+
+		<!-- PK fields -->
+
+		<column name="mfaFIDO2CredentialEntryId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+		<column name="userId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="credentialId" type="String" />
+		<column name="credentialType" type="int" />
+		<column name="publicKeyCose" type="String" />
+		<column name="signatureCount" type="long" />
+		<column name="failedAttempts" type="int" />
+
+		<!-- Finder methods -->
+
+		<finder name="UserId" return-type="Collection">
+			<finder-column name="userId" />
+		</finder>
+		<finder name="CredentialId" return-type="Collection">
+			<finder-column name="credentialId" />
+		</finder>
+		<finder name="U_C" return-type="MFAFIDO2Credential" unique="true">
+			<finder-column name="userId" />
+			<finder-column name="credentialId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="User" package-path="com.liferay.portal" />
+	</entity>
+	<exceptions>
+		<exception>DuplicateMFAFIDO2CredentialEntry</exception>
+	</exceptions>
+</service-builder>

@@ -512,7 +512,6 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 			"scripts");
 
 		if (scripts.get("build") != null) {
-
 			return true;
 		}
 

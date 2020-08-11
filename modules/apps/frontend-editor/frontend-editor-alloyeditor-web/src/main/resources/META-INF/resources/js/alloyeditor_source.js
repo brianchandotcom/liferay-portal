@@ -91,15 +91,15 @@ AUI.add(
 
 					var currentState = MAP_TOGGLE_STATE[instance._isVisible];
 
-					if (!currentState.icon) {
+					if (currentState.icon) {
+						icon = currentState.icon.cloneNode(true);
+					}
+					else {
 						icon = Liferay.Util.getLexiconIcon(
 							currentState.iconCssClass
 						);
 
 						currentState.icon = icon;
-					}
-					else {
-						icon = currentState.icon.cloneNode(true);
 					}
 
 					return icon;

@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
@@ -617,11 +618,19 @@ public class JournalConverterImpl implements JournalConverter {
 
 			try {
 				if (!ExportImportThreadLocal.isImportInProcess()) {
-					_dlAppLocalService.getFileEntryByUuidAndGroupId(
-						uuid, groupId);
-				}
+					FileEntry fileEntry =
+						_dlAppLocalService.getFileEntryByUuidAndGroupId(
+							uuid, groupId);
 
-				serializable = dynamicContentElement.getText();
+					if (fileEntry.isInTrash()) {
+						jsonObject.put(
+							"message",
+							LanguageUtil.get(
+								_getResourceBundle(defaultLocale),
+								"the-selected-document-was-moved-to-the-" +
+									"recycle-bin"));
+					}
+				}
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
@@ -631,8 +640,14 @@ public class JournalConverterImpl implements JournalConverter {
 							" and group id ", groupId));
 				}
 
-				return StringPool.BLANK;
+				jsonObject.put(
+					"message",
+					LanguageUtil.get(
+						_getResourceBundle(defaultLocale),
+						"the-selected-document-was-deleted"));
 			}
+
+			serializable = jsonObject.toString();
 		}
 		else if (Objects.equals(DDMFormFieldType.JOURNAL_ARTICLE, type)) {
 			try {

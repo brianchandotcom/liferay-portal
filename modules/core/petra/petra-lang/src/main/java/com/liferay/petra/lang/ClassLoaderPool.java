@@ -200,11 +200,9 @@ public class ClassLoaderPool {
 						qualifier = stringTokenizer.nextToken("");
 
 						for (char c : qualifier.toCharArray()) {
-							if ((c < 128) && _VALID_QUALIFIER_CHARS[c]) {
-								continue;
+							if ((c > 128) || !_VALID_QUALIFIER_CHARS[c]) {
+								return null;
 							}
-
-							return null;
 						}
 					}
 				}

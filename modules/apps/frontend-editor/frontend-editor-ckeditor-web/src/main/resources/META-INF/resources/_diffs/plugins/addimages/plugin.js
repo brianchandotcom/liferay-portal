@@ -248,12 +248,12 @@
 										type: blob.type,
 									});
 
-									const el = CKEDITOR.dom.element.createFromHtml(
+									const element = CKEDITOR.dom.element.createFromHtml(
 										`<img src="${src}">`
 									);
 
 									const imageData = {
-										el,
+										el: element,
 										file,
 									};
 

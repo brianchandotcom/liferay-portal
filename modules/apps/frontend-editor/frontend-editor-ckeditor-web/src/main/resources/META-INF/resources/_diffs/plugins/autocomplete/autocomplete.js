@@ -183,24 +183,26 @@
 				}
 			});
 
-			// What follows is an algorithm to properly select the query from the
-			// last detected trigger. Because of the HTML structure, it's not as
-			// straightforward as a text search.
+			// What follows is an algorithm to properly select the query
+			// from the last detected trigger. Because of the HTML
+			// structure, it's not as straightforward as a text search.
 			//
-			// If triggerIndex === -1, the trigger is not in the current html node
-			// element. Thus, we walk the DOM tree upwards until we find it,
-			// constructing the query as we visit the nodes in the tree.
+			// If triggerIndex === -1, the trigger is not in the current
+			// HTML node element. Thus, we walk the DOM tree upwards
+			// until we find it, constructing the query as we visit the
+			// nodes in the tree.
 			//
-			// If triggerIndex > 1, we found the trigger in a longer text sequence.
-			// We check if the char to the trigger is a space (' ' or nbsp;) by
-			// checking assserting that trimming the char returns false or a
-			// filler char (\u200b) for webkit-based engines. If that's the case,
-			// we take the substring from triggerPosition forward and discard
-			// the rest of the text sequence.
+			// If triggerIndex > 0, we found the trigger in a longer
+			// text sequence.  We check if the char before the trigger
+			// is a space (' ' or nbsp;) by checking that trimming
+			// the char returns false or a filler char (\u200b) for
+			// WebKit-based engines. If that's the case, we take the
+			// substring from triggerPosition forward and discard the
+			// rest of the text sequence.
 			//
-			// If triggerIndex === 1, the trigger is the first char in the sequence
-			// which means it's already the right query and has no additional
-			// characters.
+			// If triggerIndex === 0, the trigger is the first char in
+			// the sequence which means it's already the right query and
+			// has no additional characters.
 
 			if (triggerIndex === -1) {
 				var triggerWalker = instance._getWalker(triggerContainer);

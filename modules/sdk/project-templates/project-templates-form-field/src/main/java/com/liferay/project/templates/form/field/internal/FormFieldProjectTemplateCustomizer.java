@@ -23,7 +23,6 @@ import java.nio.file.Path;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import org.apache.maven.archetype.ArchetypeGenerationRequest;
 import org.apache.maven.archetype.ArchetypeGenerationResult;
@@ -110,15 +109,24 @@ public class FormFieldProjectTemplateCustomizer
 			ArchetypeGenerationRequest archetypeGenerationRequest)
 		throws Exception {
 
-		Properties properties = archetypeGenerationRequest.getProperties();
-
-		FormFieldProjectTemplatesArgs formFieldProjectTemplatesArgs =
-			(FormFieldProjectTemplatesArgs)
-				projectTemplatesArgs.getProjectTemplatesArgsExt();
-
 		setProperty(
-			properties, "reactTemplate",
-			String.valueOf(formFieldProjectTemplatesArgs.getReactTemplate()));
+			archetypeGenerationRequest.getProperties(), "reactTemplate",
+			String.valueOf(
+				_isReactFramework(
+					(FormFieldProjectTemplatesArgs)
+						projectTemplatesArgs.getProjectTemplatesArgsExt())));
+	}
+
+	private boolean _isReactFramework(
+		FormFieldProjectTemplatesArgs formFieldProjectTemplatesArgs) {
+
+		String jsFramework = formFieldProjectTemplatesArgs.getJSFramework();
+
+		if (jsFramework == null) {
+			return false;
+		}
+
+		return jsFramework.equals("react");
 	}
 
 }

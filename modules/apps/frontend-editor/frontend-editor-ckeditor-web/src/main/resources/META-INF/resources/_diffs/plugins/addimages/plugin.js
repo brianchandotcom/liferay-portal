@@ -335,8 +335,8 @@
 				editor.on('dragenter', this._onDragEnter.bind(this));
 				editor.on('dragover', this._onDragOver.bind(this));
 				editor.on('drop', this._onDragDrop.bind(this));
-				editor.on('paste', this._onPaste.bind(this));
 				editor.on('imageUploaded', this._onImageUploaded.bind(this));
+				editor.on('paste', this._onPaste.bind(this));
 			});
 
 			AUI().use('aui-progressbar,uploader', (A) => {

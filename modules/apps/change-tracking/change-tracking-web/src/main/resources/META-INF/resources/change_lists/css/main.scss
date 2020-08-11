@@ -74,22 +74,6 @@
 	}
 }
 
-.change-lists-view-entry-wrapper {
-	margin-top: 16px;
-}
-
-.select-change-list-table {
-	border-collapse: collapse;
-
-	td:first-child {
-		vertical-align: top;
-	}
-}
-
-#selectChangeListManagementToolbar nav:last-child {
-	margin-bottom: 0;
-}
-
 .change-lists-view-changes-wrapper {
 	.breadcrumb {
 		margin-top: 20px;
@@ -142,4 +126,20 @@
 	.taglib-empty-result-message {
 		margin-top: 20px;
 	}
+}
+
+.change-lists-view-entry-wrapper {
+	margin-top: 16px;
+}
+
+.select-change-list-table {
+	border-collapse: collapse;
+
+	td:first-child {
+		vertical-align: top;
+	}
+}
+
+#selectChangeListManagementToolbar nav:last-child {
+	margin-bottom: 0;
 }

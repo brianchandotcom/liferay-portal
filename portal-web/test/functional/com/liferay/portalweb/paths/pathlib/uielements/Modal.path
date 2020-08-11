@@ -10,17 +10,12 @@
 <tbody>
 <tr>
 	<td>HEADER</td>
-	<td>//div[contains(@class,'modal-dialog')]//div[contains(@*,'modal-title')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CLOSE_BUTTON</td>
-	<td>//div[h3[@class='modal-title']]//button[contains(@class,'close')]</td>
+	<td>//*[contains(@class,'modal-dialog')]//*[contains(@*,'modal-title')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BODY</td>
-	<td>//div[contains(@class,'modal-dialog')]//*[contains(@class,'modal-body')]</td>
+	<td>//*[contains(@class,'modal-dialog')]//*[contains(@class,'modal-body')]</td>
 	<td></td>
 </tr>
 </tbody>

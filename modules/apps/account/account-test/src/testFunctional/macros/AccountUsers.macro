@@ -182,7 +182,7 @@ definition {
 
 		SelectFrame.selectFrameTop();
 
-		Click(locator1 = "Modal#CLOSE_BUTTON");
+		Click(locator1 = "Icon#CLOSE");
 
 		SelectFrame.selectFrameTop();
 	}

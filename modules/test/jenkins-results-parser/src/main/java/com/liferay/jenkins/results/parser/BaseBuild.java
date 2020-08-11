@@ -2908,14 +2908,7 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected String getReinvokedMessage() {
-		StringBuffer sb = new StringBuffer();
-
-		sb.append("Reinvoked: ");
-		sb.append(getBuildURL());
-		sb.append(" at ");
-		sb.append(getInvocationURL());
-
-		return sb.toString();
+		return "Reinvoked: " + getBuildURL();
 	}
 
 	protected JSONObject getRunningBuildJSONObject() throws IOException {

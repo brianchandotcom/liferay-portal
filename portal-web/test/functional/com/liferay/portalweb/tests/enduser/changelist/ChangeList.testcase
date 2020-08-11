@@ -330,6 +330,66 @@ definition {
 			locator1 = "WC#ENTRY_LIST_TITLE");
 	}
 
+	@priority = "4"
+	test PublishWebContentWithFriendlyURL {
+		property test.name.skip.portal.instance = "ChangeList#PublishWebContentWithFriendlyURL";
+
+		ChangeList.createNewPublication(publicationName = "Publication Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "Test Page");
+
+		Navigator.gotoPage(pageName = "Test Page");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Set as the Default Asset Publisher for This Page");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithFriendlyURL(
+			friendlyUrl = "friendlyUrl",
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.editDisplayPage(
+			pageName = "Test Page",
+			pageType = "Public Pages");
+
+		PortletEntry.publish();
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/-/friendlyUrl");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "APAsset#ASSET_TITLE_HEADER",
+			value1 = "WC WebContent Title");
+
+		ChangeList.prepareToPublish(publicationName = "Publication Name");
+
+		ChangeList.publishPublication(publicationName = "Publication Name");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/-/friendlyUrl");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "APAsset#ASSET_TITLE_HEADER",
+			value1 = "WC WebContent Title");
+	}
+
 	@priority = "5"
 	test SearchPublishedPublications {
 		property test.name.skip.portal.instance = "ChangeList#SearchPublishedPublications";

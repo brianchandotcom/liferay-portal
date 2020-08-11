@@ -15,7 +15,7 @@ dependencies {
 }
 
 generateSampleProject {
-	args "--class-name", "FooBar", "--liferay-version", "7.3", "--name", "foobar", "--react-template"
+	args "--class-name", "FooBar", "--liferay-version", "7.3", "--name", "foobar", "--js-framework", "react"
 
 	doFirst {
 		delete "${buildDir}/foobar"

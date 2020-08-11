@@ -116,14 +116,21 @@ public class JenkinsCohort {
 				"Unable to get Jenkins properties", ioException);
 		}
 
+		if (_jenkinsMastersMap.isEmpty()) {
+			List<JenkinsMaster> jenkinsMasters =
+				JenkinsResultsParserUtil.getJenkinsMasters(
+					buildProperties, 16, getName());
+
+			for (JenkinsMaster jenkinsMaster : jenkinsMasters) {
+				_jenkinsMastersMap.put(jenkinsMaster.getName(), jenkinsMaster);
+			}
+		}
+
 		List<Callable<Void>> callables = new ArrayList<>();
-		final List<String> jobURLs = new ArrayList<>();
+		final List<String> jobURLs = Collections.synchronizedList(
+			new ArrayList<String>());
 
-		List<JenkinsMaster> jenkinsMasters =
-			JenkinsResultsParserUtil.getJenkinsMasters(
-				buildProperties, 16, getName());
-
-		for (final JenkinsMaster jenkinsMaster : jenkinsMasters) {
+		for (final JenkinsMaster jenkinsMaster : _jenkinsMastersMap.values()) {
 			Callable<Void> callable = new Callable<Void>() {
 
 				@Override
@@ -143,7 +150,7 @@ public class JenkinsCohort {
 
 		ThreadPoolExecutor threadPoolExecutor =
 			JenkinsResultsParserUtil.getNewThreadPoolExecutor(
-				jenkinsMasters.size(), true);
+				_jenkinsMastersMap.size(), true);
 
 		ParallelExecutor<Void> parallelExecutor = new ParallelExecutor<>(
 			callables, threadPoolExecutor);
@@ -286,6 +293,7 @@ public class JenkinsCohort {
 
 	private final Map<String, JenkinsCohortJob> _jenkinsCohortJobsMap =
 		new HashMap<>();
+	private Map<String, JenkinsMaster> _jenkinsMastersMap = new HashMap<>();
 	private final String _name;
 
 	private class JenkinsCohortJob {

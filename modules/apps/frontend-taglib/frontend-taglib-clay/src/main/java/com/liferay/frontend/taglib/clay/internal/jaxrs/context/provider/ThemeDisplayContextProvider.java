@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
@@ -80,6 +81,8 @@ public class ThemeDisplayContextProvider
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		themeDisplay.setLocale(_portal.getLocale(httpServletRequest));
+
 		long plid = ParamUtil.getLong(httpServletRequest, "plid");
 
 		if (plid > 0) {
@@ -108,5 +111,8 @@ public class ThemeDisplayContextProvider
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -15,7 +15,6 @@
 export const LAYOUT_DATA_ITEM_TYPE_ICONS = {
 	collection: 'list',
 	collectionItem: 'document',
-	column: 'grid',
 	container: 'container',
 	dropZone: 'box-container',
 	fragment: 'code',

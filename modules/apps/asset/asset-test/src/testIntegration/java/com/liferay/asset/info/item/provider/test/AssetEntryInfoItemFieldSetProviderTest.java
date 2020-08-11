@@ -102,23 +102,23 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 	public void testGetInfoFieldSetJournalArticlePublicEmptyVocabulary()
 		throws Exception {
 
-		_classNameId = PortalUtil.getClassNameId(
+		long classNameId = PortalUtil.getClassNameId(
 			"com.liferay.journal.model.JournalArticle");
 
 		Group group = GroupLocalServiceUtil.getCompanyGroup(
 			TestPropsValues.getCompanyId());
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-			group.getGroupId(), _classNameId, "BASIC-WEB-CONTENT");
+			group.getGroupId(), classNameId, "BASIC-WEB-CONTENT");
 
-		_classTypeId = ddmStructure.getStructureId();
+		long classTypeId = ddmStructure.getStructureId();
 
 		AssetVocabulary vocabulary = AssetTestUtil.addVocabulary(
-			_group.getGroupId(), _classNameId, _classTypeId, false);
+			_group.getGroupId(), classNameId, classTypeId, false);
 
 		InfoFieldSet infoFieldSet =
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
-				JournalArticle.class.getName(), _classTypeId,
+				JournalArticle.class.getName(), classTypeId,
 				_group.getGroupId());
 
 		InfoFieldSetEntry infoFieldSetEntry = infoFieldSet.getInfoFieldSetEntry(
@@ -190,9 +190,6 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 
 	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
-
-	private long _classNameId;
-	private long _classTypeId;
 
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;

@@ -72,12 +72,10 @@ public class FormFieldProjectTemplateCustomizer
 				"src/main/java/" + packageName.replaceAll("[.]", "/") +
 					"/form/field/" + className + "DDMFormFieldRenderer.java");
 
-			FormFieldProjectTemplatesArgs formFieldProjectTemplatesArgs =
-				(FormFieldProjectTemplatesArgs)
-					projectTemplatesArgs.getProjectTemplatesArgsExt();
-
 			if (liferayVersion.startsWith("7.3") &&
-				formFieldProjectTemplatesArgs.getReactTemplate()) {
+				_isReactFramework(
+					(FormFieldProjectTemplatesArgs)
+						projectTemplatesArgs.getProjectTemplatesArgsExt())) {
 
 				fileNames.add(
 					"src/main/resources/META-INF/resources/" + name + ".soy");

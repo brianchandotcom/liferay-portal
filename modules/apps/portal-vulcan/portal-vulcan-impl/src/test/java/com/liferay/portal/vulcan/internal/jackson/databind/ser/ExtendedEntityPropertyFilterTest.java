@@ -64,12 +64,14 @@ public class ExtendedEntityPropertyFilterTest {
 		).addFilteredPropertyKeys(
 			any()
 		);
+
 		Mockito.verify(
 			_dynamicPropertyFilter
 		).serializeAsField(
 			eq(extendedEntity), eq(_jsonGenerator), eq(_serializerProvider),
 			eq(_propertyWriter)
 		);
+
 		Mockito.verify(
 			_dynamicPropertyFilter
 		).clearFilteredPropertyKeys();
@@ -93,12 +95,14 @@ public class ExtendedEntityPropertyFilterTest {
 		).addFilteredPropertyKeys(
 			eq(filteredPropertyKeys)
 		);
+
 		Mockito.verify(
 			_dynamicPropertyFilter
 		).serializeAsField(
 			eq(extendedEntity), eq(_jsonGenerator), eq(_serializerProvider),
 			eq(_propertyWriter)
 		);
+
 		Mockito.verify(
 			_dynamicPropertyFilter
 		).clearFilteredPropertyKeys();
@@ -120,12 +124,14 @@ public class ExtendedEntityPropertyFilterTest {
 		).addFilteredPropertyKeys(
 			any()
 		);
+
 		Mockito.verify(
 			_dynamicPropertyFilter
 		).serializeAsField(
 			eq(extendedEntity), eq(_jsonGenerator), eq(_serializerProvider),
 			eq(_propertyWriter)
 		);
+
 		Mockito.verify(
 			_dynamicPropertyFilter
 		).clearFilteredPropertyKeys();

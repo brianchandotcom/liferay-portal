@@ -70,22 +70,6 @@ public class EntityExtensionWriterInterceptorTest {
 			ExtensionContext.class);
 
 		Mockito.when(
-			_mockedWriterInterceptorContext.getType()
-		).thenReturn(
-			(Class)entity.getClass()
-		);
-		Mockito.when(
-			_mockedWriterInterceptorContext.getEntity()
-		).thenReturn(
-			entity
-		);
-		Mockito.when(
-			_mockedProviders.getContextResolver(
-				eq(ExtensionContext.class), any())
-		).thenReturn(
-			mockedContextResolver
-		);
-		Mockito.when(
 			mockedContextResolver.getContext(eq(Dummy.class))
 		).thenReturn(
 			mockedExtensionContext
@@ -94,6 +78,23 @@ public class EntityExtensionWriterInterceptorTest {
 			mockedExtensionContext.getExtendedProperties(eq(entity))
 		).thenReturn(
 			extendedProperties
+		);
+
+		Mockito.when(
+			_mockedProviders.getContextResolver(
+				eq(ExtensionContext.class), any())
+		).thenReturn(
+			mockedContextResolver
+		);
+		Mockito.when(
+			_mockedWriterInterceptorContext.getEntity()
+		).thenReturn(
+			entity
+		);
+		Mockito.when(
+			_mockedWriterInterceptorContext.getType()
+		).thenReturn(
+			(Class)entity.getClass()
 		);
 
 		_entityExtensionWriterInterceptor.aroundWriteTo(
@@ -115,6 +116,7 @@ public class EntityExtensionWriterInterceptorTest {
 		).setGenericType(
 			eq(ExtendedEntity.class)
 		);
+
 		Mockito.verify(
 			_mockedWriterInterceptorContext
 		).proceed();
@@ -142,11 +144,13 @@ public class EntityExtensionWriterInterceptorTest {
 		).setEntity(
 			any()
 		);
+
 		Mockito.verify(
 			_mockedWriterInterceptorContext, Mockito.never()
 		).setGenericType(
 			any()
 		);
+
 		Mockito.verify(
 			_mockedWriterInterceptorContext
 		).proceed();
@@ -164,11 +168,13 @@ public class EntityExtensionWriterInterceptorTest {
 		).setEntity(
 			any()
 		);
+
 		Mockito.verify(
 			_mockedWriterInterceptorContext, Mockito.never()
 		).setGenericType(
 			any()
 		);
+
 		Mockito.verify(
 			_mockedWriterInterceptorContext
 		).proceed();

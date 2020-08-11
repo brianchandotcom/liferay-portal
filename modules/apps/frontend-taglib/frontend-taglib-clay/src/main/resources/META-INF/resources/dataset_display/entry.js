@@ -21,7 +21,7 @@ import ViewsContext, {viewsReducer} from './views/ViewsContext';
 
 const App = ({apiURL, appURL, ...props}) => {
 	const {
-		activeViewSettings: {name: activeViewName, ...activeViewSettings},
+		activeViewSettings: {name: activeViewName, visibleFieldNames = {}},
 		portletId,
 		views,
 	} = props;
@@ -30,9 +30,9 @@ const App = ({apiURL, appURL, ...props}) => {
 		: views[0];
 	const [state, dispatch] = useThunk(
 		useReducer(viewsReducer, {
-			...activeViewSettings,
 			activeView,
 			views,
+			visibleFieldNames,
 		})
 	);
 

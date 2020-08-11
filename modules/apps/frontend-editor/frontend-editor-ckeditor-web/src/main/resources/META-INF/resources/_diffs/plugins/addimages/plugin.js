@@ -56,8 +56,8 @@
 		 * @instance
 		 * @memberof CKEDITOR.plugins.addimages
 		 * @method _handleFiles
-		 * @param {Array} files Array of dropped files. Only the images from this list will be processed.
-		 * @param {Object} editor The current editor instance
+		 * @param {Array.<File>} files Array of dropped files. Only the images from this list will be processed
+		 * @param {CKEDITOR.editor} editor The current editor instance
 		 * @protected
 		 */
 		_handleFiles(files, editor) {
@@ -90,14 +90,14 @@
 		},
 
 		/**
-		 * Handles drag drop event. The function will create a selection from the current
+		 * Handles drop event. The function will create a selection from the current
 		 * point and will send a list of files to be processed to
 		 * {{#crossLink "CKEDITOR.plugins.addimages/_handleFiles:method"}}{{/crossLink}} method.
 		 *
 		 * @instance
 		 * @memberof CKEDITOR.plugins.addimages
 		 * @method _onDragDrop
-		 * @param {CKEDITOR.dom.event} event dragdrop event, as received natively from CKEditor
+		 * @param {CKEDITOR.eventInfo} Facade for the native `drop` event
 		 * @protected
 		 */
 		_onDragDrop(event) {
@@ -115,12 +115,12 @@
 		},
 
 		/**
-		 * Handles drag enter event. In case of IE, this function will prevent the event.
+		 * Handles dragenter event. In case of IE, this function will prevent the event.
 		 *
 		 * @instance
 		 * @memberof CKEDITOR.plugins.addimages
 		 * @method _onDragEnter
-		 * @param {DOM event} event dragenter event, as received natively from CKEditor
+		 * @param {CKEDITOR.eventInfo} Facade for the native `dragenter` event
 		 * @protected
 		 */
 		_onDragEnter(event) {
@@ -130,12 +130,12 @@
 		},
 
 		/**
-		 * Handles drag over event. In case of IE, this function will prevent the event.
+		 * Handles dragover event. In case of IE, this function will prevent the event.
 		 *
 		 * @instance
 		 * @memberof CKEDITOR.plugins.addimages
 		 * @method _onDragOver
-		 * @param {DOM event} event dragover event, as received natively from CKEditor
+		 * @param {CKEDITOR.eventInfo} event Facade for the native `dragover` event
 		 * @protected
 		 */
 		_onDragOver(event) {
@@ -182,14 +182,14 @@
 		},
 
 		/**
-		 * Checks if the pasted data is image or html.
+		 * Checks if the pasted data is a dropped image or html.
 		 * In the case of images, it passes it to
 		 * {{#crossLink "CKEDITOR.plugins.addimages/_processFile:method"}}{{/crossLink}} for processing.
 		 *
 		 * @instance
 		 * @memberof CKEDITOR.plugins.addimages
 		 * @method _onPaste
-		 * @param {CKEDITOR.dom.event} event A `paste` event, as received natively from CKEditor
+		 * @param {CKEDITOR.eventInfo} event Facade for the native `paste` event
 		 * @protected
 		 */
 		_onPaste(event) {
@@ -264,7 +264,7 @@
 		 * @instance
 		 * @memberof CKEDITOR.plugins.addimages
 		 * @method _preventEvent
-		 * @param {DOM event} event The event to be prevented.
+		 * @param {CKEDITOR.eventInfo} event Facade for the native event to be prevented
 		 * @protected
 		 */
 		_preventEvent(event) {
@@ -281,8 +281,9 @@
 		 * @fires CKEDITOR.plugins.addimages#imageAdd
 		 * @instance
 		 * @memberof CKEDITOR.plugins.addimages
-		 * @method _preventEvent
-		 * @param {DOM event} event The event to be prevented.
+		 * @method _processFile
+		 * @param {File} file The file to be processed
+		 * @param {CKEDITOR.editor} editor The current editor instance
 		 * @protected
 		 */
 		_processFile(file, editor) {
@@ -315,7 +316,7 @@
 		 * @instance
 		 * @memberof CKEDITOR.plugins.addimages
 		 * @method init
-		 * @param {Object} editor The current editor instance
+		 * @param {CKEDITOR.editor} editor The current editor instance
 		 */
 		init(editor) {
 			editor.once('contentDom', () => {

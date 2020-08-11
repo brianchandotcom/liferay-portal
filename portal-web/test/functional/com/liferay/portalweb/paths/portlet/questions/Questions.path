@@ -100,7 +100,7 @@
 </tr>
 <tr>
 	<td>QUESTIONS_CATEGORY_TITLE</td>
-	<td>//div[contains(@class,'questions-breadcrumb')]//li[contains(.,'${key_categoryTitle}')]</td>
+	<td>//div[contains(@class,'questions-root')]//ol[contains(@class,'breadcrumb')]//li[contains(.,'${key_categoryTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

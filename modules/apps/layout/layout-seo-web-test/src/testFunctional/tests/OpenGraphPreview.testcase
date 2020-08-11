@@ -162,6 +162,7 @@ definition {
 	@description = "This ensures that the user can customize OG tags."
 	@priority = "5"
 	test Smoke {
+		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 
 		var portalURL = PropsUtil.get("portal.url");

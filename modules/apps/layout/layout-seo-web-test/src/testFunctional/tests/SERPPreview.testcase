@@ -25,6 +25,7 @@ definition {
 	@description = "This test ensures that a SERP preview is shown correctly based on the meta tags."
 	@priority = "5"
 	test Smoke {
+		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 
 		var portalURL = PropsUtil.get("portal.url");

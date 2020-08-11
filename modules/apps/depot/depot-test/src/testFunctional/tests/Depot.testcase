@@ -481,6 +481,7 @@ definition {
 	@description = "This ensures that a depot can be added."
 	@priority = "5"
 	test Smoke {
+		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 
 		ApplicationsMenu.gotoPortlet(

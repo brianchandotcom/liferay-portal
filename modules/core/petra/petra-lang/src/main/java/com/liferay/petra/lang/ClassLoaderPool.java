@@ -258,30 +258,30 @@ public class ClassLoaderPool {
 	private static class Version implements Comparable<Version> {
 
 		@Override
-		public int compareTo(Version other) {
-			if (other == this) {
+		public int compareTo(Version version) {
+			if (version == this) {
 				return 0;
 			}
 
-			int result = _major - other._major;
+			int result = _major - version._major;
 
 			if (result != 0) {
 				return result;
 			}
 
-			result = _minor - other._minor;
+			result = _minor - version._minor;
 
 			if (result != 0) {
 				return result;
 			}
 
-			result = _micro - other._micro;
+			result = _micro - version._micro;
 
 			if (result != 0) {
 				return result;
 			}
 
-			return _qualifier.compareTo(other._qualifier);
+			return _qualifier.compareTo(version._qualifier);
 		}
 
 		private Version(int major, int minor, int micro, String qualifier) {

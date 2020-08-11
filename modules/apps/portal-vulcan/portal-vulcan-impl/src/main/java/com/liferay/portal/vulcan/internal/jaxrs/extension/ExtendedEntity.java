@@ -29,7 +29,7 @@ import java.util.Set;
 /**
  * @author Javier de Arcos
  */
-@JsonFilter("ExtendedEntityPropertyFilter")
+@JsonFilter("Liferay.Vulcan.ExtendedEntityPropertyFilter")
 public class ExtendedEntity {
 
 	public static ExtendedEntity extend(

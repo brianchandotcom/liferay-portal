@@ -631,106 +631,19 @@ public class ResourceActionsImpl implements ResourceActions {
 			Set<String> portletNames)
 		throws ResourceActionsException {
 
-		Element rootElement = document.getRootElement();
+		DocumentType documentType = document.getDocumentType();
 
-		if (PropsValues.RESOURCE_ACTIONS_READ_PORTLET_RESOURCES) {
-			for (Element portletResourceElement :
-					rootElement.elements("portlet-resource")) {
+		String publicId = GetterUtil.getString(documentType.getPublicId());
 
-				String portletName = _normalizePortletName(
-					servletContextName,
-					portletResourceElement.elementTextTrim("portlet-name"));
+		if (publicId.equals(
+				"-//Liferay//DTD Resource Action Mapping 6.0.0//EN")) {
 
-				Portlet portlet = portletLocalService.getPortletById(
-					portletName);
-
-				Set<String> portletActions = _getPortletMimeTypeActions(
-					portletName, portlet);
-
-				if (!portletName.equals(PortletKeys.PORTAL)) {
-					_checkPortletActions(portlet, portletActions);
-				}
-
-				_readResource(
-					portletResourceElement, portletName, portletActions);
-
-				if (portletNames != null) {
-					portletNames.add(portletName);
-				}
+			if (_log.isWarnEnabled()) {
+				_log.warn("Please update document to use the 6.1.0 format");
 			}
 		}
 
-		for (Element modelResourceElement :
-				rootElement.elements("model-resource")) {
-
-			String modelName = modelResourceElement.elementTextTrim(
-				"model-name");
-
-			if (Validator.isNull(modelName)) {
-				modelName = _getCompositeModelName(
-					modelResourceElement.element("composite-model-name"));
-			}
-
-			if (GetterUtil.getBoolean(
-					modelResourceElement.attributeValue("organization"))) {
-
-				_organizationModelResources.add(modelName);
-			}
-
-			if (GetterUtil.getBoolean(
-					modelResourceElement.attributeValue("portal"))) {
-
-				_portalModelResources.add(modelName);
-			}
-
-			Element portletRefElement = modelResourceElement.element(
-				"portlet-ref");
-
-			for (Element portletNameElement :
-					portletRefElement.elements("portlet-name")) {
-
-				String portletName = _normalizePortletName(
-					servletContextName, portletNameElement.getTextTrim());
-
-				// Reference for a portlet to child models
-
-				Set<String> modelResources =
-					_resourceReferences.computeIfAbsent(
-						portletName, key -> new HashSet<>());
-
-				modelResources.add(modelName);
-
-				// Reference for a model to parent portlets
-
-				Set<String> portletResources =
-					_resourceReferences.computeIfAbsent(
-						modelName, key -> new HashSet<>());
-
-				portletResources.add(portletName);
-
-				// Reference for a model to root portlets
-
-				boolean root = GetterUtil.getBoolean(
-					modelResourceElement.elementText("root"));
-
-				if (root) {
-					_portletRootModelResources.put(portletName, modelName);
-				}
-			}
-
-			double weight = GetterUtil.getDouble(
-				modelResourceElement.elementTextTrim("weight"), 100);
-
-			_modelResourceWeights.put(modelName, weight);
-
-			_readResource(
-				modelResourceElement, modelName,
-				Collections.singleton(ActionKeys.PERMISSIONS));
-
-			if (portletNames != null) {
-				portletNames.addAll(_resourceReferences.get(modelName));
-			}
-		}
+		_read(servletContextName, document, portletNames);
 	}
 
 	@Override
@@ -1133,7 +1046,7 @@ public class ResourceActionsImpl implements ResourceActions {
 					servletContextName, classLoader, extFileName, portletNames);
 			}
 
-			read(servletContextName, document, portletNames);
+			_read(servletContextName, document, portletNames);
 
 			if (source.endsWith(".xml") && !source.endsWith("-ext.xml")) {
 				String extFileName = StringUtil.replace(
@@ -1145,6 +1058,113 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 		catch (DocumentException documentException) {
 			throw new ResourceActionsException(documentException);
+		}
+	}
+
+	private void _read(
+			String servletContextName, Document document,
+			Set<String> portletNames)
+		throws ResourceActionsException {
+
+		Element rootElement = document.getRootElement();
+
+		if (PropsValues.RESOURCE_ACTIONS_READ_PORTLET_RESOURCES) {
+			for (Element portletResourceElement :
+					rootElement.elements("portlet-resource")) {
+
+				String portletName = _normalizePortletName(
+					servletContextName,
+					portletResourceElement.elementTextTrim("portlet-name"));
+
+				Portlet portlet = portletLocalService.getPortletById(
+					portletName);
+
+				Set<String> portletActions = _getPortletMimeTypeActions(
+					portletName, portlet);
+
+				if (!portletName.equals(PortletKeys.PORTAL)) {
+					_checkPortletActions(portlet, portletActions);
+				}
+
+				_readResource(
+					portletResourceElement, portletName, portletActions);
+
+				if (portletNames != null) {
+					portletNames.add(portletName);
+				}
+			}
+		}
+
+		for (Element modelResourceElement :
+				rootElement.elements("model-resource")) {
+
+			String modelName = modelResourceElement.elementTextTrim(
+				"model-name");
+
+			if (Validator.isNull(modelName)) {
+				modelName = _getCompositeModelName(
+					modelResourceElement.element("composite-model-name"));
+			}
+
+			if (GetterUtil.getBoolean(
+					modelResourceElement.attributeValue("organization"))) {
+
+				_organizationModelResources.add(modelName);
+			}
+
+			if (GetterUtil.getBoolean(
+					modelResourceElement.attributeValue("portal"))) {
+
+				_portalModelResources.add(modelName);
+			}
+
+			Element portletRefElement = modelResourceElement.element(
+				"portlet-ref");
+
+			for (Element portletNameElement :
+					portletRefElement.elements("portlet-name")) {
+
+				String portletName = _normalizePortletName(
+					servletContextName, portletNameElement.getTextTrim());
+
+				// Reference for a portlet to child models
+
+				Set<String> modelResources =
+					_resourceReferences.computeIfAbsent(
+						portletName, key -> new HashSet<>());
+
+				modelResources.add(modelName);
+
+				// Reference for a model to parent portlets
+
+				Set<String> portletResources =
+					_resourceReferences.computeIfAbsent(
+						modelName, key -> new HashSet<>());
+
+				portletResources.add(portletName);
+
+				// Reference for a model to root portlets
+
+				boolean root = GetterUtil.getBoolean(
+					modelResourceElement.elementText("root"));
+
+				if (root) {
+					_portletRootModelResources.put(portletName, modelName);
+				}
+			}
+
+			double weight = GetterUtil.getDouble(
+				modelResourceElement.elementTextTrim("weight"), 100);
+
+			_modelResourceWeights.put(modelName, weight);
+
+			_readResource(
+				modelResourceElement, modelName,
+				Collections.singleton(ActionKeys.PERMISSIONS));
+
+			if (portletNames != null) {
+				portletNames.addAll(_resourceReferences.get(modelName));
+			}
 		}
 	}
 

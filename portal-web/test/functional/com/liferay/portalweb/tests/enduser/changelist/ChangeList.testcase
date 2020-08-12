@@ -695,4 +695,72 @@ definition {
 		}
 	}
 
+	@priority = "5"
+	test ViewPageFriendlyURLAfterRevertingPublication {
+		property test.name.skip.portal.instance = "ChangeList#ViewPageFriendlyURLAfterRevertingPublication";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "Test Page");
+
+		ChangeList.createNewPublication(publicationName = "Publication Name");
+
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page");
+
+		Page.editFriendlyURL(friendlyURLEdit = "/test-page-edited");
+
+		AssertVisible(
+			key_friendlyURL = "/test-page-edited",
+			locator1 = "SitePages#FRIENDLY_URL");
+
+		ChangeList.workOnProduction();
+
+		AssertVisible(
+			key_friendlyURL = "/test-page",
+			locator1 = "SitePages#FRIENDLY_URL");
+
+		ChangeList.selectPublication(publicationName = "Publication Name");
+
+		ChangeList.prepareToPublish(publicationName = "Publication Name");
+
+		ChangeList.publishPublication(publicationName = "Publication Name");
+
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page");
+
+		AssertVisible(
+			key_friendlyURL = "/test-page-edited",
+			locator1 = "SitePages#FRIENDLY_URL");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Manage Publications");
+
+		Navigator.gotoNavTab(navTab = "History");
+
+		ChangeList.revertPublication(publicationName = "Publication Name");
+
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page");
+
+		AssertVisible(
+			key_friendlyURL = "/test-page",
+			locator1 = "SitePages#FRIENDLY_URL");
+	}
+
 }

@@ -892,6 +892,8 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 			</condition>
 		</fail>
 
+		<antcall inheritAll="false" target="setup-profile-dxp" />
+
 		<delete dir="${user.home}/.m2/repository/com/liferay/portal/com.liferay.portal.dxp.apps.${dxp.dir.name}" />
 
 		<gradle-execute failonerror="false" forcedcacheenabled="true" outputproperty="dxp.zip.file" setupbinariescache="@{setupbinariescache}" task="printDependencyPath">

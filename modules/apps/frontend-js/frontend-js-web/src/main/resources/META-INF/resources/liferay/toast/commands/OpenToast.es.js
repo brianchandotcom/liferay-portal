@@ -124,6 +124,17 @@ function openToast({
 		}
 	};
 
+	let titleHTML =
+		title === undefined ? DEFAULT_TOAST_TYPE_TITLES[type] : title;
+
+	if (titleHTML) {
+		titleHTML = titleHTML.replace(/:$/, '');
+		titleHTML = `<strong class="lead">${titleHTML}:</strong>`;
+	}
+	else {
+		titleHTML = '';
+	}
+
 	render(
 		<ClayAlert
 			autoClose={autoClose}
@@ -135,14 +146,7 @@ function openToast({
 		>
 			<div
 				dangerouslySetInnerHTML={{
-					__html: `${
-						title ||
-						(title === undefined && DEFAULT_TOAST_TYPE_TITLES[type])
-							? `<strong class="lead">${
-									title || DEFAULT_TOAST_TYPE_TITLES[type]
-							  }:</strong>`
-							: ''
-					}${message}`,
+					__html: `${titleHTML}${message}`,
 				}}
 			/>
 		</ClayAlert>,

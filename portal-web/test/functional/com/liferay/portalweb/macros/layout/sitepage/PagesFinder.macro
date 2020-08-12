@@ -232,6 +232,7 @@ definition {
 
 	macro navigateToPage {
 		Click(
+			key_pageName = "${pageName}",
 			locator1 = "PagesFinder#PAGE_NAME",
 			value1 = "${pageName}");
 
@@ -251,7 +252,9 @@ definition {
 	}
 
 	macro viewPageNameInPagesFinder {
-		AssertElementPresent(locator1 = "PagesFinder#PAGE_NAME");
+		AssertElementPresent(
+			key_pageName = "${pageName}",
+			locator1 = "PagesFinder#PAGE_NAME");
 	}
 
 }

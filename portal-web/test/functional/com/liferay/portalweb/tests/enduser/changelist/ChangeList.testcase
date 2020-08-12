@@ -248,6 +248,49 @@ definition {
 	}
 
 	@priority = "4"
+	test PublishDeletedPageWithTag {
+		property test.name.skip.portal.instance = "ChangeList#PublishDeletedPageWithTag";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "Test Page");
+
+		ChangeList.createNewPublication(publicationName = "Publication Name");
+
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page");
+
+		AssetCategorization.addTag(tagName = "tag name");
+
+		PortletEntry.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.deletePage(pageName = "Test Page");
+
+		Navigator.openURL();
+
+		Page.viewNoPG(pageName = "Test Page");
+
+		ChangeList.prepareToPublish(publicationName = "Publication Name");
+
+		ChangeList.publishPublication(publicationName = "Publication Name");
+
+		Navigator.openURL();
+
+		Page.viewNoPG(pageName = "Test Page");
+	}
+
+	@priority = "4"
 	test PublishExpiredWebContentViaWCD {
 		property test.name.skip.portal.instance = "ChangeList#PublishExpiredWebContentViaWCD";
 

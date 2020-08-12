@@ -9,7 +9,27 @@ definition {
 
 		var userLastName = JSONUserSetter.setUserLastName(userLastName = "${userLastName}");
 
+		if (!(isSet(birthdayDay))) {
+			var birthdayDay = "31";
+		}
+
+		if (!(isSet(birthdayMonth))) {
+			var birthdayMonth = "4";
+		}
+
+		if (!(isSet(birthdayYear))) {
+			var birthdayYear = "1986";
+		}
+
+		if (!(isSet(jobTitle))) {
+			var jobTitle = "";
+		}
+
 		JSONUserAPI._addUser(
+			birthdayDay = "${birthdayDay}",
+			birthdayMonth = "${birthdayMonth}",
+			birthdayYear = "${birthdayYear}",
+			jobTitle = "${jobTitle}",
 			locale = "${locale}",
 			userEmailAddress = "${userEmailAddress}",
 			userFirstName = "${userFirstName}",

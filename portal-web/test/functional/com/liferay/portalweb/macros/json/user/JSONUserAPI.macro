@@ -26,10 +26,10 @@ definition {
 				-d prefixId=0 \
 				-d suffixId=0 \
 				-d male=true \
-				-d birthdayMonth=4 \
-				-d birthdayDay=31 \
-				-d birthdayYear=1986 \
-				-d jobTitle= \
+				-d birthdayMonth=${birthdayMonth} \
+				-d birthdayDay=${birthdayDay} \
+				-d birthdayYear=${birthdayYear} \
+				-d jobTitle=${jobTitle} \
 				-d groupIds= \
 				-d organizationIds= \
 				-d roleIds= \

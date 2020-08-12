@@ -35,13 +35,10 @@ definition {
 
 		PageEditor.gotoTab(tabName = "Page Structure");
 
-		var key_navItem = "Link";
-
-		if (IsElementNotPresent(locator1 = "PageEditor#ACTIVE_NAV_ITEM_BUTTON")) {
-			AssertClick(
-				locator1 = "PageEditor#NAV_ITEM_BUTTON",
-				value1 = "Link");
-		}
+		AssertClick(
+			key_navItem = "Link",
+			locator1 = "PageEditor#NAV_ITEM_BUTTON",
+			value1 = "Link");
 	}
 
 	macro mapURLToAsset {

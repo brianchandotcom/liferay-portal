@@ -14,13 +14,10 @@ definition {
 
 		PageEditor.gotoTab(tabName = "Page Structure");
 
-		var key_navItem = "Mapping";
-
-		if (IsElementNotPresent(locator1 = "PageEditor#ACTIVE_NAV_ITEM_BUTTON")) {
-			AssertClick(
-				locator1 = "PageEditor#NAV_ITEM_BUTTON",
-				value1 = "Mapping");
-		}
+		AssertClick(
+			key_navItem = "Mapping",
+			locator1 = "PageEditor#NAV_ITEM_BUTTON",
+			value1 = "Mapping");
 	}
 
 	macro mapEditableFieldToAsset {
@@ -68,13 +65,10 @@ definition {
 
 		PageEditor.gotoTab(tabName = "Page Structure");
 
-		var key_navItem = "Mapping";
-
-		if (IsElementNotPresent(locator1 = "PageEditor#ACTIVE_NAV_ITEM_BUTTON")) {
-			AssertClick(
-				locator1 = "PageEditor#NAV_ITEM_BUTTON",
-				value1 = "Mapping");
-		}
+		AssertClick(
+			key_navItem = "Mapping",
+			locator1 = "PageEditor#NAV_ITEM_BUTTON",
+			value1 = "Mapping");
 
 		Pause(locator1 = "3000");
 

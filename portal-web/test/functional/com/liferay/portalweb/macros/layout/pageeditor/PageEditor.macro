@@ -644,13 +644,10 @@ definition {
 
 		PageEditor.gotoTab(tabName = "Page Structure");
 
-		var key_navItem = "Configuration";
-
-		if (IsElementNotPresent(locator1 = "PageEditor#ACTIVE_NAV_ITEM_BUTTON")) {
-			AssertClick(
-				locator1 = "PageEditor#NAV_ITEM_BUTTON",
-				value1 = "Configuration");
-		}
+		AssertClick(
+			key_navItem = "Configuration",
+			locator1 = "PageEditor#NAV_ITEM_BUTTON",
+			value1 = "Configuration");
 
 		Click(locator1 = "PageEditor#PLUS_ICON_BUTTON");
 
@@ -730,13 +727,10 @@ definition {
 
 		PageEditor.gotoTab(tabName = "Page Structure");
 
-		var key_navItem = "Configuration";
-
-		if (IsElementNotPresent(locator1 = "PageEditor#ACTIVE_NAV_ITEM_BUTTON")) {
-			AssertClick(
-				locator1 = "PageEditor#NAV_ITEM_BUTTON",
-				value1 = "Configuration");
-		}
+		AssertClick(
+			key_navItem = "Configuration",
+			locator1 = "PageEditor#NAV_ITEM_BUTTON",
+			value1 = "Configuration");
 
 		if (isSet(inCollectionDisplay)) {
 			Select(
@@ -868,13 +862,10 @@ definition {
 
 		PageEditor.gotoTab(tabName = "Page Structure");
 
-		var key_navItem = "Image";
-
-		if (IsElementNotPresent(locator1 = "PageEditor#ACTIVE_NAV_ITEM_BUTTON")) {
-			AssertClick(
-				locator1 = "PageEditor#NAV_ITEM_BUTTON",
-				value1 = "Image");
-		}
+		AssertClick(
+			key_navItem = "Image",
+			locator1 = "PageEditor#NAV_ITEM_BUTTON",
+			value1 = "Image");
 
 		Button.clickSelect();
 
@@ -957,13 +948,10 @@ definition {
 		PageEditor.gotoTab(tabName = "Page Structure");
 
 		if ("${panel}" == "Styles") {
-			var key_navItem = "Styles";
-
-			if (IsElementNotPresent(locator1 = "PageEditor#ACTIVE_NAV_ITEM_BUTTON")) {
-				AssertClick(
-					locator1 = "PageEditor#NAV_ITEM_BUTTON",
-					value1 = "Styles");
-			}
+			AssertClick(
+				key_navItem = "Styles",
+				locator1 = "PageEditor#NAV_ITEM_BUTTON",
+				value1 = "Styles");
 
 			if (isSet(backgroundColor)) {
 				Click(
@@ -1219,13 +1207,10 @@ definition {
 		}
 
 		if ("${panel}" == "Link") {
-			var key_navItem = "Link";
-
-			if (IsElementNotPresent(locator1 = "PageEditor#ACTIVE_NAV_ITEM_BUTTON")) {
-				AssertClick(
-					locator1 = "PageEditor#NAV_ITEM_BUTTON",
-					value1 = "Link");
-			}
+			AssertClick(
+				key_navItem = "Link",
+				locator1 = "PageEditor#NAV_ITEM_BUTTON",
+				value1 = "Link");
 		}
 
 		PageEditor.waitForAutoSave();
@@ -1242,13 +1227,10 @@ definition {
 		PageEditor.gotoTab(tabName = "Page Structure");
 
 		if ("${panel}" == "Configuration") {
-			var key_navItem = "Configuration";
-
-			if (IsElementNotPresent(locator1 = "PageEditor#ACTIVE_NAV_ITEM_BUTTON")) {
-				AssertClick(
-					locator1 = "PageEditor#NAV_ITEM_BUTTON",
-					value1 = "Configuration");
-			}
+			AssertClick(
+				key_navItem = "Configuration",
+				locator1 = "PageEditor#NAV_ITEM_BUTTON",
+				value1 = "Configuration");
 
 			if (isSet(columnCount)) {
 				Select(
@@ -1276,13 +1258,10 @@ definition {
 			}
 		}
 		else if ("${panel}" == "Styles") {
-			var key_navItem = "Styles";
-
-			if (IsElementNotPresent(locator1 = "PageEditor#ACTIVE_NAV_ITEM_BUTTON")) {
-				AssertClick(
-					locator1 = "PageEditor#NAV_ITEM_BUTTON",
-					value1 = "Styles");
-			}
+			AssertClick(
+				key_navItem = "Styles",
+				locator1 = "PageEditor#NAV_ITEM_BUTTON",
+				value1 = "Styles");
 
 			if (isSet(layout)) {
 				Select(
@@ -1386,13 +1365,10 @@ definition {
 			key_nodeName = "${fragmentName}",
 			locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_ACTIVE");
 
-		var key_navItem = "Configuration";
-
-		if (IsElementNotPresent(locator1 = "PageEditor#ACTIVE_NAV_ITEM_BUTTON")) {
-			AssertClick(
-				locator1 = "PageEditor#NAV_ITEM_BUTTON",
-				value1 = "Configuration");
-		}
+		AssertClick(
+			key_navItem = "Configuration",
+			locator1 = "PageEditor#NAV_ITEM_BUTTON",
+			value1 = "Configuration");
 	}
 
 	macro gotoContentConfiguration {
@@ -1413,13 +1389,10 @@ definition {
 
 		PageEditor.gotoTab(tabName = "Page Structure");
 
-		var key_navItem = "Configuration";
-
-		if (IsElementNotPresent(locator1 = "PageEditor#ACTIVE_NAV_ITEM_BUTTON")) {
-			AssertClick(
-				locator1 = "PageEditor#NAV_ITEM_BUTTON",
-				value1 = "Configuration");
-		}
+		AssertClick(
+			key_navItem = "Configuration",
+			locator1 = "PageEditor#NAV_ITEM_BUTTON",
+			value1 = "Configuration");
 	}
 
 	macro gotoDuplicate {
@@ -1464,13 +1437,10 @@ definition {
 
 		PageEditor.gotoTab(tabName = "Page Structure");
 
-		var key_navItem = "Configuration";
-
-		if (IsElementNotPresent(locator1 = "PageEditor#ACTIVE_NAV_ITEM_BUTTON")) {
-			AssertClick(
-				locator1 = "PageEditor#NAV_ITEM_BUTTON",
-				value1 = "Configuration");
-		}
+		AssertClick(
+			key_navItem = "Configuration",
+			locator1 = "PageEditor#NAV_ITEM_BUTTON",
+			value1 = "Configuration");
 
 		Click(locator1 = "PageEditor#PLUS_ICON_BUTTON");
 
@@ -1486,13 +1456,10 @@ definition {
 			key_nodeName = "${fragmentName}",
 			locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_ACTIVE");
 
-		var key_navItem = "Styles";
-
-		if (IsElementNotPresent(locator1 = "PageEditor#ACTIVE_NAV_ITEM_BUTTON")) {
-			AssertClick(
-				locator1 = "PageEditor#NAV_ITEM_BUTTON",
-				value1 = "Styles");
-		}
+		AssertClick(
+			key_navItem = "Styles",
+			locator1 = "PageEditor#NAV_ITEM_BUTTON",
+			value1 = "Styles");
 	}
 
 	macro gotoTab {

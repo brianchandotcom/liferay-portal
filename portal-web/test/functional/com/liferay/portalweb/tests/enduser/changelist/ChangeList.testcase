@@ -419,7 +419,7 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Web Content");
 
-		WebContentNavigator.gotoAddCP()
+		WebContentNavigator.gotoAddCP();
 
 		WebContent.addWithCategoryCP(
 			categoryName = "Category Name",

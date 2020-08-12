@@ -57,9 +57,6 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
-import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
-import com.liferay.portal.kernel.settings.SettingsLocatorHelperUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.template.comparator.TemplateHandlerComparator;
@@ -681,7 +678,7 @@ public class DDMDisplayContext {
 
 		ThemeDisplay themeDisplay = _ddmWebRequestHelper.getThemeDisplay();
 
-		if (_isEnableTemplateCreation() &&
+		if (_ddmWebConfiguration.enableTemplateCreation() &&
 			ddmDisplay.isShowAddButton(themeDisplay.getScopeGroup())) {
 
 			long classNameId = getClassNameId();
@@ -1121,17 +1118,6 @@ public class DDMDisplayContext {
 		return null;
 	}
 
-	private boolean _isEnableTemplateCreation() {
-		Settings ddmWebConfigurationSettings =
-			_settingsLocatorHelper.getConfigurationBeanSettings(
-				"com.liferay.dynamic.data.mapping.web.internal.configuration." +
-					"DDMWebConfiguration");
-
-		return GetterUtil.getBoolean(
-			ddmWebConfigurationSettings.getValue(
-				"enableTemplateCreation", "true"));
-	}
-
 	private final DDMDisplayRegistry _ddmDisplayRegistry;
 	private final DDMStructureLinkLocalService _ddmStructureLinkLocalService;
 	private final DDMStructureService _ddmStructureService;
@@ -1141,8 +1127,6 @@ public class DDMDisplayContext {
 	private final DDMWebRequestHelper _ddmWebRequestHelper;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final SettingsLocatorHelper _settingsLocatorHelper =
-		SettingsLocatorHelperUtil.getSettingsLocatorHelper();
 	private final StorageAdapterRegistry _storageAdapterRegistry;
 
 }

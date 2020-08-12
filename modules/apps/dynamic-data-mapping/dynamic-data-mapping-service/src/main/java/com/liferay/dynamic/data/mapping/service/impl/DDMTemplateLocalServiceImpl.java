@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.service.impl;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.dynamic.data.mapping.configuration.DDMGroupServiceConfiguration;
+import com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration;
 import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.exception.InvalidTemplateVersionException;
@@ -40,6 +41,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -57,8 +59,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -81,7 +81,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -109,6 +111,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcellus Tavares
  */
 @Component(
+	configurationPid = "com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration",
 	property = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMTemplate",
 	service = AopService.class
 )
@@ -200,7 +203,7 @@ public class DDMTemplateLocalServiceImpl
 
 		// Template
 
-		if (!_isTemplateCreationEnabled()) {
+		if (!ddmWebConfiguration.enableTemplateCreation()) {
 			throw new TemplateCreationDisabledException();
 		}
 
@@ -1580,6 +1583,13 @@ public class DDMTemplateLocalServiceImpl
 			template.getSmallImageURL(), smallImageFile, serviceContext);
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		ddmWebConfiguration = ConfigurableUtil.createConfigurable(
+			DDMWebConfiguration.class, properties);
+	}
+
 	protected DDMTemplateVersion addTemplateVersion(
 		User user, DDMTemplate template, String version,
 		ServiceContext serviceContext) {
@@ -1818,6 +1828,8 @@ public class DDMTemplateLocalServiceImpl
 		}
 	}
 
+	protected volatile DDMWebConfiguration ddmWebConfiguration;
+
 	private long[] _getAncestorSiteAndDepotGroupIds(long groupId) {
 		try {
 			return ArrayUtil.append(
@@ -1832,17 +1844,6 @@ public class DDMTemplateLocalServiceImpl
 
 			return new long[0];
 		}
-	}
-
-	private boolean _isTemplateCreationEnabled() {
-		Settings ddmWebConfigurationSettings =
-			_settingsLocatorHelper.getConfigurationBeanSettings(
-				"com.liferay.dynamic.data.mapping.web.internal.configuration." +
-					"DDMWebConfiguration");
-
-		return GetterUtil.getBoolean(
-			ddmWebConfigurationSettings.getValue(
-				"enableTemplateCreation", "true"));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -1868,8 +1869,5 @@ public class DDMTemplateLocalServiceImpl
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private SettingsLocatorHelper _settingsLocatorHelper;
 
 }

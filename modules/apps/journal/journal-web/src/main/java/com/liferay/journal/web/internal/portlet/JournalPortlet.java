@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
+import com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException;
 import com.liferay.dynamic.data.mapping.exception.StorageFieldRequiredException;
@@ -95,6 +96,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = {
+		"com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration",
 		"com.liferay.journal.web.internal.configuration.JournalDDMEditorConfiguration",
 		"com.liferay.journal.web.internal.configuration.JournalWebConfiguration"
 	},
@@ -160,6 +162,8 @@ public class JournalPortlet extends MVCPortlet {
 			DDMFormValuesToMapConverter.class.getName(),
 			_ddmFormValuesToMapConverter);
 		renderRequest.setAttribute(
+			DDMWebConfiguration.class.getName(), _ddmWebConfiguration);
+		renderRequest.setAttribute(
 			JournalDDMEditorConfiguration.class.getName(),
 			_journalDDMEditorConfiguration);
 		renderRequest.setAttribute(
@@ -198,6 +202,8 @@ public class JournalPortlet extends MVCPortlet {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
+		_ddmWebConfiguration = ConfigurableUtil.createConfigurable(
+			DDMWebConfiguration.class, properties);
 		_journalDDMEditorConfiguration = ConfigurableUtil.createConfigurable(
 			JournalDDMEditorConfiguration.class, properties);
 		_journalFileUploadsConfiguration = ConfigurableUtil.createConfigurable(
@@ -312,6 +318,8 @@ public class JournalPortlet extends MVCPortlet {
 
 	@Reference
 	private DDMTemplateHelper _ddmTemplateHelper;
+
+	private volatile DDMWebConfiguration _ddmWebConfiguration;
 
 	@Reference
 	private ItemSelector _itemSelector;

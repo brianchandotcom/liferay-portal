@@ -70,8 +70,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DETAILS_TAG_FIELD</td>
+	<td>DETAILS_TAG_FIELD_INPUT</td>
 	<td>//input[contains(@class,'form-control-inset')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_TAG_FIELD</td>
+	<td>//label[contains(.,'Tags')]//following-sibling::div//span[contains(.,'${key_userTag}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -268,11 +268,11 @@ definition {
 
 		if (isSet(userTag)) {
 			Type(
-				locator1 = "UsersAndOrganizationsEditUser#DETAILS_TAG_FIELD",
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_TAG_FIELD_INPUT",
 				value1 = "${userTag}");
 
 			KeyPress(
-				locator1 = "UsersAndOrganizationsEditUser#DETAILS_TAG_FIELD",
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_TAG_FIELD_INPUT",
 				value1 = "\ENTER");
 		}
 
@@ -335,7 +335,7 @@ definition {
 
 			if (isSet(userJobTitle)) {
 				AssertTextEquals(
-					locator1 = "UsersAndOrganizationsEditUser#DETAILS_TAG_FIELD",
+					locator1 = "UsersAndOrganizationsEditUser#DETAILS_JOB_TITLE_FIELD",
 					value1 = "${userJobTitle}");
 			}
 
@@ -345,13 +345,14 @@ definition {
 
 			if (isSet(userTag)) {
 				AssertTextEquals(
+					key_userTag = "${userTag}",
 					locator1 = "UsersAndOrganizationsEditUser#DETAILS_TAG_FIELD",
 					value1 = "${userTag}");
 			}
 
 			if (isSet(userComment)) {
 				AssertTextEquals(
-					locator1 = "UsersAndOrganizationsEditUser#DETAILS_TAG_FIELD",
+					locator1 = "TextArea#COMMENTS",
 					value1 = "${userComment}");
 			}
 		}

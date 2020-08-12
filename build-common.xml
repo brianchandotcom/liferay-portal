@@ -1718,17 +1718,36 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 					</uptodate>
 				</not>
 				<then>
-					<delete dir="${project.dir}/modules/dxp/@{appname}" />
+					<delete dir="${project.dir}/modules/.releng/dxp/apps/@{appname}" />
+
+					<unzip
+						dest="${project.dir}/modules/.releng/dxp/apps"
+						src="${dxp.app.zip.dir}/com.liferay.portal.dxp.apps.@{appname}-${build.setup.profile.dxp.app.lcs.version}.zip"
+					>
+						<mapper
+							from="com.liferay.portal.dxp.apps.@{appname}-${build.setup.profile.dxp.app.lcs.version}/.releng/*"
+							to="@{appname}/*"
+							type="glob"
+						/>
+						<patternset>
+							<include name="com.liferay.portal.dxp.apps.@{appname}-${build.setup.profile.dxp.app.lcs.version}/.releng/**" />
+						</patternset>
+					</unzip>
+
+					<delete dir="${project.dir}/modules/dxp/apps/@{appname}" />
 
 					<unzip
 						dest="${project.dir}/modules/dxp/apps"
 						src="${dxp.app.zip.dir}/com.liferay.portal.dxp.apps.@{appname}-${build.setup.profile.dxp.app.lcs.version}.zip"
 					>
 						<mapper
-							from="com.liferay.portal.dxp.apps.@{appname}-${build.setup.profile.dxp.app.lcs.version}/*"
+							from="com.liferay.portal.dxp.apps.@{appname}-${build.setup.profile.dxp.app.lcs.version}/apps/*"
 							to="@{appname}/*"
 							type="glob"
 						/>
+						<patternset>
+							<include name="com.liferay.portal.dxp.apps.@{appname}-${build.setup.profile.dxp.app.lcs.version}/apps/**" />
+						</patternset>
 					</unzip>
 				</then>
 			</if>

@@ -972,8 +972,12 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 			duplicate="preserve"
 		>
 			<zipfileset
+				dir="${project.dir}/modules/.releng/dxp/apps/${dxp.dir.name}"
+				prefix="${dxp.name}/.releng"
+			/>
+			<zipfileset
 				dir="${project.dir}/modules/dxp/apps/${dxp.dir.name}"
-				prefix="${dxp.name}"
+				prefix="${dxp.name}/apps"
 			/>
 		</zip>
 

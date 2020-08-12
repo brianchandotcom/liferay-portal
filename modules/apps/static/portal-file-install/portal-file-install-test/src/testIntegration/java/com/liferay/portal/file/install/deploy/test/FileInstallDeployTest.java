@@ -86,8 +86,15 @@ public class FileInstallDeployTest {
 		try {
 			_updateConfiguration(
 				() -> {
-					String content = StringBundler.concat(
-						_TEST_KEY, StringPool.EQUAL, _TEST_VALUE_1);
+					StringBundler sb = new StringBundler(5);
+
+					sb.append(_TEST_KEY);
+					sb.append(StringPool.EQUAL);
+					sb.append(StringPool.QUOTE);
+					sb.append(_TEST_VALUE_1);
+					sb.append(StringPool.QUOTE);
+
+					String content = sb.toString();
 
 					Files.write(path, content.getBytes());
 				});
@@ -102,8 +109,15 @@ public class FileInstallDeployTest {
 
 			_updateConfiguration(
 				() -> {
-					String content = StringBundler.concat(
-						_TEST_KEY, StringPool.EQUAL, _TEST_VALUE_2);
+					StringBundler sb = new StringBundler(5);
+
+					sb.append(_TEST_KEY);
+					sb.append(StringPool.EQUAL);
+					sb.append(StringPool.QUOTE);
+					sb.append(_TEST_VALUE_2);
+					sb.append(StringPool.QUOTE);
+
+					String content = sb.toString();
 
 					Files.write(path, content.getBytes());
 				});
@@ -142,8 +156,8 @@ public class FileInstallDeployTest {
 			_updateConfiguration(
 				() -> {
 					String content = StringBundler.concat(
-						_TEST_KEY, StringPool.EQUAL, "${",
-						systemTestPropertyKey, "}");
+						_TEST_KEY, StringPool.EQUAL, "\"${",
+						systemTestPropertyKey, "}\"");
 
 					Files.write(path, content.getBytes());
 				});

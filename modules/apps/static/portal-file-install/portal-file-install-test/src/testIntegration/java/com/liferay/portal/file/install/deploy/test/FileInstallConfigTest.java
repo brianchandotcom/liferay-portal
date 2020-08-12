@@ -194,7 +194,7 @@ public class FileInstallConfigTest {
 			configurationPid.concat(".config"));
 
 		String testKey = "testKey";
-		String testValue = "testValue";
+		String testValue = "\"testValue\"";
 
 		_configuration = _createConfiguration(
 			configurationPid,

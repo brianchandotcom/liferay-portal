@@ -50,7 +50,7 @@ public class TypedProperties {
 	public Object get(String key) {
 		String value = _storage.get(key);
 
-		if ((value != null) && _typed) {
+		if (value != null) {
 			return _convertFromString(value);
 		}
 
@@ -92,19 +92,6 @@ public class TypedProperties {
 					comments, new ArrayList<>(propertiesReader.getValues())));
 		}
 
-		Boolean typed = propertiesReader.isTyped();
-
-		if ((typed == null) || !typed) {
-			_typed = false;
-
-			for (Map.Entry<String, String> entry : _storage.entrySet()) {
-				entry.setValue(_unescapeJava(entry.getValue()));
-			}
-		}
-		else {
-			_typed = true;
-		}
-
 		if (hasProperty) {
 			_footers = new ArrayList<>(propertiesReader.getComments());
 		}
@@ -114,12 +101,6 @@ public class TypedProperties {
 	}
 
 	public Object put(String key, Object value) {
-		if ((value instanceof String) && !_typed) {
-			return _put(key, (String)value);
-		}
-
-		_ensureTyped();
-
 		String old = _put(key, _convertToString(value));
 
 		if (old == null) {
@@ -140,7 +121,7 @@ public class TypedProperties {
 	}
 
 	public void save(Writer writer) throws IOException {
-		_saveLayout(writer, _typed);
+		_saveLayout(writer);
 	}
 
 	public static class PropertiesReader extends BufferedReader {
@@ -165,10 +146,6 @@ public class TypedProperties {
 			return _values;
 		}
 
-		public Boolean isTyped() {
-			return _typed;
-		}
-
 		public boolean nextProperty() throws IOException {
 			String line = _readProperty();
 
@@ -180,19 +157,8 @@ public class TypedProperties {
 
 			String[] property = _parseProperty(line);
 
-			boolean typed = false;
-
 			if (property[1].length() >= 2) {
 				Matcher matcher = _pattern.matcher(property[1]);
-
-				typed = matcher.matches();
-			}
-
-			if (_typed == null) {
-				_typed = typed;
-			}
-			else {
-				_typed = _typed & typed;
 			}
 
 			_propertyName = _unescapeJava(property[0]);
@@ -387,17 +353,14 @@ public class TypedProperties {
 				"\\([\\S\\s]*\\)|\"[\\S\\s]*\")\\s*");
 		private String _propertyName;
 		private String _propertyValue;
-		private Boolean _typed;
 		private final List<String> _values = new ArrayList<>();
 
 	}
 
 	public static class PropertiesWriter extends FilterWriter {
 
-		public PropertiesWriter(Writer writer, boolean typed) {
+		public PropertiesWriter(Writer writer) {
 			super(writer);
-
-			_typed = typed;
 		}
 
 		public void writeln(String string) throws IOException {
@@ -411,18 +374,10 @@ public class TypedProperties {
 		public void writeProperty(String key, String value) throws IOException {
 			write(key);
 			write(" = ");
-
-			if (_typed) {
-				write(value);
-			}
-			else {
-				write(_escapeJava(value));
-			}
+			write(value);
 
 			writeln(null);
 		}
-
-		private boolean _typed;
 
 	}
 
@@ -690,18 +645,6 @@ public class TypedProperties {
 		return 0;
 	}
 
-	private void _ensureTyped() {
-		if (!_typed) {
-			_typed = true;
-
-			for (String key : keySet()) {
-				String string = _convertToString(get(key));
-
-				_put(key, _getComments(key), Arrays.asList(string.split("\n")));
-			}
-		}
-	}
-
 	private List<String> _getComments(String key) {
 		Layout layout = _layoutMap.get(key);
 
@@ -736,10 +679,6 @@ public class TypedProperties {
 
 			String realValue = value;
 
-			if (!_typed) {
-				realValue = _escapeJava(value);
-			}
-
 			value = value.trim();
 
 			if (!value.startsWith(key)) {
@@ -758,12 +697,7 @@ public class TypedProperties {
 		for (int i = 1; i < values.size(); i++) {
 			String value = values.get(i);
 
-			if (_typed) {
-				values.set(i, value);
-			}
-			else {
-				values.set(i, _escapeJava(value));
-			}
+			values.set(i, value);
 
 			while ((value.length() > 0) &&
 				   Character.isWhitespace(value.charAt(0))) {
@@ -795,10 +729,8 @@ public class TypedProperties {
 		return old;
 	}
 
-	private void _saveLayout(Writer writer, boolean typed) throws IOException {
-		try (PropertiesWriter propertiesWriter = new PropertiesWriter(
-				writer, typed)) {
-
+	private void _saveLayout(Writer writer) throws IOException {
+		try (PropertiesWriter propertiesWriter = new PropertiesWriter(writer)) {
 			if (_headers != null) {
 				for (String s : _headers) {
 					propertiesWriter.writeln(s);
@@ -877,7 +809,6 @@ public class TypedProperties {
 	private List<String> _headers;
 	private final Map<String, Layout> _layoutMap = new LinkedHashMap<>();
 	private final Map<String, String> _storage = new LinkedHashMap<>();
-	private boolean _typed;
 
 	private static class Layout {
 

@@ -104,11 +104,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SITE_ADMIN_CONTENT_COLLECTIONS</td>
-	<td>//a[contains(.,'Content') and contains(@class,'permission-navigation-item-header')]/following-sibling::*//li[contains(@class,'permission-navigation-item')]/a[contains(.,'Collections')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SITE_ADMIN_CONTENT_BLOGS</td>
 	<td>//a[contains(.,'Content') and contains(@class,'permission-navigation-item-header')]/following-sibling::*//li[contains(@class,'permission-navigation-item')]/a[contains(.,'Blogs')]</td>
 	<td></td>
@@ -146,6 +141,12 @@
 <tr>
 	<td></td>
 	<td></td>
+	<td></td>
+</tr>
+<!--SITE_ADMIN_BUILDER-->
+<tr>
+	<td>SITE_ADMIN_BUILDER_COLLECTIONS</td>
+	<td>//a[contains(.,'Builder') and contains(@class,'permission-navigation-item-header')]/following-sibling::*//li[contains(@class,'permission-navigation-item')]/a[contains(.,'Collections')]</td>
 	<td></td>
 </tr>
 <!--SITE_ADMIN_CATEGORIZATION-->

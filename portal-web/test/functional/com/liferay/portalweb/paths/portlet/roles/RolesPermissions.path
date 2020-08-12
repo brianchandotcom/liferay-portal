@@ -202,6 +202,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--SITE_ADMIN_BUILDER_COLLECTIONS_ASSET_LIST_ENTRY-->
+<tr>
+	<td>SITE_ADMIN_BUILDER_COLLECTIONS_ASSET_LIST_ENTRY_DELETE_CHECKBOX</td>
+	<td>//tbody//input[contains(@value,'AssetListEntryDELETE')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_BUILDER_COLLECTIONS_ASSET_LIST_ENTRY_DELETE_CHANGE_LINK</td>
+	<td>//span[contains(@id,'AssetListEntryDELETE')]/button[contains(.,'Change')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_BUILDER_COLLECTIONS_ASSET_LIST_ENTRY_DELETE_SITE_SCOPE</td>
+	<td>//span[contains(@id,'AssetListEntryDELETE')]/span[contains(.,'${key_siteNameScope}')]/span</td>
+	<td></td>
+</tr>
 <!--SITE_ADMIN_CONFIGURATION_SITE_SETTINGS_RESOURCE_PERMISSIONS-->
 <tr>
 	<td>SITE_ADMIN_CONFIGURATION_SITE_SETTINGS_RESOURCE_PERMISSIONS_SITE_VIEW_SITE_ADMINISTRATION_MENU_CHECKBOX</td>
@@ -593,22 +609,6 @@
 <tr>
 	<td></td>
 	<td></td>
-	<td></td>
-</tr>
-<!--SITE_ADMIN_CONTENT_CONTENT_SETS_ASSET_LIST_ENTRY-->
-<tr>
-	<td>SITE_ADMIN_CONTENT_COLLECTIONS_ASSET_LIST_ENTRY_DELETE_CHECKBOX</td>
-	<td>//tbody//input[contains(@value,'AssetListEntryDELETE')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_ADMIN_CONTENT_COLLECTIONS_ASSET_LIST_ENTRY_DELETE_CHANGE_LINK</td>
-	<td>//span[contains(@id,'AssetListEntryDELETE')]/button[contains(.,'Change')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_ADMIN_CONTENT_COLLECTIONS_ASSET_LIST_ENTRY_DELETE_SITE_SCOPE</td>
-	<td>//span[contains(@id,'AssetListEntryDELETE')]/span[contains(.,'${key_siteNameScope}')]/span</td>
 	<td></td>
 </tr>
 <!--SITE_ADMIN_CONTENT_BLOGS_GENERAL_PERMISSIONS-->

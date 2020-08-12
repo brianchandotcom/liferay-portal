@@ -33,11 +33,11 @@ import StructureTreeNode from './StructureTreeNode';
 
 const EDITABLE_TYPE_ICONS = {
 	[EDITABLE_TYPES.backgroundImage]: 'picture',
-	[EDITABLE_TYPES.html]: 'document-code',
+	[EDITABLE_TYPES.html]: 'code',
 	[EDITABLE_TYPES.image]: 'picture',
 	[EDITABLE_TYPES.link]: 'link',
 	[EDITABLE_TYPES['rich-text']]: 'text-editor',
-	[EDITABLE_TYPES.text]: 'text',
+	[EDITABLE_TYPES.text]: 'text-editor',
 };
 
 const EDITABLE_TYPE_LABELS = {

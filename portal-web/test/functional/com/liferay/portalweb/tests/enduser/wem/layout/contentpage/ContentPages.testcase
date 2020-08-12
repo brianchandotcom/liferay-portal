@@ -1783,7 +1783,7 @@ definition {
 
 			Select(
 				locator1 = "PageEditorEditableLink#FIELD",
-				value1 = "Basic Web Content *");
+				value1 = "Basic Web Content");
 
 			SelectFrame(value1 = "relative=top");
 

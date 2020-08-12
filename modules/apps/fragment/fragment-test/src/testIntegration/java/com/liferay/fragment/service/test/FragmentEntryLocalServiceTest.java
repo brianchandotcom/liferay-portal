@@ -77,6 +77,9 @@ public class FragmentEntryLocalServiceTest {
 
 		_fragmentCollection = FragmentTestUtil.addFragmentCollection(
 			_group.getGroupId());
+
+		_fragmentCollectionAlter = FragmentTestUtil.addFragmentCollection(
+			_group.getGroupId());
 	}
 
 	@Test
@@ -838,6 +841,39 @@ public class FragmentEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testUpdateFragmentCollectionId() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.addFragmentEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				_fragmentCollection.getFragmentCollectionId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), "<H1>A</H1>",
+				RandomTestUtil.randomString(), null,
+				RandomTestUtil.randomLong(), FragmentConstants.TYPE_COMPONENT,
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		_fragmentEntryLocalService.updateFragmentEntry(
+			fragmentEntry.getUserId(), fragmentEntry.getFragmentEntryId(),
+			_fragmentCollectionAlter.getFragmentCollectionId(),
+			fragmentEntry.getName(), fragmentEntry.getCss(),
+			fragmentEntry.getHtml(), fragmentEntry.getJs(), false, null,
+			fragmentEntry.getPreviewFileEntryId(),
+			WorkflowConstants.STATUS_APPROVED);
+
+		FragmentEntry persistedFragmentEntry =
+			_fragmentEntryPersistence.fetchByPrimaryKey(
+				fragmentEntry.getFragmentEntryId());
+
+		Assert.assertEquals(
+			_fragmentCollectionAlter.getFragmentCollectionId(),
+			persistedFragmentEntry.getFragmentCollectionId());
+	}
+
+	@Test
 	public void testUpdateFragmentEntryName() throws Exception {
 		FragmentEntry fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
 			_fragmentCollection.getFragmentCollectionId(),
@@ -993,6 +1029,7 @@ public class FragmentEntryLocalServiceTest {
 	}
 
 	private FragmentCollection _fragmentCollection;
+	private FragmentCollection _fragmentCollectionAlter;
 
 	@Inject
 	private FragmentEntryLocalService _fragmentEntryLocalService;

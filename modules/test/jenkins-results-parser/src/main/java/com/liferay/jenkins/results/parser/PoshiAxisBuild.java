@@ -28,7 +28,19 @@ public class PoshiAxisBuild extends AxisBuild {
 
 	@Override
 	public List<TestResult> getTestResults(String testStatus) {
-		List<TestResult> testResults = super.getTestResults(testStatus);
+		String status = getStatus();
+
+		if ((status == null) || !status.equals("completed")) {
+			return Collections.emptyList();
+		}
+
+		List<TestResult> testResults = new ArrayList<>();
+
+		String result = getResult();
+
+		if (result.equals("SUCCESS") || result.equals("UNSTABLE")) {
+			testResults.addAll(super.getTestResults(testStatus));
+		}
 
 		List<String> existingTestNames = new ArrayList<>();
 

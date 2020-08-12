@@ -125,7 +125,8 @@ public class SetUpYarnTask extends DefaultTask {
 
 		workspaces.put("packages", packages);
 
-		String packageJSON = JsonOutput.toJson(packageJsonMap);
+		String packageJSON = JsonOutput.prettyPrint(
+			JsonOutput.toJson(packageJsonMap));
 
 		Files.write(path, packageJSON.getBytes(StandardCharsets.UTF_8));
 	}

@@ -276,6 +276,10 @@ definition {
 				var permissionNavigationKey = "SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY";
 				var permissionNavigationValue = "Web Content Display";
 			}
+			else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_BUILDER_COLLECTIONS")) {
+				var permissionNavigationKey = "SITE_ADMIN_BUILDER_COLLECTIONS";
+				var permissionNavigationValue = "Collections";
+			}
 			else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_CONFIGURATION_REDIRECTION")) {
 				var permissionNavigationKey = "SITE_ADMIN_CONFIGURATION_REDIRECTION";
 				var permissionNavigationValue = "Redirection";
@@ -295,10 +299,6 @@ definition {
 			else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_CATEGORIES")) {
 				var permissionNavigationKey = "SITE_ADMIN_CATEGORIES";
 				var permissionNavigationValue = "Categories";
-			}
-			else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_CONTENT_COLLECTIONS")) {
-				var permissionNavigationKey = "SITE_ADMIN_CONTENT_COLLECTIONS";
-				var permissionNavigationValue = "Collections";
 			}
 			else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA")) {
 				var permissionNavigationKey = "SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA";
@@ -627,6 +627,10 @@ definition {
 			var permissionNavigationKey = "SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY";
 			var permissionNavigationValue = "Web Content Display";
 		}
+		else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_BUILDER_COLLECTIONS")) {
+			var permissionNavigationKey = "SITE_ADMIN_BUILDER_COLLECTIONS";
+			var permissionNavigationValue = "Collections";
+		}
 		else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_CONFIGURATION_REDIRECTION")) {
 			var permissionNavigationKey = "SITE_ADMIN_CONFIGURATION_REDIRECTION";
 			var permissionNavigationValue = "Redirection";
@@ -634,10 +638,6 @@ definition {
 		else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_CONTENT_BLOGS")) {
 			var permissionNavigationKey = "SITE_ADMIN_CONTENT_BLOGS";
 			var permissionNavigationValue = "Blogs";
-		}
-		else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_CONTENT_COLLECTIONS")) {
-			var permissionNavigationKey = "SITE_ADMIN_CONTENT_COLLECTIONS";
-			var permissionNavigationValue = "Collections";
 		}
 		else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA")) {
 			var permissionNavigationKey = "SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA";

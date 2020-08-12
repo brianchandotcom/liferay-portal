@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>PAGE_NAME</td>
-	<td>//a[contains(@class,'layout-tree')][contains(.,'${pageName}')]</td>
+	<td>//a[contains(@class,'layout-tree')][contains(.,'${key_pageName}')]</td>
 	<td></td>
 </tr>
 <tr>

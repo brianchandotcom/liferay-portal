@@ -1691,11 +1691,19 @@ definition {
 				value1 = "${webContentNumber}");
 		}
 
-		if (isSet(webContentTextBox)) {
-			AssertTextEquals(
-				key_fieldName = "TextBox",
-				locator1 = "DDMField#TEXT_BOX",
-				value1 = "${webContentTextBox}");
+		if (isSet(webContentRichText)) {
+			if (isSet(fieldName)) {
+				AssertTextEquals(
+					key_fieldName = "${fieldName}",
+					locator1 = "DDMField#RICH_TEXT",
+					value1 = "${webContentRichText}");
+			}
+			else {
+				AssertTextEquals(
+					key_fieldName = "TextBox",
+					locator1 = "DDMField#RICH_TEXT",
+					value1 = "${webContentRichText}");
+			}
 		}
 
 		if (isSet(webContentDocumentsAndMedia)) {

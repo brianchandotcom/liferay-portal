@@ -596,6 +596,8 @@ definition {
 	@description = "This is for LPS-116077. The data of Style Books is immediately available to Live site when manage it in Staging site."
 	@priority = "5"
 	test ViewDataChangesOfStyleBookAreImmediatelyAvailableToLiveSite {
+		property portal.acceptance = "true";
+
 		task ("Edit the style book and Publish it") {
 			StyleBooks.selectForm(formName = "Color System");
 

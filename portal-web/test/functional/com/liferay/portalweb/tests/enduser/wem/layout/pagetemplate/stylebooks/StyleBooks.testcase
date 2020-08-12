@@ -474,6 +474,8 @@ definition {
 	@description = "This is for LPS-116078. Can preview the effect on page when edit the style book."
 	@priority = "5"
 	test PreviewTheEffectOnPageInStyleBookEditor {
+		property portal.acceptance = "true";
+
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

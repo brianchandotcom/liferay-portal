@@ -117,19 +117,6 @@ portletDisplay.setURLBack(backURL);
 													</clay:content-section>
 												</clay:content-col>
 
-												<liferay-portlet:actionURL name="/change_lists/delete_ct_auto_resolution_info" var="dismissURL">
-													<liferay-portlet:param name="redirect" value="<%= currentURL %>" />
-													<liferay-portlet:param name="ctAutoResolutionInfoId" value="<%= String.valueOf(conflictInfo.getCTAutoResolutionInfoId()) %>" />
-												</liferay-portlet:actionURL>
-
-												<clay:content-col>
-													<clay:content-section>
-														<a class="btn btn-secondary btn-sm" href="<%= dismissURL %>" type="button">
-															<liferay-ui:message key="dismiss" />
-														</a>
-													</clay:content-section>
-												</clay:content-col>
-
 												<%
 												boolean viewDiff = false;
 
@@ -149,6 +136,19 @@ portletDisplay.setURLBack(backURL);
 														</clay:content-section>
 													</clay:content-col>
 												</c:if>
+
+												<liferay-portlet:actionURL name="/change_lists/delete_ct_auto_resolution_info" var="dismissURL">
+													<liferay-portlet:param name="redirect" value="<%= currentURL %>" />
+													<liferay-portlet:param name="ctAutoResolutionInfoId" value="<%= String.valueOf(conflictInfo.getCTAutoResolutionInfoId()) %>" />
+												</liferay-portlet:actionURL>
+
+												<clay:content-col>
+													<clay:content-section>
+														<a class="btn btn-secondary btn-sm" href="<%= dismissURL %>" type="button">
+															<liferay-ui:message key="dismiss" />
+														</a>
+													</clay:content-section>
+												</clay:content-col>
 											</clay:content-row>
 										</div>
 									</div>

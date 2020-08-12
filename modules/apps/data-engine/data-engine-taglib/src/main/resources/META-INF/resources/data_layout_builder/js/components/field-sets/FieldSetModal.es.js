@@ -275,9 +275,9 @@ const ModalContent = ({
 	);
 };
 
-const FieldSetModal = ({isVisible, onClose, ...props}) => {
-	const {observer} = useModal({
-		onClose,
+const FieldSetModal = ({isVisible, onClose: onCloseFn, ...props}) => {
+	const {observer, onClose} = useModal({
+		onClose: onCloseFn,
 	});
 
 	if (!isVisible) {

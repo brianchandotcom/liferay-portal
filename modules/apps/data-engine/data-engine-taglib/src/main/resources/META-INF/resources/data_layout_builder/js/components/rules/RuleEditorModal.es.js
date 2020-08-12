@@ -192,9 +192,9 @@ const RuleEditorModalContent = ({onClose, rule}) => {
 	);
 };
 
-const RuleEditorModal = ({isVisible, onClose, rule}) => {
-	const {observer} = useModal({
-		onClose,
+const RuleEditorModal = ({isVisible, onClose: onCloseFn, rule}) => {
+	const {observer, onClose} = useModal({
+		onClose: onCloseFn,
 	});
 
 	if (!isVisible) {

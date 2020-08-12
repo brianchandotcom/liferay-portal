@@ -34,6 +34,31 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CUSTOMER_EDIT_BUTTON</td>
+	<td>//td[text()='${key_customerId}']/..//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOKINGS_INPUT_FIELD</td>
+	<td>//tr[contains(.,'${key_item}')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOMER_FIRST_NAME</td>
+	<td>//td[text()='${key_customerId}']/following-sibling::td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOMER_LAST_NAME</td>
+	<td>//td[text()='${key_customerId}']/following-sibling::td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPORT_LINK</td>
+	<td>//tr[contains(.,'${key_lastName}')]//a[contains(.,'Export')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELD_ERROR</td>>
 	<td>//*[contains(@id,'${key_fieldName}')]//span[contains(@class,'alloy-message') or contains(@class,'msg-err') or contains(@class,'message-error-detail')] | //*[contains(@id,'${key_fieldName}')]/../following-sibling::div/div[contains(@class,'alert-danger')]</td>
 	<td></td>

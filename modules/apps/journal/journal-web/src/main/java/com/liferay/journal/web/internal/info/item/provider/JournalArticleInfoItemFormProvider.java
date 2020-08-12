@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.info.item.provider.DDMStructureInfoItemFieldSetProvider;
 import com.liferay.dynamic.data.mapping.info.item.provider.DDMTemplateInfoItemFieldSetProvider;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.expando.info.item.provider.ExpandoInfoItemFieldSetProvider;
 import com.liferay.info.exception.NoSuchClassTypeException;
 import com.liferay.info.exception.NoSuchFormVariationException;
@@ -31,8 +32,15 @@ import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.internal.info.item.JournalArticleInfoItemFields;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Component;
@@ -169,7 +177,10 @@ public class JournalArticleInfoItemFormProvider
 					if (ddmStructureId != 0) {
 						consumer.accept(
 							_ddmStructureInfoItemFieldSetProvider.
-								getInfoItemFieldSet(ddmStructureId));
+								getInfoItemFieldSet(
+									ddmStructureId,
+									_getStructureFieldSetNameInfoLocalizedValue(
+										ddmStructureId)));
 
 						consumer.accept(
 							_ddmTemplateInfoItemFieldSetProvider.
@@ -198,6 +209,36 @@ public class JournalArticleInfoItemFormProvider
 		}
 	}
 
+	private InfoLocalizedValue<String>
+			_getStructureFieldSetNameInfoLocalizedValue(long ddmStructureId)
+		throws NoSuchStructureException {
+
+		try {
+			DDMStructure ddmStructure =
+				_ddmStructureLocalService.getDDMStructure(ddmStructureId);
+
+			Map<Locale, String> nameMap = new HashMap<>(
+				ddmStructure.getNameMap());
+
+			nameMap.replaceAll(
+				(locale, name) -> StringBundler.concat(
+					LanguageUtil.get(locale, "content"), StringPool.SPACE,
+					StringPool.OPEN_PARENTHESIS, name,
+					StringPool.CLOSE_PARENTHESIS));
+
+			return InfoLocalizedValue.<String>builder(
+			).values(
+				nameMap
+			).build();
+		}
+		catch (NoSuchStructureException noSuchStructureException) {
+			throw noSuchStructureException;
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException("Unexpected exception", portalException);
+		}
+	}
+
 	@Reference
 	private AssetEntryInfoItemFieldSetProvider
 		_assetEntryInfoItemFieldSetProvider;
@@ -208,6 +249,9 @@ public class JournalArticleInfoItemFormProvider
 	@Reference
 	private DDMStructureInfoItemFieldSetProvider
 		_ddmStructureInfoItemFieldSetProvider;
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
 	private DDMTemplateInfoItemFieldSetProvider

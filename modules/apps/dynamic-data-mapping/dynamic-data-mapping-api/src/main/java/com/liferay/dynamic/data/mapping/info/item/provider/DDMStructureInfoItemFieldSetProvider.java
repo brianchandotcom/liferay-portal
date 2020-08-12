@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.info.field.InfoFieldSet;
+import com.liferay.info.localized.InfoLocalizedValue;
 
 /**
  * @author Jürgen Kappler
@@ -27,6 +28,11 @@ import com.liferay.info.field.InfoFieldSet;
 public interface DDMStructureInfoItemFieldSetProvider {
 
 	public InfoFieldSet getInfoItemFieldSet(long ddmStructureId)
+		throws NoSuchStructureException;
+
+	public InfoFieldSet getInfoItemFieldSet(
+			long ddmStructureId,
+			InfoLocalizedValue<String> fieldSetNameInfoLocalizedValue)
 		throws NoSuchStructureException;
 
 }

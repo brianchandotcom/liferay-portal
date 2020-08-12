@@ -41,9 +41,26 @@ public class DDMStructureInfoItemFieldSetProviderImpl
 	public InfoFieldSet getInfoItemFieldSet(long ddmStructureId)
 		throws NoSuchStructureException {
 
+		return getInfoItemFieldSet(ddmStructureId, null);
+	}
+
+	@Override
+	public InfoFieldSet getInfoItemFieldSet(
+			long ddmStructureId,
+			InfoLocalizedValue<String> fieldSetNameInfoLocalizedValue)
+		throws NoSuchStructureException {
+
 		try {
 			DDMStructure ddmStructure =
 				_ddmStructureLocalService.getDDMStructure(ddmStructureId);
+
+			if (fieldSetNameInfoLocalizedValue == null) {
+				fieldSetNameInfoLocalizedValue =
+					InfoLocalizedValue.<String>builder(
+					).values(
+						ddmStructure.getNameMap()
+					).build();
+			}
 
 			return InfoFieldSet.builder(
 			).infoFieldSetEntry(
@@ -63,10 +80,7 @@ public class DDMStructureInfoItemFieldSetProviderImpl
 					}
 				}
 			).labelInfoLocalizedValue(
-				InfoLocalizedValue.<String>builder(
-				).values(
-					ddmStructure.getNameMap()
-				).build()
+				fieldSetNameInfoLocalizedValue
 			).name(
 				ddmStructure.getStructureKey()
 			).build();

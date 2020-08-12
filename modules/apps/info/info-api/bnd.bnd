@@ -20,6 +20,7 @@ Export-Package:\
 	com.liferay.info.item.renderer,\
 	com.liferay.info.item.renderer.template,\
 	com.liferay.info.item.selector,\
+	com.liferay.info.item.updater,\
 	com.liferay.info.list.provider,\
 	com.liferay.info.list.renderer,\
 	com.liferay.info.localized,\

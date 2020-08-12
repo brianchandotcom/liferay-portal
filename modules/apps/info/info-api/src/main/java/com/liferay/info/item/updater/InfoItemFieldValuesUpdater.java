@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.translation.info.item.updater;
+package com.liferay.info.item.updater;
 
 import com.liferay.info.item.InfoItemFieldValues;
 

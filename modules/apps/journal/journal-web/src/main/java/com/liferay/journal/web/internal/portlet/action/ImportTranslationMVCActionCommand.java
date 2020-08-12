@@ -17,6 +17,7 @@ package com.liferay.journal.web.internal.portlet.action;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.item.updater.InfoItemFieldValuesUpdater;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.translation.exception.XLIFFFileException;
 import com.liferay.translation.importer.TranslationInfoItemFieldValuesImporter;
-import com.liferay.translation.info.item.updater.InfoItemFieldValuesUpdater;
 
 import java.io.InputStream;
 

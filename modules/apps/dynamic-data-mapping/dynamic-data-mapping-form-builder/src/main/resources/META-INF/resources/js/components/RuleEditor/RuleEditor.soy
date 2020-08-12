@@ -716,7 +716,7 @@
 												{msg desc=""}choose-an-option{/msg}
 											{/param}
 											{param readOnly: $readOnly /}
-											{param ref: 'secondOperand' + $index /}
+											{param ref: 'secondOperandField' + $index /}
 											{param spritemap: $spritemap /}
 											{param value: [$secondOperandOptionValue] /}
 										{/call}
@@ -731,7 +731,7 @@
 											{param placeholder kind="text"}
 												{msg desc=""}choose-an-option{/msg}
 											{/param}
-											{param ref: 'secondOperand' + $index /}
+											{param ref: 'secondOperandField' + $index /}
 											{param spritemap: $spritemap /}
 											{param value: [$secondOperandValue] /}
 										{/call}
@@ -744,7 +744,7 @@
 											{param fieldType: $secondOperandType /}
 											{param name: $secondOperandFieldName /}
 											{param readOnly: $readOnly /}
-											{param ref: 'secondOperand' + $index /}
+											{param ref: 'secondOperandValue' + $index /}
 											{param spritemap: $spritemap /}
 											{param value: $secondOperandValue /}
 										{/call}

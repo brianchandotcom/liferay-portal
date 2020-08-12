@@ -65,6 +65,8 @@ definition {
 	@description = "This is a test for LPS-118060. The contributed content types and their subtypes are available when creating a display page template."
 	@priority = "5"
 	test ViewTypesDuringCreation {
+		property osgi.app.includes = "document-library-google-docs";
+
 		task ("Add a custom Web Content structure") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

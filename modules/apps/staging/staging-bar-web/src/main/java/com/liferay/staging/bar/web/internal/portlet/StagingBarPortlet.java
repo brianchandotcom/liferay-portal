@@ -14,6 +14,8 @@
 
 package com.liferay.staging.bar.web.internal.portlet;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.exportimport.kernel.exception.RemoteExportException;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
@@ -201,6 +203,10 @@ public class StagingBarPortlet extends MVCPortlet {
 		String remoteURL = null;
 		String stagingURL = null;
 
+		Object originalAssetEntry = httpServletRequest.getAttribute(
+			WebKeys.LAYOUT_ASSET_ENTRY);
+		long originalScopeGroupId = themeDisplay.getScopeGroupId();
+
 		if (themeDisplay.isShowStagingIcon()) {
 			if (liveGroup != null) {
 				liveLayout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
@@ -209,6 +215,15 @@ public class StagingBarPortlet extends MVCPortlet {
 
 				if (liveLayout != null) {
 					try {
+						if (liveLayout.isTypeAssetDisplay()) {
+							themeDisplay.setScopeGroupId(
+								liveGroup.getGroupId());
+
+							_setScopedAssetEntry(
+								themeDisplay.getRequest(),
+								liveGroup.getGroupId());
+						}
+
 						liveURL = _portal.getLayoutURL(
 							liveLayout, themeDisplay);
 					}
@@ -234,6 +249,15 @@ public class StagingBarPortlet extends MVCPortlet {
 
 				if (stagingLayout != null) {
 					try {
+						if (stagingLayout.isTypeAssetDisplay()) {
+							themeDisplay.setScopeGroupId(
+								stagingGroup.getGroupId());
+
+							_setScopedAssetEntry(
+								themeDisplay.getRequest(),
+								stagingGroup.getGroupId());
+						}
+
 						stagingURL = _portal.getLayoutURL(
 							stagingLayout, themeDisplay);
 					}
@@ -246,6 +270,10 @@ public class StagingBarPortlet extends MVCPortlet {
 						themeDisplay, layout.isPrivateLayout());
 				}
 			}
+
+			themeDisplay.setScopeGroupId(originalScopeGroupId);
+			httpServletRequest.setAttribute(
+				WebKeys.LAYOUT_ASSET_ENTRY, originalAssetEntry);
 
 			if (group.isStagingGroup() || group.isStagedRemotely()) {
 				layoutSetBranches =
@@ -621,8 +649,28 @@ public class StagingBarPortlet extends MVCPortlet {
 		}
 	}
 
+	private void _setScopedAssetEntry(
+		HttpServletRequest httpServletRequest, long groupId) {
+
+		Object object = httpServletRequest.getAttribute(
+			WebKeys.LAYOUT_ASSET_ENTRY);
+
+		if ((object != null) && (object instanceof AssetEntry)) {
+			AssetEntry assetEntry = (AssetEntry)object;
+
+			AssetEntry scopedAssetEntry = _assetEntryLocalService.fetchEntry(
+				groupId, assetEntry.getClassUuid());
+
+			httpServletRequest.setAttribute(
+				WebKeys.LAYOUT_ASSET_ENTRY, scopedAssetEntry);
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		StagingBarPortlet.class);
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	private LayoutLocalService _layoutLocalService;
 	private LayoutRevisionLocalService _layoutRevisionLocalService;

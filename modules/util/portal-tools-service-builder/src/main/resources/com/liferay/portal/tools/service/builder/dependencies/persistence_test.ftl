@@ -1041,13 +1041,24 @@ public class ${entity.name}PersistenceTest {
 		<#if serviceBuilder.isVersionGTE_7_3_0()>
 			@Test
 			public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase() throws Exception {
+				_testResetOriginalValuesWithDynamicQuery(true);
+			}
+
+			@Test
+			public void testResetOriginalValuesWithDynamicQueryLoadFromSession() throws Exception {
+				_testResetOriginalValuesWithDynamicQuery(false);
+			}
+
+			private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession) throws Exception {
 				${entity.name} new${entity.name} = add${entity.name}();
 
-				Session session = _persistence.openSession();
+				if (clearSession) {
+					Session session = _persistence.openSession();
 
-				session.flush();
+					session.flush();
 
-				session.clear();
+					session.clear();
+				}
 
 				DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(${entity.name}.class, _dynamicQueryClassLoader);
 

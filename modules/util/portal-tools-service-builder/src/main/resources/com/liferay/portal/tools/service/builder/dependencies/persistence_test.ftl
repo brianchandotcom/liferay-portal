@@ -1015,24 +1015,75 @@ public class ${entity.name}PersistenceTest {
 
 			_persistence.clearCache();
 
-			${entity.name} existing${entity.name} = _persistence.findByPrimaryKey(new${entity.name}.getPrimaryKey());
+			<#if serviceBuilder.isVersionGTE_7_3_0()>
+				_assertOriginalValues(_persistence.findByPrimaryKey(new${entity.name}.getPrimaryKey()));
+			<#else>
+				${entity.name} existing${entity.name} = _persistence.findByPrimaryKey(new${entity.name}.getPrimaryKey());
 
-			<#list entity.uniqueEntityFinders as uniqueEntityFinder>
-				<#assign entityColumns = uniqueEntityFinder.entityColumns />
+				<#list entity.uniqueEntityFinders as uniqueEntityFinder>
+					<#assign entityColumns = uniqueEntityFinder.entityColumns />
 
-				<#list entityColumns as entityColumn>
-					<#if entityColumn.isInterfaceColumn()>
-						<#if stringUtil.equals(entityColumn.type, "double")>
-							AssertUtils.assertEquals(existing${entity.name}.get${entityColumn.methodName}(), ReflectionTestUtil.<Double>invoke(existing${entity.name}, "getOriginal${entityColumn.methodName}", new Class<?>[0]));
-						<#elseif entityColumn.isPrimitiveType()>
-							Assert.assertEquals(${serviceBuilder.getPrimitiveObj(entityColumn.type)}.valueOf(existing${entity.name}.get${entityColumn.methodName}()), ReflectionTestUtil.<${serviceBuilder.getPrimitiveObj(entityColumn.type)}>invoke(existing${entity.name}, "getOriginal${entityColumn.methodName}", new Class<?>[0]));
-						<#else>
-							Assert.assertTrue(Objects.equals(existing${entity.name}.get${entityColumn.methodName}(), ReflectionTestUtil.invoke(existing${entity.name}, "getOriginal${entityColumn.methodName}", new Class<?>[0])));
+					<#list entityColumns as entityColumn>
+						<#if entityColumn.isInterfaceColumn()>
+							<#if stringUtil.equals(entityColumn.type, "double")>
+								AssertUtils.assertEquals(existing${entity.name}.get${entityColumn.methodName}(), ReflectionTestUtil.<Double>invoke(existing${entity.name}, "getOriginal${entityColumn.methodName}", new Class<?>[0]));
+							<#elseif entityColumn.isPrimitiveType()>
+								Assert.assertEquals(${serviceBuilder.getPrimitiveObj(entityColumn.type)}.valueOf(existing${entity.name}.get${entityColumn.methodName}()), ReflectionTestUtil.<${serviceBuilder.getPrimitiveObj(entityColumn.type)}>invoke(existing${entity.name}, "getOriginal${entityColumn.methodName}", new Class<?>[0]));
+							<#else>
+								Assert.assertTrue(Objects.equals(existing${entity.name}.get${entityColumn.methodName}(), ReflectionTestUtil.invoke(existing${entity.name}, "getOriginal${entityColumn.methodName}", new Class<?>[0])));
+							</#if>
 						</#if>
-					</#if>
+					</#list>
 				</#list>
-			</#list>
+			</#if>
 		}
+
+		<#if serviceBuilder.isVersionGTE_7_3_0()>
+			@Test
+			public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase() throws Exception {
+				${entity.name} new${entity.name} = add${entity.name}();
+
+				Session session = _persistence.openSession();
+
+				session.flush();
+
+				session.clear();
+
+				DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(${entity.name}.class, _dynamicQueryClassLoader);
+
+				<#if entity.hasCompoundPK()>
+					<#list entity.PKEntityColumns as entityColumn>
+						dynamicQuery.add(RestrictionsFactoryUtil.eq("id.${entityColumn.name}", new${entity.name}.get${entityColumn.methodName}()));
+					</#list>
+				<#else>
+					<#assign entityColumn = entity.PKEntityColumns[0] />
+
+					dynamicQuery.add(RestrictionsFactoryUtil.eq("${entityColumn.name}", new${entity.name}.get${entityColumn.methodName}()));
+				</#if>
+
+				List<${entity.name}> result = _persistence.findWithDynamicQuery(dynamicQuery);
+
+				_assertOriginalValues(result.get(0));
+			}
+
+			private void _assertOriginalValues(${entity.name} ${entity.varName}) {
+				<#list entity.uniqueEntityFinders as uniqueEntityFinder>
+					<#assign entityColumns = uniqueEntityFinder.entityColumns />
+
+					<#list entityColumns as entityColumn>
+						<#if entityColumn.isInterfaceColumn()>
+							<#if stringUtil.equals(entityColumn.type, "double")>
+								AssertUtils.assertEquals(${entity.varName}.get${entityColumn.methodName}(), ReflectionTestUtil.<Double>invoke(${entity.varName}, "getOriginal${entityColumn.methodName}", new Class<?>[0]));
+							<#elseif entityColumn.isPrimitiveType()>
+								Assert.assertEquals(${serviceBuilder.getPrimitiveObj(entityColumn.type)}.valueOf(${entity.varName}.get${entityColumn.methodName}()), ReflectionTestUtil.<${serviceBuilder.getPrimitiveObj(entityColumn.type)}>invoke(${entity.varName}, "getOriginal${entityColumn.methodName}", new Class<?>[0]));
+							<#else>
+								Assert.assertTrue(Objects.equals(${entity.varName}.get${entityColumn.methodName}(), ReflectionTestUtil.invoke(${entity.varName}, "getOriginal${entityColumn.methodName}", new Class<?>[0])));
+							</#if>
+						</#if>
+					</#list>
+				</#list>
+			}
+		</#if>
 	</#if>
 
 	protected ${entity.name} add${entity.name}() throws Exception {

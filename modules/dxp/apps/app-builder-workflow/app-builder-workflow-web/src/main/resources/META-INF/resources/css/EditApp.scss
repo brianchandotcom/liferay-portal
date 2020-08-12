@@ -108,7 +108,6 @@ $navbarHeight: 120px;
 		.step-badge {
 			font-size: 18px;
 			height: 32px;
-			margin-top: 16px;
 			padding: 0.25rem 0.625rem;
 
 			&.index-badge {
@@ -157,6 +156,7 @@ $navbarHeight: 120px;
 		}
 
 		.step-wrapper {
+			align-items: center;
 			display: flex;
 			margin: auto;
 		}

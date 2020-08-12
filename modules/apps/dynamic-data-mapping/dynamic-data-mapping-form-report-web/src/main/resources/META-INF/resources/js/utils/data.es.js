@@ -35,4 +35,10 @@ const toDataArray = (options, values) =>
 		.sort((a, b) => (a.count > b.count ? -1 : b.count > a.count ? 1 : 0));
 
 export default toDataArray;
-export {getColumnLabel, removeEmptyValues, roundPercentage, sumTotalEntries, toArray};
+export {
+	getColumnLabel,
+	removeEmptyValues,
+	roundPercentage,
+	sumTotalEntries,
+	toArray,
+};

@@ -94,7 +94,6 @@ export default ({data, field, height, structure, width}) => {
 	const renderLegend = (props) => {
 		const {payload} = props;
 
-
 		return (
 			<ul className="bar-legend">
 				{payload.map((entry, index) => {

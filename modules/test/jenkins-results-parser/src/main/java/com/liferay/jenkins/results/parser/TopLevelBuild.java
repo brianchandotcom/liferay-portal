@@ -1174,6 +1174,10 @@ public abstract class TopLevelBuild extends BaseBuild {
 				toJenkinsReportDateString(
 					new Date(getStartTime()), getJenkinsReportTimeZoneName())),
 			Dom4JUtil.getNewElement(
+				"p", null, "Invocation Delay Time: ",
+				JenkinsResultsParserUtil.toDurationString(
+					getQueuingDuration())),
+			Dom4JUtil.getNewElement(
 				"p", null, "Build Time: ",
 				JenkinsResultsParserUtil.toDurationString(getDuration())),
 			Dom4JUtil.getNewElement(

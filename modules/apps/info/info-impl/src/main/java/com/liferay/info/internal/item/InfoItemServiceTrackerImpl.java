@@ -35,6 +35,7 @@ import com.liferay.info.list.provider.InfoListProvider;
 import com.liferay.info.list.renderer.InfoListRenderer;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.type.Keyed;
+import com.liferay.osgi.service.tracker.collections.ServiceReferenceServiceTuple;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -53,8 +54,13 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Filter;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Jürgen Kappler
@@ -74,17 +80,39 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 
 	@Override
 	public <P> List<P> getAllInfoItemServices(
-		Class<P> serviceClass, String itemClassName) {
+		Class<P> serviceClass, String itemClassName, String filterString) {
 
-		ServiceTrackerMap<String, List<P>> infoItemServiceTrackerMap =
-			(ServiceTrackerMap<String, List<P>>)
-				_itemClassNameInfoItemServiceTrackerMap.get(
-					serviceClass.getName());
+		ServiceTrackerMap
+			<String, ? extends List<ServiceReferenceServiceTuple<P, P>>>
+				infoItemServiceTrackerMap =
+					(ServiceTrackerMap)
+						_itemClassNameInfoItemServiceTrackerMap.get(
+							serviceClass.getName());
 
-		List<P> services = infoItemServiceTrackerMap.getService(itemClassName);
+		List<ServiceReferenceServiceTuple<P, P>> serviceReferenceServiceTuples =
+			infoItemServiceTrackerMap.getService(itemClassName);
 
-		if (services != null) {
-			return new ArrayList<>(services);
+		if (serviceReferenceServiceTuples != null) {
+			Stream<ServiceReferenceServiceTuple<P, P>> stream =
+				serviceReferenceServiceTuples.stream();
+
+			if (filterString != null) {
+				try {
+					Filter filter = FrameworkUtil.createFilter(filterString);
+
+					stream = stream.filter(
+						srst -> filter.match(srst.getServiceReference()));
+				}
+				catch (InvalidSyntaxException invalidSyntaxException) {
+					return Collections.emptyList();
+				}
+			}
+
+			return stream.map(
+				ServiceReferenceServiceTuple::getService
+			).collect(
+				Collectors.toList()
+			);
 		}
 
 		return Collections.emptyList();
@@ -92,10 +120,10 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 
 	@Override
 	public <P> P getFirstInfoItemService(
-		Class<P> serviceClass, String itemClassName) {
+		Class<P> serviceClass, String itemClassName, String filterString) {
 
 		List<?> infoItemServices = getAllInfoItemServices(
-			serviceClass, itemClassName);
+			serviceClass, itemClassName, filterString);
 
 		if (ListUtil.isEmpty(infoItemServices)) {
 			return null;
@@ -110,7 +138,7 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 
 		InfoItemCapabilitiesProvider infoItemCapabilitiesProvider =
 			getFirstInfoItemService(
-				InfoItemCapabilitiesProvider.class, itemClassName);
+				InfoItemCapabilitiesProvider.class, itemClassName, null);
 
 		return infoItemCapabilitiesProvider.getInfoItemCapabilities();
 	}
@@ -151,7 +179,7 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 			InfoItemCapabilitiesProvider infoItemCapabilitiesProvider =
 				getFirstInfoItemService(
 					InfoItemCapabilitiesProvider.class,
-					curInfoItemClassDetails.getClassName());
+					curInfoItemClassDetails.getClassName(), null);
 
 			List<InfoItemCapability> infoItemCapabilities =
 				infoItemCapabilitiesProvider.getInfoItemCapabilities();
@@ -226,11 +254,16 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 		};
 
 		for (Class<?> serviceClass : serviceClasses) {
-			ServiceTrackerMap<String, ? extends List<?>>
-				itemClassNameInfoItemServiceTrackerMap =
-					ServiceTrackerMapFactory.openMultiValueMap(
-						bundleContext, serviceClass, null,
-						new ItemClassNameServiceReferenceMapper(bundleContext));
+			ServiceTrackerMap
+				<String, ? extends List<ServiceReferenceServiceTuple<?, ?>>>
+					itemClassNameInfoItemServiceTrackerMap =
+						ServiceTrackerMapFactory.openMultiValueMap(
+							bundleContext, serviceClass, null,
+							new ItemClassNameServiceReferenceMapper(
+								bundleContext),
+							(ServiceTrackerCustomizer)
+								new ServiceReferenceServiceTupleServiceTrackerCustomizer(
+									bundleContext));
 
 			_itemClassNameInfoItemServiceTrackerMap.put(
 				serviceClass.getName(), itemClassNameInfoItemServiceTrackerMap);
@@ -264,7 +297,7 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 
 		InfoItemDetailsProvider infoItemDetailsProvider =
 			getFirstInfoItemService(
-				InfoItemDetailsProvider.class, itemClassName);
+				InfoItemDetailsProvider.class, itemClassName, null);
 
 		InfoItemClassDetails infoItemClassDetails = null;
 
@@ -282,9 +315,61 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 
 	private ServiceTrackerMap<String, InfoItemCapability>
 		_infoItemCapabilityServiceTrackerMap;
-	private final Map<String, ServiceTrackerMap<String, ? extends List<?>>>
-		_itemClassNameInfoItemServiceTrackerMap = new HashMap<>();
+	private final Map
+		<String,
+		 ServiceTrackerMap
+			 <String, ? extends List<ServiceReferenceServiceTuple<?, ?>>>>
+				_itemClassNameInfoItemServiceTrackerMap = new HashMap<>();
 	private final Map<String, ServiceTrackerMap<String, ?>>
 		_keyedInfoItemServiceTrackerMap = new HashMap<>();
+
+	private static class ServiceReferenceServiceTupleServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<Object, ServiceReferenceServiceTuple<Object, Object>> {
+
+		public ServiceReferenceServiceTupleServiceTrackerCustomizer(
+			BundleContext bundleContext) {
+
+			_bundleContext = bundleContext;
+		}
+
+		@Override
+		public ServiceReferenceServiceTuple<Object, Object> addingService(
+			ServiceReference<Object> serviceReference) {
+
+			Object service = _bundleContext.getService(serviceReference);
+
+			if (service == null) {
+				return null;
+			}
+
+			return new ServiceReferenceServiceTuple<>(
+				serviceReference, service);
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<Object> serviceReference,
+			ServiceReferenceServiceTuple<Object, Object>
+				objectObjectServiceReferenceServiceTuple) {
+
+			//nothing to do here since servicereference is mutable and has
+
+			// already been mutated by the framework
+
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<Object> serviceReference,
+			ServiceReferenceServiceTuple<Object, Object>
+				serviceReferenceServiceTuple) {
+
+			_bundleContext.ungetService(serviceReference);
+		}
+
+		private final BundleContext _bundleContext;
+
+	}
 
 }

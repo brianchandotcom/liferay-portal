@@ -77,7 +77,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.addCPWithTag(
+		User.addCP(
 			userEmailAddress = "OrganizationTag@liferay.com",
 			userFirstName = "OrganizationTag",
 			userLastName = "OrganizationTag",
@@ -167,7 +167,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.addCPWithTag(
+		User.addCP(
 			userEmailAddress = "Tag@liferay.com",
 			userFirstName = "UserTag",
 			userLastName = "UserTag",

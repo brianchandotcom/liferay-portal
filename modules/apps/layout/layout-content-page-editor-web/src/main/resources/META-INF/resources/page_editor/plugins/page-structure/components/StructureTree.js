@@ -19,10 +19,8 @@ import React, {useMemo} from 'react';
 import {useActiveItemId} from '../../../app/components/Controls';
 import hasDropZoneChild from '../../../app/components/layout-data-items/hasDropZoneChild';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../app/config/constants/editableFragmentEntryProcessor';
-import {EDITABLE_TYPE_ICONS} from '../../../app/config/constants/editableTypeIcons';
 import {EDITABLE_TYPES} from '../../../app/config/constants/editableTypes';
 import {ITEM_TYPES} from '../../../app/config/constants/itemTypes';
-import {LAYOUT_DATA_ITEM_TYPE_ICONS} from '../../../app/config/constants/layoutDataItemTypeIcons';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {LAYOUT_TYPES} from '../../../app/config/constants/layoutTypes';
 import {config} from '../../../app/config/index';
@@ -32,6 +30,25 @@ import {useSelector} from '../../../app/store/index';
 import getLayoutDataItemLabel from '../../../app/utils/getLayoutDataItemLabel';
 import PageStructureSidebarSection from './PageStructureSidebarSection';
 import StructureTreeNode from './StructureTreeNode';
+
+const EDITABLE_TYPE_ICONS = {
+	[EDITABLE_TYPES.backgroundImage]: 'picture',
+	[EDITABLE_TYPES.html]: 'document-code',
+	[EDITABLE_TYPES.image]: 'picture',
+	[EDITABLE_TYPES.link]: 'link',
+	[EDITABLE_TYPES['rich-text']]: 'text-editor',
+	[EDITABLE_TYPES.text]: 'text',
+};
+
+const LAYOUT_DATA_ITEM_TYPE_ICONS = {
+	[LAYOUT_DATA_ITEM_TYPES.collection]: 'list',
+	[LAYOUT_DATA_ITEM_TYPES.collectionItem]: 'document',
+	[LAYOUT_DATA_ITEM_TYPES.container]: 'container',
+	[LAYOUT_DATA_ITEM_TYPES.dropZone]: 'box-container',
+	[LAYOUT_DATA_ITEM_TYPES.fragment]: 'code',
+	[LAYOUT_DATA_ITEM_TYPES.root]: 'page',
+	[LAYOUT_DATA_ITEM_TYPES.row]: 'grid',
+};
 
 export default function PageStructureSidebar() {
 	const activeItemId = useActiveItemId();
@@ -75,7 +92,7 @@ export default function PageStructureSidebar() {
 
 	return (
 		<PageStructureSidebarSection>
-			<div className="page-editor__page-structure__structure-tree px-4">
+			<div className="page-editor__page-structure__structure-tree px-3">
 				{!nodes.length && (
 					<ClayAlert
 						displayType="info"

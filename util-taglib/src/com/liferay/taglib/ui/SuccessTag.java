@@ -132,7 +132,7 @@ public class SuccessTag extends IncludeTag implements BodyTag {
 		}
 
 		Map<String, String> values = HashMapBuilder.put(
-			"title", LanguageUtil.get(resourceBundle, "success-colon")
+			"title", LanguageUtil.get(resourceBundle, "success")
 		).build();
 
 		if (_embed) {

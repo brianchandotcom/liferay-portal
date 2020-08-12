@@ -76,7 +76,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.LinkedList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -683,7 +683,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			scriptedMetricAggregationResult.getValue());
 	}
 
-	private List<Instance> _getInstances(
+	private Collection<Instance> _getInstances(
 		Long[] assigneeIds, Long[] classPKs, Boolean completed, Date dateEnd,
 		Date dateStart, long instanceCount, Pagination pagination,
 		long processId, String[] slaStatuses, String[] taskNames) {
@@ -721,31 +721,10 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 		taskNameTermsAggregation.setSize(10000);
 
-		FilterAggregation tasksIndexFilterAggregation = _aggregations.filter(
-			"tasksIndex",
-			_queries.term(
-				"_index",
-				_taskWorkflowMetricsIndexNameBuilder.getIndexName(
-					contextCompany.getCompanyId())));
-
-		TermsAggregation assigneeTypeTermsAggregation = _aggregations.terms(
-			"assigneeType", "assigneeType");
-
-		TermsAggregation assigneeIdTermsAggregation = _aggregations.terms(
-			"assigneeId", "assigneeIds");
-
-		assigneeIdTermsAggregation.setSize(10000);
-
-		assigneeTypeTermsAggregation.addChildAggregation(
-			assigneeIdTermsAggregation);
-
-		tasksIndexFilterAggregation.addChildAggregation(
-			assigneeTypeTermsAggregation);
-
 		termsAggregation.addChildrenAggregations(
 			instancesIndexFilterAggregation, onTimeFilterAggregation,
 			overdueFilterAggregation, taskNameTermsAggregation,
-			tasksIndexFilterAggregation, _aggregations.topHits("topHits"),
+			_aggregations.topHits("topHits"),
 			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
 				ListUtil.fromArray(assigneeIds), completed, dateEnd, dateStart,
 				ListUtil.fromArray(slaStatuses),
@@ -771,7 +750,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		searchSearchRequest.setQuery(
 			_createBooleanQuery(assigneeIds, classPKs, completed, processId));
 
-		return Stream.of(
+		Map<Long, Instance> instances = Stream.of(
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
 		).map(
 			SearchSearchResponse::getAggregationResultsMap
@@ -804,10 +783,8 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				this::_createInstance
 			).map(
 				instance -> {
-					_setAssignees(bucket, instance);
 					_setSLAStatus(bucket, instance);
 					_setTaskNames(bucket, instance);
-					_setTransitions(instance);
 
 					return instance;
 				}
@@ -815,8 +792,13 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				Instance::new
 			)
 		).collect(
-			Collectors.toCollection(LinkedList::new)
+			LinkedHashMap::new,
+			(map, instance) -> map.put(instance.getId(), instance), Map::putAll
 		);
+
+		_populateAssignees(assigneeIds, instances, processId);
+
+		return instances.values();
 	}
 
 	private String _getLocalizedName(String name) {
@@ -1028,6 +1010,87 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 			return null;
 		}
+	}
+
+	private void _populateAssignees(
+		Long[] assigneeIds, Map<Long, Instance> instances, Long processId) {
+
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		TermsAggregation termsAggregation = _aggregations.terms(
+			"instanceId", "instanceId");
+
+		FilterAggregation tasksIndexFilterAggregation = _aggregations.filter(
+			"tasksIndex",
+			_queries.term(
+				"_index",
+				_taskWorkflowMetricsIndexNameBuilder.getIndexName(
+					contextCompany.getCompanyId())));
+
+		TermsAggregation assigneeTypeTermsAggregation = _aggregations.terms(
+			"assigneeType", "assigneeType");
+
+		TermsAggregation assigneeIdTermsAggregation = _aggregations.terms(
+			"assigneeId", "assigneeIds");
+
+		assigneeIdTermsAggregation.setSize(10000);
+
+		assigneeTypeTermsAggregation.addChildAggregation(
+			assigneeIdTermsAggregation);
+
+		tasksIndexFilterAggregation.addChildAggregation(
+			assigneeTypeTermsAggregation);
+
+		termsAggregation.addChildrenAggregations(tasksIndexFilterAggregation);
+
+		termsAggregation.setSize(instances.size());
+
+		searchSearchRequest.addAggregation(termsAggregation);
+
+		searchSearchRequest.setIndexNames(
+			_taskWorkflowMetricsIndexNameBuilder.getIndexName(
+				contextCompany.getCompanyId()));
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		TermsQuery termsQuery = _queries.terms("instanceId");
+
+		termsQuery.addValues(
+			Stream.of(
+				instances.keySet()
+			).flatMap(
+				Collection::stream
+			).map(
+				String::valueOf
+			).toArray(
+				Object[]::new
+			));
+
+		booleanQuery.addMustQueryClauses(
+			termsQuery, _createTasksBooleanQuery(assigneeIds, processId));
+
+		searchSearchRequest.setQuery(booleanQuery);
+
+		Stream.of(
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
+		).map(
+			SearchSearchResponse::getAggregationResultsMap
+		).map(
+			aggregationResultsMap ->
+				(TermsAggregationResult)aggregationResultsMap.get("instanceId")
+		).map(
+			TermsAggregationResult::getBuckets
+		).flatMap(
+			Collection::stream
+		).forEach(
+			bucket -> {
+				Instance instance = instances.get(
+					GetterUtil.getLong(bucket.getKey()));
+
+				_setAssignees(bucket, instance);
+				_setTransitions(instance);
+			}
+		);
 	}
 
 	private void _setAssignees(Bucket bucket, Instance instance) {

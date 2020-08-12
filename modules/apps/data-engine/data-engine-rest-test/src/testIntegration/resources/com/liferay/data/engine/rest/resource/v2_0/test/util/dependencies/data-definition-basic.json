@@ -10,6 +10,7 @@
 				"en_US": "Text",
 				"pt_BR": "Texto"
 			},
+			"localizable": true,
 			"name": "Text"
 		}
 	],

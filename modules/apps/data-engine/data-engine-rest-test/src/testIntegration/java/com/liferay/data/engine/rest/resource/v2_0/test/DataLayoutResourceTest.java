@@ -20,7 +20,9 @@ import com.liferay.data.engine.rest.client.dto.v2_0.DataDefinitionField;
 import com.liferay.data.engine.rest.client.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.client.dto.v2_0.DataLayoutColumn;
 import com.liferay.data.engine.rest.client.dto.v2_0.DataLayoutPage;
+import com.liferay.data.engine.rest.client.dto.v2_0.DataLayoutRenderingContext;
 import com.liferay.data.engine.rest.client.dto.v2_0.DataLayoutRow;
+import com.liferay.data.engine.rest.client.http.HttpInvoker;
 import com.liferay.data.engine.rest.client.pagination.Page;
 import com.liferay.data.engine.rest.client.pagination.Pagination;
 import com.liferay.data.engine.rest.client.problem.Problem;
@@ -36,9 +38,12 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
 import java.util.List;
+
+import org.hamcrest.CoreMatchers;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -297,6 +302,46 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 		finally {
 			dataDefinitionResource.deleteDataDefinition(dataDefinition.getId());
 		}
+	}
+
+	@Override
+	@Test
+	public void testPostDataLayoutContext() throws Exception {
+		DataDefinition dataDefinition =
+			DataDefinitionTestUtil.addDataDefinitionWithDataLayout(
+				testGroup.getGroupId());
+
+		DataLayout dataLayout = dataDefinition.getDefaultDataLayout();
+
+		HttpInvoker.HttpResponse httpResponse =
+			dataLayoutResource.postDataLayoutContextHttpResponse(
+				dataLayout.getId(),
+				new DataLayoutRenderingContext() {
+					{
+						containerId = "testContainer";
+						dataRecordValues = HashMapBuilder.<String, Object>put(
+							"Text",
+							HashMapBuilder.<String, Object>put(
+								"en_US", "value"
+							).put(
+								"pt_BR", "valor"
+							).build()
+						).build();
+						namespace = "myNamespace";
+						pathThemeImages = StringUtil.randomString();
+						readOnly = false;
+					}
+				});
+
+		String content = httpResponse.getContent();
+
+		Assert.assertThat(content, CoreMatchers.containsString("myNamespace"));
+		Assert.assertThat(
+			content, CoreMatchers.containsString("testContainer"));
+		Assert.assertThat(content, CoreMatchers.containsString("valor"));
+		Assert.assertThat(content, CoreMatchers.containsString("value"));
+
+		Assert.assertEquals(200, httpResponse.getStatusCode());
 	}
 
 	@Override

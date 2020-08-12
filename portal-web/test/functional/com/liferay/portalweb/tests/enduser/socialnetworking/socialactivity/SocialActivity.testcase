@@ -43,44 +43,34 @@ definition {
 
 		FormFields.viewCheckboxChecked(fieldName = "enableUserSocialActivityTracking");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Social Activity");
-
-		SocialActivity.enableBlogsCP();
-
-		Button.clickSave();
-
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
-			layoutName = "Social Activity Page");
+			layoutName = "Activities Page");
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Social Activity Page",
-			widgetName = "User Statistics");
+		Navigator.gotoPage(pageName = "Activities Page");
 
-		Navigator.gotoPage(pageName = "Social Activity Page");
+		Portlet.addPG(portletName = "Activities");
+
+		Navigator.gotoPage(pageName = "Activities Page");
 
 		AssertTextEquals(
-			key_portletName = "User Statistics",
+			key_portletName = "Activities",
 			locator1 = "Portlet#BODY",
-			value1 = "There are no active users for this period.");
+			value1 = "There are no recent activities.");
 
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
 
-		Navigator.gotoPage(pageName = "Social Activity Page");
+		Navigator.gotoPage(pageName = "Activities Page");
 
-		SocialActivity.viewPGViaUserStatistics(
-			contributionScore = "Contribution Score: 0 (Total: 0)",
-			participationScore = "Participation Score: 5 (Total: 5)",
-			userName = "Test Test",
-			userRank = "Rank: 1");
+		AssertTextEquals(
+			key_assetName = "DM Document Title",
+			locator1 = "Activities#ACTIVITY_TITLE_ASSET_NAME",
+			value1 = "DM Document Title");
 	}
 
 	@description = "It ensures that the user statistics are not counted when social tracking is disabled."
@@ -104,43 +94,38 @@ definition {
 
 		FormFields.viewCheckboxNotChecked(fieldName = "enable");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Social Activity");
-
-		SocialActivity.enableBlogsCP();
-
-		Button.clickSave();
-
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
-			layoutName = "Social Activity Page");
+			layoutName = "Activities Page");
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+		Navigator.gotoPage(pageName = "Activities Page");
+
+		Portlet.addPG(portletName = "Activities");
+
+		Navigator.gotoPage(pageName = "Activities Page");
+
+		AssertTextEquals(
+			key_portletName = "Activities",
+			locator1 = "Portlet#BODY",
+			value1 = "There are no recent activities.");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
 			groupName = "Guest",
-			layoutName = "Social Activity Page",
-			widgetName = "User Statistics");
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
 
-		Navigator.gotoPage(pageName = "Social Activity Page");
-
-		AssertTextEquals(
-			key_portletName = "User Statistics",
-			locator1 = "Portlet#BODY",
-			value1 = "There are no active users for this period.");
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		Navigator.gotoPage(pageName = "Social Activity Page");
+		Navigator.gotoPage(pageName = "Activities Page");
 
 		AssertTextEquals(
-			key_portletName = "User Statistics",
+			key_portletName = "Activities",
 			locator1 = "Portlet#BODY",
-			value1 = "There are no active users for this period.");
+			value1 = "There are no recent activities.");
+
+		AssertElementNotPresent(
+			key_assetName = "DM Document Title",
+			locator1 = "Activities#ACTIVITY_TITLE_ASSET_NAME");
 	}
 
 }

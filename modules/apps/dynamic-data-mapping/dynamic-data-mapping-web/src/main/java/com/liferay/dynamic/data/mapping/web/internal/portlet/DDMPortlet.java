@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.web.internal.portlet;
 
+import com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.constants.DDMWebKeys;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
@@ -43,7 +44,6 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustNotDuplicateFieldName;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetOptionsForField;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidCharactersForFieldName;
-import com.liferay.dynamic.data.mapping.web.internal.configuration.DDMWebConfiguration;
 import com.liferay.dynamic.data.mapping.web.internal.display.context.DDMDisplayContext;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.LocaleException;
@@ -82,7 +82,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Leonardo Barros
  */
 @Component(
-	configurationPid = "com.liferay.dynamic.data.mapping.web.internal.configuration.DDMWebConfiguration",
+	configurationPid = "com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",

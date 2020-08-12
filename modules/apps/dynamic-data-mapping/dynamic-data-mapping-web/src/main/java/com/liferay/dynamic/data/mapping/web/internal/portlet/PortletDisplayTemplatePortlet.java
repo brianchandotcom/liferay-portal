@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.web.internal.portlet;
 
-import com.liferay.dynamic.data.mapping.web.internal.configuration.DDMWebConfiguration;
+import com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 
@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Modified;
  * @author Marcellus Tavares
  */
 @Component(
-	configurationPid = "com.liferay.dynamic.data.mapping.web.internal.configuration.DDMWebConfiguration",
+	configurationPid = "com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",

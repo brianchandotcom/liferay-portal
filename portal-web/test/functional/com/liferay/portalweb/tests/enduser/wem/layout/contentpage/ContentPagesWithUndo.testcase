@@ -330,6 +330,8 @@ definition {
 	@description = "This is a test for LPS-111946. Undo can bring deleted Collection Display with collection items back."
 	@priority = "3"
 	test UndoDeletedFragmentWithCollection {
+		property osgi.app.includes = "bookmarks";
+
 		for (var i : list "1,2,3") {
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content ${i}",

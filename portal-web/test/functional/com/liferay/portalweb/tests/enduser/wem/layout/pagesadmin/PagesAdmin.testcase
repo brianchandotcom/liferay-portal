@@ -27,6 +27,8 @@ definition {
 	@description = "This is use case for LPS-107776. Can add collection items in a collection page based on dynamic collection with all types."
 	@priority = "5"
 	test AddCollectionItemsInCollectionPageBasedOnDynamicCollection {
+		property osgi.app.includes = "bookmarks";
+
 		task ("Add a dynamic collection with All Types") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
 				groupName = "Test Site Name",
@@ -1084,6 +1086,8 @@ definition {
 	@description = "This is a test for LPS-110183. Can view information about collection items of collection page."
 	@priority = "5"
 	test ViewCollectionItemViaPageFinderAndPageAdmin {
+		property osgi.app.includes = "bookmarks";
+
 		JSONWebcontent.addWebContent(
 			content = "Webcontent Content",
 			groupName = "Test Site Name",

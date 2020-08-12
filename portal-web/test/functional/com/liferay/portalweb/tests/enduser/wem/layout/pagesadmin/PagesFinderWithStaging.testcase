@@ -35,6 +35,8 @@ definition {
 	@description = "This is the test for LPS-107774. Can create a Collection Page based on Collections or Collection Providers in Pages Tree panel of Staging site."
 	@priority = "4"
 	test AddCollectionPageViaPageFinder {
+		property osgi.app.includes = "bookmarks";
+
 		task ("Add three Web Content Articles based on Basic Web Content") {
 			for (var entryTitle : list "First Web Content,Second Web Content,Third Web Content") {
 				JSONWebcontent.addWebContent(

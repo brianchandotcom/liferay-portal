@@ -139,6 +139,8 @@ definition {
 	@description = "This is a use case for LPS-86193. The Collection Display with mapping content should be exported and imported with display page template."
 	@priority = "4"
 	test ExportImportDisplayPageTemplateWithCollectionDisplayContainingMappingContent {
+		property osgi.app.includes = "bookmarks";
+
 		task ("Add three Web Content Articles based on Basic Web Content") {
 			for (var entryTitle : list "First Web Content,Second Web Content,Third Web Content") {
 				JSONWebcontent.addWebContent(

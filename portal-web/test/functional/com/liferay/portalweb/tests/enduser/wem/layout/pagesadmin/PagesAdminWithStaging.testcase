@@ -124,6 +124,8 @@ definition {
 	@description = "This is a test for LPS-110183. Can view information about collection items of collection page when enable Live."
 	@priority = "3"
 	test ViewCollectionItemInformationInStaging {
+		property osgi.app.includes = "bookmarks";
+
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",
 			groupName = "Test Site Name (Staging)",

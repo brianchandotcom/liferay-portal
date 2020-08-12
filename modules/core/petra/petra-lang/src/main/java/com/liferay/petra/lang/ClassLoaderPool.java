@@ -153,7 +153,7 @@ public class ClassLoaderPool {
 			Version version = _parseVersion(contextName.substring(index + 1));
 
 			if (version != null) {
-				return new AbstractMap.SimpleEntry<>(
+				return new AbstractMap.SimpleImmutableEntry<>(
 					contextName.substring(0, index), version);
 			}
 		}

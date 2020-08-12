@@ -96,13 +96,17 @@ const BulkUpdateDueDateModal = () => {
 					setSelectedItems([]);
 					setSelectAll(false);
 				})
-				.catch(() => {
+				.catch(({response}) => {
+					const {title} = (response && response.data) || {
+						title: Liferay.Language.get('your-request-has-failed'),
+					};
+
 					setUpdating(false);
 
 					setErrorToast(
-						`${Liferay.Language.get(
-							'your-request-has-failed'
-						)} ${Liferay.Language.get('select-done-to-retry')}`
+						`${title} ${Liferay.Language.get(
+							'select-done-to-retry'
+						)}`
 					);
 				});
 		}

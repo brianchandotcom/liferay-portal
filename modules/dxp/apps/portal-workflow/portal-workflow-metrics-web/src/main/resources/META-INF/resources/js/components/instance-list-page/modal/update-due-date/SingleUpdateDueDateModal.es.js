@@ -88,11 +88,15 @@ const SingleUpdateDueDateModal = () => {
 					setSendingPost(false);
 					setErrorToast(false);
 				})
-				.catch(() => {
+				.catch(({response}) => {
+					const {title} = (response && response.data) || {
+						title: Liferay.Language.get('your-request-has-failed'),
+					};
+
 					setErrorToast(
-						`${Liferay.Language.get(
-							'your-request-has-failed'
-						)} ${Liferay.Language.get('select-done-to-retry')}`
+						`${title} ${Liferay.Language.get(
+							'select-done-to-retry'
+						)}`
 					);
 					setSendingPost(false);
 				});

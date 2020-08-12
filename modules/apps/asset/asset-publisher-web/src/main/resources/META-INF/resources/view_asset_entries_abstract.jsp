@@ -221,7 +221,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 
 				<clay:content-row
 					cssClass="asset-details"
-					floatElements="true"
+					floatElements=""
 					verticalAlign="center"
 				>
 					<c:if test="<%= assetPublisherDisplayContext.isEnableRatings() && assetRenderer.isRatable() %>">
@@ -319,7 +319,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 
 				<clay:content-row
 					cssClass="asset-details"
-					floatElements="true"
+					floatElements=""
 					verticalAlign="center"
 				>
 					<c:if test="<%= assetPublisherDisplayContext.isShowAvailableLocales() && assetRenderer.isLocalizable() %>">

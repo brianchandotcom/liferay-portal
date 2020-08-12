@@ -203,7 +203,7 @@ if (journalContentDisplayContext.isShowArticle()) {
 
 		<clay:content-row
 			cssClass="mb-4 user-tool-asset-addon-entries"
-			floatElements="true"
+			floatElements=""
 			verticalAlign="center"
 		>
 			<c:if test="<%= ratingsContentMetadataAssetAddonEntry != null %>">

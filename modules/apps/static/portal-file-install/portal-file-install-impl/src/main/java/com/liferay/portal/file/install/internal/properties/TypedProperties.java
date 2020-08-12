@@ -384,7 +384,7 @@ public class TypedProperties {
 		private final List<String> _comments = new ArrayList<>();
 		private final Pattern _pattern = Pattern.compile(
 			"\\s*[TILFDXSCBilfdxscb]?(\\[[\\S\\s]*\\]|\\{[\\S\\s]*\\}|" +
-				"\"[\\S\\s]*\")\\s*");
+				"\\([\\S\\s]*\\)|\"[\\S\\s]*\")\\s*");
 		private String _propertyName;
 		private String _propertyValue;
 		private Boolean _typed;

@@ -281,10 +281,17 @@ public class LayoutsTreeDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		portletURL.setParameter(
-			"redirect",
-			PortalUtil.getLayoutRelativeURL(
-				_themeDisplay.getLayout(), _themeDisplay));
+		Layout layout = _themeDisplay.getLayout();
+
+		String redirect = PortalUtil.getLayoutRelativeURL(
+			_themeDisplay.getLayout(), _themeDisplay);
+
+		if (layout.isTypeAssetDisplay() || layout.isTypeControlPanel()) {
+			redirect = ParamUtil.getString(
+				_liferayPortletRequest, "redirect", redirect);
+		}
+
+		portletURL.setParameter("redirect", redirect);
 		portletURL.setParameter("showActions", String.valueOf(Boolean.TRUE));
 
 		portletURL.setWindowState(LiferayWindowState.POP_UP);

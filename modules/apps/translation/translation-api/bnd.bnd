@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Translation API
 Bundle-SymbolicName: com.liferay.translation.api
-Bundle-Version: 3.0.2
+Bundle-Version: 4.0.0
 Export-Package:\
 	com.liferay.translation.exception,\
 	com.liferay.translation.exporter,\

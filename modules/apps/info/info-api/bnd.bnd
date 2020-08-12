@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Info API
 Bundle-SymbolicName: com.liferay.info.api
-Bundle-Version: 5.5.1
+Bundle-Version: 5.6.0
 Export-Package:\
 	com.liferay.info.constants,\
 	com.liferay.info.display.contributor,\

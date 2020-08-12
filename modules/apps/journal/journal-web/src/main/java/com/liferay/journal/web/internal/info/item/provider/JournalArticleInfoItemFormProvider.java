@@ -197,6 +197,8 @@ public class JournalArticleInfoItemFormProvider
 			).infoFieldSetEntry(
 				assetEntryInfoFieldSet
 			).infoFieldSetEntry(
+				_getScheduleInfoFieldSet()
+			).infoFieldSetEntry(
 				_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
 					JournalArticle.class.getName())
 			).name(
@@ -207,6 +209,19 @@ public class JournalArticleInfoItemFormProvider
 			throw new NoSuchFormVariationException(
 				String.valueOf(ddmStructureId), noSuchStructureException);
 		}
+	}
+
+	private InfoFieldSet _getScheduleInfoFieldSet() {
+		return InfoFieldSet.builder(
+		).infoFieldSetEntry(
+			JournalArticleInfoItemFields.displayDateInfoField
+		).infoFieldSetEntry(
+			JournalArticleInfoItemFields.expirationDateInfoField
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(getClass(), "schedule")
+		).name(
+			"schedule"
+		).build();
 	}
 
 	private InfoLocalizedValue<String>

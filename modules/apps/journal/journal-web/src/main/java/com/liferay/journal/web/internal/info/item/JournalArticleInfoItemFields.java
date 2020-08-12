@@ -60,6 +60,16 @@ public interface JournalArticleInfoItemFields {
 		).localizable(
 			true
 		).build();
+	public static final InfoField<DateInfoFieldType> displayDateInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			DateInfoFieldType.INSTANCE
+		).name(
+			"displayDate"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				JournalArticleInfoItemFields.class, "display-date")
+		).build();
 	public static final InfoField<URLInfoFieldType> displayPageUrlInfoField =
 		InfoField.builder(
 		).infoFieldType(
@@ -69,6 +79,16 @@ public interface JournalArticleInfoItemFields {
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
 				"com.liferay.asset.info.display.impl", "display-page-url")
+		).build();
+	public static final InfoField<DateInfoFieldType> expirationDateInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			DateInfoFieldType.INSTANCE
+		).name(
+			"expirationDate"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				JournalArticleInfoItemFields.class, "expiration-date")
 		).build();
 	public static final InfoField<TextInfoFieldType> lastEditorNameInfoField =
 		InfoField.builder(

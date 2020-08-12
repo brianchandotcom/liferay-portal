@@ -139,3 +139,5 @@
 
 	<liferay-ui:message key="<%= se.getMessage() %>" />
 </liferay-ui:error>
+
+<liferay-ui:error key="publicationsEnabled" message="publications-are-enabled-for-the-current-virtual-instance" />

@@ -23,6 +23,8 @@
 
 	<div class="sheet-text"><liferay-ui:message key="publications-help" /></div>
 
+	<liferay-ui:error key="stagingEnabled" message="staging-is-enabled-for-at-least-one-site-in-the-current-virtual-instance" />
+
 	<div class="form-group">
 		<aui:input label="" name="enableChangeLists" onClick='<%= liferayPortletResponse.getNamespace() + "updateSubmitRedirectToOverview()" %>' type="toggle-switch" value="<%= changeListsConfigurationDisplayContext.isChangeListsEnabled() %>" />
 	</div>

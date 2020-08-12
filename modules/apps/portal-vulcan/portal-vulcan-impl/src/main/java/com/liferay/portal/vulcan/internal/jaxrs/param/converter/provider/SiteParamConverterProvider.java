@@ -126,6 +126,10 @@ public class SiteParamConverterProvider
 				DepotEntry depotEntry = _depotEntryLocalService.fetchDepotEntry(
 					GetterUtil.getLong(assetLibraryId));
 
+				if (depotEntry == null) {
+					return null;
+				}
+
 				group = depotEntry.getGroup();
 			}
 			catch (PortalException portalException) {

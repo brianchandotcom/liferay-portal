@@ -52,8 +52,6 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryBriefUtil;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.portal.kernel.comment.CommentManager;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -64,6 +62,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
@@ -104,8 +103,6 @@ public class DocumentDTOConverter
 		FileEntry fileEntry = _dlAppService.getFileEntry(
 			(Long)dtoConverterContext.getId());
 
-		Group group = _groupLocalService.fetchGroup(fileEntry.getGroupId());
-
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
 		return new Document() {
@@ -117,9 +114,8 @@ public class DocumentDTOConverter
 					_ratingsStatsLocalService.fetchStats(
 						DLFileEntry.class.getName(),
 						fileEntry.getFileEntryId()));
-				assetLibraryKey =
-					(group.getType() == GroupConstants.TYPE_DEPOT) ?
-						group.getGroupKey() : null;
+				assetLibraryKey = GroupUtil.getAssetLibraryKey(
+					_groupLocalService.fetchGroup(fileEntry.getGroupId()));
 				contentUrl = _dlURLHelper.getPreviewURL(
 					fileEntry, fileVersion, null, "");
 				contentValue = ContentValueUtil.toContentValue(

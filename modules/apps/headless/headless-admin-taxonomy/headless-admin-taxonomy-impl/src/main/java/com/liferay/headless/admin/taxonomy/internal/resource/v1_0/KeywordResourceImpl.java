@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.dao.orm.ProjectionList;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Sort;
@@ -47,6 +46,7 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portlet.asset.model.impl.AssetTagImpl;
 
@@ -273,15 +273,12 @@ public class KeywordResourceImpl
 						assetTag.getUserId(), "com.liferay.asset.tags",
 						assetTag.getGroupId())
 				).build();
-				assetLibraryKey =
-					(group.getType() == GroupConstants.TYPE_DEPOT) ?
-						group.getGroupKey() : null;
+				assetLibraryKey = GroupUtil.getAssetLibraryKey(group);
 				dateCreated = assetTag.getCreateDate();
 				dateModified = assetTag.getModifiedDate();
 				id = assetTag.getTagId();
 				name = assetTag.getName();
-				siteId = (group.getType() == GroupConstants.TYPE_DEPOT) ? null :
-					assetTag.getGroupId();
+				siteId = GroupUtil.getSiteId(group);
 
 				setCreator(
 					() -> {

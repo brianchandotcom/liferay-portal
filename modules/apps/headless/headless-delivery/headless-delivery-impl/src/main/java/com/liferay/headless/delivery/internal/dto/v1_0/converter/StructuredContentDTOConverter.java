@@ -45,7 +45,6 @@ import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -55,6 +54,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.portal.vulcan.util.JaxRsLinkUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -110,9 +110,7 @@ public class StructuredContentDTOConverter
 					_ratingsStatsLocalService.fetchStats(
 						JournalArticle.class.getName(),
 						journalArticle.getResourcePrimKey()));
-				assetLibraryKey =
-					(GroupConstants.TYPE_DEPOT == group.getType()) ?
-						group.getGroupKey() : null;
+				assetLibraryKey = GroupUtil.getAssetLibraryKey(group);
 				availableLanguages = LocaleUtil.toW3cLanguageIds(
 					journalArticle.getAvailableLanguageIds());
 				contentFields = _toContentFields(
@@ -163,8 +161,7 @@ public class StructuredContentDTOConverter
 					dtoConverterContext.getHttpServletRequest(), journalArticle,
 					dtoConverterContext.getLocale(),
 					dtoConverterContext.getUriInfoOptional());
-				siteId = (group.getType() == GroupConstants.TYPE_DEPOT) ? null :
-					journalArticle.getGroupId();
+				siteId = GroupUtil.getSiteId(group);
 				subscribed = _subscriptionLocalService.isSubscribed(
 					journalArticle.getCompanyId(),
 					dtoConverterContext.getUserId(),

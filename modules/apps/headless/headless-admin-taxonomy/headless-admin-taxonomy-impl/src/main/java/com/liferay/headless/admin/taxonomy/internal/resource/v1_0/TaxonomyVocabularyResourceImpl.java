@@ -29,7 +29,6 @@ import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResou
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
@@ -51,6 +50,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ContentLanguageUtil;
+import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
@@ -525,9 +525,7 @@ public class TaxonomyVocabularyResourceImpl
 					addAction(
 						"UPDATE", assetVocabulary, "patchTaxonomyVocabulary")
 				).build();
-				assetLibraryKey =
-					(group.getType() == GroupConstants.TYPE_DEPOT) ?
-						group.getGroupKey() : null;
+				assetLibraryKey = GroupUtil.getAssetLibraryKey(group);
 				assetTypes = _getAssetTypes(
 					new AssetVocabularySettingsHelper(
 						assetVocabulary.getSettings()),
@@ -557,8 +555,7 @@ public class TaxonomyVocabularyResourceImpl
 				).orElse(
 					0
 				);
-				siteId = (group.getType() == GroupConstants.TYPE_DEPOT) ? null :
-					assetVocabulary.getGroupId();
+				siteId = GroupUtil.getSiteId(group);
 			}
 		};
 	}

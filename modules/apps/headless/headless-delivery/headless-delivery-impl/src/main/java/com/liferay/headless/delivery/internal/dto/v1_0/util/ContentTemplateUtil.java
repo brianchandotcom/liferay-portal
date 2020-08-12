@@ -17,12 +17,12 @@ package com.liferay.headless.delivery.internal.dto.v1_0.util;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.headless.delivery.dto.v1_0.ContentTemplate;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 /**
@@ -40,9 +40,7 @@ public class ContentTemplateUtil {
 		return new ContentTemplate() {
 			{
 				actions = dtoConverterContext.getActions();
-				assetLibraryKey =
-					(group.getType() == GroupConstants.TYPE_DEPOT) ?
-						group.getGroupKey() : null;
+				assetLibraryKey = GroupUtil.getAssetLibraryKey(group);
 				availableLanguages = LocaleUtil.toW3cLanguageIds(
 					ddmTemplate.getAvailableLanguageIds());
 				contentStructureId = ddmTemplate.getClassPK();
@@ -62,8 +60,7 @@ public class ContentTemplateUtil {
 					dtoConverterContext.isAcceptAllLanguages(),
 					ddmTemplate.getNameMap());
 				programmingLanguage = ddmTemplate.getLanguage();
-				siteId = (group.getType() == GroupConstants.TYPE_DEPOT) ? null :
-					ddmTemplate.getGroupId();
+				siteId = GroupUtil.getSiteId(group);
 				templateScript = ddmTemplate.getScript();
 			}
 		};

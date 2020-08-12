@@ -22,13 +22,13 @@ import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.service.JournalFolderService;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
 import org.osgi.service.component.annotations.Component;
@@ -63,9 +63,7 @@ public class StructuredContentFolderDTOConverter
 		return new StructuredContentFolder() {
 			{
 				actions = dtoConverterContext.getActions();
-				assetLibraryKey =
-					(group.getType() == GroupConstants.TYPE_DEPOT) ?
-						group.getGroupKey() : null;
+				assetLibraryKey = GroupUtil.getAssetLibraryKey(group);
 				creator = CreatorUtil.toCreator(
 					_portal, dtoConverterContext.getUriInfoOptional(),
 					_userLocalService.fetchUser(journalFolder.getUserId()));
@@ -87,8 +85,7 @@ public class StructuredContentFolderDTOConverter
 					_journalArticleService.getArticlesCount(
 						journalFolder.getGroupId(), journalFolder.getFolderId(),
 						WorkflowConstants.STATUS_APPROVED);
-				siteId = (group.getType() == GroupConstants.TYPE_DEPOT) ? null :
-					journalFolder.getGroupId();
+				siteId = GroupUtil.getSiteId(group);
 				subscribed = _subscriptionLocalService.isSubscribed(
 					journalFolder.getCompanyId(),
 					dtoConverterContext.getUserId(),

@@ -126,7 +126,7 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 		Document document = dlSearchFixture.searchOnlyOneSearchHit(
 			searchTerm, LocaleUtil.JAPAN);
 
-		indexedFieldsFixture.postProcessDocument(document);
+		document = indexedFieldsFixture.postProcessDocument(document);
 
 		Map<String, String> map = new HashMap<>();
 

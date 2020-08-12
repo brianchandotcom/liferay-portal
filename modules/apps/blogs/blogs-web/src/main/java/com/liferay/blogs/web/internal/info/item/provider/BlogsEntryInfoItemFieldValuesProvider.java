@@ -151,7 +151,7 @@ public class BlogsEntryInfoItemFieldValuesProvider
 
 			blogsEntryFieldValues.add(
 				new InfoFieldValue<>(
-					BlogsEntryInfoItemFields.publishDateInfoField,
+					BlogsEntryInfoItemFields.displayDateInfoField,
 					blogsEntry.getDisplayDate()));
 
 			if (themeDisplay != null) {

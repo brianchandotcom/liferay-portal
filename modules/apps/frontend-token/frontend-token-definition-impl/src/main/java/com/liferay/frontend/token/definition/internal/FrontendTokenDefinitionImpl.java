@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
@@ -92,13 +93,15 @@ public class FrontendTokenDefinitionImpl implements FrontendTokenDefinition {
 	protected void translateJSONObject(
 		JSONObject jsonObject, ResourceBundle resourceBundle) {
 
+		Map<String, String> translationsMap = new HashMap<>();
+
 		for (String key : jsonObject.keySet()) {
 			if (_localizableKeys.contains(key)) {
 				String value = jsonObject.getString(key);
 
 				if (Validator.isNotNull(value)) {
 					try {
-						jsonObject.put(
+						translationsMap.put(
 							key,
 							ResourceBundleUtil.getString(
 								resourceBundle, value));
@@ -131,6 +134,10 @@ public class FrontendTokenDefinitionImpl implements FrontendTokenDefinition {
 					}
 				}
 			}
+		}
+
+		for (Map.Entry<String, String> entry : translationsMap.entrySet()) {
+			jsonObject.put(entry.getKey(), entry.getValue());
 		}
 	}
 

@@ -97,17 +97,12 @@ const BulkUpdateDueDateModal = () => {
 					setSelectAll(false);
 				})
 				.catch(({response}) => {
-					const {title} = (response && response.data) || {
-						title: Liferay.Language.get('your-request-has-failed'),
-					};
+					const errorMessage = `${Liferay.Language.get(
+						'your-request-has-failed'
+					)} ${Liferay.Language.get('select-done-to-retry')}`;
 
+					setErrorToast(response?.data.title ?? errorMessage);
 					setUpdating(false);
-
-					setErrorToast(
-						`${title} ${Liferay.Language.get(
-							'select-done-to-retry'
-						)}`
-					);
 				});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps

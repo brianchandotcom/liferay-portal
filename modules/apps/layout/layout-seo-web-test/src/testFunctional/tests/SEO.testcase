@@ -133,7 +133,7 @@ definition {
 			mappedFieldValue = "Basic Web Content: Description");
 
 		OpenGraph.mapEditableTextToField(
-			field = "Basic Web Content *",
+			field = "Basic Web Content",
 			mappedField = "HTML Title");
 
 		OpenGraph.mapEditableTextToField(
@@ -144,7 +144,7 @@ definition {
 
 		OpenGraph.viewMappedField(
 			mappedField = "Title",
-			mappedFieldValue = "Basic Web Content: Basic Web Content *");
+			mappedFieldValue = "Basic Web Content: Basic Web Content");
 
 		OpenGraph.viewMappedField(
 			mappedField = "Description",

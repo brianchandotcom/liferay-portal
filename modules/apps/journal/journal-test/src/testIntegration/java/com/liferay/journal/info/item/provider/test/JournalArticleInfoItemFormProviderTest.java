@@ -108,7 +108,7 @@ public class JournalArticleInfoItemFormProviderTest {
 			Comparator.comparing(
 				InfoField::getName, String::compareToIgnoreCase));
 
-		Assert.assertEquals(infoFields.toString(), 18, infoFields.size());
+		Assert.assertEquals(infoFields.toString(), 20, infoFields.size());
 
 		Iterator<InfoField> iterator = infoFields.iterator();
 
@@ -293,7 +293,7 @@ public class JournalArticleInfoItemFormProviderTest {
 			infoItemFieldValues.getInfoFieldValues();
 
 		Assert.assertEquals(
-			infoFieldValues.toString(), 15, infoFieldValues.size());
+			infoFieldValues.toString(), 17, infoFieldValues.size());
 
 		InfoFieldValue<Object> descriptionInfoFieldValue =
 			infoItemFieldValues.getInfoFieldValue("description");

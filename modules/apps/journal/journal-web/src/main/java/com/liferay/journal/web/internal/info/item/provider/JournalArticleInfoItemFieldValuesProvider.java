@@ -282,6 +282,14 @@ public class JournalArticleInfoItemFieldValuesProvider
 
 			journalArticleFieldValues.add(
 				new InfoFieldValue<>(
+					JournalArticleInfoItemFields.displayDateInfoField,
+					journalArticle.getDisplayDate()));
+			journalArticleFieldValues.add(
+				new InfoFieldValue<>(
+					JournalArticleInfoItemFields.expirationDateInfoField,
+					journalArticle.getExpirationDate()));
+			journalArticleFieldValues.add(
+				new InfoFieldValue<>(
 					JournalArticleInfoItemFields.publishDateInfoField,
 					journalArticle.getDisplayDate()));
 

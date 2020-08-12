@@ -414,7 +414,7 @@ definition {
 
 		Role.definePermissionCP(
 			assetLibrariesScope = "true",
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_COLLECTIONS_ASSET_LIST_ENTRY_DELETE_CHECKBOX",
+			permissionDefinitionKey = "SITE_ADMIN_BUILDER_COLLECTIONS_ASSET_LIST_ENTRY_DELETE_CHECKBOX",
 			permissionDefinitionValue = "Delete",
 			roleTitle = "Depot Regrole Name",
 			siteNameScope = "Test Depot Name");

@@ -369,6 +369,10 @@ portalArtifactsJar {
 	zip64 = true
 
 	doFirst {
+		if (FileUtil.exists(project, ".releng/dxp")) {
+			assert FileUtil.exists(project, "../release.profile-dxp.properties") : "Please run 'ant setup-profile-dxp'"
+		}
+
 		relengPropertiesFiles = _getRelengPropertiesFiles()
 
 		ConfigurationContainer configurationContainer = project.getConfigurations()

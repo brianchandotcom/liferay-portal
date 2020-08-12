@@ -51,6 +51,27 @@ public class DataDefinitionTestUtil {
 			groupId, "app-builder", _randomDataDefinition(groupId));
 	}
 
+	public static DataDefinition addDataDefinitionWithDataLayout(long groupId)
+		throws Exception {
+
+		DataDefinition dataDefinition = DataDefinition.toDTO(
+			read("data-definition-basic.json"));
+
+		dataDefinition.setSiteId(groupId);
+
+		DataDefinitionResource.Builder builder =
+			DataDefinitionResource.builder();
+
+		DataDefinitionResource dataDefinitionResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		return dataDefinitionResource.postSiteDataDefinitionByContentType(
+			groupId, "app-builder", dataDefinition);
+	}
+
 	public static DDMStructure addDDMStructure(Group group) throws Exception {
 		DDMStructureTestHelper ddmStructureTestHelper =
 			new DDMStructureTestHelper(

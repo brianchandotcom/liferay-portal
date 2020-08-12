@@ -43,6 +43,10 @@ public class DataDefinitionFieldLinkResourceTest
 	public void setUp() throws Exception {
 		super.setUp();
 
+		_dataDefinition =
+			DataDefinitionTestUtil.addDataDefinitionWithDataLayout(
+				testGroup.getGroupId());
+
 		DataDefinitionResource.Builder builder =
 			DataDefinitionResource.builder();
 
@@ -51,12 +55,6 @@ public class DataDefinitionFieldLinkResourceTest
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
-
-		_dataDefinition =
-			_dataDefinitionResource.postDataDefinitionByContentType(
-				"app-builder",
-				DataDefinition.toDTO(
-					DataDefinitionTestUtil.read("data-definition-basic.json")));
 	}
 
 	@Override

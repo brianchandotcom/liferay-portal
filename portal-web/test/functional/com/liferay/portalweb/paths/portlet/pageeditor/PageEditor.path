@@ -640,6 +640,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CUSTOM_STYLES_SELECT_FIELD</td>
+	<td>//div[contains(@class,'custom-styles')]/div[label[contains(.,'${key_fieldLabel}')]]/select</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ITEM_SELECTOR_CONTENT_INPUT</td>
 	<td>//input[contains(@class,'item-selector__content-input')][contains(@value,'${key_contentName}')]</td>
 	<td></td>

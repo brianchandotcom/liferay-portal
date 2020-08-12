@@ -237,7 +237,11 @@ public abstract class Base${schemaName}ResourceImpl
 					firstJavaMethodParameter = javaMethodSignature.javaMethodParameters[0]
 				/>
 
-				${schemaName} existing${schemaName} = get${schemaName}(${firstJavaMethodParameter.parameterName});
+				<#if javaMethodSignature.methodName?contains("ByExternalReferenceCode")>
+					${schemaName} existing${schemaName} = get${schemaName}ByExternalReferenceCode(${firstJavaMethodParameter.parameterName});
+				<#else>
+					${schemaName} existing${schemaName} = get${schemaName}(${firstJavaMethodParameter.parameterName});
+				</#if>
 
 				<#assign properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema) />
 
@@ -251,7 +255,11 @@ public abstract class Base${schemaName}ResourceImpl
 
 				preparePatch(${schemaVarName}, existing${schemaName});
 
-				return put${schemaName}(${firstJavaMethodParameter.parameterName}, existing${schemaName});
+				<#if javaMethodSignature.methodName?contains("ByExternalReferenceCode")>
+					return put${schemaName}ByExternalReferenceCode(${firstJavaMethodParameter.parameterName}, existing${schemaName});
+				<#else>
+					return put${schemaName}(${firstJavaMethodParameter.parameterName}, existing${schemaName});
+				</#if>
 			<#else>
 				return new ${javaMethodSignature.returnType}();
 			</#if>

@@ -23,6 +23,8 @@ import com.liferay.portal.change.tracking.registry.CTModelRegistry;
 import com.liferay.portal.dao.orm.hibernate.event.MVCCSynchronizerPostUpdateEventListener;
 import com.liferay.portal.dao.orm.hibernate.event.NestableAutoFlushEventListener;
 import com.liferay.portal.dao.orm.hibernate.event.NestableFlushEventListener;
+import com.liferay.portal.dao.orm.hibernate.event.ResetOriginalValuesLoadEventListener;
+import com.liferay.portal.dao.orm.hibernate.event.ResetOriginalValuesPostLoadEventListener;
 import com.liferay.portal.internal.change.tracking.hibernate.CTSQLInterceptor;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -65,6 +67,8 @@ import org.hibernate.engine.query.QueryPlanCache;
 import org.hibernate.event.AutoFlushEventListener;
 import org.hibernate.event.EventListeners;
 import org.hibernate.event.FlushEventListener;
+import org.hibernate.event.LoadEventListener;
+import org.hibernate.event.PostLoadEventListener;
 import org.hibernate.event.PostUpdateEventListener;
 import org.hibernate.metadata.ClassMetadata;
 import org.hibernate.persister.entity.OuterJoinLoadable;
@@ -252,10 +256,18 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 				}
 			}
 
-			if (_mvccEnabled) {
-				EventListeners eventListeners =
-					configuration.getEventListeners();
+			EventListeners eventListeners = configuration.getEventListeners();
 
+			eventListeners.setLoadEventListeners(
+				new LoadEventListener[] {
+					ResetOriginalValuesLoadEventListener.INSTANCE
+				});
+			eventListeners.setPostLoadEventListeners(
+				new PostLoadEventListener[] {
+					ResetOriginalValuesPostLoadEventListener.INSTANCE
+				});
+
+			if (_mvccEnabled) {
 				eventListeners.setAutoFlushEventListeners(
 					new AutoFlushEventListener[] {
 						NestableAutoFlushEventListener.INSTANCE

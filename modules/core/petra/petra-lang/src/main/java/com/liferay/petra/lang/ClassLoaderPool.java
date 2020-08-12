@@ -15,8 +15,9 @@
 package com.liferay.petra.lang;
 
 import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentNavigableMap;
 import java.util.concurrent.ConcurrentSkipListMap;
@@ -161,58 +162,58 @@ public class ClassLoaderPool {
 	}
 
 	private static Version _parseVersion(String version) {
-		int major;
+		int major = 0;
 		int minor = 0;
 		int micro = 0;
 		String qualifier = "";
 
+		List<String> parts = _split(version);
+
+		int size = parts.size();
+
 		try {
-			StringTokenizer stringTokenizer = new StringTokenizer(
-				version, ".", true);
-
-			major = Integer.parseInt(stringTokenizer.nextToken());
-
-			if (major < 0) {
-				return null;
+			if (size >= 1) {
+				major = Integer.parseInt(parts.get(0));
 			}
 
-			if (stringTokenizer.hasMoreTokens()) {
-				stringTokenizer.nextToken();
+			if (size >= 2) {
+				minor = Integer.parseInt(parts.get(1));
+			}
 
-				minor = Integer.parseInt(stringTokenizer.nextToken());
+			if (size >= 3) {
+				micro = Integer.parseInt(parts.get(2));
+			}
 
-				if (minor < 0) {
-					return null;
-				}
-
-				if (stringTokenizer.hasMoreTokens()) {
-					stringTokenizer.nextToken();
-
-					micro = Integer.parseInt(stringTokenizer.nextToken());
-
-					if (micro < 0) {
-						return null;
-					}
-
-					if (stringTokenizer.hasMoreTokens()) {
-						stringTokenizer.nextToken();
-
-						qualifier = stringTokenizer.nextToken("");
-
-						for (char c : qualifier.toCharArray()) {
-							if ((c > 128) || !_VALID_QUALIFIER_CHARS[c]) {
-								return null;
-							}
-						}
-					}
-				}
+			if (size >= 4) {
+				qualifier = parts.get(3);
 			}
 		}
-		catch (Exception exception) {
+		catch (NumberFormatException numberFormatException) {
 			return null;
 		}
 
 		return new Version(major, minor, micro, qualifier);
+	}
+
+	private static List<String> _split(String s) {
+		List<String> values = new ArrayList<>();
+
+		int offset = 0;
+		int pos;
+
+		while ((pos = s.indexOf('.', offset)) != -1) {
+			if (offset < pos) {
+				values.add(s.substring(offset, pos));
+			}
+
+			offset = pos + 1;
+		}
+
+		if (offset < s.length()) {
+			values.add(s.substring(offset));
+		}
+
+		return values;
 	}
 
 	private static void _unregisterFallback(String contextName) {
@@ -235,8 +236,6 @@ public class ClassLoaderPool {
 			});
 	}
 
-	private static final boolean[] _VALID_QUALIFIER_CHARS = new boolean[128];
-
 	private static final Map<String, ClassLoader> _classLoaders =
 		new ConcurrentHashMap<>();
 	private static final Map<ClassLoader, String> _contextNames =
@@ -248,21 +247,6 @@ public class ClassLoaderPool {
 	static {
 		register("SystemClassLoader", ClassLoader.getSystemClassLoader());
 		register("GlobalClassLoader", ClassLoaderPool.class.getClassLoader());
-
-		for (int i = 'a'; i <= 'z'; i++) {
-			_VALID_QUALIFIER_CHARS[i] = true;
-		}
-
-		for (int i = 'A'; i <= 'Z'; i++) {
-			_VALID_QUALIFIER_CHARS[i] = true;
-		}
-
-		for (int i = '0'; i <= '9'; i++) {
-			_VALID_QUALIFIER_CHARS[i] = true;
-		}
-
-		_VALID_QUALIFIER_CHARS['-'] = true;
-		_VALID_QUALIFIER_CHARS['_'] = true;
 	}
 
 	private static class Version implements Comparable<Version> {

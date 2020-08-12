@@ -177,6 +177,8 @@ public class ClassLoaderPoolTest {
 		Method method = ReflectionTestUtil.getMethod(
 			ClassLoaderPool.class, "_parseVersion", String.class);
 
+		_assertVersionEquals("0.0.0", method.invoke(null, ""));
+		_assertVersionEquals("0.0.0", method.invoke(null, "."));
 		_assertVersionEquals("1.0.0", method.invoke(null, "1"));
 		_assertVersionEquals("1.0.0", method.invoke(null, "1.0"));
 		_assertVersionEquals("1.0.0.0", method.invoke(null, "1.0.0.0"));
@@ -186,26 +188,6 @@ public class ClassLoaderPoolTest {
 			"null should be return because 'x' of \"1.x.0\" is not a decimal " +
 				"digit",
 			method.invoke(null, "1.x.0"));
-		Assert.assertNull(
-			"null should be return because '-1' of \"-1.0.0\" is less than 0",
-			method.invoke(null, "-1.0.0"));
-		Assert.assertNull(
-			"null should be return because '-1' of \"1.-1.0\" is less than 0",
-			method.invoke(null, "1.-1.0"));
-		Assert.assertNull(
-			"null should be return because '-1' of \"1.0.-1\" is less than 0",
-			method.invoke(null, "1.0.-1"));
-		Assert.assertNull(
-			"null should be return because '~' of \"1.0.0.~\" is not a valid " +
-				"qualifier char",
-			method.invoke(null, "1.0.0.~"));
-		Assert.assertNull(
-			"null should be return because \"1.0.\" is not a complete version",
-			method.invoke(null, "1.0."));
-		Assert.assertNull(
-			"null should be return because " + (char)128 + "of 1.0.0." +
-				(char)128 + "is not a valid qualifier char",
-			method.invoke(null, "1.0.0." + (char)128));
 	}
 
 	@Test

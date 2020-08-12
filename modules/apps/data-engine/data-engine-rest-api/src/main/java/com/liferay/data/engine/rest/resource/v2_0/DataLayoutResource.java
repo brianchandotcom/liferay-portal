@@ -15,6 +15,7 @@
 package com.liferay.data.engine.rest.resource.v2_0;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
+import com.liferay.data.engine.rest.dto.v2_0.DataLayoutRenderingContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -75,6 +76,11 @@ public interface DataLayoutResource {
 		throws Exception;
 
 	public Response putDataLayoutBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public Response postDataLayoutContext(
+			Long dataLayoutId,
+			DataLayoutRenderingContext dataLayoutRenderingContext)
 		throws Exception;
 
 	public DataLayout getSiteDataLayoutByContentTypeByDataLayoutKey(

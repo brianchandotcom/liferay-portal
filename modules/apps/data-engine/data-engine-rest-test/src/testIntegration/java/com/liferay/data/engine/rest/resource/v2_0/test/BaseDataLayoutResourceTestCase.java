@@ -634,6 +634,11 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	@Test
+	public void testPostDataLayoutContext() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testGetSiteDataLayoutByContentTypeByDataLayoutKey()
 		throws Exception {
 

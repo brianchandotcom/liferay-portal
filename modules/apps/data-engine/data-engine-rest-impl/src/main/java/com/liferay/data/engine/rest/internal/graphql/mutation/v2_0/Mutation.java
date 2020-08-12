@@ -16,6 +16,7 @@ package com.liferay.data.engine.rest.internal.graphql.mutation.v2_0;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
+import com.liferay.data.engine.rest.dto.v2_0.DataLayoutRenderingContext;
 import com.liferay.data.engine.rest.dto.v2_0.DataListView;
 import com.liferay.data.engine.rest.dto.v2_0.DataRecord;
 import com.liferay.data.engine.rest.dto.v2_0.DataRecordCollection;
@@ -288,6 +289,20 @@ public class Mutation {
 			this::_populateResourceContext,
 			dataLayoutResource -> dataLayoutResource.putDataLayoutBatch(
 				callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response createDataLayoutContext(
+			@GraphQLName("dataLayoutId") Long dataLayoutId,
+			@GraphQLName("dataLayoutRenderingContext")
+				DataLayoutRenderingContext dataLayoutRenderingContext)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_dataLayoutResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataLayoutResource -> dataLayoutResource.postDataLayoutContext(
+				dataLayoutId, dataLayoutRenderingContext));
 	}
 
 	@GraphQLField

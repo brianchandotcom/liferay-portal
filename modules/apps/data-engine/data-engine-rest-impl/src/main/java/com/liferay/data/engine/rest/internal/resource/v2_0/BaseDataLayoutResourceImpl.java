@@ -15,6 +15,7 @@
 package com.liferay.data.engine.rest.internal.resource.v2_0;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
+import com.liferay.data.engine.rest.dto.v2_0.DataLayoutRenderingContext;
 import com.liferay.data.engine.rest.resource.v2_0.DataLayoutResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -326,6 +327,31 @@ public abstract class BaseDataLayoutResourceImpl
 			vulcanBatchEngineImportTaskResource.putImportTask(
 				DataLayout.class.getName(), callbackURL, object)
 		).build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/data-engine/v2.0/data-layouts/{dataLayoutId}/context' -d $'{"containerId": ___, "dataRecordValues": ___, "namespace": ___, "pathThemeImages": ___, "readOnly": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@POST
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "dataLayoutId")}
+	)
+	@Path("/data-layouts/{dataLayoutId}/context")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "DataLayout")})
+	public Response postDataLayoutContext(
+			@NotNull @Parameter(hidden = true) @PathParam("dataLayoutId") Long
+				dataLayoutId,
+			DataLayoutRenderingContext dataLayoutRenderingContext)
+		throws Exception {
+
+		Response.ResponseBuilder responseBuilder = Response.ok();
+
+		return responseBuilder.build();
 	}
 
 	/**

@@ -15,6 +15,7 @@
 package com.liferay.data.engine.rest.client.resource.v2_0;
 
 import com.liferay.data.engine.rest.client.dto.v2_0.DataLayout;
+import com.liferay.data.engine.rest.client.dto.v2_0.DataLayoutRenderingContext;
 import com.liferay.data.engine.rest.client.http.HttpInvoker;
 import com.liferay.data.engine.rest.client.pagination.Page;
 import com.liferay.data.engine.rest.client.pagination.Pagination;
@@ -105,6 +106,16 @@ public interface DataLayoutResource {
 
 	public HttpInvoker.HttpResponse putDataLayoutBatchHttpResponse(
 			String callbackURL, Object object)
+		throws Exception;
+
+	public void postDataLayoutContext(
+			Long dataLayoutId,
+			DataLayoutRenderingContext dataLayoutRenderingContext)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse postDataLayoutContextHttpResponse(
+			Long dataLayoutId,
+			DataLayoutRenderingContext dataLayoutRenderingContext)
 		throws Exception;
 
 	public DataLayout getSiteDataLayoutByContentTypeByDataLayoutKey(
@@ -741,6 +752,65 @@ public interface DataLayoutResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + "/o/data-engine/v2.0/data-layouts/batch");
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void postDataLayoutContext(
+				Long dataLayoutId,
+				DataLayoutRenderingContext dataLayoutRenderingContext)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postDataLayoutContextHttpResponse(
+					dataLayoutId, dataLayoutRenderingContext);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+		}
+
+		public HttpInvoker.HttpResponse postDataLayoutContextHttpResponse(
+				Long dataLayoutId,
+				DataLayoutRenderingContext dataLayoutRenderingContext)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(
+				dataLayoutRenderingContext.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/data-engine/v2.0/data-layouts/{dataLayoutId}/context",
+				dataLayoutId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

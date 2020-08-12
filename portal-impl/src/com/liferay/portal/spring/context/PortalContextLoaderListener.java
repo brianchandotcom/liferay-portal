@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
+import com.liferay.portal.servlet.AxisServlet;
 import com.liferay.portal.servlet.PortalSessionListener;
 import com.liferay.portal.spring.aop.DynamicProxyCreator;
 import com.liferay.portal.spring.compat.CompatBeanDefinitionRegistryPostProcessor;
@@ -81,6 +82,7 @@ import java.util.concurrent.FutureTask;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletRegistration;
 
 import javax.sql.DataSource;
 
@@ -373,6 +375,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		CustomJspBagRegistryUtil.getCustomJspBags();
 
+		initServlets(servletContext);
 		initListeners(servletContext);
 	}
 
@@ -441,6 +444,18 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		servletContext.addListener(PortalSessionListener.class);
 		servletContext.addListener(PortletSessionListenerManager.class);
+	}
+
+	protected void initServlets(ServletContext servletContext) {
+		if (PropsValues.AXIS_SERVLET_ENABLED) {
+			ServletRegistration.Dynamic dynamic = servletContext.addServlet(
+				"Axis Servlet", new AxisServlet());
+
+			dynamic.addMapping(PropsValues.AXIS_SERVLET_MAPPING);
+
+			dynamic.setAsyncSupported(true);
+			dynamic.setLoadOnStartup(1);
+		}
 	}
 
 	private void _logJVMArguments() {

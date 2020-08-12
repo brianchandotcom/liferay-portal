@@ -307,6 +307,10 @@ public interface PropsKeys {
 	public static final String AUTO_LOGIN_IGNORE_PATHS =
 		"auto.login.ignore.paths";
 
+	public static final String AXIS_SERVLET_ENABLED = "axis.servlet.enabled";
+
+	public static final String AXIS_SERVLET_MAPPING = "axis.servlet.mapping";
+
 	public static final String BASIC_AUTH_PASSWORD_REQUIRED =
 		"basic.auth.password.required";
 

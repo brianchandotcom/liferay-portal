@@ -122,12 +122,6 @@
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
-		<servlet-name>Axis Servlet</servlet-name>
-		<servlet-class>com.liferay.portal.servlet.AxisServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-		<async-supported>true</async-supported>
-	</servlet>
-	<servlet>
 		<servlet-name>Combo Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.servlet.ComboServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
@@ -970,10 +964,6 @@
 	<servlet-mapping>
 		<servlet-name>Atom Servlet</servlet-name>
 		<url-pattern>/api/atom/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>Axis Servlet</servlet-name>
-		<url-pattern>/api/axis/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>JSON Servlet</servlet-name>

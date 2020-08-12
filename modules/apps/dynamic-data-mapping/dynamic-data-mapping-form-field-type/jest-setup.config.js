@@ -67,6 +67,7 @@ window.themeDisplay = {
 	getLayoutRelativeControlPanelURL: () => 'layoutRelativeControlPanelURL',
 	getLayoutRelativeURL: () => 'getLayoutRelativeURL',
 	getScopeGroupId: () => 'scopeGroupId',
+	isSignedIn: () => true,
 };
 
 window.util = {

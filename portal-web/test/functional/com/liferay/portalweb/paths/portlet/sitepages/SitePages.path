@@ -111,6 +111,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRIENDLY_URL</td>
+	<td>//input[contains(@name,'friendlyURL') and contains(@value,'${key_friendlyURL}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

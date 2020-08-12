@@ -35,7 +35,7 @@ export default withRouter(
 
 		sectionTitle = sectionTitle || queryParams.get('sectiontitle');
 
-		const isActive = (value) => location.pathname.includes(value);
+		const isActive = (value) => location.pathname === value;
 
 		const label = () => {
 			if (location.pathname.includes('tags')) {
@@ -64,11 +64,9 @@ export default withRouter(
 									triggerLabel={label()}
 								>
 									<ClayNavigationBar.Item
-										active={
-											!isActive('activity') &&
-											!isActive('tags') &&
-											!isActive('subscriptions')
-										}
+										active={isActive(
+											`/questions/${sectionTitle}`
+										)}
 										onClick={() =>
 											historyPushParser(
 												sectionTitle
@@ -86,7 +84,9 @@ export default withRouter(
 									</ClayNavigationBar.Item>
 
 									<ClayNavigationBar.Item
-										active={isActive('tags')}
+										active={isActive(
+											`/questions/${sectionTitle}/tags`
+										)}
 										onClick={() =>
 											historyPushParser(
 												sectionTitle
@@ -104,7 +104,9 @@ export default withRouter(
 									</ClayNavigationBar.Item>
 
 									<ClayNavigationBar.Item
-										active={isActive('subscriptions')}
+										active={isActive(
+											`/subscriptions/${context.userId}`
+										)}
 										className={
 											Liferay.ThemeDisplay.isSignedIn()
 												? 'ml-md-auto'
@@ -134,7 +136,9 @@ export default withRouter(
 									</ClayNavigationBar.Item>
 
 									<ClayNavigationBar.Item
-										active={isActive('activity')}
+										active={isActive(
+											`/activity/${context.userId}`
+										)}
 										className={
 											Liferay.ThemeDisplay.isSignedIn()
 												? ''

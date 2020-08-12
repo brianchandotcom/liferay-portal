@@ -756,4 +756,85 @@ definition {
 			state = "FL");
 	}
 
+	@priority = "5"
+	test JSFExportPDFPortletSmoke {
+
+		// Only export files, no verification of file content
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/jsf-pdf");
+
+		BridgeDemos.exportFile(lastName = "Green,Kessler,Shearer");
+
+	}
+
+	@priority = "5"
+	test JSF_IPCEventsPortletsSmoke {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/jsf-events");
+
+		var currentDate = DateUtil.getFormattedCurrentDate("MM/dd/yyyy");
+
+		BridgeDemos.ViewNames(
+			customerId = "1",
+			firstName = "Brian",
+			lastName = "Green",
+			lastNameEdit = "Greeny");
+
+		BridgeDemos.viewStartDate(
+			customerId = "1",
+			startDate = "${currentDate}",
+			startDateEdit = "12/25/1999");
+
+		BridgeDemos.ViewNames(
+			customerId = "2",
+			firstName = "Liz",
+			lastName = "Kessler",
+			firstNameEdit = "Lizy");
+
+		BridgeDemos.ViewNames(
+			customerId = "3",
+			firstName = "Rich",
+			lastName = "Shearer",
+			firstNameEdit = "Richy");
+
+		BridgeDemos.viewStartDate(
+			customerId = "1",
+			startDate = "12/25/1999",
+			startDateEdit = "${currentDate}");
+	}
+
+	@priority = "5"
+	test JSF_IPCPublicRenderParamsPortletsSmoke {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/jsf-prp");
+
+		var currentDate = DateUtil.getFormattedCurrentDate("MM/dd/yyyy");
+
+		BridgeDemos.ViewNames(
+			customerId = "1",
+			firstName = "Brian",
+			lastName = "Green",
+			lastNameEdit = "Greeny");
+
+		BridgeDemos.viewStartDate(
+			customerId = "1",
+			startDate = "${currentDate}",
+			startDateEdit = "12/25/1999");
+
+		BridgeDemos.ViewNames(
+			customerId = "2",
+			firstName = "Liz",
+			lastName = "Kessler",
+			firstNameEdit = "Lizy");
+
+		BridgeDemos.ViewNames(
+			customerId = "3",
+			firstName = "Rich",
+			lastName = "Shearer",
+			firstNameEdit = "Richy");
+
+		BridgeDemos.viewStartDate(
+			customerId = "1",
+			startDate = "12/25/1999",
+			startDateEdit = "${currentDate}");
+	}
+
 }

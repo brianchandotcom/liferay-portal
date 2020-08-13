@@ -24,8 +24,10 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.fragment.service.http.FragmentCollectionServiceSoap}.
  *
  * @author Brian Wing Shun Chan
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class FragmentCollectionSoap implements Serializable {
 
 	public static FragmentCollectionSoap toSoapModel(FragmentCollection model) {

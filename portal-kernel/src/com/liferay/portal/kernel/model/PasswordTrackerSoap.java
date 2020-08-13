@@ -24,8 +24,10 @@ import java.util.List;
  * This class is used by SOAP remote services.
  *
  * @author Brian Wing Shun Chan
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class PasswordTrackerSoap implements Serializable {
 
 	public static PasswordTrackerSoap toSoapModel(PasswordTracker model) {

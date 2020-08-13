@@ -57,8 +57,10 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see OrgLaborServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class OrgLaborServiceSoap {
 
 	public static com.liferay.portal.kernel.model.OrgLaborSoap addOrgLabor(

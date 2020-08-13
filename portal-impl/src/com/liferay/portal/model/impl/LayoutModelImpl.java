@@ -229,7 +229,9 @@ public class LayoutModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static Layout toModel(LayoutSoap soapModel) {
 		if (soapModel == null) {
 			return null;
@@ -290,7 +292,9 @@ public class LayoutModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<Layout> toModels(LayoutSoap[] soapModels) {
 		if (soapModels == null) {
 			return null;

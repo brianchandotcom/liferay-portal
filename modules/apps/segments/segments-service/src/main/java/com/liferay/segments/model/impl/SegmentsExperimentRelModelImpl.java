@@ -142,7 +142,9 @@ public class SegmentsExperimentRelModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static SegmentsExperimentRel toModel(
 		SegmentsExperimentRelSoap soapModel) {
 
@@ -174,7 +176,9 @@ public class SegmentsExperimentRelModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<SegmentsExperimentRel> toModels(
 		SegmentsExperimentRelSoap[] soapModels) {
 

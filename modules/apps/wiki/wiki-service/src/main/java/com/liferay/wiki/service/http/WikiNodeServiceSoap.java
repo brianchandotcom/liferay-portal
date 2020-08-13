@@ -57,8 +57,10 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see WikiNodeServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class WikiNodeServiceSoap {
 
 	public static com.liferay.wiki.model.WikiNodeSoap addNode(

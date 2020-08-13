@@ -51,7 +51,9 @@ package com.liferay.polls.service.http;
  *
  * @author Brian Wing Shun Chan
  * @see PollsChoiceServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class PollsChoiceServiceSoap {
 }

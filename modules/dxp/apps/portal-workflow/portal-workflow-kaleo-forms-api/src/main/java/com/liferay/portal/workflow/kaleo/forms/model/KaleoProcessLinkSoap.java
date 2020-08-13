@@ -23,8 +23,10 @@ import java.util.List;
  * This class is used by SOAP remote services.
  *
  * @author Marcellus Tavares
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class KaleoProcessLinkSoap implements Serializable {
 
 	public static KaleoProcessLinkSoap toSoapModel(KaleoProcessLink model) {

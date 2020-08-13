@@ -24,8 +24,10 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.sharing.service.http.SharingEntryServiceSoap}.
  *
  * @author Brian Wing Shun Chan
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class SharingEntrySoap implements Serializable {
 
 	public static SharingEntrySoap toSoapModel(SharingEntry model) {

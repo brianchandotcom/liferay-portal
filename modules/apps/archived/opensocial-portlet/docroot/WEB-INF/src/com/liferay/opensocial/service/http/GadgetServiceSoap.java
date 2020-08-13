@@ -57,8 +57,10 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see GadgetServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class GadgetServiceSoap {
 
 	public static com.liferay.opensocial.model.GadgetSoap addGadget(

@@ -57,8 +57,10 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see DDLRecordSetVersionServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class DDLRecordSetVersionServiceSoap {
 
 	public static com.liferay.dynamic.data.lists.model.DDLRecordSetVersionSoap

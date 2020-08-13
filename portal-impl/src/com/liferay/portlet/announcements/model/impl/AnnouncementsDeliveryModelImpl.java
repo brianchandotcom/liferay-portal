@@ -141,7 +141,9 @@ public class AnnouncementsDeliveryModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static AnnouncementsDelivery toModel(
 		AnnouncementsDeliverySoap soapModel) {
 
@@ -168,7 +170,9 @@ public class AnnouncementsDeliveryModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<AnnouncementsDelivery> toModels(
 		AnnouncementsDeliverySoap[] soapModels) {
 

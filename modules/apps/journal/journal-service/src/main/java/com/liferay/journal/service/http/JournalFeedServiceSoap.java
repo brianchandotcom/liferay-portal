@@ -57,8 +57,10 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see JournalFeedServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class JournalFeedServiceSoap {
 
 	public static com.liferay.journal.model.JournalFeedSoap addFeed(

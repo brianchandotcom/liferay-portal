@@ -61,8 +61,10 @@ import java.util.Map;
  *
  * @author Marcellus Tavares
  * @see KaleoProcessServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class KaleoProcessServiceSoap {
 
 	/**

@@ -57,8 +57,10 @@ import java.rmi.RemoteException;
  *
  * @author Ryan Park
  * @see AppServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class AppServiceSoap {
 
 	public static com.liferay.marketplace.model.AppSoap deleteApp(long appId)

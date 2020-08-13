@@ -57,8 +57,10 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see RedirectEntryServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class RedirectEntryServiceSoap {
 
 	public static com.liferay.redirect.model.RedirectEntrySoap addRedirectEntry(

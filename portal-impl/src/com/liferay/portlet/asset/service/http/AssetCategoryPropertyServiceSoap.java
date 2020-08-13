@@ -57,8 +57,7 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see AssetCategoryPropertyServiceHttp
- * @deprecated As of Judson (7.1.x), replaced by {@link
- com.liferay.asset.category.property.service.impl.AssetCategoryPropertyServiceImpl}
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
 @Deprecated

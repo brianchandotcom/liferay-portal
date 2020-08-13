@@ -27,8 +27,10 @@ import java.util.Map;
  * This class is used by SOAP remote services.
  *
  * @author Shuyang Zhou
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class BatchEngineExportTaskSoap implements Serializable {
 
 	public static BatchEngineExportTaskSoap toSoapModel(

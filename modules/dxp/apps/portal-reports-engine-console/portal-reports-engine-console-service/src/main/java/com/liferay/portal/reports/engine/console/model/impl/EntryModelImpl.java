@@ -147,7 +147,9 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static Entry toModel(EntrySoap soapModel) {
 		if (soapModel == null) {
 			return null;
@@ -185,7 +187,9 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<Entry> toModels(EntrySoap[] soapModels) {
 		if (soapModels == null) {
 			return null;

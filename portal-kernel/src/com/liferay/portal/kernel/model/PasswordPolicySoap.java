@@ -24,8 +24,10 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.portal.service.http.PasswordPolicyServiceSoap}.
  *
  * @author Brian Wing Shun Chan
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class PasswordPolicySoap implements Serializable {
 
 	public static PasswordPolicySoap toSoapModel(PasswordPolicy model) {

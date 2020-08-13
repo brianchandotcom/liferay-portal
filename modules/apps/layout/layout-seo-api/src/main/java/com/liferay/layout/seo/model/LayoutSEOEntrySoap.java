@@ -24,8 +24,10 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.layout.seo.service.http.LayoutSEOEntryServiceSoap}.
  *
  * @author Brian Wing Shun Chan
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class LayoutSEOEntrySoap implements Serializable {
 
 	public static LayoutSEOEntrySoap toSoapModel(LayoutSEOEntry model) {

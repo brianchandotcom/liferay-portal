@@ -159,7 +159,9 @@ public class MDRRuleModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static MDRRule toModel(MDRRuleSoap soapModel) {
 		if (soapModel == null) {
 			return null;
@@ -191,7 +193,9 @@ public class MDRRuleModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<MDRRule> toModels(MDRRuleSoap[] soapModels) {
 		if (soapModels == null) {
 			return null;

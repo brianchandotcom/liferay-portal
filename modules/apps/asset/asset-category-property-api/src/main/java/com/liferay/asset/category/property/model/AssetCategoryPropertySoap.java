@@ -24,8 +24,10 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.asset.category.property.service.http.AssetCategoryPropertyServiceSoap}.
  *
  * @author Brian Wing Shun Chan
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class AssetCategoryPropertySoap implements Serializable {
 
 	public static AssetCategoryPropertySoap toSoapModel(

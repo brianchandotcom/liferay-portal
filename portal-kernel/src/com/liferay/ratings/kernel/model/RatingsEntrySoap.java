@@ -24,8 +24,10 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.portlet.ratings.service.http.RatingsEntryServiceSoap}.
  *
  * @author Brian Wing Shun Chan
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class RatingsEntrySoap implements Serializable {
 
 	public static RatingsEntrySoap toSoapModel(RatingsEntry model) {

@@ -24,8 +24,10 @@ import java.util.List;
  * This class is used by SOAP remote services.
  *
  * @author Jamie Sammons
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class AkismetEntrySoap implements Serializable {
 
 	public static AkismetEntrySoap toSoapModel(AkismetEntry model) {

@@ -57,8 +57,10 @@ import java.rmi.RemoteException;
  *
  * @author Ryan Park
  * @see TasksEntryServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class TasksEntryServiceSoap {
 
 	public static com.liferay.tasks.model.TasksEntrySoap addTasksEntry(

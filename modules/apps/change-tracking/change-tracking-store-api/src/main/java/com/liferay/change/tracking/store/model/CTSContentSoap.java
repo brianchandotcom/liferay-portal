@@ -25,8 +25,10 @@ import java.util.List;
  * This class is used by SOAP remote services.
  *
  * @author Shuyang Zhou
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CTSContentSoap implements Serializable {
 
 	public static CTSContentSoap toSoapModel(CTSContent model) {

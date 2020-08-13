@@ -57,8 +57,10 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see KBTemplateServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class KBTemplateServiceSoap {
 
 	public static com.liferay.knowledge.base.model.KBTemplateSoap addKBTemplate(

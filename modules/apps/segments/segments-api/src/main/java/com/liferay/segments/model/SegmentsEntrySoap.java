@@ -24,8 +24,10 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.segments.service.http.SegmentsEntryServiceSoap}.
  *
  * @author Eduardo Garcia
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class SegmentsEntrySoap implements Serializable {
 
 	public static SegmentsEntrySoap toSoapModel(SegmentsEntry model) {

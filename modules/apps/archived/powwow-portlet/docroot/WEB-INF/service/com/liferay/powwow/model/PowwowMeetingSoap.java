@@ -24,8 +24,10 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.powwow.service.http.PowwowMeetingServiceSoap}.
  *
  * @author Shinn Lok
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class PowwowMeetingSoap implements Serializable {
 
 	public static PowwowMeetingSoap toSoapModel(PowwowMeeting model) {

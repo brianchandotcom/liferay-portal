@@ -57,8 +57,10 @@ import java.rmi.RemoteException;
  *
  * @author Eduardo Garcia
  * @see SegmentsExperimentRelServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class SegmentsExperimentRelServiceSoap {
 
 	public static com.liferay.segments.model.SegmentsExperimentRelSoap

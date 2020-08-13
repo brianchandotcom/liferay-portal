@@ -145,7 +145,9 @@ public class KBTemplateModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static KBTemplate toModel(KBTemplateSoap soapModel) {
 		if (soapModel == null) {
 			return null;
@@ -174,7 +176,9 @@ public class KBTemplateModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<KBTemplate> toModels(KBTemplateSoap[] soapModels) {
 		if (soapModels == null) {
 			return null;

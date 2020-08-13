@@ -156,7 +156,9 @@ public class MDRRuleGroupInstanceModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static MDRRuleGroupInstance toModel(
 		MDRRuleGroupInstanceSoap soapModel) {
 
@@ -189,7 +191,9 @@ public class MDRRuleGroupInstanceModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<MDRRuleGroupInstance> toModels(
 		MDRRuleGroupInstanceSoap[] soapModels) {
 

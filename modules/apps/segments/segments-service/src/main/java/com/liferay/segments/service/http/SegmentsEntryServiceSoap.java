@@ -61,8 +61,10 @@ import java.util.Map;
  *
  * @author Eduardo Garcia
  * @see SegmentsEntryServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class SegmentsEntryServiceSoap {
 
 	public static com.liferay.segments.model.SegmentsEntrySoap addSegmentsEntry(

@@ -24,8 +24,10 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.oauth.service.http.OAuthApplicationServiceSoap}.
  *
  * @author Ivica Cardic
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class OAuthApplicationSoap implements Serializable {
 
 	public static OAuthApplicationSoap toSoapModel(OAuthApplication model) {

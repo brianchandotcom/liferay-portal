@@ -61,8 +61,10 @@ import java.util.Map;
  *
  * @author Brian Wing Shun Chan
  * @see LayoutSEOEntryServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class LayoutSEOEntryServiceSoap {
 
 	public static com.liferay.layout.seo.model.LayoutSEOEntrySoap

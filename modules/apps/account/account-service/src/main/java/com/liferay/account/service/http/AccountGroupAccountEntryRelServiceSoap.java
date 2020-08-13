@@ -51,7 +51,9 @@ package com.liferay.account.service.http;
  *
  * @author Brian Wing Shun Chan
  * @see AccountGroupAccountEntryRelServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class AccountGroupAccountEntryRelServiceSoap {
 }

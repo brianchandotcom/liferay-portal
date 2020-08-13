@@ -158,7 +158,9 @@ public class SharingEntryModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static SharingEntry toModel(SharingEntrySoap soapModel) {
 		if (soapModel == null) {
 			return null;
@@ -189,7 +191,9 @@ public class SharingEntryModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<SharingEntry> toModels(SharingEntrySoap[] soapModels) {
 		if (soapModels == null) {
 			return null;

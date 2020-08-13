@@ -24,8 +24,10 @@ import java.util.List;
  * This class is used by SOAP remote services.
  *
  * @author Supritha Sundaram
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class WeDeployAuthTokenSoap implements Serializable {
 
 	public static WeDeployAuthTokenSoap toSoapModel(WeDeployAuthToken model) {

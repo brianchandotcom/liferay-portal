@@ -57,8 +57,10 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see AnnouncementsEntryServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class AnnouncementsEntryServiceSoap {
 
 	public static com.liferay.announcements.kernel.model.AnnouncementsEntrySoap

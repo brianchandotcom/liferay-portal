@@ -147,7 +147,9 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static Team toModel(TeamSoap soapModel) {
 		if (soapModel == null) {
 			return null;
@@ -177,7 +179,9 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<Team> toModels(TeamSoap[] soapModels) {
 		if (soapModels == null) {
 			return null;

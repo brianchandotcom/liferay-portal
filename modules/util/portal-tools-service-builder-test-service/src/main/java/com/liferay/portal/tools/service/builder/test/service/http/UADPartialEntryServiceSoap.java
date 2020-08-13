@@ -51,7 +51,9 @@ package com.liferay.portal.tools.service.builder.test.service.http;
  *
  * @author Brian Wing Shun Chan
  * @see UADPartialEntryServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class UADPartialEntryServiceSoap {
 }

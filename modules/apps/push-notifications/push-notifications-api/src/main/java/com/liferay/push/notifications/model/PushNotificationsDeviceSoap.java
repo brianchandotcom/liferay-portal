@@ -24,8 +24,10 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.push.notifications.service.http.PushNotificationsDeviceServiceSoap}.
  *
  * @author Bruno Farache
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class PushNotificationsDeviceSoap implements Serializable {
 
 	public static PushNotificationsDeviceSoap toSoapModel(

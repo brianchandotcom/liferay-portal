@@ -57,8 +57,10 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see PollsVoteServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class PollsVoteServiceSoap {
 
 	public static com.liferay.polls.model.PollsVoteSoap addVote(

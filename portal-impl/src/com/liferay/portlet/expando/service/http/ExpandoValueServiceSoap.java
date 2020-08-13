@@ -57,8 +57,10 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see ExpandoValueServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class ExpandoValueServiceSoap {
 
 	public static com.liferay.expando.kernel.model.ExpandoValueSoap addValue(

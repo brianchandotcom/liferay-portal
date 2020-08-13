@@ -128,7 +128,9 @@ public class AccountEntryOrganizationRelModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static AccountEntryOrganizationRel toModel(
 		AccountEntryOrganizationRelSoap soapModel) {
 
@@ -154,7 +156,9 @@ public class AccountEntryOrganizationRelModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<AccountEntryOrganizationRel> toModels(
 		AccountEntryOrganizationRelSoap[] soapModels) {
 

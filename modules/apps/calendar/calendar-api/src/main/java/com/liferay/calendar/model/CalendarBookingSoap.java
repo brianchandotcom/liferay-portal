@@ -24,8 +24,10 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.calendar.service.http.CalendarBookingServiceSoap}.
  *
  * @author Eduardo Lundgren
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CalendarBookingSoap implements Serializable {
 
 	public static CalendarBookingSoap toSoapModel(CalendarBooking model) {

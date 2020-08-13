@@ -57,8 +57,10 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see ClassNameServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class ClassNameServiceSoap {
 
 	public static com.liferay.portal.kernel.model.ClassNameSoap

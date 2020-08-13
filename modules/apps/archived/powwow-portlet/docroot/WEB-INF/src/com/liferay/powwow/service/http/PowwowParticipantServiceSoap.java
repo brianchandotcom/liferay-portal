@@ -57,8 +57,10 @@ import java.rmi.RemoteException;
  *
  * @author Shinn Lok
  * @see PowwowParticipantServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class PowwowParticipantServiceSoap {
 
 	public static com.liferay.powwow.model.PowwowParticipantSoap

@@ -51,7 +51,9 @@ package com.liferay.layout.seo.service.http;
  *
  * @author Brian Wing Shun Chan
  * @see LayoutSEOSiteServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class LayoutSEOSiteServiceSoap {
 }

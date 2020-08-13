@@ -493,73 +493,25 @@ public class JenkinsResultsParserUtil {
 			commands);
 	}
 
-	public static void executeBashService(
+	public static void executeBashCommandService(
 		final String command, final File baseDir,
 		final Map<String, String> environments, final long maxLogSize) {
 
-		Runnable runnable = new Runnable() {
+		_executeCommandService(
+			command, baseDir, environments, maxLogSize, false);
+	}
 
-			public void run() {
-				StringBuilder sb = new StringBuilder();
+	public static void executeBatchCommandService(
+		final String command, final File baseDir,
+		final Map<String, String> environments, final long maxLogSize) {
 
-				try {
-					if (isWindows()) {
-						sb.append("C:\\Program Files\\Git\\bin\\sh.exe ");
-					}
-					else {
-						sb.append("/bin/sh ");
-					}
+		if (!isWindows()) {
+			throw new RuntimeException(
+				"Invalid Operating System, please use Windows.");
+		}
 
-					sb.append(command);
-
-					Runtime runtime = Runtime.getRuntime();
-
-					String[] environmentParameters =
-						new String[environments.size()];
-
-					int i = 0;
-
-					for (Map.Entry<String, String> environment :
-							environments.entrySet()) {
-
-						environmentParameters[i] = combine(
-							environment.getKey(), "=", environment.getValue());
-
-						i++;
-					}
-
-					Process process = runtime.exec(
-						sb.toString(), environmentParameters, baseDir);
-
-					try (CountingInputStream countingInputStream =
-							new CountingInputStream(process.getInputStream());
-						InputStreamReader inputStreamReader =
-							new InputStreamReader(
-								countingInputStream, StandardCharsets.UTF_8)) {
-
-						int logCharInt = 0;
-
-						while ((logCharInt = inputStreamReader.read()) != -1) {
-							if (countingInputStream.getCount() > maxLogSize) {
-								continue;
-							}
-
-							System.out.print((char)logCharInt);
-						}
-					}
-
-					process.waitFor();
-				}
-				catch (InterruptedException | IOException exception) {
-					throw new RuntimeException(exception);
-				}
-			}
-
-		};
-
-		Thread thread = new Thread(runnable);
-
-		thread.start();
+		_executeCommandService(
+			command, baseDir, environments, maxLogSize, true);
 	}
 
 	public static void executeJenkinsScript(
@@ -3318,6 +3270,86 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return duration;
+	}
+
+	private static void _executeCommandService(
+		final String command, final File baseDir,
+		final Map<String, String> environments, final long maxLogSize,
+		final boolean batchCommand) {
+
+		if (batchCommand && !isWindows()) {
+			throw new RuntimeException(
+				"Invalid Operating System, please use Windows.");
+		}
+
+		Runnable runnable = new Runnable() {
+
+			public void run() {
+				StringBuilder sb = new StringBuilder();
+
+				try {
+					if (isWindows()) {
+						if (batchCommand) {
+							sb.append("cmd.exe /c ");
+						}
+						else {
+							sb.append("C:\\Program Files\\Git\\bin\\sh.exe ");
+						}
+					}
+					else {
+						sb.append("/bin/sh ");
+					}
+
+					sb.append(command);
+
+					Runtime runtime = Runtime.getRuntime();
+
+					String[] environmentParameters =
+						new String[environments.size()];
+
+					int i = 0;
+
+					for (Map.Entry<String, String> environment :
+							environments.entrySet()) {
+
+						environmentParameters[i] = combine(
+							environment.getKey(), "=", environment.getValue());
+
+						i++;
+					}
+
+					Process process = runtime.exec(
+						sb.toString(), environmentParameters, baseDir);
+
+					try (CountingInputStream countingInputStream =
+							new CountingInputStream(process.getInputStream());
+						InputStreamReader inputStreamReader =
+							new InputStreamReader(
+								countingInputStream, StandardCharsets.UTF_8)) {
+
+						int logCharInt = 0;
+
+						while ((logCharInt = inputStreamReader.read()) != -1) {
+							if (countingInputStream.getCount() > maxLogSize) {
+								continue;
+							}
+
+							System.out.print((char)logCharInt);
+						}
+					}
+
+					process.waitFor();
+				}
+				catch (InterruptedException | IOException exception) {
+					throw new RuntimeException(exception);
+				}
+			}
+
+		};
+
+		Thread thread = new Thread(runnable);
+
+		thread.start();
 	}
 
 	private static File _getCacheFile(String key) {

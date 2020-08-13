@@ -96,71 +96,63 @@ export default withRouter(
 			<section className="questions-section questions-section-list">
 				<div className="questions-container">
 					<div className="c-p-5 row">
-						<PageHeader />
-						<Questions />
+						<div className="c-mt-3 c-mx-auto c-px-0 col-xl-10">
+							<div className="d-flex flex-row">
+								<div className="c-mt-3">
+									<UserIcon
+										fullName={creatorInfo.name}
+										portraitURL={creatorInfo.image}
+										size="xl"
+										userId={String(creatorInfo.id)}
+									/>
+								</div>
+								<div className="c-ml-4 flex-column">
+									<div>
+										<span className="small">
+											Rank: {creatorInfo.rank}
+										</span>
+									</div>
+									<div>
+										<strong className="h2">
+											{creatorInfo.name}
+										</strong>
+									</div>
+									<div>
+										<span className="small">
+											Posts: {creatorInfo.postsNumber}
+										</span>
+									</div>
+								</div>
+							</div>
+							<div className="border-bottom c-mt-5">
+								<h2>Latest Questions Asked</h2>
+							</div>
+						</div>
+						<div className="c-mx-auto c-px-0 col-xl-10">
+							<PaginatedList
+								activeDelta={pageSize}
+								activePage={page}
+								changeDelta={(pageSize) =>
+									changePage(page, pageSize)
+								}
+								changePage={(page) =>
+									changePage(page, pageSize)
+								}
+								data={data && data.messageBoardThreads}
+								loading={loading}
+							>
+								{(question) => (
+									<QuestionRow
+										key={question.id}
+										question={question}
+										showSectionLabel={true}
+									/>
+								)}
+							</PaginatedList>
+						</div>
 					</div>
 				</div>
 			</section>
 		);
-
-		function PageHeader() {
-			return (
-				<div className="c-mt-3 c-mx-auto c-px-0 col-xl-10">
-					<div className="d-flex flex-row">
-						<div className="c-mt-3">
-							<UserIcon
-								fullName={creatorInfo.name}
-								portraitURL={creatorInfo.image}
-								size="xl"
-								userId={String(creatorInfo.id)}
-							/>
-						</div>
-						<div className="c-ml-4 flex-column">
-							<div>
-								<span className="small">
-									Rank: {creatorInfo.rank}
-								</span>
-							</div>
-							<div>
-								<strong className="h2">
-									{creatorInfo.name}
-								</strong>
-							</div>
-							<div>
-								<span className="small">
-									Posts: {creatorInfo.postsNumber}
-								</span>
-							</div>
-						</div>
-					</div>
-					<div className="border-bottom c-mt-5">
-						<h2>Latest Questions Asked</h2>
-					</div>
-				</div>
-			);
-		}
-
-		function Questions() {
-			return (
-				<div className="c-mx-auto c-px-0 col-xl-10">
-					<PaginatedList
-						activeDelta={pageSize}
-						activePage={page}
-						changeDelta={(pageSize) => changePage(page, pageSize)}
-						changePage={(page) => changePage(page, pageSize)}
-						data={data && data.messageBoardThreads}
-						loading={loading}
-					>
-						{(question) => (
-							<QuestionRow
-								key={question.id}
-								question={question}
-								showSectionLabel={true}
-							/>
-						)}
-					</PaginatedList>
-				</div>
-			);
-		}
 	}
 );

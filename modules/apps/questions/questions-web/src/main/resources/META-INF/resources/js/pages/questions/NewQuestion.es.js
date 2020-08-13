@@ -25,7 +25,11 @@ import Link from '../../components/Link.es';
 import QuestionsEditor from '../../components/QuestionsEditor';
 import TagSelector from '../../components/TagSelector.es';
 import TextLengthValidation from '../../components/TextLengthValidation.es';
-import {client, createQuestionQuery, getSections} from '../../utils/client.es';
+import {
+	client,
+	createQuestionQuery,
+	getSectionBySectionTitle,
+} from '../../utils/client.es';
 import lang from '../../utils/lang.es';
 import {
 	getContextLink,
@@ -67,31 +71,32 @@ export default withRouter(
 		});
 
 		useEffect(() => {
-			getSections(slugToText(sectionTitle), context.siteKey).then(
-				(section) => {
-					setSectionId(section.id);
-					if (section.parentMessageBoardSection) {
-						setSections([
-							{
-								id: section.parentMessageBoardSection.id,
-								title: section.parentMessageBoardSection.title,
-							},
-							...section.parentMessageBoardSection
-								.messageBoardSections.items,
-							...section.messageBoardSections.items,
-						]);
-					}
-					else {
-						setSections([
-							{
-								id: section.id,
-								title: section.title,
-							},
-							...section.messageBoardSections.items,
-						]);
-					}
+			getSectionBySectionTitle(
+				context.siteKey,
+				slugToText(sectionTitle)
+			).then((section) => {
+				setSectionId(section.id);
+				if (section.parentMessageBoardSection) {
+					setSections([
+						{
+							id: section.parentMessageBoardSection.id,
+							title: section.parentMessageBoardSection.title,
+						},
+						...section.parentMessageBoardSection
+							.messageBoardSections.items,
+						...section.messageBoardSections.items,
+					]);
 				}
-			);
+				else {
+					setSections([
+						{
+							id: section.id,
+							title: section.title,
+						},
+						...section.messageBoardSections.items,
+					]);
+				}
+			});
 		}, [context.siteKey, sectionTitle]);
 
 		const processError = (error) => {

@@ -18,16 +18,15 @@ import ClayEmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useContext, useEffect, useState} from 'react';
-import {withRouter} from 'react-router-dom';
+import {Redirect, withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
 import Alert from '../../components/Alert.es';
 import Link from '../../components/Link.es';
 import NewTopicModal from '../../components/NewTopicModal.es';
-import {getSectionsFromRootSection} from '../../utils/client.es';
+import {getSectionsByRootSection} from '../../utils/client.es';
 import lang from '../../utils/lang.es';
 import {historyPushWithSlug} from '../../utils/utils.es';
-import {Redirect} from 'react-router-dom';
 
 export default withRouter(({history}) => {
 	const context = useContext(AppContext);
@@ -39,7 +38,7 @@ export default withRouter(({history}) => {
 	const [sections, setSections] = useState({});
 
 	useEffect(() => {
-		getSectionsFromRootSection(context.rootTopic, context.siteKey)
+		getSectionsByRootSection(context.siteKey, context.rootTopic)
 			.then(({data, loading}) => {
 				setSections(data || []);
 				setLoading(loading);
@@ -61,8 +60,9 @@ export default withRouter(({history}) => {
 
 	return (
 		<section className="c-mt-3 questions-section questions-section-cards">
-
-			{!context.showSectionLanding && <Redirect to="/questions/0" />}
+			{!context.showSectionLanding && (
+				<Redirect to={'/questions/' + context.rootTopic} />
+			)}
 
 			<div className="questions-container">
 				<div className="row">
@@ -70,6 +70,7 @@ export default withRouter(({history}) => {
 					{!loading && (
 						<>
 							{sections &&
+								sections.actions &&
 								sections.actions.create &&
 								sections.items.length > 0 && (
 									<div className="c-mb-4 col-lg-4 col-md-6 col-xl-3">

@@ -41,6 +41,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.util.FastDateFormatFactoryImpl;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -84,6 +86,7 @@ public class DDMFormInstanceRecordExporterImplTest extends PowerMockito {
 	public void setUp() throws Exception {
 		setUpHtmlUtil();
 		setUpLanguageUtil();
+		setUpFastDateFormatFactoryUtil();
 	}
 
 	@Test
@@ -780,6 +783,14 @@ public class DDMFormInstanceRecordExporterImplTest extends PowerMockito {
 		).write(
 			Matchers.any(DDMFormInstanceRecordWriterRequest.class)
 		);
+	}
+
+	protected void setUpFastDateFormatFactoryUtil() {
+		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
+			new FastDateFormatFactoryUtil();
+
+		fastDateFormatFactoryUtil.setFastDateFormatFactory(
+			new FastDateFormatFactoryImpl());
 	}
 
 	protected void setUpHtmlUtil() {

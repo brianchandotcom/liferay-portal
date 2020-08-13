@@ -25,6 +25,8 @@ portletURL.setParameter("configurationScreenKey", "synced-contact-data");
 String redirect = portletURL.toString();
 %>
 
+<portlet:actionURL name="/analytics_settings/edit_synced_contacts_fields" var="editSyncedContactsFieldsURL" />
+
 <clay:sheet
 	cssClass="portlet-analytics-settings"
 >
@@ -36,111 +38,113 @@ String redirect = portletURL.toString();
 		<liferay-ui:message key="sync-data-fields-help" />
 	</p>
 
-	<liferay-ui:tabs
-		names='<%= LanguageUtil.get(resourceBundle, "contact-x") + "," + LanguageUtil.get(resourceBundle, "user-x") %>'
-		refresh="<%= false %>"
-	>
-		<liferay-ui:section>
+	<aui:form action="<%= editSyncedContactsFieldsURL %>" method="post" name="fm">
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-			<%
-			FieldDisplayContext fieldDisplayContext = new FieldDisplayContext("/analytics_settings/edit_synced_contact_fields", renderRequest, renderResponse);
-			%>
+		<liferay-ui:tabs
+			names='<%= LanguageUtil.get(resourceBundle, "contact-x") + "," + LanguageUtil.get(resourceBundle, "user-x") %>'
+			refresh="<%= false %>"
+		>
+			<liferay-ui:section>
 
-			<clay:management-toolbar
-				displayContext="<%= new FieldManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fieldDisplayContext) %>"
-			/>
+				<%
+				FieldDisplayContext fieldDisplayContext = new FieldDisplayContext("/analytics_settings/edit_synced_contact_fields", renderRequest, renderResponse);
+				%>
 
-			<liferay-ui:search-container
-				id="selectContactFields"
-				searchContainer="<%= fieldDisplayContext.getFieldSearch() %>"
-				var="contactFieldsSearchContainer"
-			>
-				<liferay-ui:search-container-row
-					className="com.liferay.analytics.settings.web.internal.model.Field"
-					escapedModel="<%= true %>"
-					keyProperty="name"
-					modelVar="contactField"
-				>
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand"
-						name="attribute"
-						value="<%= HtmlUtil.escape(contactField.getName()) %>"
-					/>
-
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand"
-						name="category"
-						value="<%= HtmlUtil.escape(contactField.getCategory()) %>"
-					/>
-
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand"
-						name="data-type"
-						value="<%= HtmlUtil.escape(contactField.getDataType()) %>"
-					/>
-				</liferay-ui:search-container-row>
-
-				<liferay-ui:search-iterator
-					markupView="lexicon"
-					paginate="<%= false %>"
-					searchResultCssClass="show-quick-actions-on-hover table table-autofit"
+				<clay:management-toolbar
+					displayContext="<%= new FieldManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fieldDisplayContext) %>"
 				/>
-			</liferay-ui:search-container>
-		</liferay-ui:section>
 
-
-		<liferay-ui:section>
-
-			<%
-			FieldDisplayContext fieldDisplayContext = new FieldDisplayContext("/analytics_settings/edit_synced_user_fields", renderRequest, renderResponse);
-			%>
-
-			<clay:management-toolbar
-				displayContext="<%= new FieldManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fieldDisplayContext) %>"
-			/>
-
-
-			<liferay-ui:search-container
-				id="selectUserFields"
-				searchContainer="<%= fieldDisplayContext.getFieldSearch() %>"
-				var="userFieldsSearchContainer"
-			>
-				<liferay-ui:search-container-row
-					className="com.liferay.analytics.settings.web.internal.model.Field"
-					escapedModel="<%= true %>"
-					keyProperty="name"
-					modelVar="userField"
+				<liferay-ui:search-container
+					id="selectContactFields"
+					searchContainer="<%= fieldDisplayContext.getFieldSearch() %>"
+					var="contactFieldsSearchContainer"
 				>
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand"
-						name="attribute"
-						value="<%= HtmlUtil.escape(userField.getName()) %>"
-					/>
+					<liferay-ui:search-container-row
+						className="com.liferay.analytics.settings.web.internal.model.Field"
+						escapedModel="<%= true %>"
+						keyProperty="name"
+						modelVar="contactField"
+					>
+						<liferay-ui:search-container-column-text
+							cssClass="table-cell-expand"
+							name="attribute"
+							value="<%= HtmlUtil.escape(contactField.getName()) %>"
+						/>
 
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand"
-						name="category"
-						value="<%= HtmlUtil.escape(userField.getCategory()) %>"
-					/>
+						<liferay-ui:search-container-column-text
+							cssClass="table-cell-expand"
+							name="category"
+							value="<%= HtmlUtil.escape(contactField.getCategory()) %>"
+						/>
 
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand"
-						name="data-type"
-						value="<%= HtmlUtil.escape(userField.getDataType()) %>"
-					/>
-				</liferay-ui:search-container-row>
+						<liferay-ui:search-container-column-text
+							cssClass="table-cell-expand"
+							name="data-type"
+							value="<%= HtmlUtil.escape(contactField.getDataType()) %>"
+						/>
+					</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator
-					markupView="lexicon"
-					paginate="<%= false %>"
-					searchResultCssClass="show-quick-actions-on-hover table table-autofit"
+					<liferay-ui:search-iterator
+						markupView="lexicon"
+						paginate="<%= false %>"
+						searchResultCssClass="show-quick-actions-on-hover table table-autofit"
+					/>
+				</liferay-ui:search-container>
+			</liferay-ui:section>
+
+			<liferay-ui:section>
+
+				<%
+				FieldDisplayContext fieldDisplayContext = new FieldDisplayContext("/analytics_settings/edit_synced_user_fields", renderRequest, renderResponse);
+				%>
+
+				<clay:management-toolbar
+					displayContext="<%= new FieldManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fieldDisplayContext) %>"
 				/>
-			</liferay-ui:search-container>
-		</liferay-ui:section>
-	</liferay-ui:tabs>
 
-	<aui:button-row>
-		<aui:button type="submit" value="save" />
-		<aui:button href="<%= redirect %>" type="cancel" value="cancel" />
-	</aui:button-row>
+				<liferay-ui:search-container
+					id="selectUserFields"
+					searchContainer="<%= fieldDisplayContext.getFieldSearch() %>"
+					var="userFieldsSearchContainer"
+				>
+					<liferay-ui:search-container-row
+						className="com.liferay.analytics.settings.web.internal.model.Field"
+						escapedModel="<%= true %>"
+						keyProperty="name"
+						modelVar="userField"
+					>
+						<liferay-ui:search-container-column-text
+							cssClass="table-cell-expand"
+							name="attribute"
+							value="<%= HtmlUtil.escape(userField.getName()) %>"
+						/>
+
+						<liferay-ui:search-container-column-text
+							cssClass="table-cell-expand"
+							name="category"
+							value="<%= HtmlUtil.escape(userField.getCategory()) %>"
+						/>
+
+						<liferay-ui:search-container-column-text
+							cssClass="table-cell-expand"
+							name="data-type"
+							value="<%= HtmlUtil.escape(userField.getDataType()) %>"
+						/>
+					</liferay-ui:search-container-row>
+
+					<liferay-ui:search-iterator
+						markupView="lexicon"
+						paginate="<%= false %>"
+						searchResultCssClass="show-quick-actions-on-hover table table-autofit"
+					/>
+				</liferay-ui:search-container>
+			</liferay-ui:section>
+		</liferay-ui:tabs>
+
+		<aui:button-row>
+			<aui:button type="submit" value="save" />
+			<aui:button href="<%= redirect %>" type="cancel" value="cancel" />
+		</aui:button-row>
+	</aui:form>
 </clay:sheet>

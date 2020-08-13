@@ -42,7 +42,7 @@ String format = ParamUtil.getString(request, SearchPortletParameterNames.FORMAT)
 		<aui:input name="scope" type="hidden" value="<%= searchDisplayContext.getSearchScopeParameterString() %>" />
 		<aui:input name="useAdvancedSearchSyntax" type="hidden" value="<%= searchDisplayContext.isUseAdvancedSearchSyntax() %>" />
 
-		<aui:field-wrapper inlineField="<%= true %>">
+		<aui:field-wrapper cssClass="search-button-field-wrapper" inlineField="<%= true %>">
 			<aui:button icon="icon-search" onClick='<%= liferayPortletResponse.getNamespace() + "search();" %>' type="submit" value="search" />
 		</aui:field-wrapper>
 	</aui:fieldset>

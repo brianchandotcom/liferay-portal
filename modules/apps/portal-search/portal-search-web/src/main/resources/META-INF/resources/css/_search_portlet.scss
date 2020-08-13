@@ -1,5 +1,18 @@
-.lfr-search-button-wrapper {
-	line-height: 2.5rem;
-	margin-left: -2rem;
-	position: absolute;
+.portlet-search {
+	.scope-selector {
+		margin-left: 12px;
+		max-width: 144px;
+	}
+
+	.search-button-field-wrapper {
+		margin-bottom: 1.5rem;
+	}
+
+	.search-input-group {
+		margin-bottom: 0;
+
+		.form-group-item {
+			margin-right: 0;
+		}
+	}
 }

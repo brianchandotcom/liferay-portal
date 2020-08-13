@@ -493,8 +493,8 @@ public class Mutation {
 		keywordResource.setContextHttpServletResponse(_httpServletResponse);
 		keywordResource.setContextUriInfo(_uriInfo);
 		keywordResource.setContextUser(_user);
-		keywordResource.setGroupLocalService(groupLocalService);
-		keywordResource.setRoleLocalService(roleLocalService);
+		keywordResource.setGroupLocalService(_groupLocalService);
+		keywordResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(
@@ -509,8 +509,8 @@ public class Mutation {
 			_httpServletResponse);
 		taxonomyCategoryResource.setContextUriInfo(_uriInfo);
 		taxonomyCategoryResource.setContextUser(_user);
-		taxonomyCategoryResource.setGroupLocalService(groupLocalService);
-		taxonomyCategoryResource.setRoleLocalService(roleLocalService);
+		taxonomyCategoryResource.setGroupLocalService(_groupLocalService);
+		taxonomyCategoryResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(
@@ -525,8 +525,8 @@ public class Mutation {
 			_httpServletResponse);
 		taxonomyVocabularyResource.setContextUriInfo(_uriInfo);
 		taxonomyVocabularyResource.setContextUser(_user);
-		taxonomyVocabularyResource.setGroupLocalService(groupLocalService);
-		taxonomyVocabularyResource.setRoleLocalService(roleLocalService);
+		taxonomyVocabularyResource.setGroupLocalService(_groupLocalService);
+		taxonomyVocabularyResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private static ComponentServiceObjects<KeywordResource>
@@ -538,12 +538,12 @@ public class Mutation {
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;
-	private GroupLocalService groupLocalService;
-	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
-	private com.liferay.portal.kernel.model.User _user;
+	private GroupLocalService _groupLocalService;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
-	private RoleLocalService roleLocalService;
+	private RoleLocalService _roleLocalService;
+	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private UriInfo _uriInfo;
+	private com.liferay.portal.kernel.model.User _user;
 
 }

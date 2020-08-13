@@ -580,8 +580,8 @@ public class Mutation {
 		assigneeResource.setContextHttpServletResponse(_httpServletResponse);
 		assigneeResource.setContextUriInfo(_uriInfo);
 		assigneeResource.setContextUser(_user);
-		assigneeResource.setGroupLocalService(groupLocalService);
-		assigneeResource.setRoleLocalService(roleLocalService);
+		assigneeResource.setGroupLocalService(_groupLocalService);
+		assigneeResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(
@@ -596,8 +596,8 @@ public class Mutation {
 			_httpServletResponse);
 		assigneeMetricResource.setContextUriInfo(_uriInfo);
 		assigneeMetricResource.setContextUser(_user);
-		assigneeMetricResource.setGroupLocalService(groupLocalService);
-		assigneeMetricResource.setRoleLocalService(roleLocalService);
+		assigneeMetricResource.setGroupLocalService(_groupLocalService);
+		assigneeMetricResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(IndexResource indexResource)
@@ -609,8 +609,8 @@ public class Mutation {
 		indexResource.setContextHttpServletResponse(_httpServletResponse);
 		indexResource.setContextUriInfo(_uriInfo);
 		indexResource.setContextUser(_user);
-		indexResource.setGroupLocalService(groupLocalService);
-		indexResource.setRoleLocalService(roleLocalService);
+		indexResource.setGroupLocalService(_groupLocalService);
+		indexResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(InstanceResource instanceResource)
@@ -622,8 +622,8 @@ public class Mutation {
 		instanceResource.setContextHttpServletResponse(_httpServletResponse);
 		instanceResource.setContextUriInfo(_uriInfo);
 		instanceResource.setContextUser(_user);
-		instanceResource.setGroupLocalService(groupLocalService);
-		instanceResource.setRoleLocalService(roleLocalService);
+		instanceResource.setGroupLocalService(_groupLocalService);
+		instanceResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(NodeResource nodeResource)
@@ -635,8 +635,8 @@ public class Mutation {
 		nodeResource.setContextHttpServletResponse(_httpServletResponse);
 		nodeResource.setContextUriInfo(_uriInfo);
 		nodeResource.setContextUser(_user);
-		nodeResource.setGroupLocalService(groupLocalService);
-		nodeResource.setRoleLocalService(roleLocalService);
+		nodeResource.setGroupLocalService(_groupLocalService);
+		nodeResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(ProcessResource processResource)
@@ -648,8 +648,8 @@ public class Mutation {
 		processResource.setContextHttpServletResponse(_httpServletResponse);
 		processResource.setContextUriInfo(_uriInfo);
 		processResource.setContextUser(_user);
-		processResource.setGroupLocalService(groupLocalService);
-		processResource.setRoleLocalService(roleLocalService);
+		processResource.setGroupLocalService(_groupLocalService);
+		processResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(SLAResource slaResource)
@@ -661,8 +661,8 @@ public class Mutation {
 		slaResource.setContextHttpServletResponse(_httpServletResponse);
 		slaResource.setContextUriInfo(_uriInfo);
 		slaResource.setContextUser(_user);
-		slaResource.setGroupLocalService(groupLocalService);
-		slaResource.setRoleLocalService(roleLocalService);
+		slaResource.setGroupLocalService(_groupLocalService);
+		slaResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(TaskResource taskResource)
@@ -674,8 +674,8 @@ public class Mutation {
 		taskResource.setContextHttpServletResponse(_httpServletResponse);
 		taskResource.setContextUriInfo(_uriInfo);
 		taskResource.setContextUser(_user);
-		taskResource.setGroupLocalService(groupLocalService);
-		taskResource.setRoleLocalService(roleLocalService);
+		taskResource.setGroupLocalService(_groupLocalService);
+		taskResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private static ComponentServiceObjects<AssigneeResource>
@@ -697,12 +697,12 @@ public class Mutation {
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;
-	private GroupLocalService groupLocalService;
-	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
-	private com.liferay.portal.kernel.model.User _user;
+	private GroupLocalService _groupLocalService;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
-	private RoleLocalService roleLocalService;
+	private RoleLocalService _roleLocalService;
+	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private UriInfo _uriInfo;
+	private com.liferay.portal.kernel.model.User _user;
 
 }

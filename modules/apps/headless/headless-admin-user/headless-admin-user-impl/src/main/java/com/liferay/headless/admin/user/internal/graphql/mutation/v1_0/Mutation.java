@@ -437,8 +437,8 @@ public class Mutation {
 			_httpServletResponse);
 		organizationResource.setContextUriInfo(_uriInfo);
 		organizationResource.setContextUser(_user);
-		organizationResource.setGroupLocalService(groupLocalService);
-		organizationResource.setRoleLocalService(roleLocalService);
+		organizationResource.setGroupLocalService(_groupLocalService);
+		organizationResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(RoleResource roleResource)
@@ -450,8 +450,8 @@ public class Mutation {
 		roleResource.setContextHttpServletResponse(_httpServletResponse);
 		roleResource.setContextUriInfo(_uriInfo);
 		roleResource.setContextUser(_user);
-		roleResource.setGroupLocalService(groupLocalService);
-		roleResource.setRoleLocalService(roleLocalService);
+		roleResource.setGroupLocalService(_groupLocalService);
+		roleResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(
@@ -465,8 +465,8 @@ public class Mutation {
 			_httpServletResponse);
 		subscriptionResource.setContextUriInfo(_uriInfo);
 		subscriptionResource.setContextUser(_user);
-		subscriptionResource.setGroupLocalService(groupLocalService);
-		subscriptionResource.setRoleLocalService(roleLocalService);
+		subscriptionResource.setGroupLocalService(_groupLocalService);
+		subscriptionResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(
@@ -479,8 +479,8 @@ public class Mutation {
 		userAccountResource.setContextHttpServletResponse(_httpServletResponse);
 		userAccountResource.setContextUriInfo(_uriInfo);
 		userAccountResource.setContextUser(_user);
-		userAccountResource.setGroupLocalService(groupLocalService);
-		userAccountResource.setRoleLocalService(roleLocalService);
+		userAccountResource.setGroupLocalService(_groupLocalService);
+		userAccountResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private static ComponentServiceObjects<OrganizationResource>
@@ -494,12 +494,12 @@ public class Mutation {
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;
-	private GroupLocalService groupLocalService;
-	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
-	private com.liferay.portal.kernel.model.User _user;
+	private GroupLocalService _groupLocalService;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
-	private RoleLocalService roleLocalService;
+	private RoleLocalService _roleLocalService;
+	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private UriInfo _uriInfo;
+	private com.liferay.portal.kernel.model.User _user;
 
 }

@@ -1064,9 +1064,9 @@ public abstract class BaseContentTemplateResourceTestCase {
 		Group group = testDepotEntry.getGroup();
 
 		if (!Objects.equals(
-				contentTemplate.getSiteId(), testGroup.getGroupId()) &&
+				contentTemplate.getAssetLibraryKey(), group.getGroupKey()) &&
 			!Objects.equals(
-				contentTemplate.getAssetLibraryKey(), group.getGroupKey())) {
+				contentTemplate.getSiteId(), testGroup.getGroupId())) {
 
 			valid = false;
 		}

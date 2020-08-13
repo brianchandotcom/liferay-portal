@@ -1146,8 +1146,8 @@ public class Query {
 			_httpServletResponse);
 		dataDefinitionResource.setContextUriInfo(_uriInfo);
 		dataDefinitionResource.setContextUser(_user);
-		dataDefinitionResource.setGroupLocalService(groupLocalService);
-		dataDefinitionResource.setRoleLocalService(roleLocalService);
+		dataDefinitionResource.setGroupLocalService(_groupLocalService);
+		dataDefinitionResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(
@@ -1163,8 +1163,9 @@ public class Query {
 			_httpServletResponse);
 		dataDefinitionFieldLinkResource.setContextUriInfo(_uriInfo);
 		dataDefinitionFieldLinkResource.setContextUser(_user);
-		dataDefinitionFieldLinkResource.setGroupLocalService(groupLocalService);
-		dataDefinitionFieldLinkResource.setRoleLocalService(roleLocalService);
+		dataDefinitionFieldLinkResource.setGroupLocalService(
+			_groupLocalService);
+		dataDefinitionFieldLinkResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(DataLayoutResource dataLayoutResource)
@@ -1176,8 +1177,8 @@ public class Query {
 		dataLayoutResource.setContextHttpServletResponse(_httpServletResponse);
 		dataLayoutResource.setContextUriInfo(_uriInfo);
 		dataLayoutResource.setContextUser(_user);
-		dataLayoutResource.setGroupLocalService(groupLocalService);
-		dataLayoutResource.setRoleLocalService(roleLocalService);
+		dataLayoutResource.setGroupLocalService(_groupLocalService);
+		dataLayoutResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(
@@ -1191,8 +1192,8 @@ public class Query {
 			_httpServletResponse);
 		dataListViewResource.setContextUriInfo(_uriInfo);
 		dataListViewResource.setContextUser(_user);
-		dataListViewResource.setGroupLocalService(groupLocalService);
-		dataListViewResource.setRoleLocalService(roleLocalService);
+		dataListViewResource.setGroupLocalService(_groupLocalService);
+		dataListViewResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(DataRecordResource dataRecordResource)
@@ -1204,8 +1205,8 @@ public class Query {
 		dataRecordResource.setContextHttpServletResponse(_httpServletResponse);
 		dataRecordResource.setContextUriInfo(_uriInfo);
 		dataRecordResource.setContextUser(_user);
-		dataRecordResource.setGroupLocalService(groupLocalService);
-		dataRecordResource.setRoleLocalService(roleLocalService);
+		dataRecordResource.setGroupLocalService(_groupLocalService);
+		dataRecordResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(
@@ -1220,8 +1221,8 @@ public class Query {
 			_httpServletResponse);
 		dataRecordCollectionResource.setContextUriInfo(_uriInfo);
 		dataRecordCollectionResource.setContextUser(_user);
-		dataRecordCollectionResource.setGroupLocalService(groupLocalService);
-		dataRecordCollectionResource.setRoleLocalService(roleLocalService);
+		dataRecordCollectionResource.setGroupLocalService(_groupLocalService);
+		dataRecordCollectionResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private static ComponentServiceObjects<DataDefinitionResource>
@@ -1238,14 +1239,14 @@ public class Query {
 		_dataRecordCollectionResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
-	private BiFunction<Object, String, Filter> _filterBiFunction;
-	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private com.liferay.portal.kernel.model.Company _company;
-	private GroupLocalService groupLocalService;
-	private com.liferay.portal.kernel.model.User _user;
+	private BiFunction<Object, String, Filter> _filterBiFunction;
+	private GroupLocalService _groupLocalService;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
-	private RoleLocalService roleLocalService;
+	private RoleLocalService _roleLocalService;
+	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private UriInfo _uriInfo;
+	private com.liferay.portal.kernel.model.User _user;
 
 }

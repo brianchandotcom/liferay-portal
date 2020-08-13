@@ -127,22 +127,22 @@ public class Query {
 		statusResource.setContextHttpServletResponse(_httpServletResponse);
 		statusResource.setContextUriInfo(_uriInfo);
 		statusResource.setContextUser(_user);
-		statusResource.setGroupLocalService(groupLocalService);
-		statusResource.setRoleLocalService(roleLocalService);
+		statusResource.setGroupLocalService(_groupLocalService);
+		statusResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private static ComponentServiceObjects<StatusResource>
 		_statusResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
-	private BiFunction<Object, String, Filter> _filterBiFunction;
-	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private com.liferay.portal.kernel.model.Company _company;
-	private GroupLocalService groupLocalService;
-	private com.liferay.portal.kernel.model.User _user;
+	private BiFunction<Object, String, Filter> _filterBiFunction;
+	private GroupLocalService _groupLocalService;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
-	private RoleLocalService roleLocalService;
+	private RoleLocalService _roleLocalService;
+	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private UriInfo _uriInfo;
+	private com.liferay.portal.kernel.model.User _user;
 
 }

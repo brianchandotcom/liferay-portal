@@ -1103,8 +1103,8 @@ public class Query {
 		assigneeResource.setContextHttpServletResponse(_httpServletResponse);
 		assigneeResource.setContextUriInfo(_uriInfo);
 		assigneeResource.setContextUser(_user);
-		assigneeResource.setGroupLocalService(groupLocalService);
-		assigneeResource.setRoleLocalService(roleLocalService);
+		assigneeResource.setGroupLocalService(_groupLocalService);
+		assigneeResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(TransitionResource transitionResource)
@@ -1116,8 +1116,8 @@ public class Query {
 		transitionResource.setContextHttpServletResponse(_httpServletResponse);
 		transitionResource.setContextUriInfo(_uriInfo);
 		transitionResource.setContextUser(_user);
-		transitionResource.setGroupLocalService(groupLocalService);
-		transitionResource.setRoleLocalService(roleLocalService);
+		transitionResource.setGroupLocalService(_groupLocalService);
+		transitionResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(
@@ -1132,8 +1132,8 @@ public class Query {
 			_httpServletResponse);
 		workflowDefinitionResource.setContextUriInfo(_uriInfo);
 		workflowDefinitionResource.setContextUser(_user);
-		workflowDefinitionResource.setGroupLocalService(groupLocalService);
-		workflowDefinitionResource.setRoleLocalService(roleLocalService);
+		workflowDefinitionResource.setGroupLocalService(_groupLocalService);
+		workflowDefinitionResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(
@@ -1148,8 +1148,8 @@ public class Query {
 			_httpServletResponse);
 		workflowInstanceResource.setContextUriInfo(_uriInfo);
 		workflowInstanceResource.setContextUser(_user);
-		workflowInstanceResource.setGroupLocalService(groupLocalService);
-		workflowInstanceResource.setRoleLocalService(roleLocalService);
+		workflowInstanceResource.setGroupLocalService(_groupLocalService);
+		workflowInstanceResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(
@@ -1162,8 +1162,8 @@ public class Query {
 		workflowLogResource.setContextHttpServletResponse(_httpServletResponse);
 		workflowLogResource.setContextUriInfo(_uriInfo);
 		workflowLogResource.setContextUser(_user);
-		workflowLogResource.setGroupLocalService(groupLocalService);
-		workflowLogResource.setRoleLocalService(roleLocalService);
+		workflowLogResource.setGroupLocalService(_groupLocalService);
+		workflowLogResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(
@@ -1177,8 +1177,8 @@ public class Query {
 			_httpServletResponse);
 		workflowTaskResource.setContextUriInfo(_uriInfo);
 		workflowTaskResource.setContextUser(_user);
-		workflowTaskResource.setGroupLocalService(groupLocalService);
-		workflowTaskResource.setRoleLocalService(roleLocalService);
+		workflowTaskResource.setGroupLocalService(_groupLocalService);
+		workflowTaskResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(
@@ -1194,8 +1194,9 @@ public class Query {
 			_httpServletResponse);
 		workflowTaskTransitionsResource.setContextUriInfo(_uriInfo);
 		workflowTaskTransitionsResource.setContextUser(_user);
-		workflowTaskTransitionsResource.setGroupLocalService(groupLocalService);
-		workflowTaskTransitionsResource.setRoleLocalService(roleLocalService);
+		workflowTaskTransitionsResource.setGroupLocalService(
+			_groupLocalService);
+		workflowTaskTransitionsResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private static ComponentServiceObjects<AssigneeResource>
@@ -1214,14 +1215,14 @@ public class Query {
 		_workflowTaskTransitionsResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
-	private BiFunction<Object, String, Filter> _filterBiFunction;
-	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private com.liferay.portal.kernel.model.Company _company;
-	private GroupLocalService groupLocalService;
-	private com.liferay.portal.kernel.model.User _user;
+	private BiFunction<Object, String, Filter> _filterBiFunction;
+	private GroupLocalService _groupLocalService;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
-	private RoleLocalService roleLocalService;
+	private RoleLocalService _roleLocalService;
+	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private UriInfo _uriInfo;
+	private com.liferay.portal.kernel.model.User _user;
 
 }

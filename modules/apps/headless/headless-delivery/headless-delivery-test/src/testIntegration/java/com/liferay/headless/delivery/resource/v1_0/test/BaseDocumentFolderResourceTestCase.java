@@ -1739,9 +1739,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		Group group = testDepotEntry.getGroup();
 
 		if (!Objects.equals(
-				documentFolder.getSiteId(), testGroup.getGroupId()) &&
+				documentFolder.getAssetLibraryKey(), group.getGroupKey()) &&
 			!Objects.equals(
-				documentFolder.getAssetLibraryKey(), group.getGroupKey())) {
+				documentFolder.getSiteId(), testGroup.getGroupId())) {
 
 			valid = false;
 		}

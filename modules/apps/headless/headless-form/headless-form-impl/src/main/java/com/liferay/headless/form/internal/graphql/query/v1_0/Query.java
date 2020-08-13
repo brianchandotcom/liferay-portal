@@ -425,8 +425,8 @@ public class Query {
 		formResource.setContextHttpServletResponse(_httpServletResponse);
 		formResource.setContextUriInfo(_uriInfo);
 		formResource.setContextUser(_user);
-		formResource.setGroupLocalService(groupLocalService);
-		formResource.setRoleLocalService(roleLocalService);
+		formResource.setGroupLocalService(_groupLocalService);
+		formResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(
@@ -440,8 +440,8 @@ public class Query {
 			_httpServletResponse);
 		formDocumentResource.setContextUriInfo(_uriInfo);
 		formDocumentResource.setContextUser(_user);
-		formDocumentResource.setGroupLocalService(groupLocalService);
-		formDocumentResource.setRoleLocalService(roleLocalService);
+		formDocumentResource.setGroupLocalService(_groupLocalService);
+		formDocumentResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(FormRecordResource formRecordResource)
@@ -453,8 +453,8 @@ public class Query {
 		formRecordResource.setContextHttpServletResponse(_httpServletResponse);
 		formRecordResource.setContextUriInfo(_uriInfo);
 		formRecordResource.setContextUser(_user);
-		formRecordResource.setGroupLocalService(groupLocalService);
-		formRecordResource.setRoleLocalService(roleLocalService);
+		formRecordResource.setGroupLocalService(_groupLocalService);
+		formRecordResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(
@@ -468,8 +468,8 @@ public class Query {
 			_httpServletResponse);
 		formStructureResource.setContextUriInfo(_uriInfo);
 		formStructureResource.setContextUser(_user);
-		formStructureResource.setGroupLocalService(groupLocalService);
-		formStructureResource.setRoleLocalService(roleLocalService);
+		formStructureResource.setGroupLocalService(_groupLocalService);
+		formStructureResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private static ComponentServiceObjects<FormResource>
@@ -482,14 +482,14 @@ public class Query {
 		_formStructureResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
-	private BiFunction<Object, String, Filter> _filterBiFunction;
-	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private com.liferay.portal.kernel.model.Company _company;
-	private GroupLocalService groupLocalService;
-	private com.liferay.portal.kernel.model.User _user;
+	private BiFunction<Object, String, Filter> _filterBiFunction;
+	private GroupLocalService _groupLocalService;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
-	private RoleLocalService roleLocalService;
+	private RoleLocalService _roleLocalService;
+	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private UriInfo _uriInfo;
+	private com.liferay.portal.kernel.model.User _user;
 
 }

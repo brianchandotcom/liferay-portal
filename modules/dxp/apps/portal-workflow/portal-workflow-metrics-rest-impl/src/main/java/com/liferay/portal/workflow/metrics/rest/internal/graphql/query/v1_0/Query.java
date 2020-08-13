@@ -1214,8 +1214,8 @@ public class Query {
 		calendarResource.setContextHttpServletResponse(_httpServletResponse);
 		calendarResource.setContextUriInfo(_uriInfo);
 		calendarResource.setContextUser(_user);
-		calendarResource.setGroupLocalService(groupLocalService);
-		calendarResource.setRoleLocalService(roleLocalService);
+		calendarResource.setGroupLocalService(_groupLocalService);
+		calendarResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(
@@ -1230,8 +1230,8 @@ public class Query {
 			_httpServletResponse);
 		histogramMetricResource.setContextUriInfo(_uriInfo);
 		histogramMetricResource.setContextUser(_user);
-		histogramMetricResource.setGroupLocalService(groupLocalService);
-		histogramMetricResource.setRoleLocalService(roleLocalService);
+		histogramMetricResource.setGroupLocalService(_groupLocalService);
+		histogramMetricResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(IndexResource indexResource)
@@ -1243,8 +1243,8 @@ public class Query {
 		indexResource.setContextHttpServletResponse(_httpServletResponse);
 		indexResource.setContextUriInfo(_uriInfo);
 		indexResource.setContextUser(_user);
-		indexResource.setGroupLocalService(groupLocalService);
-		indexResource.setRoleLocalService(roleLocalService);
+		indexResource.setGroupLocalService(_groupLocalService);
+		indexResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(InstanceResource instanceResource)
@@ -1256,8 +1256,8 @@ public class Query {
 		instanceResource.setContextHttpServletResponse(_httpServletResponse);
 		instanceResource.setContextUriInfo(_uriInfo);
 		instanceResource.setContextUser(_user);
-		instanceResource.setGroupLocalService(groupLocalService);
-		instanceResource.setRoleLocalService(roleLocalService);
+		instanceResource.setGroupLocalService(_groupLocalService);
+		instanceResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(NodeResource nodeResource)
@@ -1269,8 +1269,8 @@ public class Query {
 		nodeResource.setContextHttpServletResponse(_httpServletResponse);
 		nodeResource.setContextUriInfo(_uriInfo);
 		nodeResource.setContextUser(_user);
-		nodeResource.setGroupLocalService(groupLocalService);
-		nodeResource.setRoleLocalService(roleLocalService);
+		nodeResource.setGroupLocalService(_groupLocalService);
+		nodeResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(NodeMetricResource nodeMetricResource)
@@ -1282,8 +1282,8 @@ public class Query {
 		nodeMetricResource.setContextHttpServletResponse(_httpServletResponse);
 		nodeMetricResource.setContextUriInfo(_uriInfo);
 		nodeMetricResource.setContextUser(_user);
-		nodeMetricResource.setGroupLocalService(groupLocalService);
-		nodeMetricResource.setRoleLocalService(roleLocalService);
+		nodeMetricResource.setGroupLocalService(_groupLocalService);
+		nodeMetricResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(ProcessResource processResource)
@@ -1295,8 +1295,8 @@ public class Query {
 		processResource.setContextHttpServletResponse(_httpServletResponse);
 		processResource.setContextUriInfo(_uriInfo);
 		processResource.setContextUser(_user);
-		processResource.setGroupLocalService(groupLocalService);
-		processResource.setRoleLocalService(roleLocalService);
+		processResource.setGroupLocalService(_groupLocalService);
+		processResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(
@@ -1310,8 +1310,8 @@ public class Query {
 			_httpServletResponse);
 		processMetricResource.setContextUriInfo(_uriInfo);
 		processMetricResource.setContextUser(_user);
-		processMetricResource.setGroupLocalService(groupLocalService);
-		processMetricResource.setRoleLocalService(roleLocalService);
+		processMetricResource.setGroupLocalService(_groupLocalService);
+		processMetricResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(
@@ -1325,8 +1325,8 @@ public class Query {
 			_httpServletResponse);
 		reindexStatusResource.setContextUriInfo(_uriInfo);
 		reindexStatusResource.setContextUser(_user);
-		reindexStatusResource.setGroupLocalService(groupLocalService);
-		reindexStatusResource.setRoleLocalService(roleLocalService);
+		reindexStatusResource.setGroupLocalService(_groupLocalService);
+		reindexStatusResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(RoleResource roleResource)
@@ -1338,8 +1338,8 @@ public class Query {
 		roleResource.setContextHttpServletResponse(_httpServletResponse);
 		roleResource.setContextUriInfo(_uriInfo);
 		roleResource.setContextUser(_user);
-		roleResource.setGroupLocalService(groupLocalService);
-		roleResource.setRoleLocalService(roleLocalService);
+		roleResource.setGroupLocalService(_groupLocalService);
+		roleResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(SLAResource slaResource)
@@ -1351,8 +1351,8 @@ public class Query {
 		slaResource.setContextHttpServletResponse(_httpServletResponse);
 		slaResource.setContextUriInfo(_uriInfo);
 		slaResource.setContextUser(_user);
-		slaResource.setGroupLocalService(groupLocalService);
-		slaResource.setRoleLocalService(roleLocalService);
+		slaResource.setGroupLocalService(_groupLocalService);
+		slaResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(TaskResource taskResource)
@@ -1364,8 +1364,8 @@ public class Query {
 		taskResource.setContextHttpServletResponse(_httpServletResponse);
 		taskResource.setContextUriInfo(_uriInfo);
 		taskResource.setContextUser(_user);
-		taskResource.setGroupLocalService(groupLocalService);
-		taskResource.setRoleLocalService(roleLocalService);
+		taskResource.setGroupLocalService(_groupLocalService);
+		taskResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(TimeRangeResource timeRangeResource)
@@ -1377,8 +1377,8 @@ public class Query {
 		timeRangeResource.setContextHttpServletResponse(_httpServletResponse);
 		timeRangeResource.setContextUriInfo(_uriInfo);
 		timeRangeResource.setContextUser(_user);
-		timeRangeResource.setGroupLocalService(groupLocalService);
-		timeRangeResource.setRoleLocalService(roleLocalService);
+		timeRangeResource.setGroupLocalService(_groupLocalService);
+		timeRangeResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private static ComponentServiceObjects<CalendarResource>
@@ -1409,14 +1409,14 @@ public class Query {
 		_timeRangeResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
-	private BiFunction<Object, String, Filter> _filterBiFunction;
-	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private com.liferay.portal.kernel.model.Company _company;
-	private GroupLocalService groupLocalService;
-	private com.liferay.portal.kernel.model.User _user;
+	private BiFunction<Object, String, Filter> _filterBiFunction;
+	private GroupLocalService _groupLocalService;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
-	private RoleLocalService roleLocalService;
+	private RoleLocalService _roleLocalService;
+	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private UriInfo _uriInfo;
+	private com.liferay.portal.kernel.model.User _user;
 
 }

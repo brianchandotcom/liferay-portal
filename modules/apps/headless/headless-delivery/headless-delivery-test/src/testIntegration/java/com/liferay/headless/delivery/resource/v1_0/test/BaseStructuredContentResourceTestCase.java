@@ -2515,9 +2515,9 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Group group = testDepotEntry.getGroup();
 
 		if (!Objects.equals(
-				structuredContent.getSiteId(), testGroup.getGroupId()) &&
+				structuredContent.getAssetLibraryKey(), group.getGroupKey()) &&
 			!Objects.equals(
-				structuredContent.getAssetLibraryKey(), group.getGroupKey())) {
+				structuredContent.getSiteId(), testGroup.getGroupId())) {
 
 			valid = false;
 		}

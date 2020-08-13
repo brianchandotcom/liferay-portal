@@ -1386,9 +1386,9 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		Group group = testDepotEntry.getGroup();
 
 		if (!Objects.equals(
-				taxonomyVocabulary.getSiteId(), testGroup.getGroupId()) &&
+				taxonomyVocabulary.getAssetLibraryKey(), group.getGroupKey()) &&
 			!Objects.equals(
-				taxonomyVocabulary.getAssetLibraryKey(), group.getGroupKey())) {
+				taxonomyVocabulary.getSiteId(), testGroup.getGroupId())) {
 
 			valid = false;
 		}

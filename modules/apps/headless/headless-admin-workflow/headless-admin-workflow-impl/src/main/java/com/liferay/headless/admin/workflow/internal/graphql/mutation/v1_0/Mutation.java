@@ -402,8 +402,8 @@ public class Mutation {
 			_httpServletResponse);
 		workflowDefinitionResource.setContextUriInfo(_uriInfo);
 		workflowDefinitionResource.setContextUser(_user);
-		workflowDefinitionResource.setGroupLocalService(groupLocalService);
-		workflowDefinitionResource.setRoleLocalService(roleLocalService);
+		workflowDefinitionResource.setGroupLocalService(_groupLocalService);
+		workflowDefinitionResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(
@@ -418,8 +418,8 @@ public class Mutation {
 			_httpServletResponse);
 		workflowInstanceResource.setContextUriInfo(_uriInfo);
 		workflowInstanceResource.setContextUser(_user);
-		workflowInstanceResource.setGroupLocalService(groupLocalService);
-		workflowInstanceResource.setRoleLocalService(roleLocalService);
+		workflowInstanceResource.setGroupLocalService(_groupLocalService);
+		workflowInstanceResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(
@@ -433,8 +433,8 @@ public class Mutation {
 			_httpServletResponse);
 		workflowTaskResource.setContextUriInfo(_uriInfo);
 		workflowTaskResource.setContextUser(_user);
-		workflowTaskResource.setGroupLocalService(groupLocalService);
-		workflowTaskResource.setRoleLocalService(roleLocalService);
+		workflowTaskResource.setGroupLocalService(_groupLocalService);
+		workflowTaskResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(
@@ -452,9 +452,9 @@ public class Mutation {
 		workflowTaskAssignableUsersResource.setContextUriInfo(_uriInfo);
 		workflowTaskAssignableUsersResource.setContextUser(_user);
 		workflowTaskAssignableUsersResource.setGroupLocalService(
-			groupLocalService);
+			_groupLocalService);
 		workflowTaskAssignableUsersResource.setRoleLocalService(
-			roleLocalService);
+			_roleLocalService);
 	}
 
 	private static ComponentServiceObjects<WorkflowDefinitionResource>
@@ -468,12 +468,12 @@ public class Mutation {
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;
-	private GroupLocalService groupLocalService;
-	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
-	private com.liferay.portal.kernel.model.User _user;
+	private GroupLocalService _groupLocalService;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
-	private RoleLocalService roleLocalService;
+	private RoleLocalService _roleLocalService;
+	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private UriInfo _uriInfo;
+	private com.liferay.portal.kernel.model.User _user;
 
 }

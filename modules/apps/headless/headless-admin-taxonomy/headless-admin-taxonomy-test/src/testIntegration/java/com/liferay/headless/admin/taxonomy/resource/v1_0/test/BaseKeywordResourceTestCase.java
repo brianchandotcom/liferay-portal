@@ -1248,9 +1248,9 @@ public abstract class BaseKeywordResourceTestCase {
 
 		Group group = testDepotEntry.getGroup();
 
-		if (!Objects.equals(keyword.getSiteId(), testGroup.getGroupId()) &&
-			!Objects.equals(
-				keyword.getAssetLibraryKey(), group.getGroupKey())) {
+		if (!Objects.equals(
+				keyword.getAssetLibraryKey(), group.getGroupKey()) &&
+			!Objects.equals(keyword.getSiteId(), testGroup.getGroupId())) {
 
 			valid = false;
 		}

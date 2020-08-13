@@ -1912,10 +1912,10 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		Group group = testDepotEntry.getGroup();
 
 		if (!Objects.equals(
-				structuredContentFolder.getSiteId(), testGroup.getGroupId()) &&
-			!Objects.equals(
 				structuredContentFolder.getAssetLibraryKey(),
-				group.getGroupKey())) {
+				group.getGroupKey()) &&
+			!Objects.equals(
+				structuredContentFolder.getSiteId(), testGroup.getGroupId())) {
 
 			valid = false;
 		}

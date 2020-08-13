@@ -171,8 +171,8 @@ public class Mutation {
 		appWorkflowResource.setContextHttpServletResponse(_httpServletResponse);
 		appWorkflowResource.setContextUriInfo(_uriInfo);
 		appWorkflowResource.setContextUser(_user);
-		appWorkflowResource.setGroupLocalService(groupLocalService);
-		appWorkflowResource.setRoleLocalService(roleLocalService);
+		appWorkflowResource.setGroupLocalService(_groupLocalService);
+		appWorkflowResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(
@@ -189,8 +189,9 @@ public class Mutation {
 		appWorkflowDataRecordLinkResource.setContextUriInfo(_uriInfo);
 		appWorkflowDataRecordLinkResource.setContextUser(_user);
 		appWorkflowDataRecordLinkResource.setGroupLocalService(
-			groupLocalService);
-		appWorkflowDataRecordLinkResource.setRoleLocalService(roleLocalService);
+			_groupLocalService);
+		appWorkflowDataRecordLinkResource.setRoleLocalService(
+			_roleLocalService);
 	}
 
 	private static ComponentServiceObjects<AppWorkflowResource>
@@ -200,12 +201,12 @@ public class Mutation {
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;
-	private GroupLocalService groupLocalService;
-	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
-	private com.liferay.portal.kernel.model.User _user;
+	private GroupLocalService _groupLocalService;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
-	private RoleLocalService roleLocalService;
+	private RoleLocalService _roleLocalService;
+	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private UriInfo _uriInfo;
+	private com.liferay.portal.kernel.model.User _user;
 
 }

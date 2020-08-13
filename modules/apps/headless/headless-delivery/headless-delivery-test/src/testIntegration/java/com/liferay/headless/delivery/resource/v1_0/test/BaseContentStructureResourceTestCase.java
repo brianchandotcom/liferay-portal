@@ -1058,9 +1058,9 @@ public abstract class BaseContentStructureResourceTestCase {
 		Group group = testDepotEntry.getGroup();
 
 		if (!Objects.equals(
-				contentStructure.getSiteId(), testGroup.getGroupId()) &&
+				contentStructure.getAssetLibraryKey(), group.getGroupKey()) &&
 			!Objects.equals(
-				contentStructure.getAssetLibraryKey(), group.getGroupKey())) {
+				contentStructure.getSiteId(), testGroup.getGroupId())) {
 
 			valid = false;
 		}

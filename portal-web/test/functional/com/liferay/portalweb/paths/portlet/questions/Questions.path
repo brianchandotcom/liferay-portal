@@ -194,6 +194,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>QUESTIONS_VOTED_COUNT</td>
+	<td>//div[contains(@class,'question-row') and contains(.,'${key_questionTitle}')]//ul/li[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VOTE_BUTTON</td>
+	<td>//button[contains(@class,'text-reset')]//*[name()='svg'][contains(@class,'${key_caretName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VOTED_RESULT</td>
+	<td>//div[contains(@class,'questions-container')]//span[contains(@class,'c-px-2') and normalize-space()='${key_votedResult}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_INFO</td>
 	<td>//div[contains(@class,'questions-container')]//span[contains(.,'${key_resultsInfo}')]</td>
 	<td></td>

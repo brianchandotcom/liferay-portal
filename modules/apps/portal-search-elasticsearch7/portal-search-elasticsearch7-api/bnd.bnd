@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Search Elasticsearch 7 API
 Bundle-SymbolicName: com.liferay.portal.search.elasticsearch7.api
-Bundle-Version: 2.3.4
+Bundle-Version: 2.4.0
 Export-Package:\
 	com.liferay.portal.search.elasticsearch7.configuration,\
 	com.liferay.portal.search.elasticsearch7.constants,\

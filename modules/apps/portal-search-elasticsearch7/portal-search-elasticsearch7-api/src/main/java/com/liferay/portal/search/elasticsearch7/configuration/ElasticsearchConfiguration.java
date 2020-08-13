@@ -217,6 +217,12 @@ public interface ElasticsearchConfiguration {
 	public String networkPublishHost();
 
 	@Meta.AD(
+		deflt = "true", description = "track-total-hits-help",
+		name = "track-total-hits", required = false
+	)
+	public boolean trackTotalHits();
+
+	@Meta.AD(
 		deflt = "", description = "transport-tcp-port-help",
 		name = "transport-tcp-port", required = false
 	)

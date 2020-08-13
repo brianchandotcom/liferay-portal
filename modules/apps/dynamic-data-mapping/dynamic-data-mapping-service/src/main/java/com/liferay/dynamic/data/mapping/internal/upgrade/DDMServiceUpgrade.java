@@ -235,8 +235,10 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register("2.0.8", "2.0.9", new DummyUpgradeStep());
 
+		registry.register("2.0.9", "2.0.10", new DummyUpgradeStep());
+
 		registry.register(
-			"2.0.9", "3.0.0",
+			"2.0.10", "3.0.0",
 			new BaseUpgradeSQLServerDatetime(
 				new Class<?>[] {
 					DDMContentTable.class, DDMDataProviderInstanceTable.class,
@@ -298,8 +300,10 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register("3.2.6", "3.2.7", new DummyUpgradeStep());
 
+		registry.register("3.2.7", "3.2.8", new DummyUpgradeStep());
+
 		registry.register(
-			"3.2.7", "3.3.0",
+			"3.2.8", "3.3.0",
 			new UpgradeCTModel(
 				"DDMStructure", "DDMStructureVersion", "DDMTemplate",
 				"DDMTemplateVersion"));

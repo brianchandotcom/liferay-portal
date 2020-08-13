@@ -38,11 +38,11 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Admin.Workflow)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Admin.Workflow.WorkflowExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Admin.Workflow.InvalidWorkflowExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
-public class WorkflowExceptionMapper
+public class InvalidWorkflowExceptionMapper
 	extends BaseExceptionMapper<WorkflowException> {
 
 	@Override
@@ -58,7 +58,7 @@ public class WorkflowExceptionMapper
 			return _language.get(
 				ResourceBundleUtil.getModuleAndPortalResourceBundle(
 					_acceptLanguage.getPreferredLocale(),
-					WorkflowExceptionMapper.class),
+					InvalidWorkflowExceptionMapper.class),
 				"please-enter-a-valid-due-date");
 		}
 

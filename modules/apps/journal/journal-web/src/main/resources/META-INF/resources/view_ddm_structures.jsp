@@ -31,9 +31,7 @@ JournalDDMStructuresManagementToolbarDisplayContext journalDDMStructuresManageme
 	displayContext="<%= journalDDMStructuresManagementToolbarDisplayContext %>"
 />
 
-<portlet:actionURL copyCurrentRenderParameters="<%= true %>" name="/journal/delete_ddm_structure" var="deleteDDMStructureURL">
-	<portlet:param name="mvcPath" value="/view_ddm_structures.jsp" />
-</portlet:actionURL>
+<portlet:actionURL copyCurrentRenderParameters="<%= true %>" name="/journal/delete_ddm_structure" var="deleteDDMStructureURL" />
 
 <portlet:actionURL name="/journal/delete_data_definition" var="deleteDataDefinitionURL">
 	<portlet:param name="mvcPath" value="/view_ddm_structures.jsp" />

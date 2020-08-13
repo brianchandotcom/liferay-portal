@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.ratings.kernel.model.RatingsStatsTable;
 import com.liferay.social.kernel.model.SocialActivitySetTable;
 import com.liferay.subscription.model.SubscriptionTable;
+import com.liferay.trash.model.TrashEntryTable;
+import com.liferay.trash.model.TrashVersionTable;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -128,6 +130,30 @@ public class AssetEntryTableReferenceDefinition
 				).and(
 					AssetEntryTable.INSTANCE.classPK.eq(
 						SubscriptionTable.INSTANCE.classPK)
+				)
+			)
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
+				TrashEntryTable.INSTANCE
+			).innerJoinON(
+				AssetEntryTable.INSTANCE,
+				AssetEntryTable.INSTANCE.classNameId.eq(
+					TrashEntryTable.INSTANCE.classNameId
+				).and(
+					AssetEntryTable.INSTANCE.classPK.eq(
+						TrashEntryTable.INSTANCE.classPK)
+				)
+			)
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
+				TrashVersionTable.INSTANCE
+			).innerJoinON(
+				AssetEntryTable.INSTANCE,
+				AssetEntryTable.INSTANCE.classNameId.eq(
+					TrashVersionTable.INSTANCE.classNameId
+				).and(
+					AssetEntryTable.INSTANCE.classPK.eq(
+						TrashVersionTable.INSTANCE.classPK)
 				)
 			)
 		);

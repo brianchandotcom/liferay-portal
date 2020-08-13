@@ -1094,9 +1094,8 @@ definition {
 
 			if (isSet(marginBottom)) {
 				Select(
-					key_borderBottom = "Margin",
-					key_fieldLabel = "Bottom",
-					locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
+					key_fieldLabel = "Margin Bottom",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "${marginBottom}");
 
 				Pause(locator1 = "3000");
@@ -1104,9 +1103,8 @@ definition {
 
 			if (isSet(marginLeft)) {
 				Select(
-					key_borderBottom = "Margin",
-					key_fieldLabel = "Left",
-					locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
+					key_fieldLabel = "Margin Left",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "${marginLeft}");
 
 				Pause(locator1 = "3000");
@@ -1114,9 +1112,8 @@ definition {
 
 			if (isSet(marginRight)) {
 				Select(
-					key_borderBottom = "Margin",
-					key_fieldLabel = "Right",
-					locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
+					key_fieldLabel = "Margin Right",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "${marginRight}");
 
 				Pause(locator1 = "3000");
@@ -1124,9 +1121,8 @@ definition {
 
 			if (isSet(marginTop)) {
 				Select(
-					key_borderBottom = "Margin",
-					key_fieldLabel = "Top",
-					locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
+					key_fieldLabel = "Margin Top",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "${marginTop}");
 
 				Pause(locator1 = "3000");
@@ -1152,9 +1148,8 @@ definition {
 
 			if (isSet(paddingBottom)) {
 				Select(
-					key_borderBottom = "Padding",
-					key_fieldLabel = "Bottom",
-					locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
+					key_fieldLabel = "Padding Bottom",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "${paddingBottom}");
 
 				Pause(locator1 = "3000");
@@ -1162,9 +1157,8 @@ definition {
 
 			if (isSet(paddingLeft)) {
 				Select(
-					key_borderBottom = "Padding",
-					key_fieldLabel = "Left",
-					locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
+					key_fieldLabel = "Padding Left",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "${paddingLeft}");
 
 				Pause(locator1 = "3000");
@@ -1172,9 +1166,8 @@ definition {
 
 			if (isSet(paddingRight)) {
 				Select(
-					key_borderBottom = "Padding",
-					key_fieldLabel = "Right",
-					locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
+					key_fieldLabel = "Padding Right",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "${paddingRight}");
 
 				Pause(locator1 = "3000");
@@ -1182,9 +1175,8 @@ definition {
 
 			if (isSet(paddingTop)) {
 				Select(
-					key_borderBottom = "Padding",
-					key_fieldLabel = "Top",
-					locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
+					key_fieldLabel = "Padding Top",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "${paddingTop}");
 
 				Pause(locator1 = "3000");

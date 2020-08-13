@@ -40,15 +40,18 @@ public class ClayDataSetDisplayViewRegistryImpl
 	implements ClayDataSetDisplayViewRegistry {
 
 	@Override
-	public List<ClayDataSetDisplayView> getClayDataSetDisplayViews(String key) {
+	public List<ClayDataSetDisplayView> getClayDataSetDisplayViews(
+		String clayDataSetDisplayName) {
+
 		List<ServiceWrapper<ClayDataSetDisplayView>>
 			clayDataSetDisplayViewServiceWrappers =
-				_serviceTrackerMap.getService(key);
+				_serviceTrackerMap.getService(clayDataSetDisplayName);
 
 		if (clayDataSetDisplayViewServiceWrappers == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No Clay data set display view registered with key " + key);
+					"No Clay data set display view registered with name " +
+						clayDataSetDisplayName);
 			}
 
 			return Collections.emptyList();

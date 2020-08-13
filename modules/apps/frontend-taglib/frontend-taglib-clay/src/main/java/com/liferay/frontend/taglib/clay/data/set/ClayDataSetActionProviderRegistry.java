@@ -22,6 +22,6 @@ import java.util.List;
 public interface ClayDataSetActionProviderRegistry {
 
 	public List<ClayDataSetActionProvider> getClayDataSetActionProviders(
-		String clayDataSetProviderKey);
+		String clayDataProviderKey);
 
 }

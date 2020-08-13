@@ -72,10 +72,10 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 public class FrontendClayApplication extends Application {
 
 	@GET
-	@Path("/data-set/{tableName}/{dataProvider}")
+	@Path("/data-set/{tableName}/{clayDataProviderKey}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getClayDataSetData(
-		@PathParam("dataProvider") String dataProvider,
+		@PathParam("clayDataProviderKey") String clayDataProviderKey,
 		@PathParam("tableName") String tableName,
 		@QueryParam("groupId") long groupId, @QueryParam("plid") long plid,
 		@QueryParam("portletId") String portletId,
@@ -85,17 +85,18 @@ public class FrontendClayApplication extends Application {
 		@Context ThemeDisplay themeDisplay, @Context UriInfo uriInfo) {
 
 		ClayDataSetDataProvider clayDataSetDataProvider =
-			_clayDataProviderRegistry.getClayDataSetProvider(dataProvider);
+			_clayDataProviderRegistry.getClayDataSetProvider(
+				clayDataProviderKey);
 
 		if ((clayDataSetDataProvider == null) && _log.isDebugEnabled()) {
 			_log.debug(
 				"No Clay data set data provider registered with key " +
-					dataProvider);
+					clayDataProviderKey);
 		}
 
 		try {
 			FilterFactory filterFactory =
-				_filterFactoryRegistry.getFilterFactory(dataProvider);
+				_filterFactoryRegistry.getFilterFactory(clayDataProviderKey);
 
 			return Response.ok(
 				_clayDataSetDataJSONFactory.create(

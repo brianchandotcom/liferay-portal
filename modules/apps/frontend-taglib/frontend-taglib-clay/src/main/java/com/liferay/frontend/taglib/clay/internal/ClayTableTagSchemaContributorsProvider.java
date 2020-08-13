@@ -37,12 +37,13 @@ import org.osgi.service.component.annotations.Deactivate;
 public class ClayTableTagSchemaContributorsProvider {
 
 	public static List<ClayTableTagSchemaContributor>
-		getClayTableTagSchemaContributors(String key) {
+		getClayTableTagSchemaContributors(
+			String clayTableTagSchemaContributorKey) {
 
 		if (_clayTableTagSchemaContributorsProvider == null) {
 			_log.error(
 				"Unable to get list of Clay table tag schema contributors " +
-					"for key " + key);
+					"for key " + clayTableTagSchemaContributorKey);
 
 			return Collections.emptyList();
 		}
@@ -52,7 +53,8 @@ public class ClayTableTagSchemaContributorsProvider {
 				_clayTableTagSchemaContributorsProvider.
 					_clayTableTagSchemaContributors;
 
-		return clayTableTagSchemaContributors.getService(key);
+		return clayTableTagSchemaContributors.getService(
+			clayTableTagSchemaContributorKey);
 	}
 
 	public ClayTableTagSchemaContributorsProvider() {

@@ -37,12 +37,12 @@ import org.osgi.service.component.annotations.Deactivate;
 public class ClayTagContextContributorsProvider {
 
 	public static List<ClayTagContextContributor> getClayTagContextContributors(
-		String key) {
+		String clayTagContextContributorKey) {
 
 		if (_clayTagContextContributorsProvider == null) {
 			_log.error(
 				"Unable to get list of Clay tag context contributors for key " +
-					key);
+					clayTagContextContributorKey);
 
 			return Collections.emptyList();
 		}
@@ -51,7 +51,8 @@ public class ClayTagContextContributorsProvider {
 			clayTagContextContributors =
 				_clayTagContextContributorsProvider._clayTagContextContributors;
 
-		return clayTagContextContributors.getService(key);
+		return clayTagContextContributors.getService(
+			clayTagContextContributorKey);
 	}
 
 	public ClayTagContextContributorsProvider() {

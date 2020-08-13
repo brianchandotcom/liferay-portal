@@ -23,6 +23,6 @@ public interface ClayDataSetContentRendererContextContributorRegistry {
 
 	public List<ClayDataSetContentRendererContextContributor>
 		getClayDataSetContentRendererContextContributors(
-			String clayDataSetContentRendererContextContributorKey);
+			String clayDataSetContentRendererName);
 
 }

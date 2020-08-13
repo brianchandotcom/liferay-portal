@@ -78,6 +78,7 @@ String redirect = portletURL.toString();
 
 				<liferay-ui:search-iterator
 					markupView="lexicon"
+					paginate="<%= false %>"
 					searchResultCssClass="show-quick-actions-on-hover table table-autofit"
 				/>
 			</liferay-ui:search-container>
@@ -122,6 +123,7 @@ String redirect = portletURL.toString();
 
 				<liferay-ui:search-iterator
 					markupView="lexicon"
+					paginate="<%= false %>"
 					searchResultCssClass="show-quick-actions-on-hover table table-autofit"
 				/>
 			</liferay-ui:search-container>

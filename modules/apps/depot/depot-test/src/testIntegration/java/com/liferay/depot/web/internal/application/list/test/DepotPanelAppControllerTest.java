@@ -90,21 +90,6 @@ public class DepotPanelAppControllerTest {
 	}
 
 	@Test
-	public void testGetPanelAppsShowsOnlyExportAndIMportInTheStagingCategoryForADepotGroup()
-		throws Exception {
-
-		List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
-			PanelCategoryKeys.SITE_ADMINISTRATION_PUBLISHING,
-			PermissionThreadLocal.getPermissionChecker(),
-			_groupLocalService.getGroup(_depotEntry.getGroupId()));
-
-		Assert.assertEquals(panelApps.toString(), 2, panelApps.size());
-
-		_assertPanelAppsContain(panelApps, ExportImportPortletKeys.EXPORT);
-		_assertPanelAppsContain(panelApps, ExportImportPortletKeys.IMPORT);
-	}
-
-	@Test
 	public void testGetPanelAppsShowsAllContentWithSites() throws Exception {
 		List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
 			PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT,
@@ -128,6 +113,21 @@ public class DepotPanelAppControllerTest {
 		_assertPanelAppsContain(
 			panelApps, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN);
 		_assertPanelAppsContain(panelApps, JournalPortletKeys.JOURNAL);
+	}
+
+	@Test
+	public void testGetPanelAppsShowsOnlyExportAndIMportInTheStagingCategoryForADepotGroup()
+		throws Exception {
+
+		List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
+			PanelCategoryKeys.SITE_ADMINISTRATION_PUBLISHING,
+			PermissionThreadLocal.getPermissionChecker(),
+			_groupLocalService.getGroup(_depotEntry.getGroupId()));
+
+		Assert.assertEquals(panelApps.toString(), 2, panelApps.size());
+
+		_assertPanelAppsContain(panelApps, ExportImportPortletKeys.EXPORT);
+		_assertPanelAppsContain(panelApps, ExportImportPortletKeys.IMPORT);
 	}
 
 	@Test
@@ -199,20 +199,6 @@ public class DepotPanelAppControllerTest {
 			_groupLocalService.getGroup(groupId));
 
 		Assert.assertFalse(panelApps.isEmpty());
-	}
-
-	private void _assertIsHiddenForADepotGroup(String parentPanelCategoryKey)
-		throws Exception {
-
-		List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
-			parentPanelCategoryKey,
-			PermissionThreadLocal.getPermissionChecker(),
-			_groupLocalService.getGroup(_depotEntry.getGroupId()));
-
-		Assert.assertTrue(panelApps.isEmpty());
-
-		_assertIsDisplayed(
-			TestPropsValues.getGroupId(), parentPanelCategoryKey);
 	}
 
 	private void _assertPanelAppsContain(

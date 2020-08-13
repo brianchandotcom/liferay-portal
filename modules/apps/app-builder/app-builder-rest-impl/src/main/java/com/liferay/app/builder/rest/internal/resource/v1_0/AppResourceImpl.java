@@ -81,8 +81,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import javax.ws.rs.BadRequestException;
@@ -695,22 +693,12 @@ public class AppResourceImpl
 					throw new InvalidAppException(
 						"The app name has more than 30 characters");
 				}
-
-				Matcher matcher = _invalidAppNameCharsPattern.matcher(
-					localizedName);
-
-				if (matcher.matches()) {
-					throw new InvalidAppException(
-						"The app name must not contain special characters");
-				}
 			}
 		}
 	}
 
 	private static final EntityModel _entityModel =
 		new AppBuilderAppEntityModel();
-	private static final Pattern _invalidAppNameCharsPattern = Pattern.compile(
-		".*[$&+,:;=\\\\?@#|/'<>.^*()%!-].*");
 
 	@Reference
 	private AppBuilderAppDeploymentLocalService

@@ -19,27 +19,24 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.rest.client.dto.v1_0.AccountUser;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Drew Brokke
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class AccountUserResourceTest extends BaseAccountUserResourceTestCase {
 
@@ -49,15 +46,31 @@ public class AccountUserResourceTest extends BaseAccountUserResourceTestCase {
 		super.setUp();
 
 		_accountEntry = _getAccountEntry();
-		_irrelevantAccountEntry = _getAccountEntry();
 	}
 
 	@After
 	@Override
 	public void tearDown() throws Exception {
-		super.tearDown();
+	}
 
-		_deleteAccountUsers(_accountUsers);
+	@Override
+	@Test
+	public void testPostAccountUser() throws Exception {
+		super.testPostAccountUser();
+
+		AccountUser randomAccountUser = randomAccountUser();
+
+		Assert.assertNull(
+			_userLocalService.fetchUserByReferenceCode(
+				TestPropsValues.getCompanyId(),
+				randomAccountUser.getExternalReferenceCode()));
+
+		testPostAccountUser_addAccountUser(randomAccountUser);
+
+		Assert.assertNotNull(
+			_userLocalService.fetchUserByReferenceCode(
+				TestPropsValues.getCompanyId(),
+				randomAccountUser.getExternalReferenceCode()));
 	}
 
 	@Override
@@ -66,22 +79,20 @@ public class AccountUserResourceTest extends BaseAccountUserResourceTestCase {
 	}
 
 	@Override
-	protected AccountUser randomAccountUser() {
-		return new AccountUser() {
-			{
-				emailAddress =
-					StringUtil.toLowerCase(RandomTestUtil.randomString()) +
-						"@liferay.com";
-				firstName = RandomTestUtil.randomString();
-				id = RandomTestUtil.randomLong();
-				lastName = RandomTestUtil.randomString();
-				middleName = RandomTestUtil.randomString();
-				prefix = RandomTestUtil.randomString();
-				screenName = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				suffix = RandomTestUtil.randomString();
-			}
-		};
+	protected AccountUser
+			testGetAccountUsersByExternalReferenceCodePage_addAccountUser(
+				String externalReferenceCode, AccountUser accountUser)
+		throws Exception {
+
+		return accountUserResource.postAccountUserByExternalReferenceCode(
+			externalReferenceCode, accountUser);
+	}
+
+	@Override
+	protected String
+		testGetAccountUsersByExternalReferenceCodePage_getExternalReferenceCode() {
+
+		return _accountEntry.getExternalReferenceCode();
 	}
 
 	@Override
@@ -95,11 +106,6 @@ public class AccountUserResourceTest extends BaseAccountUserResourceTestCase {
 	@Override
 	protected Long testGetAccountUsersPage_getAccountId() {
 		return _getAccountEntryId();
-	}
-
-	@Override
-	protected Long testGetAccountUsersPage_getIrrelevantAccountId() {
-		return _getIrrelevantAccountEntryId();
 	}
 
 	@Override
@@ -117,61 +123,46 @@ public class AccountUserResourceTest extends BaseAccountUserResourceTestCase {
 		return _addAccountUser(_getAccountEntryId(), accountUser);
 	}
 
+	@Override
+	protected AccountUser
+			testPostAccountUserByExternalReferenceCode_addAccountUser(
+				AccountUser accountUser)
+		throws Exception {
+
+		return accountUserResource.postAccountUserByExternalReferenceCode(
+			_accountEntry.getExternalReferenceCode(), accountUser);
+	}
+
 	private AccountUser _addAccountUser(Long accountId, AccountUser accountUser)
 		throws Exception {
 
-		accountUser = accountUserResource.postAccountUser(
-			accountId, accountUser);
-
-		_accountUsers.add(accountUser);
-
-		return accountUser;
-	}
-
-	private void _deleteAccountUsers(List<AccountUser> accountUsers) {
-		for (AccountUser accountUser : accountUsers) {
-			try {
-				_userLocalService.deleteUser(accountUser.getId());
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
-				}
-			}
-		}
+		return accountUserResource.postAccountUser(accountId, accountUser);
 	}
 
 	private AccountEntry _getAccountEntry() throws Exception {
-		return _accountEntryLocalService.addAccountEntry(
+		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
 			TestPropsValues.getUserId(),
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 			RandomTestUtil.randomString(20), RandomTestUtil.randomString(20),
 			null, null, null, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
 			WorkflowConstants.STATUS_APPROVED,
 			ServiceContextTestUtil.getServiceContext());
+
+		accountEntry.setExternalReferenceCode(RandomTestUtil.randomString());
+
+		_accountEntryLocalService.updateAccountEntry(accountEntry);
+
+		return accountEntry;
 	}
 
 	private Long _getAccountEntryId() {
 		return _accountEntry.getAccountEntryId();
 	}
 
-	private Long _getIrrelevantAccountEntryId() {
-		return _irrelevantAccountEntry.getAccountEntryId();
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AccountUserResourceTest.class);
-
-	@DeleteAfterTestRun
 	private AccountEntry _accountEntry;
 
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
-
-	private final List<AccountUser> _accountUsers = new ArrayList<>();
-
-	@DeleteAfterTestRun
-	private AccountEntry _irrelevantAccountEntry;
 
 	@Inject
 	private UserLocalService _userLocalService;

@@ -203,6 +203,11 @@ definition {
 
 			Pause(locator1 = "3000");
 
+			AssertClick(
+				key_navItem = "Configuration",
+				locator1 = "PageEditor#NAV_ITEM_BUTTON",
+				value1 = "Configuration");
+
 			AssertVisible(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_CONFIGURATION_PANEL");
 		}
 	}

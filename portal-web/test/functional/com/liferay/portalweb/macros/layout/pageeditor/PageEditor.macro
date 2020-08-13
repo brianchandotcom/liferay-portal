@@ -481,18 +481,9 @@ definition {
 	macro configureFragment {
 		if (isSet(alignment)) {
 			Select(
-				key_fieldLabel = "Align",
+				key_fieldLabel = "Text Align",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${alignment}");
-
-			Pause(locator1 = "2000");
-		}
-
-		if (isSet(contentAlign)) {
-			Select(
-				key_fieldLabel = "Content Align",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${contentAlign}");
 
 			Pause(locator1 = "2000");
 		}
@@ -526,7 +517,7 @@ definition {
 
 		if (isSet(boxShadow)) {
 			Select(
-				key_fieldLabel = "Box Shadow",
+				key_fieldLabel = "Shadow",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${boxShadow}");
 
@@ -599,15 +590,6 @@ definition {
 				key_borderBottom = "Text Body",
 				key_paletteItem = "${textColor}",
 				locator1 = "Button#BORDER_BOTTOM_PALETTE_ITEM");
-
-			Pause(locator1 = "2000");
-		}
-
-		if (isSet(textAlign)) {
-			Select(
-				key_fieldLabel = "Text Align",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${textAlign}");
 
 			Pause(locator1 = "2000");
 		}

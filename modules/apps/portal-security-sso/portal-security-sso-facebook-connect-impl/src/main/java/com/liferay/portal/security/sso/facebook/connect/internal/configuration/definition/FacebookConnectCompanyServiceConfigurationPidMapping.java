@@ -22,8 +22,10 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Mika Koivisto
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
 @Component(service = ConfigurationPidMapping.class)
+@Deprecated
 public class FacebookConnectCompanyServiceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 

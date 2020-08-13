@@ -16,7 +16,9 @@ package com.liferay.portal.security.sso.facebook.connect.constants;
 
 /**
  * @author Michael C. Han
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public interface FacebookConnectWebKeys {
 
 	public static final String FACEBOOK_ACCESS_TOKEN = "FACEBOOK_ACCESS_TOKEN";

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Headless Delivery API
 Bundle-SymbolicName: com.liferay.headless.delivery.api
-Bundle-Version: 25.0.3
+Bundle-Version: 25.1.0
 Export-Package:\
 	com.liferay.headless.delivery.dto.v1_0,\
 	com.liferay.headless.delivery.resource.v1_0

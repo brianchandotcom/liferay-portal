@@ -46,6 +46,10 @@ String redirect = portletURL.toString();
 			FieldDisplayContext fieldDisplayContext = new FieldDisplayContext("/analytics_settings/edit_synced_contact_fields", renderRequest, renderResponse);
 			%>
 
+			<clay:management-toolbar
+				displayContext="<%= new FieldManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fieldDisplayContext) %>"
+			/>
+
 			<liferay-ui:search-container
 				id="selectContactFields"
 				searchContainer="<%= fieldDisplayContext.getFieldSearch() %>"
@@ -90,6 +94,11 @@ String redirect = portletURL.toString();
 			<%
 			FieldDisplayContext fieldDisplayContext = new FieldDisplayContext("/analytics_settings/edit_synced_user_fields", renderRequest, renderResponse);
 			%>
+
+			<clay:management-toolbar
+				displayContext="<%= new FieldManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fieldDisplayContext) %>"
+			/>
+
 
 			<liferay-ui:search-container
 				id="selectUserFields"

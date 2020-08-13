@@ -117,7 +117,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		String screenName = ParamUtil.getString(actionRequest, "screenName");
 		String emailAddress = ParamUtil.getString(
 			actionRequest, "emailAddress");
-		long facebookId = 0;
 		String languageId = ParamUtil.getString(actionRequest, "languageId");
 		String firstName = ParamUtil.getString(actionRequest, "firstName");
 		String middleName = ParamUtil.getString(actionRequest, "middleName");
@@ -140,13 +139,13 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 		User user = _userService.addUser(
 			themeDisplay.getCompanyId(), true, null, null, autoScreenName,
-			screenName, emailAddress, facebookId, null,
-			LocaleUtil.fromLanguageId(languageId), firstName, middleName,
-			lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay,
-			birthdayYear, jobTitle, null, organizationIds, null, null,
-			new ArrayList<Address>(), new ArrayList<EmailAddress>(),
-			new ArrayList<Phone>(), new ArrayList<Website>(),
-			new ArrayList<AnnouncementsDelivery>(), sendEmail, serviceContext);
+			screenName, emailAddress, LocaleUtil.fromLanguageId(languageId),
+			firstName, middleName, lastName, prefixId, suffixId, male,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, null,
+			organizationIds, null, null, new ArrayList<Address>(),
+			new ArrayList<EmailAddress>(), new ArrayList<Phone>(),
+			new ArrayList<Website>(), new ArrayList<AnnouncementsDelivery>(),
+			sendEmail, serviceContext);
 
 		user.setComments(comments);
 
@@ -423,7 +422,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		String oldEmailAddress = user.getEmailAddress();
 		String emailAddress = BeanParamUtil.getString(
 			user, actionRequest, "emailAddress");
-		long facebookId = user.getFacebookId();
 
 		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
 
@@ -473,11 +471,11 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 		user = _userService.updateUser(
 			user.getUserId(), oldPassword, null, null, user.isPasswordReset(),
-			null, null, screenName, emailAddress, facebookId, user.getOpenId(),
-			!deleteLogo, portraitBytes, languageId, user.getTimeZoneId(),
-			user.getGreeting(), comments, firstName, middleName, lastName,
-			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
-			contact.getSmsSn(), contact.getFacebookSn(), contact.getJabberSn(),
+			null, null, screenName, emailAddress, !deleteLogo, portraitBytes,
+			languageId, user.getTimeZoneId(), user.getGreeting(), comments,
+			firstName, middleName, lastName, prefixId, suffixId, male,
+			birthdayMonth, birthdayDay, birthdayYear, contact.getSmsSn(),
+			contact.getFacebookSn(), contact.getJabberSn(),
 			contact.getSkypeSn(), contact.getTwitterSn(), jobTitle, null, null,
 			null, null, null, null, null, null, null, null, serviceContext);
 

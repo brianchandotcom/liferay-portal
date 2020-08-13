@@ -86,12 +86,6 @@ public class UpdateUserContactInformationFormMVCActionCommand
 			_saveContactInformation(
 				user, facebookSn, jabberSn, skypeSn, smsSn, twitterSn);
 
-			String openId = ParamUtil.getString(actionRequest, "openId");
-
-			_validateOpenId(user.getCompanyId(), user.getUserId(), openId);
-
-			_userLocalService.updateOpenId(user.getUserId(), openId);
-
 			String redirect = _portal.escapeRedirect(
 				ParamUtil.getString(actionRequest, "redirect"));
 
@@ -159,20 +153,6 @@ public class UpdateUserContactInformationFormMVCActionCommand
 		contact.setTwitterSn(twitterSn);
 
 		_contactLocalService.updateContact(contact);
-	}
-
-	private void _validateOpenId(long companyId, long userId, String openId)
-		throws Exception {
-
-		if (Validator.isNull(openId)) {
-			return;
-		}
-
-		User user = _userLocalService.fetchUserByOpenId(companyId, openId);
-
-		if ((user != null) && (user.getUserId() != userId)) {
-			throw new DuplicateOpenIdException("{userId=" + userId + "}");
-		}
 	}
 
 	@Reference

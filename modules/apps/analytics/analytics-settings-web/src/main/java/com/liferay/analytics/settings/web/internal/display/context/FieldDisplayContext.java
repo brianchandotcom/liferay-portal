@@ -72,6 +72,20 @@ public class FieldDisplayContext {
 			fieldSearch.setTotal(
 				_userFieldNames.size() - _requiredUserFieldNames.size());
 		}
+		else if (StringUtil.equalsIgnoreCase(
+					_mvcRenderCommandName,
+					"/analytics_settings/edit_synced_contact_fields")) {
+
+			for (Map.Entry<String, String> entry :
+					_contactFieldNames.entrySet()) {
+
+				fields.add(
+					new Field(
+						"Default Field", entry.getValue(), entry.getKey()));
+			}
+
+			fieldSearch.setTotal(_contactFieldNames.size());
+		}
 
 		fieldSearch.setResults(fields);
 
@@ -86,6 +100,60 @@ public class FieldDisplayContext {
 		return portletURL;
 	}
 
+	private static final Map<String, String> _contactFieldNames =
+		TreeMapBuilder.put(
+			"accountId", "Long"
+		).put(
+			"birthday", "Date"
+		).put(
+			"classNameId", "Long"
+		).put(
+			"classPK", "Long"
+		).put(
+			"companyId", "Long"
+		).put(
+			"contactId", "Long"
+		).put(
+			"createDate", "Date"
+		).put(
+			"emailAddress", "String"
+		).put(
+			"employeeNumber", "String"
+		).put(
+			"employeeStatusId", "String"
+		).put(
+			"facebookSn", "String"
+		).put(
+			"firstName", "String"
+		).put(
+			"hoursOfOperation", "String"
+		).put(
+			"jabberSn", "String"
+		).put(
+			"jobClass", "String"
+		).put(
+			"jobTitle", "String"
+		).put(
+			"lastName", "String"
+		).put(
+			"male", "Boolean"
+		).put(
+			"middleName", "String"
+		).put(
+			"modifiedDate", "Date"
+		).put(
+			"parentContactId", "Long"
+		).put(
+			"prefixId", "Long"
+		).put(
+			"skypeSn", "String"
+		).put(
+			"smsSn", "String"
+		).put(
+			"suffixId", "Long"
+		).put(
+			"twitterSn", "String"
+		).build();
 	private static final List<String> _requiredUserFieldNames = Arrays.asList(
 		"createDate", "emailAddress", "modifiedDate", "userId", "uuid");
 	private static final Map<String, String> _userFieldNames =

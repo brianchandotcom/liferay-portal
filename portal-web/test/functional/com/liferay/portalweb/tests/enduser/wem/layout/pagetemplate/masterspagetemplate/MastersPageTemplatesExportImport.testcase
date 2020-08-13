@@ -218,8 +218,8 @@ definition {
 			PageEditor.gotoStyle(fragmentName = "Heading");
 
 			PageEditor.configureFragment(
+				alignment = "Center",
 				marginBottom = "1",
-				textAlign = "Center",
 				textColor = "danger");
 
 			PageEditor.gotoConfiguration(fragmentName = "Heading");

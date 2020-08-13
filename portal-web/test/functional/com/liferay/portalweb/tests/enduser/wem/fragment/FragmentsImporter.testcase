@@ -428,8 +428,8 @@ definition {
 		PageEditor.gotoStyle(fragmentName = "Heading");
 
 		PageEditor.configureFragment(
+			alignment = "Center",
 			marginBottom = "1",
-			textAlign = "Center",
 			textColor = "danger");
 
 		PageEditor.gotoConfiguration(fragmentName = "Heading");
@@ -482,10 +482,10 @@ definition {
 
 		task ("View the Heading fragment style") {
 			PageEditor.viewFragmentStyle(
+				alignment = "Center",
 				fragmentName = "heading",
 				headingLevel = "H2",
 				marginBottom = "1",
-				textAlign = "Center",
 				textColor = "danger");
 		}
 	}

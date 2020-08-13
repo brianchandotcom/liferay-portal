@@ -54,7 +54,7 @@ definition {
 
 		PageEditor.gotoStyle(fragmentName = "Heading");
 
-		PageEditor.configureFragment(textAlign = "Center");
+		PageEditor.configureFragment(alignment = "Center");
 
 		PageEditor.viewFragmentStyle(
 			alignment = "center",

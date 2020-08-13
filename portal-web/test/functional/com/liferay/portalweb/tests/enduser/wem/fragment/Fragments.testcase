@@ -312,9 +312,9 @@ definition {
 			PageEditor.gotoStyle(fragmentName = "Card");
 
 			PageEditor.configureFragment(
+				alignment = "Center",
 				borderRadius = "None",
 				boxShadow = "Large",
-				contentAlign = "Center",
 				imageSize = "Fit",
 				marginBottom = "5");
 		}
@@ -374,7 +374,7 @@ definition {
 			PageEditor.gotoStyle(fragmentName = "Heading");
 
 			PageEditor.configureFragment(
-				textAlign = "Right",
+				alignment = "Right",
 				textColor = "secondary");
 
 			PageEditor.gotoConfiguration(fragmentName = "Heading");
@@ -493,7 +493,7 @@ definition {
 			PageEditor.gotoStyle(fragmentName = "Paragraph");
 
 			PageEditor.configureFragment(
-				textAlign = "Right",
+				alignment = "Right",
 				textColor = "warning");
 		}
 

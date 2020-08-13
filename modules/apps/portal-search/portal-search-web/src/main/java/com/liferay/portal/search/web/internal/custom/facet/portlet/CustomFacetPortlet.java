@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.web.internal.custom.facet.constants.CustomFacetPortletKeys;
 import com.liferay.portal.search.web.internal.custom.facet.display.context.CustomFacetDisplayBuilder;
@@ -132,6 +133,8 @@ public class CustomFacetPortlet extends MVCPortlet {
 			customFacetPortletPreferences.getFrequencyThreshold()
 		).setMaxTerms(
 			customFacetPortletPreferences.getMaxTerms()
+		).setPaginationStartParameterName(
+			getPaginationStartParameterName(portletSharedSearchResponse)
 		).setParameterName(
 			parameterName
 		).setParameterValues(
@@ -172,6 +175,17 @@ public class CustomFacetPortlet extends MVCPortlet {
 			_portal.getLiferayPortletRequest(renderRequest);
 
 		return liferayPortletRequest.getHttpServletRequest();
+	}
+
+	protected String getPaginationStartParameterName(
+		PortletSharedSearchResponse portletSharedSearchResponse) {
+
+		SearchResponse searchResponse =
+			portletSharedSearchResponse.getSearchResponse();
+
+		SearchRequest request = searchResponse.getRequest();
+
+		return request.getPaginationStartParameterName();
 	}
 
 	protected String getParameterName(

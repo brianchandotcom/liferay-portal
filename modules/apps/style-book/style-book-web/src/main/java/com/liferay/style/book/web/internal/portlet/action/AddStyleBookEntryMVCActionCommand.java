@@ -71,7 +71,9 @@ public class AddStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
 			JSONObject jsonObject = JSONUtil.put(
 				"redirectURL", getRedirectURL(actionResponse, styleBookEntry));
 
-			if (SessionErrors.contains(actionRequest, "fragmentNameInvalid")) {
+			if (SessionErrors.contains(
+					actionRequest, "styleBookEntryNameInvalid")) {
+
 				addSuccessMessage(actionRequest, actionResponse);
 			}
 
@@ -79,7 +81,7 @@ public class AddStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, actionResponse, jsonObject);
 		}
 		catch (PortalException portalException) {
-			SessionErrors.add(actionRequest, "fragmentNameInvalid");
+			SessionErrors.add(actionRequest, "styleBookEntryNameInvalid");
 
 			hideDefaultErrorMessage(actionRequest);
 

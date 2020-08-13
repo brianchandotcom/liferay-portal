@@ -101,7 +101,7 @@ public class CrossClusterReplicationHelperImpl
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Uunfollow index " + indexName +
+					"Not unfollowing index " + indexName +
 						" because cross-cluster replication is not enabled");
 			}
 

@@ -1480,7 +1480,7 @@ definition {
 				position = "2");
 
 			AssertElementPresent(
-				key_elementHeader = "//*[contains(@class,'component-heading')][contains(@class,'text-white')]",
+				key_elementHeader = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Heading')]//following-sibling::div[contains(@class,'page-editor__topper__content')]/div[contains(@class,'text-white')]",
 				key_position = "2",
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}

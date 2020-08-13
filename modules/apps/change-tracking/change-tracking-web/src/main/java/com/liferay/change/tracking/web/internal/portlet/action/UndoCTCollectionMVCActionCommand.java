@@ -79,8 +79,17 @@ public class UndoCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, CTPortletKeys.CHANGE_LISTS,
 			PortletRequest.RENDER_PHASE);
 
-		redirectURL.setParameter(
-			"mvcRenderCommandName", "/change_lists/view_changes");
+		String publishTime = ParamUtil.get(actionRequest, "publishTime", "now");
+
+		if (publishTime.equals("now")) {
+			redirectURL.setParameter(
+				"mvcRenderCommandName", "/change_lists/view_conflicts");
+		}
+		else {
+			redirectURL.setParameter(
+				"mvcRenderCommandName", "/change_lists/view_changes");
+		}
+
 		redirectURL.setParameter(
 			"ctCollectionId", String.valueOf(ctCollection.getCtCollectionId()));
 

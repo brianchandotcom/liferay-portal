@@ -33,6 +33,32 @@
 	}
 }
 
+.change-lists-fieldset .panel-body {
+	margin-bottom: 24px;
+	padding-left: 0;
+	padding-right: 0;
+
+	.col-5 {
+		padding-left: 0;
+	}
+
+	input {
+		margin-top: 3px;
+	}
+
+	.radio-inline {
+		padding-left: 8px;
+
+		.change-lists-radio-help {
+			color: #6b6c7e;
+		}
+
+		.change-lists-radio-label {
+			font-weight: 600;
+		}
+	}
+}
+
 .change-lists-table {
 	.change-list-description {
 		color: #6b6c7e;

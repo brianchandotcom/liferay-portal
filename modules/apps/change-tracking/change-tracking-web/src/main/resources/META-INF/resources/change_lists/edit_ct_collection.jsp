@@ -61,36 +61,83 @@ portletDisplay.setShowBackIcon(true);
 <liferay-ui:error exception="<%= CTCollectionDescriptionException.class %>" message="the-publication-description-is-too-long" />
 <liferay-ui:error exception="<%= CTCollectionNameException.class %>" message="the-publication-name-is-too-long" />
 
-<clay:sheet>
-	<aui:form action='<%= actionURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="editChangeListFm">
-		<aui:input name="ctCollectionId" type="hidden" value="<%= ctCollectionId %>" />
+<clay:container-fluid
+	cssClass="container-form-lg"
+>
+	<clay:sheet>
+		<aui:form action='<%= actionURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="editChangeListFm">
+			<aui:input name="ctCollectionId" type="hidden" value="<%= ctCollectionId %>" />
 
-		<c:if test="<%= revert %>">
-			<p class="sheet-text"><liferay-ui:message key="reverting-creates-a-new-publication-with-the-reverted-changes" /></p>
+			<c:if test="<%= revert %>">
+				<p class="sheet-text"><liferay-ui:message key="reverting-creates-a-new-publication-with-the-reverted-changes" /></p>
 
-			<div class="sheet-section">
-				<h3 class="sheet-subtitle">
-					<liferay-ui:message key="publication-with-reverted-changes" />
-				</h3>
-		</c:if>
+				<div class="sheet-section">
+					<h3 class="sheet-subtitle">
+						<liferay-ui:message key="publication-with-reverted-changes" />
+					</h3>
+			</c:if>
 
-			<aui:input label="name" name="name" placeholder="publication-name-placeholder" value="<%= name %>">
-				<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(CTCollection.class.getName(), "name") %></aui:validator>
-				<aui:validator name="required" />
-			</aui:input>
+				<aui:input label="name" name="name" placeholder="publication-name-placeholder" value="<%= name %>">
+					<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(CTCollection.class.getName(), "name") %></aui:validator>
+					<aui:validator name="required" />
+				</aui:input>
 
-			<aui:input label="description" name="description" placeholder="publication-description-placeholder" type="textarea" value="<%= description %>">
-				<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(CTCollection.class.getName(), "description") %></aui:validator>
-			</aui:input>
+				<aui:input label="description" name="description" placeholder="publication-description-placeholder" type="textarea" value="<%= description %>">
+					<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(CTCollection.class.getName(), "description") %></aui:validator>
+				</aui:input>
 
-		<c:if test="<%= revert %>">
-			</div>
-		</c:if>
+			<c:if test="<%= revert %>">
+					<aui:fieldset cssClass="change-lists-fieldset" label="when-do-you-want-to-publish" markupView="lexicon">
+						<div class="col-10 row">
+							<div class="col-5">
+								<div class="autofit-row">
+									<div class="autofit-col">
+										<input checked="<%= true %>" class="field" id="<portlet:namespace/>publishTimeNow" name="<portlet:namespace/>publishTime" type="radio" value="now" />
+									</div>
 
-		<aui:button-row>
-			<aui:button id="saveButton" type="submit" value="<%= LanguageUtil.get(request, saveButtonLabel) %>" />
+									<div class="autofit-col autofit-col-expand">
+										<label class="radio-inline" for="<portlet:namespace/>publishTimeNow">
+											<div class="change-lists-radio-label">
+												<liferay-ui:message key="now" />
+											</div>
 
-			<aui:button href="<%= redirect %>" type="cancel" />
-		</aui:button-row>
-	</aui:form>
-</clay:sheet>
+											<div class="change-lists-radio-help">
+												<liferay-ui:message key="revert-your-changes-to-production-immediately" />
+											</div>
+										</label>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-6">
+								<div class="autofit-row">
+									<div class="autofit-col">
+										<input class="field" id="<portlet:namespace/>publishTimeLater" name="<portlet:namespace/>publishTime" type="radio" value="later" />
+									</div>
+
+									<div class="autofit-col autofit-col-expand">
+										<label class="radio-inline" for="<portlet:namespace/>publishTimeLater">
+											<div class="change-lists-radio-label">
+												<liferay-ui:message key="later" />
+											</div>
+
+											<div class="change-lists-radio-help">
+												<liferay-ui:message key="make-additional-changes-and-publish-them-when-you-are-ready" />
+											</div>
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</aui:fieldset>
+				</div>
+			</c:if>
+
+			<aui:button-row>
+				<aui:button id="saveButton" type="submit" value="<%= LanguageUtil.get(request, saveButtonLabel) %>" />
+
+				<aui:button href="<%= redirect %>" type="cancel" />
+			</aui:button-row>
+		</aui:form>
+	</clay:sheet>
+</clay:container-fluid>

@@ -36,6 +36,25 @@ if (amImageConfigurationEntry != null) {
 }
 %>
 
+<div class="sheet sheet-lg">
+	<react:component
+		module="adaptive_media/js/EditAdaptiveMedia.es"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"configurationEntryEditable", configurationEntryEditable
+			).put(
+				"configurationEntryUuid", configurationEntryUuid
+			).put(
+				"name", (amImageConfigurationEntry != null) ? amImageConfigurationEntry.getName() : StringPool.BLANK
+			).put(
+				"namespace", liferayPortletResponse.getNamespace()
+			).put(
+				"redirect", redirect
+			).build()
+		%>'
+	/>
+</div>
+
 <portlet:actionURL name="/adaptive_media/edit_image_configuration_entry" var="editImageConfigurationEntryURL">
 	<portlet:param name="mvcRenderCommandName" value="/adaptive_media/edit_image_configuration_entry" />
 </portlet:actionURL>

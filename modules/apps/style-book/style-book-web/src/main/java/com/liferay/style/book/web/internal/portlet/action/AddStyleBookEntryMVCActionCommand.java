@@ -57,16 +57,8 @@ public class AddStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String name = ParamUtil.getString(actionRequest, "name");
-
 		try {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				actionRequest);
-
-			StyleBookEntry styleBookEntry =
-				_styleBookEntryService.addStyleBookEntry(
-					serviceContext.getScopeGroupId(), name, StringPool.BLANK,
-					serviceContext);
+			StyleBookEntry styleBookEntry = _addStyleBookEntry(actionRequest);
 
 			JSONObject jsonObject = JSONUtil.put(
 				"redirectURL", getRedirectURL(actionResponse, styleBookEntry));
@@ -105,6 +97,19 @@ public class AddStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
 			String.valueOf(styleBookEntry.getStyleBookEntryId()));
 
 		return portletURL.toString();
+	}
+
+	private StyleBookEntry _addStyleBookEntry(ActionRequest actionRequest)
+		throws PortalException {
+
+		String name = ParamUtil.getString(actionRequest, "name");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
+		return _styleBookEntryService.addStyleBookEntry(
+			serviceContext.getScopeGroupId(), name, StringPool.BLANK,
+			serviceContext);
 	}
 
 	@Reference

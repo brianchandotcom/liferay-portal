@@ -17,6 +17,16 @@
 <%@ include file="/init.jsp" %>
 
 <%
+AnalyticsConfiguration analyticsConfiguration = (AnalyticsConfiguration)request.getAttribute(AnalyticsSettingsWebKeys.ANALYTICS_CONFIGURATION);
+
+String[] syncedContactFieldNames = new String[0];
+String[] syncedUserFieldNames = new String[0];
+
+if (analyticsConfiguration != null) {
+	syncedContactFieldNames = analyticsConfiguration.syncedContactFieldNames();
+	syncedUserFieldNames = analyticsConfiguration.syncedUserFieldNames();
+}
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/view_configuration_screen");
@@ -42,7 +52,7 @@ String redirect = portletURL.toString();
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 		<liferay-ui:tabs
-			names='<%= LanguageUtil.get(resourceBundle, "contact-x") + "," + LanguageUtil.get(resourceBundle, "user-x") %>'
+			names='<%= LanguageUtil.format(resourceBundle, "contact-x", syncedContactFieldNames.length, false) + "," + LanguageUtil.format(resourceBundle, "user-x", syncedUserFieldNames.length, false) %>'
 			refresh="<%= false %>"
 		>
 			<liferay-ui:section>

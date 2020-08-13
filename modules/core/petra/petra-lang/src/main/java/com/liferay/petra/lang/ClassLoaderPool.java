@@ -245,8 +245,8 @@ public class ClassLoaderPool {
 			_fallbackClassLoaders = new ConcurrentHashMap<>();
 
 	static {
-		register("SystemClassLoader", ClassLoader.getSystemClassLoader());
 		register("GlobalClassLoader", ClassLoaderPool.class.getClassLoader());
+		register("SystemClassLoader", ClassLoader.getSystemClassLoader());
 	}
 
 	private static class Version implements Comparable<Version> {

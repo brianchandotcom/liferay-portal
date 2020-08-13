@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + StyleBookPortletKeys.STYLE_BOOK,
-		"mvc.command.name=/style_book/style_book_entry"
+		"mvc.command.name=/style_book/add_style_book_entry"
 	},
 	service = MVCActionCommand.class
 )

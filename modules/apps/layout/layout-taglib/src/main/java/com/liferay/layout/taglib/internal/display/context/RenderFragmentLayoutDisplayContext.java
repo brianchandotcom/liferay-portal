@@ -292,9 +292,12 @@ public class RenderFragmentLayoutDisplayContext {
 				styledLayoutStructureItem.getBackgroundColorCssClass());
 		}
 
-		if (Validator.isNotNull(styledLayoutStructureItem.getBorderColor())) {
+		if (Validator.isNotNull(
+				styledLayoutStructureItem.getBorderColorCssClass())) {
+
 			cssClassSB.append(" border-");
-			cssClassSB.append(styledLayoutStructureItem.getBorderColor());
+			cssClassSB.append(
+				styledLayoutStructureItem.getBorderColorCssClass());
 		}
 
 		if (Validator.isNotNull(styledLayoutStructureItem.getBorderRadius())) {
@@ -512,12 +515,20 @@ public class RenderFragmentLayoutDisplayContext {
 	public String getStyle(StyledLayoutStructureItem styledLayoutStructureItem)
 		throws PortalException {
 
-		StringBundler styleSB = new StringBundler(30);
+		StringBundler styleSB = new StringBundler(39);
 
 		styleSB.append("box-sizing: border-box;");
 
 		String backgroundImage = _getBackgroundImage(
 			styledLayoutStructureItem.getBackgroundImageJSONObject());
+
+		if (Validator.isNotNull(
+				styledLayoutStructureItem.getBackgroundColor())) {
+
+			styleSB.append("background-color: ");
+			styleSB.append(styledLayoutStructureItem.getBackgroundColor());
+			styleSB.append(StringPool.SEMICOLON);
+		}
 
 		if (Validator.isNotNull(backgroundImage)) {
 			styleSB.append("background-position: 50% 50%; background-repeat: ");
@@ -525,6 +536,12 @@ public class RenderFragmentLayoutDisplayContext {
 			styleSB.append("background-image: url(");
 			styleSB.append(backgroundImage);
 			styleSB.append(");");
+		}
+
+		if (Validator.isNotNull(styledLayoutStructureItem.getBorderColor())) {
+			styleSB.append("border-color: ");
+			styleSB.append(styledLayoutStructureItem.getBorderColor());
+			styleSB.append(StringPool.SEMICOLON);
 		}
 
 		if (styledLayoutStructureItem.getBorderWidth() != -1L) {
@@ -566,6 +583,12 @@ public class RenderFragmentLayoutDisplayContext {
 		if (styledLayoutStructureItem.getOpacity() != -1L) {
 			styleSB.append("opacity: ");
 			styleSB.append(styledLayoutStructureItem.getOpacity() / 100.0);
+			styleSB.append(StringPool.SEMICOLON);
+		}
+
+		if (Validator.isNotNull(styledLayoutStructureItem.getTextColor())) {
+			styleSB.append("color: ");
+			styleSB.append(styledLayoutStructureItem.getTextColor());
 			styleSB.append(StringPool.SEMICOLON);
 		}
 

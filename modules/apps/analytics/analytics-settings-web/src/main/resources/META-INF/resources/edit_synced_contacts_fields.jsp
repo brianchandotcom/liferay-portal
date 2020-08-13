@@ -36,6 +36,54 @@ String redirect = portletURL.toString();
 		<liferay-ui:message key="sync-data-fields-help" />
 	</p>
 
+	<liferay-ui:tabs
+		names='<%= LanguageUtil.format(resourceBundle, "user-x") %>'
+		refresh="<%= false %>"
+	>
+		<liferay-ui:section>
+
+			<%
+			FieldDisplayContext fieldDisplayContext = new FieldDisplayContext("/analytics_settings/edit_synced_user_fields", renderRequest, renderResponse);
+			%>
+
+			<liferay-ui:search-container
+				id="selectUserFields"
+				searchContainer="<%= fieldDisplayContext.getFieldSearch() %>"
+				var="userFieldsSearchContainer"
+			>
+				<liferay-ui:search-container-row
+					className="com.liferay.analytics.settings.web.internal.model.Field"
+					escapedModel="<%= true %>"
+					keyProperty="name"
+					modelVar="userField"
+				>
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand"
+						name="attribute"
+						value="<%= HtmlUtil.escape(userField.getName()) %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand"
+						name="category"
+						value="<%= HtmlUtil.escape(userField.getCategory()) %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand"
+						name="data-type"
+						value="<%= HtmlUtil.escape(userField.getDataType()) %>"
+					/>
+				</liferay-ui:search-container-row>
+
+				<liferay-ui:search-iterator
+					markupView="lexicon"
+					searchResultCssClass="show-quick-actions-on-hover table table-autofit"
+				/>
+			</liferay-ui:search-container>
+		</liferay-ui:section>
+	</liferay-ui:tabs>
+
 	<aui:button-row>
 		<aui:button type="submit" value="save" />
 		<aui:button href="<%= redirect %>" type="cancel" value="cancel" />

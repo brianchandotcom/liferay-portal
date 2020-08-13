@@ -202,6 +202,332 @@ public abstract class BaseAccountRoleResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteAccountRoleUserAssociationByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AccountRole accountRole =
+			testDeleteAccountRoleUserAssociationByExternalReferenceCode_addAccountRole();
+
+		assertHttpResponseStatusCode(
+			204,
+			accountRoleResource.
+				deleteAccountRoleUserAssociationByExternalReferenceCodeHttpResponse(
+					null, accountRole.getId(), null));
+	}
+
+	protected AccountRole
+			testDeleteAccountRoleUserAssociationByExternalReferenceCode_addAccountRole()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostAccountRoleUserAssociationByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AccountRole accountRole =
+			testPostAccountRoleUserAssociationByExternalReferenceCode_addAccountRole();
+
+		assertHttpResponseStatusCode(
+			204,
+			accountRoleResource.
+				postAccountRoleUserAssociationByExternalReferenceCodeHttpResponse(
+					null, accountRole.getId(), null));
+
+		assertHttpResponseStatusCode(
+			404,
+			accountRoleResource.
+				postAccountRoleUserAssociationByExternalReferenceCodeHttpResponse(
+					null, 0L, null));
+	}
+
+	protected AccountRole
+			testPostAccountRoleUserAssociationByExternalReferenceCode_addAccountRole()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetAccountRolesByExternalReferenceCodePage()
+		throws Exception {
+
+		Page<AccountRole> page =
+			accountRoleResource.getAccountRolesByExternalReferenceCodePage(
+				testGetAccountRolesByExternalReferenceCodePage_getExternalReferenceCode(),
+				RandomTestUtil.randomString(), Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		String externalReferenceCode =
+			testGetAccountRolesByExternalReferenceCodePage_getExternalReferenceCode();
+		String irrelevantExternalReferenceCode =
+			testGetAccountRolesByExternalReferenceCodePage_getIrrelevantExternalReferenceCode();
+
+		if ((irrelevantExternalReferenceCode != null)) {
+			AccountRole irrelevantAccountRole =
+				testGetAccountRolesByExternalReferenceCodePage_addAccountRole(
+					irrelevantExternalReferenceCode,
+					randomIrrelevantAccountRole());
+
+			page =
+				accountRoleResource.getAccountRolesByExternalReferenceCodePage(
+					irrelevantExternalReferenceCode, null, Pagination.of(1, 2),
+					null);
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantAccountRole),
+				(List<AccountRole>)page.getItems());
+			assertValid(page);
+		}
+
+		AccountRole accountRole1 =
+			testGetAccountRolesByExternalReferenceCodePage_addAccountRole(
+				externalReferenceCode, randomAccountRole());
+
+		AccountRole accountRole2 =
+			testGetAccountRolesByExternalReferenceCodePage_addAccountRole(
+				externalReferenceCode, randomAccountRole());
+
+		page = accountRoleResource.getAccountRolesByExternalReferenceCodePage(
+			externalReferenceCode, null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(accountRole1, accountRole2),
+			(List<AccountRole>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetAccountRolesByExternalReferenceCodePageWithPagination()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetAccountRolesByExternalReferenceCodePage_getExternalReferenceCode();
+
+		AccountRole accountRole1 =
+			testGetAccountRolesByExternalReferenceCodePage_addAccountRole(
+				externalReferenceCode, randomAccountRole());
+
+		AccountRole accountRole2 =
+			testGetAccountRolesByExternalReferenceCodePage_addAccountRole(
+				externalReferenceCode, randomAccountRole());
+
+		AccountRole accountRole3 =
+			testGetAccountRolesByExternalReferenceCodePage_addAccountRole(
+				externalReferenceCode, randomAccountRole());
+
+		Page<AccountRole> page1 =
+			accountRoleResource.getAccountRolesByExternalReferenceCodePage(
+				externalReferenceCode, null, Pagination.of(1, 2), null);
+
+		List<AccountRole> accountRoles1 = (List<AccountRole>)page1.getItems();
+
+		Assert.assertEquals(accountRoles1.toString(), 2, accountRoles1.size());
+
+		Page<AccountRole> page2 =
+			accountRoleResource.getAccountRolesByExternalReferenceCodePage(
+				externalReferenceCode, null, Pagination.of(2, 2), null);
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<AccountRole> accountRoles2 = (List<AccountRole>)page2.getItems();
+
+		Assert.assertEquals(accountRoles2.toString(), 1, accountRoles2.size());
+
+		Page<AccountRole> page3 =
+			accountRoleResource.getAccountRolesByExternalReferenceCodePage(
+				externalReferenceCode, null, Pagination.of(1, 3), null);
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(accountRole1, accountRole2, accountRole3),
+			(List<AccountRole>)page3.getItems());
+	}
+
+	@Test
+	public void testGetAccountRolesByExternalReferenceCodePageWithSortDateTime()
+		throws Exception {
+
+		testGetAccountRolesByExternalReferenceCodePageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, accountRole1, accountRole2) -> {
+				BeanUtils.setProperty(
+					accountRole1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetAccountRolesByExternalReferenceCodePageWithSortInteger()
+		throws Exception {
+
+		testGetAccountRolesByExternalReferenceCodePageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, accountRole1, accountRole2) -> {
+				BeanUtils.setProperty(accountRole1, entityField.getName(), 0);
+				BeanUtils.setProperty(accountRole2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetAccountRolesByExternalReferenceCodePageWithSortString()
+		throws Exception {
+
+		testGetAccountRolesByExternalReferenceCodePageWithSort(
+			EntityField.Type.STRING,
+			(entityField, accountRole1, accountRole2) -> {
+				Class<?> clazz = accountRole1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						accountRole1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						accountRole2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanUtils.setProperty(
+						accountRole1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanUtils.setProperty(
+						accountRole2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanUtils.setProperty(
+						accountRole1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanUtils.setProperty(
+						accountRole2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetAccountRolesByExternalReferenceCodePageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, AccountRole, AccountRole, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String externalReferenceCode =
+			testGetAccountRolesByExternalReferenceCodePage_getExternalReferenceCode();
+
+		AccountRole accountRole1 = randomAccountRole();
+		AccountRole accountRole2 = randomAccountRole();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, accountRole1, accountRole2);
+		}
+
+		accountRole1 =
+			testGetAccountRolesByExternalReferenceCodePage_addAccountRole(
+				externalReferenceCode, accountRole1);
+
+		accountRole2 =
+			testGetAccountRolesByExternalReferenceCodePage_addAccountRole(
+				externalReferenceCode, accountRole2);
+
+		for (EntityField entityField : entityFields) {
+			Page<AccountRole> ascPage =
+				accountRoleResource.getAccountRolesByExternalReferenceCodePage(
+					externalReferenceCode, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(accountRole1, accountRole2),
+				(List<AccountRole>)ascPage.getItems());
+
+			Page<AccountRole> descPage =
+				accountRoleResource.getAccountRolesByExternalReferenceCodePage(
+					externalReferenceCode, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(accountRole2, accountRole1),
+				(List<AccountRole>)descPage.getItems());
+		}
+	}
+
+	protected AccountRole
+			testGetAccountRolesByExternalReferenceCodePage_addAccountRole(
+				String externalReferenceCode, AccountRole accountRole)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetAccountRolesByExternalReferenceCodePage_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetAccountRolesByExternalReferenceCodePage_getIrrelevantExternalReferenceCode()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
+	public void testPostAccountRoleByExternalReferenceCode() throws Exception {
+		AccountRole randomAccountRole = randomAccountRole();
+
+		AccountRole postAccountRole =
+			testPostAccountRoleByExternalReferenceCode_addAccountRole(
+				randomAccountRole);
+
+		assertEquals(randomAccountRole, postAccountRole);
+		assertValid(postAccountRole);
+	}
+
+	protected AccountRole
+			testPostAccountRoleByExternalReferenceCode_addAccountRole(
+				AccountRole accountRole)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetAccountRolesPage() throws Exception {
 		Page<AccountRole> page = accountRoleResource.getAccountRolesPage(
 			testGetAccountRolesPage_getAccountId(),

@@ -192,6 +192,7 @@ public abstract class BaseAccountResourceTestCase {
 		Account account = randomAccount();
 
 		account.setDescription(regex);
+		account.setExternalReferenceCode(regex);
 		account.setName(regex);
 
 		String json = AccountSerDes.toJSON(account);
@@ -201,6 +202,7 @@ public abstract class BaseAccountResourceTestCase {
 		account = AccountSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, account.getDescription());
+		Assert.assertEquals(regex, account.getExternalReferenceCode());
 		Assert.assertEquals(regex, account.getName());
 	}
 
@@ -483,6 +485,162 @@ public abstract class BaseAccountResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteAccountByExternalReferenceCode() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Account account = testDeleteAccountByExternalReferenceCode_addAccount();
+
+		assertHttpResponseStatusCode(
+			204,
+			accountResource.deleteAccountByExternalReferenceCodeHttpResponse(
+				account.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			accountResource.getAccountByExternalReferenceCodeHttpResponse(
+				account.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			accountResource.getAccountByExternalReferenceCodeHttpResponse(
+				account.getExternalReferenceCode()));
+	}
+
+	protected Account testDeleteAccountByExternalReferenceCode_addAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetAccountByExternalReferenceCode() throws Exception {
+		Account postAccount =
+			testGetAccountByExternalReferenceCode_addAccount();
+
+		Account getAccount = accountResource.getAccountByExternalReferenceCode(
+			postAccount.getExternalReferenceCode());
+
+		assertEquals(postAccount, getAccount);
+		assertValid(getAccount);
+	}
+
+	protected Account testGetAccountByExternalReferenceCode_addAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetAccountByExternalReferenceCode()
+		throws Exception {
+
+		Account account = testGraphQLAccount_addAccount();
+
+		Assert.assertTrue(
+			equals(
+				account,
+				AccountSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"accountByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												account.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/accountByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetAccountByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"accountByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
+	public void testPatchAccountByExternalReferenceCode() throws Exception {
+		Account postAccount =
+			testPatchAccountByExternalReferenceCode_addAccount();
+
+		Account randomPatchAccount = randomPatchAccount();
+
+		Account patchAccount =
+			accountResource.patchAccountByExternalReferenceCode(
+				postAccount.getExternalReferenceCode(), randomPatchAccount);
+
+		Account expectedPatchAccount = postAccount.clone();
+
+		_beanUtilsBean.copyProperties(expectedPatchAccount, randomPatchAccount);
+
+		Account getAccount = accountResource.getAccount(patchAccount.getId());
+
+		assertEquals(expectedPatchAccount, getAccount);
+		assertValid(getAccount);
+	}
+
+	protected Account testPatchAccountByExternalReferenceCode_addAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutAccountByExternalReferenceCode() throws Exception {
+		Account postAccount =
+			testPutAccountByExternalReferenceCode_addAccount();
+
+		Account randomAccount = randomAccount();
+
+		Account putAccount = accountResource.putAccountByExternalReferenceCode(
+			postAccount.getExternalReferenceCode(), randomAccount);
+
+		assertEquals(randomAccount, putAccount);
+		assertValid(putAccount);
+
+		Account getAccount = accountResource.getAccountByExternalReferenceCode(
+			putAccount.getExternalReferenceCode());
+
+		assertEquals(randomAccount, getAccount);
+		assertValid(getAccount);
+	}
+
+	protected Account testPutAccountByExternalReferenceCode_addAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteAccount() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Account account = testDeleteAccount_addAccount();
@@ -724,6 +882,16 @@ public abstract class BaseAccountResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (account.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (account.getName() == null) {
 					valid = false;
@@ -858,6 +1026,19 @@ public abstract class BaseAccountResourceTestCase {
 			if (Objects.equals("domains", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						account1.getDomains(), account2.getDomains())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						account1.getExternalReferenceCode(),
+						account2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1010,6 +1191,14 @@ public abstract class BaseAccountResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("externalReferenceCode")) {
+			sb.append("'");
+			sb.append(String.valueOf(account.getExternalReferenceCode()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1083,6 +1272,8 @@ public abstract class BaseAccountResourceTestCase {
 		return new Account() {
 			{
 				description = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());

@@ -48,6 +48,15 @@ public interface AccountUserResource {
 		return FactoryHolder.factory.create();
 	}
 
+	public Page<AccountUser> getAccountUsersByExternalReferenceCodePage(
+			String externalReferenceCode, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public AccountUser postAccountUserByExternalReferenceCode(
+			String externalReferenceCode, AccountUser accountUser)
+		throws Exception;
+
 	public Page<AccountUser> getAccountUsersPage(
 			Long accountId, String search, Filter filter, Pagination pagination,
 			Sort[] sorts)

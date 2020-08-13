@@ -58,6 +58,22 @@ public interface AccountResource {
 	public Response postAccountBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteAccountByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Account getAccountByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Account patchAccountByExternalReferenceCode(
+			String externalReferenceCode, Account account)
+		throws Exception;
+
+	public Account putAccountByExternalReferenceCode(
+			String externalReferenceCode, Account account)
+		throws Exception;
+
 	public void deleteAccount(Long accountId) throws Exception;
 
 	public Response deleteAccountBatch(String callbackURL, Object object)

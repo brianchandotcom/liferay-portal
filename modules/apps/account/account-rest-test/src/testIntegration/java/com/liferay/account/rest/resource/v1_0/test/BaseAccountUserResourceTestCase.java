@@ -188,6 +188,7 @@ public abstract class BaseAccountUserResourceTestCase {
 		AccountUser accountUser = randomAccountUser();
 
 		accountUser.setEmailAddress(regex);
+		accountUser.setExternalReferenceCode(regex);
 		accountUser.setFirstName(regex);
 		accountUser.setLastName(regex);
 		accountUser.setMiddleName(regex);
@@ -202,12 +203,356 @@ public abstract class BaseAccountUserResourceTestCase {
 		accountUser = AccountUserSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, accountUser.getEmailAddress());
+		Assert.assertEquals(regex, accountUser.getExternalReferenceCode());
 		Assert.assertEquals(regex, accountUser.getFirstName());
 		Assert.assertEquals(regex, accountUser.getLastName());
 		Assert.assertEquals(regex, accountUser.getMiddleName());
 		Assert.assertEquals(regex, accountUser.getPrefix());
 		Assert.assertEquals(regex, accountUser.getScreenName());
 		Assert.assertEquals(regex, accountUser.getSuffix());
+	}
+
+	@Test
+	public void testGetAccountUsersByExternalReferenceCodePage()
+		throws Exception {
+
+		Page<AccountUser> page =
+			accountUserResource.getAccountUsersByExternalReferenceCodePage(
+				testGetAccountUsersByExternalReferenceCodePage_getExternalReferenceCode(),
+				RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		String externalReferenceCode =
+			testGetAccountUsersByExternalReferenceCodePage_getExternalReferenceCode();
+		String irrelevantExternalReferenceCode =
+			testGetAccountUsersByExternalReferenceCodePage_getIrrelevantExternalReferenceCode();
+
+		if ((irrelevantExternalReferenceCode != null)) {
+			AccountUser irrelevantAccountUser =
+				testGetAccountUsersByExternalReferenceCodePage_addAccountUser(
+					irrelevantExternalReferenceCode,
+					randomIrrelevantAccountUser());
+
+			page =
+				accountUserResource.getAccountUsersByExternalReferenceCodePage(
+					irrelevantExternalReferenceCode, null, null,
+					Pagination.of(1, 2), null);
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantAccountUser),
+				(List<AccountUser>)page.getItems());
+			assertValid(page);
+		}
+
+		AccountUser accountUser1 =
+			testGetAccountUsersByExternalReferenceCodePage_addAccountUser(
+				externalReferenceCode, randomAccountUser());
+
+		AccountUser accountUser2 =
+			testGetAccountUsersByExternalReferenceCodePage_addAccountUser(
+				externalReferenceCode, randomAccountUser());
+
+		page = accountUserResource.getAccountUsersByExternalReferenceCodePage(
+			externalReferenceCode, null, null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(accountUser1, accountUser2),
+			(List<AccountUser>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetAccountUsersByExternalReferenceCodePageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String externalReferenceCode =
+			testGetAccountUsersByExternalReferenceCodePage_getExternalReferenceCode();
+
+		AccountUser accountUser1 = randomAccountUser();
+
+		accountUser1 =
+			testGetAccountUsersByExternalReferenceCodePage_addAccountUser(
+				externalReferenceCode, accountUser1);
+
+		for (EntityField entityField : entityFields) {
+			Page<AccountUser> page =
+				accountUserResource.getAccountUsersByExternalReferenceCodePage(
+					externalReferenceCode, null,
+					getFilterString(entityField, "between", accountUser1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(accountUser1),
+				(List<AccountUser>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetAccountUsersByExternalReferenceCodePageWithFilterStringEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String externalReferenceCode =
+			testGetAccountUsersByExternalReferenceCodePage_getExternalReferenceCode();
+
+		AccountUser accountUser1 =
+			testGetAccountUsersByExternalReferenceCodePage_addAccountUser(
+				externalReferenceCode, randomAccountUser());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AccountUser accountUser2 =
+			testGetAccountUsersByExternalReferenceCodePage_addAccountUser(
+				externalReferenceCode, randomAccountUser());
+
+		for (EntityField entityField : entityFields) {
+			Page<AccountUser> page =
+				accountUserResource.getAccountUsersByExternalReferenceCodePage(
+					externalReferenceCode, null,
+					getFilterString(entityField, "eq", accountUser1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(accountUser1),
+				(List<AccountUser>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetAccountUsersByExternalReferenceCodePageWithPagination()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetAccountUsersByExternalReferenceCodePage_getExternalReferenceCode();
+
+		AccountUser accountUser1 =
+			testGetAccountUsersByExternalReferenceCodePage_addAccountUser(
+				externalReferenceCode, randomAccountUser());
+
+		AccountUser accountUser2 =
+			testGetAccountUsersByExternalReferenceCodePage_addAccountUser(
+				externalReferenceCode, randomAccountUser());
+
+		AccountUser accountUser3 =
+			testGetAccountUsersByExternalReferenceCodePage_addAccountUser(
+				externalReferenceCode, randomAccountUser());
+
+		Page<AccountUser> page1 =
+			accountUserResource.getAccountUsersByExternalReferenceCodePage(
+				externalReferenceCode, null, null, Pagination.of(1, 2), null);
+
+		List<AccountUser> accountUsers1 = (List<AccountUser>)page1.getItems();
+
+		Assert.assertEquals(accountUsers1.toString(), 2, accountUsers1.size());
+
+		Page<AccountUser> page2 =
+			accountUserResource.getAccountUsersByExternalReferenceCodePage(
+				externalReferenceCode, null, null, Pagination.of(2, 2), null);
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<AccountUser> accountUsers2 = (List<AccountUser>)page2.getItems();
+
+		Assert.assertEquals(accountUsers2.toString(), 1, accountUsers2.size());
+
+		Page<AccountUser> page3 =
+			accountUserResource.getAccountUsersByExternalReferenceCodePage(
+				externalReferenceCode, null, null, Pagination.of(1, 3), null);
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(accountUser1, accountUser2, accountUser3),
+			(List<AccountUser>)page3.getItems());
+	}
+
+	@Test
+	public void testGetAccountUsersByExternalReferenceCodePageWithSortDateTime()
+		throws Exception {
+
+		testGetAccountUsersByExternalReferenceCodePageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, accountUser1, accountUser2) -> {
+				BeanUtils.setProperty(
+					accountUser1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetAccountUsersByExternalReferenceCodePageWithSortInteger()
+		throws Exception {
+
+		testGetAccountUsersByExternalReferenceCodePageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, accountUser1, accountUser2) -> {
+				BeanUtils.setProperty(accountUser1, entityField.getName(), 0);
+				BeanUtils.setProperty(accountUser2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetAccountUsersByExternalReferenceCodePageWithSortString()
+		throws Exception {
+
+		testGetAccountUsersByExternalReferenceCodePageWithSort(
+			EntityField.Type.STRING,
+			(entityField, accountUser1, accountUser2) -> {
+				Class<?> clazz = accountUser1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						accountUser1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						accountUser2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanUtils.setProperty(
+						accountUser1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanUtils.setProperty(
+						accountUser2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanUtils.setProperty(
+						accountUser1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanUtils.setProperty(
+						accountUser2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetAccountUsersByExternalReferenceCodePageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, AccountUser, AccountUser, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String externalReferenceCode =
+			testGetAccountUsersByExternalReferenceCodePage_getExternalReferenceCode();
+
+		AccountUser accountUser1 = randomAccountUser();
+		AccountUser accountUser2 = randomAccountUser();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, accountUser1, accountUser2);
+		}
+
+		accountUser1 =
+			testGetAccountUsersByExternalReferenceCodePage_addAccountUser(
+				externalReferenceCode, accountUser1);
+
+		accountUser2 =
+			testGetAccountUsersByExternalReferenceCodePage_addAccountUser(
+				externalReferenceCode, accountUser2);
+
+		for (EntityField entityField : entityFields) {
+			Page<AccountUser> ascPage =
+				accountUserResource.getAccountUsersByExternalReferenceCodePage(
+					externalReferenceCode, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(accountUser1, accountUser2),
+				(List<AccountUser>)ascPage.getItems());
+
+			Page<AccountUser> descPage =
+				accountUserResource.getAccountUsersByExternalReferenceCodePage(
+					externalReferenceCode, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(accountUser2, accountUser1),
+				(List<AccountUser>)descPage.getItems());
+		}
+	}
+
+	protected AccountUser
+			testGetAccountUsersByExternalReferenceCodePage_addAccountUser(
+				String externalReferenceCode, AccountUser accountUser)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetAccountUsersByExternalReferenceCodePage_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetAccountUsersByExternalReferenceCodePage_getIrrelevantExternalReferenceCode()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
+	public void testPostAccountUserByExternalReferenceCode() throws Exception {
+		AccountUser randomAccountUser = randomAccountUser();
+
+		AccountUser postAccountUser =
+			testPostAccountUserByExternalReferenceCode_addAccountUser(
+				randomAccountUser);
+
+		assertEquals(randomAccountUser, postAccountUser);
+		assertValid(postAccountUser);
+	}
+
+	protected AccountUser
+			testPostAccountUserByExternalReferenceCode_addAccountUser(
+				AccountUser accountUser)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -628,6 +973,16 @@ public abstract class BaseAccountUserResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (accountUser.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("firstName", additionalAssertFieldName)) {
 				if (accountUser.getFirstName() == null) {
 					valid = false;
@@ -771,6 +1126,19 @@ public abstract class BaseAccountUserResourceTestCase {
 				if (!Objects.deepEquals(
 						accountUser1.getEmailAddress(),
 						accountUser2.getEmailAddress())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						accountUser1.getExternalReferenceCode(),
+						accountUser2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -942,6 +1310,14 @@ public abstract class BaseAccountUserResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("externalReferenceCode")) {
+			sb.append("'");
+			sb.append(String.valueOf(accountUser.getExternalReferenceCode()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("firstName")) {
 			sb.append("'");
 			sb.append(String.valueOf(accountUser.getFirstName()));
@@ -1042,6 +1418,8 @@ public abstract class BaseAccountUserResourceTestCase {
 				emailAddress =
 					StringUtil.toLowerCase(RandomTestUtil.randomString()) +
 						"@liferay.com";
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				firstName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();

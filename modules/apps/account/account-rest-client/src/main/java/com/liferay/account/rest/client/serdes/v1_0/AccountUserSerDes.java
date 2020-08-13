@@ -69,6 +69,20 @@ public class AccountUserSerDes {
 			sb.append("\"");
 		}
 
+		if (accountUser.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(accountUser.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (accountUser.getFirstName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -190,6 +204,15 @@ public class AccountUserSerDes {
 				"emailAddress", String.valueOf(accountUser.getEmailAddress()));
 		}
 
+		if (accountUser.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(accountUser.getExternalReferenceCode()));
+		}
+
 		if (accountUser.getFirstName() == null) {
 			map.put("firstName", null);
 		}
@@ -263,6 +286,14 @@ public class AccountUserSerDes {
 			if (Objects.equals(jsonParserFieldName, "emailAddress")) {
 				if (jsonParserFieldValue != null) {
 					accountUser.setEmailAddress((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					accountUser.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "firstName")) {

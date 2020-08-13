@@ -63,13 +63,6 @@ import java.rmi.RemoteException;
 @Deprecated
 public class TranslationEntryServiceSoap {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use
-	 * <code>TranslationEntryServiceUtil</code>
-	 * to access the translation entry remote service.
-	 */
 	public static com.liferay.translation.model.TranslationEntrySoap
 			addOrUpdateTranslationEntry(
 				long groupId, String languageId,

@@ -37,14 +37,6 @@ public class TranslationEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.translation.service.impl.TranslationEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use
-	 * <code>TranslationEntryServiceUtil</code>
-	 * to access the translation entry remote service.
-	 */
 	public static com.liferay.translation.model.TranslationEntry
 			addOrUpdateTranslationEntry(
 				long groupId, String languageId,

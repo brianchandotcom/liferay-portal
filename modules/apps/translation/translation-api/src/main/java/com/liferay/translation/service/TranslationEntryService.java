@@ -51,14 +51,6 @@ public interface TranslationEntryService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.translation.service.impl.TranslationEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the translation entry remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link TranslationEntryServiceUtil} if injection and service tracking are not available.
 	 */
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use
-	 * <code>TranslationEntryServiceUtil</code>
-	 * to access the translation entry remote service.
-	 */
 	public TranslationEntry addOrUpdateTranslationEntry(
 			long groupId, String languageId,
 			InfoItemReference infoItemReference,

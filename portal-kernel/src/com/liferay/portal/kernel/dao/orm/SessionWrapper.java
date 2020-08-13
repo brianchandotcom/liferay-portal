@@ -114,6 +114,11 @@ public class SessionWrapper implements Session {
 	}
 
 	@Override
+	public void evict(Class<?> clazz, Serializable id) throws ORMException {
+		session.evict(clazz, id);
+	}
+
+	@Override
 	public void evict(Object object) throws ORMException {
 		session.evict(object);
 	}

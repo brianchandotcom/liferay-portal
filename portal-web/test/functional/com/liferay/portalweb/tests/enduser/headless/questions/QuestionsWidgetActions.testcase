@@ -590,6 +590,107 @@ definition {
 			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
 	}
 
+	@description = "Validate if the user can filter by votes."
+	@priority = "4"
+	test ViewQuestionsFilteredByVotes {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		for (var num : list "1,2,3") {
+			Questions.addQuestionByAPI(
+				bodyField = "Question Body ${num}",
+				categoryName = "Questions Test Category",
+				tagField = "test tag",
+				titleField = "Question ${num}");
+		}
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Question 1");
+
+		Questions.voteQuestion(
+			currentVotedCount = "0",
+			voteUp = "true");
+
+		Click(locator1 = "Questions#QUESTIONS_HOME_ICON");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Question 2");
+
+		Questions.voteQuestion(
+			currentVotedCount = "0",
+			voteUp = "true");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Question 2");
+
+		Questions.voteQuestion(
+			currentVotedCount = "1",
+			voteUp = "true");
+
+		Click(locator1 = "Questions#QUESTIONS_HOME_ICON");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Refresh();
+
+		AssertTextEquals(
+			key_questionTitle = "Question 1",
+			locator1 = "Questions#QUESTIONS_VOTED_COUNT",
+			value1 = "1");
+
+		AssertTextEquals(
+			key_questionTitle = "Question 2",
+			locator1 = "Questions#QUESTIONS_VOTED_COUNT",
+			value1 = "2");
+
+		AssertTextEquals(
+			key_questionTitle = "Question 3",
+			locator1 = "Questions#QUESTIONS_VOTED_COUNT",
+			value1 = "0");
+
+		Questions.configureFilter(filterBy = "Most Voted");
+
+		Questions.viewFilterResults(
+			lastQuestionTitle = "Question 1",
+			questionTitle = "Question 2");
+	}
+
 	@description = "Validate if the users can view the questions from different topics via the breadcrumb."
 	@priority = "4"
 	test ViewQuestionsFromDifferentSubTopics {

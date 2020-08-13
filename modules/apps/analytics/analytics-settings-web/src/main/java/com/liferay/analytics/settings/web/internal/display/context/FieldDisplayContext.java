@@ -104,6 +104,10 @@ public class FieldDisplayContext {
 		return fieldSearch;
 	}
 
+	public String getMVCRenderCommandName() {
+		return _mvcRenderCommandName;
+	}
+
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 

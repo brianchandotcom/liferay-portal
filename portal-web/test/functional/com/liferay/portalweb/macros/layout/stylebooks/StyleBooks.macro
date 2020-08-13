@@ -52,7 +52,7 @@ definition {
 
 		LexiconCard.clickCardTitle(card = "${styleBookName}");
 
-		Pause(locator1 = "3000");
+		PageEditor.assertFragmentSidebarLoaded();
 
 		PageEditor.gotoTab(tabName = "Page Design Options");
 

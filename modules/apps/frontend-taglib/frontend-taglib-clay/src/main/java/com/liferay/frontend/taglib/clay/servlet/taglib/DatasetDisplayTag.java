@@ -105,7 +105,7 @@ public class DatasetDisplayTag extends IncludeTag {
 
 			if ((npmResolver != null) && Validator.isNull(_module)) {
 				_module = npmResolver.resolveModuleName(
-					"frontend-taglib-clay/dataset_display/entry");
+					"frontend-taglib-clay/data_set_display/entry");
 			}
 		}
 		catch (Exception exception) {
@@ -342,54 +342,54 @@ public class DatasetDisplayTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		request.setAttribute(
-			"clay:dataset-display:actionParameterName", _actionParameterName);
+			"clay:data-set-display:actionParameterName", _actionParameterName);
 		request.setAttribute(
-			"clay:dataset-display:activeViewSettingsJSON",
+			"clay:data-set-display:activeViewSettingsJSON",
 			_activeViewSettingsJSON);
-		request.setAttribute("clay:dataset-display:apiURL", _apiURL);
-		request.setAttribute("clay:dataset-display:appURL", _appURL);
+		request.setAttribute("clay:data-set-display:apiURL", _apiURL);
+		request.setAttribute("clay:data-set-display:appURL", _appURL);
 		request.setAttribute(
-			"clay:dataset-display:bulkActionDropdownItems",
+			"clay:data-set-display:bulkActionDropdownItems",
 			_bulkActionDropdownItems);
 		request.setAttribute(
-			"clay:dataset-display:clayDataSetDisplayViewsContext",
+			"clay:data-set-display:clayDataSetDisplayViewsContext",
 			_clayDataSetDisplayViewsContext);
 		request.setAttribute(
-			"clay:dataset-display:clayPaginationEntries",
+			"clay:data-set-display:clayPaginationEntries",
 			_clayPaginationEntries);
 		request.setAttribute(
-			"clay:dataset-display:creationMenu", _creationMenu);
+			"clay:data-set-display:creationMenu", _creationMenu);
 		request.setAttribute(
-			"clay:dataset-display:dataProviderKey", _dataProviderKey);
-		request.setAttribute("clay:dataset-display:deltaParam", _deltaParam);
-		request.setAttribute("clay:dataset-display:formId", _formId);
-		request.setAttribute("clay:dataset-display:id", _id);
+			"clay:data-set-display:dataProviderKey", _dataProviderKey);
+		request.setAttribute("clay:data-set-display:deltaParam", _deltaParam);
+		request.setAttribute("clay:data-set-display:formId", _formId);
+		request.setAttribute("clay:data-set-display:id", _id);
 		request.setAttribute(
-			"clay:dataset-display:itemsPerPage", _itemsPerPage);
-		request.setAttribute("clay:dataset-display:module", _module);
-		request.setAttribute("clay:dataset-display:namespace", _namespace);
+			"clay:data-set-display:itemsPerPage", _itemsPerPage);
+		request.setAttribute("clay:data-set-display:module", _module);
+		request.setAttribute("clay:data-set-display:namespace", _namespace);
 		request.setAttribute(
-			"clay:dataset-display:nestedItemsKey", _nestedItemsKey);
+			"clay:data-set-display:nestedItemsKey", _nestedItemsKey);
 		request.setAttribute(
-			"clay:dataset-display:nestedItemsReferenceKey",
+			"clay:data-set-display:nestedItemsReferenceKey",
 			_nestedItemsReferenceKey);
-		request.setAttribute("clay:dataset-display:pageNumber", _pageNumber);
+		request.setAttribute("clay:data-set-display:pageNumber", _pageNumber);
 		request.setAttribute(
-			"clay:dataset-display:paginationSelectedEntry",
+			"clay:data-set-display:paginationSelectedEntry",
 			_paginationSelectedEntry);
-		request.setAttribute("clay:dataset-display:portletURL", _portletURL);
+		request.setAttribute("clay:data-set-display:portletURL", _portletURL);
 		request.setAttribute(
-			"clay:dataset-display:selectedItems", _selectedItems);
+			"clay:data-set-display:selectedItems", _selectedItems);
 		request.setAttribute(
-			"clay:dataset-display:selectedItemsKey", _selectedItemsKey);
+			"clay:data-set-display:selectedItemsKey", _selectedItemsKey);
 		request.setAttribute(
-			"clay:dataset-display:selectionType", _selectionType);
+			"clay:data-set-display:selectionType", _selectionType);
 		request.setAttribute(
-			"clay:dataset-display:showManagementBar", _showManagementBar);
+			"clay:data-set-display:showManagementBar", _showManagementBar);
 		request.setAttribute(
-			"clay:dataset-display:showPagination", _showPagination);
-		request.setAttribute("clay:dataset-display:showSearch", _showSearch);
-		request.setAttribute("clay:dataset-display:style", _style);
+			"clay:data-set-display:showPagination", _showPagination);
+		request.setAttribute("clay:data-set-display:showSearch", _showSearch);
+		request.setAttribute("clay:data-set-display:style", _style);
 	}
 
 	private List<ClayPaginationEntry> _getClayPaginationEntries() {
@@ -440,7 +440,7 @@ public class DatasetDisplayTag extends IncludeTag {
 			clayPaginationEntry);
 	}
 
-	private static final String _PAGE = "/dataset_display/page.jsp";
+	private static final String _PAGE = "/data_set_display/page.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DatasetDisplayTag.class);

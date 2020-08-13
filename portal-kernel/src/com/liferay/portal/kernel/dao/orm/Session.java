@@ -66,6 +66,8 @@ public interface Session {
 
 	public void delete(Object object) throws ORMException;
 
+	public void evict(Class<?> clazz, Serializable id) throws ORMException;
+
 	public void evict(Object object) throws ORMException;
 
 	public void flush() throws ORMException;

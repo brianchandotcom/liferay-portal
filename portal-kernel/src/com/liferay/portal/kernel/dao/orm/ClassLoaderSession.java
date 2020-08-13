@@ -313,6 +313,26 @@ public class ClassLoaderSession implements Session {
 	}
 
 	@Override
+	public void evict(Class<?> clazz, Serializable id) throws ORMException {
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		try {
+			if (contextClassLoader != _classLoader) {
+				currentThread.setContextClassLoader(_classLoader);
+			}
+
+			_session.evict(clazz, id);
+		}
+		finally {
+			if (contextClassLoader != _classLoader) {
+				currentThread.setContextClassLoader(contextClassLoader);
+			}
+		}
+	}
+
+	@Override
 	public void evict(Object object) throws ORMException {
 		Thread currentThread = Thread.currentThread();
 

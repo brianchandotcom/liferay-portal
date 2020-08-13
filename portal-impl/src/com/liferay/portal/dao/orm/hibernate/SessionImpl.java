@@ -34,6 +34,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.hibernate.LockOptions;
+import org.hibernate.engine.EntityKey;
+import org.hibernate.engine.PersistenceContext;
+import org.hibernate.engine.SessionFactoryImplementor;
+import org.hibernate.event.EventSource;
 
 /**
  * @author Brian Wing Shun Chan
@@ -211,6 +215,34 @@ public class SessionImpl implements Session {
 	public void delete(Object object) throws ORMException {
 		try {
 			_session.delete(object);
+		}
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
+		}
+	}
+
+	public void evict(Class<?> clazz, Serializable id) throws ORMException {
+		try {
+			EventSource eventSource = (EventSource)_session;
+
+			PersistenceContext persistenceContext =
+				eventSource.getPersistenceContext();
+
+			SessionFactoryImplementor sessionFactoryImplementor =
+				eventSource.getFactory();
+
+			Object object = persistenceContext.getEntity(
+				new EntityKey(
+					id,
+					sessionFactoryImplementor.getEntityPersister(
+						clazz.getName()),
+					eventSource.getEntityMode()));
+
+			if (object == null) {
+				return;
+			}
+
+			eventSource.evict(object);
 		}
 		catch (Exception exception) {
 			throw ExceptionTranslator.translate(exception);

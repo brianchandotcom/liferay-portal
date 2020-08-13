@@ -172,7 +172,7 @@ describe('EditEntry', () => {
 				body: {
 					appBuilderAppId: 1,
 					dataRecord:
-						'{"dataRecordValues": {"Text": {"en_US": "text"}, "Text1": {"en_US": ["text1"]}, "Text2": ""}}',
+						'{"dataRecordValues":{"Text":{"en_US":"text"},"Text1":{"en_US":["text1"]},"Text2":""}}',
 					dataRecordId: '0',
 				},
 				method: 'POST',

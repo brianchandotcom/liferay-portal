@@ -28,7 +28,6 @@ import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
-import com.liferay.info.display.url.provider.InfoEditURLProvider;
 import com.liferay.info.display.url.provider.InfoEditURLProviderTracker;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoFieldValue;
@@ -101,14 +100,6 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		String infoItemClassName = portal.getClassName(
 			infoDisplayObjectProvider.getClassNameId());
 
-		InfoEditURLProvider<?> infoEditURLProvider =
-			infoEditURLProviderTracker.getInfoEditURLProvider(
-				infoItemClassName);
-
-		httpServletRequest.setAttribute(
-			AssetDisplayPageWebKeys.INFO_EDIT_URL_PROVIDER,
-			infoEditURLProvider);
-
 		Object infoItem = _getInfoItem(friendlyURL, infoDisplayObjectProvider);
 
 		httpServletRequest.setAttribute(InfoDisplayWebKeys.INFO_ITEM, infoItem);
@@ -128,10 +119,6 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		httpServletRequest.setAttribute(
 			InfoDisplayWebKeys.INFO_ITEM_FIELD_VALUES_PROVIDER,
 			infoItemFieldValuesProvider);
-
-		httpServletRequest.setAttribute(
-			InfoDisplayWebKeys.INFO_ITEM_SERVICE_TRACKER,
-			infoItemServiceTracker);
 
 		Locale locale = portal.getLocale(httpServletRequest);
 		Layout layout = _getInfoDisplayObjectProviderLayout(

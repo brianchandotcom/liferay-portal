@@ -52,13 +52,25 @@ public class FieldDisplayContext {
 				_mvcRenderCommandName,
 				"/analytics_settings/edit_synced_user_fields")) {
 
+			for (String fieldName : _requiredUserFieldNames) {
+				fields.add(
+					new Field(
+						"Default Field", _userFieldNames.get(fieldName),
+						fieldName));
+			}
+
 			for (Map.Entry<String, String> entry : _userFieldNames.entrySet()) {
+				if (_requiredUserFieldNames.contains(entry.getKey())) {
+					continue;
+				}
+
 				fields.add(
 					new Field(
 						"Default Field", entry.getValue(), entry.getKey()));
 			}
 
-			fieldSearch.setTotal(_userFieldNames.size());
+			fieldSearch.setTotal(
+				_userFieldNames.size() - _requiredUserFieldNames.size());
 		}
 
 		fieldSearch.setResults(fields);
@@ -74,6 +86,8 @@ public class FieldDisplayContext {
 		return portletURL;
 	}
 
+	private static final List<String> _requiredUserFieldNames = Arrays.asList(
+		"createDate", "emailAddress", "modifiedDate", "userId", "uuid");
 	private static final Map<String, String> _userFieldNames =
 		TreeMapBuilder.put(
 			"agreedToTermsOfUse", "Boolean"

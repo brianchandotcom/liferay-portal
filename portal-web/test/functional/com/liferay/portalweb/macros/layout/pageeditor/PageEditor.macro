@@ -499,8 +499,9 @@ definition {
 
 		if (isSet(borderColor)) {
 			Click(
+				key_borderBottom = "Border Color",
 				key_paletteItem = "${borderColor}",
-				locator1 = "Button#PALETTE_ITEM");
+				locator1 = "Button#BORDER_BOTTOM_PALETTE_ITEM");
 
 			Pause(locator1 = "2000");
 		}
@@ -595,8 +596,9 @@ definition {
 
 		if (isSet(textColor)) {
 			Click(
+				key_borderBottom = "Text Body",
 				key_paletteItem = "${textColor}",
-				locator1 = "Button#PALETTE_ITEM");
+				locator1 = "Button#BORDER_BOTTOM_PALETTE_ITEM");
 
 			Pause(locator1 = "2000");
 		}
@@ -955,8 +957,9 @@ definition {
 
 			if (isSet(backgroundColor)) {
 				Click(
+					key_borderBottom = "Background Color",
 					key_paletteItem = "${backgroundColor}",
-					locator1 = "Button#PALETTE_ITEM");
+					locator1 = "Button#BORDER_BOTTOM_PALETTE_ITEM");
 
 				Pause(locator1 = "3000");
 			}

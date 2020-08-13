@@ -65,17 +65,17 @@
 </tr>
 <tr>
 	<td>FRAGMENTS_EDITOR_FLOATING_TOOLBAR_FIELD_SELECT</td>
-	<td>//select[contains(@class,'form-control')]</td>
+	<td>//div[contains(@role,'tabpanel') and contains(@class,'active')]//select[contains(@class,'form-control')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENTS_EDITOR_FLOATING_TOOLBAR_INPUT</td>
-	<td>//div[contains(@class,'floating-toolbar')]//input[contains(@value,'${key_contentName}')]</td>
+	<td>//div[contains(@role,'tabpanel') and contains(@class,'active')]//div[contains(@class,'floating-toolbar')]//input[contains(@value,'${key_contentName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENTS_EDITOR_FLOATING_TOOLBAR_PALETTE_SELECT</td>
-	<td>//button[contains(@class,'${colorPalette}')]</td>
+	<td>//div[contains(@role,'tabpanel') and contains(@class,'active')]//button[contains(@class,'${colorPalette}')]</td>
 	<td></td>
 </tr>
 <tr>

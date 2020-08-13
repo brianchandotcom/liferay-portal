@@ -37,9 +37,53 @@ String redirect = portletURL.toString();
 	</p>
 
 	<liferay-ui:tabs
-		names='<%= LanguageUtil.format(resourceBundle, "user-x") %>'
+		names='<%= LanguageUtil.get(resourceBundle, "contact-x") + "," + LanguageUtil.get(resourceBundle, "user-x") %>'
 		refresh="<%= false %>"
 	>
+		<liferay-ui:section>
+
+			<%
+			FieldDisplayContext fieldDisplayContext = new FieldDisplayContext("/analytics_settings/edit_synced_contact_fields", renderRequest, renderResponse);
+			%>
+
+			<liferay-ui:search-container
+				id="selectContactFields"
+				searchContainer="<%= fieldDisplayContext.getFieldSearch() %>"
+				var="contactFieldsSearchContainer"
+			>
+				<liferay-ui:search-container-row
+					className="com.liferay.analytics.settings.web.internal.model.Field"
+					escapedModel="<%= true %>"
+					keyProperty="name"
+					modelVar="contactField"
+				>
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand"
+						name="attribute"
+						value="<%= HtmlUtil.escape(contactField.getName()) %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand"
+						name="category"
+						value="<%= HtmlUtil.escape(contactField.getCategory()) %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand"
+						name="data-type"
+						value="<%= HtmlUtil.escape(contactField.getDataType()) %>"
+					/>
+				</liferay-ui:search-container-row>
+
+				<liferay-ui:search-iterator
+					markupView="lexicon"
+					searchResultCssClass="show-quick-actions-on-hover table table-autofit"
+				/>
+			</liferay-ui:search-container>
+		</liferay-ui:section>
+
+
 		<liferay-ui:section>
 
 			<%

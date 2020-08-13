@@ -277,18 +277,17 @@ public class DDMFormInstanceFinderImpl
 
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			queryPos.add(companyId);
-
 			if (groupId > 0) {
 				queryPos.add(groupId);
 			}
 
+			queryPos.add(companyId);
+			queryPos.add(names, 2);
+			queryPos.add(descriptions, 2);
+
 			if (status != WorkflowConstants.STATUS_ANY) {
 				queryPos.add(status);
 			}
-
-			queryPos.add(names, 2);
-			queryPos.add(descriptions, 2);
 
 			Iterator<Long> iterator = sqlQuery.iterate();
 
@@ -371,18 +370,17 @@ public class DDMFormInstanceFinderImpl
 
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			queryPos.add(companyId);
-
 			if (groupId > 0) {
 				queryPos.add(groupId);
 			}
 
+			queryPos.add(companyId);
+			queryPos.add(names, 2);
+			queryPos.add(descriptions, 2);
+
 			if (status != WorkflowConstants.STATUS_ANY) {
 				queryPos.add(status);
 			}
-
-			queryPos.add(names, 2);
-			queryPos.add(descriptions, 2);
 
 			return (List<DDMFormInstance>)QueryUtil.list(
 				sqlQuery, getDialect(), start, end);

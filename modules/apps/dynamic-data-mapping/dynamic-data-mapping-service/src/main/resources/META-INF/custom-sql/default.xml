@@ -49,8 +49,8 @@
 			FROM
 				DDMFormInstance
 			WHERE
-				(DDMFormInstance.companyId = ?) AND
 				(DDMFormInstance.groupId = ?) AND
+				(DDMFormInstance.companyId = ?) AND
 				(
 					(LOWER(DDMFormInstance.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(DDMFormInstance.description LIKE ? [$AND_OR_NULL_CHECK$])
@@ -65,13 +65,13 @@
 				DDMFormInstance, DDMFormInstanceVersion
 			WHERE
 				(DDMFormInstance.formInstanceId = DDMFormInstanceVersion.formInstanceId) AND
-				(DDMFormInstance.companyId = ?) AND
 				(DDMFormInstance.groupId = ?) AND
-				(DDMFormInstanceVersion.status = ?) AND
+				(DDMFormInstance.companyId = ?) AND
 				(
 					(LOWER(DDMFormInstance.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(DDMFormInstance.description LIKE ? [$AND_OR_NULL_CHECK$])
-				)
+				) AND
+				(DDMFormInstanceVersion.status = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceFinder.findByC_G_N_D">
@@ -85,8 +85,8 @@
 					FROM
 						DDMFormInstance
 					WHERE
-						(DDMFormInstance.companyId = ?) AND
 						(DDMFormInstance.groupId = ?) AND
+						(DDMFormInstance.companyId = ?) AND
 						(
 							(LOWER(DDMFormInstance.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(DDMFormInstance.description LIKE ? [$AND_OR_NULL_CHECK$])
@@ -112,13 +112,13 @@
 						DDMFormInstance, DDMFormInstanceVersion
 					WHERE
 						(DDMFormInstance.formInstanceId = DDMFormInstanceVersion.formInstanceId) AND
-						(DDMFormInstance.companyId = ?) AND
 						(DDMFormInstance.groupId = ?) AND
-						(DDMFormInstanceVersion.status = ?) AND
+						(DDMFormInstance.companyId = ?) AND
 						(
 							(LOWER(DDMFormInstance.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(DDMFormInstance.description LIKE ? [$AND_OR_NULL_CHECK$])
-						)
+						) AND
+						(DDMFormInstanceVersion.status = ?)
 				)
 				TEMP_TABLE
 					INNER JOIN

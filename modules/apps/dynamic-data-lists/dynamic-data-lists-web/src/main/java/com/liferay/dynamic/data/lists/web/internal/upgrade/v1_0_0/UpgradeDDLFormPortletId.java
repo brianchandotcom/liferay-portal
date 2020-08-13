@@ -174,6 +174,10 @@ public class UpgradeDDLFormPortletId extends BaseUpgradePortletId {
 			"<preference><name>formView</name><value>true</value>" +
 				"</preference></portlet-preferences>");
 
+		newPreferences = StringUtil.replace(
+			newPreferences, "#portlet_" + oldRootPortletId,
+			"#portlet_" + newRootPortletId);
+
 		portletPreferences.setPreferences(newPreferences);
 
 		_portletPreferencesLocalService.updatePortletPreferences(

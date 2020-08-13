@@ -20,7 +20,7 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.common.spi.resource.SPIRatingResource;
-import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
 import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
 import com.liferay.headless.delivery.dto.v1_0.Image;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
@@ -178,10 +178,11 @@ public class BlogPostingResourceImpl
 				localDateTime.getHour(), localDateTime.getMinute(), true, true,
 				new String[0], _getCaption(image), _getImageSelector(image),
 				null,
-				ServiceContextUtil.createServiceContext(
+				ServiceContextRequestUtil.createServiceContext(
 					blogPosting.getTaxonomyCategoryIds(),
 					blogPosting.getKeywords(),
 					_getExpandoBridgeAttributes(blogPosting), siteId,
+					contextHttpServletRequest,
 					blogPosting.getViewableByAsString())));
 	}
 
@@ -205,11 +206,11 @@ public class BlogPostingResourceImpl
 				localDateTime.getHour(), localDateTime.getMinute(), true, true,
 				new String[0], _getCaption(image), _getImageSelector(image),
 				null,
-				ServiceContextUtil.createServiceContext(
+				ServiceContextRequestUtil.createServiceContext(
 					blogPosting.getTaxonomyCategoryIds(),
 					blogPosting.getKeywords(),
 					_getExpandoBridgeAttributes(blogPosting),
-					blogsEntry.getGroupId(),
+					blogsEntry.getGroupId(), contextHttpServletRequest,
 					blogPosting.getViewableByAsString())));
 	}
 

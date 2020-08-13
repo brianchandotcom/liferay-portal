@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
-import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
 import com.liferay.headless.delivery.dto.v1_0.NavigationMenu;
 import com.liferay.headless.delivery.dto.v1_0.NavigationMenuItem;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
@@ -106,7 +106,8 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 			_siteNavigationMenuService.addSiteNavigationMenu(
 				siteId, navigationMenu.getName(),
 				SiteNavigationConstants.TYPE_DEFAULT, true,
-				ServiceContextUtil.createServiceContext(siteId, null));
+				ServiceContextRequestUtil.createServiceContext(
+					siteId, contextHttpServletRequest, null));
 
 		_createNavigationMenuItems(
 			navigationMenu.getNavigationMenuItems(), 0, siteId,
@@ -129,8 +130,10 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 			siteNavigationMenu.getGroupId(),
 			siteNavigationMenu.getSiteNavigationMenuId());
 
-		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
-			siteNavigationMenu.getGroupId(), null);
+		ServiceContext serviceContext =
+			ServiceContextRequestUtil.createServiceContext(
+				siteNavigationMenu.getGroupId(), contextHttpServletRequest,
+				null);
 
 		NavigationMenu.NavigationType navigationType =
 			navigationMenu.getNavigationType();
@@ -158,7 +161,8 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 			_siteNavigationMenuItemService.addSiteNavigationMenuItem(
 				siteId, siteNavigationMenuId, parentNavigationMenuId,
 				_getType(navigationMenuItem), unicodeProperties,
-				ServiceContextUtil.createServiceContext(siteId, null));
+				ServiceContextRequestUtil.createServiceContext(
+					siteId, contextHttpServletRequest, null));
 
 		_createNavigationMenuItems(
 			navigationMenuItem.getNavigationMenuItems(),
@@ -570,8 +574,8 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 								_getUnicodeProperties(
 									false, navigationMenuItem, siteId,
 									existingSiteNavigationMenuItem),
-								ServiceContextUtil.createServiceContext(
-									siteId, null));
+								ServiceContextRequestUtil.createServiceContext(
+									siteId, contextHttpServletRequest, null));
 
 					_updateNavigationMenuItems(
 						navigationMenuItem.getNavigationMenuItems(),

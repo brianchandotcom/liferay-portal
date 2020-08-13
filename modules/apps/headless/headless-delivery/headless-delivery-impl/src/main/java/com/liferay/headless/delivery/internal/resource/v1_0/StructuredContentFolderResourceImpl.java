@@ -16,7 +16,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
-import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.StructuredContentFolderDTOConverter;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
@@ -221,9 +221,9 @@ public class StructuredContentFolderResourceImpl
 				journalFolder.getParentFolderId(),
 				structuredContentFolder.getName(),
 				structuredContentFolder.getDescription(), false,
-				ServiceContextUtil.createServiceContext(
+				ServiceContextRequestUtil.createServiceContext(
 					_getExpandoBridgeAttributes(structuredContentFolder),
-					journalFolder.getGroupId(),
+					journalFolder.getGroupId(), contextHttpServletRequest,
 					structuredContentFolder.getViewableByAsString())));
 	}
 
@@ -260,9 +260,10 @@ public class StructuredContentFolderResourceImpl
 			_journalFolderService.addFolder(
 				siteId, parentFolderId, structuredContentFolder.getName(),
 				structuredContentFolder.getDescription(),
-				ServiceContextUtil.createServiceContext(
+				ServiceContextRequestUtil.createServiceContext(
 					_getExpandoBridgeAttributes(structuredContentFolder),
-					siteId, structuredContentFolder.getViewableByAsString())));
+					siteId, contextHttpServletRequest,
+					structuredContentFolder.getViewableByAsString())));
 	}
 
 	private Map<String, Serializable> _getExpandoBridgeAttributes(

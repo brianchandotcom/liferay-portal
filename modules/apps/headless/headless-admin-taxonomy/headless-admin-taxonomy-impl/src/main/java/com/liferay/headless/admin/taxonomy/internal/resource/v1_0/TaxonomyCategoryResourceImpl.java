@@ -24,7 +24,7 @@ import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.internal.dto.v1_0.converter.TaxonomyCategoryDTOConverter;
 import com.liferay.headless.admin.taxonomy.internal.odata.entity.v1_0.CategoryEntityModel;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyCategoryResource;
-import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -343,8 +343,9 @@ public class TaxonomyCategoryResourceImpl
 		AssetCategory assetCategory = _assetCategoryService.addCategory(
 			groupId, taxonomyCategoryId, titleMap, descriptionMap,
 			taxonomyVocabularyId, null,
-			ServiceContextUtil.createServiceContext(
-				groupId, taxonomyCategory.getViewableByAsString()));
+			ServiceContextRequestUtil.createServiceContext(
+				groupId, contextHttpServletRequest,
+				taxonomyCategory.getViewableByAsString()));
 
 		if (taxonomyCategory.getExternalReferenceCode() != null) {
 			assetCategory.setExternalReferenceCode(

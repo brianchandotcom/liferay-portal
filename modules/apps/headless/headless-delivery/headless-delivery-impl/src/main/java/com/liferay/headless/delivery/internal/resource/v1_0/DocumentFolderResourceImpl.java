@@ -19,7 +19,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
-import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
 import com.liferay.headless.delivery.dto.v1_0.CustomField;
 import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.DocumentFolderDTOConverter;
@@ -245,12 +245,13 @@ public class DocumentFolderResourceImpl
 			_dlAppService.addFolder(
 				siteId, parentDocumentFolderId, documentFolder.getName(),
 				documentFolder.getDescription(),
-				ServiceContextUtil.createServiceContext(
+				ServiceContextRequestUtil.createServiceContext(
 					CustomFieldsUtil.toMap(
 						DLFolder.class.getName(), contextCompany.getCompanyId(),
 						documentFolder.getCustomFields(),
 						contextAcceptLanguage.getPreferredLocale()),
-					siteId, documentFolder.getViewableByAsString())));
+					siteId, contextHttpServletRequest,
+					documentFolder.getViewableByAsString())));
 	}
 
 	private Page<DocumentFolder> _getDocumentFoldersPage(
@@ -357,12 +358,12 @@ public class DocumentFolderResourceImpl
 		return _toDocumentFolder(
 			_dlAppService.updateFolder(
 				documentFolderId, name, description,
-				ServiceContextUtil.createServiceContext(
+				ServiceContextRequestUtil.createServiceContext(
 					CustomFieldsUtil.toMap(
 						DLFolder.class.getName(), contextCompany.getCompanyId(),
 						customFields,
 						contextAcceptLanguage.getPreferredLocale()),
-					0, null)));
+					0, contextHttpServletRequest, null)));
 	}
 
 	@Reference

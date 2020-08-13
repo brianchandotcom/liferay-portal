@@ -17,7 +17,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.common.spi.resource.SPIRatingResource;
-import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.KnowledgeBaseArticleDTOConverter;
@@ -309,7 +309,7 @@ public class KnowledgeBaseArticleResourceImpl
 				knowledgeBaseArticleId, knowledgeBaseArticle.getTitle(),
 				knowledgeBaseArticle.getArticleBody(),
 				knowledgeBaseArticle.getDescription(), null, null, null, null,
-				ServiceContextUtil.createServiceContext(
+				ServiceContextRequestUtil.createServiceContext(
 					Optional.ofNullable(
 						knowledgeBaseArticle.getTaxonomyCategoryIds()
 					).orElse(
@@ -321,7 +321,7 @@ public class KnowledgeBaseArticleResourceImpl
 						new String[0]
 					),
 					_getExpandoBridgeAttributes(knowledgeBaseArticle),
-					knowledgeBaseArticle.getSiteId(),
+					knowledgeBaseArticle.getSiteId(), contextHttpServletRequest,
 					knowledgeBaseArticle.getViewableByAsString())));
 	}
 
@@ -392,10 +392,11 @@ public class KnowledgeBaseArticleResourceImpl
 				knowledgeBaseArticle.getFriendlyUrlPath(),
 				knowledgeBaseArticle.getArticleBody(),
 				knowledgeBaseArticle.getDescription(), null, null, null,
-				ServiceContextUtil.createServiceContext(
+				ServiceContextRequestUtil.createServiceContext(
 					knowledgeBaseArticle.getTaxonomyCategoryIds(),
 					knowledgeBaseArticle.getKeywords(),
 					_getExpandoBridgeAttributes(knowledgeBaseArticle), siteId,
+					contextHttpServletRequest,
 					knowledgeBaseArticle.getViewableByAsString())));
 	}
 

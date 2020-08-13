@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
-import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
 import com.liferay.headless.delivery.dto.v1_0.WikiNode;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.WikiNodeEntityModel;
@@ -112,7 +112,8 @@ public class WikiNodeResourceImpl
 		return _toWikiNode(
 			_wikiNodeService.addNode(
 				wikiNode.getName(), wikiNode.getDescription(),
-				ServiceContextUtil.createServiceContext(siteId, null)));
+				ServiceContextRequestUtil.createServiceContext(
+					siteId, contextHttpServletRequest, null)));
 	}
 
 	@Override
@@ -125,8 +126,9 @@ public class WikiNodeResourceImpl
 		return _toWikiNode(
 			_wikiNodeService.updateNode(
 				wikiNodeId, wikiNode.getName(), wikiNode.getDescription(),
-				ServiceContextUtil.createServiceContext(
+				ServiceContextRequestUtil.createServiceContext(
 					serviceBuilderWikiNode.getGroupId(),
+					contextHttpServletRequest,
 					wikiNode.getViewableByAsString())));
 	}
 

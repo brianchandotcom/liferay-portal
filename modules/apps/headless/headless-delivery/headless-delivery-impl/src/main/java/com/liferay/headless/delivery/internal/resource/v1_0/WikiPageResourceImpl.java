@@ -22,7 +22,7 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
-import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
 import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.dto.v1_0.WikiPage;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
@@ -190,10 +190,11 @@ public class WikiPageResourceImpl
 
 		WikiNode wikiNode = _wikiNodeService.getNode(wikiNodeId);
 
-		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
-			wikiPage.getTaxonomyCategoryIds(), wikiPage.getKeywords(),
-			_getExpandoBridgeAttributes(wikiPage), wikiNode.getGroupId(),
-			wikiPage.getViewableByAsString());
+		ServiceContext serviceContext =
+			ServiceContextRequestUtil.createServiceContext(
+				wikiPage.getTaxonomyCategoryIds(), wikiPage.getKeywords(),
+				_getExpandoBridgeAttributes(wikiPage), wikiNode.getGroupId(),
+				contextHttpServletRequest, wikiPage.getViewableByAsString());
 
 		serviceContext.setCommand("add");
 
@@ -216,10 +217,12 @@ public class WikiPageResourceImpl
 			PermissionThreadLocal.getPermissionChecker(),
 			parentWikiPage.getNodeId(), ActionKeys.ADD_PAGE);
 
-		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
-			wikiPage.getTaxonomyCategoryIds(), wikiPage.getKeywords(),
-			_getExpandoBridgeAttributes(wikiPage), parentWikiPage.getGroupId(),
-			wikiPage.getViewableByAsString());
+		ServiceContext serviceContext =
+			ServiceContextRequestUtil.createServiceContext(
+				wikiPage.getTaxonomyCategoryIds(), wikiPage.getKeywords(),
+				_getExpandoBridgeAttributes(wikiPage),
+				parentWikiPage.getGroupId(), contextHttpServletRequest,
+				wikiPage.getViewableByAsString());
 
 		serviceContext.setCommand("add");
 
@@ -243,11 +246,12 @@ public class WikiPageResourceImpl
 			PermissionThreadLocal.getPermissionChecker(),
 			serviceBuilderWikiPage, ActionKeys.UPDATE);
 
-		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
-			wikiPage.getTaxonomyCategoryIds(), wikiPage.getKeywords(),
-			_getExpandoBridgeAttributes(wikiPage),
-			serviceBuilderWikiPage.getGroupId(),
-			wikiPage.getViewableByAsString());
+		ServiceContext serviceContext =
+			ServiceContextRequestUtil.createServiceContext(
+				wikiPage.getTaxonomyCategoryIds(), wikiPage.getKeywords(),
+				_getExpandoBridgeAttributes(wikiPage),
+				serviceBuilderWikiPage.getGroupId(), contextHttpServletRequest,
+				wikiPage.getViewableByAsString());
 
 		serviceContext.setCommand("update");
 

@@ -18,7 +18,7 @@ import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
 import com.liferay.headless.delivery.dto.v1_0.BlogPostingImage;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.ContentValueUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.BlogPostingImageEntityModel;
@@ -135,8 +135,8 @@ public class BlogPostingImageResourceImpl
 				binaryFile.getFileName()
 			),
 			null, null, binaryFile.getInputStream(), binaryFile.getSize(),
-			ServiceContextUtil.createServiceContext(
-				siteId,
+			ServiceContextRequestUtil.createServiceContext(
+				siteId, contextHttpServletRequest,
 				blogPostingImageOptional.map(
 					BlogPostingImage::getViewableByAsString
 				).orElse(

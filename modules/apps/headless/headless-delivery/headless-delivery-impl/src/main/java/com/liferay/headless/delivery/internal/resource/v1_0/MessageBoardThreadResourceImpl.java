@@ -17,7 +17,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.common.spi.resource.SPIRatingResource;
-import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardThread;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.MessageBoardThreadDTOConverter;
@@ -508,15 +508,17 @@ public class MessageBoardThreadResourceImpl
 	private ServiceContext _getServiceContext(
 		MessageBoardThread messageBoardThread, long siteId) {
 
-		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
-			messageBoardThread.getTaxonomyCategoryIds(),
-			Optional.ofNullable(
-				messageBoardThread.getKeywords()
-			).orElse(
-				new String[0]
-			),
-			_getExpandoBridgeAttributes(messageBoardThread), siteId,
-			messageBoardThread.getViewableByAsString());
+		ServiceContext serviceContext =
+			ServiceContextRequestUtil.createServiceContext(
+				messageBoardThread.getTaxonomyCategoryIds(),
+				Optional.ofNullable(
+					messageBoardThread.getKeywords()
+				).orElse(
+					new String[0]
+				),
+				_getExpandoBridgeAttributes(messageBoardThread), siteId,
+				contextHttpServletRequest,
+				messageBoardThread.getViewableByAsString());
 
 		String link = contextHttpServletRequest.getHeader("Link");
 

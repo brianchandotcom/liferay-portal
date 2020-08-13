@@ -136,105 +136,103 @@ export default withRouter(({history}) => {
 			<div className="c-p-5 questions-container row">
 				<div className="col-xl-8 offset-xl-2">
 					<h2 className="sheet-subtitle">Topics</h2>
-					<Topics />
+					{topics &&
+						topics.myUserAccountSubscriptions.items &&
+						!topics.myUserAccountSubscriptions.items.length && (
+							<ClayEmptyState
+								title={Liferay.Language.get(
+									'there-are-no-results'
+								)}
+							/>
+						)}
+					<div className="row">
+						{topics &&
+							topics.myUserAccountSubscriptions.items &&
+							topics.myUserAccountSubscriptions.items.map(
+								(data) => (
+									<div
+										className="col-md-4 question-tags"
+										key={data.graphQLNode.id}
+									>
+										<div className="card card-interactive card-interactive-primary card-type-template template-card-horizontal">
+											<div className="card-body">
+												<div className="card-row">
+													<div className="autofit-col autofit-col-expand">
+														<Link
+															title={
+																data.graphQLNode
+																	.title
+															}
+															to={`/questions/${data.graphQLNode.title}`}
+														>
+															<div className="autofit-section">
+																<div className="card-title">
+																	<span className="text-truncate">
+																		{
+																			data
+																				.graphQLNode
+																				.title
+																		}
+																	</span>
+																</div>
+															</div>
+														</Link>
+													</div>
+													<div className="autofit-col">
+														<ClayDropDownWithItems
+															items={actions(
+																data
+															)}
+															trigger={
+																<ClayButtonWithIcon
+																	displayType="unstyled"
+																	small
+																	symbol="ellipsis-v"
+																/>
+															}
+														/>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								)
+							)}
+					</div>
 					<h2 className="mt-5 sheet-subtitle">Questions</h2>
-					<Questions />
+					<div>
+						{threads &&
+							threads.myUserAccountSubscriptions.items &&
+							!threads.myUserAccountSubscriptions.items
+								.length && (
+								<ClayEmptyState
+									title={Liferay.Language.get(
+										'there-are-no-results'
+									)}
+								/>
+							)}
+						{threads &&
+							threads.myUserAccountSubscriptions.items &&
+							threads.myUserAccountSubscriptions.items.map(
+								(data) => (
+									<div key={data.id}>
+										<QuestionRow
+											items={actions(data)}
+											question={data.graphQLNode}
+											showSectionLabel={true}
+										/>
+									</div>
+								)
+							)}
+						<DeleteQuestion
+							deleteModalVisibility={showDeleteModalPanel}
+							question={questionToDelete}
+							setDeleteModalVisibility={setShowDeleteModalPanel}
+						/>
+					</div>
 				</div>
 			</div>
 			<Alert displayType={'success'} info={info} />
 		</section>
 	);
-
-	function Topics() {
-		return (
-			<>
-				{topics &&
-					topics.myUserAccountSubscriptions.items &&
-					!topics.myUserAccountSubscriptions.items.length && (
-						<ClayEmptyState
-							title={Liferay.Language.get('there-are-no-results')}
-						/>
-					)}
-				<div className="row">
-					{topics &&
-						topics.myUserAccountSubscriptions.items &&
-						topics.myUserAccountSubscriptions.items.map((data) => (
-							<div
-								className="col-md-4 question-tags"
-								key={data.graphQLNode.id}
-							>
-								<div className="card card-interactive card-interactive-primary card-type-template template-card-horizontal">
-									<div className="card-body">
-										<div className="card-row">
-											<div className="autofit-col autofit-col-expand">
-												<Link
-													title={
-														data.graphQLNode.title
-													}
-													to={`/questions/${data.graphQLNode.title}`}
-												>
-													<div className="autofit-section">
-														<div className="card-title">
-															<span className="text-truncate">
-																{
-																	data
-																		.graphQLNode
-																		.title
-																}
-															</span>
-														</div>
-													</div>
-												</Link>
-											</div>
-											<div className="autofit-col">
-												<ClayDropDownWithItems
-													items={actions(data)}
-													trigger={
-														<ClayButtonWithIcon
-															displayType="unstyled"
-															small
-															symbol="ellipsis-v"
-														/>
-													}
-												/>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						))}
-				</div>
-			</>
-		);
-	}
-
-	function Questions() {
-		return (
-			<div>
-				{threads &&
-					threads.myUserAccountSubscriptions.items &&
-					!threads.myUserAccountSubscriptions.items.length && (
-						<ClayEmptyState
-							title={Liferay.Language.get('there-are-no-results')}
-						/>
-					)}
-				{threads &&
-					threads.myUserAccountSubscriptions.items &&
-					threads.myUserAccountSubscriptions.items.map((data) => (
-						<div key={data.id}>
-							<QuestionRow
-								items={actions(data)}
-								question={data.graphQLNode}
-								showSectionLabel={true}
-							/>
-						</div>
-					))}
-				<DeleteQuestion
-					deleteModalVisibility={showDeleteModalPanel}
-					question={questionToDelete}
-					setDeleteModalVisibility={setShowDeleteModalPanel}
-				/>
-			</div>
-		);
-	}
 });

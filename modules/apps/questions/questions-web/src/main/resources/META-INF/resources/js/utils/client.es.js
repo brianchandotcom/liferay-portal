@@ -562,8 +562,8 @@ export const getThreads = (
 		.then((result) => ({...result, data: result.data.messageBoardThreads}));
 };
 
-export const getSectionsFromRootSection = (rootSection, siteKey) => {
-	if (!rootSection) {
+export const getSectionsByRootSection = (siteKey, sectionTitle) => {
+	if (!sectionTitle || sectionTitle === '0') {
 		return client
 			.query({
 				query: getSectionsQuery,
@@ -577,25 +577,35 @@ export const getSectionsFromRootSection = (rootSection, siteKey) => {
 			}));
 	}
 
+	return getSectionBySectionTitle(siteKey, sectionTitle).then((result) => ({
+		...result,
+		data: result.messageBoardSections,
+	}));
+};
+
+export const getSectionByRootSection = (siteKey) => {
 	return client
 		.query({
-			query: getSectionQuery,
+			query: getSectionsQuery,
 			variables: {
-				filter: `title eq '${rootSection}' or id eq '${rootSection}'`,
 				siteKey,
 			},
 		})
-		.then((result) => ({
-			...result,
-			data:
-				result.data.messageBoardSections.items[0].messageBoardSections,
+		.then(({data}) => ({
+			actions: data.actions,
+			id: 0,
+			messageBoardSections: data.messageBoardSections,
+			numberOfMessageBoardSections:
+				data.messageBoardSections &&
+				data.messageBoardSections.items &&
+				data.messageBoardSections.items.length,
 		}));
 };
 
-export const getSections = (sectionTitle, siteKey) =>
+export const getSectionBySectionTitle = (siteKey, sectionTitle) =>
 	client
 		.query({
-			query: getSectionQuery,
+			query: getSectionBySectionTitleQuery,
 			variables: {
 				filter: `title eq '${sectionTitle}' or id eq '${sectionTitle}'`,
 				siteKey,
@@ -811,7 +821,7 @@ export const getRelatedThreadsQuery = gql`
 	}
 `;
 
-export const getSectionQuery = gql`
+export const getSectionBySectionTitleQuery = gql`
 	query messageBoardSections($filter: String!, $siteKey: String!) {
 		messageBoardSections(
 			filter: $filter
@@ -820,10 +830,12 @@ export const getSectionQuery = gql`
 			siteKey: $siteKey
 			sort: "title:desc"
 		) {
+			actions
 			items {
 				actions
 				id
 				messageBoardSections(sort: "title:asc") {
+					actions
 					items {
 						id
 						description
@@ -859,7 +871,7 @@ export const getSectionQuery = gql`
 	}
 `;
 
-export const getSectionsByIdQuery = gql`
+export const getSectionQuery = gql`
 	query messageBoardSection($messageBoardSectionId: Long!) {
 		messageBoardSection(messageBoardSectionId: $messageBoardSectionId) {
 			actions

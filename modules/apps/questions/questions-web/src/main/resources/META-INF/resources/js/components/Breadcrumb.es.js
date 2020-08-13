@@ -14,16 +14,21 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
-import {client, getSectionsByIdQuery} from '../utils/client.es';
+import {AppContext} from '../AppContext.es';
+import {client, getSectionQuery} from '../utils/client.es';
 import {historyPushWithSlug, stringToSlug} from '../utils/utils.es';
 import BreadcrumbDropdown from './BreadcrumbDropdown.es';
 import Link from './Link.es';
 import NewTopicModal from './NewTopicModal.es';
 
-export default withRouter(({history, rootSection, section}) => {
+export default withRouter(({history, section}) => {
+	const context = useContext(AppContext);
+
+	const rootSection = context.rootTopic;
+
 	const MAX_SECTIONS_IN_BREADCRUMB = 3;
 	const historyPushParser = historyPushWithSlug(history.push);
 	const [breadcrumbNodes, setBreadcrumbNodes] = useState([]);
@@ -48,7 +53,7 @@ export default withRouter(({history, rootSection, section}) => {
 	const findParent = (messageBoardSectionId) =>
 		client
 			.query({
-				query: getSectionsByIdQuery,
+				query: getSectionQuery,
 				variables: {messageBoardSectionId},
 			})
 			.then(({data}) => data.messageBoardSection);
@@ -58,7 +63,7 @@ export default withRouter(({history, rootSection, section}) => {
 			if (rootSection !== section.title) {
 				acc.push({
 					subCategories: getSubSections(section),
-					title: section.title,
+					title: section.title || 'Home',
 				});
 
 				if (section.parentMessageBoardSectionId) {
@@ -180,7 +185,7 @@ export default withRouter(({history, rootSection, section}) => {
 				key={i}
 			>
 				{section.subCategories.length <= 0 ? (
-					section.title
+					section.title || 'Home'
 				) : (
 					<BreadcrumbDropdown
 						className="breadcrumb-item breadcrumb-text-truncate"

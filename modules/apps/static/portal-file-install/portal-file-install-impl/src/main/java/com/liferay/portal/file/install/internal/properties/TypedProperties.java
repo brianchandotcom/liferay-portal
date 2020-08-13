@@ -16,6 +16,8 @@ package com.liferay.portal.file.install.internal.properties;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.BufferedReader;
 import java.io.FilterWriter;
@@ -156,6 +158,12 @@ public class TypedProperties {
 
 			if (property[1].length() >= 2) {
 				Matcher matcher = _pattern.matcher(property[1]);
+
+				if (!matcher.matches()) {
+					_log.error("Unable to read property line " + line);
+
+					return false;
+				}
 			}
 
 			_propertyName = _unescapeJava(property[0]);
@@ -645,6 +653,9 @@ public class TypedProperties {
 	private static final char[] _SEPARATORS = {CharPool.EQUAL, CharPool.COLON};
 
 	private static final char[] _WHITE_SPACE = {CharPool.SPACE, '\t', '\f'};
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		TypedProperties.class);
 
 	private List<String> _footers;
 	private List<String> _headers;

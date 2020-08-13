@@ -322,7 +322,7 @@ definition {
 		task ("View the fragment style") {
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
-				borderRadius = "0",
+				borderRadius = "rounded-0",
 				boxShadow = "lg",
 				fragmentName = "card",
 				imageSize = "100",

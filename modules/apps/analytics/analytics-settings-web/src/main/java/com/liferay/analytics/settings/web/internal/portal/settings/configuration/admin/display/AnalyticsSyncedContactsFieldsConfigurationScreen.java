@@ -34,6 +34,11 @@ public class AnalyticsSyncedContactsFieldsConfigurationScreen
 	}
 
 	@Override
+	public boolean isVisible() {
+		return false;
+	}
+
+	@Override
 	protected String getJspPath() {
 		return "/edit_synced_contacts_fields.jsp";
 	}

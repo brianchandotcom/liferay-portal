@@ -14,10 +14,10 @@
 
 package com.liferay.fragment.internal.renderer;
 
-import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.info.item.renderer.InfoItemRendererTracker;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -76,9 +76,10 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		Object displayObject = _getDisplayObject(httpServletRequest);
+		Object infoItem = httpServletRequest.getAttribute(
+			InfoDisplayWebKeys.INFO_ITEM);
 
-		if (displayObject == null) {
+		if (infoItem == null) {
 			if (FragmentRendererUtil.isEditMode(httpServletRequest)) {
 				FragmentRendererUtil.printPortletMessageInfo(
 					httpServletRequest, httpServletResponse,
@@ -88,8 +89,12 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 			return;
 		}
 
+		InfoItemDetails infoItemDetails =
+			(InfoItemDetails)httpServletRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_ITEM_DETAILS);
+
 		InfoItemRenderer<Object> infoItemRenderer = _getInfoItemRenderer(
-			displayObject.getClass());
+			infoItemDetails.getClass());
 
 		if (infoItemRenderer == null) {
 			if (FragmentRendererUtil.isEditMode(httpServletRequest)) {
@@ -103,19 +108,7 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 		}
 
 		infoItemRenderer.render(
-			displayObject, httpServletRequest, httpServletResponse);
-	}
-
-	private Object _getDisplayObject(HttpServletRequest httpServletRequest) {
-		InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
-			(InfoDisplayObjectProvider<?>)httpServletRequest.getAttribute(
-				AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
-
-		if (infoDisplayObjectProvider == null) {
-			return null;
-		}
-
-		return infoDisplayObjectProvider.getDisplayObject();
+			infoItem, httpServletRequest, httpServletResponse);
 	}
 
 	private InfoItemRenderer<Object> _getInfoItemRenderer(

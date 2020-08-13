@@ -26,6 +26,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.asset.kernel.model.AssetRendererFactory" %><%@
 page import="com.liferay.fragment.constants.FragmentEntryLinkConstants" %><%@
 page import="com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys" %><%@
+page import="com.liferay.layout.type.controller.display.page.internal.constants.DisplayPageLayoutTypeControllerWebKeys" %><%@
 page import="com.liferay.layout.type.controller.display.page.internal.display.context.DisplayPageLayoutTypeControllerDisplayContext" %><%@
 page import="com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil" %><%@
 page import="com.liferay.portal.kernel.model.LayoutTemplateConstants" %><%@
@@ -39,7 +40,3 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
-
-<%
-DisplayPageLayoutTypeControllerDisplayContext displayPageLayoutTypeControllerDisplayContext = new DisplayPageLayoutTypeControllerDisplayContext(request);
-%>

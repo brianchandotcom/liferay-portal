@@ -14,11 +14,16 @@
 
 package com.liferay.layout.type.controller.display.page.internal.product.navigation.control.menu;
 
-import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.display.url.provider.InfoEditURLProvider;
+import com.liferay.info.display.url.provider.InfoEditURLProviderTracker;
+import com.liferay.info.item.InfoItemDetails;
+import com.liferay.info.item.InfoItemReference;
+import com.liferay.layout.type.controller.display.page.internal.constants.DisplayPageLayoutTypeControllerWebKeys;
+import com.liferay.layout.type.controller.display.page.internal.display.context.EditDisplayPageMenuDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -27,16 +32,20 @@ import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 
+import java.io.IOException;
+
 import java.util.Locale;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -72,6 +81,29 @@ public class EditDisplayPageMenuProductNavigationControlMenuEntry
 	}
 
 	@Override
+	public boolean includeIcon(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException {
+
+		InfoItemDetails infoItemDetails =
+			(InfoItemDetails)httpServletRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_ITEM_DETAILS);
+
+		InfoEditURLProvider<Object> infoEditURLProvider =
+			_infoEditURLProviderTracker.getInfoEditURLProvider(
+				infoItemDetails.getClassName());
+
+		httpServletRequest.setAttribute(
+			DisplayPageLayoutTypeControllerWebKeys.
+				EDIT_DISPLAY_PAGE_MENU_DISPLAY_CONTEXT,
+			new EditDisplayPageMenuDisplayContext(
+				httpServletRequest, infoEditURLProvider));
+
+		return super.includeIcon(httpServletRequest, httpServletResponse);
+	}
+
+	@Override
 	public boolean isShow(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
@@ -104,24 +136,26 @@ public class EditDisplayPageMenuProductNavigationControlMenuEntry
 			return false;
 		}
 
-		InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
-			(InfoDisplayObjectProvider<?>)httpServletRequest.getAttribute(
-				AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
+		InfoItemDetails infoItemDetails =
+			(InfoItemDetails)httpServletRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_ITEM_DETAILS);
 
-		if (infoDisplayObjectProvider == null) {
+		if (infoItemDetails == null) {
 			return false;
 		}
 
 		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.
-				getAssetRendererFactoryByClassNameId(
-					infoDisplayObjectProvider.getClassNameId());
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				infoItemDetails.getClassName());
 
 		AssetRenderer<?> assetRenderer = null;
 
 		if (assetRendererFactory != null) {
+			InfoItemReference infoItemReference =
+				infoItemDetails.getInfoItemReference();
+
 			assetRenderer = assetRendererFactory.getAssetRenderer(
-				infoDisplayObjectProvider.getClassPK());
+				infoItemReference.getClassPK());
 		}
 
 		if (((assetRenderer == null) ||
@@ -145,5 +179,11 @@ public class EditDisplayPageMenuProductNavigationControlMenuEntry
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
+
+	@Reference
+	private InfoEditURLProviderTracker _infoEditURLProviderTracker;
+
+	@Reference
+	private Portal _portal;
 
 }

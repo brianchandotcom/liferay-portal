@@ -38,17 +38,16 @@ import javax.servlet.http.HttpServletRequest;
 public class DisplayPageLayoutTypeControllerDisplayContext {
 
 	public DisplayPageLayoutTypeControllerDisplayContext(
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest,
+		InfoItemServiceTracker infoItemServiceTracker) {
 
 		_httpServletRequest = httpServletRequest;
+		_infoItemServiceTracker = infoItemServiceTracker;
 
 		_infoItem = httpServletRequest.getAttribute(
 			InfoDisplayWebKeys.INFO_ITEM);
 		_infoItemDetails = (InfoItemDetails)httpServletRequest.getAttribute(
 			InfoDisplayWebKeys.INFO_ITEM_DETAILS);
-		_infoItemServiceTracker =
-			(InfoItemServiceTracker)httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_ITEM_SERVICE_TRACKER);
 	}
 
 	public AssetRendererFactory<?> getAssetRendererFactory() {

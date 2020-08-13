@@ -20,7 +20,8 @@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.layout.type.controller.display.page.internal.display.context.EditDisplayPageMenuDisplayContext" %>
+<%@ page import="com.liferay.layout.type.controller.display.page.internal.constants.DisplayPageLayoutTypeControllerWebKeys" %><%@
+page import="com.liferay.layout.type.controller.display.page.internal.display.context.EditDisplayPageMenuDisplayContext" %>
 
 <liferay-frontend:defineObjects />
 

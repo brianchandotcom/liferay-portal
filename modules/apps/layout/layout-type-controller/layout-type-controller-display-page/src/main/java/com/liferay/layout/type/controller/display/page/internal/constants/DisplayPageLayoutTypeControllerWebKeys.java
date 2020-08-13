@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,19 +11,19 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/page_template/init.jsp" %>
+package com.liferay.layout.type.controller.display.page.internal.constants;
 
-<%
-EditDisplayPageMenuDisplayContext editDisplayPageMenuDisplayContext = (EditDisplayPageMenuDisplayContext)request.getAttribute(DisplayPageLayoutTypeControllerWebKeys.EDIT_DISPLAY_PAGE_MENU_DISPLAY_CONTEXT);
-%>
+/**
+ * @author Jürgen Kappler
+ */
+public class DisplayPageLayoutTypeControllerWebKeys {
 
-<clay:dropdown-menu
-	borderless="<%= true %>"
-	displayType="secondary"
-	dropdownItems="<%= editDisplayPageMenuDisplayContext.getDropdownItems() %>"
-	icon="pencil"
-	monospaced="<%= true %>"
-	small="<%= true %>"
-/>
+	public static final String
+		DISPLAY_PAGE_LAYOUT_TYPE_CONTROLLER_DISPLAY_CONTEXT =
+			"DISPLAY_PAGE_LAYOUT_TYPE_CONTROLLER_DISPLAY_CONTEXT";
+
+	public static final String EDIT_DISPLAY_PAGE_MENU_DISPLAY_CONTEXT =
+		"EDIT_DISPLAY_PAGE_MENU_DISPLAY_CONTEXT";
+
+}

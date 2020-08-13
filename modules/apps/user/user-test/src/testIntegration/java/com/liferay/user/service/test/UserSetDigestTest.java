@@ -139,8 +139,6 @@ public class UserSetDigestTest {
 		String password2 = password;
 
 		boolean autoScreenName = false;
-		long facebookId = 0;
-		String openId = StringPool.BLANK;
 		Locale locale = LocaleUtil.getDefault();
 		String firstName = RandomTestUtil.randomString();
 		String middleName = RandomTestUtil.randomString();
@@ -161,10 +159,10 @@ public class UserSetDigestTest {
 
 		_userLocalService.addUserWithWorkflow(
 			creatorUserId, companyId, autoPassword, password1, password2,
-			autoScreenName, screenName, emailAddress, facebookId, openId,
-			locale, firstName, middleName, lastName, prefixId, suffixId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
-			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+			autoScreenName, screenName, emailAddress, locale, firstName,
+			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
+			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
+			roleIds, userGroupIds, sendEmail, serviceContext);
 	}
 
 	@Inject

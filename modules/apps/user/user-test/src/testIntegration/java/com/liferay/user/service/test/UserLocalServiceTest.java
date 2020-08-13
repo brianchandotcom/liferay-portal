@@ -376,10 +376,10 @@ public class UserLocalServiceTest {
 						"TestUser" + RandomTestUtil.nextLong(),
 						"UserServiceTest." + RandomTestUtil.nextLong() +
 							"@liferay.com",
-						0, StringPool.BLANK, false, null, StringPool.BLANK,
-						StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-						"UserServiceTest", StringPool.BLANK, "UserServiceTest",
-						0, 0, true, Calendar.JANUARY, 1, 1970, StringPool.BLANK,
+						false, null, StringPool.BLANK, StringPool.BLANK,
+						StringPool.BLANK, StringPool.BLANK, "UserServiceTest",
+						StringPool.BLANK, "UserServiceTest", 0, 0, true,
+						Calendar.JANUARY, 1, 1970, StringPool.BLANK,
 						StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 						StringPool.BLANK, StringPool.BLANK, null, null, null,
 						null, null, serviceContext);

@@ -22,6 +22,9 @@ import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.display.request.attributes.contributor.InfoDisplayRequestAttributesContributor;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemDetailsProvider;
+import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -83,6 +86,27 @@ public class AssetInfoDisplayRequestAttributesContributor
 					AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER,
 					infoDisplayObjectProvider);
 			}
+
+			InfoItemObjectProvider<?> infoItemObjectProvider =
+				_infoItemServiceTracker.getFirstInfoItemService(
+					InfoItemObjectProvider.class, assetEntry.getClassName());
+
+			if (infoItemObjectProvider != null) {
+				Object infoItem = infoItemObjectProvider.getInfoItem(
+					assetEntry.getClassPK());
+
+				httpServletRequest.setAttribute(
+					InfoDisplayWebKeys.INFO_ITEM, infoItem);
+
+				InfoItemDetailsProvider infoItemDetailsProvider =
+					_infoItemServiceTracker.getFirstInfoItemService(
+						InfoItemDetailsProvider.class,
+						assetEntry.getClassName());
+
+				httpServletRequest.setAttribute(
+					InfoDisplayWebKeys.INFO_ITEM_DETAILS,
+					infoItemDetailsProvider.getInfoItemDetails(infoItem));
+			}
 		}
 		catch (Exception exception) {
 			_log.error("Unable to get info display object provider", exception);
@@ -99,5 +123,8 @@ public class AssetInfoDisplayRequestAttributesContributor
 
 	@Reference
 	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
+
+	@Reference
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 }

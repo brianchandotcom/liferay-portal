@@ -10,7 +10,7 @@
  */
 
 import getClassName from 'classnames';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 const FilterItem = ({
 	active = false,
@@ -38,6 +38,11 @@ const FilterItem = ({
 			hideControl && 'control-hidden'
 		),
 	};
+
+	useEffect(() => {
+		setChecked(active);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [active]);
 
 	const onClickFilter = (event) => {
 		onClick(event);

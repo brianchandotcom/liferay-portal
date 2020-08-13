@@ -409,4 +409,37 @@ definition {
 		}
 	}
 
+	macro voteQuestion {
+		AssertTextEquals(
+			key_votedResult = "${currentVotedCount}",
+			locator1 = "Questions#VOTED_RESULT",
+			value1 = "${currentVotedCount}");
+
+		if (isSet(voteUp)) {
+			Click(
+				key_caretName = "caret-top",
+				locator1 = "Questions#VOTE_BUTTON");
+
+			var newVotedCount = ${currentVotedCount} + 1;
+
+			AssertTextEquals(
+				key_votedResult = "${newVotedCount}",
+				locator1 = "Questions#VOTED_RESULT",
+				value1 = "${newVotedCount}");
+		}
+
+		if (isSet(voteDown)) {
+			Click(
+				key_caretName = "caret-bottom",
+				locator1 = "Questions#VOTE_BUTTON");
+
+			var newVotedCount = ${currentVotedCount} - 1;
+
+			AssertTextEquals(
+				key_votedResult = "${newVotedCount}",
+				locator1 = "Questions#VOTED_RESULT",
+				value1 = "${newVotedCount}");
+		}
+	}
+
 }

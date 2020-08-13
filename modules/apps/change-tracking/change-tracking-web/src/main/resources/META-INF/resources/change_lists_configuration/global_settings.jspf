@@ -19,9 +19,9 @@
 </clay:sheet-header>
 
 <clay:sheet-section>
-	<h3 class="sheet-subtitle"><liferay-ui:message key="enable-change-lists" /></h3>
+	<h3 class="sheet-subtitle"><liferay-ui:message key="enable-publications" /></h3>
 
-	<div class="sheet-text"><liferay-ui:message key="change-lists-help" /></div>
+	<div class="sheet-text"><liferay-ui:message key="publications-help" /></div>
 
 	<div class="form-group">
 		<aui:input label="" name="enableChangeLists" onClick='<%= liferayPortletResponse.getNamespace() + "updateSubmitRedirectToOverview()" %>' type="toggle-switch" value="<%= changeListsConfigurationDisplayContext.isChangeListsEnabled() %>" />

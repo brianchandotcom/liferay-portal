@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 @Meta.OCD(
 	id = "com.liferay.change.tracking.internal.configuration.CTMessageBusConfiguration",
 	localization = "content/Language",
-	name = "change-tracking-portal-message-bus-configuration-name"
+	name = "publications-portal-message-bus-configuration-name"
 )
 public interface CTMessageBusConfiguration {
 

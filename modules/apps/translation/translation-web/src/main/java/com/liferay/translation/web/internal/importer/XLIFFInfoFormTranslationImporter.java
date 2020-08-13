@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.translation.exception.XLIFFFileException;
 import com.liferay.translation.importer.TranslationInfoItemFieldValuesImporter;
-import com.liferay.translation.web.internal.util.ContextClassLoaderSetter;
 
 import java.io.CharConversionException;
 import java.io.File;
@@ -89,11 +88,14 @@ public class XLIFFInfoFormTranslationImporter
 			InputStream inputStream)
 		throws IOException, XLIFFFileException {
 
-		try (ContextClassLoaderSetter contextClassLoaderSetter =
-				new ContextClassLoaderSetter(
-					XLIFFInfoFormTranslationImporter.class.getClassLoader());
-			AutoXLIFFFilter filter = new AutoXLIFFFilter()) {
+		Thread currentThread = Thread.currentThread();
 
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		currentThread.setContextClassLoader(
+			XLIFFInfoFormTranslationImporter.class.getClassLoader());
+
+		try (AutoXLIFFFilter filter = new AutoXLIFFFilter()) {
 			File tempFile = FileUtil.createTempFile(inputStream);
 
 			Document document = _saxReader.read(tempFile);
@@ -154,6 +156,9 @@ public class XLIFFInfoFormTranslationImporter
 		catch (InvalidParameterException invalidParameterException) {
 			throw new XLIFFFileException.MustHaveValidParameter(
 				invalidParameterException);
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

@@ -22,6 +22,7 @@ import com.liferay.document.library.repository.cmis.configuration.CMISRepository
 import com.liferay.document.library.repository.cmis.search.BaseCmisSearchQueryBuilder;
 import com.liferay.document.library.repository.cmis.search.CMISSearchQueryBuilder;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.repository.BaseRepository;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.RepositoryEntryLocalService;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ProxyUtil;
 
 /**
  * @author Adolfo Pérez
@@ -43,13 +45,20 @@ public abstract class BaseCMISRepositoryFactory<T extends CMISRepositoryHandler>
 	public LocalRepository createLocalRepository(long repositoryId)
 		throws PortalException {
 
-		try (ContextClassLoaderSetter contextClassLoaderSetter =
-				new ContextClassLoaderSetter(
-					BaseCMISRepositoryFactory.class.getClassLoader())) {
+		Thread currentThread = Thread.currentThread();
 
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		currentThread.setContextClassLoader(
+			BaseCMISRepositoryFactory.class.getClassLoader());
+
+		try {
 			BaseRepository baseRepository = createBaseRepository(repositoryId);
 
 			return baseRepository.getLocalRepository();
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 
@@ -57,14 +66,14 @@ public abstract class BaseCMISRepositoryFactory<T extends CMISRepositoryHandler>
 	public Repository createRepository(long repositoryId)
 		throws PortalException {
 
-		try (ContextClassLoaderSetter contextClassLoaderSetter =
-				new ContextClassLoaderSetter(
-					BaseCMISRepositoryFactory.class.getClassLoader())) {
-
-			return new RepositoryProxyBean(
-				createBaseRepository(repositoryId),
-				BaseCMISRepositoryFactory.class.getClassLoader());
-		}
+		return (Repository)ProxyUtil.newProxyInstance(
+			Repository.class.getClassLoader(),
+			new Class<?>[] {Repository.class},
+			new ClassLoaderBeanHandler(
+				new RepositoryProxyBean(
+					createBaseRepository(repositoryId),
+					BaseCMISRepositoryFactory.class.getClassLoader()),
+				BaseCMISRepositoryFactory.class.getClassLoader()));
 	}
 
 	protected abstract T createBaseRepository();

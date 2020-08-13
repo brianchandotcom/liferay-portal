@@ -33,7 +33,7 @@ const FilterItem = ({
 		dropdown: getClassName(
 			'dropdown-item',
 
-			active && 'active',
+			checked && 'active',
 			description && 'with-description',
 			hideControl && 'control-hidden'
 		),

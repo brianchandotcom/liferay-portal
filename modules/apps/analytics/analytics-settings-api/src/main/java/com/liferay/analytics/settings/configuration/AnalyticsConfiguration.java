@@ -55,10 +55,16 @@ public interface AnalyticsConfiguration {
 	public boolean syncAllContacts();
 
 	@Meta.AD(required = false)
+	public String[] syncedContactFieldNames();
+
+	@Meta.AD(required = false)
 	public String[] syncedGroupIds();
 
 	@Meta.AD(required = false)
 	public String[] syncedOrganizationIds();
+
+	@Meta.AD(required = false)
+	public String[] syncedUserFieldNames();
 
 	@Meta.AD(required = false)
 	public String[] syncedUserGroupIds();

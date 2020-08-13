@@ -33,13 +33,6 @@ public class TranslationEntryServiceWrapper
 		_translationEntryService = translationEntryService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use
-	 * <code>TranslationEntryServiceUtil</code>
-	 * to access the translation entry remote service.
-	 */
 	@Override
 	public com.liferay.translation.model.TranslationEntry
 			addOrUpdateTranslationEntry(

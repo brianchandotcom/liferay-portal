@@ -29,17 +29,14 @@ import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.model.MBTreeWalker;
-import com.liferay.message.boards.model.impl.MBThreadImpl;
 import com.liferay.message.boards.model.impl.MBTreeWalkerImpl;
 import com.liferay.message.boards.service.MBStatsUserLocalService;
 import com.liferay.message.boards.service.base.MBThreadLocalServiceBaseImpl;
 import com.liferay.message.boards.service.persistence.MBCategoryPersistence;
 import com.liferay.message.boards.util.comparator.MessageThreadComparator;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.dao.orm.LockMode;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.increment.BufferedIncrement;
 import com.liferay.portal.kernel.increment.DateOverrideIncrement;
@@ -1064,41 +1061,25 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		}
 	)
 	public void updateLastPostDate(long threadId, Date lastPostDate) {
-		Session session = null;
+		MBThread thread = mbThreadPersistence.fetchByPrimaryKey(threadId);
 
-		try {
-			session = mbThreadPersistence.openSession();
-
-			MBThread thread = (MBThread)session.get(
-				MBThreadImpl.class, threadId, LockMode.UPGRADE);
-
-			if (thread == null) {
-				return;
-			}
-
-			MBMessage message = mbMessagePersistence.fetchByT_S_Last(
-				threadId, WorkflowConstants.STATUS_APPROVED, null);
-
-			if ((message == null) || message.isAnonymous()) {
-				thread.setLastPostByUserId(0);
-			}
-			else {
-				thread.setLastPostByUserId(message.getUserId());
-			}
-
-			thread.setLastPostDate(lastPostDate);
-
-			session.saveOrUpdate(thread);
-
-			session.flush();
-
-			mbThreadPersistence.clearCache(thread);
-
-			mbThreadPersistence.cacheResult(thread);
+		if (thread == null) {
+			return;
 		}
-		finally {
-			mbThreadPersistence.closeSession(session);
+
+		MBMessage message = mbMessagePersistence.fetchByT_S_Last(
+			threadId, WorkflowConstants.STATUS_APPROVED, null);
+
+		if ((message == null) || message.isAnonymous()) {
+			thread.setLastPostByUserId(0);
 		}
+		else {
+			thread.setLastPostByUserId(message.getUserId());
+		}
+
+		thread.setLastPostDate(lastPostDate);
+
+		mbThreadPersistence.update(thread);
 	}
 
 	@Override

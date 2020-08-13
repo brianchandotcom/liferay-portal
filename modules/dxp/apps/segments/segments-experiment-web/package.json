@@ -9,6 +9,7 @@
 		"@clayui/link": "3.2.0",
 		"@clayui/modal": "3.6.4",
 		"@clayui/tabs": "3.2.3",
+		"@clayui/tooltip": "3.3.3",
 		"classnames": "2.2.6",
 		"frontend-js-react-web": "*",
 		"frontend-js-web": "*",

@@ -13,6 +13,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import {useEventListener} from 'frontend-js-react-web';
 import {throttle} from 'frontend-js-web';
@@ -432,26 +433,30 @@ function Target({allowEdit, element, geometry, mode, selector}) {
 				top: spaceOnTop,
 			}}
 		>
-			<div
-				className={classNames({
-					'lfr-portal-tooltip': mode === 'inactive',
-					'lfr-segments-experiment-click-goal-target-overlay': true,
-					'lfr-segments-experiment-click-goal-target-overlay-editing':
-						mode === 'editing',
-					'lfr-segments-experiment-click-goal-target-overlay-selected':
-						mode === 'selected',
-				})}
-				data-target-selector={selector}
-				data-title={
-					mode === 'inactive'
-						? Liferay.Language.get(
-								'click-element-to-set-as-click-target-for-your-goal'
-						  )
-						: ''
-				}
-				onClick={handleClick}
-				style={{height, width}}
-			></div>
+			<ClayTooltipProvider>
+				<div
+					className={classNames(
+						'lfr-segments-experiment-click-goal-target-overlay',
+						{
+							'lfr-segments-experiment-click-goal-target-overlay-editing':
+								mode === 'editing',
+							'lfr-segments-experiment-click-goal-target-overlay-selected':
+								mode === 'selected',
+						}
+					)}
+					data-target-selector={selector}
+					data-tooltip-align="bottom-left"
+					onClick={handleClick}
+					style={{height, width}}
+					title={
+						mode === 'inactive'
+							? Liferay.Language.get(
+									'click-element-to-set-as-click-target-for-your-goal'
+							  )
+							: ''
+					}
+				></div>
+			</ClayTooltipProvider>
 			{mode !== 'inactive' && (
 				<ClickGoalPicker.TargetTopper
 					allowEdit={allowEdit}

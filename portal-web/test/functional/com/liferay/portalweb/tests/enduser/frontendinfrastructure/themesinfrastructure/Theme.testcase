@@ -187,9 +187,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		AssertTextNotPresent(
-			locator1 = "Card#SPECIFIC_LARGE_TEXT",
-			value1 = "test-theme-7-3");
+		LexiconCard.viewCardNotPresent(card = "test-theme-7-3");
 
 		FileInstall.deleteWarOffline(liferayDependencyWars = "test-theme.war");
 
@@ -212,9 +210,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		AssertTextNotPresent(
-			locator1 = "Card#SPECIFIC_LARGE_TEXT",
-			value1 = "test-theme-7-3");
+		LexiconCard.viewCardNotPresent(card = "test-theme-7-3");
 	}
 
 }

@@ -219,15 +219,9 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Images");
 
-		AssertElementPresent(
-			key_cardText = "Document_3.jpg",
-			locator1 = "Card#SPECIFIC_LARGE_TEXT",
-			value1 = "${rowEntry}");
+		LexiconCard.viewCardPresent(card = "Document_3.jpg");
 
-		AssertElementNotPresent(
-			key_cardText = "Document_3 (1).jpg",
-			locator1 = "Card#SPECIFIC_LARGE_TEXT",
-			value1 = "${rowEntry}");
+		LexiconCard.viewCardNotPresent(card = "Document_3 (1).jpg");
 	}
 
 	@description = "This test covers LPS-99265. It ensures that a staged blogs entry cannot be shared unless it is first published to Live."

@@ -112,8 +112,8 @@ definition {
 	macro gotoEntry {
 		if (IsElementPresent(locator1 = "Icon#DISPLAY_STYLE_ACTIVE", key_displayStyle = "cards")) {
 			AssertClick(
-				key_cardText = "${rowEntry}",
-				locator1 = "Card#SPECIFIC_LARGE_TEXT",
+				key_card = "${rowEntry}",
+				locator1 = "LexiconCard#CARD_TITLE_LINK",
 				value1 = "${rowEntry}");
 		}
 		else {

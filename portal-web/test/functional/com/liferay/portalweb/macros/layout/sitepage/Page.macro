@@ -190,13 +190,9 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		var key_cardText = "${themeName}";
+		LexiconCard.viewCardTitle(card = "${themeName}");
 
-		AssertTextPresent(
-			locator1 = "Card#SPECIFIC_LARGE_TEXT",
-			value1 = "${key_cardText}");
-
-		Click(locator1 = "Card#SPECIFIC_LARGE_TEXT");
+		LexiconCard.clickCardTitle(card = "${themeName}");
 
 		SelectFrameTop(value1 = "relative=top");
 
@@ -230,13 +226,9 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		var key_cardText = "${themeName}";
+		LexiconCard.viewCardTitle(card = "${themeName}");
 
-		AssertTextPresent(
-			locator1 = "Card#SPECIFIC_LARGE_TEXT",
-			value1 = "${key_cardText}");
-
-		Click(locator1 = "Card#SPECIFIC_LARGE_TEXT");
+		LexiconCard.clickCardTitle(card = "${themeName}");
 
 		SelectFrameTop(value1 = "relative=top");
 
@@ -1018,15 +1010,11 @@ definition {
 	}
 
 	macro viewPageTemplateTypeNotPresent {
-		AssertElementNotPresent(
-			key_cardText = "${pageTemplateName}",
-			locator1 = "Card#SPECIFIC_LARGE_TEXT");
+		LexiconCard.viewCardNotPresent(card = "${pageTemplateName}");
 	}
 
 	macro viewPageTemplateTypePresent {
-		AssertElementPresent(
-			key_cardText = "${pageTemplateName}",
-			locator1 = "Card#SPECIFIC_LARGE_TEXT");
+		LexiconCard.viewCardPresent(card = "${pageTemplateName}");
 	}
 
 	macro viewPanelPortletListCP {

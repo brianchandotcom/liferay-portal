@@ -166,7 +166,7 @@ public class TypedProperties {
 				}
 			}
 
-			_propertyName = _unescapeJava(property[0]);
+			_propertyName = property[0];
 
 			_propertyValue = InterpolationUtil.substVars(property[1]);
 
@@ -430,117 +430,6 @@ public class TypedProperties {
 		}
 
 		return false;
-	}
-
-	private static String _unescapeJava(String string) {
-		if (string == null) {
-			return null;
-		}
-
-		int size = string.length();
-
-		StringBundler sb = new StringBundler(size);
-
-		StringBuffer unicode = new StringBuffer(_UNICODE_LEN);
-
-		boolean hadSlash = false;
-
-		boolean inUnicode = false;
-
-		for (int i = 0; i < size; i++) {
-			char c = string.charAt(i);
-
-			if (inUnicode) {
-
-				// if in unicode, then we're reading unicode
-				// values in somehow
-
-				unicode.append(c);
-
-				if (unicode.length() == _UNICODE_LEN) {
-
-					// unicode now contains the four hex digits
-					// which represents our unicode character
-
-					try {
-						int value = Integer.parseInt(
-							unicode.toString(), _HEX_RADIX);
-
-						sb.append((char)value);
-
-						unicode.setLength(0);
-
-						inUnicode = false;
-
-						hadSlash = false;
-					}
-					catch (NumberFormatException numberFormatException) {
-						throw new IllegalArgumentException(
-							"Unable to parse unicode value: " + unicode,
-							numberFormatException);
-					}
-				}
-
-				continue;
-			}
-
-			if (hadSlash) {
-
-				// handle an escaped value
-
-				hadSlash = false;
-
-				if (c == '\\') {
-					sb.append("\\");
-				}
-				else if (c == CharPool.APOSTROPHE) {
-					sb.append(CharPool.APOSTROPHE);
-				}
-				else if (c == CharPool.QUOTE) {
-					sb.append(CharPool.QUOTE);
-				}
-				else if (c == 'r') {
-					sb.append('\r');
-				}
-				else if (c == 'f') {
-					sb.append('\f');
-				}
-				else if (c == 't') {
-					sb.append('\t');
-				}
-				else if (c == 'n') {
-					sb.append('\n');
-				}
-				else if (c == 'b') {
-					sb.append('\b');
-				}
-				else if (c == 'u') {
-					inUnicode = true;
-				}
-				else {
-					sb.append(c);
-				}
-
-				continue;
-			}
-			else if (c == '\\') {
-				hadSlash = true;
-
-				continue;
-			}
-
-			sb.append(c);
-		}
-
-		if (hadSlash) {
-
-			// then we're in the weird case of a \ at the end of the
-			// string, let's output it anyway.
-
-			sb.append('\\');
-		}
-
-		return sb.toString();
 	}
 
 	private int _checkHeaderComment(List<String> comments) {

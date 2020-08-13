@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -180,8 +181,9 @@ public class PanelAppTag extends BasePanelTag {
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(
 				themeDisplay.getCompanyId(), _panelApp.getPortletId());
 
-			_label = PortalUtil.getPortletTitle(
-				portlet, servletContext, themeDisplay.getLocale());
+			_label = HtmlUtil.escape(
+				PortalUtil.getPortletTitle(
+					portlet, servletContext, themeDisplay.getLocale()));
 
 			if (!_data.containsKey("qa-id")) {
 				_data.put("qa-id", "app");

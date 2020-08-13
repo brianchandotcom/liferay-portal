@@ -373,7 +373,13 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		 *
 		 * @param soapModel the soap model instance to convert
 		 * @return the normal model instance
+		<#if serviceBuilder.isVersionGTE_7_3_0()>
+		 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 		 */
+		@Deprecated
+		<#else>
+		 */
+		</#if>
 		public static ${entity.name} toModel(${entity.name}Soap soapModel) {
 			if (soapModel == null) {
 				return null;
@@ -397,7 +403,13 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		 *
 		 * @param soapModels the soap model instances to convert
 		 * @return the normal model instances
+		<#if serviceBuilder.isVersionGTE_7_3_0()>
+		 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 		 */
+		@Deprecated
+		<#else>
+		 */
+		</#if>
 		public static List<${entity.name}> toModels(${entity.name}Soap[] soapModels) {
 			if (soapModels == null) {
 				return null;

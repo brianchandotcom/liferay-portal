@@ -35,6 +35,9 @@ public class WorkflowStatusManagerImpl implements WorkflowStatusManager {
 		try {
 			WorkflowHandlerRegistryUtil.updateStatus(status, workflowContext);
 		}
+		catch (WorkflowException workflowException) {
+			throw workflowException;
+		}
 		catch (Exception exception) {
 			throw new WorkflowException(exception);
 		}

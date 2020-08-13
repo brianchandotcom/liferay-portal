@@ -71,6 +71,9 @@ public class WorkflowInstanceManagerImpl implements WorkflowInstanceManager {
 			return _workflowEngine.getNextTransitionNames(
 				workflowInstanceId, serviceContext);
 		}
+		catch (WorkflowException workflowException) {
+			throw workflowException;
+		}
 		catch (Exception exception) {
 			throw new WorkflowException(exception);
 		}

@@ -690,6 +690,9 @@ public class DefaultWorkflowEngineImpl
 				kaleoInstance,
 				kaleoInstance.getRootKaleoInstanceToken(serviceContext));
 		}
+		catch (WorkflowException workflowException) {
+			throw workflowException;
+		}
 		catch (Exception exception) {
 			throw new WorkflowException(exception);
 		}
@@ -705,6 +708,9 @@ public class DefaultWorkflowEngineImpl
 
 				_workflowValidator.validate(definition);
 			}
+		}
+		catch (WorkflowException workflowException) {
+			throw workflowException;
 		}
 		catch (Exception exception) {
 			throw new WorkflowException(exception);
@@ -746,7 +752,7 @@ public class DefaultWorkflowEngineImpl
 			}
 		}
 		catch (WorkflowException workflowException) {
-			throw new WorkflowException(workflowException);
+			throw workflowException;
 		}
 		finally {
 			_workflowModelParser.setValidate(true);

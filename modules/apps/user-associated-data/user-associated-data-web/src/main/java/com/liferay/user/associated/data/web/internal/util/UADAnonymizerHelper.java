@@ -91,8 +91,6 @@ public class UADAnonymizerHelper {
 		String emailAddress = StringBundler.concat(
 			screenName, StringPool.AT, company.getMx());
 
-		long facebookId = 0;
-		String openId = StringPool.BLANK;
 		Locale locale = LocaleThreadLocal.getDefaultLocale();
 		String firstName = "Anonymous";
 		String middleName = StringPool.BLANK;
@@ -113,10 +111,10 @@ public class UADAnonymizerHelper {
 
 		User anonymousUser = _userLocalService.addUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
-			autoScreenName, screenName, emailAddress, facebookId, openId,
-			locale, firstName, middleName, lastName, prefixId, suffixId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
-			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+			autoScreenName, screenName, emailAddress, locale, firstName,
+			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
+			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
+			roleIds, userGroupIds, sendEmail, serviceContext);
 
 		anonymousUser.setComments(
 			StringBundler.concat(

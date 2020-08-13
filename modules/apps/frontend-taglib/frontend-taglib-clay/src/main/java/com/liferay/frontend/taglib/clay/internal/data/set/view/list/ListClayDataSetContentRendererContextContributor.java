@@ -53,29 +53,28 @@ public class ListClayDataSetContentRendererContextContributor
 	private Map<String, Object> _serialize(
 		BaseListClayDataSetDisplayView baseListClayDataSetDisplayView) {
 
-		Map<String, Object> schema = HashMapBuilder.<String, Object>put(
-			"description", baseListClayDataSetDisplayView.getDescription()
-		).put(
-			"image", baseListClayDataSetDisplayView.getImage()
-		).put(
-			"sticker", baseListClayDataSetDisplayView.getSticker()
-		).put(
-			"symbol", baseListClayDataSetDisplayView.getSymbol()
-		).put(
-			"title",
-			() -> {
-				String title = baseListClayDataSetDisplayView.getTitle();
-
-				if (title.contains(StringPool.PERIOD)) {
-					return StringUtil.split(title, StringPool.PERIOD);
-				}
-
-				return title;
-			}
-		).build();
-
 		return HashMapBuilder.<String, Object>put(
-			"schema", schema
+			"schema",
+			HashMapBuilder.<String, Object>put(
+				"description", baseListClayDataSetDisplayView.getDescription()
+			).put(
+				"image", baseListClayDataSetDisplayView.getImage()
+			).put(
+				"sticker", baseListClayDataSetDisplayView.getSticker()
+			).put(
+				"symbol", baseListClayDataSetDisplayView.getSymbol()
+			).put(
+				"title",
+				() -> {
+					String title = baseListClayDataSetDisplayView.getTitle();
+
+					if (title.contains(StringPool.PERIOD)) {
+						return StringUtil.split(title, StringPool.PERIOD);
+					}
+
+					return title;
+				}
+			).build()
 		).build();
 	}
 

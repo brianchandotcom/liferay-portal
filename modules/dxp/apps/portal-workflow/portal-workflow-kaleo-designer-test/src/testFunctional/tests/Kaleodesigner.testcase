@@ -1320,7 +1320,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-47352 and LPS-48912."
-	@priority = "2"
+	@priority = "3"
 	test ViewWorkflowDefinitionButtons {
 		property test.name.skip.portal.instance = "Kaleodesigner#ViewWorkflowDefinitionButtons";
 
@@ -1335,7 +1335,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-47352 and LPS-48912."
-	@priority = "2"
+	@priority = "3"
 	test ViewWorkflowDefinitionButtonsViaKaleoFormsAdmin {
 		property test.name.skip.portal.instance = "Kaleodesigner#ViewWorkflowDefinitionButtonsViaKaleoFormsAdmin";
 

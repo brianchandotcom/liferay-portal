@@ -605,7 +605,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-69884."
-	@priority = "2"
+	@priority = "3"
 	test ViewCalendarsAfterCancellingEdit {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 

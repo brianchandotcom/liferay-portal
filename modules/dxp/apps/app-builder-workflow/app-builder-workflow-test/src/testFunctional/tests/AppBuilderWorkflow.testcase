@@ -6,7 +6,8 @@ definition {
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "App Builder,Workflow";
-	property testray.main.component.name = "App Builder";
+	property testray.main.component.name = "Workflow";
+	property test.run.environment = "EE";
 
 	setUp {
 		TestCase.setUpPortalInstance();

@@ -1048,7 +1048,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-49037."
-	@priority = "2"
+	@priority = "3"
 	test EditProcessFieldSetPaginationAndViewSelectedForm {
 		property portal.upstream = "true";
 
@@ -2521,7 +2521,7 @@ definition {
 		KaleoFormsAdmin.viewInvalidDefinitionMessage();
 	}
 
-	@priority = "2"
+	@priority = "3"
 	test ViewFieldSetCreateHeaderTitle {
 		Navigator.openURL();
 
@@ -2556,7 +2556,7 @@ definition {
 		KaleoFormsAdmin.saveFieldSet();
 	}
 
-	@priority = "2"
+	@priority = "3"
 	test ViewFieldSetParentDefinitionIframeTitle {
 		property portal.upstream = "quarantine";
 
@@ -2821,7 +2821,7 @@ definition {
 		KaleoFormsAdmin.next();
 	}
 
-	@priority = "2"
+	@priority = "3"
 	test ViewUnpublishedWorkflowDefinitionsMenulist {
 		property portal.upstream = "quarantine";
 		Navigator.openURL();

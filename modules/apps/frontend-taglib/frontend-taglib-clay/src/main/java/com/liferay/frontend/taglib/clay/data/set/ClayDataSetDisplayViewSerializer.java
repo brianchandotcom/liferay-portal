@@ -23,6 +23,6 @@ import java.util.Locale;
  */
 public interface ClayDataSetDisplayViewSerializer {
 
-	public JSONArray serialize(String clayDataSetDisplayViewKey, Locale locale);
+	public JSONArray serialize(String clayDataSetDisplayName, Locale locale);
 
 }

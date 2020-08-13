@@ -41,17 +41,17 @@ public class ClayDataSetActionProviderRegistryImpl
 
 	@Override
 	public List<ClayDataSetActionProvider> getClayDataSetActionProviders(
-		String key) {
+		String clayDataProviderKey) {
 
 		List<ServiceWrapper<ClayDataSetActionProvider>>
 			clayDataSetActionProviderServiceWrappers =
-				_serviceTrackerMap.getService(key);
+				_serviceTrackerMap.getService(clayDataProviderKey);
 
 		if (clayDataSetActionProviderServiceWrappers == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"No Clay data set action provider registered with key " +
-						key);
+						clayDataProviderKey);
 			}
 
 			return Collections.emptyList();

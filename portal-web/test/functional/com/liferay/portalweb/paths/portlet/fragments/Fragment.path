@@ -127,17 +127,17 @@
 </tr>
 <tr>
 	<td>FRAGMENT_CONFIGURATION_ALIGNMENT</td>
-	<td>//*[contains(@class,'component-${key_fragmentName}')][contains(@class,'text-${key_alignment}')]</td>
+	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]//following-sibling::div[contains(@class,'page-editor__topper__content')]/div[contains(@class,'text-${key_alignment}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_CONFIGURATION_BORDER_COLOR</td>
-	<td>//div[contains(@class,'component-${key_fragmentName}')]//hr[contains(@class,'border-${key_paletteItem}')]</td>
+	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]//following-sibling::div[contains(@class,'page-editor__topper__content')]/div[contains(@class,'border-${key_paletteItem}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_CONFIGURATION_BORDER_RADIUS</td>
-	<td>//*[contains(@class,'component-${key_fragmentName}')]//div[contains(@style,'border-radius: ${key_borderRadius}')]</td>
+	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]//following-sibling::div[contains(@class,'page-editor__topper__content')]/div[contains(@class,'${key_borderRadius}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -147,12 +147,12 @@
 </tr>
 <tr>
 	<td>FRAGMENT_CONFIGURATION_BOX_SHADOW</td>
-	<td>//*[contains(@class,'component-${key_fragmentName}')]//div[contains(@class,'shadow-${key_boxShadow}')]</td>
+	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]//following-sibling::div[contains(@class,'page-editor__topper__content')]/div[contains(@class,'shadow-${key_boxShadow}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_CONFIGURATION_MARGIN_BOTTOM</td>
-	<td>//*[contains(@class,'component-${key_fragmentName}')][contains(@class,'mb-${key_marginBottom}')]</td>
+	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]//following-sibling::div[contains(@class,'page-editor__topper__content')]/div[contains(@class,'mb-${key_marginBottom}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -177,7 +177,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_CONFIGURATION_TEXT_COLOR</td>
-	<td>//*[contains(@class,'component-${key_fragmentName}')][contains(@class,'text-${key_textColor}')]</td>
+	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]//following-sibling::div[contains(@class,'page-editor__topper__content')]/div[contains(@class,'text-${key_textColor}')]</td>
 	<td></td>
 </tr>
 <tr>

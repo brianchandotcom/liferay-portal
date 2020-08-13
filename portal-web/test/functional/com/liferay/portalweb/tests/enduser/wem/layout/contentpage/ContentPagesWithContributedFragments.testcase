@@ -290,6 +290,7 @@ definition {
 	@priority = "5"
 	test AddFragmentToOneCellOfCollectionDisplay {
 		property osgi.app.includes = "bookmarks";
+		property osgi.app.includes = "document-library-google-docs";
 		property portal.acceptance = "true";
 
 		task ("Add three Web Content Articles based on Basic Web Content") {
@@ -1372,6 +1373,7 @@ definition {
 	@priority = "4"
 	test MapContentToEditableFieldOfFragmentInCollectionDisplay {
 		property osgi.app.includes = "bookmarks";
+		property osgi.app.includes = "document-library-google-docs";
 
 		task ("Add three Web Content Articles based on Basic Web Content") {
 			for (var entryTitle : list "First Web Content,Second Web Content,Third Web Content") {
@@ -1774,6 +1776,7 @@ definition {
 	@priority = "4"
 	test PropagateChangesOfInlineContentToOtherCellsOfCollectionDisplay {
 		property osgi.app.includes = "bookmarks";
+		property osgi.app.includes = "document-library-google-docs";
 
 		task ("Add three documents") {
 			for (var entryTitle : list "First Document,Second Document,Third Document") {
@@ -1946,6 +1949,7 @@ definition {
 	@priority = "5"
 	test ShowTitleOfCollectionItemsInCollectionDisplay {
 		property osgi.app.includes = "bookmarks";
+		property osgi.app.includes = "document-library-google-docs";
 		property portal.acceptance = "true";
 
 		task ("Add three Web Content Articles based on Basic Web Content") {
@@ -2230,6 +2234,7 @@ definition {
 	@priority = "4"
 	test ViewBlogEntryViaContentInCollectionDisplay {
 		property osgi.app.includes = "bookmarks";
+		property osgi.app.includes = "document-library-google-docs";
 
 		for (var i : list "1,2,3") {
 			JSONBlog.addEntry(
@@ -2302,6 +2307,7 @@ definition {
 	@priority = "4"
 	test ViewDocumentViaContentInCollectionDisplay {
 		property osgi.app.includes = "bookmarks";
+		property osgi.app.includes = "document-library-google-docs";
 
 		for (var i : list "1,2,3") {
 			JSONDocument.addFileWithUploadedFile(
@@ -2376,6 +2382,7 @@ definition {
 	@priority = "5"
 	test ViewFlagsViaContentFlagsInCollectionDisplay {
 		property osgi.app.includes = "bookmarks";
+		property osgi.app.includes = "document-library-google-docs";
 		property portal.acceptance = "true";
 
 		for (var i : list "1,2,3") {
@@ -2556,6 +2563,7 @@ definition {
 	@priority = "5"
 	test ViewRatingsViaContentRatingsInCollectionDisplay {
 		property osgi.app.includes = "bookmarks";
+		property osgi.app.includes = "document-library-google-docs";
 		property portal.acceptance = "true";
 
 		for (var i : list "1,2,3") {
@@ -2634,6 +2642,7 @@ definition {
 	@priority = "5"
 	test ViewWebContentViaContentInCollectionDisplay {
 		property osgi.app.includes = "bookmarks";
+		property osgi.app.includes = "document-library-google-docs";
 		property portal.acceptance = "true";
 
 		for (var i : list "1,2,3") {
@@ -2707,6 +2716,7 @@ definition {
 	@priority = "5"
 	test ViewWebContentWithCustomTemplateViaContentDisplayInCollectionDisplay {
 		property osgi.app.includes = "bookmarks";
+		property osgi.app.includes = "document-library-google-docs";
 		property portal.acceptance = "true";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

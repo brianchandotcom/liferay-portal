@@ -86,6 +86,7 @@ definition {
 	@priority = "5"
 	test DeleteAssetList {
 		property osgi.app.includes = "bookmarks";
+		property osgi.app.includes = "document-library-google-docs";
 		property portal.acceptance = "true";
 
 		task ("Create a manual asset list") {
@@ -221,6 +222,7 @@ definition {
 	@priority = "4"
 	test ViewWCViaAPWithAssetListBasedOnGroupedKeywords {
 		property osgi.app.includes = "bookmarks";
+		property osgi.app.includes = "document-library-google-docs";
 
 		task ("Create public page") {
 			JSONLayout.addPublicLayout(
@@ -487,6 +489,7 @@ definition {
 	@priority = "5"
 	test ViewWebContentViaAssetPublisherWithAssetListBasedOnKeywords {
 		property osgi.app.includes = "bookmarks";
+		property osgi.app.includes = "document-library-google-docs";
 		property portal.acceptance = "true";
 
 		task ("Create public page") {

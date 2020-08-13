@@ -28,6 +28,7 @@ definition {
 	@priority = "5"
 	test AddCollectionItemsInCollectionPageBasedOnDynamicCollection {
 		property osgi.app.includes = "bookmarks";
+		property osgi.app.includes = "document-library-google-docs";
 
 		task ("Add a dynamic collection with All Types") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
@@ -1087,6 +1088,7 @@ definition {
 	@priority = "5"
 	test ViewCollectionItemViaPageFinderAndPageAdmin {
 		property osgi.app.includes = "bookmarks";
+		property osgi.app.includes = "document-library-google-docs";
 
 		JSONWebcontent.addWebContent(
 			content = "Webcontent Content",

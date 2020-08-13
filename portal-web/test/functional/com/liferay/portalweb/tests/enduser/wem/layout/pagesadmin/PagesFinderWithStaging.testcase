@@ -36,6 +36,7 @@ definition {
 	@priority = "4"
 	test AddCollectionPageViaPageFinder {
 		property osgi.app.includes = "bookmarks";
+		property osgi.app.includes = "document-library-google-docs";
 
 		task ("Add three Web Content Articles based on Basic Web Content") {
 			for (var entryTitle : list "First Web Content,Second Web Content,Third Web Content") {

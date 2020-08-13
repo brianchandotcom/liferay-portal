@@ -331,6 +331,7 @@ definition {
 	@priority = "3"
 	test UndoDeletedFragmentWithCollection {
 		property osgi.app.includes = "bookmarks";
+		property osgi.app.includes = "document-library-google-docs";
 
 		for (var i : list "1,2,3") {
 			JSONWebcontent.addWebContent(

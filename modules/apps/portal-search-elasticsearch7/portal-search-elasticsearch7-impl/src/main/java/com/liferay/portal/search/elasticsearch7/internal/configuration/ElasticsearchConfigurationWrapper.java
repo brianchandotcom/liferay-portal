@@ -195,6 +195,10 @@ public class ElasticsearchConfigurationWrapper {
 		return _elasticsearchConfiguration.sidecarShutdownTimeout();
 	}
 
+	public boolean trackTotalHits() {
+		return _elasticsearchConfiguration.trackTotalHits();
+	}
+
 	public String transportTcpPort() {
 		return _elasticsearchConfiguration.transportTcpPort();
 	}

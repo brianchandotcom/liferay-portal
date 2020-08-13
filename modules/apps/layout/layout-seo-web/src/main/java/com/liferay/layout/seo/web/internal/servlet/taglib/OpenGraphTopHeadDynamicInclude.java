@@ -14,7 +14,6 @@
 
 package com.liferay.layout.seo.web.internal.servlet.taglib;
 
-import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
@@ -25,8 +24,9 @@ import com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil;
 import com.liferay.dynamic.data.mapping.kernel.Value;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
@@ -333,21 +333,22 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 		HttpServletRequest httpServletRequest, Layout layout) {
 
 		if (layout.isTypeAssetDisplay()) {
-			InfoDisplayObjectProvider<Object> infoDisplayObjectProvider =
-				(InfoDisplayObjectProvider<Object>)
-					httpServletRequest.getAttribute(
-						AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
+			InfoItemDetails infoItemDetails =
+				(InfoItemDetails)httpServletRequest.getAttribute(
+					InfoDisplayWebKeys.INFO_ITEM_DETAILS);
 
-			if (infoDisplayObjectProvider != null) {
+			if (infoItemDetails != null) {
 				InfoItemFieldValuesProvider infoItemFormProvider =
 					_infoItemServiceTracker.getFirstInfoItemService(
 						InfoItemFieldValuesProvider.class,
-						_portal.getClassName(
-							infoDisplayObjectProvider.getClassNameId()));
+						infoItemDetails.getClassName());
 
 				if (infoItemFormProvider != null) {
+					Object infoItem = httpServletRequest.getAttribute(
+						InfoDisplayWebKeys.INFO_ITEM);
+
 					return infoItemFormProvider.getInfoItemFieldValues(
-						infoDisplayObjectProvider.getDisplayObject());
+						infoItem);
 				}
 			}
 		}

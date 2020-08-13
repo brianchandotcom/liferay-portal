@@ -14,7 +14,10 @@
 
 package com.liferay.analytics.settings.web.internal.display.context;
 
+import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
+import com.liferay.analytics.settings.web.internal.constants.AnalyticsSettingsWebKeys;
 import com.liferay.analytics.settings.web.internal.model.Field;
+import com.liferay.analytics.settings.web.internal.search.FieldChecker;
 import com.liferay.analytics.settings.web.internal.search.FieldSearch;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
@@ -40,6 +43,10 @@ public class FieldDisplayContext {
 		_mvcRenderCommandName = mvcRenderCommandName;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+
+		_analyticsConfiguration =
+			(AnalyticsConfiguration)renderRequest.getAttribute(
+				AnalyticsSettingsWebKeys.ANALYTICS_CONFIGURATION);
 	}
 
 	public FieldSearch getFieldSearch() {
@@ -69,6 +76,12 @@ public class FieldDisplayContext {
 						"Default Field", entry.getValue(), entry.getKey()));
 			}
 
+			fieldSearch.setRowChecker(
+				new FieldChecker(
+					_mvcRenderCommandName, _renderResponse,
+					SetUtil.fromList(_requiredUserFieldNames),
+					SetUtil.fromArray(
+						_analyticsConfiguration.syncedUserFieldNames())));
 			fieldSearch.setTotal(
 				_userFieldNames.size() - _requiredUserFieldNames.size());
 		}
@@ -95,6 +108,12 @@ public class FieldDisplayContext {
 						"Default Field", entry.getValue(), entry.getKey()));
 			}
 
+			fieldSearch.setRowChecker(
+				new FieldChecker(
+					_mvcRenderCommandName, _renderResponse,
+					SetUtil.fromList(_requiredContactFieldNames),
+					SetUtil.fromArray(
+						_analyticsConfiguration.syncedContactFieldNames())));
 			fieldSearch.setTotal(
 				_contactFieldNames.size() - _requiredContactFieldNames.size());
 		}
@@ -231,6 +250,7 @@ public class FieldDisplayContext {
 			"uuid", "String"
 		).build();
 
+	private final AnalyticsConfiguration _analyticsConfiguration;
 	private final String _mvcRenderCommandName;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

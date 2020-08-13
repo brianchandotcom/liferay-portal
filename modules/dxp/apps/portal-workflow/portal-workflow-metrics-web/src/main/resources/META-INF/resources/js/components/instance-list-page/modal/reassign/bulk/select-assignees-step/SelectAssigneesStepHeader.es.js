@@ -90,21 +90,20 @@ const Header = ({data}) => {
 	return (
 		<PromisesResolver.Resolved>
 			<ClayManagementToolbar className="border-bottom mb-0 px-3">
-				<ClayManagementToolbar.Item className="pt-2">
-					<ClayCheckbox
-						checked={useSameAssignee}
-						data-testid="useSameAssignee"
-						disabled={disableBulk}
-						label={Liferay.Language.get(
-							'use-the-same-assignee-for-all-tasks'
-						)}
-						onChange={handleCheck}
-					/>
-				</ClayManagementToolbar.Item>
-
-				<ClayManagementToolbar.Item />
-
-				<div className="navbar-form">
+				<ClayManagementToolbar.ItemList>
+					<ClayManagementToolbar.Item className="pt-2">
+						<ClayCheckbox
+							checked={useSameAssignee}
+							data-testid="useSameAssignee"
+							disabled={disableBulk}
+							label={Liferay.Language.get(
+								'use-the-same-assignee-for-all-tasks'
+							)}
+							onChange={handleCheck}
+						/>
+					</ClayManagementToolbar.Item>
+				</ClayManagementToolbar.ItemList>
+				<ClayManagementToolbar.Search>
 					<Autocomplete
 						defaultValue={defaultValue}
 						disabled={disableBulk || !useSameAssignee}
@@ -122,7 +121,7 @@ const Header = ({data}) => {
 							/>
 						</ClayInput.GroupInsetItem>
 					</Autocomplete>
-				</div>
+				</ClayManagementToolbar.Search>
 			</ClayManagementToolbar>
 		</PromisesResolver.Resolved>
 	);

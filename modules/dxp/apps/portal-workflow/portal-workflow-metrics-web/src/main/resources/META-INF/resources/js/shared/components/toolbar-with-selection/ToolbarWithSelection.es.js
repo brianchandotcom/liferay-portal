@@ -32,7 +32,7 @@ const ToolbarWithSelection = ({
 			active={active}
 			className="mb-0 show-quick-actions-on-hover"
 		>
-			<ul className="navbar-nav" style={{width: '100%'}}>
+			<ClayManagementToolbar.ItemList expand>
 				<ClayManagementToolbar.Item className="ml-2">
 					<ClayCheckbox
 						checked={checked}
@@ -85,7 +85,7 @@ const ToolbarWithSelection = ({
 				)}
 
 				{children}
-			</ul>
+			</ClayManagementToolbar.ItemList>
 		</ClayManagementToolbar>
 	);
 };

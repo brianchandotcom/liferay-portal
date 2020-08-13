@@ -25,9 +25,7 @@ const Header = ({page, pageSize, search, sort, totalCount}) => {
 	return (
 		<>
 			<ClayManagementToolbar className="mb-0">
-				<div className="navbar-form-autofit">
-					<SearchField disabled={!search && totalCount === 0} />
-				</div>
+				<SearchField disabled={!search && totalCount === 0} />
 			</ClayManagementToolbar>
 
 			{search && (

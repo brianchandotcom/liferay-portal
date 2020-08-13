@@ -6,7 +6,6 @@ Export-Package:\
 	com.liferay.translation.exporter,\
 	com.liferay.translation.importer,\
 	com.liferay.translation.info.field,\
-	com.liferay.translation.info.item.updater,\
 	com.liferay.translation.model,\
 	com.liferay.translation.service,\
 	com.liferay.translation.service.persistence

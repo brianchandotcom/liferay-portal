@@ -38,6 +38,9 @@ public interface PanelCategoryKeys {
 	public static final String APPLICATIONS_MENU_APPLICATIONS_CUSTOM_APPS =
 		"applications_menu.applications.custom.apps";
 
+	public static final String APPLICATIONS_MENU_APPLICATIONS_PUBLICATIONS =
+		"applications_menu.applications.publications";
+
 	public static final String CONTROL_PANEL = "control_panel";
 
 	public static final String CONTROL_PANEL_APPS =

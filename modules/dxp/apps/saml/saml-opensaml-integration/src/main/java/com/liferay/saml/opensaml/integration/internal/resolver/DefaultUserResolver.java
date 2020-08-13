@@ -190,8 +190,6 @@ public class DefaultUserResolver implements UserResolver {
 
 		boolean autoScreenName = false;
 		String screenName = getValueAsString("screenName", attributesMap);
-		long facebookId = 0;
-		String openId = StringPool.BLANK;
 		Locale locale = serviceContext.getLocale();
 		String firstName = getValueAsString("firstName", attributesMap);
 		String middleName = StringPool.BLANK;
@@ -215,10 +213,10 @@ public class DefaultUserResolver implements UserResolver {
 
 		User user = _userLocalService.addUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
-			autoScreenName, screenName, emailAddress, facebookId, openId,
-			locale, firstName, middleName, lastName, prefixId, suffixId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
-			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+			autoScreenName, screenName, emailAddress, locale, firstName,
+			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
+			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
+			roleIds, userGroupIds, sendEmail, serviceContext);
 
 		user = _userLocalService.updateEmailAddressVerified(
 			user.getUserId(), true);
@@ -512,11 +510,11 @@ public class DefaultUserResolver implements UserResolver {
 			user = _userLocalService.updateUser(
 				user.getUserId(), StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, false, user.getReminderQueryQuestion(),
-				user.getReminderQueryAnswer(), screenName, emailAddress,
-				user.getFacebookId(), user.getOpenId(), true, null,
-				user.getLanguageId(), user.getTimeZoneId(), user.getGreeting(),
-				user.getComments(), firstName, user.getMiddleName(), lastName,
-				contact.getPrefixId(), contact.getSuffixId(), user.getMale(),
+				user.getReminderQueryAnswer(), screenName, emailAddress, true,
+				null, user.getLanguageId(), user.getTimeZoneId(),
+				user.getGreeting(), user.getComments(), firstName,
+				user.getMiddleName(), lastName, contact.getPrefixId(),
+				contact.getSuffixId(), user.getMale(),
 				birthdayCalendar.get(Calendar.MONTH),
 				birthdayCalendar.get(Calendar.DATE),
 				birthdayCalendar.get(Calendar.YEAR), contact.getSmsSn(),

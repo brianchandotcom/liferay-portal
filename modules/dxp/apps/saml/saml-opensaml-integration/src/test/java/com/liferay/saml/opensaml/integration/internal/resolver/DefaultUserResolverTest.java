@@ -259,7 +259,6 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 				Mockito.anyString(), Mockito.anyString(), Mockito.anyBoolean(),
 				Mockito.eq(_SUBJECT_NAME_IDENTIFIER_SCREEN_NAME),
 				Mockito.eq(_SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS),
-				Mockito.anyLong(), Mockito.anyString(),
 				Mockito.any(Locale.class), Mockito.eq("test"),
 				Mockito.anyString(), Mockito.eq("test"), Mockito.anyInt(),
 				Mockito.anyInt(), Mockito.anyBoolean(), Mockito.anyInt(),

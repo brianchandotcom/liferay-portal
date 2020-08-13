@@ -14,13 +14,14 @@
 
 package com.liferay.layout.taglib.internal.display.context;
 
-import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
 import com.liferay.asset.info.display.contributor.util.ContentAccessor;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
@@ -165,36 +166,38 @@ public class RenderFragmentLayoutDisplayContext {
 		String mappedField = linkJSONObject.getString("mappedField");
 
 		if (Validator.isNotNull(mappedField)) {
-			InfoDisplayObjectProvider<Object> infoDisplayObjectProvider =
-				(InfoDisplayObjectProvider<Object>)
-					_httpServletRequest.getAttribute(
-						AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
+			Object infoItem = _httpServletRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_ITEM);
 
-			if ((_infoDisplayContributorTracker != null) &&
-				(infoDisplayObjectProvider != null)) {
+			InfoItemDetails infoItemDetails =
+				(InfoItemDetails)_httpServletRequest.getAttribute(
+					InfoDisplayWebKeys.INFO_ITEM_DETAILS);
 
-				InfoDisplayContributor<Object> infoDisplayContributor =
-					(InfoDisplayContributor<Object>)
-						_infoDisplayContributorTracker.
-							getInfoDisplayContributor(
-								PortalUtil.getClassName(
-									infoDisplayObjectProvider.
-										getClassNameId()));
+			if ((infoItem != null) && (infoItemDetails != null)) {
+				InfoItemFieldValuesProvider<Object>
+					infoItemFieldValuesProvider =
+						_infoItemServiceTracker.getFirstInfoItemService(
+							InfoItemFieldValuesProvider.class,
+							infoItemDetails.getClassName());
 
-				if (infoDisplayContributor != null) {
-					Object object =
-						infoDisplayContributor.getInfoDisplayFieldValue(
-							infoDisplayObjectProvider.getDisplayObject(),
-							mappedField, LocaleUtil.getDefault());
+				if (infoItemFieldValuesProvider != null) {
+					InfoFieldValue<Object> infoItemFieldValue =
+						infoItemFieldValuesProvider.getInfoItemFieldValue(
+							infoItem, mappedField);
 
-					if (object instanceof String) {
-						String fieldValue = (String)object;
+					if (infoItemFieldValue != null) {
+						Object object = infoItemFieldValue.getValue(
+							LocaleUtil.getDefault());
 
-						if (Validator.isNotNull(fieldValue)) {
-							return fieldValue;
+						if (object instanceof String) {
+							String fieldValue = (String)object;
+
+							if (Validator.isNotNull(fieldValue)) {
+								return fieldValue;
+							}
+
+							return StringPool.BLANK;
 						}
-
-						return StringPool.BLANK;
 					}
 				}
 			}
@@ -503,41 +506,44 @@ public class RenderFragmentLayoutDisplayContext {
 		String mappedField = rowConfigJSONObject.getString("mappedField");
 
 		if (Validator.isNotNull(mappedField)) {
-			InfoDisplayObjectProvider<Object> infoDisplayObjectProvider =
-				(InfoDisplayObjectProvider<Object>)
-					_httpServletRequest.getAttribute(
-						AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
+			Object infoItem = _httpServletRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_ITEM);
 
-			if ((_infoDisplayContributorTracker != null) &&
-				(infoDisplayObjectProvider != null)) {
+			InfoItemDetails infoItemDetails =
+				(InfoItemDetails)_httpServletRequest.getAttribute(
+					InfoDisplayWebKeys.INFO_ITEM_DETAILS);
 
-				InfoDisplayContributor<Object> infoDisplayContributor =
-					(InfoDisplayContributor<Object>)
-						_infoDisplayContributorTracker.
-							getInfoDisplayContributor(
-								PortalUtil.getClassName(
-									infoDisplayObjectProvider.
-										getClassNameId()));
+			if ((infoItem != null) && (infoItemDetails != null)) {
+				InfoItemFieldValuesProvider<Object>
+					infoItemFieldValuesProvider =
+						_infoItemServiceTracker.getFirstInfoItemService(
+							InfoItemFieldValuesProvider.class,
+							infoItemDetails.getClassName());
 
-				if (infoDisplayContributor != null) {
-					Object object =
-						infoDisplayContributor.getInfoDisplayFieldValue(
-							infoDisplayObjectProvider.getDisplayObject(),
-							mappedField, LocaleUtil.getDefault());
+				if (infoItemFieldValuesProvider != null) {
+					InfoFieldValue<Object> infoItemFieldValue =
+						infoItemFieldValuesProvider.getInfoItemFieldValue(
+							infoItem, mappedField);
 
-					if (object instanceof JSONObject) {
-						JSONObject fieldValueJSONObject = (JSONObject)object;
+					if (infoItemFieldValue != null) {
+						Object object = infoItemFieldValue.getValue(
+							LocaleUtil.getDefault());
 
-						return fieldValueJSONObject.getString(
-							"url", StringPool.BLANK);
-					}
-					else if (object instanceof String) {
-						return (String)object;
-					}
-					else if (object instanceof WebImage) {
-						WebImage webImage = (WebImage)object;
+						if (object instanceof JSONObject) {
+							JSONObject fieldValueJSONObject =
+								(JSONObject)object;
 
-						return webImage.getUrl();
+							return fieldValueJSONObject.getString(
+								"url", StringPool.BLANK);
+						}
+						else if (object instanceof String) {
+							return (String)object;
+						}
+						else if (object instanceof WebImage) {
+							WebImage webImage = (WebImage)object;
+
+							return webImage.getUrl();
+						}
 					}
 				}
 			}

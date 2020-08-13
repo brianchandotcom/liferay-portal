@@ -7,12 +7,16 @@
 		<portlet-ref>
 			<portlet-name>com_liferay_translation_web_internal_portlet_TranslationPortlet</portlet-name>
 		</portlet-ref>
+
 		<root>true</root>
+
 		<weight>1</weight>
+
 		<permissions>
 			<supports>
 				<action-key>TRANSLATE</action-key>
 			</supports>
+
 			<guest-defaults />
 		</permissions>
 	</model-resource>

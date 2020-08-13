@@ -4,8 +4,10 @@ dependencies {
 	testIntegrationCompile group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	testIntegrationCompile group: "org.apache.tika", name: "tika-core", version: "1.24.1"
 	testIntegrationCompile project(":apps:application-list:application-list-api")
+	testIntegrationCompile project(":apps:asset:asset-list-api")
 	testIntegrationCompile project(":apps:depot:depot-api")
 	testIntegrationCompile project(":apps:document-library:document-library-api")
+	testIntegrationCompile project(":apps:export-import:export-import-api")
 	testIntegrationCompile project(":apps:item-selector:item-selector-api")
 	testIntegrationCompile project(":apps:item-selector:item-selector-criteria-api")
 	testIntegrationCompile project(":apps:journal:journal-api")

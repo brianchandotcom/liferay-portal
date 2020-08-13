@@ -18,9 +18,11 @@ import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -74,19 +76,32 @@ public class DepotPanelAppControllerTest {
 	}
 
 	@Test
-	public void testGetPanelAppsDoesNotShowTheSiteBuilderCategoryForADepotGroup()
+	public void testGetPanelAppsShowOnlyContentSetsInTheSiteBuilderCategoryForADepotGroup()
 		throws Exception {
 
-		_assertIsHiddenForADepotGroup(
-			PanelCategoryKeys.SITE_ADMINISTRATION_BUILD);
+		List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
+			PanelCategoryKeys.SITE_ADMINISTRATION_BUILD,
+			PermissionThreadLocal.getPermissionChecker(),
+			_groupLocalService.getGroup(_depotEntry.getGroupId()));
+
+		Assert.assertEquals(panelApps.toString(), 1, panelApps.size());
+
+		_assertPanelAppsContain(panelApps, AssetListPortletKeys.ASSET_LIST);
 	}
 
 	@Test
-	public void testGetPanelAppsDoesNotShowTheStagingCategoryForADepotGroup()
+	public void testGetPanelAppsShowsOnlyExportAndIMportInTheStagingCategoryForADepotGroup()
 		throws Exception {
 
-		_assertIsHiddenForADepotGroup(
-			PanelCategoryKeys.SITE_ADMINISTRATION_PUBLISHING);
+		List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
+			PanelCategoryKeys.SITE_ADMINISTRATION_PUBLISHING,
+			PermissionThreadLocal.getPermissionChecker(),
+			_groupLocalService.getGroup(_depotEntry.getGroupId()));
+
+		Assert.assertEquals(panelApps.toString(), 2, panelApps.size());
+
+		_assertPanelAppsContain(panelApps, ExportImportPortletKeys.EXPORT);
+		_assertPanelAppsContain(panelApps, ExportImportPortletKeys.IMPORT);
 	}
 
 	@Test
@@ -96,7 +111,7 @@ public class DepotPanelAppControllerTest {
 			PermissionThreadLocal.getPermissionChecker(),
 			_groupLocalService.getGroup(TestPropsValues.getGroupId()));
 
-		Assert.assertTrue(panelApps.size() > 2);
+		Assert.assertTrue(panelApps.size() >= 2);
 	}
 
 	@Test
@@ -108,18 +123,11 @@ public class DepotPanelAppControllerTest {
 			PermissionThreadLocal.getPermissionChecker(),
 			_groupLocalService.getGroup(_depotEntry.getGroupId()));
 
-		Assert.assertEquals(panelApps.toString(), 3, panelApps.size());
+		Assert.assertEquals(panelApps.toString(), 2, panelApps.size());
 
 		_assertPanelAppsContain(
 			panelApps, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN);
 		_assertPanelAppsContain(panelApps, JournalPortletKeys.JOURNAL);
-
-		panelApps = _panelAppRegistry.getPanelApps(
-			PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT,
-			PermissionThreadLocal.getPermissionChecker(),
-			_groupLocalService.getGroup(TestPropsValues.getGroupId()));
-
-		Assert.assertTrue(panelApps.size() > 1);
 	}
 
 	@Test

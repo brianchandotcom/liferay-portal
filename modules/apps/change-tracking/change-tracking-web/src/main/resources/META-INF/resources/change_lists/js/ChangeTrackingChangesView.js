@@ -1039,7 +1039,7 @@ class ChangeTrackingChangesView extends React.Component {
 						<div className="taglib-empty-result-message-header" />
 						<div className="sheet-text text-center">
 							{Liferay.Language.get(
-								'no-changes-to-display-in-this-view'
+								'there-are-no-changes-to-display-in-this-view'
 							)}
 						</div>
 					</div>

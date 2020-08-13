@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -169,9 +170,16 @@ public class JournalConverterImpl implements JournalConverter {
 		rootElement.addAttribute(
 			"available-locales", getAvailableLocales(ddmFields));
 
+		Long groupId = GroupThreadLocal.getGroupId();
+
+		Locale defaultLocale = ddmFields.getDefaultLocale();
+
+		if (!LanguageUtil.isAvailableLocale(groupId, defaultLocale)) {
+			defaultLocale = LocaleUtil.getSiteDefault();
+		}
+
 		rootElement.addAttribute(
-			"default-locale",
-			LocaleUtil.toLanguageId(ddmFields.getDefaultLocale()));
+			"default-locale", LocaleUtil.toLanguageId(defaultLocale));
 
 		DDMFieldsCounter ddmFieldsCounter = new DDMFieldsCounter();
 

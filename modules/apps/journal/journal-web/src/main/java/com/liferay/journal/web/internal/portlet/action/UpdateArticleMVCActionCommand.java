@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -181,6 +182,8 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 			fields = DDMUtil.getFields(
 				ddmStructure.getStructureId(), serviceContext);
 		}
+
+		GroupThreadLocal.setGroupId(groupId);
 
 		String content = _journalConverter.getContent(ddmStructure, fields);
 

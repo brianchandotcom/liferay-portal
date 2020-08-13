@@ -1938,6 +1938,8 @@ definition {
 
 	macro viewFragmentStyle {
 		if (isSet(alignment)) {
+			var fragmentName = StringUtil.upperCaseFirstLetter("${fragmentName}");
+
 			AssertElementPresent(
 				key_alignment = "${alignment}",
 				key_fragmentName = "${fragmentName}",
@@ -1945,6 +1947,8 @@ definition {
 		}
 
 		if (isSet(borderColor)) {
+			var fragmentName = StringUtil.upperCaseFirstLetter("${fragmentName}");
+
 			AssertElementPresent(
 				key_fragmentName = "${fragmentName}",
 				key_paletteItem = "${borderColor}",
@@ -1952,6 +1956,8 @@ definition {
 		}
 
 		if (isSet(borderRadius)) {
+			var fragmentName = StringUtil.upperCaseFirstLetter("${fragmentName}");
+
 			AssertElementPresent(
 				key_borderRadius = "${borderRadius}",
 				key_fragmentName = "${fragmentName}",
@@ -1959,6 +1965,8 @@ definition {
 		}
 
 		if (isSet(bottomSpacing)) {
+			var fragmentName = StringUtil.lowerCase("${fragmentName}");
+
 			AssertElementPresent(
 				key_bottomSpacing = "${bottomSpacing}",
 				key_fragmentName = "${fragmentName}",
@@ -1966,6 +1974,8 @@ definition {
 		}
 
 		if (isSet(boxShadow)) {
+			var fragmentName = StringUtil.upperCaseFirstLetter("${fragmentName}");
+
 			AssertElementPresent(
 				key_boxShadow = "${boxShadow}",
 				key_fragmentName = "${fragmentName}",
@@ -1973,6 +1983,8 @@ definition {
 		}
 
 		if (isSet(headingLevel)) {
+			var fragmentName = StringUtil.lowerCase("${fragmentName}");
+
 			AssertElementPresent(
 				key_fragmentName = "${fragmentName}",
 				key_headingLevel = "${headingLevel}",
@@ -1986,6 +1998,8 @@ definition {
 		}
 
 		if (isSet(imageSize)) {
+			var fragmentName = StringUtil.lowerCase("${fragmentName}");
+
 			AssertElementPresent(
 				key_fragmentName = "${fragmentName}",
 				key_imageSize = "${imageSize}",
@@ -1993,6 +2007,8 @@ definition {
 		}
 
 		if (isSet(marginBottom)) {
+			var fragmentName = StringUtil.upperCaseFirstLetter("${fragmentName}");
+
 			AssertElementPresent(
 				key_fragmentName = "${fragmentName}",
 				key_marginBottom = "${marginBottom}",
@@ -2000,6 +2016,8 @@ definition {
 		}
 
 		if (isSet(size)) {
+			var fragmentName = StringUtil.lowerCase("${fragmentName}");
+
 			AssertElementPresent(
 				key_fragmentName = "${fragmentName}",
 				key_size = "${size}",
@@ -2007,6 +2025,8 @@ definition {
 		}
 
 		if (isSet(textColor)) {
+			var fragmentName = StringUtil.upperCaseFirstLetter("${fragmentName}");
+
 			AssertElementPresent(
 				key_fragmentName = "${fragmentName}",
 				key_textColor = "${textColor}",
@@ -2014,6 +2034,8 @@ definition {
 		}
 
 		if (isSet(type)) {
+			var fragmentName = StringUtil.lowerCase("${fragmentName}");
+
 			AssertElementPresent(
 				key_fragmentName = "${fragmentName}",
 				key_type = "${type}",

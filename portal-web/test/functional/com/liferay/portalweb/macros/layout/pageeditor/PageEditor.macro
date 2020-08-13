@@ -544,7 +544,7 @@ definition {
 		if (isSet(height)) {
 			Select(
 				key_fieldLabel = "Height",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
+				locator1 = "PageEditor#CUSTOM_STYLES_SELECT_FIELD",
 				value1 = "${height}");
 
 			Pause(locator1 = "2000");

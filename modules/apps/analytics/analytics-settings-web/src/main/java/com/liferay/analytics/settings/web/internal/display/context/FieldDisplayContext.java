@@ -76,15 +76,27 @@ public class FieldDisplayContext {
 					_mvcRenderCommandName,
 					"/analytics_settings/edit_synced_contact_fields")) {
 
+			for (String fieldName : _requiredContactFieldNames) {
+				fields.add(
+					new Field(
+						"Default Field", _contactFieldNames.get(fieldName),
+						fieldName));
+			}
+
 			for (Map.Entry<String, String> entry :
 					_contactFieldNames.entrySet()) {
+
+				if (_requiredContactFieldNames.contains(entry.getKey())) {
+					continue;
+				}
 
 				fields.add(
 					new Field(
 						"Default Field", entry.getValue(), entry.getKey()));
 			}
 
-			fieldSearch.setTotal(_contactFieldNames.size());
+			fieldSearch.setTotal(
+				_contactFieldNames.size() - _requiredContactFieldNames.size());
 		}
 
 		fieldSearch.setResults(fields);
@@ -154,6 +166,10 @@ public class FieldDisplayContext {
 		).put(
 			"twitterSn", "String"
 		).build();
+	private static final List<String> _requiredContactFieldNames =
+		Arrays.asList(
+			"classPK", "contactId", "createDate", "emailAddress",
+			"modifiedDate");
 	private static final List<String> _requiredUserFieldNames = Arrays.asList(
 		"createDate", "emailAddress", "modifiedDate", "userId", "uuid");
 	private static final Map<String, String> _userFieldNames =

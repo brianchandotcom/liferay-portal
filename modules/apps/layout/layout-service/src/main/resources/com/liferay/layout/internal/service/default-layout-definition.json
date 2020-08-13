@@ -1,53 +1,52 @@
 {
 	"definition": {
-		"backgroundColor": "",
-		"backgroundImage": {
-			"title": {
-				"value": "welcome_bg.jpg"
-			},
-			"url": {
-				"value": "${WELCOME_IMAGE_URL}"
-			}
-		},
 		"layout": {
-			"borderRadius": "None",
+			"widthType": "Fluid"
+		},
+		"styles": {
+			"backgroundImage": {
+				"title": {
+					"value": "welcome_bg.jpg"
+				},
+				"url": {
+					"value": "${WELCOME_IMAGE_URL}"
+				}
+			},
+			"borderRadius": "rounded-0",
 			"borderWidth": 0,
-			"contentDisplay": "Block",
-			"justify": "None",
+			"display": "block",
+			"justify": "none",
 			"marginBottom": 0,
 			"marginLeft": 0,
 			"marginRight": 0,
 			"marginTop": 0,
 			"opacity": 100,
-			"paddingBottom": 10,
-			"paddingLeft": 0,
-			"paddingRight": 0,
-			"paddingTop": 10,
-			"shadow": "Default",
-			"widthType": "Fluid"
+			"paddingBottom": 5,
+			"paddingLeft": 5,
+			"paddingRight": 5,
+			"paddingTop": 5
 		}
 	},
 	"pageElements": [
 		{
 			"definition": {
-				"backgroundImage": {
-				},
 				"layout": {
-					"borderRadius": "None",
+					"widthType": "Fixed"
+				},
+				"styles": {
+					"borderRadius": "rounded-0",
 					"borderWidth": 0,
-					"contentDisplay": "Block",
-					"justify": "None",
-					"marginBottom": 0,
-					"marginLeft": 0,
-					"marginRight": 0,
-					"marginTop": 0,
+					"display": "block",
+					"justify": "none",
+					"marginBottom": 5,
+					"marginLeft": 5,
+					"marginRight": 5,
+					"marginTop": 5,
 					"opacity": 100,
 					"paddingBottom": 0,
-					"paddingLeft": 1,
-					"paddingRight": 1,
-					"paddingTop": 0,
-					"shadow": "Default",
-					"widthType": "Fixed"
+					"paddingLeft": 3,
+					"paddingRight": 3,
+					"paddingTop": 0
 				}
 			},
 			"pageElements": [

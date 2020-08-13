@@ -28,6 +28,7 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -219,6 +221,16 @@ public class ContainerLayoutStructureItemImporter
 				}
 			}
 
+			Map<String, Object> styles = (Map<String, Object>)definitionMap.get(
+				"styles");
+
+			if (styles != null) {
+				JSONObject jsonObject = JSONUtil.put(
+					"styles", _toStylesJSONObject(styles));
+
+				containerLayoutStructureItem.updateItemConfig(jsonObject);
+			}
+
 			Map<String, Object> fragmentLinkMap =
 				(Map<String, Object>)definitionMap.get("fragmentLink");
 
@@ -348,6 +360,53 @@ public class ContainerLayoutStructureItemImporter
 				"classPK", classPK
 			);
 		}
+	}
+
+	private JSONObject _toStylesJSONObject(Map<String, Object> styles) {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		for (Map.Entry<String, Object> entry : styles.entrySet()) {
+			if (entry.getValue() instanceof HashMap) {
+				Map<String, Object> childStyleMap =
+					(Map<String, Object>)entry.getValue();
+
+				if (Objects.equals(entry.getKey(), "backgroundImage")) {
+					JSONObject backgroundImageJSONObject =
+						JSONFactoryUtil.createJSONObject();
+
+					Map<String, Object> titleMap =
+						(Map<String, Object>)childStyleMap.get("title");
+
+					if (titleMap != null) {
+						backgroundImageJSONObject.put(
+							"title", _getLocalizedValue(titleMap));
+					}
+
+					Map<String, Object> urlMap =
+						(Map<String, Object>)childStyleMap.get("url");
+
+					if (urlMap != null) {
+						backgroundImageJSONObject.put(
+							"url", _getLocalizedValue(urlMap));
+
+						_processMapping(
+							backgroundImageJSONObject,
+							(Map<String, Object>)urlMap.get("mapping"));
+					}
+
+					jsonObject.put(entry.getKey(), backgroundImageJSONObject);
+				}
+				else {
+					jsonObject.put(
+						entry.getKey(), _toStylesJSONObject(childStyleMap));
+				}
+			}
+			else {
+				jsonObject.put(entry.getKey(), entry.getValue());
+			}
+		}
+
+		return jsonObject;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

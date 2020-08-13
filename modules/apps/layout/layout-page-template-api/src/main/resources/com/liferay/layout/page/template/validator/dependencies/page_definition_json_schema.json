@@ -1172,6 +1172,10 @@
 					},
 					"title": "The layout Schema",
 					"type": "object"
+				},
+				"styles": {
+					"title": "The Styles Schema",
+					"type": "object"
 				}
 			},
 			"title": "The PageSectionDefinition Schema",

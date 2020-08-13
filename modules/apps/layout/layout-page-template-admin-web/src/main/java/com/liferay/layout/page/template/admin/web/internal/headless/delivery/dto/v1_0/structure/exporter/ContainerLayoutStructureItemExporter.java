@@ -45,7 +45,11 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.function.Function;
 
 import org.osgi.service.component.annotations.Component;
@@ -87,6 +91,14 @@ public class ContainerLayoutStructureItemExporter
 							containerLayoutStructureItem.getLinkJSONObject(),
 							saveMappingConfiguration);
 						layout = _toLayout(containerLayoutStructureItem);
+
+						JSONObject itemConfigJSONObject =
+							containerLayoutStructureItem.
+								getItemConfigJSONObject();
+
+						styles = _toStylesMap(
+							itemConfigJSONObject.getJSONObject("styles"),
+							saveMappingConfiguration);
 					}
 				};
 				type = PageElement.Type.SECTION;
@@ -521,6 +533,35 @@ public class ContainerLayoutStructureItemExporter
 
 						return null;
 					});
+			}
+		};
+	}
+
+	private Map<String, Object> _toStylesMap(
+		JSONObject jsonObject, boolean saveMappingConfiguration) {
+
+		return new HashMap<String, Object>() {
+			{
+				Set<String> keys = jsonObject.keySet();
+
+				Iterator<String> iterator = keys.iterator();
+
+				while (iterator.hasNext()) {
+					String key = iterator.next();
+
+					Object value = jsonObject.get(key);
+
+					if (Objects.equals(key, "backgroundImage")) {
+						JSONObject backgroundImageJSONObject =
+							(JSONObject)value;
+
+						value = _toBackgroundFragmentImage(
+							backgroundImageJSONObject,
+							saveMappingConfiguration);
+					}
+
+					put(key, value);
+				}
 			}
 		};
 	}

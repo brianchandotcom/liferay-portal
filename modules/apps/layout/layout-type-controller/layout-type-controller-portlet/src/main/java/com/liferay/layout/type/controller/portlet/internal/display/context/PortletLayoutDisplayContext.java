@@ -14,7 +14,6 @@
 
 package com.liferay.layout.type.controller.portlet.internal.display.context;
 
-import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
 import com.liferay.asset.info.display.contributor.util.ContentAccessor;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
@@ -202,44 +201,6 @@ public class PortletLayoutDisplayContext {
 
 		if (linkJSONObject == null) {
 			return StringPool.BLANK;
-		}
-
-		String mappedField = linkJSONObject.getString("mappedField");
-
-		if (Validator.isNotNull(mappedField)) {
-			InfoDisplayObjectProvider<Object> infoDisplayObjectProvider =
-				(InfoDisplayObjectProvider<Object>)
-					_httpServletRequest.getAttribute(
-						AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
-
-			if ((_infoDisplayContributorTracker != null) &&
-				(infoDisplayObjectProvider != null)) {
-
-				InfoDisplayContributor<Object> infoDisplayContributor =
-					(InfoDisplayContributor<Object>)
-						_infoDisplayContributorTracker.
-							getInfoDisplayContributor(
-								PortalUtil.getClassName(
-									infoDisplayObjectProvider.
-										getClassNameId()));
-
-				if (infoDisplayContributor != null) {
-					Object object =
-						infoDisplayContributor.getInfoDisplayFieldValue(
-							infoDisplayObjectProvider.getDisplayObject(),
-							mappedField, LocaleUtil.getDefault());
-
-					if (object instanceof String) {
-						String fieldValue = (String)object;
-
-						if (Validator.isNotNull(fieldValue)) {
-							return fieldValue;
-						}
-
-						return StringPool.BLANK;
-					}
-				}
-			}
 		}
 
 		String fieldId = linkJSONObject.getString("fieldId");

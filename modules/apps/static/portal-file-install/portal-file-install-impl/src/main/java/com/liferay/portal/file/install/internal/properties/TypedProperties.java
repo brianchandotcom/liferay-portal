@@ -98,7 +98,46 @@ public class TypedProperties {
 	}
 
 	public void save(Writer writer) throws IOException {
-		_saveLayout(writer);
+		try (PropertiesWriter propertiesWriter = new PropertiesWriter(writer)) {
+			if (_header != null) {
+				propertiesWriter.writeln(_header);
+			}
+
+			for (Map.Entry<String, String> entry : _storage.entrySet()) {
+				String key = entry.getKey();
+
+				String value = entry.getValue();
+
+				Layout layout = _layoutMap.get(key);
+
+				if (layout == null) {
+					propertiesWriter.writeProperty(key, value);
+
+					continue;
+				}
+
+				List<String> values = layout.getValues();
+
+				if (values == null) {
+					propertiesWriter.writeProperty(key, value);
+
+					continue;
+				}
+
+				int size = values.size();
+
+				for (int i = 0; i < size; i++) {
+					String string = values.get(i);
+
+					if (i < (size - 1)) {
+						propertiesWriter.writeln(string + "\\");
+					}
+					else {
+						propertiesWriter.writeln(string);
+					}
+				}
+			}
+		}
 	}
 
 	public class PropertiesReader extends BufferedReader {
@@ -310,55 +349,6 @@ public class TypedProperties {
 		return old;
 	}
 
-	private void _saveLayout(Writer writer) throws IOException {
-		try (PropertiesWriter propertiesWriter = new PropertiesWriter(writer)) {
-			if (_header != null) {
-				propertiesWriter.writeln(_header);
-			}
-
-			for (Map.Entry<String, String> entry : _storage.entrySet()) {
-				String key = entry.getKey();
-
-				String value = entry.getValue();
-
-				Layout layout = _layoutMap.get(key);
-
-				if (layout == null) {
-					propertiesWriter.writeProperty(key, value);
-
-					continue;
-				}
-
-				List<String> values = layout.getValues();
-
-				if (values == null) {
-					propertiesWriter.writeProperty(key, value);
-
-					continue;
-				}
-
-				int size = values.size();
-
-				for (int i = 0; i < size; i++) {
-					String string = values.get(i);
-
-					if (i < (size - 1)) {
-						propertiesWriter.writeln(string + "\\");
-					}
-					else {
-						propertiesWriter.writeln(string);
-					}
-				}
-			}
-
-			if (_footers != null) {
-				for (String string : _footers) {
-					propertiesWriter.writeln(string);
-				}
-			}
-		}
-	}
-
 	private static final String _LINE_SEPARATOR = System.getProperty(
 		"line.separator");
 
@@ -367,7 +357,6 @@ public class TypedProperties {
 	private static final Log _log = LogFactoryUtil.getLog(
 		TypedProperties.class);
 
-	private List<String> _footers;
 	private String _header;
 	private final Map<String, Layout> _layoutMap = new LinkedHashMap<>();
 	private final Map<String, String> _storage = new LinkedHashMap<>();

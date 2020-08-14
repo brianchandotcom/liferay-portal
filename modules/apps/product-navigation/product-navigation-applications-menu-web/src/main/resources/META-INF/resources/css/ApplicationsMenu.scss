@@ -37,13 +37,10 @@
 .applications-menu-wrapper {
 	display: flex;
 	flex-direction: column;
-	max-height: -moz-available;
-	max-height: -webkit-fill-available;
-	max-height: stretch;
-
-	@include media-breakpoint-up(sm) {
-		max-height: 100vh;
-	}
+	height: -moz-available;
+	height: -webkit-fill-available;
+	height: stretch;
+	max-height: 100vh;
 }
 
 .applications-menu-bg {

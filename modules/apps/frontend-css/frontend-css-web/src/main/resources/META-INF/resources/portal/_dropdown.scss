@@ -2,3 +2,7 @@ html.rtl .dropdown-menu {
 	left: auto;
 	right: 0;
 }
+
+.dropdown-menu .dropdown-item.active {
+	pointer-events: initial;
+}

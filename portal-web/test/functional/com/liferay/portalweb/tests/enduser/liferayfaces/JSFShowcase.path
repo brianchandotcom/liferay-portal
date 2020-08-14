@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONVERSION_CORRECT_MESSAGE</td>
+	<td>//li[contains(text(),'Correct!')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONVERSION_INCORRECT_MESSAGE</td>
+	<td>//li[contains(text(),'Incorrect!')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COPY_CLEAR_BUTTON</td>
 	<td>//button[contains(text(),'${key_text}')]</td>
 	<td></td>
@@ -69,6 +79,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GENERAL_CHECKBOX_2</td>
+	<td>xpath=(//td[contains(.,'${key_opt}')]//input[contains(@id,':select')])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GENERAL_LINK</td>
 	<td>//a[contains(text(),'Text for a link')][not(./img[contains(@src,'jsf-logo-small.png')])]</td>
 	<td></td>
@@ -111,6 +126,11 @@
 <tr>
 	<td>MODEL_VALUE</td>
 	<td>//span[contains(@id,':modelValue') and contains(.,'${key_attribute}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MODEL_VALUE_2</td>
+	<td>//div[@class='showcase-example' and contains(.,'2')]/following-sibling::div[@class='showcase-results']//span[contains(@id,':modelValue') and contains(.,'${key_attribute}')]</td>
 	<td></td>
 </tr>
 <tr>

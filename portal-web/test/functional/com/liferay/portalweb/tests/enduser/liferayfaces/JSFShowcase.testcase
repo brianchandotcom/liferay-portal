@@ -540,13 +540,50 @@ definition {
 
 	@priority = "5"
 	test SelectOneRadioSmoke {
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/selectoneradio/general");
 
-		JSFShowcase.validateRequiredCheckbox();
+		// SelectOneRadioConversion
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/selectoneradio/conversion");
+
+		JSFShowcase.selectCheckbox(
+			checkboxNameList = "October 31, 1517 AD",
+			textValue = "Oct 31, 1517 AD");
+
+		AssertElementPresent(locator1 = "JSFShowcase#CONVERSION_INCORRECT_MESSAGE");
+
+		JSFShowcase.selectCheckbox(
+			checkboxNameList = "July 4, 1776 AD",
+			textValue = "Jul 4, 1776 AD");
+
+		AssertElementNotPresent(
+			key_attribute = "Oct 31, 1517 AD",
+			locator1 = "JSFShowcase#MODEL_VALUE");
+
+		AssertElementPresent(locator1 = "JSFShowcase#CONVERSION_CORRECT_MESSAGE");
+
+		// SelectOneRadioData-model
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/selectoneradio/data-model");
+
+		JSFShowcase.selectCheckbox(
+			checkboxNameList = "Compatible",
+			textValue = "1");
 
 		JSFShowcase.selectCheckbox(
 			checkboxNameList = "Powerful Integration",
 			textValue = "3");
+
+		AssertElementNotPresent(
+			key_attribute = "1",
+			locator1 = "JSFShowcase#MODEL_VALUE");
+
+		// SelectOneRadioDefault-value
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/selectoneradio/default-value");
+
+		AssertElementPresent(
+			key_attribute = "3",
+			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		JSFShowcase.selectCheckbox(
 			checkboxNameList = "Compatible",
@@ -554,6 +591,84 @@ definition {
 
 		AssertElementNotPresent(
 			key_attribute = "3",
+			locator1 = "JSFShowcase#MODEL_VALUE");
+
+		// SelectOneRadioImmediate
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/selectoneradio/immediate");
+
+		JSFShowcase.submitImmediate(
+			checkboxNameList = "Compatible",
+			immediate = "true",
+			messageImmediate1 = "APPLY_REQUEST_VALUES",
+			textValue = "1");
+
+		JSFShowcase.submitImmediate(
+			checkboxNameList = "Powerful Integration",
+			immediate = "true",
+			messageImmediate1 = "APPLY_REQUEST_VALUES",
+			textValue = "3");
+
+		AssertElementNotPresent(
+			key_attribute = "1",
+			locator1 = "JSFShowcase#MODEL_VALUE");
+
+		JSFShowcase.submitImmediate(
+			checkboxNameList = "Compatible",
+			immediate = "false",
+			messageImmediate2 = "PROCESS_VALIDATIONS",
+			textValue = "1");
+
+		JSFShowcase.submitImmediate(
+			checkboxNameList = "Powerful Integration",
+			immediate = "false",
+			messageImmediate2 = "PROCESS_VALIDATIONS",
+			textValue = "3");
+
+		AssertElementNotPresent(
+			key_attribute = "1",
+			locator1 = "JSFShowcase#MODEL_VALUE_2");
+
+		// SelectOneRadioGeneral
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/selectoneradio/general");
+
+		JSFShowcase.validateRequiredCheckbox();
+
+		JSFShowcase.selectCheckbox(
+			checkboxNameList = "Compatible",
+			textValue = "1");
+
+		JSFShowcase.selectCheckbox(
+			checkboxNameList = "Powerful Integration",
+			textValue = "3");
+
+		AssertElementNotPresent(
+			key_attribute = "1",
+			locator1 = "JSFShowcase#MODEL_VALUE");
+
+		// SelectOneRadioInstant-ajax
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/selectoneradio/instant-ajax");
+
+		Check(
+			key_opt = "Compatible",
+			locator1 = "JSFShowcase#GENERAL_CHECKBOX");
+
+		AssertElementPresent(
+			key_attribute = "1",
+			locator1 = "JSFShowcase#MODEL_VALUE");
+
+		Check(
+			key_opt = "Powerful Integration",
+			locator1 = "JSFShowcase#GENERAL_CHECKBOX");
+
+		AssertElementPresent(
+			key_attribute = "3",
+			locator1 = "JSFShowcase#MODEL_VALUE");
+
+		AssertElementNotPresent(
+			key_attribute = "1",
 			locator1 = "JSFShowcase#MODEL_VALUE");
 	}
 

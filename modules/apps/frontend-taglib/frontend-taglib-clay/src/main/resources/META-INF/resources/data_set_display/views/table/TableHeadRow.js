@@ -189,7 +189,6 @@ function TableHeadRow({
 	selectedItemsKey,
 	selectedItemsValue,
 	selectionType,
-	showActionItems,
 	sorting,
 	updateSorting,
 	visibleFields,
@@ -231,13 +230,9 @@ function TableHeadRow({
 						updateSorting={updateSorting}
 					/>
 				))}
-				{showActionItems ? (
-					<ClayTable.Cell className="text-right" headingCell>
-						<FieldsSelectorDropdown fields={schema.fields} />
-					</ClayTable.Cell>
-				) : (
+				<ClayTable.Cell className="text-right" headingCell>
 					<FieldsSelectorDropdown fields={schema.fields} />
-				)}
+				</ClayTable.Cell>
 			</ClayTable.Row>
 		</ClayTable.Head>
 	);
@@ -264,7 +259,6 @@ TableHeadRow.propTypes = {
 		PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 	),
 	selectionType: PropTypes.oneOf(['single', 'multiple']),
-	showActionItems: PropTypes.bool,
 	sorting: PropTypes.arrayOf(
 		PropTypes.shape({
 			direction: PropTypes.oneOf(['asc', 'desc']).isRequired,

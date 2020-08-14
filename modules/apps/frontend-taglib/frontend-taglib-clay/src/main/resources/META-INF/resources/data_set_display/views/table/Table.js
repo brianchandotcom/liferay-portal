@@ -158,7 +158,6 @@ function Table({items, itemsActions, schema, style}) {
 					selectedItemsValue={selectedItemsValue}
 					selectionType={selectionType}
 					selectItems={selectItems}
-					showActionItems={showActionItems}
 					sorting={sorting}
 					updateSorting={updateSorting}
 					visibleFields={visibleFields}
@@ -207,10 +206,9 @@ function Table({items, itemsActions, schema, style}) {
 										itemId,
 										itemsActions
 									)}
-									{showActionItems && (
-										<ClayTable.Cell className="data-set-item-actions-wrapper">
-											{(itemsActions ||
-												item.actionDropdownItems) && (
+									<ClayTable.Cell className="data-set-item-actions-wrapper">
+										{showActionItems &&
+											item.actionDropdownItems && (
 												<ActionsDropdownRenderer
 													actions={
 														itemsActions ||
@@ -220,8 +218,7 @@ function Table({items, itemsActions, schema, style}) {
 													itemId={itemId}
 												/>
 											)}
-										</ClayTable.Cell>
-									)}
+									</ClayTable.Cell>
 								</ClayTable.Row>
 								{nestedItems?.length
 									? nestedItems.map((nestedItem, i) => (

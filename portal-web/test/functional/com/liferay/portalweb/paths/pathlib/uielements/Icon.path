@@ -310,6 +310,11 @@
 </tr>
 <!--ELLIPSIS-->
 <tr>
+	<td>ANY_VERTICAL_ELLIPSIS</td>
+	<td>//*[contains(.,'${key_text}')]//*[*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VERTICAL_ELLIPSIS_BUTTON</td>
 	<td>//div[contains(@class,'dropdown-action')]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>

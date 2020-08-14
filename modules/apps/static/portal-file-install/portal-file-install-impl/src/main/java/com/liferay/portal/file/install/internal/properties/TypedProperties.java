@@ -155,10 +155,22 @@ public class TypedProperties {
 
 			// parse the line
 
-			String[] property = _parseProperty(line);
+			Matcher matcher = _linePattern.matcher(line);
 
-			if (property[1].length() >= 2) {
-				Matcher matcher = _pattern.matcher(property[1]);
+			if (!matcher.matches()) {
+				_log.error("Unable to parse config line: " + line);
+
+				return false;
+			}
+
+			String key = matcher.group(1);
+
+			String value = matcher.group(2);
+
+			value = value.trim();
+
+			if (value.length() >= 2) {
+				matcher = _pattern.matcher(value);
 
 				if (!matcher.matches()) {
 					_log.error("Unable to read property line " + line);
@@ -167,9 +179,9 @@ public class TypedProperties {
 				}
 			}
 
-			_propertyName = property[0];
+			_propertyName = key.trim();
 
-			_propertyValue = InterpolationUtil.substVars(property[1]);
+			_propertyValue = InterpolationUtil.substVars(value);
 
 			return true;
 		}
@@ -188,22 +200,6 @@ public class TypedProperties {
 			}
 
 			return false;
-		}
-
-		private String[] _parseProperty(String line) {
-			Matcher matcher = _linePattern.matcher(line);
-
-			if (!matcher.matches()) {
-				_log.error("Unable to parse config line: " + line);
-
-				return new String[2];
-			}
-
-			String key = matcher.group(1);
-
-			String value = matcher.group(2);
-
-			return new String[] {key.trim(), value.trim()};
 		}
 
 		private String _readProperty() throws IOException {

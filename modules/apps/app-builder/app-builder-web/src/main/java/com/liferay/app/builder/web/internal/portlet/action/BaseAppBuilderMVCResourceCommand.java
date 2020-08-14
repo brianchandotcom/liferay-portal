@@ -52,7 +52,7 @@ public abstract class BaseAppBuilderMVCResourceCommand<T>
 				_transactionConfig,
 				() -> {
 					Optional<T> resultOptional = doTransactionalCommand(
-						resourceRequest);
+						resourceRequest, resourceResponse);
 
 					if (resultOptional.isPresent()) {
 						JSONPortletResponseUtil.writeJSON(
@@ -78,7 +78,7 @@ public abstract class BaseAppBuilderMVCResourceCommand<T>
 	}
 
 	protected abstract Optional<T> doTransactionalCommand(
-			ResourceRequest resourceRequest)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception;
 
 	@Reference

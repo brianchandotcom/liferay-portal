@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -66,7 +67,7 @@ public class DeleteDataDefinitionMVCResourceCommand
 
 	@Override
 	protected Optional<Void> doTransactionalCommand(
-			ResourceRequest resourceRequest)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(

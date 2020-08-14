@@ -14,6 +14,8 @@
 
 package com.liferay.data.engine.rest.internal.resource.v2_0;
 
+import com.google.gson.Gson;
+
 import com.liferay.data.engine.constants.DataActionKeys;
 import com.liferay.data.engine.content.type.DataDefinitionContentType;
 import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
@@ -631,16 +633,29 @@ public class DataDefinitionResourceImpl
 
 				customProperties.put("rows", jsonArray.toString());
 
-				DataDefinitionField[] dataDefinitionFields = ArrayUtil.clone(
-					dataDefinition.getDataDefinitionFields());
+				DataDefinitionField[] nestedDataDefinitionFields =
+					new DataDefinitionField[0];
+
+				for (DataDefinitionField nestedDataDefinitionField :
+						dataDefinition.getDataDefinitionFields()) {
+
+					Gson gson = new Gson();
+
+					nestedDataDefinitionFields = ArrayUtil.append(
+						nestedDataDefinitionFields,
+						gson.fromJson(
+							JSONFactoryUtil.looseSerializeDeep(
+								nestedDataDefinitionField),
+							DataDefinitionField.class));
+				}
 
 				_normalizeFields(
 					existingDataDefinition.getAvailableLanguageIds(),
 					dataDefinition.getDefaultLanguageId(),
-					dataDefinitionFields);
+					nestedDataDefinitionFields);
 
 				dataDefinitionField.setNestedDataDefinitionFields(
-					dataDefinitionFields);
+					nestedDataDefinitionFields);
 			}
 
 			putDataDefinition(

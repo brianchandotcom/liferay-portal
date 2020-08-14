@@ -51,9 +51,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.text.Format;
+
 import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
@@ -230,28 +229,6 @@ public class DDMFormInstanceRecordExporterImplTest extends PowerMockito {
 			DDMFormInstanceRecordExporterRequest.Builder.newBuilder(1, "csv");
 
 		ddmFormInstanceRecordExporterImpl.export(builder.build());
-	}
-
-	@Test
-	public void testFormatDate() {
-		DDMFormInstanceRecordExporterImpl ddmFormInstanceRecordExporterImpl =
-			new DDMFormInstanceRecordExporterImpl();
-
-		DateTimeFormatter dateTimeFormatter =
-			ddmFormInstanceRecordExporterImpl.getDateTimeFormatter(
-				new Locale("pt", "BR"));
-
-		LocalDate localDate = LocalDate.of(2018, 2, 1);
-
-		Instant instant = Instant.from(
-			localDate.atStartOfDay(ZoneId.systemDefault()));
-
-		Date date = Date.from(instant);
-
-		String actual = ddmFormInstanceRecordExporterImpl.formatDate(
-			date, dateTimeFormatter);
-
-		Assert.assertEquals("01/02/18 00:00", actual);
 	}
 
 	@Test
@@ -452,6 +429,13 @@ public class DDMFormInstanceRecordExporterImplTest extends PowerMockito {
 
 		DateTimeFormatter dateTimeFormatter = mock(DateTimeFormatter.class);
 
+		Date statusDate = new Date();
+
+		Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
+			locale);
+
+		String modifiedDate = dateFormatDateTime.format(statusDate);
+
 		when(
 			ddmFormInstanceRecordExporterImpl.getDateTimeFormatter(locale)
 		).thenReturn(
@@ -487,7 +471,7 @@ public class DDMFormInstanceRecordExporterImplTest extends PowerMockito {
 		when(
 			ddmFormInstanceRecordVersion.getStatusDate()
 		).thenReturn(
-			new Date()
+			statusDate
 		);
 
 		when(
@@ -504,13 +488,6 @@ public class DDMFormInstanceRecordExporterImplTest extends PowerMockito {
 		);
 
 		when(
-			ddmFormInstanceRecordExporterImpl.formatDate(
-				Matchers.any(Date.class), Matchers.any(DateTimeFormatter.class))
-		).thenReturn(
-			"01/02/2018 00:00"
-		);
-
-		when(
 			ddmFormInstanceRecordExporterImpl.getDDMFormFieldValues(
 				ddmFormFields, ddmFormInstanceRecords, locale)
 		).thenCallRealMethod();
@@ -524,18 +501,12 @@ public class DDMFormInstanceRecordExporterImplTest extends PowerMockito {
 		Assert.assertEquals(StringPool.BLANK, valuesMap.get("field1"));
 		Assert.assertEquals("value", valuesMap.get("field2"));
 		Assert.assertEquals("aprovado", valuesMap.get("status"));
-		Assert.assertEquals("01/02/2018 00:00", valuesMap.get("modifiedDate"));
+		Assert.assertEquals(modifiedDate, valuesMap.get("modifiedDate"));
 		Assert.assertEquals("User Name", valuesMap.get("author"));
 
 		InOrder inOrder = Mockito.inOrder(
 			ddmFormInstanceRecordExporterImpl, ddmFormInstanceRecord,
 			ddmFormInstanceRecordVersion);
-
-		inOrder.verify(
-			ddmFormInstanceRecordExporterImpl, Mockito.times(1)
-		).getDateTimeFormatter(
-			locale
-		);
 
 		inOrder.verify(
 			ddmFormInstanceRecord, Mockito.times(1)
@@ -565,12 +536,6 @@ public class DDMFormInstanceRecordExporterImplTest extends PowerMockito {
 		inOrder.verify(
 			ddmFormInstanceRecordVersion, Mockito.times(1)
 		).getStatusDate();
-
-		inOrder.verify(
-			ddmFormInstanceRecordExporterImpl, Mockito.times(1)
-		).formatDate(
-			Matchers.any(Date.class), Matchers.any(DateTimeFormatter.class)
-		);
 	}
 
 	@Test

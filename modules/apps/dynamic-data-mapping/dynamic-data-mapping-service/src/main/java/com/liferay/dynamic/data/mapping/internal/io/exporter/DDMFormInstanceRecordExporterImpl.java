@@ -49,14 +49,11 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.text.Format;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -113,15 +110,6 @@ public class DDMFormInstanceRecordExporterImpl
 		}
 
 		return builder.build();
-	}
-
-	protected String formatDate(
-		Date date, DateTimeFormatter dateTimeFormatter) {
-
-		LocalDateTime localDateTime = LocalDateTime.ofInstant(
-			date.toInstant(), ZoneId.systemDefault());
-
-		return dateTimeFormatter.format(localDateTime);
 	}
 
 	protected DateTimeFormatter getDateTimeFormatter(Locale locale) {

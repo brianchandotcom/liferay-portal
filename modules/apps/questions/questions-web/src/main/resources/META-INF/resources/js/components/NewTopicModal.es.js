@@ -16,16 +16,18 @@ import {useMutation} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
-import React, {useRef} from 'react';
+import React, {useContext, useRef} from 'react';
 
-import {createTopicQuery} from '../utils/client.es';
+import { AppContext } from '../AppContext.es';
+import {createSubTopicQuery, createTopicQuery} from '../utils/client.es';
 import {deleteCacheVariables} from '../utils/utils.es';
 
 export default ({currentSectionId, onClose, onCreateNavigateTo, visible}) => {
-	const topicName = useRef(null);
+    const context = useContext(AppContext);
+    const topicName = useRef(null);
 	const topicDescription = useRef(null);
 
-	const [createNewTopic] = useMutation(createTopicQuery, {
+	const [createNewSubTopic] = useMutation(createSubTopicQuery, {
 		onCompleted(data) {
 			onCreateNavigateTo(
 				data.createMessageBoardSectionMessageBoardSection.title
@@ -36,6 +38,43 @@ export default ({currentSectionId, onClose, onCreateNavigateTo, visible}) => {
 			proxy.gc();
 		},
 	});
+
+	const [createNewTopic] = useMutation(createTopicQuery, {
+		onCompleted(data) {
+			onCreateNavigateTo(
+				data.createSiteMessageBoardSection.title
+			);
+		},
+		update(proxy) {
+			deleteCacheVariables(proxy, 'MessageBoardSection');
+			deleteCacheVariables(proxy, 'ROOT_QUERY');
+			proxy.gc();
+		},
+	});
+
+	const createTopic = () => {
+        if(currentSectionId) {
+            createNewSubTopic({
+                variables: {
+                    description:
+                        topicDescription.current
+                            .value,
+                    parentMessageBoardSectionId: currentSectionId,
+                    title: topicName.current.value,
+                },
+            });
+        } else {
+            createNewTopic({
+                variables: {
+                    description:
+                        topicDescription.current
+                            .value,
+                    siteKey: context.siteKey,
+                    title: topicName.current.value,
+                },
+            });
+        }
+    };
 
 	const {observer, onClose: close} = useModal({
 		onClose,
@@ -89,15 +128,7 @@ export default ({currentSectionId, onClose, onCreateNavigateTo, visible}) => {
 								<ClayButton
 									displayType="primary"
 									onClick={() => {
-										createNewTopic({
-											variables: {
-												description:
-													topicDescription.current
-														.value,
-												parentMessageBoardSectionId: currentSectionId,
-												title: topicName.current.value,
-											},
-										});
+										createTopic()
 										close();
 									}}
 								>

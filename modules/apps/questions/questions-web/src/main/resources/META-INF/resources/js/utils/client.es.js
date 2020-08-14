@@ -104,7 +104,7 @@ export const createQuestionQuery = gql`
 	}
 `;
 
-export const createTopicQuery = gql`
+export const createSubTopicQuery = gql`
 	mutation createMessageBoardSectionMessageBoardSection(
 		$description: String
 		$parentMessageBoardSectionId: Long!
@@ -112,6 +112,22 @@ export const createTopicQuery = gql`
 	) {
 		createMessageBoardSectionMessageBoardSection(
 			parentMessageBoardSectionId: $parentMessageBoardSectionId
+			messageBoardSection: {description: $description, title: $title}
+		) {
+			id
+			title
+		}
+	}
+`;
+
+export const createTopicQuery = gql`
+	mutation createSiteMessageBoardSection(
+		$description: String
+		$siteKey: String!
+		$title: String!
+	) {
+		createSiteMessageBoardSection(
+			siteKey: $siteKey
 			messageBoardSection: {description: $description, title: $title}
 		) {
 			id

@@ -18,15 +18,23 @@ import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.xml.DocumentException;
+import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.translation.constants.TranslationActionKeys;
 import com.liferay.translation.constants.TranslationConstants;
+import com.liferay.translation.exception.XLIFFFileException;
+import com.liferay.translation.internal.util.XLIFFLocaleIdUtil;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.base.TranslationEntryServiceBaseImpl;
 
+import net.sf.okapi.common.LocaleId;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The implementation of the translation entry remote service.
@@ -55,6 +63,42 @@ public class TranslationEntryServiceImpl
 
 	@Override
 	public TranslationEntry addOrUpdateTranslationEntry(
+			long groupId, InfoItemReference infoItemReference, String content,
+			String contentType, ServiceContext serviceContext)
+		throws PortalException {
+
+		try {
+			LocaleId targetLocaleId = XLIFFLocaleIdUtil.getTargetLocaleId(
+				_saxReader.read(content));
+
+			String languageId = _language.getLanguageId(
+				targetLocaleId.toJavaLocale());
+
+			PermissionChecker permissionChecker = getPermissionChecker();
+
+			String name = TranslationConstants.RESOURCE_NAME + "." + languageId;
+
+			if (!permissionChecker.hasPermission(
+					groupId, name, name, TranslationActionKeys.TRANSLATE)) {
+
+				throw new PrincipalException.MustHavePermission(
+					permissionChecker, name, name,
+					TranslationActionKeys.TRANSLATE);
+			}
+
+			return translationEntryLocalService.addOrUpdateTranslationEntry(
+				groupId, infoItemReference.getClassName(),
+				infoItemReference.getClassPK(), content, contentType,
+				languageId, serviceContext);
+		}
+		catch (DocumentException documentException) {
+			throw new XLIFFFileException.MustHaveCorrectEncoding(
+				documentException);
+		}
+	}
+
+	@Override
+	public TranslationEntry addOrUpdateTranslationEntry(
 			long groupId, String languageId,
 			InfoItemReference infoItemReference,
 			InfoItemFieldValues infoItemFieldValues,
@@ -76,5 +120,11 @@ public class TranslationEntryServiceImpl
 			groupId, languageId, infoItemReference, infoItemFieldValues,
 			serviceContext);
 	}
+
+	@Reference
+	private Language _language;
+
+	@Reference
+	private SAXReader _saxReader;
 
 }

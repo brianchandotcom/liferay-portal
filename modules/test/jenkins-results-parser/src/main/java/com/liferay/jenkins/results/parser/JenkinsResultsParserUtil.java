@@ -506,8 +506,7 @@ public class JenkinsResultsParserUtil {
 		final Map<String, String> environments, final long maxLogSize) {
 
 		if (!isWindows()) {
-			throw new RuntimeException(
-				"Invalid Operating System, please use Windows.");
+			throw new RuntimeException("Invalid OS: " + SystemUtils.OS_NAME);
 		}
 
 		_executeCommandService(
@@ -3278,8 +3277,7 @@ public class JenkinsResultsParserUtil {
 		final boolean batchCommand) {
 
 		if (batchCommand && !isWindows()) {
-			throw new RuntimeException(
-				"Invalid Operating System, please use Windows.");
+			throw new RuntimeException("Invalid OS: " + SystemUtils.OS_NAME);
 		}
 
 		Runnable runnable = new Runnable() {

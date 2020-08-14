@@ -14,12 +14,11 @@
 
 package com.liferay.commerce.order.content.web.internal.frontend;
 
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetAction;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.content.web.internal.frontend.util.CommerceOrderClayTableUtil;
 import com.liferay.commerce.order.content.web.internal.model.Order;
-import com.liferay.petra.string.StringPool;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -40,18 +39,18 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PENDING_ORDERS,
+	property = "clay.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PENDING_ORDERS,
 	service = ClayDataSetActionProvider.class
 )
 public class CommercePendingOrderDataSetActionProvider
 	implements ClayDataSetActionProvider {
 
 	@Override
-	public List<ClayDataSetAction> clayDataSetActions(
+	public List<DropdownItem> getDropdownItems(
 			HttpServletRequest httpServletRequest, long groupId, Object model)
 		throws PortalException {
 
-		List<ClayDataSetAction> clayDataSetActions = new ArrayList<>();
+		List<DropdownItem> dropdownItems = new ArrayList<>();
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -63,18 +62,17 @@ public class CommercePendingOrderDataSetActionProvider
 				themeDisplay.getPermissionChecker(), order.getOrderId(),
 				ActionKeys.VIEW)) {
 
-			String editURL = CommerceOrderClayTableUtil.getEditOrderURL(
-				order.getOrderId(), httpServletRequest);
+			DropdownItem dropdownItem = new DropdownItem();
 
-			ClayDataSetAction clayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK, editURL, StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, "view"), null, false,
-				false);
+			dropdownItem.setHref(
+				CommerceOrderClayTableUtil.getEditOrderURL(
+					order.getOrderId(), httpServletRequest));
+			dropdownItem.setLabel(LanguageUtil.get(httpServletRequest, "view"));
 
-			clayDataSetActions.add(clayDataSetAction);
+			dropdownItems.add(dropdownItem);
 		}
 
-		return clayDataSetActions;
+		return dropdownItems;
 	}
 
 	@Reference(

@@ -33,7 +33,7 @@ CommerceAccount commerceAccount = commerceOrderContentDisplayContext.getCommerce
 	displayStyleGroupId="<%= commerceOrderContentDisplayContext.getDisplayStyleGroupId(CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT) %>"
 	entries="<%= commerceOrderContentDisplayContext.getCommerceOrders() %>"
 >
-	<commerce-ui:dataset-display
+	<clay:dataset-display
 		dataProviderKey="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PENDING_ORDERS %>"
 		id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PENDING_ORDERS %>"
 		itemsPerPage="<%= 10 %>"

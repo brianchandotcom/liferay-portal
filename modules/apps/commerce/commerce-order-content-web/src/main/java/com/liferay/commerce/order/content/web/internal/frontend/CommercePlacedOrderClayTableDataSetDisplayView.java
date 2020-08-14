@@ -14,11 +14,11 @@
 
 package com.liferay.commerce.order.content.web.internal.frontend;
 
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchema;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilder;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilderFactory;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -28,28 +28,29 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PLACED_ORDERS,
+	property = "clay.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PLACED_ORDERS,
 	service = ClayDataSetDisplayView.class
 )
 public class CommercePlacedOrderClayTableDataSetDisplayView
-	extends ClayTableDataSetDisplayView {
+	extends BaseTableClayDataSetDisplayView {
 
 	@Override
 	public ClayTableSchema getClayTableSchema() {
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
-			_clayTableSchemaBuilderFactory.clayTableSchemaBuilder();
+			_clayTableSchemaBuilderFactory.create();
 
-		clayTableSchemaBuilder.addField("title", "order-id");
+		clayTableSchemaBuilder.addClayTableSchemaField("title", "order-id");
 
-		clayTableSchemaBuilder.addField("date", "order-date");
+		clayTableSchemaBuilder.addClayTableSchemaField("date", "order-date");
 
-		clayTableSchemaBuilder.addField("accountName", "account");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"accountName", "account");
 
-		clayTableSchemaBuilder.addField("author", "author");
+		clayTableSchemaBuilder.addClayTableSchemaField("author", "author");
 
-		clayTableSchemaBuilder.addField("orderStatus", "status");
+		clayTableSchemaBuilder.addClayTableSchemaField("orderStatus", "status");
 
-		clayTableSchemaBuilder.addField("amount", "amount");
+		clayTableSchemaBuilder.addClayTableSchemaField("amount", "amount");
 
 		return clayTableSchemaBuilder.build();
 	}

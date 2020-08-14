@@ -55,11 +55,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NOTIFICATIONS_BODY_SPECIFIC</td>
-	<td>//h4//a//div[(@class='body')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>NOTIFICATIONS_VERTICAL_ELLIPSIS</td>
 	<td>//li[contains(.,'${key_contentBody}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>

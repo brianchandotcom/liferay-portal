@@ -175,3 +175,44 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 		</div>
 	</clay:col>
 </clay:row>
+
+<portlet:renderURL var="verifyPasswordURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcPath" value="/user/password_verification.jsp" />
+</portlet:renderURL>
+
+<aui:script use="liferay-form">
+	Liferay.once('<portlet:namespace/>formReady', function () {
+		var form = Liferay.Form.get('<portlet:namespace/>fm');
+
+		form.set('onSubmit', function (event) {
+			event.preventDefault();
+
+			var emailAddressInput = document.getElementById(
+				'<portlet:namespace/>emailAddress'
+			);
+			var screenNameInput = document.getElementById(
+				'<portlet:namespace/>screenName'
+			);
+
+			if (
+				emailAddressInput.value != '<%= selUser.getEmailAddress() %>' ||
+				screenNameInput.value != '<%= selUser.getScreenName() %>'
+			) {
+				Liferay.Util.openModal({
+					height: '270px',
+					id: 'password-verification-dialog',
+					onSelect: function () {
+						submitForm(form.form);
+					},
+					selectEventName: '<portlet:namespace/>verifyPassword',
+					size: 'lg',
+					title: '<%= LanguageUtil.get(request, "confirm-password") %>',
+					url: '<%= verifyPasswordURL %>',
+				});
+			}
+			else {
+				submitForm(form.form);
+			}
+		});
+	});
+</aui:script>

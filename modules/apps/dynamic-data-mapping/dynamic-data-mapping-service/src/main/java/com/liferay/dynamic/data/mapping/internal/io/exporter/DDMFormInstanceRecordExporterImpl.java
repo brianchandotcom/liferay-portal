@@ -178,6 +178,8 @@ public class DDMFormInstanceRecordExporterImpl
 
 		List<Map<String, String>> ddmFormFieldValues = new ArrayList<>();
 
+		Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(locale);
+
 		for (DDMFormInstanceRecord ddmFormInstanceRecord :
 				ddmFormInstanceRecords) {
 
@@ -211,12 +213,9 @@ public class DDMFormInstanceRecordExporterImpl
 				getStatusMessage(
 					ddmFormInstanceRecordVersion.getStatus(), locale));
 
-			Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
-				locale);
-
 			ddmFormFieldsValue.put(
 				_MODIFIED_DATE,
-				dateFormatDateTime.format(
+				dateTimeFormat.format(
 					ddmFormInstanceRecordVersion.getStatusDate()));
 
 			ddmFormFieldsValue.put(

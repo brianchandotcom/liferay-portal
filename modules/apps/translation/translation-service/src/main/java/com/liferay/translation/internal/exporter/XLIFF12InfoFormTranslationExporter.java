@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.translation.web.internal.exporter;
+package com.liferay.translation.internal.exporter;
 
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
@@ -40,10 +40,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	property = "content.type=application/xliff+xml",
+	property = "content.type=application/x-xliff+xml",
 	service = TranslationInfoItemFieldValuesExporter.class
 )
-public class XLIFF20InfoFormTranslationExporter
+public class XLIFF12InfoFormTranslationExporter
 	implements TranslationInfoItemFieldValuesExporter {
 
 	@Override
@@ -55,23 +55,29 @@ public class XLIFF20InfoFormTranslationExporter
 		Document document = SAXReaderUtil.createDocument();
 
 		Element xliffElement = document.addElement(
-			"xliff", "urn:oasis:names:tc:xliff:document:2.0");
+			"xliff", "urn:oasis:names:tc:xliff:document:1.2");
 
-		xliffElement.addAttribute(
-			"srcLang", LocaleUtil.toBCP47LanguageId(sourceLocale));
-		xliffElement.addAttribute(
-			"trgLang", LocaleUtil.toBCP47LanguageId(targetLocale));
-		xliffElement.addAttribute("version", "2.0");
+		xliffElement.addAttribute("version", "1.2");
 
 		Element fileElement = xliffElement.addElement("file");
+
+		fileElement.addAttribute("datatype", "plaintext");
 
 		InfoItemReference infoItemReference =
 			infoItemFieldValues.getInfoItemReference();
 
 		fileElement.addAttribute(
-			"id",
+			"original",
 			infoItemReference.getClassName() + StringPool.COLON +
 				infoItemReference.getClassPK());
+
+		fileElement.addAttribute(
+			"source-language", LocaleUtil.toBCP47LanguageId(sourceLocale));
+		fileElement.addAttribute(
+			"target-language", LocaleUtil.toBCP47LanguageId(targetLocale));
+		fileElement.addAttribute("tool", "Liferay");
+
+		Element bodyElement = fileElement.addElement("body");
 
 		Collection<InfoFieldValue<Object>> infoFieldValues =
 			infoItemFieldValues.getInfoFieldValues();
@@ -83,19 +89,21 @@ public class XLIFF20InfoFormTranslationExporter
 				continue;
 			}
 
-			Element unitElement = fileElement.addElement("unit");
+			Element transUnitElement = bodyElement.addElement("trans-unit");
 
-			unitElement.addAttribute("id", infoField.getName());
+			transUnitElement.addAttribute("id", infoField.getName());
 
-			Element segmentElement = unitElement.addElement("segment");
+			Element sourceElement = transUnitElement.addElement("source");
 
-			Element sourceElement = segmentElement.addElement("source");
-
+			sourceElement.addAttribute(
+				"xml:lang", fileElement.attributeValue("source-language"));
 			sourceElement.addCDATA(
 				_getStringValue(infoFieldValue.getValue(sourceLocale)));
 
-			Element targetElement = segmentElement.addElement("target");
+			Element targetElement = transUnitElement.addElement("target");
 
+			targetElement.addAttribute(
+				"xml:lang", fileElement.attributeValue("target-language"));
 			targetElement.addCDATA(
 				_getStringValue(infoFieldValue.getValue(targetLocale)));
 		}
@@ -107,7 +115,7 @@ public class XLIFF20InfoFormTranslationExporter
 
 	@Override
 	public String getMimeType() {
-		return "application/xliff+xml";
+		return "application/x-xliff+xml";
 	}
 
 	private String _getStringValue(Object value) {

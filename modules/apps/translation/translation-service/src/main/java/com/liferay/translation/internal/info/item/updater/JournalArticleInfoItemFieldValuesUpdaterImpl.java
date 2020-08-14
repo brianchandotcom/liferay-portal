@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.translation.web.internal.info.item.updater;
+package com.liferay.translation.internal.info.item.updater;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.Field;

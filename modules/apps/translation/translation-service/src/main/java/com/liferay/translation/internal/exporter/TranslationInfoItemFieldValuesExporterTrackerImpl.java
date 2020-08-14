@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.translation.web.internal.exporter;
+package com.liferay.translation.internal.exporter;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;

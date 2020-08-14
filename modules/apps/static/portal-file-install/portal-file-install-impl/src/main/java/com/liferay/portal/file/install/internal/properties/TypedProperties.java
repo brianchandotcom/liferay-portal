@@ -110,7 +110,7 @@ public class TypedProperties {
 		return _convertFromString(old);
 	}
 
-	public String remove(Object key) {
+	public String remove(String key) {
 		Layout layout = _layoutMap.get(key);
 
 		if (layout != null) {

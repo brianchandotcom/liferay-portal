@@ -143,7 +143,7 @@ public class ArchiveUtil {
 
 			String name = getName();
 
-			if (manifestFileName.equals(getName())) {
+			if (manifestFileName.equals(name)) {
 				return -1;
 			}
 

@@ -636,7 +636,7 @@ public class DataDefinitionResourceImpl
 				DataDefinitionField[] nestedDataDefinitionFields =
 					new DataDefinitionField[0];
 
-				for (DataDefinitionField nestedDataDefinitionField :
+				for (DataDefinitionField dataDefinitionField1 :
 						dataDefinition.getDataDefinitionFields()) {
 
 					Gson gson = new Gson();
@@ -645,14 +645,14 @@ public class DataDefinitionResourceImpl
 						nestedDataDefinitionFields,
 						gson.fromJson(
 							JSONFactoryUtil.looseSerializeDeep(
-								nestedDataDefinitionField),
+								dataDefinitionField1),
 							DataDefinitionField.class));
 				}
 
 				_normalizeFields(
 					existingDataDefinition.getAvailableLanguageIds(),
-					dataDefinition.getDefaultLanguageId(),
-					nestedDataDefinitionFields);
+					nestedDataDefinitionFields,
+					dataDefinition.getDefaultLanguageId());
 
 				dataDefinitionField.setNestedDataDefinitionFields(
 					nestedDataDefinitionFields);
@@ -1100,8 +1100,8 @@ public class DataDefinitionResourceImpl
 	}
 
 	private void _normalizeFields(
-		String[] availableLanguageIds, String defaultLanguageId,
-		DataDefinitionField[] dataDefinitionFields) {
+		String[] availableLanguageIds,
+		DataDefinitionField[] dataDefinitionFields, String defaultLanguageId) {
 
 		for (DataDefinitionField dataDefinitionField : dataDefinitionFields) {
 			Map<String, Object> customProperties =
@@ -1130,8 +1130,9 @@ public class DataDefinitionResourceImpl
 					dataDefinitionField.getNestedDataDefinitionFields())) {
 
 				_normalizeFields(
-					availableLanguageIds, defaultLanguageId,
-					dataDefinitionField.getNestedDataDefinitionFields());
+					availableLanguageIds,
+					dataDefinitionField.getNestedDataDefinitionFields(),
+					defaultLanguageId);
 			}
 
 			_normalizeProperty(

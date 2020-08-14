@@ -1084,11 +1084,11 @@ public class ${entity.name}PersistenceTest {
 					<#list entityColumns as entityColumn>
 						<#if entityColumn.isInterfaceColumn()>
 							<#if stringUtil.equals(entityColumn.type, "double")>
-								AssertUtils.assertEquals(${entity.varName}.get${entityColumn.methodName}(), ReflectionTestUtil.<Double>invoke(${entity.varName}, "getOriginal${entityColumn.methodName}", new Class<?>[0]));
+								AssertUtils.assertEquals(${entity.varName}.get${entityColumn.methodName}(), ReflectionTestUtil.<Double>invoke(${entity.varName}, "getColumnOriginalValue", new Class<?>[]{String.class}, "${entityColumn.DBName}"));
 							<#elseif entityColumn.isPrimitiveType()>
-								Assert.assertEquals(${serviceBuilder.getPrimitiveObj(entityColumn.type)}.valueOf(${entity.varName}.get${entityColumn.methodName}()), ReflectionTestUtil.<${serviceBuilder.getPrimitiveObj(entityColumn.type)}>invoke(${entity.varName}, "getOriginal${entityColumn.methodName}", new Class<?>[0]));
+								Assert.assertEquals(${serviceBuilder.getPrimitiveObj(entityColumn.type)}.valueOf(${entity.varName}.get${entityColumn.methodName}()), ReflectionTestUtil.<${serviceBuilder.getPrimitiveObj(entityColumn.type)}>invoke(${entity.varName}, "getColumnOriginalValue", new Class<?>[]{String.class}, "${entityColumn.DBName}"));
 							<#else>
-								Assert.assertEquals(${entity.varName}.get${entityColumn.methodName}(), ReflectionTestUtil.invoke(${entity.varName}, "getOriginal${entityColumn.methodName}", new Class<?>[0]));
+								Assert.assertEquals(${entity.varName}.get${entityColumn.methodName}(), ReflectionTestUtil.invoke(${entity.varName}, "getColumnOriginalValue", new Class<?>[]{String.class}, "${entityColumn.DBName}"));
 							</#if>
 						</#if>
 					</#list>

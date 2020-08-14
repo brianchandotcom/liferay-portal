@@ -198,7 +198,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	<#assign columnBitmaskEnabled = (entity.finderEntityColumns?size &gt; 0) && (entity.finderEntityColumns?size &lt; 64) && !entity.hasEagerBlobColumn()/>
+	<#if serviceBuilder.isVersionGTE_7_3_0()>
+		<#assign columnBitmaskEnabled = (entity.databaseRegularEntityColumns?size &lt; 64) && !entity.hasEagerBlobColumn()/>
+	<#else>
+		<#assign columnBitmaskEnabled = (entity.finderEntityColumns?size &gt; 0) && (entity.finderEntityColumns?size &lt; 64) && !entity.hasEagerBlobColumn()/>
+	</#if>
 
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
@@ -479,7 +483,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						(${entity.varName}ModelImpl.getColumnBitmask() & _finderPathFetchBy${uniqueEntityFinder.name}.getColumnBitmask()) != 0
 					<#else>
 						<#list entityColumns as entityColumn>
-							<#if entityColumn.isPrimitiveType()>
+							<#if serviceBuilder.isVersionGTE_7_3_0()>
+								!Objects.equals(${entity.varName}ModelImpl.get${entityColumn.methodName}(), ${entity.varName}ModelImpl.getColumnOriginalValue("${entityColumn.DBName}"))
+							<#elseif entityColumn.isPrimitiveType()>
 								<#if stringUtil.equals(entityColumn.type, "boolean")>
 									(${entity.varName}ModelImpl.is${entityColumn.methodName}() != ${entity.varName}ModelImpl.getOriginal${entityColumn.methodName}())
 								<#else>
@@ -499,9 +505,19 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					Object[] args = new Object[] {
 						<#list entityColumns as entityColumn>
 							<#if stringUtil.equals(entityColumn.type, "Date")>
-								_getTime(${entity.varName}ModelImpl.getOriginal${entityColumn.methodName}())
+								_getTime(${entity.varName}ModelImpl.
+								<#if serviceBuilder.isVersionGTE_7_3_0()>
+									getColumnOriginalValue("${entityColumn.DBName}"))
+								<#else>
+									getOriginal${entityColumn.methodName}())
+								</#if>
 							<#else>
-								${entity.varName}ModelImpl.getOriginal${entityColumn.methodName}()
+								${entity.varName}ModelImpl.
+								<#if serviceBuilder.isVersionGTE_7_3_0()>
+									getColumnOriginalValue("${entityColumn.DBName}")
+								<#else>
+									getOriginal${entityColumn.methodName}()
+								</#if>
 							</#if>
 
 							<#if entityColumn_has_next>
@@ -776,8 +792,13 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					if (isNew) {
 						nestedSetsTreeManager.insert(${entity.varName}, fetchByPrimaryKey(${entity.varName}.getParent${pkEntityColumn.methodName}()));
 					}
-					else if (${entity.varName}.getParent${pkEntityColumn.methodName}() != ${entity.varName}ModelImpl.getOriginalParent${pkEntityColumn.methodName}()){
-						nestedSetsTreeManager.move(${entity.varName}, fetchByPrimaryKey(${entity.varName}ModelImpl.getOriginalParent${pkEntityColumn.methodName}()), fetchByPrimaryKey(${entity.varName}.getParent${pkEntityColumn.methodName}()));
+					<#if serviceBuilder.isVersionGTE_7_3_0()>
+						else if ((${entity.varName}ModelImpl.getColumnOriginalValue("parent${pkEntityColumn.methodName}") != null) && !Objects.equals(${entity.varName}.getParent${pkEntityColumn.methodName}(), ${entity.varName}ModelImpl.getColumnOriginalValue("parent${pkEntityColumn.methodName}"))){
+							nestedSetsTreeManager.move(${entity.varName}, fetchByPrimaryKey(${entity.varName}ModelImpl.getColumnOriginalValue("parent${pkEntityColumn.methodName}")), fetchByPrimaryKey(${entity.varName}.getParent${pkEntityColumn.methodName}()));
+					<#else>
+						else if (${entity.varName}.getParent${pkEntityColumn.methodName}() != ${entity.varName}ModelImpl.getOriginalParent${pkEntityColumn.methodName}()){
+							nestedSetsTreeManager.move(${entity.varName}, fetchByPrimaryKey(${entity.varName}ModelImpl.getOriginalParent${pkEntityColumn.methodName}()), fetchByPrimaryKey(${entity.varName}.getParent${pkEntityColumn.methodName}()));
+					</#if>
 					}
 
 					clearCache();
@@ -897,7 +918,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 							(${entity.varName}ModelImpl.getColumnBitmask() & _finderPathWithoutPaginationFindBy${entityFinder.name}.getColumnBitmask()) != 0
 						<#else>
 							<#list entityColumns as entityColumn>
-								<#if entityColumn.isPrimitiveType()>
+								<#if serviceBuilder.isVersionGTE_7_3_0()>
+									!Objects.equals(${entity.varName}.get${entityColumn.methodName}(), ${entity.varName}ModelImpl.getColumnOriginalValue("${entityColumn.DBName}"))
+								<#elseif entityColumn.isPrimitiveType()>
 									<#if stringUtil.equals(entityColumn.type, "boolean")>
 										(${entity.varName}.is${entityColumn.methodName}() != ${entity.varName}ModelImpl.getOriginal${entityColumn.methodName}())
 									<#else>
@@ -916,7 +939,12 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 						Object[] args = new Object[] {
 							<#list entityColumns as entityColumn>
-								${entity.varName}ModelImpl.getOriginal${entityColumn.methodName}()
+								${entity.varName}ModelImpl.
+								<#if serviceBuilder.isVersionGTE_7_3_0()>
+									getColumnOriginalValue("${entityColumn.DBName}")
+								<#else>
+									getOriginal${entityColumn.methodName}()
+								</#if>
 
 								<#if entityColumn_has_next>
 									,
@@ -2307,7 +2335,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 							,
 
 							<#list entityColumns as entityColumn>
-								${entity.name}ModelImpl.${entityColumn.name?upper_case}_COLUMN_BITMASK
+								<#if serviceBuilder.isVersionGTE_7_3_0()>
+									${entity.name}ModelImpl.getColumnBitmask("${entityColumn.DBName}")
+								<#else>
+									${entity.name}ModelImpl.${entityColumn.name?upper_case}_COLUMN_BITMASK
+								</#if>
 
 								<#if entityColumn_has_next>
 									|
@@ -2317,7 +2349,12 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 							<#if entity.entityOrder??>
 								<#list entity.entityOrder.entityColumns as entityColumn>
 									<#if !entityColumns?seq_contains(entityColumn) && !entity.PKEntityColumns?seq_contains(entityColumn)>
-										| ${entity.name}ModelImpl.${entityColumn.name?upper_case}_COLUMN_BITMASK
+										|
+										<#if serviceBuilder.isVersionGTE_7_3_0()>
+											${entity.name}ModelImpl.getColumnBitmask("${entityColumn.DBName}")
+										<#else>
+											${entity.name}ModelImpl.${entityColumn.name?upper_case}_COLUMN_BITMASK
+										</#if>
 									</#if>
 								</#list>
 							</#if>
@@ -2350,7 +2387,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						,
 
 						<#list entityColumns as entityColumn>
-							${entity.name}ModelImpl.${entityColumn.name?upper_case}_COLUMN_BITMASK
+							<#if serviceBuilder.isVersionGTE_7_3_0()>
+								${entity.name}ModelImpl.getColumnBitmask("${entityColumn.DBName}")
+							<#else>
+								${entity.name}ModelImpl.${entityColumn.name?upper_case}_COLUMN_BITMASK
+							</#if>
 
 							<#if entityColumn_has_next>
 								|

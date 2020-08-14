@@ -2118,11 +2118,20 @@ public class StringUtil {
 	 * @return a randomized string of four lower case, alphabetic characters
 	 */
 	public static String randomId() {
+		return randomId(4);
+	}
+
+	/**
+	 * Returns a randomized string with the length informed and only alphabetic characters.
+	 *
+	 * @return a randomized string with the length informed and only alphabetic characters.
+	 */
+	public static String randomId(int length) {
 		Random random = new Random();
 
-		char[] chars = new char[4];
+		char[] chars = new char[length];
 
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < length; i++) {
 			chars[i] = (char)(CharPool.LOWER_CASE_A + random.nextInt(26));
 		}
 

@@ -62,7 +62,6 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -336,13 +335,7 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 			offset = getFieldOffset(
 				fieldsDisplayValues, name, ddmFieldsCounter.get(name));
 
-			String fieldNamespace = StringUtil.randomId();
-
-			while (_fieldNamespaceSet.contains(fieldNamespace)) {
-				fieldNamespace = StringUtil.randomId();
-			}
-
-			_fieldNamespaceSet.add(fieldNamespace);
+			String fieldNamespace = StringUtil.randomId(8);
 
 			if (fieldDisplayable) {
 				fieldNamespace = getFieldNamespace(
@@ -743,7 +736,5 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormFieldFreeMarkerRenderer.class);
-
-	private static final Set<String> _fieldNamespaceSet = new HashSet<>();
 
 }

@@ -119,19 +119,21 @@ export default function ({fieldType, mappedItem, onMappingSelect}) {
 	return collectionConfig ? (
 		<>
 			{collectionItemTypeLabel && (
-				<div className="mb-2 page-editor__mapping-panel__type-label">
-					<b className="mr-1">{Liferay.Language.get('item-type')}:</b>
+				<p className="mb-2 page-editor__mapping-panel__type-label">
+					<span className="mr-1">
+						{Liferay.Language.get('item-type')}:
+					</span>
 					{collectionItemTypeLabel}
-				</div>
+				</p>
 			)}
 
 			{collectionItemSubtypeLabel && (
-				<div className="mb-2 page-editor__mapping-panel__type-label">
-					<b className="mr-1">
+				<p className="mb-2 page-editor__mapping-panel__type-label">
+					<span className="mr-1">
 						{Liferay.Language.get('item-subtype')}:
-					</b>
+					</span>
 					{collectionItemSubtypeLabel}
-				</div>
+				</p>
 			)}
 
 			<MappingFieldSelect

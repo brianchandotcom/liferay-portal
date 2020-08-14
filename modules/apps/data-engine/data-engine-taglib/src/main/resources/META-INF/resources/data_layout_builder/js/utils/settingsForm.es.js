@@ -14,6 +14,18 @@
 
 import {PagesVisitor, generateName} from 'dynamic-data-mapping-form-renderer';
 
+const getPredefinedValues = ({locale, localizedValue, options}) => {
+	if (Array.isArray(localizedValue[locale])) {
+		return localizedValue[locale].filter((value) => {
+			if (options.find((option) => value === option.value)) {
+				return value;
+			}
+		});
+	}
+
+	return localizedValue[locale];
+};
+
 export const getFilteredSettingsContext = ({
 	config,
 	editingLanguageId,
@@ -69,6 +81,12 @@ export const getFilteredSettingsContext = ({
 							...updatedField,
 							readOnly: true,
 						};
+					}
+
+					if (fieldName === 'predefinedValue') {
+						field.localizedValue[
+							field.locale
+						] = getPredefinedValues(field);
 					}
 
 					return {

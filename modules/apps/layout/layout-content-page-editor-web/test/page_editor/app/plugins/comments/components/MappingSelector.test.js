@@ -295,11 +295,13 @@ describe('MappingSelector', () => {
 		useCollectionConfig.mockImplementation(() => emptyCollectionConfig);
 
 		CollectionService.getCollectionMappingFields.mockImplementation(() =>
-			Promise.resolve([
-				{
-					fields: collectionFields,
-				},
-			])
+			Promise.resolve({
+				mappingFields: [
+					{
+						fields: collectionFields,
+					},
+				],
+			})
 		);
 
 		await act(async () => {

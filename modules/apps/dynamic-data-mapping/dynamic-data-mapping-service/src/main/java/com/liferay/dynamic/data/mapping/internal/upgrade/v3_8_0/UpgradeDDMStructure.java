@@ -117,7 +117,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		return ddmFormDeserializerDeserializeResponse.getDDMForm();
 	}
 
-	private boolean _hasMoreThanOneDDMFormFieldForColumn(
+	private boolean _hasMoreThanOneDDMFormFieldPerColumn(
 			DDMFormLayout ddmFormLayout)
 		throws Exception {
 
@@ -193,10 +193,9 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 			try (ResultSet rs = ps1.executeQuery()) {
 				while (rs.next()) {
-					String structureVersionDefinition = rs.getString(
-						"definition");
+					String definition = rs.getString("definition");
 
-					ps2.setString(1, structureVersionDefinition);
+					ps2.setString(1, definition);
 
 					long structureId = rs.getLong("structureId");
 
@@ -258,18 +257,18 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 						ddmFormLayoutDeserializerDeserializeResponse.
 							getDDMFormLayout();
 
-					boolean paginationMode = Objects.equals(
+					boolean pagination = Objects.equals(
 						ddmFormLayout.getPaginationMode(), "pagination");
 
-					if (paginationMode) {
+					if (pagination) {
 						ddmFormLayout.setPaginationMode(
 							DDMFormLayout.WIZARD_MODE);
 					}
 
-					boolean hasMoreThanOneDDMFormFieldForColumn =
-						_hasMoreThanOneDDMFormFieldForColumn(ddmFormLayout);
+					boolean hasMoreThanOneDDMFormFieldPerColumn =
+						_hasMoreThanOneDDMFormFieldPerColumn(ddmFormLayout);
 
-					if (hasMoreThanOneDDMFormFieldForColumn) {
+					if (hasMoreThanOneDDMFormFieldPerColumn) {
 						long structureVersionId = rs.getLong(
 							"structureVersionId");
 
@@ -279,7 +278,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 						_structureIds.add(rs.getLong("structureId"));
 					}
 
-					if (paginationMode || hasMoreThanOneDDMFormFieldForColumn) {
+					if (pagination || hasMoreThanOneDDMFormFieldPerColumn) {
 						DDMFormLayoutSerializerSerializeResponse
 							ddmFormLayoutSerializerSerializeResponse =
 								_ddmFormLayoutSerializer.serialize(

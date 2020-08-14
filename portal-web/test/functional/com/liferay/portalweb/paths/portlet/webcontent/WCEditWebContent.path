@@ -179,13 +179,13 @@
 <!--LINK TO PAGE_FIELD-->
 <tr>
 	<td>LINK_TO_PAGE_SELECT</td>
-	<td>//div[@data-field-name='LinkToPage']//button[contains(.,'Select')]</td>
+	<td>//p[contains(.,'Link to Page')]/..//button[contains(.,'Select')]</td>
 	<td></td>
 </tr>
 <!--WC_FIELD-->
 <tr>
 	<td>WC_FIELD_SELECT</td>
-	<td>//div[@data-field-name='WebContent']//button[contains(.,'Select')]</td>
+	<td>//p[contains(.,'Web Content')]/..//button[contains(.,'Select')]</td>
 	<td></td>
 </tr>
 </tbody>

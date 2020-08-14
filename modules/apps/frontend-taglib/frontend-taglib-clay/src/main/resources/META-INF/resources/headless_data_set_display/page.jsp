@@ -33,7 +33,10 @@ JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 <aui:script require='<%= module + " as dataSetDisplay" %>'>
 	dataSetDisplay.default(
 		{
-			apiUrl: '<%= apiURL %>',
+			actionParameterName: '<%= actionParameterName %>',
+			activeViewSettings: <%= activeViewSettingsJSON %>,
+			apiURL: '<%= apiURL %>',
+			appURL: '<%= appURL %>',
 			bulkActions: <%= jsonSerializer.serializeDeep(bulkActionDropdownItems) %>,
 			creationMenu: <%= jsonSerializer.serializeDeep(creationMenu) %>,
 			currentUrl: '<%= PortalUtil.getCurrentURL(request) %>',
@@ -62,7 +65,7 @@ JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 			%>
 
 			pagination: {
-				deltas: <%= jsonSerializer.serializeDeep(paginationEntries) %>,
+				deltas: <%= jsonSerializer.serializeDeep(clayPaginationEntries) %>,
 				initialDelta: <%= itemsPerPage %>,
 				initialPageNumber: <%= pageNumber %>,
 			},

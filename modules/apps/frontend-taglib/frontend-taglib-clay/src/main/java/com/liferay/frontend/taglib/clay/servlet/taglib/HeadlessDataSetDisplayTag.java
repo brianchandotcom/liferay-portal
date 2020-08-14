@@ -26,6 +26,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
@@ -50,13 +52,13 @@ public class HeadlessDataSetDisplayTag extends IncludeTag {
 	@Override
 	public int doStartTag() throws JspException {
 		try {
+			_appURL =
+				PortalUtil.getPortalURL(request) +
+					"/o/frontend-taglib-clay/app";
+
 			if (_creationMenu == null) {
 				_creationMenu = new CreationMenu();
 			}
-
-			_setClayDataSetDisplayViewsContext();
-			_setClayDataSetFiltersContext();
-			_setClayPaginationEntries();
 
 			NPMResolver npmResolver = NPMResolverProvider.getNPMResolver();
 
@@ -64,12 +66,21 @@ public class HeadlessDataSetDisplayTag extends IncludeTag {
 				_module = npmResolver.resolveModuleName(
 					"frontend-taglib-clay/data_set_display/entry");
 			}
+
+			_setActiveViewSettingsJSON();
+			_setClayDataSetDisplayViewsContext();
+			_setClayDataSetFiltersContext();
+			_setClayPaginationEntries();
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
 		}
 
 		return super.doStartTag();
+	}
+
+	public String getActionParameterName() {
+		return _actionParameterName;
 	}
 
 	public String getApiURL() {
@@ -152,6 +163,10 @@ public class HeadlessDataSetDisplayTag extends IncludeTag {
 
 	public boolean isShowSearch() {
 		return _showSearch;
+	}
+
+	public void setActionParameterName(String actionParameterName) {
+		_actionParameterName = actionParameterName;
 	}
 
 	public void setApiURL(String apiURL) {
@@ -249,7 +264,10 @@ public class HeadlessDataSetDisplayTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_actionParameterName = null;
+		_activeViewSettingsJSON = null;
 		_apiURL = null;
+		_appURL = null;
 		_bulkActionDropdownItems = new ArrayList<>();
 		_clayDataSetActionDropdownItems = new ArrayList<>();
 		_clayDataSetDisplayViewsContext = null;
@@ -284,7 +302,14 @@ public class HeadlessDataSetDisplayTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		request.setAttribute(
+			"clay:headless-data-set-display:actionParameterName",
+			_actionParameterName);
+		request.setAttribute(
+			"clay:headless-data-set-display:activeViewSettingsJSON",
+			_activeViewSettingsJSON);
 		request.setAttribute("clay:headless-data-set-display:apiURL", _apiURL);
+		request.setAttribute("clay:headless-data-set-display:appURL", _appURL);
 		request.setAttribute(
 			"clay:headless-data-set-display:bulkActionDropdownItems",
 			_bulkActionDropdownItems);
@@ -306,6 +331,7 @@ public class HeadlessDataSetDisplayTag extends IncludeTag {
 		request.setAttribute("clay:headless-data-set-display:id", _id);
 		request.setAttribute(
 			"clay:headless-data-set-display:itemsPerPage", _itemsPerPage);
+		request.setAttribute("clay:headless-data-set-display:module", _module);
 		request.setAttribute(
 			"clay:headless-data-set-display:namespace", _namespace);
 		request.setAttribute(
@@ -351,6 +377,18 @@ public class HeadlessDataSetDisplayTag extends IncludeTag {
 		return clayPaginationEntries;
 	}
 
+	private void _setActiveViewSettingsJSON() {
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(request);
+
+		String clayDataSetDisplaySettingsNamespace =
+			ServletContextUtil.getClayDataSetDisplaySettingsNamespace(
+				request, _id);
+
+		_activeViewSettingsJSON = portalPreferences.getValue(
+			clayDataSetDisplaySettingsNamespace, "activeViewSettingsJSON");
+	}
+
 	private void _setClayDataSetDisplayViewsContext() {
 		_clayDataSetDisplayViewsContext =
 			_clayDataSetDisplayViewSerializer.serialize(
@@ -383,7 +421,10 @@ public class HeadlessDataSetDisplayTag extends IncludeTag {
 	private static final Log _log = LogFactoryUtil.getLog(
 		HeadlessDataSetDisplayTag.class);
 
+	private String _actionParameterName;
+	private String _activeViewSettingsJSON;
 	private String _apiURL;
+	private String _appURL;
 	private List<DropdownItem> _bulkActionDropdownItems = new ArrayList<>();
 	private List<ClayDataSetActionDropdownItem>
 		_clayDataSetActionDropdownItems = new ArrayList<>();

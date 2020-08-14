@@ -52,6 +52,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryBriefUtil;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -103,6 +104,8 @@ public class DocumentDTOConverter
 		FileEntry fileEntry = _dlAppService.getFileEntry(
 			(Long)dtoConverterContext.getId());
 
+		Group group = _groupLocalService.fetchGroup(fileEntry.getGroupId());
+
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
 		return new Document() {
@@ -114,8 +117,7 @@ public class DocumentDTOConverter
 					_ratingsStatsLocalService.fetchStats(
 						DLFileEntry.class.getName(),
 						fileEntry.getFileEntryId()));
-				assetLibraryKey = GroupUtil.getAssetLibraryKey(
-					_groupLocalService.fetchGroup(fileEntry.getGroupId()));
+				assetLibraryKey = GroupUtil.getAssetLibraryKey(group);
 				contentUrl = _dlURLHelper.getPreviewURL(
 					fileEntry, fileVersion, null, "");
 				contentValue = ContentValueUtil.toContentValue(
@@ -149,6 +151,7 @@ public class DocumentDTOConverter
 					dtoConverterContext.getDTOConverterRegistry(),
 					DLFileEntry.class.getName(), fileEntry.getFileEntryId(),
 					dtoConverterContext.getLocale());
+				siteId = GroupUtil.getSiteId(group);
 				sizeInBytes = fileEntry.getSize();
 				taxonomyCategoryBriefs = TransformUtil.transformToArray(
 					_assetCategoryLocalService.getCategories(

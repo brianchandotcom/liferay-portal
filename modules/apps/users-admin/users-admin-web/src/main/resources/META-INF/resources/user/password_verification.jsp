@@ -40,13 +40,24 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 	</aui:field-wrapper>
 
 	<aui:button-row cssClass="position-fixed">
-		<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "verifyPassword();" %>' primary="<%= true %>" value="confirm" />
+		<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "onClick();" %>' primary="<%= true %>" value="confirm" />
 
 		<aui:button type="cancel" />
 	</aui:button-row>
 </aui:form>
 
 <aui:script>
+	function <portlet:namespace/>onClick() {
+		var form = Liferay.Form.get('<portlet:namespace/>fm');
+		var formValidator = form.formValidator;
+
+		formValidator.validate();
+
+		if (!formValidator.hasErrors()) {
+			<portlet:namespace/>verifyPassword();
+		}
+	}
+
 	function <portlet:namespace />verifyPassword() {
 		var form = document.<portlet:namespace />fm;
 

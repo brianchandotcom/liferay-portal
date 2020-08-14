@@ -28,6 +28,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -1648,19 +1649,19 @@ public class DLFileEntryLocalServiceImpl
 			dlFileEntry.getFolderId(), fileEntryTypeId);
 
 		if ((fileEntryTypeId != dlFileEntry.getFileEntryTypeId()) &&
-			(dlFileEntry.getFileEntryTypeId() != 0)) {
+			(dlFileEntry.getFileEntryTypeId() !=
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT)) {
 
 			DLFileEntryMetadata dlFileEntryMetadata =
 				dlFileEntryMetadataPersistence.fetchByFileEntryId_Last(
 					fileEntryId, null);
 
-			DDMStructure ddmStructure = DDMStructureManagerUtil.fetchStructure(
-				dlFileEntry.getGroupId(),
-				classNameLocalService.getClassNameId(DLFileEntryMetadata.class),
-				DLUtil.getDDMStructureKey(dlFileEntry.getDLFileEntryType()));
-
 			long classNameId = classNameLocalService.getClassNameId(
 				DLFileEntryMetadata.class);
+
+			DDMStructure ddmStructure = DDMStructureManagerUtil.fetchStructure(
+				dlFileEntry.getGroupId(), classNameId,
+				DLUtil.getDDMStructureKey(dlFileEntry.getDLFileEntryType()));
 
 			DDMStructureLinkManagerUtil.deleteStructureLink(
 				classNameId, dlFileEntryMetadata.getFileEntryMetadataId(),

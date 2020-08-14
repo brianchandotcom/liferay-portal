@@ -307,15 +307,14 @@ class DataLayoutBuilder extends React.Component {
 		dataDefinition,
 		dataLayout = this.getDefaultDataLayout(dataDefinition)
 	) {
-		const {
-			editingLanguageId = themeDisplay.getDefaultLanguageId(),
-		} = this.props;
+		const {editingLanguageId = themeDisplay.getDefaultLanguageId()} = this.props;
+		const {defaultLanguageId, name} = dataDefinition;
 
 		return {
 			description: dataDefinition.description[editingLanguageId],
 			id: dataDefinition.id,
 			localizedDescription: dataDefinition.description,
-			localizedTitle: dataDefinition.name,
+			localizedTitle: name,
 			pages: dataLayout.dataLayoutPages.map((dataLayoutPage) => ({
 				rows: dataLayoutPage.dataLayoutRows.map((dataLayoutRow) => ({
 					columns: dataLayoutRow.dataLayoutColumns.map(
@@ -328,7 +327,7 @@ class DataLayoutBuilder extends React.Component {
 					),
 				})),
 			})),
-			title: dataDefinition.name[editingLanguageId],
+			title: name[editingLanguageId] || name[defaultLanguageId],
 		};
 	}
 

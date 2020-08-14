@@ -124,7 +124,7 @@ public class TypedProperties {
 		_saveLayout(writer);
 	}
 
-	public static class PropertiesReader extends BufferedReader {
+	public class PropertiesReader extends BufferedReader {
 
 		public PropertiesReader(Reader reader) {
 			super(reader);
@@ -174,7 +174,7 @@ public class TypedProperties {
 			return true;
 		}
 
-		private static boolean _checkCombineLines(String line) {
+		private boolean _checkCombineLines(String line) {
 			int bsCount = 0;
 
 			for (int i = line.length() - 1;
@@ -190,7 +190,7 @@ public class TypedProperties {
 			return false;
 		}
 
-		private static String[] _parseProperty(String line) {
+		private String[] _parseProperty(String line) {
 
 			// sorry for this spaghetti code, please replace it as soon as
 			// possible with a regexp when the Java 1.3 requirement is dropped
@@ -363,7 +363,7 @@ public class TypedProperties {
 
 	}
 
-	public static class PropertiesWriter extends FilterWriter {
+	public class PropertiesWriter extends FilterWriter {
 
 		public PropertiesWriter(Writer writer) {
 			super(writer);
@@ -385,36 +385,6 @@ public class TypedProperties {
 			writeln(null);
 		}
 
-	}
-
-	private static Object _convertFromString(String value) {
-		try {
-			return ConfigurationHandler.read(value);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-	}
-
-	private static String _convertToString(Object value) {
-		try {
-			return ConfigurationHandler.write(value);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-	}
-
-	private static boolean _isCommentLine(String line) {
-		String string = line.trim();
-
-		// blank lines are also treated as comment lines
-
-		if ((string.length() < 1) || (CharPool.POUND == string.charAt(0))) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private int _checkHeaderComment(List<String> comments) {
@@ -440,6 +410,36 @@ public class TypedProperties {
 		}
 
 		return 0;
+	}
+
+	private Object _convertFromString(String value) {
+		try {
+			return ConfigurationHandler.read(value);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	private String _convertToString(Object value) {
+		try {
+			return ConfigurationHandler.write(value);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	private boolean _isCommentLine(String line) {
+		String string = line.trim();
+
+		// blank lines are also treated as comment lines
+
+		if ((string.length() < 1) || (CharPool.POUND == string.charAt(0))) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private String _put(String key, String value) {

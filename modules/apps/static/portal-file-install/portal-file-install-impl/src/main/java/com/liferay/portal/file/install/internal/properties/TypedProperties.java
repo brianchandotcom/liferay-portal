@@ -222,7 +222,7 @@ public class TypedProperties {
 
 						state = 2;
 					}
-					else if (ArrayUtil.contains(_SEPARATORS, c)) {
+					else if (CharPool.EQUAL == c) {
 
 						// switch to the value parsing state
 
@@ -233,7 +233,7 @@ public class TypedProperties {
 					}
 				}
 				else if (state == 1) {
-					if (ArrayUtil.contains(_SEPARATORS, c) ||
+					if ((CharPool.EQUAL == c) ||
 						ArrayUtil.contains(_WHITE_SPACE, c)) {
 
 						// this is an escaped separator or white space
@@ -259,7 +259,7 @@ public class TypedProperties {
 
 						state = 2;
 					}
-					else if (ArrayUtil.contains(_SEPARATORS, c)) {
+					else if (CharPool.EQUAL == c) {
 
 						// switch to the value parsing state
 
@@ -517,8 +517,6 @@ public class TypedProperties {
 
 	private static final String _LINE_SEPARATOR = System.getProperty(
 		"line.separator");
-
-	private static final char[] _SEPARATORS = {CharPool.EQUAL, CharPool.COLON};
 
 	private static final char[] _WHITE_SPACE = {CharPool.SPACE, '\t', '\f'};
 

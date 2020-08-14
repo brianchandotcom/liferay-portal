@@ -116,6 +116,32 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		return ddmFormDeserializerDeserializeResponse.getDDMForm();
 	}
 
+	private boolean _hasMoreThanOneDDMFormFieldForColumn(
+			DDMFormLayout ddmFormLayout)
+		throws Exception {
+
+		for (DDMFormLayoutPage ddmFormLayoutPage :
+				ddmFormLayout.getDDMFormLayoutPages()) {
+
+			for (DDMFormLayoutRow ddmFormLayoutRow :
+					ddmFormLayoutPage.getDDMFormLayoutRows()) {
+
+				for (DDMFormLayoutColumn ddmFormLayoutColumn :
+						ddmFormLayoutRow.getDDMFormLayoutColumns()) {
+
+					List<String> ddmFormFieldNames =
+						ddmFormLayoutColumn.getDDMFormFieldNames();
+
+					if (ddmFormFieldNames.size() > 1) {
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
 	private void _upgradeDDMStructure() throws Exception {
 		StringBundler sb = new StringBundler(6);
 
@@ -156,9 +182,10 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 	}
 
 	private void _upgradeDDMStructureLayout() throws Exception {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(10);
 
-		sb.append("select DDMStructureLayout.structureLayoutId, ");
+		sb.append("select DDMStructure.structureId, ");
+		sb.append("DDMStructureLayout.structureLayoutId, ");
 		sb.append("DDMStructureLayout.structureVersionId, ");
 		sb.append("DDMStructureLayout.definition from DDMStructureLayout ");
 		sb.append("inner join DDMStructureVersion on ");
@@ -182,18 +209,68 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 				while (rs.next()) {
 					String definition = rs.getString("definition");
 
-					long structureVersionId = rs.getLong("structureVersionId");
+					DDMFormLayoutDeserializerDeserializeResponse
+						ddmFormLayoutDeserializerDeserializeResponse =
+							_ddmFormLayoutDeserializer.deserialize(
+								DDMFormLayoutDeserializerDeserializeRequest.
+									Builder.newBuilder(
+										definition
+									).build());
 
-					ps2.setString(
-						1,
-						_upgradeDDMStructureLayoutDefinition(
-							definition, structureVersionId));
+					Exception exception =
+						ddmFormLayoutDeserializerDeserializeResponse.
+							getException();
 
-					long structureLayoutId = rs.getLong("structureLayoutId");
+					if (exception != null) {
+						throw new UpgradeException(exception);
+					}
 
-					ps2.setLong(2, structureLayoutId);
+					DDMFormLayout ddmFormLayout =
+						ddmFormLayoutDeserializerDeserializeResponse.
+							getDDMFormLayout();
 
-					ps2.addBatch();
+					boolean paginationMode = Objects.equals(
+						ddmFormLayout.getPaginationMode(), "pagination");
+
+					if (paginationMode) {
+						ddmFormLayout.setPaginationMode(
+							DDMFormLayout.WIZARD_MODE);
+					}
+
+					boolean hasMoreThanOneDDMFormFieldForColumn =
+						_hasMoreThanOneDDMFormFieldForColumn(ddmFormLayout);
+
+					if (hasMoreThanOneDDMFormFieldForColumn) {
+						long structureVersionId = rs.getLong(
+							"structureVersionId");
+
+						ddmFormLayout = _upgradeDDMStructureLayoutDefinition(
+							ddmFormLayout, structureVersionId);
+
+						_structureIds.add(rs.getLong("structureId"));
+					}
+
+					if (paginationMode || hasMoreThanOneDDMFormFieldForColumn) {
+						DDMFormLayoutSerializerSerializeResponse
+							ddmFormLayoutSerializerSerializeResponse =
+								_ddmFormLayoutSerializer.serialize(
+									DDMFormLayoutSerializerSerializeRequest.
+										Builder.newBuilder(
+											ddmFormLayout
+										).build());
+
+						ps2.setString(
+							1,
+							ddmFormLayoutSerializerSerializeResponse.
+								getContent());
+
+						long structureLayoutId = rs.getLong(
+							"structureLayoutId");
+
+						ps2.setLong(2, structureLayoutId);
+
+						ps2.addBatch();
+					}
 				}
 
 				ps2.executeBatch();
@@ -201,33 +278,11 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		}
 	}
 
-	private String _upgradeDDMStructureLayoutDefinition(
-			String definition, long structureVersionId)
+	private DDMFormLayout _upgradeDDMStructureLayoutDefinition(
+			DDMFormLayout ddmFormLayout, long structureVersionId)
 		throws Exception {
 
 		List<Tuple> ddmFormFieldTuples = new ArrayList<>();
-
-		DDMFormLayoutDeserializerDeserializeResponse
-			ddmFormLayoutDeserializerDeserializeResponse =
-				_ddmFormLayoutDeserializer.deserialize(
-					DDMFormLayoutDeserializerDeserializeRequest.Builder.
-						newBuilder(
-							definition
-						).build());
-
-		Exception exception =
-			ddmFormLayoutDeserializerDeserializeResponse.getException();
-
-		if (exception != null) {
-			throw new UpgradeException(exception);
-		}
-
-		DDMFormLayout ddmFormLayout =
-			ddmFormLayoutDeserializerDeserializeResponse.getDDMFormLayout();
-
-		if (Objects.equals(ddmFormLayout.getPaginationMode(), "pagination")) {
-			ddmFormLayout.setPaginationMode(DDMFormLayout.WIZARD_MODE);
-		}
 
 		for (DDMFormLayoutPage ddmFormLayoutPage :
 				ddmFormLayout.getDDMFormLayoutPages()) {
@@ -261,14 +316,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 			_nestedFieldsMap.put(structureVersionId, ddmFormFieldTuples);
 		}
 
-		DDMFormLayoutSerializerSerializeResponse
-			ddmFormLayoutSerializerSerializeResponse =
-				_ddmFormLayoutSerializer.serialize(
-					DDMFormLayoutSerializerSerializeRequest.Builder.newBuilder(
-						ddmFormLayout
-					).build());
-
-		return ddmFormLayoutSerializerSerializeResponse.getContent();
+		return ddmFormLayout;
 	}
 
 	private void _upgradeDDMStructureVersion() throws Exception {
@@ -414,5 +462,6 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 	private final DDMFormSerializer _ddmFormSerializer;
 	private final JSONFactory _jsonFactory;
 	private final Map<Long, List<Tuple>> _nestedFieldsMap = new HashMap<>();
+	private final List<Long> _structureIds = new ArrayList<>();
 
 }

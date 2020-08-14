@@ -108,7 +108,7 @@ export function loadData(
 	page = 1,
 	sorting = []
 ) {
-	const url = new URL(apiURL);
+	const url = new URL(apiURL, themeDisplay.getPortalURL());
 
 	url.searchParams.append('currentUrl', currentUrl);
 

@@ -14,9 +14,7 @@ buildscript {
 apply plugin: "com.liferay.css.builder"
 
 dependencies {
-	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
-	compileOnly group: "javax.portlet", name: "portlet-api"
-	compileOnly group: "javax.servlet", name: "javax.servlet-api"
+	compileOnly group: "com.liferay.portal", name: "release.portal.api"
 
 	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "@com.liferay.css.builder.version@"
 

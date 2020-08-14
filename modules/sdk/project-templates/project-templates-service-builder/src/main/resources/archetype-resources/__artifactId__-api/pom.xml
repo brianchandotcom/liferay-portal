@@ -14,55 +14,9 @@
 		<version>${version}</version>
 	</parent>
 	<dependencies>
-#if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")})
-		<dependency>
-			<groupId>biz.aQute.bnd</groupId>
-			<artifactId>biz.aQute.bnd.annotation</artifactId>
-			<version>@biz.aQute.bnd.version@</version>
-			<scope>provided</scope>
-		</dependency>
-#end
-#if (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
-		<dependency>
-			<groupId>com.liferay</groupId>
-			<artifactId>com.liferay.petra.lang</artifactId>
-			<scope>provided</scope>
-		</dependency>
-#end
-#if (${liferayVersion.startsWith("7.3")})
-		<dependency>
-			<groupId>com.liferay</groupId>
-			<artifactId>com.liferay.petra.sql.dsl.api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-#end
-#if (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
-		<dependency>
-			<groupId>com.liferay</groupId>
-			<artifactId>com.liferay.petra.string</artifactId>
-			<scope>provided</scope>
-		</dependency>
-#end
 		<dependency>
 			<groupId>com.liferay.portal</groupId>
-			<artifactId>com.liferay.portal.kernel</artifactId>
-			<scope>provided</scope>
-		</dependency>
-#if (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
-		<dependency>
-			<groupId>org.osgi</groupId>
-			<artifactId>org.osgi.annotation.versioning</artifactId>
-			<scope>provided</scope>
-		</dependency>
-#end
-		<dependency>
-			<groupId>org.osgi</groupId>
-			<artifactId>org.osgi.core</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.osgi</groupId>
-			<artifactId>org.osgi.service.component.annotations</artifactId>
+			<artifactId>release.portal.api</artifactId>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>

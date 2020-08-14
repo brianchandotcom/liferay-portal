@@ -1,21 +1,5 @@
 dependencies {
-#if (!${liferayVersion.startsWith("7.0")})
-	compileOnly group: "com.liferay", name: "com.liferay.asset.taglib"
-	compileOnly group: "com.liferay", name: "com.liferay.comment.taglib"
-	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib"
-	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib.dynamic.section"
-	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib.form.navigator"
-	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib.util"
-	compileOnly group: "com.liferay", name: "com.liferay.journal.taglib"
-	compileOnly group: "com.liferay", name: "com.liferay.layout.taglib"
-	compileOnly group: "com.liferay", name: "com.liferay.site.taglib"
-#end
-	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
-	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib"
-	compileOnly group: "javax.portlet", name: "portlet-api"
-	compileOnly group: "javax.servlet", name: "javax.servlet-api"
-	compileOnly group: "jstl", name: "jstl"
-	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
+	compileOnly group: "com.liferay.portal", name: "release.portal.api"
 
 	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "@com.liferay.css.builder.version@"
 }

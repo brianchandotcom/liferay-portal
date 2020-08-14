@@ -78,7 +78,15 @@ public class TypedProperties {
 	}
 
 	public Object put(String key, Object value) {
-		String old = _put(key, _convertToString(value));
+		String old = _storage.put(key, _convertToString(value));
+
+		if ((old == null) || !old.equals(value)) {
+			Layout layout = _layoutMap.get(key);
+
+			if (layout != null) {
+				layout.clearValue();
+			}
+		}
 
 		if (old == null) {
 			return null;
@@ -333,20 +341,6 @@ public class TypedProperties {
 		}
 
 		return false;
-	}
-
-	private String _put(String key, String value) {
-		String old = _storage.put(key, value);
-
-		if ((old == null) || !old.equals(value)) {
-			Layout layout = _layoutMap.get(key);
-
-			if (layout != null) {
-				layout.clearValue();
-			}
-		}
-
-		return old;
 	}
 
 	private static final String _LINE_SEPARATOR = System.getProperty(

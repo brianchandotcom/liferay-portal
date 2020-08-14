@@ -5,7 +5,7 @@ definition {
 
 		FormFields.editTextMultiline(
 			fieldName = "ccrLocalClusterConnectionConfigurations",
-			fieldValue = "localhost:8080=${ccrLocalClusterConnectionID}");
+			fieldValue = "localhost:8080,${ccrLocalClusterConnectionID}");
 
 		SystemSettings.saveConfiguration();
 	}

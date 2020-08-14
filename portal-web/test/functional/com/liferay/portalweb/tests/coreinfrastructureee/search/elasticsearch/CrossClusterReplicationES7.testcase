@@ -141,10 +141,6 @@ definition {
 			OSGiConfigFileName = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-default_ccr.config",
 			OSGiConfigs = "active=&quot;true&quot;,connectionId=&quot;ccr&quot;,networkHostAddresses=[&quot;http://localhost:9202&quot;]");
 
-		AntCommand(
-			locator1 = "build-test-elasticsearch7.xml",
-			value1 = "create-follower-indices");
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -206,10 +202,6 @@ definition {
 		OSGiConfig.deployOSGiConfigs(
 			OSGiConfigFileName = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-default_ccr.config",
 			OSGiConfigs = "active=&quot;true&quot;,connectionId=&quot;ccr&quot;,networkHostAddresses=[&quot;http://localhost:9202&quot;]");
-
-		AntCommand(
-			locator1 = "build-test-elasticsearch7.xml",
-			value1 = "create-follower-indices");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -275,10 +267,6 @@ definition {
 		OSGiConfig.deployOSGiConfigs(
 			OSGiConfigFileName = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-default_ccr.config",
 			OSGiConfigs = "active=&quot;true&quot;,connectionId=&quot;ccr&quot;,networkHostAddresses=[&quot;http://localhost:9202&quot;]");
-
-		AntCommand(
-			locator1 = "build-test-elasticsearch7.xml",
-			value1 = "create-follower-indices");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

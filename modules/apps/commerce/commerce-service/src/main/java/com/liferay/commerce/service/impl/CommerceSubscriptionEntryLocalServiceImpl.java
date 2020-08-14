@@ -160,7 +160,8 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 
 			Date subscriptionStartDate =
 				cpSubscriptionType.getSubscriptionStartDate(
-					user.getTimeZone(), subscriptionTypeSettingsUnicodeProperties);
+					user.getTimeZone(),
+					subscriptionTypeSettingsUnicodeProperties);
 
 			commerceSubscriptionEntry.setStartDate(subscriptionStartDate);
 		}

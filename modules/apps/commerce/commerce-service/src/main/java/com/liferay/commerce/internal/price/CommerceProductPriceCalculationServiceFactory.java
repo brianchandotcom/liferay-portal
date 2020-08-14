@@ -62,23 +62,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class CommerceProductPriceCalculationServiceFactory
 	implements ServiceFactory<CommerceProductPriceCalculation> {
 
-	@Activate
-	public void activate(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
-		_serviceRegistration = bundleContext.registerService(
-			CommerceProductPriceCalculation.class, this,
-			new Hashtable<String, Object>());
-
-		_commercePricingConfiguration = ConfigurableUtil.createConfigurable(
-			CommercePricingConfiguration.class, properties);
-	}
-
-	@Deactivate
-	public void deactivate() {
-		_serviceRegistration.unregister();
-	}
-
 	@Override
 	public CommerceProductPriceCalculation getService(
 		Bundle bundle,
@@ -139,6 +122,23 @@ public class CommerceProductPriceCalculationServiceFactory
 			properties.get("commerce.price.list.discovery.key"));
 
 		_commercePriceListDiscoveryMap.remove(commercePriceListDiscoveryKey);
+	}
+
+	@Activate
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		_serviceRegistration = bundleContext.registerService(
+			CommerceProductPriceCalculation.class, this,
+			new Hashtable<String, Object>());
+
+		_commercePricingConfiguration = ConfigurableUtil.createConfigurable(
+			CommercePricingConfiguration.class, properties);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceRegistration.unregister();
 	}
 
 	@Reference(

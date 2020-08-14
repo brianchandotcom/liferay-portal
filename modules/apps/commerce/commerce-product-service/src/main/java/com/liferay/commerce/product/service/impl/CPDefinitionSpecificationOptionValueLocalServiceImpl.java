@@ -215,6 +215,23 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 
 	@Override
 	public List<CPDefinitionSpecificationOptionValue>
+		getCPDefinitionSpecificationOptionValues(long cpSpecificationOptionId) {
+
+		return cpDefinitionSpecificationOptionValuePersistence.
+			findByCPSpecificationOptionId(cpSpecificationOptionId);
+	}
+
+	@Override
+	public List<CPDefinitionSpecificationOptionValue>
+		getCPDefinitionSpecificationOptionValues(
+			long cpSpecificationOptionId, int start, int end) {
+
+		return cpDefinitionSpecificationOptionValuePersistence.
+			findByCPSpecificationOptionId(cpSpecificationOptionId, start, end);
+	}
+
+	@Override
+	public List<CPDefinitionSpecificationOptionValue>
 		getCPDefinitionSpecificationOptionValues(
 			long cpDefinitionId, int start, int end,
 			OrderByComparator<CPDefinitionSpecificationOptionValue>
@@ -248,23 +265,6 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 
 		return cpDefinitionSpecificationOptionValuePersistence.
 			countByCPDefinitionId(cpDefinitionId);
-	}
-
-	@Override
-	public List<CPDefinitionSpecificationOptionValue>
-		getCPDefinitionSpecificationOptionValues(long cpSpecificationOptionId) {
-
-		return cpDefinitionSpecificationOptionValuePersistence.
-			findByCPSpecificationOptionId(cpSpecificationOptionId);
-	}
-
-	@Override
-	public List<CPDefinitionSpecificationOptionValue>
-		getCPDefinitionSpecificationOptionValues(
-			long cpSpecificationOptionId, int start, int end) {
-
-		return cpDefinitionSpecificationOptionValuePersistence.
-			findByCPSpecificationOptionId(cpSpecificationOptionId, start, end);
 	}
 
 	@Override

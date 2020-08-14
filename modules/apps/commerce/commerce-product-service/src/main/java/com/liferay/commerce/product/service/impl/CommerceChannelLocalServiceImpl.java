@@ -82,7 +82,8 @@ public class CommerceChannelLocalServiceImpl
 		commerceChannel.setSiteGroupId(siteGroupId);
 		commerceChannel.setName(name);
 		commerceChannel.setType(type);
-		commerceChannel.setTypeSettingsProperties(typeSettingsUnicodeProperties);
+		commerceChannel.setTypeSettingsProperties(
+			typeSettingsUnicodeProperties);
 		commerceChannel.setCommerceCurrencyCode(commerceCurrencyCode);
 		commerceChannel.setPriceDisplayType(
 			CommercePricingConstants.TAX_EXCLUDED_FROM_PRICE);
@@ -282,7 +283,8 @@ public class CommerceChannelLocalServiceImpl
 		commerceChannel.setSiteGroupId(siteGroupId);
 		commerceChannel.setName(name);
 		commerceChannel.setType(type);
-		commerceChannel.setTypeSettingsProperties(typeSettingsUnicodeProperties);
+		commerceChannel.setTypeSettingsProperties(
+			typeSettingsUnicodeProperties);
 		commerceChannel.setCommerceCurrencyCode(commerceCurrencyCode);
 
 		return commerceChannelPersistence.update(commerceChannel);
@@ -303,7 +305,8 @@ public class CommerceChannelLocalServiceImpl
 		commerceChannel.setSiteGroupId(siteGroupId);
 		commerceChannel.setName(name);
 		commerceChannel.setType(type);
-		commerceChannel.setTypeSettingsProperties(typeSettingsUnicodeProperties);
+		commerceChannel.setTypeSettingsProperties(
+			typeSettingsUnicodeProperties);
 		commerceChannel.setCommerceCurrencyCode(commerceCurrencyCode);
 		commerceChannel.setPriceDisplayType(priceDisplayType);
 		commerceChannel.setDiscountsTargetNetPrice(discountsTargetNetPrice);

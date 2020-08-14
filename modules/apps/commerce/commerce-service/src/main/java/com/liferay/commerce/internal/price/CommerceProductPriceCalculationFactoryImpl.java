@@ -58,13 +58,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class CommerceProductPriceCalculationFactoryImpl
 	implements CommerceProductPriceCalculationFactory {
 
-	@Activate
-	@Modified
-	public void activate(Map<String, Object> properties) {
-		_commercePricingConfiguration = ConfigurableUtil.createConfigurable(
-			CommercePricingConfiguration.class, properties);
-	}
-
 	@Override
 	public CommerceProductPriceCalculation
 		getCommerceProductPriceCalculation() {
@@ -115,6 +108,13 @@ public class CommerceProductPriceCalculationFactoryImpl
 			properties.get("commerce.price.list.discovery.key"));
 
 		_commercePriceListDiscoveryMap.remove(commercePriceListDiscoveryKey);
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_commercePricingConfiguration = ConfigurableUtil.createConfigurable(
+			CommercePricingConfiguration.class, properties);
 	}
 
 	@Reference(

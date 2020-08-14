@@ -42,13 +42,6 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceOrderPriceCalculationFactoryImpl
 	implements CommerceOrderPriceCalculationFactory {
 
-	@Activate
-	@Modified
-	public void activate(Map<String, Object> properties) {
-		_commercePricingConfiguration = ConfigurableUtil.createConfigurable(
-			CommercePricingConfiguration.class, properties);
-	}
-
 	@Override
 	public CommerceOrderPriceCalculation getCommerceOrderPriceCalculation() {
 		if ((_commercePricingConfiguration == null) ||
@@ -64,6 +57,13 @@ public class CommerceOrderPriceCalculationFactoryImpl
 		return new CommerceOrderPriceCalculationImpl(
 			_commerceChannelLocalService, _commerceDiscountCalculation,
 			_commerceMoneyFactory, _commerceTaxCalculation);
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_commercePricingConfiguration = ConfigurableUtil.createConfigurable(
+			CommercePricingConfiguration.class, properties);
 	}
 
 	@Reference

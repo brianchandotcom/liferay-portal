@@ -183,8 +183,8 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 			getPermissionChecker(), commerceChannelId, ActionKeys.UPDATE);
 
 		return commerceChannelLocalService.updateCommerceChannel(
-			commerceChannelId, siteGroupId, name, type, typeSettingsUnicodeProperties,
-			commerceCurrencyCode);
+			commerceChannelId, siteGroupId, name, type,
+			typeSettingsUnicodeProperties, commerceCurrencyCode);
 	}
 
 	@Override
@@ -199,8 +199,9 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 			getPermissionChecker(), commerceChannelId, ActionKeys.UPDATE);
 
 		return commerceChannelLocalService.updateCommerceChannel(
-			commerceChannelId, siteGroupId, name, type, typeSettingsUnicodeProperties,
-			commerceCurrencyCode, priceDisplayType, discountsTargetNetPrice);
+			commerceChannelId, siteGroupId, name, type,
+			typeSettingsUnicodeProperties, commerceCurrencyCode,
+			priceDisplayType, discountsTargetNetPrice);
 	}
 
 	@Override

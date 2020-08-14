@@ -229,8 +229,8 @@ public class CommerceTaxRateClayTable
 	}
 
 	private String _getLocalizedRate(
-			CommerceCurrency commerceCurrency, boolean percentage,
-			double rate, Locale locale)
+			CommerceCurrency commerceCurrency, boolean percentage, double rate,
+			Locale locale)
 		throws PortalException {
 
 		BigDecimal bigDecimalPercentage = new BigDecimal(rate);

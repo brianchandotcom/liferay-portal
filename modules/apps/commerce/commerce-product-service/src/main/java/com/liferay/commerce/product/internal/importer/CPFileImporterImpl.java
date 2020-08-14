@@ -906,10 +906,12 @@ public class CPFileImporterImpl implements CPFileImporter {
 				typeSettingsUnicodeProperties.keySet();
 
 			if (typeSettingPropertiesKeys.contains(key)) {
-				typeSettingsUnicodeProperties.replace(key, jsonObject.getString(key));
+				typeSettingsUnicodeProperties.replace(
+					key, jsonObject.getString(key));
 			}
 			else {
-				typeSettingsUnicodeProperties.put(key, jsonObject.getString(key));
+				typeSettingsUnicodeProperties.put(
+					key, jsonObject.getString(key));
 			}
 		}
 

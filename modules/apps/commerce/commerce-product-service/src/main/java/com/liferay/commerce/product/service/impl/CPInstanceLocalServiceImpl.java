@@ -1597,8 +1597,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		return cpInstanceLocalService.updateSubscriptionInfo(
 			cpInstanceId, overrideSubscriptionInfo, subscriptionEnabled,
 			subscriptionLength, subscriptionType,
-			subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles, false, 1,
-			null, null, 0);
+			subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles,
+			false, 1, null, null, 0);
 	}
 
 	@Override

@@ -72,7 +72,7 @@ public class HeadlessDataSetDisplayTag extends IncludeTag {
 		return super.doStartTag();
 	}
 
-	public String getAPIURL() {
+	public String getApiURL() {
 		return _apiURL;
 	}
 
@@ -154,7 +154,7 @@ public class HeadlessDataSetDisplayTag extends IncludeTag {
 		return _showSearch;
 	}
 
-	public void setAPIURL(String apiURL) {
+	public void setApiURL(String apiURL) {
 		_apiURL = apiURL;
 	}
 

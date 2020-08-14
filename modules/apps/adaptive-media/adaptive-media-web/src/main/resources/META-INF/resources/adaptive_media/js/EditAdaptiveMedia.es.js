@@ -19,18 +19,8 @@ import ClayLayout from '@clayui/layout';
 import {useFormik} from 'formik';
 import React, {useState} from 'react';
 
-import {Input, RequiredMark} from './utils/input.es';
-
-const HelpMessage = ({message}) => {
-	return (
-		<span
-			className="inline-item-after lfr-portal-tooltip tooltip-icon"
-			data-title={message}
-		>
-			<ClayIcon symbol="question-circle-full" />
-		</span>
-	);
-};
+import {HelpMessage, RequiredMark} from './utils/formComponents.es';
+import Input from './utils/input.es';
 
 const EditAdaptiveMedia = ({namespace}) => {
 	const [automaticUuid, setAutomaticUuid] = useState(true);

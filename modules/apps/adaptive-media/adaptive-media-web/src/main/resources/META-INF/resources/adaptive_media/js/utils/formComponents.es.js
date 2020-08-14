@@ -16,41 +16,39 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 
-import {ErrorFeedback, RequiredMark} from './formComponents.es';
-
-const Input = ({
-	disabled,
-	error,
-	id,
-	label,
-	name,
-	required,
-	type = 'text',
-	...restProps
-}) => {
-	const inputId = id || name;
-
+const ErrorFeedback = ({error}) => {
 	return (
-		<ClayForm.Group className={error ? 'has-error' : ''}>
-			<label className={disabled ? 'disabled' : ''} htmlFor={inputId}>
-				{label}
-
-				{required && <RequiredMark />}
-			</label>
-
-			<ClayInput
-				{...restProps}
-				className="form-control"
-				component={type === 'textarea' ? 'textarea' : 'input'}
-				disabled={disabled}
-				id={inputId}
-				name={name}
-				type={type}
-			/>
-
-			{error && <ErrorFeedback error={error} />}
-		</ClayForm.Group>
+		<ClayForm.FeedbackGroup>
+			<ClayForm.FeedbackItem>
+				<span>{error}</span>
+			</ClayForm.FeedbackItem>
+		</ClayForm.FeedbackGroup>
 	);
 };
 
-export default Input;
+const HelpMessage = ({message}) => {
+	return (
+		<span
+			className="inline-item-after lfr-portal-tooltip tooltip-icon"
+			data-title={message}
+		>
+			<ClayIcon symbol="question-circle-full" />
+		</span>
+	);
+};
+
+const RequiredMark = () => {
+	return (
+		<>
+			<span className="inline-item-after reference-mark text-warning">
+				<ClayIcon symbol="asterisk" />
+			</span>
+			<span className="hide-accessible">
+				{Liferay.Language.get('required')}
+			</span>
+		</>
+	);
+};
+
+export {ErrorFeedback, HelpMessage, RequiredMark};
+

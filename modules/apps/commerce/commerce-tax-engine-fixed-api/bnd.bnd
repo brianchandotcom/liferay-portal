@@ -1,10 +1,6 @@
 Bundle-Name: Liferay Commerce Tax Engine Fixed API
 Bundle-SymbolicName: com.liferay.commerce.tax.engine.fixed.api
-<<<<<<< HEAD
-Bundle-Version: 1.4.9
-=======
 Bundle-Version: 2.0.0
->>>>>>> e47493f9f... COMMERCE-4072 Regen service and rest
 Export-Package:\
 	com.liferay.commerce.tax.engine.fixed.configuration,\
 	com.liferay.commerce.tax.engine.fixed.exception,\

@@ -1,10 +1,6 @@
 Bundle-Name: Liferay Commerce Shipping Engine Fixed API
 Bundle-SymbolicName: com.liferay.commerce.shipping.engine.fixed.api
-<<<<<<< HEAD
-Bundle-Version: 2.1.9
-=======
 Bundle-Version: 3.0.0
->>>>>>> e47493f9f... COMMERCE-4072 Regen service and rest
 Export-Package:\
 	com.liferay.commerce.shipping.engine.fixed.constants,\
 	com.liferay.commerce.shipping.engine.fixed.exception,\

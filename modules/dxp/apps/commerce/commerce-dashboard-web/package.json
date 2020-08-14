@@ -17,10 +17,5 @@
 		"watch": "liferay-npm-scripts webpack --watch"
 	},
 	"sideEffects": false,
-<<<<<<< HEAD
 	"version": "1.0.33"
 }
-=======
-	"version": "1.0.32"
-}
->>>>>>> a5343879d... COMMERCE-4072 Fix SF part 1

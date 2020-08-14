@@ -1,10 +1,6 @@
 Bundle-Name: Liferay Commerce Product Type Grouped API
 Bundle-SymbolicName: com.liferay.commerce.product.type.grouped.api
-<<<<<<< HEAD
-Bundle-Version: 2.0.26
-=======
 Bundle-Version: 3.0.0
->>>>>>> e47493f9f... COMMERCE-4072 Regen service and rest
 Export-Package:\
 	com.liferay.commerce.product.type.grouped.constants,\
 	com.liferay.commerce.product.type.grouped.exception,\

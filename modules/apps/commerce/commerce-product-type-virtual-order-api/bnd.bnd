@@ -1,10 +1,6 @@
 Bundle-Name: Liferay Commerce Product Type Virtual Order API
 Bundle-SymbolicName: com.liferay.commerce.product.type.virtual.order.api
-<<<<<<< HEAD
-Bundle-Version: 2.0.24
-=======
 Bundle-Version: 3.0.0
->>>>>>> e47493f9f... COMMERCE-4072 Regen service and rest
 Export-Package:\
 	com.liferay.commerce.product.type.virtual.order.constants,\
 	com.liferay.commerce.product.type.virtual.order.exception,\

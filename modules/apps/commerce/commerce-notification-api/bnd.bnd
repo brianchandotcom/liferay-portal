@@ -1,10 +1,6 @@
 Bundle-Name: Liferay Commerce Notification API
 Bundle-SymbolicName: com.liferay.commerce.notification.api
-<<<<<<< HEAD
-Bundle-Version: 3.2.7
-=======
 Bundle-Version: 4.0.0
->>>>>>> e47493f9f... COMMERCE-4072 Regen service and rest
 Export-Package:\
 	com.liferay.commerce.notification.constants,\
 	com.liferay.commerce.notification.exception,\

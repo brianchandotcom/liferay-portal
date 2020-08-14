@@ -1,10 +1,6 @@
 Bundle-Name: Liferay Commerce Wish List API
 Bundle-SymbolicName: com.liferay.commerce.wish.list.api
-<<<<<<< HEAD
-Bundle-Version: 4.0.9
-=======
 Bundle-Version: 5.0.0
->>>>>>> e47493f9f... COMMERCE-4072 Regen service and rest
 Export-Package:\
 	com.liferay.commerce.wish.list.constants,\
 	com.liferay.commerce.wish.list.exception,\

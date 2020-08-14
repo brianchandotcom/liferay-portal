@@ -1,10 +1,6 @@
 Bundle-Name: Liferay Commerce Payment Api
 Bundle-SymbolicName: com.liferay.commerce.payment.api
-<<<<<<< HEAD
-Bundle-Version: 2.2.4
-=======
 Bundle-Version: 3.0.0
->>>>>>> e47493f9f... COMMERCE-4072 Regen service and rest
 Export-Package:\
 	com.liferay.commerce.payment.constants,\
 	com.liferay.commerce.payment.exception,\

@@ -1,10 +1,6 @@
 Bundle-Name: Liferay Commerce Tax API
 Bundle-SymbolicName: com.liferay.commerce.tax.api
-<<<<<<< HEAD
-Bundle-Version: 1.2.7
-=======
 Bundle-Version: 2.0.0
->>>>>>> e47493f9f... COMMERCE-4072 Regen service and rest
 Export-Package:\
 	com.liferay.commerce.tax.configuration,\
 	com.liferay.commerce.tax.exception,\

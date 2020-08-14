@@ -1067,6 +1067,13 @@ components:
                         $ref: "#/components/schemas/RelatedContent"
                     readOnly: true
                     type: array
+                siteId:
+                    # @review
+                    description:
+                        The ID of the site to which this document is scoped.
+                    format: int64
+                    readOnly: true
+                    type: integer
                 sizeInBytes:
                     description:
                         The document's size in bytes.

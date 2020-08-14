@@ -23,6 +23,8 @@ import com.liferay.portal.search.engine.adapter.cluster.StateClusterRequest;
 import com.liferay.portal.search.engine.adapter.cluster.StateClusterResponse;
 import com.liferay.portal.search.engine.adapter.cluster.StatsClusterRequest;
 import com.liferay.portal.search.engine.adapter.cluster.StatsClusterResponse;
+import com.liferay.portal.search.engine.adapter.cluster.UpdateSettingsClusterRequest;
+import com.liferay.portal.search.engine.adapter.cluster.UpdateSettingsClusterResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -64,6 +66,14 @@ public class SolrClusterRequestExecutor implements ClusterRequestExecutor {
 		return _statsClusterRequestExecutor.execute(statsClusterRequest);
 	}
 
+	@Override
+	public UpdateSettingsClusterResponse executeClusterRequest(
+		UpdateSettingsClusterRequest updateSettingsClusterRequest) {
+
+		return _updateSettingsClusterRequestExecutor.execute(
+			updateSettingsClusterRequest);
+	}
+
 	@Reference(unbind = "-")
 	protected void setHealthClusterRequestExecutor(
 		HealthClusterRequestExecutor healthClusterRequestExecutor) {
@@ -85,8 +95,19 @@ public class SolrClusterRequestExecutor implements ClusterRequestExecutor {
 		_statsClusterRequestExecutor = statsClusterRequestExecutor;
 	}
 
+	@Reference(unbind = "-")
+	protected void setUpdateSettingsClusterRequestExecutor(
+		UpdateSettingsClusterRequestExecutor
+			updateSettingsClusterRequestExecutor) {
+
+		_updateSettingsClusterRequestExecutor =
+			updateSettingsClusterRequestExecutor;
+	}
+
 	private HealthClusterRequestExecutor _healthClusterRequestExecutor;
 	private StateClusterRequestExecutor _stateClusterRequestExecutor;
 	private StatsClusterRequestExecutor _statsClusterRequestExecutor;
+	private UpdateSettingsClusterRequestExecutor
+		_updateSettingsClusterRequestExecutor;
 
 }

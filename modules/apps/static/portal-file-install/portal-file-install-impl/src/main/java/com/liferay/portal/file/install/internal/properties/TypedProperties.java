@@ -64,40 +64,17 @@ public class TypedProperties {
 	public void load(Reader reader) throws IOException {
 		PropertiesReader propertiesReader = new PropertiesReader(reader);
 
-		boolean hasProperty = false;
-
 		while (propertiesReader.nextProperty()) {
-			hasProperty = true;
-
 			_storage.put(
 				propertiesReader.getPropertyName(),
 				propertiesReader.getPropertyValue());
 
-			int index = _checkHeaderComment(propertiesReader.getComments());
-
-			List<String> comments = propertiesReader.getComments();
-
-			int size = comments.size();
-
-			if (index < comments.size()) {
-				comments = new ArrayList<>(comments.subList(index, size));
-			}
-			else {
-				comments = null;
-			}
-
 			_layoutMap.put(
 				propertiesReader.getPropertyName(),
-				new Layout(
-					comments, new ArrayList<>(propertiesReader.getValues())));
+				new Layout(new ArrayList<>(propertiesReader.getValues())));
 		}
 
-		if (hasProperty) {
-			_footers = new ArrayList<>(propertiesReader.getComments());
-		}
-		else {
-			_headers = new ArrayList<>(propertiesReader.getComments());
-		}
+		_header = propertiesReader.getComment();
 	}
 
 	public Object put(String key, Object value) {
@@ -130,8 +107,8 @@ public class TypedProperties {
 			super(reader);
 		}
 
-		public List<String> getComments() {
-			return _comments;
+		public String getComment() {
+			return _comment;
 		}
 
 		public String getPropertyName() {
@@ -203,7 +180,6 @@ public class TypedProperties {
 		}
 
 		private String _readProperty() throws IOException {
-			_comments.clear();
 			_values.clear();
 
 			StringBundler sb = new StringBundler();
@@ -219,7 +195,14 @@ public class TypedProperties {
 				}
 
 				if (_isCommentLine(line)) {
-					_comments.add(line);
+					if ((_comment == null) && _values.isEmpty()) {
+						_comment = line;
+					}
+					else {
+						if (_log.isWarnEnabled()) {
+							_log.warn("Multiple comment lines found: " + line);
+						}
+					}
 
 					continue;
 				}
@@ -248,7 +231,7 @@ public class TypedProperties {
 			return sb.toString();
 		}
 
-		private final List<String> _comments = new ArrayList<>();
+		private String _comment;
 		private final Pattern _linePattern = Pattern.compile("(.+)=(.+)");
 		private final Pattern _pattern = Pattern.compile(
 			"\\s*[TILFDXSCBilfdxscb]?(\\[[\\S\\s]*\\]|\\{[\\S\\s]*\\}|" +
@@ -281,31 +264,6 @@ public class TypedProperties {
 			writeln(null);
 		}
 
-	}
-
-	private int _checkHeaderComment(List<String> comments) {
-		if ((_headers == null) && _layoutMap.isEmpty()) {
-
-			// This is the first comment. Search for blank lines.
-
-			int index = comments.size() - 1;
-
-			while (index >= 0) {
-				String commentLine = comments.get(index);
-
-				if (commentLine.length() <= 0) {
-					break;
-				}
-
-				index--;
-			}
-
-			_headers = new ArrayList<>(comments.subList(0, index + 1));
-
-			return index + 1;
-		}
-
-		return 0;
 	}
 
 	private Object _convertFromString(String value) {
@@ -354,10 +312,8 @@ public class TypedProperties {
 
 	private void _saveLayout(Writer writer) throws IOException {
 		try (PropertiesWriter propertiesWriter = new PropertiesWriter(writer)) {
-			if (_headers != null) {
-				for (String s : _headers) {
-					propertiesWriter.writeln(s);
-				}
+			if (_header != null) {
+				propertiesWriter.writeln(_header);
 			}
 
 			for (Map.Entry<String, String> entry : _storage.entrySet()) {
@@ -371,14 +327,6 @@ public class TypedProperties {
 					propertiesWriter.writeProperty(key, value);
 
 					continue;
-				}
-
-				List<String> comments = layout.getComments();
-
-				if (comments != null) {
-					for (String string : comments) {
-						propertiesWriter.writeln(string);
-					}
 				}
 
 				List<String> values = layout.getValues();
@@ -420,14 +368,13 @@ public class TypedProperties {
 		TypedProperties.class);
 
 	private List<String> _footers;
-	private List<String> _headers;
+	private String _header;
 	private final Map<String, Layout> _layoutMap = new LinkedHashMap<>();
 	private final Map<String, String> _storage = new LinkedHashMap<>();
 
 	private static class Layout {
 
-		public Layout(List<String> comments, List<String> values) {
-			_comments = comments;
+		public Layout(List<String> values) {
 			_values = values;
 		}
 
@@ -435,15 +382,10 @@ public class TypedProperties {
 			_values = null;
 		}
 
-		public List<String> getComments() {
-			return _comments;
-		}
-
 		public List<String> getValues() {
 			return _values;
 		}
 
-		private final List<String> _comments;
 		private List<String> _values;
 
 	}

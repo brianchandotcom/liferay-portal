@@ -1130,7 +1130,7 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 				</not>
 			</and>
 			<then>
-				<setup-dxp-app appname="lcs" />
+				<setup-dxp-app appname="lcs" appversion="${build.setup.profile.dxp.app.lcs.version}" />
 			</then>
 		</if>
 

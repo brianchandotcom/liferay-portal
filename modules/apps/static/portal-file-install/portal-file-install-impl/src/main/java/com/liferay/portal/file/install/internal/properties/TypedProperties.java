@@ -436,7 +436,7 @@ public class TypedProperties {
 				index--;
 			}
 
-			_setHeader(new ArrayList<>(comments.subList(0, index + 1)));
+			_headers = new ArrayList<>(comments.subList(0, index + 1));
 
 			return index + 1;
 		}
@@ -515,10 +515,6 @@ public class TypedProperties {
 				}
 			}
 		}
-	}
-
-	private void _setHeader(List<String> headers) {
-		_headers = headers;
 	}
 
 	private static final String _COMMENT_CHARS = "#!";

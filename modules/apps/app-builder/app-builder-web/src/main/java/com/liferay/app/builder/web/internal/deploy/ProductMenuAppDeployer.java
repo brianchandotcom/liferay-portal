@@ -75,9 +75,6 @@ public class ProductMenuAppDeployer extends BaseAppDeployer {
 			_serviceRegistrations.computeIfAbsent(
 				appId,
 				key -> new ServiceRegistration<?>[] {
-					_deployPortlet(
-						appBuilderApp, appName, applicationsMenuLabel),
-					_deployPortlet(appBuilderApp, appName, siteMenuLabel),
 					_deployPanelApp(
 						appBuilderApp.getCompanyId(),
 						PanelCategoryKeys.APPLICATIONS_MENU_APPLICATIONS,
@@ -89,7 +86,10 @@ public class ProductMenuAppDeployer extends BaseAppDeployer {
 						PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT,
 						siteMenuLabel,
 						JSONUtil.toLongArray(
-							jsonObject.getJSONArray("siteIds")))
+							jsonObject.getJSONArray("siteIds"))),
+					_deployPortlet(
+						appBuilderApp, appName, applicationsMenuLabel),
+					_deployPortlet(appBuilderApp, appName, siteMenuLabel)
 				});
 		}
 		else {
@@ -108,11 +108,11 @@ public class ProductMenuAppDeployer extends BaseAppDeployer {
 			_serviceRegistrations.computeIfAbsent(
 				appId,
 				mapKey -> new ServiceRegistration<?>[] {
-					_deployPortlet(appBuilderApp, appName, menuLabel),
 					_deployPanelApp(
 						appBuilderApp.getCompanyId(), scope, menuLabel,
 						JSONUtil.toLongArray(
-							jsonObject.getJSONArray("siteIds")))
+							jsonObject.getJSONArray("siteIds"))),
+					_deployPortlet(appBuilderApp, appName, menuLabel)
 				});
 		}
 

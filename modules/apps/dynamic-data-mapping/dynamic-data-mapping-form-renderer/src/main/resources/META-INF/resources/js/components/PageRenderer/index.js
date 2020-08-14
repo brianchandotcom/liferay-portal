@@ -154,6 +154,8 @@ const Renderer = ({
 	activePage = 0,
 	editable = false,
 	editingLanguageId,
+	forceAriaUpdate,
+	invalidFormMessage,
 	overrides = {},
 	page: defaultPage,
 	pageIndex = 0,
@@ -199,6 +201,7 @@ const Renderer = ({
 				activePage={activePage}
 				editable={editable}
 				empty={empty}
+				forceAriaUpdate={forceAriaUpdate}
 				header={
 					variant === LAYOUT_TYPES.SINGLE_PAGE ? null : (
 						<Header
@@ -208,6 +211,7 @@ const Renderer = ({
 						/>
 					)
 				}
+				invalidFormMessage={invalidFormMessage}
 				page={page}
 				pageIndex={pageIndex}
 			>

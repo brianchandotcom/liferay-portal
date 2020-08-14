@@ -153,7 +153,9 @@ export const Page = ({
 	children,
 	editable,
 	empty,
+	forceAriaUpdate,
 	header: Header,
+	invalidFormMessage,
 	pageIndex,
 }) => {
 	const {canDrop, drop, overTarget} = useDrop({
@@ -168,6 +170,18 @@ export const Page = ({
 			className="active ddm-form-page lfr-ddm-form-page"
 			data-ddm-page={pageIndex}
 		>
+			{invalidFormMessage && (
+				<span
+					aria-atomic="true"
+					aria-hidden="false"
+					aria-live="polite"
+					hidden
+				>
+					{invalidFormMessage}
+					<span aria-hidden="true">{forceAriaUpdate}</span>
+				</span>
+			)}
+
 			{activePage === pageIndex && Header}
 
 			{empty && editable && activePage === pageIndex ? (

@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {HashRouter as Router, Route, Switch} from 'react-router-dom';
 
 import {AppContextProvider} from '../../AppContext.es';
@@ -26,16 +26,25 @@ export default function ({appTab, ...props}) {
 	const PageComponent = useLazy();
 	const defaultLanguageId = getStorageLanguageId(props.appId);
 	const [userLanguageId, setUserLanguageId] = useState(defaultLanguageId);
+	const [showAppName, setShowAppName] = useState(false);
 
 	props.userLanguageId = userLanguageId;
 
-	const ListPage = (props) => (
-		<PageComponent module={appTab.listEntryPoint} props={props} />
-	);
+	const ListPage = (props) => {
+		useEffect(() => {
+			setShowAppName(true);
+		}, []);
 
-	const ViewPage = (props) => (
-		<PageComponent module={appTab.viewEntryPoint} props={props} />
-	);
+		return <PageComponent module={appTab.listEntryPoint} props={props} />;
+	};
+
+	const ViewPage = (props) => {
+		useEffect(() => {
+			setShowAppName(false);
+		}, []);
+
+		return <PageComponent module={appTab.viewEntryPoint} props={props} />;
+	};
 
 	return (
 		<div className="app-builder-root">
@@ -43,6 +52,7 @@ export default function ({appTab, ...props}) {
 				<TranslationManagerWrapper
 					dataDefinitionId={props.dataDefinitionId}
 					setUserLanguageId={setUserLanguageId}
+					showAppName={showAppName}
 					userLanguageId={userLanguageId}
 				/>
 

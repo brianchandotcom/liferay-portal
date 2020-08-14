@@ -104,13 +104,13 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 			DDMFormRenderingContext ddmFormRenderingContext)
 		throws PortalException {
 
-		Map<String, Object> ddmFormTemplateContext =
+		Map<String, Object> templateContext =
 			_ddmFormTemplateContextFactory.create(
 				ddmForm, ddmFormLayout, ddmFormRenderingContext);
 
-		ddmFormTemplateContext.put("editable", false);
+		templateContext.put("editable", false);
 
-		ddmFormTemplateContext.remove("fieldTypes");
+		templateContext.remove("fieldTypes");
 
 		HttpServletRequest httpServletRequest =
 			ddmFormRenderingContext.getHttpServletRequest();
@@ -123,9 +123,9 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 
 		String spriteMap = pathThemeImages.concat("/clay/icons.svg");
 
-		ddmFormTemplateContext.put("spritemap", spriteMap);
+		templateContext.put("spritemap", spriteMap);
 
-		return ddmFormTemplateContext;
+		return templateContext;
 	}
 
 	private static final String _MODULE_NAME =

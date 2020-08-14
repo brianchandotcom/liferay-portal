@@ -249,20 +249,20 @@ public class DataLayoutResourceImpl
 		ddmFormRenderingContext.setShowSubmitButton(false);
 		ddmFormRenderingContext.setViewMode(true);
 
-		Map<String, Object> ddmFormTemplateContextMap =
+		Map<String, Object> templateContext =
 			_ddmFormTemplateContextFactory.create(
 				ddmForm, ddmStructureLayout.getDDMFormLayout(),
 				ddmFormRenderingContext);
 
-		ddmFormTemplateContextMap.put("editable", false);
-		ddmFormTemplateContextMap.put(
+		templateContext.put("editable", false);
+		templateContext.put(
 			"spritemap",
 			dataLayoutRenderingContext.getPathThemeImages() +
 				"/clay/icons.svg");
-		ddmFormTemplateContextMap.remove("fieldTypes");
+		templateContext.remove("fieldTypes");
 
 		return Response.ok(
-			ddmFormTemplateContextMap
+			templateContext
 		).build();
 	}
 

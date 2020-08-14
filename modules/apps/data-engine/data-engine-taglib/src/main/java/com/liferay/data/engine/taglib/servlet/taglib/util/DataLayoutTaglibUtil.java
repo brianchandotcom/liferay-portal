@@ -598,7 +598,7 @@ public class DataLayoutTaglibUtil {
 
 			DDMForm ddmForm = _getDDMForm();
 
-			Map<String, Object> ddmFormTemplateContext =
+			Map<String, Object> templateContext =
 				_ddmFormTemplateContextFactory.create(
 					ddmForm, _getDDMFormLayout(),
 					new DDMFormRenderingContext() {
@@ -611,12 +611,12 @@ public class DataLayoutTaglibUtil {
 					});
 
 			_populateDDMFormFieldSettingsContext(
-				ddmForm.getDDMFormFieldsMap(true), ddmFormTemplateContext);
+				ddmForm.getDDMFormFieldsMap(true), templateContext);
 
-			ddmFormTemplateContext.put("rules", _getDataRulesJSONArray());
+			templateContext.put("rules", _getDataRulesJSONArray());
 
 			return _jsonFactory.createJSONObject(
-				_jsonFactory.looseSerializeDeep(ddmFormTemplateContext));
+				_jsonFactory.looseSerializeDeep(templateContext));
 		}
 
 		private Map<String, Object> _createDDMFormFieldSettingContext(
@@ -886,7 +886,7 @@ public class DataLayoutTaglibUtil {
 
 		private void _populateDDMFormFieldSettingsContext(
 				Map<String, DDMFormField> ddmFormFieldsMap,
-				Map<String, Object> ddmFormTemplateContext)
+				Map<String, Object> templateContext)
 			throws Exception {
 
 			UnsafeConsumer<Map<String, Object>, Exception> unsafeConsumer =
@@ -904,7 +904,7 @@ public class DataLayoutTaglibUtil {
 				};
 
 			List<Map<String, Object>> pages =
-				(List<Map<String, Object>>)ddmFormTemplateContext.get("pages");
+				(List<Map<String, Object>>)templateContext.get("pages");
 
 			for (Map<String, Object> page : pages) {
 				List<Map<String, Object>> rows =

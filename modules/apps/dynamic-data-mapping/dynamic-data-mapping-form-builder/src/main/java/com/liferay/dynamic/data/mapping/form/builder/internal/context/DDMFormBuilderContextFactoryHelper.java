@@ -133,14 +133,14 @@ public class DDMFormBuilderContextFactoryHelper {
 		ddmFormRenderingContext.setPortletNamespace(_portletNamespace);
 		ddmFormRenderingContext.setReadOnly(_readOnly);
 
-		Map<String, Object> ddmFormTemplateContext =
+		Map<String, Object> templateContext =
 			_ddmFormTemplateContextFactory.create(
 				ddmForm, ddmFormLayout, ddmFormRenderingContext);
 
 		populateDDMFormFieldSettingsContext(
-			ddmFormTemplateContext, ddmForm.getDDMFormFieldsMap(true));
+			ddmForm.getDDMFormFieldsMap(true), templateContext);
 
-		return ddmFormTemplateContext;
+		return templateContext;
 	}
 
 	protected Map<String, Object> createFormContext(DDMStructure ddmStructure) {
@@ -394,12 +394,12 @@ public class DDMFormBuilderContextFactoryHelper {
 	}
 
 	protected void populateDDMFormFieldSettingsContext(
-		Map<String, Object> ddmFormTemplateContext,
-		Map<String, DDMFormField> ddmFormFieldsMap) {
+		Map<String, DDMFormField> ddmFormFieldsMap,
+		Map<String, Object> templateContext) {
 
 		DDMFormBuilderContextFieldVisitor ddmFormBuilderContextFieldVisitor =
 			new DDMFormBuilderContextFieldVisitor(
-				ddmFormTemplateContext,
+				templateContext,
 				new Consumer<Map<String, Object>>() {
 
 					@Override

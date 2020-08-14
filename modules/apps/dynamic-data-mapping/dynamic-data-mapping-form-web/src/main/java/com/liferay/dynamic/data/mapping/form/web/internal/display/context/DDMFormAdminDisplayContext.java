@@ -321,11 +321,11 @@ public class DDMFormAdminDisplayContext {
 			ddmFormRenderingContext.setViewMode(true);
 
 			try {
-				Map<String, Object> settingsContext =
+				Map<String, Object> templateContext =
 					_ddmFormTemplateContextFactory.create(
 						ddmForm, ddmFormLayout, ddmFormRenderingContext);
 
-				jsonObject.put("settingsContext", settingsContext);
+				jsonObject.put("settingsContext", templateContext);
 			}
 			catch (PortalException portalException) {
 				_log.error(portalException, portalException);

@@ -64,7 +64,7 @@ public class RemoteAppPortletRegistrar {
 	@Deactivate
 	protected void deactivate() {
 		if (_log.isInfoEnabled()) {
-			_log.info("Stopping all remote apps");
+			_log.info("Stopping remote apps");
 		}
 
 		Collection<RemoteAppPortlet> remoteAppPortlets;

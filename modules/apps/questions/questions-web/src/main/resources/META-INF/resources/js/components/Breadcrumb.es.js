@@ -12,17 +12,22 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import React, {useCallback, useEffect, useState} from 'react';
+import {withRouter} from 'react-router-dom';
 
 import {client, getSectionsByIdQuery} from '../utils/client.es';
+import {historyPushWithSlug, stringToSlug} from '../utils/utils.es';
 import BreadcrumbDropdown from './BreadcrumbDropdown.es';
 import Link from './Link.es';
-import NewTopic from './NewTopic.es';
+import NewTopicModal from './NewTopicModal.es';
 
-export default ({section}) => {
+export default withRouter(({history ,section}) => {
 	const MAX_SECTIONS_IN_BREADCRUMB = 3;
+	const historyPushParser = historyPushWithSlug(history.push);
 	const [breadcrumbNodes, setBreadcrumbNodes] = useState([]);
+	const [visible, setVisible] = useState(false);
 
 	const getSubSections = (section) =>
 		(section &&
@@ -91,11 +96,28 @@ export default ({section}) => {
 					<AllBreadcrumb />
 				)}
 			</ol>
-			{section &&
-				section.actions &&
-				section.actions['add-subcategory'] && (
-					<NewTopic currentSectionId={section && section.id} />
-				)}
+			{section && section.actions && section.actions['add-subcategory'] && (
+				<>
+					<NewTopicModal
+						currentSectionId={section && section.id}
+						onClose={() => setVisible(false)}
+						onCreateNavigateTo={(topicName) =>
+							historyPushParser(
+								`/questions/${stringToSlug(topicName)}`
+							)
+						}
+						visible={visible}
+					/>
+					<ClayButton
+						className="breadcrumb-button c-ml-3 c-p-2"
+						displayType="unstyled"
+						onClick={() => setVisible(true)}
+					>
+						<ClayIcon className="c-mr-2" symbol="plus" />
+						{Liferay.Language.get('new-topic')}
+					</ClayButton>
+				</>
+			)}
 		</section>
 	);
 
@@ -161,4 +183,4 @@ export default ({section}) => {
 			</li>
 		));
 	}
-};
+});

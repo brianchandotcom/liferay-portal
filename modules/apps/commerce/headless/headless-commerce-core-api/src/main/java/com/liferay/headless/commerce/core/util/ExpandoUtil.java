@@ -34,10 +34,11 @@ public class ExpandoUtil {
 		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
 			companyId, clazz.getName(), classPK);
 
-		Enumeration<String> attributeNames = expandoBridge.getAttributeNames();
+		Enumeration<String> attributeNamesEnumeration =
+			expandoBridge.getAttributeNames();
 
-		while (attributeNames.hasMoreElements()) {
-			String attributeName = attributeNames.nextElement();
+		while (attributeNamesEnumeration.hasMoreElements()) {
+			String attributeName = attributeNamesEnumeration.nextElement();
 
 			if (!expandoAttributes.containsKey(attributeName)) {
 				continue;

@@ -93,14 +93,14 @@ public class OrderHelper {
 	}
 
 	public Order toOrder(
-			long commerceOrderId, Locale locale, boolean isAcceptAllLanguages,
+			long commerceOrderId, Locale locale, boolean acceptAllLanguages,
 			User contextUser, UriInfo contextUriInfo,
 			Map<String, Map<String, String>> actions)
 		throws Exception {
 
 		return _orderDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				isAcceptAllLanguages, actions, _dtoConverterRegistry,
+				acceptAllLanguages, actions, _dtoConverterRegistry,
 				commerceOrderId, locale, contextUriInfo, contextUser));
 	}
 

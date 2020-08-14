@@ -82,6 +82,7 @@
 		<suppress checks="JavaConfigurationCategoryCheck" files=".*" />
 		<suppress checks="JavaInternalPackageCheck" files="commerce-product-service/.*" />
 		<suppress checks="JavaInternalPackageCheck" files="commerce-service/.*" />
+		<suppress checks="JavaPackagePathCheck" files=".*" />
 		<suppress checks="JavaVariableTypeCheck" files="commerce-product-api/src/main/java/com/liferay/commerce/product/option/CommerceOptionValue\.java" />
 		<suppress checks="JSONPackageJSONCheck" files="commerce-cart-taglib/package\.json" />
 		<suppress checks="JSONPackageJSONCheck" files="commerce-frontend-js/package\.json" />
@@ -90,7 +91,6 @@
 		<suppress checks="JSONPackageJSONCheck" files="commerce-product-options-web/package\.json" />
 		<suppress checks="JSONPackageJSONCheck" files="commerce-theme-minium/commerce-theme-minium-impl/package\.json" />
 		<suppress checks="JSONPackageJSONDependencyVersionCheck" files=".*" />
-		<suppress checks="JavaPackagePathCheck" files=".*" />
 		<suppress checks="PropertiesLiferayPluginPackageLiferayVersionsCheck" files="commerce-theme-minium/commerce-theme-minium/src/WEB-INF/liferay-plugin-package\.properties" />
 		<suppress checks="PropertiesLiferayPluginPackageLiferayVersionsCheck" files="commerce-theme-speedwell/commerce-theme-speedwell/src/WEB-INF/liferay-plugin-package\.properties" />
 		<suppress checks="StringMethodsCheck" files="commerce-discount-web/src/main/java/com/liferay/commerce/discount/web/internal/display/context/CommerceDiscountDisplayContext\.java" />

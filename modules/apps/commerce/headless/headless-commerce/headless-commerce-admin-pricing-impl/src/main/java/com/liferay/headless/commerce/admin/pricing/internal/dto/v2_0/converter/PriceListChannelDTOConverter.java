@@ -47,7 +47,7 @@ public class PriceListChannelDTOConverter
 			_commercePriceListChannelRelService.getCommercePriceListChannelRel(
 				(Long)dtoConverterContext.getId());
 
-		CommerceChannel commercechannel =
+		CommerceChannel commerceChannel =
 			commercePriceListChannelRel.getCommerceChannel();
 		CommercePriceList commercePriceList =
 			commercePriceListChannelRel.getCommercePriceList();
@@ -56,8 +56,8 @@ public class PriceListChannelDTOConverter
 			{
 				actions = dtoConverterContext.getActions();
 				channelExternalReferenceCode =
-					commercechannel.getExternalReferenceCode();
-				channelId = commercechannel.getCommerceChannelId();
+					commerceChannel.getExternalReferenceCode();
+				channelId = commerceChannel.getCommerceChannelId();
 				id =
 					commercePriceListChannelRel.
 						getCommercePriceListChannelRelId();

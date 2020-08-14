@@ -546,6 +546,7 @@ definition {
 
 	@priority = "4"
 	test ViewNoAddPagePermissionsPG {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Navigation,Permissions";
 
 		task ("Add a page to the site") {
@@ -573,11 +574,10 @@ definition {
 				userLastName = "userln",
 				userScreenName = "usersn");
 
-			User.openUsersAdmin();
-
-			User.editPasswordCP(
-				userEmailAddress = "userea@liferay.com",
-				userScreenName = "usersn");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
 
 			JSONRole.assignRoleToUser(
 				roleTitle = "Power User",

@@ -214,6 +214,7 @@ definition {
 
 	@priority = "3"
 	test LocalizeCountryName {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Site Localization,Users and Organizations";
 
 		JSONUser.addUser(
@@ -222,11 +223,10 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		User.openUsersAdmin();
-
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
 
 		User.openUsersAdmin();
 
@@ -274,6 +274,7 @@ definition {
 
 	@priority = "3"
 	test NoLocalePrependedWhenLocaleMatchMyPreferredLocalization {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.name.skip.portal.instance = "LocalizationWithSites#NoLocalePrependedWhenLocaleMatchMyPreferredLocalization";
 		property testray.component.names = "Site Localization";
 		var portalURL = PropsUtil.get("portal.url");
@@ -304,11 +305,10 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		User.openUsersAdmin();
-
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
 
 		User.openUsersAdmin();
 
@@ -598,6 +598,7 @@ definition {
 
 	@priority = "4"
 	test ViewAvailableSiteLocaleAlternatives {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.name.skip.portal.instance = "LocalizationWithSites#ViewAvailableSiteLocaleAlternatives";
 		property testray.component.names = "Site Localization";
 
@@ -607,11 +608,10 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		User.openUsersAdmin();
-
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
 
 		User.openUsersAdmin();
 

@@ -26,6 +26,7 @@ definition {
 
 	@priority = "5"
 	test AddAndViewStructureAndTemplateWithPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 		property testray.component.names = "Permissions,Roles,Training,Web Content Administration";
 
@@ -152,11 +153,10 @@ definition {
 				userLastName = "userln${number}",
 				userScreenName = "usersn${number}");
 
-			User.openUsersAdmin();
-
-			User.editPasswordCP(
-				userEmailAddress = "user${number}@liferay.com",
-				userScreenName = "usersn${number}");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "user${number}@liferay.com");
 
 			JSONUser.addUserToSite(
 				groupName = "Test Site Name",

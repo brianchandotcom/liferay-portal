@@ -688,6 +688,7 @@ definition {
 
 	@priority = "3"
 	test ViewMembershipRequestWithSiteMembershipScope {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Site Administration,Users and Organizations";
 
 		for (var i : list "1,2") {
@@ -702,11 +703,10 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		User.openUsersAdmin();
-
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",

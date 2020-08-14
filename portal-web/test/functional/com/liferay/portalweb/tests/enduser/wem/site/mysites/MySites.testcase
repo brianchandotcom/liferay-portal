@@ -64,6 +64,7 @@ definition {
 	@description = "Assert a default user can join a normal open site"
 	@priority = "4"
 	test JoinSiteOpen {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Site Administration,Users and Organizations";
 
 		task ("Create an open site") {
@@ -77,11 +78,10 @@ definition {
 				userLastName = "userln",
 				userScreenName = "usersn");
 
-			User.openUsersAdmin();
-
-			User.editPasswordCP(
-				userEmailAddress = "userea@liferay.com",
-				userScreenName = "usersn");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
 		}
 
 		task ("Login with the new user and join the open site") {
@@ -110,6 +110,7 @@ definition {
 	@description = "Assert a default user cannot join a normal private site"
 	@priority = "5"
 	test JoinSitePrivateNo {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 		property testray.component.names = "Site Administration,Users and Organizations";
 
@@ -126,11 +127,10 @@ definition {
 				userLastName = "userln",
 				userScreenName = "usersn");
 
-			User.openUsersAdmin();
-
-			User.editPasswordCP(
-				userEmailAddress = "userea@liferay.com",
-				userScreenName = "usersn");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
 		}
 
 		task ("Login with the new user and attempt to join the private site") {
@@ -160,6 +160,7 @@ definition {
 	@description = "Assert joining a restricted site requires admin approval"
 	@priority = "5"
 	test JoinSiteRestricted {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 		property testray.component.names = "Site Administration,Users and Organizations";
 
@@ -176,11 +177,10 @@ definition {
 				userLastName = "userln",
 				userScreenName = "usersn");
 
-			User.openUsersAdmin();
-
-			User.editPasswordCP(
-				userEmailAddress = "userea@liferay.com",
-				userScreenName = "usersn");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
 		}
 
 		task ("Login with the new user and request to join the restricted site") {
@@ -250,6 +250,7 @@ definition {
 	@description = "Assert a default user can leave a site"
 	@priority = "5"
 	test LeaveSite {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 		property testray.component.names = "Site Administration,Users and Organizations";
 
@@ -264,11 +265,10 @@ definition {
 				userLastName = "userln",
 				userScreenName = "usersn");
 
-			User.openUsersAdmin();
-
-			User.editPasswordCP(
-				userEmailAddress = "userea@liferay.com",
-				userScreenName = "usersn");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
 		}
 
 		task ("Log in with new user and join site") {
@@ -336,6 +336,7 @@ definition {
 	@description = "Asssign site membership to a user in multiple ways via CP"
 	@priority = "3"
 	test ViewMembershipAssignViaSiteCP {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Site Administration,Users and Organizations";
 
 		task ("Create a user and set its password") {
@@ -345,11 +346,10 @@ definition {
 				userLastName = "userln",
 				userScreenName = "usersn");
 
-			User.openUsersAdmin();
-
-			User.editPasswordCP(
-				userEmailAddress = "userea@liferay.com",
-				userScreenName = "usersn");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
 		}
 
 		task ("Make user a member of home site via Site Settings CP") {
@@ -445,6 +445,7 @@ definition {
 	@description = "Assert a user cannot join a site with manual membership management disabled"
 	@priority = "3"
 	test ViewNoJoinOption {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Site Administration,Users and Organizations";
 
 		task ("Create a user and set its password") {
@@ -454,11 +455,10 @@ definition {
 				userLastName = "userln",
 				userScreenName = "usersn");
 
-			User.openUsersAdmin();
-
-			User.editPasswordCP(
-				userEmailAddress = "userea@liferay.com",
-				userScreenName = "usersn");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
 		}
 
 		task ("Assign the Administrator role of Home site to new user") {

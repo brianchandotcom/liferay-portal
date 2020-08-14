@@ -818,6 +818,7 @@ definition {
 	@description = "This is a test for LPS-98589. Can edit the title of the widgets with "borderless" and "decorate" decorators in content page with correct permissions."
 	@priority = "5"
 	test EditConvertedContentPageWithDecorator {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		JSONLayout.addPublicLayout(
@@ -900,12 +901,10 @@ definition {
 			userLastName = "Userln1",
 			userScreenName = "usersn1");
 
-		User.openUsersAdmin();
-
-		User.editPasswordCP(
-			password = "password",
-			userEmailAddress = "userea1@liferay.com",
-			userScreenName = "usersn1");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea1@liferay.com");
 
 		JSONUser.addUserToSite(
 			groupName = "Test Site Name",

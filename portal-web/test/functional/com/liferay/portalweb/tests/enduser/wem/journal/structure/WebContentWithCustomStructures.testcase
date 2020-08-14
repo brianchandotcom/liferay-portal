@@ -482,6 +482,7 @@ definition {
 
 	@priority = "3"
 	test AddWebContentWithGlobalStructureAndEditedDefaultValues {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Web Content Administration";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
@@ -528,11 +529,10 @@ definition {
 			userLastName = "test1",
 			userScreenName = "test1test");
 
-		User.openUsersAdmin();
-
-		User.editPasswordCP(
-			userEmailAddress = "test1@liferay.com",
-			userScreenName = "test1test");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "test1@liferay.com");
 
 		JSONUser.addUserToSite(
 			groupName = "Test Site Name",

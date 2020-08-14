@@ -49,6 +49,8 @@ definition {
 	@description = "This is a test for LPS-90999. A user with permissions has access to edit the web content article or display page while viewing the article through its display page."
 	@priority = "5"
 	test EditWhenViewingInDisplayPageAsUser {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		task ("Add a display page with fragments mapped to Basic Web Content") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
@@ -111,11 +113,10 @@ definition {
 				userLastName = "Userln1",
 				userScreenName = "usersn1");
 
-			User.openUsersAdmin();
-
-			User.editPasswordCP(
-				userEmailAddress = "userea1@liferay.com",
-				userScreenName = "usersn1");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea1@liferay.com");
 
 			JSONRole.assignRoleToUser(
 				roleTitle = "Administrator",
@@ -129,11 +130,10 @@ definition {
 				userLastName = "Userln2",
 				userScreenName = "usersn2");
 
-			User.openUsersAdmin();
-
-			User.editPasswordCP(
-				userEmailAddress = "userea2@liferay.com",
-				userScreenName = "usersn2");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea2@liferay.com");
 		}
 
 		task ("Sign in as the first user") {
@@ -517,6 +517,8 @@ definition {
 	@description = "This is a test for LPS-86550. Users should be able to map last editor name and author profile image to a fragment editable field in a display page."
 	@priority = "5"
 	test MapWebContentLastEditor {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		task ("Add a display page with last editor name and profile fields mapped") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
@@ -569,11 +571,10 @@ definition {
 				userLastName = "Userln",
 				userScreenName = "usersn");
 
-			User.openUsersAdmin();
-
-			User.editPasswordCP(
-				userEmailAddress = "userea@liferay.com",
-				userScreenName = "usersn");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
 
 			JSONRole.assignRoleToUser(
 				roleTitle = "Administrator",

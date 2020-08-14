@@ -1,6 +1,7 @@
 @component-name = "portal-wcm"
 definition {
 
+	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Site Pages Administration";
@@ -18,11 +19,10 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		User.openUsersAdmin();
-
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
 
 		JSONGroup.assignUserToGroup(
 			groupName = "Test Site Name",

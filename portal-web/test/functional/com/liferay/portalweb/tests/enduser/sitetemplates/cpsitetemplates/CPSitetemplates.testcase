@@ -93,7 +93,7 @@ definition {
 
 	@priority = "4"
 	test AddSiteTemplateDisablePageModification {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		SiteTemplates.addCP(
 			disableChanges = "true",
@@ -418,7 +418,7 @@ definition {
 
 	@priority = "4"
 	test OnlySiteAdminCanModifyPageAssociatedWithSiteTemplate {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 

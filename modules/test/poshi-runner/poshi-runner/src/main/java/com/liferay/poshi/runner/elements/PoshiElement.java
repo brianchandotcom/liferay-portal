@@ -176,6 +176,20 @@ public abstract class PoshiElement
 		_poshiScript = poshiScript;
 	}
 
+	public List<PoshiElement> toPoshiElements(List<?> list) {
+		if (list == null) {
+			return null;
+		}
+
+		List<PoshiElement> poshiElements = new ArrayList<>(list.size());
+
+		for (Object object : list) {
+			poshiElements.add((PoshiElement)object);
+		}
+
+		return poshiElements;
+	}
+
 	@Override
 	public String toPoshiScript() {
 		StringBuilder sb = new StringBuilder();
@@ -1019,20 +1033,6 @@ public abstract class PoshiElement
 		}
 
 		return poshiElementAttributes;
-	}
-
-	protected List<PoshiElement> toPoshiElements(List<?> list) {
-		if (list == null) {
-			return null;
-		}
-
-		List<PoshiElement> poshiElements = new ArrayList<>(list.size());
-
-		for (Object object : list) {
-			poshiElements.add((PoshiElement)object);
-		}
-
-		return poshiElements;
 	}
 
 	protected List<PoshiNode<?, ?>> toPoshiNodes(List<?> list) {

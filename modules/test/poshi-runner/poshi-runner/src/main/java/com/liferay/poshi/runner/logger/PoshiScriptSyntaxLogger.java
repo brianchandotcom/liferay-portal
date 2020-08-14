@@ -107,7 +107,8 @@ public final class PoshiScriptSyntaxLogger extends SyntaxLogger {
 
 		String name = element.getName();
 
-		List<PoshiElement> elements = element.elements();
+		List<PoshiElement> elements = poshiElement.toPoshiElements(
+			element.elements());
 
 		if (!name.equals("execute") && !elements.isEmpty()) {
 			logStatement += " {";

@@ -2,7 +2,6 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="CamelCaseNameCheck" files="commerce-google-merchant/src/main/java/com/liferay/commerce/frontend/internal/account/CommerceAccountResource\.java" />
 		<suppress checks="CamelCaseNameCheck" files="commerce-google-merchant/src/main/java/com/liferay/commerce/google/merchant/internal/sftp/SftpUploader\.java" />
 		<suppress checks="ChainingCheck" files=".*" />
 		<suppress checks="ChainingCheck" files="commerce-frontend-impl/src/main/java/com/liferay/commerce/frontend/internal/account/CommerceAccountResource\.java" />
@@ -16,7 +15,6 @@
 		<suppress checks="VariableNameCheck" files="commerce-google-merchant/src/main/java/com/liferay/commerce/google/merchant/internal/jsch/FingerprintHostKeyRepository\.java" />
 	</checkstyle>
 	<source-check>
-		<suppress checks="JavaPackagePathCheck" files=".*" />
 		<suppress checks="BNDExportsCheck" files="commerce-application-list/bnd\.bnd" />
 		<suppress checks="BNDExportsCheck" files="commerce-initializer-util/bnd\.bnd" />
 		<suppress checks="BNDExportsCheck" files="commerce-media-impl/bnd\.bnd" />
@@ -92,6 +90,7 @@
 		<suppress checks="JSONPackageJSONCheck" files="commerce-product-options-web/package\.json" />
 		<suppress checks="JSONPackageJSONCheck" files="commerce-theme-minium/commerce-theme-minium-impl/package\.json" />
 		<suppress checks="JSONPackageJSONDependencyVersionCheck" files=".*" />
+		<suppress checks="JavaPackagePathCheck" files=".*" />
 		<suppress checks="PropertiesLiferayPluginPackageLiferayVersionsCheck" files="commerce-theme-minium/commerce-theme-minium/src/WEB-INF/liferay-plugin-package\.properties" />
 		<suppress checks="PropertiesLiferayPluginPackageLiferayVersionsCheck" files="commerce-theme-speedwell/commerce-theme-speedwell/src/WEB-INF/liferay-plugin-package\.properties" />
 		<suppress checks="StringMethodsCheck" files="commerce-discount-web/src/main/java/com/liferay/commerce/discount/web/internal/display/context/CommerceDiscountDisplayContext\.java" />

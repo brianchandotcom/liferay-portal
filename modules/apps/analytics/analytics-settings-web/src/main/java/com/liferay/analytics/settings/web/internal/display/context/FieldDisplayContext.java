@@ -19,6 +19,7 @@ import com.liferay.analytics.settings.web.internal.constants.AnalyticsSettingsWe
 import com.liferay.analytics.settings.web.internal.model.Field;
 import com.liferay.analytics.settings.web.internal.search.FieldChecker;
 import com.liferay.analytics.settings.web.internal.search.FieldSearch;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 

@@ -446,7 +446,7 @@ public class ProjectTemplatesFormFieldTest
 
 	@Test
 	public void testBuildTemplateFormField73() throws Exception {
-		String liferayVersion = "7.3.3";
+		String liferayVersion = "7.3.4";
 		String name = "foobar";
 
 		File workspaceDir = buildWorkspace(temporaryFolder, liferayVersion);

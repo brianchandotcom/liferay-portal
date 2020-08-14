@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
@@ -98,6 +99,10 @@ public class WorkflowTaskUserNotificationHandler
 
 			return StringPool.BLANK;
 		}
+
+		serviceContext.setAttribute(
+			WorkflowConstants.CONTEXT_URL,
+			jsonObject.getString(WorkflowConstants.CONTEXT_URL));
 
 		return workflowHandler.getURLEditWorkflowTask(
 			workflowTaskId, serviceContext);

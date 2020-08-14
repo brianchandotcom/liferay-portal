@@ -64,8 +64,8 @@ public class OrderHelper {
 				Field.ENTRY_CLASS_PK),
 			new UnsafeConsumer() {
 
-				public void accept(Object o) throws Exception {
-					SearchContext searchContext = (SearchContext)o;
+				public void accept(Object object) throws Exception {
+					SearchContext searchContext = (SearchContext)object;
 
 					searchContext.setCompanyId(companyId);
 

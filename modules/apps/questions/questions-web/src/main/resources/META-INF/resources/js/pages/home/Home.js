@@ -16,6 +16,7 @@ import {useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayCard from '@clayui/card';
 import ClayEmptyState from '@clayui/empty-state';
+import ClayIcon from '@clayui/icon';
 import React, {useContext, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
@@ -24,7 +25,7 @@ import Link from '../../components/Link.es';
 import NewTopicModal from '../../components/NewTopicModal.es';
 import {getSectionsQuery} from '../../utils/client.es';
 import lang from '../../utils/lang.es';
-import {historyPushWithSlug, stringToSlug} from '../../utils/utils.es';
+import {historyPushWithSlug} from '../../utils/utils.es';
 
 export default withRouter(({history}) => {
 	const context = useContext(AppContext);
@@ -45,6 +46,31 @@ export default withRouter(({history}) => {
 		<section className="questions-section questions-section-cards">
 			<div className="questions-container">
 				<div className="row">
+					{data && data.messageBoardSections.items.length > 0 && (
+						<div className="c-mb-4 col-lg-4 col-md-6 col-xl-3">
+							<div className="questions-card text-decoration-none text-secondary">
+								<ClayCard
+									onClick={() =>
+										setTopicModalVisibility(true)
+									}
+								>
+									<ClayCard.Body>
+										<ClayEmptyState
+											description=""
+											imgSrc={
+												context.includeContextPath +
+												'/assets/new_topic_illustration.png'
+											}
+											title=""
+										>
+											<ClayIcon symbol="plus" />
+											{Liferay.Language.get('new-topic')}
+										</ClayEmptyState>
+									</ClayCard.Body>
+								</ClayCard>
+							</div>
+						</div>
+					)}
 					{(data &&
 						data.messageBoardSections.items.length > 0 &&
 						data.messageBoardSections.items.map((section) => (
@@ -124,9 +150,7 @@ export default withRouter(({history}) => {
 						currentSectionId={0}
 						onClose={() => setTopicModalVisibility(false)}
 						onCreateNavigateTo={() => {
-							historyPushParser(
-								`/`
-							);
+							historyPushParser(`/`);
 						}}
 						visible={topicModalVisibility}
 					/>

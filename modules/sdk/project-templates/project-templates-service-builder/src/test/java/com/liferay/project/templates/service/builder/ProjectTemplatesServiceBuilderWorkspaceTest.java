@@ -157,17 +157,9 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 			testContains(
 				gradleProjectDir, _name + "-service/bnd.bnd",
 				"-dsannotations-options: inherit");
-
-			testNotContains(
-				gradleProjectDir, _name + "-service/build.gradle",
-				"com.liferay.portal.spring.extender");
 		}
 
 		if (_dependencyInjector.equals("spring")) {
-			testContains(
-				gradleProjectDir, _name + "-service/build.gradle",
-				"com.liferay.portal.spring.extender");
-
 			testNotContains(
 				gradleProjectDir, _name + "-service/bnd.bnd",
 				"-dsannotations-options: inherit");
@@ -176,46 +168,12 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 				"dependency-injector=\"ds\"");
 		}
 
-		if (_liferayVersion.equals("7.0.6") ||
-			_liferayVersion.equals("7.1.3")) {
-
-			testContains(
-				gradleProjectDir, _name + "-api/build.gradle",
-				DEPENDENCY_PORTAL_KERNEL, "biz.aQute.bnd.annotation");
-			testContains(
-				gradleProjectDir, _name + "-service/build.gradle",
-				DEPENDENCY_PORTAL_KERNEL, "biz.aQute.bnd.annotation");
-
-			testNotContains(
-				gradleProjectDir, _name + "-api/build.gradle",
-				"org.osgi.annotation.versioning");
-			testNotContains(
-				gradleProjectDir, _name + "-service/build.gradle",
-				"org.osgi.annotation.versioning");
-		}
-		else {
-			testContains(
-				gradleProjectDir, _name + "-api/build.gradle",
-				DEPENDENCY_PORTAL_KERNEL, "com.liferay.petra.lang",
-				"com.liferay.petra.string", "org.osgi.annotation.versioning");
-			testContains(
-				gradleProjectDir, _name + "-service/build.gradle",
-				DEPENDENCY_PORTAL_KERNEL, "com.liferay.petra.lang",
-				"com.liferay.petra.string", "org.osgi.annotation.versioning",
-				"com.liferay.portal.aop.api");
-
-			if (_liferayVersion.equals("7.3.3")) {
-				testContains(
-					gradleProjectDir, _name + "-service/build.gradle",
-					"com.liferay.petra.sql.dsl.api");
-			}
-
-			testNotContains(
-				gradleProjectDir, _name + "-api/build.gradle", "biz.aQute.bnd");
-			testNotContains(
-				gradleProjectDir, _name + "-service/build.gradle",
-				"biz.aQute.bnd");
-		}
+		testContains(
+			gradleProjectDir, _name + "-api/build.gradle",
+			DEPENDENCY_RELEASE_PORTAL_API);
+		testContains(
+			gradleProjectDir, _name + "-service/build.gradle",
+			DEPENDENCY_RELEASE_PORTAL_API);
 
 		File mavenWorkspaceDir = buildWorkspace(
 			temporaryFolder, "maven", "mavenWS", _liferayVersion,

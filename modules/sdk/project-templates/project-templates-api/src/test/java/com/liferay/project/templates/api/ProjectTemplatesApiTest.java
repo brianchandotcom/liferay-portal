@@ -77,7 +77,8 @@ public class ProjectTemplatesApiTest implements BaseProjectTemplatesTestCase {
 
 		testExists(gradleProjectDir, "bnd.bnd");
 
-		testContains(gradleProjectDir, "build.gradle", DEPENDENCY_OSGI_CORE);
+		testContains(
+			gradleProjectDir, "build.gradle", DEPENDENCY_RELEASE_PORTAL_API);
 		testContains(
 			gradleProjectDir, "src/main/java/foo/api/Foo.java",
 			"public interface Foo");

@@ -93,7 +93,7 @@ public class ProjectTemplatesPortletProviderTest
 			"src/main/resources/META-INF/resources/css/main.scss");
 
 		testContains(
-			gradleProjectDir, "build.gradle", DEPENDENCY_PORTAL_KERNEL);
+			gradleProjectDir, "build.gradle", DEPENDENCY_RELEASE_PORTAL_API);
 		testContains(
 			gradleProjectDir,
 			"src/main/java/provider/test/constants" +

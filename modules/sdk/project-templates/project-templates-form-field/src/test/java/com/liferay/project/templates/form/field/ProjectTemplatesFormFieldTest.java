@@ -80,7 +80,7 @@ public class ProjectTemplatesFormFieldTest
 			gradleProjectDir, "bnd.bnd", "Bundle-Name: " + name,
 			"Web-ContextPath: /dynamic-data-foobar-form-field");
 		testContains(
-			gradleProjectDir, "build.gradle", DEPENDENCY_PORTAL_KERNEL);
+			gradleProjectDir, "build.gradle", DEPENDENCY_RELEASE_PORTAL_API);
 		testContains(
 			gradleProjectDir,
 			"src/main/java/foobar/form/field/FoobarDDMFormFieldRenderer.java",
@@ -151,7 +151,7 @@ public class ProjectTemplatesFormFieldTest
 			gradleProjectDir, "bnd.bnd", "Bundle-Name: " + name,
 			"Web-ContextPath: /dynamic-data-foobar-form-field");
 		testContains(
-			gradleProjectDir, "build.gradle", DEPENDENCY_PORTAL_KERNEL);
+			gradleProjectDir, "build.gradle", DEPENDENCY_RELEASE_PORTAL_API);
 		testContains(
 			gradleProjectDir, "package.json",
 			"\"name\": \"dynamic-data-foobar-form-field\"",
@@ -237,7 +237,7 @@ public class ProjectTemplatesFormFieldTest
 			gradleProjectDir, "bnd.bnd", "Bundle-Name: " + name,
 			"Web-ContextPath: /dynamic-data-foo-bar-form-field");
 		testContains(
-			gradleProjectDir, "build.gradle", DEPENDENCY_PORTAL_KERNEL);
+			gradleProjectDir, "build.gradle", DEPENDENCY_RELEASE_PORTAL_API);
 		testContains(
 			gradleProjectDir, "package.json",
 			"\"name\": \"dynamic-data-foo-bar-form-field\"",
@@ -321,14 +321,7 @@ public class ProjectTemplatesFormFieldTest
 			gradleProjectDir, "bnd.bnd", "Provide-Capability:", "soy;",
 			"type:String=\"LiferayFormField\"");
 		testContains(
-			gradleProjectDir, "build.gradle",
-			"compileOnly group: \"com.liferay\", name: " +
-				"\"com.liferay.dynamic.data.mapping.api\"",
-			"compileOnly group: \"com.liferay\", name: " +
-				"\"com.liferay.frontend.js.loader.modules.extender.api\"",
-			"jsCompile group: \"com.liferay\", name: " +
-				"\"com.liferay.dynamic.data.mapping.form.field.type\"",
-			DEPENDENCY_PORTAL_KERNEL);
+			gradleProjectDir, "build.gradle", DEPENDENCY_RELEASE_PORTAL_API);
 		testContains(
 			gradleProjectDir,
 			"src/main/java/foobar/form/field/FoobarDDMFormFieldType.java",
@@ -466,14 +459,7 @@ public class ProjectTemplatesFormFieldTest
 			gradleProjectDir, "bnd.bnd", "Provide-Capability:", "soy;",
 			"type:String=\"LiferayFormField\"");
 		testContains(
-			gradleProjectDir, "build.gradle",
-			"compileOnly group: \"com.liferay\", name: " +
-				"\"com.liferay.dynamic.data.mapping.api\"",
-			"compileOnly group: \"com.liferay\", name: " +
-				"\"com.liferay.frontend.js.loader.modules.extender.api\"",
-			"jsCompile group: \"com.liferay\", name: " +
-				"\"com.liferay.dynamic.data.mapping.form.field.type\"",
-			DEPENDENCY_PORTAL_KERNEL);
+			gradleProjectDir, "build.gradle", DEPENDENCY_RELEASE_PORTAL_API);
 		testContains(
 			gradleProjectDir,
 			"src/main/java/foobar/form/field/FoobarDDMFormFieldType.java",

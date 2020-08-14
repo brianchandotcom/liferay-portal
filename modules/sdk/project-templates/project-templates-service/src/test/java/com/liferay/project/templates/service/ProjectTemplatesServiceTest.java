@@ -96,7 +96,7 @@ public class ProjectTemplatesServiceTest
 			"com.liferay.portal.kernel.events.LifecycleAction");
 
 		testContains(
-			gradleProjectDir, "build.gradle", DEPENDENCY_PORTAL_KERNEL);
+			gradleProjectDir, "build.gradle", DEPENDENCY_RELEASE_PORTAL_API);
 
 		testNotContains(gradleProjectDir, "build.gradle", "version: \"[0-9].*");
 

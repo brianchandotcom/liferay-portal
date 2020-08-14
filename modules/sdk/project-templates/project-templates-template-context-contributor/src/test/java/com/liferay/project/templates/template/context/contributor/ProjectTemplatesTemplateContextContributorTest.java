@@ -92,7 +92,7 @@ public class ProjectTemplatesTemplateContextContributorTest
 		testExists(gradleProjectDir, "bnd.bnd");
 
 		testContains(
-			gradleProjectDir, "build.gradle", DEPENDENCY_PORTAL_KERNEL);
+			gradleProjectDir, "build.gradle", DEPENDENCY_RELEASE_PORTAL_API);
 		testContains(
 			gradleProjectDir,
 			"src/main/java/blade/test/context/contributor" +

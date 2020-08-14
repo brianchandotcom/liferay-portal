@@ -18,6 +18,8 @@ import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Bryan Engler
  */
@@ -31,6 +33,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	localization = "content/Language",
 	name = "elasticsearch-connection-configuration-name"
 )
+@ProviderType
 public interface ElasticsearchConnectionConfiguration {
 
 	@Meta.AD(

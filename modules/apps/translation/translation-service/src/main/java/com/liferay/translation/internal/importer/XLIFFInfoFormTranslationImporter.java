@@ -26,13 +26,12 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
-import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.translation.exception.XLIFFFileException;
 import com.liferay.translation.importer.TranslationInfoItemFieldValuesImporter;
+import com.liferay.translation.internal.util.XLIFFLocaleIdUtil;
 
 import java.io.CharConversionException;
 import java.io.File;
@@ -42,9 +41,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -100,34 +97,11 @@ public class XLIFFInfoFormTranslationImporter
 
 			Document document = _saxReader.read(tempFile);
 
-			Element rootElement = document.getRootElement();
-
-			LocaleId sourceLocaleId = _getAttributeValueOptional(
-				rootElement, "srcLang", LocaleId::fromString
-			).orElseGet(
-				() -> _getAttributeValueOptional(
-					rootElement.element("file"), "source-language",
-					LocaleId::fromString
-				).orElse(
-					_defaultLocaleId
-				)
-			);
-
-			LocaleId targetLocaleId = _getAttributeValueOptional(
-				rootElement, "trgLang", LocaleId::fromString
-			).orElseGet(
-				() -> _getAttributeValueOptional(
-					rootElement.element("file"), "target-language",
-					LocaleId::fromString
-				).orElse(
-					_defaultLocaleId
-				)
-			);
-
 			filter.open(
 				new RawDocument(
-					tempFile.toURI(), document.getXMLEncoding(), sourceLocaleId,
-					targetLocaleId));
+					tempFile.toURI(), document.getXMLEncoding(),
+					XLIFFLocaleIdUtil.getSourceLocaleId(document),
+					XLIFFLocaleIdUtil.getTargetLocaleId(document)));
 
 			Stream<Event> stream = filter.stream();
 
@@ -160,22 +134,6 @@ public class XLIFFInfoFormTranslationImporter
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);
 		}
-	}
-
-	private <T> Optional<T> _getAttributeValueOptional(
-		Element element, String attributeName, Function<String, T> function) {
-
-		if (element == null) {
-			return Optional.empty();
-		}
-
-		Attribute attribute = element.attribute(attributeName);
-
-		if (attribute == null) {
-			return Optional.empty();
-		}
-
-		return Optional.of(function.apply(attribute.getValue()));
 	}
 
 	private InfoItemFieldValues _getInfoItemFieldValuesXLIFFv12(
@@ -504,9 +462,6 @@ public class XLIFFInfoFormTranslationImporter
 				"There is no translation target");
 		}
 	}
-
-	private static final LocaleId _defaultLocaleId = LocaleId.fromString(
-		LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
 
 	@Reference
 	private Language _language;

@@ -410,9 +410,7 @@ public class TypedProperties {
 
 		// blank lines are also treated as comment lines
 
-		if ((string.length() < 1) ||
-			(_COMMENT_CHARS.indexOf(string.charAt(0)) >= 0)) {
-
+		if ((string.length() < 1) || (CharPool.POUND == string.charAt(0))) {
 			return true;
 		}
 
@@ -516,8 +514,6 @@ public class TypedProperties {
 			}
 		}
 	}
-
-	private static final String _COMMENT_CHARS = "#!";
 
 	private static final String _LINE_SEPARATOR = System.getProperty(
 		"line.separator");

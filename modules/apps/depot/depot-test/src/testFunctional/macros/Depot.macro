@@ -61,7 +61,7 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
 		AssertTextEquals(
-			locator1 = "LexiconCard#CARD_TITLE",
+			locator1 = "Card#CARD_TITLE",
 			value1 = "${orgName}");
 
 		LexiconCard.checkCardCheckbox(card = "${orgName}");
@@ -578,20 +578,20 @@ definition {
 
 		Click(
 			key_card = "${depotName}",
-			locator1 = "LexiconCard#CARD_TITLE");
+			locator1 = "Card#CARD_TITLE");
 
 		if (isSet(noApplication)) {
 			for (var applicationList : list "${applicationList}") {
 				AssertElementNotPresent(
 					key_card = "${applicationList}",
-					locator1 = "LexiconCard#CARD");
+					locator1 = "Card#CARD");
 			}
 		}
 		else {
 			for (var applicationList : list "${applicationList}") {
 				AssertVisible(
 					key_card = "${applicationList}",
-					locator1 = "LexiconCard#CARD");
+					locator1 = "Card#CARD");
 			}
 		}
 	}
@@ -816,7 +816,7 @@ definition {
 
 		AssertVisible(
 			key_card = "${userFirstName} ${userLastName}",
-			locator1 = "LexiconCard#CARD_ELLIPSIS");
+			locator1 = "Card#CARD_ELLIPSIS");
 	}
 
 	macro viewMemberOrganization {
@@ -891,7 +891,7 @@ definition {
 			var key_card = "${depotName}";
 
 			AssertTextEquals(
-				locator1 = "LexiconCard#CARD_TITLE",
+				locator1 = "Card#CARD_TITLE",
 				value1 = "${depotName}");
 		}
 
@@ -899,7 +899,7 @@ definition {
 			for (var depotName : list "${excludedResults}") {
 				var key_card = "${depotName}";
 
-				AssertElementNotPresent(locator1 = "LexiconCard#CARD_TITLE");
+				AssertElementNotPresent(locator1 = "Card#CARD_TITLE");
 			}
 		}
 	}

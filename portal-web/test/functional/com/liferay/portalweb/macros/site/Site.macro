@@ -295,7 +295,7 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
 		AssertTextEquals(
-			locator1 = "LexiconCard#CARD_TITLE",
+			locator1 = "Card#CARD_TITLE",
 			value1 = "${orgName}");
 
 		LexiconCard.checkCardCheckbox(card = "${orgName}");
@@ -1210,7 +1210,7 @@ definition {
 
 		AssertElementPresent(
 			key_card = "${site}",
-			locator1 = "LexiconCard#CARD_CUSTOM_LOGO");
+			locator1 = "Card#CARD_CUSTOM_LOGO");
 
 		SiteSelector._searchSite(site = "${site}");
 
@@ -1263,7 +1263,7 @@ definition {
 
 		AssertVisible(
 			key_card = "${userFirstName} ${userLastName}",
-			locator1 = "LexiconCard#CARD_ELLIPSIS");
+			locator1 = "Card#CARD_ELLIPSIS");
 	}
 
 	macro viewMemberListCP {

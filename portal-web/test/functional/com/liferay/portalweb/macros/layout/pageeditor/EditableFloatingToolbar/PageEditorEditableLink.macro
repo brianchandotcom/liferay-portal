@@ -18,7 +18,7 @@ definition {
 
 		Click(
 			key_card = "${entryTitle}",
-			locator1 = "LexiconCard#CARD_TITLE");
+			locator1 = "Card#CARD_TITLE");
 	}
 
 	macro _selectField {

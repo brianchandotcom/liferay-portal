@@ -1,11 +1,11 @@
 <html>
 <head>
-<title>LexiconCard</title>
+<title>Card</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">LexiconCard</td></tr>
+<tr><td rowspan="1" colspan="3">Card</td></tr>
 </thead>
 <tbody>
 <tr>

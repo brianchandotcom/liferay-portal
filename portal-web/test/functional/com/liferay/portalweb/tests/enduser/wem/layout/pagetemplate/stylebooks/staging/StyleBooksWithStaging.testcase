@@ -280,7 +280,7 @@ definition {
 
 			AssertElementPresent(
 				key_card = "Inherited from Master",
-				locator1 = "LexiconCard#CARD_SELECTED");
+				locator1 = "Card#CARD_SELECTED");
 
 			StyleBooks.selectStyleBookViaPageDesignOptions(styleBookName = "Test Style Book Name");
 
@@ -334,7 +334,7 @@ definition {
 
 			AssertElementPresent(
 				key_card = "Test Style Book Name",
-				locator1 = "LexiconCard#CARD_SELECTED");
+				locator1 = "Card#CARD_SELECTED");
 
 			StyleBooks.selectStyleBookViaPageDesignOptions(styleBookName = "Inherited from Master");
 
@@ -657,7 +657,7 @@ definition {
 
 			AssertElementPresent(
 				key_card = "Inherited from Master",
-				locator1 = "LexiconCard#CARD_SELECTED");
+				locator1 = "Card#CARD_SELECTED");
 
 			StyleBooks.selectStyleBookViaPageDesignOptions(styleBookName = "Test Style Book Name");
 

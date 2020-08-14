@@ -46,7 +46,7 @@ definition {
 		task ("Assert Export action is disabled") {
 			Click.waitForMenuToggleJSClick(
 				key_card = "Custom Masters Page Template",
-				locator1 = "LexiconCard#CARD_ELLIPSIS");
+				locator1 = "Card#CARD_ELLIPSIS");
 
 			AssertVisible(
 				key_menuItem = "Export",

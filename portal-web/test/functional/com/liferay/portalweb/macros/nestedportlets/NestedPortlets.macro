@@ -28,7 +28,7 @@ definition {
 
 		AssertChecked(
 			key_card = "${defaultColumnName}",
-			locator1 = "LexiconCard#CARD_RADIO");
+			locator1 = "Card#CARD_RADIO");
 
 		SelectFrameTop(value1 = "relative=top");
 	}

@@ -154,7 +154,7 @@ definition {
 
 		Check.checkNotVisible(
 			key_card = "${pageTemplateName}",
-			locator1 = "LexiconCard#CARD_CHECKBOX");
+			locator1 = "Card#CARD_CHECKBOX");
 	}
 
 	macro viewEntryWorkflowStatus {

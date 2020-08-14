@@ -59,7 +59,7 @@ definition {
 
 		Check.checkNotVisible(
 			key_card = "${masterLayoutName}",
-			locator1 = "LexiconCard#CARD_CHECKBOX");
+			locator1 = "Card#CARD_CHECKBOX");
 	}
 
 	macro viewMastersPresent {

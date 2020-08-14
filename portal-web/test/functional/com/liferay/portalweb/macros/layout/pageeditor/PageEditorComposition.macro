@@ -23,12 +23,12 @@ definition {
 			if (isSet(selectCollectionName)) {
 				AssertClick(
 					key_card = "${collectionName}",
-					locator1 = "LexiconCard#CARD",
+					locator1 = "Card#CARD",
 					value1 = "${collectionName}");
 			}
 			AssertElementPresent(
 				key_card = "${collectionName}",
-				locator1 = "LexiconCard#CARD_SELECTED");
+				locator1 = "Card#CARD_SELECTED");
 		}
 
 		AssertClick(

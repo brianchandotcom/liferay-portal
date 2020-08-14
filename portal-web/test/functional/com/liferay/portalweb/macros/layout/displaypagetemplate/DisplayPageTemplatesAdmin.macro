@@ -83,7 +83,7 @@ definition {
 
 		AssertVisible(
 			key_card = "${displayPageName}",
-			locator1 = "LexiconCard#CARD_STICKER");
+			locator1 = "Card#CARD_STICKER");
 	}
 
 	macro openDisplayPagesAdmin {

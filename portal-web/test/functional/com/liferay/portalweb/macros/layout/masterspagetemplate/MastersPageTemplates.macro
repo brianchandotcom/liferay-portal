@@ -39,7 +39,7 @@ definition {
 
 		AssertElementPresent(
 			key_card = "${masterLayoutName}",
-			locator1 = "LexiconCard#CARD_SELECTED");
+			locator1 = "Card#CARD_SELECTED");
 
 		SelectFrameTop();
 
@@ -53,7 +53,7 @@ definition {
 
 		AssertElementPresent(
 			key_card = "${masterLayoutName}",
-			locator1 = "LexiconCard#CARD_SELECTED");
+			locator1 = "Card#CARD_SELECTED");
 
 		PageEditor.waitForAutoSave();
 	}

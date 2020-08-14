@@ -38,7 +38,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				key_card = "${webContentTitle}",
-				locator1 = "LexiconCard#CARD_TITLE",
+				locator1 = "Card#CARD_TITLE",
 				value1 = "${webContentTitle}");
 		}
 
@@ -300,7 +300,7 @@ definition {
 
 		Click(
 			key_card = "${otherSiteName}",
-			locator1 = "LexiconCard#CARD_TITLE_LINK");
+			locator1 = "Card#CARD_TITLE_LINK");
 
 		var key_listEntry = "${webContentTitle}";
 
@@ -316,7 +316,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			key_card = "${webContentTitle}",
-			locator1 = "LexiconCard#CARD_TITLE",
+			locator1 = "Card#CARD_TITLE",
 			value1 = "${webContentTitle}");
 
 		PortletEntry.save();
@@ -366,7 +366,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				key_card = "${webContentTitle}",
-				locator1 = "LexiconCard#CARD_TITLE",
+				locator1 = "Card#CARD_TITLE",
 				value1 = "${webContentTitle}");
 		}
 
@@ -388,7 +388,7 @@ definition {
 
 			AssertTextEquals(
 				key_card = "${webContentTitle}",
-				locator1 = "LexiconCard#CARD_TITLE",
+				locator1 = "Card#CARD_TITLE",
 				value1 = "${webContentTitle}");
 		}
 

@@ -212,13 +212,13 @@ definition {
 		task ("Assert the Blank page template without ellipsis icon button") {
 			AssertElementNotPresent(
 				key_card = "Blank",
-				locator1 = "LexiconCard#CARD_ELLIPSIS");
+				locator1 = "Card#CARD_ELLIPSIS");
 		}
 
 		task ("Assert the Blank page template without checkbox") {
 			AssertElementNotPresent(
 				key_card = "Blank",
-				locator1 = "LexiconCard#CARD_CHECKBOX");
+				locator1 = "Card#CARD_CHECKBOX");
 		}
 	}
 
@@ -234,7 +234,7 @@ definition {
 		task ("Assert the Blank page template without ellipsis icon button") {
 			AssertElementNotPresent(
 				key_card = "Blank",
-				locator1 = "LexiconCard#CARD_ELLIPSIS");
+				locator1 = "Card#CARD_ELLIPSIS");
 		}
 	}
 

@@ -44,7 +44,7 @@ definition {
 
 			Click.waitForMenuToggleJSClick(
 				key_card = "Display Page Name",
-				locator1 = "LexiconCard#CARD_ELLIPSIS");
+				locator1 = "Card#CARD_ELLIPSIS");
 
 			MenuItem.viewPresent(menuItem = "Discard Draft");
 

@@ -33,7 +33,7 @@ definition {
 			var key_card = "${depotName}";
 
 			Click(
-				locator1 = "LexiconCard#CARD_TITLE",
+				locator1 = "Card#CARD_TITLE",
 				value1 = "${depotName}");
 		}
 
@@ -44,7 +44,7 @@ definition {
 		for (var portletName : list "Web Content,Documents and Media,Collections,Categories,Tags,Recycle Bin,Memberships,Settings,Workflow") {
 			AssertTextEquals(
 				key_card = "${portletName}",
-				locator1 = "LexiconCard#CARD",
+				locator1 = "Card#CARD",
 				value1 = "${portletName}");
 		}
 	}
@@ -70,7 +70,7 @@ definition {
 			var key_card = "${depotName}";
 
 			Click(
-				locator1 = "LexiconCard#CARD_TITLE",
+				locator1 = "Card#CARD_TITLE",
 				value1 = "${depotName}");
 		}
 
@@ -89,7 +89,7 @@ definition {
 
 			Click(
 				key_card = "${otherDepotName}",
-				locator1 = "LexiconCard#CARD_TITLE");
+				locator1 = "Card#CARD_TITLE");
 
 			DepotNavigator.gotoPortlet(
 				depotName = "${otherDepotName}",
@@ -168,7 +168,7 @@ definition {
 	macro gotoPortlet {
 		Click(
 			key_card = "${portlet}",
-			locator1 = "LexiconCard#CARD");
+			locator1 = "Card#CARD");
 
 		if ("${portlet}" == "Settings") {
 			AssertTextEquals(

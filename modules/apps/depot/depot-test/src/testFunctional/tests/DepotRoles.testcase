@@ -103,16 +103,16 @@ definition {
 
 		AssertElementNotPresent(
 			key_card = "Test Depot Name",
-			locator1 = "LexiconCard#CARD_ELLIPSIS");
+			locator1 = "Card#CARD_ELLIPSIS");
 
 		Click(
 			key_card = "Test Depot Name",
-			locator1 = "LexiconCard#CARD_TITLE",
+			locator1 = "Card#CARD_TITLE",
 			value1 = "Test Depot Name");
 
 		AssertVisible(
 			key_card = "Test Depot Name",
-			locator1 = "LexiconCard#CARD");
+			locator1 = "Card#CARD");
 	}
 
 	@description = "This ensures that the Asset Library Connected Site Members role does not appear in user roles even after it is automatically assigned to a connected site member. This test also covers permissions and makes sure the library asset can be updated by the role."
@@ -596,16 +596,16 @@ definition {
 
 		AssertTextEquals(
 			key_card = "Asset Library Content Reviewer",
-			locator1 = "LexiconCard#CARD_TITLE",
+			locator1 = "Card#CARD_TITLE",
 			value1 = "Asset Library Content Reviewer");
 
 		AssertElementNotPresent(
 			key_card = "Asset Library Administrator",
-			locator1 = "LexiconCard#CARD_TITLE");
+			locator1 = "Card#CARD_TITLE");
 
 		AssertElementNotPresent(
 			key_card = "Asset Library Owner",
-			locator1 = "LexiconCard#CARD_TITLE");
+			locator1 = "Card#CARD_TITLE");
 	}
 
 	@description = "This ensures that the Asset Library Connected Site Members role does not appear in user roles even it is automatically assigned to an existing site member after connecting site."

@@ -221,7 +221,7 @@ definition {
 
 		Click(
 			key_card = "Test Depot Name",
-			locator1 = "LexiconCard#CARD_TITLE");
+			locator1 = "Card#CARD_TITLE");
 
 		AssertTextEquals(
 			locator1 = "ControlMenu#HEADING",
@@ -230,7 +230,7 @@ definition {
 		for (var portletName : list "Web Content,Documents and Media,Collections,Recycle Bin") {
 			AssertElementNotPresent(
 				key_card = "${portletName}",
-				locator1 = "LexiconCard#CARD");
+				locator1 = "Card#CARD");
 		}
 
 		DepotNavigator.gotoPortlet(

@@ -394,7 +394,7 @@ definition {
 				}
 
 				AssertClick.assertPartialTextClickAt(
-					locator1 = "LexiconCard#CARD_TITLE",
+					locator1 = "Card#CARD_TITLE",
 					value1 = "${siteNameScope}");
 
 				var key_siteNameScope = "${siteNameScope}";

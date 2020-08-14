@@ -1559,7 +1559,7 @@ definition {
 		task ("Assert only Documents and Media entry shown") {
 			AssertElementPresent(
 				key_card = "Document Title",
-				locator1 = "LexiconCard#CARD");
+				locator1 = "Card#CARD");
 
 			AssertElementNotPresent(
 				key_navItem = "Web Content",

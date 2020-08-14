@@ -60,6 +60,12 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.StringEntityField;
+import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.sort.FieldSort;
+import com.liferay.portal.search.sort.NestedSort;
+import com.liferay.portal.search.sort.SortOrder;
+import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -191,6 +197,14 @@ public class DataRecordResourceImpl
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
+				if (sorts != null) {
+					_searchRequestBuilderFactory.builder(
+						searchContext
+					).sorts(
+						_getSearchSorts(sorts)
+					);
+				}
+
 				searchContext.setAttribute(
 					Field.STATUS, WorkflowConstants.STATUS_ANY);
 				searchContext.setAttribute(
@@ -200,7 +214,7 @@ public class DataRecordResourceImpl
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setUserId(0);
 			},
-			sorts,
+			null,
 			document -> _toDataRecord(
 				_ddlRecordLocalService.fetchRecord(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
@@ -238,7 +252,7 @@ public class DataRecordResourceImpl
 				entityFields.add(
 					new StringEntityField(
 						fieldName,
-						locale -> _getSortableIndexFieldName(
+						locale -> _getIndexFieldName(
 							ddmStructure.getStructureId(), fieldName, locale)));
 			}
 		}
@@ -425,18 +439,47 @@ public class DataRecordResourceImpl
 		return _ddmIndexer.encodeName(ddmStructureId, fieldName, locale);
 	}
 
-	private String _getSortableIndexFieldName(
-		long ddmStructureId, String fieldName, Locale locale) {
+	private FieldSort[] _getSearchSorts(Sort[] sorts) {
+		List<FieldSort> fieldSorts = new ArrayList<>();
 
-		StringBundler sb = new StringBundler(
-			_getIndexFieldName(ddmStructureId, fieldName, locale));
+		for (Sort sort : sorts) {
+			FieldSort fieldSort = _sorts.field(
+				_getSortableField(sort.getFieldName()));
 
+			if (sort.isReverse()) {
+				fieldSort.setSortOrder(SortOrder.DESC);
+			}
+
+			NestedSort nestedSort = _sorts.nested(DDMIndexer.DDM_FIELD_ARRAY);
+
+			nestedSort.setFilterQuery(
+				_queries.term(
+					StringBundler.concat(
+						DDMIndexer.DDM_FIELD_ARRAY, StringPool.PERIOD,
+						DDMIndexer.DDM_FIELD_NAME),
+					sort.getFieldName()));
+
+			fieldSort.setNestedSort(nestedSort);
+
+			fieldSorts.add(fieldSort);
+		}
+
+		return fieldSorts.toArray(new FieldSort[0]);
+	}
+
+	private String _getSortableField(String sortField) {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(DDMIndexer.DDM_FIELD_ARRAY);
+		sb.append(StringPool.PERIOD);
+		sb.append(
+			_ddmIndexer.getValueFieldName(
+				sortField.split(DDMIndexer.DDM_FIELD_SEPARATOR)[1],
+				contextAcceptLanguage.getPreferredLocale()));
 		sb.append(StringPool.UNDERLINE);
 		sb.append("String");
-		sb.append(StringPool.UNDERLINE);
-		sb.append(Field.SORTABLE_FIELD_SUFFIX);
 
-		return sb.toString();
+		return Field.getSortableFieldName(sb.toString());
 	}
 
 	private DataRecord _toDataRecord(DDLRecord ddlRecord) throws Exception {
@@ -497,6 +540,15 @@ public class DataRecordResourceImpl
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private Queries _queries;
+
+	@Reference
+	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
+
+	@Reference
+	private Sorts _sorts;
 
 	@Reference
 	private SPIDDMFormRuleConverter _spiDDMFormRuleConverter;

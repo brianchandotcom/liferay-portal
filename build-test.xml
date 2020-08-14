@@ -4326,10 +4326,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 										</then>
 									</elseif>
 									<else>
-										<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" outputproperty="app.server.log" resolveexecutable="true">
-											<arg line="${app.server.start.executable.arg.line}" />
-											<env key="JAVA_HOME" path="${java.jdk.home}" />
-										</exec>
+										<start-app-server-cmd-bash />
 									</else>
 								</if>
 
@@ -4392,10 +4389,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 											</then>
 										</elseif>
 										<else>
-											<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" failonerror="true" output="app.server.log" resolveexecutable="true">
-												<arg line="${app.server.start.executable.arg.line}" />
-												<env key="JAVA_HOME" path="${java.jdk.home}" />
-											</exec>
+											<start-app-server-cmd-bash />
 										</else>
 									</if>
 								</daemons>
@@ -4404,6 +4398,64 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					</if>
 				</then>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="start-app-server-cmd-bash">
+		<sequential>
+			<beanshell>
+				<![CDATA[
+					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+					public File getBaseDir() {
+						return new File(project.getProperty("test.app.server.bin.dir"));
+					}
+
+					public String getCommand() {
+						return JenkinsResultsParserUtil.combine(new String[] {project.getProperty("app.server.start.executable"), " ", project.getProperty("app.server.start.executable.arg.line")});
+					}
+
+					public Map getEnvironments() {
+						Map environments = new HashMap();
+
+						String javaHome = project.getProperty("java.jdk.home");
+
+						if (javaHome != null) {
+							environments.put("JAVA_HOME", javaHome);
+						}
+
+						String javaOpts = project.getProperty("env.JAVA_OPTS");
+
+						if ((javaOpts != null) && !javaOpts.isEmpty()) {
+							environments.put("JAVA_OPTS", javaOpts);
+						}
+
+						String path = project.getProperty("env.PATH");
+
+						if (JenkinsResultsParserUtil.isWindows()) {
+							path = path.replaceAll("[^;]+\\\\jdk[^\\\\]*\\\\[^;]*bin", javaHome.replaceAll("\\\\", "\\\\") + "\\\\bin");
+						}
+						else {
+							path = path.replaceAll("[^:]+/jdk[^/]*/[^:]*bin", javaHome + "/bin");
+						}
+
+						environments.put("PATH", path);
+
+						return environments;
+					}
+
+					public long getMaxLogSize() {
+						return Long.valueOf(project.getProperty("app.server.max.log.size.in.mb")) * 1024 * 1024;
+					}
+
+					if (JenkinsResultsParserUtil.isWindows()) {
+						JenkinsResultsParserUtil.executeBatchCommandService(getCommand(), getBaseDir(), getEnvironments(), getMaxLogSize());
+					}
+					else {
+						JenkinsResultsParserUtil.executeBashCommandService(getCommand(), getBaseDir(), getEnvironments(), getMaxLogSize());
+					}
+				]]>
+			</beanshell>
 		</sequential>
 	</macrodef>
 
